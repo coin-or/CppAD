@@ -15,7 +15,6 @@ var list_current0 = [
 'base_std_math.htm#Purpose',
 'base_std_math.htm#Unary Standard Math',
 'base_std_math.htm#CPPAD_STANDARD_MATH_UNARY',
-'base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p',
 'base_std_math.htm#sign',
 'base_std_math.htm#pow',
 'base_std_math.htm#isnan'

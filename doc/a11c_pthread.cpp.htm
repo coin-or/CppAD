@@ -92,14 +92,6 @@ This example just demonstrates pthreads and does not use CppAD at all.
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cassert&gt;</font>
 
-<i><font color="#9A1900">// define CPPAD_NULPTR</font></i>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/configure.hpp&gt;</font>
-<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
-<b><font color="#000080"># define</font></b> CPPAD_NULL nullptr
-<b><font color="#000080"># else</font></b>
-<b><font color="#000080"># define</font></b> CPPAD_NULL <font color="#993399">0</font>
-<b><font color="#000080"># endif</font></b>
-<i><font color="#9A1900">//</font></i>
 <b><font color="#000080"># define</font></b> NUMBER_THREADS <font color="#993399">4</font>
 
 <b><font color="#000080"># ifdef</font></b> NDEBUG
@@ -123,7 +115,7 @@ This example just demonstrates pthreads and does not use CppAD at all.
     <font color="#FF0000">{</font>   start_arg<font color="#990000">*</font> arg <font color="#990000">=</font> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font>start_arg<font color="#990000">*&gt;(</font> arg_vptr <font color="#990000">);</font>
         <b><font color="#000000">a1</font></b><font color="#990000">(</font>arg<font color="#990000">-&gt;</font>n<font color="#990000">,</font> arg<font color="#990000">-&gt;</font>a<font color="#990000">,</font> arg<font color="#990000">-&gt;</font>b<font color="#990000">);</font>
 
-        <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> nullptr<font color="#990000">;</font>
         <b><font color="#000000">pthread_exit</font></b><font color="#990000">(</font>no_status<font color="#990000">);</font>
 
         <b><font color="#0000FF">return</font></b> no_status<font color="#990000">;</font>
@@ -171,7 +163,7 @@ This example just demonstrates pthreads and does not use CppAD at all.
         <font color="#990000">)</font> <font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_thread<font color="#990000">;</font> j<font color="#990000">++)</font>
-    <font color="#FF0000">{</font>   <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    <font color="#FF0000">{</font>   <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> nullptr<font color="#990000">;</font>
         <b><font color="#000000">CHECK_ZERO</font></b><font color="#990000">(</font> <b><font color="#000000">pthread_join</font></b><font color="#990000">(</font>thread<font color="#990000">[</font>j<font color="#990000">],</font> <font color="#990000">&amp;</font>no_status<font color="#990000">)</font> <font color="#990000">);</font>
     <font color="#FF0000">}</font>
 

@@ -97,10 +97,10 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
     <b><font color="#0000FF">enum</font></b> thread_job_t <font color="#FF0000">{</font> init_enum<font color="#990000">,</font> work_enum<font color="#990000">,</font> join_enum <font color="#FF0000">}</font> thread_job_<font color="#990000">;</font>
 
     <i><font color="#9A1900">// barrier used to wait for other threads to finish work</font></i>
-    boost<font color="#990000">::</font>barrier<font color="#990000">*</font> wait_for_work_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    boost<font color="#990000">::</font>barrier<font color="#990000">*</font> wait_for_work_ <font color="#990000">=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// barrier used to wait for master thread to set next job</font></i>
-    boost<font color="#990000">::</font>barrier<font color="#990000">*</font> wait_for_job_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    boost<font color="#990000">::</font>barrier<font color="#990000">*</font> wait_for_job_ <font color="#990000">=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// Are we in sequential mode; i.e., other threads are waiting for</font></i>
     <i><font color="#9A1900">// master thread to set up next job ?</font></i>
@@ -120,7 +120,7 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
     <font color="#008080">thread_one_t</font> thread_all_<font color="#990000">[</font>MAX_NUMBER_THREADS<font color="#990000">];</font>
 
     <i><font color="#9A1900">// pointer to function that does the work for one thread</font></i>
-    <font color="#009900">void</font> <font color="#990000">(*</font> worker_<font color="#990000">)(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    <font color="#009900">void</font> <font color="#990000">(*</font> worker_<font color="#990000">)(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// in_parallel()</font></i>
@@ -136,8 +136,8 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// function that gets called by boost thread constructor</font></i>
     <font color="#009900">void</font> <b><font color="#000000">thread_work</font></b><font color="#990000">(</font><font color="#008080">size_t</font> thread_num<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> wait_for_work_ <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
-        ok     <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+    <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> wait_for_work_ <font color="#990000">!=</font> nullptr<font color="#990000">;</font>
+        ok     <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">!=</font> nullptr<font color="#990000">;</font>
         ok     <font color="#990000">&amp;=</font> thread_num     <font color="#990000">!=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
         <i><font color="#9A1900">// thread specific storage of thread number for this thread</font></i>
@@ -178,8 +178,8 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// check that we currently do not have multiple threads running</font></i>
     ok  <font color="#990000">=</font> num_threads_ <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
-    ok <font color="#990000">&amp;=</font> wait_for_work_ <font color="#990000">==</font> CPPAD_NULL<font color="#990000">;</font>
-    ok <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">==</font> CPPAD_NULL<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> wait_for_work_ <font color="#990000">==</font> nullptr<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">==</font> nullptr<font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> sequential_execution_<font color="#990000">;</font>
 
     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
@@ -190,7 +190,7 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
 
         <i><font color="#9A1900">// initialize</font></i>
         thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-        thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>bthread     <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>bthread     <font color="#990000">=</font> nullptr<font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// Finish setup of thread_all_ for this thread</font></i>
     thread_num_ptr_<font color="#990000">.</font><b><font color="#000000">reset</font></b><font color="#990000">(&amp;</font> thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>thread_num<font color="#990000">);</font>
@@ -234,8 +234,8 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
     <font color="#009900">bool</font> ok <font color="#990000">=</font> sequential_execution_<font color="#990000">;</font>
     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-    ok     <font color="#990000">&amp;=</font> wait_for_work_  <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
-    ok     <font color="#990000">&amp;=</font> wait_for_job_   <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+    ok     <font color="#990000">&amp;=</font> wait_for_work_  <font color="#990000">!=</font> nullptr<font color="#990000">;</font>
+    ok     <font color="#990000">&amp;=</font> wait_for_job_   <font color="#990000">!=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// set global version of this work routine</font></i>
     worker_ <font color="#990000">=</font> worker<font color="#990000">;</font>
@@ -268,8 +268,8 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
     <i><font color="#9A1900">// This master thread (thread zero) has not completed wait_for_job_</font></i>
     <font color="#009900">bool</font> ok <font color="#990000">=</font> sequential_execution_<font color="#990000">;</font>
     ok     <font color="#990000">&amp;=</font> <b><font color="#000000">thread_number</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
-    ok     <font color="#990000">&amp;=</font> wait_for_work_ <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
-    ok     <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">!=</font> CPPAD_NULL<font color="#990000">;</font>
+    ok     <font color="#990000">&amp;=</font> wait_for_work_ <font color="#990000">!=</font> nullptr<font color="#990000">;</font>
+    ok     <font color="#990000">&amp;=</font> wait_for_job_  <font color="#990000">!=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// set the new job that other threads are waiting for</font></i>
     thread_job_ <font color="#990000">=</font> join_enum<font color="#990000">;</font>
@@ -281,22 +281,22 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
 
     <i><font color="#9A1900">// now wait for the other threads to be destroyed</font></i>
     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
-    ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>bthread <font color="#990000">==</font> CPPAD_NULL<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>bthread <font color="#990000">==</font> nullptr<font color="#990000">;</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
     <font color="#FF0000">{</font>   thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread<font color="#990000">-&gt;</font><b><font color="#000000">join</font></b><font color="#990000">();</font>
         <b><font color="#0000FF">delete</font></b> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread<font color="#990000">;</font>
-        thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread <font color="#990000">=</font> nullptr<font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// now we are down to just the master thread (thread zero)</font></i>
     sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
     <i><font color="#9A1900">// destroy wait_for_work_</font></i>
     <b><font color="#0000FF">delete</font></b> wait_for_work_<font color="#990000">;</font>
-    wait_for_work_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    wait_for_work_ <font color="#990000">=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// destroy wait_for_job_</font></i>
     <b><font color="#0000FF">delete</font></b> wait_for_job_<font color="#990000">;</font>
-    wait_for_job_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    wait_for_job_ <font color="#990000">=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// check ok before changing num_threads_</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
@@ -304,7 +304,7 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
 
     <i><font color="#9A1900">// now inform CppAD that there is only one thread</font></i>
     num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-    thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> nullptr<font color="#990000">,</font> nullptr<font color="#990000">);</font>
     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
     CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
 

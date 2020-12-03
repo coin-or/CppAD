@@ -198,7 +198,7 @@ boost multi-threading environment.
 
         <i><font color="#9A1900">// This master thread is already running, we need to create</font></i>
         <i><font color="#9A1900">// num_threads - 1 more threads</font></i>
-        thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>bthread <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        thread_all_<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>bthread <font color="#990000">=</font> nullptr<font color="#990000">;</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
         <font color="#FF0000">{</font>   <i><font color="#9A1900">// Create the thread with thread number equal to thread_num</font></i>
             thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread <font color="#990000">=</font>
@@ -214,14 +214,14 @@ boost multi-threading environment.
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
         <font color="#FF0000">{</font>   thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread<font color="#990000">-&gt;</font><b><font color="#000000">join</font></b><font color="#990000">();</font>
             <b><font color="#0000FF">delete</font></b> thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread<font color="#990000">;</font>
-            thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+            thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>bthread <font color="#990000">=</font> nullptr<font color="#990000">;</font>
         <font color="#FF0000">}</font>
 
         <i><font color="#9A1900">// Inform CppAD that we now are definately back to sequential mode</font></i>
         sequential_execution_ <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// now inform CppAD that there is only one thread</font></i>
-        thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>
+        thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> nullptr<font color="#990000">,</font> nullptr<font color="#990000">);</font>
         thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
         CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
 

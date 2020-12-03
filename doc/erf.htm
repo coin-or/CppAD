@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Error Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Error Function">
-<meta name="keywords" id="keywords" content=" the error function syntax description x y cppad_use_cplusplus_2011 true false example ">
+<meta name="keywords" id="keywords" content=" the error function syntax description x y atomic example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atanh.cpp.htm" target="_top">Prev</a>
+<td><a href="cosh.cpp.htm" target="_top">Prev</a>
 </td><td><a href="erf.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -71,9 +71,7 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Description</option>
 <option>x, y</option>
-<option>CPPAD_USE_CPLUSPLUS_2011</option>
-<option>CPPAD_USE_CPLUSPLUS_2011.true</option>
-<option>CPPAD_USE_CPLUSPLUS_2011.false</option>
+<option>Atomic</option>
 <option>Example</option>
 </select>
 </td>
@@ -84,7 +82,9 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>The Error Function</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+<center><b><big><big>The Error Function</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -114,38 +114,10 @@ for a unary standard math function.
 
 <br>
 <br>
-<b><big><a name="CPPAD_USE_CPLUSPLUS_2011" id="CPPAD_USE_CPLUSPLUS_2011">CPPAD_USE_CPLUSPLUS_2011</a></big></b>
-
-
+<b><big><a name="Atomic" id="Atomic">Atomic</a></big></b>
 <br>
-<br>
-<big><a name="CPPAD_USE_CPLUSPLUS_2011.true" id="CPPAD_USE_CPLUSPLUS_2011.true">true</a></big>
-<br>
-If this preprocessor symbol is true (<code><font color="blue">1</font></code>),
-and 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is an AD type,
-this is an <a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic&nbsp;operation</span></a>
+This is an <a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic&nbsp;operation</span></a>
 .
-
-<br>
-<br>
-<big><a name="CPPAD_USE_CPLUSPLUS_2011.false" id="CPPAD_USE_CPLUSPLUS_2011.false">false</a></big>
-<br>
-If this preprocessor symbol is false (<code><font color="blue">0</font></code>),
-CppAD uses a fast approximation (few numerical operations)
-with relative error bound <small>@(@
-4 \times 10^{-4}
-@)@</small>; see
-Vedder, J.D.,
-
-<code><i><font color="black"><span style='white-space: nowrap'>Simple&nbsp;approximations&nbsp;for&nbsp;the&nbsp;error&nbsp;function&nbsp;and&nbsp;its&nbsp;inverse</span></font></i></code>
-,
-American Journal of Physics,
-v 55,
-n 8,
-1987,
-p 762-3.
 
 <br>
 <br>
@@ -158,7 +130,7 @@ The file
 contains an example and test of this function.
 
 
-<hr>Input File: include/cppad/core/erf.hpp
+<hr>Input File: include/cppad/core/std_math_11.hpp
 
 </body>
 </html>

@@ -16,9 +16,7 @@ var list_current0 = [
 'erfc.htm#Syntax',
 'erfc.htm#Description',
 'erfc.htm#x, y',
-'erfc.htm#CPPAD_USE_CPLUSPLUS_2011',
-'erfc.htm#CPPAD_USE_CPLUSPLUS_2011.true',
-'erfc.htm#CPPAD_USE_CPLUSPLUS_2011.false',
+'erfc.htm#Atomic',
 'erfc.htm#Example'
 ];
 function choose_across0(item)

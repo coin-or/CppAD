@@ -154,9 +154,9 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
 
     <i><font color="#9A1900">// structure that holds some of the work done by sparse_jac</font></i>
     <font color="#009900">int</font>        nnz<font color="#990000">;</font>                   <i><font color="#9A1900">// number of non-zero values</font></i>
-    <font color="#008080">SizeVector</font> rind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// row indices</font></i>
-    <font color="#008080">SizeVector</font> cind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// column indices</font></i>
-    <font color="#008080">DblVector</font>  values <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// Jacobian values</font></i>
+    <font color="#008080">SizeVector</font> rind   <font color="#990000">=</font> nullptr<font color="#990000">;</font>   <i><font color="#9A1900">// row indices</font></i>
+    <font color="#008080">SizeVector</font> cind   <font color="#990000">=</font> nullptr<font color="#990000">;</font>   <i><font color="#9A1900">// column indices</font></i>
+    <font color="#008080">DblVector</font>  values <font color="#990000">=</font> nullptr<font color="#990000">;</font>   <i><font color="#9A1900">// Jacobian values</font></i>
 
     <i><font color="#9A1900">// choose a value for x</font></i>
     CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> x<font color="#990000">);</font>
@@ -204,9 +204,9 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
         same_pattern <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
         <i><font color="#9A1900">// calculate the jacobian at this x</font></i>
-        rind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-        cind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-        values <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        rind   <font color="#990000">=</font> nullptr<font color="#990000">;</font>
+        cind   <font color="#990000">=</font> nullptr<font color="#990000">;</font>
+        values <font color="#990000">=</font> nullptr<font color="#990000">;</font>
         <b><font color="#000000">sparse_jac</font></b><font color="#990000">(</font>tag<font color="#990000">,</font> <font color="#009900">int</font><font color="#990000">(</font>m<font color="#990000">),</font> <font color="#009900">int</font><font color="#990000">(</font>n<font color="#990000">),</font>
             same_pattern<font color="#990000">,</font> x<font color="#990000">,</font> <font color="#990000">&amp;</font>nnz<font color="#990000">,</font> <font color="#990000">&amp;</font>rind<font color="#990000">,</font> <font color="#990000">&amp;</font>cind<font color="#990000">,</font> <font color="#990000">&amp;</font>values<font color="#990000">,</font> options
         <font color="#990000">);</font>

@@ -105,8 +105,7 @@ A:active { color : purple }
     y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
 
     <i><font color="#9A1900">// Store operation sequence, and order zero forward results, in f.</font></i>
-    <i><font color="#9A1900">// If CPPAD_USE_CPLUSPLUS_2011 in cppad/configure.hpp is 1,</font></i>
-    <i><font color="#9A1900">// this assignment will use move semantics</font></i>
+    <i><font color="#9A1900">// This assignment will use move semantics</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
     f <font color="#990000">=</font> CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
 

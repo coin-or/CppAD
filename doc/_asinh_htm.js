@@ -16,9 +16,7 @@ var list_current0 = [
 'asinh.htm#Syntax',
 'asinh.htm#Description',
 'asinh.htm#x, y',
-'asinh.htm#CPPAD_USE_CPLUSPLUS_2011',
-'asinh.htm#CPPAD_USE_CPLUSPLUS_2011.true',
-'asinh.htm#CPPAD_USE_CPLUSPLUS_2011.false',
+'asinh.htm#Atomic',
 'asinh.htm#Example'
 ];
 function choose_across0(item)

@@ -16,9 +16,7 @@ var list_current0 = [
 'expm1.htm#Syntax',
 'expm1.htm#Description',
 'expm1.htm#x, y',
-'expm1.htm#CPPAD_USE_CPLUSPLUS_2011',
-'expm1.htm#CPPAD_USE_CPLUSPLUS_2011.true',
-'expm1.htm#CPPAD_USE_CPLUSPLUS_2011.false',
+'expm1.htm#Atomic',
 'expm1.htm#Example'
 ];
 function choose_across0(item)

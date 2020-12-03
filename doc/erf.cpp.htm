@@ -72,10 +72,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
-
-
-<center><b><big><big>The AD erf Function: Example and Test</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>The AD erf Function: Example and Test</big></big></b></center>
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
@@ -108,10 +105,8 @@ A:active { color : purple }
     <i><font color="#9A1900">// check relative erorr</font></i>
     <font color="#009900">double</font> erf_x0 <font color="#990000">=</font> <font color="#993399">0.5204998778130465</font><font color="#990000">;</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> erf_x0<font color="#990000">,</font>  <font color="#993399">0</font><font color="#990000">.,</font>    <font color="#993399">4e-4</font><font color="#990000">);</font>
-<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
     <font color="#009900">double</font> tmp <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font><font color="#993399">1e-15</font><font color="#990000">,</font> eps<font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> erf_x0<font color="#990000">,</font>  <font color="#993399">0</font><font color="#990000">.,</font>    tmp<font color="#990000">);</font>
-<b><font color="#000080"># endif</font></b>
 
     <i><font color="#9A1900">// value of derivative of erf at x0</font></i>
     <font color="#009900">double</font> pi     <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>
@@ -124,9 +119,7 @@ A:active { color : purple }
     dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
     dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> dx<font color="#990000">);</font>
     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font>  <font color="#993399">0</font><font color="#990000">.,</font>  <font color="#993399">1e-3</font><font color="#990000">);</font>
-<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font>  <font color="#993399">0</font><font color="#990000">.,</font>  eps<font color="#990000">);</font>
-<b><font color="#000080"># endif</font></b>
 
     <i><font color="#9A1900">// reverse computation of derivative of y[0]</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
@@ -134,9 +127,7 @@ A:active { color : purple }
     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
     dw    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font>  <font color="#993399">0</font><font color="#990000">.,</font> <font color="#993399">1e-1</font><font color="#990000">);</font>
-<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
     ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font>  <font color="#993399">0</font><font color="#990000">.,</font> eps<font color="#990000">);</font>
-<b><font color="#000080"># endif</font></b>
 
     <i><font color="#9A1900">// use a VecAD&lt;Base&gt;::reference object with erf</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>

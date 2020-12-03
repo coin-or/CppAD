@@ -16,9 +16,7 @@ var list_current0 = [
 'erf.htm#Syntax',
 'erf.htm#Description',
 'erf.htm#x, y',
-'erf.htm#CPPAD_USE_CPLUSPLUS_2011',
-'erf.htm#CPPAD_USE_CPLUSPLUS_2011.true',
-'erf.htm#CPPAD_USE_CPLUSPLUS_2011.false',
+'erf.htm#Atomic',
 'erf.htm#Example'
 ];
 function choose_across0(item)

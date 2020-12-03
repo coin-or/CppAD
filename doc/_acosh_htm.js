@@ -16,9 +16,7 @@ var list_current0 = [
 'acosh.htm#Syntax',
 'acosh.htm#Description',
 'acosh.htm#x, y',
-'acosh.htm#CPPAD_USE_CPLUSPLUS_2011',
-'acosh.htm#CPPAD_USE_CPLUSPLUS_2011.true',
-'acosh.htm#CPPAD_USE_CPLUSPLUS_2011.false',
+'acosh.htm#Atomic',
 'acosh.htm#Example'
 ];
 function choose_across0(item)

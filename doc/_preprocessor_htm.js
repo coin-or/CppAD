@@ -14,9 +14,9 @@ var list_current0 = [
 'preprocessor.htm#NOMINMAX',
 'preprocessor.htm#Documented Here',
 'preprocessor.htm#Documented Here.CPPAD_DEBUG_AND_RELEASE',
-'preprocessor.htm#Documented Here.CPPAD_NULL',
-'preprocessor.htm#Documented Here.CPPAD_PACKAGE_STRING',
-'preprocessor.htm#Documented Here.CPPAD_USE_CPLUSPLUS_2011',
+'preprocessor.htm#CPPAD_NULL',
+'preprocessor.htm#CPPAD_NULL.CPPAD_PACKAGE_STRING',
+'preprocessor.htm#CPPAD_USE_CPLUSPLUS_2011',
 'preprocessor.htm#Documented Elsewhere',
 'preprocessor.htm#Deprecated'
 ];

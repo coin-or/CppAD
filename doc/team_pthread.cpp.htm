@@ -142,7 +142,7 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
     <font color="#008080">thread_one_t</font> thread_all_<font color="#990000">[</font>MAX_NUMBER_THREADS<font color="#990000">];</font>
 
     <i><font color="#9A1900">// pointer to function that does the work for one thread</font></i>
-    <font color="#009900">void</font> <font color="#990000">(*</font> worker_<font color="#990000">)(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    <font color="#009900">void</font> <font color="#990000">(*</font> worker_<font color="#990000">)(</font><font color="#009900">void</font><font color="#990000">)</font> <font color="#990000">=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// in_parallel()</font></i>
@@ -202,10 +202,10 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
         thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>ok <font color="#990000">=</font> ok<font color="#990000">;</font>
 <b><font color="#000080"># if</font></b> DEMONSTRATE_BUG_IN_CYGWIN
         <i><font color="#9A1900">// Terminate this thread</font></i>
-        <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> nullptr<font color="#990000">;</font>
         <b><font color="#000000">pthread_exit</font></b><font color="#990000">(</font>no_status<font color="#990000">);</font>
 <b><font color="#000080"># endif</font></b>
-        <b><font color="#0000FF">return</font></b> CPPAD_NULL<font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> nullptr<font color="#990000">;</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
@@ -255,7 +255,7 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
     num_threads_ <font color="#990000">=</font> num_threads<font color="#990000">;</font>
 
     <i><font color="#9A1900">// initialize two barriers, one for work done, one for new job ready</font></i>
-    pthread_barrierattr_t<font color="#990000">*</font> no_barrierattr <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    pthread_barrierattr_t<font color="#990000">*</font> no_barrierattr <font color="#990000">=</font> nullptr<font color="#990000">;</font>
     rc <font color="#990000">=</font> <b><font color="#000000">pthread_barrier_init</font></b><font color="#990000">(</font>
         <font color="#990000">&amp;</font>wait_for_work_<font color="#990000">,</font> no_barrierattr<font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> num_threads
     <font color="#990000">);</font>
@@ -268,7 +268,7 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
     <i><font color="#9A1900">// structure used to create the threads</font></i>
     <font color="#008080">pthread_t</font>       pthread_id<font color="#990000">;</font>
     <i><font color="#9A1900">// default for pthread_attr_setdetachstate is PTHREAD_CREATE_JOINABLE</font></i>
-    pthread_attr_t<font color="#990000">*</font> no_attr<font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    pthread_attr_t<font color="#990000">*</font> no_attr<font color="#990000">=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// initial job for the threads</font></i>
     thread_job_           <font color="#990000">=</font> init_enum<font color="#990000">;</font>
@@ -358,7 +358,7 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
     <i><font color="#9A1900">// now wait for the other threads to exit</font></i>
     <font color="#008080">size_t</font> thread_num<font color="#990000">;</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>thread_num <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> thread_num <font color="#990000">&lt;</font> num_threads_<font color="#990000">;</font> thread_num<font color="#990000">++)</font>
-    <font color="#FF0000">{</font>   <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    <font color="#FF0000">{</font>   <font color="#009900">void</font><font color="#990000">*</font> no_status <font color="#990000">=</font> nullptr<font color="#990000">;</font>
         rc      <font color="#990000">=</font> <b><font color="#000000">pthread_join</font></b><font color="#990000">(</font>
             thread_all_<font color="#990000">[</font>thread_num<font color="#990000">].</font>pthread_id<font color="#990000">,</font> <font color="#990000">&amp;</font>no_status
         <font color="#990000">);</font>
@@ -385,7 +385,7 @@ Set the following preprocessor symbol to 1 to demonstrate this bug:
 
     <i><font color="#9A1900">// now inform CppAD that there is only one thread</font></i>
     num_threads_ <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-    thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> CPPAD_NULL<font color="#990000">,</font> CPPAD_NULL<font color="#990000">);</font>
+    thread_alloc<font color="#990000">::</font><b><font color="#000000">parallel_setup</font></b><font color="#990000">(</font>num_threads_<font color="#990000">,</font> nullptr<font color="#990000">,</font> nullptr<font color="#990000">);</font>
     thread_alloc<font color="#990000">::</font><b><font color="#000000">hold_memory</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
     CppAD<font color="#990000">::</font>parallel_ad<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;();</font>
 

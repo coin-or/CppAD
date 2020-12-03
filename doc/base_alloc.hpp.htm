@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Example AD&lt;Base&gt; Where Base Constructor Allocates Memory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Example AD&lt;Base&gt; Where Base Constructor Allocates Memory">
-<meta name="keywords" id="keywords" content=" example ad&lt;base&gt; where base constructor allocates memory purpose include file compound assignment macro binary operator boolean class definition condexpop condexprel equalopseq identical output integer azmul ordered unary standard math erf asinh acosh atanh expm1 log1p sign pow numeric_limits to_string hash_code ">
+<meta name="keywords" id="keywords" content=" example ad&lt;base&gt; where base constructor allocates memory purpose include file compound assignment macro binary operator boolean class definition condexpop condexprel equalopseq identical output integer azmul ordered unary standard math sign pow numeric_limits to_string hash_code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,7 +81,6 @@ A:active { color : purple }
 <option>azmul</option>
 <option>Ordered</option>
 <option>Unary Standard Math</option>
-<option>erf, asinh, acosh, atanh, expm1, log1p</option>
 <option>sign</option>
 <option>pow</option>
 <option>numeric_limits</option>
@@ -360,13 +359,20 @@ The following invocations of the macro above define the
 (except for <code><font color="blue">abs</font></code>):
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>acos<font color="#990000">)</font>
+    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>asin<font color="#990000">)</font>
+    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>atan<font color="#990000">)</font>
+    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>cos<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>cosh<font color="#990000">)</font>
+    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
+    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>erfc<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>exp<font color="#990000">)</font>
+    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>fabs<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>log<font color="#990000">)</font>
+    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>log10<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>sin<font color="#990000">)</font>
     <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>sinh<font color="#990000">)</font>
@@ -385,23 +391,6 @@ The isnan function is special because it returns a bool
     <b><font color="#0000FF">inline</font></b> <font color="#009900">bool</font> <b><font color="#000000">isnan</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> base_alloc<font color="#990000">&amp;</font> x<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_ <font color="#990000">!=</font> <font color="#990000">*</font>x<font color="#990000">.</font>ptrdbl_<font color="#990000">;</font> <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
-<br>
-<b><big><a name="erf, asinh, acosh, atanh, expm1, log1p" id="erf, asinh, acosh, atanh, expm1, log1p">erf, asinh, acosh, atanh, expm1, log1p</a></big></b>
-<br>
-The following defines the
-<a href="base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p" target="_top"><span style='white-space: nowrap'>asinh,&nbsp;acosh,&nbsp;atanh,&nbsp;erf,&nbsp;erfc,&nbsp;expm1,&nbsp;log1p</span></a>
-
-functions
-required by <code><font color="blue">AD&lt;base_alloc&gt;</font></code>:
-<pre><tt><b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2011
-    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
-    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
-    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
-    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
-    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>erfc<font color="#990000">)</font>
-    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
-    <b><font color="#000000">BASE_ALLOC_STD_MATH</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>
-<b><font color="#000080"># endif</font></b></tt></pre>
 <br>
 <b><big><a name="sign" id="sign">sign</a></big></b>
 <br>

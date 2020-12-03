@@ -16,9 +16,7 @@ var list_current0 = [
 'log1p.htm#Syntax',
 'log1p.htm#Description',
 'log1p.htm#x, y',
-'log1p.htm#CPPAD_USE_CPLUSPLUS_2011',
-'log1p.htm#CPPAD_USE_CPLUSPLUS_2011.true',
-'log1p.htm#CPPAD_USE_CPLUSPLUS_2011.false',
+'log1p.htm#Atomic',
 'log1p.htm#Example'
 ];
 function choose_across0(item)

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Base Type Requirements for Standard Math Functions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Base Type Requirements for Standard Math Functions">
-<meta name="keywords" id="keywords" content=" base type requirements standard math functions purpose unary cppad_standard_math_unary asinh acosh atanh erf erfc expm1 log1p sign pow isnan ">
+<meta name="keywords" id="keywords" content=" base type requirements standard math functions purpose unary cppad_standard_math_unary sign pow isnan ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,7 +68,6 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>Unary Standard Math</option>
 <option>CPPAD_STANDARD_MATH_UNARY</option>
-<option>asinh, acosh, atanh, erf, erfc, expm1, log1p</option>
 <option>sign</option>
 <option>pow</option>
 <option>isnan</option>
@@ -109,67 +108,102 @@ unary standard math functions (in the CppAD namespace):
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;abs(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
- absolute value     </td></tr><tr><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
+ absolute value                </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;acos(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- </td><td align='left'  valign='top'>
- inverse cosine     </td></tr><tr><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
+ inverse cosine                </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;acosh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ inverse hyperbolic cosine     </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;asin(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- </td><td align='left'  valign='top'>
- inverse sine       </td></tr><tr><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
+ inverse sine                  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;asinh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ inverse hyperbolic sin        </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;atan(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- </td><td align='left'  valign='top'>
- inverse tangent    </td></tr><tr><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
+ inverse tangent               </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;atanh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+  </td><td align='left'  valign='top'>
+ inverse hyperbolic tangent    </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cos(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
- cosine             </td></tr><tr><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
+ cosine                        </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cosh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- </td><td align='left'  valign='top'>
- hyperbolic cosine  </td></tr><tr><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
+ hyperbolic cosine             </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;erf(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+    </td><td align='left'  valign='top'>
+ error function                </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;erfc(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+   </td><td align='left'  valign='top'>
+ complementary error function  </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exp(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+    </td><td align='left'  valign='top'>
+ exponential                   </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;expm1(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
   </td><td align='left'  valign='top'>
- exponential        </td></tr><tr><td align='left'  valign='top'>
+ exponential of x minus one    </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;fabs(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- </td><td align='left'  valign='top'>
- absolute value     </td></tr><tr><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
+ absolute value                </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+    </td><td align='left'  valign='top'>
+ natural logarithm             </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log1p(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
   </td><td align='left'  valign='top'>
- natural logarithm  </td></tr><tr><td align='left'  valign='top'>
+ logarithm of one plus x       </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sin(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
- sine               </td></tr><tr><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
+ sine                          </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sinh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- </td><td align='left'  valign='top'>
- hyperbolic sine    </td></tr><tr><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
+ hyperbolic sine               </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sqrt(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- </td><td align='left'  valign='top'>
- square root        </td></tr><tr><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
+ square root                   </td></tr><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;tan(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
+    </td><td align='left'  valign='top'>
  tangent
 </td></tr>
 </table>
@@ -209,64 +243,6 @@ For example,
 .
 
 <br>
-<br>
-<b><big><a name="asinh, acosh, atanh, erf, erfc, expm1, log1p" id="asinh, acosh, atanh, erf, erfc, expm1, log1p">asinh, acosh, atanh, erf, erfc, expm1, log1p</a></big></b>
-<br>
-If this preprocessor symbol
-<code><font color="blue">CPPAD_USE_CPLUSPLUS_2011</font></code> is true (<code><font color="blue">1</font></code>),
-when compiling for c++11, the type
-<code><font color="blue">double</font></code> is supported for the functions listed below.
-In this case, the type 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- must also support these functions:
-<table><tr><td align='left'  valign='top'>
-
-<b>Syntax</b> </td><td align='left'  valign='top'>
- <b>Result</b>
-</td></tr><tr><td align='left'  valign='top'>
-
-
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;asinh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
- inverse hyperbolic sin        </td></tr><tr><td align='left'  valign='top'>
-
-
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;acosh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
- inverse hyperbolic cosine     </td></tr><tr><td align='left'  valign='top'>
-
-
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;atanh(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
- inverse hyperbolic tangent    </td></tr><tr><td align='left'  valign='top'>
-
-
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;erf(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-    </td><td align='left'  valign='top'>
- error function                </td></tr><tr><td align='left'  valign='top'>
-
-
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;erfc(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-   </td><td align='left'  valign='top'>
- complementary error function  </td></tr><tr><td align='left'  valign='top'>
-
-
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;expm1(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
- exponential of x minus one    </td></tr><tr><td align='left'  valign='top'>
-
-
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log1p(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-  </td><td align='left'  valign='top'>
- logarithm of one plus x
-</td></tr>
-</table>
-where the arguments and return value have the prototypes
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
 <br>
 <b><big><a name="sign" id="sign">sign</a></big></b>
 <br>

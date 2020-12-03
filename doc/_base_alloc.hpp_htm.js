@@ -28,7 +28,6 @@ var list_current0 = [
 'base_alloc.hpp.htm#azmul',
 'base_alloc.hpp.htm#Ordered',
 'base_alloc.hpp.htm#Unary Standard Math',
-'base_alloc.hpp.htm#erf, asinh, acosh, atanh, expm1, log1p',
 'base_alloc.hpp.htm#sign',
 'base_alloc.hpp.htm#pow',
 'base_alloc.hpp.htm#numeric_limits',

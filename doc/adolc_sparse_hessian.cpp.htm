@@ -150,9 +150,9 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
 
     <i><font color="#9A1900">// structure that holds some of the work done by sparse_hess</font></i>
     <font color="#009900">int</font>       nnz<font color="#990000">;</font>                   <i><font color="#9A1900">// number of non-zero values</font></i>
-    <font color="#008080">IntVector</font> rind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// row indices</font></i>
-    <font color="#008080">IntVector</font> cind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// column indices</font></i>
-    <font color="#008080">DblVector</font> values <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>   <i><font color="#9A1900">// Hessian values</font></i>
+    <font color="#008080">IntVector</font> rind   <font color="#990000">=</font> nullptr<font color="#990000">;</font>   <i><font color="#9A1900">// row indices</font></i>
+    <font color="#008080">IntVector</font> cind   <font color="#990000">=</font> nullptr<font color="#990000">;</font>   <i><font color="#9A1900">// column indices</font></i>
+    <font color="#008080">DblVector</font> values <font color="#990000">=</font> nullptr<font color="#990000">;</font>   <i><font color="#9A1900">// Hessian values</font></i>
 
     <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
@@ -176,9 +176,9 @@ See <a href="link_sparse_hessian.htm" target="_top"><span style='white-space: no
         <font color="#009900">int</font> same_pattern <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
 
         <i><font color="#9A1900">// calculate the hessian at this x</font></i>
-        rind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-        cind   <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
-        values <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+        rind   <font color="#990000">=</font> nullptr<font color="#990000">;</font>
+        cind   <font color="#990000">=</font> nullptr<font color="#990000">;</font>
+        values <font color="#990000">=</font> nullptr<font color="#990000">;</font>
         <b><font color="#000000">sparse_hess</font></b><font color="#990000">(</font>tag<font color="#990000">,</font> <font color="#009900">int</font><font color="#990000">(</font>n<font color="#990000">),</font>
             same_pattern<font color="#990000">,</font> x<font color="#990000">,</font> <font color="#990000">&amp;</font>nnz<font color="#990000">,</font> <font color="#990000">&amp;</font>rind<font color="#990000">,</font> <font color="#990000">&amp;</font>cind<font color="#990000">,</font> <font color="#990000">&amp;</font>values<font color="#990000">,</font> options
         <font color="#990000">);</font>

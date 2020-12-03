@@ -422,9 +422,7 @@ see <a href="optimize.htm#options.no_print_for_op" target="_top"><span style='wh
 <b><big><a name="10-06" id="10-06">10-06</a></big></b>
 
 <ol type="1"><li>
-Add
-<a href="preprocessor.htm#Documented Here.CPPAD_USE_CPLUSPLUS_2011" target="_top"><span style='white-space: nowrap'>CPPAD_USE_CPLUSPLUS_2011</span></a>
-,
+Add the <code><font color="blue">CPPAD_USE_CPLUSPLUS_2011</font></code>,
 <code><font color="blue">CPPAD_NUMERIC_LIMITS</font></code>, and
 <code><font color="blue">CPPAD_STANDARD_MATH_UNARY</font></code>, to
 the <a href="preprocessor.htm" target="_top"><span style='white-space: nowrap'>preprocessor</span></a>
@@ -1094,16 +1092,13 @@ Add the exponential minus one function <a href="log1p.htm" target="_top"><span s
 <a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
 :
 If you are defining your own base type,
-note that
-<a href="base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p" target="_top"><span style='white-space: nowrap'>log1p</span></a>
-
+note that <code><font color="blue">log1p</font></code> function
 was added to the base type requirements.
 </li><li>
 
 Use the single preprocessor flag
 <code><font color="blue">CPPAD_USE_CPLUSPLUS_2011</font></code> to signal that the functions
-<a href="base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p" target="_top"><span style='white-space: nowrap'>asinh,&nbsp;acosh,&nbsp;atanh,&nbsp;erf,&nbsp;erfc,&nbsp;expm1,&nbsp;log1p</span></a>
-
+asinh, acosh, atanh, erf, erfc, expm1, log1p
 are part of the base type requirements.
 </li></ol>
 
@@ -1116,9 +1111,7 @@ are part of the base type requirements.
 Add the exponential minus one function <a href="expm1.htm" target="_top"><span style='white-space: nowrap'>expm1</span></a>
 .
 If you are defining your own base type,
-note that
-<a href="base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p" target="_top"><span style='white-space: nowrap'>expm1</span></a>
-
+note that expm1
 was added to the base type requirements.
 </li><li>
 
@@ -1138,17 +1131,13 @@ when using <a href="cppad_testvector.htm#eigen" target="_top"><span style='white
 Add the inverse hyperbolic sine function <a href="atanh.htm" target="_top"><span style='white-space: nowrap'>atanh</span></a>
 .
 If you are defining your own base type,
-note that
-<a href="base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p" target="_top"><span style='white-space: nowrap'>atanh</span></a>
-
+note that atanh
 was added to the base type requirements.
 </li><li>
 
 Fix a bug in the implementation of the <code><font color="blue">acosh</font></code>
 multiple direction forward mode <a href="forward_dir.htm" target="_top"><span style='white-space: nowrap'>forward_dir</span></a>
-
-(when compiler has <a href="acosh.htm#CPPAD_USE_CPLUSPLUS_2011" target="_top"><span style='white-space: nowrap'>acosh</span></a>
-).
+.
 </li></ol>
 
 
@@ -1159,9 +1148,7 @@ multiple direction forward mode <a href="forward_dir.htm" target="_top"><span st
 Add the inverse hyperbolic sine function <a href="acosh.htm" target="_top"><span style='white-space: nowrap'>acosh</span></a>
 .
 If you are defining your own base type,
-note that
-<a href="base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p" target="_top"><span style='white-space: nowrap'>acosh</span></a>
-
+note that acosh
 was added to the base type requirements.
 
 <br>
@@ -1171,9 +1158,7 @@ was added to the base type requirements.
 Add the inverse hyperbolic sine function <a href="asinh.htm" target="_top"><span style='white-space: nowrap'>asinh</span></a>
 .
 If you are defining your own base type,
-note that
-<a href="base_std_math.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p" target="_top"><span style='white-space: nowrap'>asinh</span></a>
-
+note that asinh
 was added to the base type requirements.
 
 <br>
@@ -1292,9 +1277,7 @@ the sparsity pattern for the entire functions.
 <b><big><a name="02-14" id="02-14">02-14</a></big></b>
 <br>
 Fix another bug in the derivative calculations for the
-c++11 version of the error function; see
-<a href="erf.htm#CPPAD_USE_CPLUSPLUS_2011" target="_top"><span style='white-space: nowrap'>CPPAD_USE_CPLUSPLUS_2011</span></a>
-.
+c++11 version of the error function.
 
 <br>
 <br>
@@ -1315,9 +1298,7 @@ The change on <a href="whats_new_14.htm#12-23" target="_top"><span style='white-
  introduced a
 bug when the c++11 version of the error function was used with
 an <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimized</span></a>
- function. see
-<a href="erf.htm#CPPAD_USE_CPLUSPLUS_2011" target="_top"><span style='white-space: nowrap'>CPPAD_USE_CPLUSPLUS_2011</span></a>
-.
+ function.
 There was also a bug in the sparsity calculations for when
 this erf function was included.
 These bugs have been fixed.

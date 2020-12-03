@@ -16,9 +16,7 @@ var list_current0 = [
 'atanh.htm#Syntax',
 'atanh.htm#Description',
 'atanh.htm#x, y',
-'atanh.htm#CPPAD_USE_CPLUSPLUS_2011',
-'atanh.htm#CPPAD_USE_CPLUSPLUS_2011.true',
-'atanh.htm#CPPAD_USE_CPLUSPLUS_2011.false',
+'atanh.htm#Atomic',
 'atanh.htm#Example'
 ];
 function choose_across0(item)

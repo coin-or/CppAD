@@ -101,7 +101,7 @@ the
     <i><font color="#9A1900">// This needs to stay in scope for as long as a recording will use it.</font></i>
     <i><font color="#9A1900">// We cannot be in parallel mode when this object is created or deleted.</font></i>
     <i><font color="#9A1900">// We use a pointer so that there is no left over memory in thread zero.</font></i>
-    CppAD<font color="#990000">::</font>chkpoint_two<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> a_square_root_ <font color="#990000">=</font> CPPAD_NULL<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font>chkpoint_two<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> a_square_root_ <font color="#990000">=</font> nullptr<font color="#990000">;</font>
 
     <i><font color="#9A1900">// structure with information for one thread</font></i>
     <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">struct</font></b> <font color="#FF0000">{</font>

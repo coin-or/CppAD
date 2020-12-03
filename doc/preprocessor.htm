@@ -61,9 +61,9 @@ A:active { color : purple }
 <option>NOMINMAX</option>
 <option>Documented Here</option>
 <option>---..CPPAD_DEBUG_AND_RELEASE</option>
-<option>---..CPPAD_NULL</option>
+<option>CPPAD_NULL</option>
 <option>---..CPPAD_PACKAGE_STRING</option>
-<option>---..CPPAD_USE_CPLUSPLUS_2011</option>
+<option>CPPAD_USE_CPLUSPLUS_2011</option>
 <option>Documented Elsewhere</option>
 <option>Deprecated</option>
 </select>
@@ -118,26 +118,24 @@ this can be a significant time savings when <code><font color="blue">NDEBUG</fon
 
 <br>
 <br>
-<big><a name="Documented Here.CPPAD_NULL" id="Documented Here.CPPAD_NULL">CPPAD_NULL</a></big>
+<b><big><a name="CPPAD_NULL" id="CPPAD_NULL">CPPAD_NULL</a></big></b>
 <br>
-Is a null pointer used by CppAD,
-instead of just using the value zero which was often done in C++98,
-which has been replaced by the value <code><font color="blue">nullptr</font></code> in C++11.
+Deprecated 2020-12-03:
+This preprocessor symbol was used for a null pointer before c++11.
+Replace it by <code><font color="blue">nullptr</font></code>.
 
 <br>
 <br>
-<big><a name="Documented Here.CPPAD_PACKAGE_STRING" id="Documented Here.CPPAD_PACKAGE_STRING">CPPAD_PACKAGE_STRING</a></big>
+<big><a name="CPPAD_NULL.CPPAD_PACKAGE_STRING" id="CPPAD_NULL.CPPAD_PACKAGE_STRING">CPPAD_PACKAGE_STRING</a></big>
 <br>
 Is a <code><font color="blue">const char*</font></code> representation of this version of CppAD.
 
 <br>
 <br>
-<big><a name="Documented Here.CPPAD_USE_CPLUSPLUS_2011" id="Documented Here.CPPAD_USE_CPLUSPLUS_2011">CPPAD_USE_CPLUSPLUS_2011</a></big>
+<b><big><a name="CPPAD_USE_CPLUSPLUS_2011" id="CPPAD_USE_CPLUSPLUS_2011">CPPAD_USE_CPLUSPLUS_2011</a></big></b>
 <br>
-This preprocessor symbol has the value has the value <code><font color="blue">1</font></code>
-if C++11 features are being used by CppAD.
-Otherwise it has the value zero.
-
+Deprecated 2020-12-03:
+Should CppAD use C++11 features. This is always 1 (for true).
 
 <br>
 <br>
