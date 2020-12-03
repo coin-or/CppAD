@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_TWO_CLEAR_HPP
 # define CPPAD_CORE_ATOMIC_TWO_CLEAR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -67,8 +67,8 @@ void atomic_base<Base>::clear(void)
     bool         set_null = true;
     size_t       index  = 0;
     size_t       type  = 0;          // set to avoid warning
-    std::string* name  = CPPAD_NULL;
-    void*        v_ptr = CPPAD_NULL; // set to avoid warning
+    std::string* name  = nullptr;
+    void*        v_ptr = nullptr; // set to avoid warning
     size_t       n_atomic = local::atomic_index<Base>(
         set_null, index, type, name, v_ptr
     );
@@ -78,7 +78,7 @@ void atomic_base<Base>::clear(void)
     {   local::atomic_index<Base>(set_null, index, type, name, v_ptr);
         if( type == 2 )
         {   atomic_base* op = reinterpret_cast<atomic_base*>(v_ptr);
-            if( op != CPPAD_NULL )
+            if( op != nullptr )
             {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
                     op->free_work(thread);
             }

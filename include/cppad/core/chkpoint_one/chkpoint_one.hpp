@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
 # define CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -286,7 +286,7 @@ private:
     //
     /// allocate member_ for this thread
     void allocate_member(size_t thread)
-    {   if( member_[thread] == CPPAD_NULL )
+    {   if( member_[thread] == nullptr )
         {   member_[thread] = new member_struct;
             // The function is recorded in sequential mode and placed in
             // const_member_.f_, other threads have copy.
@@ -297,9 +297,9 @@ private:
     //
     /// free member_ for this thread
     void free_member(size_t thread)
-    {   if( member_[thread] != CPPAD_NULL )
+    {   if( member_[thread] != nullptr )
         {   delete member_[thread];
-            member_[thread] = CPPAD_NULL;
+            member_[thread] = nullptr;
         }
         return;
     }

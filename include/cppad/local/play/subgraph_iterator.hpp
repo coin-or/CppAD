@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PLAY_SUBGRAPH_ITERATOR_HPP
 # define CPPAD_LOCAL_PLAY_SUBGRAPH_ITERATOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -47,8 +47,8 @@ private:
 public:
     /// default constructor
     const_subgraph_iterator(void) :
-    random_itr_(CPPAD_NULL) ,
-    subgraph_(CPPAD_NULL)   ,
+    random_itr_(nullptr) ,
+    subgraph_(nullptr)   ,
     subgraph_index_(0)
     { }
     /// default assignment operator

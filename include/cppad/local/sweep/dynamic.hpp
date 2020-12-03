@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 # define CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -121,7 +121,7 @@ void dynamic(
     // used to hold the first two parameter arguments
     const Base* par[2];
     for(size_t j = 0; j < 2; ++j)
-        par[j] = CPPAD_NULL;
+        par[j] = nullptr;
     //
     // Initialize index in dyn_par_arg
     size_t i_arg = 0;
@@ -455,7 +455,7 @@ void dynamic(
                 bool         set_null = false;
                 size_t       type     = 0;          // set to avoid warning
                 std::string name;
-                void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+                void*        v_ptr    = nullptr; // set to avoid warning
                 atomic_index<RecBase>(
                     set_null, atom_index, type, &name, v_ptr
                 );

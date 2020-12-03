@@ -68,13 +68,13 @@ private:
     size_t length_;
     Type*  data_;
 public:
-    size_t capacity(void) const CPPAD_NOEXCEPT
+    size_t capacity(void) const noexcept
     {   return capacity_; }
-    size_t size(void) const CPPAD_NOEXCEPT
+    size_t size(void) const noexcept
     {   return length_; }
-    const Type* data(void) const CPPAD_NOEXCEPT
+    const Type* data(void) const noexcept
     {   return data_; }
-    Type* data(void) CPPAD_NOEXCEPT
+    Type* data(void) noexcept
     {   return data_; }
 /* %$$
 $end
@@ -142,19 +142,19 @@ Call destructor and free all the allocated elements
 $head Source$$
 $srccode%hpp% */
 public:
-    vector(void) CPPAD_NOEXCEPT
-    : capacity_(0), length_(0), data_(CPPAD_NULL)
+    vector(void) noexcept
+    : capacity_(0), length_(0), data_(nullptr)
     { }
-    vector(size_t n) : capacity_(0), length_(0), data_(CPPAD_NULL)
+    vector(size_t n) : capacity_(0), length_(0), data_(nullptr)
     {   resize(n); }
-    vector(int n) : capacity_(0), length_(0), data_(CPPAD_NULL)
+    vector(int n) : capacity_(0), length_(0), data_(nullptr)
     {   CPPAD_ASSERT_KNOWN(
             n >= 0,
             "CppAD::vector: attempt to create a vector with a negative size."
         );
         resize( size_t(n) );
     }
-    vector(const vector& other) : capacity_(0), length_(0), data_(CPPAD_NULL)
+    vector(const vector& other) : capacity_(0), length_(0), data_(nullptr)
     {   resize(other.length_);
         for(size_t i = 0; i < length_; i++)
             data_[i] = other.data_[i];
@@ -274,7 +274,7 @@ $end
 */
 // BEGIN_SWAP
 public:
-    void swap(vector& other) CPPAD_NOEXCEPT
+    void swap(vector& other) noexcept
 // END_SWAP
     {  // special case where vec and other are the same vector
        if( this == &other )
@@ -465,17 +465,17 @@ $icode%os%vec%.end()
 
 $head Source$$
 $srccode%hpp% */
-    const_iterator begin(void) const CPPAD_NOEXCEPT
+    const_iterator begin(void) const noexcept
     {    return const_iterator(&data_, &length_, 0); }
-    const_iterator end(void) const CPPAD_NOEXCEPT
+    const_iterator end(void) const noexcept
     {   typedef typename const_iterator::difference_type difference_type;
         difference_type index = static_cast<difference_type>(length_);
         return const_iterator(&data_, &length_, index);
     }
     //
-    iterator begin(void) CPPAD_NOEXCEPT
+    iterator begin(void) noexcept
     {    return iterator(&data_, &length_, 0); }
-    iterator end(void) CPPAD_NOEXCEPT
+    iterator end(void) noexcept
     {   typedef typename iterator::difference_type difference_type;
         difference_type index = static_cast<difference_type>(length_);
         return iterator(&data_, &length_, index);

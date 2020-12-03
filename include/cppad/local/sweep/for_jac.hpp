@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FOR_JAC_HPP
 # define CPPAD_LOCAL_SWEEP_FOR_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -794,7 +794,7 @@ void for_jac(
                     1,
                     &z_value,
                     0,
-                    (CppAD::vectorBool *) CPPAD_NULL
+                    (CppAD::vectorBool *) nullptr
                 );
                 std::cout << std::endl;
             }
@@ -825,7 +825,7 @@ void for_jac(
                 1,
                 &z_value,
                 0,
-                (CppAD::vectorBool *) CPPAD_NULL
+                (CppAD::vectorBool *) nullptr
             );
             std::cout << std::endl;
         }

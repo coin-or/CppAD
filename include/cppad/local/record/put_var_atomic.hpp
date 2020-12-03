@@ -94,7 +94,7 @@ void recorder<Base>::put_var_atomic(
         "atomic_three: cppad_tape_addr_type maximum not large enough"
     );
     CPPAD_ASSERT_UNKNOWN(
-        (tape_id == 0) == (AD<Base>::tape_ptr() == CPPAD_NULL)
+        (tape_id == 0) == (AD<Base>::tape_ptr() == nullptr)
     );
     // Operator that marks beginning of this atomic operation
     CPPAD_ASSERT_NARG_NRES(local::AFunOp, 4, 0 );

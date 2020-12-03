@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -27,7 +27,7 @@ namespace {
     }
 
     // will be a pointer to atomic version of g_algo
-    CppAD::checkpoint<double>* atom_g = CPPAD_NULL;
+    CppAD::checkpoint<double>* atom_g = nullptr;
     // ------------------------------------------------------------------------
     // record function
     void record_function(
@@ -40,7 +40,7 @@ namespace {
         avector au(3), av(1);
         for(size_t j = 0; j < 3; j++)
             au[j] = AD<double>(j);
-        if( atom_g == CPPAD_NULL )
+        if( atom_g == nullptr )
             atom_g = new CppAD::checkpoint<double>("atom_g", g_algo, au, av);
         //
         // domain space vector
@@ -301,7 +301,7 @@ bool subgraph_1(void)
     ok           &= test_subgraph_sparsity(optimize);
     ok           &= test_subgraph_reverse(optimize);
     //
-    ok           &= atom_g != CPPAD_NULL;
+    ok           &= atom_g != nullptr;
     delete atom_g;
     //
     return ok;

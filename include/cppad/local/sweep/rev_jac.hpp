@@ -800,7 +800,7 @@ void rev_jac(
         if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
             std::cout,
             0,
-            (CppAD::vectorBool *) CPPAD_NULL,
+            (CppAD::vectorBool *) nullptr,
             1,
             &z_value
         );

@@ -132,7 +132,7 @@ namespace {
     // This needs to stay in scope for as long as a recording will use it.
     // We cannot be in parallel mode when this object is created or deleted.
     // We use a pointer so that there is no left over memory in thread zero.
-    CppAD::checkpoint<double>* a_square_root_ = CPPAD_NULL;
+    CppAD::checkpoint<double>* a_square_root_ = nullptr;
 
     // structure with information for one thread
     typedef struct {

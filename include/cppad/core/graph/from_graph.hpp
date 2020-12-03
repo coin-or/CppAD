@@ -660,7 +660,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             // afun
             bool         set_null = false;
             size_t       type;
-            std::string* name = CPPAD_NULL;
+            std::string* name = nullptr;
             void*        v_ptr;
             CppAD::local::atomic_index<RecBase>(
                 set_null, atomic_index, type, name, v_ptr

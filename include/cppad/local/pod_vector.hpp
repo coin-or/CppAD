@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_POD_VECTOR_HPP
 # define CPPAD_LOCAL_POD_VECTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -51,7 +51,7 @@ private:
 public:
     /// default constructor sets byte_capacity_ = byte_length_ = data_ = 0
     pod_vector(void)
-    : byte_capacity_(0), byte_length_(0), data_(CPPAD_NULL)
+    : byte_capacity_(0), byte_length_(0), data_(nullptr)
     {   CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
     }
 
@@ -59,7 +59,7 @@ public:
     pod_vector(
         /// number of elements in this vector
         size_t n )
-    : byte_capacity_(0), byte_length_(0), data_(CPPAD_NULL)
+    : byte_capacity_(0), byte_length_(0), data_(nullptr)
     {   CPPAD_ASSERT_UNKNOWN( is_pod<Type>() );
         extend(n);
     }
@@ -266,7 +266,7 @@ public:
             void* v_ptr = reinterpret_cast<void*>( data_ );
             thread_alloc::return_memory(v_ptr);
         }
-        data_          = CPPAD_NULL;
+        data_          = nullptr;
         byte_capacity_ = 0;
         byte_length_   = 0;
     }
@@ -311,7 +311,7 @@ private:
 public:
     /// default constructor sets capacity_ = length_ = data_ = 0
     pod_vector_maybe(void)
-    : capacity_(0), length_(0), data_(CPPAD_NULL)
+    : capacity_(0), length_(0), data_(nullptr)
     {   CPPAD_ASSERT_UNKNOWN( is_pod<size_t>() );
     }
 
@@ -319,7 +319,7 @@ public:
     pod_vector_maybe(
         /// number of elements in this vector
         size_t n )
-    : capacity_(0), length_(0), data_(CPPAD_NULL)
+    : capacity_(0), length_(0), data_(nullptr)
     {   extend(n); }
 
 
@@ -543,7 +543,7 @@ public:
             void* v_ptr = reinterpret_cast<void*>( data_ );
             thread_alloc::return_memory(v_ptr);
         }
-        data_     = CPPAD_NULL;
+        data_     = nullptr;
         capacity_ = 0;
         length_   = 0;
     }

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_PRINT_FOR_HPP
 # define CPPAD_CORE_PRINT_FOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -145,7 +145,7 @@ namespace CppAD {
 
         // check for case where we are not recording operations
         local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-        if( tape == CPPAD_NULL )
+        if( tape == nullptr )
             return;
 
         CPPAD_ASSERT_KNOWN(

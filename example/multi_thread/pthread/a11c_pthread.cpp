@@ -35,14 +35,6 @@ $end
 # include <cmath>
 # include <cassert>
 
-// define CPPAD_NULPTR
-# include <cppad/configure.hpp>
-# if CPPAD_USE_CPLUSPLUS_2011
-# define CPPAD_NULL nullptr
-# else
-# define CPPAD_NULL 0
-# endif
-//
 # define NUMBER_THREADS 4
 
 # ifdef NDEBUG
@@ -66,7 +58,7 @@ namespace {
     {   start_arg* arg = static_cast<start_arg*>( arg_vptr );
         a1(arg->n, arg->a, arg->b);
 
-        void* no_status = CPPAD_NULL;
+        void* no_status = nullptr;
         pthread_exit(no_status);
 
         return no_status;
@@ -114,7 +106,7 @@ bool a11c(void)
         ) );
     }
     for(j = 0; j < n_thread; j++)
-    {   void* no_status = CPPAD_NULL;
+    {   void* no_status = nullptr;
         CHECK_ZERO( pthread_join(thread[j], &no_status) );
     }
 

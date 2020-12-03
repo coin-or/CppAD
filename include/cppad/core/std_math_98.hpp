@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_STD_MATH_98_HPP
 # define CPPAD_CORE_STD_MATH_98_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -489,7 +489,7 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
         CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
                                                                   \
         local::ADTape<Base>* tape = AD<Base>::tape_ptr();         \
-        if( tape == CPPAD_NULL )                                  \
+        if( tape == nullptr )                                  \
             return result;                                        \
                                                                   \
         if( tape_id_ != tape->id_ )                               \
@@ -564,7 +564,7 @@ namespace CppAD {
 
         // check if there is a recording in progress
         local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-        if( tape == CPPAD_NULL )
+        if( tape == nullptr )
             return result;
 
         // check if operand is a constant parameter

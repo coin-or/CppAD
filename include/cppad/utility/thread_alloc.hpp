@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_THREAD_ALLOC_HPP
 # define CPPAD_UTILITY_THREAD_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -118,7 +118,7 @@ private:
         // -----------------------------------------------------------------
         /// make default constructor private. It is only used by constructor
         /// for `root arrays below.
-        block_t(void) : extra_(0), tc_index_(0), next_(CPPAD_NULL)
+        block_t(void) : extra_(0), tc_index_(0), next_(nullptr)
         { }
     };
 
@@ -175,21 +175,21 @@ private:
 
     \param clear
     If clear is true, then the information pointer for this thread
-    is deleted and the CPPAD_NULL pointer is returned.
+    is deleted and the nullptr pointer is returned.
     There must be no memory currently in either the inuse or avaialble
     lists when this routine is called.
 
     \return
     is the current informaiton pointer for this thread.
-    If clear is false, and the current pointer is CPPAD_NULL,
+    If clear is false, and the current pointer is nullptr,
     a new infromation record is allocated and its pointer returned.
     In this case, if info is the retured pointer,
     <code>info->count_inuse == 0</code> and
     <code>info->count_available == 0</code>.
     In addition,
     for <code>c = 0 , ... , CPPAD_MAX_NUM_CAPACITY-1</code>
-    <code>info->root_inuse_[c].next_ == CPPAD_NULL</code> and
-    <code>info->root_available_[c].next_ == CPPAD_NULL</code>.
+    <code>info->root_inuse_[c].next_ == nullptr</code> and
+    <code>info->root_available_[c].next_ == nullptr</code>.
     */
     static thread_alloc_info* thread_info(
         size_t             thread          ,
@@ -203,7 +203,7 @@ private:
 
         thread_alloc_info* info = all_info[thread];
         if( clear )
-        {   if( info != CPPAD_NULL )
+        {   if( info != nullptr )
             {
 # ifndef NDEBUG
                 CPPAD_ASSERT_UNKNOWN(
@@ -212,18 +212,18 @@ private:
                 );
                 for(size_t c = 0; c < CPPAD_MAX_NUM_CAPACITY; c++)
                 {   CPPAD_ASSERT_UNKNOWN(
-                        info->root_inuse_[c].next_     == CPPAD_NULL &&
-                        info->root_available_[c].next_ == CPPAD_NULL
+                        info->root_inuse_[c].next_     == nullptr &&
+                        info->root_available_[c].next_ == nullptr
                     );
                 }
 # endif
                 if( thread != 0 )
                     ::operator delete( reinterpret_cast<void*>(info) );
-                info             = CPPAD_NULL;
+                info             = nullptr;
                 all_info[thread] = info;
             }
         }
-        else if( info == CPPAD_NULL )
+        else if( info == nullptr )
         {   if( thread == 0 )
                 info = &zero_info;
             else
@@ -235,8 +235,8 @@ private:
 
             // initialize the information record
             for(size_t c = 0; c < CPPAD_MAX_NUM_CAPACITY; c++)
-            {   info->root_inuse_[c].next_       = CPPAD_NULL;
-                info->root_available_[c].next_   = CPPAD_NULL;
+            {   info->root_inuse_[c].next_       = nullptr;
+                info->root_available_[c].next_   = nullptr;
             }
             info->count_inuse_     = 0;
             info->count_available_ = 0;
@@ -370,7 +370,7 @@ private:
     \return
     returns value for the most recent setting for thread_num_new.
     If set is true,
-    or the most recent setting is CPPAD_NULL (its initial value),
+    or the most recent setting is nullptr (its initial value),
     the return value is zero.
     Otherwise the routine corresponding to the most recent setting
     is called and its value returned by set_get_thread_num.
@@ -387,14 +387,14 @@ private:
     static size_t set_get_thread_num(
         size_t (*thread_num_new)(void)  ,
         bool set = false                )
-    {   static size_t (*thread_num_user)(void) = CPPAD_NULL;
+    {   static size_t (*thread_num_user)(void) = nullptr;
 
         if( set )
         {   thread_num_user = thread_num_new;
             return 0;
         }
 
-        if( thread_num_user == CPPAD_NULL )
+        if( thread_num_user == nullptr )
             return 0;
 
         size_t thread = thread_num_user();
@@ -519,8 +519,8 @@ $end
         {   bool set = true;
             set_get_num_threads(num_threads);
             // emphasize that this routine is outside thread_alloc class
-            CppAD::local::set_get_in_parallel(CPPAD_NULL, set);
-            set_get_thread_num(CPPAD_NULL, set);
+            CppAD::local::set_get_in_parallel(nullptr, set);
+            set_get_thread_num(nullptr, set);
             return;
         }
 
@@ -533,12 +533,12 @@ $end
             "parallel_setup: num_threads == zero"
         );
         CPPAD_ASSERT_KNOWN(
-            in_parallel != CPPAD_NULL ,
-            "parallel_setup: num_threads != 1 and in_parallel == CPPAD_NULL"
+            in_parallel != nullptr ,
+            "parallel_setup: num_threads != 1 and in_parallel == nullptr"
         );
         CPPAD_ASSERT_KNOWN(
-            thread_num != CPPAD_NULL ,
-            "parallel_setup: num_threads != 1 and thread_num == CPPAD_NULL"
+            thread_num != nullptr ,
+            "parallel_setup: num_threads != 1 and thread_num == nullptr"
         );
 
         // Make sure that constructors for all static variables in this file
@@ -551,7 +551,7 @@ $end
 
         // free memory allocated by call to get_memory above
         return_memory(v_ptr);
-        free_available( set_get_thread_num(CPPAD_NULL) );
+        free_available( set_get_thread_num(nullptr) );
 
         // delay this so thread_num() call above is in previous mode
         // (current setings may not yet be valid)
@@ -671,7 +671,7 @@ $end
 */
     /// Get current thread number
     static size_t thread_num(void)
-    {   return set_get_thread_num(CPPAD_NULL); }
+    {   return set_get_thread_num(nullptr); }
 /* -----------------------------------------------------------------------
 $begin ta_get_memory$$
 $spell
@@ -812,7 +812,7 @@ $end
         // check if we already have a node we can use
         void* v_node              = available_root->next_;
         block_t* node             = reinterpret_cast<block_t*>(v_node);
-        if( node != CPPAD_NULL )
+        if( node != nullptr )
         {   CPPAD_ASSERT_UNKNOWN( node->tc_index_ == tc_index );
 
             // remove node from available list
@@ -952,7 +952,7 @@ $end
         void* v_node         = reinterpret_cast<void*>(node);
         block_t* inuse_root  = info->root_inuse_ + c_index;
         block_t* previous    = inuse_root;
-        while( (previous->next_ != CPPAD_NULL) & (previous->next_ != v_node) )
+        while( (previous->next_ != nullptr) & (previous->next_ != v_node) )
             previous = reinterpret_cast<block_t*>(previous->next_);
 
         // check that v_ptr is valid
@@ -1071,7 +1071,7 @@ $end
         {   size_t capacity = capacity_vec[c_index];
             block_t* available_root = info->root_available_ + c_index;
             void* v_ptr             = available_root->next_;
-            while( v_ptr != CPPAD_NULL )
+            while( v_ptr != nullptr )
             {   block_t* node = reinterpret_cast<block_t*>(v_ptr);
                 void* next    = node->next_;
                 ::operator delete(v_ptr);
@@ -1079,7 +1079,7 @@ $end
 
                 dec_available(capacity, thread);
             }
-            available_root->next_ = CPPAD_NULL;
+            available_root->next_ = nullptr;
         }
         CPPAD_ASSERT_UNKNOWN( available(thread) == 0 );
         if( inuse(thread) == 0 )

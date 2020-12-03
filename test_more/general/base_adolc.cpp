@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -66,7 +66,7 @@ bool base_adolc(void)
     trace_off();
 
     // arrays for Adolc zos_forward
-    double *x = CPPAD_NULL, *y = CPPAD_NULL;
+    double *x = nullptr, *y = nullptr;
     x = CPPAD_TRACK_NEW_VEC(n, x);
     y = CPPAD_TRACK_NEW_VEC(m, y);
 

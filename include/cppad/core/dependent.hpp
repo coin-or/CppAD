@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_DEPENDENT_HPP
 # define CPPAD_CORE_DEPENDENT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -149,7 +149,7 @@ template <class ADvector>
 void ADFun<Base,RecBase>::Dependent(const ADvector &y)
 {   local::ADTape<Base>* tape = AD<Base>::tape_ptr();
     CPPAD_ASSERT_KNOWN(
-        tape != CPPAD_NULL,
+        tape != nullptr,
         "Can't store current operation sequence in this ADFun object"
         "\nbecause there is no active tape (for this thread)."
     );

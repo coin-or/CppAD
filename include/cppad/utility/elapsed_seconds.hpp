@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_ELAPSED_SECONDS_HPP
 # define CPPAD_UTILITY_ELAPSED_SECONDS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -69,7 +69,7 @@ $end
 // fails with the error message 'gettimeofday' not defined.
 # include <cppad/core/cppad_assert.hpp>
 
-// define CPPAD_NULL
+// define nullptr
 # include <cppad/local/define.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
@@ -156,11 +156,11 @@ inline double elapsed_seconds(void)
     static struct timeval tv_;
     struct timeval        tv;
     if( first_ )
-    {   gettimeofday(&tv_, CPPAD_NULL);
+    {   gettimeofday(&tv_, nullptr);
         first_ = false;
         return 0.;
     }
-    gettimeofday(&tv, CPPAD_NULL);
+    gettimeofday(&tv, nullptr);
     assert( tv.tv_sec >= tv_.tv_sec );
 
     double sec  = double(tv.tv_sec -  tv_.tv_sec);

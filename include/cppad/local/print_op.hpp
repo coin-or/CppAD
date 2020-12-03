@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PRINT_OP_HPP
 # define CPPAD_LOCAL_PRINT_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -93,7 +93,7 @@ Contains the value of variables.
 \par Checked Assertions:
 \li NumArg(PriOp)  == 5
 \li NumRes(PriOp)  == 0
-\li text          !=  CPPAD_NULL
+\li text          !=  nullptr
 \li arg[1]         <  num_text
 \li if pos is a parameter, arg[1] < num_par
 \li if var is a parameter, arg[3] < num_par

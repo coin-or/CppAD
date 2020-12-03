@@ -249,7 +249,7 @@ void forward1(
     const size_t num_text = play->num_text_rec();
 
     // pointer to the beginning of the text vector
-    const char* text = CPPAD_NULL;
+    const char* text = nullptr;
     if( num_text > 0 )
         text = play->GetTxt(0);
     /*
@@ -1047,7 +1047,7 @@ void forward1(
                     i_tmp,
                     atom_iy[i],
                     FunrvOp,
-                    CPPAD_NULL
+                    nullptr
                 );
                 Base* Z_tmp = taylor + atom_iy[i] * J;
                 printOpResult(
@@ -1055,7 +1055,7 @@ void forward1(
                     q + 1,
                     Z_tmp,
                     0,
-                    (Base *) CPPAD_NULL
+                    (Base *) nullptr
                 );
                 std::cout << std::endl;
             }
@@ -1076,7 +1076,7 @@ void forward1(
                 q + 1,
                 Z_tmp,
                 0,
-                (Base *) CPPAD_NULL
+                (Base *) nullptr
             );
             std::cout << std::endl;
         }

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 # define CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -231,7 +231,7 @@ void forward0(
     const size_t num_text = play->num_text_rec();
 
     // pointer to the beginning of the text vector
-    const char* text = CPPAD_NULL;
+    const char* text = nullptr;
     if( num_text > 0 )
         text = play->GetTxt(0);
 
@@ -956,7 +956,7 @@ void forward0(
                     i_tmp,
                     atom_iy[i],
                     FunrvOp,
-                    CPPAD_NULL
+                    nullptr
                 );
                 Base* Z_tmp = taylor + atom_iy[i] * J;
                 printOpResult(
@@ -964,7 +964,7 @@ void forward0(
                     d + 1,
                     Z_tmp,
                     0,
-                    (Base *) CPPAD_NULL
+                    (Base *) nullptr
                 );
                 std::cout << std::endl;
             }
@@ -985,7 +985,7 @@ void forward0(
                 d + 1,
                 Z_tmp,
                 0,
-                (Base *) CPPAD_NULL
+                (Base *) nullptr
             );
             std::cout << std::endl;
         }

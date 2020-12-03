@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_POW_HPP
 # define CPPAD_CORE_POW_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -102,7 +102,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 
     // check if there is a recording in progress
     local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-    if( tape == CPPAD_NULL )
+    if( tape == nullptr )
         return result;
     tape_id_t tape_id = tape->id_;
     // tape_id cannot match the default value for tape_id_; i.e., 0

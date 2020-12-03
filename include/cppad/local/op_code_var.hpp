@@ -1125,7 +1125,7 @@ void printOp(
             size_t       atom_index = size_t( arg[0] );
             size_t       type       = 0;          // set to avoid warning
             std::string name;
-            void*        v_ptr    = CPPAD_NULL; // set to avoid warning
+            void*        v_ptr    = nullptr; // set to avoid warning
             atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
             printOpField(os, " f=",   name.c_str(), ncol);
             printOpField(os, " i=", arg[1], ncol);

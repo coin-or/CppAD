@@ -187,7 +187,7 @@ public:
 
         // check if there is a recording in progress
         local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-        if( tape == CPPAD_NULL )
+        if( tape == nullptr )
             return result;
 
         // tape_id cannot match the default value zero
@@ -432,7 +432,7 @@ public:
 
         // check if there is a recording in progress
         local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-        if( tape == CPPAD_NULL )
+        if( tape == nullptr )
             return VecAD_reference<Base>(*this, ind);
 
         // tape_id cannot match the defautl value zero
@@ -498,7 +498,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &right)
 
     // check if there is a recording in progress
     local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-    if( tape == CPPAD_NULL )
+    if( tape == nullptr )
         return;
 
     // tape_id cannot match the defautl value zero
