@@ -622,16 +622,12 @@ Add the exponential minus one function $cref log1p$$.
 $lnext
 $cref base_require$$:
 If you are defining your own base type,
-note that
-$cref/log1p/base_std_math/asinh, acosh, atanh, erf, erfc, expm1, log1p/$$
+note that $code log1p$$ function
 was added to the base type requirements.
 $lnext
 Use the single preprocessor flag
 $code CPPAD_USE_CPLUSPLUS_2011$$ to signal that the functions
-$cref/asinh, acosh, atanh, erf, erfc, expm1, log1p
-    /base_std_math
-    /asinh, acosh, atanh, erf, erfc, expm1, log1p
-/$$
+asinh, acosh, atanh, erf, erfc, expm1, log1p
 are part of the base type requirements.
 $lend
 
@@ -639,8 +635,7 @@ $head 05-09$$
 $list number$$
 Add the exponential minus one function $cref expm1$$.
 If you are defining your own base type,
-note that
-$cref/expm1/base_std_math/asinh, acosh, atanh, erf, erfc, expm1, log1p/$$
+note that expm1
 was added to the base type requirements.
 $lnext
 Fix some warnings about comparing signed and unsigned integers
@@ -653,8 +648,7 @@ $head 05-08$$
 $list number$$
 Add the inverse hyperbolic sine function $cref atanh$$.
 If you are defining your own base type,
-note that
-$cref/atanh/base_std_math/asinh, acosh, atanh, erf, erfc, expm1, log1p/$$
+note that atanh
 was added to the base type requirements.
 $lnext
 Fix a bug in the implementation of the $code acosh$$
@@ -664,15 +658,13 @@ $lend
 $head 05-07$$
 Add the inverse hyperbolic sine function $cref acosh$$.
 If you are defining your own base type,
-note that
-$cref/acosh/base_std_math/asinh, acosh, atanh, erf, erfc, expm1, log1p/$$
+note that acosh
 was added to the base type requirements.
 
 $head 05-05$$
 Add the inverse hyperbolic sine function $cref asinh$$.
 If you are defining your own base type,
-note that
-$cref/asinh/base_std_math/asinh, acosh, atanh, erf, erfc, expm1, log1p/$$
+note that asinh
 was added to the base type requirements.
 
 $head 04-18$$

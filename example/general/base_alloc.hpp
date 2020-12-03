@@ -291,13 +291,20 @@ $cref/unary standard math/base_std_math/Unary Standard Math/$$ functions
 $srccode%cpp% */
 namespace CppAD {
     BASE_ALLOC_STD_MATH(acos)
+    BASE_ALLOC_STD_MATH(acosh)
     BASE_ALLOC_STD_MATH(asin)
+    BASE_ALLOC_STD_MATH(asinh)
     BASE_ALLOC_STD_MATH(atan)
+    BASE_ALLOC_STD_MATH(atanh)
     BASE_ALLOC_STD_MATH(cos)
     BASE_ALLOC_STD_MATH(cosh)
+    BASE_ALLOC_STD_MATH(erf)
+    BASE_ALLOC_STD_MATH(erfc)
     BASE_ALLOC_STD_MATH(exp)
+    BASE_ALLOC_STD_MATH(expm1)
     BASE_ALLOC_STD_MATH(fabs)
     BASE_ALLOC_STD_MATH(log)
+    BASE_ALLOC_STD_MATH(log1p)
     BASE_ALLOC_STD_MATH(log10)
     BASE_ALLOC_STD_MATH(sin)
     BASE_ALLOC_STD_MATH(sinh)
@@ -320,24 +327,6 @@ namespace CppAD {
     inline bool isnan(const base_alloc& x)
     {   return *x.ptrdbl_ != *x.ptrdbl_; }
 }
-/* %$$
-
-$head erf, asinh, acosh, atanh, expm1, log1p$$
-The following defines the
-$cref/asinh, acosh, atanh, erf, erfc, expm1, log1p
-    /base_std_math
-    /asinh, acosh, atanh, erf, erfc, expm1, log1p
-/$$
-functions
-required by $code AD<base_alloc>$$:
-$srccode%cpp% */
-    BASE_ALLOC_STD_MATH(asinh)
-    BASE_ALLOC_STD_MATH(acosh)
-    BASE_ALLOC_STD_MATH(atanh)
-    BASE_ALLOC_STD_MATH(erf)
-    BASE_ALLOC_STD_MATH(erfc)
-    BASE_ALLOC_STD_MATH(expm1)
-    BASE_ALLOC_STD_MATH(log1p)
 /* %$$
 
 $head sign$$

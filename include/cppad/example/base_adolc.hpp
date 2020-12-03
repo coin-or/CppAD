@@ -239,12 +239,7 @@ $code sqrt$$,
 $code tan$$.
 
 $head asinh, acosh, atanh, erf, erfc, expm1, log1p$$
-If the
-$cref/asinh, acosh, atanh, erf, erfc, expm1, log1p
-    /base_std_math
-    /asinh, acosh, atanh, erf, erfc, expm1, log1p
-/$$,
-functions are supported by the compiler,
+The functions below are supported by the compiler,
 they must also be supported by a $icode Base$$ type;
 The adolc package does not support these functions so make
 their use an error:
