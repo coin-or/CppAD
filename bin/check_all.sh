@@ -127,7 +127,7 @@ then
     random_01 standard
     if [ "$random_01_standard" == '0' ]
     then
-        standard='--c++11 --no_adolc --no_sacado --no_cppadcg'
+        standard='--c++11'
     else
         standard='--c++17'
     fi
