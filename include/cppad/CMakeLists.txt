@@ -183,4 +183,4 @@ CONFIGURE_FILE(
 )
 # -----------------------------------------------------------------------------
 # configure files in local subdirectory
-ADD_SUBDIRECTORY(local)
+# ADD_SUBDIRECTORY(local)

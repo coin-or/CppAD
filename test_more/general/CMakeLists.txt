@@ -87,6 +87,7 @@ SET(source_list
     hes_sparsity.cpp
     jacobian.cpp
     json_graph.cpp
+    local/is_pod.cpp
     local/json_lexer.cpp
     local/json_parser.cpp
     local/vector_set.cpp

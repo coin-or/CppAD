@@ -628,8 +628,6 @@ CppAD_MS_COMPILER_TRUE
 RANLIB
 cppad_has_gettimeofday
 cppad_cppadvector
-is_pod_specialize_11
-is_pod_specialize_98
 compiler_has_conversion_warn
 cppad_cplusplus_201100_ok
 cppad_has_tmpnam_s
@@ -5702,43 +5700,6 @@ cppad_cplusplus_201100_ok=0
 compiler_has_conversion_warn=0
 
 
-is_pod_specialize_98="
-    template <> inline bool is_pod<bool>(void) { return true; }
-    template <> inline bool is_pod<char>(void) { return true; }
-    template <> inline bool is_pod<wchar_t>(void) { return true; }
-    template <> inline bool is_pod<float>(void) { return true; }
-    template <> inline bool is_pod<double>(void) { return true; }
-    template <> inline bool is_pod<long double>(void) { return true; }
-    template <> inline bool is_pod<signed char>(void) { return true; }
-    template <> inline bool is_pod<unsigned char>(void) { return true; }
-    template <> inline bool is_pod<signed short>(void) { return true; }
-    template <> inline bool is_pod<unsigned short>(void) { return true; }
-    template <> inline bool is_pod<signed int>(void) { return true; }
-    template <> inline bool is_pod<unsigned int>(void) { return true; }
-    template <> inline bool is_pod<signed long>(void) { return true; }
-    template <> inline bool is_pod<unsigned long>(void) { return true; }
-"
-
-is_pod_specialize_11="
-    template <> inline bool is_pod<bool>(void) { return true; }
-    template <> inline bool is_pod<char>(void) { return true; }
-    template <> inline bool is_pod<wchar_t>(void) { return true; }
-    template <> inline bool is_pod<float>(void) { return true; }
-    template <> inline bool is_pod<double>(void) { return true; }
-    template <> inline bool is_pod<long double>(void) { return true; }
-    template <> inline bool is_pod<signed char>(void) { return true; }
-    template <> inline bool is_pod<unsigned char>(void) { return true; }
-    template <> inline bool is_pod<signed short>(void) { return true; }
-    template <> inline bool is_pod<unsigned short>(void) { return true; }
-    template <> inline bool is_pod<signed int>(void) { return true; }
-    template <> inline bool is_pod<unsigned int>(void) { return true; }
-    template <> inline bool is_pod<signed long>(void) { return true; }
-    template <> inline bool is_pod<unsigned long>(void) { return true; }
-"
-
-
-
-
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
     cppad_cppadvector=1
 
@@ -6981,12 +6942,10 @@ eigen_prefix=${EIGEN_DIR}
 
 ipopt_prefix=${IPOPT_DIR}
 
-ac_config_files="$ac_config_files include/cppad/configure.hpp include/cppad/local/is_pod.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile cppad_lib/makefile example/general/makefile example/abs_normal/makefile example/atomic_two/makefile example/atomic_three/makefile example/chkpoint_two/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile example/get_started/makefile include/makefile introduction/makefile example/multi_thread/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/sacado/makefile speed/src/makefile test_more/compare_c/makefile test_more/general/makefile test_more/deprecated/makefile test_more/deprecated/atomic_two/makefile test_more/deprecated/chkpoint_one/makefile"
+ac_config_files="$ac_config_files include/cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile cppad_lib/makefile example/general/makefile example/abs_normal/makefile example/atomic_two/makefile example/atomic_three/makefile example/chkpoint_two/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile example/get_started/makefile include/makefile introduction/makefile example/multi_thread/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/sacado/makefile speed/src/makefile test_more/compare_c/makefile test_more/general/makefile test_more/deprecated/makefile test_more/deprecated/atomic_two/makefile test_more/deprecated/chkpoint_one/makefile"
 
 
 ac_config_commands="$ac_config_commands configure.hpp"
-
-ac_config_commands="$ac_config_commands is_pod.hpp"
 
 ac_config_commands="$ac_config_commands example_ipopt_solve_test.sh"
 
@@ -7791,8 +7750,6 @@ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
 AMDEP_TRUE="$AMDEP_TRUE" MAKE="${MAKE-make}"
 abs_top_srcdir=$abs_top_srcdir
 
-abs_top_srcdir=$abs_top_srcdir
-
 
 
 
@@ -7812,7 +7769,6 @@ do
   case $ac_config_target in
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "include/cppad/configure.hpp") CONFIG_FILES="$CONFIG_FILES include/cppad/configure.hpp" ;;
-    "include/cppad/local/is_pod.hpp") CONFIG_FILES="$CONFIG_FILES include/cppad/local/is_pod.hpp" ;;
     "cppad_ipopt/example/test.sh") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/example/test.sh" ;;
     "cppad_ipopt/speed/test.sh") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/speed/test.sh" ;;
     "cppad_ipopt/test/test.sh") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/test/test.sh" ;;
@@ -7852,7 +7808,6 @@ do
     "test_more/deprecated/atomic_two/makefile") CONFIG_FILES="$CONFIG_FILES test_more/deprecated/atomic_two/makefile" ;;
     "test_more/deprecated/chkpoint_one/makefile") CONFIG_FILES="$CONFIG_FILES test_more/deprecated/chkpoint_one/makefile" ;;
     "configure.hpp") CONFIG_COMMANDS="$CONFIG_COMMANDS configure.hpp" ;;
-    "is_pod.hpp") CONFIG_COMMANDS="$CONFIG_COMMANDS is_pod.hpp" ;;
     "example_ipopt_solve_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS example_ipopt_solve_test.sh" ;;
     "cppad_ipopt_example_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_example_test.sh" ;;
     "cppad_ipopt_speed_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_speed_test.sh" ;;
@@ -8384,8 +8339,6 @@ See \`config.log' for more details" "$LINENO" 5; }
  ;;
     "configure.hpp":C) cp include/cppad/configure.hpp  \
         $abs_top_srcdir/include/cppad/configure.hpp ;;
-    "is_pod.hpp":C) cp include/cppad/local/is_pod.hpp  \
-        $abs_top_srcdir/include/cppad/local/is_pod.hpp ;;
     "example_ipopt_solve_test.sh":C) chmod +x example/ipopt_solve/test.sh ;;
     "cppad_ipopt_example_test.sh":C) chmod +x cppad_ipopt/example/test.sh ;;
     "cppad_ipopt_speed_test.sh":C) chmod +x cppad_ipopt/speed/test.sh ;;

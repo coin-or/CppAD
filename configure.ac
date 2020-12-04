@@ -359,43 +359,6 @@ AC_SUBST(cppad_has_tmpnam_s, 0)
 AC_SUBST(cppad_cplusplus_201100_ok, 0)
 AC_SUBST(compiler_has_conversion_warn, 0)
 
-dnl autotools version sets is_pod without testing system, cmake is better
-dnl for the  Fundamental types
-AC_SUBST(is_pod_specialize_98,"
-    template <> inline bool is_pod<bool>(void) { return true; }
-    template <> inline bool is_pod<char>(void) { return true; }
-    template <> inline bool is_pod<wchar_t>(void) { return true; }
-    template <> inline bool is_pod<float>(void) { return true; }
-    template <> inline bool is_pod<double>(void) { return true; }
-    template <> inline bool is_pod<long double>(void) { return true; }
-    template <> inline bool is_pod<signed char>(void) { return true; }
-    template <> inline bool is_pod<unsigned char>(void) { return true; }
-    template <> inline bool is_pod<signed short>(void) { return true; }
-    template <> inline bool is_pod<unsigned short>(void) { return true; }
-    template <> inline bool is_pod<signed int>(void) { return true; }
-    template <> inline bool is_pod<unsigned int>(void) { return true; }
-    template <> inline bool is_pod<signed long>(void) { return true; }
-    template <> inline bool is_pod<unsigned long>(void) { return true; }
-" )
-AC_SUBST(is_pod_specialize_11, "
-    template <> inline bool is_pod<bool>(void) { return true; }
-    template <> inline bool is_pod<char>(void) { return true; }
-    template <> inline bool is_pod<wchar_t>(void) { return true; }
-    template <> inline bool is_pod<float>(void) { return true; }
-    template <> inline bool is_pod<double>(void) { return true; }
-    template <> inline bool is_pod<long double>(void) { return true; }
-    template <> inline bool is_pod<signed char>(void) { return true; }
-    template <> inline bool is_pod<unsigned char>(void) { return true; }
-    template <> inline bool is_pod<signed short>(void) { return true; }
-    template <> inline bool is_pod<unsigned short>(void) { return true; }
-    template <> inline bool is_pod<signed int>(void) { return true; }
-    template <> inline bool is_pod<unsigned int>(void) { return true; }
-    template <> inline bool is_pod<signed long>(void) { return true; }
-    template <> inline bool is_pod<unsigned long>(void) { return true; }
-" )
-AM_SUBST_NOTMAKE(is_pod_specialize_98)
-AM_SUBST_NOTMAKE(is_pod_specialize_11)
-
 dnl -------------------------------------------------------------------------
 dnl Determine which definition we are using for CPPAD_TESTVECTOR
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
@@ -696,7 +659,6 @@ dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([
     include/cppad/configure.hpp
-    include/cppad/local/is_pod.hpp
     cppad_ipopt/example/test.sh
     cppad_ipopt/speed/test.sh
     cppad_ipopt/test/test.sh
@@ -745,12 +707,6 @@ AC_CONFIG_COMMANDS(
     [cp include/cppad/configure.hpp  \
         $abs_top_srcdir/include/cppad/configure.hpp],
 [abs_top_srcdir=$abs_top_srcdir]
-)
-AC_CONFIG_COMMANDS(
-    [is_pod.hpp],
-    [cp include/cppad/local/is_pod.hpp  \
-        $abs_top_srcdir/include/cppad/local/is_pod.hpp],
-    [abs_top_srcdir=$abs_top_srcdir]
 )
 dnl scripts that set library path before running test
 AC_CONFIG_COMMANDS(
