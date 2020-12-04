@@ -70,8 +70,8 @@ bool a11c(void)
 
     // Test setup
     int i, j, n_total = 10;
-    float *a = new float[n_total];
-    float *b = new float[n_total];
+    float *a = new float[size_t(n_total)];
+    float *b = new float[size_t(n_total)];
     for(i = 0; i < n_total; i++)
         a[i] = float(i);
 
