@@ -52,7 +52,7 @@ bool a11c(void)
 {   bool ok = true;
 
     // Test setup
-    int i, n = 1000;
+    size_t i, n = 1000;
     float *a = new float[n];
     float *b = new float[n];
     for(i = 0; i < n; i++)
@@ -62,7 +62,7 @@ bool a11c(void)
     omp_set_dynamic(0);              // off dynamic thread adjust
     omp_set_num_threads(n_thread);   // set the number of threads
 
-    a1(n, a, b);
+    a1(int(n), a, b);
 
     // check the result
     float eps = float(100) * std::numeric_limits<float>::epsilon();

@@ -35,9 +35,17 @@ $spell
     msys
     Microsoft
     config
+    std
+    resize
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 12-04$$
+The cppad vector $cref/resize/cppad_vector/resize/$$ operation
+now preserves the data even if the new size does not fit in the
+old capacity of the array.
+This makes $code cppad_vector$$ more like $code std::vector$$.
 
 $head 12-03$$
 $bold API Change:$$ support of c++11 is required for this,

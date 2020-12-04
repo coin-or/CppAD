@@ -62,9 +62,8 @@ It uses the $cref thread_alloc$$ memory allocator which makes it fast
 in a multi-threading environment; see
 $cref/memory and parallel mode/CppAD_vector/Memory and Parallel Mode/$$.
 $lnext
-Its $cref/resize/CppAD_vector/resize/$$ function is designed so that
-a local vector can be held in memory and resized for each use without
-having to allocate memory or copy elements for each use.
+The operations it has are like the corresponding $code std::vector$$
+operation so it is easy to use.
 $lend
 
 $head Include$$
@@ -213,12 +212,18 @@ $codei%
     %vec%.resize(%n%)
 %$$
 sets the size of $icode vec$$ equal to $icode n$$.
+
+$subhead data$$
+The elements in $icode vec$$ before the resize operation are preserved.
+
+$subhead memory$$
 If before the resize, $icode%n% <= %vec%.capacity()%$$,
-no memory is freed or allocated,
-the capacity of $icode vec$$ does not change,
-and the data in $icode vec$$ is preserved.
-Otherwise, new memory is allocated and the data in $icode vec$$ is lost
-(not copied to the new memory location).
+no memory is freed or allocated and
+the capacity of $icode vec$$ does not change.
+Otherwise, new memory is allocated and the elements before the resize
+are copied to the new memory.
+If you do not need to the elements previously in the vector,
+you can resize to zero and then to the new size to avoid the copy.
 
 $head clear$$
 $icode%vec%.clear()

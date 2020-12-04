@@ -60,7 +60,7 @@ usage: bin/run_cmake.sh: \\
     [--help] \\
     [--addr_t_size_t] \\
     [--verbose] \\
-    [--c++98] \\
+    [--c++11] \\
     [--profile_speed] \\
     [--callgrind] \\
     [--clang ] \\

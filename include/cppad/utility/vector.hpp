@@ -195,8 +195,10 @@ $head resize$$
 If $icode n$$ is less than or equal the input value of
 $icode%vec%.capacity_%$$,
 the only change is that $icode%vec%.length_%$$ is set to $icode n$$.
-Otherwise the old elements are deleted and a new vector is created
-with $icode%vec%.length_%$$ equal to $icode n$$.
+Otherwise, new memory is allocated for the vector and
+$icode%vec%.length_%$$ elements are copied from the old vector
+to the new one. I you do not need the old elements, you can first resize
+to zero and then the $icode n$$ to avoid copying the elements.
 
 $head clear$$
 The destructor is called for all the elements of $icode vec$$
@@ -209,17 +211,27 @@ $end
 public:
     void resize(size_t n)
 // END_RESIZE
-    {   length_ = n;
-        if( capacity_ < length_ )
-        {   // we must allocate new memory
+    {   if( capacity_ < n )
+        {   if( capacity_ == 0 )
+            {   // get new memory and set capacity
+                data_ = thread_alloc::create_array<Type>(n, capacity_);
+            }
+            else
+            {   // save old information
+                Type*  old_data     = data_;
 
-            // free old memory
-            if( capacity_ > 0 )
-                delete_data(data_);
+                // get new memory and set capacity
+                data_ = thread_alloc::create_array<Type>(n, capacity_);
 
-            // get new memory and set capacity
-            data_ = thread_alloc::create_array<Type>(length_, capacity_);
+                // copy old data
+                for(size_t i = 0; i < length_; ++i)
+                    data_[i] = old_data[i];
+
+                // free old memory
+                thread_alloc::delete_array(old_data);
+            }
         }
+        length_ = n;
     }
 // BEGIN_CLEAR
     void clear(void)
