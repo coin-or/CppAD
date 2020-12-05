@@ -31,7 +31,7 @@ namespace {
         if( s[0] == '-' )
             ++index;
         while( index < s.size() )
-            result = Integer(10 * result + s[index++] - '0');
+            result = Integer( 10 * result + (s[index++] - '0') );
         if( s[0] == '-' )
             return - result;
         return result;

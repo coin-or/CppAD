@@ -51,6 +51,9 @@ $lnext
 Fix a problem with the autotools build and the $code is_pod$$ function.
 This function, which is not in the CppAD user API, was simplified because
 it is no longer necessary to handle the c++98 case.
+$lnext
+Fix the $code example/utility/to_string.cpp$$ test; see
+$href%https://github.com/coin-or/CppAD/issues/44%issue 44%$$.
 $lend
 
 $head 12-03$$
