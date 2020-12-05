@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Enable use of AD&lt;Base&gt; where Base is Adolc's adouble Type</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Enable use of AD&lt;Base&gt; where Base is Adolc's adouble Type">
-<meta name="keywords" id="keywords" content=" enable use ad&lt;base&gt; where base is adolc's adouble type syntax example include files condexpop condexprel equalopseq identical integer azmul ordered unary standard math asinh acosh atanh erf erfc expm1 log1p sign abs pow numeric_limits to_string hash_code ">
+<meta name="keywords" id="keywords" content=" enable use ad&lt;base&gt; where base is adolc's adouble type syntax example include files condexpop condexprel equalopseq identical integer azmul ordered unary standard math erfc sign abs pow numeric_limits to_string hash_code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -79,7 +79,7 @@ A:active { color : purple }
 <option>azmul</option>
 <option>Ordered</option>
 <option>Unary Standard Math</option>
-<option>asinh, acosh, atanh, erf, erfc, expm1, log1p</option>
+<option>erfc</option>
 <option>sign</option>
 <option>abs</option>
 <option>pow</option>
@@ -271,10 +271,14 @@ The following <a href="base_require.htm" target="_top"><span style='white-space:
 are defined by the Adolc package for the <code><font color="blue">adouble</font></code> base case:
 <code><span style='white-space: nowrap'><br>
 </span></code><code><font color="blue">acos</font></code>,
+<code><font color="blue">acosh</font></code>,
 <code><font color="blue">asin</font></code>,
+<code><font color="blue">asinh</font></code>,
 <code><font color="blue">atan</font></code>,
+<code><font color="blue">atanh</font></code>,
 <code><font color="blue">cos</font></code>,
 <code><font color="blue">cosh</font></code>,
+<code><font color="blue">erf</font></code>,
 <code><font color="blue">exp</font></code>,
 <code><font color="blue">fabs</font></code>,
 <code><font color="blue">log</font></code>,
@@ -285,14 +289,12 @@ are defined by the Adolc package for the <code><font color="blue">adouble</font>
 
 <br>
 <br>
-<b><big><a name="asinh, acosh, atanh, erf, erfc, expm1, log1p" id="asinh, acosh, atanh, erf, erfc, expm1, log1p">asinh, acosh, atanh, erf, erfc, expm1, log1p</a></big></b>
+<b><big><a name="erfc" id="erfc">erfc</a></big></b>
 <br>
-The functions below are supported by the compiler,
-they must also be supported by a 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- type;
-The adolc package does not support these functions so make
-their use an error:
+If you provide <code><font color="blue">--enable-atrig-erf</font></code> on the configure command line,
+the adolc package supports all the c++11 math functions except
+<code><font color="blue">erfc</font></code>, <code><font color="blue">expm1</font></code>, and <code><font color="blue">log1p</font></code>.
+For the reason, we make using <code><font color="blue">erfc</font></code> an error:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
 <b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>fun<font color="#990000">)</font>                         <font color="#990000">\</font>
     <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> adouble<font color="#990000">&amp;</font> x<font color="#990000">)</font>                          <font color="#990000">\</font>
@@ -302,10 +304,6 @@ their use an error:
         <font color="#990000">);</font>                                                        <font color="#990000">\</font>
         <b><font color="#0000FF">return</font></b> <font color="#993399">0.0</font><font color="#990000">;</font>                                               <font color="#990000">\</font>
     <font color="#FF0000">}</font>
-    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>asinh<font color="#990000">)</font>
-    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>acosh<font color="#990000">)</font>
-    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>atanh<font color="#990000">)</font>
-    <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>erf<font color="#990000">)</font>
     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>erfc<font color="#990000">)</font>
     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>expm1<font color="#990000">)</font>
     <b><font color="#000000">CPPAD_BASE_ADOLC_NO_SUPPORT</font></b><font color="#990000">(</font>log1p<font color="#990000">)</font>

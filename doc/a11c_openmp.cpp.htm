@@ -111,7 +111,7 @@ This example just demonstrates OpenMP and does not use CppAD at all.
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 
     <i><font color="#9A1900">// Test setup</font></i>
-    <font color="#009900">int</font> i<font color="#990000">,</font> n <font color="#990000">=</font> <font color="#993399">1000</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> i<font color="#990000">,</font> n <font color="#990000">=</font> <font color="#993399">1000</font><font color="#990000">;</font>
     <font color="#009900">float</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n<font color="#990000">];</font>
     <font color="#009900">float</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n<font color="#990000">];</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
@@ -121,7 +121,7 @@ This example just demonstrates OpenMP and does not use CppAD at all.
     <b><font color="#000000">omp_set_dynamic</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>              <i><font color="#9A1900">// off dynamic thread adjust</font></i>
     <b><font color="#000000">omp_set_num_threads</font></b><font color="#990000">(</font>n_thread<font color="#990000">);</font>   <i><font color="#9A1900">// set the number of threads</font></i>
 
-    <b><font color="#000000">a1</font></b><font color="#990000">(</font>n<font color="#990000">,</font> a<font color="#990000">,</font> b<font color="#990000">);</font>
+    <b><font color="#000000">a1</font></b><font color="#990000">(</font><font color="#009900">int</font><font color="#990000">(</font>n<font color="#990000">),</font> a<font color="#990000">,</font> b<font color="#990000">);</font>
 
     <i><font color="#9A1900">// check the result</font></i>
     <font color="#009900">float</font> eps <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">)</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">float</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>

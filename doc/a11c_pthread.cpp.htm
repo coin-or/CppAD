@@ -127,8 +127,8 @@ This example just demonstrates pthreads and does not use CppAD at all.
 
     <i><font color="#9A1900">// Test setup</font></i>
     <font color="#009900">int</font> i<font color="#990000">,</font> j<font color="#990000">,</font> n_total <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
-    <font color="#009900">float</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n_total<font color="#990000">];</font>
-    <font color="#009900">float</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font>n_total<font color="#990000">];</font>
+    <font color="#009900">float</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font><b><font color="#000000">size_t</font></b><font color="#990000">(</font>n_total<font color="#990000">)];</font>
+    <font color="#009900">float</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">float</font><font color="#990000">[</font><b><font color="#000000">size_t</font></b><font color="#990000">(</font>n_total<font color="#990000">)];</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_total<font color="#990000">;</font> i<font color="#990000">++)</font>
         a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">float</font><font color="#990000">(</font>i<font color="#990000">);</font>
 

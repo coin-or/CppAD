@@ -24,7 +24,7 @@ var list_current0 = [
 'base_adolc.hpp.htm#azmul',
 'base_adolc.hpp.htm#Ordered',
 'base_adolc.hpp.htm#Unary Standard Math',
-'base_adolc.hpp.htm#asinh, acosh, atanh, erf, erfc, expm1, log1p',
+'base_adolc.hpp.htm#erfc',
 'base_adolc.hpp.htm#sign',
 'base_adolc.hpp.htm#abs',
 'base_adolc.hpp.htm#pow',

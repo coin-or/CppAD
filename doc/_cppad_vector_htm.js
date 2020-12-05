@@ -29,6 +29,8 @@ var list_current0 = [
 'cppad_vector.htm#push_vector',
 'cppad_vector.htm#Output',
 'cppad_vector.htm#resize',
+'cppad_vector.htm#resize.data',
+'cppad_vector.htm#resize.memory',
 'cppad_vector.htm#clear',
 'cppad_vector.htm#data',
 'cppad_vector.htm#Iterators',

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD::vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD::vector Template Class">
-<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 integer size capacity swap assignment check return reference move semantics element access i error checking push_back push_vector output resize clear data iterators iterator const_iterator begin end vectorbool memory bit_per_unit type parallel mode example exercise ">
+<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 integer size capacity swap assignment check return reference move semantics element access i error checking push_back push_vector output resize data memory clear iterators iterator const_iterator begin end vectorbool bit_per_unit type parallel mode example exercise ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,6 +81,8 @@ A:active { color : purple }
 <option>push_vector</option>
 <option>Output</option>
 <option>resize</option>
+<option>---..data</option>
+<option>---..memory</option>
 <option>clear</option>
 <option>data</option>
 <option>Iterators</option>
@@ -151,10 +153,8 @@ in a multi-threading environment; see
 .
 </li><li>
 
-Its <a href="cppad_vector.htm#resize" target="_top"><span style='white-space: nowrap'>resize</span></a>
- function is designed so that
-a local vector can be held in memory and resized for each use without
-having to allocate memory or copy elements for each use.
+The operations it has are like the corresponding <code><font color="blue">std::vector</font></code>
+operation so it is easy to use.
 </li></ol>
 
 
@@ -470,20 +470,30 @@ sets the size of
  equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
 .
+
+<br>
+<br>
+<big><a name="resize.data" id="resize.data">data</a></big>
+<br>
+The elements in 
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
+ before the resize operation are preserved.
+
+<br>
+<br>
+<big><a name="resize.memory" id="resize.memory">memory</a></big>
+<br>
 If before the resize, 
 <code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.capacity()</span></font></code>
 ,
-no memory is freed or allocated,
+no memory is freed or allocated and
 the capacity of 
 <code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
- does not change,
-and the data in 
-<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
- is preserved.
-Otherwise, new memory is allocated and the data in 
-<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
- is lost
-(not copied to the new memory location).
+ does not change.
+Otherwise, new memory is allocated and the elements before the resize
+are copied to the new memory.
+If you do not need to the elements previously in the vector,
+you can resize to zero and then to the new size to avoid the copy.
 
 <br>
 <br>
