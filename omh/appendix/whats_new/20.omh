@@ -42,10 +42,16 @@ $$
 $section Changes and Additions to CppAD During 2020$$
 
 $head 12-04$$
+$list number$$
 The cppad vector $cref/resize/cppad_vector/resize/$$ operation
 now preserves the data even if the new size does not fit in the
 old capacity of the array.
 This makes $code cppad_vector$$ more like $code std::vector$$.
+$lnext
+Fix a problem with the autotools build and the $code is_pod$$ function.
+This function, which is not in the CppAD user API, was simplified because
+it is no longer necessary to handle the c++98 case.
+$lend
 
 $head 12-03$$
 $bold API Change:$$ support of c++11 is required for this,

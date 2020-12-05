@@ -63,6 +63,7 @@ $spell
     cosh
     exp
     sqrt
+    atrig
 $$
 
 
@@ -226,10 +227,14 @@ are defined by the Adolc package for the $code adouble$$ base case:
 $pre
 $$
 $code acos$$,
+$code acosh$$,
 $code asin$$,
+$code asinh$$,
 $code atan$$,
+$code atanh$$,
 $code cos$$,
 $code cosh$$,
+$code erf$$,
 $code exp$$,
 $code fabs$$,
 $code log$$,
@@ -238,11 +243,11 @@ $code sinh$$,
 $code sqrt$$,
 $code tan$$.
 
-$head asinh, acosh, atanh, erf, erfc, expm1, log1p$$
-The functions below are supported by the compiler,
-they must also be supported by a $icode Base$$ type;
-The adolc package does not support these functions so make
-their use an error:
+$head erfc$$
+If you provide $code --enable-atrig-erf$$ on the configure command line,
+the adolc package supports all the c++11 math functions except
+$code erfc$$, $code expm1$$, and $code log1p$$.
+For the reason, we make using $code erfc$$ an error:
 $srccode%cpp% */
 namespace CppAD {
 # define CPPAD_BASE_ADOLC_NO_SUPPORT(fun)                         \
@@ -253,10 +258,6 @@ namespace CppAD {
         );                                                        \
         return 0.0;                                               \
     }
-    CPPAD_BASE_ADOLC_NO_SUPPORT(asinh)
-    CPPAD_BASE_ADOLC_NO_SUPPORT(acosh)
-    CPPAD_BASE_ADOLC_NO_SUPPORT(atanh)
-    CPPAD_BASE_ADOLC_NO_SUPPORT(erf)
     CPPAD_BASE_ADOLC_NO_SUPPORT(erfc)
     CPPAD_BASE_ADOLC_NO_SUPPORT(expm1)
     CPPAD_BASE_ADOLC_NO_SUPPORT(log1p)

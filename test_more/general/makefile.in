@@ -110,7 +110,7 @@ am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
 	extern_value.hpp fabs.cpp for_hess.cpp for_sparse_hes.cpp \
 	for_sparse_jac.cpp forward.cpp forward_dir.cpp \
 	forward_order.cpp from_base.cpp fun_check.cpp general.cpp \
-	hes_sparsity.cpp jacobian.cpp json_graph.cpp \
+	hes_sparsity.cpp jacobian.cpp json_graph.cpp local/is_pod.cpp \
 	local/json_lexer.cpp local/json_parser.cpp \
 	local/vector_set.cpp log10.cpp log1p.cpp log.cpp \
 	mul_cond_rev.cpp mul.cpp mul_cskip.cpp mul_eq.cpp \
@@ -152,16 +152,17 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
 	from_base.$(OBJEXT) fun_check.$(OBJEXT) general.$(OBJEXT) \
 	hes_sparsity.$(OBJEXT) jacobian.$(OBJEXT) json_graph.$(OBJEXT) \
-	local/json_lexer.$(OBJEXT) local/json_parser.$(OBJEXT) \
-	local/vector_set.$(OBJEXT) log10.$(OBJEXT) log1p.$(OBJEXT) \
-	log.$(OBJEXT) mul_cond_rev.$(OBJEXT) mul.$(OBJEXT) \
-	mul_cskip.$(OBJEXT) mul_eq.$(OBJEXT) mul_level.$(OBJEXT) \
-	mul_zdouble.$(OBJEXT) mul_zero_one.$(OBJEXT) \
-	near_equal_ext.$(OBJEXT) neg.$(OBJEXT) new_dynamic.$(OBJEXT) \
-	num_limits.$(OBJEXT) ode_err_control.$(OBJEXT) \
-	optimize.$(OBJEXT) parameter.$(OBJEXT) poly.$(OBJEXT) \
-	pow.$(OBJEXT) pow_int.$(OBJEXT) print_for.$(OBJEXT) \
-	reverse.$(OBJEXT) rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
+	local/is_pod.$(OBJEXT) local/json_lexer.$(OBJEXT) \
+	local/json_parser.$(OBJEXT) local/vector_set.$(OBJEXT) \
+	log10.$(OBJEXT) log1p.$(OBJEXT) log.$(OBJEXT) \
+	mul_cond_rev.$(OBJEXT) mul.$(OBJEXT) mul_cskip.$(OBJEXT) \
+	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_zdouble.$(OBJEXT) \
+	mul_zero_one.$(OBJEXT) near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
+	new_dynamic.$(OBJEXT) num_limits.$(OBJEXT) \
+	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) \
+	parameter.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
+	pow_int.$(OBJEXT) print_for.$(OBJEXT) reverse.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
 	romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) runge_45.$(OBJEXT) \
 	simple_vector.$(OBJEXT) sin_cos.$(OBJEXT) sin.$(OBJEXT) \
 	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
@@ -246,8 +247,8 @@ am__depfiles_remade = ./$(DEPDIR)/acos.Po ./$(DEPDIR)/acosh.Po \
 	./$(DEPDIR)/test_vector.Po ./$(DEPDIR)/to_string.Po \
 	./$(DEPDIR)/value.Po ./$(DEPDIR)/vec_ad.Po \
 	./$(DEPDIR)/vec_ad_par.Po ./$(DEPDIR)/vec_unary.Po \
-	local/$(DEPDIR)/json_lexer.Po local/$(DEPDIR)/json_parser.Po \
-	local/$(DEPDIR)/vector_set.Po
+	local/$(DEPDIR)/is_pod.Po local/$(DEPDIR)/json_lexer.Po \
+	local/$(DEPDIR)/json_parser.Po local/$(DEPDIR)/vector_set.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -573,6 +574,7 @@ general_SOURCES = \
 	hes_sparsity.cpp \
 	jacobian.cpp \
 	json_graph.cpp \
+	local/is_pod.cpp \
 	local/json_lexer.cpp \
 	local/json_parser.cpp \
 	local/vector_set.cpp \
@@ -670,6 +672,8 @@ local/$(am__dirstamp):
 local/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) local/$(DEPDIR)
 	@: > local/$(DEPDIR)/$(am__dirstamp)
+local/is_pod.$(OBJEXT): local/$(am__dirstamp) \
+	local/$(DEPDIR)/$(am__dirstamp)
 local/json_lexer.$(OBJEXT): local/$(am__dirstamp) \
 	local/$(DEPDIR)/$(am__dirstamp)
 local/json_parser.$(OBJEXT): local/$(am__dirstamp) \
@@ -794,6 +798,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad_par.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_unary.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@local/$(DEPDIR)/is_pod.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@local/$(DEPDIR)/json_lexer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@local/$(DEPDIR)/json_parser.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@local/$(DEPDIR)/vector_set.Po@am__quote@ # am--include-marker
@@ -1053,6 +1058,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/vec_ad.Po
 	-rm -f ./$(DEPDIR)/vec_ad_par.Po
 	-rm -f ./$(DEPDIR)/vec_unary.Po
+	-rm -f local/$(DEPDIR)/is_pod.Po
 	-rm -f local/$(DEPDIR)/json_lexer.Po
 	-rm -f local/$(DEPDIR)/json_parser.Po
 	-rm -f local/$(DEPDIR)/vector_set.Po
@@ -1207,6 +1213,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/vec_ad.Po
 	-rm -f ./$(DEPDIR)/vec_ad_par.Po
 	-rm -f ./$(DEPDIR)/vec_unary.Po
+	-rm -f local/$(DEPDIR)/is_pod.Po
 	-rm -f local/$(DEPDIR)/json_lexer.Po
 	-rm -f local/$(DEPDIR)/json_parser.Po
 	-rm -f local/$(DEPDIR)/vector_set.Po

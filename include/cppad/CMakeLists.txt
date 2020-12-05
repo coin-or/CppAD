@@ -182,5 +182,3 @@ CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/configure.hpp
 )
 # -----------------------------------------------------------------------------
-# configure files in local subdirectory
-# ADD_SUBDIRECTORY(local)

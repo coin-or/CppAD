@@ -133,12 +133,7 @@ fi
 echo_eval cd build
 # -----------------------------------------------------------------------------
 flags="--prefix=$prefix --with-colpack=$prefix --libdir=$prefix/$libdir"
-if [ "$system" == 'cygwin' ]
-then
-    flags="$flags --enable-static --disable-shared"
-else
-    flags="$flags --enable-static --enable-shared"
-fi
+flags="$flags --enable-static --enable-shared --enable-atrig-erf"
 #
 echo_eval ../configure $flags
 echo_eval make install
