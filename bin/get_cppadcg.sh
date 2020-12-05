@@ -48,9 +48,9 @@
 # $head Git Hash$$
 # This will install the commit of Cppadcg with the following git hash
 # $srccode%sh%
-git_hash='38d4f3b'
+git_hash='b5307ad'
 # %$$
-# The date corresponding to this commit was 20200113.
+# The date corresponding to this commit was 20201009.
 #
 # $head Configuration$$
 # If the file
@@ -85,13 +85,13 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 web_page='https://github.com/joaoleal/CppADCodeGen.git'
-cppad_dir=`pwd`
+cppad_repo=$(pwd)
 # -----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-    prefix="$cppad_dir/$prefix"
+    prefix="$cppad_repo/$prefix"
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
@@ -116,8 +116,46 @@ if [ ! -e $package.git ]
 then
     echo_eval git clone $web_page $package.git
 fi
-# -----------------------------------------------------------------------------
 echo_eval cd $package.git
+# -----------------------------------------------------------------------------
+# 2DO: get following code into CppADCodeGen
+cat << EOF > get_cppadcg.sed
+s|IF *( *DEFINED *CPPAD_HOME *)|IF (DEFINED CPPAD_GIT_REPO)\\
+    # CPPAD_GIT_REPO is the a CppAD git repository. It is assume that\\
+    # cmake and make have been executed in it's build sub-directory.\\
+    SET(CPPAD_INCLUDE_DIR "\${CPPAD_GIT_REPO}/include" )\\
+    SET(CPPAD_LIBRARIES   "\${CPPAD_GIT_REPO}/build/cppad_lib" )\\
+    #\\
+    IF( NOT EXISTS "\${CPPAD_INCLUDE_DIR}/cppad/cppad.hpp" )\\
+        MESSAGE(FATAL_ERROR\\
+            "Cannot find CPPAD_GIT_REPO/include/cppad/cppad.hpp"\\
+        )\\
+    ENDIF()\\
+    IF( NOT EXISTS "\${CPPAD_INCLUDE_DIR}/cppad/cppad.hpp" )\\
+        MESSAGE(FATAL_ERROR\\
+            "Cannot find CPPAD_GIT_REPO/include/cppad/cppad.hpp"\\
+        )\\
+    ENDIF()\\
+    #\\
+    FIND_LIBRARY(CPPAD_LIB_PATH\\
+        cppad_lib\\
+        \${CPPAD_LIBRARIES}\\
+        NO_DEFAULT_PATH\\
+    )\\
+    IF(NOT CPPAD_LIB_PATH )\\
+        MESSAGE(FATAL_ERROR\\
+            "Cannot find cppad libarary in CPPAD_GIT_REPO/build/cppad_lib "\\
+        )\\
+    ENDIF()\\
+    #\\
+    SET(CPPAD_FOUND TRUE)\\
+\\
+ELSEIF (DEFINED CPPAD_HOME)|
+EOF
+echo_eval git checkout  cmake/FindCppAD.cmake
+echo_eval sed -i cmake/FindCppAD.cmake -f get_cppadcg.sed
+echo_eval rm get_cppadcg.sed
+# -----------------------------------------------------------------------------
 echo_eval git checkout --quiet $git_hash
 if [ ! -e build ]
 then
@@ -125,13 +163,13 @@ then
 fi
 echo_eval cd build
 echo_eval cmake \
-    -D CPPAD_INCLUDE_DIRS='../include' \
+    -D CPPAD_GIT_REPO="$cppad_repo" \
     -D CMAKE_INSTALL_PREFIX=$prefix \
     -D EIGNE_INCLUDE_DIR=$prefix/include \
     -D GOOGLETEST_GIT=ON \
-    -D CREATE_DOXYGEN_DOC=OFF \
+    -D CREATE_DOXYGEN_DOC=ON \
     ..
 echo_eval make install
 # -----------------------------------------------------------------------------
-echo_eval touch $cppad_dir/$configured_flag
+echo_eval touch $cppad_repo/$configured_flag
 echo "get_$package.sh: OK"
