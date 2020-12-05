@@ -18,6 +18,7 @@ $spell
     CppAD
     namespace
     bool
+    inline
 $$
 
 $section The is_pod Template Function$$
