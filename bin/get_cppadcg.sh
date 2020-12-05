@@ -16,6 +16,8 @@
 #   CppAD
 #   cppadcg
 #   Eigen
+#   doxygen
+#   html
 # $$
 #
 # $section Download and Install CppADCodeGen in Build Directory$$
@@ -41,7 +43,7 @@
 #
 # $head Prefix$$
 # The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional$$ is used this install.
+# in the file $code bin/get_optional.sh$$ is used for this install.
 #
 # $head Git Hash$$
 # This will install the commit of Cppadcg with the following git hash
@@ -57,6 +59,15 @@ git_hash='38d4f3b'
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
+#
+# $head Documentation$$
+# If you change the setting for $code CREATE_DOXYGEN_DOC$$ to $code ON$$,
+# the doxygen documentation for CppADCodeGen will be installed in the directory
+# $codei%
+#   %prefix%/share/doc/cppadcg/html
+# %$$
+# where $icode prefix$$ has the value specified in the
+# $cref/get_optional.sh/get_optional.sh/prefix/$$ file.
 #
 # $end
 # -----------------------------------------------------------------------------
@@ -118,6 +129,7 @@ echo_eval cmake \
     -D CMAKE_INSTALL_PREFIX=$prefix \
     -D EIGNE_INCLUDE_DIR=$prefix/include \
     -D GOOGLETEST_GIT=ON \
+    -D CREATE_DOXYGEN_DOC=OFF \
     ..
 echo_eval make install
 # -----------------------------------------------------------------------------

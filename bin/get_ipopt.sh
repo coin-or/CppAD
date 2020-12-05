@@ -43,7 +43,7 @@
 #
 # $head Prefix$$
 # The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional$$ is used this install.
+# in the file $code bin/get_optional.sh$$ is used for this install.
 #
 # $head Version$$
 # This will install the following version of Ipopt
