@@ -34,6 +34,8 @@ $end
 # include <limits>
 # include <cmath>
 # include <cassert>
+// for size_t
+# include <cstddef>
 
 # define NUMBER_THREADS 4
 
