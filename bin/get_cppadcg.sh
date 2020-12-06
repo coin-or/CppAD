@@ -106,12 +106,27 @@ then
     exit 0
 fi
 # -----------------------------------------------------------------------------
-if [ ! -d build/external ]
+# Create build/cppad_lib/libcppad_lib.* to aid in cppadcg install
+if [ ! -d build ]
 then
-    echo_eval mkdir -p build/external
+    echo_eval mkdir build
 fi
-echo_eval cd build/external
+echo_eval cd build
+if [ -e CMakeCache.txt ]
+then
+    echo_eval rm CMakeCache.txt
+fi
+echo_eval cmake ..
+echo_eval make
 # -----------------------------------------------------------------------------
+# Change into build/external
+if [ ! -d external ]
+then
+    echo_eval mkdir -p external
+fi
+echo_eval cd external
+# -----------------------------------------------------------------------------
+# cppadcg.git
 if [ ! -e $package.git ]
 then
     echo_eval git clone $web_page $package.git
@@ -119,6 +134,8 @@ fi
 echo_eval cd $package.git
 # -----------------------------------------------------------------------------
 # 2DO: get following code into CppADCodeGen
+# Must modify FindCppAD.cmake so can used git repository
+# version of CppAD (not yet installed).
 cat << EOF > get_cppadcg.sed
 s|IF *( *DEFINED *CPPAD_HOME *)|IF (DEFINED CPPAD_GIT_REPO)\\
     # This setting is used for testing before installing CppAD.\\
@@ -163,6 +180,7 @@ echo_eval git checkout  cmake/FindCppAD.cmake
 echo_eval sed -i cmake/FindCppAD.cmake -f get_cppadcg.sed
 echo_eval rm get_cppadcg.sed
 # -----------------------------------------------------------------------------
+#  make install
 echo_eval git checkout --quiet $git_hash
 if [ ! -e build ]
 then

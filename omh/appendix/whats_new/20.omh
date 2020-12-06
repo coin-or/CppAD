@@ -42,6 +42,10 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 12-06$$
+Fix $code bin/get_cppadcg.sh$$ install of newer version
+of cppadcg.
+
 $head 12-05$$
 Advance to Oct 9, 2020 version of cppadcg.
 

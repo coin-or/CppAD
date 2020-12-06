@@ -102,10 +102,6 @@ fi
 list='colpack adolc eigen fadbad ipopt sacado cppadcg'
 for package in $list
 do
-    if [ "$package" == 'cppadcg' ]
-    then
-        bin/run_cmake.sh --no_cppadcg
-    fi
     echo "bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err"
     if bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err
     then
