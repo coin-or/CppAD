@@ -121,32 +121,46 @@ echo_eval cd $package.git
 # 2DO: get following code into CppADCodeGen
 cat << EOF > get_cppadcg.sed
 s|IF *( *DEFINED *CPPAD_HOME *)|IF (DEFINED CPPAD_GIT_REPO)\\
-    # CPPAD_GIT_REPO is the a CppAD git repository. It is assume that\\
-    # cmake and make have been executed in it's build sub-directory.\\
+    # This setting is used for testing before installing CppAD.\\
+    # CPPAD_GIT_REPO is the a CppAD git repository. It is assume that:\\
+    # 1. cmake and make have been executed in it's build sub-directory.\\
+    # 2. ipopt has been installed in build/prefix.\\
+    # 3. If you run cppadcg tests, cppad must be configured without colpack.\\
     SET(CPPAD_INCLUDE_DIR "\${CPPAD_GIT_REPO}/include" )\\
-    SET(CPPAD_LIBRARIES   "\${CPPAD_GIT_REPO}/build/cppad_lib" )\\
-    #\\
-    IF( NOT EXISTS "\${CPPAD_INCLUDE_DIR}/cppad/cppad.hpp" )\\
-        MESSAGE(FATAL_ERROR\\
-            "Cannot find CPPAD_GIT_REPO/include/cppad/cppad.hpp"\\
-        )\\
-    ENDIF()\\
-    IF( NOT EXISTS "\${CPPAD_INCLUDE_DIR}/cppad/cppad.hpp" )\\
-        MESSAGE(FATAL_ERROR\\
-            "Cannot find CPPAD_GIT_REPO/include/cppad/cppad.hpp"\\
-        )\\
-    ENDIF()\\
-    #\\
-    FIND_LIBRARY(CPPAD_LIB_PATH\\
-        cppad_lib\\
-        \${CPPAD_LIBRARIES}\\
-        NO_DEFAULT_PATH\\
+    SET(CPPAD_LIBRARIES\\
+        "\${CPPAD_GIT_REPO}/build/prefix/lib"\\
+        "\${CPPAD_GIT_REPO}/build/prefix/lib64"\\
+        "\${CPPAD_GIT_REPO}/build/cppad_lib"\\
     )\\
-    IF(NOT CPPAD_LIB_PATH )\\
+    INCLUDE_DIRECTORIES(\\
+        "\${CPPAD_INCLUDE_DIR}"\\
+        "\${CPPAD_GIT_REPO}/build/prefix/include"\\
+    )\\
+    #\\
+    IF( NOT EXISTS "\${CPPAD_INCLUDE_DIR}/cppad/cppad.hpp" )\\
         MESSAGE(FATAL_ERROR\\
-            "Cannot find cppad libarary in CPPAD_GIT_REPO/build/cppad_lib "\\
+            "Cannot find CPPAD_GIT_REPO/include/cppad/cppad.hpp"\\
         )\\
     ENDIF()\\
+    IF( NOT EXISTS "\${CPPAD_INCLUDE_DIR}/cppad/cppad.hpp" )\\
+        MESSAGE(FATAL_ERROR\\
+            "Cannot find CPPAD_GIT_REPO/include/cppad/cppad.hpp"\\
+        )\\
+    ENDIF()\\
+    #\\
+    FOREACH(library cppad_lib ipopt )\\
+        FIND_LIBRARY( \${library}_PATH\\
+            \${library}\\
+            PATHS \${CPPAD_LIBRARIES}\\
+            NO_DEFAULT_PATH\\
+        )\\
+        MESSAGE(STATUS "\${library}_PATH=\${\${library}_PATH}")\\
+        IF( NOT \${library}_PATH  )\\
+            MESSAGE(FATAL_ERROR\\
+                "Cannot find \${library} library below CPPAD_GIT_REPO"\\
+            )\\
+        ENDIF()\\
+    ENDFOREACH()\\
     #\\
     SET(CPPAD_FOUND TRUE)\\
 \\
@@ -167,7 +181,7 @@ echo_eval cmake \
     -D CMAKE_INSTALL_PREFIX=$prefix \
     -D EIGNE_INCLUDE_DIR=$prefix/include \
     -D GOOGLETEST_GIT=ON \
-    -D CREATE_DOXYGEN_DOC=ON \
+    -D CREATE_DOXYGEN_DOC=OFF \
     ..
 echo_eval make install
 # -----------------------------------------------------------------------------
