@@ -102,6 +102,9 @@ at which the function will be evaluated.
 $head y$$
 This return value has size $icode m$$ and is the value of $latex f(x)$$.
 
+$head Example$$
+The file $cref cppadcg_det_minor.cpp$$ contain a speed test
+that uses $code compiled_fun$$.
 
 $end
 */

@@ -383,7 +383,6 @@ extern void sparse_jacobian_cg(
     size_t seed,
     const CppAD::vector<size_t>& size
 );
-# include "cppadcg/det_minor_grad_c.hpp"
 # include "cppadcg/sparse_jacobian_c.hpp"
 # endif
 //
@@ -531,29 +530,6 @@ namespace {
             found |= vec[i] == element;
         if( ! found )
             vec.push_back(element);
-    }
-    // ----------------------------------------------------------------
-    // function that generates cppadcg soruce for det_minor test
-    bool check_det_minor_cg(CppAD::vector<size_t> size_vec, size_t other_size)
-    {   bool ok               = true;
-        set_add(size_vec, other_size);
-        for(size_t i = 0; i < size_vec.size(); ++i)
-        {   size_t size_i   = size_vec[i];
-            int    optimize = 0;
-            size_t n        = size_i * size_i;
-            CppAD::vector<double> x(n * n), y(n * n);
-            int flag = det_minor_grad_c(
-                optimize, int(size_i), x.data(), y.data()
-            );
-            ok &= flag == 0;
-        }
-        if( ! ok )
-        {   det_minor_cg( size_vec );
-            cerr <<
-                "det_minor_grad.c: sizes are not the same. "
-                "A new version was created with proper sizes.\n";
-        }
-        return ok;
     }
     // ----------------------------------------------------------------
     // function that generates cppadcg soruce for sparse_jacobian test
@@ -722,12 +698,7 @@ int main(int argc, char *argv[])
     switch(match)
     {   case test_correct:
         case test_speed:
-        ok &= check_det_minor_cg(empty, 3);
         ok &= check_sparse_jacobian_cg(empty, 10);
-        break;
-
-        case test_det_minor:
-        ok &= check_det_minor_cg(size_det_minor, 3);
         break;
 
         case test_sparse_jacobian:

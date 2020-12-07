@@ -25,7 +25,6 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 SET(source_list ../main.cpp
     det_lu.cpp
     det_minor.cpp
-    det_minor_cg.cpp
     mat_mul.cpp
     ode.cpp
     poly.cpp
@@ -42,7 +41,7 @@ IF( "${cppad_debug_which}" STREQUAL "debug_all" )
 ELSEIF( "${cppad_debug_which}" STREQUAL "debug_all" )
     SET(flags ${CMAKE_C_FLAGS_RELEASE} )
 ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
-FOREACH(c_source det_minor_grad.c sparse_jacobian.c )
+FOREACH(c_source sparse_jacobian.c )
     CONFIGURE_FILE(
             ${CMAKE_CURRENT_SOURCE_DIR}/${c_source}
             ${CMAKE_CURRENT_BINARY_DIR}/${c_source}
@@ -53,7 +52,7 @@ FOREACH(c_source det_minor_grad.c sparse_jacobian.c )
     SET_SOURCE_FILES_PROPERTIES(
         ${file_name} PROPERTIES COMPILE_FLAGS "${flags}"
     )
-ENDFOREACH(c_source det_minor_grad.c link_sparse_jacobian.c )
+ENDFOREACH(c_source link_sparse_jacobian.c )
 #
 ADD_EXECUTABLE(speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
 
