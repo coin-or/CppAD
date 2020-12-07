@@ -135,7 +135,8 @@ libcppad_lib_a_AR = $(AR) $(ARFLAGS)
 libcppad_lib_a_LIBADD =
 am_libcppad_lib_a_OBJECTS = cppad_colpack.$(OBJEXT) \
 	json_lexer.$(OBJEXT) cpp_graph_op.$(OBJEXT) \
-	json_parser.$(OBJEXT) json_writer.$(OBJEXT)
+	json_parser.$(OBJEXT) json_writer.$(OBJEXT) \
+	cppadcg_library.$(OBJEXT)
 libcppad_lib_a_OBJECTS = $(am_libcppad_lib_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -153,8 +154,9 @@ DEFAULT_INCLUDES =
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/cpp_graph_op.Po \
-	./$(DEPDIR)/cppad_colpack.Po ./$(DEPDIR)/json_lexer.Po \
-	./$(DEPDIR)/json_parser.Po ./$(DEPDIR)/json_writer.Po
+	./$(DEPDIR)/cppad_colpack.Po ./$(DEPDIR)/cppadcg_library.Po \
+	./$(DEPDIR)/json_lexer.Po ./$(DEPDIR)/json_parser.Po \
+	./$(DEPDIR)/json_writer.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -383,7 +385,8 @@ libcppad_lib_a_SOURCES = \
 	json_lexer.cpp \
 	cpp_graph_op.cpp \
 	json_parser.cpp \
-	json_writer.cpp
+	json_writer.cpp \
+	cppadcg_library.cpp
 
 all: all-am
 
@@ -463,6 +466,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_graph_op.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_colpack.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppadcg_library.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_lexer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_parser.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_writer.Po@am__quote@ # am--include-marker
@@ -618,6 +622,7 @@ clean-am: clean-generic clean-libLIBRARIES mostlyclean-am
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/cpp_graph_op.Po
 	-rm -f ./$(DEPDIR)/cppad_colpack.Po
+	-rm -f ./$(DEPDIR)/cppadcg_library.Po
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f ./$(DEPDIR)/json_writer.Po
@@ -668,6 +673,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/cpp_graph_op.Po
 	-rm -f ./$(DEPDIR)/cppad_colpack.Po
+	-rm -f ./$(DEPDIR)/cppadcg_library.Po
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f ./$(DEPDIR)/json_writer.Po

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -41,6 +41,9 @@ SET(source_list
     json_writer.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
+IF( cppad_has_cppadcg )
+    SET(source_list ${source_list} cppadcg_library.cpp)
+ENDIF( cppad_has_cppadcg )
 #
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 #
@@ -51,6 +54,11 @@ ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
     MESSAGE( STATUS "Not Windows system so building shared cppad_lib")
     ADD_LIBRARY( cppad_lib SHARED ${source_list} )
     SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )
+    #
+    FIND_LIBRARY(dl_LIBRARY dl)
+    IF( dl_LIBRARY )
+        TARGET_LINK_LIBRARIES(cppad_lib ${dl_LIBRARY})
+    ENDIF( dl_LIBRARY )
 ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
 #
 # install(TARGETS myExe mySharedLib myStaticLib
