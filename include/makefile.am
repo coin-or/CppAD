@@ -178,7 +178,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/example/atomic_two/eigen_mat_inv.hpp \
 	cppad/example/atomic_two/eigen_mat_mul.hpp \
 	cppad/example/base_adolc.hpp \
-	cppad/example/cppadcg_library.hpp \
+	cppad/example/compiled_fun.hpp \
 	cppad/example/cppad_eigen.hpp \
 	cppad/example/eigen_plugin.hpp \
 	cppad/ipopt/solve.hpp \

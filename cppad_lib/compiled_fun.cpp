@@ -10,7 +10,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 -------------------------------------------------------------------------- */
 /*
-$begin cppadcg_library$$
+$begin compiled_fun$$
 $spell
     CppAD
     cppad
@@ -22,13 +22,13 @@ $$
 $section Compile and Link Source For an AD Function$$
 
 $head Syntax$$
-$codei%# include <cppad/example/cppadcg_library.hpp>
+$codei%# include <cppad/example/compiled_fun.hpp>
 %$$
-$codei%cppadcg_library %fun_name%(%cg_fun%, %file_name%)
+$codei%compiled_fun %fun_name%(%cg_fun%, %file_name%)
 %$$
-$codei%cppadcg_library %fun_name%(%file_name%)
+$codei%compiled_fun %fun_name%(%file_name%)
 %$$
-$codei%cppadcg_library %fun_name%()
+$codei%compiled_fun %fun_name%()
 %$$
 $icode%fun_name%.swap(%other_fun%)
 %$$
@@ -66,15 +66,15 @@ $codei%
     %y% = cg_fun.Forward(0, %x%)
 %$$.
 The conversion to source and linking is expect to take a significant
-amout of time and the evaluation of the function is expected to be
+amount of time and the evaluation of the function is expected to be
 much faster.
 
 
 $head fun_name$$
-This is the name of the $code cppadcg_library$$ object.
+This is the name of the $code compiled_fun$$ object.
 
 $head other_fun$$
-This is the name of another $code cppadcg_library$$ object.
+This is the name of another $code compiled_fun$$ object.
 
 $head cg_fun$$
 This is a CppAD function object that corresponds to a function
@@ -106,10 +106,10 @@ This return value has size $icode m$$ and is the value of $latex f(x)$$.
 $end
 */
 
-# include <cppad/example/cppadcg_library.hpp>
+# include <cppad/example/compiled_fun.hpp>
 
 // BEGIN_CTOR_AD_FUN_FILE_NAME
-cppadcg_library::cppadcg_library(
+compiled_fun::compiled_fun(
     CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun    ,
     const std::string&       file_name )
 // END_CTOR_AD_FUN_FILE_NAME
@@ -128,7 +128,7 @@ cppadcg_library::cppadcg_library(
     model_        = dynamic_lib_->model("model");
 }
 // BEGIN_CTOR_FILE_NAME
-cppadcg_library::cppadcg_library(
+compiled_fun::compiled_fun(
     const std::string&       file_name )
 // END_CTOR_FILE_NAME
 {   // file name plus extension used for dynamic libraries on this system
@@ -144,18 +144,18 @@ cppadcg_library::cppadcg_library(
     model_        = dynamic_lib_->model("model");
 }
 // BEGIN_CTOR_VOID
-cppadcg_library::cppadcg_library(void)
+compiled_fun::compiled_fun(void)
 // END_CTOR_VOID
 { }
 // BEGIN_SWAP_OTHER_FUN
-void cppadcg_library::swap(cppadcg_library& other_fun)
+void compiled_fun::swap(compiled_fun& other_fun)
 // END_SWAP_OTHER_FUN
 {   std::swap(dynamic_lib_, other_fun.dynamic_lib_);
     std::swap(model_, other_fun.model_ );
 }
 // BEGIN_FUN_NAME_X
 CppAD::vector<double>
-cppadcg_library::operator()(const CppAD::vector<double>& x)
+compiled_fun::operator()(const CppAD::vector<double>& x)
 // END_FUN_NAME_X
 {   return model_-> ForwardZero(x);
 }

@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_CPPADCG_LIBRARY_HPP
-# define CPPAD_EXAMPLE_CPPADCG_LIBRARY_HPP
+# ifndef CPPAD_EXAMPLE_COMPILED_FUN_HPP
+# define CPPAD_EXAMPLE_COMPILED_FUN_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
@@ -14,7 +14,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 # include <cppad/cg/cppadcg.hpp>
 
-class cppadcg_library {
+class compiled_fun {
 private:
     // dynamic_lib_
     std::unique_ptr< CppAD::cg::DynamicLib<double> > dynamic_lib_;
@@ -23,19 +23,19 @@ private:
     std::unique_ptr< CppAD::cg::GenericModel<double> > model_;
 public:
     // fun_name( cg_fun, file_name)
-    cppadcg_library(
+    compiled_fun(
         CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun    ,
         const std::string&       file_name
     );
     //
     // fun_name( file_name )
-    cppadcg_library(const std::string& file_name);
+    compiled_fun(const std::string& file_name);
     //
     // fun_name()
-    cppadcg_library(void);
+    compiled_fun(void);
     //
     // swap(other_fun)
-    void swap(cppadcg_library& other_fun);
+    void swap(compiled_fun& other_fun);
     //
     // y = fun_name(x)
     CppAD::vector<double>  operator()(const CppAD::vector<double> & x);

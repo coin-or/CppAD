@@ -25,4 +25,4 @@ libcppad_lib_a_SOURCES = \
 	cpp_graph_op.cpp \
 	json_parser.cpp \
 	json_writer.cpp \
-	cppadcg_library.cpp
+	compiled_fun.cpp

@@ -14,14 +14,16 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
-#   include/cppad/core/undef.hpp
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#   cppad_lib/cppadcg_library.cpp
+#   include/cppad/example/cppadcg_library.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#   s|cppadcg_library|compiled_fun|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,13 +35,8 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/^# if CPPAD_USE_CPLUSPLUS_2011$/! b skip
-: loop
-N
-/\n#/! b loop
-/\n# endif$/! b skip
-#
-s|^# if CPPAD_USE_CPLUSPLUS_2011\n||
-s|\n# endif||
+s|CPPADCG_LIBRARY|COMPILED_FUN|
+s|cppadcg_library|compiled_fun|g
+s|^amout |amount |
 #
 :skip

@@ -42,7 +42,7 @@ SET(source_list
 )
 # END_SORT_THIS_LINE_MINUS_2
 IF( cppad_has_cppadcg )
-    SET(source_list ${source_list} cppadcg_library.cpp)
+    SET(source_list ${source_list} compiled_fun.cpp)
 ENDIF( cppad_has_cppadcg )
 #
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )

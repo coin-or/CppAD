@@ -337,7 +337,7 @@ $childtable%
     example/general/mul_level_ode.cpp%
     example/general/mul_level_adolc_ode.cpp%
     example/general/stack_machine.cpp%
-    cppad_lib/cppadcg_library.cpp
+    cppad_lib/compiled_fun.cpp
 %$$
 
 $end
