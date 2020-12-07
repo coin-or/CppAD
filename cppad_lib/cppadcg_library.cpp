@@ -7,19 +7,23 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
   This Source Code may also be made available under the following
   Secondary License when the conditions for such availability set forth
   in the Eclipse Public License, Version 2.0 are satisfied:
-        GNU General Public License, Version 2.0 or later.
+
 -------------------------------------------------------------------------- */
 /*
 $begin cppadcg_library$$
 $spell
     CppAD
+    cppad
+    hpp
     cppadcg
     cg
 $$
 
-$section CppADCodeGen Dynamic Libraries$$
+$section Compile and Link Source For an AD Function$$
 
 $head Syntax$$
+$codei%# include <cppad/example/cppadcg_library.hpp>
+%$$
 $codei%cppadcg_library %fun_name%(%cg_fun%, %file_name%)
 %$$
 $codei%cppadcg_library %fun_name%(%file_name%)
@@ -47,6 +51,24 @@ $srcthisfile%
 $srcthisfile%
     0%// BEGIN_FUN_NAME_X%// END_FUN_NAME_X%1
 %$$
+$pre
+
+$$
+
+$head CppAD::cg::CG<double>$$
+This is the CppAD $icode Base$$ type for the function
+$icode cg_fun$$.
+It is defined by
+$href%https://github.com/joaoleal/CppADCodeGen%CppADCodeGen%$$.
+and used to convert the $icode cg_fun$$ function object to source code,
+compile the source code, and then link the corresponding function evaluation
+$codei%
+    %y% = cg_fun.Forward(0, %x%)
+%$$.
+The conversion to source and linking is expect to take a significant
+amout of time and the evaluation of the function is expected to be
+much faster.
+
 
 $head fun_name$$
 This is the name of the $code cppadcg_library$$ object.
