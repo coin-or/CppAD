@@ -232,7 +232,7 @@ echo_log_eval bin/run_cmake.sh \
     $package_vector
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
-file='speed/cppadcg/det_minor_grad.c'
+file='speed/cppadcg/sparse_jacobian.c'
 if [ -e $file ]
 then
     echo_log 'building cppadcg souce with proper options for correctness test'
