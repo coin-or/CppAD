@@ -40,7 +40,10 @@ namespace {
     //
     // setup
     void setup(compiled_fun& g, size_t size )
-    {
+    {   // optimization options
+        std::string optimize_options =
+            "no_conditional_skip no_compare_op no_print_for_op";
+        //
         // object for computing determinant
         CppAD::det_by_minor<ac_double>   ac_det(size);
         //
@@ -69,6 +72,8 @@ namespace {
         CppAD::ADFun<c_double>            c_f;
         CppAD::ADFun<ac_double, c_double> ac_f;
         c_f.Dependent(ac_A, ac_detA);
+        if( global_option["optimize"] )
+            c_f.optimize(optimize_options);
         ac_f = c_f.base2ad();
         //
         // declare independent variables for gradient computation
@@ -86,6 +91,8 @@ namespace {
         // create function objects for g : A -> det'( detA  )
         CppAD::ADFun<c_double> c_g;
         c_g.Dependent(ac_A, ac_gradient);
+        if( global_option["optimize"] )
+            c_g.optimize(optimize_options);
         compiled_fun g_tmp(c_g, "det_minor");
         //
         // static_g
@@ -117,10 +124,6 @@ bool link_det_minor(
         }
     }
     // --------------------------------------------------------------------
-    //
-    // optimization options
-    std::string optimize_options =
-        "no_conditional_skip no_compare_op no_print_for_op";
     //
     // function object mapping matrix to gradiend of determinant
     static compiled_fun static_g;
@@ -156,7 +159,9 @@ bool link_det_minor(
     //
     // -----------------------------------------------------------------------
     if( onetape ) while(repeat--)
-    {   CPPAD_ASSERT_UNKNOWN( size == static_size );
+    {   // use if before assert to vaoid warning that static_size is not used
+        if( size != static_size )
+            CPPAD_ASSERT_UNKNOWN( size == static_size );
 
         // get next matrix
         CppAD::uniform_01(nx, matrix);
@@ -166,6 +171,7 @@ bool link_det_minor(
     }
     else while(repeat--)
     {   setup(static_g, size);
+        static_size = size;
 
         // get next matrix
         CppAD::uniform_01(nx, matrix);
