@@ -43,7 +43,7 @@ SET(source_list
     add.cpp
     add_eq.cpp
     add_zero.cpp
-    adfun_copy.cpp
+    adfun.cpp
     asin.cpp
     asinh.cpp
     assign.cpp

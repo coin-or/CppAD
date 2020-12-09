@@ -126,9 +126,6 @@ private:
     /// which dependent variables are actually parameters
     local::pod_vector<bool> dep_parameter_;
 
-    /// results of the forward mode calculations
-    local::pod_vector_maybe<Base> taylor_;
-
     /// which operations can be conditionally skipped
     /// Set during forward pass of order zero
     local::pod_vector<bool> cskip_op_;
@@ -137,8 +134,19 @@ private:
     /// (if zero, the operation corresponds to a parameter).
     local::pod_vector<addr_t> load_op2var_;
 
+    /// results of the forward mode calculations
+    local::pod_vector_maybe<Base> taylor_;
+
+    /// used for subgraph reverse mode calculations.
+    /// Declared here to avoid reallocation for each call to subgraph_reverse.
+    /// Not in subgraph_info_ because it depends on Base.
+    local::pod_vector_maybe<Base> subgraph_partial_;
+
     /// the operation sequence corresponding to this object
     local::player<Base> play_;
+
+    /// subgraph information for this object
+    local::subgraph::subgraph_info subgraph_info_;
 
     /// Packed results of the forward mode Jacobian sparsity calculations.
     /// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
@@ -149,13 +157,6 @@ private:
     /// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
     local::sparse::list_setvec for_jac_sparse_set_;
 
-    /// subgraph information for this object
-    local::subgraph::subgraph_info subgraph_info_;
-
-    /// used for subgraph reverse mode calculations.
-    /// Declared here to avoid reallocation for each call to subgraph_reverse.
-    /// Not in subgraph_info_ because it depends on Base.
-    local::pod_vector_maybe<Base> subgraph_partial_;
 
     // ------------------------------------------------------------
     // Private member functions

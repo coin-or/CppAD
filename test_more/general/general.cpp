@@ -28,7 +28,7 @@ extern bool acos(void);
 extern bool AddEq(void);
 extern bool Add(void);
 extern bool AddZero(void);
-extern bool adfun_copy(void);
+extern bool adfun(void);
 extern bool alloc_openmp(void);
 extern bool asinh(void);
 extern bool asin(void);
@@ -149,7 +149,7 @@ int main(void)
     Run( Add,             "Add"            );
     Run( AddEq,           "AddEq"          );
     Run( AddZero,         "AddZero"        );
-    Run( adfun_copy,      "adfun_copy"     );
+    Run( adfun,           "adfun"          );
     Run( asin,            "asin"           );
     Run( asinh,           "asinh"          );
     Run( assign,          "assign"         );
