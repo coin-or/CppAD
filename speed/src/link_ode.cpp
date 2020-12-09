@@ -12,6 +12,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/utility/near_equal.hpp>
+# include <cppad/utility/near_equal.hpp>
+# include <cppad/utility/time_test.hpp>
 // BEGIN PROTOTYPE
 extern bool link_ode(
     size_t                     size       ,
@@ -110,6 +112,7 @@ bool available_ode(void)
 
     return link_ode(n, repeat, x, jacobian);
 }
+// ----------------------------------------------------------------------------
 bool correct_ode(bool is_package_double)
 {   bool ok       = true;
 
@@ -134,7 +137,8 @@ bool correct_ode(bool is_package_double)
 
     return ok;
 }
-void speed_ode(size_t n, size_t repeat)
+// ----------------------------------------------------------------------------
+void time_ode_callback(size_t n, size_t repeat)
 {   // free statically allocated memory
     if( n == 0 && repeat == 0 )
         return;
@@ -144,3 +148,7 @@ void speed_ode(size_t n, size_t repeat)
     link_ode(n, repeat, x, jacobian);
     return;
 }
+double time_ode(double time_min, size_t size)
+{   return CppAD::time_test(time_ode_callback, time_min, size);
+}
+// ----------------------------------------------------------------------------

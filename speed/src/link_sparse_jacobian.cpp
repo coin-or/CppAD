@@ -13,11 +13,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/speed/sparse_jac_fun.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/utility/index_sort.hpp>
+# include <cppad/utility/time_test.hpp>
 
 # include "link_sparse_jacobian.hpp"
 
 /*
- ------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 $begin choose_row_col_sparse_jacobian$$
 $spell
     Jacobian
@@ -178,8 +179,8 @@ bool correct_sparse_jacobian(bool is_package_double)
     return ok;
 }
 // ----------------------------------------------------------------------------
-// speed_sparse_jacobian
-void speed_sparse_jacobian(size_t size, size_t repeat)
+// time_sparse_jacobian
+void time_sparse_jacobian_callback(size_t size, size_t repeat)
 {   using CppAD::vector;
     // cppadcg assumes that m = 2 * size; see ../main.cpp
     size_t n   = size;
@@ -209,6 +210,10 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
     size_t         n_color;
     link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
     return;
+}
+// ----------------------------------------------------------------------------
+double time_sparse_jacobian(double time_min, size_t size)
+{   return CppAD::time_test(time_sparse_jacobian_callback, time_min, size);
 }
 // ----------------------------------------------------------------------------
 // info_sparse_jacobian

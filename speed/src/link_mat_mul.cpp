@@ -11,6 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <cppad/utility/vector.hpp>
 # include <cppad/utility/near_equal.hpp>
+# include <cppad/utility/time_test.hpp>
 // BEGIN PROTOTYPE
 extern bool link_mat_mul(
     size_t                     size     ,
@@ -101,6 +102,7 @@ bool available_mat_mul(void)
 
     return link_mat_mul(size, repeat, x, z, dz);
 }
+// --------------------------------------------------------------------------
 bool correct_mat_mul(bool is_package_double)
 {   size_t size   = 2;
     size_t repeat = 1;
@@ -139,8 +141,8 @@ bool correct_mat_mul(bool is_package_double)
 
     return ok;
 }
-
-void speed_mat_mul(size_t size, size_t repeat)
+// --------------------------------------------------------------------------
+void time_mat_mul_callback(size_t size, size_t repeat)
 {   // free statically allocated memory
     if( size == 0 && repeat == 0 )
         return;
@@ -150,3 +152,7 @@ void speed_mat_mul(size_t size, size_t repeat)
     link_mat_mul(size, repeat, x, z, dz);
     return;
 }
+double time_mat_mul(double time_min, size_t size)
+{   return CppAD::time_test(time_mat_mul_callback, time_min, size);
+}
+// --------------------------------------------------------------------------

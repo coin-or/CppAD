@@ -13,6 +13,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
+# include <cppad/utility/time_test.hpp>
+
 // BEGIN PROTOTYPE
 extern bool link_det_lu(
     size_t                     size      ,
@@ -82,7 +84,6 @@ the determinant value (the gradient value is not computed).
 $end
 -----------------------------------------------------------------------------
 */
-
 bool available_det_lu(void)
 {   size_t size   = 3;
     size_t repeat = 1;
@@ -91,6 +92,7 @@ bool available_det_lu(void)
 
     return link_det_lu(size, repeat, matrix, gradient);
 }
+// ---------------------------------------------------------------------------
 bool correct_det_lu(bool is_package_double)
 {   size_t size   = 3;
     size_t repeat = 1;
@@ -105,7 +107,8 @@ bool correct_det_lu(bool is_package_double)
         ok = CppAD::det_grad_33(matrix, gradient);
     return ok;
 }
-void speed_det_lu(size_t size, size_t repeat)
+// ---------------------------------------------------------------------------
+void time_det_lu_callback(size_t size, size_t repeat)
 {   // free statically allocated memory
     if( size == 0 && repeat == 0 )
         return;
@@ -115,4 +118,8 @@ void speed_det_lu(size_t size, size_t repeat)
 
     link_det_lu(size, repeat, matrix, gradient);
     return;
+}
+// ---------------------------------------------------------------------------
+double time_det_lu(double time_min, size_t size)
+{   return CppAD::time_test(time_det_lu_callback, time_min, size);
 }

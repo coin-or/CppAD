@@ -13,19 +13,16 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/speed/sparse_hes_fun.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/utility/index_sort.hpp>
+# include <cppad/utility/time_test.hpp>
 
 # include "link_sparse_hessian.hpp"
 
-/*!
-\{
-\file link_sparse_hessian.cpp
-Defines and implement sparse Hessian speed link to package specific code.
-*/
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 using CppAD::vector;
 
 /*
+------------------------------------------------------------------------------
 $begin choose_row_col$$
 $spell
     Namespace
@@ -117,6 +114,7 @@ void choose_row_col(
 
 
 /*
+------------------------------------------------------------------------------
 $begin available_sparse_hessian$$
 $spell
     Namespace
@@ -153,6 +151,7 @@ bool available_sparse_hessian(void)
     return link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
 }
 /*
+------------------------------------------------------------------------------
 $begin correct_sparse_hessian$$
 $spell
     Namespace
@@ -219,19 +218,20 @@ bool correct_sparse_hessian(bool is_package_double)
     return ok;
 }
 /*
-$begin speed_sparse_hessian$$
+------------------------------------------------------------------------------
+$begin time_sparse_hessian_callback$$
 $spell
     Namespace
     CppAD
 $$
 
-$section Drive Sparse Hessian for Speed Testing$$
+$section Sparse Hessian Timing Callback Function$$
 
 $head Namespace$$
 This function is in the global namespace, not the CppAD namespace.
 
 $head Syntax$$
-$codei%speed_sparse_hessian(%size%, %repeat%)%$$
+$codei%time_sparse_hessian_callback(%size%, %repeat%)%$$
 
 $head size$$
 This $code size_t$$ value
@@ -244,7 +244,7 @@ is the number of times to repeat the speed test.
 
 $end
 */
-void speed_sparse_hessian(size_t size, size_t repeat)
+void time_sparse_hessian_callback(size_t size, size_t repeat)
 {
     static size_t previous_size = 0;
     static vector<size_t> row, col;
@@ -276,6 +276,39 @@ void speed_sparse_hessian(size_t size, size_t repeat)
     return;
 }
 /*
+-----------------------------------------------------------------------------
+$begin time_sparse_hessian$$
+
+$seciton Time Sparse Hessian Routine$$
+
+$head Namespace$$
+This function is in the global namespace, not the CppAD namespace.
+
+$head Syntax$$
+$icode%time$ = $time_sparse_hessian(%ttime_min%, %size%)%$$
+
+$head time_min$$
+Is the minum time, in seconcds, for the test.
+Calls to $code time_sparse_hessian_callback$$ will be repeated in order to
+reach this minimum time.
+
+$head size$$
+This $code size_t$$ value
+is the dimension of the argument space for function we are taking
+the Hessian of.
+
+$head time$$
+This is the amout of time for each call. This is the total time
+(which is greater than or equal $icode time_min$$)
+divided by the number of repeats.
+
+$end
+*/
+double time_sparse_hessian(double time_min, size_t size)
+{   return CppAD::time_test(time_sparse_hessian_callback, time_min, size);
+}
+/*
+------------------------------------------------------------------------------
 $begin info_sparse_hessian$$
 $spell
     Namespace
@@ -292,8 +325,8 @@ $codei%info_spares_hessian(%size%, %n_color%)%$$
 
 $head size$$
 This $code size_t$$ value is equal to
-$cref/size/speed_sparse_hessian/size/$$
-in the corresponding call to $code speed_sparse_hessian$$.
+$cref/size/time_sparse_hessian_callback/size/$$
+in the corresponding call to $code time_sparse_hessian_callback$$.
 
 $head n_color$$
 The input value of this $icode size_t$$ does not matter.

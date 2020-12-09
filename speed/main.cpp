@@ -20,7 +20,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
-# include <cppad/utility/time_test.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/utility/poly.hpp>
 # include <cppad/utility/track_new_del.hpp>
@@ -355,18 +354,18 @@ $end
 */
 // external routines
 
-# define CPPAD_DECLARE_SPEED(name)                       \
-     extern bool available_##name(void);                 \
-     extern bool correct_##name(bool is_package_double); \
-     extern void speed_##name(size_t size, size_t repeat)
+# define CPPAD_DECLARE_TIME(name)                         \
+    extern bool available_##name(void);                   \
+    extern bool correct_##name(bool is_package_double);   \
+    extern double time_##name(double time_min, size_t size)
 
-CPPAD_DECLARE_SPEED(det_lu);
-CPPAD_DECLARE_SPEED(det_minor);
-CPPAD_DECLARE_SPEED(mat_mul);
-CPPAD_DECLARE_SPEED(ode);
-CPPAD_DECLARE_SPEED(poly);
-CPPAD_DECLARE_SPEED(sparse_hessian);
-CPPAD_DECLARE_SPEED(sparse_jacobian);
+CPPAD_DECLARE_TIME(det_lu);
+CPPAD_DECLARE_TIME(det_minor);
+CPPAD_DECLARE_TIME(mat_mul);
+CPPAD_DECLARE_TIME(ode);
+CPPAD_DECLARE_TIME(poly);
+CPPAD_DECLARE_TIME(sparse_hessian);
+CPPAD_DECLARE_TIME(sparse_jacobian);
 //
 // some routines defined in src subdirectory
 extern void info_sparse_jacobian(size_t size, size_t& n_color);
@@ -493,9 +492,9 @@ namespace {
     // ----------------------------------------------------------------
     // function that runs one speed case
     void run_speed(
-        void speed_case(size_t size, size_t repeat) ,
-        const CppAD::vector<size_t>&       size_vec ,
-        const std::string&                case_name )
+        double time_case(double time_min,  size_t size)  ,
+        const CppAD::vector<size_t>&        size_vec     ,
+        const std::string&                  case_name    )
     {   double time_min = 1.;
         cout << case_name << "_size = ";
         output(size_vec);
@@ -509,7 +508,7 @@ namespace {
                 cout << ", ";
             cout << std::flush;
             size_t size = size_vec[i];
-            double time = CppAD::time_test(speed_case, time_min, size);
+            double time = time_case(time_min, size);
             double rate = 1. / time;
             if( rate >= 1000 )
                 cout << std::setprecision(0) << rate;
@@ -517,8 +516,6 @@ namespace {
         }
         cout << " ]" << endl;
         //
-        // free statically allocated memory (size = repeat = 0)
-        speed_case(0, 0);
         return;
     }
 # ifdef CPPAD_CPPADCG_SPEED
@@ -756,25 +753,25 @@ int main(int argc, char *argv[])
         // run all the speed tests
         case test_speed:
         if( available_det_lu() ) run_speed(
-        speed_det_lu,          size_det_lu,          "det_lu"
+            time_det_lu,          size_det_lu,          "det_lu"
         );
         if( available_det_minor() ) run_speed(
-        speed_det_minor,       size_det_minor,       "det_minor"
+            time_det_minor,       size_det_minor,       "det_minor"
         );
         if( available_mat_mul() ) run_speed(
-        speed_mat_mul,           size_mat_mul,       "mat_mul"
+            time_mat_mul,           size_mat_mul,       "mat_mul"
         );
         if( available_ode() ) run_speed(
-        speed_ode,             size_ode,             "ode"
+            time_ode,             size_ode,             "ode"
         );
         if( available_poly() ) run_speed(
-        speed_poly,            size_poly,            "poly"
+            time_poly,            size_poly,            "poly"
         );
         if( available_sparse_hessian() ) run_speed(
-        speed_sparse_hessian,  size_sparse_hessian,  "sparse_hessian"
+            time_sparse_hessian,  size_sparse_hessian,  "sparse_hessian"
         );
         if( available_sparse_jacobian() ) run_speed(
-        speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
+        time_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
         );
         ok = true;
         break;
@@ -788,7 +785,7 @@ int main(int argc, char *argv[])
         ok &= run_correct(
             available_det_lu, correct_det_lu, "det_lu")
         ;
-        run_speed(speed_det_lu,    size_det_lu,     "det_lu");
+        run_speed(time_det_lu,    size_det_lu,     "det_lu");
         break;
         // ---------------------------------------------------------
 
@@ -800,7 +797,7 @@ int main(int argc, char *argv[])
         ok &= run_correct(
             available_det_minor, correct_det_minor, "det_minor"
         );
-        run_speed(speed_det_minor, size_det_minor, "det_minor");
+        run_speed(time_det_minor, size_det_minor, "det_minor");
         break;
         // ---------------------------------------------------------
 
@@ -812,7 +809,7 @@ int main(int argc, char *argv[])
         ok &= run_correct(
             available_mat_mul, correct_mat_mul, "mat_mul"
         );
-        run_speed(speed_mat_mul, size_mat_mul, "mat_mul");
+        run_speed(time_mat_mul, size_mat_mul, "mat_mul");
         break;
         // ---------------------------------------------------------
 
@@ -824,7 +821,7 @@ int main(int argc, char *argv[])
         ok &= run_correct(
             available_ode, correct_ode, "ode"
         );
-        run_speed(speed_ode,      size_ode,      "ode");
+        run_speed(time_ode,      size_ode,      "ode");
         break;
         // ---------------------------------------------------------
 
@@ -836,7 +833,7 @@ int main(int argc, char *argv[])
         ok &= run_correct(
             available_poly, correct_poly, "poly"
         );
-        run_speed(speed_poly,      size_poly,      "poly");
+        run_speed(time_poly,      size_poly,      "poly");
         break;
         // ---------------------------------------------------------
 
@@ -851,7 +848,7 @@ int main(int argc, char *argv[])
             "sparse_hessian"
         );
         run_speed(
-            speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian"
+            time_sparse_hessian, size_sparse_hessian,  "sparse_hessian"
         );
         cout << AD_PACKAGE << "_sparse_hessian_n_color = ";
         for(size_t i = 0; i < size_sparse_hessian.size(); i++)
@@ -878,7 +875,7 @@ int main(int argc, char *argv[])
             "sparse_jacobian"
         );
         run_speed(
-            speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
+            time_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
         );
         cout << AD_PACKAGE << "_sparse_jacobian_n_color = ";
         for(size_t i = 0; i < size_sparse_jacobian.size(); i++)

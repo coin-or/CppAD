@@ -12,6 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/vector.hpp>
 # include <cppad/utility/poly.hpp>
 # include <cppad/utility/near_equal.hpp>
+# include <cppad/utility/time_test.hpp>
 // BEGIN PROTOTYPE
 extern bool link_poly(
     size_t                     size     ,
@@ -97,6 +98,7 @@ bool available_poly(void)
 
     return link_poly(size, repeat, a, z, ddp);
 }
+// ---------------------------------------------------------------------------
 bool correct_poly(bool is_package_double)
 {   size_t size   = 10;
     size_t repeat = 1;
@@ -116,7 +118,8 @@ bool correct_poly(bool is_package_double)
     bool ok = CppAD::NearEqual(check, ddp[0], eps99, eps99);
     return ok;
 }
-void speed_poly(size_t size, size_t repeat)
+// ---------------------------------------------------------------------------
+void time_poly_callback(size_t size, size_t repeat)
 {   // free statically allocated memory
     if( size == 0 && repeat == 0 )
         return;
@@ -126,3 +129,7 @@ void speed_poly(size_t size, size_t repeat)
     link_poly(size, repeat, a, z, ddp);
     return;
 }
+double time_poly(double time_min, size_t size)
+{   return CppAD::time_test(time_poly_callback, time_min, size);
+}
+// ---------------------------------------------------------------------------

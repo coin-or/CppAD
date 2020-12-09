@@ -42,6 +42,7 @@ extern std::map<std::string, bool> global_option;
 extern size_t global_cppad_thread_alloc_inuse;
 
 bool link_det_minor(
+    const std::string&         job      ,
     size_t                     size     ,
     size_t                     repeat   ,
     CppAD::vector<double>     &matrix   ,
