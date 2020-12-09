@@ -36,8 +36,8 @@ bool link_det_minor(
     size_t                     repeat   ,
     CppAD::vector<double>     &matrix   ,
     CppAD::vector<double>     &gradient )
-{   assert( matrix.size() == size * size );
-    assert( gradient.size() == size * size );
+{   CPPAD_ASSERT_UNKNOWN( matrix.size() == size * size );
+    CPPAD_ASSERT_UNKNOWN( gradient.size() == size * size );
     // --------------------------------------------------------------------
     // check global options
     const char* valid[] = { "onetape", "optimize"};
@@ -64,37 +64,46 @@ bool link_det_minor(
     typedef CppAD::AD<c_double>      ac_double;
     typedef CppAD::vector<ac_double> ac_vector;
     //
+    // function object mapping matrix to gradiend of determinant
+    static compiled_fun static_g;
+    //
+    // size correspmnding to static_g
+    static size_t static_size;
+    //
     // object for computing determinant
     CppAD::det_by_minor<ac_double>   ac_det(size);
     //
     // number of independent variables
     size_t nx = size * size;
-    // determinant domain space vector
-    ac_vector   ac_A(nx);
-    // determinant range space vector
-    ac_vector   ac_detA(1);
-    // gradient of determinant
-    ac_vector   ac_gradient(nx);
     //
     // vectors of reverse mode weights
     CppAD::vector<ac_double> ac_w(1);
     ac_w[0] = ac_double(1.0);
     //
-    // the AD function objects
-    CppAD::ADFun<c_double> c_f;
-    CppAD::ADFun<c_double> c_g;
-    CppAD::ADFun<ac_double, c_double> ac_f;
-    //
     // do not even record comparison operators
-    size_t abort_op_index = 0;
     bool record_compare   = false;
     //
-    // -----------------------------------------------------------------------
-    if( ! global_option["one_tape"] ) while(repeat--)
-    {   // choose a matrix
+    // no abort AD recording index
+    size_t abort_op_index = 0;
+    //
+    // onetape
+    bool onetape = global_option["onetape"];
+    //
+    if( job == "setup" )
+    {   // case where setup time is in the loop
+        if( ! onetape )
+        {   static_size = 0;
+            return true;
+        }
+        //
+        // size corresponding to setup
+        static_size = size;
+        //
+        // choose a matrix
         CppAD::uniform_01(nx, matrix);
 
         // copy to independent variables
+        ac_vector   ac_A(nx);
         for(size_t j = 0; j < nx; ++j)
             ac_A[j] = matrix[j];
 
@@ -102,9 +111,12 @@ bool link_det_minor(
         CppAD::Independent(ac_A, abort_op_index, record_compare);
 
         // AD computation of the determinant
+        ac_vector ac_detA(1);
         ac_detA[0] = ac_det(ac_A);
 
         // create function objects for f : A -> detA
+        CppAD::ADFun<c_double>            c_f;
+        CppAD::ADFun<ac_double, c_double> ac_f;
         c_f.Dependent(ac_A, ac_detA);
         ac_f = c_f.base2ad();
 
@@ -112,10 +124,58 @@ bool link_det_minor(
         CppAD::Independent(ac_A, abort_op_index, record_compare);
 
         // AD computation of the gradient
+        ac_vector ac_gradient(nx);
         ac_f.Forward(0, ac_A);
         ac_gradient = ac_f.Reverse(1, ac_w);
 
         // create function objects for g : A -> det'( detA  )
+        CppAD::ADFun<c_double> c_g;
+        c_g.Dependent(ac_A, ac_gradient);
+        compiled_fun g(c_g, "det_minor");
+        static_g.swap(g);
+        //
+        return true;
+    }
+    if( job ==  "teardown" )
+    {   compiled_fun g;
+        static_g.swap(g);
+        return true;
+    }
+    CPPAD_ASSERT_UNKNOWN( job == "run" );
+    //
+    // -----------------------------------------------------------------------
+    if( ! onetape ) while(repeat--)
+    {   // choose a matrix
+        CppAD::uniform_01(nx, matrix);
+
+        // copy to independent variables
+        ac_vector   ac_A(nx);
+        for(size_t j = 0; j < nx; ++j)
+            ac_A[j] = matrix[j];
+
+        // declare independent variables for function computation
+        CppAD::Independent(ac_A, abort_op_index, record_compare);
+
+        // AD computation of the determinant
+        ac_vector ac_detA(1);
+        ac_detA[0] = ac_det(ac_A);
+
+        // create function objects for f : A -> detA
+        CppAD::ADFun<c_double>            c_f;
+        CppAD::ADFun<ac_double, c_double> ac_f;
+        c_f.Dependent(ac_A, ac_detA);
+        ac_f = c_f.base2ad();
+
+        // declare independent variables for gradient computation
+        CppAD::Independent(ac_A, abort_op_index, record_compare);
+
+        // AD computation of the gradient
+        ac_vector ac_gradient(nx);
+        ac_f.Forward(0, ac_A);
+        ac_gradient = ac_f.Reverse(1, ac_w);
+
+        // create function objects for g : A -> det'( detA  )
+        CppAD::ADFun<c_double> c_g;
         c_g.Dependent(ac_A, ac_gradient);
         compiled_fun g(c_g, "det_minor");
 
@@ -123,40 +183,13 @@ bool link_det_minor(
         gradient = g(matrix);
     }
     else
-    {   // choose a matrix
-        CppAD::uniform_01(nx, matrix);
-
-        // copy to independent variables
-        for(size_t j = 0; j < nx; ++j)
-            ac_A[j] = matrix[j];
-
-        // declare independent variables for function computation
-        CppAD::Independent(ac_A, abort_op_index, record_compare);
-
-        // AD computation of the determinant
-        ac_detA[0] = ac_det(ac_A);
-
-        // create function objects for f : A -> detA
-        c_f.Dependent(ac_A, ac_detA);
-        ac_f = c_f.base2ad();
-
-        // declare independent variables for gradient computation
-        CppAD::Independent(ac_A, abort_op_index, record_compare);
-
-        // AD computation of the gradient
-        ac_f.Forward(0, ac_A);
-        ac_gradient = ac_f.Reverse(1, ac_w);
-
-        // create function objects for g : A -> det'( detA  )
-        c_g.Dependent(ac_A, ac_gradient);
-        compiled_fun g(c_g, "det_minor");
-
-        while(repeat--)
+    {   CPPAD_ASSERT_UNKNOWN( size == static_size );
+         while(repeat--)
         {   // get next matrix
             CppAD::uniform_01(nx, matrix);
 
             // evaluate the gradient
-            gradient = g(matrix);
+            gradient = static_g(matrix);
         }
     }
     return true;

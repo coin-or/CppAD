@@ -72,7 +72,7 @@ how long this routine takes.
 
 $subhead run$$
 This call will be used for timing how long this routine takes.
-The previous call $icode job$$ was either $code seutp$$ or $code run$$
+The previous call $icode job$$ was either $code setup$$ or $code run$$
 and had the same value of $icode size$$.
 
 $subhead teardown$$
@@ -167,7 +167,7 @@ double time_det_minor(double time_min, size_t size)
     CppAD::vector<double> matrix(size * size);
     CppAD::vector<double> gradient(size * size);
     //
-    std::string job    = "seutp";
+    std::string job    = "setup";
     size_t      repeat = 0;
     link_det_minor(job, size, repeat, matrix, gradient);
     //
