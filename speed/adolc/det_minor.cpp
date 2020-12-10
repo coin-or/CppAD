@@ -12,7 +12,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin adolc_det_minor.cpp$$
 $spell
-    thread_alloc
     onetape
     cppad
     zos
@@ -50,6 +49,31 @@ $srccode%cpp% */
 # include <map>
 extern std::map<std::string, bool> global_option;
 
+namespace {
+    void setup(int tag, size_t size, const CppAD::vector<double>& matrix)
+    {   // number of independent variables
+        int n = size * size;
+
+        // object for computing determinant
+        CppAD::det_by_minor<adouble> a_det(size);
+
+        // declare independent variables
+        int keep = 1; // keep forward mode results
+        trace_on(tag, keep);
+        CppAD::vector<adouble> a_A(n);
+        for(int j = 0; j < n; ++j)
+            a_A[j] <<= matrix[j];
+
+        // AD computation of the determinant
+        adouble a_detA = a_det(a_A);
+
+        // create function object f : A -> detA
+        double f;
+        a_detA >>= f;
+        trace_off();
+    }
+}
+
 bool link_det_minor(
     const std::string&         job      ,
     size_t                     size     ,
@@ -57,109 +81,91 @@ bool link_det_minor(
     CppAD::vector<double>     &matrix   ,
     CppAD::vector<double>     &gradient )
 {
-    // speed test global option values
-    if( global_option["atomic"] )
-        return false;
-    if( global_option["memory"] || global_option["optimize"] )
-        return false;
-    // -----------------------------------------------------
-    // setup
-    typedef adouble    ADScalar;
-    typedef ADScalar*  ADVector;
-
-    int tag  = 0;         // tape identifier
-    int m    = 1;         // number of dependent variables
-    int n    = size*size; // number of independent variables
-    double f;             // function value
-    int j;                // temporary index
-
-    // set up for thread_alloc memory allocator (fast and checks for leaks)
-    using CppAD::thread_alloc; // the allocator
-    size_t capacity;           // capacity of an allocation
-
-    // object for computing determinant
-    CppAD::det_by_minor<ADScalar> Det(size);
-
-    // AD value of determinant
-    ADScalar   detA;
-
-    // AD version of matrix
-    ADVector A   = thread_alloc::create_array<ADScalar>(size_t(n), capacity);
-
-    // vectors of reverse mode weights
-    double* u    = thread_alloc::create_array<double>(size_t(m), capacity);
-    u[0] = 1.;
-
-    // vector with matrix value
-    double* mat  = thread_alloc::create_array<double>(size_t(n), capacity);
-
-    // vector to receive gradient result
-    double* grad = thread_alloc::create_array<double>(size_t(n), capacity);
-
-    // ----------------------------------------------------------------------
-    if( ! global_option["onetape"] ) while(repeat--)
-    {   // choose a matrix
-        CppAD::uniform_01(n, mat);
-
-        // declare independent variables
-        int keep = 1; // keep forward mode results
-        trace_on(tag, keep);
-        for(j = 0; j < n; j++)
-            A[j] <<= mat[j];
-
-        // AD computation of the determinant
-        detA = Det(A);
-
-        // create function object f : A -> detA
-        detA >>= f;
-        trace_off();
-
-        // evaluate and return gradient using reverse mode
-        fos_reverse(tag, m, n, u, grad);
-    }
-    else
-    {
-        // choose a matrix
-        CppAD::uniform_01(n, mat);
-
-        // declare independent variables
-        int keep = 0; // do not keep forward mode results in buffer
-        trace_on(tag, keep);
-        for(j = 0; j < n; j++)
-            A[j] <<= mat[j];
-
-        // AD computation of the determinant
-        detA = Det(A);
-
-        // create function object f : A -> detA
-        detA >>= f;
-        trace_off();
-
-        while(repeat--)
-        {   // get the next matrix
-            CppAD::uniform_01(n, mat);
-
-            // evaluate the determinant at the new matrix value
-            keep = 1; // keep this forward mode result
-            zos_forward(tag, m, n, keep, mat, &f);
-
-            // evaluate and return gradient using reverse mode
-            fos_reverse(tag, m, n, u, grad);
+    // --------------------------------------------------------------------
+    // check global options
+    // Allow colpack true even though it is not used below because it is
+    // true durng the adolc correctness tests.
+    const char* valid[] = { "onetape", "optimize", "colpack"};
+    size_t n_valid = sizeof(valid) / sizeof(valid[0]);
+    typedef std::map<std::string, bool>::iterator iterator;
+    //
+    for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+    {   if( itr->second )
+        {   bool ok = false;
+            for(size_t i = 0; i < n_valid; i++)
+                ok |= itr->first == valid[i];
+            if( ! ok )
+                return false;
         }
     }
-    // --------------------------------------------------------------------
-
-    // return matrix and gradient
-    for(j = 0; j < n; j++)
-    {   matrix[j] = mat[j];
-        gradient[j] = grad[j];
+    // -----------------------------------------------------
+    // -----------------------------------------------------
+    // size corresponding to current tape
+    static size_t static_size = 0;
+    //
+    // tape identifier
+    int tag  = 0;
+    //
+    // number of dependent variables
+    int m    = 1;
+    //
+    // number of independent variables
+    int n = size * size;
+    //
+    // vectors of reverse mode weights
+    CppAD::vector<double> u(m);
+    u[0] = 1.;
+    //
+    bool onetape = global_option["onetape"];
+    // ----------------------------------------------------------------------
+    if( job == "setup" )
+    {   if( onetape )
+        {   // get a matrix
+            CppAD::uniform_01(size_t(n), matrix);
+            //
+            // recrod the tape
+            setup(tag, size, matrix);
+            static_size = size;
+        }
+        else
+        {   static_size = 0;
+        }
+        return true;
     }
+    if( job == "teardown" )
+    {   // 2DO: How does one free an adolc tape ?
+        return true;
+    }
+    // ----------------------------------------------------------------------
+    CPPAD_ASSERT_UNKNOWN( job == "run" );
+    if( onetape ) while(repeat--)
+    {   if( size != static_size )
+        {   CPPAD_ASSERT_UNKNOWN( size == static_size );
+        }
 
-    // tear down
-    thread_alloc::delete_array(grad);
-    thread_alloc::delete_array(mat);
-    thread_alloc::delete_array(u);
-    thread_alloc::delete_array(A);
+        // choose a matrix
+        CppAD::uniform_01(n, matrix);
+
+        // evaluate the determinant at the new matrix value
+        int keep = 1; // keep this forward mode result
+        double f;     // function result
+        zos_forward(tag, m, n, keep, matrix.data(), &f);
+
+        // evaluate and return gradient using reverse mode
+        fos_reverse(tag, m, n, u.data(), gradient.data());
+    }
+    else while(repeat--)
+    {
+        // choose a matrix
+        CppAD::uniform_01(n, matrix);
+
+        // record the tape
+        setup(tag, size, matrix);
+
+        // evaluate and return gradient using reverse mode
+        fos_reverse(tag, m, n, u.data(), gradient.data());
+    }
+    // --------------------------------------------------------------------
     return true;
 }
 /* %$$

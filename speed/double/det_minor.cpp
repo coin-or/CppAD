@@ -44,15 +44,19 @@ bool link_det_minor(
     size_t                     repeat   ,
     CppAD::vector<double>     &matrix   ,
     CppAD::vector<double>     &det      )
-{
-    if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
-        return false;
-    // -----------------------------------------------------
+{   // --------------------------------------------------------------------------
+    // ignore global_option
+    // --------------------------------------------------------------------------
+    if( job == "setup" || job == "teardown" )
+        return true;
+    CPPAD_ASSERT_UNKNOWN( job == "run" );
+    //
     // setup
     CppAD::det_by_minor<double>   Det(size);
-    size_t n = size * size; // number of independent variables
-
-    // ------------------------------------------------------
+    //
+    // number of independent variables
+    size_t n = size * size;
+    // -------------------------------------------------------------------------
     while(repeat--)
     {   // get the next matrix
         CppAD::uniform_01(n, matrix);

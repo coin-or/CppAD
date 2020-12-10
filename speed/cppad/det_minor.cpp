@@ -116,7 +116,7 @@ bool link_det_minor(
     static CppAD::ADFun<double> static_f;
     //
     // size corresponding to static_f
-    static size_t static_size;
+    static size_t static_size = 0;
     //
     // number of independent variables
     size_t nx = size * size;
@@ -127,7 +127,7 @@ bool link_det_minor(
     //
     // onetape
     bool onetape = global_option["onetape"];
-    //
+    // -----------------------------------------------------------------------
     if( job == "setup" )
     {   if( onetape )
         {   setup(static_f, size);
@@ -142,13 +142,13 @@ bool link_det_minor(
     {   static_f = CppAD::ADFun<double>();
         return true;
     }
-    CPPAD_ASSERT_UNKNOWN( job == "run" );
-    //
     // -----------------------------------------------------------------------
+    CPPAD_ASSERT_UNKNOWN( job == "run" );
     if( onetape ) while(repeat--)
     {   // use if before assert to avoid warning that static_size is not used
         if( size != static_size )
-            CPPAD_ASSERT_UNKNOWN( size == static_size );
+        {   CPPAD_ASSERT_UNKNOWN( size == static_size );
+        }
 
         // get next matrix
         CppAD::uniform_01(nx, matrix);

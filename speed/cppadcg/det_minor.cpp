@@ -129,7 +129,7 @@ bool link_det_minor(
     static compiled_fun static_g;
     //
     // size correspmnding to static_g
-    static size_t static_size;
+    static size_t static_size = 0;
     //
     // object for computing determinant
     CppAD::det_by_minor<ac_double>   ac_det(size);
@@ -139,7 +139,7 @@ bool link_det_minor(
     //
     // onetape
     bool onetape = global_option["onetape"];
-    //
+    // ----------------------------------------------------------------------
     if( job == "setup" )
     {   if( onetape )
         {   setup(static_g, size);
@@ -155,13 +155,13 @@ bool link_det_minor(
         static_g.swap(g);
         return true;
     }
-    CPPAD_ASSERT_UNKNOWN( job == "run" );
-    //
     // -----------------------------------------------------------------------
+    CPPAD_ASSERT_UNKNOWN( job == "run" );
     if( onetape ) while(repeat--)
     {   // use if before assert to vaoid warning that static_size is not used
         if( size != static_size )
-            CPPAD_ASSERT_UNKNOWN( size == static_size );
+        {   CPPAD_ASSERT_UNKNOWN( size == static_size );
+        }
 
         // get next matrix
         CppAD::uniform_01(nx, matrix);
