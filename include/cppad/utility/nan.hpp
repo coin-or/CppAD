@@ -147,6 +147,8 @@ $end
 
 //needed for is_floating_point compile-time check
 # include <type_traits>
+//needed for std::isnan
+# include <cmath>
 # include <cppad/core/cppad_assert.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
@@ -171,11 +173,12 @@ namespace CppAD { // BEGIN CppAD namespace
 template <class Scalar>
 bool isnan(const Scalar &s)
 {
-  if constexpr (std::is_floating_point<Scalar>::value) 
+  if (std::is_floating_point<Scalar>::value) 
   {
       return ::std::isnan(s);
   }
-  else {
+  else 
+  {
       return (s != s);
   }
 }
