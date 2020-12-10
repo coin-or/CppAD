@@ -54,24 +54,33 @@ bool link_det_minor(
     CppAD::vector<double>     &matrix   ,
     CppAD::vector<double>     &gradient )
 {
-    // speed test global option values
-    if( global_option["atomic"] )
-        return false;
-    if( global_option["memory"] || global_option["onetape"] || global_option["optimize"] )
-        return false;
+    // --------------------------------------------------------------------
+    // check not global options
+    typedef std::map<std::string, bool>::iterator iterator;
+    for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+    {   if( itr->second )
+            return false;
+    }
     // -----------------------------------------------------
-    // setup
 
     // object for computing determinant
-    typedef fadbad::B<double>       ADScalar;
-    typedef CppAD::vector<ADScalar> ADVector;
-    CppAD::det_by_minor<ADScalar>   Det(size);
+    typedef fadbad::B<double>       b_double;
+    typedef CppAD::vector<b_double> b_vector;
 
-    size_t i;                // temporary index
-    size_t m = 1;            // number of dependent variables
-    size_t n = size * size;  // number of independent variables
-    ADScalar   detA;         // AD value of the determinant
-    ADVector   A(n);         // AD version of matrix
+    // object that computes the determinant
+    CppAD::det_by_minor<b_double>   b_det(size);
+
+    // number of dependent variables
+    unsigned int m = 1;
+
+    // number of independent variables
+    size_t n = size * size;
+
+    // independent variable vector
+    b_vector   b_A(n);
+
+    // AD value of the determinant
+    b_double  b_detA;
 
     // ------------------------------------------------------
     while(repeat--)
@@ -79,18 +88,18 @@ bool link_det_minor(
         CppAD::uniform_01(n, matrix);
 
         // set independent variable values
-        for(i = 0; i < n; i++)
-            A[i] = matrix[i];
+        for(size_t j = 0; j < n; j++)
+            b_A[j] = matrix[j];
 
         // compute the determinant
-        detA = Det(A);
+        b_detA = b_det(b_A);
 
         // create function object f : A -> detA
-        detA.diff(0, (unsigned int) m);  // index 0 of m dependent variables
+        b_detA.diff(0, m);  // index 0 of m dependent variables
 
         // evaluate and return gradient using reverse mode
-        for(i =0; i < n; i++)
-            gradient[i] = A[i].d(0); // partial detA w.r.t A[i]
+        for(size_t j = 0; j < n; j++)
+            gradient[j] = b_A[j].d(0); // partial detA w.r.t A[i]
     }
     // ---------------------------------------------------------
     return true;

@@ -54,23 +54,32 @@ bool link_det_minor(
     CppAD::vector<double>     &matrix   ,
     CppAD::vector<double>     &gradient )
 {
-    // speed test global option values
-    if( global_option["atomic"] )
-        return false;
-    if( global_option["memory"] || global_option["onetape"] || global_option["optimize"] )
-        return false;
+    // --------------------------------------------------------------------
+    // check none of the global options is true
+    typedef std::map<std::string, bool>::iterator iterator;
+    for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+    {   if( itr->second )
+            return false;
+    }
     // -----------------------------------------------------
-    // setup
+    // not using job
+    // -----------------------------------------------------
 
-    // object for computing determinant
-    typedef Sacado::Rad::ADvar<double>    ADScalar;
-    typedef CppAD::vector<ADScalar>       ADVector;
-    CppAD::det_by_minor<ADScalar>         Det(size);
+    // AD types
+    typedef Sacado::Rad::ADvar<double>    r_double;
+    typedef CppAD::vector<r_double>       r_vector;
 
-    size_t i;                // temporary index
-    size_t n = size * size;  // number of independent variables
-    ADScalar   detA;         // AD value of the determinant
-    ADVector   A(n);         // AD version of matrix
+    // object for computing deterinant
+    CppAD::det_by_minor<r_double>         r_det(size);
+
+    // number of independent variables
+    size_t n = size * size;
+
+    // independent variable vector
+    r_vector   r_A(n);
+
+    // AD value of the determinant
+    r_double   r_detA;
 
     // ------------------------------------------------------
     while(repeat--)
@@ -78,18 +87,18 @@ bool link_det_minor(
         CppAD::uniform_01(n, matrix);
 
         // set independent variable values
-        for(i = 0; i < n; i++)
-            A[i] = matrix[i];
+        for(size_t j = 0; j < n; ++j)
+            r_A[j] = matrix[j];
 
         // compute the determinant
-        detA = Det(A);
+        r_detA = r_det(r_A);
 
         // reverse mode compute gradient of last computed value; i.e., detA
-        ADScalar::Gradcomp();
+        r_double::Gradcomp();
 
         // return gradient
-        for(i =0; i < n; i++)
-            gradient[i] = A[i].adj(); // partial detA w.r.t A[i]
+        for(size_t j =0; j < n; ++j)
+            gradient[j] = r_A[j].adj(); // partial detA w.r.t A[j]
     }
     // ---------------------------------------------------------
     return true;
