@@ -99,8 +99,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
 	eigen_mat_inv.cpp ipopt_solve.cpp alloc_openmp.cpp acos.cpp \
-	acosh.cpp add.cpp add_eq.cpp add_zero.cpp adfun_copy.cpp \
-	asin.cpp asinh.cpp assign.cpp atan2.cpp atan.cpp atanh.cpp \
+	acosh.cpp add.cpp add_eq.cpp add_zero.cpp adfun.cpp asin.cpp \
+	asinh.cpp assign.cpp atan2.cpp atan.cpp atanh.cpp \
 	atomic_three.cpp azmul.cpp base_alloc.cpp bool_sparsity.cpp \
 	check_simple_vector.cpp chkpoint_one.cpp chkpoint_two.cpp \
 	compare_change.cpp compare.cpp cond_exp_ad.cpp cond_exp.cpp \
@@ -135,7 +135,7 @@ am__dirstamp = $(am__leading_dot)dirstamp
 am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	$(am__objects_3) $(am__objects_4) acos.$(OBJEXT) \
 	acosh.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
-	add_zero.$(OBJEXT) adfun_copy.$(OBJEXT) asin.$(OBJEXT) \
+	add_zero.$(OBJEXT) adfun.$(OBJEXT) asin.$(OBJEXT) \
 	asinh.$(OBJEXT) assign.$(OBJEXT) atan2.$(OBJEXT) \
 	atan.$(OBJEXT) atanh.$(OBJEXT) atomic_three.$(OBJEXT) \
 	azmul.$(OBJEXT) base_alloc.$(OBJEXT) bool_sparsity.$(OBJEXT) \
@@ -198,7 +198,7 @@ depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/acos.Po ./$(DEPDIR)/acosh.Po \
 	./$(DEPDIR)/add.Po ./$(DEPDIR)/add_eq.Po \
-	./$(DEPDIR)/add_zero.Po ./$(DEPDIR)/adfun_copy.Po \
+	./$(DEPDIR)/add_zero.Po ./$(DEPDIR)/adfun.Po \
 	./$(DEPDIR)/alloc_openmp.Po ./$(DEPDIR)/asin.Po \
 	./$(DEPDIR)/asinh.Po ./$(DEPDIR)/assign.Po ./$(DEPDIR)/atan.Po \
 	./$(DEPDIR)/atan2.Po ./$(DEPDIR)/atanh.Po \
@@ -528,7 +528,7 @@ general_SOURCES = \
 	add.cpp \
 	add_eq.cpp \
 	add_zero.cpp \
-	adfun_copy.cpp \
+	adfun.cpp \
 	asin.cpp \
 	asinh.cpp \
 	assign.cpp \
@@ -697,7 +697,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add_eq.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add_zero.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/adfun_copy.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/adfun.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alloc_openmp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asin.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asinh.Po@am__quote@ # am--include-marker
@@ -957,7 +957,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/add.Po
 	-rm -f ./$(DEPDIR)/add_eq.Po
 	-rm -f ./$(DEPDIR)/add_zero.Po
-	-rm -f ./$(DEPDIR)/adfun_copy.Po
+	-rm -f ./$(DEPDIR)/adfun.Po
 	-rm -f ./$(DEPDIR)/alloc_openmp.Po
 	-rm -f ./$(DEPDIR)/asin.Po
 	-rm -f ./$(DEPDIR)/asinh.Po
@@ -1112,7 +1112,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/add.Po
 	-rm -f ./$(DEPDIR)/add_eq.Po
 	-rm -f ./$(DEPDIR)/add_zero.Po
-	-rm -f ./$(DEPDIR)/adfun_copy.Po
+	-rm -f ./$(DEPDIR)/adfun.Po
 	-rm -f ./$(DEPDIR)/alloc_openmp.Po
 	-rm -f ./$(DEPDIR)/asin.Po
 	-rm -f ./$(DEPDIR)/asinh.Po
