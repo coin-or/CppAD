@@ -95,6 +95,21 @@ derivative of $icode z$$ with respect to $icode x$$.
 $end
 -----------------------------------------------------------------------------
 */
+namespace {
+    void time_mat_mul_callback(size_t size, size_t repeat)
+    {   // free statically allocated memory
+        if( size == 0 && repeat == 0 )
+            return;
+        //
+        CppAD::vector<double>  x(size * size), z(1), dz(size * size);
+
+        link_mat_mul(size, repeat, x, z, dz);
+        return;
+    }
+}
+// ---------------------------------------------------------------------------
+// The routines below are documented in link.omh
+// ---------------------------------------------------------------------------
 bool available_mat_mul(void)
 {   size_t size   = 3;
     size_t repeat = 1;
@@ -140,17 +155,6 @@ bool correct_mat_mul(bool is_package_double)
     ok   &= CppAD::NearEqual(check, dz[1 * size + 1], eps99, eps99);
 
     return ok;
-}
-// --------------------------------------------------------------------------
-void time_mat_mul_callback(size_t size, size_t repeat)
-{   // free statically allocated memory
-    if( size == 0 && repeat == 0 )
-        return;
-    //
-    CppAD::vector<double>  x(size * size), z(1), dz(size * size);
-
-    link_mat_mul(size, repeat, x, z, dz);
-    return;
 }
 double time_mat_mul(double time_min, size_t size)
 {   return CppAD::time_test(time_mat_mul_callback, time_min, size);

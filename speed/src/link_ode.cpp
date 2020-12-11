@@ -104,6 +104,21 @@ $latex f(x)$$ corresponding to the output value of $icode x$$.
 $end
 -----------------------------------------------------------------------------
 */
+namespace {
+    void time_ode_callback(size_t n, size_t repeat)
+    {   // free statically allocated memory
+        if( n == 0 && repeat == 0 )
+            return;
+        //
+        CppAD::vector<double> x(n);
+        CppAD::vector<double> jacobian(n * n);
+        link_ode(n, repeat, x, jacobian);
+        return;
+    }
+}
+// ---------------------------------------------------------------------------
+// The routines below are documented in link.omh
+// ---------------------------------------------------------------------------
 bool available_ode(void)
 {   size_t n      = 1;
     size_t repeat = 1;
@@ -136,17 +151,6 @@ bool correct_ode(bool is_package_double)
         ok &= CppAD::NearEqual(check[k], jacobian[k], 1e-6, 1e-6);
 
     return ok;
-}
-// ----------------------------------------------------------------------------
-void time_ode_callback(size_t n, size_t repeat)
-{   // free statically allocated memory
-    if( n == 0 && repeat == 0 )
-        return;
-    //
-    CppAD::vector<double> x(n);
-    CppAD::vector<double> jacobian(n * n);
-    link_ode(n, repeat, x, jacobian);
-    return;
 }
 double time_ode(double time_min, size_t size)
 {   return CppAD::time_test(time_ode_callback, time_min, size);

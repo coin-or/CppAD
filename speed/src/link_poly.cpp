@@ -91,6 +91,21 @@ is the polynomial value (the second derivative is not computed).
 $end
 -----------------------------------------------------------------------------
 */
+namespace {
+void time_poly_callback(size_t size, size_t repeat)
+    {   // free statically allocated memory
+        if( size == 0 && repeat == 0 )
+            return;
+        //
+        CppAD::vector<double>  a(size), z(1), ddp(1);
+
+        link_poly(size, repeat, a, z, ddp);
+        return;
+    }
+}
+// ---------------------------------------------------------------------------
+// The routines below are documented in link.omh
+// ---------------------------------------------------------------------------
 bool available_poly(void)
 {   size_t size   = 10;
     size_t repeat = 1;
@@ -119,16 +134,6 @@ bool correct_poly(bool is_package_double)
     return ok;
 }
 // ---------------------------------------------------------------------------
-void time_poly_callback(size_t size, size_t repeat)
-{   // free statically allocated memory
-    if( size == 0 && repeat == 0 )
-        return;
-    //
-    CppAD::vector<double>  a(size), z(1), ddp(1);
-
-    link_poly(size, repeat, a, z, ddp);
-    return;
-}
 double time_poly(double time_min, size_t size)
 {   return CppAD::time_test(time_poly_callback, time_min, size);
 }

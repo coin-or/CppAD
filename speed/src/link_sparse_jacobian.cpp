@@ -17,9 +17,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 # include "link_sparse_jacobian.hpp"
 
+extern size_t global_seed;
+namespace { // BEGIN_EMPTY_NAMESPACE
+
 /*
 ------------------------------------------------------------------------------
-$begin choose_row_col_sparse_jacobian$$
+$begin sparse_jacobian_choose_row_col$$
 $spell
     Jacobian
     CppAD
@@ -27,7 +30,7 @@ $$
 $section Randomly Choose Row and Column Indices for Sparse Jacobian$$
 
 $head Syntax$$
-$codei%choose_row_col_sparse_jacobian(%seed%, %n%, %m%, %row%, %col%)%$$
+$codei%choose_row_col(%seed%, %n%, %m%, %row%, %col%)%$$
 
 $head Prototype$$
 $srcthisfile%
@@ -61,7 +64,7 @@ Upon return it is the chosen column indices.
 $end
 */
 // BEGIN_CHOOSE_ROW_COL
-void choose_row_col_sparse_jacobian(
+void choose_row_col(
     size_t                 seed ,
     size_t                 n    ,
     size_t                 m    ,
@@ -119,8 +122,126 @@ void choose_row_col_sparse_jacobian(
         c_previous = c;
     }
 }
-extern size_t global_seed;
-// ----------------------------------------------------------------------------
+/*
+------------------------------------------------------------------------------
+$begin time_sparse_jacobian_callback$$
+$spell
+    Jacobian
+    Namespace
+    CppAD
+$$
+
+$section Sparse Jacobian Timing Callback Function$$
+
+$head Namespace$$
+This function is in the empty namespace; i.e., it is only accessed
+by functions in this file.
+
+$head Syntax$$
+$codei%time_sparse_jacobian_callback(%size%, %repeat%)%$$
+
+$head size$$
+This $code size_t$$ value
+is the dimension of the argument space for function we are taking
+the Hessian of.
+
+$head repeat$$
+This $code size_t$$ value
+is the number of times to repeat the speed test.
+
+$end
+*/
+void time_sparse_jacobian_callback(size_t size, size_t repeat)
+{   using CppAD::vector;
+    // cppadcg assumes that m = 2 * size; see ../main.cpp
+    size_t n   = size;
+    size_t m   = 2 * n;
+    //
+    static size_t previous_size = 0;
+    static vector<size_t> row, col;
+    //
+    // free statically allocated memory
+    if( size == 0 && repeat == 0 )
+    {   row.clear();
+        col.clear();
+        previous_size = size;
+        return;
+    }
+
+    if( size != previous_size)
+    {   choose_row_col(global_seed, n, m, row, col);
+        previous_size = size;
+    }
+
+    // note that cppad/sparse_jacobian.cpp assumes that x.size()
+    // is the size corresponding to this test
+    vector<double> x(n);
+    size_t K = row.size();
+    vector<double> jacobian(K);
+    size_t         n_color;
+    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
+    return;
+}
+} // END_EMPTY_NAMESPACE
+// 2DO: remove when convert this test to use cppadcg compiled_fun
+void choose_row_col_sparse_jacobian(
+    size_t                 seed ,
+    size_t                 n    ,
+    size_t                 m    ,
+    CppAD::vector<size_t>& row  ,
+    CppAD::vector<size_t>& col  )
+{   choose_row_col(seed, n, m, row, col);
+}
+/*
+------------------------------------------------------------------------------
+$begin info_sparse_jacobian$$
+$spell
+    Jacobian
+    Namespace
+    CppAD
+$$
+
+$section Sparse Jacobian Speed Test Information$$
+
+$head Namespace$$
+This function is in the global namespace, not the CppAD namespace.
+
+$head Syntax$$
+$codei%info_spares_jacobian(%size%, %n_color%)%$$
+
+$head size$$
+This $code size_t$$ value is equal to
+$cref/size/time_sparse_jacobian_callback/size/$$
+in the corresponding call to $code time_sparse_jacobian_callback$$.
+
+$head n_color$$
+The input value of this $icode size_t$$ does not matter.
+Upon return, it is the value $cref/n_color/link_sparse_jacobian/n_color/$$
+returned by the corresponding call to $code link_sparse_jacobian$$.
+
+$end
+*/
+// info_sparse_jacobian
+void info_sparse_jacobian(size_t size, size_t& n_color)
+{   using CppAD::vector;
+    // cppadcg assumes that m = 2 * size; see ../main.cpp
+    size_t n      = size;
+    size_t m      = 2 * n;
+    size_t repeat = 1;
+    vector<size_t> row, col;
+    choose_row_col(global_seed, n, m, row, col);
+
+    // note that cppad/sparse_jacobian.cpp assumes that x.size()
+    // is the size corresponding to this test
+    vector<double> x(n);
+    size_t K = row.size();
+    vector<double> jacobian(K);
+    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
+    return;
+}
+// ---------------------------------------------------------------------------
+// The routines below are documented in link.omh
+// ---------------------------------------------------------------------------
 // available_sparse_jacobian
 bool available_sparse_jacobian(void)
 {   using CppAD::vector;
@@ -129,7 +250,7 @@ bool available_sparse_jacobian(void)
     size_t m      = 2 * n;
     size_t repeat = 1;
     vector<size_t> row, col;
-    choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
+    choose_row_col(global_seed, n, m, row, col);
 
     vector<double> x(n);
     size_t K = row.size();
@@ -148,7 +269,7 @@ bool correct_sparse_jacobian(bool is_package_double)
     bool ok       = true;
     double eps    = 10. * CppAD::numeric_limits<double>::epsilon();
     vector<size_t> row, col;
-    choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
+    choose_row_col(global_seed, n, m, row, col);
 
     size_t K = row.size();
     // The double package assumes jacobian.size() >= m
@@ -179,58 +300,6 @@ bool correct_sparse_jacobian(bool is_package_double)
     return ok;
 }
 // ----------------------------------------------------------------------------
-// time_sparse_jacobian
-void time_sparse_jacobian_callback(size_t size, size_t repeat)
-{   using CppAD::vector;
-    // cppadcg assumes that m = 2 * size; see ../main.cpp
-    size_t n   = size;
-    size_t m   = 2 * n;
-    //
-    static size_t previous_size = 0;
-    static vector<size_t> row, col;
-    //
-    // free statically allocated memory
-    if( size == 0 && repeat == 0 )
-    {   row.clear();
-        col.clear();
-        previous_size = size;
-        return;
-    }
-
-    if( size != previous_size)
-    {   choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
-        previous_size = size;
-    }
-
-    // note that cppad/sparse_jacobian.cpp assumes that x.size()
-    // is the size corresponding to this test
-    vector<double> x(n);
-    size_t K = row.size();
-    vector<double> jacobian(K);
-    size_t         n_color;
-    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
-    return;
-}
-// ----------------------------------------------------------------------------
 double time_sparse_jacobian(double time_min, size_t size)
 {   return CppAD::time_test(time_sparse_jacobian_callback, time_min, size);
-}
-// ----------------------------------------------------------------------------
-// info_sparse_jacobian
-void info_sparse_jacobian(size_t size, size_t& n_color)
-{   using CppAD::vector;
-    // cppadcg assumes that m = 2 * size; see ../main.cpp
-    size_t n      = size;
-    size_t m      = 2 * n;
-    size_t repeat = 1;
-    vector<size_t> row, col;
-    choose_row_col_sparse_jacobian(global_seed, n, m, row, col);
-
-    // note that cppad/sparse_jacobian.cpp assumes that x.size()
-    // is the size corresponding to this test
-    vector<double> x(n);
-    size_t K = row.size();
-    vector<double> jacobian(K);
-    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
-    return;
 }

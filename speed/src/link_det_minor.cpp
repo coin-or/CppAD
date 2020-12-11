@@ -111,6 +111,20 @@ the determinant value (the gradient value is not computed).
 $end
 -----------------------------------------------------------------------------
 */
+namespace {
+    void time_det_minor_callback(size_t size, size_t repeat)
+    {   // job
+        std::string job = "run";
+        CppAD::vector<double> matrix(size * size);
+        CppAD::vector<double> gradient(size * size);
+        //
+        link_det_minor(job, size, repeat, matrix, gradient);
+        return;
+    }
+}
+// ---------------------------------------------------------------------------
+// The routines below are documented in link.omh
+// ---------------------------------------------------------------------------
 bool available_det_minor(void)
 {
     size_t size   = 3;
@@ -150,16 +164,6 @@ bool correct_det_minor(bool is_package_double)
     link_det_minor(job, size, repeat, matrix, gradient);
     //
     return ok;
-}
-// ---------------------------------------------------------------------------
-void time_det_minor_callback(size_t size, size_t repeat)
-{   // job
-    std::string job = "run";
-    CppAD::vector<double> matrix(size * size);
-    CppAD::vector<double> gradient(size * size);
-    //
-    link_det_minor(job, size, repeat, matrix, gradient);
-    return;
 }
 double time_det_minor(double time_min, size_t size)
 {   CPPAD_ASSERT_UNKNOWN( size != 0 );

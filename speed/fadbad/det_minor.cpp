@@ -63,7 +63,7 @@ bool link_det_minor(
     }
     // -----------------------------------------------------
 
-    // object for computing determinant
+    // AD types
     typedef fadbad::B<double>       b_double;
     typedef CppAD::vector<b_double> b_vector;
 

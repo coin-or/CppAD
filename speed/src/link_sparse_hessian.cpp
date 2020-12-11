@@ -23,7 +23,7 @@ using CppAD::vector;
 
 /*
 ------------------------------------------------------------------------------
-$begin choose_row_col$$
+$begin sparse_hessian_choose_row_col$$
 $spell
     Namespace
 $$
@@ -31,7 +31,7 @@ $$
 $section Randomly choose Hessian row and column indices$$
 
 $head Namespace$$
-This function is in the empty namespace; i.e., it can only be accessed
+This function is in the empty namespace; i.e., it is only accessed
 by functions in this file.
 
 $head Prototype$$
@@ -110,113 +110,6 @@ void choose_row_col(
         }
     }
 }
-} // END_EMPTY_NAMESPACE
-
-
-/*
-------------------------------------------------------------------------------
-$begin available_sparse_hessian$$
-$spell
-    Namespace
-    CppAD
-    bool
-$$
-
-$section Is Sparse Hessian Speed Test Available$$
-
-$head Namespace$$
-This function is in the global namespace, not the CppAD namespace.
-
-$head Syntax$$
-$icode%available% = available_sparse_hessian()%$$
-
-$head available$$
-If the spare Hessian speed test is available for this package,
-the $code bool$$ value $icode available$$ is true.
-Otherwise it is false.
-
-$end
-*/
-bool available_sparse_hessian(void)
-{
-    size_t n      = 2;
-    size_t repeat = 1;
-    vector<double> x(n);
-    vector<size_t> row, col;
-    choose_row_col(n, row, col);
-    size_t K = row.size();
-    vector<double> hessian(K);
-
-    size_t n_color;
-    return link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
-}
-/*
-------------------------------------------------------------------------------
-$begin correct_sparse_hessian$$
-$spell
-    Namespace
-    CppAD
-    bool
-$$
-
-$section Does Sparse Hessian Pass Correctness Test$$
-
-$head Namespace$$
-This function is in the global namespace, not the CppAD namespace.
-
-$head Syntax$$
-$icode%ok% = correct_sparse_hessian(%is_package_double%)%$$
-
-$head is_package_double$$
-If the $code bool$$ value $code is_package_double$$ is true,
-we are checking function values.
-Otherwise, we are checking derivative values.
-
-$head ok$$
-If the spare Hessian correctness test passed,
-the $code bool$$ value $icode ok$$ is true.
-Otherwise it is false.
-
-$end
-*/
-bool correct_sparse_hessian(bool is_package_double)
-{
-    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-    size_t n      = 10;
-    size_t repeat = 1;
-    vector<double> x(n);
-    vector<size_t> row, col;
-    choose_row_col(n, row, col);
-    size_t K = row.size();
-    vector<double> hessian(K);
-# ifndef NDEBUG
-    for(size_t k = 0; k < K; k++)
-        CPPAD_ASSERT_UNKNOWN( col[k] <= row[k] );
-# endif
-
-    // The double package assumes hessian.size() >= 1
-    CPPAD_ASSERT_UNKNOWN( K >= 1 );
-    size_t n_color;
-    link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
-
-    size_t order, size;
-    if( is_package_double)
-    {   order = 0;  // check function value
-        size  = 1;
-    }
-    else
-    {   order = 2;     // check hessian value
-        size  = K;
-    }
-    CppAD::vector<double> check(size);
-    CppAD::sparse_hes_fun<double>(n, x, row, col, order, check);
-    bool ok = true;
-    size_t k;
-    for(k = 0; k < size; k++)
-        ok &= CppAD::NearEqual(check[k], hessian[k], eps99, eps99);
-
-    return ok;
-}
 /*
 ------------------------------------------------------------------------------
 $begin time_sparse_hessian_callback$$
@@ -228,7 +121,8 @@ $$
 $section Sparse Hessian Timing Callback Function$$
 
 $head Namespace$$
-This function is in the global namespace, not the CppAD namespace.
+This function is in the empty namespace; i.e., it is only accessed
+by functions in this file.
 
 $head Syntax$$
 $codei%time_sparse_hessian_callback(%size%, %repeat%)%$$
@@ -275,38 +169,7 @@ void time_sparse_hessian_callback(size_t size, size_t repeat)
     link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
     return;
 }
-/*
------------------------------------------------------------------------------
-$begin time_sparse_hessian$$
-
-$seciton Time Sparse Hessian Routine$$
-
-$head Namespace$$
-This function is in the global namespace, not the CppAD namespace.
-
-$head Syntax$$
-$icode%time$ = $time_sparse_hessian(%ttime_min%, %size%)%$$
-
-$head time_min$$
-Is the minum time, in seconcds, for the test.
-Calls to $code time_sparse_hessian_callback$$ will be repeated in order to
-reach this minimum time.
-
-$head size$$
-This $code size_t$$ value
-is the dimension of the argument space for function we are taking
-the Hessian of.
-
-$head time$$
-This is the amout of time for each call. This is the total time
-(which is greater than or equal $icode time_min$$)
-divided by the number of repeats.
-
-$end
-*/
-double time_sparse_hessian(double time_min, size_t size)
-{   return CppAD::time_test(time_sparse_hessian_callback, time_min, size);
-}
+} // END_EMPTY_NAMESPACE
 /*
 ------------------------------------------------------------------------------
 $begin info_sparse_hessian$$
@@ -348,4 +211,61 @@ void info_sparse_hessian(size_t size, size_t& n_color)
     vector<double> hessian(K);
     link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
     return;
+}
+// ---------------------------------------------------------------------------
+// The routines below are documented in link.omh
+// ---------------------------------------------------------------------------
+bool available_sparse_hessian(void)
+{
+    size_t n      = 2;
+    size_t repeat = 1;
+    vector<double> x(n);
+    vector<size_t> row, col;
+    choose_row_col(n, row, col);
+    size_t K = row.size();
+    vector<double> hessian(K);
+
+    size_t n_color;
+    return link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
+}
+bool correct_sparse_hessian(bool is_package_double)
+{
+    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+    size_t n      = 10;
+    size_t repeat = 1;
+    vector<double> x(n);
+    vector<size_t> row, col;
+    choose_row_col(n, row, col);
+    size_t K = row.size();
+    vector<double> hessian(K);
+# ifndef NDEBUG
+    for(size_t k = 0; k < K; k++)
+        CPPAD_ASSERT_UNKNOWN( col[k] <= row[k] );
+# endif
+
+    // The double package assumes hessian.size() >= 1
+    CPPAD_ASSERT_UNKNOWN( K >= 1 );
+    size_t n_color;
+    link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
+
+    size_t order, size;
+    if( is_package_double)
+    {   order = 0;  // check function value
+        size  = 1;
+    }
+    else
+    {   order = 2;     // check hessian value
+        size  = K;
+    }
+    CppAD::vector<double> check(size);
+    CppAD::sparse_hes_fun<double>(n, x, row, col, order, check);
+    bool ok = true;
+    size_t k;
+    for(k = 0; k < size; k++)
+        ok &= CppAD::NearEqual(check[k], hessian[k], eps99, eps99);
+
+    return ok;
+}
+double time_sparse_hessian(double time_min, size_t size)
+{   return CppAD::time_test(time_sparse_hessian_callback, time_min, size);
 }
