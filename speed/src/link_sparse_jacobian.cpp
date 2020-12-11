@@ -301,5 +301,7 @@ bool correct_sparse_jacobian(bool is_package_double)
 }
 // ----------------------------------------------------------------------------
 double time_sparse_jacobian(double time_min, size_t size)
-{   return CppAD::time_test(time_sparse_jacobian_callback, time_min, size);
+{   double time = CppAD::time_test(time_sparse_jacobian_callback, time_min, size);
+    time_sparse_jacobian_callback(0, 0);
+    return  time;
 }
