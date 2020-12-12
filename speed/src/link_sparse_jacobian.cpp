@@ -249,7 +249,7 @@ void info_sparse_jacobian(size_t size, size_t& n_color)
     return;
 }
 // ---------------------------------------------------------------------------
-// The routines below are documented in link.omh
+// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 // available_sparse_jacobian
 bool available_sparse_jacobian(void)

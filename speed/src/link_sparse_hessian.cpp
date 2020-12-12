@@ -116,6 +116,7 @@ $begin time_sparse_hessian_callback$$
 $spell
     Namespace
     CppAD
+    onetape
 $$
 
 $section Sparse Hessian Timing Callback Function$$
@@ -136,9 +137,12 @@ $head repeat$$
 This $code size_t$$ value
 is the number of times to repeat the speed test.
 
+
 $head Static Memory$$
-Static memory is used to cache the row and column vectors for
-a specific size (this speeds up execution).
+Static memory is used to hold the row and column vectors for
+a specific size, this speeds up execution keeps the function the same
+so long as the size is the same.  If the function changed on every call,
+the onetape option would not be valid.
 If you no longer need these vectors, you can free the memory
 with the call
 $codei%
@@ -222,7 +226,7 @@ void info_sparse_hessian(size_t size, size_t& n_color)
     return;
 }
 // ---------------------------------------------------------------------------
-// The routines below are documented in link.omh
+// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 bool available_sparse_hessian(void)
 {

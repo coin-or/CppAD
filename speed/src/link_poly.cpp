@@ -104,7 +104,7 @@ void time_poly_callback(size_t size, size_t repeat)
     }
 }
 // ---------------------------------------------------------------------------
-// The routines below are documented in link.omh
+// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 bool available_poly(void)
 {   size_t size   = 10;

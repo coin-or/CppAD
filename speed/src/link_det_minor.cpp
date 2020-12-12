@@ -123,7 +123,7 @@ namespace {
     }
 }
 // ---------------------------------------------------------------------------
-// The routines below are documented in link.omh
+// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 bool available_det_minor(void)
 {
