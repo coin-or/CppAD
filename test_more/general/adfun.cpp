@@ -55,6 +55,10 @@ bool adfun_empty(void)
 {   bool ok = true;
     size_t thread  = CppAD::thread_alloc::thread_num();
     //
+    // Allocate this memory first incase we are using
+    // CppAD::vector which uses thread_alloc.
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(1), ay(1);
+    //
     // check that an empty function does not hold memory
     size_t inuse_1  = CppAD::thread_alloc::inuse(thread);
     CppAD::ADFun<double> f;
@@ -62,7 +66,6 @@ bool adfun_empty(void)
     ok &= inuse_1 == inuse_2;
     //
     // check that creating an adfun uses memory
-    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(1), ay(1);
     CppAD::Independent(ax);
     ay = ax;
     CppAD::ADFun<double> g(ax, ay);
