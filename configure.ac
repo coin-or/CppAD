@@ -11,7 +11,7 @@
 # -----------------------------------------------------------------------------
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT([cppad], [20201206], [cppad@list.coin-or.org])
+AC_INIT([cppad], [20201211], [cppad@list.coin-or.org])
 AM_SILENT_RULES([no])
 
 dnl By defalut disable maintainer mode when running configure;
@@ -349,7 +349,12 @@ dnl not compiling any fortran so no need to touch flags
 dnl Check for pkgconfig
 AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
 AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
-
+dnl --------------------------------------------------------------------------
+dnl If the compiler does not support -c -o, wrap it with the compile script.
+AC_PROG_CXX_C_O
+if test $ac_cv_prog_cxx_c_o = no ; then
+   CXX="$am_aux_dir/compile $CXX"
+fi
 dnl -------------------------------------------------------------------------
 dnl Setting that cmake finds but autotools not kept up to date on
 AC_SUBST(cppad_cxx_flags, "")

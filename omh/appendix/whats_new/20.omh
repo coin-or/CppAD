@@ -38,9 +38,16 @@ $spell
     std
     resize
     Oct
+    msvc
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 12-14$$
+Change the autotools $cref/configure/autotools/Configure/$$ script
+so that it does better detection of the microsoft cl compiler.
+In addition, add documentation for the
+$cref/--enable-msvc/autotools/--enable-msvc/$$ option.
 
 $head 12-06$$
 Fix $code bin/get_cppadcg.sh$$ install of newer version
