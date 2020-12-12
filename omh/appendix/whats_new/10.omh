@@ -183,7 +183,7 @@ $code sizeof(size_t))$$.
 
 $head 02-11$$
 The $code speed$$ directory has been reorganized and the
-common part of the $cref/link functions/speed_main/Link Functions/$$,
+common part of the $cref/link routines/speed_main/Link Routines/$$,
 as well as the $cref microsoft_timer$$,
 have been moved to the subdirectory $code speed/src$$
 where a library is built.

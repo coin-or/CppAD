@@ -28,8 +28,6 @@ extern bool link_det_minor(
 $begin link_det_minor$$
 $spell
     det
-    bool
-    CppAD
 $$
 
 
@@ -40,54 +38,9 @@ $srcthisfile%
     0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 
-
-$head Purpose$$
-Each $cref/package/speed_main/package/$$
-must define a version of this routine as specified below.
-This is used by the $cref speed_main$$ program
-to run the corresponding speed and correctness tests.
-
 $head Method$$
 The same template class $cref det_by_minor$$
 is used by the different AD packages.
-
-$head Return Value$$
-If this speed test is not yet
-supported by a particular $icode package$$,
-the corresponding return value for $code link_det_minor$$
-should be $code false$$.
-
-$head Thread Save$$
-These speed tests may use static memory for setup and teardown
-and hence my not be thread safe.
-
-$head job$$
-This argument has one of the following values:
-
-$subhead setup$$
-This is the first call with a new value for $icode size$$
-and will not be used for timing.
-It can be used to setup information that should not be included in timing
-how long this routine takes.
-
-$subhead run$$
-This call will be used for timing how long this routine takes.
-The previous call $icode job$$ was either $code setup$$ or $code run$$
-and had the same value of $icode size$$.
-
-$subhead teardown$$
-This is the last call with this value of $icode size$$
-and will not be used for timing.
-It should be used to take down the setup; e.g., fee any memory that
-was allocated.
-
-$head size$$
-The argument $icode size$$
-is the number of rows and columns in the matrix.
-
-$head repeat$$
-The argument $icode repeat$$ is the number of different matrices
-that the gradient (or determinant) is computed for.
 
 $head matrix$$
 The argument $icode matrix$$ is a vector with

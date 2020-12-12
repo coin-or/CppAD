@@ -324,20 +324,13 @@ $cref/sparse_hessian/sparse_hessian/n_sweep/$$.
 
 
 $children%
-    speed/src/link_det_lu.cpp%
-    speed/src/link_det_minor.cpp%
-    speed/src/link_mat_mul.cpp%
-    speed/src/link_ode.cpp%
-    speed/src/link_poly.cpp%
-    speed/src/link_sparse_hessian.hpp%
-    speed/src/link_sparse_jacobian.hpp%
-    speed/src/microsoft_timer.cpp
+    speed/src/link.omh
 %$$
-
-$head Link Functions$$
+$head Link Routines$$
 Each $cref/package/speed_main/package/$$
-defines it's own version of one of the link functions listed below.
-Each of these functions links this main program to the corresponding test:
+defines it's own version of one of the
+$cref link_routines$$ listed below.
+Each of these routines links this main program to the corresponding test:
 $table
 $rref link_det_lu$$
 $rref link_det_minor$$
