@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -15,15 +15,9 @@ language: cpp
 compiler: gcc
 
 script:
-  # bin/travis.sh test_name
+  # bin/travis.sh (make|test_one) target1 target2 ...
   #
-  # Where test_name can be 'all', a directory that contains tests,
-  # or a file that contains one test. A file that contains one test must
-  # have the .cpp extension.  Note that travis does not yet support test
-  # that require other packages; e.g., adolc. We are waiting for a
-  # good way to build these dependicies and store them.
-  #
-  bin/travis.sh all
+  bin/travis.sh make check install uninstall
 
 notifications:
   email:
