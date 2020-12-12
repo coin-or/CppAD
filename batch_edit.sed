@@ -35,8 +35,6 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|CPPADCG_LIBRARY|COMPILED_FUN|
-s|cppadcg_library|compiled_fun|g
-s|^amout |amount |
-#
-:skip
+s|build/external\([/ ]\)|external\1|g
+s|build/external$|external|
+s|mkdir -p external|mkdir external|

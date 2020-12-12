@@ -13,6 +13,7 @@
 /build/
 /dev/
 /doxydoc/
+/external/
 /new/
 /new.*/
 # directory that is ignored by master, but not by gh-pages

@@ -34,7 +34,7 @@
 #
 # $head Source Directory$$
 # The Sacado source code is downloaded into the sub-directory
-# $code build/external/trilinos.git$$ below the distribution directory.
+# $code external/trilinos.git$$ below the distribution directory.
 #
 # $head Prefix$$
 # The $cref/prefix/get_optional.sh/prefix/$$
@@ -50,7 +50,7 @@ version='13-0-1'
 # $head Configuration$$
 # If the file
 # $codei%
-#   build/external/sacado-%version%.configured
+#   external/sacado-%version%.configured
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
@@ -82,12 +82,12 @@ then
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
-configured_flag="build/external/$package-${version}.configured"
+configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
-    echo_eval cd build/external/trilinos.git/build
+    echo_eval cd external/trilinos.git/build
     echo_eval make install
     echo "get_$package.sh: OK"
     exit 0
@@ -101,12 +101,12 @@ else
     libdir='lib'
 fi
 # -----------------------------------------------------------------------------
-# change into build/external directory
-if [ ! -d build/external ]
+# change into external directory
+if [ ! -d external ]
 then
-    echo_eval mkdir -p build/external
+    echo_eval mkdir external
 fi
-echo_eval cd build/external
+echo_eval cd external
 # -----------------------------------------------------------------------------
 # create the trilions source directory and change into it
 if [ ! -e trilinos.git ]

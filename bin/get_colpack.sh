@@ -34,7 +34,7 @@
 #
 # $head Source Directory$$
 # The ColPack source code is downloaded into the sub-directory
-# $code build/external/colpack.git$$ below the distribution directory.
+# $code external/colpack.git$$ below the distribution directory.
 #
 # $head Prefix$$
 # The $cref/prefix/get_optional.sh/prefix/$$
@@ -49,7 +49,7 @@ version='1.0.10'
 # $head Configuration$$
 # If the file
 # $codei%
-#   build/external/colpack-%version%.configured
+#   external/colpack-%version%.configured
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
@@ -80,12 +80,12 @@ then
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
-configured_flag="build/external/$package-${version}.configured"
+configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
-    echo_eval cd build/external/$package.git
+    echo_eval cd external/$package.git
     echo_eval make install
     echo "get_$package.sh: OK"
     exit 0
@@ -98,11 +98,11 @@ else
     libdir='lib'
 fi
 # -----------------------------------------------------------------------------
-if [ ! -d build/external ]
+if [ ! -d external ]
 then
-    echo_eval mkdir -p build/external
+    echo_eval mkdir external
 fi
-echo_eval cd build/external
+echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e "$package.git" ]
 then

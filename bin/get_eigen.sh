@@ -32,7 +32,7 @@
 #
 # $head Source Directory$$
 # The Eigen source code is downloaded into the sub-directory
-# $code build/external/eigen.git$$ below the distribution directory.
+# $code external/eigen.git$$ below the distribution directory.
 #
 # $head Prefix$$
 # The $cref/prefix/get_optional.sh/prefix/$$
@@ -47,7 +47,7 @@ version='3.3.7'
 # $head Configuration$$
 # If the file
 # $codei%
-#   build/external/eigen-%version%.configured
+#   external/eigen-%version%.configured
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
@@ -78,12 +78,12 @@ then
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
-configured_flag="build/external/$package-${version}.configured"
+configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
-    echo_eval cd build/external/$package.git/build
+    echo_eval cd external/$package.git/build
     echo_eval make install
     if [ -e $prefix/include/Eigen ]
     then
@@ -94,11 +94,11 @@ then
     exit 0
 fi
 # -----------------------------------------------------------------------------
-if [ ! -d build/external ]
+if [ ! -d external ]
 then
-    echo_eval mkdir -p build/external
+    echo_eval mkdir external
 fi
-echo_eval cd build/external
+echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e $package.git ]
 then
