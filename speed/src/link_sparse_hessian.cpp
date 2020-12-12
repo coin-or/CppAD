@@ -136,6 +136,15 @@ $head repeat$$
 This $code size_t$$ value
 is the number of times to repeat the speed test.
 
+$head Static Memory$$
+Static memory is used to cache the row and column vectors for
+a specific size (this speeds up execution).
+If you no longer need these vectors, you can free the memory
+with the call
+$codei%
+    time_sparse_hessian_callback(0, 0)
+%$$
+
 $end
 */
 void time_sparse_hessian_callback(size_t size, size_t repeat)
@@ -267,5 +276,9 @@ bool correct_sparse_hessian(bool is_package_double)
     return ok;
 }
 double time_sparse_hessian(double time_min, size_t size)
-{   return CppAD::time_test(time_sparse_hessian_callback, time_min, size);
+{   double time = CppAD::time_test(
+        time_sparse_hessian_callback, time_min, size
+    );
+    time_sparse_hessian_callback(0, 0);
+    return time;
 }
