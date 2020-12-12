@@ -59,6 +59,12 @@ extra: extra source files and/or options for the compile command
 EOF
     exit 1
 fi
+if ! echo "$1" | grep '/' > /dev/null
+then
+    echo 'test_one.sh: dir missing in'
+    echo '    bin/test_one.sh dir/file'
+    exit 1
+fi
 dir=`echo $1 | sed -e 's|/[^/]*$||'`
 file=`echo $1 | sed -e 's|.*/||'`
 extra="$2"
