@@ -118,6 +118,7 @@ then
 fi
 echo_eval cmake ..
 echo_eval make
+echo_eval cd ..
 # -----------------------------------------------------------------------------
 # Change into external
 if [ ! -d external ]
