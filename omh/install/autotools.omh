@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 $begin autotools$$
 $dollar ^$$
 $spell
+    Microsoft
     Autotools
     CppAD
     dist_dir
@@ -52,6 +53,7 @@ $spell
     htm
     ublas
     cp
+    msvc
 $$
 
 
@@ -82,6 +84,7 @@ $codei%
     --prefix=%prefix_dir%                    \
     --with-Documentation                     \
     --with-%test%vector                      \
+    --enable-msvc                            \
     MAX_NUM_THREADS=%max_num_threads%         \
     CXX_FLAGS=%cxx_flags%                     \
     OPENMP_FLAGS=%openmp_flags%               \
@@ -202,6 +205,10 @@ See also,
 $cref/boost_dir/autotools/boost_dir/$$
 and
 $cref/eigen_dir/autotools/eigen_dir/$$.
+
+$head --enable-msvc$$
+If this flag is present, the Microsoft $code cl$$ compiler will be
+placed at the front of the list of compilers to search for.
 
 $head max_num_threads$$
 this specifies the value for the default value for the preprocessor symbol
