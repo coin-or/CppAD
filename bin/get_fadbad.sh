@@ -32,7 +32,7 @@
 #
 # $head Source Directory$$
 # The Fadbad source code is downloaded into the sub-directory
-# $code build/external/FADBAD++$$ below the distribution directory.
+# $code external/FADBAD++$$ below the distribution directory.
 #
 # $head Prefix$$
 # The $cref/prefix/get_optional.sh/prefix/$$
@@ -70,11 +70,11 @@ then
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
-if [ ! -d build/external ]
+if [ ! -d external ]
 then
-    echo_eval mkdir -p build/external
+    echo_eval mkdir external
 fi
-echo_eval cd build/external
+echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e "FADBAD++-$version.tar.gz" ]
 then

@@ -33,13 +33,6 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/^# if CPPAD_USE_CPLUSPLUS_2011$/! b skip
-: loop
-N
-/\n#/! b loop
-/\n# endif$/! b skip
-#
-s|^# if CPPAD_USE_CPLUSPLUS_2011\n||
-s|\n# endif||
-#
-:skip
+s|build/external\([/ ]\)|external\1|g
+s|build/external$|external|
+s|mkdir -p external|mkdir external|

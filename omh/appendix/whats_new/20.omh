@@ -43,7 +43,14 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
-$head 12-14$$
+$head 12-12$$
+Change the location where the source code for the
+$cref/optional/get_optional.sh/$$ packages is stored from
+$code build/external$$ to $code external$$.
+This enables one to remove the old build directory
+without having to rebuild the optional packages.
+
+$head 12-11$$
 Change the autotools $cref/configure/autotools/Configure/$$ script
 so that it does better detection of the microsoft cl compiler.
 In addition, add documentation for the

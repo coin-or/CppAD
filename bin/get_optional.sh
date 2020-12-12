@@ -56,7 +56,7 @@ prefix="build/prefix"
 # If you do an install and then change the @icode prefix@@,
 # you should delete all the files listed by the following command:
 # @codei%
-#   ls build/external/*.configured
+#   ls external/*.configured
 # %@@
 #
 # @head get_optional.log@@

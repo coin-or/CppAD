@@ -39,7 +39,7 @@
 #
 # $head Source Directory$$
 # The Ipopt source code is downloaded and compiled in the sub-directory
-# $codei%build/external/Ipopt-%version%$$ below the distribution directory.
+# $codei%external/Ipopt-%version%$$ below the distribution directory.
 #
 # $head Prefix$$
 # The $cref/prefix/get_optional.sh/prefix/$$
@@ -54,7 +54,7 @@ version='3.13.2'
 # $head Configuration$$
 # If the file
 # $codei%
-#   build/external/ipopt-%version%.configured
+#   external/ipopt-%version%.configured
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
@@ -85,22 +85,22 @@ then
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
-configured_flag="build/external/$package-${version}.configured"
+configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
-    echo_eval cd build/external
+    echo_eval cd external
     ./coinbrew install Ipopt --no-prompt
     echo "get_$package.sh: OK"
     exit 0
 fi
 # -----------------------------------------------------------------------------
-if [ ! -d build/external ]
+if [ ! -d external ]
 then
-    echo_eval mkdir -p build/external
+    echo_eval mkdir external
 fi
-echo_eval cd build/external
+echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e coinbrew ]
 then
