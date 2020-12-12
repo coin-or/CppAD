@@ -131,9 +131,6 @@ bool link_det_minor(
     // size correspmnding to static_g
     static size_t static_size = 0;
     //
-    // object for computing determinant
-    CppAD::det_by_minor<ac_double>   ac_det(size);
-    //
     // number of independent variables
     size_t nx = size * size;
     //
