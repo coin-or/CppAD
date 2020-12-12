@@ -42,6 +42,17 @@ $head Method$$
 The same template class $cref det_by_minor$$
 is used by the different AD packages.
 
+$head job$$
+See $cref/job/link_routines/job/$$.
+
+$head size$$
+See $cref/job/link_routines/job/$$
+In addition, $icode size$$ is the number of rows and columns in
+$icode matrix$$.
+
+$head repeat$$
+See $cref/repeat/link_routines/repeat/$$.
+
 $head matrix$$
 The argument $icode matrix$$ is a vector with
 $icode%size%*%size%$$ elements.
@@ -64,6 +75,9 @@ the determinant value (the gradient value is not computed).
 $end
 -----------------------------------------------------------------------------
 */
+// ---------------------------------------------------------------------------
+// The routines below are documented in dev_link.omh
+// ---------------------------------------------------------------------------
 namespace {
     void time_det_minor_callback(size_t size, size_t repeat)
     {   // job
@@ -75,8 +89,6 @@ namespace {
         return;
     }
 }
-// ---------------------------------------------------------------------------
-// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 bool available_det_minor(void)
 {

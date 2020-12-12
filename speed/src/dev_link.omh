@@ -34,7 +34,7 @@ $code det_minor$$,
 $code mat_mul$$,
 $code ode$$,
 $code sparse_hessian$$, or
-$code sparse_jacobian$$,
+$code sparse_jacobian$$.
 
 $head Namespace$$
 This function is in the global namespace, not the CppAD namespace.
@@ -74,7 +74,7 @@ $code det_minor$$,
 $code mat_mul$$,
 $code ode$$,
 $code sparse_hessian$$, or
-$code sparse_jacobian$$,
+$code sparse_jacobian$$.
 
 $head Namespace$$
 This function is in the global namespace, not the CppAD namespace.
@@ -118,7 +118,7 @@ $code det_minor$$,
 $code mat_mul$$,
 $code ode$$,
 $code sparse_hessian$$, or
-$code sparse_jacobian$$,
+$code sparse_jacobian$$.
 
 $head Namespace$$
 This function is in the global namespace, not the CppAD namespace.
@@ -143,3 +143,47 @@ $codei%speed/src/link_%name%.cpp%$$.
 
 $end
 ------------------------------------------------------------------------------
+$begin speed_time_callback$$
+$spell
+    det
+    lu
+    mul
+    jacobian
+    namespace
+    CppAD
+    bool
+    src
+$$
+
+$section Timing Callback Functions$$
+
+$head Syntax$$
+$icode%time% = time_%name%_callback(%size_t%, %repeat%)
+%$$
+
+$head name$$
+The text $icode name$$ in the syntax is
+$code det_lu$$,
+$code det_minor$$,
+$code mat_mul$$,
+$code ode$$,
+$code sparse_hessian$$, or
+$code sparse_jacobian$$.
+
+$head Namespace$$
+These functions are in the empty namespace; i.e., it is only accessed
+by functions in the file where it is defined.
+
+$head size$$
+This $code size_t$$ argument the size for this speed test;
+see $icode size$$ in the corresponding $codei%link_%name%$$ documentation.
+
+$head repeat$$
+This $code size_t$$ value
+is the number of times to repeat a call to the corresponding link routine.
+
+$head job$$
+The $cref/job/link_routines/job/$$
+arguement to the correspnding link routine will be $code run$$.
+
+$end

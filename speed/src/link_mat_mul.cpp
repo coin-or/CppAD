@@ -95,6 +95,9 @@ derivative of $icode z$$ with respect to $icode x$$.
 $end
 -----------------------------------------------------------------------------
 */
+// ---------------------------------------------------------------------------
+// The routines below are documented in dev_link.omh
+// ---------------------------------------------------------------------------
 namespace {
     void time_mat_mul_callback(size_t size, size_t repeat)
     {   // free statically allocated memory
@@ -107,8 +110,6 @@ namespace {
         return;
     }
 }
-// ---------------------------------------------------------------------------
-// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 bool available_mat_mul(void)
 {   size_t size   = 3;

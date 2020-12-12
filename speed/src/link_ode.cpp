@@ -104,6 +104,9 @@ $latex f(x)$$ corresponding to the output value of $icode x$$.
 $end
 -----------------------------------------------------------------------------
 */
+// ---------------------------------------------------------------------------
+// The routines below are documented in dev_link.omh
+// ---------------------------------------------------------------------------
 namespace {
     void time_ode_callback(size_t n, size_t repeat)
     {   // free statically allocated memory
@@ -116,8 +119,6 @@ namespace {
         return;
     }
 }
-// ---------------------------------------------------------------------------
-// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 bool available_ode(void)
 {   size_t n      = 1;

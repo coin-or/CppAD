@@ -122,75 +122,6 @@ void choose_row_col(
         c_previous = c;
     }
 }
-/*
-------------------------------------------------------------------------------
-$begin time_sparse_jacobian_callback$$
-$spell
-    Jacobian
-    Namespace
-    CppAD
-$$
-
-$section Sparse Jacobian Timing Callback Function$$
-
-$head Namespace$$
-This function is in the empty namespace; i.e., it is only accessed
-by functions in this file.
-
-$head Syntax$$
-$codei%time_sparse_jacobian_callback(%size%, %repeat%)%$$
-
-$head size$$
-This $code size_t$$ value
-is the dimension of the argument space for function we are taking
-the Hessian of.
-
-$head repeat$$
-This $code size_t$$ value
-is the number of times to repeat the speed test.
-
-$head Static Memory$$
-Static memory is used to cache the row and column vectors for
-a specific size (this speeds up execution).
-If you no longer need these vectors, you can free the memory
-with the call
-$codei%
-    time_sparse_jacobian_callback(0, 0)
-%$$
-
-$end
-*/
-void time_sparse_jacobian_callback(size_t size, size_t repeat)
-{   using CppAD::vector;
-    // cppadcg assumes that m = 2 * size; see ../main.cpp
-    size_t n   = size;
-    size_t m   = 2 * n;
-    //
-    static size_t previous_size = 0;
-    static vector<size_t> row, col;
-    //
-    // free statically allocated memory
-    if( size == 0 && repeat == 0 )
-    {   row.clear();
-        col.clear();
-        previous_size = size;
-        return;
-    }
-
-    if( size != previous_size)
-    {   choose_row_col(global_seed, n, m, row, col);
-        previous_size = size;
-    }
-
-    // note that cppad/sparse_jacobian.cpp assumes that x.size()
-    // is the size corresponding to this test
-    vector<double> x(n);
-    size_t K = row.size();
-    vector<double> jacobian(K);
-    size_t         n_color;
-    link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
-    return;
-}
 } // END_EMPTY_NAMESPACE
 // 2DO: remove when convert this test to use cppadcg compiled_fun
 void choose_row_col_sparse_jacobian(
@@ -251,7 +182,40 @@ void info_sparse_jacobian(size_t size, size_t& n_color)
 // ---------------------------------------------------------------------------
 // The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
-// available_sparse_jacobian
+namespace {
+    void time_sparse_jacobian_callback(size_t size, size_t repeat)
+    {   using CppAD::vector;
+        // cppadcg assumes that m = 2 * size; see ../main.cpp
+        size_t n   = size;
+        size_t m   = 2 * n;
+        //
+        static size_t previous_size = 0;
+        static vector<size_t> row, col;
+        //
+        // free statically allocated memory
+        if( size == 0 && repeat == 0 )
+        {   row.clear();
+            col.clear();
+            previous_size = size;
+            return;
+        }
+
+        if( size != previous_size)
+        {   choose_row_col(global_seed, n, m, row, col);
+            previous_size = size;
+        }
+
+        // note that cppad/sparse_jacobian.cpp assumes that x.size()
+        // is the size corresponding to this test
+        vector<double> x(n);
+        size_t K = row.size();
+        vector<double> jacobian(K);
+        size_t         n_color;
+        link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
+        return;
+    }
+}
+// ---------------------------------------------------------------------------
 bool available_sparse_jacobian(void)
 {   using CppAD::vector;
     // cppadcg assumes that that size = 10, m = 2 * size; see ../main.cpp
@@ -268,7 +232,6 @@ bool available_sparse_jacobian(void)
     return link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_color);
 }
 // ----------------------------------------------------------------------------
-// correct_sparse_jacobian
 bool correct_sparse_jacobian(bool is_package_double)
 {   using CppAD::vector;
     // cppadcg assumes that that size = 10, m = 2 * size; see ../main.cpp

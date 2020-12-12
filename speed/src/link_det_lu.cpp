@@ -84,6 +84,9 @@ the determinant value (the gradient value is not computed).
 $end
 -----------------------------------------------------------------------------
 */
+// ---------------------------------------------------------------------------
+// The routines below are documented in dev_link.omh
+// ---------------------------------------------------------------------------
 namespace {
     void time_det_lu_callback(size_t size, size_t repeat)
     {   // free statically allocated memory
@@ -97,8 +100,6 @@ namespace {
         return;
     }
 }
-// ---------------------------------------------------------------------------
-// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 bool available_det_lu(void)
 {   size_t size   = 3;

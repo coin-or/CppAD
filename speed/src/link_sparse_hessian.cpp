@@ -110,78 +110,6 @@ void choose_row_col(
         }
     }
 }
-/*
-------------------------------------------------------------------------------
-$begin time_sparse_hessian_callback$$
-$spell
-    Namespace
-    CppAD
-    onetape
-$$
-
-$section Sparse Hessian Timing Callback Function$$
-
-$head Namespace$$
-This function is in the empty namespace; i.e., it is only accessed
-by functions in this file.
-
-$head Syntax$$
-$codei%time_sparse_hessian_callback(%size%, %repeat%)%$$
-
-$head size$$
-This $code size_t$$ value
-is the dimension of the argument space for function we are taking
-the Hessian of.
-
-$head repeat$$
-This $code size_t$$ value
-is the number of times to repeat the speed test.
-
-
-$head Static Memory$$
-Static memory is used to hold the row and column vectors for
-a specific size, this speeds up execution keeps the function the same
-so long as the size is the same.  If the function changed on every call,
-the onetape option would not be valid.
-If you no longer need these vectors, you can free the memory
-with the call
-$codei%
-    time_sparse_hessian_callback(0, 0)
-%$$
-
-$end
-*/
-void time_sparse_hessian_callback(size_t size, size_t repeat)
-{
-    static size_t previous_size = 0;
-    static vector<size_t> row, col;
-    //
-    // free statically allocated memory
-    if( size == 0 && repeat == 0 )
-    {   row.clear();
-        col.clear();
-        previous_size = size;
-        return;
-    }
-
-    size_t n = size;
-    vector<double> x(n);
-    if( size != previous_size )
-    {   choose_row_col(n, row, col);
-        previous_size = size;
-    }
-    size_t K = row.size();
-    vector<double> hessian(K);
-# ifndef NDEBUG
-    for(size_t k = 0; k < K; k++)
-        CPPAD_ASSERT_UNKNOWN( col[k] <= row[k] );
-# endif
-
-    // note that cppad/sparse_hessian.cpp assumes that x.size() == size
-    size_t n_color;
-    link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
-    return;
-}
 } // END_EMPTY_NAMESPACE
 /*
 ------------------------------------------------------------------------------
@@ -228,6 +156,40 @@ void info_sparse_hessian(size_t size, size_t& n_color)
 // ---------------------------------------------------------------------------
 // The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
+namespace {
+    void time_sparse_hessian_callback(size_t size, size_t repeat)
+    {
+        static size_t previous_size = 0;
+        static vector<size_t> row, col;
+        //
+        // free statically allocated memory
+        if( size == 0 && repeat == 0 )
+        {   row.clear();
+            col.clear();
+            previous_size = size;
+            return;
+        }
+
+        size_t n = size;
+        vector<double> x(n);
+        if( size != previous_size )
+        {   choose_row_col(n, row, col);
+            previous_size = size;
+        }
+        size_t K = row.size();
+        vector<double> hessian(K);
+# ifndef NDEBUG
+        for(size_t k = 0; k < K; k++)
+            CPPAD_ASSERT_UNKNOWN( col[k] <= row[k] );
+# endif
+
+        // note that cppad/sparse_hessian.cpp assumes that x.size() == size
+        size_t n_color;
+        link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
+        return;
+    }
+}
+// ---------------------------------------------------------------------------
 bool available_sparse_hessian(void)
 {
     size_t n      = 2;
@@ -241,6 +203,7 @@ bool available_sparse_hessian(void)
     size_t n_color;
     return link_sparse_hessian(n, repeat, row, col, x, hessian, n_color);
 }
+// ---------------------------------------------------------------------------
 bool correct_sparse_hessian(bool is_package_double)
 {
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
@@ -279,6 +242,7 @@ bool correct_sparse_hessian(bool is_package_double)
 
     return ok;
 }
+// ---------------------------------------------------------------------------
 double time_sparse_hessian(double time_min, size_t size)
 {   double time = CppAD::time_test(
         time_sparse_hessian_callback, time_min, size

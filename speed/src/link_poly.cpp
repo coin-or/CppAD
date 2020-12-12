@@ -91,6 +91,9 @@ is the polynomial value (the second derivative is not computed).
 $end
 -----------------------------------------------------------------------------
 */
+// ---------------------------------------------------------------------------
+// The routines below are documented in dev_link.omh
+// ---------------------------------------------------------------------------
 namespace {
 void time_poly_callback(size_t size, size_t repeat)
     {   // free statically allocated memory
@@ -103,8 +106,6 @@ void time_poly_callback(size_t size, size_t repeat)
         return;
     }
 }
-// ---------------------------------------------------------------------------
-// The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 bool available_poly(void)
 {   size_t size   = 10;
