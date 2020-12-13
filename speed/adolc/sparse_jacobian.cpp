@@ -57,6 +57,7 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_sparse_jacobian(
+    const std::string&               job      ,
     size_t                           size     ,
     size_t                           repeat   ,
     size_t                           m        ,

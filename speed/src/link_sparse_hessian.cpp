@@ -129,7 +129,7 @@ $codei%info_spares_hessian(%size%, %n_color%)%$$
 
 $head size$$
 This $code size_t$$ value is equal to
-$cref/size/time_sparse_hessian_callback/size/$$
+$cref/size/speed_time_callback/size/$$
 in the corresponding call to $code time_sparse_hessian_callback$$.
 
 $head n_color$$

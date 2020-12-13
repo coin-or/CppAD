@@ -184,6 +184,6 @@ is the number of times to repeat a call to the corresponding link routine.
 
 $head job$$
 The $cref/job/link_routines/job/$$
-arguement to the correspnding link routine will be $code run$$.
+argument to the corresponding link routine will be $code run$$.
 
 $end

@@ -43,15 +43,15 @@ The same template class $cref det_by_minor$$
 is used by the different AD packages.
 
 $head job$$
-See $cref/job/link_routines/job/$$.
+See the standard link specifications for $cref/job/link_routines/job/$$.
 
 $head size$$
-See $cref/job/link_routines/job/$$
+See the standard link specifications for $cref/job/link_routines/job/$$
 In addition, $icode size$$ is the number of rows and columns in
 $icode matrix$$.
 
 $head repeat$$
-See $cref/repeat/link_routines/repeat/$$.
+See the standard link specifications for $cref/repeat/link_routines/repeat/$$.
 
 $head matrix$$
 The argument $icode matrix$$ is a vector with
@@ -80,8 +80,7 @@ $end
 // ---------------------------------------------------------------------------
 namespace {
     void time_det_minor_callback(size_t size, size_t repeat)
-    {   // job
-        std::string job = "run";
+    {   std::string           job("run");
         CppAD::vector<double> matrix(size * size);
         CppAD::vector<double> gradient(size * size);
         //
@@ -93,7 +92,7 @@ namespace {
 bool available_det_minor(void)
 {
     size_t size   = 3;
-    size_t repeat = 1;
+    size_t repeat = 0;
     CppAD::vector<double> matrix(size * size);
     CppAD::vector<double> gradient(size * size);
     //
@@ -107,7 +106,7 @@ bool available_det_minor(void)
 }
 // ---------------------------------------------------------------------------
 bool correct_det_minor(bool is_package_double)
-{   // cppadcg package assumes that that size = 3; see ../main.cpp
+{
     size_t  size   = 3;
     size_t  repeat = 1;
     CppAD::vector<double> matrix(size * size);
@@ -140,7 +139,7 @@ double time_det_minor(double time_min, size_t size)
     size_t      repeat = 0;
     link_det_minor(job, size, repeat, matrix, gradient);
     //
-    // job = run
+    // job is run in time_det_minor_callback
     double time = CppAD::time_test(time_det_minor_callback, time_min, size);
     //
     job = "teardown";

@@ -80,9 +80,12 @@ The $code size_t$$ argument $icode size$$ this is the size parameter for this
 test.  Larger sizes correspond to more computation per call.
 
 $head repeat$$
-The $icode size_t$$ argument $icode repeat$$ is the number of
+If $icode job$$ is $code run$$,
+the $icode size_t$$ argument $icode repeat$$ is the number of
 randomly chosen argument values that the test derivatives should be
 evaluated for.
+The value of $icode repeat$$ is always greater than or equal one
+and all the $codei%link_%name%$$ output values are always calculated.
 
 $head other_arguments$$
 Each link function routine has specific specifications

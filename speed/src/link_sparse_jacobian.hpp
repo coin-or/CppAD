@@ -15,6 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/vector.hpp>
 // BEGIN PROTOTYPE
 extern bool link_sparse_jacobian(
+    const std::string&                job       ,
     size_t                            size      ,
     size_t                            repeat    ,
     size_t                            m         ,
@@ -35,10 +36,11 @@ $spell
     bool
     CppAD
     Jacobian
+    Jacobians
 $$
 
 
-$section Speed Testing Sparse Jacobian$$
+$section Speed Testing Sparse Jacobians$$
 
 $head Prototype$$
 $srcthisfile%
@@ -57,16 +59,23 @@ $latex \[
 for some $latex k$$ between zero and $icode%K% = %row%.size()-1%$$.
 All the other terms of the Jacobian are zero.
 
+$head Sparsity Pattern$$
+The combination of $icode row$$ and $icode col$$ determine
+the sparsity pattern for the Jacobian that is differentiated.
+The calculation of this sparsity pattern,
+if necessary to compute the Jacobian,
+is intended to be part of the timing for this test.
+
+$head job$$
+See the standard link specifications for $cref/job/link_routines/job/$$.
 
 $head size$$
-The argument $icode size$$, referred to as $latex n$$ below,
+See the standard link specifications for $cref/size/link_routines/size/$$.
+In addition, $icode size$$ is referred to as $latex n$$ below,
 is the dimension of the domain space for $latex f(x)$$.
 
 $head repeat$$
-The argument $icode repeat$$ is the number of times
-to repeat the test
-(with a different value for $icode x$$ corresponding to
-each repetition).
+See the standard link specifications for $cref/repeat/link_routines/$$.
 
 $head m$$
 Is the dimension of the range space for the function $latex f(x)$$.
@@ -93,7 +102,6 @@ and if $icode%row%[%k%] == %row%[%k%+1]%$$ then
 $codei%
     %col%[%k%] < %col%[%k%+1]
 %$$
-
 
 $head x$$
 The argument $icode x$$ has prototype
@@ -123,12 +131,14 @@ $latex \[
 
 $head n_color$$
 The input value of $icode n_color$$ does not matter. On output,
-it is the value $cref/n_sweep/sparse_jacobian/n_sweep/$$ corresponding
+it has value zero or $cref/n_sweep/sparse_jacobian/n_sweep/$$ corresponding
 to the evaluation of $icode jacobian$$.
 This is also the number of colors corresponding to the
 $cref/coloring method/sparse_jacobian/work/color_method/$$,
 which can be set to $cref/colpack/speed_main/Sparsity Options/colpack/$$,
 and is otherwise $code cppad$$.
+If this routine returns an non-zero $icode n_color$$ for
+any $icode job$$ value, the non-zero value will be reported for this test.
 
 $subhead double$$
 In the case where $icode package$$ is $code double$$,

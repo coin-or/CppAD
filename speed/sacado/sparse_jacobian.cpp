@@ -10,6 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cstring>
+# include <string>
 # include <cppad/utility/vector.hpp>
 
 /*
@@ -27,6 +28,7 @@ $section Sacado Speed: sparse_jacobian$$
 $srccode%cpp% */
 // A sacado version of this test is not yet available
 bool link_sparse_jacobian(
+    const std::string&               job      ,
     size_t                           size     ,
     size_t                           repeat   ,
     size_t                           m        ,

@@ -232,31 +232,6 @@ echo_log_eval bin/run_cmake.sh \
     $package_vector
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
-file='speed/cppadcg/sparse_jacobian.c'
-if [ -e $file ]
-then
-    echo_log 'building cppadcg souce with proper options for correctness test'
-    file='../speed/cppadcg/CMakeLists.txt'
-    random_seed=`grep 'SET(random_seed *[0-9]*)$' $file | \
-        sed -e 's|SET(random_seed *||' -e 's|)$||'`
-    if [ "$random_seed" == '' ]
-    then
-        echo 'Cannot find "SET(random_seed *[0-9]*)$" in '$file
-        exit 1
-    fi
-    echo_log_eval pushd speed/cppadcg
-    echo_log_eval make speed_cppadcg
-    echo_log "./speed_cppadcg correct $random_seed onetape > /dev/null"
-    if ./speed_cppadcg correct $random_seed onetape >& /dev/null
-    then
-        echo 'Expected the command above to fail.'
-        exit 1
-    else
-        echo 'As expected, the command above failed.'
-    fi
-    echo_log_eval popd
-fi
-# -----------------------------------------------------------------------------
 # can comment out this make check to if only running tests below it
 n_job=`nproc`
 echo_log_eval make -j $n_job check

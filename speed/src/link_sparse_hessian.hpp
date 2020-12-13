@@ -73,6 +73,13 @@ $latex \[
 for some $latex k $$ between zero and $latex K-1 $$.
 All the other terms of the Hessian are zero.
 
+$head Sparsity Pattern$$
+The combination of $icode row$$ and $icode col$$ determine
+the sparsity pattern for the Hessian that is computed.
+The calculation of this sparsity pattern,
+if necessary to compute the Hessian,
+is intended to be part of the timing for this test.
+
 $head size$$
 The argument $icode size$$, referred to as $latex n$$ below,
 is the dimension of the domain space for $latex f(x)$$.

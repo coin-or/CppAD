@@ -30,29 +30,8 @@ SET(source_list ../main.cpp
     poly.cpp
     sparse_hessian.cpp
     sparse_jacobian.cpp
-    sparse_jacobian_cg.cpp
 )
 set_compile_flags( speed_cppadcg "${cppad_debug_which}" "${source_list}" )
-#
-# Adding C source code here because flags above are for C++
-# Binary directory version of these files gets replaced by running *_cg.cpp
-IF( "${cppad_debug_which}" STREQUAL "debug_all" )
-    SET(flags ${CMAKE_C_FLAGS_DEBUG} )
-ELSEIF( "${cppad_debug_which}" STREQUAL "debug_all" )
-    SET(flags ${CMAKE_C_FLAGS_RELEASE} )
-ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
-FOREACH(c_source sparse_jacobian.c )
-    CONFIGURE_FILE(
-            ${CMAKE_CURRENT_SOURCE_DIR}/${c_source}
-            ${CMAKE_CURRENT_BINARY_DIR}/${c_source}
-            COPYONLY
-    )
-    SET(file_name ${CMAKE_CURRENT_BINARY_DIR}/${c_source})
-    add_to_list(source_list ${file_name})
-    SET_SOURCE_FILES_PROPERTIES(
-        ${file_name} PROPERTIES COMPILE_FLAGS "${flags}"
-    )
-ENDFOREACH(c_source link_sparse_jacobian.c )
 #
 ADD_EXECUTABLE(speed_cppadcg EXCLUDE_FROM_ALL ${source_list} )
 
