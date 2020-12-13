@@ -494,7 +494,10 @@ namespace {
             double rate = 1. / time;
             if( rate >= 1000 )
                 cout << std::setprecision(0) << rate;
-            else cout << std::setprecision(2) << rate;
+            else if( rate >= 10 )
+                cout << std::setprecision(2) << rate;
+            else
+                cout << std::setprecision(4) << rate;
         }
         cout << " ]" << endl;
         //
