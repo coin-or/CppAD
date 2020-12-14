@@ -75,7 +75,7 @@ In addition, $icode size$$ is referred to as $latex n$$ below,
 is the dimension of the domain space for $latex f(x)$$.
 
 $head repeat$$
-See the standard link specifications for $cref/repeat/link_routines/$$.
+See the standard link specifications for $cref/repeat/link_routines/repeat/$$.
 
 $head m$$
 Is the dimension of the range space for the function $latex f(x)$$.

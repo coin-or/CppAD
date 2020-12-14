@@ -39,9 +39,36 @@ $spell
     resize
     Oct
     msvc
+    cg
+    rc
+    rcv
+    jacobian
+    det
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head cg Branch$$
+
+$list number$$
+$bold API Change:$$
+The $icode SizeVector$$ class in
+$cref/sparse_rc/sparse_rc/SizeVector/$$ and
+$cref/sparse_rcv/sparse_rcv/SizeVector/$$
+must support the $code swap$$ operation.
+$lnext
+The $code swap$$ operator was added to the
+$cref/sparse_rc/sparse_rc/other/swap/$$ and
+$cref/sparse_rcv/sparse_rcv/other/swap/$$ template classes.
+$lnext
+The $icode job$$ option was added to the
+$cref/det_minor/link_det_minor/job/$$ and
+$cref/sparse_jacobian/link_sparse_jacobian/job/$$ speed tests.
+$lnext
+The $cref compiled_fun$$ example for using CppADCodeGen was added.
+In addition, $cref cppadcg_sparse_jacobian.cpp$$ and
+$cref cppadcg_det_minor.cpp$$ examples were modified to use this utility.
+$lend
 
 $head 12-12$$
 Change the location where the source code for the

@@ -37,7 +37,9 @@ $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %empty%
 %$$
 $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %matrix%(%pattern%)
 %$$
-$icode%target% = %matrix%
+$icode%other% = %matrix%
+%$$
+$icode%other%.swap( %matrix% )
 %$$
 $icode%matrix%.set(%k%, %v%)
 %$$
@@ -90,17 +92,23 @@ Only the $icode val$$ vector can be changed. All other values returned by
 $icode matrix$$ are fixed during the constructor and constant there after.
 The $icode val$$ vector is only changed by the constructor
 and the $code set$$ function.
-There is one exception to the rule, where $icode matrix$$ corresponds
-to $icode target$$ for an assignment statement.
+There are two exceptions to this rule, where $icode other$$ appears in the
+assignment and swap syntax..
 
-$head target$$
-The target of the assignment statement must have prototype
+$head other$$
+The $icode other$$ variable has prototype
 $codei%
-    sparse_rcv<%SizeVector%, %ValueVector%>  %target%
+    sparse_rcv<%SizeVector%, %ValueVector%>  %other%
 %$$
-After this assignment statement, $icode target$$ is an independent copy
+
+$subhead Assignment$$
+After this assignment statement, $icode other$$ is an independent copy
 of $icode matrix$$; i.e. it has all the same values as $icode matrix$$
-and changes to $icode target$$ do not affect $icode matrix$$.
+and changes to $icode other$$ do not affect $icode matrix$$.
+
+$subhead swap$$
+After the swap operation $icode other$$ ($icode matrix$$) is equivalent
+to $icode matrix$$ ($icode other$$) before the operation.
 
 $head nr$$
 This return value has prototype
@@ -246,6 +254,11 @@ public:
         // simple vector assignment requires vectors to have same size
         val_.resize( matrix.nnz() );
         val_ = matrix.val();
+    }
+    /// swap
+    void swap(sparse_rcv& matrix)
+    {   pattern_.swap( matrix.pattern_ );
+        val_.swap( matrix.val_ );
     }
     // ------------------------------------------------------------------------
     void set(size_t k, const value_type& v)

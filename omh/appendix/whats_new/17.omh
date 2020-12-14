@@ -466,9 +466,9 @@ transposed; i.e., the sense of
 $cref/transpose/rev_hes_sparsity/transpose/$$ was reversed.
 
 $head 03-11$$
-Add sparse assignment statements; see $icode target$$ for
-$cref/sparse_rc/sparse_rc/target/$$ and
-$cref/sparse_rcv/sparse_rcv/target/$$.
+Add sparse assignment statements; see $icode other$$ for
+$cref/sparse_rc/sparse_rc/other/Assignment/$$ and
+$cref/sparse_rcv/sparse_rcv/other/Assignment/$$.
 
 $head 03-10$$
 Add the a sizing constructor to the

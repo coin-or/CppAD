@@ -46,7 +46,7 @@ $head job$$
 See the standard link specifications for $cref/job/link_routines/job/$$.
 
 $head size$$
-See the standard link specifications for $cref/job/link_routines/job/$$
+See the standard link specifications for $cref/size/link_routines/size/$$
 In addition, $icode size$$ is the number of rows and columns in
 $icode matrix$$.
 

@@ -106,13 +106,13 @@ namespace {
         size_t nr = 2 * nc;
         ac_vector ac_y(nr);
         //
-        // subset of Jacobian pattern that is evaluated
+        // sparsity patttern  for subset of Jacobian pattern that is evaluated
         size_t nnz = row.size();
         sparsity subset_pattern(nr, nc, nnz);
         for(size_t k = 0; k < nnz; ++k)
             subset_pattern.set(k, row[k], col[k]);
         //
-        // subset of Jacobian that is evaluated
+        // spoarse matrix for subset of Jacobian that is evaluated
         CppAD::sparse_rcv<s_vector, ac_vector> ac_subset( subset_pattern );
         //
         //
@@ -227,7 +227,7 @@ bool link_sparse_jacobian(
     // function object mapping x to f'(x)
     static compiled_fun static_g;
     //
-    // number opf independent variables
+    // number of independent variables
     size_t nx = size;
     //
     bool onetape = global_option["onetape"];
@@ -249,8 +249,8 @@ bool link_sparse_jacobian(
     if( job == "teardown" )
     {   compiled_fun g;
         static_g.swap(g);
-        return true;
         static_size    = 0;
+        return true;
     }
     // -----------------------------------------------------
     CPPAD_ASSERT_UNKNOWN( job == "run" )

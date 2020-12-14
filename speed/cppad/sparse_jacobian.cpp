@@ -50,11 +50,17 @@ extern size_t global_cppad_thread_alloc_inuse;
 
 namespace {
     using CppAD::vector;
-    typedef vector<size_t>  s_vector;
-    typedef vector<bool>    b_vector;
+    typedef CppAD::AD<double>                     a_double;
+    typedef vector<size_t>                        s_vector;
+    typedef vector<bool>                          b_vector;
+    typedef vector<double>                        d_vector;
+    typedef vector<a_double>                      a_vector;
+    typedef CppAD::sparse_rc<s_vector>            sparsity;
+    typedef CppAD::sparse_rcv<s_vector, d_vector> sparse_matrix;
+
 
     void calc_sparsity(
-        CppAD::sparse_rc<s_vector>& sparsity ,
+        CppAD::sparse_rc<s_vector>& pattern ,
         CppAD::ADFun<double>&       f        )
     {   bool reverse       = global_option["revsparsity"];
         bool transpose     = false;
@@ -70,7 +76,7 @@ namespace {
             for(size_t i = 0; i < m; ++i)
                 select_range[i] = true;
             f.subgraph_sparsity(
-                select_domain, select_range, transpose, sparsity
+                select_domain, select_range, transpose, pattern
             );
         }
         else
@@ -85,14 +91,103 @@ namespace {
             //
             if( reverse )
             {   f.rev_jac_sparsity(
-                    identity, transpose, dependency, internal_bool, sparsity
+                    identity, transpose, dependency, internal_bool, pattern
                 );
             }
             else
             {   f.for_jac_sparsity(
-                    identity, transpose, dependency, internal_bool, sparsity
+                    identity, transpose, dependency, internal_bool, pattern
                 );
             }
+        }
+    }
+    // --------------------------------------------------------------------
+    void setup(
+        // inputs
+        size_t                  size    ,
+        size_t                  m       ,
+        const s_vector&         row     ,
+        const s_vector&         col     ,
+        // outputs
+        size_t&                 n_color ,
+        CppAD::ADFun<double>&   f       ,
+        sparse_matrix&          subset  ,
+        CppAD::sparse_jac_work& work    )
+    {   // optimization options
+        std::string optimize_options =
+            "no_conditional_skip no_compare_op no_print_for_op";
+        //
+        // default value for n_color
+        n_color = 0;
+        //
+        // independent variable vector
+        size_t nc = size;
+        a_vector a_x(nc);
+        d_vector x(nc);
+        //
+        // dependent variable vector
+        size_t nr = m;
+        a_vector a_y(nr);
+        //
+        // choose a value for independent variable vector
+        CppAD::uniform_01(nc, x);
+        for(size_t j = 0; j < nc; j++)
+            a_x[j] = x[j];
+        //
+        // declare independent variables
+        size_t abort_op_index = 0;
+        bool record_compare   = false;
+        CppAD::Independent(a_x, abort_op_index, record_compare);
+        //
+        // AD computation of f(x)
+        size_t order = 0;
+        CppAD::sparse_jac_fun<a_double>(nr, nc, a_x, row, col, order, a_y);
+        //
+        // create function object f : x -> y
+        f.Dependent(a_x, a_y);
+        //
+        if( global_option["optimize"] )
+            f.optimize(optimize_options);
+        //
+        // coloring method
+        std::string coloring = "cppad";
+# if CPPAD_HAS_COLPACK
+        if( global_option["colpack"] )
+            coloring = "colpack";
+# else
+        CPPAD_ASSERT_UNKNOWN( ! global_option["colpack"] );
+# endif
+        //
+        // sparsity pattern for subset of Jacobian that is evaluated
+        size_t nnz = row.size();
+        sparsity subset_pattern(nr, nc, nnz);
+        for(size_t k = 0; k < nnz; ++k)
+            subset_pattern.set(k, row[k], col[k]);
+        //
+        // sparse matrix for subset of Jacobian that is evaluated
+        subset = sparse_matrix( subset_pattern );
+        //
+        // maximum number of colors at once
+        size_t group_max = 25;
+        //
+        if( global_option["subgraph"] )
+        {   // This would cache some information in f,  but would it enough ?
+            // The time it takes to compute derivatives that are not used
+            // slows down the test when onetape is false.
+            // f.subgraph_jac_rev(x, ac_subset);
+        }
+        else
+        {   // need full sparsity pattern
+            // (could use subset_sparsity, but pretend we do not konw that)
+            sparsity pattern;
+            calc_sparsity(pattern, f);
+            //
+            // Use forward mode to compute the Jacobian
+            // (this caches informaiton in work),
+            work.clear();
+            n_color = f.sparse_jac_for(
+                group_max, x, subset, pattern, coloring, work
+            );
         }
     }
 }
@@ -136,141 +231,85 @@ bool link_sparse_jacobian(
         ||  global_option["colpack"]  )
             return false;
     }
-    // ---------------------------------------------------------------------
-    // optimization options: no conditional skips or compare operators
-    std::string optimize_options =
-        "no_conditional_skip no_compare_op no_print_for_op";
     // -----------------------------------------------------
-    // setup
-    typedef CppAD::AD<double>    a_double;
-    typedef vector<double>       d_vector;
-    typedef vector<a_double>     ad_vector;
+    // size corresponding to static_f
+    static size_t static_size = 0;
     //
-    size_t order = 0;         // derivative order corresponding to function
-    size_t n     = size;      // number of independent variables
-    ad_vector  a_x(n);        // AD domain space vector
-    ad_vector  a_y(m);        // AD range space vector y = f(x)
-    CppAD::ADFun<double> f;   // AD function object
+    // function object corresponding to f(x)
+    static CppAD::ADFun<double> static_f;
     //
-    // declare sparsity pattern
-    CppAD::sparse_rc<s_vector>  sparsity;
+    // subset of Jacobian that we are using
+    static sparse_matrix static_subset;
     //
-    // declare subset where Jacobian is evaluated
-    CppAD::sparse_rc<s_vector> subset_pattern;
-    size_t nr  = m;
-    size_t nc  = n;
-    size_t nnz = row.size();
-    subset_pattern.resize(nr, nc, nnz);
-    for(size_t k = 0; k < nnz; k++)
-        subset_pattern.set(k, row[k], col[k]);
-    CppAD::sparse_rcv<s_vector, d_vector> subset( subset_pattern );
-    const d_vector& subset_val( subset.val() );
+    // information used by for_sparse_jac_for
+    static CppAD::sparse_jac_work static_work;
+    //
+    // sparsity pattern not used because work is non-empty
+    sparsity empty_pattern;
+    // -----------------------------------------------------------------------
+    //
+    // default value for n_color
+    n_color = 0;
+    //
+    bool onetape = global_option["onetape"];
+    //
+    if( job == "setup" )
+    {   if( onetape )
+        {   setup(size, m, row, col,
+                n_color, static_f, static_subset, static_work
+            );
+            static_size = size;
+        }
+        else
+        {   static_size = 0;
+        }
+        return true;
+    }
+    if( job == "teardown" )
+    {   static_f      = CppAD::ADFun<double>();
+        sparse_matrix empty_matrix;
+        static_subset.swap( empty_matrix );
+        static_work.clear();
+        static_size = 0;
+        return true;
+    }
+    // ------------------------------------------------------------------------
+    CPPAD_ASSERT_UNKNOWN( job == "run" );
+    //
+    // number of independent variables
+    static size_t n = size;
+    //
+    // maximum number of colors at once
+    size_t group_max = 25;
     //
     // coloring method
     std::string coloring = "cppad";
-# if CPPAD_HAS_COLPACK
     if( global_option["colpack"] )
         coloring = "colpack";
-# endif
-    //
-    // maximum number of colors at once
-    //
-    // do not even record comparison operators
-    size_t abort_op_index = 0;
-    bool record_compare   = false;
-    //
-    size_t group_max = 25;
     // ------------------------------------------------------
-    if( ! global_option["onetape"] ) while(repeat--)
-    {   // choose a value for x
-        CppAD::uniform_01(n, x);
-        for(size_t j = 0; j < n; j++)
-            a_x[j] = x[j];
-
-        // declare independent variables
-        Independent(a_x, abort_op_index, record_compare);
-        //
-        // AD computation of f(x)
-        CppAD::sparse_jac_fun<a_double>(m, n, a_x, row, col, order, a_y);
-        //
-        // create function object f : X -> Y
-        f.Dependent(a_x, a_y);
-        //
-        if( global_option["optimize"] )
-            f.optimize(optimize_options);
-        //
-        // skip comparison operators
-        f.compare_change_count(0);
-        //
-        if( global_option["subgraph"] )
-        {   // user reverse mode becasue forward not yet implemented
-            f.subgraph_jac_rev(x, subset);
-            n_color = 0;
+    while(repeat--)
+    {   if( onetape )
+        {   CPPAD_ASSERT_UNKNOWN( size == static_size );
         }
         else
-        {
-            // calculate the Jacobian sparsity pattern for this function
-            calc_sparsity(sparsity, f);
-            //
-            // structure that holds some of the work done by sparse_jac_for
-            CppAD::sparse_jac_work work;
-            //
-            // calculate the Jacobian at this x
-            // (use forward mode because m > n ?)
-            n_color = f.sparse_jac_for(
-                group_max, x, subset, sparsity, coloring, work
+        {   setup(size, m, row, col,
+                n_color, static_f, static_subset, static_work
             );
         }
-        for(size_t k = 0; k < nnz; k++)
-            jacobian[k] = subset_val[k];
-    }
-    else
-    {   // choose a value for x
+        // choose a value for x
         CppAD::uniform_01(n, x);
-        for(size_t j = 0; j < n; j++)
-            a_x[j] = x[j];
-        //
-        // declare independent variables
-        Independent(a_x, abort_op_index, record_compare);
-        //
-        // AD computation of f(x)
-        CppAD::sparse_jac_fun<a_double>(m, n, a_x, row, col, order, a_y);
-        //
-        // create function object f : X -> Y
-        f.Dependent(a_x, a_y);
-        //
-        if( global_option["optimize"] )
-            f.optimize(optimize_options);
-        //
-        // skip comparison operators
-        f.compare_change_count(0);
-        //
-        // calculate the Jacobian sparsity pattern for this function
-        if( ! global_option["subgraph"] )
-            calc_sparsity(sparsity, f);
-        //
-        // structure that holds some of the work done by sparse_jac_for
-        CppAD::sparse_jac_work work;
-        //
-        while(repeat--)
-        {   // choose a value for x
-            CppAD::uniform_01(n, x);
-            //
-            // calculate the Jacobian at this x
-            if( global_option["subgraph"] )
-            {   // user reverse mode becasue forward not yet implemented
-                f.subgraph_jac_rev(x, subset);
-                n_color = 0;
-            }
-            else
-            {   // (use forward mode because m > n ?)
-                n_color = f.sparse_jac_for(
-                    group_max, x, subset, sparsity, coloring, work
-                );
-            }
-            for(size_t k = 0; k < nnz; k++)
-                jacobian[k] = subset_val[k];
+
+        if( global_option["subgraph"] )
+        {   // user reverse mode becasue forward not yet implemented
+            static_f.subgraph_jac_rev(x, static_subset);
         }
+        else
+        {   // Use forward mode because m > n (is this sufficient reason ?)
+            n_color = static_f.sparse_jac_for(group_max, x,
+                static_subset, empty_pattern, coloring, static_work
+            );
+        }
+        jacobian = static_subset.val();
     }
     size_t thread                   = CppAD::thread_alloc::thread_num();
     global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
