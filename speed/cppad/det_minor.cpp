@@ -148,22 +148,16 @@ bool link_det_minor(
     }
     // -----------------------------------------------------------------------
     CPPAD_ASSERT_UNKNOWN( job == "run" );
-    if( onetape ) while(repeat--)
-    {   // use if before assert to avoid warning that static_size is not used
-        if( size != static_size )
-        {   CPPAD_ASSERT_UNKNOWN( size == static_size );
+    while(repeat--)
+    {   if( onetape )
+        {   // use if before assert to avoid warning
+            if( size != static_size )
+            {   CPPAD_ASSERT_UNKNOWN( size == static_size );
+            }
         }
-
-        // get next matrix
-        CppAD::uniform_01(nx, matrix);
-
-        // evaluate the gradient
-        static_f.Forward(0, matrix);
-        gradient = static_f.Reverse(1, w);
-    }
-    else while(repeat--)
-    {   setup(size, static_f);
-
+        else
+        {   setup(size, static_f);
+        }
         // get next matrix
         CppAD::uniform_01(nx, matrix);
 
