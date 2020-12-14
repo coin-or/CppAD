@@ -39,7 +39,7 @@ $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %matrix%(%pattern%)
 %$$
 $icode%other% = %matrix%
 %$$
-$icode%other%.swap( %matrix% )
+$icode%matrix%.swap( %other% )
 %$$
 $icode%matrix%.set(%k%, %v%)
 %$$
@@ -93,7 +93,7 @@ $icode matrix$$ are fixed during the constructor and constant there after.
 The $icode val$$ vector is only changed by the constructor
 and the $code set$$ function.
 There are two exceptions to this rule, where $icode other$$ appears in the
-assignment and swap syntax..
+assignment and swap syntax.
 
 $head other$$
 The $icode other$$ variable has prototype

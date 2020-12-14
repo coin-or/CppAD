@@ -41,8 +41,8 @@ bool sparse_rc(void)
         pattern.set(k, k, k);
 
     // row and column vectors corresponding to pattern
-    const SizeVector& row( pattern.row() );
-    const SizeVector& col( pattern.row() );
+    const SizeVector& row = pattern.row();
+    const SizeVector& col = pattern.row();
 
     // check pattern
     ok &= pattern.nnz() == nnz;
@@ -72,19 +72,29 @@ bool sparse_rc(void)
     }
 
     // create an empty pattern
-    CppAD::sparse_rc<SizeVector> target;
-    ok &= target.nnz() == 0;
-    ok &= target.nr()  == 0;
-    ok &= target.nc()  == 0;
+    CppAD::sparse_rc<SizeVector> other;
+    ok &= other.nnz() == 0;
+    ok &= other.nr()  == 0;
+    ok &= other.nc()  == 0;
 
-    // now use it as the target for an assignment statement
-    target = pattern;
-    ok    &= target.nr()  == pattern.nr();
-    ok    &= target.nc()  == pattern.nc();
-    ok    &= target.nnz() == pattern.nnz();
+    // now swap other with pattern
+    pattern.swap(other);
+    ok &= pattern.nnz() == 0;
+    ok &= pattern.nr()  == 0;
+    ok &= pattern.nc()  == 0;
     for(size_t k = 0; k < nnz; k++)
-    {   ok &= target.row()[k] == row[k];
-        ok &= target.col()[k] == col[k];
+    {   ok &= other.row()[k] == nnz - k - 1;
+        ok &= other.col()[k] == nnz - k - 1;
+    }
+
+    // now use the assignment statement
+    pattern = other;
+    ok    &= other.nr()  == pattern.nr();
+    ok    &= other.nc()  == pattern.nc();
+    ok    &= other.nnz() == pattern.nnz();
+    for(size_t k = 0; k < nnz; k++)
+    {   ok &= pattern.row()[k] == other.row()[k];
+        ok &= pattern.col()[k] == other.col()[k];
     }
     return ok;
 }

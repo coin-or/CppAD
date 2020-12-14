@@ -76,20 +76,31 @@ bool sparse_rcv(void)
     }
 
     // create an empty matrix
-    CppAD::sparse_rcv<SizeVector, ValueVector> target;
-    ok &= target.nnz() == 0;
-    ok &= target.nr()  == 0;
-    ok &= target.nc()  == 0;
+    CppAD::sparse_rcv<SizeVector, ValueVector> other;
+    ok &= other.nnz() == 0;
+    ok &= other.nr()  == 0;
+    ok &= other.nc()  == 0;
 
-    // now use it as the target for an assignment statement
-    target = matrix;
-    ok    &= target.nr()  == matrix.nr();
-    ok    &= target.nc()  == matrix.nc();
-    ok    &= target.nnz() == matrix.nnz();
+    // now swap other with matrix
+    matrix.swap(other);
+    ok &= matrix.nnz() == 0;
+    ok &= matrix.nr()  == 0;
+    ok &= matrix.nc()  == 0;
     for(size_t k = 0; k < nnz; k++)
-    {   ok &= target.row()[k] == row[k];
-        ok &= target.col()[k] == col[k];
-        ok &= target.val()[k] == val[k];
+    {   ok &= other.row()[ col_major[k] ] == k;
+        ok &= other.col()[ col_major[k] ] == k;
+        ok &= other.val()[ col_major[k] ] == double(k);
+    }
+
+    // now use the assignment statement
+    matrix = other;
+    ok    &= other.nr()  == matrix.nr();
+    ok    &= other.nc()  == matrix.nc();
+    ok    &= other.nnz() == matrix.nnz();
+    for(size_t k = 0; k < nnz; k++)
+    {   ok &= matrix.row()[k] == other.row()[k];
+        ok &= matrix.col()[k] == other.col()[k];
+        ok &= matrix.val()[k] == other.val()[k];
     }
     return ok;
 }

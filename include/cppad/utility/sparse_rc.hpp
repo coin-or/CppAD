@@ -36,7 +36,7 @@ $codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
 %$$
 $icode%other% = %pattern%
 %$$
-$icode%other%.swap(%pattern%)
+$icode%pattern%.swap(%other%)
 %$$
 $icode%resize%(%nr%, %nc%, %nnz%)
 %$$
