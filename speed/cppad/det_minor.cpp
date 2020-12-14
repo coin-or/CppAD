@@ -47,7 +47,11 @@ namespace {
     typedef CppAD::vector<a_double> a_vector;
     //
     // setup
-    void setup(CppAD::ADFun<double>& f, size_t size)
+    void setup(
+        // inputs
+        size_t size             ,
+        // outputs
+        CppAD::ADFun<double>& f )
     {
         // object for computing determinant
         CppAD::det_by_minor<a_double>   a_det(size);
@@ -130,7 +134,7 @@ bool link_det_minor(
     // -----------------------------------------------------------------------
     if( job == "setup" )
     {   if( onetape )
-        {   setup(static_f, size);
+        {   setup(size, static_f);
             static_size = size;
         }
         else
@@ -158,7 +162,7 @@ bool link_det_minor(
         gradient = static_f.Reverse(1, w);
     }
     else while(repeat--)
-    {   setup(static_f, size);
+    {   setup(size, static_f);
 
         // get next matrix
         CppAD::uniform_01(nx, matrix);

@@ -39,7 +39,11 @@ namespace {
     typedef CppAD::vector<ac_double> ac_vector;
     //
     // setup
-    void setup(compiled_fun& g, size_t size )
+    void setup(
+        // inputs
+        size_t size     ,
+        // outputs
+        compiled_fun& g )
     {   // optimization options
         std::string optimize_options =
             "no_conditional_skip no_compare_op no_print_for_op";
@@ -139,7 +143,7 @@ bool link_det_minor(
     // ----------------------------------------------------------------------
     if( job == "setup" )
     {   if( onetape )
-        {   setup(static_g, size);
+        {   setup(size, static_g);
             static_size = size;
         }
         else
@@ -167,7 +171,7 @@ bool link_det_minor(
         gradient = static_g(matrix);
     }
     else while(repeat--)
-    {   setup(static_g, size);
+    {   setup(size, static_g);
         static_size = size;
 
         // get next matrix

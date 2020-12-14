@@ -89,11 +89,13 @@ namespace {
     // -------------------------------------------------------------------------
     // setup
     void setup(
-            compiled_fun&   g       ,
-            size_t&         n_color ,
+            // inputs
             size_t          size    ,
             const s_vector& row     ,
-            const s_vector& col     )
+            const s_vector& col     ,
+            // outputs
+            size_t&         n_color ,
+            compiled_fun&   g       )
     {   // optimization options
         std::string optimize_options =
             "no_conditional_skip no_compare_op no_print_for_op";
@@ -238,7 +240,7 @@ bool link_sparse_jacobian(
     if( job == "setup" )
     {   if( onetape )
         {   // sets n_color when ontape is true
-            setup(static_g, n_color, size, row, col);
+            setup(size, row, col, n_color, static_g);
             static_size = size;
         }
         else
@@ -268,7 +270,7 @@ bool link_sparse_jacobian(
     }
     else while(repeat--)
     {   // sets n_color when ontape is false
-        setup(static_g, n_color, size, row, col);
+        setup(size, row, col, n_color, static_g);
         static_size = size;
 
         // get next x
