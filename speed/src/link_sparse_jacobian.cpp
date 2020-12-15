@@ -53,6 +53,9 @@ $head col$$
 The input size and elements of $icode col$$ do not matter.
 Upon return it is the chosen column indices.
 
+$head Row Major$$
+The result is in row major order.
+
 $end
 */
 // BEGIN_CHOOSE_ROW_COL
@@ -109,6 +112,19 @@ void choose_row_col(
         r_previous = r;
         c_previous = c;
     }
+# ifndef NDEBUG
+    size_t nnz = row.size();
+    CPPAD_ASSERT_UNKNOWN( nnz > 0 );
+    r_previous    = row[0];
+    c_previous    = col[0];
+    for(k = 1; k < nnz; ++k)
+    {   CPPAD_ASSERT_UNKNOWN( r_previous <= row[k] );
+        if( r_previous == row[k] )
+            CPPAD_ASSERT_UNKNOWN( c_previous <= col[k] );
+        r_previous = row[k];
+        c_previous = col[k];
+    }
+# endif
 }
 } // END_EMPTY_NAMESPACE
 /*

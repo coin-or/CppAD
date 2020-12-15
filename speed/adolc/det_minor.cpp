@@ -99,22 +99,14 @@ bool link_det_minor(
         }
     }
     // -----------------------------------------------------
-    // -----------------------------------------------------
     // size corresponding to current tape
     static size_t static_size = 0;
-    //
-    // tape identifier
-    int tag  = 0;
-    //
-    // number of dependent variables
-    int m    = 1;
     //
     // number of independent variables
     int n = size * size;
     //
-    // vectors of reverse mode weights
-    CppAD::vector<double> u(m);
-    u[0] = 1.;
+    // tape identifier
+    int tag  = 0;
     //
     bool onetape = global_option["onetape"];
     // ----------------------------------------------------------------------
@@ -138,6 +130,14 @@ bool link_det_minor(
     }
     // ----------------------------------------------------------------------
     CPPAD_ASSERT_UNKNOWN( job == "run" );
+    //
+    // number of dependent variables
+    int m    = 1;
+    //
+    // vectors of reverse mode weights
+    CppAD::vector<double> u(m);
+    u[0] = 1.;
+    //
     if( onetape ) while(repeat--)
     {   if( size != static_size )
         {   CPPAD_ASSERT_UNKNOWN( size == static_size );

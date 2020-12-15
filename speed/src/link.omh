@@ -16,6 +16,7 @@ $spell
     const
     namespace
     CppAD
+    onetape
 $$
 
 $section Package Specific Speed Test Linking Routines$$
@@ -56,7 +57,13 @@ The $code bool$$ return value $icode available$$ is true (false)
 if the speed test $icode name$$ is (is not) available for this package.
 
 $head job$$
-This $code const std::string&$$ argument has one of the following values:
+This argument can be used to cache information that does not
+depend on the function argument value without having the corresponding time
+included in the test results.
+This is expected to be important when the global option
+$cref/onetape/speed_main/Global Options/onetape/$$ is true.
+The $code const std::string&$$ argument $icode job$$
+has one of the following values:
 
 $subhead setup$$
 This is the first call with a new value for $icode size$$

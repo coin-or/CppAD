@@ -56,6 +56,65 @@ $srccode%cpp% */
 # include <map>
 extern std::map<std::string, bool> global_option;
 
+namespace {
+    using CppAD::vector;
+    typedef vector<size_t>    s_vector;
+    typedef vector<double>    d_vector;
+    typedef vector<adouble>   a_vector;
+    void setup(
+        // inputs
+        int             tag     ,
+        size_t          size    ,
+        size_t          m       ,
+        const s_vector& row     ,
+        const s_vector& col     ,
+        const d_vector& x       ,
+        int*            options , // const but adolc want non-const arg
+        // outupts
+        size_t&         n_color ,
+        int&            nnz     ,
+        unsigned int*&  rind    ,
+        unsigned int*&  cind    ,
+        double*&        values  )
+    {   // independent variables
+        CPPAD_ASSERT_UNKNOWN( size = x.size() );
+        int keep = 0; // keep forward mode results
+        trace_on(tag, keep);
+        size_t n = size;
+        a_vector a_x(n);
+        for(size_t j = 0; j < n; ++j)
+            a_x[j] <<= x[j];
+        //
+        // dependent variables
+        a_vector a_y(m);
+        //
+        // AD computation of f(x)
+        size_t order = 0;
+        CppAD::sparse_jac_fun<adouble>(m, n, a_x, row, col, order, a_y);
+        //
+        // create function object f : x -> y
+        double yi;
+        for(size_t i = 0; i < m; i++)
+            a_y[i] >>= yi;
+        trace_off();
+        //
+        // null pointers for recalculation of sparsity pattern
+        free(rind);
+        free(cind);
+        free(values);
+        rind   = nullptr;
+        cind   = nullptr;
+        values = nullptr;
+        //
+        // Retrieve n_color using undocumented feature of sparsedrivers.cpp
+        int same_pattern = 0;
+        n_color = sparse_jac(tag, int(m), int(n),
+            same_pattern, x.data(), &nnz, &rind, &cind, &values, options
+        );
+    }
+
+}
+
 bool link_sparse_jacobian(
     const std::string&               job      ,
     size_t                           size     ,
@@ -67,156 +126,112 @@ bool link_sparse_jacobian(
           CppAD::vector<double>&     jacobian ,
           size_t&                    n_color  )
 {
-    if( global_option["atomic"] || (! global_option["colpack"]) )
-        return false;
-    if( global_option["memory"] || global_option["optimize"] )
-        return false;
+    // --------------------------------------------------------------------
+    // check global options
+    // Allow colpack true even though it is not used below because it is
+    // true durng the adolc correctness tests.
+    const char* valid[] = { "onetape", "optimize", "colpack"};
+    size_t n_valid = sizeof(valid) / sizeof(valid[0]);
+    typedef std::map<std::string, bool>::iterator iterator;
+    //
+    for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+    {   if( itr->second )
+        {   bool ok = false;
+            for(size_t i = 0; i < n_valid; i++)
+                ok |= itr->first == valid[i];
+            if( ! ok )
+                return false;
+        }
+    }
     // -----------------------------------------------------
-    // setup
-    typedef unsigned int*    SizeVector;
-    typedef double*          DblVector;
-    typedef adouble          ADScalar;
-    typedef ADScalar*        ADVector;
-
-    size_t i, j, k;            // temporary indices
-    size_t n = size;           // number of independent variables
-    size_t order = 0;          // derivative order corresponding to function
-
-    // set up for thread_alloc memory allocator (fast and checks for leaks)
-    using CppAD::thread_alloc; // the allocator
-    size_t capacity;           // capacity of an allocation
-
-    // tape identifier
+    static size_t  static_size     = 0;
+    static int     static_nnz      = 0;
+    unsigned int*  static_rind     = nullptr;
+    unsigned int*  static_cind     = nullptr;
+    double*        static_values   = nullptr;
+    // -----------------------------------------------------
     int tag  = 0;
-    // AD domain space vector
-    ADVector a_x = thread_alloc::create_array<ADScalar>(n, capacity);
-    // AD range space vector
-    ADVector a_y = thread_alloc::create_array<ADScalar>(m, capacity);
-    // argument value in double
-    DblVector x = thread_alloc::create_array<double>(n, capacity);
-    // function value in double
-    DblVector y = thread_alloc::create_array<double>(m, capacity);
-
-
+    //
     // options that control sparse_jac
     int        options[4];
     if( global_option["boolsparsity"] )
         options[0] = 1;  // sparsity by propagation of bit pattern
     else
         options[0] = 0;  // sparsity pattern by index domains
-    options[1] = 0; // (0 = safe mode, 1 = tight mode)
-    options[2] = 0; // see changing to -1 and back to 0 below
-    options[3] = 0; // (0 = column compression, 1 = row compression)
-
-    // structure that holds some of the work done by sparse_jac
-    int        nnz;                   // number of non-zero values
-    SizeVector rind   = nullptr;   // row indices
-    SizeVector cind   = nullptr;   // column indices
-    DblVector  values = nullptr;   // Jacobian values
-
-    // choose a value for x
-    CppAD::uniform_01(n, x);
-
-    // declare independent variables
-    int keep = 0; // keep forward mode results
-    trace_on(tag, keep);
-    for(j = 0; j < n; j++)
-        a_x[j] <<= x[j];
-
-    // AD computation of f (x)
-    CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
-
-    // create function object f : x -> y
-    for(i = 0; i < m; i++)
-        a_y[i] >>= y[i];
-    trace_off();
-
-    // Retrieve n_color using undocumented feature of sparsedrivers.cpp
-    int same_pattern = 0;
-    options[2]       = -1;
-    n_color = sparse_jac(tag, int(m), int(n),
-        same_pattern, x, &nnz, &rind, &cind, &values, options
-    );
-    options[2]       = 0;
-    // ----------------------------------------------------------------------
-    if( ! global_option["onetape"] ) while(repeat--)
+    options[1] = 0;  // 0 = safe mode, 1 = tight mode
+    options[2] = 0;  // 0 = autodetect, 1 = forward, 2 = reverse
+    options[3] = 0;  // 0 = column compression, 1 = row compression
+    //
+    // independent variiables
+    size_t n = size;
+    d_vector x(n);
+    //
+    // default value for n_color
+    n_color = 0;
+    //
+    bool onetape = global_option["onetape"];
+    // -----------------------------------------------------
+    if( job == "setup" )
+    {   // get a value for x
+        CppAD::uniform_01(n, x);
+        //
+        // record the tape and run coloring problem
+        options[2] = -1;
+        setup(tag, size, m, row, col, x, options,
+            n_color, static_nnz, static_rind, static_cind, static_values
+        );
+        static_size = size;
+        //
+        return true;
+    }
+    if( job == "teardown" )
+    {   free(static_rind);
+        free(static_cind);
+        free(static_values);
+        static_rind   = nullptr;
+        static_cind   = nullptr;
+        static_values = nullptr;
+        return true;
+    }
+    // -----------------------------------------------------
+    CPPAD_ASSERT_UNKNOWN( job == "run" );
+    //
+    while (repeat--)
     {   // choose a value for x
         CppAD::uniform_01(n, x);
-
-        // declare independent variables
-        trace_on(tag, keep);
-        for(j = 0; j < n; j++)
-            a_x[j] <<= x[j];
-
-        // AD computation of f (x)
-        CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
-
-        // create function object f : x -> y
-        for(i = 0; i < m; i++)
-            a_y[i] >>= y[i];
-        trace_off();
-
-        // is this a repeat call with the same sparsity pattern
-        same_pattern = 0;
-
-        // calculate the jacobian at this x
-        rind   = nullptr;
-        cind   = nullptr;
-        values = nullptr;
-        sparse_jac(tag, int(m), int(n),
-            same_pattern, x, &nnz, &rind, &cind, &values, options
-        );
-        // only needed last time through loop
-        if( repeat == 0 )
-        {   assert( size_t(nnz) == row.size() );
-            for(int ell = 0; ell < nnz; ell++)
-            {   assert( row[ell] == size_t(rind[ell]) );
-                assert( col[ell] == size_t(cind[ell]) );
-                jacobian[ell] = values[ell];
-            }
-        }
-
-        // free raw memory allocated by sparse_jac
-        free(rind);
-        free(cind);
-        free(values);
-    }
-    else
-    {   while(repeat--)
-        {   // choose a value for x
-            CppAD::uniform_01(n, x);
-
-            // calculate the jacobian at this x
-            sparse_jac(tag, int(m), int(n),
-                same_pattern, x, &nnz, &rind, &cind, &values, options
+        //
+        if ( ! onetape )
+        {   // retape and calculate jacobian
+            options[2] = -1; // stop at sparsity pattern, return n_color
+            setup(tag, size, m, row, col, x, options,
+                n_color, static_nnz, static_rind, static_cind, static_values
             );
-            same_pattern = 1;
+            options[2] = 0;
         }
-        // check that acolc has the same sparsity pattern in row major order
-        bool ok = size_t(nnz) == row.size();
-        for(k = 0; k < row.size(); ++k)
-        {   ok &= row[k] == size_t( rind[k] );
-            ok &= col[k] == size_t( cind[k] );
-            jacobian[k] = values[k];
+        else
+        {   if( size != static_size )
+                CPPAD_ASSERT_UNKNOWN( size == static_size );
         }
-        // assert here in case adolc stops returning same pattern
-        assert( ok );
-
-        // free raw memory allocated by sparse_jac
-        free(rind);
-        free(cind);
-        free(values);
+        // calculate the jacobian at this x
+        int same_pattern = 1;
+        sparse_jac(
+            tag, int(m), int(n), same_pattern, x.data(),
+            &static_nnz, &static_rind, &static_cind, &static_values,
+            options
+        );
     }
     // --------------------------------------------------------------------
-    // return argument
-    for(j = 0; j < n; j++)
+    // jacobian
+    CPPAD_ASSERT_UNKNOWN( size_t(static_nnz) == row.size() );
+    for(int ell = 0; ell < static_nnz; ell++)
+    {   CPPAD_ASSERT_UNKNOWN( row[ell] == size_t(static_rind[ell]) );
+        CPPAD_ASSERT_UNKNOWN( col[ell] == size_t(static_cind[ell]) );
+        jacobian[ell] = static_values[ell];
+    }
+    // x_return
+    for(size_t j = 0; j < n; j++)
         x_return[j] = x[j];
-
-    // tear down
-    thread_alloc::delete_array(a_x);
-    thread_alloc::delete_array(a_y);
-    thread_alloc::delete_array(x);
-    thread_alloc::delete_array(y);
+    //
     return true;
 }
 /* %$$
