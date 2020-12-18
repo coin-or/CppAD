@@ -175,7 +175,7 @@ namespace {
         c_g.Dependent(ac_x, ac_val);
         if( global_option["optimize"] )
             c_g.optimize(optimize_options);
-        compiled_fun g_tmp(c_g, "sparse_jacobian");
+        compiled_fun g_tmp("sparse_jacobian", c_g);
         //
         // set reture value
         g.swap(g_tmp);

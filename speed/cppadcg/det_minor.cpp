@@ -97,7 +97,7 @@ namespace {
         c_g.Dependent(ac_A, ac_gradient);
         if( global_option["optimize"] )
             c_g.optimize(optimize_options);
-        compiled_fun g_tmp(c_g, "det_minor");
+        compiled_fun g_tmp("det_minor", c_g);
         //
         // static_g
         g.swap(g_tmp);

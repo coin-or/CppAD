@@ -22,18 +22,23 @@ private:
     // model_ (contains a reference to dynamic_lib_)
     std::unique_ptr< CppAD::cg::GenericModel<double> > model_;
 public:
-    // fun_name( cg_fun, file_name)
-    compiled_fun(
-        CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun    ,
-        const std::string&       file_name
-    );
-    //
-    // fun_name( file_name )
-    compiled_fun(const std::string& file_name);
-    //
+	// -----------------------------------------------------------------------
+	// constructors
+	// -----------------------------------------------------------------------
     // fun_name()
     compiled_fun(void);
     //
+    // fun_name( file_name )
+    compiled_fun(const std::string& file_name);
+	//
+    // fun_name(file_name, cg_fun)
+    compiled_fun(
+        const std::string&                     file_name  ,
+        CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun
+    );
+    // -----------------------------------------------------------------------
+	// operations
+    // -----------------------------------------------------------------------
     // swap(other_fun)
     void swap(compiled_fun& other_fun);
     //

@@ -24,27 +24,36 @@ $section Compile and Link Source For an AD Function$$
 $head Syntax$$
 $codei%# include <cppad/example/compiled_fun.hpp>
 %$$
-$codei%compiled_fun %fun_name%(%cg_fun%, %file_name%)
+
+$subhead Constructor$$
+$codei%compiled_fun %fun_name%()
 %$$
 $codei%compiled_fun %fun_name%(%file_name%)
 %$$
-$codei%compiled_fun %fun_name%()
+$codei%compiled_fun %fun_name%(%file_name%, %cg_fun%)
+
 %$$
+
+$subhead Operations$$
 $icode%fun_name%.swap(%other_fun%)
 %$$
 $icode%y% = %fun_name%(%x%)
 %$$
 
 $head Prototype$$
+
+$subhead Constructors$$
 $srcthisfile%
-    0%// BEGIN_CTOR_AD_FUN_FILE_NAME%// END_CTOR_AD_FUN_FILE_NAME%1
+    0%// BEGIN_CTOR_VOID%// END_CTOR_VOID%1
 %$$
 $srcthisfile%
     0%// BEGIN_CTOR_FILE_NAME%// END_CTOR_FILE_NAME%1
 %$$
 $srcthisfile%
-    0%// BEGIN_CTOR_VOID%// END_CTOR_VOID%1
+    0%// BEGIN_CTOR_CG_FUN%// END_CTOR_CG_FUN%1
 %$$
+
+$subhead Operations$$
 $srcthisfile%
     0%// BEGIN_SWAP_OTHER_FUN%// END_SWAP_OTHER_FUN%1
 %$$
@@ -111,11 +120,11 @@ $end
 
 # include <cppad/example/compiled_fun.hpp>
 
-// BEGIN_CTOR_AD_FUN_FILE_NAME
+// BEGIN_CTOR_CG_FUN
 compiled_fun::compiled_fun(
-    CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun    ,
-    const std::string&       file_name )
-// END_CTOR_AD_FUN_FILE_NAME
+    const std::string&                     file_name ,
+    CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun    )
+// END_CTOR_CG_FUN
 {
     // Generate source code
     CppAD::cg::ModelCSourceGen<double> cgen(cg_fun, "model");
@@ -131,8 +140,7 @@ compiled_fun::compiled_fun(
     model_        = dynamic_lib_->model("model");
 }
 // BEGIN_CTOR_FILE_NAME
-compiled_fun::compiled_fun(
-    const std::string&       file_name )
+compiled_fun::compiled_fun(const std::string&  file_name )
 // END_CTOR_FILE_NAME
 {   // file name plus extension used for dynamic libraries on this system
     std::string file_name_ext = file_name +
