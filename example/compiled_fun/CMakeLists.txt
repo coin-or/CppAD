@@ -16,6 +16,7 @@ SET(source_list
     file.cpp
     function.cpp
     jacobian.cpp
+    jac_as_fun.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

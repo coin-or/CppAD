@@ -30,6 +30,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 extern bool file(void);
 extern bool function(void);
 extern bool jacobian(void);
+extern bool jac_as_fun(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -45,6 +46,7 @@ int main(void)
     Run( file,                 "file"            );
     Run( function,             "function"        );
     Run( jacobian,             "jacobian"        );
+    Run( jac_as_fun,           "jac_as_fun"      );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak
