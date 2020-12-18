@@ -28,6 +28,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
 extern bool function(void);
+extern bool jacobian(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -41,6 +42,7 @@ int main(void)
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
     Run( function,             "function"        );
+    Run( jacobian,             "jacobian"        );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak

@@ -81,9 +81,15 @@ compile the source code, and then link the corresponding function evaluation
 $codei%
     %y% = cg_fun.Forward(0, %x%)
 %$$.
+
+$head Speed$$
 The conversion to source and linking is expect to take a significant
 amount of time and the evaluation of the function is expected to be
-much faster.
+much faster; see the following speed tests:
+$table
+$rref cppadcg_det_minor.cpp$$
+$rref cppadcg_sparse_jacobian.cpp$$
+$tend
 
 
 $head fun_name$$
@@ -139,11 +145,13 @@ $latex \[
 \] $$
 
 $children%
-    example/compiled_fun/function.cpp
+    example/compiled_fun/function.cpp%
+    example/compiled_fun/jacobian.cpp
 %$$
 $head Examples$$
 $table
 $rref compiled_fun_function.cpp$$
+$rref compiled_fun_jacobian.cpp$$
 $tend
 
 $end
