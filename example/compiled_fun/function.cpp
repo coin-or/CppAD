@@ -63,7 +63,7 @@ bool function(void)
 
     // check function values
     for(size_t i = 0; i < m; ++i)
-    {   double check = double(i + 1) * sin( x[i % n] );
+    {   double check = double(i + 1) * std::sin( x[i % n] );
         ok &= CppAD::NearEqual(y[i] , check, eps99, eps99);
     }
     return ok;

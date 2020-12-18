@@ -146,11 +146,13 @@ $latex \[
 
 $children%
     example/compiled_fun/function.cpp%
+    example/compiled_fun/file.cpp%
     example/compiled_fun/jacobian.cpp
 %$$
 $head Examples$$
 $table
 $rref compiled_fun_function.cpp$$
+$rref compiled_fun_file.cpp$$
 $rref compiled_fun_jacobian.cpp$$
 $tend
 

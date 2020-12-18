@@ -13,6 +13,7 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     compiled_fun.cpp
+    file.cpp
     function.cpp
     jacobian.cpp
 )
