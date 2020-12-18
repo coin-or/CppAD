@@ -91,6 +91,7 @@ $rref colpack_jac.cpp$$
 $rref colpack_jacobian.cpp$$
 $rref compare_change.cpp$$
 $rref compare.cpp$$
+$rref compiled_fun_function.cpp$$
 $rref complex_poly.cpp$$
 $rref cond_exp.cpp$$
 $rref con_dyn_var.cpp$$

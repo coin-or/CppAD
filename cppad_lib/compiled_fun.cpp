@@ -17,6 +17,9 @@ $spell
     hpp
     cppadcg
     cg
+    eval_jac
+    jacobian
+    enum
 $$
 
 $section Compile and Link Source For an AD Function$$
@@ -31,7 +34,8 @@ $codei%compiled_fun %fun_name%()
 $codei%compiled_fun %fun_name%(%file_name%)
 %$$
 $codei%compiled_fun %fun_name%(%file_name%, %cg_fun%)
-
+%$$
+$codei%compiled_fun %fun_name%(%file_name%, %cg_fun%, %eval_jac%)
 %$$
 
 $subhead Operations$$
@@ -39,6 +43,9 @@ $icode%fun_name%.swap(%other_fun%)
 %$$
 $icode%y% = %fun_name%(%x%)
 %$$
+$icode%J% = %fun_name%.jacobian(%x%)
+%$$
+
 
 $head Prototype$$
 
@@ -85,12 +92,6 @@ This is the name of the $code compiled_fun$$ object.
 $head other_fun$$
 This is the name of another $code compiled_fun$$ object.
 
-$head cg_fun$$
-This is a CppAD function object that corresponds to a function
-$latex f : \B{R}^n \rightarrow \B{R}^m$$.
-If this arguments is present in the constructor,
-a new dynamic library is created.
-
 $head file_name$$
 This is the absolute or relative path for the
 file that contains the dynamic library.
@@ -99,6 +100,25 @@ for dynamic libraries on this system.
 If $icode cg_fun$$ is not present in the constructor,
 it must have been present in a previous constructor with the same
 $icode file_name$$.
+
+$head cg_fun$$
+This is a CppAD function object that corresponds to a function
+$latex f : \B{R}^n \rightarrow \B{R}^m$$.
+If this arguments is present in the constructor,
+a new dynamic library is created.
+
+$head eval_jac$$
+If this argument is present in the constructor,
+it determines which type of Jacobian $latex f'(x)$$ will be enabled.
+The possible choices for $icode eval_jac$$ are:
+$table
+$icode eval_jac$$                 $pre  $$ $cnext Available Jacobian
+$rnext
+$code compiled_fun::none_enum$$   $pre  $$ $cnext none
+$rnext
+$code compiled_fun::dense_enum$$  $pre  $$ $cnext $icode%fun_name%.jacobian%$$
+$tend
+The default value for $icode eval_jac$$ is none.
 
 $head swap$$
 This exchanges the library in $icode fun_name$$ with the library in
@@ -111,23 +131,51 @@ at which the function will be evaluated.
 $head y$$
 This return value has size $icode m$$ and is the value of $latex f(x)$$.
 
-$head Example$$
-The file $cref cppadcg_det_minor.cpp$$ contain a speed test
-that uses $code compiled_fun$$.
+$head J$$
+This return value has size $icode%m% * %n%$$ and is the value of
+the Jacobian $latex f'(x)$$ where
+$latex \[
+    J[ i \cdot n + j ] =  ( \partial f_i / \partial x_j )  (x)
+\] $$
+
+$children%
+    example/compiled_fun/function.cpp
+%$$
+$head Examples$$
+$table
+$rref compiled_fun_function.cpp$$
+$tend
 
 $end
 */
 
 # include <cppad/example/compiled_fun.hpp>
 
+// ---------------------------------------------------------------------------
+// compiled_fun fun_name(file_name, cg_name, eval_jac)
+//
 // BEGIN_CTOR_CG_FUN
 compiled_fun::compiled_fun(
-    const std::string&                     file_name ,
-    CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun    )
+    const std::string&                     file_name  ,
+    CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun     ,
+    evaluation_enum                        eval_jac   )
 // END_CTOR_CG_FUN
-{
-    // Generate source code
+{   // Generate source code
     CppAD::cg::ModelCSourceGen<double> cgen(cg_fun, "model");
+    switch(eval_jac)
+    {   case none_enum:
+        break;
+
+        case dense_enum:
+        cgen.setCreateJacobian(true);
+        break;
+
+        case sparse_enum:
+        CPPAD_ASSERT_KNOWN( false,
+            "compiled_fun::sparse_jacobian not yet implemented"
+        );
+        break;
+    }
     CppAD::cg::ModelLibraryCSourceGen<double> libcgen(cgen);
 
     // Compile source, create the library file, and load the library
@@ -139,6 +187,9 @@ compiled_fun::compiled_fun(
     // create the model object
     model_        = dynamic_lib_->model("model");
 }
+// ---------------------------------------------------------------------------
+// compiled_fun fun_name(file_name)
+//
 // BEGIN_CTOR_FILE_NAME
 compiled_fun::compiled_fun(const std::string&  file_name )
 // END_CTOR_FILE_NAME
@@ -154,19 +205,40 @@ compiled_fun::compiled_fun(const std::string&  file_name )
     // create the model object
     model_        = dynamic_lib_->model("model");
 }
+// ---------------------------------------------------------------------------
+// compiled_fun fun_name
+//
 // BEGIN_CTOR_VOID
 compiled_fun::compiled_fun(void)
 // END_CTOR_VOID
 { }
+// --------------------------------------------------------------------------
+// fun_name.swap(other_fun)
+//
 // BEGIN_SWAP_OTHER_FUN
 void compiled_fun::swap(compiled_fun& other_fun)
 // END_SWAP_OTHER_FUN
 {   std::swap(dynamic_lib_, other_fun.dynamic_lib_);
     std::swap(model_, other_fun.model_ );
 }
+// --------------------------------------------------------------------------
+// y = fun_name(x)
+//
 // BEGIN_FUN_NAME_X
 CppAD::vector<double>
 compiled_fun::operator()(const CppAD::vector<double>& x)
 // END_FUN_NAME_X
-{   return model_-> ForwardZero(x);
+{   return model_->ForwardZero(x);
+}
+// --------------------------------------------------------------------------
+// J = fun_name.jacobian(x)
+//
+// BEGIN_JACOBIAN
+CppAD::vector<double>
+compiled_fun::jacobian(const CppAD::vector<double>& x)
+// END_JACOBIAN
+{   CPPAD_ASSERT_KNOWN( model_->isJacobianAvailable() ,
+        "compiled_fun: dense jacobian not enables during constructor"
+    );
+    return model_-> Jacobian(x);
 }
