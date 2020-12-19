@@ -34,10 +34,12 @@ $section Construct an ADFun Object and Stop Recording$$
 $head Syntax$$
 $codei%ADFun<%Base%> %f%(%x%, %y%);
 %$$
-$codei%ADFun<%Base%> %g%
+$codei%ADFun<%Base%> %f%
 %$$
-$icode%g% = %f%$$
-
+$icode%f%.swap(%g%)
+%$$
+$icode%f% = %g
+%$$
 
 $head Purpose$$
 The $codei%ADFun<%Base%>%$$ object $icode f$$
@@ -141,6 +143,12 @@ $codei%
 where $icode f$$ is an $codei%ADFun<%Base%>%$$ object.
 Use its $cref/default constructor/FunConstruct/Default Constructor/$$ instead
 and its assignment operator.
+
+$head swap$$
+The swap operation $code%f%.swap(%g%)%$$ exchanges the contents of
+the two $codei%ADFun<%Base%>%$$ functions; i.e.,
+$icode f$$ ($icode g$$) before the swap is identical to
+$icode g$$ ($icode f$$) after the swap.
 
 $head Assignment Operator$$
 The $codei%ADFun<%Base%>%$$ assignment operation
@@ -352,9 +360,9 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
     // sparse_list
     for_jac_sparse_set_        = f.for_jac_sparse_set_;
 }
-/// Move semantics version of assignment operator
+/// swap
 template <class Base, class RecBase>
-void ADFun<Base,RecBase>::operator=(ADFun&& f)
+void ADFun<Base,RecBase>::swap(ADFun& f)
 {
     // string objects
     function_name_.swap( f.function_name_ );
@@ -394,6 +402,14 @@ void ADFun<Base,RecBase>::operator=(ADFun&& f)
     // sparse_list
     for_jac_sparse_set_.swap( f.for_jac_sparse_set_);
 }
+/// Move semantics version of constructor and assignment
+template <class Base, class RecBase>
+ADFun<Base,RecBase>::ADFun(ADFun&& f)
+{   swap(f); }
+template <class Base, class RecBase>
+void ADFun<Base,RecBase>::operator=(ADFun&& f)
+{   swap(f); }
+
 
 /*!
 ADFun constructor from an operation sequence.

@@ -303,7 +303,14 @@ public:
     // assignment operator
     // (doxygen in cppad/core/fun_construct.hpp)
     void operator=(const ADFun& f);
-    // assignment operator with move semantics
+
+    // swap
+    void swap(ADFun& f);
+
+    // move semenatics copy
+    ADFun(ADFun&& f);
+
+    // move semantics assignment
     void operator=(ADFun&& f);
 
     // create from Json or C++ AD graph

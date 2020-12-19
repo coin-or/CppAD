@@ -76,6 +76,8 @@ $srcthisfile%
 $srcthisfile%
     0%// BEGIN_SPARSE_JACOBIAN%// END_SPARSE_JACOBIAN%1
 %$$
+$pre
+$$
 
 $head CppAD::cg::CG<double>$$
 This is the CppAD $icode Base$$ type for the function
@@ -89,7 +91,7 @@ $codei%
 %$$.
 
 $head Speed$$
-The conversion to source and linking is expect to take a significant
+The conversion to source and linking is expected to take a significant
 amount of time and the evaluation of the function is expected to be
 much faster; see the following speed tests:
 $table

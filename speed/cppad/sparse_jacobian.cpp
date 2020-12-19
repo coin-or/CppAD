@@ -289,7 +289,8 @@ bool link_sparse_jacobian(
     // ------------------------------------------------------
     while(repeat--)
     {   if( onetape )
-        {   CPPAD_ASSERT_UNKNOWN( size == static_size );
+        {   if( size != static_size )
+                CPPAD_ASSERT_UNKNOWN( size == static_size );
         }
         else
         {   setup(size, m, row, col,

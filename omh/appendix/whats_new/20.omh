@@ -73,6 +73,10 @@ $lnext
 The $cref compiled_fun$$ example for using CppADCodeGen was added.
 In addition, $cref cppadcg_sparse_jacobian.cpp$$ and
 $cref cppadcg_det_minor.cpp$$ examples were modified to use this utility.
+$lnext
+The ADFun $cref/swap/FunConstruct/swap/$$ operation,
+and move semantics copy constructor, were added.
+This ensures the move semantics assignment operator does not make any copies.
 $lend
 
 $head 12-12$$
