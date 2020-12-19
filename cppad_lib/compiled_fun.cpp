@@ -159,7 +159,8 @@ $children%
     example/compiled_fun/file.cpp%
     example/compiled_fun/jacobian.cpp%
     example/compiled_fun/jac_as_fun.cpp%
-    example/compiled_fun/sparse_jacobian.cpp
+    example/compiled_fun/sparse_jacobian.cpp%
+    example/compiled_fun/sparse_jac_as_fun.cpp
 %$$
 $head Examples$$
 $table
@@ -168,6 +169,7 @@ $rref compiled_fun_file.cpp$$
 $rref compiled_fun_jacobian.cpp$$
 $rref compiled_fun_jac_as_fun.cpp$$
 $rref compiled_fun_sparse_jacobian.cpp$$
+$rref compiled_fun_sparse_jac_as_fun.cpp$$
 $tend
 
 $end

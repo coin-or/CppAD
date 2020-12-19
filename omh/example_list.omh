@@ -96,6 +96,7 @@ $rref compiled_fun_function.cpp$$
 $rref compiled_fun_jacobian.cpp$$
 $rref compiled_fun_jac_as_fun.cpp$$
 $rref compiled_fun_sparse_jacobian.cpp$$
+$rref compiled_fun_sparse_jac_as_fun.cpp$$
 $rref complex_poly.cpp$$
 $rref cond_exp.cpp$$
 $rref con_dyn_var.cpp$$
