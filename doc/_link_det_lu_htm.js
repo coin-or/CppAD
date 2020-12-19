@@ -9,6 +9,7 @@ var list_up0 = [
 'cppad.htm',
 'speed.htm',
 'speed_main.htm',
+'link_routines.htm',
 'link_det_lu.htm'
 ];
 var list_current0 = [

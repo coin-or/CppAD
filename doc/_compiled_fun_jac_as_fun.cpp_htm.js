@@ -7,21 +7,10 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'speed.htm',
-'speed_cppadcg.htm',
-'cppadcg_sparse_jacobian.cpp.htm',
-'cppadcg_sparse_jacobian_cg.cpp.htm'
-];
-var list_current0 = [
-'cppadcg_sparse_jacobian_cg.cpp.htm#Syntax',
-'cppadcg_sparse_jacobian_cg.cpp.htm#Purpose',
-'cppadcg_sparse_jacobian_cg.cpp.htm#subgraph',
-'cppadcg_sparse_jacobian_cg.cpp.htm#optimize',
-'cppadcg_sparse_jacobian_cg.cpp.htm#seed',
-'cppadcg_sparse_jacobian_cg.cpp.htm#size_vec',
-'cppadcg_sparse_jacobian_cg.cpp.htm#sparse_jacobian.c',
-'cppadcg_sparse_jacobian_cg.cpp.htm#choose_row_col',
-'cppadcg_sparse_jacobian_cg.cpp.htm#Implementation'
+'example.htm',
+'general.htm',
+'compiled_fun.htm',
+'compiled_fun_jac_as_fun.cpp.htm'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

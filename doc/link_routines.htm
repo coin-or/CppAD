@@ -1,0 +1,242 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Package Specific Speed Test Linking Routines</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Package Specific Speed Test Linking Routines">
+<meta name="keywords" id="keywords" content=" package specific speed test linking routines syntax purpose thread save link_name namespace available job setup run teardown size repeat other_arguments ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_link_routines_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="speed_main.htm" target="_top">Prev</a>
+</td><td><a href="link_det_lu.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_main</option>
+<option>link_routines</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_main_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_link_routines_htm.js'></script>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>Thread Save</option>
+<option>link_name</option>
+<option>Contents</option>
+<option>Namespace</option>
+<option>available</option>
+<option>job</option>
+<option>---..setup</option>
+<option>---..run</option>
+<option>---..teardown</option>
+<option>size</option>
+<option>repeat</option>
+<option>other_arguments</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Package Specific Speed Test Linking Routines</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>available</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>link_name</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>job</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other_arguments</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Each <a href="speed_main.htm#package" target="_top"><span style='white-space: nowrap'>package</span></a>
+
+defines a version of each 
+<code><i><font color="black"><span style='white-space: nowrap'>link_name</span></font></i></code>
+ listed below.
+This is used by the <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ program
+to run the corresponding speed and correctness tests.
+
+<br>
+<br>
+<b><big><a name="Thread Save" id="Thread Save">Thread Save</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>link_name</span></font></i></code>
+ routines may use static memory for setup and teardown
+and hence may not be thread safe.
+
+<br>
+<br>
+<b><big><a name="link_name" id="link_name">link_name</a></big></b>
+<br>
+The routine 
+<code><i><font color="black"><span style='white-space: nowrap'>link_name</span></font></i></code>
+ in the syntax is one of the following:
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="link_det_lu.htm" target="_top">link_det_lu</a></td><td>Speed&nbsp;Testing&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;Using&nbsp;Lu&nbsp;Factorization</td></tr><tr><td><a href="link_det_minor.htm" target="_top">link_det_minor</a></td><td>Speed&nbsp;Testing&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;by&nbsp;Minor&nbsp;Expansion</td></tr><tr><td><a href="link_mat_mul.htm" target="_top">link_mat_mul</a></td><td>Speed&nbsp;Testing&nbsp;Derivative&nbsp;of&nbsp;Matrix&nbsp;Multiply</td></tr><tr><td><a href="link_ode.htm" target="_top">link_ode</a></td><td>Speed&nbsp;Testing&nbsp;the&nbsp;Jacobian&nbsp;of&nbsp;Ode&nbsp;Solution</td></tr><tr><td><a href="link_poly.htm" target="_top">link_poly</a></td><td>Speed&nbsp;Testing&nbsp;Second&nbsp;Derivative&nbsp;of&nbsp;a&nbsp;Polynomial</td></tr><tr><td><a href="link_sparse_hessian.htm" target="_top">link_sparse_hessian</a></td><td>Link&nbsp;to&nbsp;Speed&nbsp;Test&nbsp;Sparse&nbsp;Hessian</td></tr><tr><td><a href="link_sparse_jacobian.htm" target="_top">link_sparse_jacobian</a></td><td>Speed&nbsp;Testing&nbsp;Sparse&nbsp;Jacobians</td></tr><tr><td><a href="microsoft_timer.htm" target="_top">microsoft_timer</a></td><td>Microsoft&nbsp;Version&nbsp;of&nbsp;Elapsed&nbsp;Number&nbsp;of&nbsp;Seconds</td></tr></table><br>
+<b><big><a name="Namespace" id="Namespace">Namespace</a></big></b>
+<br>
+These routines are in the global namespace, not the CppAD namespace.
+
+<br>
+<br>
+<b><big><a name="available" id="available">available</a></big></b>
+<br>
+The <code><font color="blue">bool</font></code> return value 
+<code><i><font color="black"><span style='white-space: nowrap'>available</span></font></i></code>
+ is true (false)
+if the speed test 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is (is not) available for this package.
+
+<br>
+<br>
+<b><big><a name="job" id="job">job</a></big></b>
+<br>
+This argument can be used to cache information that does not
+depend on the function argument value without having the corresponding time
+included in the test results.
+This is expected to be important when the global option
+<a href="speed_main.htm#Global Options.onetape" target="_top"><span style='white-space: nowrap'>onetape</span></a>
+ is true.
+The <code><font color="blue">const std::string&amp;</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>job</span></font></i></code>
+
+has one of the following values:
+
+<br>
+<br>
+<big><a name="job.setup" id="job.setup">setup</a></big>
+<br>
+This is the first call with a new value for 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+
+and will not be used for timing.
+It can be used to setup information that should not be included in timing
+how long this routine takes.
+
+<br>
+<br>
+<big><a name="job.run" id="job.run">run</a></big>
+<br>
+This call will be used for timing how long this routine takes.
+The previous call 
+<code><i><font color="black"><span style='white-space: nowrap'>job</span></font></i></code>
+ was either <code><font color="blue">setup</font></code> or <code><font color="blue">run</font></code>
+and had the same value of 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="job.teardown" id="job.teardown">teardown</a></big>
+<br>
+This is the last call with this value of 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+
+and will not be used for timing.
+It should be used to take down the setup; e.g., fee any memory that
+was allocated.
+
+<br>
+<br>
+<b><big><a name="size" id="size">size</a></big></b>
+<br>
+The <code><font color="blue">size_t</font></code> argument 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ this is the size parameter for this
+test.  Larger sizes correspond to more computation per call.
+
+<br>
+<br>
+<b><big><a name="repeat" id="repeat">repeat</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>job</span></font></i></code>
+ is <code><font color="blue">run</font></code>,
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>size_t</span></font></i></code>
+ argument 
+<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
+ is the number of
+randomly chosen argument values that the test derivatives should be
+evaluated for.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
+ is always greater than or equal one
+and all the 
+<code><font color="blue"><span style='white-space: nowrap'>link_</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ output values are always calculated.
+
+<br>
+<br>
+<b><big><a name="other_arguments" id="other_arguments">other_arguments</a></big></b>
+<br>
+Each link function routine has specific specifications
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ and their other arguments.
+
+
+<hr>Input File: speed/src/link.omh
+
+</body>
+</html>

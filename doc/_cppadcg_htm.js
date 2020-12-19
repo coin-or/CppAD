@@ -12,7 +12,7 @@ var list_up0 = [
 'cppadcg.htm'
 ];
 var list_current0 = [
-'cppadcg.htm#Cppadcg Home Page',
+'cppadcg.htm#CppADCodeGen Home Page',
 'cppadcg.htm#Purpose',
 'cppadcg.htm#include_cppadcg',
 'cppadcg.htm#Speed Tests',

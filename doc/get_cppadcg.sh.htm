@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Download and Install CppADCodeGen in Build Directory</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Download and Install CppADCodeGen in Build Directory">
-<meta name="keywords" id="keywords" content=" download install cppadcodegen build directory syntax purpose requirements distribution source prefix git hash configuration ">
+<meta name="keywords" id="keywords" content=" download install cppadcodegen build directory syntax purpose requirements distribution source prefix git hash configuration documentation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,6 +74,7 @@ A:active { color : purple }
 <option>Prefix</option>
 <option>Git Hash</option>
 <option>Configuration</option>
+<option>Documentation</option>
 </select>
 </td>
 </tr></table><br>
@@ -122,7 +123,7 @@ This command must be executed in the
 <b><big><a name="Source Directory" id="Source Directory">Source Directory</a></big></b>
 <br>
 The Cppadcg source code is downloaded into the sub-directory
-<code><font color="blue">build/external/cppadcg.git</font></code> below the distribution directory.
+<code><font color="blue">external/cppadcg.git</font></code> below the distribution directory.
 
 <br>
 <br>
@@ -130,7 +131,7 @@ The Cppadcg source code is downloaded into the sub-directory
 <br>
 The <a href="get_optional.sh.htm#prefix" target="_top"><span style='white-space: nowrap'>prefix</span></a>
 
-in the file <code><font color="blue">bin/get_optional</font></code> is used this install.
+in the file <code><font color="blue">bin/get_optional.sh</font></code> is used for this install.
 
 <br>
 <br>
@@ -138,9 +139,9 @@ in the file <code><font color="blue">bin/get_optional</font></code> is used this
 <br>
 This will install the commit of Cppadcg with the following git hash
 <pre style='display:inline'><tt>
-<font color="#009900">git_hash</font><font color="#990000">=</font><font color="#FF0000">'38d4f3b'</font>
+<font color="#009900">git_hash</font><font color="#990000">=</font><font color="#FF0000">'b5307ad'</font>
 </tt></pre>
-The date corresponding to this commit was 20200113.
+The date corresponding to this commit was 20201009.
 
 <br>
 <br>
@@ -149,10 +150,26 @@ The date corresponding to this commit was 20200113.
 If the file
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;build/external/cppadcg-</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'>.configured<br>
+&nbsp;&nbsp;external/cppadcg-</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'>.configured<br>
 </span></font></code>
 exists, the configuration will be skipped.
 Delete this file if you want to re-run the configuration.
+
+<br>
+<br>
+<b><big><a name="Documentation" id="Documentation">Documentation</a></big></b>
+<br>
+If you change the setting for <code><font color="blue">CREATE_DOXYGEN_DOC</font></code> to <code><font color="blue">ON</font></code>,
+the doxygen documentation for CppADCodeGen will be installed in the directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/share/doc/cppadcg/html<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i></code>
+ has the value specified in the
+<a href="get_optional.sh.htm#prefix" target="_top"><span style='white-space: nowrap'>get_optional.sh</span></a>
+ file.
 
 
 <hr>Input File: bin/get_cppadcg.sh

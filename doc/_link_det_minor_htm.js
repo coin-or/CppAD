@@ -9,13 +9,13 @@ var list_up0 = [
 'cppad.htm',
 'speed.htm',
 'speed_main.htm',
+'link_routines.htm',
 'link_det_minor.htm'
 ];
 var list_current0 = [
 'link_det_minor.htm#Prototype',
-'link_det_minor.htm#Purpose',
 'link_det_minor.htm#Method',
-'link_det_minor.htm#Return Value',
+'link_det_minor.htm#job',
 'link_det_minor.htm#size',
 'link_det_minor.htm#repeat',
 'link_det_minor.htm#matrix',

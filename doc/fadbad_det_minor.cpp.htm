@@ -101,29 +101,39 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
 <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">link_det_minor</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>         job      <font color="#990000">,</font>
     <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
     <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>matrix   <font color="#990000">,</font>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>gradient <font color="#990000">)</font>
 <font color="#FF0000">{</font>
-    <i><font color="#9A1900">// speed test global option values</font></i>
-    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"memory"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]</font> <font color="#990000">||</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// check not global options</font></i>
+    <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font>map<font color="#990000">&lt;</font>std<font color="#990000">::</font>string<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&gt;::</font><font color="#008080">iterator</font> iterator<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> itr<font color="#990000">=</font>global_option<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font> itr<font color="#990000">!=</font>global_option<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">();</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> itr<font color="#990000">-&gt;</font>second <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
     <i><font color="#9A1900">// -----------------------------------------------------</font></i>
-    <i><font color="#9A1900">// setup</font></i>
 
-    <i><font color="#9A1900">// object for computing determinant</font></i>
-    <b><font color="#0000FF">typedef</font></b> fadbad<font color="#990000">::</font><font color="#008080">B&lt;double&gt;</font>       ADScalar<font color="#990000">;</font>
-    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font> ADVector<font color="#990000">;</font>
-    CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;ADScalar&gt;</font>   <b><font color="#000000">Det</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+    <i><font color="#9A1900">// AD types</font></i>
+    <b><font color="#0000FF">typedef</font></b> fadbad<font color="#990000">::</font><font color="#008080">B&lt;double&gt;</font>       b_double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;b_double&gt;</font> b_vector<font color="#990000">;</font>
 
-    <font color="#008080">size_t</font> i<font color="#990000">;</font>                <i><font color="#9A1900">// temporary index</font></i>
-    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>            <i><font color="#9A1900">// number of dependent variables</font></i>
-    <font color="#008080">size_t</font> n <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font>  <i><font color="#9A1900">// number of independent variables</font></i>
-    <font color="#008080">ADScalar</font>   detA<font color="#990000">;</font>         <i><font color="#9A1900">// AD value of the determinant</font></i>
-    <font color="#008080">ADVector</font>   <b><font color="#000000">A</font></b><font color="#990000">(</font>n<font color="#990000">);</font>         <i><font color="#9A1900">// AD version of matrix</font></i>
+    <i><font color="#9A1900">// object that computes the determinant</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;b_double&gt;</font>   <b><font color="#000000">b_det</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// number of dependent variables</font></i>
+    <font color="#009900">unsigned</font> <font color="#009900">int</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+
+    <i><font color="#9A1900">// number of independent variables</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// independent variable vector</font></i>
+    <font color="#008080">b_vector</font>   <b><font color="#000000">b_A</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+
+    <i><font color="#9A1900">// AD value of the determinant</font></i>
+    <font color="#008080">b_double</font>  b_detA<font color="#990000">;</font>
 
     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
@@ -131,18 +141,18 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
         CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> matrix<font color="#990000">);</font>
 
         <i><font color="#9A1900">// set independent variable values</font></i>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-            A<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>i<font color="#990000">];</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            b_A<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>j<font color="#990000">];</font>
 
         <i><font color="#9A1900">// compute the determinant</font></i>
-        detA <font color="#990000">=</font> <b><font color="#000000">Det</font></b><font color="#990000">(</font>A<font color="#990000">);</font>
+        b_detA <font color="#990000">=</font> <b><font color="#000000">b_det</font></b><font color="#990000">(</font>b_A<font color="#990000">);</font>
 
         <i><font color="#9A1900">// create function object f : A -&gt; detA</font></i>
-        detA<font color="#990000">.</font><b><font color="#000000">diff</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#990000">(</font><font color="#009900">unsigned</font> <font color="#009900">int</font><font color="#990000">)</font> m<font color="#990000">);</font>  <i><font color="#9A1900">// index 0 of m dependent variables</font></i>
+        b_detA<font color="#990000">.</font><b><font color="#000000">diff</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> m<font color="#990000">);</font>  <i><font color="#9A1900">// index 0 of m dependent variables</font></i>
 
         <i><font color="#9A1900">// evaluate and return gradient using reverse mode</font></i>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font><font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
-            gradient<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> A<font color="#990000">[</font>i<font color="#990000">].</font><b><font color="#000000">d</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font> <i><font color="#9A1900">// partial detA w.r.t A[i]</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            gradient<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> b_A<font color="#990000">[</font>j<font color="#990000">].</font><b><font color="#000000">d</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font> <i><font color="#9A1900">// partial detA w.r.t A[i]</font></i>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// ---------------------------------------------------------</font></i>
     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>

@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Speed Testing Sparse Jacobian</title>
+<title>Speed Testing Sparse Jacobians</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Speed Testing Sparse Jacobian">
-<meta name="keywords" id="keywords" content=" speed testing sparse jacobian prototype method size repeat m row col major x n_color double ">
+<meta name="description" id="description" content="Speed Testing Sparse Jacobians">
+<meta name="keywords" id="keywords" content=" speed testing sparse jacobians prototype method sparsity pattern job size repeat m row col major x jacobian n_color double ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,11 +49,9 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>speed</option>
 <option>speed_main</option>
+<option>link_routines</option>
 <option>link_sparse_jacobian</option>
 </select>
-</td>
-<td>
-<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
@@ -61,12 +59,17 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_speed_main_htm.js'></script>
 </td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_link_routines_htm.js'></script>
+</td>
 <td>link_sparse_jacobian</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Prototype</option>
 <option>Method</option>
+<option>Sparsity Pattern</option>
+<option>job</option>
 <option>size</option>
 <option>repeat</option>
 <option>m</option>
@@ -90,12 +93,13 @@ A:active { color : purple }
 
 
 
-<center><b><big><big>Speed Testing Sparse Jacobian</big></big></b></center>
+<center><b><big><big>Speed Testing Sparse Jacobians</big></big></b></center>
 <br>
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
 
 <pre><tt>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">link_sparse_jacobian</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>                job       <font color="#990000">,</font>
     <font color="#008080">size_t</font>                            size      <font color="#990000">,</font>
     <font color="#008080">size_t</font>                            repeat    <font color="#990000">,</font>
     <font color="#008080">size_t</font>                            m         <font color="#990000">,</font>
@@ -134,14 +138,36 @@ k
 .
 All the other terms of the Jacobian are zero.
 
+<br>
+<br>
+<b><big><a name="Sparsity Pattern" id="Sparsity Pattern">Sparsity Pattern</a></big></b>
+<br>
+The combination of 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ determine
+the sparsity pattern for the Jacobian that is differentiated.
+The calculation of this sparsity pattern,
+if necessary to compute the Jacobian,
+is intended to be part of the timing for this test.
+
+<br>
+<br>
+<b><big><a name="job" id="job">job</a></big></b>
+<br>
+See the standard link specifications for <a href="link_routines.htm#job" target="_top"><span style='white-space: nowrap'>job</span></a>
+.
 
 <br>
 <br>
 <b><big><a name="size" id="size">size</a></big></b>
 <br>
-The argument 
+See the standard link specifications for <a href="link_routines.htm#size" target="_top"><span style='white-space: nowrap'>size</span></a>
+.
+In addition, 
 <code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
-, referred to as <small>@(@
+ is referred to as <small>@(@
 n
 @)@</small> below,
 is the dimension of the domain space for <small>@(@
@@ -152,14 +178,8 @@ f(x)
 <br>
 <b><big><a name="repeat" id="repeat">repeat</a></big></b>
 <br>
-The argument 
-<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
- is the number of times
-to repeat the test
-(with a different value for 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- corresponding to
-each repetition).
+See the standard link specifications for <a href="link_routines.htm#repeat" target="_top"><span style='white-space: nowrap'>repeat</span></a>
+.
 
 <br>
 <br>
@@ -286,7 +306,7 @@ k = 0 , \ldots , K - 1
 The input value of 
 <code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i></code>
  does not matter. On output,
-it is the value <a href="sparse_jacobian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>n_sweep</span></a>
+it has value zero or <a href="sparse_jacobian.htm#n_sweep" target="_top"><span style='white-space: nowrap'>n_sweep</span></a>
  corresponding
 to the evaluation of 
 <code><i><font color="black"><span style='white-space: nowrap'>jacobian</span></font></i></code>
@@ -297,6 +317,12 @@ This is also the number of colors corresponding to the
 which can be set to <a href="speed_main.htm#Sparsity Options.colpack" target="_top"><span style='white-space: nowrap'>colpack</span></a>
 ,
 and is otherwise <code><font color="blue">cppad</font></code>.
+If this routine returns an non-zero 
+<code><i><font color="black"><span style='white-space: nowrap'>n_color</span></font></i></code>
+ for
+any 
+<code><i><font color="black"><span style='white-space: nowrap'>job</span></font></i></code>
+ value, the non-zero value will be reported for this test.
 
 <br>
 <br>

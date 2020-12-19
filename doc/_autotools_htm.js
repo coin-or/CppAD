@@ -22,6 +22,7 @@ var list_current0 = [
 'autotools.htm#prefix_dir',
 'autotools.htm#--with-Documentation',
 'autotools.htm#--with-testvector',
+'autotools.htm#--enable-msvc',
 'autotools.htm#max_num_threads',
 'autotools.htm#cxx_flags',
 'autotools.htm#openmp_flags',

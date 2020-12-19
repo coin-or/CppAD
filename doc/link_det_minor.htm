@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Speed Testing Gradient of Determinant by Minor Expansion</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Speed Testing Gradient of Determinant by Minor Expansion">
-<meta name="keywords" id="keywords" content=" speed testing gradient determinant minor expansion prototype purpose method return value size repeat matrix double ">
+<meta name="keywords" id="keywords" content=" speed testing gradient determinant minor expansion prototype method job size repeat matrix double ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,11 +49,9 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>speed</option>
 <option>speed_main</option>
+<option>link_routines</option>
 <option>link_det_minor</option>
 </select>
-</td>
-<td>
-<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
@@ -61,14 +59,16 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_speed_main_htm.js'></script>
 </td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_link_routines_htm.js'></script>
+</td>
 <td>link_det_minor</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Prototype</option>
-<option>Purpose</option>
 <option>Method</option>
-<option>Return Value</option>
+<option>job</option>
 <option>size</option>
 <option>repeat</option>
 <option>matrix</option>
@@ -93,22 +93,12 @@ A:active { color : purple }
 
 <pre><tt>
 <b><font color="#0000FF">extern</font></b> <font color="#009900">bool</font> <b><font color="#000000">link_det_minor</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>         job       <font color="#990000">,</font>
     <font color="#008080">size_t</font>                     size      <font color="#990000">,</font>
     <font color="#008080">size_t</font>                     repeat    <font color="#990000">,</font>
     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     matrix    <font color="#990000">,</font>
     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>     gradient
 <font color="#990000">);</font></tt></pre>
-<br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
-<br>
-Each <a href="speed_main.htm#package" target="_top"><span style='white-space: nowrap'>package</span></a>
-
-must define a version of this routine as specified below.
-This is used by the <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
- program
-to run the corresponding speed and correctness tests.
-
-<br>
 <br>
 <b><big><a name="Method" id="Method">Method</a></big></b>
 <br>
@@ -118,32 +108,30 @@ is used by the different AD packages.
 
 <br>
 <br>
-<b><big><a name="Return Value" id="Return Value">Return Value</a></big></b>
+<b><big><a name="job" id="job">job</a></big></b>
 <br>
-If this speed test is not yet
-supported by a particular 
-<code><i><font color="black"><span style='white-space: nowrap'>package</span></font></i></code>
-,
-the corresponding return value for <code><font color="blue">link_det_minor</font></code>
-should be <code><font color="blue">false</font></code>.
+See the standard link specifications for <a href="link_routines.htm#job" target="_top"><span style='white-space: nowrap'>job</span></a>
+.
 
 <br>
 <br>
 <b><big><a name="size" id="size">size</a></big></b>
 <br>
-The argument 
-<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+See the standard link specifications for <a href="link_routines.htm#size" target="_top"><span style='white-space: nowrap'>size</span></a>
 
-is the number of rows and columns in the matrix.
+In addition, 
+<code><i><font color="black"><span style='white-space: nowrap'>size</span></font></i></code>
+ is the number of rows and columns in
+
+<code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
+.
 
 <br>
 <br>
 <b><big><a name="repeat" id="repeat">repeat</a></big></b>
 <br>
-The argument 
-<code><i><font color="black"><span style='white-space: nowrap'>repeat</span></font></i></code>
- is the number of different matrices
-that the gradient (or determinant) is computed for.
+See the standard link specifications for <a href="link_routines.htm#repeat" target="_top"><span style='white-space: nowrap'>repeat</span></a>
+.
 
 <br>
 <br>

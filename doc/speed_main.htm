@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Running the Speed Test Program</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Running the Speed Test Program">
-<meta name="keywords" id="keywords" content=" running the speed test program syntax purpose package ad double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack symmetric correctness results n_color link functions ">
+<meta name="keywords" id="keywords" content=" running the speed test program syntax purpose package ad double profile correct seed global options onetape memory optimize atomic hes2jac subgraph sparsity boolsparsity revsparsity subsparsity colpack symmetric correctness results n_color link routines ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="speed.htm" target="_top">Prev</a>
-</td><td><a href="link_det_lu.htm" target="_top">Next</a>
+</td><td><a href="link_routines.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -89,7 +89,7 @@ A:active { color : purple }
 <option>Correctness Results</option>
 <option>Speed Results</option>
 <option>---..n_color</option>
-<option>Link Functions</option>
+<option>Link Routines</option>
 </select>
 </td>
 </tr></table><br>
@@ -525,15 +525,16 @@ colors used for each sparse Jacobian (Hessian) calculation; see
 
 
 
-
 <br>
 <br>
-<b><big><a name="Link Functions" id="Link Functions">Link Functions</a></big></b>
+<b><big><a name="Link Routines" id="Link Routines">Link Routines</a></big></b>
 <br>
 Each <a href="speed_main.htm#package" target="_top"><span style='white-space: nowrap'>package</span></a>
 
-defines it's own version of one of the link functions listed below.
-Each of these functions links this main program to the corresponding test:
+defines it's own version of one of the
+<a href="link_routines.htm" target="_top"><span style='white-space: nowrap'>link_routines</span></a>
+ listed below.
+Each of these routines links this main program to the corresponding test:
 <table><tr><td align='left'  valign='top'>
 
 <a href="link_det_lu.htm" target="_top">link_det_lu</a></td><td>
@@ -561,7 +562,7 @@ Link to Speed Test Sparse Hessian</td></tr>
 <tr><td>
 
 <a href="link_sparse_jacobian.htm" target="_top">link_sparse_jacobian</a></td><td>
-Speed Testing Sparse Jacobian</td></tr>
+Speed Testing Sparse Jacobians</td></tr>
 <tr><td>
 
 </td></tr>

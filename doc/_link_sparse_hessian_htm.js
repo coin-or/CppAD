@@ -9,6 +9,7 @@ var list_up0 = [
 'cppad.htm',
 'speed.htm',
 'speed_main.htm',
+'link_routines.htm',
 'link_sparse_hessian.htm'
 ];
 var list_current0 = [
@@ -16,6 +17,7 @@ var list_current0 = [
 'link_sparse_hessian.htm#Prototype',
 'link_sparse_hessian.htm#Namespace',
 'link_sparse_hessian.htm#Method',
+'link_sparse_hessian.htm#Sparsity Pattern',
 'link_sparse_hessian.htm#size',
 'link_sparse_hessian.htm#repeat',
 'link_sparse_hessian.htm#x',

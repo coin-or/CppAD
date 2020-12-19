@@ -7,18 +7,10 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'speed.htm',
-'speed_cppadcg.htm',
-'cppadcg_det_minor.cpp.htm',
-'cppadcg_det_minor_cg.cpp.htm'
-];
-var list_current0 = [
-'cppadcg_det_minor_cg.cpp.htm#Syntax',
-'cppadcg_det_minor_cg.cpp.htm#Purpose',
-'cppadcg_det_minor_cg.cpp.htm#n_size',
-'cppadcg_det_minor_cg.cpp.htm#size_vec',
-'cppadcg_det_minor_cg.cpp.htm#det_minor_grad.c',
-'cppadcg_det_minor_cg.cpp.htm#Implementation'
+'example.htm',
+'general.htm',
+'compiled_fun.htm',
+'compiled_fun_jacobian.cpp.htm'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

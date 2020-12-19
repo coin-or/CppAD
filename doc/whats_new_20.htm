@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 12-04 12-03 12-02 12-01 11-29 10-26 10-23 10-22 10-21 10-20 10-17 09-05 06-08 06-04 05-27 05-26 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 12-19 12-12 12-11 12-06 12-05 12-04 12-03 12-02 12-01 11-29 10-26 10-23 10-22 10-21 10-20 10-17 09-05 06-08 06-04 05-27 05-26 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,11 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>12-19</option>
+<option>12-12</option>
+<option>12-11</option>
+<option>12-06</option>
+<option>12-05</option>
 <option>12-04</option>
 <option>12-03</option>
 <option>12-02</option>
@@ -107,6 +112,91 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
+<br>
+<b><big><a name="12-19" id="12-19">12-19</a></big></b>
+<br>
+Merge in <code><font color="blue">cg</font></code> branch which had the following changes:
+
+<ol type="1"><li>
+<b>API Change:</b>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
+ class in
+<a href="sparse_rc.htm#SizeVector" target="_top"><span style='white-space: nowrap'>sparse_rc</span></a>
+ and
+<a href="sparse_rcv.htm#SizeVector" target="_top"><span style='white-space: nowrap'>sparse_rcv</span></a>
+
+must support the <code><font color="blue">swap</font></code> operation.
+</li><li>
+
+The <code><font color="blue">swap</font></code> operator was added to the
+<a href="sparse_rc.htm#other.swap" target="_top"><span style='white-space: nowrap'>sparse_rc</span></a>
+ and
+<a href="sparse_rcv.htm#other.swap" target="_top"><span style='white-space: nowrap'>sparse_rcv</span></a>
+ template classes.
+</li><li>
+
+A move semantics version of the assignment operator was added to the
+<a href="sparse_rc.htm#other.Assignment" target="_top"><span style='white-space: nowrap'>sparse_rc</span></a>
+ and
+<a href="sparse_rcv.htm#other.Assignment" target="_top"><span style='white-space: nowrap'>sparse_rcv</span></a>
+ template classes.
+</li><li>
+
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>job</span></font></i></code>
+ option was added to the
+<a href="link_det_minor.htm#job" target="_top"><span style='white-space: nowrap'>det_minor</span></a>
+ and
+<a href="link_sparse_jacobian.htm#job" target="_top"><span style='white-space: nowrap'>sparse_jacobian</span></a>
+ speed tests.
+</li><li>
+
+The <a href="compiled_fun.htm" target="_top"><span style='white-space: nowrap'>compiled_fun</span></a>
+ example for using CppADCodeGen was added.
+In addition, <a href="cppadcg_sparse_jacobian.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_sparse_jacobian.cpp</span></a>
+ and
+<a href="cppadcg_det_minor.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_det_minor.cpp</span></a>
+ examples were modified to use this utility.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="12-12" id="12-12">12-12</a></big></b>
+<br>
+Change the location where the source code for the
+<a href="get_optional.sh.htm" target="_top"><span style='white-space: nowrap'>optional</span></a>
+ packages is stored from
+<code><font color="blue">build/external</font></code> to <code><font color="blue">external</font></code>.
+This enables one to remove the old build directory
+without having to rebuild the optional packages.
+
+<br>
+<br>
+<b><big><a name="12-11" id="12-11">12-11</a></big></b>
+<br>
+Change the autotools <a href="autotools.htm#Configure" target="_top"><span style='white-space: nowrap'>configure</span></a>
+ script
+so that it does better detection of the microsoft cl compiler.
+In addition, add documentation for the
+<a href="autotools.htm#--enable-msvc" target="_top"><span style='white-space: nowrap'>--enable-msvc</span></a>
+ option.
+
+<br>
+<br>
+<b><big><a name="12-06" id="12-06">12-06</a></big></b>
+<br>
+Fix <code><font color="blue">bin/get_cppadcg.sh</font></code> install of newer version
+of cppadcg.
+
+<br>
+<br>
+<b><big><a name="12-05" id="12-05">12-05</a></big></b>
+<br>
+Advance to Oct 9, 2020 version of cppadcg.
+
+<br>
 <br>
 <b><big><a name="12-04" id="12-04">12-04</a></big></b>
 

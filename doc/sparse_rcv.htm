@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sparse Matrix Row, Column, Value Representation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sparse Matrix Row, Column, Value Representation">
-<meta name="keywords" id="keywords" content=" sparse matrix row column value representation syntax sizevector valuevector empty pattern target nr nc nnz set k v col val pat row_major col_major eigen example ">
+<meta name="keywords" id="keywords" content=" sparse matrix row column value representation syntax sizevector valuevector empty pattern other assignment swap nr nc nnz set k v col val pat row_major col_major eigen example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,7 +69,9 @@ A:active { color : purple }
 <option>empty</option>
 <option>pattern</option>
 <option>matrix</option>
-<option>target</option>
+<option>other</option>
+<option>---..Assignment</option>
+<option>---..swap</option>
 <option>nr</option>
 <option>nc</option>
 <option>nnz</option>
@@ -108,7 +110,10 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'>sparse_rcv&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ValueVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>target</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+<code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>.swap(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i><font color="blue"><span style='white-space: nowrap'>.set(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
@@ -210,24 +215,27 @@ The
 <code><i><font color="black"><span style='white-space: nowrap'>val</span></font></i></code>
  vector is only changed by the constructor
 and the <code><font color="blue">set</font></code> function.
-There is one exception to the rule, where 
-<code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
- corresponds
-to 
-<code><i><font color="black"><span style='white-space: nowrap'>target</span></font></i></code>
- for an assignment statement.
+There are two exceptions to this rule, where 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ appears in the
+assignment and swap syntax.
 
 <br>
 <br>
-<b><big><a name="target" id="target">target</a></big></b>
+<b><big><a name="other" id="other">other</a></big></b>
 <br>
-The target of the assignment statement must have prototype
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ variable has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;sparse_rcv&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ValueVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>target</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;sparse_rcv&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ValueVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+<br>
+<big><a name="other.Assignment" id="other.Assignment">Assignment</a></big>
+<br>
 After this assignment statement, 
-<code><i><font color="black"><span style='white-space: nowrap'>target</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
  is an independent copy
 of 
 <code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
@@ -235,10 +243,30 @@ of
 <code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
 
 and changes to 
-<code><i><font color="black"><span style='white-space: nowrap'>target</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
  do not affect 
 <code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
 .
+A move semantics version of the assignment operator is defined; e.g.,
+it is used when 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ in the assignment syntax
+is a function return value;
+
+<br>
+<br>
+<big><a name="other.swap" id="other.swap">swap</a></big>
+<br>
+After the swap operation 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
+) is equivalent
+to 
+<code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+) before the operation.
 
 <br>
 <br>

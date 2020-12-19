@@ -13,7 +13,7 @@ var list_up0 = [
 ];
 var list_current0 = [
 'cppadcg_sparse_jacobian.cpp.htm#Specifications',
-'cppadcg_sparse_jacobian.cpp.htm#Contents'
+'cppadcg_sparse_jacobian.cpp.htm#Implementation'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

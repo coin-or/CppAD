@@ -13,7 +13,6 @@ var list_up0 = [
 ];
 var list_current0 = [
 'cppadcg_det_minor.cpp.htm#Specifications',
-'cppadcg_det_minor.cpp.htm#Contents',
 'cppadcg_det_minor.cpp.htm#Implementation'
 ];
 function choose_across0(item)

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Autotools Unix Test and Installation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Autotools Unix Test and Installation">
-<meta name="keywords" id="keywords" content=" autotools unix test installation deprecated 2012-12-26 distribution directory build configure make examples tests profiling cppad prefix_dir --with-documentation --with-testvector max_num_threads cxx_flags openmp_flags postfix_dir adolc_dir linux cygwin boost_dir eigen_dir fadbad_dir ipopt_dir sacado_dir tape_addr_type tape_id_type install ">
+<meta name="keywords" id="keywords" content=" autotools unix test installation deprecated 2012-12-26 distribution directory build configure make examples tests profiling cppad prefix_dir --with-documentation --with-testvector --enable-msvc max_num_threads cxx_flags openmp_flags postfix_dir adolc_dir linux cygwin boost_dir eigen_dir fadbad_dir ipopt_dir sacado_dir tape_addr_type tape_id_type install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,7 @@ A:active { color : purple }
 <option>prefix_dir</option>
 <option>--with-Documentation</option>
 <option>--with-testvector</option>
+<option>--enable-msvc</option>
 <option>max_num_threads</option>
 <option>cxx_flags</option>
 <option>openmp_flags</option>
@@ -149,6 +150,7 @@ Execute the following command in the build directory:
 &nbsp;&nbsp;&nbsp;&nbsp;--prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>prefix_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;--with-Documentation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;--with-</span></font><i><font color="black"><span style='white-space: nowrap'>test</span></font></i><font color="blue"><span style='white-space: nowrap'>vector&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;--enable-msvc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;MAX_NUM_THREADS=</span></font><i><font color="black"><span style='white-space: nowrap'>max_num_threads</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;CXX_FLAGS=</span></font><i><font color="black"><span style='white-space: nowrap'>cxx_flags</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;OPENMP_FLAGS=</span></font><i><font color="black"><span style='white-space: nowrap'>openmp_flags</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
@@ -301,6 +303,13 @@ See also,
 and
 <a href="autotools.htm#eigen_dir" target="_top"><span style='white-space: nowrap'>eigen_dir</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="--enable-msvc" id="--enable-msvc">--enable-msvc</a></big></b>
+<br>
+If this flag is present, the Microsoft <code><font color="blue">cl</font></code> compiler will be
+placed at the front of the list of compilers to search for.
 
 <br>
 <br>

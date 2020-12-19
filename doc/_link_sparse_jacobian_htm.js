@@ -9,11 +9,14 @@ var list_up0 = [
 'cppad.htm',
 'speed.htm',
 'speed_main.htm',
+'link_routines.htm',
 'link_sparse_jacobian.htm'
 ];
 var list_current0 = [
 'link_sparse_jacobian.htm#Prototype',
 'link_sparse_jacobian.htm#Method',
+'link_sparse_jacobian.htm#Sparsity Pattern',
+'link_sparse_jacobian.htm#job',
 'link_sparse_jacobian.htm#size',
 'link_sparse_jacobian.htm#repeat',
 'link_sparse_jacobian.htm#m',

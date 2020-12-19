@@ -97,19 +97,24 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
 <b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">link_det_minor</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>         job      <font color="#990000">,</font>
     <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
     <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>matrix   <font color="#990000">,</font>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>det      <font color="#990000">)</font>
-<font color="#FF0000">{</font>
-    <b><font color="#0000FF">if</font></b><font color="#990000">(</font>global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">]||</font>global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]||</font>global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">])</font>
-        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-    <i><font color="#9A1900">// -----------------------------------------------------</font></i>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// --------------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// ignore global_option</font></i>
+    <i><font color="#9A1900">// --------------------------------------------------------------------------</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> job <font color="#990000">==</font> <font color="#FF0000">"setup"</font> <font color="#990000">||</font> job <font color="#990000">==</font> <font color="#FF0000">"teardown"</font> <font color="#990000">)</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> job <font color="#990000">==</font> <font color="#FF0000">"run"</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// setup</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;double&gt;</font>   <b><font color="#000000">Det</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
-    <font color="#008080">size_t</font> n <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font> <i><font color="#9A1900">// number of independent variables</font></i>
-
-    <i><font color="#9A1900">// ------------------------------------------------------</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// number of independent variables</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font>
+    <i><font color="#9A1900">// -------------------------------------------------------------------------</font></i>
     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// get the next matrix</font></i>
         CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>n<font color="#990000">,</font> matrix<font color="#990000">);</font>

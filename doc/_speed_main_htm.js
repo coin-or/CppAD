@@ -37,7 +37,7 @@ var list_current0 = [
 'speed_main.htm#Correctness Results',
 'speed_main.htm#Speed Results',
 'speed_main.htm#Speed Results.n_color',
-'speed_main.htm#Link Functions'
+'speed_main.htm#Link Routines'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

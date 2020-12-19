@@ -1,0 +1,377 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Compile and Link Source For an AD Function</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Compile and Link Source For an AD Function">
+<meta name="keywords" id="keywords" content=" compile link source ad function syntax constructor operations prototype constructors cppad::cg::cg&lt;double&gt; speed fun_name other_fun file_name cg_fun eval_jac swap x y j jrcv examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_compiled_fun_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="stack_machine.cpp.htm" target="_top">Prev</a>
+</td><td><a href="compiled_fun_function.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Example</option>
+<option>General</option>
+<option>compiled_fun</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_example_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_general_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_compiled_fun_htm.js'></script>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..Constructor</option>
+<option>---..Operations</option>
+<option>Prototype</option>
+<option>---..Constructors</option>
+<option>---..Operations</option>
+<option>CppAD::cg::CG&lt;double&gt;</option>
+<option>Speed</option>
+<option>fun_name</option>
+<option>other_fun</option>
+<option>file_name</option>
+<option>cg_fun</option>
+<option>eval_jac</option>
+<option>swap</option>
+<option>x</option>
+<option>y</option>
+<option>J</option>
+<option>Jrcv</option>
+<option>Examples</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Compile and Link Source For an AD Function</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/example/compiled_fun.hpp&gt;<br>
+</span></font></code>
+<br>
+<big><a name="Syntax.Constructor" id="Syntax.Constructor">Constructor</a></big>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>compiled_fun&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>()<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>compiled_fun&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>compiled_fun&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cg_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>compiled_fun&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cg_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eval_jac</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<big><a name="Syntax.Operations" id="Syntax.Operations">Operations</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>.swap(</span></font><i><font color="black"><span style='white-space: nowrap'>other_fun</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>J</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>.jacobian(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>Jrcv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>.sparse_jacobian(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Prototype.Constructors" id="Prototype.Constructors">Constructors</a></big>
+
+<pre style='display:inline'><tt>
+
+compiled_fun<font color="#990000">::</font><b><font color="#000000">compiled_fun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+</tt></pre>
+<pre style='display:inline'><tt>
+compiled_fun<font color="#990000">::</font><b><font color="#000000">compiled_fun</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>  file_name <font color="#990000">)</font>
+</tt></pre>
+<pre><tt>compiled_fun<font color="#990000">::</font><b><font color="#000000">compiled_fun</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>                     file_name  <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>ADFun<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>cg<font color="#990000">::</font>CG<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font> cg_fun     <font color="#990000">,</font>
+    <font color="#008080">evaluation_enum</font>                        eval_jac   <font color="#990000">)</font></tt></pre>
+<big><a name="Prototype.Operations" id="Prototype.Operations">Operations</a></big>
+
+<pre style='display:inline'><tt>
+
+<font color="#009900">void</font> compiled_fun<font color="#990000">::</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>compiled_fun<font color="#990000">&amp;</font> other_fun<font color="#990000">)</font>
+</tt></pre>
+<pre style='display:inline'><tt>
+CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font>
+compiled_fun<font color="#990000">::</font><b><font color="#0000FF">operator</font></b><font color="#990000">()(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+</tt></pre>
+<pre style='display:inline'><tt>
+CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font>
+compiled_fun<font color="#990000">::</font><b><font color="#000000">jacobian</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+</tt></pre>
+<pre style='display:inline'><tt>
+CppAD<font color="#990000">::</font>sparse_rcv<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;,</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;</font>
+compiled_fun<font color="#990000">::</font><b><font color="#000000">sparse_jacobian</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
+</tt></pre>
+<b><big><a name="CppAD::cg::CG&lt;double&gt;" id="CppAD::cg::CG&lt;double&gt;">CppAD::cg::CG&lt;double&gt;</a></big></b>
+<br>
+This is the CppAD 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+ type for the function
+
+<code><i><font color="black"><span style='white-space: nowrap'>cg_fun</span></font></i></code>
+.
+It is defined by
+<a href="https://github.com/joaoleal/CppADCodeGen" target="_top"><span style='white-space: nowrap'>CppADCodeGen</span></a>
+.
+and used to convert the 
+<code><i><font color="black"><span style='white-space: nowrap'>cg_fun</span></font></i></code>
+ function object to source code,
+compile the source code, and then link the corresponding function evaluation
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cg_fun.Forward(0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="Speed" id="Speed">Speed</a></big></b>
+<br>
+The conversion to source and linking is expect to take a significant
+amount of time and the evaluation of the function is expected to be
+much faster; see the following speed tests:
+<table><tr><td align='left'  valign='top'>
+
+<a href="cppadcg_det_minor.cpp.htm" target="_top">cppadcg_det_minor.cpp</a></td><td>
+Cppadcg Speed: Gradient of Determinant by Minor Expansion</td></tr>
+<tr><td>
+
+<a href="cppadcg_sparse_jacobian.cpp.htm" target="_top">cppadcg_sparse_jacobian.cpp</a></td><td>
+Cppadcg Speed: Sparse Jacobian</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+<br>
+<b><big><a name="fun_name" id="fun_name">fun_name</a></big></b>
+<br>
+This is the name of the <code><font color="blue">compiled_fun</font></code> object.
+
+<br>
+<br>
+<b><big><a name="other_fun" id="other_fun">other_fun</a></big></b>
+<br>
+This is the name of another <code><font color="blue">compiled_fun</font></code> object.
+
+<br>
+<br>
+<b><big><a name="file_name" id="file_name">file_name</a></big></b>
+<br>
+This is the absolute or relative path for the
+file that contains the dynamic library.
+It does not include the files extension at the end that is used
+for dynamic libraries on this system.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>cg_fun</span></font></i></code>
+ is not present in the constructor,
+it must have been present in a previous constructor with the same
+
+<code><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="cg_fun" id="cg_fun">cg_fun</a></big></b>
+<br>
+This is a CppAD function object that corresponds to a function
+<small>@(@
+f : \B{R}^n \rightarrow \B{R}^m
+@)@</small>.
+If this arguments is present in the constructor,
+a new dynamic library is created.
+
+<br>
+<br>
+<b><big><a name="eval_jac" id="eval_jac">eval_jac</a></big></b>
+<br>
+If this argument is present in the constructor,
+it determines which type of Jacobian <small>@(@
+f'(x)
+@)@</small> will be enabled.
+The possible choices for 
+<code><i><font color="black"><span style='white-space: nowrap'>eval_jac</span></font></i></code>
+ are:
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>eval_jac</span></font></i></code>
+                 <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Available Jacobian
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">compiled_fun::none_enum</font></code>   <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ none
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">compiled_fun::dense_enum</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i><font color="blue"><span style='white-space: nowrap'>.jacobian</span></font></code>
+
+</td></tr>
+</table>
+The default value for 
+<code><i><font color="black"><span style='white-space: nowrap'>eval_jac</span></font></i></code>
+ is none.
+
+<br>
+<br>
+<b><big><a name="swap" id="swap">swap</a></big></b>
+<br>
+This exchanges the library in 
+<code><i><font color="black"><span style='white-space: nowrap'>fun_name</span></font></i></code>
+ with the library in
+
+<code><i><font color="black"><span style='white-space: nowrap'>other_fun</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+is a vector of size 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ specifying the argument value
+at which the function will be evaluated.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+This return value has size 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ and is the value of <small>@(@
+f(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="J" id="J">J</a></big></b>
+<br>
+This return value has size 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+ and is the value of
+the Jacobian <small>@(@
+f'(x)
+@)@</small> where
+<small>@[@
+
+    J[ i \cdot n + j ] =  ( \partial f_i / \partial x_j )  (x)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Jrcv" id="Jrcv">Jrcv</a></big></b>
+<br>
+This return value is a <a href="sparse_rcv.htm" target="_top"><span style='white-space: nowrap'>sparse_rcv</span></a>
+ sparse matrix representation
+of the Jacobian.
+
+
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+<a href="compiled_fun_function.cpp.htm" target="_top">compiled_fun_function.cpp</a></td><td>
+Compiled AD Function Value: Example and Test</td></tr>
+<tr><td>
+
+<a href="compiled_fun_file.cpp.htm" target="_top">compiled_fun_file.cpp</a></td><td>
+Compiled AD File Store and Retrieve: Example and Test</td></tr>
+<tr><td>
+
+<a href="compiled_fun_jacobian.cpp.htm" target="_top">compiled_fun_jacobian.cpp</a></td><td>
+Compiled AD Jacobian Values: Example and Test</td></tr>
+<tr><td>
+
+<a href="compiled_fun_jac_as_fun.cpp.htm" target="_top">compiled_fun_jac_as_fun.cpp</a></td><td>
+Compiled AD Jacobian As Function Value: Example and Test</td></tr>
+<tr><td>
+
+<a href="compiled_fun_sparse_jacobian.cpp.htm" target="_top">compiled_fun_sparse_jacobian.cpp</a></td><td>
+Compiled AD Jacobian Values: Example and Test</td></tr>
+<tr><td>
+
+<a href="compiled_fun_sparse_jac_as_fun.cpp.htm" target="_top">compiled_fun_sparse_jac_as_fun.cpp</a></td><td>
+Compiled AD Sparse Jacobian As Function Value: Example and Test</td></tr>
+<tr><td>
+
+</td></tr>
+</table>
+
+<hr>Input File: cppad_lib/compiled_fun.cpp
+
+</body>
+</html>

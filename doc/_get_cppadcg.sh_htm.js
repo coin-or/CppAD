@@ -20,7 +20,8 @@ var list_current0 = [
 'get_cppadcg.sh.htm#Source Directory',
 'get_cppadcg.sh.htm#Prefix',
 'get_cppadcg.sh.htm#Git Hash',
-'get_cppadcg.sh.htm#Configuration'
+'get_cppadcg.sh.htm#Configuration',
+'get_cppadcg.sh.htm#Documentation'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

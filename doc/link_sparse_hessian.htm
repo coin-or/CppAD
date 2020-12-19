@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Link to Speed Test Sparse Hessian</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Link to Speed Test Sparse Hessian">
-<meta name="keywords" id="keywords" content=" link to speed test sparse hessian syntax prototype namespace method size repeat x row col major lower triangular n_color double ">
+<meta name="keywords" id="keywords" content=" link to speed test sparse hessian syntax prototype namespace method sparsity pattern size repeat x row col major lower triangular n_color double ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,17 +49,18 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>speed</option>
 <option>speed_main</option>
+<option>link_routines</option>
 <option>link_sparse_hessian</option>
 </select>
-</td>
-<td>
-<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_speed_main_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_link_routines_htm.js'></script>
 </td>
 <td>link_sparse_hessian</td>
 <td>
@@ -69,6 +70,7 @@ A:active { color : purple }
 <option>Prototype</option>
 <option>Namespace</option>
 <option>Method</option>
+<option>Sparsity Pattern</option>
 <option>size</option>
 <option>repeat</option>
 <option>x</option>
@@ -158,6 +160,20 @@ k
 K-1
 @)@</small>.
 All the other terms of the Hessian are zero.
+
+<br>
+<br>
+<b><big><a name="Sparsity Pattern" id="Sparsity Pattern">Sparsity Pattern</a></big></b>
+<br>
+The combination of 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ determine
+the sparsity pattern for the Hessian that is computed.
+The calculation of this sparsity pattern,
+if necessary to compute the Hessian,
+is intended to be part of the timing for this test.
 
 <br>
 <br>
