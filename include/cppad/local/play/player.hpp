@@ -118,14 +118,6 @@ public:
     num_var_vecad_rec_(0)
     { }
     // =================================================================
-    /// copy constructor (needed for base2ad)
-    player(const player& play)
-    {   // 2DO: want to use move semantics here because it is a temporary
-        // in base2ad case.
-        *this = play;
-    }
-
-    // =================================================================
     /// destructor
     ~player(void)
     { }
@@ -524,32 +516,6 @@ public:
         all_par_vec_        = play.all_par_vec_;
     }
     // ===============================================================
-    // move semantics version of assignment operator
-    void operator=(player&& play)
-    {
-        // size_t objects
-        num_dynamic_ind_    = play.num_dynamic_ind_;
-        num_var_rec_        = play.num_var_rec_;
-        num_var_load_rec_   = play.num_var_load_rec_;
-        num_var_vecad_rec_  = play.num_var_vecad_rec_;
-        //
-        // pod_vectors
-        op_vec_.swap(            play.op_vec_);
-        arg_vec_.swap(           play.arg_vec_);
-        text_vec_.swap(          play.text_vec_);
-        all_var_vecad_ind_.swap( play.all_var_vecad_ind_);
-        dyn_par_is_.swap(        play.dyn_par_is_);
-        dyn_ind2par_ind_.swap(   play.dyn_ind2par_ind_);
-        dyn_par_op_.swap(        play.dyn_par_op_);
-        dyn_par_arg_.swap(       play.dyn_par_arg_);
-        op2arg_vec_.swap(        play.op2arg_vec_);
-        op2var_vec_.swap(        play.op2var_vec_);
-        var2op_vec_.swap(        play.var2op_vec_);
-        //
-        // pod_maybe_vectors
-        all_par_vec_.swap(       play.all_par_vec_);
-    }
-    // ===============================================================
     /// Create a player< AD<Base> > from this player<Base>
     player< AD<Base> > base2ad(void) const
     {   player< AD<Base> > play;
@@ -606,6 +572,12 @@ public:
         // pod_maybe_vectors
         all_par_vec_.swap(    other.all_par_vec_);
     }
+    // move semantics assignment
+    void operator=(player&& play)
+    {   swap(play); }
+    // move semantics copy
+    player(player& play)
+    {   swap(play);  }
     // =================================================================
     /// Enable use of const_subgraph_iterator and member functions that begin
     // with random_(no work if already setup).
