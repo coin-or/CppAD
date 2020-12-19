@@ -11,6 +11,7 @@
 # ----------------------------------------------------------------------------
 # specific directories
 /build/
+/build2/
 /dev/
 /doxydoc/
 /external/
@@ -18,7 +19,6 @@
 /new.*/
 # directory that is ignored by master, but not by gh-pages
 /doc/
-/build2/
 # ----------------------------------------------------------------------------
 # specific extensions in top direcotry
 /*.err
