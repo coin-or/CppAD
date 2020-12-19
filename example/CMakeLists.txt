@@ -26,7 +26,9 @@ ADD_SUBDIRECTORY(atomic_three)
 ADD_SUBDIRECTORY(chkpoint_two)
 
 # compiled_fun examples
-ADD_SUBDIRECTORY(compiled_fun)
+IF( cpapd_has_cpapdcg )
+    ADD_SUBDIRECTORY(compiled_fun)
+ENDIF( cpapd_has_cpapdcg )
 
 # graph examples
 ADD_SUBDIRECTORY(graph)
