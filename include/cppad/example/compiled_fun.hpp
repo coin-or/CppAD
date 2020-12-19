@@ -16,7 +16,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 class compiled_fun {
 public:
-    // type of evaluation for Jacobians and Hessians
+    // type of evaluation for Jacobians (possibly Hessians in the future)
     enum evaluation_enum { none_enum, dense_enum, sparse_enum };
 private:
     // dynamic_lib_
@@ -52,6 +52,10 @@ public:
     //
     // J = fun_name.jacobian(x)
     CppAD::vector<double>  jacobian(const CppAD::vector<double> & x);
+    //
+    // Jrcv = fun_name.sparse_jacobian(x)
+    CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
+    sparse_jacobian(const CppAD::vector<double>& x);
 };
 
 # endif

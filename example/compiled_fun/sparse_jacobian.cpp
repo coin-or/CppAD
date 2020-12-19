@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin compiled_fun_jacobian.cpp$$
+$begin compiled_fun_sparse_jacobian.cpp$$
 $spell
     jacobian
 $$
@@ -25,7 +25,7 @@ $end
 // BEGIN C++
 # include <cppad/example/compiled_fun.hpp>
 
-bool jacobian(void)
+bool sparse_jacobian(void)
 {   bool ok = true;
     //
     typedef CppAD::cg::CG<double>     c_double;
@@ -56,24 +56,39 @@ bool jacobian(void)
 
     // create compiled version of c_f
     std::string file_name = "example_lib";
-    compiled_fun::evaluation_enum eval_jac = compiled_fun::dense_enum;
+    compiled_fun::evaluation_enum eval_jac = compiled_fun::sparse_enum;
     compiled_fun f(file_name, c_f, eval_jac);
 
-    // evaluate the compiled jacobian
-    d_vector x(n), J;
+    // evaluate the compiled sparse_jacobian
+    d_vector x(n);
     for(size_t j = 0; j < n; ++j)
         x[j] = 1.0 / double(j + 2);
-    J = f.jacobian(x);
+    CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> > Jrcv;
+    // use swap so do not need to copy the sparse matrix
+    Jrcv = f.sparse_jacobian(x);
 
     // check Jaociban values
+    ok &= Jrcv.nr() == m;
+    ok &= Jrcv.nc() == n;
+    const CppAD::vector<size_t>& row( Jrcv.row() );
+    const CppAD::vector<size_t>& col( Jrcv.col() );
+    const CppAD::vector<double>& val( Jrcv.val() );
+    CppAD::vector<size_t> row_major = Jrcv.row_major();
+    size_t k = 0;
     for(size_t i = 0; i < m; ++i)
     {   for(size_t j = 0; j < n; ++j)
-        {   double check = 0.0;
-            if( j == i % n )
-                check = double(i + 1) * cos( x[i % n] );
-            ok &= CppAD::NearEqual(J[i * n + j] , check, eps99, eps99);
+        {   if( j == i % n )
+            {   double check = double(i + 1) * cos( x[i % n] );
+                size_t ell = row_major[k];
+                ok &= row[ell] == i;
+                ok &= col[ell] == j;
+                ok &= CppAD::NearEqual(val[ell] , check, eps99, eps99);
+                ++k;
+            }
         }
     }
+    ok &= Jrcv.nnz() == k;
+    //
     return ok;
 }
 // END C++

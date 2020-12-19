@@ -20,6 +20,7 @@ $spell
     eval_jac
     jacobian
     enum
+    Jrcv
 $$
 
 $section Compile and Link Source For an AD Function$$
@@ -45,6 +46,8 @@ $icode%y% = %fun_name%(%x%)
 %$$
 $icode%J% = %fun_name%.jacobian(%x%)
 %$$
+$icode%Jrcv% = %fun_name%.sparse_jacobian(%x%)
+%$$
 
 
 $head Prototype$$
@@ -67,9 +70,12 @@ $srcthisfile%
 $srcthisfile%
     0%// BEGIN_FUN_NAME_X%// END_FUN_NAME_X%1
 %$$
-$pre
-
-$$
+$srcthisfile%
+    0%// BEGIN_JACOBIAN%// END_JACOBIAN%1
+%$$
+$srcthisfile%
+    0%// BEGIN_SPARSE_JACOBIAN%// END_SPARSE_JACOBIAN%1
+%$$
 
 $head CppAD::cg::CG<double>$$
 This is the CppAD $icode Base$$ type for the function
@@ -144,11 +150,16 @@ $latex \[
     J[ i \cdot n + j ] =  ( \partial f_i / \partial x_j )  (x)
 \] $$
 
+$head Jrcv$$
+This return value is a $cref sparse_rcv$$ sparse matrix representation
+of the Jacobian.
+
 $children%
     example/compiled_fun/function.cpp%
     example/compiled_fun/file.cpp%
     example/compiled_fun/jacobian.cpp%
-    example/compiled_fun/jac_as_fun.cpp
+    example/compiled_fun/jac_as_fun.cpp%
+    example/compiled_fun/sparse_jacobian.cpp
 %$$
 $head Examples$$
 $table
@@ -156,6 +167,7 @@ $rref compiled_fun_function.cpp$$
 $rref compiled_fun_file.cpp$$
 $rref compiled_fun_jacobian.cpp$$
 $rref compiled_fun_jac_as_fun.cpp$$
+$rref compiled_fun_sparse_jacobian.cpp$$
 $tend
 
 $end
@@ -183,9 +195,7 @@ compiled_fun::compiled_fun(
         break;
 
         case sparse_enum:
-        CPPAD_ASSERT_KNOWN( false,
-            "compiled_fun::sparse_jacobian not yet implemented"
-        );
+        cgen.setCreateSparseJacobian(true);
         break;
     }
     CppAD::cg::ModelLibraryCSourceGen<double> libcgen(cgen);
@@ -253,4 +263,43 @@ compiled_fun::jacobian(const CppAD::vector<double>& x)
         "compiled_fun: dense jacobian not enables during constructor"
     );
     return model_-> Jacobian(x);
+}
+// --------------------------------------------------------------------------
+// Jrcv = fun_name.sparse_jacobian(x)
+//
+// BEGIN_SPARSE_JACOBIAN
+CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
+compiled_fun::sparse_jacobian(const CppAD::vector<double>& x)
+// END_SPARSE_JACOBIAN
+{   CPPAD_ASSERT_KNOWN( model_->isSparseJacobianAvailable() ,
+        "compiled_fun: sparse jacobian not enabled during constructor"
+    );
+    // x_std
+    size_t n = model_->Domain();
+    std::vector<double> x_std(n);
+    for(size_t j = 0; j < n; ++j)
+        x_std[j] = x[j];
+    //
+    // 2DO: Prepahs CppAD should have a sparse_rcv constructor (jac, row, col)
+    // that uses swap to swap the vectors
+    //
+    // jac, row, col
+    std::vector<double> jac;
+    std::vector<size_t> row, col;
+    model_-> SparseJacobian(x_std, jac, row, col);
+    //
+    // sparse_rc
+    size_t nr  = model_->Range();
+    size_t nc  = model_->Domain();
+    size_t nnz = row.size();
+    CppAD::sparse_rc< CppAD::vector<size_t> > pattern(nr, nc, nnz);
+    for(size_t k = 0; k < nnz; ++k)
+        pattern.set(k, row[k], col[k]);
+    // sparse_rcv
+    CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
+    Jrcv(pattern);
+    for(size_t k = 0; k < nnz; ++k)
+        Jrcv.set(k, jac[k]);
+    //
+    return Jrcv;
 }

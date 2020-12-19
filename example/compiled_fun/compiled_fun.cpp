@@ -31,6 +31,7 @@ extern bool file(void);
 extern bool function(void);
 extern bool jacobian(void);
 extern bool jac_as_fun(void);
+extern bool sparse_jacobian(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -47,6 +48,7 @@ int main(void)
     Run( function,             "function"        );
     Run( jacobian,             "jacobian"        );
     Run( jac_as_fun,           "jac_as_fun"      );
+    Run( sparse_jacobian,      "sparse_jacobian" );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak
