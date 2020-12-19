@@ -34,7 +34,7 @@ $codei%sparse_rc<%SizeVector%>  %empty%
 %$$
 $codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
 %$$
-$icode%other% = %pattern%
+$icode%pattern% = %other%
 %$$
 $icode%pattern%.swap(%other%)
 %$$
@@ -86,6 +86,9 @@ $subhead Assignment$$
 After the assignment statement, $icode other$$ is an independent copy
 of $icode pattern$$; i.e. it has all the same values as $icode pattern$$
 and changes to $icode other$$ do not affect $icode pattern$$.
+A move semantics version of the assignment operator is defined; e.g.,
+it is used when $icode other$$ in the assignment syntax
+is a function return value.
 
 $subhead swap$$
 After the swap operation $icode other$$ ($icode pattern$$) is equivalent
@@ -254,25 +257,30 @@ public:
     col_(other.col_)
     { }
     /// assignment
-    void operator=(const sparse_rc& pattern)
-    {   nr_  = pattern.nr_;
-        nc_  = pattern.nc_;
-        nnz_ = pattern.nnz_;
+    void operator=(const sparse_rc& other)
+    {   nr_  = other.nr_;
+        nc_  = other.nc_;
+        nnz_ = other.nnz_;
         // simple vector assignment requires vectors to have same size
         row_.resize(nnz_);
         col_.resize(nnz_);
-        row_ = pattern.row_;
-        col_ = pattern.col_;
+        row_ = other.row_;
+        col_ = other.col_;
     }
     /// swap
-    void swap(sparse_rc& pattern)
-    {   std::swap( nr_ , pattern.nr_ );
-        std::swap( nc_ , pattern.nc_ );
-        std::swap( nnz_ , pattern.nnz_ );
+    void swap(sparse_rc& other)
+    {   std::swap( nr_ , other.nr_ );
+        std::swap( nc_ , other.nc_ );
+        std::swap( nnz_ , other.nnz_ );
         //
-        row_.swap( pattern.row_ );
-        col_.swap( pattern.col_ );
+        row_.swap( other.row_ );
+        col_.swap( other.col_ );
     }
+    /// move semantics consructor and assignment
+    sparse_rc(sparse_rc&& other)
+    {   swap(other); }
+    void operator=(sparse_rc&& other)
+    {   swap(other); }
     /// resize
     void resize(size_t nr, size_t nc, size_t nnz)
     {   nr_ = nr;

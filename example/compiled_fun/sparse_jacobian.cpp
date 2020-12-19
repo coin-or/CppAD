@@ -64,7 +64,7 @@ bool sparse_jacobian(void)
     for(size_t j = 0; j < n; ++j)
         x[j] = 1.0 / double(j + 2);
     CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> > Jrcv;
-    // use swap so do not need to copy the sparse matrix
+    // This assignment uses move semantics
     Jrcv = f.sparse_jacobian(x);
 
     // check Jaociban values

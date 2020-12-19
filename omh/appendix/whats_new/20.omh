@@ -48,7 +48,8 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
-$head cg Branch$$
+$head 12-19$$
+Merge in $code cg$$ branch which had the following changes:
 
 $list number$$
 $bold API Change:$$
@@ -60,6 +61,10 @@ $lnext
 The $code swap$$ operator was added to the
 $cref/sparse_rc/sparse_rc/other/swap/$$ and
 $cref/sparse_rcv/sparse_rcv/other/swap/$$ template classes.
+$lnext
+A move semantics version of the assignment operator was added to the
+$cref/sparse_rc/sparse_rc/other/Assignment/$$ and
+$cref/sparse_rcv/sparse_rcv/other/Assignment/$$ template classes.
 $lnext
 The $icode job$$ option was added to the
 $cref/det_minor/link_det_minor/job/$$ and

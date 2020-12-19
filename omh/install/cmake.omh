@@ -387,6 +387,12 @@ $head include_cppadcg$$
 The $cref cppadcg$$ examples
 will be compiled and tested if $code include_ipopt=true$$
 is on the command line.
+$bold Warning$$ :
+Do not use this option when installing cppad because
+the cppadcg package depends on cppad and using this option
+makes cppad depend on cppadcg.
+The script $cref get_cppadcg.sh$$ handles this confusion
+for testing purposes only.
 
 $head package_prefix$$
 Each of these packages do not have $code pkg-config$$ files and

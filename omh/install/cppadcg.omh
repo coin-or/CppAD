@@ -22,14 +22,15 @@ $spell
     config
 $$
 
-$section Including Cppadcg Speed Tests$$
+$section Including CppADCodeGen Examples and Tests$$
 
-$head Cppadcg Home Page$$
+$head CppADCodeGen Home Page$$
 $href%https://github.com/joaoleal/CppADCodeGen.git%$$
 
 $head Purpose$$
-CppAD includes speed comparisons for the Cppadcg AD package; see
-$cref speed_cppadcg$$.
+CppAD includes examples and test that use the CppADCodeGen package,
+abbreviated as $code cppadcg$$, see:
+$cref compiled_fun$$.
 
 $head include_cppadcg$$
 If $code include_cppadcg=true$$ is on the cmake command line,
@@ -42,8 +43,8 @@ $codei%
 finds the location of the file $code cppadcg.pc$$.
 
 $head Speed Tests$$
-If you $code include_cppadcg=true$$ is on the cmake command line,
-you will be able to run the Cppadcg speed correctness tests
+If $code include_cppadcg=true$$ is on the cmake command line,
+you will be able to run the cppadcg speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
@@ -51,14 +52,14 @@ $codei%
     make check_speed_cppadcg
 %$$
 After executing $code make check_speed_cppadcg$$,
-you can run a specific Cppadcg speed test
+you can run a specific cppadcg speed test
 by executing the command $code ./speed_cppadcg$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
 $head get_cppadcg$$
 If you are using Unix, you can download and install
-a copy of Cppadcg using $cref get_cppadcg.sh$$.
+a copy of cppadcg using $cref get_cppadcg.sh$$.
 The corresponding install prefix is
 $code build/prefix$$.
 

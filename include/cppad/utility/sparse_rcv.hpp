@@ -37,7 +37,7 @@ $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %empty%
 %$$
 $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %matrix%(%pattern%)
 %$$
-$icode%other% = %matrix%
+$icode%matrix% = %other%
 %$$
 $icode%matrix%.swap( %other% )
 %$$
@@ -105,6 +105,9 @@ $subhead Assignment$$
 After this assignment statement, $icode other$$ is an independent copy
 of $icode matrix$$; i.e. it has all the same values as $icode matrix$$
 and changes to $icode other$$ do not affect $icode matrix$$.
+A move semantics version of the assignment operator is defined; e.g.,
+it is used when $icode other$$ in the assignment syntax
+is a function return value;
 
 $subhead swap$$
 After the swap operation $icode other$$ ($icode matrix$$) is equivalent
@@ -249,17 +252,22 @@ public:
     val_(pattern_.nnz())
     { }
     /// assignment
-    void operator=(const sparse_rcv& matrix)
-    {   pattern_ = matrix.pattern_;
+    void operator=(const sparse_rcv& other)
+    {   pattern_ = other.pattern_;
         // simple vector assignment requires vectors to have same size
-        val_.resize( matrix.nnz() );
-        val_ = matrix.val();
+        val_.resize( other.nnz() );
+        val_ = other.val();
     }
     /// swap
-    void swap(sparse_rcv& matrix)
-    {   pattern_.swap( matrix.pattern_ );
-        val_.swap( matrix.val_ );
+    void swap(sparse_rcv& other)
+    {   pattern_.swap( other.pattern_ );
+        val_.swap( other.val_ );
     }
+    /// move semantics constructor and assignment
+    sparse_rcv(sparse_rcv&& other)
+    {   swap(other); }
+    void operator=(sparse_rcv&& other)
+    {   swap(other); }
     // ------------------------------------------------------------------------
     void set(size_t k, const value_type& v)
     {   CPPAD_ASSERT_KNOWN(
