@@ -131,6 +131,10 @@ creates the vector $icode vec$$
 with $icode%n% = %other%.size()%$$ elements and capacity
 greater than or equal $icode n$$.
 
+$head Move Semantics$$
+A move semantics version of the copy operator
+is implemented using $code swap$$.
+
 $head Destructor$$
 If $code capacity_$$ is non-zero, call the destructor
 for all the corresponding elements and then frees the corresponding memory.
@@ -159,6 +163,8 @@ public:
         for(size_t i = 0; i < length_; i++)
             data_[i] = other.data_[i];
     }
+    vector(vector&& other) : capacity_(0), length_(0), data_(nullptr)
+    {   swap(other); }
     ~vector(void)
     {   if( capacity_ > 0 ) delete_data(data_); }
 private:
@@ -263,10 +269,10 @@ $srcthisfile%
     0%// BEGIN_SWAP%// END_SWAP%1
 %$$
 $srcthisfile%
-    0%// BEGIN_ASSIGN%// END_ASSIGN%1
+    0%// BEGIN_MOVE_ASSIGN%// END_MOVE_ASSIGN%1
 %$$
 $srcthisfile%
-    0%// BEGIN_MOVE_SEMANTICS%// END_MOVE_SEMANTICS%1
+    0%// BEGIN_ASSIGN%// END_ASSIGN%1
 %$$
 
 $head swap$$
@@ -277,8 +283,8 @@ $head Assignment$$
 see $cref/user API assignment/CppAD_vector/Assignment/$$
 
 $head Move Semantics$$
-A move semantics version of the assignment operator, implemented using
-$code swap$$, is defined.
+A move semantics version of the assignment operator
+is implemented using $code swap$$.
 
 $end
 -------------------------------------------------------------------------------
@@ -296,6 +302,20 @@ public:
         std::swap(data_,     other.data_     );
         return;
     }
+
+// BEGIN_MOVE_ASSIGN
+    // Move semantics should not do any allocation.
+    // If NDEBUG is defined, this should not throw an exception.
+    vector& operator=(vector&& other) CPPAD_NDEBUG_NOEXCEPT
+// END_MOVE_ASSIGN
+    {   CPPAD_ASSERT_KNOWN(
+            length_ == other.length_ || (length_ == 0),
+            "vector: size miss match in assignment operation"
+        );
+        swap(other);
+        return *this;
+    }
+
 // BEGIN_ASSIGN
     vector& operator=(const vector& other)
 // END_ASSIGN
@@ -307,18 +327,6 @@ public:
         );
         for(size_t i = 0; i < length_; i++)
             data_[i] = other.data_[i];
-        return *this;
-    }
-// BEGIN_MOVE_SEMANTICS
-    // move semantics should not do any allocation
-    // hence when NDEBUG is define this should not throw an exception
-    vector& operator=(vector&& other) CPPAD_NDEBUG_NOEXCEPT
-// END_MOVE_SEMANTICS
-    {   CPPAD_ASSERT_KNOWN(
-            length_ == other.length_ || (length_ == 0),
-            "vector: size miss match in assignment operation"
-        );
-        swap(other);
         return *this;
     }
 /*

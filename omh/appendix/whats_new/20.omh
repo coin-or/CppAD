@@ -59,6 +59,11 @@ making a separate copy of an ADFun object.
 $lnext
 Fix a bug in the
 ADFun $cref/swap/FunConstruct/swap/$$, which was added on 12-19.
+$lnext
+Add a move semantic version of the copy constructor to
+the $cref cppad_vector$$ template class.
+(This should improve the speed of handling function return values
+that are vectors.)
 $lend
 
 

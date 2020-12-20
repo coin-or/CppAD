@@ -262,7 +262,7 @@ int main(void)
     Run( reverse_three,     "reverse_three"    );
     Run( reverse_two,       "reverse_two"      );
     Run( rosen_34,          "rosen_34"         );
-    Run( runge_45,        "runge_45"       );
+    Run( runge_45,           "runge_45"        );
     Run( seq_property,      "seq_property"     );
     Run( sign,              "sign"             );
     Run( taylor_ode,        "ode_taylor"       );
