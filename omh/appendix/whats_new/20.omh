@@ -48,6 +48,20 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 12-20$$
+$list number$$
+The $cref rosen_34.cpp$$ example was changed to use
+$cref/dynamic/independent/dynamic/$$ parameters so it does not
+need to record a new function for every argument value.
+The new version of this example also uses the
+ADFun $cref/swap/FunConstruct/swap/$$ operation to avoid
+making a separate copy of an ADFun object.
+$lnext
+Fix a bug in the
+ADFun $cref/swap/FunConstruct/swap/$$, which was added on 12-19.
+$lend
+
+
 $head 12-19$$
 Merge in $code cg$$ branch which had the following changes:
 

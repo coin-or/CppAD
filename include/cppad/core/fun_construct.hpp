@@ -368,19 +368,19 @@ void ADFun<Base,RecBase>::swap(ADFun& f)
     function_name_.swap( f.function_name_ );
     //
     // bool objects
-    exceed_collision_limit_    = f.exceed_collision_limit_;
-    base2ad_return_value_      = false; // f might be, but this is not
-    has_been_optimized_        = f.has_been_optimized_;
-    check_for_nan_             = f.check_for_nan_;
+    std::swap( exceed_collision_limit_    , f.exceed_collision_limit_);
+    std::swap( base2ad_return_value_      , f.base2ad_return_value_);
+    std::swap( has_been_optimized_        , f.has_been_optimized_);
+    std::swap( check_for_nan_             , f.check_for_nan_);
     //
     // size_t objects
-    compare_change_count_      = f.compare_change_count_;
-    compare_change_number_     = f.compare_change_number_;
-    compare_change_op_index_   = f.compare_change_op_index_;
-    num_order_taylor_          = f.num_order_taylor_;
-    cap_order_taylor_          = f.cap_order_taylor_;
-    num_direction_taylor_      = f.num_direction_taylor_;
-    num_var_tape_              = f.num_var_tape_;
+    std::swap( compare_change_count_      , f.compare_change_count_);
+    std::swap( compare_change_number_     , f.compare_change_number_);
+    std::swap( compare_change_op_index_   , f.compare_change_op_index_);
+    std::swap( num_order_taylor_          , f.num_order_taylor_);
+    std::swap( cap_order_taylor_          , f.cap_order_taylor_);
+    std::swap( num_direction_taylor_      , f.num_direction_taylor_);
+    std::swap( num_var_tape_              , f.num_var_tape_);
     //
     // pod_vector objects
     ind_taddr_.swap(      f.ind_taddr_);

@@ -45,115 +45,126 @@ $end
 
 namespace {
     class Fun {
+    private:
+        const bool           use_x_;
+        CppAD::ADFun<double> ode_ind_;
+        CppAD::ADFun<double> ode_dep_;
     public:
         // constructor
-        Fun(bool use_x_) : use_x(use_x_)
+        Fun(bool use_x) : use_x_(use_x)
         { }
 
         // compute f(t, x) both for double and AD<double>
         template <class Scalar>
         void Ode(
-            const Scalar                    &t,
+            const Scalar                   &t,
             const CPPAD_TESTVECTOR(Scalar) &x,
             CPPAD_TESTVECTOR(Scalar)       &f)
         {   size_t n  = x.size();
             Scalar ti(1);
             f[0]   = Scalar(1);
-            size_t i;
-            for(i = 1; i < n; i++)
+            for(size_t i = 1; i < n; i++)
             {   ti *= t;
-                // convert int(size_t) to avoid warning
-                // on _MSC_VER systems
-                if( use_x )
-                    f[i] = int(i+1) * x[i-1];
+                if( use_x_ )
+                    f[i] = Scalar(i+1) * x[i-1];
                 else
-                    f[i] = int(i+1) * ti;
+                    f[i] = Scalar(i+1) * ti;
             }
         }
 
         // compute partial of f(t, x) w.r.t. t using AD
         void Ode_ind(
-            const double                    &t,
+            const double                   &t,
             const CPPAD_TESTVECTOR(double) &x,
             CPPAD_TESTVECTOR(double)       &f_t)
         {   using namespace CppAD;
 
             size_t n  = x.size();
-            CPPAD_TESTVECTOR(AD<double>) T(1);
-            CPPAD_TESTVECTOR(AD<double>) X(n);
-            CPPAD_TESTVECTOR(AD<double>) F(n);
+            if( ode_ind_.size_var() == 0 )
+            {   // record function that evaluates f(t, x)
+                // with t as independent variable and x as dynamcic parameter
+                CPPAD_TESTVECTOR(AD<double>) at(1);
+                CPPAD_TESTVECTOR(AD<double>) ax(n);
+                CPPAD_TESTVECTOR(AD<double>) af(n);
 
-            // set argument values
-            T[0] = t;
-            size_t i;
-            for(i = 0; i < n; i++)
-                X[i] = x[i];
+                // set argument values
+                at[0] = t;
+                size_t i;
+                for(i = 0; i < n; i++)
+                    ax[i] = x[i];
 
-            // declare independent variables
-            Independent(T);
+                // declare independent variables and dynamic parameters
+                size_t abort_op_index = 0;
+                bool   record_compare = false;
+                Independent(at, abort_op_index, record_compare, ax);
 
-            // compute f(t, x)
-            this->Ode(T[0], X, F);
+                // compute f(t, x)
+                this->Ode(at[0], ax, af);
 
-            // define AD function object
-            ADFun<double> fun(T, F);
+                // define AD function object
+                ADFun<double> fun(at, af);
 
+                // store result in ode_ind_ so can be re-used
+                ode_ind_.swap(fun);
+                assert( ode_ind_.size_var() != 0 );
+                assert( fun.size_var() == 0 );
+            }
             // compute partial of f w.r.t t
-            CPPAD_TESTVECTOR(double) dt(1);
-            dt[0] = 1.;
-            f_t = fun.Forward(1, dt);
+            CPPAD_TESTVECTOR(double) t_vec(1);
+            t_vec[0] = t;
+            ode_ind_.new_dynamic(x);
+            f_t = ode_ind_.Jacobian(t_vec); // partial f(t, x) w.r.t. t
         }
 
         // compute partial of f(t, x) w.r.t. x using AD
         void Ode_dep(
-            const double                    &t,
+            const double                   &t,
             const CPPAD_TESTVECTOR(double) &x,
             CPPAD_TESTVECTOR(double)       &f_x)
         {   using namespace CppAD;
 
             size_t n  = x.size();
-            CPPAD_TESTVECTOR(AD<double>) T(1);
-            CPPAD_TESTVECTOR(AD<double>) X(n);
-            CPPAD_TESTVECTOR(AD<double>) F(n);
+            if( ode_dep_.size_var() == 0 )
+            {   // record function that evaluates f(t, x)
+                // with x as independent variable and t as dynamcic parameter
+                CPPAD_TESTVECTOR(AD<double>) at(1);
+                CPPAD_TESTVECTOR(AD<double>) ax(n);
+                CPPAD_TESTVECTOR(AD<double>) af(n);
 
-            // set argument values
-            T[0] = t;
-            size_t i, j;
-            for(i = 0; i < n; i++)
-                X[i] = x[i];
+                // set argument values
+                at[0] = t;
+                for(size_t i = 0; i < n; i++)
+                    ax[i] = x[i];
 
-            // declare independent variables
-            Independent(X);
+                // declare independent variables
+                size_t abort_op_index = 0;
+                bool   record_compare = false;
+                Independent(ax, abort_op_index, record_compare, at);
 
-            // compute f(t, x)
-            this->Ode(T[0], X, F);
+                // compute f(t, x)
+                this->Ode(at[0], ax, af);
 
-            // define AD function object
-            ADFun<double> fun(X, F);
+                // define AD function object
+                ADFun<double> fun(ax, af);
 
-            // compute partial of f w.r.t x
-            CPPAD_TESTVECTOR(double) dx(n);
-            CPPAD_TESTVECTOR(double) df(n);
-            for(j = 0; j < n; j++)
-                dx[j] = 0.;
-            for(j = 0; j < n; j++)
-            {   dx[j] = 1.;
-                df = fun.Forward(1, dx);
-                for(i = 0; i < n; i++)
-                    f_x [i * n + j] = df[i];
-                dx[j] = 0.;
+                // store result in ode_dep_ so can be re-used
+                ode_dep_.swap(fun);
+                assert( ode_ind_.size_var() != 0 );
+                assert( fun.size_var() == 0 );
             }
+            // compute partial of f w.r.t x
+            CPPAD_TESTVECTOR(double) t_vec(1), dx(n), df(n);
+            t_vec[0] = t;
+            ode_dep_.new_dynamic(t_vec);
+            f_x = ode_dep_.Jacobian(x); // partial f(t, x) w.r.t. x
         }
 
-    private:
-        const bool use_x;
 
     };
 }
 
 bool rosen_34(void)
 {   bool ok = true;     // initial return value
-    size_t i;           // temporary indices
 
     using CppAD::NearEqual;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
@@ -165,11 +176,10 @@ bool rosen_34(void)
 
     // xi = X(0)
     CPPAD_TESTVECTOR(double) xi(n);
-    for(i = 0; i <n; i++)
+    for(size_t i = 0; i <n; i++)
         xi[i] = 0.;
 
-    size_t use_x;
-    for( use_x = 0; use_x < 2; use_x++)
+    for(size_t use_x = 0; use_x < 2; use_x++)
     {   // function object depends on value of use_x
         Fun F(use_x > 0);
 
@@ -178,7 +188,7 @@ bool rosen_34(void)
         xf = CppAD::Rosen34(F, M, ti, tf, xi, e);
 
         double check = tf;
-        for(i = 0; i < n; i++)
+        for(size_t i = 0; i < n; i++)
         {   // check that error is always positive
             ok    &= (e[i] >= 0.);
             // 4th order method is exact for i < 4
