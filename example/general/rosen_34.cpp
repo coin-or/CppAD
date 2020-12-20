@@ -35,6 +35,20 @@ X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
 \] $$
 The example tests Rosen34 using the relations above:
 
+$head Operation Sequence$$
+The $cref rosen34$$ method for solving ODE's requires the inversion
+of a system of linear equations.
+This indices used for pivoting may change with different values
+for $latex t$$ and $latex x$$.
+This example checks the comparison operators.
+If some of the comparisons change,
+it makes a new recording of the function with the pivots for the current
+$latex t$$ and $latex x$$.
+Note that one could skip this step and always use the same pivot.
+This would not be as numerically stable,
+but it would still solve the equations
+(so long as none of the pivot elements are zero).
+
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
@@ -79,8 +93,20 @@ namespace {
             CPPAD_TESTVECTOR(double)       &f_t)
         {   using namespace CppAD;
 
-            size_t n  = x.size();
-            if( ode_ind_.size_var() == 0 )
+            size_t n                = x.size();
+            bool   ode_ind_defined  = ode_ind_.size_var() != 0;
+            //
+            CPPAD_TESTVECTOR(double) t_vec(1);
+            t_vec[0] = t;
+            //
+            bool retape = true;
+            if( ode_ind_defined )
+            {   // check if any comparison operators have a different result
+                ode_ind_.new_dynamic(x);
+                ode_ind_.Forward(0, t_vec);
+                retape = ode_ind_.compare_change_number() > 0;
+            }
+            if( retape )
             {   // record function that evaluates f(t, x)
                 // with t as independent variable and x as dynamcic parameter
                 CPPAD_TESTVECTOR(AD<double>) at(1);
@@ -107,12 +133,12 @@ namespace {
                 // store result in ode_ind_ so can be re-used
                 ode_ind_.swap(fun);
                 assert( ode_ind_.size_var() != 0 );
-                assert( fun.size_var() == 0 );
+                assert( fun.size_var() == 0 || ode_ind_defined );
             }
+            // special case where new_dynamic not yet set
+            if( ! ode_ind_defined )
+                ode_ind_.new_dynamic(x);
             // compute partial of f w.r.t t
-            CPPAD_TESTVECTOR(double) t_vec(1);
-            t_vec[0] = t;
-            ode_ind_.new_dynamic(x);
             f_t = ode_ind_.Jacobian(t_vec); // partial f(t, x) w.r.t. t
         }
 
@@ -123,8 +149,20 @@ namespace {
             CPPAD_TESTVECTOR(double)       &f_x)
         {   using namespace CppAD;
 
-            size_t n  = x.size();
-            if( ode_dep_.size_var() == 0 )
+            size_t n                = x.size();
+            bool   ode_dep_defined  = ode_dep_.size_var() != 0;
+            //
+            CPPAD_TESTVECTOR(double) t_vec(1), dx(n), df(n);
+            t_vec[0] = t;
+            //
+            bool retape = true;
+            if( ode_dep_defined )
+            {   // check if any comparison operators have a differrent result
+                ode_dep_.new_dynamic(t_vec);
+                ode_dep_.Forward(0, x);
+                retape = ode_dep_.compare_change_number() > 0;
+            }
+            if( retape )
             {   // record function that evaluates f(t, x)
                 // with x as independent variable and t as dynamcic parameter
                 CPPAD_TESTVECTOR(AD<double>) at(1);
@@ -150,12 +188,12 @@ namespace {
                 // store result in ode_dep_ so can be re-used
                 ode_dep_.swap(fun);
                 assert( ode_ind_.size_var() != 0 );
-                assert( fun.size_var() == 0 );
+                assert( fun.size_var() == 0 || ode_dep_defined );
             }
+            // special case where new_dynamic not yet set
+            if( ! ode_dep_defined )
+                ode_dep_.new_dynamic(t_vec);
             // compute partial of f w.r.t x
-            CPPAD_TESTVECTOR(double) t_vec(1), dx(n), df(n);
-            t_vec[0] = t;
-            ode_dep_.new_dynamic(t_vec);
             f_x = ode_dep_.Jacobian(x); // partial f(t, x) w.r.t. x
         }
 
