@@ -161,6 +161,11 @@ $srccode%hpp%:
         for(size_t i = 0; i < n_used; ++i)
             data_[i] = other.data_[i];
     }
+    // n_unit_ is the only value necessary to make destructor work
+    // for other after this move semantics constructor
+    vectorBool(vectorBool&& other)
+    : n_unit_(0), length_(0), data_(nullptr)
+    {   swap(other); }
     ~vectorBool(void)
     {   clear(); }
 /* %$$

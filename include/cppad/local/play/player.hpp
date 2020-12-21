@@ -117,6 +117,10 @@ public:
     num_var_load_rec_(0)  ,
     num_var_vecad_rec_(0)
     { }
+    // move semantics constructor
+    // (none of the default constructor values matter to the destructor)
+    player(player& play)
+    {   swap(play);  }
     // =================================================================
     /// destructor
     ~player(void)
@@ -575,9 +579,6 @@ public:
     // move semantics assignment
     void operator=(player&& play)
     {   swap(play); }
-    // move semantics copy
-    player(player& play)
-    {   swap(play);  }
     // =================================================================
     /// Enable use of const_subgraph_iterator and member functions that begin
     // with random_(no work if already setup).

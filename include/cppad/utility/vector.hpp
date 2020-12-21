@@ -163,6 +163,8 @@ public:
         for(size_t i = 0; i < length_; i++)
             data_[i] = other.data_[i];
     }
+    // capacity_ is only value required to make destructor work for other
+    // after this move semantics constuctor
     vector(vector&& other) : capacity_(0), length_(0), data_(nullptr)
     {   swap(other); }
     ~vector(void)

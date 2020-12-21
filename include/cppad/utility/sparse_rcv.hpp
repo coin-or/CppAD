@@ -243,7 +243,14 @@ public:
     // ------------------------------------------------------------------------
     /// default constructor
     sparse_rcv(void)
-    : pattern_(0, 0, 0), val_(0)
+    : pattern_(0, 0, 0)
+    { }
+    /// move semantics constructor
+    /// (none of the default constructor values are used by destructor)
+    sparse_rcv(sparse_rcv&& other)
+    {   swap(other); }
+    /// destructor
+    ~sparse_rcv(void)
     { }
     /// constructor
     sparse_rcv(const sparse_rc<SizeVector>& pattern )
@@ -263,9 +270,7 @@ public:
     {   pattern_.swap( other.pattern_ );
         val_.swap( other.val_ );
     }
-    /// move semantics constructor and assignment
-    sparse_rcv(sparse_rcv&& other)
-    {   swap(other); }
+    /// move semantics assignment
     void operator=(sparse_rcv&& other)
     {   swap(other); }
     // ------------------------------------------------------------------------

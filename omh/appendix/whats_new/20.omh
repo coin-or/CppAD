@@ -44,9 +44,17 @@ $spell
     rcv
     jacobian
     det
+    Bool
 $$
 
 $section Changes and Additions to CppAD During 2020$$
+
+$head 12-21$$
+Add a move semantics version of the copy constructor to
+$cref ADFun$$, $cref sparse_rc$$, $cref sparse_rcv$$, and
+$cref/vectorBool/CppAD_vector/vectorBool/$$ template classes.
+This should improve the speed of handling function return values
+that have these types.
 
 $head 12-20$$
 $list number$$

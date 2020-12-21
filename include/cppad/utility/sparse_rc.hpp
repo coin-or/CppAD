@@ -240,6 +240,14 @@ public:
     sparse_rc(void)
     : nr_(0), nc_(0), nnz_(0)
     { }
+    /// move semantics constructor
+    /// (none of the default constructor values are used by destructor)
+    sparse_rc(sparse_rc&& other)
+    {   swap(other); }
+    /// destructor
+    ~sparse_rc(void)
+    { }
+    /// move semantics assignment
     /// sizing constructor
     /// Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
     sparse_rc(size_t nr, size_t nc, size_t nnz)
@@ -276,9 +284,6 @@ public:
         row_.swap( other.row_ );
         col_.swap( other.col_ );
     }
-    /// move semantics consructor and assignment
-    sparse_rc(sparse_rc&& other)
-    {   swap(other); }
     void operator=(sparse_rc&& other)
     {   swap(other); }
     /// resize

@@ -267,7 +267,17 @@ cap_order_taylor_(0),
 num_direction_taylor_(0),
 num_var_tape_(0)
 { }
-
+//
+// move semantics version of constructor
+// (none of the defualt constructor values matter to the destructor)
+template <class Base, class RecBase>
+ADFun<Base,RecBase>::ADFun(ADFun&& f)
+{   swap(f); }
+//
+// destructor
+template <class Base, class RecBase>
+ADFun<Base,RecBase>::~ADFun(void)
+{ }
 /*!
 ADFun copy constructor
 
@@ -403,9 +413,6 @@ void ADFun<Base,RecBase>::swap(ADFun& f)
     for_jac_sparse_set_.swap( f.for_jac_sparse_set_);
 }
 /// Move semantics version of constructor and assignment
-template <class Base, class RecBase>
-ADFun<Base,RecBase>::ADFun(ADFun&& f)
-{   swap(f); }
 template <class Base, class RecBase>
 void ADFun<Base,RecBase>::operator=(ADFun&& f)
 {   swap(f); }

@@ -335,8 +335,7 @@ public:
     ADFun(const ADvector &x, const ADvector &y);
 
     /// destructor
-    ~ADFun(void)
-    { }
+    ~ADFun(void);
 
     /// set check_for_nan
     void check_for_nan(bool value);

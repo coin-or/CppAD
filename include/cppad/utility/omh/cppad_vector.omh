@@ -292,7 +292,7 @@ a comparison operator (e.g. $code >$$) is used between
 two iterators that correspond to different vectors.
 
 $head vectorBool$$
-The file $code <cppad/vector_bool.hpp>$$ defines the class
+The file $code <cppad/utility/vector_bool.hpp>$$ defines the class
 $code CppAD::vectorBool$$.
 This has the same specifications as $code CppAD::vector<bool>$$
 with the following exceptions:
