@@ -20,37 +20,6 @@ Test that ADFun copy constructor generates an error message.
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 
-// error handler to catch the error
-void myhandler(
-    bool known       ,
-    int  line        ,
-    const char *file ,
-    const char *exp  ,
-    const char *msg  )
-{   // error handler must not return, so throw an exception
-    throw std::string("myhandler");
-}
-
-bool adfun_copy(void)
-{
-    // error handler for this routine
-    CppAD::ErrorHandler info(myhandler);
-    // an ADFun object
-    CppAD::ADFun<double> f;
-    // value of ok if no error occurs
-    bool ok = false;
-    try {
-        // This operation uses the ADFun copy constructor which is defined,
-        // but should not be used and should generate an error
-        CppAD::ADFun<double> g(f);
-    }
-    catch ( std::string msg )
-    {   // check for expected return
-        ok = (msg == "myhandler");
-    }
-    return ok;
-}
-
 bool adfun_empty(void)
 {   bool ok = true;
     size_t thread  = CppAD::thread_alloc::thread_num();
@@ -87,11 +56,39 @@ bool adfun_empty(void)
     return ok;
 }
 
+bool adfun_swap(void)
+{   bool ok = true;
+    //
+    // Independent variables
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(1);
+    CppAD::Independent(ax);
+    //
+    // Dependent variables
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(2);
+    ay[0] = ax[0];
+    ay[1] = ax[0];
+    //
+    // Nonempty ADFun
+    CppAD::ADFun<double> f(ax, ay);
+    ok &= f.size_var() != 0;
+    //
+    // Empry ADFun
+    CppAD::ADFun<double> g;
+    ok &= g.size_var() == 0;
+    //
+    // swap
+    f.swap(g);
+    ok &= f.size_var() == 0;
+    ok &= g.size_var() != 0;
+    //
+    return ok;
+}
+
 } // END_EMPTY_NAMESPACE
 
 bool adfun(void)
 {   bool ok = true;
-    ok     &= adfun_copy();
     ok     &= adfun_empty();
+    ok     &= adfun_swap();
     return ok;
 }

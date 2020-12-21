@@ -74,9 +74,6 @@ template <class Base, class RecBase>
 ADFun< AD<Base>, RecBase > ADFun<Base,RecBase>::base2ad(void) const
 {   ADFun< AD<Base>, RecBase > fun;
     //
-    // This is a base2ad return value and only case where this flag is true
-    fun.base2ad_return_value_      = true;
-    //
     // bool values
     fun.has_been_optimized_        = has_been_optimized_;
     fun.check_for_nan_             = check_for_nan_;

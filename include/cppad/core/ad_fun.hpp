@@ -81,10 +81,6 @@ private:
     /// Did the previous optimzation exceed the collision limit
     bool exceed_collision_limit_;
 
-    /// Is this function obejct a base2ad return value
-    /// (special becasue some compliers need copy constructor in this case)
-    bool base2ad_return_value_;
-
     /// Has this ADFun object been optmized
     bool has_been_optimized_;
 
@@ -298,7 +294,7 @@ public:
     ADFun(void);
 
     /// copy constructor
-    ADFun(const ADFun& g);
+    ADFun(const ADFun& g) = delete;
 
     // assignment operator
     // (doxygen in cppad/core/fun_construct.hpp)

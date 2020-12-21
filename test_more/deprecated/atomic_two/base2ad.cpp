@@ -203,8 +203,7 @@ bool base2ad(void)
     ok &= NearEqual(dw[0] , check,  eps, eps);
 
     // create af : x -> y
-    CppAD::ADFun< AD<double> , double > af;
-    af = f.base2ad();
+    CppAD::ADFun< AD<double> , double > af( f.base2ad() );
 
     // check zero order forward mode
     vector< AD<double> > ax_q(n), ay_q(m);

@@ -176,8 +176,7 @@ $srccode%cpp% */
 /* %$$
 $head AD<double> f(x, p)$$
 $srccode%cpp% */
-    CppAD::ADFun< AD<double>, double > af;
-    af = f.base2ad();
+    CppAD::ADFun< AD<double>, double > af( f.base2ad() );
 /* %$$
 $head Evaluate Derivative$$
 $srccode%cpp% */

@@ -1425,7 +1425,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     // ----------------------------------------------------------------------
     //
     // bool values in this object except check_for_nan_
-    base2ad_return_value_      = false;
     has_been_optimized_        = false;
     //
     // size_t values in this object

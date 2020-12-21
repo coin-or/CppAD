@@ -205,8 +205,7 @@ bool base2ad(void)
 
 
     // afun_g
-    afun_double afun_g;
-    afun_g = fun_g.base2ad(); // differential equation
+    afun_double afun_g( fun_g.base2ad() ); // differential equation
 
     // other arguments to taylor_ode
     size_t   order = n;       // order of Taylor's method used

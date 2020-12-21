@@ -256,7 +256,6 @@ template <class Base, class RecBase>
 ADFun<Base,RecBase>::ADFun(void) :
 function_name_(""),
 exceed_collision_limit_(false),
-base2ad_return_value_(false),
 has_been_optimized_(false),
 check_for_nan_(true) ,
 compare_change_count_(0),
@@ -278,33 +277,6 @@ ADFun<Base,RecBase>::ADFun(ADFun&& f)
 template <class Base, class RecBase>
 ADFun<Base,RecBase>::~ADFun(void)
 { }
-/*!
-ADFun copy constructor
-
-This is only alowed for a base2ad return value and is required
-by some compilers to support the following syntax:
-\verbatim
-    ADFun< AD<Base>, Base > af;
-    af = f.base2ad();
-\endverbatim
-
-*/
-template <class Base, class RecBase>
-ADFun<Base,RecBase>::ADFun(const ADFun& g)
-{   if( g.base2ad_return_value_ )
-        *this = g;
-    else
-    {   CppAD::ErrorHandler::Call(
-            true,
-            __LINE__,
-            __FILE__,
-            "ADFun(const ADFun& g)",
-            "Attempting to use the ADFun<Base> copy constructor.\n"
-            "Perhaps you are passing an ADFun<Base> object "
-            "by value instead of by reference."
-        );
-    }
-}
 /*!
 ADFun assignment operator
 
@@ -334,7 +306,6 @@ void ADFun<Base,RecBase>::operator=(const ADFun& f)
     //
     // bool objects
     exceed_collision_limit_    = f.exceed_collision_limit_;
-    base2ad_return_value_      = false;
     has_been_optimized_        = f.has_been_optimized_;
     check_for_nan_             = f.check_for_nan_;
     //
@@ -379,7 +350,6 @@ void ADFun<Base,RecBase>::swap(ADFun& f)
     //
     // bool objects
     std::swap( exceed_collision_limit_    , f.exceed_collision_limit_);
-    std::swap( base2ad_return_value_      , f.base2ad_return_value_);
     std::swap( has_been_optimized_        , f.has_been_optimized_);
     std::swap( check_for_nan_             , f.check_for_nan_);
     //
