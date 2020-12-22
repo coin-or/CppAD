@@ -339,7 +339,8 @@ See <a href="link_sparse_jacobian.htm" target="_top"><span style='white-space: n
     <i><font color="#9A1900">// ------------------------------------------------------</font></i>
     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> onetape <font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> size <font color="#990000">==</font> static_size <font color="#990000">);</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> size <font color="#990000">!=</font> static_size <font color="#990000">)</font>
+                <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> size <font color="#990000">==</font> static_size <font color="#990000">);</font>
         <font color="#FF0000">}</font>
         <b><font color="#0000FF">else</font></b>
         <font color="#FF0000">{</font>   <b><font color="#000000">setup</font></b><font color="#990000">(</font>size<font color="#990000">,</font> m<font color="#990000">,</font> row<font color="#990000">,</font> col<font color="#990000">,</font>

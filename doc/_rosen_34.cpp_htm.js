@@ -11,6 +11,9 @@ var list_up0 = [
 'rosen34.htm',
 'rosen_34.cpp.htm'
 ];
+var list_current0 = [
+'rosen_34.cpp.htm#Operation Sequence'
+];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

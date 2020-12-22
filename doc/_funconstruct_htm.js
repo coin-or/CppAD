@@ -20,6 +20,7 @@ var list_current0 = [
 'funconstruct.htm#Default Constructor',
 'funconstruct.htm#Sequence Constructor',
 'funconstruct.htm#Copy Constructor',
+'funconstruct.htm#swap',
 'funconstruct.htm#Assignment Operator',
 'funconstruct.htm#Assignment Operator.Move Semantics',
 'funconstruct.htm#Assignment Operator.Taylor Coefficients',

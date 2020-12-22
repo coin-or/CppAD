@@ -269,8 +269,7 @@ A:active { color : purple }
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
     <i><font color="#9A1900">// create ag : x -&gt; y</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt; AD&lt;double&gt; , double &gt;</font> af<font color="#990000">;</font>
-    af <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">();</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt; AD&lt;double&gt; , double &gt;</font> <b><font color="#000000">af</font></b> <font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">()</font> <font color="#990000">);</font>
 
     <i><font color="#9A1900">// check zero order forward mode</font></i>
     <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax_q</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">av_q</font></b><font color="#990000">(</font>m<font color="#990000">);</font>

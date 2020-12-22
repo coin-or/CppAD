@@ -342,8 +342,7 @@ see <a href="json_ad_graph.htm#dependent_vec" target="_top"><span style='white-s
 <b><big><a name="AD&lt;double&gt; f(x, p)" id="AD&lt;double&gt; f(x, p)">AD&lt;double&gt; f(x, p)</a></big></b>
 
 <pre style='display:inline'><tt>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt; AD&lt;double&gt;, double &gt;</font> af<font color="#990000">;</font>
-    af <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">();</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt; AD&lt;double&gt;, double &gt;</font> <b><font color="#000000">af</font></b><font color="#990000">(</font> f<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">()</font> <font color="#990000">);</font>
 </tt></pre>
 <br>
 <b><big><a name="Evaluate Derivative" id="Evaluate Derivative">Evaluate Derivative</a></big></b>

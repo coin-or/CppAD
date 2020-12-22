@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Construct an ADFun Object and Stop Recording</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Construct an ADFun Object and Stop Recording">
-<meta name="keywords" id="keywords" content=" construct adfun object stop recording syntax purpose x y advector default constructor sequence copy assignment operator move semantics taylor coefficients sparsity patterns parallel mode example ">
+<meta name="keywords" id="keywords" content=" construct adfun object stop recording syntax purpose x y advector default constructor sequence copy swap assignment operator move semantics taylor coefficients sparsity patterns parallel mode example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,7 @@ A:active { color : purple }
 <option>Default Constructor</option>
 <option>Sequence Constructor</option>
 <option>Copy Constructor</option>
+<option>swap</option>
 <option>Assignment Operator</option>
 <option>---..Move Semantics</option>
 <option>---..Taylor Coefficients</option>
@@ -102,14 +103,14 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>);<br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.swap(</span></font><i><font color="black"><span style='white-space: nowrap'>g</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 
-
-
-<br>
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g<br>
+</span></font></i></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -308,6 +309,25 @@ where
 Use its <a href="funconstruct.htm#Default Constructor" target="_top"><span style='white-space: nowrap'>default&nbsp;constructor</span></a>
  instead
 and its assignment operator.
+
+<br>
+<br>
+<b><big><a name="swap" id="swap">swap</a></big></b>
+<br>
+The swap operation <code><font color="blue">%f%.swap(%g%)%</font></code> exchanges the contents of
+the two 
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ functions; i.e.,
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+) before the swap is identical to
+
+<code><i><font color="black"><span style='white-space: nowrap'>g</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+) after the swap.
 
 <br>
 <br>
