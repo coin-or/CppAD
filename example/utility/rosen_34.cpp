@@ -128,12 +128,10 @@ namespace {
                 this->Ode(at[0], ax, af);
 
                 // define AD function object
-                ADFun<double> fun(at, af);
+                ode_ind_.Dependent(at, af);
 
                 // store result in ode_ind_ so can be re-used
-                ode_ind_.swap(fun);
                 assert( ode_ind_.size_var() != 0 );
-                assert( fun.size_var() == 0 || ode_ind_defined );
             }
             // special case where new_dynamic not yet set
             if( ! ode_ind_defined )
@@ -183,12 +181,10 @@ namespace {
                 this->Ode(at[0], ax, af);
 
                 // define AD function object
-                ADFun<double> fun(ax, af);
+                ode_dep_.Dependent(ax, af);
 
                 // store result in ode_dep_ so can be re-used
-                ode_dep_.swap(fun);
                 assert( ode_ind_.size_var() != 0 );
-                assert( fun.size_var() == 0 || ode_dep_defined );
             }
             // special case where new_dynamic not yet set
             if( ! ode_dep_defined )

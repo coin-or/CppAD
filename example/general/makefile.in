@@ -117,10 +117,9 @@ am__general_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	mul_eq.cpp mul_level.cpp mul_level_ode.cpp near_equal_ext.cpp \
 	new_dynamic.cpp number_skip.cpp numeric_type.cpp \
 	num_limits.cpp ode_stiff.cpp taylor_ode.cpp opt_val_hes.cpp \
-	con_dyn_var.cpp poly.cpp pow.cpp pow_int.cpp print_for.cpp \
-	rev_checkpoint.cpp reverse_one.cpp reverse_three.cpp \
-	reverse_two.cpp rev_one.cpp rev_two.cpp rosen_34.cpp \
-	runge_45.cpp seq_property.cpp sign.cpp sin.cpp sinh.cpp \
+	con_dyn_var.cpp pow.cpp print_for.cpp rev_checkpoint.cpp \
+	reverse_one.cpp reverse_three.cpp reverse_two.cpp rev_one.cpp \
+	rev_two.cpp seq_property.cpp sign.cpp sin.cpp sinh.cpp \
 	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
 	tape_index.cpp unary_minus.cpp unary_plus.cpp value.cpp \
 	var2par.cpp vec_ad.cpp
@@ -159,17 +158,16 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	near_equal_ext.$(OBJEXT) new_dynamic.$(OBJEXT) \
 	number_skip.$(OBJEXT) numeric_type.$(OBJEXT) \
 	num_limits.$(OBJEXT) ode_stiff.$(OBJEXT) taylor_ode.$(OBJEXT) \
-	opt_val_hes.$(OBJEXT) con_dyn_var.$(OBJEXT) poly.$(OBJEXT) \
-	pow.$(OBJEXT) pow_int.$(OBJEXT) print_for.$(OBJEXT) \
-	rev_checkpoint.$(OBJEXT) reverse_one.$(OBJEXT) \
-	reverse_three.$(OBJEXT) reverse_two.$(OBJEXT) \
-	rev_one.$(OBJEXT) rev_two.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge_45.$(OBJEXT) seq_property.$(OBJEXT) sign.$(OBJEXT) \
-	sin.$(OBJEXT) sinh.$(OBJEXT) sqrt.$(OBJEXT) \
-	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
-	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
-	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) value.$(OBJEXT) \
-	var2par.$(OBJEXT) vec_ad.$(OBJEXT)
+	opt_val_hes.$(OBJEXT) con_dyn_var.$(OBJEXT) pow.$(OBJEXT) \
+	print_for.$(OBJEXT) rev_checkpoint.$(OBJEXT) \
+	reverse_one.$(OBJEXT) reverse_three.$(OBJEXT) \
+	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) rev_two.$(OBJEXT) \
+	seq_property.$(OBJEXT) sign.$(OBJEXT) sin.$(OBJEXT) \
+	sinh.$(OBJEXT) sqrt.$(OBJEXT) stack_machine.$(OBJEXT) \
+	sub.$(OBJEXT) sub_eq.$(OBJEXT) tan.$(OBJEXT) tanh.$(OBJEXT) \
+	tape_index.$(OBJEXT) unary_minus.$(OBJEXT) \
+	unary_plus.$(OBJEXT) value.$(OBJEXT) var2par.$(OBJEXT) \
+	vec_ad.$(OBJEXT)
 general_OBJECTS = $(am_general_OBJECTS)
 general_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -229,19 +227,18 @@ am__depfiles_remade = ./$(DEPDIR)/abort_recording.Po \
 	./$(DEPDIR)/new_dynamic.Po ./$(DEPDIR)/num_limits.Po \
 	./$(DEPDIR)/number_skip.Po ./$(DEPDIR)/numeric_type.Po \
 	./$(DEPDIR)/ode_stiff.Po ./$(DEPDIR)/opt_val_hes.Po \
-	./$(DEPDIR)/poly.Po ./$(DEPDIR)/pow.Po ./$(DEPDIR)/pow_int.Po \
-	./$(DEPDIR)/print_for.Po ./$(DEPDIR)/rev_checkpoint.Po \
-	./$(DEPDIR)/rev_one.Po ./$(DEPDIR)/rev_two.Po \
-	./$(DEPDIR)/reverse_one.Po ./$(DEPDIR)/reverse_three.Po \
-	./$(DEPDIR)/reverse_two.Po ./$(DEPDIR)/rosen_34.Po \
-	./$(DEPDIR)/runge_45.Po ./$(DEPDIR)/seq_property.Po \
-	./$(DEPDIR)/sign.Po ./$(DEPDIR)/sin.Po ./$(DEPDIR)/sinh.Po \
-	./$(DEPDIR)/sqrt.Po ./$(DEPDIR)/stack_machine.Po \
-	./$(DEPDIR)/sub.Po ./$(DEPDIR)/sub_eq.Po ./$(DEPDIR)/tan.Po \
-	./$(DEPDIR)/tanh.Po ./$(DEPDIR)/tape_index.Po \
-	./$(DEPDIR)/taylor_ode.Po ./$(DEPDIR)/unary_minus.Po \
-	./$(DEPDIR)/unary_plus.Po ./$(DEPDIR)/value.Po \
-	./$(DEPDIR)/var2par.Po ./$(DEPDIR)/vec_ad.Po
+	./$(DEPDIR)/pow.Po ./$(DEPDIR)/print_for.Po \
+	./$(DEPDIR)/rev_checkpoint.Po ./$(DEPDIR)/rev_one.Po \
+	./$(DEPDIR)/rev_two.Po ./$(DEPDIR)/reverse_one.Po \
+	./$(DEPDIR)/reverse_three.Po ./$(DEPDIR)/reverse_two.Po \
+	./$(DEPDIR)/seq_property.Po ./$(DEPDIR)/sign.Po \
+	./$(DEPDIR)/sin.Po ./$(DEPDIR)/sinh.Po ./$(DEPDIR)/sqrt.Po \
+	./$(DEPDIR)/stack_machine.Po ./$(DEPDIR)/sub.Po \
+	./$(DEPDIR)/sub_eq.Po ./$(DEPDIR)/tan.Po ./$(DEPDIR)/tanh.Po \
+	./$(DEPDIR)/tape_index.Po ./$(DEPDIR)/taylor_ode.Po \
+	./$(DEPDIR)/unary_minus.Po ./$(DEPDIR)/unary_plus.Po \
+	./$(DEPDIR)/value.Po ./$(DEPDIR)/var2par.Po \
+	./$(DEPDIR)/vec_ad.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -324,7 +321,7 @@ CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -580,9 +577,7 @@ general_SOURCES = \
 	taylor_ode.cpp \
 	opt_val_hes.cpp \
 	con_dyn_var.cpp \
-	poly.cpp \
 	pow.cpp \
-	pow_int.cpp \
 	print_for.cpp \
 	rev_checkpoint.cpp \
 	reverse_one.cpp \
@@ -590,8 +585,6 @@ general_SOURCES = \
 	reverse_two.cpp \
 	rev_one.cpp \
 	rev_two.cpp \
-	rosen_34.cpp \
-	runge_45.cpp \
 	seq_property.cpp \
 	sign.cpp \
 	sin.cpp \
@@ -737,9 +730,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/numeric_type.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_stiff.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opt_val_hes.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow_int.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_checkpoint.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_one.Po@am__quote@ # am--include-marker
@@ -747,8 +738,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_one.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_three.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_two.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rosen_34.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge_45.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/seq_property.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sign.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin.Po@am__quote@ # am--include-marker
@@ -995,9 +984,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/numeric_type.Po
 	-rm -f ./$(DEPDIR)/ode_stiff.Po
 	-rm -f ./$(DEPDIR)/opt_val_hes.Po
-	-rm -f ./$(DEPDIR)/poly.Po
 	-rm -f ./$(DEPDIR)/pow.Po
-	-rm -f ./$(DEPDIR)/pow_int.Po
 	-rm -f ./$(DEPDIR)/print_for.Po
 	-rm -f ./$(DEPDIR)/rev_checkpoint.Po
 	-rm -f ./$(DEPDIR)/rev_one.Po
@@ -1005,8 +992,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/reverse_one.Po
 	-rm -f ./$(DEPDIR)/reverse_three.Po
 	-rm -f ./$(DEPDIR)/reverse_two.Po
-	-rm -f ./$(DEPDIR)/rosen_34.Po
-	-rm -f ./$(DEPDIR)/runge_45.Po
 	-rm -f ./$(DEPDIR)/seq_property.Po
 	-rm -f ./$(DEPDIR)/sign.Po
 	-rm -f ./$(DEPDIR)/sin.Po
@@ -1150,9 +1135,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/numeric_type.Po
 	-rm -f ./$(DEPDIR)/ode_stiff.Po
 	-rm -f ./$(DEPDIR)/opt_val_hes.Po
-	-rm -f ./$(DEPDIR)/poly.Po
 	-rm -f ./$(DEPDIR)/pow.Po
-	-rm -f ./$(DEPDIR)/pow_int.Po
 	-rm -f ./$(DEPDIR)/print_for.Po
 	-rm -f ./$(DEPDIR)/rev_checkpoint.Po
 	-rm -f ./$(DEPDIR)/rev_one.Po
@@ -1160,8 +1143,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/reverse_one.Po
 	-rm -f ./$(DEPDIR)/reverse_three.Po
 	-rm -f ./$(DEPDIR)/reverse_two.Po
-	-rm -f ./$(DEPDIR)/rosen_34.Po
-	-rm -f ./$(DEPDIR)/runge_45.Po
 	-rm -f ./$(DEPDIR)/seq_property.Po
 	-rm -f ./$(DEPDIR)/sign.Po
 	-rm -f ./$(DEPDIR)/sin.Po

@@ -264,7 +264,7 @@ must not be $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $head Example$$
 $children%
-    example/general/rosen_34.cpp
+    example/utility/rosen_34.cpp
 %$$
 The file
 $cref rosen_34.cpp$$

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -26,9 +26,13 @@ SET(source_list
     ode_err_maxabs.cpp
     ode_gear.cpp
     ode_gear_control.cpp
+    poly.cpp
+    pow_int.cpp
     romberg_mul.cpp
     romberg_one.cpp
+    rosen_34.cpp
     runge45_1.cpp
+    runge_45.cpp
     set_union.cpp
     simple_vector.cpp
     sparse_rc.cpp

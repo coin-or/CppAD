@@ -99,7 +99,7 @@ of $icode x$$.
 
 $head Example$$
 $children%
-    example/general/pow_int.cpp
+    example/utility/pow_int.cpp
 %$$
 The file $cref pow_int.cpp$$
 is an example and test of this function.

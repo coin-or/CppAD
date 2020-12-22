@@ -25,7 +25,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <cmath>
 
-bool Poly(void)
+bool poly(void)
 {   bool ok = true;
 
     // degree of the polynomial

@@ -59,6 +59,10 @@ that have these types.
 $lnext
 The default ADFun copy constructor was deleted so that its use is now
 a compile error (it used to generate a run time error message).
+$lnext
+Move  $cref poly.cpp$$, $cref pow_int$$,
+$cref runge_45.cpp$$, and $cref rosen_34.cpp$$
+from $code example/general$$ to $code example/utility/$$.
 $lend
 
 $head 12-20$$

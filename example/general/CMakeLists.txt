@@ -108,9 +108,7 @@ SET(source_list
     numeric_type.cpp
     ode_stiff.cpp
     opt_val_hes.cpp
-    poly.cpp
     pow.cpp
-    pow_int.cpp
     print_for.cpp
     rev_one.cpp
     rev_two.cpp
@@ -118,8 +116,6 @@ SET(source_list
     reverse_one.cpp
     reverse_three.cpp
     reverse_two.cpp
-    rosen_34.cpp
-    runge_45.cpp
     seq_property.cpp
     sign.cpp
     sin.cpp

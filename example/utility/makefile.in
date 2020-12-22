@@ -103,11 +103,13 @@ am_utility_OBJECTS = check_numeric_type.$(OBJEXT) \
 	lu_factor.$(OBJEXT) lu_invert.$(OBJEXT) lu_solve.$(OBJEXT) \
 	nan.$(OBJEXT) near_equal.$(OBJEXT) ode_err_control.$(OBJEXT) \
 	ode_err_maxabs.$(OBJEXT) ode_gear_control.$(OBJEXT) \
-	ode_gear.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
-	runge45_1.$(OBJEXT) set_union.$(OBJEXT) \
-	simple_vector.$(OBJEXT) sparse_rc.$(OBJEXT) \
-	sparse_rcv.$(OBJEXT) thread_alloc.$(OBJEXT) \
-	to_string.$(OBJEXT) utility.$(OBJEXT) vector_bool.$(OBJEXT)
+	ode_gear.$(OBJEXT) poly.$(OBJEXT) pow_int.$(OBJEXT) \
+	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
+	runge45_1.$(OBJEXT) runge_45.$(OBJEXT) rosen_34.$(OBJEXT) \
+	set_union.$(OBJEXT) simple_vector.$(OBJEXT) \
+	sparse_rc.$(OBJEXT) sparse_rcv.$(OBJEXT) \
+	thread_alloc.$(OBJEXT) to_string.$(OBJEXT) utility.$(OBJEXT) \
+	vector_bool.$(OBJEXT)
 utility_OBJECTS = $(am_utility_OBJECTS)
 utility_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -132,8 +134,10 @@ am__depfiles_remade = ./$(DEPDIR)/check_numeric_type.Po \
 	./$(DEPDIR)/lu_solve.Po ./$(DEPDIR)/nan.Po \
 	./$(DEPDIR)/near_equal.Po ./$(DEPDIR)/ode_err_control.Po \
 	./$(DEPDIR)/ode_err_maxabs.Po ./$(DEPDIR)/ode_gear.Po \
-	./$(DEPDIR)/ode_gear_control.Po ./$(DEPDIR)/romberg_mul.Po \
-	./$(DEPDIR)/romberg_one.Po ./$(DEPDIR)/runge45_1.Po \
+	./$(DEPDIR)/ode_gear_control.Po ./$(DEPDIR)/poly.Po \
+	./$(DEPDIR)/pow_int.Po ./$(DEPDIR)/romberg_mul.Po \
+	./$(DEPDIR)/romberg_one.Po ./$(DEPDIR)/rosen_34.Po \
+	./$(DEPDIR)/runge45_1.Po ./$(DEPDIR)/runge_45.Po \
 	./$(DEPDIR)/set_union.Po ./$(DEPDIR)/simple_vector.Po \
 	./$(DEPDIR)/sparse_rc.Po ./$(DEPDIR)/sparse_rcv.Po \
 	./$(DEPDIR)/thread_alloc.Po ./$(DEPDIR)/to_string.Po \
@@ -208,7 +212,7 @@ CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -378,9 +382,13 @@ utility_SOURCES = \
 	ode_err_maxabs.cpp \
 	ode_gear_control.cpp \
 	ode_gear.cpp \
+	poly.cpp \
+	pow_int.cpp \
 	romberg_mul.cpp \
 	romberg_one.cpp \
 	runge45_1.cpp \
+	runge_45.cpp \
+	rosen_34.cpp \
 	set_union.cpp \
 	simple_vector.cpp \
 	sparse_rc.cpp \
@@ -451,9 +459,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_err_maxabs.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_gear.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_gear_control.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow_int.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_mul.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_one.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rosen_34.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge45_1.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge_45.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/set_union.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_vector.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_rc.Po@am__quote@ # am--include-marker
@@ -624,9 +636,13 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/ode_err_maxabs.Po
 	-rm -f ./$(DEPDIR)/ode_gear.Po
 	-rm -f ./$(DEPDIR)/ode_gear_control.Po
+	-rm -f ./$(DEPDIR)/poly.Po
+	-rm -f ./$(DEPDIR)/pow_int.Po
 	-rm -f ./$(DEPDIR)/romberg_mul.Po
 	-rm -f ./$(DEPDIR)/romberg_one.Po
+	-rm -f ./$(DEPDIR)/rosen_34.Po
 	-rm -f ./$(DEPDIR)/runge45_1.Po
+	-rm -f ./$(DEPDIR)/runge_45.Po
 	-rm -f ./$(DEPDIR)/set_union.Po
 	-rm -f ./$(DEPDIR)/simple_vector.Po
 	-rm -f ./$(DEPDIR)/sparse_rc.Po
@@ -694,9 +710,13 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/ode_err_maxabs.Po
 	-rm -f ./$(DEPDIR)/ode_gear.Po
 	-rm -f ./$(DEPDIR)/ode_gear_control.Po
+	-rm -f ./$(DEPDIR)/poly.Po
+	-rm -f ./$(DEPDIR)/pow_int.Po
 	-rm -f ./$(DEPDIR)/romberg_mul.Po
 	-rm -f ./$(DEPDIR)/romberg_one.Po
+	-rm -f ./$(DEPDIR)/rosen_34.Po
 	-rm -f ./$(DEPDIR)/runge45_1.Po
+	-rm -f ./$(DEPDIR)/runge_45.Po
 	-rm -f ./$(DEPDIR)/set_union.Po
 	-rm -f ./$(DEPDIR)/simple_vector.Po
 	-rm -f ./$(DEPDIR)/sparse_rc.Po

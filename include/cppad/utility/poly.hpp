@@ -123,7 +123,7 @@ of $icode z$$ and the elements of $icode a$$
 
 
 $children%
-    example/general/poly.cpp%
+    example/utility/poly.cpp%
     omh/poly_hpp.omh
 %$$
 
