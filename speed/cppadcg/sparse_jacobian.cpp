@@ -21,6 +21,16 @@ $section Cppadcg Speed: Sparse Jacobian$$
 $head Specifications$$
 See $cref link_sparse_jacobian$$.
 
+$head USE_CODE_GEN_SPARSE_JACOBIAN$$
+If this is zero, the sparse Jacobian is the  $code compiled_fun$$
+$cref/function/compiled_fun/Syntax/function/$$.
+Otherwise, the $code compiled$$
+$cref/sparse_jacobian/compiled_fun/Syntax/sparse_jacobian/$$
+member function is used to calculate the sparse Jacobian.
+$srccode%cpp% */
+# define USE_CODE_GEN_SPARSE_JACOBIAN 1
+/* %$$
+
 
 $head Implementation$$
 $srccode%cpp% */
@@ -42,7 +52,8 @@ namespace {
     typedef CppAD::vector<double>       d_vector;
     typedef CppAD::vector<ac_double>   ac_vector;
     typedef CppAD::sparse_rc<s_vector> sparsity;
-    //
+    // ------------------------------------------------------------------------
+# ifndef USE_CODE_GEN_SPARSE_JACOBIAN
     // calc_sparsity
     void calc_sparsity(
         CppAD::sparse_rc<s_vector>& pattern ,
@@ -86,16 +97,18 @@ namespace {
             }
         }
     }
+# endif // USE_CODE_GEN_SPARSE_JACOBIAN
     // -------------------------------------------------------------------------
     // setup
     void setup(
             // inputs
-            size_t          size    ,
-            const s_vector& row     ,
-            const s_vector& col     ,
+            size_t          size     ,
+            const s_vector& row      ,
+            const s_vector& col      ,
             // outputs
-            size_t&         n_color ,
-            compiled_fun&   g       )
+            size_t&         n_color  ,
+            compiled_fun&   fun      ,
+            s_vector&  row_major     )
     {   // optimization options
         std::string optimize_options =
             "no_conditional_skip no_compare_op no_print_for_op";
@@ -107,26 +120,6 @@ namespace {
         // dependent variable vector
         size_t nr = 2 * nc;
         ac_vector ac_y(nr);
-        //
-        // sparsity patttern  for subset of Jacobian pattern that is evaluated
-        size_t nnz = row.size();
-        sparsity subset_pattern(nr, nc, nnz);
-        for(size_t k = 0; k < nnz; ++k)
-            subset_pattern.set(k, row[k], col[k]);
-        //
-        // spoarse matrix for subset of Jacobian that is evaluated
-        CppAD::sparse_rcv<s_vector, ac_vector> ac_subset( subset_pattern );
-        //
-        //
-        // coloring method
-        std::string coloring = "cppad";
-# if CPPAD_HAS_COLPACK
-        if( global_option["colpack"] )
-            coloring = "colpack";
-# endif
-        //
-        // maximum number of colors at once
-        size_t group_max = 1;
         //
         // values of independent variables do not matter
         for(size_t j = 0; j < nc; j++)
@@ -147,6 +140,50 @@ namespace {
         c_f.Dependent(ac_x, ac_y);
         if( global_option["optimize"] )
             c_f.optimize(optimize_options);
+        //
+        // number of non-zeros in sparsity pattern for Jacobian
+# if USE_CODE_GEN_SPARSE_JACOBIAN
+        // set fun
+        compiled_fun::evaluation_enum eval_jac = compiled_fun::sparse_enum;
+        compiled_fun f_tmp("sparse_jacobian", c_f, eval_jac);
+        fun.swap(f_tmp);
+        //
+        // set row_major
+        d_vector x(nc);
+        CppAD::uniform_01(nc, x);
+        CppAD::sparse_rcv<s_vector, d_vector> Jrcv = fun.sparse_jacobian(x);
+        row_major = Jrcv.row_major();
+# ifndef NDEBUG
+        size_t nnz = row.size();
+        CPPAD_ASSERT_UNKNOWN( row_major.size() == nnz );
+        for(size_t k = 0; k < nnz; ++k)
+        {   size_t ell = row_major[k];
+            CPPAD_ASSERT_UNKNOWN(
+                Jrcv.row()[ell] == row[k] && Jrcv.col()[ell] == col[k]
+            );
+        }
+# endif
+        //
+# else  // USE_CODE_GEN_SPARSE_JACOBIAN
+        //
+        // sparsity patttern  for subset of Jacobian pattern that is evaluated
+        size_t nnz = row.size();
+        sparsity subset_pattern(nr, nc, nnz);
+        for(size_t k = 0; k < nnz; ++k)
+            subset_pattern.set(k, row[k], col[k]);
+        //
+        // spoarse matrix for subset of Jacobian that is evaluated
+        CppAD::sparse_rcv<s_vector, ac_vector> ac_subset( subset_pattern );
+        //
+        // coloring method
+        std::string coloring = "cppad";
+# if CPPAD_HAS_COLPACK
+        if( global_option["colpack"] )
+            coloring = "colpack";
+# endif
+        //
+        // maximum number of colors at once
+        size_t group_max = 1;
         ac_f = c_f.base2ad();
         //
         // declare independent variables for jacobian computation
@@ -178,7 +215,8 @@ namespace {
         compiled_fun g_tmp("sparse_jacobian", c_g);
         //
         // set reture value
-        g.swap(g_tmp);
+        fun.swap(g_tmp);
+# endif // USE_CODE_GEN_SPARSE_JACOBIAN
         return;
     }
 }
@@ -223,11 +261,18 @@ bool link_sparse_jacobian(
             return false;
     }
     // -----------------------------------------------------
-    // size corresponding to static_g
+    // size corresponding to static_fun
     static size_t static_size = 0;
     //
     // function object mapping x to f'(x)
-    static compiled_fun static_g;
+    static compiled_fun static_fun;
+    //
+# if USE_CODE_GEN_SPARSE_JACOBIAN
+    // row_major order for Jrcv
+    static s_vector static_row_major;
+    // code gen value for sparse jacobian
+    CppAD::sparse_rcv<s_vector, d_vector> Jrcv;
+# endif
     //
     // number of independent variables
     size_t nx = size;
@@ -240,7 +285,7 @@ bool link_sparse_jacobian(
     if( job == "setup" )
     {   if( onetape )
         {   // sets n_color when ontape is true
-            setup(size, row, col, n_color, static_g);
+            setup(size, row, col, n_color, static_fun, static_row_major);
             static_size = size;
         }
         else
@@ -249,8 +294,10 @@ bool link_sparse_jacobian(
         return true;
     }
     if( job == "teardown" )
-    {   compiled_fun g;
-        static_g.swap(g);
+    {   compiled_fun f_tmp;
+        static_fun.swap(f_tmp);
+        static_row_major.clear();
+        //
         static_size    = 0;
         return true;
     }
@@ -266,18 +313,32 @@ bool link_sparse_jacobian(
         CppAD::uniform_01(nx, x);
 
         // evaluate the jacobian
-        jacobian = static_g(x);
+# if USE_CODE_GEN_SPARSE_JACOBIAN
+        Jrcv = static_fun.sparse_jacobian(x);
+        CPPAD_ASSERT_UNKNOWN( Jrcv.nnz() == jacobian.size() );
+        for(size_t k = 0; k < row.size(); ++k)
+            jacobian[k] = Jrcv.val()[ static_row_major[k] ];
+# else
+        jacobian = static_fun(x);
+# endif
     }
     else while(repeat--)
     {   // sets n_color when ontape is false
-        setup(size, row, col, n_color, static_g);
+        setup(size, row, col, n_color, static_fun, static_row_major);
         static_size = size;
 
         // get next x
         CppAD::uniform_01(nx, x);
 
         // evaluate the jacobian
-        jacobian = static_g(x);
+# if USE_CODE_GEN_SPARSE_JACOBIAN
+        Jrcv = static_fun.sparse_jacobian(x);
+        CPPAD_ASSERT_UNKNOWN( Jrcv.nnz() == jacobian.size() );
+        for(size_t k = 0; k < row.size(); ++k)
+            jacobian[k] = Jrcv.val()[ static_row_major[k] ];
+# else
+        jacobian = static_fun(x);
+# endif
     }
     return true;
 }

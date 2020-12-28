@@ -147,16 +147,42 @@ at which the function will be evaluated.
 $head y$$
 This return value has size $icode m$$ and is the value of $latex f(x)$$.
 
-$head J$$
+$head jacobian$$
+
+$subhead J$$
 This return value has size $icode%m% * %n%$$ and is the value of
 the Jacobian $latex f'(x)$$ where
 $latex \[
     J[ i \cdot n + j ] =  ( \partial f_i / \partial x_j )  (x)
 \] $$
 
+$subhead Speed$$
+The speed test $cref cppadcg_det_minor.cpp$$ has the option to pass
+the determinant function, or the Jacobian of the determinant function,
+to CppADCodeGen (for the same eventual calculation); see
+$cref/USE_CODE_GEN_JACOBIAN
+    /cppadcg_det_minor.cpp
+    /USE_CODE_GEN_JACOBIAN
+/$$.
+This test indicates that both methods have similar setup
+and derivative calculation times.
+
+$head sparse_jacobian$$
+
 $head Jrcv$$
 This return value is a $cref sparse_rcv$$ sparse matrix representation
 of the Jacobian.
+
+$subhead Speed$$
+The speed test $cref cppadcg_sparse_jacobian.cpp$$ has the option to pass
+a function ($cref sparse_jac_fun$$) or it's Jacobian to CppADCodeGen
+(for the same eventual calculation); see
+$cref/USE_CODE_GEN_SPARSE_JACOBIAN
+    /cppadcg_sparse_jacobian.cpp
+    /USE_CODE_GEN_SPARSE_JACOBIAN
+/$$.
+THis test indicates that both methods have similar setup
+and derivative calculation times.
 
 $children%
     example/compiled_fun/function.cpp%

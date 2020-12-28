@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin cppadcg_det_minor.cpp$$
 $spell
     Cppadcg
-	Jacobian
+    Jacobian
 $$
 
 $section Cppadcg Speed: Gradient of Determinant by Minor Expansion$$
@@ -22,14 +22,13 @@ $head Specifications$$
 See $cref link_det_minor$$.
 
 $head USE_CODE_GEN_JACOBIAN$$
-If this is zero, the Jacobian of the determinant is the
-$cref/function/compiled_fun/Syntax/function/$$
-from the $code compiled_fun$$ perspective.
+If this is zero, the Jacobian of the determinant is the $code compiled_fun$$
+$cref/function/compiled_fun/Syntax/function/$$.
 Otherwise, the
-$cref/jacobian/compiled_fun/Syntax/jacobian/$$
+$cref/jacobian/compiled_fun/Syntax/jacobian/$$ $code compiled_fun$$
 member function is used to calculate the Jacobian.
 $srccode%cpp% */
-# define USE_CODE_GEN_JACOBIAN 0
+# define USE_CODE_GEN_JACOBIAN 1
 /* %$$
 
 $head Implementation$$
@@ -90,9 +89,10 @@ namespace {
         if( global_option["optimize"] )
             c_f.optimize(optimize_options);
 # if USE_CODE_GEN_JACOBIAN
-		// f(x) is the determinant function
-		compiled_fun::evaluation_enum eval_jac = compiled_fun::dense_enum;
-        compiled_fun g_tmp("det_minor", c_f, eval_jac);
+        // f(x) is the determinant function
+        compiled_fun::evaluation_enum eval_jac = compiled_fun::dense_enum;
+        compiled_fun f_tmp("det_minor", c_f, eval_jac);
+        fun.swap(f_tmp);
 # else
         CppAD::ADFun<ac_double, c_double> ac_f;
         ac_f = c_f.base2ad();
@@ -114,11 +114,10 @@ namespace {
         c_g.Dependent(ac_A, ac_gradient);
         if( global_option["optimize"] )
             c_g.optimize(optimize_options);
-		// g(x) is the Jacobian of the determinant
+        // g(x) is the Jacobian of the determinant
         compiled_fun g_tmp("det_minor", c_g);
-# endif
-        // return fun
         fun.swap(g_tmp);
+# endif
     }
 }
 
@@ -187,7 +186,7 @@ bool link_det_minor(
 
         // evaluate the gradient
 # if USE_CODE_GEN_JACOBIAN
-		gradient = static_fun.jacobian(matrix);
+        gradient = static_fun.jacobian(matrix);
 # else
         gradient = static_fun(matrix);
 # endif
@@ -201,7 +200,7 @@ bool link_det_minor(
 
         // evaluate the gradient
 # if USE_CODE_GEN_JACOBIAN
-		gradient = static_fun.jacobian(matrix);
+        gradient = static_fun.jacobian(matrix);
 # else
         gradient = static_fun(matrix);
 # endif
