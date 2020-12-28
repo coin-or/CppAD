@@ -16,7 +16,7 @@ $spell
     jacobian
 $$
 
-$section Compiled AD Jacobian As Function Value: Example and Test$$
+$section Pass Jacobian as Code Gen Function: Example and Test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 

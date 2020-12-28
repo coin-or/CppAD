@@ -23,7 +23,7 @@ $spell
     Jrcv
 $$
 
-$section Compile and Link Source For an AD Function$$
+$section Generate Source Code and Compile an AD Function$$
 
 $head Syntax$$
 $codei%# include <cppad/example/code_gen_fun.hpp>
@@ -90,7 +90,7 @@ and used to convert the $icode cg_fun$$ function object to source code,
 compile the source code, and then link the corresponding function evaluation
 $codei%
     %y% = cg_fun.Forward(0, %x%)
-%$$.
+%$$
 
 $head Speed$$
 The conversion to source and linking is expected to take a significant

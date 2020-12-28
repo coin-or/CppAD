@@ -16,7 +16,7 @@ $spell
     jacobian
 $$
 
-$section Compiled AD Jacobian Values: Example and Test$$
+$section Evaluate Sparse Jacobian of a Code Gen Function: Example and Test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 

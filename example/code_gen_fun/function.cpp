@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin code_gen_fun_function.cpp$$
 
-$section Compiled AD Function Value: Example and Test$$
+$section Evaluate a Code Gen Function: Example and Test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
