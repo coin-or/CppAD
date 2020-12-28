@@ -13,12 +13,24 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin cppadcg_det_minor.cpp$$
 $spell
     Cppadcg
+	Jacobian
 $$
 
 $section Cppadcg Speed: Gradient of Determinant by Minor Expansion$$
 
 $head Specifications$$
 See $cref link_det_minor$$.
+
+$head USE_CODE_GEN_JACOBIAN$$
+If this is zero, the Jacobian of the determinant is the
+$cref/function/compiled_fun/Syntax/function/$$
+from the $code compiled_fun$$ perspective.
+Otherwise, the
+$cref/jacobian/compiled_fun/Syntax/jacobian/$$
+member function is used to calculate the Jacobian.
+$srccode%cpp% */
+# define USE_CODE_GEN_JACOBIAN 0
+/* %$$
 
 $head Implementation$$
 $srccode%cpp% */
@@ -43,7 +55,7 @@ namespace {
         // inputs
         size_t size     ,
         // outputs
-        compiled_fun& g )
+        compiled_fun& fun )
     {   // optimization options
         std::string optimize_options =
             "no_conditional_skip no_compare_op no_print_for_op";
@@ -74,10 +86,15 @@ namespace {
         //
         // create function objects for f : A -> detA
         CppAD::ADFun<c_double>            c_f;
-        CppAD::ADFun<ac_double, c_double> ac_f;
         c_f.Dependent(ac_A, ac_detA);
         if( global_option["optimize"] )
             c_f.optimize(optimize_options);
+# if USE_CODE_GEN_JACOBIAN
+		// f(x) is the determinant function
+		compiled_fun::evaluation_enum eval_jac = compiled_fun::dense_enum;
+        compiled_fun g_tmp("det_minor", c_f, eval_jac);
+# else
+        CppAD::ADFun<ac_double, c_double> ac_f;
         ac_f = c_f.base2ad();
         //
         // declare independent variables for gradient computation
@@ -97,10 +114,11 @@ namespace {
         c_g.Dependent(ac_A, ac_gradient);
         if( global_option["optimize"] )
             c_g.optimize(optimize_options);
+		// g(x) is the Jacobian of the determinant
         compiled_fun g_tmp("det_minor", c_g);
-        //
-        // static_g
-        g.swap(g_tmp);
+# endif
+        // return fun
+        fun.swap(g_tmp);
     }
 }
 
@@ -130,9 +148,9 @@ bool link_det_minor(
     // --------------------------------------------------------------------
     //
     // function object mapping matrix to gradiend of determinant
-    static compiled_fun static_g;
+    static compiled_fun static_fun;
     //
-    // size correspmnding to static_g
+    // size correspmnding to static_fun
     static size_t static_size = 0;
     //
     // number of independent variables
@@ -143,7 +161,7 @@ bool link_det_minor(
     // ----------------------------------------------------------------------
     if( job == "setup" )
     {   if( onetape )
-        {   setup(size, static_g);
+        {   setup(size, static_fun);
             static_size = size;
         }
         else
@@ -152,8 +170,8 @@ bool link_det_minor(
         return true;
     }
     if( job ==  "teardown" )
-    {   compiled_fun g;
-        static_g.swap(g);
+    {   compiled_fun fun;
+        static_fun.swap(fun);
         return true;
     }
     // -----------------------------------------------------------------------
@@ -168,17 +186,25 @@ bool link_det_minor(
         CppAD::uniform_01(nx, matrix);
 
         // evaluate the gradient
-        gradient = static_g(matrix);
+# if USE_CODE_GEN_JACOBIAN
+		gradient = static_fun.jacobian(matrix);
+# else
+        gradient = static_fun(matrix);
+# endif
     }
     else while(repeat--)
-    {   setup(size, static_g);
+    {   setup(size, static_fun);
         static_size = size;
 
         // get next matrix
         CppAD::uniform_01(nx, matrix);
 
         // evaluate the gradient
-        gradient = static_g(matrix);
+# if USE_CODE_GEN_JACOBIAN
+		gradient = static_fun.jacobian(matrix);
+# else
+        gradient = static_fun(matrix);
+# endif
     }
     return true;
 }

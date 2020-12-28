@@ -29,7 +29,7 @@ $head Syntax$$
 $codei%# include <cppad/example/compiled_fun.hpp>
 %$$
 
-$subhead Constructor$$
+$subhead Constructors$$
 $codei%compiled_fun %fun_name%()
 %$$
 $codei%compiled_fun %fun_name%(%file_name%)
@@ -39,15 +39,17 @@ $codei%compiled_fun %fun_name%(%file_name%, %cg_fun%)
 $codei%compiled_fun %fun_name%(%file_name%, %cg_fun%, %eval_jac%)
 %$$
 
-$subhead Operations$$
-$icode%fun_name%.swap(%other_fun%)
-%$$
-$icode%y% = %fun_name%(%x%)
-%$$
-$icode%J% = %fun_name%.jacobian(%x%)
-%$$
-$icode%Jrcv% = %fun_name%.sparse_jacobian(%x%)
-%$$
+$subhead swap$$
+$icode%fun_name%.swap(%other_fun%)%$$
+
+$subhead function$$
+$icode%y% = %fun_name%(%x%)%$$
+
+$subhead jacobian$$
+$icode%J% = %fun_name%.jacobian(%x%)%$$
+
+$subhead sparse_jacobian$$
+$icode%Jrcv% = %fun_name%.sparse_jacobian(%x%)%$$
 
 
 $head Prototype$$
