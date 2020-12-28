@@ -11,7 +11,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-
+// BEGIN C++
 # include <cppad/cg/cppadcg.hpp>
 
 class compiled_fun {
@@ -57,5 +57,6 @@ public:
     CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
     sparse_jacobian(const CppAD::vector<double>& x);
 };
+// END C++
 
 # endif

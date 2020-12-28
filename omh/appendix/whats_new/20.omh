@@ -49,6 +49,10 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
+$head 12-27$$
+Include the example implementations $cref compiled_fun.hpp$$
+and $cref compiled_fun.cpp$$ in the documentation.
+
 $head 12-21$$
 $list number$$
 Add a move semantics version of the copy constructor to

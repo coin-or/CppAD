@@ -174,14 +174,41 @@ $rref compiled_fun_sparse_jacobian.cpp$$
 $rref compiled_fun_sparse_jac_as_fun.cpp$$
 $tend
 
+$head Implementation$$
+see $cref compiled_fun.hpp$$ and $cref compiled_fun.cpp$$
+
+$end
+-----------------------------------------------------------------------------
+$begin compiled_fun.hpp$$
+
+$section compiled_fun Class Include File$$
+
+$head See Also$$
+$cref compiled_fun$$, $cref compiled_fun.cpp$$
+
+$head Source$$
+$srcfile%include/cppad/example/compiled_fun.hpp%0%// BEGIN C++%// END C++%$$
+
+$end
+-----------------------------------------------------------------------------
+$begin compiled_fun.cpp$$
+
+$section compiled_fun Class Member  Implementation$$
+
+$head See Also$$
+$cref compiled_fun$$, $cref compiled_fun.hpp$$
+
+$head Source$$
+$srcthisfile%0%// BEGIN C++%// END C++%2%$$
+
 $end
 */
-
+// BEGIN C++
 # include <cppad/example/compiled_fun.hpp>
 
 // ---------------------------------------------------------------------------
 // compiled_fun fun_name(file_name, cg_name, eval_jac)
-//
+// ---------------------------------------------------------------------------
 // BEGIN_CTOR_CG_FUN
 compiled_fun::compiled_fun(
     const std::string&                     file_name  ,
@@ -215,7 +242,7 @@ compiled_fun::compiled_fun(
 }
 // ---------------------------------------------------------------------------
 // compiled_fun fun_name(file_name)
-//
+// ---------------------------------------------------------------------------
 // BEGIN_CTOR_FILE_NAME
 compiled_fun::compiled_fun(const std::string&  file_name )
 // END_CTOR_FILE_NAME
@@ -233,14 +260,14 @@ compiled_fun::compiled_fun(const std::string&  file_name )
 }
 // ---------------------------------------------------------------------------
 // compiled_fun fun_name
-//
+// ---------------------------------------------------------------------------
 // BEGIN_CTOR_VOID
 compiled_fun::compiled_fun(void)
 // END_CTOR_VOID
 { }
 // --------------------------------------------------------------------------
 // fun_name.swap(other_fun)
-//
+// --------------------------------------------------------------------------
 // BEGIN_SWAP_OTHER_FUN
 void compiled_fun::swap(compiled_fun& other_fun)
 // END_SWAP_OTHER_FUN
@@ -249,7 +276,7 @@ void compiled_fun::swap(compiled_fun& other_fun)
 }
 // --------------------------------------------------------------------------
 // y = fun_name(x)
-//
+// --------------------------------------------------------------------------
 // BEGIN_FUN_NAME_X
 CppAD::vector<double>
 compiled_fun::operator()(const CppAD::vector<double>& x)
@@ -258,7 +285,7 @@ compiled_fun::operator()(const CppAD::vector<double>& x)
 }
 // --------------------------------------------------------------------------
 // J = fun_name.jacobian(x)
-//
+// --------------------------------------------------------------------------
 // BEGIN_JACOBIAN
 CppAD::vector<double>
 compiled_fun::jacobian(const CppAD::vector<double>& x)
@@ -270,7 +297,7 @@ compiled_fun::jacobian(const CppAD::vector<double>& x)
 }
 // --------------------------------------------------------------------------
 // Jrcv = fun_name.sparse_jacobian(x)
-//
+// --------------------------------------------------------------------------
 // BEGIN_SPARSE_JACOBIAN
 CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
 compiled_fun::sparse_jacobian(const CppAD::vector<double>& x)
@@ -307,3 +334,4 @@ compiled_fun::sparse_jacobian(const CppAD::vector<double>& x)
     //
     return Jrcv;
 }
+// END C++
