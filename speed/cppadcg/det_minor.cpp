@@ -12,23 +12,27 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin cppadcg_det_minor.cpp$$
 $spell
-    Cppadcg
+    cppadcg
     Jacobian
+    Cpp
 $$
 
-$section Cppadcg Speed: Gradient of Determinant by Minor Expansion$$
+$section cppadcg Speed: Gradient of Determinant by Minor Expansion$$
 
 $head Specifications$$
 See $cref link_det_minor$$.
 
-$head USE_CODE_GEN_JACOBIAN$$
-If this is zero, the Jacobian of the determinant is the $code compiled_fun$$
-$cref/function/compiled_fun/Syntax/function/$$.
-Otherwise, the
-$cref/jacobian/compiled_fun/Syntax/jacobian/$$ $code compiled_fun$$
-member function is used to calculate the Jacobian.
+$head PASS_JACOBIAN_TO_CODE_GEN$$
+If this is one, the Jacobian of the determinant is the function passed
+to CppADCodeGen.  In this case,  the $code compiled_fun$$
+$cref/function/compiled_fun/Syntax/function/$$ is used to calculate
+the Jacobian of the determinant.
+Otherwise, this flag is zero and the determinant function is passed
+to CppADCodeGen. In this case, the $code compiled_fun$$
+$cref/jacobian/compiled_fun/Syntax/jacobian/$$ is used to calculate
+the Jacobian of the determinant.
 $srccode%cpp% */
-# define USE_CODE_GEN_JACOBIAN 1
+# define PASS_JACOBIAN_TO_CODE_GEN 1
 /* %$$
 
 $head Implementation$$
@@ -88,7 +92,7 @@ namespace {
         c_f.Dependent(ac_A, ac_detA);
         if( global_option["optimize"] )
             c_f.optimize(optimize_options);
-# if USE_CODE_GEN_JACOBIAN
+# if ! PASS_JACOBIAN_TO_CODE_GEN
         // f(x) is the determinant function
         compiled_fun::evaluation_enum eval_jac = compiled_fun::dense_enum;
         compiled_fun f_tmp("det_minor", c_f, eval_jac);
@@ -185,10 +189,10 @@ bool link_det_minor(
         CppAD::uniform_01(nx, matrix);
 
         // evaluate the gradient
-# if USE_CODE_GEN_JACOBIAN
-        gradient = static_fun.jacobian(matrix);
-# else
+# if PASS_JACOBIAN_TO_CODE_GEN
         gradient = static_fun(matrix);
+# else
+        gradient = static_fun.jacobian(matrix);
 # endif
     }
     else while(repeat--)
@@ -199,10 +203,10 @@ bool link_det_minor(
         CppAD::uniform_01(nx, matrix);
 
         // evaluate the gradient
-# if USE_CODE_GEN_JACOBIAN
-        gradient = static_fun.jacobian(matrix);
-# else
+# if PASS_JACOBIAN_TO_CODE_GEN
         gradient = static_fun(matrix);
+# else
+        gradient = static_fun.jacobian(matrix);
 # endif
     }
     return true;

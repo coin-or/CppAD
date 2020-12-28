@@ -51,9 +51,9 @@ $section Changes and Additions to CppAD During 2020$$
 
 $head 12-28$$
 Add the
-$cref/USE_CODE_GEN_JACOBIAN
-    /cppadcg_det_minor.cpp
-    /USE_CODE_GEN_JACOBIAN
+$cref/PASS_SPARSE_JACOBIAN_TO_CODE_GEN
+    /cppadcg_sparse_jacobian.cpp
+    /PASS_SPARSE_JACOBIAN_TO_CODE_GEN
 /$$
 option to the cppadcg sparse jacobian speed test
 so one can compare passing a function, or its sparse Jacobian, to
@@ -65,9 +65,9 @@ Include the example implementations $cref compiled_fun.hpp$$
 and $cref compiled_fun.cpp$$ in the documentation.
 $lnext
 Add the
-$cref/USE_CODE_GEN_JACOBIAN
+$cref/PASS_JACOBIAN_TO_CODE_GEN
     /cppadcg_det_minor.cpp
-    /USE_CODE_GEN_JACOBIAN
+    /PASS_JACOBIAN_TO_CODE_GEN
 /$$
 option to the cppadcg det_minor speed test
 so one can compare passing the determinant or its Jacobian to

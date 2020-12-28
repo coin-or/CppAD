@@ -14,6 +14,7 @@ $begin cppadcg_sparse_jacobian.cpp$$
 $spell
     cppadcg
     jacobian
+    Cpp
 $$
 
 $section Cppadcg Speed: Sparse Jacobian$$
@@ -21,14 +22,17 @@ $section Cppadcg Speed: Sparse Jacobian$$
 $head Specifications$$
 See $cref link_sparse_jacobian$$.
 
-$head USE_CODE_GEN_SPARSE_JACOBIAN$$
-If this is zero, the sparse Jacobian is the  $code compiled_fun$$
-$cref/function/compiled_fun/Syntax/function/$$.
-Otherwise, the $code compiled$$
+$head PASS_SPARSE_JACOBIAN_TO_CODE_GEN$$
+If this is one, the sparse Jacobian is the is the function passed
+to CppADCodeGen, In this case, the $code compiled_fun$$
+$cref/function/compiled_fun/Syntax/function/$$ is used to calculate
+the sparse Jacobian.
+Otherwise, this flag is zero and the original function passed
+to CppADCodeGen. In this case, the $code compiled_fun$$
 $cref/sparse_jacobian/compiled_fun/Syntax/sparse_jacobian/$$
-member function is used to calculate the sparse Jacobian.
+is used to calculate the sparse Jacobian.
 $srccode%cpp% */
-# define USE_CODE_GEN_SPARSE_JACOBIAN 1
+# define PASS_SPARSE_JACOBIAN_TO_CODE_GEN 1
 /* %$$
 
 
@@ -53,7 +57,7 @@ namespace {
     typedef CppAD::vector<ac_double>   ac_vector;
     typedef CppAD::sparse_rc<s_vector> sparsity;
     // ------------------------------------------------------------------------
-# ifndef USE_CODE_GEN_SPARSE_JACOBIAN
+# if PASS_SPARSE_JACOBIAN_TO_CODE_GEN
     // calc_sparsity
     void calc_sparsity(
         CppAD::sparse_rc<s_vector>& pattern ,
@@ -97,7 +101,7 @@ namespace {
             }
         }
     }
-# endif // USE_CODE_GEN_SPARSE_JACOBIAN
+# endif // PASS_SPARSE_JACOBIAN_TO_CODE_GEN
     // -------------------------------------------------------------------------
     // setup
     void setup(
@@ -142,7 +146,7 @@ namespace {
             c_f.optimize(optimize_options);
         //
         // number of non-zeros in sparsity pattern for Jacobian
-# if USE_CODE_GEN_SPARSE_JACOBIAN
+# if ! PASS_SPARSE_JACOBIAN_TO_CODE_GEN
         // set fun
         compiled_fun::evaluation_enum eval_jac = compiled_fun::sparse_enum;
         compiled_fun f_tmp("sparse_jacobian", c_f, eval_jac);
@@ -164,7 +168,7 @@ namespace {
         }
 # endif
         //
-# else  // USE_CODE_GEN_SPARSE_JACOBIAN
+# else  // PASS_SPARSE_JACOBIAN_TO_CODE_GEN
         //
         // sparsity patttern  for subset of Jacobian pattern that is evaluated
         size_t nnz = row.size();
@@ -216,7 +220,7 @@ namespace {
         //
         // set reture value
         fun.swap(g_tmp);
-# endif // USE_CODE_GEN_SPARSE_JACOBIAN
+# endif // PASS_SPARSE_JACOBIAN_TO_CODE_GEN
         return;
     }
 }
@@ -267,9 +271,10 @@ bool link_sparse_jacobian(
     // function object mapping x to f'(x)
     static compiled_fun static_fun;
     //
-# if USE_CODE_GEN_SPARSE_JACOBIAN
     // row_major order for Jrcv
     static s_vector static_row_major;
+    //
+# if ! PASS_SPARSE_JACOBIAN_TO_CODE_GEN
     // code gen value for sparse jacobian
     CppAD::sparse_rcv<s_vector, d_vector> Jrcv;
 # endif
@@ -313,13 +318,13 @@ bool link_sparse_jacobian(
         CppAD::uniform_01(nx, x);
 
         // evaluate the jacobian
-# if USE_CODE_GEN_SPARSE_JACOBIAN
+# if PASS_SPARSE_JACOBIAN_TO_CODE_GEN
+        jacobian = static_fun(x);
+# else
         Jrcv = static_fun.sparse_jacobian(x);
         CPPAD_ASSERT_UNKNOWN( Jrcv.nnz() == jacobian.size() );
         for(size_t k = 0; k < row.size(); ++k)
             jacobian[k] = Jrcv.val()[ static_row_major[k] ];
-# else
-        jacobian = static_fun(x);
 # endif
     }
     else while(repeat--)
@@ -331,13 +336,13 @@ bool link_sparse_jacobian(
         CppAD::uniform_01(nx, x);
 
         // evaluate the jacobian
-# if USE_CODE_GEN_SPARSE_JACOBIAN
+# if PASS_SPARSE_JACOBIAN_TO_CODE_GEN
+        jacobian = static_fun(x);
+# else
         Jrcv = static_fun.sparse_jacobian(x);
         CPPAD_ASSERT_UNKNOWN( Jrcv.nnz() == jacobian.size() );
         for(size_t k = 0; k < row.size(); ++k)
             jacobian[k] = Jrcv.val()[ static_row_major[k] ];
-# else
-        jacobian = static_fun(x);
 # endif
     }
     return true;

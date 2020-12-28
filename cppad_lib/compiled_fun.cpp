@@ -160,9 +160,9 @@ $subhead Speed$$
 The speed test $cref cppadcg_det_minor.cpp$$ has the option to pass
 the determinant function, or the Jacobian of the determinant function,
 to CppADCodeGen (for the same eventual calculation); see
-$cref/USE_CODE_GEN_JACOBIAN
+$cref/PASS_JACOBIAN_TO_CODE_GEN
     /cppadcg_det_minor.cpp
-    /USE_CODE_GEN_JACOBIAN
+    /PASS_JACOBIAN_TO_CODE_GEN
 /$$.
 This test indicates that both methods have similar setup
 and derivative calculation times.
@@ -177,9 +177,9 @@ $subhead Speed$$
 The speed test $cref cppadcg_sparse_jacobian.cpp$$ has the option to pass
 a function ($cref sparse_jac_fun$$) or it's Jacobian to CppADCodeGen
 (for the same eventual calculation); see
-$cref/USE_CODE_GEN_SPARSE_JACOBIAN
+$cref/PASS_SPARSE_JACOBIAN_TO_CODE_GEN
     /cppadcg_sparse_jacobian.cpp
-    /USE_CODE_GEN_SPARSE_JACOBIAN
+    /PASS_SPARSE_JACOBIAN_TO_CODE_GEN
 /$$.
 THis test indicates that both methods have similar setup
 and derivative calculation times.
