@@ -30,7 +30,7 @@ $href%https://github.com/joaoleal/CppADCodeGen.git%$$
 $head Purpose$$
 CppAD includes examples and test that use the CppADCodeGen package,
 abbreviated as $code cppadcg$$, see:
-$cref compiled_fun$$.
+$cref code_gen_fun$$.
 
 $head include_cppadcg$$
 If $code include_cppadcg=true$$ is on the cmake command line,

@@ -11,21 +11,18 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin compiled_fun_jacobian.cpp$$
-$spell
-    jacobian
-$$
+$begin code_gen_fun_function.cpp$$
 
-$section Compiled AD Jacobian Values: Example and Test$$
+$section Compiled AD Function Value: Example and Test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
 // BEGIN C++
-# include <cppad/example/compiled_fun.hpp>
+# include <cppad/example/code_gen_fun.hpp>
 
-bool jacobian(void)
+bool function(void)
 {   bool ok = true;
     //
     typedef CppAD::cg::CG<double>     c_double;
@@ -56,23 +53,18 @@ bool jacobian(void)
 
     // create compiled version of c_f
     std::string file_name = "example_lib";
-    compiled_fun::evaluation_enum eval_jac = compiled_fun::dense_enum;
-    compiled_fun f(file_name, c_f, eval_jac);
+    code_gen_fun f(file_name, c_f);
 
-    // evaluate the compiled jacobian
-    d_vector x(n), J;
+    // evaluate the compiled function
+    d_vector x(n), y(m);
     for(size_t j = 0; j < n; ++j)
         x[j] = 1.0 / double(j + 2);
-    J = f.jacobian(x);
+    y = f(x);
 
-    // check Jaociban values
+    // check function values
     for(size_t i = 0; i < m; ++i)
-    {   for(size_t j = 0; j < n; ++j)
-        {   double check = 0.0;
-            if( j == i % n )
-                check = double(i + 1) * cos( x[i % n] );
-            ok &= CppAD::NearEqual(J[i * n + j] , check, eps99, eps99);
-        }
+    {   double check = double(i + 1) * std::sin( x[i % n] );
+        ok &= CppAD::NearEqual(y[i] , check, eps99, eps99);
     }
     return ok;
 }

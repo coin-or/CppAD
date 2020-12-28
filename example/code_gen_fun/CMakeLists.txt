@@ -12,7 +12,7 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    compiled_fun.cpp
+    code_gen_fun.cpp
     file.cpp
     function.cpp
     jacobian.cpp
@@ -22,23 +22,23 @@ SET(source_list
 )
 # END_SORT_THIS_LINE_MINUS_2
 
-set_compile_flags(example_compiled_fun "${cppad_debug_which}" "${source_list}" )
+set_compile_flags(example_code_gen_fun "${cppad_debug_which}" "${source_list}" )
 #
-ADD_EXECUTABLE(example_compiled_fun EXCLUDE_FROM_ALL ${source_list})
+ADD_EXECUTABLE(example_code_gen_fun EXCLUDE_FROM_ALL ${source_list})
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(example_compiled_fun
+TARGET_LINK_LIBRARIES(example_code_gen_fun
     ${cppad_lib}
     ${colpack_libs}
 )
 #
-# Add the check_example_compiled_fun target
-ADD_CUSTOM_TARGET(check_example_compiled_fun
-    example_compiled_fun
-    DEPENDS example_compiled_fun
+# Add the check_example_code_gen_fun target
+ADD_CUSTOM_TARGET(check_example_code_gen_fun
+    example_code_gen_fun
+    DEPENDS example_code_gen_fun
 )
-MESSAGE(STATUS "make check_example_compiled_fun: available")
+MESSAGE(STATUS "make check_example_code_gen_fun: available")
 #
 # add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_compiled_fun)
+add_to_list(check_example_depends check_example_code_gen_fun)
 SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

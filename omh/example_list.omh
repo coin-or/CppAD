@@ -91,12 +91,12 @@ $rref colpack_jac.cpp$$
 $rref colpack_jacobian.cpp$$
 $rref compare_change.cpp$$
 $rref compare.cpp$$
-$rref compiled_fun_file.cpp$$
-$rref compiled_fun_function.cpp$$
-$rref compiled_fun_jacobian.cpp$$
-$rref compiled_fun_jac_as_fun.cpp$$
-$rref compiled_fun_sparse_jacobian.cpp$$
-$rref compiled_fun_sparse_jac_as_fun.cpp$$
+$rref code_gen_fun_file.cpp$$
+$rref code_gen_fun_function.cpp$$
+$rref code_gen_fun_jacobian.cpp$$
+$rref code_gen_fun_jac_as_fun.cpp$$
+$rref code_gen_fun_sparse_jacobian.cpp$$
+$rref code_gen_fun_sparse_jac_as_fun.cpp$$
 $rref complex_poly.cpp$$
 $rref cond_exp.cpp$$
 $rref con_dyn_var.cpp$$
@@ -343,7 +343,7 @@ $childtable%
     example/general/mul_level_ode.cpp%
     example/general/mul_level_adolc_ode.cpp%
     example/general/stack_machine.cpp%
-    cppad_lib/compiled_fun.cpp
+    cppad_lib/code_gen_fun.cpp
 %$$
 
 $end

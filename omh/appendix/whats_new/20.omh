@@ -50,6 +50,7 @@ $$
 $section Changes and Additions to CppAD During 2020$$
 
 $head 12-28$$
+$list number$$
 Add the
 $cref/PASS_SPARSE_JACOBIAN_TO_CODE_GEN
     /cppadcg_sparse_jacobian.cpp
@@ -58,11 +59,15 @@ $cref/PASS_SPARSE_JACOBIAN_TO_CODE_GEN
 option to the cppadcg sparse jacobian speed test
 so one can compare passing a function, or its sparse Jacobian, to
 CppADCodeGen (for the same eventual result).
+$lnext
+Move $code compiled_fun$$ to $cref code_gen_fun$$,
+to emphasize the fact that it used the CppADCodeGen package.
+$lend
 
 $head 12-27$$
 $list number$$
-Include the example implementations $cref compiled_fun.hpp$$
-and $cref compiled_fun.cpp$$ in the documentation.
+Include the example implementations $code compiled_fun.hpp$$
+and $code compiled_fun.cpp$$ in the documentation.
 $lnext
 Add the
 $cref/PASS_JACOBIAN_TO_CODE_GEN
@@ -131,7 +136,8 @@ The $icode job$$ option was added to the
 $cref/det_minor/link_det_minor/job/$$ and
 $cref/sparse_jacobian/link_sparse_jacobian/job/$$ speed tests.
 $lnext
-The $cref compiled_fun$$ example for using CppADCodeGen was added.
+The $code compiled_fun$$ example for using CppADCodeGen was added
+(since moved to $cref code_gen_fun$$).
 In addition, $cref cppadcg_sparse_jacobian.cpp$$ and
 $cref cppadcg_det_minor.cpp$$ examples were modified to use this utility.
 $lnext

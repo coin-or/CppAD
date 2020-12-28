@@ -10,7 +10,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 -------------------------------------------------------------------------- */
 /*
-$begin compiled_fun$$
+$begin code_gen_fun$$
 $spell
     CppAD
     cppad
@@ -26,17 +26,17 @@ $$
 $section Compile and Link Source For an AD Function$$
 
 $head Syntax$$
-$codei%# include <cppad/example/compiled_fun.hpp>
+$codei%# include <cppad/example/code_gen_fun.hpp>
 %$$
 
 $subhead Constructors$$
-$codei%compiled_fun %fun_name%()
+$codei%code_gen_fun %fun_name%()
 %$$
-$codei%compiled_fun %fun_name%(%file_name%)
+$codei%code_gen_fun %fun_name%(%file_name%)
 %$$
-$codei%compiled_fun %fun_name%(%file_name%, %cg_fun%)
+$codei%code_gen_fun %fun_name%(%file_name%, %cg_fun%)
 %$$
-$codei%compiled_fun %fun_name%(%file_name%, %cg_fun%, %eval_jac%)
+$codei%code_gen_fun %fun_name%(%file_name%, %cg_fun%, %eval_jac%)
 %$$
 
 $subhead swap$$
@@ -103,10 +103,10 @@ $tend
 
 
 $head fun_name$$
-This is the name of the $code compiled_fun$$ object.
+This is the name of the $code code_gen_fun$$ object.
 
 $head other_fun$$
-This is the name of another $code compiled_fun$$ object.
+This is the name of another $code code_gen_fun$$ object.
 
 $head file_name$$
 This is the absolute or relative path for the
@@ -130,9 +130,9 @@ The possible choices for $icode eval_jac$$ are:
 $table
 $icode eval_jac$$                 $pre  $$ $cnext Available Jacobian
 $rnext
-$code compiled_fun::none_enum$$   $pre  $$ $cnext none
+$code code_gen_fun::none_enum$$   $pre  $$ $cnext none
 $rnext
-$code compiled_fun::dense_enum$$  $pre  $$ $cnext $icode%fun_name%.jacobian%$$
+$code code_gen_fun::dense_enum$$  $pre  $$ $cnext $icode%fun_name%.jacobian%$$
 $tend
 The default value for $icode eval_jac$$ is none.
 
@@ -185,46 +185,46 @@ THis test indicates that both methods have similar setup
 and derivative calculation times.
 
 $children%
-    example/compiled_fun/function.cpp%
-    example/compiled_fun/file.cpp%
-    example/compiled_fun/jacobian.cpp%
-    example/compiled_fun/jac_as_fun.cpp%
-    example/compiled_fun/sparse_jacobian.cpp%
-    example/compiled_fun/sparse_jac_as_fun.cpp
+    example/code_gen_fun/function.cpp%
+    example/code_gen_fun/file.cpp%
+    example/code_gen_fun/jacobian.cpp%
+    example/code_gen_fun/jac_as_fun.cpp%
+    example/code_gen_fun/sparse_jacobian.cpp%
+    example/code_gen_fun/sparse_jac_as_fun.cpp
 %$$
 $head Examples$$
 $table
-$rref compiled_fun_function.cpp$$
-$rref compiled_fun_file.cpp$$
-$rref compiled_fun_jacobian.cpp$$
-$rref compiled_fun_jac_as_fun.cpp$$
-$rref compiled_fun_sparse_jacobian.cpp$$
-$rref compiled_fun_sparse_jac_as_fun.cpp$$
+$rref code_gen_fun_function.cpp$$
+$rref code_gen_fun_file.cpp$$
+$rref code_gen_fun_jacobian.cpp$$
+$rref code_gen_fun_jac_as_fun.cpp$$
+$rref code_gen_fun_sparse_jacobian.cpp$$
+$rref code_gen_fun_sparse_jac_as_fun.cpp$$
 $tend
 
 $head Implementation$$
-see $cref compiled_fun.hpp$$ and $cref compiled_fun.cpp$$
+see $cref code_gen_fun.hpp$$ and $cref code_gen_fun.cpp$$
 
 $end
 -----------------------------------------------------------------------------
-$begin compiled_fun.hpp$$
+$begin code_gen_fun.hpp$$
 
-$section compiled_fun Class Include File$$
+$section code_gen_fun Class Include File$$
 
 $head See Also$$
-$cref compiled_fun$$, $cref compiled_fun.cpp$$
+$cref code_gen_fun$$, $cref code_gen_fun.cpp$$
 
 $head Source$$
-$srcfile%include/cppad/example/compiled_fun.hpp%0%// BEGIN C++%// END C++%$$
+$srcfile%include/cppad/example/code_gen_fun.hpp%0%// BEGIN C++%// END C++%$$
 
 $end
 -----------------------------------------------------------------------------
-$begin compiled_fun.cpp$$
+$begin code_gen_fun.cpp$$
 
-$section compiled_fun Class Member  Implementation$$
+$section code_gen_fun Class Member  Implementation$$
 
 $head See Also$$
-$cref compiled_fun$$, $cref compiled_fun.hpp$$
+$cref code_gen_fun$$, $cref code_gen_fun.hpp$$
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%2%$$
@@ -232,13 +232,13 @@ $srcthisfile%0%// BEGIN C++%// END C++%2%$$
 $end
 */
 // BEGIN C++
-# include <cppad/example/compiled_fun.hpp>
+# include <cppad/example/code_gen_fun.hpp>
 
 // ---------------------------------------------------------------------------
-// compiled_fun fun_name(file_name, cg_name, eval_jac)
+// code_gen_fun fun_name(file_name, cg_name, eval_jac)
 // ---------------------------------------------------------------------------
 // BEGIN_CTOR_CG_FUN
-compiled_fun::compiled_fun(
+code_gen_fun::code_gen_fun(
     const std::string&                     file_name  ,
     CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun     ,
     evaluation_enum                        eval_jac   )
@@ -269,10 +269,10 @@ compiled_fun::compiled_fun(
     model_        = dynamic_lib_->model("model");
 }
 // ---------------------------------------------------------------------------
-// compiled_fun fun_name(file_name)
+// code_gen_fun fun_name(file_name)
 // ---------------------------------------------------------------------------
 // BEGIN_CTOR_FILE_NAME
-compiled_fun::compiled_fun(const std::string&  file_name )
+code_gen_fun::code_gen_fun(const std::string&  file_name )
 // END_CTOR_FILE_NAME
 {   // file name plus extension used for dynamic libraries on this system
     std::string file_name_ext = file_name +
@@ -287,17 +287,17 @@ compiled_fun::compiled_fun(const std::string&  file_name )
     model_        = dynamic_lib_->model("model");
 }
 // ---------------------------------------------------------------------------
-// compiled_fun fun_name
+// code_gen_fun fun_name
 // ---------------------------------------------------------------------------
 // BEGIN_CTOR_VOID
-compiled_fun::compiled_fun(void)
+code_gen_fun::code_gen_fun(void)
 // END_CTOR_VOID
 { }
 // --------------------------------------------------------------------------
 // fun_name.swap(other_fun)
 // --------------------------------------------------------------------------
 // BEGIN_SWAP_OTHER_FUN
-void compiled_fun::swap(compiled_fun& other_fun)
+void code_gen_fun::swap(code_gen_fun& other_fun)
 // END_SWAP_OTHER_FUN
 {   std::swap(dynamic_lib_, other_fun.dynamic_lib_);
     std::swap(model_, other_fun.model_ );
@@ -307,7 +307,7 @@ void compiled_fun::swap(compiled_fun& other_fun)
 // --------------------------------------------------------------------------
 // BEGIN_FUN_NAME_X
 CppAD::vector<double>
-compiled_fun::operator()(const CppAD::vector<double>& x)
+code_gen_fun::operator()(const CppAD::vector<double>& x)
 // END_FUN_NAME_X
 {   return model_->ForwardZero(x);
 }
@@ -316,10 +316,10 @@ compiled_fun::operator()(const CppAD::vector<double>& x)
 // --------------------------------------------------------------------------
 // BEGIN_JACOBIAN
 CppAD::vector<double>
-compiled_fun::jacobian(const CppAD::vector<double>& x)
+code_gen_fun::jacobian(const CppAD::vector<double>& x)
 // END_JACOBIAN
 {   CPPAD_ASSERT_KNOWN( model_->isJacobianAvailable() ,
-        "compiled_fun: dense jacobian not enables during constructor"
+        "code_gen_fun: dense jacobian not enables during constructor"
     );
     return model_-> Jacobian(x);
 }
@@ -328,10 +328,10 @@ compiled_fun::jacobian(const CppAD::vector<double>& x)
 // --------------------------------------------------------------------------
 // BEGIN_SPARSE_JACOBIAN
 CppAD::sparse_rcv< CppAD::vector<size_t>, CppAD::vector<double> >
-compiled_fun::sparse_jacobian(const CppAD::vector<double>& x)
+code_gen_fun::sparse_jacobian(const CppAD::vector<double>& x)
 // END_SPARSE_JACOBIAN
 {   CPPAD_ASSERT_KNOWN( model_->isSparseJacobianAvailable() ,
-        "compiled_fun: sparse jacobian not enabled during constructor"
+        "code_gen_fun: sparse jacobian not enabled during constructor"
     );
     // x_std
     size_t n = model_->Domain();

@@ -25,9 +25,9 @@ ADD_SUBDIRECTORY(atomic_three)
 # checkpoint exmaples
 ADD_SUBDIRECTORY(chkpoint_two)
 
-# compiled_fun examples
+# code_gen_fun examples
 IF( cpapd_has_cpapdcg )
-    ADD_SUBDIRECTORY(compiled_fun)
+    ADD_SUBDIRECTORY(code_gen_fun)
 ENDIF( cpapd_has_cpapdcg )
 
 # graph examples

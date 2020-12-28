@@ -24,12 +24,12 @@ See $cref link_sparse_jacobian$$.
 
 $head PASS_SPARSE_JACOBIAN_TO_CODE_GEN$$
 If this is one, the sparse Jacobian is the is the function passed
-to CppADCodeGen, In this case, the $code compiled_fun$$
-$cref/function/compiled_fun/Syntax/function/$$ is used to calculate
+to CppADCodeGen, In this case, the $code code_gen_fun$$
+$cref/function/code_gen_fun/Syntax/function/$$ is used to calculate
 the sparse Jacobian.
 Otherwise, this flag is zero and the original function passed
-to CppADCodeGen. In this case, the $code compiled_fun$$
-$cref/sparse_jacobian/compiled_fun/Syntax/sparse_jacobian/$$
+to CppADCodeGen. In this case, the $code code_gen_fun$$
+$cref/sparse_jacobian/code_gen_fun/Syntax/sparse_jacobian/$$
 is used to calculate the sparse Jacobian.
 $srccode%cpp% */
 # define PASS_SPARSE_JACOBIAN_TO_CODE_GEN 1
@@ -41,7 +41,7 @@ $srccode%cpp% */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
-# include <cppad/example/compiled_fun.hpp>
+# include <cppad/example/code_gen_fun.hpp>
 
 # include <map>
 extern std::map<std::string, bool> global_option;
@@ -111,7 +111,7 @@ namespace {
             const s_vector& col      ,
             // outputs
             size_t&         n_color  ,
-            compiled_fun&   fun      ,
+            code_gen_fun&   fun      ,
             s_vector&  row_major     )
     {   // optimization options
         std::string optimize_options =
@@ -148,8 +148,8 @@ namespace {
         // number of non-zeros in sparsity pattern for Jacobian
 # if ! PASS_SPARSE_JACOBIAN_TO_CODE_GEN
         // set fun
-        compiled_fun::evaluation_enum eval_jac = compiled_fun::sparse_enum;
-        compiled_fun f_tmp("sparse_jacobian", c_f, eval_jac);
+        code_gen_fun::evaluation_enum eval_jac = code_gen_fun::sparse_enum;
+        code_gen_fun f_tmp("sparse_jacobian", c_f, eval_jac);
         fun.swap(f_tmp);
         //
         // set row_major
@@ -216,7 +216,7 @@ namespace {
         c_g.Dependent(ac_x, ac_val);
         if( global_option["optimize"] )
             c_g.optimize(optimize_options);
-        compiled_fun g_tmp("sparse_jacobian", c_g);
+        code_gen_fun g_tmp("sparse_jacobian", c_g);
         //
         // set reture value
         fun.swap(g_tmp);
@@ -269,7 +269,7 @@ bool link_sparse_jacobian(
     static size_t static_size = 0;
     //
     // function object mapping x to f'(x)
-    static compiled_fun static_fun;
+    static code_gen_fun static_fun;
     //
     // row_major order for Jrcv
     static s_vector static_row_major;
@@ -299,7 +299,7 @@ bool link_sparse_jacobian(
         return true;
     }
     if( job == "teardown" )
-    {   compiled_fun f_tmp;
+    {   code_gen_fun f_tmp;
         static_fun.swap(f_tmp);
         static_row_major.clear();
         //

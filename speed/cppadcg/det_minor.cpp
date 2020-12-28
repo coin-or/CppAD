@@ -24,12 +24,12 @@ See $cref link_det_minor$$.
 
 $head PASS_JACOBIAN_TO_CODE_GEN$$
 If this is one, the Jacobian of the determinant is the function passed
-to CppADCodeGen.  In this case,  the $code compiled_fun$$
-$cref/function/compiled_fun/Syntax/function/$$ is used to calculate
+to CppADCodeGen.  In this case,  the $code code_gen_fun$$
+$cref/function/code_gen_fun/Syntax/function/$$ is used to calculate
 the Jacobian of the determinant.
 Otherwise, this flag is zero and the determinant function is passed
-to CppADCodeGen. In this case, the $code compiled_fun$$
-$cref/jacobian/compiled_fun/Syntax/jacobian/$$ is used to calculate
+to CppADCodeGen. In this case, the $code code_gen_fun$$
+$cref/jacobian/code_gen_fun/Syntax/jacobian/$$ is used to calculate
 the Jacobian of the determinant.
 $srccode%cpp% */
 # define PASS_JACOBIAN_TO_CODE_GEN 1
@@ -40,7 +40,7 @@ $srccode%cpp% */
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/utility/vector.hpp>
-# include <cppad/example/compiled_fun.hpp>
+# include <cppad/example/code_gen_fun.hpp>
 
 # include <map>
 extern std::map<std::string, bool> global_option;
@@ -58,7 +58,7 @@ namespace {
         // inputs
         size_t size     ,
         // outputs
-        compiled_fun& fun )
+        code_gen_fun& fun )
     {   // optimization options
         std::string optimize_options =
             "no_conditional_skip no_compare_op no_print_for_op";
@@ -94,8 +94,8 @@ namespace {
             c_f.optimize(optimize_options);
 # if ! PASS_JACOBIAN_TO_CODE_GEN
         // f(x) is the determinant function
-        compiled_fun::evaluation_enum eval_jac = compiled_fun::dense_enum;
-        compiled_fun f_tmp("det_minor", c_f, eval_jac);
+        code_gen_fun::evaluation_enum eval_jac = code_gen_fun::dense_enum;
+        code_gen_fun f_tmp("det_minor", c_f, eval_jac);
         fun.swap(f_tmp);
 # else
         CppAD::ADFun<ac_double, c_double> ac_f;
@@ -119,7 +119,7 @@ namespace {
         if( global_option["optimize"] )
             c_g.optimize(optimize_options);
         // g(x) is the Jacobian of the determinant
-        compiled_fun g_tmp("det_minor", c_g);
+        code_gen_fun g_tmp("det_minor", c_g);
         fun.swap(g_tmp);
 # endif
     }
@@ -151,7 +151,7 @@ bool link_det_minor(
     // --------------------------------------------------------------------
     //
     // function object mapping matrix to gradiend of determinant
-    static compiled_fun static_fun;
+    static code_gen_fun static_fun;
     //
     // size correspmnding to static_fun
     static size_t static_size = 0;
@@ -173,7 +173,7 @@ bool link_det_minor(
         return true;
     }
     if( job ==  "teardown" )
-    {   compiled_fun fun;
+    {   code_gen_fun fun;
         static_fun.swap(fun);
         return true;
     }

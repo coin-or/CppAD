@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_COMPILED_FUN_HPP
-# define CPPAD_EXAMPLE_COMPILED_FUN_HPP
+# ifndef CPPAD_EXAMPLE_CODE_GEN_FUN_HPP
+# define CPPAD_EXAMPLE_CODE_GEN_FUN_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
@@ -14,7 +14,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 // BEGIN C++
 # include <cppad/cg/cppadcg.hpp>
 
-class compiled_fun {
+class code_gen_fun {
 public:
     // type of evaluation for Jacobians (possibly Hessians in the future)
     enum evaluation_enum { none_enum, dense_enum, sparse_enum };
@@ -30,13 +30,13 @@ public:
     // constructors
     // -----------------------------------------------------------------------
     // fun_name()
-    compiled_fun(void);
+    code_gen_fun(void);
     //
     // fun_name( file_name )
-    compiled_fun(const std::string& file_name);
+    code_gen_fun(const std::string& file_name);
     //
     // fun_name(file_name, cg_fun, eval_jac)
-    compiled_fun(
+    code_gen_fun(
         const std::string&                     file_name             ,
         CppAD::ADFun< CppAD::cg::CG<double> >& cg_fun                ,
         evaluation_enum                        eval_jac = none_enum
@@ -45,7 +45,7 @@ public:
     // operations
     // -----------------------------------------------------------------------
     // swap(other_fun)
-    void swap(compiled_fun& other_fun);
+    void swap(code_gen_fun& other_fun);
     //
     // y = fun_name(x)
     CppAD::vector<double>  operator()(const CppAD::vector<double> & x);

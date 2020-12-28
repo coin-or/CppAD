@@ -136,7 +136,7 @@ libcppad_lib_a_LIBADD =
 am_libcppad_lib_a_OBJECTS = cppad_colpack.$(OBJEXT) \
 	json_lexer.$(OBJEXT) cpp_graph_op.$(OBJEXT) \
 	json_parser.$(OBJEXT) json_writer.$(OBJEXT) \
-	compiled_fun.$(OBJEXT)
+	code_gen_fun.$(OBJEXT)
 libcppad_lib_a_OBJECTS = $(am_libcppad_lib_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -153,7 +153,7 @@ am__v_at_1 =
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/compiled_fun.Po \
+am__depfiles_remade = ./$(DEPDIR)/code_gen_fun.Po \
 	./$(DEPDIR)/cpp_graph_op.Po ./$(DEPDIR)/cppad_colpack.Po \
 	./$(DEPDIR)/json_lexer.Po ./$(DEPDIR)/json_parser.Po \
 	./$(DEPDIR)/json_writer.Po
@@ -386,7 +386,7 @@ libcppad_lib_a_SOURCES = \
 	cpp_graph_op.cpp \
 	json_parser.cpp \
 	json_writer.cpp \
-	compiled_fun.cpp
+	code_gen_fun.cpp
 
 all: all-am
 
@@ -464,7 +464,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compiled_fun.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/code_gen_fun.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_graph_op.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_colpack.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_lexer.Po@am__quote@ # am--include-marker
@@ -620,7 +620,7 @@ clean: clean-am
 clean-am: clean-generic clean-libLIBRARIES mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/compiled_fun.Po
+		-rm -f ./$(DEPDIR)/code_gen_fun.Po
 	-rm -f ./$(DEPDIR)/cpp_graph_op.Po
 	-rm -f ./$(DEPDIR)/cppad_colpack.Po
 	-rm -f ./$(DEPDIR)/json_lexer.Po
@@ -671,7 +671,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/compiled_fun.Po
+		-rm -f ./$(DEPDIR)/code_gen_fun.Po
 	-rm -f ./$(DEPDIR)/cpp_graph_op.Po
 	-rm -f ./$(DEPDIR)/cppad_colpack.Po
 	-rm -f ./$(DEPDIR)/json_lexer.Po

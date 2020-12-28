@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin compiled_fun_file.cpp$$
+$begin code_gen_fun_file.cpp$$
 
 $section Compiled AD File Store and Retrieve: Example and Test$$
 
@@ -20,7 +20,7 @@ $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
-# include <cppad/example/compiled_fun.hpp>
+# include <cppad/example/code_gen_fun.hpp>
 
 namespace {
     void store(const std::string& file_name)
@@ -49,7 +49,7 @@ namespace {
         CppAD::ADFun<c_double> c_f(ac_x, ac_y);
 
         // create compiled version of c_f
-        compiled_fun f(file_name, c_f);
+        code_gen_fun f(file_name, c_f);
     }
 }
 
@@ -63,7 +63,7 @@ bool file(void)
     //
     // retrieve the compled function from the file
     // (compiling take much longer than retrieving the file)
-    compiled_fun f(file_name);
+    code_gen_fun f(file_name);
 
     // evaluate the compiled function
     size_t n = 2, m = 3;

@@ -37,7 +37,7 @@ extern bool sparse_jac_as_fun(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "test_more/compiled_fun";
+{   std::string group = "test_more/code_gen_fun";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
