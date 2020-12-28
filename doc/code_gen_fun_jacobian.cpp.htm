@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Compiled AD Jacobian As Function Value: Example and Test</title>
+<title>Evaluate Jacobian of a Code Gen Function: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Compiled AD Jacobian As Function Value: Example and Test">
-<meta name="keywords" id="keywords" content=" compiled ad jacobian function value: example test ">
+<meta name="description" id="description" content="Evaluate Jacobian of a Code Gen Function: Example and Test">
+<meta name="keywords" id="keywords" content=" evaluate jacobian code gen function: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_compiled_fun_jac_as_fun.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_code_gen_fun_jacobian.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="compiled_fun_jacobian.cpp.htm" target="_top">Prev</a>
-</td><td><a href="compiled_fun_sparse_jacobian.cpp.htm" target="_top">Next</a>
+<td><a href="code_gen_fun_file.cpp.htm" target="_top">Prev</a>
+</td><td><a href="code_gen_fun_jac_as_fun.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -49,8 +49,8 @@ A:active { color : purple }
 <option>CppAD</option>
 <option>Example</option>
 <option>General</option>
-<option>compiled_fun</option>
-<option>compiled_fun_jac_as_fun.cpp</option>
+<option>code_gen_fun</option>
+<option>code_gen_fun_jacobian.cpp</option>
 </select>
 </td>
 <td>
@@ -60,9 +60,9 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_general_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_compiled_fun_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_code_gen_fun_htm.js'></script>
 </td>
-<td>compiled_fun_jac_as_fun.cpp</td>
+<td>code_gen_fun_jacobian.cpp</td>
 <td>Headings</td>
 </tr></table><br>
 @(@\newcommand{\W}[1]{ \; #1 \; }
@@ -71,10 +71,10 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Compiled AD Jacobian As Function Value: Example and Test</big></big></b></center>
-<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/compiled_fun.hpp&gt;</font>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Evaluate Jacobian of a Code Gen Function: Example and Test</big></big></b></center>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/code_gen_fun.hpp&gt;</font>
 
-<font color="#009900">bool</font> <b><font color="#000000">jac_as_fun</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">jacobian</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>cg<font color="#990000">::</font><font color="#008080">CG&lt;double&gt;</font>     c_double<font color="#990000">;</font>
@@ -100,31 +100,19 @@ A:active { color : purple }
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         ac_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">sin</font></b><font color="#990000">(</font> ac_x<font color="#990000">[</font>i <font color="#990000">%</font> n<font color="#990000">]</font> <font color="#990000">);</font>
 
-    <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
+    <i><font color="#9A1900">// create c_f: x -&gt; y and stop tape recording</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;c_double&gt;</font> <b><font color="#000000">c_f</font></b><font color="#990000">(</font>ac_x<font color="#990000">,</font> ac_y<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// create a version of f that evalutes using ac_double</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;ac_double, c_double&gt;</font> ac_f <font color="#990000">=</font> c_f<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">();</font>
-
-    <i><font color="#9A1900">// Independent varialbes while evaluating Jacobian</font></i>
-    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ac_x<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// Evaluate the Jacobian using any CppAD method</font></i>
-    <i><font color="#9A1900">// (for this example we just use the simpliest thing)</font></i>
-    <font color="#008080">ac_vector</font> ac_J <font color="#990000">=</font> ac_f<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>ac_x<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// create g: x -&gt; f'(x)</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;c_double&gt;</font> <b><font color="#000000">c_g</font></b><font color="#990000">(</font>ac_x<font color="#990000">,</font> ac_J<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// create compiled version of c_g</font></i>
+    <i><font color="#9A1900">// create compiled version of c_f</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font> file_name <font color="#990000">=</font> <font color="#FF0000">"example_lib"</font><font color="#990000">;</font>
-    <font color="#008080">compiled_fun</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> c_g<font color="#990000">);</font>
+    code_gen_fun<font color="#990000">::</font><font color="#008080">evaluation_enum</font> eval_jac <font color="#990000">=</font> code_gen_fun<font color="#990000">::</font>dense_enum<font color="#990000">;</font>
+    <font color="#008080">code_gen_fun</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> c_f<font color="#990000">,</font> eval_jac<font color="#990000">);</font>
 
     <i><font color="#9A1900">// evaluate the compiled jacobian</font></i>
-    <font color="#008080">d_vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">J</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font>
+    <font color="#008080">d_vector</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> J<font color="#990000">;</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
         x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>j <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">);</font>
-    J <font color="#990000">=</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    J <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">jacobian</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
 
     <i><font color="#9A1900">// check Jaociban values</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
@@ -138,7 +126,7 @@ A:active { color : purple }
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: example/compiled_fun/jac_as_fun.cpp
+<hr>Input File: example/code_gen_fun/jacobian.cpp
 
 </body>
 </html>

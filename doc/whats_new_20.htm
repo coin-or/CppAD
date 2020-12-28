@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 12-21 12-20 12-19 12-12 12-11 12-06 12-05 12-04 12-03 12-02 12-01 11-29 10-26 10-23 10-22 10-21 10-20 10-17 09-05 06-08 06-04 05-27 05-26 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2020 12-28 12-27 12-21 12-20 12-19 12-12 12-11 12-06 12-05 12-04 12-03 12-02 12-01 11-29 10-26 10-23 10-22 10-21 10-20 10-17 09-05 06-08 06-04 05-27 05-26 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>12-28</option>
+<option>12-27</option>
 <option>12-21</option>
 <option>12-20</option>
 <option>12-19</option>
@@ -114,6 +116,43 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2020</big></big></b></center>
+<br>
+<b><big><a name="12-28" id="12-28">12-28</a></big></b>
+
+<ol type="1"><li>
+Add the
+<a href="cppadcg_sparse_jacobian.cpp.htm#PASS_SPARSE_JACOBIAN_TO_CODE_GEN" target="_top"><span style='white-space: nowrap'>PASS_SPARSE_JACOBIAN_TO_CODE_GEN</span></a>
+
+option to the cppadcg sparse jacobian speed test
+so one can compare passing a function, or its sparse Jacobian, to
+CppADCodeGen (for the same eventual result).
+</li><li>
+
+Move <code><font color="blue">compiled_fun</font></code> to <a href="code_gen_fun.htm" target="_top"><span style='white-space: nowrap'>code_gen_fun</span></a>
+,
+to emphasize the fact that it used the CppADCodeGen package.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="12-27" id="12-27">12-27</a></big></b>
+
+<ol type="1"><li>
+Include the example implementations <code><font color="blue">compiled_fun.hpp</font></code>
+and <code><font color="blue">compiled_fun.cpp</font></code> in the documentation.
+</li><li>
+
+Add the
+<a href="cppadcg_det_minor.cpp.htm#PASS_JACOBIAN_TO_CODE_GEN" target="_top"><span style='white-space: nowrap'>PASS_JACOBIAN_TO_CODE_GEN</span></a>
+
+option to the cppadcg det_minor speed test
+so one can compare passing the determinant or its Jacobian to
+CppADCodeGen (for the same eventual result).
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="12-21" id="12-21">12-21</a></big></b>
 
@@ -214,8 +253,9 @@ The
  speed tests.
 </li><li>
 
-The <a href="compiled_fun.htm" target="_top"><span style='white-space: nowrap'>compiled_fun</span></a>
- example for using CppADCodeGen was added.
+The <code><font color="blue">compiled_fun</font></code> example for using CppADCodeGen was added
+(since moved to <a href="code_gen_fun.htm" target="_top"><span style='white-space: nowrap'>code_gen_fun</span></a>
+).
 In addition, <a href="cppadcg_sparse_jacobian.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_sparse_jacobian.cpp</span></a>
  and
 <a href="cppadcg_det_minor.cpp.htm" target="_top"><span style='white-space: nowrap'>cppadcg_det_minor.cpp</span></a>

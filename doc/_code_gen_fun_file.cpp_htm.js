@@ -7,14 +7,10 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'speed.htm',
-'speed_cppadcg.htm',
-'cppadcg_det_minor.cpp.htm'
-];
-var list_current0 = [
-'cppadcg_det_minor.cpp.htm#Specifications',
-'cppadcg_det_minor.cpp.htm#PASS_JACOBIAN_TO_CODE_GEN',
-'cppadcg_det_minor.cpp.htm#Implementation'
+'example.htm',
+'general.htm',
+'code_gen_fun.htm',
+'code_gen_fun_file.cpp.htm'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

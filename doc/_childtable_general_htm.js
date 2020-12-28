@@ -16,7 +16,9 @@ document.write('\
 <option>mul_level_ode.cpp</option>\
 <option>mul_level_adolc_ode.cpp</option>\
 <option>stack_machine.cpp</option>\
-<option>compiled_fun</option>\
+<option>code_gen_fun</option>\
+<option>code_gen_fun.hpp</option>\
+<option>code_gen_fun.cpp</option>\
 </select>\
 ');
 function general_child(item)
@@ -35,7 +37,9 @@ function general_child(item)
 		'mul_level_ode.cpp.htm',
 		'mul_level_adolc_ode.cpp.htm',
 		'stack_machine.cpp.htm',
-		'compiled_fun.htm'
+		'code_gen_fun.htm',
+		'code_gen_fun.hpp.htm',
+		'code_gen_fun.cpp.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

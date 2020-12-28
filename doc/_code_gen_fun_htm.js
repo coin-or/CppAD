@@ -9,8 +9,36 @@ var list_up0 = [
 'cppad.htm',
 'example.htm',
 'general.htm',
-'compiled_fun.htm',
-'compiled_fun_sparse_jacobian.cpp.htm'
+'code_gen_fun.htm'
+];
+var list_current0 = [
+'code_gen_fun.htm#Syntax',
+'code_gen_fun.htm#Syntax.Constructors',
+'code_gen_fun.htm#Syntax.swap',
+'code_gen_fun.htm#Syntax.function',
+'code_gen_fun.htm#Syntax.jacobian',
+'code_gen_fun.htm#Syntax.sparse_jacobian',
+'code_gen_fun.htm#Prototype',
+'code_gen_fun.htm#Prototype.Constructors',
+'code_gen_fun.htm#Prototype.Operations',
+'code_gen_fun.htm#CppAD::cg::CG&lt;double&gt;',
+'code_gen_fun.htm#Speed',
+'code_gen_fun.htm#fun_name',
+'code_gen_fun.htm#other_fun',
+'code_gen_fun.htm#file_name',
+'code_gen_fun.htm#cg_fun',
+'code_gen_fun.htm#eval_jac',
+'code_gen_fun.htm#swap',
+'code_gen_fun.htm#x',
+'code_gen_fun.htm#y',
+'code_gen_fun.htm#jacobian',
+'code_gen_fun.htm#jacobian.J',
+'code_gen_fun.htm#jacobian.Speed',
+'code_gen_fun.htm#sparse_jacobian',
+'code_gen_fun.htm#Jrcv',
+'code_gen_fun.htm#Jrcv.Speed',
+'code_gen_fun.htm#Examples',
+'code_gen_fun.htm#Implementation'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

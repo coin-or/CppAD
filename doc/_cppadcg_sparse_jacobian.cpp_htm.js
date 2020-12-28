@@ -13,6 +13,7 @@ var list_up0 = [
 ];
 var list_current0 = [
 'cppadcg_sparse_jacobian.cpp.htm#Specifications',
+'cppadcg_sparse_jacobian.cpp.htm#PASS_SPARSE_JACOBIAN_TO_CODE_GEN',
 'cppadcg_sparse_jacobian.cpp.htm#Implementation'
 ];
 function choose_across0(item)

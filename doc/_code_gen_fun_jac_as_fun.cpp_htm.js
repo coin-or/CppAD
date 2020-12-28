@@ -9,28 +9,8 @@ var list_up0 = [
 'cppad.htm',
 'example.htm',
 'general.htm',
-'compiled_fun.htm'
-];
-var list_current0 = [
-'compiled_fun.htm#Syntax',
-'compiled_fun.htm#Syntax.Constructor',
-'compiled_fun.htm#Syntax.Operations',
-'compiled_fun.htm#Prototype',
-'compiled_fun.htm#Prototype.Constructors',
-'compiled_fun.htm#Prototype.Operations',
-'compiled_fun.htm#CppAD::cg::CG&lt;double&gt;',
-'compiled_fun.htm#Speed',
-'compiled_fun.htm#fun_name',
-'compiled_fun.htm#other_fun',
-'compiled_fun.htm#file_name',
-'compiled_fun.htm#cg_fun',
-'compiled_fun.htm#eval_jac',
-'compiled_fun.htm#swap',
-'compiled_fun.htm#x',
-'compiled_fun.htm#y',
-'compiled_fun.htm#J',
-'compiled_fun.htm#Jrcv',
-'compiled_fun.htm#Examples'
+'code_gen_fun.htm',
+'code_gen_fun_jac_as_fun.cpp.htm'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

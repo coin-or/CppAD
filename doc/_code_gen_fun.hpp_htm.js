@@ -9,8 +9,11 @@ var list_up0 = [
 'cppad.htm',
 'example.htm',
 'general.htm',
-'compiled_fun.htm',
-'compiled_fun_sparse_jac_as_fun.cpp.htm'
+'code_gen_fun.hpp.htm'
+];
+var list_current0 = [
+'code_gen_fun.hpp.htm#See Also',
+'code_gen_fun.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

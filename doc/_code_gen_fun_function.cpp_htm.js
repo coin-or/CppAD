@@ -9,8 +9,8 @@ var list_up0 = [
 'cppad.htm',
 'example.htm',
 'general.htm',
-'compiled_fun.htm',
-'compiled_fun_jacobian.cpp.htm'
+'code_gen_fun.htm',
+'code_gen_fun_function.cpp.htm'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
