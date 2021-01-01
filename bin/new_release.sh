@@ -10,8 +10,8 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-stable_version='20200000' # date at which this stable branch started
-release='3'               # first release for each stable version is 0
+stable_version='20210000' # date at which this stable branch started
+release='0'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -56,7 +56,7 @@ then
     exit 1
 fi
 # -----------------------------------------------------------------------------
-# Check if these reference tags alread exist
+# Check if these reference tags already exist
 #
 tag=$stable_version.$release
 if git tag --list | grep "$tag"

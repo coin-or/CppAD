@@ -299,8 +299,8 @@ https://opensource.org/licenses/EPL-2.0
       <!-- appear. These must *NOT* be uncommented unless    -->
       <!-- needed.                                           -->
 
-<stableVersionNumber>20200000</stableVersionNumber>
-<releaseNumber>20200000.3</releaseNumber>
+<stableVersionNumber>20210000</stableVersionNumber>
+<releaseNumber>20210000.0</releaseNumber>
 
       </developmentStatus>
 
