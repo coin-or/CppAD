@@ -145,12 +145,11 @@ if [ "$ok" != 'yes' ]
 then
 cat << EOF
 bin/new_release.sh: version number is not correct in $stable_branch.
-Use the following commands in $stable_branch to fix it ?
+Currently in $stable_branch branch, use following to fix it ?
     git fetch
     version.sh set $stable_version.$release
     version.sh copy
     version.sh check
-    bin/autotools.sh automake
     Then check the chages to the $stable_branch branch and commit
 EOF
     exit 1
