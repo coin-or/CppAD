@@ -1,0 +1,99 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Changes and Additions to CppAD During 2021</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 01-03 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_21_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="whats_new.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_20.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Appendix</option>
+<option>whats_new</option>
+<option>whats_new_21</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_appendix_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_whats_new_htm.js'></script>
+</td>
+<td>whats_new_21</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>01-03</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="01-03" id="01-03">01-03</a></big></b>
+<br>
+Fix a bug in <a href="reverse.htm" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ mode for an
+
+<code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;</span></font></code>
+ function that has
+<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameters and
+value of one of these parameters was zero or one when the function
+was recorded.
+
+
+<hr>Input File: omh/appendix/whats_new/21.omh
+
+</body>
+</html>
