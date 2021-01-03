@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -14,6 +14,48 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cmath>
 
 namespace {
+    bool test_base2ad(void)
+    {   bool ok = true;
+        double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+
+        using CppAD::AD;
+
+        // Both recordiings are done with the dynamic  parameter p = 0, 1
+        // to make sure does not short circut multiply
+        for(size_t ip = 0; ip < 2; ++ip)
+        {
+            // f(p; x) = p[0] * x[0] * x[0]
+            CPPAD_TESTVECTOR(AD<double>)  ap(1), ax(1), ay(1), aw(1);
+            ap[0] = double(ip);
+            ax[0] = 0.0;
+            CppAD::Independent(ax, ap);
+            ay[0] = ap[0] * ax[0] * ax[0];
+            CppAD::ADFun<double> f(ax, ay);
+
+            // AD version of f
+            CppAD::ADFun< AD<double> , double > af = f.base2ad();
+
+            // g(p; x) = d/dx f(p, x) = 2 * p[0] * x[0]
+            CppAD::Independent(ax, ap);
+            af.new_dynamic(ap);
+            af.Forward(0, ax);
+            aw[0] = 1.0;
+            ay    = af.Reverse(1, aw);
+            CppAD::ADFun<double> g(ax, ay);
+
+            // Evaluate g(p, x)
+            CPPAD_TESTVECTOR(double) p(1), x(1), y(1);
+            p[0] = 2.0;
+            x[0] = 3.0;
+            g.new_dynamic(p);
+            y = g.Forward(0, x);
+
+            // check result
+            double check = 2.0 * p[0] * x[0];
+            ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
+        }
+        return ok;
+    }
     bool test_forward(void)
     {   bool ok = true;
 
@@ -259,6 +301,7 @@ namespace {
 bool azmul(void)
 {   bool ok = true;
 
+    ok &= test_base2ad();
     ok &= test_forward();
     ok &= test_reverse();
     ok &= test_forward_dir();
