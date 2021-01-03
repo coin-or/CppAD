@@ -361,7 +361,6 @@ AC_SUBST(cppad_cxx_flags, "")
 AC_SUBST(cppad_has_colpack, 0)
 AC_SUBST(cppad_has_mkstemp, 0)
 AC_SUBST(cppad_has_tmpnam_s, 0)
-AC_SUBST(cppad_cplusplus_201100_ok, 0)
 AC_SUBST(compiler_has_conversion_warn, 0)
 
 dnl -------------------------------------------------------------------------
@@ -698,6 +697,7 @@ AC_CONFIG_FILES([
     speed/fadbad/makefile
     speed/sacado/makefile
     speed/src/makefile
+    speed/xpackage/makefile
     test_more/compare_c/makefile
     test_more/general/makefile
     test_more/deprecated/makefile

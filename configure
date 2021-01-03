@@ -629,7 +629,6 @@ RANLIB
 cppad_has_gettimeofday
 cppad_cppadvector
 compiler_has_conversion_warn
-cppad_cplusplus_201100_ok
 cppad_has_tmpnam_s
 cppad_has_mkstemp
 cppad_has_colpack
@@ -5762,8 +5761,6 @@ cppad_has_mkstemp=0
 
 cppad_has_tmpnam_s=0
 
-cppad_cplusplus_201100_ok=0
-
 compiler_has_conversion_warn=0
 
 
@@ -7009,7 +7006,7 @@ eigen_prefix=${EIGEN_DIR}
 
 ipopt_prefix=${IPOPT_DIR}
 
-ac_config_files="$ac_config_files include/cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile cppad_lib/makefile example/general/makefile example/abs_normal/makefile example/atomic_two/makefile example/atomic_three/makefile example/chkpoint_two/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile example/get_started/makefile include/makefile introduction/makefile example/multi_thread/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/sacado/makefile speed/src/makefile test_more/compare_c/makefile test_more/general/makefile test_more/deprecated/makefile test_more/deprecated/atomic_two/makefile test_more/deprecated/chkpoint_one/makefile"
+ac_config_files="$ac_config_files include/cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile cppad_lib/makefile example/general/makefile example/abs_normal/makefile example/atomic_two/makefile example/atomic_three/makefile example/chkpoint_two/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile example/get_started/makefile include/makefile introduction/makefile example/multi_thread/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/sacado/makefile speed/src/makefile speed/xpackage/makefile test_more/compare_c/makefile test_more/general/makefile test_more/deprecated/makefile test_more/deprecated/atomic_two/makefile test_more/deprecated/chkpoint_one/makefile"
 
 
 ac_config_commands="$ac_config_commands configure.hpp"
@@ -7869,6 +7866,7 @@ do
     "speed/fadbad/makefile") CONFIG_FILES="$CONFIG_FILES speed/fadbad/makefile" ;;
     "speed/sacado/makefile") CONFIG_FILES="$CONFIG_FILES speed/sacado/makefile" ;;
     "speed/src/makefile") CONFIG_FILES="$CONFIG_FILES speed/src/makefile" ;;
+    "speed/xpackage/makefile") CONFIG_FILES="$CONFIG_FILES speed/xpackage/makefile" ;;
     "test_more/compare_c/makefile") CONFIG_FILES="$CONFIG_FILES test_more/compare_c/makefile" ;;
     "test_more/general/makefile") CONFIG_FILES="$CONFIG_FILES test_more/general/makefile" ;;
     "test_more/deprecated/makefile") CONFIG_FILES="$CONFIG_FILES test_more/deprecated/makefile" ;;

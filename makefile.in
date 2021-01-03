@@ -192,9 +192,9 @@ CTAGS = ctags
 CSCOPE = cscope
 DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	cppad_ipopt/speed cppad_ipopt/test speed/src speed/adolc \
-	speed/cppad speed/double speed/example speed/fadbad \
-	speed/sacado cppad_lib example/abs_normal example/atomic_two \
-	example/atomic_three test_more/deprecated \
+	speed/cppad speed/double speed/example speed/xpackage \
+	speed/fadbad speed/sacado cppad_lib example/abs_normal \
+	example/atomic_two example/atomic_three test_more/deprecated \
 	test_more/deprecated/atomic_two example/general \
 	example/get_started example/optimize example/print_for \
 	example/sparse example/utility include introduction \
@@ -342,7 +342,6 @@ build_vendor = @build_vendor@
 builddir = @builddir@
 compiler_has_conversion_warn = @compiler_has_conversion_warn@
 cppad_boostvector = @cppad_boostvector@
-cppad_cplusplus_201100_ok = @cppad_cplusplus_201100_ok@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
 cppad_description = @cppad_description@
@@ -459,6 +458,7 @@ SPEED_TESTS = \
 	speed/cppad \
 	speed/double \
 	speed/example \
+	speed/xpackage \
 	$(SPEED_FADBAD_TESTS) \
 	$(SPEED_SACADO_TESTS)
 

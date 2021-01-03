@@ -63,6 +63,7 @@ SPEED_TESTS = \
 	speed/cppad \
 	speed/double \
 	speed/example \
+	speed/xpackage \
 	$(SPEED_FADBAD_TESTS) \
 	$(SPEED_SACADO_TESTS)
 #
