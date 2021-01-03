@@ -13,15 +13,20 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 $begin whats_new_21$$
 $spell
     CppAD
+    cppad
 $$
 
 $section Changes and Additions to CppAD During 2021$$
 
 $head 01-03$$
+$list number$$
 Fix a bug in $cref reverse$$ mode for an
 $codei%ADFun< AD<%Base%> >%$$ function that has
 $cref/dynamic/Independent/dynamic/$$ parameters and
 value of one of these parameters was zero or one when the function
 was recorded.
+$lnext
+Fix a bug in the $cref autotools$$ building of $code cppad_lib$$.
+$lend
 
 $end

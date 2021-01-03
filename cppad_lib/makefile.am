@@ -24,5 +24,8 @@ libcppad_lib_a_SOURCES = \
 	json_lexer.cpp \
 	cpp_graph_op.cpp \
 	json_parser.cpp \
-	json_writer.cpp \
-	code_gen_fun.cpp
+	json_writer.cpp
+
+# autotools version of install does not support CppADCodeGen but need source
+# here so that bin/check_makefile.sh knows not using it is OK.
+#	code_gen_fun.cpp

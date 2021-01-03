@@ -135,8 +135,7 @@ libcppad_lib_a_AR = $(AR) $(ARFLAGS)
 libcppad_lib_a_LIBADD =
 am_libcppad_lib_a_OBJECTS = cppad_colpack.$(OBJEXT) \
 	json_lexer.$(OBJEXT) cpp_graph_op.$(OBJEXT) \
-	json_parser.$(OBJEXT) json_writer.$(OBJEXT) \
-	code_gen_fun.$(OBJEXT)
+	json_parser.$(OBJEXT) json_writer.$(OBJEXT)
 libcppad_lib_a_OBJECTS = $(am_libcppad_lib_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -153,10 +152,9 @@ am__v_at_1 =
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/code_gen_fun.Po \
-	./$(DEPDIR)/cpp_graph_op.Po ./$(DEPDIR)/cppad_colpack.Po \
-	./$(DEPDIR)/json_lexer.Po ./$(DEPDIR)/json_parser.Po \
-	./$(DEPDIR)/json_writer.Po
+am__depfiles_remade = ./$(DEPDIR)/cpp_graph_op.Po \
+	./$(DEPDIR)/cppad_colpack.Po ./$(DEPDIR)/json_lexer.Po \
+	./$(DEPDIR)/json_parser.Po ./$(DEPDIR)/json_writer.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -385,8 +383,7 @@ libcppad_lib_a_SOURCES = \
 	json_lexer.cpp \
 	cpp_graph_op.cpp \
 	json_parser.cpp \
-	json_writer.cpp \
-	code_gen_fun.cpp
+	json_writer.cpp
 
 all: all-am
 
@@ -464,7 +461,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/code_gen_fun.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_graph_op.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_colpack.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_lexer.Po@am__quote@ # am--include-marker
@@ -620,8 +616,7 @@ clean: clean-am
 clean-am: clean-generic clean-libLIBRARIES mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/code_gen_fun.Po
-	-rm -f ./$(DEPDIR)/cpp_graph_op.Po
+		-rm -f ./$(DEPDIR)/cpp_graph_op.Po
 	-rm -f ./$(DEPDIR)/cppad_colpack.Po
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
@@ -671,8 +666,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/code_gen_fun.Po
-	-rm -f ./$(DEPDIR)/cpp_graph_op.Po
+		-rm -f ./$(DEPDIR)/cpp_graph_op.Po
 	-rm -f ./$(DEPDIR)/cppad_colpack.Po
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
@@ -712,6 +706,10 @@ uninstall-am: uninstall-libLIBRARIES
 
 .PRECIOUS: makefile
 
+
+# autotools version of install does not support CppADCodeGen but need source
+# here so that bin/check_makefile.sh knows not using it is OK.
+#	code_gen_fun.cpp
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
