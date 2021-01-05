@@ -17,12 +17,7 @@ SET(CMAKE_LEGACY_CYGWIN_WIN32 0) # remove when version below >= 2.8.4
 #
 # Set the minimum required version of cmake for this project.
 # see http://www.cmake.org/pipermail/cmake/2013-January/053213.html
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.4)
-#
-# https://gitlab.kitware.com/cmake/cmake/issues/17292
-if(POLICY CMP0054)
-  cmake_policy(SET CMP0054 NEW)
-endif()
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 #
 # cppad_version is used by version.sh to get the version number.
 SET(cppad_version "20210105")
@@ -82,7 +77,7 @@ INCLUDE(cmake/set_compile_flags.cmake)
 # pkgconfig_info(name, system)
 INCLUDE(cmake/pkgconfig_info.cmake)
 # ============================================================================
-# Check for c++11
+# Ensure c++11 support
 SET(source "
 int main(void)
 {   if( __cplusplus < 201103 )
@@ -90,13 +85,11 @@ int main(void)
     return 0;
 }"
 )
-run_source_test("${source}" cppad_cplusplus_201100_ok )
-IF( NOT cppad_cplusplus_201100_ok  )
-    MESSAGE(FATAL_ERROR
-    "The c++ complier flag __cplusplus is less than 201103. "
-    "Starting with cppad-20201202, c++11 or higher is required."
-    )
-ENDIF( NOT cppad_cplusplus_201100_ok  )
+run_source_test("${source}" cplusplus_201100_ok )
+IF( NOT cplusplus_201100_ok  )
+    SET(CMAKE_CXX_STANDARD 11)
+    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+ENDIF( NOT cplusplus_201100_ok  )
 # =============================================================================
 # command line arguments
 # =============================================================================

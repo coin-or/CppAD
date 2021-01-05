@@ -15,14 +15,25 @@ $spell
     CppAD
     cppad
     cxx
+    cmake
 $$
 
 $section Changes and Additions to CppAD During 2021$$
 
 $head 0-05$$
+$list number$$
 Improve discussion of $cref/cppad_cxx/cmake/cppad_cxx_flags/$$
 and make sure all uses are exactly as described.
 In addition, change mention of optional features from C++11 to C++17.
+$lnext
+The required version of $cref cmake$$ was advanced from 2.8.4 to 3.0.
+This fixes a policy CMP0042 warning on Mac systems.
+$lnext
+If the compiler, plus the flags in
+$cref/cppad_cxx_flags/cmake/cppad_cxx_flags/$$,
+does not by default support C++11, cmake is used
+to find and add the flags necessary for this support.
+$lend
 
 $head 01-03$$
 $list number$$
