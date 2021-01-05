@@ -14,9 +14,15 @@ $begin whats_new_21$$
 $spell
     CppAD
     cppad
+    cxx
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 0-05$$
+Improve discussion of $cref/cppad_cxx/cmake/cppad_cxx_flags/$$
+and make sure all uses are exactly as described.
+In addition, change mention of optional features from C++11 to C++17.
 
 $head 01-03$$
 $list number$$

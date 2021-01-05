@@ -77,8 +77,6 @@ IF( cppad_eigenvector )
         )
     ENDIF( NOT include_eigen )
 ENDIF( cppad_eigenvector )
-#
-print_variable(cppad_cplusplus_201100_ok)
 # -----------------------------------------------------------------------------
 # cppad_has_gettimeofday
 #

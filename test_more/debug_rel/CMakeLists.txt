@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -13,24 +13,24 @@
 
 # set compiler flags for debug_rel.cpp and debug.cpp
 IF( "${debug_which}" STREQUAL "debug_all" )
-    SET(debug_extra    "${CMAKE_CXX_FLAGS_DEBUG}")
-    SET(release_extra  "${CMAKE_CXX_FLAGS_DEBUG}")
+    SET(debug_flags    "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}")
+    SET(release_flags  "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}")
 ELSEIF( "${debug_which}" STREQUAL "debug_none" )
-    SET(debug_extra    "${CMAKE_CXX_FLAGS_RELEASE}")
-    SET(release_extra  "${CMAKE_CXX_FLAGS_RELEASE}")
+    SET(debug_flags    "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}")
+    SET(release_flags  "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}")
 ELSE( "${debug_which}" )
-    SET(debug_extra    "${CMAKE_CXX_FLAGS_DEBUG}")
-    SET(release_extra  "${CMAKE_CXX_FLAGS_RELEASE}")
+    SET(debug_flags    "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}")
+    SET(release_flags  "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}")
 ENDIF( "${debug_which}" STREQUAL "debug_all" )
 #
 SET_SOURCE_FILES_PROPERTIES(
     debug_rel.cpp debug.cpp PROPERTIES COMPILE_FLAGS
-    "${cppad_cxx_flags} ${debug_extra} -DCPPAD_DEBUG_AND_RELEASE"
+    "${debug_flags} -DCPPAD_DEBUG_AND_RELEASE"
 )
 #
 SET_SOURCE_FILES_PROPERTIES(
     release.cpp PROPERTIES COMPILE_FLAGS
-    "${cppad_cxx_flags} ${release_extra} -DCPPAD_DEBUG_AND_RELEASE"
+    "${release_flags} -DCPPAD_DEBUG_AND_RELEASE"
 )
 
 # now that we have the properties, add the executable

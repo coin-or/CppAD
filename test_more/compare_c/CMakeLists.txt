@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -40,10 +40,13 @@
 # use cppad_debug_which to determine build type
 IF( "${cppad_debug_which}" STREQUAL debug_all )
     SET(CMAKE_BUILD_TYPE DEBUG)
+    SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_DEBUG}")
 ELSEIF( "${cppad_debug_which}" STREQUAL debug_odd )
     SET(CMAKE_BUILD_TYPE DEBUG)
+    SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_DEBUG}")
 ELSE( "${cppad_debug_which}" STREQUAL debug_odd )
     SET(CMAKE_BUILD_TYPE RELEASE)
+    SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_RELEASE}")
 ENDIF( "${cppad_debug_which}" STREQUAL debug_all )
 #
 # Loop though the C and C++ compilers
@@ -59,9 +62,9 @@ FOREACH( com c cpp )
     ADD_EXECUTABLE( det_by_minor_${com} EXCLUDE_FROM_ALL ${source})
     #
     IF( ${com} STREQUAL cpp )
-        # These are C++ compiler flags (may not be valid for C)
+        # cppad_cxx_flags are C++ compiler flags and may not be valid for C
         SET_TARGET_PROPERTIES(
-            det_by_minor_${com} PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+            det_by_minor_${com} PROPERTIES COMPILE_FLAGS "${all_cxx_flags}"
         )
     ENDIF( ${com} STREQUAL cpp )
     #
