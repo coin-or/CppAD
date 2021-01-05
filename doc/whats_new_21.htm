@@ -82,11 +82,26 @@ A:active { color : purple }
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
 <br>
 <b><big><a name="0-05" id="0-05">0-05</a></big></b>
-<br>
+
+<ol type="1"><li>
 Improve discussion of <a href="cmake.htm#cppad_cxx_flags" target="_top"><span style='white-space: nowrap'>cppad_cxx</span></a>
 
 and make sure all uses are exactly as described.
 In addition, change mention of optional features from C++11 to C++17.
+</li><li>
+
+The required version of <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ was advanced from 2.8.4 to 3.0.
+This fixes a policy CMP0042 warning on Mac systems.
+</li><li>
+
+If the compiler, plus the flags in
+<a href="cmake.htm#cppad_cxx_flags" target="_top"><span style='white-space: nowrap'>cppad_cxx_flags</span></a>
+,
+does not by default support C++11, cmake is used
+to find and add the flags necessary for this support.
+</li></ol>
+
 
 <br>
 <br>
