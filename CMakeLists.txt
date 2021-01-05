@@ -92,10 +92,8 @@ int main(void)
 )
 run_source_test("${source}" cppad_cplusplus_201100_ok )
 IF( NOT cppad_cplusplus_201100_ok  )
-    MESSAGE(FATAL_ERROR
-    "The c++ complier flag __cplusplus is less than 201103. "
-    "Starting with cppad-20201202, c++11 or higher is required."
-    )
+    SET(CMAKE_CXX_STANDARD 11)
+    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 ENDIF( NOT cppad_cplusplus_201100_ok  )
 # =============================================================================
 # command line arguments
