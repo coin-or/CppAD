@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -141,6 +141,7 @@ extern bool num_limits(void);
 extern bool number_skip(void);
 extern bool opt_val_hes(void);
 extern bool pow(void);
+extern bool pow_nan(void);
 extern bool print_for(void);
 extern bool rev_checkpoint(void);
 extern bool reverse_one(void);
@@ -251,6 +252,7 @@ int main(void)
     Run( number_skip,       "number_skip"      );
     Run( opt_val_hes,       "opt_val_hes"      );
     Run( pow,               "pow"              );
+    Run( pow_nan,           "pow_nan"          );
     Run( rev_checkpoint,    "rev_checkpoint"   );
     Run( reverse_one,       "reverse_one"      );
     Run( reverse_three,     "reverse_three"    );

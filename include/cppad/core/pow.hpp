@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_POW_HPP
 # define CPPAD_CORE_POW_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -79,10 +79,11 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 $head Example$$
 $children%
     example/general/pow.cpp
+    %example/general/pow_nan.cpp
 %$$
-The file
-$cref pow.cpp$$
-is an examples and tests of this function.
+The files
+$cref pow.cpp$$ and $cref pow_nan.cpp$$
+are examples tests of this function.
 
 $end
 -------------------------------------------------------------------------------

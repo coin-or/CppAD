@@ -117,12 +117,12 @@ am__general_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	mul_eq.cpp mul_level.cpp mul_level_ode.cpp near_equal_ext.cpp \
 	new_dynamic.cpp number_skip.cpp numeric_type.cpp \
 	num_limits.cpp ode_stiff.cpp taylor_ode.cpp opt_val_hes.cpp \
-	con_dyn_var.cpp pow.cpp print_for.cpp rev_checkpoint.cpp \
-	reverse_one.cpp reverse_three.cpp reverse_two.cpp rev_one.cpp \
-	rev_two.cpp seq_property.cpp sign.cpp sin.cpp sinh.cpp \
-	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
-	tape_index.cpp unary_minus.cpp unary_plus.cpp value.cpp \
-	var2par.cpp vec_ad.cpp
+	con_dyn_var.cpp pow.cpp pow_nan.cpp print_for.cpp \
+	rev_checkpoint.cpp reverse_one.cpp reverse_three.cpp \
+	reverse_two.cpp rev_one.cpp rev_two.cpp seq_property.cpp \
+	sign.cpp sin.cpp sinh.cpp sqrt.cpp stack_machine.cpp sub.cpp \
+	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp unary_minus.cpp \
+	unary_plus.cpp value.cpp var2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 @CppAD_EIGEN_TRUE@am__objects_2 = eigen_det.$(OBJEXT) \
@@ -159,7 +159,7 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	number_skip.$(OBJEXT) numeric_type.$(OBJEXT) \
 	num_limits.$(OBJEXT) ode_stiff.$(OBJEXT) taylor_ode.$(OBJEXT) \
 	opt_val_hes.$(OBJEXT) con_dyn_var.$(OBJEXT) pow.$(OBJEXT) \
-	print_for.$(OBJEXT) rev_checkpoint.$(OBJEXT) \
+	pow_nan.$(OBJEXT) print_for.$(OBJEXT) rev_checkpoint.$(OBJEXT) \
 	reverse_one.$(OBJEXT) reverse_three.$(OBJEXT) \
 	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) rev_two.$(OBJEXT) \
 	seq_property.$(OBJEXT) sign.$(OBJEXT) sin.$(OBJEXT) \
@@ -227,18 +227,18 @@ am__depfiles_remade = ./$(DEPDIR)/abort_recording.Po \
 	./$(DEPDIR)/new_dynamic.Po ./$(DEPDIR)/num_limits.Po \
 	./$(DEPDIR)/number_skip.Po ./$(DEPDIR)/numeric_type.Po \
 	./$(DEPDIR)/ode_stiff.Po ./$(DEPDIR)/opt_val_hes.Po \
-	./$(DEPDIR)/pow.Po ./$(DEPDIR)/print_for.Po \
-	./$(DEPDIR)/rev_checkpoint.Po ./$(DEPDIR)/rev_one.Po \
-	./$(DEPDIR)/rev_two.Po ./$(DEPDIR)/reverse_one.Po \
-	./$(DEPDIR)/reverse_three.Po ./$(DEPDIR)/reverse_two.Po \
-	./$(DEPDIR)/seq_property.Po ./$(DEPDIR)/sign.Po \
-	./$(DEPDIR)/sin.Po ./$(DEPDIR)/sinh.Po ./$(DEPDIR)/sqrt.Po \
-	./$(DEPDIR)/stack_machine.Po ./$(DEPDIR)/sub.Po \
-	./$(DEPDIR)/sub_eq.Po ./$(DEPDIR)/tan.Po ./$(DEPDIR)/tanh.Po \
-	./$(DEPDIR)/tape_index.Po ./$(DEPDIR)/taylor_ode.Po \
-	./$(DEPDIR)/unary_minus.Po ./$(DEPDIR)/unary_plus.Po \
-	./$(DEPDIR)/value.Po ./$(DEPDIR)/var2par.Po \
-	./$(DEPDIR)/vec_ad.Po
+	./$(DEPDIR)/pow.Po ./$(DEPDIR)/pow_nan.Po \
+	./$(DEPDIR)/print_for.Po ./$(DEPDIR)/rev_checkpoint.Po \
+	./$(DEPDIR)/rev_one.Po ./$(DEPDIR)/rev_two.Po \
+	./$(DEPDIR)/reverse_one.Po ./$(DEPDIR)/reverse_three.Po \
+	./$(DEPDIR)/reverse_two.Po ./$(DEPDIR)/seq_property.Po \
+	./$(DEPDIR)/sign.Po ./$(DEPDIR)/sin.Po ./$(DEPDIR)/sinh.Po \
+	./$(DEPDIR)/sqrt.Po ./$(DEPDIR)/stack_machine.Po \
+	./$(DEPDIR)/sub.Po ./$(DEPDIR)/sub_eq.Po ./$(DEPDIR)/tan.Po \
+	./$(DEPDIR)/tanh.Po ./$(DEPDIR)/tape_index.Po \
+	./$(DEPDIR)/taylor_ode.Po ./$(DEPDIR)/unary_minus.Po \
+	./$(DEPDIR)/unary_plus.Po ./$(DEPDIR)/value.Po \
+	./$(DEPDIR)/var2par.Po ./$(DEPDIR)/vec_ad.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -577,6 +577,7 @@ general_SOURCES = \
 	opt_val_hes.cpp \
 	con_dyn_var.cpp \
 	pow.cpp \
+	pow_nan.cpp \
 	print_for.cpp \
 	rev_checkpoint.cpp \
 	reverse_one.cpp \
@@ -730,6 +731,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_stiff.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opt_val_hes.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow_nan.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_checkpoint.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_one.Po@am__quote@ # am--include-marker
@@ -984,6 +986,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/ode_stiff.Po
 	-rm -f ./$(DEPDIR)/opt_val_hes.Po
 	-rm -f ./$(DEPDIR)/pow.Po
+	-rm -f ./$(DEPDIR)/pow_nan.Po
 	-rm -f ./$(DEPDIR)/print_for.Po
 	-rm -f ./$(DEPDIR)/rev_checkpoint.Po
 	-rm -f ./$(DEPDIR)/rev_one.Po
@@ -1135,6 +1138,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/ode_stiff.Po
 	-rm -f ./$(DEPDIR)/opt_val_hes.Po
 	-rm -f ./$(DEPDIR)/pow.Po
+	-rm -f ./$(DEPDIR)/pow_nan.Po
 	-rm -f ./$(DEPDIR)/print_for.Po
 	-rm -f ./$(DEPDIR)/rev_checkpoint.Po
 	-rm -f ./$(DEPDIR)/rev_one.Po
