@@ -30,6 +30,11 @@ $latex \[
 The example below  uses a $cref/conditional expression/condexp/$$
 to avoid this problem.
 
+$head Problem$$
+There is a problem with this representation. For example,
+when $latex x = 0$$ and $latex y = 1$$, it returns zero for the derivative,
+but the actual derivative w.r.t $latex x$$ is one.
+
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
