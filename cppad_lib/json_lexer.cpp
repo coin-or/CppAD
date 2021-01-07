@@ -15,6 +15,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 # include <cppad/utility/to_string.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 
+# include <cctype>
 
 // BEGIN_CPPAD_LOCAL_GRAPH_NAMESPACE
 namespace CppAD { namespace local { namespace graph {
