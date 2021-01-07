@@ -14,7 +14,8 @@ var list_up0 = [
 'pow_nan.cpp.htm'
 ];
 var list_current0 = [
-'pow_nan.cpp.htm#Purpose'
+'pow_nan.cpp.htm#Purpose',
+'pow_nan.cpp.htm#Problem'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

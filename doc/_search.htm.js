@@ -170,7 +170,7 @@ Keyword =
 { tag: 'atan2.cpp', title:'The AD atan2 Function: Example and Test', other:'' },
 { tag: 'pow', title:'The AD Power Function', other:' syntax see also purpose z operation sequence example' },
 { tag: 'pow.cpp', title:'The AD Power Function: Example and Test', other:'' },
-{ tag: 'pow_nan.cpp', title:'pow: Avoiding Nan in Derivatives: Example and Test', other:' purpose' },
+{ tag: 'pow_nan.cpp', title:'pow: Avoiding Nan in Derivatives: Example and Test', other:' purpose problem' },
 { tag: 'azmul', title:'Absolute Zero Multiplication', other:' syntax purpose base ad<base> vecad<base> example' },
 { tag: 'azmul.cpp', title:'AD Absolute Zero Multiplication: Example and Test', other:'' },
 { tag: 'CondExp', title:'AD Conditional Expressions', other:' syntax purpose rel type left right if_true if_false result optimize deprecate 2005-08-07 operation sequence example test atan2' },

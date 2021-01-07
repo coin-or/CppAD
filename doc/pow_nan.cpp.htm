@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>pow: Avoiding Nan in Derivatives: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="pow: Avoiding Nan in Derivatives: Example and Test">
-<meta name="keywords" id="keywords" content=" pow: avoiding nan derivatives: example test purpose ">
+<meta name="keywords" id="keywords" content=" pow: avoiding nan derivatives: example test purpose problem ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,6 +68,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Purpose</option>
+<option>Problem</option>
 </select>
 </td>
 </tr></table><br>
@@ -106,6 +107,20 @@ and the power function uses the representation
 The example below  uses a <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>conditional&nbsp;expression</span></a>
 
 to avoid this problem.
+
+<br>
+<br>
+<b><big><a name="Problem" id="Problem">Problem</a></big></b>
+<br>
+There is a problem with this representation. For example,
+when <small>@(@
+x = 0
+@)@</small> and <small>@(@
+y = 1
+@)@</small>, it returns zero for the derivative,
+but the actual derivative w.r.t <small>@(@
+x
+@)@</small> is one.
 
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cmath&gt;</font>
