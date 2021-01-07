@@ -7,14 +7,14 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'whats_new.htm',
-'whats_new_21.htm'
+'ad.htm',
+'advalued.htm',
+'binary_math.htm',
+'pow.htm',
+'pow_nan.cpp.htm'
 ];
 var list_current0 = [
-'whats_new_21.htm#01-07',
-'whats_new_21.htm#01-05',
-'whats_new_21.htm#01-03'
+'pow_nan.cpp.htm#Purpose'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

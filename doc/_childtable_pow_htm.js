@@ -3,11 +3,13 @@ document.write('\
 <select onchange="pow_child(this)">\
 <option>pow-&gt;</option>\
 <option>pow.cpp</option>\
+<option>pow_nan.cpp</option>\
 </select>\
 ');
 function pow_child(item)
 {	var child_list = [
-		'pow.cpp.htm'
+		'pow.cpp.htm',
+		'pow_nan.cpp.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
