@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>01-08</option>
 <option>01-07</option>
 <option>01-05</option>
 <option>01-03</option>
@@ -81,6 +82,14 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="01-08" id="01-08">01-08</a></big></b>
+<br>
+On some systems, the file <code><font color="blue">cppad_lib/json_lexer.cpp</font></code> would not compile
+because the <code><font color="blue">std::isdigit</font></code> function was not defined.
+This has been fixed.
+
+<br>
 <br>
 <b><big><a name="01-07" id="01-07">01-07</a></big></b>
 <br>
