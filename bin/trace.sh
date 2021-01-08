@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -15,24 +15,27 @@ then
     echo "bin/trace.sh: must be executed from its parent directory"
     exit 1
 fi
-name="$1"
+file="include/cppad/local/sweep/$1"
 option="$2"
-file="include/cppad/local/sweep/$name.hpp"
 #
 ok='yes'
 if [ "$option" != '0' ] && [ "$option" != '1' ]
 then
     ok='no'
 fi
-echo "grep '_TRACE [01]' $file"
-if ! grep '_TRACE [01]' $file > /dev/null
+if [ "$ok" == 'yes' ]
 then
-    ok='no'
+	if ! grep '_TRACE [01]' $file > /dev/null
+	then
+		ok='no'
+	fi
 fi
 if [ "$ok" == 'no' ]
 then
-    echo 'usage: bin/trace.sh name (0|1)'
-    echo 'name: include/cppad/local/sweep/name.hpp defined *_TRACE as 0 or 1'
+    echo 'usage: bin/trace.sh file (0|1)'
+    echo 'Sets trace in file to off (0) or on (1) where the file is one of:'
+	grep -l '_TRACE [01]' include/cppad/local/sweep/*.hpp | \
+		sed -e 's|^include/cppad/local/sweep/||'
     exit 1
 fi
 old=`grep '_TRACE [01]' $file`
