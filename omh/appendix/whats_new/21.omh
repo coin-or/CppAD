@@ -16,9 +16,16 @@ $spell
     cppad
     cxx
     cmake
+	json_lexer
+	std::isdigit
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 01-08$$
+On some systems, the file $code cppad_lib/json_lexer.cpp$$ would not compile
+because the $code std::isdigit$$ function was not defined.
+This has been fixed.
 
 $head 01-07$$
 The example $cref pow_nan.cpp$$ was added.
