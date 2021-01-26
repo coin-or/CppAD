@@ -22,6 +22,12 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 01-26$$
+Change the prototype for the cmake command
+$cref/options/cmake/CMake Command/Options/$$ to use $icode true_or_false$$,
+instead of $code true$$ to highlight the fact that one can choose either
+true or false.
+
 $head 01-08$$
 On some systems, the file $code cppad_lib/json_lexer.cpp$$ would not compile
 because the $code std::isdigit$$ function was not defined.
