@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -142,10 +142,10 @@ cmake %%                                                                     \
     -D cmake_install_datadir=%cmake_install_datadir%                         \
     -D cmake_install_docdir=%cmake_install_docdir%                           \
     \
-    -D include_adolc=true                                                    \
-    -D include_eigen=true                                                    \
-    -D include_ipopt=true                                                    \
-    -D include_cppadcg=true
+    -D include_adolc=%true_or_false%                                         \
+    -D include_eigen=%true_or_false%                                         \
+    -D include_ipopt=%true_or_false%                                         \
+    -D include_cppadcg=%true_or_false%                                       \
     \
     -D colpack_prefix=%colpack_prefix%                                       \
     -D fadbad_prefix=%fadbad_prefix%                                         \
@@ -370,7 +370,7 @@ If it is not specified, the documentation files are not installed.
 
 $head include_adolc$$
 The $cref adolc$$ examples
-will be compiled and tested if $icode include_adolc=true$$
+will be compiled and tested if $code include_adolc=true$$
 is in the command line.
 
 $head include_eigen$$
