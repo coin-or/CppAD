@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -73,6 +73,7 @@ general_SOURCES  = \
 	$(EIGEN_SRC_FILES) \
 	$(IPOPT_SRC_FILES) \
 	$(OPENMP_SRC_FILES) \
+	abs_normal.cpp \
 	acos.cpp \
 	acosh.cpp \
 	add.cpp \

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -23,6 +23,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
+extern bool abs_normal(void);
 extern bool acosh(void);
 extern bool acos(void);
 extern bool AddEq(void);
@@ -145,6 +146,7 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( acos,            "acos"           );
+    Run( abs_normal,      "abs_normal"     );
     Run( acosh,           "acosh"          );
     Run( Add,             "Add"            );
     Run( AddEq,           "AddEq"          );

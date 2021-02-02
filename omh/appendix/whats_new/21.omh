@@ -16,11 +16,19 @@ $spell
     cppad
     cxx
     cmake
-	json_lexer
-	std::isdigit
+    json_lexer
+    std::isdigit
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 01-27$$
+There was a bug in the converting to abs_normal form when
+the function $cref/f/abs_normal_fun/f/$$ made use of the
+$cref pow$$ operator.
+To be specific, when compiling without $code NDEBUG$$ defined,
+an assert was generated even though the code was correct.
+This has been fixed.
 
 $head 01-26$$
 Change the prototype for the cmake command

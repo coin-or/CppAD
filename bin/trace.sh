@@ -25,17 +25,17 @@ then
 fi
 if [ "$ok" == 'yes' ]
 then
-	if ! grep '_TRACE [01]' $file > /dev/null
-	then
-		ok='no'
-	fi
+    if ! grep '_TRACE [01]' $file > /dev/null
+    then
+        ok='no'
+    fi
 fi
 if [ "$ok" == 'no' ]
 then
     echo 'usage: bin/trace.sh file (0|1)'
     echo 'Sets trace in file to off (0) or on (1) where the file is one of:'
-	grep -l '_TRACE [01]' include/cppad/local/sweep/*.hpp | \
-		sed -e 's|^include/cppad/local/sweep/||'
+    grep -l '_TRACE [01]' include/cppad/local/sweep/*.hpp | \
+        sed -e 's|^include/cppad/local/sweep/||'
     exit 1
 fi
 old=`grep '_TRACE [01]' $file`

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -38,6 +38,7 @@ SET(source_list
     ${eigen_sources}
     ${ipopt_sources}
     general.cpp
+    abs_normal.cpp
     acos.cpp
     acosh.cpp
     add.cpp
