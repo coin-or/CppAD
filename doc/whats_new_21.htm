@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 01-26 01-08 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 01-27 01-26 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>01-27</option>
 <option>01-26</option>
 <option>01-08</option>
 <option>01-07</option>
@@ -83,6 +84,19 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="01-27" id="01-27">01-27</a></big></b>
+<br>
+There was a bug in the converting to abs_normal form when
+the function <a href="abs_normal_fun.htm#f" target="_top"><span style='white-space: nowrap'>f</span></a>
+ made use of the
+<a href="pow.htm" target="_top"><span style='white-space: nowrap'>pow</span></a>
+ operator.
+To be specific, when compiling without <code><font color="blue">NDEBUG</font></code> defined,
+an assert was generated even though the code was correct.
+This has been fixed.
+
+<br>
 <br>
 <b><big><a name="01-26" id="01-26">01-26</a></big></b>
 <br>
