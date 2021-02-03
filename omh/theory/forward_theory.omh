@@ -157,20 +157,27 @@ $latex \[
     e^{(j)} = d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
 \] $$
 We need to complete the induction by finding formulas for $latex z^{(j+1)}$$.
-It follows for the formula for the
-$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$
-operator that
+It follows from the definition of $latex E(t)$$ that
 $latex  \[
-\begin{array}{rcl}
-\left( \sum_{k=0}^j b^{(k)} t^k \right)
+\left( \sum_{k=0}^j b^{(k)} * t^k \right)
 *
 \left( \sum_{k=1}^{j+1} k z^{(k)} * t^{k-1} \right)
-& = &
+=
 \left( \sum_{k=0}^j e^{(k)} * t^k \right)
 *
 \left( \sum_{k=1}^{j+1} k x^{(k)} * t^{k-1} \right)
 +
 o( t^p )
+\] $$
+Setting the left and right side coefficients of $latex t^j$$ equal,
+and using the formula for
+$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$,
+we obtain
+$latex  \[
+\begin{array}{rcl}
+\sum_{k=0}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+& = &
+\sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(

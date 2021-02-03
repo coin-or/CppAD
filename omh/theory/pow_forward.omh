@@ -91,15 +91,11 @@ z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \right)
 \\
 & = &
-y \frac{1}{ x^{(0)} }
-     x^{(j+1)} z^{(0)}
+y \frac{z^{(0)}}{ x^{(0)} } x^{(j+1)}
++
 
-
-\frac{1}{j+1} \frac{1}{ x^{(0)} }
-\left(
-    +
-    (y-1) \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
-\right)
+\frac{y-1}{j+1} \frac{1}{ x^{(0)} }
+    \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
 \end{array}
 \] $$
 
