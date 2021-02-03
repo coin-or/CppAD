@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -189,8 +189,6 @@ This completes the induction that computes $latex e^{(j)}$$
 and $latex z^{(j+1)}$$.
 
 
-
-
 $children%
     omh/theory/exp_forward.omh%
     omh/theory/log_forward.omh%
@@ -200,7 +198,8 @@ $children%
     omh/theory/asin_forward.omh%
     omh/theory/acos_forward.omh%
     omh/theory/tan_forward.omh%
-    omh/theory/erf_forward.omh
+    omh/theory/erf_forward.omh%
+    omh/theory/pow_forward.omh
 %$$
 
 $subhead Cases that Apply Recursion Above$$
