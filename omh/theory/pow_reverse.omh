@@ -15,7 +15,7 @@ $spell
     Taylor
 $$
 
-$section Exponential Function Reverse Mode Theory$$
+$section Power Function Reverse Mode Theory$$
 
 We use the reverse theory
 $cref%standard math function
@@ -28,8 +28,16 @@ $cref/power/pow_forward/$$ function is
 $latex \[
     z^{(0)}  =  F ( x^{(0)} )
 \] $$
-All the equations below apply to the case where $latex j > 0$$
-where the equation for $latex z^{(j)}$$ is
+$latex \[
+\begin{array}{rcl}
+\D{H}{ x^{(0)} }
+& = & \D{G}{ x^{(0)} }  + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
+\\
+\D{ z^{(0)} }{ x^{(0)} } & = & y [ x^{(0)} ]^{y - 1}  = y z^{(0)} / x{(0)}
+\end{array}
+\] $$
+All the equations below apply to the case where $latex j > 0$$.
+For this case, the equation for $latex z^{(j)}$$ is
 $latex \[
 z^{(j)}
 =
@@ -85,7 +93,20 @@ $latex \[
 	+
 	\frac{y-1}{j} \sum_{k=1}^{j-1} k z^{(k)}  x^{(j-k)}
 \right) \right/ ( x^{(0)} x^{(0)} )
+\\
+\D{ z^{(j)} }{ x^{(0)} } & = & - z^{(j)} / x^{(0)}
 \end{array}
 \] $$
+
+$head z^0$$
+$latex \[
+\begin{array}{rcl}
+\D{H}{ z^{(0)} }
+& = & \D{G}{ z^{(0)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(0)} }
+\\
+\D{ z^{(j)} }{ z^{(0)} } & = &  y x^{(j)} / x^{(0)}
+\end{array}
+\] $$
+
 
 $end
