@@ -67,7 +67,7 @@ $latex \[
 \end{array}
 \] $$
 
-$subhead z^(j+1)$$
+$subhead z^j$$
 For $latex j = 0, \dots , p-1$$
 $latex  \[
 \begin{array}{rcl}
@@ -98,6 +98,19 @@ y \frac{z^{(0)}}{ x^{(0)} } x^{(j+1)}
     \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
 \end{array}
 \] $$
+For $latex j = 1, \dots , p$$
+$latex  \[
+\begin{array}{rcl}
+z^{(j)}
+& = &
+\left. \left(
+	y z^{(0)} x^{(j)}
+	+
+	\frac{y-1}{j} \sum_{k=1}^{j-1} k z^{(k)}  x^{(j-k)}
+\right) \right/ x^{(0)}
+\end{array}
+\] $$
+
 
 $head Special Cases When x is zero and y non-negative$$
 All the special cases below apply when $latex x^{(0)} = 0$$ and

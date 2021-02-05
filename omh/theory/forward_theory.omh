@@ -218,6 +218,7 @@ $rref sin_cos_forward$$
 $rref atan_forward$$
 $rref asin_forward$$
 $rref acos_forward$$
+$rref pow_forward$$
 $tend
 
 $subhead Special Cases$$
