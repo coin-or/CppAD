@@ -68,7 +68,7 @@ $latex \[
 \] $$
 
 $subhead z^j$$
-For $latex j = 0, \dots , p-1$$
+For $latex j = 0, \ldots , p-1$$
 $latex  \[
 \begin{array}{rcl}
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
@@ -98,7 +98,7 @@ y z^{(0)} x^{(j+1)} / x^{(0)}
 \sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
 \end{array}
 \] $$
-For $latex j = 1, \dots , p$$
+For $latex j = 1, \ldots , p$$
 $latex  \[
 \begin{array}{rcl}
 z^{(j)}

@@ -56,6 +56,8 @@ $spell
     Funav
     Funrp
     Funrv
+    Powpv
+    Powvv
 $$
 
 $head Namespace$$
