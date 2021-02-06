@@ -146,7 +146,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
         }
         else
         {   // result = variable^parameter
-            CPPAD_ASSERT_UNKNOWN( local::NumRes(local::PowvpOp) == 3 );
+            CPPAD_ASSERT_UNKNOWN( local::NumRes(local::PowvpOp) == 1 );
             CPPAD_ASSERT_UNKNOWN( local::NumArg(local::PowvpOp) == 2 );
 
             // put operand addresses in tape

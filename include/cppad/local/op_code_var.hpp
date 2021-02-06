@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_CODE_VAR_HPP
 # define CPPAD_LOCAL_OP_CODE_VAR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -104,7 +104,7 @@ For example, $code AddpvOp$$ represents the addition operator where the left
 operand is a parameter and the right operand is a variable.
 
 $subhead Pow$$
-The binary $codei%pow(%x%, %y%)%$$ operators are
+The binary $codei%pow(%x%, %y%)%$$ operators PowpvOp, PowvvOp are
 special because they have three variable results instead of one.
 To be specific, they compute
 $codei%log(%x%)%$$,
@@ -452,9 +452,9 @@ enum OpCode {
     NepvOp,   // ...
     NevvOp,   // ...
     ParOp,    // see its heading above
-    PowpvOp,  // see Pow heading above
-    PowvpOp,  // ...
-    PowvvOp,  // ...
+    PowpvOp,  // see its heading above
+    PowvpOp,  // binary
+    PowvvOp,  // see its heading above
     PriOp,    // see its heading above
     SignOp,   // unary sign
     SinOp,    // unary sin
@@ -677,7 +677,7 @@ inline size_t NumRes(OpCode op)
         0, // NevvOp
         1, // ParOp
         3, // PowpvOp
-        3, // PowvpOp
+        1, // PowvpOp
         3, // PowvvOp
         0, // PriOp
         1, // SignOp

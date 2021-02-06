@@ -83,19 +83,19 @@ z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
     - \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
 \right)
 \\
-& = & \frac{1}{j+1} \frac{1}{ x^{(0)} }
+& = &
+\frac{1}{j+1} \frac{1}{ x^{(0)} }
 \left(
     y (j+1) x^{(j+1)} z^{(0)}
     +
-    (y-1) \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
+    \sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
 \right)
 \\
 & = &
-y \frac{z^{(0)}}{ x^{(0)} } x^{(j+1)}
+y z^{(0)} x^{(j+1)} / x^{(0)}
 +
-
-\frac{y-1}{j+1} \frac{1}{ x^{(0)} }
-    \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
+\frac{1}{j+1} \frac{1}{ x^{(0)} }
+\sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
 \end{array}
 \] $$
 For $latex j = 1, \dots , p$$
@@ -106,7 +106,7 @@ z^{(j)}
 \left. \left(
 	y z^{(0)} x^{(j)}
 	+
-	\frac{y-1}{j} \sum_{k=1}^{j-1} k z^{(k)}  x^{(j-k)}
+	\frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
 \right) \right/ x^{(0)}
 \end{array}
 \] $$

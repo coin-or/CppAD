@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_POW_OP_HPP
 # define CPPAD_LOCAL_POW_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -484,38 +484,33 @@ void forward_powvp_op(
     size_t        cap_order   ,
     Base*         taylor      )
 {
-    // convert from final result to first result
-    i_z -= 2; // 2 = NumRes(PowvpOp) - 1
-
     // check assumptions
     CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( q < cap_order );
     CPPAD_ASSERT_UNKNOWN( p <= q );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z
     );
 
-    // z_0 = log(x)
-    forward_log_op(p, q, i_z, size_t(arg[0]), cap_order, taylor);
+    // Taylor coefficients corresponding to arguments and result
+    Base* x = taylor + size_t(arg[0]) * cap_order;
+    Base* z = taylor + i_z    * cap_order;
 
-    // z_1 = y * z_0
-    addr_t adr[2];
-    adr[0] = arg[1];
-    adr[1] = addr_t( i_z );
-    forward_mulpv_op(p, q, i_z+1, adr, parameter, cap_order, taylor);
+    // Paraemter value
+    Base y = parameter[ arg[1] ];
 
-    // z_2 = exp(z_1)
-    // zero order case exactly same as Base type operation
-    if( p == 0 )
-    {   Base* z_2 = taylor + (i_z+2) * cap_order;
-        Base* x   = taylor + size_t(arg[0]) * cap_order;
-        Base  y   = parameter[ arg[1] ];
-        z_2[0]  = pow(x[0], y);
-        p++;
-    }
-    if( p <= q )
-        forward_exp_op(p, q, i_z+2, i_z+1, cap_order, taylor);
+	// special case zero order
+	if( p == 0 )
+	{	z[0] = pow(x[0], y);
+		p++;
+	}
+	for(size_t j = p; j <= q; ++j)
+	{	Base sum = Base(0);
+		for(size_t k = 1; k < j; ++k)
+			sum += Base(k) * (y * x[k] * z[j-k] - z[k] * x[j-k]);
+		z[j] = ( y * z[0] * x[j] + sum / Base(j) ) / x[0];
+	}
 }
 /*!
 Multiple directions forward mode Taylor coefficients for op = PowvpOp.
@@ -540,29 +535,40 @@ void forward_powvp_op_dir(
     size_t        cap_order   ,
     Base*         taylor      )
 {
-    // convert from final result to first result
-    i_z -= 2; // 2 = NumRes(PowvpOp) - 1
-
     // check assumptions
     CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( 0 < q );
     CPPAD_ASSERT_UNKNOWN( q < cap_order );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z
     );
 
-    // z_0 = log(x)
-    forward_log_op_dir(q, r, i_z, size_t(arg[0]), cap_order, taylor);
+    // Taylor coefficients corresponding to arguments and result
+    size_t num_taylor_per_var = (cap_order-1) * r + 1;
+    Base* x = taylor + size_t(arg[0]) * num_taylor_per_var;
+    Base* z = taylor +    i_z * num_taylor_per_var;
 
-    // z_1 = y * z_0
-    addr_t adr[2];
-    adr[0] = arg[1];
-    adr[1] = addr_t( i_z );
-    forward_mulpv_op_dir(q, r, i_z+1, adr, parameter, cap_order, taylor);
+    // Parameter value
+    Base y = parameter[ arg[1] ];
 
-    // z_2 = exp(z_1)
-    forward_exp_op_dir(q, r, i_z+2, i_z+1, cap_order, taylor);
+	// index in Taylor coefficients where multiple directions start
+    size_t m = (q-1)*r + 1;
+	//
+	// loop over directions
+	Base ym1 = y - Base(1);
+    for(size_t ell = 0; ell < r; ell++)
+	{	Base sum = Base(0);
+		for(size_t k = 1; k < q; ++k)
+		{	Base xk   = x[(k-1)*r   + ell + 1];
+			Base zk   = z[(k-1)*r   + ell + 1];
+			Base xqk  = x[(q-k-1)*r + ell + 1];
+			Base zqk  = z[(q-k-1)*r + ell + 1];
+			sum += Base(k) * (y * xk * zqk - zk * xqk);
+		}
+		Base xq  = x[(q-1)*r + ell + 1];
+		z[m+ell] = ( y * z[0] * xq + sum / Base(q) ) / x[0];
+	}
 }
 
 /*!
@@ -586,31 +592,18 @@ void forward_powvp_op_0(
     size_t        cap_order   ,
     Base*         taylor      )
 {
-    // convert from final result to first result
-    i_z -= 2; // NumRes(PowvpOp) - 1;
-
     // check assumptions
     CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
 
     // Paraemter value
     Base y = parameter[ arg[1] ];
 
     // Taylor coefficients corresponding to arguments and result
-    Base* x   = taylor + size_t(arg[0]) * cap_order;
-    Base* z_0 = taylor + i_z    * cap_order;
-    Base* z_1 = z_0    +          cap_order;
-    Base* z_2 = z_1    +          cap_order;
+    Base* x = taylor + size_t(arg[0]) * cap_order;
+    Base* z = taylor + i_z * cap_order;
 
-    // z_0 = log(x)
-    z_0[0] = log(x[0]);
-
-    // z_1 = z_0 * y
-    z_1[0] = z_0[0] * y;
-
-    // z_2 = exp(z_1)
-    // zero order case exactly same as Base type operation
-    z_2[0] = pow(x[0], y);
+    z[0] = pow(x[0], y);
 }
 
 /*!
@@ -637,35 +630,58 @@ void reverse_powvp_op(
     size_t        nc_partial  ,
     Base*         partial     )
 {
-    // convert from final result to first result
-    i_z -= 2; // NumRes(PowvpOp) - 1;
-
     // check assumptions
     CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
-    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
+    CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 1 );
     CPPAD_ASSERT_UNKNOWN( d < cap_order );
     CPPAD_ASSERT_UNKNOWN( d < nc_partial );
     CPPAD_ASSERT_UNKNOWN(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z
     );
 
-    // z_2 = exp(z_1)
-    reverse_exp_op(
-        d, i_z+2, i_z+1, cap_order, taylor, nc_partial, partial
-    );
+	// Taylor coefficients
+	const Base* x = taylor + size_t( arg[0] ) * cap_order;
+	const Base* z = taylor + i_z * cap_order;
 
-    // z_1 = y * z_0
-    addr_t adr[2];
-    adr[0] = arg[1];
-    adr[1] = addr_t( i_z );
-    reverse_mulpv_op(
-    d, i_z+1, adr, parameter, cap_order, taylor, nc_partial, partial
-    );
+    // parameter value
+    const Base  y = parameter[ arg[1] ];
 
-    // z_0 = log(x)
-    reverse_log_op(
-        d, i_z, size_t(arg[0]), cap_order, taylor, nc_partial, partial
-    );
+    // Partial derivatives corresponding to arguments and result
+    Base* px = partial + size_t(arg[0]) * nc_partial;
+    Base* pz = partial + i_z * nc_partial;
+
+	// reverse z^j for j = d, ..., 1
+	size_t j = d;
+	while(j)
+	{	// j
+		Base bj = Base(j);
+		//
+		// x^j term
+		px[j] += azmul(pz[j], y * z[0] / x[0]);
+		//
+		// x^k terms
+		for(size_t k = 1; k < j; ++k)
+		{	Base term = (Base(k) * y - Base(j-k) ) * z[j-k] / (bj * x[0]);
+			px[k] += azmul(pz[j], term);
+		}
+		//
+		// z^k terms
+		for(size_t k = 1; k < j; ++k)
+		{	Base term = (Base(j-k) * y - Base(k) ) * x[j-k] / (bj * x[0]);
+			pz[k] += azmul(pz[j], term);
+		}
+		//
+		// x^0 term
+		px[0] -= azmul(pz[j], z[j] / x[0]);
+		//
+		// z^0 term
+		pz[0] += azmul(pz[j], y * x[j] / x[0] );
+		//
+		// next j
+		--j;
+	}
+	// reverse z^0
+	px[0] += azmul(pz[0], y * z[0] / x[0]);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

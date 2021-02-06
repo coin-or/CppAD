@@ -44,7 +44,7 @@ z^{(j)}
 \left. \left(
 	y z^{(0)} x^{(j)}
 	+
-	\frac{y-1}{j} \sum_{k=1}^{j-1} k z^{(k)}  x^{(j-k)}
+	\frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
 \right) \right/ x^{(0)}
 \] $$
 
@@ -65,7 +65,8 @@ $latex \[
 \D{H}{ x^{(k)} }
 & = & \D{G}{ x^{(k)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
 \\
-\D{ z^{(j)} }{ x^{(k)} } & = &  \frac{y-1}{j} (j-k) z^{(j-k)} / x^{(0)}
+\D{ z^{(j)} }{ x^{(k)} } & = &
+\frac{1}{j} ( k y - (j-k) ) z^{(j-k)} / x^{(0)}
 \end{array}
 \] $$
 
@@ -76,7 +77,8 @@ $latex \[
 \D{H}{ z^{(k)} }
 & = & \D{G}{ z^{(k)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(k)} }
 \\
-\D{ z^{(j)} }{ z^{(k)} } & = &  \frac{y-1}{j} k x^{(j-k)} / x^{(0)}
+\D{ z^{(j)} }{ z^{(k)} } & = &
+\frac{1}{j} ( (j-k) y - k ) x^{(j-k)} / x^{(0)}
 \end{array}
 \] $$
 
@@ -85,14 +87,6 @@ $latex \[
 \begin{array}{rcl}
 \D{H}{ x^{(0)} }
 & = & \D{G}{ x^{(0)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
-\\
-\D{ z^{(j)} }{ x^{(0)} }
-& = &
- - \left. \left(
-	y z^{(0)} x^{(j)}
-	+
-	\frac{y-1}{j} \sum_{k=1}^{j-1} k z^{(k)}  x^{(j-k)}
-\right) \right/ ( x^{(0)} x^{(0)} )
 \\
 \D{ z^{(j)} }{ x^{(0)} } & = & - z^{(j)} / x^{(0)}
 \end{array}
