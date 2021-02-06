@@ -112,27 +112,5 @@ z^{(j)}
 \] $$
 
 
-$head Special Cases When x is zero and y non-negative$$
-All the special cases below apply when $latex x^{(0)} = 0$$ and
-$latex y \ge 0$$.
-The calculations above yields nan or infinity.
-For the cases below we use that fact that
-$latex \[
-    F^{(j)} (x) = y * (y-1) * \cdots * (y-j+1) x^{(y-j)}
-\] $$
-which is zero for $latex j < y$$,
-is $latex y!$$ for $latex j = y$$,
-and is zero for $latex y$$ a positive integer and $latex j > y$$.
-
-$subhead j less than y$$
-If $latex j < y$$, $latex z^{(j)} = 0$$.
-
-$subhead j equal to y$$
-If $latex j = y$$, $latex z^{(j)} = y ! ( x^{(1)} )^j$$.
-
-$subhead j greater than y and y an integer$$
-If $latex j > y$$ and $latex y$$ is an integer,
-$latex z^{(j)} = 0$$,
-
 
 $end

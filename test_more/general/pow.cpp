@@ -411,43 +411,6 @@ bool PowTestSix(void)
     return ok;
 }
 
-/*
-// This test does not pass because azmul is used be reverse mode to deteremine which
-// partials are slected and the result is zero instead of nan or infinity.
-// There is a wish list item to fix this problem.
-bool PowTestSeven(void)
-{   bool ok = true;
-
-    using std::cout;
-    using CppAD::AD;
-    using CppAD::vector;
-    //
-    vector<double> x(1), y(1), dx(1), dy(1), w(1), dw(2);
-    vector< AD<double> > ax(1), ay(1);
-    //
-    ax[0] = 0.0;
-    //
-    CppAD::Independent(ax);
-    ay[0] = pow(ax[0], 0.5);
-    CppAD::ADFun<double> f(ax, ay);
-    f.check_for_nan(false);
-    //
-    x[0]  = 0.0;
-    y     = f.Forward(0, x);
-    //
-    dx[0] = 1.0;
-    dy    = f.Forward(1, dx);
-    //
-    w[0]  = 1.0;
-    dw    = f.Reverse(2, w);
-    //
-    ok &= y[0] == 0.0;
-    ok &= ! std::isfinite( dw[0] );
-    ok &= ! std::isfinite( dw[1] );
-    //
-    return ok;
-}
-*/
 // Test x^e where x is negative and e is AD<double> equal to an integer
 bool PowTestEight(void)
 {   bool ok = true;
@@ -534,34 +497,36 @@ bool PowTestNine(void)
     double check;
     //
     // zero order forward
-    x[0]  = 2.0;
-    z     = f.Forward(0, x);
-    check = dpow_dx(x[0], y, 0);
-    ok   &= NearEqual(z[0], check, eps99, eps99);
-    //
-    // first order forward
-    dx[0] = 1.0;
-    dz    = f.Forward(1, dx);
-    check = dpow_dx(x[0], y, 1);
-    ok   &= NearEqual(dz[0], check, eps99, eps99);
-    //
-    // ell-th order forward
-    double factorial = 1.0;
-    for(size_t k = 2; k < 5; ++k)
-    {   factorial *= double(k);
-        dx[0]      = 0.0; // x^(k)
-        dz         = f.Forward(k, dx);
-        check      = dpow_dx(x[0], y, k) / factorial;
-        ok        &= NearEqual(dz[0], check, eps99, eps99);
-    }
-    // second order reverse
-    w[0]  = 1.0;
-    dw    = f.Reverse(5, w);
-    factorial = 1.0;
-    for(size_t k = 0; k < 5; ++k)
-    {   check = dpow_dx(x[0], y, k+1) / factorial;
-        ok   &= NearEqual(dw[k], check, eps99, eps99);
-        factorial *= double(k+1);
+    for(size_t ix = 0; ix < 3; ++ix)
+    {   x[0]  = double(ix);
+        z     = f.Forward(0, x);
+        check = dpow_dx(x[0], y, 0);
+        ok   &= NearEqual(z[0], check, eps99, eps99);
+        //
+        // first order forward
+        dx[0] = 1.0;
+        dz    = f.Forward(1, dx);
+        check = dpow_dx(x[0], y, 1);
+        ok   &= NearEqual(dz[0], check, eps99, eps99);
+        //
+        // ell-th order forward
+        double factorial = 1.0;
+        for(size_t k = 2; k < 5; ++k)
+        {   factorial *= double(k);
+            dx[0]      = 0.0; // x^(k)
+            dz         = f.Forward(k, dx);
+            check      = dpow_dx(x[0], y, k) / factorial;
+            ok        &= NearEqual(dz[0], check, eps99, eps99);
+        }
+        // second order reverse
+        w[0]  = 1.0;
+        dw    = f.Reverse(5, w);
+        factorial = 1.0;
+        for(size_t k = 0; k < 5; ++k)
+        {   check = dpow_dx(x[0], y, k+1) / factorial;
+            ok   &= NearEqual(dw[k], check, eps99, eps99);
+            factorial *= double(k+1);
+        }
     }
     //
     return ok;
@@ -583,7 +548,7 @@ bool PowTestTen(void)
     vector< AD<double> > ax(n), az(n);
     //
     for(size_t j = 0; j < n; ++j)
-    {   ax[j] = double(j) + 1.0;
+    {   ax[j] = double(j);
         y[j]  = double(j) + 1.5;
     }
     //
@@ -653,7 +618,7 @@ bool Pow(void)
     ok     &= PowTestFour();
     ok     &= PowTestFive();
     ok     &= PowTestSix();
-    // ok     &= PowTestSeven();
+    // PowTestSeven was removed
     ok     &= PowTestEight();
     ok     &= PowTestNine();
     ok     &= PowTestTen();

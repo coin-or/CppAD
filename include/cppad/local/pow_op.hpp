@@ -500,6 +500,9 @@ void forward_powvp_op(
     // Paraemter value
     Base y = parameter[ arg[1] ];
 
+    // Special solution when x[0] is zero
+    Base b0 = Base( 0.0 );
+
     // special case zero order
     if( p == 0 )
     {   z[0] = pow(x[0], y);
@@ -512,7 +515,8 @@ void forward_powvp_op(
             sum += bk * (y * x[k] * z[j-k] - z[k] * x[j-k]);
         }
         Base bj = Base( double(j) );
-        z[j] = ( y * z[0] * x[j] + sum / bj ) / x[0];
+        Base zj = ( y * z[0] * x[j] + sum / bj ) / x[0];
+        z[j] = CondExpEq(x[0], b0, b0, zj);
     }
 }
 /*!
@@ -555,6 +559,9 @@ void forward_powvp_op_dir(
     // Parameter value
     Base y = parameter[ arg[1] ];
 
+    // special solution when x[0] is zero
+    Base b0 = Base( 0.0 );
+
     // index in Taylor coefficients where multiple directions start
     size_t m = (q-1)*r + 1;
     //
@@ -571,7 +578,8 @@ void forward_powvp_op_dir(
         }
         Base xq  = x[(q-1)*r + ell + 1];
         Base bq   = Base( double(q) );
-        z[m+ell] = ( y * z[0] * xq + sum / bq ) / x[0];
+        Base zell = ( y * z[0] * xq + sum / bq ) / x[0];
+        z[m+ell]  = CondExpEq(x[0], b0, b0, zell);
     }
 }
 
@@ -632,7 +640,8 @@ void reverse_powvp_op(
     size_t        cap_order   ,
     const Base*   taylor      ,
     size_t        nc_partial  ,
-    Base*         partial     )
+    Base*         partial     ,
+    CppAD::vector<Base>& work )
 {
     // check assumptions
     CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
@@ -654,6 +663,14 @@ void reverse_powvp_op(
     Base* px = partial + size_t(arg[0]) * nc_partial;
     Base* pz = partial + i_z * nc_partial;
 
+    // Special solution when x[0] is zero
+    Base b0 = Base( 0.0 );
+
+    // Place to hold px for this operator until conditional assigment at end
+    work.resize(nc_partial);
+    for(size_t j = 0; j <= d; ++j)
+        work[j] = px[j];
+
     // reverse z^j for j = d, ..., 1
     size_t j = d;
     while(j)
@@ -661,13 +678,13 @@ void reverse_powvp_op(
         Base bj = Base( double(j) );
         //
         // x^j term
-        px[j] += azmul(pz[j], y * z[0] / x[0]);
+        work[j] += azmul(pz[j], y * z[0] / x[0]);
         //
         // x^k terms
         for(size_t k = 1; k < j; ++k)
         {   Base bk   = Base( double(k) );
             Base term = (bk * y - Base(j-k) ) * z[j-k] / (bj * x[0]);
-            px[k] += azmul(pz[j], term);
+            work[k] += azmul(pz[j], term);
         }
         //
         // z^k terms
@@ -678,7 +695,7 @@ void reverse_powvp_op(
         }
         //
         // x^0 term
-        px[0] -= azmul(pz[j], z[j] / x[0]);
+        work[0] -= azmul(pz[j], z[j] / x[0]);
         //
         // z^0 term
         pz[0] += azmul(pz[j], y * x[j] / x[0] );
@@ -687,7 +704,10 @@ void reverse_powvp_op(
         --j;
     }
     // reverse z^0
-    px[0] += azmul(pz[0], y * z[0] / x[0]);
+    work[0] += azmul(pz[0], y * z[0] / x[0]);
+    //
+    for(j = 0; j <=d; ++j)
+        px[j] = CondExpEq(x[0], b0, b0, work[j]);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

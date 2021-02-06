@@ -22,6 +22,14 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 02-06$$
+A special version of the $cref/pow(x, y)/pow/$$ function was added
+for the special case where $icode y$$ is a parameter.
+This properly handles the special case where $icode x$$ is zero
+and $icode y$$ is greater than the order of the derivative.
+In addition, it only requires one tape variable (instead of three)
+for each $code pow$$ operation.
+
 $head 01-27$$
 There was a bug in the converting to abs_normal form when
 the function $cref/f/abs_normal_fun/f/$$ made use of the

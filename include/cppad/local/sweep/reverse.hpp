@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_REVERSE_HPP
 # define CPPAD_LOCAL_SWEEP_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -209,6 +209,10 @@ void reverse(
     // information defined by atomic forward
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
     enum_atom_state atom_state = end_atom; // proper initialization
+
+    // A vector with unspecified contents declared here so that operator
+    // routines do not need to re-allocate it
+    vector<Base> work;
 
     // temporary indices
     size_t j, ell;
@@ -534,7 +538,7 @@ void reverse(
             case PowvpOp:
             CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
             reverse_powvp_op(
-                d, i_var, arg, parameter, J, Taylor, K, Partial
+                d, i_var, arg, parameter, J, Taylor, K, Partial, work
             );
             break;
             // -------------------------------------------------
