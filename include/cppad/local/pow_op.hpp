@@ -508,8 +508,11 @@ void forward_powvp_op(
     for(size_t j = p; j <= q; ++j)
     {   Base sum = Base(0);
         for(size_t k = 1; k < j; ++k)
-            sum += Base(k) * (y * x[k] * z[j-k] - z[k] * x[j-k]);
-        z[j] = ( y * z[0] * x[j] + sum / Base(j) ) / x[0];
+        {   Base bk = Base( double(k) );
+            sum += bk * (y * x[k] * z[j-k] - z[k] * x[j-k]);
+        }
+        Base bj = Base( double(j) );
+        z[j] = ( y * z[0] * x[j] + sum / bj ) / x[0];
     }
 }
 /*!
@@ -563,10 +566,12 @@ void forward_powvp_op_dir(
             Base zk   = z[(k-1)*r   + ell + 1];
             Base xqk  = x[(q-k-1)*r + ell + 1];
             Base zqk  = z[(q-k-1)*r + ell + 1];
-            sum += Base(k) * (y * xk * zqk - zk * xqk);
+            Base bk   = Base( double(k) );
+            sum += bk * (y * xk * zqk - zk * xqk);
         }
         Base xq  = x[(q-1)*r + ell + 1];
-        z[m+ell] = ( y * z[0] * xq + sum / Base(q) ) / x[0];
+        Base bq   = Base( double(q) );
+        z[m+ell] = ( y * z[0] * xq + sum / bq ) / x[0];
     }
 }
 
@@ -653,20 +658,22 @@ void reverse_powvp_op(
     size_t j = d;
     while(j)
     {   // j
-        Base bj = Base(j);
+        Base bj = Base( double(j) );
         //
         // x^j term
         px[j] += azmul(pz[j], y * z[0] / x[0]);
         //
         // x^k terms
         for(size_t k = 1; k < j; ++k)
-        {   Base term = (Base(k) * y - Base(j-k) ) * z[j-k] / (bj * x[0]);
+        {   Base bk   = Base( double(k) );
+            Base term = (bk * y - Base(j-k) ) * z[j-k] / (bj * x[0]);
             px[k] += azmul(pz[j], term);
         }
         //
         // z^k terms
         for(size_t k = 1; k < j; ++k)
-        {   Base term = (Base(j-k) * y - Base(k) ) * x[j-k] / (bj * x[0]);
+        {   Base bk   = Base( double(k) );
+            Base term = (Base(j-k) * y - bk) * x[j-k] / (bj * x[0]);
             pz[k] += azmul(pz[j], term);
         }
         //

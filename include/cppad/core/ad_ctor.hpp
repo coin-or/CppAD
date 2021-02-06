@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_CTOR_HPP
 # define CPPAD_CORE_AD_CTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -189,7 +189,7 @@ is the object that is being converted from T to AD<Base>.
 template <class Base>
 template <class T>
 AD<Base>::AD(const T &t)
-: value_(Base(t))
+: value_( Base( double(t) ) )
 , tape_id_(0)
 , taddr_(0)
 , ad_type_(constant_enum)
