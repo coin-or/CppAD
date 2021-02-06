@@ -422,7 +422,7 @@ bool PowTestSeven(void)
     using CppAD::AD;
     using CppAD::vector;
     //
-    vector< double> x(1), y(1), dx(1), dy(1), w(1), dw(2);
+    vector<double> x(1), y(1), dx(1), dy(1), w(1), dw(2);
     vector< AD<double> > ax(1), ay(1);
     //
     ax[0] = 0.0;
@@ -458,7 +458,7 @@ bool PowTestEight(void)
     using CppAD::NearEqual;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
-    vector< double>      x(1), y(2), dx(1), dy(2), w(2), dw(2);
+    vector<double>      x(1), y(2), dx(1), dy(2), w(2), dw(2);
     vector< AD<double> > ax(1), ay(2);
     //
     x[0]  = -2.0;
@@ -509,7 +509,7 @@ double dpow_dx(double x, double y, size_t k)
         result *= (y - double(ell));
     return result;
 }
-// Testing just PowvpOp
+// Testing PowvpOp
 bool PowTestNine(void)
 {   bool ok = true;
     //
@@ -519,8 +519,8 @@ bool PowTestNine(void)
     using CppAD::NearEqual;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
-    vector< double> x(1), dx(1), d2x(1), d3x(1);
-    vector< double> z(1), dz(1), d2z(1), d3z(1);
+    vector<double> x(1), dx(1);
+    vector<double> z(1), dz(1);
     vector<double> w(1), dw(5);
     vector< AD<double> > ax(1), az(1);
     //
@@ -566,6 +566,82 @@ bool PowTestNine(void)
     //
     return ok;
 }
+// Testing PowvpOp multiple direction forward
+bool PowTestTen(void)
+{   bool ok = true;
+    //
+    using std::cout;
+    using CppAD::AD;
+    using CppAD::vector;
+    using CppAD::NearEqual;
+    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+    //
+    size_t n = 3;
+    vector<double> x(n), xq(n * n);
+    vector<double> z(n), zq(n * n);
+    vector<double> y(n);
+    vector< AD<double> > ax(n), az(n);
+    //
+    for(size_t j = 0; j < n; ++j)
+    {   ax[j] = double(j) + 1.0;
+        y[j]  = double(j) + 1.5;
+    }
+    //
+    CppAD::Independent(ax);
+    for(size_t j = 0; j < n; ++j)
+        az[j] = pow(ax[j], y[j]);
+    CppAD::ADFun<double> f(ax, az);
+    //
+    // zero order forward
+    for(size_t j = 0; j < n; ++j)
+        x[j]  = double(j) + 1.5;
+    z     = f.Forward(0, x);
+    double check;
+    for(size_t j = 0; j < n; ++j)
+    {   check = dpow_dx(x[j], y[j], 0);
+        ok   &= NearEqual(z[j], check, eps99, eps99);
+    }
+    //
+    // first order forward multiple directions
+    size_t r = n;
+    for(size_t j = 0; j < n; ++j)
+    {   for(size_t ell = 0; ell < r; ell++)
+        {   if( j == ell )
+                xq[ r * j + ell] = 1.0;
+            else
+                xq[ r * j + ell] = 0.0;
+        }
+    }
+    size_t q = 1;
+    zq = f.Forward(q, r, xq);
+    for(size_t j = 0; j < n; ++j)
+    {   for(size_t ell = 0; ell < r; ell++)
+        {   if( j == ell )
+                check = dpow_dx(x[j], y[j], 1);
+            else
+                check = 0.0;
+            ok   &= NearEqual(zq[r * j + ell], check, eps99, eps99);
+        }
+    }
+    //
+    // second order forward multiple directions
+    for(size_t j = 0; j < n; ++j)
+    {   for(size_t ell = 0; ell < r; ell++)
+                xq[ r * j + ell] = 0.0;
+    }
+    q = 2;
+    zq = f.Forward(q, r, xq);
+    for(size_t j = 0; j < n; ++j)
+    {   for(size_t ell = 0; ell < r; ell++)
+        {   if( j == ell )
+                check = dpow_dx(x[j], y[j], 2) / 2.0;
+            else
+                check = 0.0;
+            ok   &= NearEqual(zq[r * j + ell], check, eps99, eps99);
+        }
+    }
+    return ok;
+}
 
 } // END empty namespace
 
@@ -580,6 +656,7 @@ bool Pow(void)
     // ok     &= PowTestSeven();
     ok     &= PowTestEight();
     ok     &= PowTestNine();
+    ok     &= PowTestTen();
     //
     return ok;
 }
