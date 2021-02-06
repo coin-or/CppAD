@@ -556,7 +556,6 @@ void forward_powvp_op_dir(
     size_t m = (q-1)*r + 1;
     //
     // loop over directions
-    Base ym1 = y - Base(1);
     for(size_t ell = 0; ell < r; ell++)
     {   Base sum = Base(0);
         for(size_t k = 1; k < q; ++k)
