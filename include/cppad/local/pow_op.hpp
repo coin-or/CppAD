@@ -500,17 +500,17 @@ void forward_powvp_op(
     // Paraemter value
     Base y = parameter[ arg[1] ];
 
-	// special case zero order
-	if( p == 0 )
-	{	z[0] = pow(x[0], y);
-		p++;
-	}
-	for(size_t j = p; j <= q; ++j)
-	{	Base sum = Base(0);
-		for(size_t k = 1; k < j; ++k)
-			sum += Base(k) * (y * x[k] * z[j-k] - z[k] * x[j-k]);
-		z[j] = ( y * z[0] * x[j] + sum / Base(j) ) / x[0];
-	}
+    // special case zero order
+    if( p == 0 )
+    {   z[0] = pow(x[0], y);
+        p++;
+    }
+    for(size_t j = p; j <= q; ++j)
+    {   Base sum = Base(0);
+        for(size_t k = 1; k < j; ++k)
+            sum += Base(k) * (y * x[k] * z[j-k] - z[k] * x[j-k]);
+        z[j] = ( y * z[0] * x[j] + sum / Base(j) ) / x[0];
+    }
 }
 /*!
 Multiple directions forward mode Taylor coefficients for op = PowvpOp.
@@ -552,23 +552,23 @@ void forward_powvp_op_dir(
     // Parameter value
     Base y = parameter[ arg[1] ];
 
-	// index in Taylor coefficients where multiple directions start
+    // index in Taylor coefficients where multiple directions start
     size_t m = (q-1)*r + 1;
-	//
-	// loop over directions
-	Base ym1 = y - Base(1);
+    //
+    // loop over directions
+    Base ym1 = y - Base(1);
     for(size_t ell = 0; ell < r; ell++)
-	{	Base sum = Base(0);
-		for(size_t k = 1; k < q; ++k)
-		{	Base xk   = x[(k-1)*r   + ell + 1];
-			Base zk   = z[(k-1)*r   + ell + 1];
-			Base xqk  = x[(q-k-1)*r + ell + 1];
-			Base zqk  = z[(q-k-1)*r + ell + 1];
-			sum += Base(k) * (y * xk * zqk - zk * xqk);
-		}
-		Base xq  = x[(q-1)*r + ell + 1];
-		z[m+ell] = ( y * z[0] * xq + sum / Base(q) ) / x[0];
-	}
+    {   Base sum = Base(0);
+        for(size_t k = 1; k < q; ++k)
+        {   Base xk   = x[(k-1)*r   + ell + 1];
+            Base zk   = z[(k-1)*r   + ell + 1];
+            Base xqk  = x[(q-k-1)*r + ell + 1];
+            Base zqk  = z[(q-k-1)*r + ell + 1];
+            sum += Base(k) * (y * xk * zqk - zk * xqk);
+        }
+        Base xq  = x[(q-1)*r + ell + 1];
+        z[m+ell] = ( y * z[0] * xq + sum / Base(q) ) / x[0];
+    }
 }
 
 /*!
@@ -639,9 +639,9 @@ void reverse_powvp_op(
         size_t( std::numeric_limits<addr_t>::max() ) >= i_z
     );
 
-	// Taylor coefficients
-	const Base* x = taylor + size_t( arg[0] ) * cap_order;
-	const Base* z = taylor + i_z * cap_order;
+    // Taylor coefficients
+    const Base* x = taylor + size_t( arg[0] ) * cap_order;
+    const Base* z = taylor + i_z * cap_order;
 
     // parameter value
     const Base  y = parameter[ arg[1] ];
@@ -650,38 +650,38 @@ void reverse_powvp_op(
     Base* px = partial + size_t(arg[0]) * nc_partial;
     Base* pz = partial + i_z * nc_partial;
 
-	// reverse z^j for j = d, ..., 1
-	size_t j = d;
-	while(j)
-	{	// j
-		Base bj = Base(j);
-		//
-		// x^j term
-		px[j] += azmul(pz[j], y * z[0] / x[0]);
-		//
-		// x^k terms
-		for(size_t k = 1; k < j; ++k)
-		{	Base term = (Base(k) * y - Base(j-k) ) * z[j-k] / (bj * x[0]);
-			px[k] += azmul(pz[j], term);
-		}
-		//
-		// z^k terms
-		for(size_t k = 1; k < j; ++k)
-		{	Base term = (Base(j-k) * y - Base(k) ) * x[j-k] / (bj * x[0]);
-			pz[k] += azmul(pz[j], term);
-		}
-		//
-		// x^0 term
-		px[0] -= azmul(pz[j], z[j] / x[0]);
-		//
-		// z^0 term
-		pz[0] += azmul(pz[j], y * x[j] / x[0] );
-		//
-		// next j
-		--j;
-	}
-	// reverse z^0
-	px[0] += azmul(pz[0], y * z[0] / x[0]);
+    // reverse z^j for j = d, ..., 1
+    size_t j = d;
+    while(j)
+    {   // j
+        Base bj = Base(j);
+        //
+        // x^j term
+        px[j] += azmul(pz[j], y * z[0] / x[0]);
+        //
+        // x^k terms
+        for(size_t k = 1; k < j; ++k)
+        {   Base term = (Base(k) * y - Base(j-k) ) * z[j-k] / (bj * x[0]);
+            px[k] += azmul(pz[j], term);
+        }
+        //
+        // z^k terms
+        for(size_t k = 1; k < j; ++k)
+        {   Base term = (Base(j-k) * y - Base(k) ) * x[j-k] / (bj * x[0]);
+            pz[k] += azmul(pz[j], term);
+        }
+        //
+        // x^0 term
+        px[0] -= azmul(pz[j], z[j] / x[0]);
+        //
+        // z^0 term
+        pz[0] += azmul(pz[j], y * x[j] / x[0] );
+        //
+        // next j
+        --j;
+    }
+    // reverse z^0
+    px[0] += azmul(pz[0], y * z[0] / x[0]);
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

@@ -540,14 +540,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
             case DivvpOp:
             case PowvpOp:
             case ZmulvpOp:
-# ifndef NDEBUG
-            if( op == PowvpOp )
-            {   CPPAD_ASSERT_NARG_NRES(op, 2, 3);
-            }
-            else
-            {   CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-            }
-# endif
+            CPPAD_ASSERT_NARG_NRES(op, 2, 1);
             CPPAD_ASSERT_UNKNOWN( size_t( f2g_var[ arg[0] ] ) < num_var );
             new_arg[0] = f2g_var[ arg[0] ];
             new_arg[1] = arg[1]; // parameter

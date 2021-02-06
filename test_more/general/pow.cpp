@@ -504,15 +504,15 @@ bool PowTestEight(void)
 }
 // k-th derivative of x^y .w.r.t. x
 double dpow_dx(double x, double y, size_t k)
-{	double result = std::pow(x, y - double(k));
-	for(size_t ell = 0; ell < k; ++ell)
-		result *= (y - double(ell));
-	return result;
+{   double result = std::pow(x, y - double(k));
+    for(size_t ell = 0; ell < k; ++ell)
+        result *= (y - double(ell));
+    return result;
 }
 // Testing just PowvpOp
 bool PowTestNine(void)
 {   bool ok = true;
-	//
+    //
     using std::cout;
     using CppAD::AD;
     using CppAD::vector;
@@ -521,48 +521,48 @@ bool PowTestNine(void)
     //
     vector< double> x(1), dx(1), d2x(1), d3x(1);
     vector< double> z(1), dz(1), d2z(1), d3z(1);
-	vector<double> w(1), dw(5);
+    vector<double> w(1), dw(5);
     vector< AD<double> > ax(1), az(1);
     //
     ax[0]    = 1.0;
-	double y = 2.5;
+    double y = 2.5;
     //
     CppAD::Independent(ax);
     az[0] = pow(ax[0], y);
     CppAD::ADFun<double> f(ax, az);
-	//
-	double check;
     //
-	// zero order forward
+    double check;
+    //
+    // zero order forward
     x[0]  = 2.0;
     z     = f.Forward(0, x);
-	check = dpow_dx(x[0], y, 0);
+    check = dpow_dx(x[0], y, 0);
     ok   &= NearEqual(z[0], check, eps99, eps99);
     //
-	// first order forward
+    // first order forward
     dx[0] = 1.0;
     dz    = f.Forward(1, dx);
-	check = dpow_dx(x[0], y, 1);
+    check = dpow_dx(x[0], y, 1);
     ok   &= NearEqual(dz[0], check, eps99, eps99);
-	//
-	// ell-th order forward
-	double factorial = 1.0;
-	for(size_t k = 2; k < 5; ++k)
-	{	factorial *= double(k);
-		dx[0]      = 0.0; // x^(k)
-		dz         = f.Forward(k, dx);
-		check      = dpow_dx(x[0], y, k) / factorial;
-		ok        &= NearEqual(dz[0], check, eps99, eps99);
-	}
-	// second order reverse
-	w[0]  = 1.0;
-	dw    = f.Reverse(5, w);
-	factorial = 1.0;
-	for(size_t k = 0; k < 5; ++k)
-	{	check = dpow_dx(x[0], y, k+1) / factorial;
-		ok   &= NearEqual(dw[k], check, eps99, eps99);
-		factorial *= double(k+1);
-	}
+    //
+    // ell-th order forward
+    double factorial = 1.0;
+    for(size_t k = 2; k < 5; ++k)
+    {   factorial *= double(k);
+        dx[0]      = 0.0; // x^(k)
+        dz         = f.Forward(k, dx);
+        check      = dpow_dx(x[0], y, k) / factorial;
+        ok        &= NearEqual(dz[0], check, eps99, eps99);
+    }
+    // second order reverse
+    w[0]  = 1.0;
+    dw    = f.Reverse(5, w);
+    factorial = 1.0;
+    for(size_t k = 0; k < 5; ++k)
+    {   check = dpow_dx(x[0], y, k+1) / factorial;
+        ok   &= NearEqual(dw[k], check, eps99, eps99);
+        factorial *= double(k+1);
+    }
     //
     return ok;
 }

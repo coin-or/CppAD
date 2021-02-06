@@ -42,9 +42,9 @@ $latex \[
 z^{(j)}
 =
 \left. \left(
-	y z^{(0)} x^{(j)}
-	+
-	\frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
+    y z^{(0)} x^{(j)}
+    +
+    \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
 \right) \right/ x^{(0)}
 \] $$
 
