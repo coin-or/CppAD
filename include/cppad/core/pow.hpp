@@ -58,7 +58,7 @@ the actual derivative is infinite.
 
 $subhead If y is an Integer$$
 If the value of $icode y$$ is an integer,
-the $cref pow_int$$ function is used to compute this value
+the $cref pow_int$$ function can be used to compute this value
 using only multiplication (and division if $icode y$$ is negative).
 This will work even if $icode x$$ is less than or equal zero.
 
