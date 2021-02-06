@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_REV_HES_HPP
 # define CPPAD_LOCAL_SWEEP_REV_HES_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -483,7 +483,7 @@ void rev_hes(
             // -------------------------------------------------
 
             case PowvpOp:
-            CPPAD_ASSERT_NARG_NRES(op, 2, 3)
+            CPPAD_ASSERT_NARG_NRES(op, 2, 1)
             sparse::rev_hes_nl_unary_op(
             i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse
             );
