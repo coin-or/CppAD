@@ -1,0 +1,243 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Power Function Forward Mode Theory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Power Function Forward Mode Theory">
+<meta name="keywords" id="keywords" content=" power function forward mode theory derivatives taylor coefficients recursion z^(0) e^(j) z^j ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_pow_forward_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="erf_forward.htm" target="_top">Prev</a>
+</td><td><a href="reversetheory.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Theory</option>
+<option>ForwardTheory</option>
+<option>pow_forward</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_theory_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_forwardtheory_htm.js'></script>
+</td>
+<td>pow_forward</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Derivatives</option>
+<option>Taylor Coefficients Recursion</option>
+<option>---..z^(0)</option>
+<option>---..e^(j)</option>
+<option>---..z^j</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Power Function Forward Mode Theory</big></big></b></center>
+We consider the operation <small>@(@
+F(x) = x^y
+@)@</small> where <small>@(@
+x
+@)@</small>
+is a variable and <small>@(@
+y
+@)@</small> is a parameter.
+
+<br>
+<br>
+<b><big><a name="Derivatives" id="Derivatives">Derivatives</a></big></b>
+<br>
+The corresponding derivative satisfies the equation
+<small>@[@
+
+x * F^{(1)} (x) -  y F(x) = 0
+
+@]@</small>
+This is the
+<a href="forwardtheory.htm#Standard Math Functions.Differential Equation" target="_top"><span style='white-space: nowrap'>standard&nbsp;math&nbsp;function&nbsp;differential&nbsp;equation</span></a>
+,
+where
+<small>@(@
+A(x) = y
+@)@</small>,
+<small>@(@
+B(x) = x
+@)@</small>,
+and <small>@(@
+D(x) = 0
+@)@</small>.
+We use <small>@(@
+a
+@)@</small>, <small>@(@
+b
+@)@</small>, <small>@(@
+d
+@)@</small>,
+and <small>@(@
+z
+@)@</small> to denote the
+Taylor coefficients for
+<small>@(@
+A [ X (t) ]
+@)@</small>,
+<small>@(@
+B [ X (t) ]
+@)@</small>,
+<small>@(@
+D [ X (t) ]
+@)@</small>,
+and <small>@(@
+F [ X(t) ]
+@)@</small> respectively.
+It follows that
+<small>@(@
+b^j = x^j
+@)@</small>, <small>@(@
+d^j = 0
+@)@</small>,
+<small>@[@
+
+a^{(j)} = \left\{ \begin{array}{ll}
+    y & \R{if} \; j = 0
+    \\
+    0 & \R{otherwise}
+\end{array} \right.
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Taylor Coefficients Recursion" id="Taylor Coefficients Recursion">Taylor Coefficients Recursion</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Taylor Coefficients Recursion.z^(0)" id="Taylor Coefficients Recursion.z^(0)">z^(0)</a></big>
+
+<br>
+<small>@[@
+
+    z^{(0)} = F ( x^{(0)} )
+
+@]@</small><br>
+<big><a name="Taylor Coefficients Recursion.e^(j)" id="Taylor Coefficients Recursion.e^(j)">e^(j)</a></big>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+    e^{(j)} & = & d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
+    \\
+    e^{(j)} & = & y * z^{(j)}
+\end{array}
+
+@]@</small><br>
+<big><a name="Taylor Coefficients Recursion.z^j" id="Taylor Coefficients Recursion.z^j">z^j</a></big>
+<br>
+For <small>@(@
+j = 0, \ldots , p-1
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+\left(
+    \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+\right)
+\\
+& = & \frac{1}{j+1} \frac{1}{ x^{(0)} }
+\left(
+    y \sum_{k=1}^{j+1} k x^{(k)} z^{(j+1-k)}
+    - \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
+\right)
+\\
+& = &
+\frac{1}{j+1} \frac{1}{ x^{(0)} }
+\left(
+    y (j+1) x^{(j+1)} z^{(0)}
+    +
+    \sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
+\right)
+\\
+& = &
+y z^{(0)} x^{(j+1)} / x^{(0)}
++
+\frac{1}{j+1} \frac{1}{ x^{(0)} }
+\sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
+\end{array}
+
+@]@</small>
+For <small>@(@
+j = 1, \ldots , p
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+z^{(j)}
+& = &
+\left. \left(
+    y z^{(0)} x^{(j)}
+    +
+    \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
+\right) \right/ x^{(0)}
+\end{array}
+
+@]@</small>
+
+
+
+
+<hr>Input File: omh/theory/pow_forward.omh
+
+</body>
+</html>

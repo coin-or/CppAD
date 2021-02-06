@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-{ tag: 'CppAD', title:'cppad-20210202: A C++ Algorithmic Differentiation Package', other:' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example' },
+{ tag: 'CppAD', title:'cppad-20210206: A C++ Algorithmic Differentiation Package', other:' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example' },
 { tag: 'Install', title:'CppAD Download, Test, and Install Instructions', other:' step 1: 2: cmake 3: check 4: installation deprecated' },
 { tag: 'download', title:'Download The CppAD Source Code', other:' purpose distribution directory version release git compressed archives documentation building' },
 { tag: 'cmake', title:'Using CMake to Configure CppAD', other:' the program build directory command simple warning options msys2 visual studio autotools check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which' },
@@ -70,6 +70,7 @@ Keyword =
 { tag: 'acos_forward', title:'Inverse Cosine and Hyperbolic Cosine Forward Mode Theory', other:' derivatives taylor coefficients recursion' },
 { tag: 'tan_forward', title:'Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory', other:' derivatives coefficients recursion' },
 { tag: 'erf_forward', title:'Error Function Forward Taylor Polynomial Theory', other:' derivatives coefficients recursion' },
+{ tag: 'pow_forward', title:'Power Function Forward Mode Theory', other:' derivatives taylor coefficients recursion z^(0) e^(j) z^j' },
 { tag: 'ReverseTheory', title:'The Theory of Reverse Mode', other:' taylor notation binary operators addition subtraction multiplication division standard math functions' },
 { tag: 'exp_reverse', title:'Exponential Function Reverse Mode Theory', other:'' },
 { tag: 'log_reverse', title:'Logarithm Function Reverse Mode Theory', other:'' },
@@ -80,6 +81,7 @@ Keyword =
 { tag: 'acos_reverse', title:'Inverse Cosine and Hyperbolic Cosine Reverse Mode Theory', other:'' },
 { tag: 'tan_reverse', title:'Tangent and Hyperbolic Tangent Reverse Mode Theory', other:' notation eliminating y(t) positive orders z(t) zero' },
 { tag: 'erf_reverse', title:'Error Function Reverse Mode Theory', other:' notation positive orders z(t) zero' },
+{ tag: 'pow_reverse', title:'Power Function Reverse Mode Theory', other:' x^j x^k z^k x^0 z^0' },
 { tag: 'reverse_identity', title:'An Important Reverse Mode Identity', other:' notation sweep theorem proof' },
 { tag: 'taylor_ode', title:'AD Theory for Solving ODE\'s Using Taylor\'s Method', other:' problem z(t) example' },
 { tag: 'taylor_ode.cpp', title:'Taylor\'s Ode Solver: An Example and Test', other:' purpose solution' },
@@ -168,7 +170,7 @@ Keyword =
 { tag: 'sign.cpp', title:'Sign Function: Example and Test', other:'' },
 { tag: 'atan2', title:'AD Two Argument Inverse Tangent Function', other:' syntax purpose theta operation sequence example' },
 { tag: 'atan2.cpp', title:'The AD atan2 Function: Example and Test', other:'' },
-{ tag: 'pow', title:'The AD Power Function', other:' syntax see also purpose z operation sequence example' },
+{ tag: 'pow', title:'The AD Power Function', other:' syntax see also purpose if is variable parameter integer z operation sequence example' },
 { tag: 'pow.cpp', title:'The AD Power Function: Example and Test', other:'' },
 { tag: 'pow_nan.cpp', title:'pow: Avoiding Nan in Derivatives: Example and Test', other:' purpose problem' },
 { tag: 'azmul', title:'Absolute Zero Multiplication', other:' syntax purpose base ad<base> vecad<base> example' },
@@ -703,7 +705,7 @@ Keyword =
 { tag: 'Bib', title:'Bibliography', other:' abramowitz stegun the c++ programming language evaluating derivatives numerical recipes shampine l.f.' },
 { tag: 'wish_list', title:'The CppAD Wish List', other:' see also purpose dynamic parameters comparison operators vecad vectors graph reverse mode atomic examples abs-normal functions return cancellation cppad_lib requirement inline compilation speed checkpoint tapeless re-taping testing subgraph forward sparsity element-wise operations check_finite test_boolofvoid optimization special base requirements adolc recomputation iterator interface tracing atan2' },
 { tag: 'whats_new', title:'Changes and Additions to CppAD', other:' introduction this year previous years' },
-{ tag: 'whats_new_21', title:'Changes and Additions to CppAD During 2021', other:' 01-27 01-26 01-08 01-07 01-05 01-03' },
+{ tag: 'whats_new_21', title:'Changes and Additions to CppAD During 2021', other:' 02-06 01-27 01-26 01-08 01-07 01-05 01-03' },
 { tag: 'whats_new_20', title:'Changes and Additions to CppAD During 2020', other:' 12-28 12-27 12-21 12-20 12-19 12-12 12-11 12-06 12-05 12-04 12-03 12-02 12-01 11-29 10-26 10-23 10-22 10-21 10-20 10-17 09-05 06-08 06-04 05-27 05-26 05-23 05-01 03-11 02-02 02-01 01-29 01-24 01-22 01-18 01-17 01-12 01-06 01-04' },
 { tag: 'whats_new_19', title:'Changes and Additions to CppAD During 2019', other:' 12-27 12-25 12-24 12-23 12-21 12-20 12-18 12-16 12-15 12-14 12-13 12-12 12-09 12-08 11-15 11-10 11-09 11-05 10-28 10-27 10-22 10-21 10-17 10-02 09-30 09-24 09-23 09-18 09-17 09-14 09-12 09-10 09-09 08-29 08-25 08-23 08-22 08-26 08-19 08-17 08-16 08-13 08-12 08-10 08-09 08-08 08-06 07-31 07-30 07-29 07-25 07-19 07-18 07-05 07-04 07-03 06-29 06-19 06-18 06-17 06-10 06-02 05-31 05-28 05-22 05-21 05-07 04-01 03-27 03-19 03-13 02-26 02-23 02-22 02-20 02-06 02-01 01-18 01-17 01-16 01-15 01-14 01-06 01-05 01-11' },
 { tag: 'whats_new_18', title:'Changes and Additions to CppAD During 2018', other:' 12-30 12-23 12-17 12-16 12-15 12-12 11-13 11-11 11-06 11-04 11-01 10-31 10-29 10-25 10-24 10-19 10-18 09-25 09-23 09-22 09-19 09-17 09-16 09-15 08-27 08-19 08-18 08-17 08-16 08-14 08-13 08-12 08-10 08-08 08-05 08-04 07-30 07-27 07-23 07-18 07-02 06-27 06-22 06-20 06-19 06-13 06-12 06-04 05-29 05-28 05-26 05-20 05-17 05-04 05-03 04-29 04-13 03-20 03-19 03-04 03-02 02-27 02-26 02-23 02-20' },

@@ -11,6 +11,7 @@ document.write('\
 <option>acos_reverse</option>\
 <option>tan_reverse</option>\
 <option>erf_reverse</option>\
+<option>pow_reverse</option>\
 </select>\
 ');
 function reversetheory_child(item)
@@ -23,7 +24,8 @@ function reversetheory_child(item)
 		'asin_reverse.htm',
 		'acos_reverse.htm',
 		'tan_reverse.htm',
-		'erf_reverse.htm'
+		'erf_reverse.htm',
+		'pow_reverse.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

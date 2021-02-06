@@ -11,6 +11,7 @@ document.write('\
 <option>acos_forward</option>\
 <option>tan_forward</option>\
 <option>erf_forward</option>\
+<option>pow_forward</option>\
 </select>\
 ');
 function forwardtheory_child(item)
@@ -23,7 +24,8 @@ function forwardtheory_child(item)
 		'asin_forward.htm',
 		'acos_forward.htm',
 		'tan_forward.htm',
-		'erf_forward.htm'
+		'erf_forward.htm',
+		'pow_forward.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

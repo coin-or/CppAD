@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The AD Power Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The AD Power Function">
-<meta name="keywords" id="keywords" content=" the ad power function syntax see also purpose x y z operation sequence example ">
+<meta name="keywords" id="keywords" content=" the ad power function syntax see also purpose if y is variable parameter integer x z operation sequence example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,6 +71,9 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>See Also</option>
 <option>Purpose</option>
+<option>---..If y is a Variable</option>
+<option>---..If y is a Parameter</option>
+<option>---..If y is an Integer</option>
 <option>x</option>
 <option>y</option>
 <option>z</option>
@@ -113,11 +116,52 @@ Determines the value of the power function which is defined by
     {\rm pow} (x, y) = x^y
 
 @]@</small>
-This version of the <code><font color="blue">pow</font></code> function may use
+
+<br>
+<br>
+<big><a name="Purpose.If y is a Variable" id="Purpose.If y is a Variable">If y is a Variable</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is a variable,
+the <code><font color="blue">pow</font></code> function may use
 logarithms and exponentiation to compute derivatives.
 This will not work if 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
  is less than or equal zero.
+
+<br>
+<br>
+<big><a name="Purpose.If y is a Parameter" id="Purpose.If y is a Parameter">If y is a Parameter</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is a parameter, a different method is used to
+compute the derivatives; see <a href="pow_forward.htm" target="_top"><span style='white-space: nowrap'>pow_forward</span></a>
+.
+In the special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is zero,
+zero is returned as the derivative.
+This is correct when 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ minus the order of the derivative
+is greater than zero.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ minus the order of the derivative is zero,
+then 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is an integer.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ minus the order of the derivative is less than zero,
+the actual derivative is infinite.
+
+<br>
+<br>
+<big><a name="Purpose.If y is an Integer" id="Purpose.If y is an Integer">If y is an Integer</a></big>
+<br>
 If the value of 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
  is an integer,
@@ -126,9 +170,10 @@ the <a href="pow_int.htm" target="_top"><span style='white-space: nowrap'>pow_in
 using only multiplication (and division if 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
  is negative).
-(This will work even if 
+This will work even if 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- is less than or equal zero.)
+ is less than or equal zero.
+
 
 <br>
 <br>

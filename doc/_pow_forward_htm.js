@@ -7,23 +7,16 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'advalued.htm',
-'binary_math.htm',
-'pow.htm'
+'theory.htm',
+'forwardtheory.htm',
+'pow_forward.htm'
 ];
 var list_current0 = [
-'pow.htm#Syntax',
-'pow.htm#See Also',
-'pow.htm#Purpose',
-'pow.htm#Purpose.If y is a Variable',
-'pow.htm#Purpose.If y is a Parameter',
-'pow.htm#Purpose.If y is an Integer',
-'pow.htm#x',
-'pow.htm#y',
-'pow.htm#z',
-'pow.htm#Operation Sequence',
-'pow.htm#Example'
+'pow_forward.htm#Derivatives',
+'pow_forward.htm#Taylor Coefficients Recursion',
+'pow_forward.htm#Taylor Coefficients Recursion.z^(0)',
+'pow_forward.htm#Taylor Coefficients Recursion.e^(j)',
+'pow_forward.htm#Taylor Coefficients Recursion.z^j'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

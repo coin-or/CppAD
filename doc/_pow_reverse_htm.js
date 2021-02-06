@@ -7,23 +7,16 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'advalued.htm',
-'binary_math.htm',
-'pow.htm'
+'theory.htm',
+'reversetheory.htm',
+'pow_reverse.htm'
 ];
 var list_current0 = [
-'pow.htm#Syntax',
-'pow.htm#See Also',
-'pow.htm#Purpose',
-'pow.htm#Purpose.If y is a Variable',
-'pow.htm#Purpose.If y is a Parameter',
-'pow.htm#Purpose.If y is an Integer',
-'pow.htm#x',
-'pow.htm#y',
-'pow.htm#z',
-'pow.htm#Operation Sequence',
-'pow.htm#Example'
+'pow_reverse.htm#x^j',
+'pow_reverse.htm#x^k',
+'pow_reverse.htm#z^k',
+'pow_reverse.htm#x^0',
+'pow_reverse.htm#z^0'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

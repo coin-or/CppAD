@@ -327,22 +327,35 @@ e^{(j)}
 We need to complete the induction by finding formulas for <small>@(@
 z^{(j+1)}
 @)@</small>.
-It follows for the formula for the
-<a href="forwardtheory.htm#Binary Operators.Multiplication" target="_top"><span style='white-space: nowrap'>multiplication</span></a>
-
-operator that
+It follows from the definition of <small>@(@
+E(t)
+@)@</small> that
 <small>@[@
 
-\begin{array}{rcl}
-\left( \sum_{k=0}^j b^{(k)} t^k \right)
+\left( \sum_{k=0}^j b^{(k)} * t^k \right)
 *
 \left( \sum_{k=1}^{j+1} k z^{(k)} * t^{k-1} \right)
-& = &
+=
 \left( \sum_{k=0}^j e^{(k)} * t^k \right)
 *
 \left( \sum_{k=1}^{j+1} k x^{(k)} * t^{k-1} \right)
 +
 o( t^p )
+
+@]@</small>
+Setting the left and right side coefficients of <small>@(@
+t^j
+@)@</small> equal,
+and using the formula for
+<a href="forwardtheory.htm#Binary Operators.Multiplication" target="_top"><span style='white-space: nowrap'>multiplication</span></a>
+,
+we obtain
+<small>@[@
+
+\begin{array}{rcl}
+\sum_{k=0}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+& = &
+\sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
@@ -364,8 +377,6 @@ e^{(j)}
 and <small>@(@
 z^{(j+1)}
 @)@</small>.
-
-
 
 
 
@@ -402,6 +413,10 @@ Inverse Sine and Hyperbolic Sine Forward Mode Theory</td></tr>
 
 <a href="acos_forward.htm" target="_top">acos_forward</a></td><td>
 Inverse Cosine and Hyperbolic Cosine Forward Mode Theory</td></tr>
+<tr><td>
+
+<a href="pow_forward.htm" target="_top">pow_forward</a></td><td>
+Power Function Forward Mode Theory</td></tr>
 <tr><td>
 
 </td></tr>

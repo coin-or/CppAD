@@ -1,0 +1,212 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Power Function Reverse Mode Theory</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Power Function Reverse Mode Theory">
+<meta name="keywords" id="keywords" content=" power function reverse mode theory x^j x^k z^k x^0 z^0 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_pow_reverse_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="erf_reverse.htm" target="_top">Prev</a>
+</td><td><a href="reverse_identity.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>Theory</option>
+<option>ReverseTheory</option>
+<option>pow_reverse</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_theory_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_reversetheory_htm.js'></script>
+</td>
+<td>pow_reverse</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>x^j</option>
+<option>x^k</option>
+<option>z^k</option>
+<option>x^0</option>
+<option>z^0</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Power Function Reverse Mode Theory</big></big></b></center>
+We use the reverse theory
+<a href="reversetheory.htm#Standard Math Functions" target="_top"><span style='white-space: nowrap'>standard&nbsp;math&nbsp;function</span></a>
+
+definition for the functions <small>@(@
+H
+@)@</small> and <small>@(@
+G
+@)@</small>.
+The zero order forward mode formula for the
+<a href="pow_forward.htm" target="_top"><span style='white-space: nowrap'>power</span></a>
+ function is
+<small>@[@
+
+    z^{(0)}  =  F ( x^{(0)} )
+
+@]@</small>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(0)} }
+& = & \D{G}{ x^{(0)} }  + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
+\\
+\D{ z^{(0)} }{ x^{(0)} } & = & y [ x^{(0)} ]^{y - 1}  = y z^{(0)} / x{(0)}
+\end{array}
+
+@]@</small>
+All the equations below apply to the case where <small>@(@
+j > 0
+@)@</small>.
+For this case, the equation for <small>@(@
+z^{(j)}
+@)@</small> is
+<small>@[@
+
+z^{(j)}
+=
+\left. \left(
+    y z^{(0)} x^{(j)}
+    +
+    \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
+\right) \right/ x^{(0)}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="x^j" id="x^j">x^j</a></big></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(j)} }
+& = & \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
+\\
+\D{ z^{(j)} }{ x^{(j)} } & = & y z^{(0)} / x^{(0)}
+\end{array}
+
+@]@</small><br>
+<b><big><a name="x^k" id="x^k">x^k</a></big></b>
+<br>
+For <small>@(@
+k = 1 , \ldots , j-1
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(k)} }
+& = & \D{G}{ x^{(k)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+\\
+\D{ z^{(j)} }{ x^{(k)} } & = &
+\frac{1}{j} ( k y - (j-k) ) z^{(j-k)} / x^{(0)}
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="z^k" id="z^k">z^k</a></big></b>
+<br>
+For <small>@(@
+k = 1 , \ldots , j-1
+@)@</small>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ z^{(k)} }
+& = & \D{G}{ z^{(k)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(k)} }
+\\
+\D{ z^{(j)} }{ z^{(k)} } & = &
+\frac{1}{j} ( (j-k) y - k ) x^{(j-k)} / x^{(0)}
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="x^0" id="x^0">x^0</a></big></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ x^{(0)} }
+& = & \D{G}{ x^{(0)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
+\\
+\D{ z^{(j)} }{ x^{(0)} } & = & - z^{(j)} / x^{(0)}
+\end{array}
+
+@]@</small><br>
+<b><big><a name="z^0" id="z^0">z^0</a></big></b>
+
+<br>
+<small>@[@
+
+\begin{array}{rcl}
+\D{H}{ z^{(0)} }
+& = & \D{G}{ z^{(0)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(0)} }
+\\
+\D{ z^{(j)} }{ z^{(0)} } & = &  y x^{(j)} / x^{(0)}
+\end{array}
+
+@]@</small>
+<hr>Input File: omh/theory/pow_reverse.omh
+
+</body>
+</html>
