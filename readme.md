@@ -11,12 +11,12 @@ CppAD: A Package for Differentiation of C++ Algorithms
 
 - [Directories](https://coin-or.github.io/CppAD/doc/directory.htm)
 
-- [Coin-OR Download](https://www.coin-or.org/download/source/CppAD/)
+- [Downloads Before 2019](https://www.coin-or.org/download/source/CppAD/)
 
 
 # License
 <pre>
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -29,7 +29,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 
 # Autotools
-The preferred method to test and install CppAD uses [CMake](cmake.org).
+The preferred method to test and install CppAD uses [CMake](https://cmake.org).
 The deprecated Autotools procedure can be used for this purpose,
 but it will eventually be removed.
 For any sub-directory *dir*,
