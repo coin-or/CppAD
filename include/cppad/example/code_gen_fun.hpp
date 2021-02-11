@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_CODE_GEN_FUN_HPP
 # define CPPAD_EXAMPLE_CODE_GEN_FUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -14,7 +14,21 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
 // BEGIN C++
 # include <cppad/cg/cppadcg.hpp>
 
-class code_gen_fun {
+// See https://docs.microsoft.com/en-us/cpp/cpp/
+//      using-dllimport-and-dllexport-in-cpp-classes?view=msvc-160
+// Also see define.hpp where CPPAD_LIB_EXPORTS is also defined and
+// undef.hpp where it gets undefined.
+# ifdef  _MSC_VER
+# ifdef  cppad_lib_EXPORTS
+# define CPPAD_LIB_EXPORT __declspec(dllexport)
+# else
+# define CPPAD_LIB_EXPORT __declspec(dllimport)
+# endif  // cppad_lib_EXPORTS
+# else   // _MSC_VER
+# define CPPAD_LIB_EXPORT
+# endif
+
+class CPPAD_LIB_EXPORT code_gen_fun {
 public:
     // type of evaluation for Jacobians (possibly Hessians in the future)
     enum evaluation_enum { none_enum, dense_enum, sparse_enum };

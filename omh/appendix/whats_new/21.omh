@@ -18,9 +18,19 @@ $spell
     cmake
     json_lexer
     std::isdigit
+    Microsoft
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 02-11$$
+Fix some problems with the linking of the $code cppad_lib$$ library
+when using the Microsoft compiler.
+
+$head 02-08$$
+Fix some problems in the
+$cref/cppad.pc/pkgconfig/cppad.pc/$$ file; see pull request
+$href%https://github.com/coin-or/CppAD/pull/95/files%95%$$.
 
 $head 02-06$$
 A special version of the $cref/pow(x, y)/pow/$$ function was added
