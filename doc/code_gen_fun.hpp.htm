@@ -94,7 +94,21 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cg/cppadcg.hpp&gt;</font>
 
-<b><font color="#0000FF">class</font></b> <font color="#008080">code_gen_fun</font> <font color="#FF0000">{</font>
+<i><font color="#9A1900">// See https://docs.microsoft.com/en-us/cpp/cpp/</font></i>
+<i><font color="#9A1900">//      using-dllimport-and-dllexport-in-cpp-classes?view=msvc-160</font></i>
+<i><font color="#9A1900">// Also see define.hpp where CPPAD_LIB_EXPORTS is also defined and</font></i>
+<i><font color="#9A1900">// undef.hpp where it gets undefined.</font></i>
+<b><font color="#000080"># ifdef</font></b>  _MSC_VER
+<b><font color="#000080"># ifdef</font></b>  cppad_lib_EXPORTS
+<b><font color="#000080"># define</font></b> <font color="#008080">CPPAD_LIB_EXPORT</font> <b><font color="#0000FF">__declspec</font></b><font color="#990000">(</font>dllexport<font color="#990000">)</font>
+<b><font color="#000080"># else</font></b>
+<b><font color="#000080"># define</font></b> <font color="#008080">CPPAD_LIB_EXPORT</font> <b><font color="#0000FF">__declspec</font></b><font color="#990000">(</font>dllimport<font color="#990000">)</font>
+<b><font color="#000080"># endif</font></b>  <i><font color="#9A1900">// cppad_lib_EXPORTS</font></i>
+<b><font color="#000080"># else</font></b>   <i><font color="#9A1900">// _MSC_VER</font></i>
+<b><font color="#000080"># define</font></b> CPPAD_LIB_EXPORT
+<b><font color="#000080"># endif</font></b>
+
+<b><font color="#0000FF">class</font></b> <font color="#008080">CPPAD_LIB_EXPORT</font> code_gen_fun <font color="#FF0000">{</font>
 <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
     <i><font color="#9A1900">// type of evaluation for Jacobians (possibly Hessians in the future)</font></i>
     <b><font color="#0000FF">enum</font></b> evaluation_enum <font color="#FF0000">{</font> none_enum<font color="#990000">,</font> dense_enum<font color="#990000">,</font> sparse_enum <font color="#FF0000">}</font><font color="#990000">;</font>
