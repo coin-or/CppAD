@@ -41,7 +41,7 @@ This is a $code cpp_graph$$ object.
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
-    void json_writer(
+    CPPAD_LIB_EXPORT void json_writer(
         std::string&       json        ,
         const cpp_graph&   graph_obj
     );
