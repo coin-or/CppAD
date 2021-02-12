@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -17,7 +17,7 @@ then
 fi
 if [ "$1" != 'make' ] && [ "$1" != 'test_one' ]
 then
-    echo 'usage: bin/travis.sh (make|test_one) target1 target2 ...'
+    echo 'usage: bin/appveyor.sh (make|test_one) target1 target2 ...'
     echo 'target: if make specified, is one of the available make commands'
     echo          if test_one, specified, is the path to a test file.
     exit 1
@@ -43,6 +43,10 @@ echo_eval cmake \
     -D CMAKE_CXX_COMPILER=g++ \
     ..
 # -----------------------------------------------------------------------------
+# Microsoft DLLs must be in current directory or execution path
+PATH="$PATH:$(pwd)/cppad_lib"
+# -----------------------------------------------------------------------------
+# build target1, target2, ...
 if [ "$cmd" == 'make' ]
 then
     shift
