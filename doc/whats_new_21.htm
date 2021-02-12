@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>02-12</option>
 <option>02-11</option>
 <option>02-08</option>
 <option>02-06</option>
@@ -87,6 +88,28 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="02-12" id="02-12">02-12</a></big></b>
+
+<ol type="1"><li>
+We are currently trying to switch from static to shared libraries in the
+<a href="cmake.htm#CMake Command.Visual Studio" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio</span></a>
+ build.
+This is not yet completely functional.
+</li><li>
+
+In the case where
+<a href="cmake.htm#cppad_debug_which" target="_top"><span style='white-space: nowrap'>cppad_debug_which</span></a>
+ is
+<code><font color="blue">debug_all</font></code> (<code><font color="blue">debug_none</font></code>) the corresponding
+
+<code><i><font color="black"><span style='white-space: nowrap'>CMAKE_BUILD_TYPE</span></font></i></code>
+ is now specified as
+<code><font color="blue">Debug</font></code> (<code><font color="blue">Release</font></code>).
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="02-11" id="02-11">02-11</a></big></b>
 <br>

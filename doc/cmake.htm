@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++11 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -88,7 +88,7 @@ A:active { color : purple }
 <option>include_cppadcg</option>
 <option>package_prefix</option>
 <option>cppad_cxx_flags</option>
-<option>---..C++11</option>
+<option>---..C++17</option>
 <option>---..debug and release</option>
 <option>cppad_profile_flag</option>
 <option>cppad_testvector</option>
@@ -264,6 +264,13 @@ repository is located and run the following commands.
     nmake check
 </pre></font></code>
 </li></ol>
+We are currently trying to switch from using static to shared libraries
+with this build. Adding the complete path for the build/cppad_lib directory
+to your <code><font color="blue">PATH</font></code> variable will solve some of the problems that occur
+during the <code><font color="blue">nmake check</font></code> command.
+
+
+<br>
 <br>
 <big><a name="CMake Command.autotools" id="CMake Command.autotools">autotools</a></big>
 <br>
@@ -620,7 +627,7 @@ For example, if you are using <code><font color="blue">g++</font></code> you cou
     -D cppad_cxx_flags=&quot;-Wall -ansi -pedantic-errors -std=c++17 -Wshadow&quot;
 </pre></font></code>
 <br>
-<big><a name="cppad_cxx_flags.C++11" id="cppad_cxx_flags.C++11">C++11</a></big>
+<big><a name="cppad_cxx_flags.C++17" id="cppad_cxx_flags.C++17">C++17</a></big>
 <br>
 In order for the compiler to take advantage of features that are in C++17
 ,but not in C++11, the 
@@ -784,12 +791,38 @@ This option controls which mode is chosen for the corresponding files.
 The value 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i></code>
  be one of the following:
-<code><font color="blue">debug_even</font></code>, <code><font color="blue">debug_odd</font></code>, <code><font color="blue">debug_all</font></code>, <code><font color="blue">debug_none</font></code>.
-If it is <code><font color="blue">debug_even</font></code> (<code><font color="blue">debug_odd</font></code>),
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i></code>
+ </td><td align='left'  valign='top'>
+ 
+<code><i><font color="black"><span style='white-space: nowrap'>CMAKE_BUILD_TYPE</span></font></i></code>
+ </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">debug_all</font></code>          </td><td align='left'  valign='top'>
+ <code><font color="blue">Debug</font></code>             </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">debug_none</font></code>         </td><td align='left'  valign='top'>
+ <code><font color="blue">Release</font></code>           </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">debug_even</font></code>         </td><td align='left'  valign='top'>
+ not specified             </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">debug_odd</font></code>          </td><td align='left'  valign='top'>
+ not specified             </td></tr><tr><td align='left'  valign='top'>
+
+</td></tr>
+</table>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i></code>
+ is <code><font color="blue">debug_even</font></code> (<code><font color="blue">debug_odd</font></code>),
 files with an even (old) index in a list for each case will be compiled
 in debug mode. The remaining files will be compiled in release mode.
 If it is <code><font color="blue">debug_all</font></code> (<code><font color="blue">debug_none</font></code>),
-all the files will be compiled in debug (release) mode.
+all the 
+<code><i><font color="black"><span style='white-space: nowrap'>CMAKE_BUILD_TYPE</span></font></i></code>
+ will be <code><font color="blue">Debug</font></code> (<code><font color="blue">Release</font></code>).
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i></code>
  does not appear on the command line,

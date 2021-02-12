@@ -36,7 +36,7 @@ var list_current0 = [
 'cmake.htm#include_cppadcg',
 'cmake.htm#package_prefix',
 'cmake.htm#cppad_cxx_flags',
-'cmake.htm#cppad_cxx_flags.C++11',
+'cmake.htm#cppad_cxx_flags.C++17',
 'cmake.htm#cppad_cxx_flags.debug and release',
 'cmake.htm#cppad_profile_flag',
 'cmake.htm#cppad_testvector',
