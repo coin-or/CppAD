@@ -47,18 +47,14 @@ FUNCTION(set_compile_flags program_name debug_which source_list)
     ELSEIF( "${debug_which}" STREQUAL "debug_odd" )
         SET(alternate TRUE)
         SET(count_mod_2 1)
-    ELSEIF( "${debug_which}" STREQUAL "debug_all" )
-        SET(alternate FALSE)
-        SET_SOURCE_FILES_PROPERTIES(
-            ${source_list} PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
-        )
-    ELSEIF( "${debug_which}" STREQUAL "debug_none" )
-        SET(alternate FALSE)
-        SET_SOURCE_FILES_PROPERTIES(
-            ${source_list} PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
-        )
     ELSE( "${debug_which}" )
-        MESSAGE(FATAL_ERROR "cmake error: debug_which = ${debug_which}")
+        SET(alternate FALSE)
+        IF( NOT "${cppad_cxx_flags}" STREQUAL "" )
+            SET(alternate FALSE)
+            SET_SOURCE_FILES_PROPERTIES(
+                ${source_list} PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+            )
+        ENDIF( NOT "${cppad_cxx_flags}" STREQUAL "" )
     ENDIF( "${debug_which}" STREQUAL "debug_even" )
     #
     IF( alternate )

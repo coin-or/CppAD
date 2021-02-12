@@ -24,11 +24,17 @@ $$
 $section Changes and Additions to CppAD During 2021$$
 
 $head 02-12$$
+$list number$$
+We are currently trying to switch from static to shared libraries in the
+$cref/Visual Studio/cmake/CMake Command/Visual Studio/$$ build.
+This is not yet completely functional.
+$lnext
 In the case where
 $cref/cppad_debug_which/cmake/cppad_debug_which/$$ is
 $code debug_all$$ ($code debug_none$$) the corresponding
 $icode CMAKE_BUILD_TYPE$$ is now specified as
 $code Debug$$ ($code Release$$).
+$lend
 
 $head 02-11$$
 Fix some problems with the linking of the $code cppad_lib$$ library

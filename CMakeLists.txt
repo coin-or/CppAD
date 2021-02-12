@@ -193,15 +193,15 @@ command_line_arg(cppad_debug_which "debug_all" STRING
     "debug_even, debug_odd, debug_all, or debug_none"
 )
 assert_value_in_set(cppad_debug_which debug_even debug_odd debug_all debug_none)
-IF( "${debug_which}" STREQUAL debug_all)
+IF( "${cppad_debug_which}" STREQUAL debug_all)
     SET(CMAKE_BUILD_TYPE Debug)
-ELSEIF( "${debug_which}" STREQUAL debug_none)
+ELSEIF( "${cppad_debug_which}" STREQUAL debug_none)
     SET(CMAKE_BUILD_TYPE Release)
-ELSEIF( "${debug_which}" STREQUAL debug_odd)
+ELSEIF( "${cppad_debug_which}" STREQUAL debug_odd)
     SET(CMAKE_BUILD_TYPE Debug)
-ELSEIF( "${debug_which}" STREQUAL debug_even)
+ELSEIF( "${cppad_debug_which}" STREQUAL debug_even)
     SET(CMAKE_BUILD_TYPE Releaser)
-ENDIF( "${debug_which}" STREQUAL debug_all)
+ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
 #
 # include_eigen
 # include_adolc
@@ -282,14 +282,14 @@ ENDIF( cppad_has_colpack )
 # automated system configuration
 # =============================================================================
 # CMAKE_CXX_FLAGS
-IF( "${debug_which}" STREQUAL "debug_all" )
+IF( "${cppad_debug_which}" STREQUAL "debug_all" )
     print_variable(CMAKE_CXX_FLAGS_DEBUG)
-ELSEIF( "${debug_which}" STREQUAL "debug_none" )
+ELSEIF( "${cppad_debug_which}" STREQUAL "debug_none" )
     print_variable(CMAKE_CXX_FLAGS_RELEASE)
-ELSE( "${debug_which}" )
+ELSE( "${cppad_debug_which}" )
     print_variable(CMAKE_CXX_FLAGS_DEBUG)
     print_variable(CMAKE_CXX_FLAGS_RELEASE)
-ENDIF( "${debug_which}" STREQUAL "debug_all" )
+ENDIF( "${cppad_debug_which}" STREQUAL "debug_all" )
 # -----------------------------------------------------------------------------
 # cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
 #

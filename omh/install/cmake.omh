@@ -206,6 +206,11 @@ $codep
     nmake check
 $$
 $lend
+We are currently trying to switch from using static to shared libraries
+with this build. Adding the complete path for the build/cppad_lib directory
+to your $code PATH$$ variable will solve some of the problems that occur
+during the $code nmake check$$ command.
+
 
 $subhead autotools$$
 The autotools build with the Visual Studio compiler should work
