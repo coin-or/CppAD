@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -26,11 +26,8 @@
 # The files with an odd (even) index in source_list have debug (release) flags.
 # In addition the compiler flag -DCPPAD_DEBUG_AND_RELEASE is added.
 #
-# Case debug_all:
-# All the files have debug flags.
-#
-# Case debug_none:
-# All the the files have release flags.
+# Case debug_all or debug_none:
+# The debug and release flags are not set by this routine.
 #
 # source_list: (in)
 # is a list of source files that get set to have debug or release
@@ -53,12 +50,12 @@ FUNCTION(set_compile_flags program_name debug_which source_list)
     ELSEIF( "${debug_which}" STREQUAL "debug_all" )
         SET(alternate FALSE)
         SET_SOURCE_FILES_PROPERTIES(
-            ${source_list} PROPERTIES COMPILE_FLAGS "${debug_flags}"
+            ${source_list} PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
         )
     ELSEIF( "${debug_which}" STREQUAL "debug_none" )
         SET(alternate FALSE)
         SET_SOURCE_FILES_PROPERTIES(
-            ${source_list} PROPERTIES COMPILE_FLAGS "${release_flags}"
+            ${source_list} PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
         )
     ELSE( "${debug_which}" )
         MESSAGE(FATAL_ERROR "cmake error: debug_which = ${debug_which}")

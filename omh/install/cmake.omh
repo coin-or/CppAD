@@ -418,7 +418,7 @@ For example, if you are using $code g++$$ you could specify
 $codep
     -D cppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++17 -Wshadow"
 $$
-$subhead C++11$$
+$subhead C++17$$
 In order for the compiler to take advantage of features that are in C++17
 ,but not in C++11, the $icode cppad_cxx_flags$$ must enable these features.
 
@@ -520,12 +520,18 @@ All of the CppAD examples and test can optionally be tested
 in debug or release mode (see exception below).
 This option controls which mode is chosen for the corresponding files.
 The value $icode cppad_debug_which$$ be one of the following:
-$code debug_even$$, $code debug_odd$$, $code debug_all$$, $code debug_none$$.
-If it is $code debug_even$$ ($code debug_odd$$),
+$table
+$icode cppad_debug_which$$ $cnext $icode CMAKE_BUILD_TYPE$$ $rnext
+$code debug_all$$          $cnext $code Debug$$             $rnext
+$code debug_none$$         $cnext $code Release$$           $rnext
+$code debug_even$$         $cnext not specified             $rnext
+$code debug_odd$$          $cnext not specified             $rnext
+$tend
+If $icode cppad_debug_which$$ is $code debug_even$$ ($code debug_odd$$),
 files with an even (old) index in a list for each case will be compiled
 in debug mode. The remaining files will be compiled in release mode.
 If it is $code debug_all$$ ($code debug_none$$),
-all the files will be compiled in debug (release) mode.
+all the $icode CMAKE_BUILD_TYPE$$ will be $code Debug$$ ($code Release$$).
 If $icode cppad_debug_which$$ does not appear on the command line,
 the default value $code debug_all$$ is used.
 

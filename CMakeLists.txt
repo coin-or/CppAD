@@ -193,6 +193,15 @@ command_line_arg(cppad_debug_which "debug_all" STRING
     "debug_even, debug_odd, debug_all, or debug_none"
 )
 assert_value_in_set(cppad_debug_which debug_even debug_odd debug_all debug_none)
+IF( "${debug_which}" STREQUAL debug_all)
+    SET(CMAKE_BUILD_TYPE Debug)
+ELSEIF( "${debug_which}" STREQUAL debug_none)
+    SET(CMAKE_BUILD_TYPE Release)
+ELSEIF( "${debug_which}" STREQUAL debug_odd)
+    SET(CMAKE_BUILD_TYPE Debug)
+ELSEIF( "${debug_which}" STREQUAL debug_even)
+    SET(CMAKE_BUILD_TYPE Releaser)
+ENDIF( "${debug_which}" STREQUAL debug_all)
 #
 # include_eigen
 # include_adolc
