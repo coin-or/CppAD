@@ -103,7 +103,7 @@ bool cppad_vector(void)
     ok &= test_find();
     ok &= test_copy();
     ok &= test_reverse();
-// 2DO: Figure out why this test fails with Visual Studio 2019
+// 2DO: Determine out why this test fails with Visual Studio 2019
 # ifndef  _MSC_VER
     ok &= test_sort();
 # endif

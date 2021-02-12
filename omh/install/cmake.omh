@@ -206,10 +206,10 @@ $codep
     nmake check
 $$
 $lend
-We are currently trying to switch from using static to shared libraries
-with this build. Adding the complete path for the build/cppad_lib directory
-to your $code PATH$$ variable will solve some of the problems that occur
-during the $code nmake check$$ command.
+Note that when using windows DLL's, CppAD builds a static version
+of $code cppad_lib$$. There are problems using a DLL for $code cppad_lib$$
+because Windows makes separate copies of static class member functions,
+one for library and one for the rest of the program.
 
 
 $subhead autotools$$

@@ -19,16 +19,15 @@ $spell
     json_lexer
     std::isdigit
     Microsoft
+    const
+    ifndef
+    iterator
 $$
 
 $section Changes and Additions to CppAD During 2021$$
 
 $head 02-12$$
 $list number$$
-We are currently trying to switch from static to shared libraries in the
-$cref/Visual Studio/cmake/CMake Command/Visual Studio/$$ build.
-This is not yet completely functional.
-$lnext
 In the case where
 $cref/cppad_debug_which/cmake/cppad_debug_which/$$ is
 $code debug_all$$ ($code debug_none$$) the corresponding
@@ -37,6 +36,11 @@ $code Debug$$ ($code Release$$).
 $lnext
 Fix the $code Policy CMP0054$$ warning during the
 $cref/cmake command/cmake/CMake Command/$$.
+$lnext
+Fix the $cref/Visual Studio/cmake/CMake Command/Visual Studio/$$ build.
+This included commenting out part of the CppAD vector test
+because the MSC compiler is confused between the vector's const_iterator and
+iterator; see $code # ifndef _MSC_VER$$ in $cref cppad_vector.cpp$$.
 $lend
 
 $head 02-11$$

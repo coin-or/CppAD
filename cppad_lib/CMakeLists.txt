@@ -47,14 +47,19 @@ ENDIF( cppad_has_cppadcg )
 #
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 #
-MESSAGE( STATUS "Building shared cppad_lib")
-ADD_LIBRARY( cppad_lib SHARED ${source_list} )
-SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )
-#
-FIND_LIBRARY(dl_LIBRARY dl)
-IF( dl_LIBRARY )
-    TARGET_LINK_LIBRARIES(cppad_lib ${dl_LIBRARY})
-ENDIF( dl_LIBRARY )
+IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+    MESSAGE( STATUS "Windows system so building static cppad_lib")
+    ADD_LIBRARY( cppad_lib STATIC ${source_list} )
+ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+    MESSAGE( STATUS "Not Windows system so building shared cppad_lib")
+    ADD_LIBRARY( cppad_lib SHARED ${source_list} )
+    SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )
+    #
+    FIND_LIBRARY(dl_LIBRARY dl)
+    IF( dl_LIBRARY )
+        TARGET_LINK_LIBRARIES(cppad_lib ${dl_LIBRARY})
+    ENDIF( dl_LIBRARY )
+ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
 #
 # install(TARGETS myExe mySharedLib myStaticLib
 #   RUNTIME DESTINATION bin
