@@ -34,6 +34,9 @@ $cref/cppad_debug_which/cmake/cppad_debug_which/$$ is
 $code debug_all$$ ($code debug_none$$) the corresponding
 $icode CMAKE_BUILD_TYPE$$ is now specified as
 $code Debug$$ ($code Release$$).
+$lnext
+Fix the $code Policy CMP0054$$ warning during the
+$cref/cmake command/cmake/CMake Command/$$.
 $lend
 
 $head 02-11$$

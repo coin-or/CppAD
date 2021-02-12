@@ -12,12 +12,15 @@
 # =============================================================================
 # Some constants
 # =============================================================================
-# Suppress warnging that WIN32 not defined on cygwin
-SET(CMAKE_LEGACY_CYGWIN_WIN32 0) # remove when version below >= 2.8.4
 #
 # Set the minimum required version of cmake for this project.
 # see http://www.cmake.org/pipermail/cmake/2013-January/053213.html
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+#
+# Only interpret if() arguments as variables or keywords when unquoted.
+IF( POLICY CMP0054 )
+  CMAKE_POLICY(SET CMP0054 NEW)
+ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
 SET(cppad_version "20210212")
