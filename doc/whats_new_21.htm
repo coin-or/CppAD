@@ -92,12 +92,6 @@ A:active { color : purple }
 <b><big><a name="02-12" id="02-12">02-12</a></big></b>
 
 <ol type="1"><li>
-We are currently trying to switch from static to shared libraries in the
-<a href="cmake.htm#CMake Command.Visual Studio" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio</span></a>
- build.
-This is not yet completely functional.
-</li><li>
-
 In the case where
 <a href="cmake.htm#cppad_debug_which" target="_top"><span style='white-space: nowrap'>cppad_debug_which</span></a>
  is
@@ -110,6 +104,14 @@ In the case where
 
 Fix the <code><font color="blue">Policy CMP0054</font></code> warning during the
 <a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+.
+</li><li>
+
+Fix the <a href="cmake.htm#CMake Command.Visual Studio" target="_top"><span style='white-space: nowrap'>Visual&nbsp;Studio</span></a>
+ build.
+This included commenting out part of the CppAD vector test
+because the MSC compiler is confused between the vector's const_iterator and
+iterator; see <code><font color="blue"># ifndef _MSC_VER</font></code> in <a href="cppad_vector.cpp.htm" target="_top"><span style='white-space: nowrap'>cppad_vector.cpp</span></a>
 .
 </li></ol>
 

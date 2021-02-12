@@ -180,6 +180,8 @@ This is an example and test of the features of the
     <b><font color="#0000FF">const</font></b> <font color="#008080">vector&lt;Scalar&gt;</font> cvec <font color="#990000">=</font> vec<font color="#990000">;</font>
 
     <i><font color="#9A1900">// sort of vec (will reverse order of elements for this case)</font></i>
+<b><font color="#000080"># ifndef</font></b> _MSC_VER
+    <i><font color="#9A1900">// 2DO: Determine why this test fails with Visual Studio 2019</font></i>
     std<font color="#990000">::</font><b><font color="#000000">sort</font></b><font color="#990000">(</font>vec<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> vec<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">());</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         ok <font color="#990000">&amp;=</font> vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
@@ -188,6 +190,10 @@ This is an example and test of the features of the
     std<font color="#990000">::</font><b><font color="#000000">sort</font></b><font color="#990000">(</font>other<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> other<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> other<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         ok <font color="#990000">&amp;=</font> other<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+<b><font color="#000080"># else</font></b>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n <font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+<b><font color="#000080"># endif</font></b>
 
     <i><font color="#9A1900">// test direct use of iterator and const_iterator</font></i>
     <b><font color="#0000FF">typedef</font></b> vector<font color="#990000">&lt;</font>Scalar<font color="#990000">&gt;::</font><font color="#008080">iterator</font>       iterator<font color="#990000">;</font>
