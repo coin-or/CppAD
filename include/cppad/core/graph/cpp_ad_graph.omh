@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -137,12 +137,6 @@ and size $icode no$$ (the number of operators in the graph).
 For $icode%i%= 0, %...%, %no%-1%$$
 $icode%operator_vec%[%i%]%$$ contains the instructions
 for computing the result vector $icode r_i$$.
-
-$subhead C++11$$
-If the c++ compiler being used does not support c++11,
-it is assumed that operators that
-$cref/require c++11/graph_op_enum/Unary/Require C++11/$$
-are $bold not$$ used.
 
 $head operator_arg$$
 is a vector with size equal to the sum of the size of each

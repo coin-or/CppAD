@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
 # define CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -33,6 +33,7 @@ $section ADFun Object Corresponding to a CppAD Graph$$
 
 $head Syntax$$
 $codei%
+    cpp_graph %graph_obj%
     ADFun<%Base%> %fun%
     %fun%.from_graph(%graph_obj%)
     %fun%.from_graph(%graph_obj%, %dyn2var%, %var2dyn%)
