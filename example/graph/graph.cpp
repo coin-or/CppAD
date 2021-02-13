@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -36,6 +36,7 @@ extern bool discrete_op(void);
 extern bool div_op(void);
 extern bool mul_op(void);
 extern bool pow_op(void);
+extern bool print_graph(void);
 extern bool print_op(void);
 extern bool sub_op(void);
 extern bool sum_op(void);
@@ -45,7 +46,7 @@ extern bool unary_op(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "test_more/graph";
+{   std::string group = "example/graph";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
@@ -62,6 +63,7 @@ int main(void)
     Run( discrete_op,          "discrete_op"     );
     Run( mul_op,               "mul_op"          );
     Run( pow_op,               "pow_op"          );
+    Run( print_graph,          "print_graph"     );
     Run( print_op,             "print_op"        );
     Run( sub_op,               "sub_op"          );
     Run( sum_op,               "sum_op"          );

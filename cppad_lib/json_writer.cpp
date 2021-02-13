@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -21,13 +21,6 @@ void CppAD::local::graph::json_writer(
     std::string&                              json                   ,
     const cpp_graph&                          graph_obj              )
 {   using std::string;
-    // --------------------------------------------------------------------
-    if( local::graph::op_name2enum.size() == 0 )
-    {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
-            "call to set_operator_info in parallel mode"
-        );
-        local::graph::set_operator_info();
-    }
     // --------------------------------------------------------------------
     const string&  function_name( graph_obj.function_name_get() );
     const size_t&  n_dynamic_ind( graph_obj.n_dynamic_ind_get() );

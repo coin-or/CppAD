@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_GRAPH_JSON_LEXER_HPP
 # define CPPAD_LOCAL_GRAPH_JSON_LEXER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -211,16 +211,6 @@ The current token, index, line number, and character number
 are set to the first non white space character in $code json_$$.
 If this is not a left brace character $code '{'$$,
 the error is reported and the constructor does not return.
-
-$head Side Effect$$
-If $code local::graph::op_name2enum.size() == 0$$,
-the routine $cref/set_operator_info/cpp_graph_op/set_operator_info/$$
-is called to initialize
-$code op_enum2fixed_n_arg$$,
-$code op_enum2name$$, and
-$code op_name2enum$$.
-This initialization cannot be done in
-$cref/parallel mode/ta_in_parallel/$$.
 
 $head Prototype$$
 $srccode%hpp% */

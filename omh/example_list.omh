@@ -236,6 +236,7 @@ $rref pow_nan.cpp$$
 $rref pow_int.cpp$$
 $rref print_for_cout.cpp$$
 $rref print_for_string.cpp$$
+$rref print_graph.cpp$$
 $rref qp_box.cpp$$
 $rref qp_box.hpp$$
 $rref qp_interior.cpp$$

@@ -27,6 +27,8 @@ const char* op_enum2name[n_graph_op];
 // map from operator enum to n_arg (when fixed number of arguments)
 size_t op_enum2fixed_n_arg[n_graph_op];
 
+// This routine is called by the first use of the cpp_graph constructor
+// see cpp_grpah.hpp.
 void set_operator_info(void)
 {   typedef std::pair<std::string, graph_op_enum> pair;
     struct op_info {

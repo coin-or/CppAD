@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -248,8 +248,10 @@ if [ -s test_one.warn ]
 then
     cat test_one.warn
     echo 'test_one.sh: unexpected warnings: see  test_one.warn, test_one.err'
+    echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
     exit 1
 fi
 # --------------------------------------------------------------------------
 echo 'test_one.sh: OK'
+echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 exit 0

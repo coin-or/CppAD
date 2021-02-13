@@ -79,14 +79,7 @@ line_number_(1),
 char_number_(1),
 token_(""),
 function_name_("")
-{   // make sure op_name2enum has been initialized
-    if( op_name2enum.size() == 0 )
-    {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
-            "call to set_operator_info in parallel mode"
-        );
-        set_operator_info();
-    }
-
+{
     skip_white_space();
     if( index_ < json_.size() )
         token_ = json_[index_];

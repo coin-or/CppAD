@@ -74,13 +74,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
 {   using local::pod_vector;
     using local::opcode_t;
     using namespace CppAD::graph;
-    // --------------------------------------------------------------------
-    if( local::graph::op_name2enum.size() == 0 )
-    {   CPPAD_ASSERT_KNOWN( ! thread_alloc::in_parallel() ,
-            "call to set_operator_info in parallel mode"
-        );
-        local::graph::set_operator_info();
-    }
     //
 # ifndef NDEBUG
 # endif

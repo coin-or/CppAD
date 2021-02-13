@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_GRAPH_CPP_GRAPH_HPP
 # define CPPAD_CORE_GRAPH_CPP_GRAPH_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -103,7 +103,15 @@ public:
         return;
     }
     cpp_graph(void)
-    {   initialize(); }
+    {   static bool first = true;
+        if( first )
+        {   first = false;
+            CPPAD_ASSERT_UNKNOWN( local::graph::op_name2enum.size() == 0 );
+            // initialize cpp_graph global variables in cpp_graph_op.cpp
+            local::graph::set_operator_info();
+        }
+        initialize();
+    }
 /*
 ---------------------------------------------------------------------------------
 $begin cpp_graph_scalar$$
@@ -396,6 +404,60 @@ $end
     {   return dependent_vec_.size(); }
     void dependent_vec_push_back(const size_t node_index)
     {   dependent_vec_.push_back(node_index); }
+/*
+$begin cpp_graph_print$$
+$spell
+    obj
+    const
+    std::ostream
+    cpp
+$$
+
+$section Print A C++ AD Graph$$
+
+$head Under Construction$$
+
+$head Syntax$$
+$icode%graph_obj%.print(%os%)
+%$$
+
+$head graph_obj$$
+is an const $code cpp_graph$$ object.
+
+$head os$$
+Is the $code std::ostream$$ where the graph is printed.
+
+$children%
+    example/graph/print_graph.cpp
+%$$
+$head Example$$
+The file $cref print_graph.cpp$$ contains an example and test of this operation.
+
+$end
+*/
+    void print(std::ostream& os) const
+    {   size_t                    n_op = operator_vec_.size();
+        cpp_graph::const_iterator itr;
+        for(size_t op_index = 0; op_index < n_op; ++op_index)
+        {   if( op_index == 0 )
+                itr = begin();
+            else
+                ++itr;
+            //
+            cpp_graph::const_iterator::value_type itr_value = *itr;
+            graph_op_enum          op_enum  = itr_value.op_enum;
+            /*
+            const vector<size_t>& str_index( *itr_value.str_index_ptr );
+            const vector<size_t>&       arg( *itr_value.arg_node_ptr );
+            size_t                n_result  = itr_value.n_result;
+            size_t                 n_arg    = arg.size();
+            CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
+            */
+            //
+            os << local::graph::op_enum2name[ op_enum ] << "\n";
+        }
+
+    }
 
 }; // END CPP_GRAPH_CLASS
 
