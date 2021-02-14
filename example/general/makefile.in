@@ -98,74 +98,75 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__general_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
-	eigen_det.cpp eigen_array.cpp abort_recording.cpp base2ad.cpp \
-	fabs.cpp acos.cpp acosh.cpp ad_assign.cpp ad_ctor.cpp add.cpp \
-	add_eq.cpp ad_fun.cpp ad_in_c.cpp ad_input.cpp ad_output.cpp \
-	asin.cpp asinh.cpp atan2.cpp atan.cpp atanh.cpp azmul.cpp \
+	eigen_det.cpp eigen_array.cpp abort_recording.cpp acos.cpp \
+	acosh.cpp ad_assign.cpp ad_ctor.cpp ad_fun.cpp ad_in_c.cpp \
+	ad_input.cpp ad_output.cpp add.cpp add_eq.cpp asin.cpp \
+	asinh.cpp atan.cpp atan2.cpp atanh.cpp azmul.cpp base2ad.cpp \
 	base_alloc.hpp base_require.cpp bender_quad.cpp bool_fun.cpp \
 	capacity_order.cpp change_param.cpp check_for_nan.cpp \
-	compare_change.cpp compare.cpp complex_poly.cpp cond_exp.cpp \
-	cos.cpp cosh.cpp div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp \
-	erfc.cpp general.cpp exp.cpp expm1.cpp for_one.cpp for_two.cpp \
-	forward.cpp forward_dir.cpp forward_order.cpp fun_assign.cpp \
-	fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
-	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
-	independent.cpp integer.cpp interface2c.cpp interp_onetape.cpp \
-	interp_retape.cpp jac_lu_det.cpp jac_minor_det.cpp \
-	jacobian.cpp log10.cpp log1p.cpp log.cpp lu_ratio.cpp \
-	lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp mul.cpp \
-	mul_eq.cpp mul_level.cpp mul_level_ode.cpp near_equal_ext.cpp \
-	new_dynamic.cpp number_skip.cpp numeric_type.cpp \
-	num_limits.cpp ode_stiff.cpp taylor_ode.cpp opt_val_hes.cpp \
-	con_dyn_var.cpp pow.cpp pow_nan.cpp print_for.cpp \
-	rev_checkpoint.cpp reverse_one.cpp reverse_three.cpp \
-	reverse_two.cpp rev_one.cpp rev_two.cpp fun_property.cpp \
-	sign.cpp sin.cpp sinh.cpp sqrt.cpp stack_machine.cpp sub.cpp \
-	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp unary_minus.cpp \
-	unary_plus.cpp value.cpp var2par.cpp vec_ad.cpp
+	compare.cpp compare_change.cpp complex_poly.cpp \
+	con_dyn_var.cpp cond_exp.cpp cos.cpp cosh.cpp div.cpp \
+	div_eq.cpp equal_op_seq.cpp erf.cpp erfc.cpp exp.cpp expm1.cpp \
+	fabs.cpp for_one.cpp for_two.cpp forward.cpp forward_dir.cpp \
+	forward_order.cpp fun_assign.cpp fun_check.cpp \
+	fun_property.cpp function_name.cpp general.cpp \
+	hes_lagrangian.cpp hes_lu_det.cpp hes_minor_det.cpp \
+	hes_times_dir.cpp hessian.cpp independent.cpp integer.cpp \
+	interface2c.cpp interp_onetape.cpp interp_retape.cpp \
+	jac_lu_det.cpp jac_minor_det.cpp jacobian.cpp log.cpp \
+	log10.cpp log1p.cpp lu_ratio.cpp lu_vec_ad.cpp lu_vec_ad.hpp \
+	lu_vec_ad_ok.cpp mul.cpp mul_eq.cpp mul_level.cpp \
+	mul_level_ode.cpp near_equal_ext.cpp new_dynamic.cpp \
+	num_limits.cpp number_skip.cpp numeric_type.cpp ode_stiff.cpp \
+	opt_val_hes.cpp pow.cpp pow_nan.cpp print_for.cpp \
+	rev_checkpoint.cpp rev_one.cpp rev_two.cpp reverse_one.cpp \
+	reverse_three.cpp reverse_two.cpp sign.cpp sin.cpp sinh.cpp \
+	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
+	tape_index.cpp taylor_ode.cpp unary_minus.cpp unary_plus.cpp \
+	value.cpp var2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 @CppAD_EIGEN_TRUE@am__objects_2 = eigen_det.$(OBJEXT) \
 @CppAD_EIGEN_TRUE@	eigen_array.$(OBJEXT)
 am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	abort_recording.$(OBJEXT) base2ad.$(OBJEXT) fabs.$(OBJEXT) \
-	acos.$(OBJEXT) acosh.$(OBJEXT) ad_assign.$(OBJEXT) \
-	ad_ctor.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
-	ad_fun.$(OBJEXT) ad_in_c.$(OBJEXT) ad_input.$(OBJEXT) \
-	ad_output.$(OBJEXT) asin.$(OBJEXT) asinh.$(OBJEXT) \
-	atan2.$(OBJEXT) atan.$(OBJEXT) atanh.$(OBJEXT) azmul.$(OBJEXT) \
-	base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
+	abort_recording.$(OBJEXT) acos.$(OBJEXT) acosh.$(OBJEXT) \
+	ad_assign.$(OBJEXT) ad_ctor.$(OBJEXT) ad_fun.$(OBJEXT) \
+	ad_in_c.$(OBJEXT) ad_input.$(OBJEXT) ad_output.$(OBJEXT) \
+	add.$(OBJEXT) add_eq.$(OBJEXT) asin.$(OBJEXT) asinh.$(OBJEXT) \
+	atan.$(OBJEXT) atan2.$(OBJEXT) atanh.$(OBJEXT) azmul.$(OBJEXT) \
+	base2ad.$(OBJEXT) base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
 	bool_fun.$(OBJEXT) capacity_order.$(OBJEXT) \
 	change_param.$(OBJEXT) check_for_nan.$(OBJEXT) \
-	compare_change.$(OBJEXT) compare.$(OBJEXT) \
-	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) cos.$(OBJEXT) \
-	cosh.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
-	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) erfc.$(OBJEXT) \
-	general.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) \
+	compare.$(OBJEXT) compare_change.$(OBJEXT) \
+	complex_poly.$(OBJEXT) con_dyn_var.$(OBJEXT) \
+	cond_exp.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) div.$(OBJEXT) \
+	div_eq.$(OBJEXT) equal_op_seq.$(OBJEXT) erf.$(OBJEXT) \
+	erfc.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) fabs.$(OBJEXT) \
 	for_one.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
 	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
 	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
-	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
-	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
-	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
-	integer.$(OBJEXT) interface2c.$(OBJEXT) \
+	fun_property.$(OBJEXT) function_name.$(OBJEXT) \
+	general.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
+	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) \
+	hes_times_dir.$(OBJEXT) hessian.$(OBJEXT) \
+	independent.$(OBJEXT) integer.$(OBJEXT) interface2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
 	jac_lu_det.$(OBJEXT) jac_minor_det.$(OBJEXT) \
-	jacobian.$(OBJEXT) log10.$(OBJEXT) log1p.$(OBJEXT) \
-	log.$(OBJEXT) lu_ratio.$(OBJEXT) lu_vec_ad.$(OBJEXT) \
+	jacobian.$(OBJEXT) log.$(OBJEXT) log10.$(OBJEXT) \
+	log1p.$(OBJEXT) lu_ratio.$(OBJEXT) lu_vec_ad.$(OBJEXT) \
 	lu_vec_ad_ok.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
 	mul_level.$(OBJEXT) mul_level_ode.$(OBJEXT) \
 	near_equal_ext.$(OBJEXT) new_dynamic.$(OBJEXT) \
-	number_skip.$(OBJEXT) numeric_type.$(OBJEXT) \
-	num_limits.$(OBJEXT) ode_stiff.$(OBJEXT) taylor_ode.$(OBJEXT) \
-	opt_val_hes.$(OBJEXT) con_dyn_var.$(OBJEXT) pow.$(OBJEXT) \
-	pow_nan.$(OBJEXT) print_for.$(OBJEXT) rev_checkpoint.$(OBJEXT) \
-	reverse_one.$(OBJEXT) reverse_three.$(OBJEXT) \
-	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) rev_two.$(OBJEXT) \
-	fun_property.$(OBJEXT) sign.$(OBJEXT) sin.$(OBJEXT) \
-	sinh.$(OBJEXT) sqrt.$(OBJEXT) stack_machine.$(OBJEXT) \
-	sub.$(OBJEXT) sub_eq.$(OBJEXT) tan.$(OBJEXT) tanh.$(OBJEXT) \
-	tape_index.$(OBJEXT) unary_minus.$(OBJEXT) \
+	num_limits.$(OBJEXT) number_skip.$(OBJEXT) \
+	numeric_type.$(OBJEXT) ode_stiff.$(OBJEXT) \
+	opt_val_hes.$(OBJEXT) pow.$(OBJEXT) pow_nan.$(OBJEXT) \
+	print_for.$(OBJEXT) rev_checkpoint.$(OBJEXT) rev_one.$(OBJEXT) \
+	rev_two.$(OBJEXT) reverse_one.$(OBJEXT) \
+	reverse_three.$(OBJEXT) reverse_two.$(OBJEXT) sign.$(OBJEXT) \
+	sin.$(OBJEXT) sinh.$(OBJEXT) sqrt.$(OBJEXT) \
+	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
+	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
+	taylor_ode.$(OBJEXT) unary_minus.$(OBJEXT) \
 	unary_plus.$(OBJEXT) value.$(OBJEXT) var2par.$(OBJEXT) \
 	vec_ad.$(OBJEXT)
 general_OBJECTS = $(am_general_OBJECTS)
@@ -210,14 +211,15 @@ am__depfiles_remade = ./$(DEPDIR)/abort_recording.Po \
 	./$(DEPDIR)/forward.Po ./$(DEPDIR)/forward_dir.Po \
 	./$(DEPDIR)/forward_order.Po ./$(DEPDIR)/fun_assign.Po \
 	./$(DEPDIR)/fun_check.Po ./$(DEPDIR)/fun_property.Po \
-	./$(DEPDIR)/general.Po ./$(DEPDIR)/hes_lagrangian.Po \
-	./$(DEPDIR)/hes_lu_det.Po ./$(DEPDIR)/hes_minor_det.Po \
-	./$(DEPDIR)/hes_times_dir.Po ./$(DEPDIR)/hessian.Po \
-	./$(DEPDIR)/independent.Po ./$(DEPDIR)/integer.Po \
-	./$(DEPDIR)/interface2c.Po ./$(DEPDIR)/interp_onetape.Po \
-	./$(DEPDIR)/interp_retape.Po ./$(DEPDIR)/jac_lu_det.Po \
-	./$(DEPDIR)/jac_minor_det.Po ./$(DEPDIR)/jacobian.Po \
-	./$(DEPDIR)/log.Po ./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po \
+	./$(DEPDIR)/function_name.Po ./$(DEPDIR)/general.Po \
+	./$(DEPDIR)/hes_lagrangian.Po ./$(DEPDIR)/hes_lu_det.Po \
+	./$(DEPDIR)/hes_minor_det.Po ./$(DEPDIR)/hes_times_dir.Po \
+	./$(DEPDIR)/hessian.Po ./$(DEPDIR)/independent.Po \
+	./$(DEPDIR)/integer.Po ./$(DEPDIR)/interface2c.Po \
+	./$(DEPDIR)/interp_onetape.Po ./$(DEPDIR)/interp_retape.Po \
+	./$(DEPDIR)/jac_lu_det.Po ./$(DEPDIR)/jac_minor_det.Po \
+	./$(DEPDIR)/jacobian.Po ./$(DEPDIR)/log.Po \
+	./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po \
 	./$(DEPDIR)/lu_ratio.Po ./$(DEPDIR)/lu_vec_ad.Po \
 	./$(DEPDIR)/lu_vec_ad_ok.Po ./$(DEPDIR)/mul.Po \
 	./$(DEPDIR)/mul_eq.Po ./$(DEPDIR)/mul_level.Po \
@@ -492,29 +494,29 @@ AM_CXXFLAGS = \
 #
 LDADD = $(ADOLC_LIB)
 #
+# BEGIN_SORT_THIS_LINE_PLUS_5
 general_SOURCES = \
 	$(ADOLC_SRC_FILES) \
 	$(EIGEN_SRC_FILES) \
 	\
 	abort_recording.cpp \
-	base2ad.cpp \
-	fabs.cpp \
 	acos.cpp \
 	acosh.cpp \
 	ad_assign.cpp \
 	ad_ctor.cpp \
-	add.cpp \
-	add_eq.cpp \
 	ad_fun.cpp \
 	ad_in_c.cpp \
 	ad_input.cpp \
 	ad_output.cpp \
+	add.cpp \
+	add_eq.cpp \
 	asin.cpp \
 	asinh.cpp \
-	atan2.cpp \
 	atan.cpp \
+	atan2.cpp \
 	atanh.cpp \
 	azmul.cpp \
+	base2ad.cpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \
@@ -522,9 +524,10 @@ general_SOURCES = \
 	capacity_order.cpp \
 	change_param.cpp \
 	check_for_nan.cpp \
-	compare_change.cpp \
 	compare.cpp \
+	compare_change.cpp \
 	complex_poly.cpp \
+	con_dyn_var.cpp \
 	cond_exp.cpp \
 	cos.cpp \
 	cosh.cpp \
@@ -533,9 +536,9 @@ general_SOURCES = \
 	equal_op_seq.cpp \
 	erf.cpp \
 	erfc.cpp \
-	general.cpp \
 	exp.cpp \
 	expm1.cpp \
+	fabs.cpp \
 	for_one.cpp \
 	for_two.cpp \
 	forward.cpp \
@@ -543,11 +546,14 @@ general_SOURCES = \
 	forward_order.cpp \
 	fun_assign.cpp \
 	fun_check.cpp \
+	fun_property.cpp \
+	function_name.cpp \
+	general.cpp \
 	hes_lagrangian.cpp \
 	hes_lu_det.cpp \
 	hes_minor_det.cpp \
-	hessian.cpp \
 	hes_times_dir.cpp \
+	hessian.cpp \
 	independent.cpp \
 	integer.cpp \
 	interface2c.cpp\
@@ -556,9 +562,9 @@ general_SOURCES = \
 	jac_lu_det.cpp \
 	jac_minor_det.cpp \
 	jacobian.cpp \
+	log.cpp \
 	log10.cpp \
 	log1p.cpp \
-	log.cpp \
 	lu_ratio.cpp \
 	lu_vec_ad.cpp \
 	lu_vec_ad.hpp \
@@ -569,23 +575,20 @@ general_SOURCES = \
 	mul_level_ode.cpp \
 	near_equal_ext.cpp \
 	new_dynamic.cpp \
+	num_limits.cpp \
 	number_skip.cpp \
 	numeric_type.cpp \
-	num_limits.cpp \
 	ode_stiff.cpp \
-	taylor_ode.cpp \
 	opt_val_hes.cpp \
-	con_dyn_var.cpp \
 	pow.cpp \
 	pow_nan.cpp \
 	print_for.cpp \
 	rev_checkpoint.cpp \
+	rev_one.cpp \
+	rev_two.cpp \
 	reverse_one.cpp \
 	reverse_three.cpp \
 	reverse_two.cpp \
-	rev_one.cpp \
-	rev_two.cpp \
-	fun_property.cpp \
 	sign.cpp \
 	sin.cpp \
 	sinh.cpp \
@@ -596,6 +599,7 @@ general_SOURCES = \
 	tan.cpp \
 	tanh.cpp \
 	tape_index.cpp \
+	taylor_ode.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
 	value.cpp \
@@ -698,6 +702,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_assign.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_check.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_property.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/function_name.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/general.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_lagrangian.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_lu_det.Po@am__quote@ # am--include-marker
@@ -953,6 +958,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/fun_assign.Po
 	-rm -f ./$(DEPDIR)/fun_check.Po
 	-rm -f ./$(DEPDIR)/fun_property.Po
+	-rm -f ./$(DEPDIR)/function_name.Po
 	-rm -f ./$(DEPDIR)/general.Po
 	-rm -f ./$(DEPDIR)/hes_lagrangian.Po
 	-rm -f ./$(DEPDIR)/hes_lu_det.Po
@@ -1105,6 +1111,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/fun_assign.Po
 	-rm -f ./$(DEPDIR)/fun_check.Po
 	-rm -f ./$(DEPDIR)/fun_property.Po
+	-rm -f ./$(DEPDIR)/function_name.Po
 	-rm -f ./$(DEPDIR)/general.Po
 	-rm -f ./$(DEPDIR)/hes_lagrangian.Po
 	-rm -f ./$(DEPDIR)/hes_lu_det.Po
@@ -1197,6 +1204,7 @@ uninstall-am:
 
 .PRECIOUS: makefile
 
+# END_SORT_THIS_LINE_MINUS_2
 
 test: check
 	./general

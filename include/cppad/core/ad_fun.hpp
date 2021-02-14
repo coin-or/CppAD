@@ -665,6 +665,12 @@ public:
     size_t Range(void) const
     {   return dep_taddr_.size(); }
 
+    /// set and get function name
+    void function_name_set(const std::string& function_name)
+    {   function_name_ = function_name; }
+    std::string function_name_get(void)
+    {   return function_name_; }
+
     /// is variable a parameter
     bool Parameter(size_t i)
     {   CPPAD_ASSERT_KNOWN(

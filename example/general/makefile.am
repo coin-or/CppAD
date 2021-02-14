@@ -48,29 +48,29 @@ AM_CXXFLAGS =  \
 #
 LDADD        =  $(ADOLC_LIB)
 #
+# BEGIN_SORT_THIS_LINE_PLUS_5
 general_SOURCES   = \
 	$(ADOLC_SRC_FILES) \
 	$(EIGEN_SRC_FILES) \
 	\
 	abort_recording.cpp \
-	base2ad.cpp \
-	fabs.cpp \
 	acos.cpp \
 	acosh.cpp \
 	ad_assign.cpp \
 	ad_ctor.cpp \
-	add.cpp \
-	add_eq.cpp \
 	ad_fun.cpp \
 	ad_in_c.cpp \
 	ad_input.cpp \
 	ad_output.cpp \
+	add.cpp \
+	add_eq.cpp \
 	asin.cpp \
 	asinh.cpp \
-	atan2.cpp \
 	atan.cpp \
+	atan2.cpp \
 	atanh.cpp \
 	azmul.cpp \
+	base2ad.cpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \
@@ -78,9 +78,10 @@ general_SOURCES   = \
 	capacity_order.cpp \
 	change_param.cpp \
 	check_for_nan.cpp \
-	compare_change.cpp \
 	compare.cpp \
+	compare_change.cpp \
 	complex_poly.cpp \
+	con_dyn_var.cpp \
 	cond_exp.cpp \
 	cos.cpp \
 	cosh.cpp \
@@ -89,9 +90,9 @@ general_SOURCES   = \
 	equal_op_seq.cpp \
 	erf.cpp \
 	erfc.cpp \
-	general.cpp \
 	exp.cpp \
 	expm1.cpp \
+	fabs.cpp \
 	for_one.cpp \
 	for_two.cpp \
 	forward.cpp \
@@ -99,11 +100,14 @@ general_SOURCES   = \
 	forward_order.cpp \
 	fun_assign.cpp \
 	fun_check.cpp \
+	fun_property.cpp \
+	function_name.cpp \
+	general.cpp \
 	hes_lagrangian.cpp \
 	hes_lu_det.cpp \
 	hes_minor_det.cpp \
-	hessian.cpp \
 	hes_times_dir.cpp \
+	hessian.cpp \
 	independent.cpp \
 	integer.cpp \
 	interface2c.cpp\
@@ -112,9 +116,9 @@ general_SOURCES   = \
 	jac_lu_det.cpp \
 	jac_minor_det.cpp \
 	jacobian.cpp \
+	log.cpp \
 	log10.cpp \
 	log1p.cpp \
-	log.cpp \
 	lu_ratio.cpp \
 	lu_vec_ad.cpp \
 	lu_vec_ad.hpp \
@@ -125,23 +129,20 @@ general_SOURCES   = \
 	mul_level_ode.cpp \
 	near_equal_ext.cpp \
 	new_dynamic.cpp \
+	num_limits.cpp \
 	number_skip.cpp \
 	numeric_type.cpp \
-	num_limits.cpp \
 	ode_stiff.cpp \
-	taylor_ode.cpp \
 	opt_val_hes.cpp \
-	con_dyn_var.cpp \
 	pow.cpp \
 	pow_nan.cpp \
 	print_for.cpp \
 	rev_checkpoint.cpp \
+	rev_one.cpp \
+	rev_two.cpp \
 	reverse_one.cpp \
 	reverse_three.cpp \
 	reverse_two.cpp \
-	rev_one.cpp \
-	rev_two.cpp \
-	fun_property.cpp \
 	sign.cpp \
 	sin.cpp \
 	sinh.cpp \
@@ -152,11 +153,13 @@ general_SOURCES   = \
 	tan.cpp \
 	tanh.cpp \
 	tape_index.cpp \
+	taylor_ode.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
 	value.cpp \
 	var2par.cpp \
 	vec_ad.cpp
+# END_SORT_THIS_LINE_MINUS_2
 
 test: check
 	./general

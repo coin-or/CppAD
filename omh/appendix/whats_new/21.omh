@@ -33,6 +33,9 @@ $code cpp_graph$$ class.
 $lnext
 Change the name of a documentation section form $code seq_property$$
 to $cref fun_property$$.
+$lnext
+Add setting and getting a $code ADFun$$ function's
+$cref/name/function_name/$$.
 $lend
 
 $head 02-12$$

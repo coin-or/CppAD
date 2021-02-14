@@ -76,6 +76,8 @@ SET(source_list
     forward_order.cpp
     fun_assign.cpp
     fun_check.cpp
+    fun_property.cpp
+    function_name.cpp
     general.cpp
     hes_lagrangian.cpp
     hes_lu_det.cpp
@@ -111,13 +113,12 @@ SET(source_list
     pow.cpp
     pow_nan.cpp
     print_for.cpp
+    rev_checkpoint.cpp
     rev_one.cpp
     rev_two.cpp
-    rev_checkpoint.cpp
     reverse_one.cpp
     reverse_three.cpp
     reverse_two.cpp
-    fun_property.cpp
     sign.cpp
     sin.cpp
     sinh.cpp

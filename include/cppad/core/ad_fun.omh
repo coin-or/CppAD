@@ -20,7 +20,8 @@ $childtable%
     include/cppad/core/fun_construct.hpp%
     include/cppad/core/dependent.hpp%
     include/cppad/core/abort_recording.hpp%
-    include/cppad/core/fun_property.omh
+    include/cppad/core/fun_property.omh%
+    include/cppad/core/function_name.omh
 %$$
 
 $end

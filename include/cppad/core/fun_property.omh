@@ -62,7 +62,10 @@ $icode%s% = %f%.size_op_seq()
 %$$
 
 $subhead See Also$$
-$cref size_order$$, $cref capacity_order$$, $cref number_skip$$.
+$cref function_name$$,
+$cref size_order$$,
+$cref capacity_order$$,
+$cref number_skip$$.
 
 $head Purpose$$
 The operations above return properties of the
