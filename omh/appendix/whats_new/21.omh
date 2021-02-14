@@ -26,6 +26,10 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 02-14$$
+Add the $cref/print/cpp_graph_print/$$ command to the
+$code cpp_graph$$ class.
+
 $head 02-12$$
 $list number$$
 In the case where

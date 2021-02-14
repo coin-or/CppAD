@@ -11,6 +11,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
+# include <iomanip>
 # include <string>
 # include <cppad/utility/vector.hpp>
 # include <cppad/local/graph/cpp_graph_op.hpp>
@@ -415,8 +416,6 @@ $$
 
 $section Print A C++ AD Graph$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%graph_obj%.print(%os%)
 %$$
@@ -427,6 +426,11 @@ is an const $code cpp_graph$$ object.
 $head os$$
 Is the $code std::ostream$$ where the graph is printed.
 
+$head Discussion$$
+This function is included to help with using the $code cpp_graph$$ class.
+The formatting of it's output is not part of the API; i.e.,
+it may change in the future.
+
 $children%
     example/graph/print_graph.cpp
 %$$
@@ -436,25 +440,97 @@ The file $cref print_graph.cpp$$ contains an example and test of this operation.
 $end
 */
     void print(std::ostream& os) const
-    {   size_t                    n_op = operator_vec_.size();
+    {   using std::setw;
+        using std::string;
+        //
+        // function name
+        if( function_name_ != "" )
+            os << function_name_ << "\n";
+        //
+        // initialize node index
+        size_t node_index = 1;
+        //
+        // text vector
+        size_t n_text = print_text_vec_.size();
+        for(size_t i = 0; i < n_text; ++i)
+        {   string s_i = "c[" + std::to_string(i) + "]";
+            //
+            os << setw(11) << "";
+            os << setw(10) << s_i;
+            os << "'" << print_text_vec_[i] << "'";
+            os << "\n";
+        }
+        //
+        //  parameter vector
+        for(size_t i = 0; i < n_dynamic_ind_; i++)
+        {   string p_i = "p[" + std::to_string(i) + "]";
+            //
+            os << setw(11)  << node_index;
+            os << setw(10) << p_i;
+            os << "\n";
+            ++node_index;
+        }
+        //
+        //  variable vector
+        for(size_t i = 0; i < n_variable_ind_; i++)
+        {   string x_i = "x[" + std::to_string(i) + "]";
+            //
+            os << setw(11)  << node_index;
+            os << setw(10) << x_i;
+            os << "\n";
+            ++node_index;
+        }
+        //
+        //  constant vector
+        size_t n_constant = constant_vec_.size();
+        for(size_t i = 0; i < n_constant; i++)
+        {   string c_i = "c[" + std::to_string(i) + "]";
+            //
+            os << setw(11) << node_index;
+            os << setw(10) << c_i;
+            os << setw(20) << constant_vec_[i];
+            os << "\n";
+            ++node_index;
+        }
+
+        size_t                    n_op = operator_vec_.size();
         cpp_graph::const_iterator itr;
         for(size_t op_index = 0; op_index < n_op; ++op_index)
         {   if( op_index == 0 )
                 itr = begin();
             else
                 ++itr;
-            //
             cpp_graph::const_iterator::value_type itr_value = *itr;
-            graph_op_enum          op_enum  = itr_value.op_enum;
-            /*
+            //
             const vector<size_t>& str_index( *itr_value.str_index_ptr );
             const vector<size_t>&       arg( *itr_value.arg_node_ptr );
+            graph_op_enum          op_enum  = itr_value.op_enum;
             size_t                n_result  = itr_value.n_result;
-            size_t                 n_arg    = arg.size();
+            size_t                   n_arg  = arg.size();
+            size_t                   n_str  = str_index.size();
             CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
-            */
             //
-            os << local::graph::op_enum2name[ op_enum ] << "\n";
+            string op_name = local::graph::op_enum2name[ op_enum ];
+            //
+            if( n_result == 0 )
+                os << setw(11) << "";
+            else if( n_result == 1 )
+                os << setw(11)  << node_index;
+            else
+            {   string first = std::to_string(node_index);
+                string last  = std::to_string(node_index + n_result - 1);
+                os << setw(11) << first + "-" + last;
+            }
+            os << setw(10) << op_name;
+            for(size_t i = 0; i < n_arg; ++i)
+                os << setw(5) << arg[i];
+
+            for(size_t i = 0; i < n_str; ++i)
+            {   string s_i = "s[" + std::to_string(str_index[i]) + "]";
+                os << setw(10) << s_i;
+            }
+            os << "\n";
+            node_index += n_result;
         }
 
     }

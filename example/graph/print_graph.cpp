@@ -64,7 +64,19 @@ bool print_graph(void)
     // y[0]   = x[0] + ( p[0] + p[1] )
     graph_obj.dependent_vec_push_back(5);
     //
-    // graph_obj.print(std::cout);
+    // get output of print command
+    std::stringstream os;
+    graph_obj.print(os);
+    //
+    std::string check =
+        "print_graph example\n"
+        "          1      p[0]\n"
+        "          2      p[1]\n"
+        "          3      x[0]\n"
+        "          4       add    1    2\n"
+        "          5       add    3    4\n"
+    ;
+    ok &= os.str() == check;
     //
     return ok;
 }
