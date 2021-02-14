@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_OPTIMIZE_HPP
 # define CPPAD_CORE_OPTIMIZE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -44,7 +44,7 @@ $icode%flag% = %f%.exceed_collision_limit()
 $head Purpose$$
 The operation sequence corresponding to an $cref ADFun$$ object can
 be very large and involve many operations; see the
-size functions in $cref seq_property$$.
+size functions in $cref fun_property$$.
 The $icode%f%.optimize%$$ procedure reduces the number of operations,
 and thereby the time and the memory, required to
 compute function and derivative values.

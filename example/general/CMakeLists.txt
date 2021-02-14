@@ -117,7 +117,7 @@ SET(source_list
     reverse_one.cpp
     reverse_three.cpp
     reverse_two.cpp
-    seq_property.cpp
+    fun_property.cpp
     sign.cpp
     sin.cpp
     sinh.cpp

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -440,11 +440,11 @@ $codei%
     std::numeric_limits<%tape_addr_type%>::max()
 %$$
 must be larger than any of the following:
-$cref/size_op/seq_property/size_op/$$,
-$cref/size_op_arg/seq_property/size_op_arg/$$,
-$cref/size_par/seq_property/size_text/$$,
-$cref/size_par/seq_property/size_par/$$,
-$cref/size_par/seq_property/size_VecAD/$$.
+$cref/size_op/fun_property/size_op/$$,
+$cref/size_op_arg/fun_property/size_op_arg/$$,
+$cref/size_par/fun_property/size_text/$$,
+$cref/size_par/fun_property/size_par/$$,
+$cref/size_par/fun_property/size_VecAD/$$.
 
 
 $head tape_id_type$$

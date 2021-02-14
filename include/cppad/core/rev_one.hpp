@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_REV_ONE_HPP
 # define CPPAD_CORE_REV_ONE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -58,7 +58,7 @@ $codei%
 (see $cref/Vector/RevOne/Vector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the derivative.
 
@@ -68,7 +68,7 @@ $codei%
     size_t %i%
 %$$
 and is less than $latex m$$, the dimension of the
-$cref/range/seq_property/Range/$$ space for $icode f$$.
+$cref/range/fun_property/Range/$$ space for $icode f$$.
 It specifies the
 component of $latex F$$ that we are computing the derivative of.
 
@@ -79,7 +79,7 @@ $codei%
 %$$
 (see $cref/Vector/RevOne/Vector/$$ below)
 and its size is $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 The value of $icode dw$$ is the derivative of $latex F_i$$
 evaluated at $icode x$$; i.e.,
 for $latex j = 0 , \ldots , n - 1 $$

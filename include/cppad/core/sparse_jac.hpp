@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_SPARSE_JAC_HPP
 # define CPPAD_CORE_SPARSE_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -44,8 +44,8 @@ $icode%n_color% = %f%.sparse_jac_rev(
 $head Purpose$$
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 function corresponding to $icode f$$.
-Here $icode n$$ is the $cref/domain/seq_property/Domain/$$ size,
-and $icode m$$ is the $cref/range/seq_property/Range/$$ size, or $icode f$$.
+Here $icode n$$ is the $cref/domain/fun_property/Domain/$$ size,
+and $icode m$$ is the $cref/range/fun_property/Range/$$ size, or $icode f$$.
 The syntax above takes advantage of sparsity when computing the Jacobian
 $latex \[
     J(x) = F^{(1)} (x)

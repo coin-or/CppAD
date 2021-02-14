@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -106,12 +106,12 @@ $pre
 
 $$
 Add the following functions:
-$cref/size_op/seq_property/size_op/$$,
-$cref/size_op_arg/seq_property/size_op_arg/$$,
+$cref/size_op/fun_property/size_op/$$,
+$cref/size_op_arg/fun_property/size_op_arg/$$,
 and
-$cref/size_op_seq/seq_property/size_op_seq/$$.
+$cref/size_op_seq/fun_property/size_op_seq/$$.
 In addition, improve and extend the
-$cref seq_property.cpp$$ example.
+$cref fun_property.cpp$$ example.
 
 $head 11-28$$
 Fix bug in tape optimization with $cref VecAD$$ objects.
@@ -295,7 +295,7 @@ $pre
 
 $$
 The function
-$cref/size_VecAD/seq_property/size_VecAD/$$ function was added
+$cref/size_VecAD/fun_property/size_VecAD/$$ function was added
 so that the user could see the $code VecAD$$ vectors
 and elements corresponding to an operation sequence.
 
@@ -313,7 +313,7 @@ $head 08-06$$
 Add hash table coding to reduce the number of copies of the same
 parameter value necessary in a tape recording.
 In addition, add the function
-$cref/size_par/seq_property/size_par/$$ was added
+$cref/size_par/fun_property/size_par/$$ was added
 so that the user could see the number of parameters
 corresponding to an operation sequence.
 

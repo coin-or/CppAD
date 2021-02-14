@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FOR_TWO_HPP
 # define CPPAD_CORE_FOR_TWO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -60,7 +60,7 @@ $codei%
 (see $cref/BaseVector/ForTwo/BaseVector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the partial derivatives listed above.
 

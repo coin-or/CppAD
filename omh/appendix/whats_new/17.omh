@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -160,7 +160,7 @@ $codei%
     %f%.size_op() * sizeof(%tape_addr_type)
 %$$
 was added to the value returned by
-$cref/size_op_seq/seq_property/size_op_seq/$$.
+$cref/size_op_seq/fun_property/size_op_seq/$$.
 
 $head 11-04$$
 The method for iterating through the tape has been changed.
@@ -170,7 +170,7 @@ $codei%
     %f%.size_op() * sizeof(%tape_addr_type) * 2
 %$$
 was added to the value returned by
-$cref/size_op_seq/seq_property/size_op_seq/$$.
+$cref/size_op_seq/fun_property/size_op_seq/$$.
 In addition, some minor corrections were made to the
 $cref/tape_addr_type/cmake/cppad_tape_addr_type/$$
 requirements.

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -177,7 +177,7 @@ Add $cref/optimization/optimize/$$ of conditional expressions; see
 $cref/CondExp/CondExp/Optimize/$$.
 $lnext
 Add a phantom argument at the beginning of the operations sequence;
-$cref/size_op_arg/seq_property/size_op_arg/$$ and $cref seq_property.cpp$$.
+$cref/size_op_arg/fun_property/size_op_arg/$$ and $cref fun_property.cpp$$.
 (This helps with the optimization mentioned above.)
 $lnext
 Add the function $cref number_skip$$ to measure how much optimization

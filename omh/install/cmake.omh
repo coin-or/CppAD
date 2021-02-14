@@ -506,11 +506,11 @@ $codei%
     std::numeric_limits<%cppad_tape_addr_type%>::max()
 %$$
 must be larger than any of the following:
-$cref/size_op/seq_property/size_op/$$,
-$cref/size_op_arg/seq_property/size_op_arg/$$,
-$cref/size_par/seq_property/size_par/$$,
-$cref/size_text/seq_property/size_text/$$,
-$cref/size_VecAD/seq_property/size_VecAD/$$.
+$cref/size_op/fun_property/size_op/$$,
+$cref/size_op_arg/fun_property/size_op_arg/$$,
+$cref/size_par/fun_property/size_par/$$,
+$cref/size_text/fun_property/size_text/$$,
+$cref/size_VecAD/fun_property/size_VecAD/$$.
 
 $subhead cstdint$$
 If all of the following $code cstdint$$ types are defined,

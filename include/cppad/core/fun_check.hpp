@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FUN_CHECK_HPP
 # define CPPAD_CORE_FUN_CHECK_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -75,7 +75,7 @@ $codei%
 (see $cref/Vector/FunCheck/Vector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 
 $head y$$
 The $icode g$$ result $icode y$$ has prototype
@@ -85,7 +85,7 @@ $codei%
 and its value is $latex G(x)$$.
 The size of $icode y$$
 is equal to $icode m$$, the dimension of the
-$cref/range/seq_property/Range/$$ space for $icode f$$.
+$cref/range/fun_property/Range/$$ space for $icode f$$.
 
 $head x$$
 The $code FunCheck$$ argument $icode x$$ has prototype
@@ -94,7 +94,7 @@ $codei%
 %$$
 and its size
 must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 This specifies that point at which to compare the values
 calculated by $icode f$$ and $icode G$$.
 

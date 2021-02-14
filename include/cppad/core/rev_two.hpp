@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_REV_TWO_HPP
 # define CPPAD_CORE_REV_TWO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -60,7 +60,7 @@ $codei%
 (see $cref/BaseVector/RevTwo/BaseVector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the partial derivatives listed above.
 
@@ -73,7 +73,7 @@ $codei%
 We use $icode p$$ to denote the size of the vector $icode i$$.
 All of the indices in $icode i$$
 must be less than $icode m$$, the dimension of the
-$cref/range/seq_property/Range/$$ space for $icode f$$; i.e.,
+$cref/range/fun_property/Range/$$ space for $icode f$$; i.e.,
 for $latex \ell = 0 , \ldots , p-1$$, $latex i[ \ell ]  < m$$.
 
 $head j$$

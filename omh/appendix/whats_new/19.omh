@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -715,9 +715,9 @@ $head 01-16$$
 More improvements, and bug fixes, in the optimization of $cref atomic$$
 operations.
 This results in a reduction in the number of parameters
-$cref/size_par/seq_property/size_par/$$
+$cref/size_par/fun_property/size_par/$$
 and the number of variables
-$cref/size_var/seq_property/size_var/$$.
+$cref/size_var/fun_property/size_var/$$.
 
 $head 01-15$$
 Fix a bug in the optimization of $cref atomic_three$$
@@ -760,7 +760,7 @@ Move the checkpoint examples below the
 $cref/checkpoint/chkpoint_one/$$ documentation.
 $lnext
 A phantom parameter, at index zero, was added; see
-$cref/size_par/seq_property/size_par/$$.
+$cref/size_par/fun_property/size_par/$$.
 $lnext
 There appears to have been a bug in $code put_con_par$$ (not tested for)
 whereby a constant parameter might match a dynamic parameter

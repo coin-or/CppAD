@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_SPARSE_JACOBIAN_HPP
 # define CPPAD_CORE_SPARSE_JACOBIAN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -45,8 +45,8 @@ $icode%jac% = %f%.SparseJacobian(%x%)
 %$$
 
 $head Purpose$$
-We use $latex n$$ for the $cref/domain/seq_property/Domain/$$ size,
-and $latex m$$ for the $cref/range/seq_property/Range/$$ size of $icode f$$.
+We use $latex n$$ for the $cref/domain/fun_property/Domain/$$ size,
+and $latex m$$ for the $cref/range/fun_property/Range/$$ size of $icode f$$.
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ do denote the
 $cref/AD function/glossary/AD Function/$$
 corresponding to $icode f$$.
@@ -79,7 +79,7 @@ $codei%
 (see $cref/BaseVector/sparse_jacobian/BaseVector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the Jacobian.
 

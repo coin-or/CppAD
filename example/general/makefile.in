@@ -119,7 +119,7 @@ am__general_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	num_limits.cpp ode_stiff.cpp taylor_ode.cpp opt_val_hes.cpp \
 	con_dyn_var.cpp pow.cpp pow_nan.cpp print_for.cpp \
 	rev_checkpoint.cpp reverse_one.cpp reverse_three.cpp \
-	reverse_two.cpp rev_one.cpp rev_two.cpp seq_property.cpp \
+	reverse_two.cpp rev_one.cpp rev_two.cpp fun_property.cpp \
 	sign.cpp sin.cpp sinh.cpp sqrt.cpp stack_machine.cpp sub.cpp \
 	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp unary_minus.cpp \
 	unary_plus.cpp value.cpp var2par.cpp vec_ad.cpp
@@ -162,7 +162,7 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	pow_nan.$(OBJEXT) print_for.$(OBJEXT) rev_checkpoint.$(OBJEXT) \
 	reverse_one.$(OBJEXT) reverse_three.$(OBJEXT) \
 	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) rev_two.$(OBJEXT) \
-	seq_property.$(OBJEXT) sign.$(OBJEXT) sin.$(OBJEXT) \
+	fun_property.$(OBJEXT) sign.$(OBJEXT) sin.$(OBJEXT) \
 	sinh.$(OBJEXT) sqrt.$(OBJEXT) stack_machine.$(OBJEXT) \
 	sub.$(OBJEXT) sub_eq.$(OBJEXT) tan.$(OBJEXT) tanh.$(OBJEXT) \
 	tape_index.$(OBJEXT) unary_minus.$(OBJEXT) \
@@ -209,15 +209,15 @@ am__depfiles_remade = ./$(DEPDIR)/abort_recording.Po \
 	./$(DEPDIR)/for_one.Po ./$(DEPDIR)/for_two.Po \
 	./$(DEPDIR)/forward.Po ./$(DEPDIR)/forward_dir.Po \
 	./$(DEPDIR)/forward_order.Po ./$(DEPDIR)/fun_assign.Po \
-	./$(DEPDIR)/fun_check.Po ./$(DEPDIR)/general.Po \
-	./$(DEPDIR)/hes_lagrangian.Po ./$(DEPDIR)/hes_lu_det.Po \
-	./$(DEPDIR)/hes_minor_det.Po ./$(DEPDIR)/hes_times_dir.Po \
-	./$(DEPDIR)/hessian.Po ./$(DEPDIR)/independent.Po \
-	./$(DEPDIR)/integer.Po ./$(DEPDIR)/interface2c.Po \
-	./$(DEPDIR)/interp_onetape.Po ./$(DEPDIR)/interp_retape.Po \
-	./$(DEPDIR)/jac_lu_det.Po ./$(DEPDIR)/jac_minor_det.Po \
-	./$(DEPDIR)/jacobian.Po ./$(DEPDIR)/log.Po \
-	./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po \
+	./$(DEPDIR)/fun_check.Po ./$(DEPDIR)/fun_property.Po \
+	./$(DEPDIR)/general.Po ./$(DEPDIR)/hes_lagrangian.Po \
+	./$(DEPDIR)/hes_lu_det.Po ./$(DEPDIR)/hes_minor_det.Po \
+	./$(DEPDIR)/hes_times_dir.Po ./$(DEPDIR)/hessian.Po \
+	./$(DEPDIR)/independent.Po ./$(DEPDIR)/integer.Po \
+	./$(DEPDIR)/interface2c.Po ./$(DEPDIR)/interp_onetape.Po \
+	./$(DEPDIR)/interp_retape.Po ./$(DEPDIR)/jac_lu_det.Po \
+	./$(DEPDIR)/jac_minor_det.Po ./$(DEPDIR)/jacobian.Po \
+	./$(DEPDIR)/log.Po ./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po \
 	./$(DEPDIR)/lu_ratio.Po ./$(DEPDIR)/lu_vec_ad.Po \
 	./$(DEPDIR)/lu_vec_ad_ok.Po ./$(DEPDIR)/mul.Po \
 	./$(DEPDIR)/mul_eq.Po ./$(DEPDIR)/mul_level.Po \
@@ -231,14 +231,14 @@ am__depfiles_remade = ./$(DEPDIR)/abort_recording.Po \
 	./$(DEPDIR)/print_for.Po ./$(DEPDIR)/rev_checkpoint.Po \
 	./$(DEPDIR)/rev_one.Po ./$(DEPDIR)/rev_two.Po \
 	./$(DEPDIR)/reverse_one.Po ./$(DEPDIR)/reverse_three.Po \
-	./$(DEPDIR)/reverse_two.Po ./$(DEPDIR)/seq_property.Po \
-	./$(DEPDIR)/sign.Po ./$(DEPDIR)/sin.Po ./$(DEPDIR)/sinh.Po \
-	./$(DEPDIR)/sqrt.Po ./$(DEPDIR)/stack_machine.Po \
-	./$(DEPDIR)/sub.Po ./$(DEPDIR)/sub_eq.Po ./$(DEPDIR)/tan.Po \
-	./$(DEPDIR)/tanh.Po ./$(DEPDIR)/tape_index.Po \
-	./$(DEPDIR)/taylor_ode.Po ./$(DEPDIR)/unary_minus.Po \
-	./$(DEPDIR)/unary_plus.Po ./$(DEPDIR)/value.Po \
-	./$(DEPDIR)/var2par.Po ./$(DEPDIR)/vec_ad.Po
+	./$(DEPDIR)/reverse_two.Po ./$(DEPDIR)/sign.Po \
+	./$(DEPDIR)/sin.Po ./$(DEPDIR)/sinh.Po ./$(DEPDIR)/sqrt.Po \
+	./$(DEPDIR)/stack_machine.Po ./$(DEPDIR)/sub.Po \
+	./$(DEPDIR)/sub_eq.Po ./$(DEPDIR)/tan.Po ./$(DEPDIR)/tanh.Po \
+	./$(DEPDIR)/tape_index.Po ./$(DEPDIR)/taylor_ode.Po \
+	./$(DEPDIR)/unary_minus.Po ./$(DEPDIR)/unary_plus.Po \
+	./$(DEPDIR)/value.Po ./$(DEPDIR)/var2par.Po \
+	./$(DEPDIR)/vec_ad.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -585,7 +585,7 @@ general_SOURCES = \
 	reverse_two.cpp \
 	rev_one.cpp \
 	rev_two.cpp \
-	seq_property.cpp \
+	fun_property.cpp \
 	sign.cpp \
 	sin.cpp \
 	sinh.cpp \
@@ -697,6 +697,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward_order.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_assign.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_check.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_property.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/general.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_lagrangian.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_lu_det.Po@am__quote@ # am--include-marker
@@ -739,7 +740,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_one.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_three.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_two.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/seq_property.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sign.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sinh.Po@am__quote@ # am--include-marker
@@ -952,6 +952,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/forward_order.Po
 	-rm -f ./$(DEPDIR)/fun_assign.Po
 	-rm -f ./$(DEPDIR)/fun_check.Po
+	-rm -f ./$(DEPDIR)/fun_property.Po
 	-rm -f ./$(DEPDIR)/general.Po
 	-rm -f ./$(DEPDIR)/hes_lagrangian.Po
 	-rm -f ./$(DEPDIR)/hes_lu_det.Po
@@ -994,7 +995,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/reverse_one.Po
 	-rm -f ./$(DEPDIR)/reverse_three.Po
 	-rm -f ./$(DEPDIR)/reverse_two.Po
-	-rm -f ./$(DEPDIR)/seq_property.Po
 	-rm -f ./$(DEPDIR)/sign.Po
 	-rm -f ./$(DEPDIR)/sin.Po
 	-rm -f ./$(DEPDIR)/sinh.Po
@@ -1104,6 +1104,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/forward_order.Po
 	-rm -f ./$(DEPDIR)/fun_assign.Po
 	-rm -f ./$(DEPDIR)/fun_check.Po
+	-rm -f ./$(DEPDIR)/fun_property.Po
 	-rm -f ./$(DEPDIR)/general.Po
 	-rm -f ./$(DEPDIR)/hes_lagrangian.Po
 	-rm -f ./$(DEPDIR)/hes_lu_det.Po
@@ -1146,7 +1147,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/reverse_one.Po
 	-rm -f ./$(DEPDIR)/reverse_three.Po
 	-rm -f ./$(DEPDIR)/reverse_two.Po
-	-rm -f ./$(DEPDIR)/seq_property.Po
 	-rm -f ./$(DEPDIR)/sign.Po
 	-rm -f ./$(DEPDIR)/sin.Po
 	-rm -f ./$(DEPDIR)/sinh.Po

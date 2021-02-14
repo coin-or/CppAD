@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -56,7 +56,7 @@ $codei%
 %$$
 (see $cref/Vector/forward_zero/Vector/$$ below)
 and its size must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 
 $head s$$
 If the argument $icode s$$ is not present, $code std::cout$$
@@ -76,7 +76,7 @@ $codei%
 (see $cref/Vector/forward_zero/Vector/$$ below)
 and its value is $latex F(x)$$ at $icode%x% = %x0%$$.
 The size of $icode y0$$ is equal to $icode m$$, the dimension of the
-$cref/range/seq_property/Range/$$ space for $icode f$$.
+$cref/range/fun_property/Range/$$ space for $icode f$$.
 
 $head Vector$$
 The type $icode Vector$$ must be a $cref SimpleVector$$ class with

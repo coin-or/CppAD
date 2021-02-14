@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_TWO_DYNAMIC_HPP
 # define CPPAD_CORE_CHKPOINT_TWO_DYNAMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -48,7 +48,7 @@ $head dynamic$$
 This is a vector with new values for the dynamic parameters
 in the function $icode fun$$.
 Is size must be equal to
-$cref/fun.size_dyn_ind()/seq_property/size_dyn_par/$$.
+$cref/fun.size_dyn_ind()/fun_property/size_dyn_par/$$.
 This only affects the copy of $icode fun$$ used by $icode chk_fun$$.
 
 $head Multi-Threading$$

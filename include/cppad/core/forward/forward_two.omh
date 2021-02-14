@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -78,7 +78,7 @@ $codei%
 %$$
 (see $cref/Vector/forward_two/Vector/$$ below)
 and its size must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 
 $head y2$$
 The result $icode y2$$ has prototype
@@ -87,7 +87,7 @@ $codei%
 %$$
 (see $cref/Vector/forward_two/Vector/$$ below)
 The size of $icode y1$$ is equal to $icode m$$, the dimension of the
-$cref/range/seq_property/Range/$$ space for $icode f$$.
+$cref/range/fun_property/Range/$$ space for $icode f$$.
 Its value is given element-wise by the formula in the
 $cref/purpose/forward_two/Purpose/$$ above.
 

@@ -147,7 +147,7 @@ extern bool rev_checkpoint(void);
 extern bool reverse_one(void);
 extern bool reverse_three(void);
 extern bool reverse_two(void);
-extern bool seq_property(void);
+extern bool fun_property(void);
 extern bool sign(void);
 extern bool taylor_ode(void);
 extern bool vec_ad(void);
@@ -257,7 +257,7 @@ int main(void)
     Run( reverse_one,       "reverse_one"      );
     Run( reverse_three,     "reverse_three"    );
     Run( reverse_two,       "reverse_two"      );
-    Run( seq_property,      "seq_property"     );
+    Run( fun_property,      "fun_property"     );
     Run( sign,              "sign"             );
     Run( taylor_ode,        "ode_taylor"       );
     Run( vec_ad,            "vec_ad"           );

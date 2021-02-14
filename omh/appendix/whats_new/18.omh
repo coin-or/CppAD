@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -385,7 +385,7 @@ $lend
 
 $head 08-05$$
 The amount of memory in an operation sequence has changed; see
-$cref/f.size_op_seq/seq_property/size_op_seq/$$.
+$cref/f.size_op_seq/fun_property/size_op_seq/$$.
 
 $head 08-04$$
 Remove the restrictions on dynamic parameters.
@@ -418,9 +418,9 @@ $cref/dynamic/Independent/dynamic/$$ parameters
 in a call to Independent.
 For this reason the function
 $icode%f%.size_dynamic()%$$ has been replaced by
-$cref/size_dyn_ind/seq_property/size_dyn_ind/$$,
-$cref/size_dyn_par/seq_property/size_dyn_par/$$, and
-$cref/size_dyn_arg/seq_property/size_dyn_arg/$$.
+$cref/size_dyn_ind/fun_property/size_dyn_ind/$$,
+$cref/size_dyn_par/fun_property/size_dyn_par/$$, and
+$cref/size_dyn_arg/fun_property/size_dyn_arg/$$.
 
 
 $head 07-23$$
@@ -453,14 +453,14 @@ $head 06-19$$
 Another (smaller) reduction in the amount of extra memory used during the
 $cref optimize$$ process.
 This time a vector of length
-$cref/size_op/seq_property/size_op/$$ was converted from the type
+$cref/size_op/fun_property/size_op/$$ was converted from the type
 used for C++ enums to a type that only used one byte.
 
 $head 06-13$$
 Reduce the amount of extra memory used during the $cref optimize$$ process.
 To be more specific, two vectors that were separate now share the same memory.
 These vectors have size equal to
-$cref/size_op/seq_property/size_op/$$
+$cref/size_op/fun_property/size_op/$$
 for the old operation sequence, and element type
 $cref/cppad_tape_addr_type/cmake/cppad_tape_addr_type/$$.
 
@@ -509,7 +509,7 @@ the size of an enum type to the size of an $code unsigned char$$; i.e.,
 one byte.
 This changed $code CppAD::local::OpCode$$ to
 $code CPPAD_VEC_ENUM_TYPE$$ in the expression used to compute
-$cref/size_op_arg/seq_property/size_op_seq/$$.
+$cref/size_op_arg/fun_property/size_op_seq/$$.
 Note $code CPPAD_VEC_ENUM_TYPE$$ is not in CppAD API and may change.
 $lnext
 There was a bug in the call to $code optimize$$ for the CppAD
@@ -543,10 +543,10 @@ $cref/11-20/whats_new_17/11-20/$$ in whats new for 2017.
 This caused CppAD to always use more memory for storing tapes.
 This has been fixed so this extra memory is only allocated when it is needed.
 In addition it can be freed; see
-$cref/size_random/seq_property/size_random/$$ and
+$cref/size_random/fun_property/size_random/$$ and
 $cref/clear_subgraph/subgraph_reverse/clear_subgraph/$$.
 In addition, this changed the amount of memory returned by
-$cref/size_op_seq/seq_property/size_op_seq/$$ so that it
+$cref/size_op_seq/fun_property/size_op_seq/$$ so that it
 no longer includes the part returned by $code size_random$$.
 
 $head 04-29$$

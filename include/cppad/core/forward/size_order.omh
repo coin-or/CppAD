@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -22,7 +22,7 @@ $head Syntax$$
 $icode%s% = %f%.size_order()%$$
 
 $subhead See Also$$
-$cref seq_property$$
+$cref fun_property$$
 
 $head Purpose$$
 Determine the number of Taylor coefficient orders, per variable,direction,
@@ -73,7 +73,7 @@ the variables in the operation sequence corresponding to $icode f$$.
 Thus there are $latex q + 1$$ (order zero through $icode q$$)
 Taylor coefficients per variable,direction.
 (You can determine the number of variables in the operation sequence
-using the $cref/size_var/seq_property/size_var/$$ function.)
+using the $cref/size_var/fun_property/size_var/$$ function.)
 
 $head capacity_order$$
 If the number of Taylor coefficient orders

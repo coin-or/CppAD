@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -27,7 +27,7 @@ $head Purpose$$
 Consider the case where an inner function is used repeatedly in the
 definition of an outer function.
 In this case, it may reduce the number of variables
-$cref/size_var/seq_property/size_var/$$,
+$cref/size_var/fun_property/size_var/$$,
 and hence the required memory.
 
 $head Simple Case$$

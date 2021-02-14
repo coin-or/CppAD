@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_NEW_DYNAMIC_HPP
 # define CPPAD_CORE_NEW_DYNAMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -59,7 +59,7 @@ It size must be the same as the size of the independent
 $cref/dynamic/Independent/dynamic/$$ parameter vector
 in the call to $code Independent$$ that started
 the recording for $icode f$$; see
-$cref/size_dyn_ind/seq_property/size_dyn_ind/$$.
+$cref/size_dyn_ind/fun_property/size_dyn_ind/$$.
 
 $head BaseVector$$
 The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with

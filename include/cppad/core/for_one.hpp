@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FOR_ONE_HPP
 # define CPPAD_CORE_FOR_ONE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -59,7 +59,7 @@ $codei%
 (see $cref/Vector/ForOne/Vector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the partial derivative.
 
@@ -69,7 +69,7 @@ $codei%
     size_t %j%
 %$$
 an is less than $icode n$$,
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 It specifies the component of $icode F$$
 for which we are computing the partial derivative.
 
@@ -80,7 +80,7 @@ $codei%
 %$$
 (see $cref/Vector/ForOne/Vector/$$ below)
 and its size is $latex m$$, the dimension of the
-$cref/range/seq_property/Range/$$ space for $icode f$$.
+$cref/range/fun_property/Range/$$ space for $icode f$$.
 The value of $icode dy$$ is the partial of $latex F$$ with respect to
 $latex x_j$$ evaluated at $icode x$$; i.e.,
 for $latex i = 0 , \ldots , m - 1$$

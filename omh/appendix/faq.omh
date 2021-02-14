@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -150,7 +150,7 @@ Each call to $cref Reverse$$ computes the derivative of one
 range direction with respect to all the domain directions.
 The times required for (speed of)
 calls $code Forward$$ and $code Reverse$$ are about equal.
-The $cref/Parameter/seq_property/Parameter/$$
+The $cref/Parameter/fun_property/Parameter/$$
 function can be used to quickly determine that
 some range directions have derivative zero.
 

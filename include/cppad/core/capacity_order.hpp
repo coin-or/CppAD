@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CAPACITY_ORDER_HPP
 # define CPPAD_CORE_CAPACITY_ORDER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -28,7 +28,7 @@ $head Syntax$$
 $icode%f%.capacity_order(%c%)%$$
 
 $subhead See Also$$
-$cref seq_property$$
+$cref fun_property$$
 
 $head Purpose$$
 The Taylor coefficients calculated by $cref Forward$$ mode calculations

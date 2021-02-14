@@ -17,14 +17,14 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   cppad_lib/compiled_fun.cpp
-#   example/compiled_fun
-#   include/cppad/example/compiled_fun.hpp
+#   omh/seq_property.omh
+#	example/general/seq_property.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|compiled_fun|code_gen_fun|g
+#   s|omh/seq_property.omh|include/cppad/core/fun_property.omh|
+#	s|example/general/seq_property.cpp|example/general/fun_property.cpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -36,5 +36,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|compiled_fun|code_gen_fun|g
-s|COMPILED_FUN|CODE_GEN_FUN|g
+s|omh/seq_property.omh|include/cppad/core/fun_property.omh|
+s|example/general/seq_property.cpp|example/general/fun_property.cpp|
+s|ADFun Sequence Properties|ADFun Function Properties|
+s|seq_property|fun_property|g

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -60,11 +60,11 @@ $head Notation$$
 
 $subhead n$$
 We use $icode n$$ to denote the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 
 $subhead m$$
 We use $icode m$$ to denote the dimension of the
-$cref/range/seq_property/Range/$$ space for $icode f$$.
+$cref/range/fun_property/Range/$$ space for $icode f$$.
 
 $head f$$
 The $cref ADFun$$ object $icode f$$ has prototype
@@ -102,7 +102,7 @@ $codei%
 %$$
 (see $cref/BaseVector/forward_order/BaseVector/$$ below).
 As above, we use $icode n$$ to denote the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 The size of $icode xq$$ must be either $icode n$$ or
 $icode%n%*(%q%+1)%$$.
 After this call we will have

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -394,7 +394,7 @@ $pre
 
 $$
 Correct some references to $code var_size$$ that should have been
-$cref/size_var/seq_property/size_var/$$.
+$cref/size_var/fun_property/size_var/$$.
 
 $head 11-04$$
 Put text written to standard output in the documentation for the
@@ -801,7 +801,7 @@ $pre
 
 $$
 The $code var_size$$ member function was changed to
-$cref/size_var/seq_property/size_var/$$
+$cref/size_var/fun_property/size_var/$$
 (this is not backward compatible, but $code var_size$$ was just added on
 $cref/04-03/whats_new_06/04-03/$$).
 
@@ -839,8 +839,8 @@ $head 04-02$$
 The member functions of $cref ADFun$$ that return properties of
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
-have been grouped into the $cref seq_property$$ section.
-In addition, the $cref seq_property.cpp$$ example has been added.
+have been grouped into the $cref fun_property$$ section.
+In addition, the $cref fun_property.cpp$$ example has been added.
 $pre
 
 $$

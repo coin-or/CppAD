@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_DEPENDENT_HPP
 # define CPPAD_CORE_DEPENDENT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -45,9 +45,9 @@ $latex \[
 \] $$
 where $latex B$$ is the space corresponding to objects of type $icode Base$$.
 The value $latex n$$ is the dimension of the
-$cref/domain/seq_property/Domain/$$ space for the operation sequence.
+$cref/domain/fun_property/Domain/$$ space for the operation sequence.
 The value $latex m$$ is the dimension of the
-$cref/range/seq_property/Range/$$ space for the operation sequence
+$cref/range/fun_property/Range/$$ space for the operation sequence
 (which is determined by the size of $icode y$$).
 
 $head f$$

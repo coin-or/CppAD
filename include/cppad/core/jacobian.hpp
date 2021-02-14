@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_JACOBIAN_HPP
 # define CPPAD_CORE_JACOBIAN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -55,7 +55,7 @@ $codei%
 (see $cref/Vector/Jacobian/Vector/$$ below)
 and its size
 must be equal to $icode n$$, the dimension of the
-$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+$cref/domain/fun_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the Jacobian.
 
@@ -66,9 +66,9 @@ $codei%
 %$$
 (see $cref/Vector/Jacobian/Vector/$$ below)
 and its size is $latex m * n$$; i.e., the product of the
-$cref/domain/seq_property/Domain/$$
+$cref/domain/fun_property/Domain/$$
 and
-$cref/range/seq_property/Range/$$
+$cref/range/fun_property/Range/$$
 dimensions for $icode f$$.
 For $latex i = 0 , \ldots , m - 1 $$
 and $latex j = 0 , \ldots , n - 1$$

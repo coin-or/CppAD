@@ -141,7 +141,7 @@ general_SOURCES   = \
 	reverse_two.cpp \
 	rev_one.cpp \
 	rev_two.cpp \
-	seq_property.cpp \
+	fun_property.cpp \
 	sign.cpp \
 	sin.cpp \
 	sinh.cpp \

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin seq_property.cpp$$
+$begin fun_property.cpp$$
 $spell
     op
     arg
@@ -20,7 +20,7 @@ $spell
     VecAD
 $$
 
-$section ADFun Sequence Properties: Example and Test$$
+$section ADFun Function Properties: Example and Test$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
@@ -33,7 +33,7 @@ $end
 // Note that CPPAD_VEC_ENUM_TYPE is not part of CppAD API and may change
 # define CPPAD_VEC_ENUM_TYPE unsigned char
 
-bool seq_property(void)
+bool fun_property(void)
 {   bool ok = true;
     using CppAD::AD;
 

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -36,8 +36,8 @@ defines a function
 $latex F : \B{R}^n \rightarrow \B{R}^m $$
 where $latex \B{R}$$ is the space corresponding to objects of type
 $icode Base$$ (usually the real numbers),
-$icode n$$ is the size of the $cref/domain/seq_property/Domain/$$ space, and
-$icode m$$ is the size of the $cref/range/seq_property/Range/$$ space.
+$icode n$$ is the size of the $cref/domain/fun_property/Domain/$$ space, and
+$icode m$$ is the size of the $cref/range/fun_property/Range/$$ space.
 We refer to $latex F$$ as the AD function corresponding to
 the operation sequence stored in the object $icode f$$.
 (See the $cref/FunCheck discussion/FunCheck/Discussion/$$ for

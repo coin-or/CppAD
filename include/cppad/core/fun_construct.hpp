@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_FUN_CONSTRUCT_HPP
 # define CPPAD_CORE_FUN_CONSTRUCT_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -94,7 +94,7 @@ $codei%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
 $codei%
     %g%.size_var()
 %$$
-returns the value zero (see $cref/size_var/seq_property/size_var/$$).
+returns the value zero (see $cref/size_var/fun_property/size_var/$$).
 
 $head Sequence Constructor$$
 The sequence constructor

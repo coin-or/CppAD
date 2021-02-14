@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -710,7 +710,7 @@ $list number$$
 The $cref/tape_addr_type/autotools/tape_addr_type/$$ option was added
 to the $cref/configure/autotools/Configure/$$ command line.
 $lnext
-The function $cref/size_op_seq/seq_property/size_op_seq/$$ results uses
+The function $cref/size_op_seq/fun_property/size_op_seq/$$ results uses
 $code sizeof(CppAD_TAPE_ADDR_TYPE)$$
 where it used to use $code sizeof(size_t)$$.
 $lnext
@@ -782,7 +782,7 @@ $cref/
 description has been changed to explicitly specify that the
 default constructor is used to initialize elements of the array.
 $lnext
-The $cref/size_op_seq/seq_property/size_op_seq/$$ documentation
+The $cref/size_op_seq/fun_property/size_op_seq/$$ documentation
 has been improved to mention that the allocated memory may be larger.
 $lend
 

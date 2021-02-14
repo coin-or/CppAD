@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_NUM_SKIP_HPP
 # define CPPAD_CORE_NUM_SKIP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -27,7 +27,7 @@ $head Syntax$$
 $icode%n% = %f%.number_skip()%$$
 
 $subhead See Also$$
-$cref seq_property$$
+$cref fun_property$$
 
 $head Purpose$$
 The $cref/conditional expressions/CondExp/$$ use either the

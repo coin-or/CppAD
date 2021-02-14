@@ -257,7 +257,7 @@ $rref romberg_one.cpp$$
 $rref rosen_34.cpp$$
 $rref runge45_1.cpp$$
 $rref runge_45.cpp$$
-$rref seq_property.cpp$$
+$rref fun_property.cpp$$
 $rref set_union.cpp$$
 $rref simple_ad_bthread.cpp$$
 $rref simple_ad_openmp.cpp$$

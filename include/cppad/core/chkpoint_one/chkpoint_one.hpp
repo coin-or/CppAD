@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
 # define CPPAD_CORE_CHKPOINT_ONE_CHKPOINT_ONE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -194,7 +194,7 @@ This $code size_var$$ member function return value has prototype
 $codei%
     size_t %sv%
 %$$
-It is the $cref/size_var/seq_property/size_var/$$ for the
+It is the $cref/size_var/fun_property/size_var/$$ for the
 $codei%ADFun<%Base%>%$$ object is used to store the operation sequence
 corresponding to $icode algo$$.
 

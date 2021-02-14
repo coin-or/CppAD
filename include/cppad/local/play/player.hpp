@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PLAY_PLAYER_HPP
 # define CPPAD_LOCAL_PLAY_PLAYER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -736,7 +736,7 @@ public:
 
     /// A measure of amount of memory used to store
     /// the operation sequence, just lengths, not capacities.
-    /// In user api as f.size_op_seq(); see the file seq_property.omh.
+    /// In user api as f.size_op_seq(); see the file fun_property.omh.
     size_t size_op_seq(void) const
     {   // check assumptions made by ad_fun<Base>::size_op_seq()
         CPPAD_ASSERT_UNKNOWN( op_vec_.size() == num_op_rec() );
@@ -756,7 +756,7 @@ public:
         ;
     }
     /// A measure of amount of memory used for random access routine
-    /// In user api as f.size_random(); see the file seq_property.omh.
+    /// In user api as f.size_random(); see the file fun_property.omh.
     size_t size_random(void) const
     {
 # ifndef NDEBUG

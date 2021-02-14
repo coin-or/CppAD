@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -122,7 +122,7 @@ $subhead Deprecated 2006-04-03$$
 There are other sizes attached to an ADFun object, for example,
 the number of operations in the sequence.
 In order to avoid confusion with these other sizes,
-use $cref/size_var/seq_property/size_var/$$ to obtain
+use $cref/size_var/fun_property/size_var/$$ to obtain
 the number of variables in the operation sequence.
 
 $head taylor_size$$
