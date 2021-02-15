@@ -62,7 +62,7 @@ Special macro for exporting windows DLL symbols; see
 https://gitlab.kitware.com/cmake/community/wikis/doc/tutorials/BuildingWinDLL
 */
 /*
-This commented out code is for building windows shared libraries wich
+This commented out code is for building windows shared libraries which
 currently does not work for CppAD:
 # ifdef  _MSC_VER
 # ifdef  cppad_lib_EXPORTS

@@ -243,7 +243,7 @@ $icode%graph_obj%.operator_vec_push_back(%op_enum%)
 %$$
 $icode%graph_obj%.operator_arg_push_back(%argument%)
 %$$
-$icode%graph_obj%.dependent_vec_get(%node_index%)
+$icode%graph_obj%.dependent_vec_push_back(%node_index%)
 %$$
 
 $subhead Find$$
