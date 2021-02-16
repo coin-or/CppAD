@@ -570,30 +570,29 @@ to avoid unnecessary operations.
 <br>
 <big><a name="partial_x.azmul" id="partial_x.azmul">azmul</a></big>
 <br>
-If you are not checking for
-
-<code><font color="blue"><span style='white-space: nowrap'>IdenticalZero(</span></font><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>*(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)+</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>])</span></font></code>
-,
-you should use <a href="azmul.htm" target="_top"><span style='white-space: nowrap'>azmul</span></a>
- to compute the product
-<small>@[@
-
-\R{partial\_y}[ i * (q + 1 ) + k ]
-\times
-( \partial F_i^k / \partial x_j^\ell )
-
-@]@</small>
-so that if the partial w.r.t. <small>@(@
-y_i
-@)@</small> is zero,
-the product will be zero even if the other term is infinite or nan.
-This is important because reverse mode uses zero weight to signify
-that the corresponding dependent variable is not selected.
-(Note this is not necessary if you know that
+An <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimized</span></a>
+ function will use zero
+for values in 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+ that are
+not necessary in the current context.
+If you divide by these values when computing
 <small>@(@
-\partial F_i^k / \partial x_j^\ell
-@)@</small> will not be infinite
-or nan.
+( \partial F_i^k / \partial x_j^\ell )
+@)@</small> you could get an nan
+if the corresponding value in 
+<code><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i></code>
+ is zero.
+To be careful, if you do divide by
+
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i></code>
+, use <a href="azmul.htm" target="_top"><span style='white-space: nowrap'>azmul</span></a>
+
+for to avoid zero over zero calculations.
 
 
 <br>

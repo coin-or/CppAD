@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 02-15 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,7 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>02-15</option>
+<option>02-16</option>
 <option>02-14</option>
 <option>02-12</option>
 <option>02-11</option>
@@ -91,15 +91,17 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
 <br>
-<b><big><a name="02-15" id="02-15">02-15</a></big></b>
+<b><big><a name="02-16" id="02-16">02-16</a></big></b>
 <br>
-Add discussion of why to use
+There was a problem with atomic functions, <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+, and reverse mode
+that would lead to unexpected nans.
+This has been fixed by changing values,
+that the optimizer determines are not used, from nan to zero.
+A discussion of this was added below
 <a href="atomic_three_reverse.htm#partial_x.azmul" target="_top"><span style='white-space: nowrap'>azmul</span></a>
 
-during atomic reverse mode computations.
-In addition, change the <a href="atomic_three_reverse.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_three_reverse.cpp</span></a>
- example
-so it demonstrates how to do this.
+in the atomic reverse documentation.
 
 <br>
 <br>
