@@ -22,9 +22,17 @@ $spell
     const
     ifndef
     iterator
+	azmul
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 02-15$$
+Add discussion of why to use
+$cref/azmul/atomic_three_reverse/partial_x/azmul/$$
+during atomic reverse mode computations.
+In addition, change the $cref atomic_three_reverse.cpp$$ example
+so it demonstrates how to do this.
 
 $head 02-14$$
 $list number$$

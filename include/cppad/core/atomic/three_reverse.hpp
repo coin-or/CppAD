@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_THREE_REVERSE_HPP
 # define CPPAD_CORE_ATOMIC_THREE_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -30,13 +30,12 @@ $spell
     af
     aparameter
     enum
-$$
-
-$section Atomic Function Reverse Mode$$
-$spell
+    azmul
     ataylor
     apartial
 $$
+
+$section Atomic Function Reverse Mode$$
 
 $head Base$$
 This syntax is used by $icode%f%.Reverse%$$ where $icode f$$ has prototype
@@ -246,6 +245,24 @@ see $cref base_identical$$.
 This can be used,
 in a similar way to $cref/need_y/atomic_three_forward/need_y/$$,
 to avoid unnecessary operations.
+
+$subhead azmul$$
+If you are not checking for
+$codei%IdenticalZero(%partial_y%[%i%*(%q%+1)+%k%])%$$,
+you should use $cref azmul$$ to compute the product
+$latex \[
+\R{partial\_y}[ i * (q + 1 ) + k ]
+\times
+( \partial F_i^k / \partial x_j^\ell )
+\] $$
+so that if the partial w.r.t. $latex y_i$$ is zero,
+the product will be zero even if the other term is infinite or nan.
+This is important because reverse mode uses zero weight to signify
+that the corresponding dependent variable is not selected.
+(Note this is not necessary if you know that
+$latex  \partial F_i^k / \partial x_j^\ell $$ will not be infinite
+or nan.
+
 
 $head apartial_x$$
 The specifications for $icode apartial_x$$ is the same as for
