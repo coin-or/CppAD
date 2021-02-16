@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 # define CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -206,7 +206,9 @@ bool optimize_run(
     );
 
     // number of variables in the player
+# ifndef NDEBUG
     const size_t num_var = play->num_var_rec();
+# endif
 
     // number of parameter in the player
     const size_t num_par = play->num_par_rec();
@@ -296,11 +298,6 @@ bool optimize_run(
         dyn_previous
     );
     // -----------------------------------------------------------------------
-
-    // nan with type Base
-    Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
-
-    // -------------------------------------------------------------
     // conditional expression information
     //
     // Size of the conditional expression information structure.
@@ -375,6 +372,9 @@ bool optimize_run(
             new_par[i_par] = rec->put_con_par(par);
         }
     }
+
+    // index corresponding to the parameter zero
+    addr_t zero_par_index = rec->put_con_par( Base(0) );
 
     // set new_par for the dependent dynamic parameters
     size_t i_dyn = num_dynamic_ind;  // dynamic parmaeter index
@@ -1184,10 +1184,12 @@ bool optimize_run(
             CPPAD_ASSERT_UNKNOWN( previous == 0 );
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             new_arg[0] = new_par[ arg[0] ];
-            if( new_arg[0] != addr_t_max )
-                rec->PutArg(new_arg[0]);
-            else
-                rec->PutArg(0); // argument not used
+            if( new_arg[0] == addr_t_max )
+            {   // This parameter is not used, so we put zero here. If we
+                // put nan here, atomic reverse mode would have to use azmul.
+                new_arg[0] = zero_par_index;
+            }
+            rec->PutArg(new_arg[0]);
             new_op[i_op] = addr_t( rec->num_op_rec() );
             rec->PutOp(FunapOp);
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
@@ -1200,15 +1202,15 @@ bool optimize_run(
             CPPAD_ASSERT_UNKNOWN( previous == 0 );
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             new_arg[0] = new_var[ random_itr.var2op(size_t(arg[0])) ];
-            if( size_t(new_arg[0]) < num_var )
+            CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_var );
+            if( new_arg[0] != 0 )
             {   rec->PutArg(new_arg[0]);
                 new_op[i_op] = addr_t( rec->num_op_rec() );
                 rec->PutOp(FunavOp);
             }
             else
-            {   // This argument does not affect the result and
-                // has been optimized out so use nan in its place.
-                new_arg[0] = rec->put_con_par( base_nan );
+            {   // This argument does not affect the result.
+                new_arg[0] = zero_par_index;
                 rec->PutArg(new_arg[0]);
                 new_op[i_op] = addr_t( rec->num_op_rec() );
                 rec->PutOp(FunapOp);
@@ -1223,15 +1225,13 @@ bool optimize_run(
             CPPAD_ASSERT_UNKNOWN( previous == 0 );
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             new_arg[0] = new_par[ arg[0] ];
-            if( new_arg[0] != addr_t_max )
-            {   // This parameter is used, but may not by this operation
-                rec->PutArg(new_arg[0]);
-            }
-            else
+            if( new_arg[0] == addr_t_max )
             {   // This parameter is not used here or anywhere.
                 CPPAD_ASSERT_UNKNOWN( op_usage[i_op] == usage_t(no_usage) );
-                rec->PutArg(0); // result not used
+                new_arg[0] = zero_par_index;
             }
+            rec->PutArg(new_arg[0]);
+            //
             new_op[i_op] = addr_t( rec->num_op_rec() );
             rec->PutOp(FunrpOp);
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
@@ -1247,10 +1247,10 @@ bool optimize_run(
             if( op_usage[i_op] == usage_t(yes_usage) )
                 new_var[i_op] = rec->PutOp(FunrvOp);
             else
-            {   // change FunrvOp -> FunrpOp to avoid creating new variable
+            {   // This result is not used.
                 CPPAD_ASSERT_UNKNOWN( op_usage[i_op] == usage_t(no_usage) );
                 CPPAD_ASSERT_NARG_NRES(FunrpOp, 1, 0);
-                rec->PutArg(0); // result not used
+                rec->PutArg( zero_par_index );
                 rec->PutOp(FunrpOp);
             }
 

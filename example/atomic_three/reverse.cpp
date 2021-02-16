@@ -195,39 +195,27 @@ $srccode%cpp% */
             //
             // px_0^0 += py_0^1 * pg_00^0 + py_1^1 * pg_10^0
             //        += py_1^1 * x_1^1
-            partial_x[0*q1+0] += CppAD::azmul(
-                partial_y[1*q1+1] , taylor_x[1*q1+1]
-            );
+            partial_x[0*q1+0] += partial_y[1*q1+1] * taylor_x[1*q1+1];
             //
             // px_0^1 += py_0^1 * pg_00^1 + py_1^1 * pg_10^1
             //        += py_1^1 * x_1^0
-            partial_x[0*q1+1] += CppAD::azmul(
-                partial_y[1*q1+1] , taylor_x[1*q1+0]
-            );
+            partial_x[0*q1+1] += partial_y[1*q1+1] * taylor_x[1*q1+0];
             //
             // px_1^0 += py_0^1 * pg_01^0 + py_1^1 * pg_11^0
             //        += py_1^1 * x_0^1
-            partial_x[1*q1+0] += CppAD::azmul(
-                partial_y[1*q1+1] , taylor_x[0*q1+1]
-            );
+            partial_x[1*q1+0] += partial_y[1*q1+1] * taylor_x[0*q1+1];
             //
             // px_1^1 += py_0^1 * pg_01^1 + py_1^1 * pg_11^1
             //        += py_1^1 * x_0^0
-            partial_x[1*q1+1] += CppAD::azmul(
-                partial_y[1*q1+1] , taylor_x[0*q1+0]
-            );
+            partial_x[1*q1+1] += partial_y[1*q1+1] * taylor_x[0*q1+0];
             //
             // px_2^0 += py_0^1 * pg_02^0 + py_1^1 * pg_12^0
             //        += py_0^1 * 2 * x_2^1
-            partial_x[2*q1+0] += CppAD::azmul(
-                partial_y[0*q1+1] , 2.0 * taylor_x[2*q1+1]
-            );
+            partial_x[2*q1+0] += partial_y[0*q1+1] * 2.0 * taylor_x[2*q1+1];
             //
             // px_2^1 += py_0^1 * pg_02^1 + py_1^1 * pg_12^1
             //        += py_0^1 * 2 * x_2^0
-            partial_x[2*q1+1] += CppAD::azmul(
-                partial_y[0*q1+1] , 2.0 * taylor_x[2*q1+0]
-            );
+            partial_x[2*q1+1] += partial_y[0*q1+1] * 2.0 * taylor_x[2*q1+0];
         }
         // --------------------------------------------------------------
         // First order reverse computes partials of zero order coefficients
@@ -241,21 +229,15 @@ $srccode%cpp% */
         //
         // px_0^0 += py_0^0 * pg_00 + py_1^0 * pg_10
         //        += py_1^0 * x_1^0
-        partial_x[0*q1+0] += CppAD::azmul(
-            partial_y[1*q1+0] , taylor_x[1*q1+0]
-        );
+        partial_x[0*q1+0] += partial_y[1*q1+0] * taylor_x[1*q1+0];
         //
         // px_1^0 += py_1^0 * pg_01 + py_1^0 * pg_11
         //        += py_1^0 * x_0^0
-        partial_x[1*q1+0] += CppAD::azmul(
-            partial_y[1*q1+0] , taylor_x[0*q1+0]
-        );
+        partial_x[1*q1+0] += partial_y[1*q1+0] * taylor_x[0*q1+0];
         //
         // px_2^0 += py_1^0 * pg_02 + py_1^0 * pg_12
         //        += py_0^0 * 2.0 * x_2^0
-        partial_x[2*q1+0] += CppAD::azmul(
-            partial_y[0*q1+0] , 2.0 * taylor_x[2*q1+0]
-        );
+        partial_x[2*q1+0] += partial_y[0*q1+0] * 2.0 * taylor_x[2*q1+0];
         // --------------------------------------------------------------
         return ok;
     }

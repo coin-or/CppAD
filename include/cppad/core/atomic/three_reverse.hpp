@@ -247,21 +247,15 @@ in a similar way to $cref/need_y/atomic_three_forward/need_y/$$,
 to avoid unnecessary operations.
 
 $subhead azmul$$
-If you are not checking for
-$codei%IdenticalZero(%partial_y%[%i%*(%q%+1)+%k%])%$$,
-you should use $cref azmul$$ to compute the product
-$latex \[
-\R{partial\_y}[ i * (q + 1 ) + k ]
-\times
-( \partial F_i^k / \partial x_j^\ell )
-\] $$
-so that if the partial w.r.t. $latex y_i$$ is zero,
-the product will be zero even if the other term is infinite or nan.
-This is important because reverse mode uses zero weight to signify
-that the corresponding dependent variable is not selected.
-(Note this is not necessary if you know that
-$latex  \partial F_i^k / \partial x_j^\ell $$ will not be infinite
-or nan.
+An $cref/optimized/optimize/$$ function will use zero
+for values in $icode taylor_x$$ and $icode taylor_y$$ that are
+not necessary in the current context.
+If you divide by these values when computing
+$latex ( \partial F_i^k / \partial x_j^\ell )$$ you could get an nan
+if the corresponding value in $icode partial_y$$ is zero.
+To be careful, if you do divide by
+$icode taylor_x$$ or $icode taylor_y$$, use $cref azmul$$
+for to avoid zero over zero calculations.
 
 
 $head apartial_x$$
