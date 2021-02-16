@@ -29,7 +29,7 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
-$head 02-15$$
+$head 02-16$$
 There was a problem with atomic functions, $cref optimize$$, and reverse mode
 that would lead to unexpected nans.
 This has been fixed by changing values,
