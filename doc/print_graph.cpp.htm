@@ -1,0 +1,150 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Print a C++ AD Graph: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Print a C++ AD Graph: Example and Test">
+<meta name="keywords" id="keywords" content=" print c++ ad graph: example test source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_print_graph.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="cpp_graph_print.htm" target="_top">Prev</a>
+</td><td><a href="from_graph.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>other_adfun</option>
+<option>cpp_ad_graph</option>
+<option>cpp_graph</option>
+<option>cpp_graph_print</option>
+<option>print_graph.cpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_ad_graph_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_graph_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cpp_graph_print_htm.js'></script>
+</td>
+<td>print_graph.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Source Code</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Print a C++ AD Graph: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">print_graph</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>string<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// AD graph example</font></i>
+    <i><font color="#9A1900">// node_1 : p[0]</font></i>
+    <i><font color="#9A1900">// node_2 : p[1]</font></i>
+    <i><font color="#9A1900">// node_3 : x[0]</font></i>
+    <i><font color="#9A1900">// node_4 : p[0] + p[1]</font></i>
+    <i><font color="#9A1900">// node_5 : x[0] + ( p[0] + p[1] )</font></i>
+    <i><font color="#9A1900">// y[0]   = x[0] + ( p[0] + p[1] )</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// C++ graph object</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">cpp_graph</font> graph_obj<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// operator being used</font></i>
+    CppAD<font color="#990000">::</font>graph<font color="#990000">::</font><font color="#008080">graph_op_enum</font> op_enum<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// set scalars</font></i>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">function_name_set</font></b><font color="#990000">(</font><font color="#FF0000">"print_graph example"</font><font color="#990000">);</font>
+    <font color="#008080">size_t</font> n_dynamic_ind <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">n_dynamic_ind_set</font></b><font color="#990000">(</font>n_dynamic_ind<font color="#990000">);</font>
+    <font color="#008080">size_t</font> n_variable_ind <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">n_variable_ind_set</font></b><font color="#990000">(</font>n_variable_ind<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// node_4 : p[0] + p[1]</font></i>
+    op_enum <font color="#990000">=</font> CppAD<font color="#990000">::</font>graph<font color="#990000">::</font>add_graph_op<font color="#990000">;</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_vec_push_back</font></b><font color="#990000">(</font>op_enum<font color="#990000">);</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_arg_push_back</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_arg_push_back</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// node_5 : x[0] + ( p[0] + p[1] )</font></i>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_vec_push_back</font></b><font color="#990000">(</font>op_enum<font color="#990000">);</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_arg_push_back</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">);</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">operator_arg_push_back</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// y[0]   = x[0] + ( p[0] + p[1] )</font></i>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">dependent_vec_push_back</font></b><font color="#990000">(</font><font color="#993399">5</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// get output of print command</font></i>
+    std<font color="#990000">::</font><font color="#008080">stringstream</font> os<font color="#990000">;</font>
+    graph_obj<font color="#990000">.</font><b><font color="#000000">print</font></b><font color="#990000">(</font>os<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> check <font color="#990000">=</font>
+        <font color="#FF0000">"print_graph example</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"          1      p[0]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"          2      p[1]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"          3      x[0]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"          4       add    1    2</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"          5       add    3    4</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+    <font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> os<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">()</font> <font color="#990000">==</font> check<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/graph/print_graph.cpp
+
+</body>
+</html>

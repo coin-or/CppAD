@@ -7,39 +7,30 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'ad.htm',
-'advalued.htm',
-'atomic.htm',
-'atomic_three.htm',
-'atomic_three_reverse.htm'
+'adfun.htm',
+'record_adfun.htm',
+'fun_property.htm'
 ];
 var list_current0 = [
-'atomic_three_reverse.htm#Base',
-'atomic_three_reverse.htm#Base.Syntax',
-'atomic_three_reverse.htm#Base.Prototype',
-'atomic_three_reverse.htm#AD&lt;Base&gt;',
-'atomic_three_reverse.htm#AD&lt;Base&gt;.Syntax',
-'atomic_three_reverse.htm#AD&lt;Base&gt;.Prototype',
-'atomic_three_reverse.htm#Implementation',
-'atomic_three_reverse.htm#parameter_x',
-'atomic_three_reverse.htm#aparameter_x',
-'atomic_three_reverse.htm#type_x',
-'atomic_three_reverse.htm#order_up',
-'atomic_three_reverse.htm#taylor_x',
-'atomic_three_reverse.htm#taylor_x.parameters',
-'atomic_three_reverse.htm#ataylor_x',
-'atomic_three_reverse.htm#taylor_y',
-'atomic_three_reverse.htm#ataylor_y',
-'atomic_three_reverse.htm#F',
-'atomic_three_reverse.htm#G, H',
-'atomic_three_reverse.htm#partial_y',
-'atomic_three_reverse.htm#apartial_y',
-'atomic_three_reverse.htm#partial_x',
-'atomic_three_reverse.htm#partial_x.Short Circuit Operations',
-'atomic_three_reverse.htm#partial_x.azmul',
-'atomic_three_reverse.htm#apartial_x',
-'atomic_three_reverse.htm#ok',
-'atomic_three_reverse.htm#Examples'
+'fun_property.htm#Syntax',
+'fun_property.htm#Syntax.See Also',
+'fun_property.htm#Purpose',
+'fun_property.htm#f',
+'fun_property.htm#Domain',
+'fun_property.htm#Range',
+'fun_property.htm#Parameter',
+'fun_property.htm#size_var',
+'fun_property.htm#size_par',
+'fun_property.htm#size_op',
+'fun_property.htm#size_op_arg',
+'fun_property.htm#size_text',
+'fun_property.htm#size_VecAD',
+'fun_property.htm#size_random',
+'fun_property.htm#size_dyn_ind',
+'fun_property.htm#size_dyn_par',
+'fun_property.htm#size_dyn_arg',
+'fun_property.htm#size_op_seq',
+'fun_property.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

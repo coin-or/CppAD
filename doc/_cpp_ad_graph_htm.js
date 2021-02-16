@@ -27,7 +27,6 @@ var list_current0 = [
 'cpp_ad_graph.htm#n_variable_ind',
 'cpp_ad_graph.htm#constant_vec',
 'cpp_ad_graph.htm#operator_vec',
-'cpp_ad_graph.htm#operator_vec.C++11',
 'cpp_ad_graph.htm#operator_arg',
 'cpp_ad_graph.htm#operator_arg.dis_graph_op',
 'cpp_ad_graph.htm#operator_arg.atom_graph_op',

@@ -9,8 +9,8 @@ var list_up0 = [
 'cppad.htm',
 'adfun.htm',
 'record_adfun.htm',
-'seq_property.htm',
-'seq_property.cpp.htm'
+'fun_property.htm',
+'fun_property.cpp.htm'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

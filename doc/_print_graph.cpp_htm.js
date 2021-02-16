@@ -8,29 +8,14 @@ var list_across0 = [
 var list_up0 = [
 'cppad.htm',
 'adfun.htm',
-'record_adfun.htm',
-'seq_property.htm'
+'other_adfun.htm',
+'cpp_ad_graph.htm',
+'cpp_graph.htm',
+'cpp_graph_print.htm',
+'print_graph.cpp.htm'
 ];
 var list_current0 = [
-'seq_property.htm#Syntax',
-'seq_property.htm#Syntax.See Also',
-'seq_property.htm#Purpose',
-'seq_property.htm#f',
-'seq_property.htm#Domain',
-'seq_property.htm#Range',
-'seq_property.htm#Parameter',
-'seq_property.htm#size_var',
-'seq_property.htm#size_par',
-'seq_property.htm#size_op',
-'seq_property.htm#size_op_arg',
-'seq_property.htm#size_text',
-'seq_property.htm#size_VecAD',
-'seq_property.htm#size_random',
-'seq_property.htm#size_dyn_ind',
-'seq_property.htm#size_dyn_par',
-'seq_property.htm#size_dyn_arg',
-'seq_property.htm#size_op_seq',
-'seq_property.htm#Example'
+'print_graph.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

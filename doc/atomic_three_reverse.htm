@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Reverse Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Reverse Mode">
-<meta name="keywords" id="keywords" content=" atomic function reverse mode base syntax prototype ad&lt;base&gt; implementation parameter_x aparameter_x type_x order_up taylor_x parameters ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x short circuit operations apartial_x ok examples ">
+<meta name="keywords" id="keywords" content=" atomic function reverse mode base syntax prototype ad&lt;base&gt; implementation parameter_x aparameter_x type_x order_up taylor_x parameters ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x short circuit operations azmul apartial_x ok examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -91,6 +91,7 @@ A:active { color : purple }
 <option>apartial_y</option>
 <option>partial_x</option>
 <option>---..Short Circuit Operations</option>
+<option>---..azmul</option>
 <option>apartial_x</option>
 <option>ok</option>
 <option>Examples</option>
@@ -564,6 +565,36 @@ This can be used,
 in a similar way to <a href="atomic_three_forward.htm#need_y" target="_top"><span style='white-space: nowrap'>need_y</span></a>
 ,
 to avoid unnecessary operations.
+
+<br>
+<br>
+<big><a name="partial_x.azmul" id="partial_x.azmul">azmul</a></big>
+<br>
+If you are not checking for
+
+<code><font color="blue"><span style='white-space: nowrap'>IdenticalZero(</span></font><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>*(</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>+1)+</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>])</span></font></code>
+,
+you should use <a href="azmul.htm" target="_top"><span style='white-space: nowrap'>azmul</span></a>
+ to compute the product
+<small>@[@
+
+\R{partial\_y}[ i * (q + 1 ) + k ]
+\times
+( \partial F_i^k / \partial x_j^\ell )
+
+@]@</small>
+so that if the partial w.r.t. <small>@(@
+y_i
+@)@</small> is zero,
+the product will be zero even if the other term is infinite or nan.
+This is important because reverse mode uses zero weight to signify
+that the corresponding dependent variable is not selected.
+(Note this is not necessary if you know that
+<small>@(@
+\partial F_i^k / \partial x_j^\ell
+@)@</small> will not be infinite
+or nan.
+
 
 <br>
 <br>

@@ -6,7 +6,8 @@ document.write('\
 <option>FunConstruct</option>\
 <option>Dependent</option>\
 <option>abort_recording</option>\
-<option>seq_property</option>\
+<option>fun_property</option>\
+<option>function_name</option>\
 </select>\
 ');
 function record_adfun_child(item)
@@ -15,7 +16,8 @@ function record_adfun_child(item)
 		'funconstruct.htm',
 		'dependent.htm',
 		'abort_recording.htm',
-		'seq_property.htm'
+		'fun_property.htm',
+		'function_name.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
