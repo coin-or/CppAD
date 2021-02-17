@@ -140,7 +140,6 @@ The specifications for $icode ataylor_x$$ is the same as for $icode taylor_x$$
 
 $head taylor_y$$
 The size of $icode taylor_y$$ is $codei%(%q%+1)*%m%$$.
-Upon return,
 For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q$$,
 we use the Taylor coefficient notation
 $latex \[
