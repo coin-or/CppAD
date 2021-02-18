@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -167,7 +167,7 @@ bool optimize_dynamic_one(void)
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 2; // c * p
     // Three constant parameters, phantom at index 0, c, c * c
-    ok &= f.size_par() == 5;
+    ok &= f.size_par() == 6;
     // Normal variables: u, p * u
     // Extra variables: phanton at index 0, y[0], y[1]
     ok &= f.size_var() == 5;
@@ -265,7 +265,7 @@ bool optimize_dynamic_two(void)
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 1; // p
     // One constant parameter, phantom at index 0
-    ok &= f.size_par() == 2;
+    ok &= f.size_par() == 3;
 
     // check
     double check;
@@ -356,7 +356,7 @@ bool optimize_dynamic_three(void)
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 2; // p, r
     // Two constant parameters, phantom at index 0, 2.0 in computation of r
-    ok &= f.size_par() == 4;
+    ok &= f.size_par() == 5;
 
     // check
     double check;

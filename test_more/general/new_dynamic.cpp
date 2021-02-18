@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -639,7 +639,7 @@ bool optimize_csum(void)
     f.optimize();
     ok &= f.size_dyn_ind() == num_dyn_ind;
     ok &= f.size_dyn_par() == num_dyn_ind + 1;
-    ok &= f.size_par()     == num_dyn_ind + 1 + 2;
+    ok &= f.size_par()     == num_dyn_ind + 1 + 3;
     dynamic[0] = 0.3;
     dynamic[1] = 0.4;
     f.new_dynamic(dynamic);
@@ -806,7 +806,7 @@ bool dynamic_optimize(void)
     f.optimize();
     ok &= f.size_dyn_ind() == nd;
     ok &= f.size_dyn_par() == nd + 2;
-    ok &= f.size_par()     == nd + 2 + 2;
+    ok &= f.size_par()     == nd + 2 + 3;
     dynamic[0] = 6.0;
     f.new_dynamic(dynamic);
     y     = f.Forward(0, x);
