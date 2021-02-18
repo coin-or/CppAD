@@ -21,12 +21,13 @@ g_3 (x) = x_2 * x_2
 namespace {                  // start empty namespace
 using CppAD::vector;         // abbreviate CppAD::vector using vector
 
-// ---------------------------------------------------------------------------
-// start definition of atomic derived class using atomic_three interface
-class atomic_optimize : public CppAD::atomic_three<double> {
+// ============================================================================
+// Testing dynamic parameters in atomic_three fucntions.
+// ============================================================================
+class dynamic_optimize : public CppAD::atomic_three<double> {
 public:
     // can use const char* name when calling this constructor
-    atomic_optimize(const std::string& name) : // can have more arguments
+    dynamic_optimize(const std::string& name) : // can have more arguments
     CppAD::atomic_three<double>(name)          // inform base class of name
     { }
 
@@ -97,7 +98,7 @@ private:
 
         return ok;
     }
-}; // End of atomic_optimize class
+}; // End of dynamic_optimize class
 
 // ---------------------------------------------------------------------------
 bool optimize_dynamic_one(void)
@@ -105,7 +106,7 @@ bool optimize_dynamic_one(void)
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-    atomic_optimize afun("atomic_optimize");
+    dynamic_optimize afun("dynamic_optimize");
     //
     // constant parameter
     double c_0 = 2.0;
@@ -154,7 +155,7 @@ bool optimize_dynamic_one(void)
     // sequence properties
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 3; // p, r, c * p
-    // Three constant parameters, phantom at index 0, c, c * c
+    // Three constant parameters: nan, c, c * c
     ok &= f.size_par() == 6;
     // Normal variables: u, p * u, u * u
     // Extra variables: phanton at index 0, y[0], y[1]
@@ -166,8 +167,10 @@ bool optimize_dynamic_one(void)
     // sequence properties
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 2; // c * p
-    // Three constant parameters, phantom at index 0, c, c * c
+
+    // Four constant parameters: nan, zero, c, c * c
     ok &= f.size_par() == 6;
+
     // Normal variables: u, p * u
     // Extra variables: phanton at index 0, y[0], y[1]
     ok &= f.size_var() == 5;
@@ -207,7 +210,7 @@ bool optimize_dynamic_two(void)
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-    atomic_optimize afun("atomic_optimize");
+    dynamic_optimize afun("dynamic_optimize");
     //
     // indepndent dynamic parameter vector
     size_t np = 1;
@@ -254,7 +257,7 @@ bool optimize_dynamic_two(void)
     // sequence properties
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 4; // p, r, r * p, r * r
-    // Two constant parameters, phantom at index 0, 2.0 in computation of r
+    // Two constant parameters: nan, 2.0 in computation of r
     ok &= f.size_par() == 6;
 
 
@@ -264,7 +267,7 @@ bool optimize_dynamic_two(void)
     // sequence properties
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 1; // p
-    // One constant parameter, phantom at index 0
+    // Two constant paramete: nan, zero
     ok &= f.size_par() == 3;
 
     // check
@@ -298,7 +301,7 @@ bool optimize_dynamic_three(void)
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-    atomic_optimize afun("atomic_optimize");
+    dynamic_optimize afun("dynamic_optimize");
     //
     // indepndent dynamic parameter vector
     size_t np = 1;
@@ -345,7 +348,7 @@ bool optimize_dynamic_three(void)
     // sequence properties
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 4; // p, r, r * p, p * p
-    // Two constant parameters, phantom at index 0, 2.0 in computation of r
+    // Two constant parameters: nan, 2.0 in computation of r
     ok &= f.size_par() == 6;
 
 
@@ -355,7 +358,7 @@ bool optimize_dynamic_three(void)
     // sequence properties
     ok &= f.size_dyn_ind() == 1; // p
     ok &= f.size_dyn_par() == 2; // p, r
-    // Two constant parameters, phantom at index 0, 2.0 in computation of r
+    // Three constant parameters: nan, zero, 2.0 in computation of r
     ok &= f.size_par() == 5;
 
     // check
@@ -385,7 +388,177 @@ bool optimize_dynamic_three(void)
 
     return ok;
 }
+// ============================================================================
+// Testing Varialbes that get removed
+// ============================================================================
+class variable_optimize : public CppAD::atomic_three<double> {
+public:
+    // can use const char* name when calling this constructor
+    variable_optimize(const std::string& name) : // can have more arguments
+    CppAD::atomic_three<double>(name)          // inform base class of name
+    { }
+
+private:
+    // calculate type_y
+    virtual bool for_type(
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        vector<CppAD::ad_type_enum>&        type_y      )
+    {   assert( parameter_x.size() == type_x.size() );
+        bool ok = type_x.size() == 2; // n
+        ok     &= type_y.size() == 2; // m
+        if( ! ok )
+            return false;
+        type_y[0] = type_x[0];
+        type_y[1] = std::max( type_x[0], type_x[1] );
+        return true;
+    }
+    // calculate depend_x
+    virtual bool rev_depend(
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        vector<bool>&                       depend_x    ,
+        const vector<bool>&                 depend_y    )
+    {   assert( parameter_x.size() == depend_x.size() );
+        bool ok = depend_x.size() == 2; // n
+        ok     &= depend_y.size() == 2; // m
+        if( ! ok )
+            return false;
+        depend_x[0] = depend_y[0] | depend_y[1];
+        depend_x[1] = depend_y[1];
+        return true;
+    }
+    virtual bool forward(
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        size_t                              need_y    ,
+        size_t                              order_low ,
+        size_t                              order_up  ,
+        const vector<double>&               taylor_x  ,
+        vector<double>&                     taylor_y
+    )
+    {
+# ifndef NDEBUG
+        size_t n = taylor_x.size() / (order_up + 1);
+        size_t m = taylor_y.size() / (order_up + 1);
+# endif
+        assert( n == 2 );
+        assert( m == 2 );
+        assert( order_low <= order_up );
+
+        // return flag
+        bool ok = order_up == 0;
+        if( ! ok )
+            return ok;
+
+        // g_0 = exp( x_0 )
+        taylor_y[0] = std::exp( taylor_x[0] );
+        // g_1 = exp( x_0 * x_1 )
+        taylor_y[1] = std::exp( taylor_x[0] * taylor_x[1] );
+
+        return ok;
+    }
+    virtual bool reverse(
+        const vector<double>&               parameter_x ,
+        const vector<CppAD::ad_type_enum>&  type_x      ,
+        size_t                              order_up    ,
+        const vector<double>&               taylor_x    ,
+        const vector<double>&               taylor_y    ,
+        vector<double>&                     partial_x   ,
+        const vector<double>&               partial_y
+    )
+    {
+        size_t q1 = order_up + 1;
+        size_t n  = taylor_x.size() / q1;
+# ifndef NDEBUG
+        size_t m  = taylor_y.size() / q1;
+# endif
+        assert( n == 2 );
+        assert( m == 2 );
+
+        // return flag
+        bool ok = order_up == 0;
+        if( ! ok )
+            return ok;
+
+        // initialize summation as zero
+        for(size_t j = 0; j < n; ++j)
+            partial_x[j] = 0.0;
+
+        // g_0  = exp( x_0 )
+        partial_x[0] += partial_y[0] * taylor_y[0];
+        // g_1 = exp( x_0 * x_1 )
+        partial_x[0] += partial_y[1] * taylor_y[1] * taylor_x[1];
+        partial_x[1] += partial_y[1] * taylor_y[1] * taylor_x[0];
+        //
+        return ok;
+    }
+}; // End of variable_optimize class
 // ---------------------------------------------------------------------------
+bool optimize_variable_one(void)
+{   bool ok = true;
+    using CppAD::AD;
+    using CppAD::NearEqual;
+    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
+    variable_optimize afun("variable_optimize");
+    //
+    // independent variable vector
+    size_t  nu  = 2;
+    CPPAD_TESTVECTOR( AD<double> ) au(nu);
+    for(size_t j = 0; j < nu; ++j)
+        au[j] = double(j + 1);
+
+    // declare independent variables and start tape recording
+    CppAD::Independent(au);
+
+    // call atomic function and store result in ay
+    CPPAD_TESTVECTOR( AD<double> ) ax(nu), av(nu);
+    for(size_t j = 0; j < nu; ++j)
+        ax[j] = au[j] / 2.0; // x = u / 2
+    afun(ax, av);
+
+    // check type of result
+    for(size_t j = 0; j < nu; ++j)
+        ok &= Variable( av[j] );
+
+    // range space vector
+    size_t ny = 1;
+    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
+    //
+    // only the first component of av affects the function value
+    ay[0] = av[0];
+
+    // create f: u -> y and stop tape recording
+    CppAD::ADFun<double> f;
+    f.Dependent (au, ay);  // f(u) = exp( u[0] / 2 )
+
+    // optimize
+    f.optimize();
+
+    // check
+    double check;
+
+    // check zero order forward mode
+    CPPAD_TESTVECTOR( double ) u(nu), y(ny);
+    for(size_t j = 0; j < nu; ++j)
+        u[j] = double(j + 1) / double(nu);
+    y    = f.Forward(0, u);
+    check  = std::exp( u[0] / 2.0 );
+    ok    &= NearEqual(y[0] , check,  eps, eps);
+
+    // Check first order reverse mode. This test would vaile when
+    // nan was used for argument and function values that were optimized out
+    // because they were not used.
+    CPPAD_TESTVECTOR( double ) w(ny), dw(nu);
+    w[0] = 1.0;
+    dw  = f.Reverse(1, w);
+    check  = std::exp( u[0] / 2.0 ) / 2.0;
+    ok    &= NearEqual(dw[0] , check,  eps, eps);
+    check  = 0.0;
+    ok    &= NearEqual(dw[1] , check,  eps, eps);
+    //
+    return ok;
+}
 }  // End empty namespace
 
 bool atomic_three(void)
@@ -393,5 +566,6 @@ bool atomic_three(void)
     ok     &= optimize_dynamic_one();
     ok     &= optimize_dynamic_two();
     ok     &= optimize_dynamic_three();
+    ok     &= optimize_variable_one();
     return ok;
 }

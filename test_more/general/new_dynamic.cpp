@@ -620,7 +620,7 @@ bool optimize_csum(void)
     f.Dependent(ax, ay);
     ok &= f.size_dyn_ind() == num_dyn_ind;
     ok &= f.size_dyn_par() == num_dyn_ind + 2;
-    // note that there is one phantom parameter at index zero that is not used
+    // constant parameters: nan, 3.0, 4.0, 5.0
     ok &= f.size_par()     == num_dyn_ind + 2 + 4;
     // -------------------------------------------------------------
     // vectors used for new_dynamic and Forward.
@@ -636,9 +636,10 @@ bool optimize_csum(void)
     ok   &= NearEqual(y[1], check, eps99, eps99);
     // -------------------------------------------------------------
     // optimize and re-test
-    f.optimize();
+    f.optimize(); // add the zero parameter
     ok &= f.size_dyn_ind() == num_dyn_ind;
     ok &= f.size_dyn_par() == num_dyn_ind + 1;
+    // constant parameters: nan, zero, (3.0 - 4.0 + 5.0)
     ok &= f.size_par()     == num_dyn_ind + 1 + 3;
     dynamic[0] = 0.3;
     dynamic[1] = 0.4;
@@ -788,8 +789,8 @@ bool dynamic_optimize(void)
     f.Dependent(ax, ay);
     ok &= f.size_dyn_ind() == nd;
     ok &= f.size_dyn_par() == nd + 5;
-    // note that there is a phantom parameter at index zero that is not used
-    ok &= f.size_par()     == nd + 5 + 2; // one constant parameter 3.0
+    // constant parameters: nan, 3.0
+    ok &= f.size_par()     == nd + 5 + 2;
     // -------------------------------------------------------------
     // vectors used for new_dynamic and Forward.
     CPPAD_TESTVECTOR(double) dynamic(nd), x(nx), y(ny);
@@ -803,9 +804,10 @@ bool dynamic_optimize(void)
     ok   &= NearEqual(y[1], check, eps99, eps99);
     // -------------------------------------------------------------
     // optimize and re-test
-    f.optimize();
+    f.optimize(); // adds the zero parameter
     ok &= f.size_dyn_ind() == nd;
     ok &= f.size_dyn_par() == nd + 2;
+    // constant parameters: nan, zero, 3.0
     ok &= f.size_par()     == nd + 2 + 3;
     dynamic[0] = 6.0;
     f.new_dynamic(dynamic);
