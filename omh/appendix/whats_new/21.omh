@@ -25,9 +25,19 @@ $spell
     azmul
     nans
     optimizer
+    eigen
+    cppadcg
+    ipopt
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 02-21$$
+Add specifications for what is conditionally installed by the
+$cref/include_eigen/cmake/include_eigen/$$ and
+$cref/include_ipopt/cmake/include_ipopt/$$ options.
+In addition, make it clearer that
+$cref/include_cppadcg/cmake/include_cppadcg/$$ should only be used for testing.
 
 $head 02-16$$
 There was a problem with atomic functions, $cref optimize$$, and reverse mode
