@@ -393,7 +393,7 @@ will be installed.
 
 $head include_cppadcg$$
 The $cref cppadcg$$ examples
-will be compiled and tested if $code include_ipopt=true$$
+will be compiled and tested if $code include_cppadcg=true$$
 is on the command line.
 $bold Warning$$ :
 Do not use this option when installing cppad because
