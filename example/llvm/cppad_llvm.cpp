@@ -61,7 +61,7 @@ CppAD::ADFun<double> create_f(void)
     CppAD::Independent(ax, ap);
     //
     // ay
-    CppAD::vector< AD<double> > ay = algorithm(ax, ap);
+    CppAD::vector< AD<double> > ay = algorithm(ap, ax);
     //
     // f : x -> y
     CppAD::ADFun<double> f(ax, ay);
@@ -668,7 +668,7 @@ bool test_object_file(
         p[i] = input[i];
     for(size_t i = 0; i < nx; ++i)
         x[i] = input[np + i];
-    check = algorithm(x, p);
+    check = algorithm(p, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(output[i], check[i], eps99, eps99);
     //
@@ -728,7 +728,7 @@ bool test_jit(
         p[i] = input[i];
     for(size_t i = 0; i < nx; ++i)
         x[i] = input[np + i];
-    check = algorithm(x, p);
+    check = algorithm(p, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(output[i], check[i], eps99, eps99);
     //
@@ -769,7 +769,7 @@ bool cppad_llvm(void)
     vector<double> y = f.Forward(0, x);
     //
     // check
-    vector<double> check = algorithm(x, p);
+    vector<double> check = algorithm(p, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(y[i], check[i], eps99, eps99);
     //
