@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -47,6 +47,7 @@ yes_eigen='yes'
 yes_ipopt='yes'
 yes_fadbad='yes'
 yes_cppadcg='yes'
+yes_llvm='yes'
 yes_sacado='yes'
 yes_documentation='yes'
 testvector='boost'
@@ -70,6 +71,7 @@ usage: bin/run_cmake.sh: \\
     [--no_ipopt] \\
     [--no_fadbad] \\
     [--no_cppadcg] \\
+    [--no_llvm] \\
     [--no_sacado] \\
     [--no_documentation] \\
     [--<package>_vector] \\
@@ -125,6 +127,10 @@ EOF
 
         --no_cppadcg)
         yes_cppadcg='no'
+        ;;
+
+        --no_llvm)
+        yes_llvm='no'
         ;;
 
         --no_fadbad)
@@ -293,9 +299,18 @@ then
     if [ ! -e "$prefix/include/Sacado_config.h" ]
     then
         echo "Cannot find $prefix/include/Sacado_config.h"
-        exit
+        exit 1
     fi
     prefix_list="$prefix_list sacado"
+fi
+if [ "$yes_llvm" == 'yes' ]
+then
+    if ! which llvm-config > /dev/null
+    then
+        echo 'Cannont find llvm using "which llvm-config"'
+        exit 1
+    fi
+    include_list="$include_list llvm"
 fi
 for package in $include_list
 do

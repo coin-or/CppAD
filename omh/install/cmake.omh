@@ -146,6 +146,7 @@ cmake %%                                                                     \
     -D include_eigen=%true_or_false%                                         \
     -D include_ipopt=%true_or_false%                                         \
     -D include_cppadcg=%true_or_false%                                       \
+    -D include_llvm=%true_or_false%                                          \
     \
     -D colpack_prefix=%colpack_prefix%                                       \
     -D fadbad_prefix=%fadbad_prefix%                                         \
@@ -393,7 +394,7 @@ will be installed.
 
 $head include_cppadcg$$
 The $cref cppadcg$$ examples
-will be compiled and tested if $code include_cppadcg=true$$
+will be compiled and tested if $code include_ipopt=true$$
 is on the command line.
 $bold Warning$$ :
 Do not use this option when installing cppad because
@@ -401,6 +402,12 @@ the cppadcg package depends on cppad and using this option
 makes cppad depend on cppadcg.
 This option, and the script $cref get_cppadcg.sh$$ are only intended
 for testing purposes.
+
+$head include_llvm$$
+The llvm examples
+will be compiled and tested if $code include_llvm=true$$
+is on the command line.
+
 
 $head package_prefix$$
 Each of these packages do not have $code pkg-config$$ files and

@@ -210,11 +210,12 @@ ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
 # include_adolc
 # include_ipopt
 # include_cppadcg
-FOREACH(package eigen adolc ipopt cppadcg)
+# include_llvm
+FOREACH(package eigen adolc ipopt cppadcg llvm)
     command_line_arg(include_${package} "false" BOOL
             "include the ${package} examples and tests"
     )
-ENDFOREACH(package eigen adolc ipopt cppadcg)
+ENDFOREACH(package eigen adolc ipopt cppadcg llvm)
 # -----------------------------------------------------------------------------
 # CMAKE_INSTALL_PREFIX
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
@@ -255,6 +256,13 @@ IF( include_cppadcg )
 ELSE( include_cppadcg )
     SET(cppad_has_cppadcg 0)
 ENDIF( include_cppadcg )
+#
+# llvm
+IF( include_llvm )
+    SET(cppad_has_llvm 1)
+ELSE( include_llvm )
+    SET(cppad_has_llvm 0)
+ENDIF( include_llvm )
 #
 # colpack_prefix
 optional_package(colpack ${system_include} "colpack install prefix")
