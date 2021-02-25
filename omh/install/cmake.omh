@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 $begin cmake$$
 $escape $$
 $spell
+    llvm
     cppadcg
     msys
     Hsc

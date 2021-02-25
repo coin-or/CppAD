@@ -37,7 +37,8 @@ $childtable%
     include/cppad/core/base2ad.hpp%
     include/cppad/core/graph/json_ad_graph.omh%
     include/cppad/core/graph/cpp_ad_graph.omh%
-    include/cppad/core/abs_normal_fun.hpp
+    include/cppad/core/abs_normal_fun.hpp%
+    example/llvm/llvm.cpp
 %$$
 
 $head See Also$$

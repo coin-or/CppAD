@@ -148,14 +148,28 @@ then
     set_libdir @colpack_prefix@ ColPack
 fi
 #
-# cppad
+# llvm
+if [ @cppad_has_llvm@ == 1 ]
+then
+    llvm_cxxflags=$(llvm-config --cxxflags | sed -e 's|-fno-exceptions||')
+    include_flags="$include_flags $llvm_cxxflags"
+    #
+    llvm_ldflags=$(llvm-config --ldflags)
+    library_flags="$library_flags $llvm_ldflags"
+    #
+    llvm_libs=$(llvm-config --libs)
+    library_flags="$library_flags $llvm_libs"
+fi
+#
+# include_flags
 include_flags=$(echo $include_flags | \
-    sed -e 's| -I| -isystem|g' -e 's|^-I|-isystem|'
+    sed -e 's| -I/usr/include | |' -e 's| -I| -isystem|g' -e 's|^-I|-isystem|'
 )
+#
 include_flags="-I $original_dir/include $include_flags"
 cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
 library_flags="$library_flags $cppad_lib_path -lpthread"
-#
+# --------------------------------------------------------------------------
 cd build
 if ! make cppad_lib
 then

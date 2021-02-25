@@ -35,32 +35,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 //
 # include <llvm/ExecutionEngine/Orc/LLJIT.h>
 # include <llvm/ExecutionEngine/ExecutionEngine.h>
-#
+//
 # include <llvm/ADT/DenseMap.h>
+//
+# include "algorithm.hpp"
 
 namespace { // BEGIN_EMPTY_SPACE
 
-// y = f(x; p)
-template <class VectorFloat>
-VectorFloat eval_f(const VectorFloat& x, const VectorFloat& p)
-{   size_t nx = x.size();
-    size_t np = p.size();
-    size_t ny = nx + np;
-    //
-    // define the actual function
-    VectorFloat y(ny);
-    for(size_t i = 0; i < np; ++i)
-        y[i] = p[i] + double(i);
-    for(size_t i = 0; i < nx; ++i)
-        y[i + np] = x[i] + double(i + np);
-    //
-    // some operations that optimizer should remove
-    typename VectorFloat::value_type sum = 0.0;
-    for(size_t i = 0; i < ny; i++)
-        sum += y[i];
-    //
-    return y;
-}
 // ----------------------------------------------------------------------------
 CppAD::ADFun<double> create_f(void)
 {   using CppAD::AD;
@@ -80,7 +61,7 @@ CppAD::ADFun<double> create_f(void)
     CppAD::Independent(ax, ap);
     //
     // ay
-    CppAD::vector< AD<double> > ay = eval_f(ax, ap);
+    CppAD::vector< AD<double> > ay = algorithm(ax, ap);
     //
     // f : x -> y
     CppAD::ADFun<double> f(ax, ay);
@@ -687,7 +668,7 @@ bool test_object_file(
         p[i] = input[i];
     for(size_t i = 0; i < nx; ++i)
         x[i] = input[np + i];
-    check = eval_f(x, p);
+    check = algorithm(x, p);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(output[i], check[i], eps99, eps99);
     //
@@ -747,7 +728,7 @@ bool test_jit(
         p[i] = input[i];
     for(size_t i = 0; i < nx; ++i)
         x[i] = input[np + i];
-    check = eval_f(x, p);
+    check = algorithm(x, p);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(output[i], check[i], eps99, eps99);
     //
@@ -788,7 +769,7 @@ bool cppad_llvm(void)
     vector<double> y = f.Forward(0, x);
     //
     // check
-    vector<double> check = eval_f(x, p);
+    vector<double> check = algorithm(x, p);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(y[i], check[i], eps99, eps99);
     //
