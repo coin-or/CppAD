@@ -10,8 +10,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-# include <cppad/cppad.hpp>
-
 # include <llvm/IR/Type.h>
 # include <llvm/IR/LLVMContext.h>
 # include <llvm/IR/Module.h>
@@ -27,7 +25,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <llvm/Support/TargetSelect.h>
 # include "llvm/Support/TargetRegistry.h"
 # include "llvm/Support/Host.h"
-#include "llvm/Support/raw_ostream.h"
+# include "llvm/Support/raw_ostream.h"
 //
 # include <llvm/Transforms/InstCombine/InstCombine.h>
 # include <llvm/Transforms/Scalar/GVN.h>
@@ -38,38 +36,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 //
 # include <llvm/ADT/DenseMap.h>
 //
-# include "algorithm.hpp"
+# include "llvm.hpp"
 
 namespace { // BEGIN_EMPTY_SPACE
 
-// ----------------------------------------------------------------------------
-CppAD::ADFun<double> create_f(void)
-{   using CppAD::AD;
-
-    // np, nx, ny
-    size_t np = 1;
-    size_t nx = 2;
-    //
-    // ap, ax
-    CppAD::vector< AD<double> > ap(np), ax(nx);
-    for(size_t i = 0; i < np; ++i)
-        ap[i] = AD<double>( i + 1 );
-    for(size_t i = 0; i < nx; ++i)
-        ax[i] = AD<double>( i + np );
-    //
-    // start recording with ax independent variables and ap dynamic parameters
-    CppAD::Independent(ax, ap);
-    //
-    // ay
-    CppAD::vector< AD<double> > ay = algorithm(ap, ax);
-    //
-    // f : x -> y
-    CppAD::ADFun<double> f(ax, ay);
-    //
-    f.function_name_set("cppad_llvm_example");
-    //
-    return f;
-}
 // ----------------------------------------------------------------------------
 bool graph2llvm_ir(
     const CppAD::cpp_graph&             graph_obj  ,
@@ -743,12 +713,14 @@ bool cppad_llvm(void)
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
     // f
-    CppAD::ADFun<double> f = create_f();
+    size_t np = 1;
+    size_t nx = 2;
+    CppAD::ADFun<double> f = algo2adfun(np, nx);
+    size_t ny = f.Range();
     //
     // nx, ny, np
-    size_t nx = f.Domain();
-    size_t ny = f.Range();
-    size_t np = f.size_dyn_ind();
+    ok &= np == f.size_dyn_ind();
+    ok &= nx == f.Domain();
     //
     // rand_max
     // double rand_max = double(RAND_MAX);

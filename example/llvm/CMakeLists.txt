@@ -44,13 +44,13 @@ print_variable(llvm_config)
 print_variable(llvm_cxxflags)
 print_variable(llvm_libs)
 print_variable(llvm_libdir)
-#
 # -----------------------------------------------------------------------------
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     llvm.cpp
     cppad_llvm.cpp
+    algo2adfun.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
