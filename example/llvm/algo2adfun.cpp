@@ -54,7 +54,9 @@ The return value $icode ok$$ is true (false) if the function conversion
 passes (fails) its tests.
 $end
 */
-# include "llvm.hpp"
+# include "algo2adfun.hpp"
+# include "algo.hpp"
+//
 // BEGIN_PROTOTYPE
 bool algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
 // END_PROTOTYPE

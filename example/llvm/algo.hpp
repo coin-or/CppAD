@@ -52,7 +52,7 @@ We use $latex m$$ to denote the size of this vector.
 The algorithm evaluates a function
 $latex \[
     f : \B{R}^\ell \times \B{R}^n  \rightarrow \B{R}^m
-\] $$.
+\] $$
 Thus the size of $icode y$$ does not depend on the value of
 $icode x$$ or $icode p$$.
 Thus the size of $icode y$$ does not depend on the value of

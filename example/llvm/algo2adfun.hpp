@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_LLVM_LLVM_HPP
-# define CPPAD_EXAMPLE_LLVM_LLVM_HPP
+# ifndef CPPAD_EXAMPLE_LLVM_ALGO2ADFUN_HPP
+# define CPPAD_EXAMPLE_LLVM_ALGO2ADFUN_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
@@ -12,8 +12,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
-# include "algo.hpp"
-# include "graph2llvm_ir.hpp"
 
 extern bool algo2adfun(
     size_t                np    ,

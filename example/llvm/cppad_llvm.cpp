@@ -36,7 +36,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 //
 # include <llvm/ADT/DenseMap.h>
 //
-# include "llvm.hpp"
+# include "algo.hpp"
+# include "algo2adfun.hpp"
+# include "graph2llvm_ir.hpp"
 
 namespace { // BEGIN_EMPTY_SPACE
 
