@@ -26,7 +26,8 @@ $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
 $head VectorFloat$$
-This is a $cref SimpleVector$$
+This is a $cref SimpleVector$$ with elements of type
+$icode value_type$$
 
 $head value_type$$
 We use this as an abbreviation for the type of the elements; i.e.,

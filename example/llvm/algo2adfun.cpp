@@ -37,11 +37,12 @@ The algorithm in $cref llvm_algo$$ is an input to this routine.
 
 $head adfun$$
 The input value of this argument does not matter.
-Upon return, $icode adfun$$ represent the same function as the algorithm.
-Suppose that $icode x$$ and $icode p$$ are $code double$$ vectors and
+Upon return, it is an $cref ADFun$$ represent of the same function as the
+algorithm. To be specific,
+suppose that $icode x$$ and $icode p$$ are $code double$$ vectors and
 $codei%
-    adfun.new_dynamic(p);
-    y = adfun.Forward(0, x);
+    %adfun%.new_dynamic(%p%);
+    %y% = adfun.Forward(0, %x%);
 %$$
 If follows that we can compute the same $icode y$$ as follows:
 $icode%
