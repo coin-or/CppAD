@@ -715,35 +715,18 @@ bool cppad_llvm(void)
     // f
     size_t np = 1;
     size_t nx = 2;
-    CppAD::ADFun<double> f = algo2adfun(np, nx);
+    CppAD::ADFun<double> f;
+    ok  &= algo2adfun(np, nx, f);
+    //
     size_t ny = f.Range();
-    //
-    // nx, ny, np
-    ok &= np == f.size_dyn_ind();
-    ok &= nx == f.Domain();
-    //
-    // rand_max
-    // double rand_max = double(RAND_MAX);
     //
     // x, p
     vector<double> x(nx), p(np);
     for(size_t i = 0; i < np; ++i)
-    {   // p[i] = std::rand() / rand_max;
         p[i] = double(i + 4);
-    }
     for(size_t i = 0; i < nx; ++i)
-    {   // x[i] = std::rand() / rand_max;
         x[i] = double(i + np + 4);
-    }
-    //
-    // y = f(x; p)
-    f.new_dynamic(p);
-    vector<double> y = f.Forward(0, x);
-    //
-    // check
     vector<double> check = algo(p, x);
-    for(size_t i = 0; i < ny; ++i)
-        ok &= CppAD::NearEqual(y[i], check[i], eps99, eps99);
     //
     // create a cpp_graph from this function
     CppAD::cpp_graph graph_obj;
@@ -780,7 +763,7 @@ bool cppad_llvm(void)
     //
     // check
     g.new_dynamic(p);
-    y = g.Forward(0, x);
+    vector<double> y = g.Forward(0, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(y[i], check[i], eps99, eps99);
     //

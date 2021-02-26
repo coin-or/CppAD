@@ -14,6 +14,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/cppad.hpp>
 # include "algo.hpp"
 
-extern CppAD::ADFun<double> algo2adfun(size_t np, size_t nx);
+extern bool algo2adfun(
+    size_t                np    ,
+    size_t                nx    ,
+    CppAD::ADFun<double>& adfun
+);
 
 # endif
