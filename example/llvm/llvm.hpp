@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
-# include "algorithm.hpp"
+# include "algo.hpp"
 
 extern CppAD::ADFun<double> algo2adfun(size_t np, size_t nx);
 

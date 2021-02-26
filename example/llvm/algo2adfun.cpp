@@ -11,8 +11,14 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 /*
 $begin llvm_algo2adfun$$
+$spell
+    algo
+    adfun
+    np
+    nx
+$$
 
-$section LLVM Exmaple: Create an ADFun Corresponding to Algorithm$$
+$section LLVM Example: Create an ADFun Corresponding to Algorithm$$
 
 $head Syntax$$
 $icode%f% = algo2adfun(%np%, %nx%)%$$
@@ -21,10 +27,10 @@ $head np$$
 This is the size of the dynamic parameter vector $icode p$$ for this example.
 
 $head nx$$
-This is the size of the indeopendent variable vector $icode x$$ for this example.
+This is the size of the independent variable vector $icode x$$ for this example.
 
-$head algorithm$$
-The $cref llvm_algorithm$$ is an input to this routine.
+$head algo$$
+The algorithm in $cref llvm_algo$$ is an input to this routine.
 
 $head f$$
 The return value $icode f$$ represent the same function as the algorithm.
@@ -35,9 +41,10 @@ $codei%
 %$$
 If follows that we can compute the same $icode y$$ as follows:
 $icode%
-    %y% = algorithm(%x%, %p%)
+    %y% = algo(%x%, %p%)
 %$$
 
+$end
 */
 # include "llvm.hpp"
 CppAD::ADFun<double> algo2adfun(size_t np, size_t nx)
@@ -54,7 +61,7 @@ CppAD::ADFun<double> algo2adfun(size_t np, size_t nx)
     CppAD::Independent(ax, ap);
     //
     // ay
-    CppAD::vector< AD<double> > ay = algorithm(ap, ax);
+    CppAD::vector< AD<double> > ay = algo(ap, ax);
     //
     // f : x -> y
     CppAD::ADFun<double> f(ax, ay);

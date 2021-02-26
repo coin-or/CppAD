@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_LLVM_ALGORITHM_HPP
-# define CPPAD_EXAMPLE_LLVM_ALGORITHM_HPP
+# ifndef CPPAD_EXAMPLE_LLVM_ALGO_HPP
+# define CPPAD_EXAMPLE_LLVM_ALGO_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
@@ -12,14 +12,15 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin llvm_algorithm$$
+$begin llvm_algo$$
 $spell
+    algo
 $$
 
-$section LLVM Example: Template Function that Evaluates Algorithm$$
+$section LLVM Example: Template Function that Evaluates an Algorithm$$
 
 $head Syntax$$
-$icode%y% = algorithm(%p%, %x%)%$$
+$icode%y% = algo(%p%, %x%)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
@@ -60,7 +61,7 @@ $end
 */
 // BEGIN_PROTOTYPE
 template <class VectorFloat>
-VectorFloat algorithm(const VectorFloat& p, const VectorFloat& x)
+VectorFloat algo(const VectorFloat& p, const VectorFloat& x)
 // END_PROTOTYPE
 {   size_t nx = x.size();
     size_t np = p.size();

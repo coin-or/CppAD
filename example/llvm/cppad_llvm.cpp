@@ -638,7 +638,7 @@ bool test_object_file(
         p[i] = input[i];
     for(size_t i = 0; i < nx; ++i)
         x[i] = input[np + i];
-    check = algorithm(p, x);
+    check = algo(p, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(output[i], check[i], eps99, eps99);
     //
@@ -698,7 +698,7 @@ bool test_jit(
         p[i] = input[i];
     for(size_t i = 0; i < nx; ++i)
         x[i] = input[np + i];
-    check = algorithm(p, x);
+    check = algo(p, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(output[i], check[i], eps99, eps99);
     //
@@ -741,7 +741,7 @@ bool cppad_llvm(void)
     vector<double> y = f.Forward(0, x);
     //
     // check
-    vector<double> check = algorithm(p, x);
+    vector<double> check = algo(p, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(y[i], check[i], eps99, eps99);
     //

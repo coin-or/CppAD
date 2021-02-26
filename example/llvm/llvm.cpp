@@ -21,7 +21,8 @@ $head Under Construction$$
 This section, and those below it, are under construction.
 
 $childtable%
-    example/llvm/algorithm.hpp
+    example/llvm/algo.hpp%
+    example/llvm/algo2adfun.cpp
 %$$
 
 $end
