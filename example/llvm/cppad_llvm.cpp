@@ -267,12 +267,17 @@ bool cppad_llvm(void)
     os << *function_ir;
     //
     // optimize the function and print result
-    optimize_llvm_ir(function_ir, module_ir);
+    std::string msg;
+    msg = optimize_llvm_ir(module_ir.get(), function_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
     os << "\nAfter Optimization:\n";
     os << *function_ir;
     //
     // convert back to graph
-    std::string msg = llvm_ir2graph(
+    msg = llvm_ir2graph(
         graph_obj, module_ir.get(), function_name, np, nx, ny
     );
     if( msg != "" )

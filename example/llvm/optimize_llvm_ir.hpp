@@ -14,9 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 //
 # include <llvm/IR/Module.h>
 //
-extern void optimize_llvm_ir(
-    llvm::Function*                     function_ir ,
-    std::unique_ptr<llvm::Module>&      module_ir
+std::string optimize_llvm_ir(
+    llvm::Module*                       module_ir     ,
+    const std::string&                  function_name
 );
 
 # endif
