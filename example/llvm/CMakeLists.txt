@@ -52,6 +52,7 @@ SET(source_list
     cppad_llvm.cpp
     algo2adfun.cpp
     graph2llvm_ir.cpp
+    llvm_ir2graph.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
