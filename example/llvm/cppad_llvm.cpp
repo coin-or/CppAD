@@ -42,6 +42,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include "llvm_ir2graph.hpp"
 # include "optimize_llvm_ir.hpp"
 # include "llvm_ir2obj_file.hpp"
+# include "load_obj_file.hpp"
 
 namespace { // BEGIN_EMPTY_SPACE
 // ----------------------------------------------------------------------------
@@ -61,37 +62,16 @@ bool test_object_file(
     {   std::cerr << "\n" << msg << "\n";
         return false;
     }
-    //
-    // memory_buffer
-    llvm::ErrorOr< std::unique_ptr<llvm::MemoryBuffer> > error_or_buffer =
-        llvm::MemoryBuffer::getFile( file_name );
-    if( ! error_or_buffer )
-    {   std::cerr << "Cannot load " << file_name << "\n";
-        return false;
-    }
-    std::unique_ptr<llvm::MemoryBuffer> memory_buffer(
-        std::move( error_or_buffer.get() )
-    );
-    //
     // exit_on_error
     llvm::ExitOnError exit_on_error;
     //
-    // ll_jit
-    std::unique_ptr<llvm::orc::LLJIT> ll_jit =
+    // llvm_jit
+    std::unique_ptr<llvm::orc::LLJIT> llvm_jit =
         exit_on_error( llvm::orc::LLJITBuilder().create() );
     //
-    // add function corresponding to file_name to ll_jit
-    exit_on_error( ll_jit->addObjectFile( std::move(memory_buffer) ) );
-    //
-    // function_jit
-    // Look up the JIT'd function
-    auto function_jit = exit_on_error( ll_jit->lookup(function_name) );
-    //
-    // function_cpp
-    typedef void (*function_ptr) (double*, double*);
-    function_ptr function_cpp = reinterpret_cast<function_ptr>(
-        function_jit.getAddress()
-    );
+    // function_ptr
+    function_ptr_t function_ptr;
+    load_obj_file(file_name, function_name, llvm_jit.get(), function_ptr);
     //
     // input
     CppAD::vector<double> input(np + nx);
@@ -101,7 +81,7 @@ bool test_object_file(
     //
     // call function
     CppAD::vector<double> output(ny);
-    function_cpp(input.data(), output.data());
+    function_ptr(input.data(), output.data());
     std::cout << "jit: output = " << output << "\n";
     //
     // check output
