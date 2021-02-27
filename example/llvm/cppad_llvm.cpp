@@ -41,6 +41,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include "graph2llvm_ir.hpp"
 # include "llvm_ir2graph.hpp"
 # include "optimize_llvm_ir.hpp"
+# include "llvm_ir2obj_file.hpp"
 
 namespace { // BEGIN_EMPTY_SPACE
 // ----------------------------------------------------------------------------
@@ -51,64 +52,15 @@ bool test_object_file(
     std::unique_ptr<llvm::Module>&      module_ir     ,
     const std::string&                  function_name )
 {   bool ok = true;
-
-    // Initialize llvm Target functions
-    llvm::InitializeNativeTarget();
-    llvm::InitializeNativeTargetAsmPrinter();
     //
-    // target
-    std::string          target_triple = llvm::sys::getDefaultTargetTriple();
-    std::string          error_message;
-    const  llvm::Target* target        = llvm::TargetRegistry::lookupTarget(
-        target_triple, error_message
-    );
-    if( ! target )
-    {   std::cerr << error_message;
+    std::string file_name = function_name + ".o";
+    //
+    // llvm_ir2obj_file
+    std::string msg = llvm_ir2obj_file(module_ir.get(), file_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
         return false;
     }
-    //
-    // target_machine
-    const char*                        cpu      = "generic";
-    const char*                        features = "";
-    llvm::TargetOptions                target_options;
-    llvm::Optional<llvm::Reloc::Model> reloc_model;
-    llvm::TargetMachine*  target_machine = target->createTargetMachine(
-        target_triple, cpu, features, target_options, reloc_model
-    );
-    //
-    // set target for this module
-    module_ir->setTargetTriple(target_triple);
-    //
-    // set data layout for this module
-    module_ir->setDataLayout( target_machine->createDataLayout() );
-    //
-    // output_stream
-    std::string              file_name  = function_name + ".o";
-    std::error_code          std_error_code;
-    llvm::sys::fs::OpenFlags open_flag = llvm::sys::fs::OF_None;
-    llvm::raw_fd_ostream output_stream(
-        file_name, std_error_code, open_flag
-    );
-    if( std_error_code )
-    {   std::cerr << "Could not open file: " << std_error_code.message();
-        return false;
-    }
-    //
-    // pass_manager
-    llvm::legacy::PassManager pass_manager;
-    llvm::CodeGenFileType     file_type = llvm::CGFT_ObjectFile;
-    llvm::raw_pwrite_stream*  dwo_out   = nullptr;
-    bool not_supported = target_machine->addPassesToEmitFile(
-        pass_manager, output_stream, dwo_out, file_type
-    );
-    if( not_supported )
-    {   std::cerr << "Target machine cannot emit this type of file";
-        return false;
-    }
-    //
-    // run the passes and create the output file
-    pass_manager.run(*module_ir);
-    output_stream.flush();
     //
     // memory_buffer
     llvm::ErrorOr< std::unique_ptr<llvm::MemoryBuffer> > error_or_buffer =

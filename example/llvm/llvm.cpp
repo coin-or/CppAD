@@ -25,7 +25,8 @@ $childtable%
     example/llvm/algo2adfun.cpp%
     example/llvm/graph2llvm_ir.cpp%
     example/llvm/llvm_ir2graph.cpp%
-    example/llvm/optimize_llvm_ir.cpp
+    example/llvm/optimize_llvm_ir.cpp%
+    example/llvm/llvm_ir2obj_file.cpp
 %$$
 
 $end
