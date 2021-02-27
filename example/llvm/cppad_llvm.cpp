@@ -57,7 +57,8 @@ bool test_object_file(
     std::string file_name = function_name + ".o";
     //
     // llvm_ir2obj_file
-    std::string msg = llvm_ir2obj_file(module_ir.get(), file_name);
+    std::string msg;
+    msg = llvm_ir2obj_file(module_ir.get(), file_name);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -71,7 +72,11 @@ bool test_object_file(
     //
     // function_ptr
     function_ptr_t function_ptr;
-    load_obj_file(file_name, function_name, llvm_jit.get(), function_ptr);
+    msg = load_obj_file(file_name, function_name, llvm_jit.get(), function_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
     //
     // input
     CppAD::vector<double> input(np + nx);

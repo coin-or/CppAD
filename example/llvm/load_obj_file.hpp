@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 typedef void (*function_ptr_t)(double*, double*);
 //
 // load_obj_file
-extern bool load_obj_file(
+extern std::string load_obj_file(
     const std::string file_name     ,
     const std::string function_name ,
     llvm::orc::LLJIT* llvm_jit      ,
