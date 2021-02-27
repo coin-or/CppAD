@@ -11,15 +11,20 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 /*
 $begin llvm_ir2graph$$
+$spell
+    llvm_ir
+    obj
+    ind
+$$
 
 $section Convert an LLVM Intermediate Representation to a C++ AD Graph$$
 
 $head Syntax$$
-$icode%msg% = llmv_ir2graph(%graph_obj%, %module_ir%
+$icode%msg% = llvm_ir2graph(%graph_obj%, %module_ir%
     %function_name%, %n_dynamic_ind%, %n_variable_ind%, %n_dependent%
 )%$$
 
-$head Prototype%
+$head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
 $head graph_obj$$
@@ -36,13 +41,13 @@ $head n_dynamic_ind$$
 This is the number of independent dynamic parameters in the function.
 
 $head n_variable_ind$$
-This is the number of indepenent variables in the function.
+This is the number of independent variables in the function.
 
 $head n_dependent$$
 This is the number of dependent variables in the function.
 
 $head msg$$
-If the return value $icoce msg$$ is the empty string,
+If the return value $icode msg$$ is the empty string,
 no error was detected.
 Otherwise, $icode msg$$ describes the error and the return value
 of $icode graph_obj$$ is unspecified.
@@ -50,58 +55,26 @@ of $icode graph_obj$$ is unspecified.
 $end
 */
 # include "llvm_ir2graph.hpp"
-//
-// ----------------------------------------------------------------------------
-void print_llvm(llvm::raw_os_ostream& os, const llvm::Value* value)
-{   llvm::Type*        value_type = value->getType();
-    llvm::Type::TypeID type_id    = value_type->getTypeID();
-    bool               is_ptr     = llvm::isa<llvm::PointerType>(value_type);
-    assert( type_id != llvm::Type::PointerTyID || is_ptr );
-    const char* enum_name[] = {
-        "HalfTyID",
-        "BFloatTyID",
-        "FloatTyID",
-        "DoubleTyID",
-        "X86_FP80TyID",
-        "FP128TyID",
-        "PPC_FP128TyID",
-        "VoidTyID",
-        "LabelTyID",
-        "MetadataTyID",
-        "X86_MMXTyID",
-        "TokenTyID",
-        "IntegerTyID",
-        "FunctionTyID",
-        "PointerTyID",
-        "StructTyID",
-        "ArrayTyID",
-        "FixedVectorTyID",
-        "ScalableVectorTyID"
-    };
-    os << enum_name[type_id] << ":";
-    if( value->getName() != "" )
-        os << value->getName() << "=";
-    if( llvm::isa<llvm::ConstantInt>(value) )
-    {   const llvm::ConstantInt* constant_int =
-            llvm::dyn_cast<const llvm::ConstantInt>(value);
-        const llvm::APInt* constant_ap_int = &constant_int->getValue();
-        const uint64_t* constant_uint64    = constant_ap_int->getRawData();
-        os << *constant_uint64;
-    }
-    else
-        os << value;
-    return;
-}
-// ----------------------------------------------------------------------------
-void llvm_ir2graph(
-    llvm::raw_os_ostream&                     os             ,
+// BEGIN_PROTOTYPE
+std::string llvm_ir2graph(
     CppAD::cpp_graph&                         graph_obj      ,
-    const llvm::Function*                     function_ir    ,
+    const llvm::Module*                       module_ir      ,
     const std::string&                        function_name  ,
     size_t                                    n_dynamic_ind  ,
     size_t                                    n_variable_ind ,
     size_t                                    n_dependent    )
+// END_PROTOTYPE
 {   //
+    // initialize return value with name of this routine
+    std::string msg = "llvm_ir2graph";
+    //
+    // function_ir
+    const llvm::Function* function_ir = module_ir->getFunction(function_name);
+    if( ! function_ir )
+    {   msg += "Cannot find function " + function_name + " in llvm_ir";
+        return msg;
+    }
+    //
     // map and llvm::Value* for a value to graph node index
     llvm::DenseMap<const llvm::Value*, size_t>  llvm_value2graph_node;
     //
@@ -112,7 +85,7 @@ void llvm_ir2graph(
     llvm::DenseMap<const llvm::Value*, size_t>  llvm_ptr2dep_var_ind;
     //
     // Assumes the default constructor for size_t yields zero
-    assert( size_t() == 0 );
+    CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
     //
     // type used by interface to DenseMap
     typedef std::pair<const llvm::Value*, size_t> pair;
@@ -137,15 +110,9 @@ void llvm_ir2graph(
     graph_obj.n_dynamic_ind_set(n_dynamic_ind);
     graph_obj.n_variable_ind_set(n_variable_ind);
     //
-    os << "begin llvm_ir2graph\n";
-    print_llvm(os, input_ptr);
-    os << "\n";
-    print_llvm(os, output_ptr);
-    os << "\n";
-    //
     // First Pass
     // determine the floating point constants in the graph
-    assert( graph_obj.constant_vec_size() == 0 );
+    CPPAD_ASSERT_UNKNOWN( graph_obj.constant_vec_size() == 0 );
     for(llvm::const_inst_iterator itr = begin_inst; itr != end_inst; ++itr)
     {   unsigned n_operand = itr->getNumOperands();
         for(size_t i = 0; i < n_operand; ++i)
@@ -167,10 +134,6 @@ void llvm_ir2graph(
                     // add this constant do data structure
                     llvm_value2graph_node.insert( pair(operand, node) );
                     graph_obj.constant_vec_push_back(dbl);
-                    //
-                    // output this constant
-                    print_llvm(os, operand);
-                    os << " = " << dbl << "\n";
                 }
             }
         }
@@ -189,7 +152,7 @@ void llvm_ir2graph(
     CppAD::vector<size_t> dependent(n_dependent);
 # ifndef NDEBUG
     for(size_t i = 0; i < n_dependent; ++i)
-        assert( dependent[i] == 0 );
+        CPPAD_ASSERT_UNKNOWN( dependent[i] == 0 );
 # endif
     //
     // The operands and corresponding type for each instruction
@@ -203,7 +166,9 @@ void llvm_ir2graph(
     for(llvm::const_inst_iterator itr = begin_inst; itr != end_inst; ++itr)
     {
         const llvm::Value* result = llvm::dyn_cast<llvm::Value>( &(*itr) );
+# ifndef NDEBUG
         llvm::Type::TypeID result_type_id = result->getType()->getTypeID();
+# endif
         unsigned op_code                  = itr->getOpcode();
         unsigned n_operand                = itr->getNumOperands();
         operand.resize(n_operand);
@@ -220,17 +185,15 @@ void llvm_ir2graph(
         size_t                   node;
         size_t                   index;
         //
-        std::string op_enum_str = "";
         switch( op_code )
         {   // --------------------------------------------------------------
             case llvm::Instruction::Load:
             // This instruction is only used to load the first element
             // in the input vector.
-            op_enum_str = "Load";
-            assert( n_operand == 1 );
-            assert( type_id[0] == llvm::Type::PointerTyID );
+            CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
+            CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::PointerTyID );
             node = llvm_ptr2graph_node.lookup(operand[0]);
-            assert( node != 0 );
+            CPPAD_ASSERT_UNKNOWN( node != 0 );
             // result is the value that operand[0] points to
             llvm_value2graph_node.insert( pair(result , node) );
             break;
@@ -239,11 +202,10 @@ void llvm_ir2graph(
             case llvm::Instruction::FAdd:
             // This instruction creates a new node in the graph that corresonds
             // to the sum of two other nodes.
-            op_enum_str = "FAdd";
-            assert( n_operand == 2 );
-            assert( result_type_id == llvm::Type::DoubleTyID );
-            assert( type_id[0]     == llvm::Type::DoubleTyID );
-            assert( type_id[1]     == llvm::Type::DoubleTyID );
+            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
+            CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::DoubleTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::DoubleTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::DoubleTyID );
             //
             // mapping from this result to the correspondign new node in graph
             llvm_value2graph_node.insert( pair(result , ++result_node) );
@@ -254,18 +216,17 @@ void llvm_ir2graph(
             // add node index correspnding to left and right operands
             for(size_t i = 0; i < 2; ++i)
             {   node = llvm_value2graph_node.lookup(operand[i]);
-                assert( node != 0 );
+                CPPAD_ASSERT_UNKNOWN( node != 0 );
                 graph_obj.operator_arg_push_back( node );
             }
             break;
             //
             // --------------------------------------------------------------
             case llvm::Instruction::Instruction::GetElementPtr:
-            op_enum_str = "GetElementPtr";
-            assert( n_operand == 2 );
-            assert( result_type_id == llvm::Type::PointerTyID );
-            assert( type_id[0]     == llvm::Type::PointerTyID );
-            assert( type_id[1]     == llvm::Type::IntegerTyID );
+            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
+            CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::PointerTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::PointerTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::IntegerTyID );
             cint   = llvm::dyn_cast<const llvm::ConstantInt>(operand[1]);
             apint  = &cint->getValue();
             uint64 = apint->getRawData();
@@ -277,7 +238,7 @@ void llvm_ir2graph(
                 llvm_ptr2dep_var_ind.insert( pair(result, index) );
             }
             else
-            {    assert( operand[0] == input_ptr );
+            {    CPPAD_ASSERT_UNKNOWN( operand[0] == input_ptr );
                 // The only use of input_ptr is load values
                 //
                 // first element of input_ptr corresponds to node index 1
@@ -288,44 +249,38 @@ void llvm_ir2graph(
             //
             // --------------------------------------------------------------
             case llvm::Instruction::Ret:
-            assert( n_operand == 0 );
-            op_enum_str = "Ret";
+            CPPAD_ASSERT_UNKNOWN( n_operand == 0 );
             break;
             //
             // --------------------------------------------------------------
             case llvm::Instruction::Store:
-            op_enum_str = "Store";
-            assert( n_operand == 2 );
-            assert( type_id[0] == llvm::Type::DoubleTyID );
-            assert( type_id[1] == llvm::Type::PointerTyID );
+            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
+            CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
             node  = llvm_value2graph_node.lookup(operand[0]);
             index = llvm_ptr2dep_var_ind.lookup(operand[1]);
-            assert( node != 0 );
-            assert( index != 0 );
+            CPPAD_ASSERT_UNKNOWN( node != 0 );
+            CPPAD_ASSERT_UNKNOWN( index != 0 );
             dependent[ index - 1 ] = node;
             break;
             //
             // --------------------------------------------------------------
             default:
             {   std::string op_name = itr->getOpcodeName();
-                os << "Error: cannot fit enum for " << op_name << "\n";
+                msg += "Cannot handle the llvm instruction " + op_name;
             }
             break;
         }
-        print_llvm(os, result);
-        os << " = " << op_enum_str << "( ";
-        for(size_t i = 0; i < n_operand; ++i)
-        {   if( i != 0 )
-                os << ", ";
-            print_llvm(os, operand[i]);
-        }
-        os << " )\n";
     }
     for(size_t i = 0; i < n_dependent; ++i)
-    {   assert( dependent[i] != 0 );
+    {   if( dependent[i] == 0 )
+        {   msg += "No store instruction for dependent variable index ";
+            msg += std::to_string(i);
+            return msg;
+        }
         graph_obj.dependent_vec_push_back( dependent[i] );
     }
-    os << "end llvm_ir2graph\n";
-    os.flush();
-    return;
+    // No error
+    msg = "";
+    return msg;
 }

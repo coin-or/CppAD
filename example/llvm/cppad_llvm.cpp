@@ -297,9 +297,13 @@ bool cppad_llvm(void)
     os << *function_ir;
     //
     // convert back to graph
-    llvm_ir2graph(
-        os, graph_obj, function_ir, function_name, np, nx, ny
+    std::string msg = llvm_ir2graph(
+        graph_obj, module_ir.get(), function_name, np, nx, ny
     );
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
     // print the graph
     graph_obj.print(std::cout);
     //

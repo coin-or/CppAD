@@ -13,15 +13,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <cppad/core/graph/cpp_graph.hpp>
 //
-# include <llvm/IR/Function.h>
+# include <llvm/IR/Module.h>
 # include <llvm/IR/Constants.h>
 # include <llvm/IR/InstIterator.h>
-# include <llvm/Support/raw_os_ostream.h>
 //
-extern void llvm_ir2graph(
-    llvm::raw_os_ostream&                     os             ,
+extern std::string llvm_ir2graph(
     CppAD::cpp_graph&                         graph_obj      ,
-    const llvm::Function*                     function_ir    ,
+    const llvm::Module*                       module_ir      ,
     const std::string&                        function_name  ,
     size_t                                    n_dynamic_ind  ,
     size_t                                    n_variable_ind ,
