@@ -40,35 +40,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include "algo2adfun.hpp"
 # include "graph2llvm_ir.hpp"
 # include "llvm_ir2graph.hpp"
+# include "optimize_llvm_ir.hpp"
 
 namespace { // BEGIN_EMPTY_SPACE
-
 // ----------------------------------------------------------------------------
-void optimize_llvm_ir(
-    llvm::Function*                function_ir  ,
-    std::unique_ptr<llvm::Module>& module_ir    )
-{
-    // optimization_pass_manager
-    std::unique_ptr<llvm::legacy::FunctionPassManager> function_pass_manager;
-    function_pass_manager =
-        std::make_unique<llvm::legacy::FunctionPassManager>( module_ir.get() );
-    //
-    // Do simple "peephole" optimizations and bit-twiddling optzns.
-    function_pass_manager->add(llvm::createInstructionCombiningPass());
-    // Reassociate expressions.
-    function_pass_manager->add(llvm::createReassociatePass());
-    // Eliminate Common SubExpressions.
-    function_pass_manager->add(llvm::createGVNPass());
-    // Simplify the control flow graph (deleting unreachable blocks, etc).
-    function_pass_manager->add(llvm::createCFGSimplificationPass());
-    //
-    function_pass_manager->doInitialization();
-    //
-    // run the optimizer on the function
-    function_pass_manager->run(*function_ir);
-    //
-    return;
-}
 bool test_object_file(
     size_t                              np            ,
     size_t                              nx            ,
