@@ -23,6 +23,7 @@ This section, and those below it, are under construction.
 $childtable%
     example/llvm/algo.hpp%
     example/llvm/algo2adfun.cpp%
+    example/llvm/llvm_ir.cpp%
     example/llvm/graph2llvm_ir.cpp%
     example/llvm/llvm_ir2graph.cpp%
     example/llvm/optimize_llvm_ir.cpp%
@@ -48,6 +49,7 @@ $end
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
 extern bool cppad_llvm(void);
+extern bool llvm_graph(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -61,6 +63,7 @@ int main(void)
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
     Run( cppad_llvm,           "cppad_llvm"     );
+    Run( llvm_graph,           "llvm_graph"     );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak

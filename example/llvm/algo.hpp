@@ -60,6 +60,8 @@ $icode x$$ or $icode p$$.
 
 $end
 */
+# include <cstddef>
+
 // BEGIN_PROTOTYPE
 template <class VectorFloat>
 VectorFloat algo(const VectorFloat& p, const VectorFloat& x)

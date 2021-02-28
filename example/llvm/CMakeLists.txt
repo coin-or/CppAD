@@ -56,6 +56,8 @@ SET(source_list
     optimize_llvm_ir.cpp
     llvm_ir2obj_file.cpp
     load_obj_file.cpp
+    llvm_ir.cpp
+    llvm_graph.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
