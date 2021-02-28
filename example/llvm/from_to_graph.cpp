@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin llvm_graph.cpp$$
+$begin llvm_from_to_graph.cpp$$
 
 $section LLVM To and From C++ AD Graph Examples$$
 
@@ -24,7 +24,7 @@ $end
 # include "algo2adfun.hpp"
 # include "llvm_ir.hpp"
 
-bool llvm_graph(void)
+bool from_to_graph(void)
 {   bool ok = true;
     using CppAD::vector;
     //

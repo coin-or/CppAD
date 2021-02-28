@@ -185,6 +185,7 @@ $rref json_sparse.cpp$$
 $rref json_sub_op.cpp$$
 $rref json_sum_op.cpp$$
 $rref json_unary_op.cpp$$
+$rref llvm_from_to_graph.cpp$$
 $rref log.cpp$$
 $rref log10.cpp$$
 $rref log1p.cpp$$

@@ -132,10 +132,10 @@ Otherwise, $icode msg$$ describes the error and the return value
 of $icode ir_obj$$ is unspecified.
 
 $children%
-    example/llvm/llvm_graph.cpp
+    example/llvm/from_to_graph.cpp
 %$$
 $head Example$$
-The file $cref llvm_graph.cpp$$ contains an example and test
+The file $cref llvm_from_to_graph.cpp$$ contains an example and test
 of this operation.
 
 $end
