@@ -58,6 +58,7 @@ SET(source_list
     load_obj_file.cpp
     llvm_ir.cpp
     from_to_graph.cpp
+    algo2adfun_xam.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

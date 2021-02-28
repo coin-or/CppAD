@@ -122,7 +122,7 @@ $code add_graph_op$$.
 $lend
 
 $head ir_obj$$
-Its input value of this $cref llvm_ir$$ object does not matter.
+Its input value of this $cref/llvm_ir/llvm_ir_ctor/$$ object does not matter.
 Upon return, it contains an LLVM Intermediate Representation (IR)
 corresponding to the function in $icode graph_obj$$.
 
@@ -351,6 +351,7 @@ $spell
     obj
     vec
     op
+    Ptr
 $$
 
 $section Converting a C++ AD Graph to LLVM Intermediate Representation$$
@@ -363,7 +364,7 @@ $srcthisfile%0%// BEGIN_TO_GRAPH%// END_TO_GRAPH%1%$$
 
 $head graph_obj$$
 The input value of $icode graph_obj$$ does not matter.
-Upone return, it is a $cref cpp_ad_graph$$ representaion of the function.
+Upon return, it is a $cref cpp_ad_graph$$ representation of the function.
 
 $head ir_obj$$
 This is a $cref/llvm_ir/llvm_ir_ctor/$$ object.
@@ -385,9 +386,7 @@ no error was detected.
 Otherwise, $icode msg$$ describes the error and the return value
 of $icode graph_obj$$ is unspecified.
 
-$children%
-    example/llvm/from_to_graph.cpp
-%$$
+$comment example/llvm/from_to_graph.cpp was included by llvm_from_graph$$
 $head Example$$
 The file $cref llvm_from_to_graph.cpp$$ contains an example and test
 of this operation.

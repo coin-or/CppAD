@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
 
-extern bool algo2adfun(
+extern void algo2adfun(
     size_t                np    ,
     size_t                nx    ,
     CppAD::ADFun<double>& adfun

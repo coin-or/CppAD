@@ -48,6 +48,7 @@ $end
 
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
+extern bool algo2adfun_xam(void);
 extern bool cppad_llvm(void);
 extern bool from_to_graph(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -62,6 +63,7 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
+    Run( algo2adfun_xam,       "algo2adfun_xam"    );
     Run( cppad_llvm,           "cppad_llvm"        );
     Run( from_to_graph,        "from_to_graph"     );
     // END_SORT_THIS_LINE_MINUS_1

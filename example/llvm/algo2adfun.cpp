@@ -49,19 +49,22 @@ $icode%
     %y% = algo(%x%, %p%)
 %$$
 
-$head ok$$
-The return value $icode ok$$ is true (false) if the function conversion
-passes (fails) its tests.
+$children%
+    example/llvm/algo2adfun_xam.cpp
+%$$
+$head Example$$
+The file $cref llvm_algo2adfun_xam.cpp$$ contains
+an example and text of this function.
+
 $end
 */
 # include "algo2adfun.hpp"
 # include "algo.hpp"
 //
 // BEGIN_PROTOTYPE
-bool algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
+void algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
 // END_PROTOTYPE
-{   bool ok = true;
-    using CppAD::AD;
+{   using CppAD::AD;
     using CppAD::vector;
     //
     // ap, ax
@@ -81,36 +84,6 @@ bool algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
     adfun.Dependent(ax, ay);
     //
     adfun.function_name_set("algo");
-    // -----------------------------------------------------------------------
-    // check adfun
-    // -----------------------------------------------------------------------
-    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
-    ok &= adfun.function_name_get() == "algo";
-    ok &= adfun.size_dyn_ind() == np;
-    ok &= adfun.Domain() == nx;
-    ok &= adfun.Range() == ay.size();
-    size_t ny = adfun.Range();
-    //
-    // rand_max
-    double rand_max = double(RAND_MAX);
-    //
-    // x, p
-    vector<double> p(np), x(nx);
-    for(size_t i = 0; i < np; ++i)
-    {   p[i] = std::rand() / rand_max;
-    }
-    for(size_t i = 0; i < nx; ++i)
-    {   x[i] = std::rand() / rand_max;
-    }
-    // y = f(p; x)
-    adfun.new_dynamic(p);
-    vector<double> y     = adfun.Forward(0, x);
-    vector<double> check = algo(p, x);
-    //
-    ok &= y.size() == check.size();
-    for(size_t i = 0; i < ny; ++i)
-        ok &= CppAD::NearEqual(y[i], check[i], eps99, eps99);
-    //
-    return ok;
+    return;
 }

@@ -170,11 +170,11 @@ bool cppad_llvm(void)
     using CppAD::vector;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
-    // f
+    // np, nx, f
     size_t np = 1;
     size_t nx = 2;
     CppAD::ADFun<double> f;
-    ok  &= algo2adfun(np, nx, f);
+    algo2adfun(np, nx, f);
     //
     size_t ny = f.Range();
     //
