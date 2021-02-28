@@ -28,7 +28,8 @@ private:
 public:
     llvm_ir(void);
     std::string from_graph(const cpp_graph& graph_obj);
-    void print(void);
+    std::string to_graph(cpp_graph& graph_obj) const;
+    void print(void) const;
 };
 
 } // END_CPPAD_NAMESPACE

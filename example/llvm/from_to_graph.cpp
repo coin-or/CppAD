@@ -34,15 +34,7 @@ bool from_to_graph(void)
     //
     // f
     CppAD::ADFun<double> f;
-    ok  &= algo2adfun(np, nx, f);
-    //
-    // x, p
-    vector<double> x(nx), p(np);
-    for(size_t i = 0; i < np; ++i)
-        p[i] = double(i + 4);
-    for(size_t i = 0; i < nx; ++i)
-        x[i] = double(i + np + 4);
-    vector<double> check = algo(p, x);
+    algo2adfun(np, nx, f);
     //
     // graph_obj
     CppAD::cpp_graph graph_obj;
@@ -53,9 +45,44 @@ bool from_to_graph(void)
     std::string msg = ir_obj.from_graph(graph_obj);
     if( msg != "" )
     {   std::cout << "\n" << msg << "\n";
-        ok = false;
+        return false;
     }
-    ir_obj.print();
+    //
+    // graph_obj
+    msg = ir_obj.to_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // g
+    CppAD::ADFun<double> g;
+    g.from_graph(graph_obj);
+    // ---------------------------------------------------------------------
+    // Check zero order forward mode for g
+    //
+    // rand_max
+    double rand_max = double(RAND_MAX);
+    //
+    // x, p
+    vector<double> p(np), x(nx);
+    for(size_t i = 0; i < np; ++i)
+        p[i] = std::rand() / rand_max;
+    for(size_t i = 0; i < nx; ++i)
+        x[i] = std::rand() / rand_max;
+    //
+    // y = g(p; x)
+    g.new_dynamic(p);
+    vector<double> y = g.Forward(0, x);
+    //
+    // check
+    double         eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+    vector<double> check = algo(p, x);
+    size_t         ny    = g.Range();
+    ok &= check.size() == ny;
+    ok &= f.Range()    == ny;
+    for(size_t i = 0; i < ny; ++i)
+        ok &= CppAD::NearEqual(y[i], check[i], eps99, eps99);
     //
     return ok;
 }
