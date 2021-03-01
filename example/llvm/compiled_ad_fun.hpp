@@ -11,10 +11,13 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
+# include <cstdint>
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_COMPILED_AD_FUN_T
-typedef void (*compiled_ad_fun_t)(double* input, double* output);
+// error_no = function_ptr(input, output)
+typedef int32_t (*compiled_ad_fun_t)(double* , double* );
 // END_COMPILED_AD_FUN_T
 
 } // END_CPPAD_NAMESPACE

@@ -205,14 +205,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::PointerType* llvm_double_ptr =
         llvm::PointerType::getUnqual(llvm_double);
     //
-    // void_t
-    llvm::Type* void_t = llvm::Type::getVoidTy(*context_ir_);
+    // int_32_t
+    llvm::Type* int_32_t = llvm::Type::getInt32Ty(*context_ir_);
     //
     // function_t
     // void (*function_t) (double *, double*)
     std::vector<llvm::Type*> param_types = { llvm_double_ptr, llvm_double_ptr };
     bool                     is_var_arg  = false;
-    llvm::Type*              result_type = void_t;
+    llvm::Type*              result_type = int_32_t;
     llvm::FunctionType*      function_t  = llvm::FunctionType::get(
             result_type, param_types, is_var_arg
     );
@@ -301,12 +301,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             ++itr;
         CppAD::cpp_graph::const_iterator::value_type itr_value = *itr;
         //
-        const CppAD::vector<size_t>& str_index( *itr_value.str_index_ptr );
         const CppAD::vector<size_t>&       arg( *itr_value.arg_node_ptr );
         graph_op_enum  op_enum  = itr_value.op_enum;
+# ifndef NDEBUG
+        const CppAD::vector<size_t>& str_index( *itr_value.str_index_ptr );
         size_t         n_result = itr_value.n_result;
         size_t         n_arg    = arg.size();
         size_t         n_str    = str_index.size();
+# endif
         //
         llvm::Value* value;
         switch( op_enum )
@@ -341,8 +343,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         builder.CreateStore(graph_ir[node_index], ptr, is_volatile);
         graph_ir[node_index]->setName(name);
     }
-    // void return value for this function
-    builder.CreateRetVoid();
+    // return zero for no error
+    bool is_signed = true;
+    llvm::Value* no_error = llvm::ConstantInt::get(
+        *context_ir_, llvm::APInt(32, 0, is_signed)
+    );
+    builder.CreateRet(no_error);
     //
     // check retreiving this function from this module
     CPPAD_ASSERT_UNKNOWN(
@@ -594,7 +600,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             //
             // --------------------------------------------------------------
             case llvm::Instruction::Ret:
-            CPPAD_ASSERT_UNKNOWN( n_operand == 0 );
+            // returns int32_t flag
+            CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
             break;
             //
             // --------------------------------------------------------------
