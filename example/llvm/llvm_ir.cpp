@@ -211,7 +211,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // function_t
     // void (*function_t) (double *, double*)
     std::vector<llvm::Type*> param_types = { llvm_double_ptr, llvm_double_ptr };
-    bool                     is_var_arg  = "false";
+    bool                     is_var_arg  = false;
     llvm::Type*              result_type = void_t;
     llvm::FunctionType*      function_t  = llvm::FunctionType::get(
             result_type, param_types, is_var_arg

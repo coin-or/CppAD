@@ -27,7 +27,7 @@ private:
     size_t                             n_variable_ind_;
     // number of dependent variables
     size_t                             n_variable_dep_;
-    // llvm representation for this function
+    // llvm intermediate representation for this function
     std::unique_ptr<llvm::LLVMContext> context_ir_;
     std::unique_ptr<llvm::Module>      module_ir_;
 public:

@@ -24,7 +24,7 @@ $childtable%
     example/llvm/algo.hpp%
     example/llvm/algo2adfun.cpp%
     example/llvm/llvm_ir.cpp%
-    example/llvm/load_obj_file.cpp
+    example/llvm/llvm_link.cpp
 %$$
 
 $end

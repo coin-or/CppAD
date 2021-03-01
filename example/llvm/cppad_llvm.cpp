@@ -40,6 +40,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include "algo2adfun.hpp"
 # include "load_obj_file.hpp"
 # include "llvm_ir.hpp"
+# include "llvm_link.hpp"
 
 namespace { // BEGIN_EMPTY_SPACE
 // ----------------------------------------------------------------------------
@@ -52,16 +53,15 @@ bool test_object_file(
 {   bool ok = true;
     std::string msg;
     //
-    // exit_on_error
-    llvm::ExitOnError exit_on_error;
+    // link_obj
+    CppAD::llvm_link link_obj;
     //
-    // llvm_jit
-    std::unique_ptr<llvm::orc::LLJIT> llvm_jit =
-        exit_on_error( llvm::orc::LLJITBuilder().create() );
+    // load file
+    link_obj.load(file_name);
     //
     // function_ptr
-    function_ptr_t function_ptr;
-    msg = load_obj_file(file_name, function_name, llvm_jit.get(), function_ptr);
+    CppAD::compiled_ad_fun_t function_ptr;
+    msg = link_obj.compiled_ad_fun(function_name, function_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -71,12 +71,10 @@ bool test_object_file(
     CppAD::vector<double> input(np + nx);
     for(size_t i = 0; i < np + nx; ++i)
         input[i] = double(i) + 4.0;
-    std::cout << "jit: input = " << input << "\n";
     //
     // call function
     CppAD::vector<double> output(ny);
     function_ptr(input.data(), output.data());
-    std::cout << "jit: output = " << output << "\n";
     //
     // check output
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
