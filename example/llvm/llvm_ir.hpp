@@ -19,17 +19,26 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 class llvm_ir {
 private:
+    // name of the function
     std::string                        function_name_;
+    // number of independent dynamic parameters
     size_t                             n_dynamic_ind_;
+    // number of independent variables
     size_t                             n_variable_ind_;
+    // number of dependent variables
     size_t                             n_variable_dep_;
+    // llvm representation for this function
     std::unique_ptr<llvm::LLVMContext> context_ir_;
     std::unique_ptr<llvm::Module>      module_ir_;
 public:
+    // no-const member functions
     llvm_ir(void);
     std::string from_graph(const cpp_graph& graph_obj);
-    std::string to_graph(cpp_graph& graph_obj) const;
     void optimize(void);
+    //
+    // const member functions
+    std::string to_graph(cpp_graph& graph_obj) const;
+    std::string to_object_file(const std::string& file_name) const;
     void print(void) const;
 };
 
