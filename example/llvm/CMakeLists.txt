@@ -51,7 +51,6 @@ SET(source_list
     llvm.cpp
     link_xam.cpp
     algo2adfun.cpp
-    load_obj_file.cpp
     llvm_ir.cpp
     from_to_graph.cpp
     algo2adfun_xam.cpp
