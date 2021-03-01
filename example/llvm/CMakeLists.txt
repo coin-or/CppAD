@@ -51,10 +51,6 @@ SET(source_list
     llvm.cpp
     cppad_llvm.cpp
     algo2adfun.cpp
-    graph2llvm_ir.cpp
-    llvm_ir2graph.cpp
-    optimize_llvm_ir.cpp
-    llvm_ir2obj_file.cpp
     load_obj_file.cpp
     llvm_ir.cpp
     from_to_graph.cpp

@@ -29,8 +29,9 @@ $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
 $head file_name$$
-This is the name of the object file
-(probably created by $cref llvm_ir2obj_file$$) that contains the function.
+This is the name of the object file,
+possibly created by $cref llvm_ir_to_object_file$$,
+that contains the function.
 
 $head function_name$$
 This the is the name of the function we are loading into memory.

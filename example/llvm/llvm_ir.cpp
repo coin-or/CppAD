@@ -692,7 +692,7 @@ void llvm_ir::optimize(void)
 }
 /*
 -------------------------------------------------------------------------------
-$begin llvm_to_object_file$$
+$begin llvm_ir_to_object_file$$
 $spell
     llvm_ir
     obj

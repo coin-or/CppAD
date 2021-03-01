@@ -38,10 +38,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 //
 # include "algo.hpp"
 # include "algo2adfun.hpp"
-# include "graph2llvm_ir.hpp"
-# include "llvm_ir2graph.hpp"
-# include "optimize_llvm_ir.hpp"
-# include "llvm_ir2obj_file.hpp"
 # include "load_obj_file.hpp"
 # include "llvm_ir.hpp"
 
