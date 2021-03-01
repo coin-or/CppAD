@@ -14,13 +14,17 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <llvm/IR/DerivedTypes.h>
 # include <llvm/IR/InstIterator.h>
 # include <llvm/IR/IRBuilder.h>
+# include <llvm/IR/LegacyPassManager.h>
 # include <llvm/IR/Type.h>
 # include <llvm/IR/Verifier.h>
 //
 # include <llvm/Support/raw_os_ostream.h>
 //
+# include <llvm/Transforms/InstCombine/InstCombine.h>
+# include <llvm/Transforms/Scalar.h>
+# include <llvm/Transforms/Scalar/GVN.h>
+//
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-
 /*
 ------------------------------------------------------------------------------
 $begin llvm_ir_ctor$$
@@ -74,12 +78,12 @@ void llvm_ir::print(void) const
         std::cout << "llvm_ir::print: empty function\n";
         return;
     }
+    // os
     llvm::raw_os_ostream os( std::cout );
+    // function_ir
     llvm::Function* function_ir = module_ir_->getFunction(function_name_);
-    if( function_ir == nullptr )
-    {   std::cerr << "llvm_ir::print: error finding " << function_name_;
-        return;
-    }
+    CPPAD_ASSERT_UNKNOWN( function_ir != nullptr );
+    // output
     os << *function_ir;
     os.flush();
     return;
@@ -110,6 +114,8 @@ $subhead Restrictions$$
 The following limitations are placed on $icode graph_obj$$
 (and expected to be removed in the future).
 $list number$$
+$cref/function_name/cpp_ad_graph/function_name/$$ must not be empty.
+$lnext
 $cref/discrete_name_vec/cpp_ad_graph/discrete_name_vec/$$ must be empty.
 $lnext
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ must be empty.
@@ -175,6 +181,10 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     //
     // function_name_
     function_name_ = graph_obj.function_name_get();
+    if( function_name_ == "" )
+    {   msg += "graph_obj.function_name_get() is empty";
+        return msg;
+    }
     //
     // context_ir_
     context_ir_ = std::make_unique<llvm::LLVMContext>();
@@ -404,10 +414,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     //
     // function_ir
     const llvm::Function* function_ir = module_ir_->getFunction(function_name_);
-    if( ! function_ir )
-    {   msg += "Cannot find function " + function_name_ + " in llvm_ir";
-        return msg;
-    }
+    CPPAD_ASSERT_UNKNOWN( function_ir  != nullptr );
     //
     // map and llvm::Value* for a value to graph node index
     llvm::DenseMap<const llvm::Value*, size_t>  llvm_value2graph_node;
@@ -618,6 +625,66 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // No error
     msg = "";
     return msg;
+}
+/*
+------------------------------------------------------------------------------
+$begin llvm_ir_optimize$$
+$spell
+    llvm_ir
+    obj
+$$
+
+$section Optimize an LLVM Intermediate Representation$$
+
+$head Syntax$$
+$icode%ir_obj%.optimize()%$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_OPTIMIZE%// END_OPTIMIZE%1%$$
+
+$head ir_obj$$
+This is a $cref/llvm_ir/llvm_ir_ctor/$$ object.
+It contains an LLVM Intermediate Representation (IR)
+that is optimized.
+
+$children%
+    example/llvm/optimize.cpp
+%$$
+$head Example$$
+The file $cref llvm_optimize.cpp$$ contains an example and test
+of this operation.
+
+$end
+*/
+//
+// BEGIN_OPTIMIZE
+void llvm_ir::optimize(void)
+// END_OPTIMIZE
+{
+    // function_ir
+    llvm::Function* function_ir = module_ir_->getFunction(function_name_);
+    CPPAD_ASSERT_UNKNOWN( function_ir != nullptr )
+    //
+    // optimization_pass_manager
+    std::unique_ptr<llvm::legacy::FunctionPassManager> function_pass_manager;
+    function_pass_manager =
+        std::make_unique<llvm::legacy::FunctionPassManager>( module_ir_.get() );
+    //
+    // Do simple "peephole" optimizations and bit-twiddling optzns.
+    function_pass_manager->add(llvm::createInstructionCombiningPass());
+    // Reassociate expressions.
+    function_pass_manager->add(llvm::createReassociatePass());
+    // Eliminate Common SubExpressions.
+    function_pass_manager->add(llvm::createGVNPass());
+    // Simplify the control flow graph (deleting unreachable blocks, etc).
+    function_pass_manager->add(llvm::createCFGSimplificationPass());
+    //
+    function_pass_manager->doInitialization();
+    //
+    // run the optimizer on the function
+    function_pass_manager->run(*function_ir);
+    //
+    return;
 }
 
 } // END_CPPAD_NAMESPACE

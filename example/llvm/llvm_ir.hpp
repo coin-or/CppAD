@@ -29,6 +29,7 @@ public:
     llvm_ir(void);
     std::string from_graph(const cpp_graph& graph_obj);
     std::string to_graph(cpp_graph& graph_obj) const;
+    void optimize(void);
     void print(void) const;
 };
 

@@ -51,6 +51,7 @@ $end
 extern bool algo2adfun_xam(void);
 extern bool cppad_llvm(void);
 extern bool from_to_graph(void);
+extern bool optimize(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -66,6 +67,7 @@ int main(void)
     Run( algo2adfun_xam,       "algo2adfun_xam"    );
     Run( cppad_llvm,           "cppad_llvm"        );
     Run( from_to_graph,        "from_to_graph"     );
+    Run( optimize,             "optimize"          );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak
