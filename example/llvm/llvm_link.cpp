@@ -15,7 +15,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
 -------------------------------------------------------------------------------
-$beign llvm_link_ctor$$
+$begin llvm_link_ctor$$
+$spell
+    llvm_obj
+$$
 
 $section Create an LLVM Object File Linker$$
 
@@ -23,7 +26,14 @@ $head Syntax$$
 $codei%llvm_link %link_obj%;%$$
 
 $head Purpose$$
-This creates the empty $code llvm_link$$ object $iode link_obj$$.
+This creates the empty $code llvm_link$$ object $icode link_obj$$.
+
+$children%
+    example/llvm/link_xam.cpp
+%$$
+$head Example$$
+The file $cref llvm_link_xam.cpp$$ contains an example / test using
+this member function.
 
 $end
 */
@@ -72,6 +82,10 @@ $head msg$$
 If the return value $icode msg$$ is the empty string, no error was detected.
 Otherwise this is an error message and the object file was not loaded.
 
+$head Example$$
+The file $cref llvm_link_xam.cpp$$ contains an example / test using
+this member function.
+
 $end
 */
 // BEGIN_LOAD
@@ -112,7 +126,7 @@ std::string llvm_link::load(const std::string& file_name)
 }
 /*
 -------------------------------------------------------------------------------
-$begin compiled_ad_fun$$
+$begin llvm_link_compiled_ad_fun$$
 $spell
     obj
     llvm
@@ -147,6 +161,10 @@ $head msg$$
 If the return value $icode msg$$ is the empty string, no error was detected.
 Otherwise this is an error message and the return value of
 $icode function_ptr$$ is unspecified.
+
+$head Example$$
+The file $cref llvm_link_xam.cpp$$ contains an example / test using
+this member function.
 
 $end
 */

@@ -13,9 +13,16 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include "algo2adfun.hpp"
 # include "llvm_ir.hpp"
 # include "llvm_link.hpp"
+/*
+$begin llvm_link_xam.cpp$$
 
-// ----------------------------------------------------------------------------
-bool link(void)
+$section Example Linking a Compiled AD Function$$
+
+$srcthisfile%8%// BEGIN C++%// END C++%1%$$
+$end
+*/
+// BEGIN C++
+bool link_xam(void)
 {   bool ok = true;
     using CppAD::vector;
     using CppAD::llvm_ir;
@@ -79,3 +86,4 @@ bool link(void)
     //
     return ok;
 }
+// END C++

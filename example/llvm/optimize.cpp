@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin llvm_optimize.cpp$$
 
-$section Optimize LLVM Intermediate Representation$$
+$section Example Optimizing LLVM Intermediate Representation$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end

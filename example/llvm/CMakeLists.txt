@@ -49,7 +49,7 @@ print_variable(llvm_libdir)
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     llvm.cpp
-    link.cpp
+    link_xam.cpp
     algo2adfun.cpp
     load_obj_file.cpp
     llvm_ir.cpp
