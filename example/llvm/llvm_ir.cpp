@@ -210,7 +210,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     //
     // function_t
     // void (*function_t) (double *, double*)
-    std::vector<llvm::Type*> param_types = { llvm_double_ptr, llvm_double_ptr };
+    std::vector<llvm::Type*> param_types = {
+        int_32_t, llvm_double_ptr, int_32_t, llvm_double_ptr
+    };
     bool                     is_var_arg  = false;
     llvm::Type*              result_type = int_32_t;
     llvm::FunctionType*      function_t  = llvm::FunctionType::get(
@@ -224,17 +226,17 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         function_t, addr_space, function_name_, module_ir_.get()
     );
     //
-    // Make sure there are two arguments
+    // Make sure there are four arguments
     CPPAD_ASSERT_UNKNOWN(
-        function_ir->arg_begin() + 2  == function_ir->arg_end()
+        function_ir->arg_begin() + 4  == function_ir->arg_end()
     );
     //
     // input_ptr
-    llvm::Argument *input_ptr  = function_ir->arg_begin() + 0;
+    llvm::Argument *input_ptr  = function_ir->arg_begin() + 1;
     input_ptr->setName("input_ptr");
     //
     // output_ptr
-    llvm::Argument *output_ptr  = function_ir->arg_begin() + 1;
+    llvm::Argument *output_ptr  = function_ir->arg_begin() + 3;
     output_ptr->setName("output_ptr");
     //
     // Add a basic block at entry point to the function.
@@ -442,10 +444,10 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     typedef std::pair<const llvm::Value*, size_t> pair;
     //
     // input_ptr
-    const llvm::Argument *input_ptr  = function_ir->arg_begin() + 0;
+    const llvm::Argument *input_ptr  = function_ir->arg_begin() + 1;
     //
     // output_ptr
-    const llvm::Argument *output_ptr = function_ir->arg_begin() + 1;
+    const llvm::Argument *output_ptr = function_ir->arg_begin() + 3;
     //
     /// begin_inst
     const llvm::const_inst_iterator begin_inst = llvm::inst_begin(function_ir);
@@ -600,7 +602,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             //
             // --------------------------------------------------------------
             case llvm::Instruction::Ret:
-            // returns int32_t flag
+            // returns int32_t error_no
             CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
             break;
             //

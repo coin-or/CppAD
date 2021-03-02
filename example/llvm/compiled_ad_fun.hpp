@@ -16,8 +16,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_COMPILED_AD_FUN_T
-// error_no = function_ptr(input, output)
-typedef int32_t (*compiled_ad_fun_t)(double* , double* );
+// error_no = function_ptr(len_input, input, len_output, output)
+typedef int32_t (*compiled_ad_fun_t)(int32_t, double* , int32_t, double*);
 // END_COMPILED_AD_FUN_T
 
 } // END_CPPAD_NAMESPACE

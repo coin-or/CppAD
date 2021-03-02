@@ -72,7 +72,15 @@ bool link_xam(void)
     // call function
     size_t ny = f.Range();
     CppAD::vector<double> output(ny);
-    function_ptr(input.data(), output.data());
+    int32_t len_input   = static_cast<int32_t>(np + nx);
+    int32_t len_output  = static_cast<int32_t>(ny);
+    int32_t error_no    = function_ptr(
+        len_input, input.data(), len_output, output.data()
+    );
+    if( error_no != 0 )
+    {   std::cerr << "function returned error_no = " << error_no << "\n";
+        return false;
+    }
     //
     // check output
     CppAD::vector<double> p(np), x(nx), check(ny);
