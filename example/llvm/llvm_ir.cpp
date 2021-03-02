@@ -231,16 +231,24 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         function_ir->arg_begin() + 4  == function_ir->arg_end()
     );
     //
+    // len_input
+    llvm::Argument* len_input  = function_ir->arg_begin() + 0;
+    len_input->setName("len_input");
+    //
     // input_ptr
-    llvm::Argument *input_ptr  = function_ir->arg_begin() + 1;
+    llvm::Argument* input_ptr  = function_ir->arg_begin() + 1;
     input_ptr->setName("input_ptr");
     //
+    // len_output
+    llvm::Argument* len_output  = function_ir->arg_begin() + 2;
+    len_output->setName("len_output");
+    //
     // output_ptr
-    llvm::Argument *output_ptr  = function_ir->arg_begin() + 3;
+    llvm::Argument* output_ptr  = function_ir->arg_begin() + 3;
     output_ptr->setName("output_ptr");
     //
     // Add a basic block at entry point to the function.
-    llvm::BasicBlock *basic_block = llvm::BasicBlock::Create(
+    llvm::BasicBlock* basic_block = llvm::BasicBlock::Create(
         *context_ir_, "EntryBlock", function_ir
     );
     //
@@ -255,6 +263,34 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     //
     // index_vector
     std::vector<llvm::Value*> index_vector(1);
+    //
+    // error_len_input
+    size_t n_input = n_dynamic_ind_ + n_variable_ind_;
+    llvm::Value* expected_len_input = llvm::ConstantInt::get (
+        *context_ir_, llvm::APInt(32, n_input, true)
+    );
+    llvm::Value* error_len_input = builder.CreateICmpNE(
+        len_input, expected_len_input, "error_len_input"
+    );
+    //
+    // error_len_output
+    llvm::Value* expected_len_output = llvm::ConstantInt::get (
+        *context_ir_, llvm::APInt(32, n_variable_dep_, true)
+    );
+    llvm::Value* error_len_output = builder.CreateICmpNE(
+        len_output, expected_len_output, "error_len_output"
+    );
+    //
+    // error_len
+    llvm::Value* error_len = builder.CreateOr(
+        error_len_input, error_len_output, "error_len"
+    );
+    //
+    // error_no
+    // convert to boolean value error_len 32 bit signed integer
+    llvm::Value* error_no = builder.CreateZExtOrTrunc(
+            error_len, int_32_t, "error_no"
+    );
     //
     // graph_ir
     // independent parameters
@@ -346,11 +382,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         graph_ir[node_index]->setName(name);
     }
     // return zero for no error
-    bool is_signed = true;
-    llvm::Value* no_error = llvm::ConstantInt::get(
-        *context_ir_, llvm::APInt(32, 0, is_signed)
-    );
-    builder.CreateRet(no_error);
+    builder.CreateRet(error_no);
     //
     // check retreiving this function from this module
     CPPAD_ASSERT_UNKNOWN(
@@ -422,7 +454,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
 // END_TO_GRAPH
 {   //
     // initialize return value with name of this routine
-    std::string msg = "llvm_ir::to_graph";
+    std::string msg = "llvm_ir::to_graph: ";
     //
     // function_ir
     const llvm::Function* function_ir = module_ir_->getFunction(function_name_);
@@ -443,11 +475,17 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // type used by interface to DenseMap
     typedef std::pair<const llvm::Value*, size_t> pair;
     //
+    // len_input
+    const llvm::Argument* len_input  = function_ir->arg_begin() + 0;
+    //
     // input_ptr
-    const llvm::Argument *input_ptr  = function_ir->arg_begin() + 1;
+    const llvm::Argument* input_ptr  = function_ir->arg_begin() + 1;
+    //
+    // len_output
+    const llvm::Argument* len_output = function_ir->arg_begin() + 2;
     //
     // output_ptr
-    const llvm::Argument *output_ptr = function_ir->arg_begin() + 3;
+    const llvm::Argument* output_ptr = function_ir->arg_begin() + 3;
     //
     /// begin_inst
     const llvm::const_inst_iterator begin_inst = llvm::inst_begin(function_ir);
@@ -538,6 +576,13 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         size_t                   node;
         size_t                   index;
         //
+        // count or instructions
+# ifndef NDEBUG
+        size_t or_count   = 0;
+        size_t zext_count = 0;
+# endif
+        //
+        // op_code values are defined in llvm/IR/Instructions.def
         switch( op_code )
         {   // --------------------------------------------------------------
             case llvm::Instruction::Load:
@@ -601,6 +646,25 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             break;
             //
             // --------------------------------------------------------------
+            case llvm::Instruction::ICmp:
+            // This operand is only used to check len_input and len_output
+            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
+            CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::IntegerTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::IntegerTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::IntegerTyID );
+            CPPAD_ASSERT_UNKNOWN(
+                operand[0] == len_input  || operand[0] == len_output ||
+                operand[1] == len_input  || operand[1] == len_output
+            );
+            break;
+            //
+            // --------------------------------------------------------------
+            case llvm::Instruction::Or:
+            // This operand is only used once to or the two ICmp operations
+            CPPAD_ASSERT_UNKNOWN( ++or_count < 2 );
+            break;
+            //
+            // --------------------------------------------------------------
             case llvm::Instruction::Ret:
             // returns int32_t error_no
             CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
@@ -616,6 +680,13 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( node != 0 );
             CPPAD_ASSERT_UNKNOWN( index != 0 );
             dependent[ index - 1 ] = node;
+            break;
+            //
+            // --------------------------------------------------------------
+            case llvm::Instruction::ZExt:
+            // This operand is only used once to convert return value fron
+            // one bit integer to 32 bit integer.
+            CPPAD_ASSERT_UNKNOWN( ++zext_count < 2 );
             break;
             //
             // --------------------------------------------------------------
