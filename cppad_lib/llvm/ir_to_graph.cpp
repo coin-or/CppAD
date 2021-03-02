@@ -64,6 +64,7 @@ Only the following $code llvm::Instruction$$ operator codes are supported
 so far (more are  expected in the future):
 $code Load$$,
 $code FAdd$$,
+$code FSub$$,
 $code GetElementPtr$$,
 $code Ret$$,
 $code Store$$.
@@ -243,6 +244,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             //
             // --------------------------------------------------------------
             case llvm::Instruction::FAdd:
+            case llvm::Instruction::FSub:
             // This instruction creates a new node in the graph that corresonds
             // to the sum of two other nodes.
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
@@ -254,8 +256,18 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             llvm_value2graph_node.insert( pair(result , ++result_node) );
             //
             // put this operator in the graph
-            graph_obj.operator_vec_push_back( CppAD::graph::add_graph_op );
-            //
+            switch( op_code )
+            {   case llvm::Instruction::FAdd:
+                graph_obj.operator_vec_push_back( CppAD::graph::add_graph_op );
+                break;
+
+                case llvm::Instruction::FSub:
+                graph_obj.operator_vec_push_back( CppAD::graph::sub_graph_op );
+                break;
+
+                default:
+                break;
+            }
             // add node index correspnding to left and right operands
             for(size_t i = 0; i < 2; ++i)
             {   node = llvm_value2graph_node.lookup(operand[i]);

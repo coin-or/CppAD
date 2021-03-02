@@ -25,7 +25,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
         // define the actual function
         VectorFloat y(ny);
         for(size_t i = 0; i < np; ++i)
-            y[i] = p[i] + double(i);
+            y[i] = p[i] - double(i);
         for(size_t i = 0; i < nx; ++i)
             y[i + np] = x[i] + double(i + np);
         //

@@ -67,7 +67,8 @@ $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$ must be empty.
 $lnext
 Only the following operators my appear in
 $cref/operator_vec/cpp_ad_graph/operator_vec/$$:
-$code add_graph_op$$.
+$code add_graph_op$$,
+$code sub_graph_op$$,
 $lend
 
 $head ir_obj$$
@@ -295,16 +296,32 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         size_t         n_result = itr_value.n_result;
         size_t         n_arg    = arg.size();
         size_t         n_str    = str_index.size();
-# endif
         //
+        switch( op_enum )
+        {
+            case CppAD::graph::add_graph_op:
+            case CppAD::graph::sub_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 1);
+            CPPAD_ASSERT_UNKNOWN( n_str == 0 );
+            break;
+
+            default:
+            msg += "graph_obj has following unsupported operator ";
+            msg += local::graph::op_enum2name[op_enum];
+            return msg;
+        }
+# endif
         llvm::Value* value;
         switch( op_enum )
         {
             case CppAD::graph::add_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            CPPAD_ASSERT_UNKNOWN( n_result == 1);
-            CPPAD_ASSERT_UNKNOWN( n_str == 0 );
-            value = builder.CreateFAdd( graph_ir[arg[0]], graph_ir[arg[1]] );
+            value = builder.CreateFAdd(graph_ir[arg[0]], graph_ir[arg[1]]);
+            graph_ir.push_back(value);
+            break;
+
+            case CppAD::graph::sub_graph_op:
+            value = builder.CreateFSub(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
 
