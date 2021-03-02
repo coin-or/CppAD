@@ -108,15 +108,17 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     //
     // type used by interface to DenseMap
     typedef std::pair<const llvm::Value*, size_t> pair;
+# ifndef NDEBUG
     //
     // len_input
     const llvm::Argument* len_input  = function_ir->arg_begin() + 0;
     //
-    // input_ptr
-    const llvm::Argument* input_ptr  = function_ir->arg_begin() + 1;
-    //
     // len_output
     const llvm::Argument* len_output = function_ir->arg_begin() + 2;
+# endif
+    //
+    // input_ptr
+    const llvm::Argument* input_ptr  = function_ir->arg_begin() + 1;
     //
     // output_ptr
     const llvm::Argument* output_ptr = function_ir->arg_begin() + 3;
