@@ -9,10 +9,6 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include "algo.hpp"
-# include "algo2adfun.hpp"
-# include <cppad/core/llvm_ir.hpp>
-# include <cppad/core/llvm_link.hpp>
 /*
 $begin llvm_link_xam.cpp$$
 
@@ -22,6 +18,56 @@ $srcthisfile%8%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
+# include <cppad/cppad.hpp>
+# include <cppad/core/llvm_ir.hpp>
+# include <cppad/core/llvm_link.hpp>
+namespace {
+    template <class VectorFloat>
+    VectorFloat algo(const VectorFloat& p, const VectorFloat& x)
+    // END_PROTOTYPE
+    {   size_t nx = x.size();
+        size_t np = p.size();
+        size_t ny = nx + np;
+        //
+        // define the actual function
+        VectorFloat y(ny);
+        for(size_t i = 0; i < np; ++i)
+            y[i] = p[i] + double(i);
+        for(size_t i = 0; i < nx; ++i)
+            y[i + np] = x[i] + double(i + np);
+        //
+        // some operations that optimizer should remove
+        typename VectorFloat::value_type sum = 0.0;
+        for(size_t i = 0; i < ny; i++)
+            sum += y[i];
+        //
+        return y;
+    }
+    void algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
+    {   using CppAD::AD;
+        using CppAD::vector;
+        //
+        // ap, ax
+        vector< AD<double> > ap(np), ax(nx);
+        for(size_t i = 0; i < np; ++i)
+            ap[i] = AD<double>( i + 1 );
+        for(size_t i = 0; i < nx; ++i)
+            ax[i] = AD<double>( i + np );
+        //
+        // ax independent variables,  ap dynamic parameters
+        CppAD::Independent(ax, ap);
+        //
+        // ay
+        vector< AD<double> > ay = algo(ap, ax);
+        //
+        // f : x -> y
+        adfun.Dependent(ax, ay);
+        //
+        // function_name
+        adfun.function_name_set("algo");
+        return;
+    }
+}
 bool link_xam(void)
 {   bool ok = true;
     using CppAD::vector;

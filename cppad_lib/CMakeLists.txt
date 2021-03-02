@@ -14,7 +14,12 @@
 SET(llvm_soruce_list "")
 IF( cppad_has_llvm )
     SET(llvm_source_list
-        llvm/llvm_ir.cpp
+        llvm/ir_ctor.cpp
+        llvm/ir_from_graph.cpp
+        llvm/ir_optimize.cpp
+        llvm/ir_print.cpp
+        llvm/ir_to_graph.cpp
+        llvm/ir_to_object_file.cpp
         llvm/llvm_link.cpp
     )
     # llvm_config

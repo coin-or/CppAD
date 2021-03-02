@@ -144,8 +144,8 @@ $srcthisfile%0%// BEGIN_COMPILED_AD_FUN%// END_COMPILED_AD_FUN%1%$$
 
 $head compiled$$
 This type is defined by
-$srcfile%include/cppad/core/compiled.hpp%
-    0%// BEGIN_COMPILED_AD_FUN_T%// END_COMPILED_AD_FUN_T%0
+$srcfile%include/cppad/core/llvm_compiled.hpp%
+    0%// BEGIN_LLVM_COMPILED_T%// END_LLVM_COMPILED_T%0
 %$$
 
 $head function_name$$
