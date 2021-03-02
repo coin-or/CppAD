@@ -126,7 +126,7 @@ std::string llvm_link::load(const std::string& file_name)
 }
 /*
 -------------------------------------------------------------------------------
-$begin llvm_link_compiled_ad_fun$$
+$begin llvm_link_compiled$$
 $spell
     obj
     llvm
@@ -137,14 +137,14 @@ $$
 $section Get C++ Function Pointer To A Compiled AD Function$$
 
 $head Syntax$$
-$icode%msg% = %link_obj%.compiled_ad_fun(%function_name%, %function_ptr%)%$$
+$icode%msg% = %link_obj%.compiled(%function_name%, %function_ptr%)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_COMPILED_AD_FUN%// END_COMPILED_AD_FUN%1%$$
 
-$head compiled_ad_fun_t$$
+$head compiled$$
 This type is defined by
-$srcfile%include/cppad/core/compiled_ad_fun.hpp%
+$srcfile%include/cppad/core/compiled.hpp%
     0%// BEGIN_COMPILED_AD_FUN_T%// END_COMPILED_AD_FUN_T%0
 %$$
 
@@ -169,14 +169,14 @@ this member function.
 $end
 */
 // BEGIN_COMPILED_AD_FUN
-std::string llvm_link::compiled_ad_fun(
+std::string llvm_link::compiled(
     const std::string& function_name ,
-    compiled_ad_fun_t& function_ptr  ) const
+    llvm_compiled_t&   function_ptr  ) const
 // END_COMPILED_AD_FUN
 {   // 2DO: Figure out how to get the message for an llvm::Error
     //
     // initialize msg
-    std::string msg = "llvm::compiled_ad_fun: ";
+    std::string msg = "llvm::compiled: ";
     //
     // symbol
     llvm::Expected<llvm::JITEvaluatedSymbol> error_or_symbol =
@@ -189,7 +189,7 @@ std::string llvm_link::compiled_ad_fun(
     llvm::JITEvaluatedSymbol symbol = error_or_symbol.get();
     //
     // function_cpp
-    function_ptr = reinterpret_cast<compiled_ad_fun_t>( symbol.getAddress() );
+    function_ptr = reinterpret_cast<llvm_compiled_t>( symbol.getAddress() );
     if( ! function_ptr )
     {   msg += "Error looking up address for function " + function_name;
         return msg;

@@ -57,8 +57,8 @@ bool link_xam(void)
     link_obj.load(file_name);
     //
     // function_ptr
-    CppAD::compiled_ad_fun_t function_ptr;
-    msg = link_obj.compiled_ad_fun(function_name, function_ptr);
+    CppAD::llvm_compiled_t function_ptr;
+    msg = link_obj.compiled(function_name, function_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;

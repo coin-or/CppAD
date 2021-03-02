@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_LLVM_LLVM_LINK_HPP
-# define CPPAD_EXAMPLE_LLVM_LLVM_LINK_HPP
+# ifndef CPPAD_CORE_LLVM_LINK_HPP
+# define CPPAD_CORE_LLVM_LINK_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
@@ -12,7 +12,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include <cppad/core/compiled_ad_fun.hpp>
+# include <cppad/core/llvm_compiled.hpp>
 # include <llvm/ExecutionEngine/Orc/LLJIT.h>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -27,9 +27,9 @@ public:
     std::string load(const std::string& file_name);
     //
     // const member functions
-    std::string compiled_ad_fun(
+    std::string compiled(
         const std::string&  file_name    ,
-        compiled_ad_fun_t&  function_ptr
+        llvm_compiled_t&    function_ptr
     ) const;
 };
 

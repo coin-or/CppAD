@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_LLVM_LLVM_IR_HPP
-# define CPPAD_EXAMPLE_LLVM_LLVM_IR_HPP
+# ifndef CPPAD_CORE_LLVM_IR_HPP
+# define CPPAD_CORE_LLVM_IR_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell

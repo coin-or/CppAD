@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_LLVM_COMPILED_AD_FUN_HPP
-# define CPPAD_EXAMPLE_LLVM_COMPILED_AD_FUN_HPP
+# ifndef CPPAD_CORE_LLVM_COMPILED_HPP
+# define CPPAD_CORE_LLVM_COMPILED_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
@@ -17,7 +17,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_COMPILED_AD_FUN_T
 // error_no = function_ptr(len_input, input, len_output, output)
-typedef int32_t (*compiled_ad_fun_t)(int32_t, double* , int32_t, double*);
+typedef int32_t (*llvm_compiled_t)(int32_t, double* , int32_t, double*);
 // END_COMPILED_AD_FUN_T
 
 } // END_CPPAD_NAMESPACE

@@ -6,7 +6,6 @@
 #
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
-#   cppad_lib/llvm
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
@@ -36,6 +35,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|"llvm_ir.hpp"|<cppad/core/llvm_ir.hpp>|
-s|"llvm_link.hpp"|<cppad/core/llvm_link.hpp>|
-s|"compiled_ad_fun.hpp"|<cppad/core/compiled_ad_fun.hpp>|
+s|compiled_ad_fun|llvm_compiled|
