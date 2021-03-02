@@ -9,26 +9,6 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-/*
-$begin llvm$$
-$spell
-    llvm
-$$
-
-$section llvm Examples$$
-
-$head Under Construction$$
-This section, and those below it, are under construction.
-
-$childtable%
-    example/llvm/algo.hpp%
-    example/llvm/algo2adfun.cpp%
-    cppad_lib/llvm/llvm_ir.cpp%
-    cppad_lib/llvm/llvm_link.cpp
-%$$
-
-$end
-*/
 
 // CPPAD_HAS_* defines
 # include <cppad/configure.hpp>
