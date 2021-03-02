@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/core/cppad_assert.hpp>
-# include "llvm_link.hpp"
+# include <cppad/core/llvm_link.hpp>
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*

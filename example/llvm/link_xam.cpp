@@ -11,8 +11,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include "algo.hpp"
 # include "algo2adfun.hpp"
-# include "llvm_ir.hpp"
-# include "llvm_link.hpp"
+# include <cppad/core/llvm_ir.hpp>
+# include <cppad/core/llvm_link.hpp>
 /*
 $begin llvm_link_xam.cpp$$
 

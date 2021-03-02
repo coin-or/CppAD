@@ -22,7 +22,7 @@ $end
 //
 # include "algo.hpp"
 # include "algo2adfun.hpp"
-# include "llvm_ir.hpp"
+# include <cppad/core/llvm_ir.hpp>
 
 bool from_to_graph(void)
 {   bool ok = true;

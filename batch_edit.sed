@@ -17,12 +17,14 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   omh/adfun.omh
+#   example/llvm/llvm_ir.hpp
+#   example/llvm/llvm_link.hpp
+#   example/llvm/compiled_ad_fun.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|omh/adfun.omh|include/cppad/core/ad_fun.omh|
+#   s|example/llvm/|include/cppad/core/|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -34,4 +36,6 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|omh/adfun.omh|include/cppad/core/ad_fun.omh|
+s|"llvm_ir.hpp"|<cppad/core/llvm_ir.hpp>|
+s|"llvm_link.hpp"|<cppad/core/llvm_link.hpp>|
+s|"compiled_ad_fun.hpp"|<cppad/core/compiled_ad_fun.hpp>|

@@ -9,7 +9,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include "llvm_ir.hpp"
+# include <cppad/core/llvm_ir.hpp>
 //
 # include <llvm/IR/DerivedTypes.h>
 # include <llvm/IR/InstIterator.h>

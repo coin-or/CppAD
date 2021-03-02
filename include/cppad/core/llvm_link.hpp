@@ -12,7 +12,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include "compiled_ad_fun.hpp"
+# include <cppad/core/compiled_ad_fun.hpp>
 # include <llvm/ExecutionEngine/Orc/LLJIT.h>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
