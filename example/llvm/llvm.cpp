@@ -23,8 +23,8 @@ This section, and those below it, are under construction.
 $childtable%
     example/llvm/algo.hpp%
     example/llvm/algo2adfun.cpp%
-    example/llvm/llvm_ir.cpp%
-    example/llvm/llvm_link.cpp
+    cppad_lib/llvm/llvm_ir.cpp%
+    cppad_lib/llvm/llvm_link.cpp
 %$$
 
 $end

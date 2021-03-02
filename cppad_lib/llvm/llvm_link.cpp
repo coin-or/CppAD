@@ -144,7 +144,7 @@ $srcthisfile%0%// BEGIN_COMPILED_AD_FUN%// END_COMPILED_AD_FUN%1%$$
 
 $head compiled_ad_fun_t$$
 This type is defined by
-$srcfile%example/llvm/compiled_ad_fun.hpp%
+$srcfile%include/cppad/core/compiled_ad_fun.hpp%
     0%// BEGIN_COMPILED_AD_FUN_T%// END_COMPILED_AD_FUN_T%0
 %$$
 

@@ -6,6 +6,7 @@
 #
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
+#   cppad_lib/llvm
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
@@ -17,9 +18,8 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   example/llvm/llvm_ir.hpp
-#   example/llvm/llvm_link.hpp
-#   example/llvm/compiled_ad_fun.hpp
+#   example/llvm/llvm_ir.cpp
+#   example/llvm/llvm_link.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.

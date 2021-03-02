@@ -51,11 +51,9 @@ SET(source_list
     llvm.cpp
     link_xam.cpp
     algo2adfun.cpp
-    llvm_ir.cpp
     from_to_graph.cpp
     algo2adfun_xam.cpp
     optimize.cpp
-    llvm_link.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
