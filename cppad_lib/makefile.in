@@ -133,9 +133,11 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 libcppad_lib_a_AR = $(AR) $(ARFLAGS)
 libcppad_lib_a_LIBADD =
+am__dirstamp = $(am__leading_dot)dirstamp
 am_libcppad_lib_a_OBJECTS = cppad_colpack.$(OBJEXT) \
 	json_lexer.$(OBJEXT) cpp_graph_op.$(OBJEXT) \
-	json_parser.$(OBJEXT) json_writer.$(OBJEXT)
+	json_parser.$(OBJEXT) json_writer.$(OBJEXT) \
+	llvm/llvm_ir.$(OBJEXT) lllvm/llvm_link.$(OBJEXT)
 libcppad_lib_a_OBJECTS = $(am_libcppad_lib_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -154,7 +156,8 @@ depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/cpp_graph_op.Po \
 	./$(DEPDIR)/cppad_colpack.Po ./$(DEPDIR)/json_lexer.Po \
-	./$(DEPDIR)/json_parser.Po ./$(DEPDIR)/json_writer.Po
+	./$(DEPDIR)/json_parser.Po ./$(DEPDIR)/json_writer.Po \
+	lllvm/$(DEPDIR)/llvm_link.Po llvm/$(DEPDIR)/llvm_ir.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -382,7 +385,9 @@ libcppad_lib_a_SOURCES = \
 	json_lexer.cpp \
 	cpp_graph_op.cpp \
 	json_parser.cpp \
-	json_writer.cpp
+	json_writer.cpp \
+	llvm/llvm_ir.cpp \
+	lllvm/llvm_link.cpp
 
 all: all-am
 
@@ -448,6 +453,22 @@ uninstall-libLIBRARIES:
 
 clean-libLIBRARIES:
 	-test -z "$(lib_LIBRARIES)" || rm -f $(lib_LIBRARIES)
+llvm/$(am__dirstamp):
+	@$(MKDIR_P) llvm
+	@: > llvm/$(am__dirstamp)
+llvm/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) llvm/$(DEPDIR)
+	@: > llvm/$(DEPDIR)/$(am__dirstamp)
+llvm/llvm_ir.$(OBJEXT): llvm/$(am__dirstamp) \
+	llvm/$(DEPDIR)/$(am__dirstamp)
+lllvm/$(am__dirstamp):
+	@$(MKDIR_P) lllvm
+	@: > lllvm/$(am__dirstamp)
+lllvm/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lllvm/$(DEPDIR)
+	@: > lllvm/$(DEPDIR)/$(am__dirstamp)
+lllvm/llvm_link.$(OBJEXT): lllvm/$(am__dirstamp) \
+	lllvm/$(DEPDIR)/$(am__dirstamp)
 
 libcppad_lib.a: $(libcppad_lib_a_OBJECTS) $(libcppad_lib_a_DEPENDENCIES) $(EXTRA_libcppad_lib_a_DEPENDENCIES) 
 	$(AM_V_at)-rm -f libcppad_lib.a
@@ -456,6 +477,8 @@ libcppad_lib.a: $(libcppad_lib_a_OBJECTS) $(libcppad_lib_a_DEPENDENCIES) $(EXTRA
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f lllvm/*.$(OBJEXT)
+	-rm -f llvm/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -465,6 +488,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_lexer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_parser.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_writer.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@lllvm/$(DEPDIR)/llvm_link.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@llvm/$(DEPDIR)/llvm_ir.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -606,6 +631,10 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f lllvm/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lllvm/$(am__dirstamp)
+	-rm -f llvm/$(DEPDIR)/$(am__dirstamp)
+	-rm -f llvm/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -620,6 +649,8 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f ./$(DEPDIR)/json_writer.Po
+	-rm -f lllvm/$(DEPDIR)/llvm_link.Po
+	-rm -f llvm/$(DEPDIR)/llvm_ir.Po
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -670,6 +701,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f ./$(DEPDIR)/json_writer.Po
+	-rm -f lllvm/$(DEPDIR)/llvm_link.Po
+	-rm -f llvm/$(DEPDIR)/llvm_ir.Po
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

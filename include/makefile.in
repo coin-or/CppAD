@@ -452,6 +452,9 @@ nobase_myinclude_HEADERS = \
 	cppad/core/graph/from_json.hpp \
 	cppad/core/graph/graph_op_enum.hpp \
 	cppad/core/graph/to_json.hpp \
+	cppad/core/llvm_compiled.hpp \
+	cppad/core/llvm_ir.hpp \
+	cppad/core/llvm_link.hpp \
 	cppad/core/lu_ratio.hpp \
 	cppad/core/mul.hpp \
 	cppad/core/mul_eq.hpp \
