@@ -266,6 +266,16 @@ then
     exit 1
 fi
 # --------------------------------------------------------------------------
+if echo "$fun" | grep 'llvm' > /dev/null
+then
+    if [ -e 'algo.o' ]
+    then
+        # llvm tests use the algo.o for the object file.
+        echo 'rm algo.o'
+        rm algo.o
+    fi
+fi
+# --------------------------------------------------------------------------
 echo 'test_one.sh: OK'
 echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 exit 0

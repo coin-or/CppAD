@@ -93,6 +93,7 @@ bool link_xam(void)
     }
     //
     // create object file
+    // bin/test_one.sh.in assumes file_name == "algo.o"
     std::string file_name = function_name + ".o";
     ir_obj.to_object_file(file_name);
     //
