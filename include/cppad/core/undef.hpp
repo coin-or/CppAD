@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_UNDEF_HPP
 # define CPPAD_CORE_UNDEF_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -78,6 +78,7 @@ by the CppAD examples and tests.
 # undef CPPAD_HAS_EIGEN
 # undef CPPAD_HAS_GETTIMEOFDAY
 # undef CPPAD_HAS_IPOPT
+# undef CPPAD_HAS_LLVM
 # undef CPPAD_HAS_MKSTEMP
 # undef CPPAD_HAS_TMPNAM_S
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION

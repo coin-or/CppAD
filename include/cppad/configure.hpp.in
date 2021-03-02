@@ -1,7 +1,7 @@
 # ifndef CPPAD_CONFIGURE_HPP
 # define CPPAD_CONFIGURE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -102,6 +102,12 @@ $head CPPAD_HAS_IPOPT$$
 Was include_ipopt=true on the cmake command line.
 $srccode%hpp% */
 # define CPPAD_HAS_IPOPT @cppad_has_ipopt@
+/* %$$
+
+$head CPPAD_HAS_LLVM$$
+Was include_llvm=true on the cmake command line.
+$srccode%hpp% */
+# define CPPAD_HAS_LLVM @cppad_has_llvm@
 /* %$$
 
 $head CPPAD_DEPRECATED$$

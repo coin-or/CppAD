@@ -25,18 +25,26 @@ ELSE( cppad_has_eigen )
     SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
 #
-# ipopt_sourced
+# ipopt_sources
 IF( cppad_has_ipopt )
     SET(ipopt_sources ipopt_solve.cpp)
 ELSE( cppad_has_ipopt )
     SET(ipopt_sources "")
 ENDIF( cppad_has_ipopt )
 #
+# llvm_sources
+IF( cppad_has_llvm )
+    SET(llvm_sources llvm_tst.cpp)
+ELSE( cppad_has_llvm )
+    SET(llvm_sources "")
+ENDIF( cppad_has_llvm )
+#
 # BEGIN_SORT_THIS_LINE_PLUS_6
 SET(source_list
     ${adolc_sources}
     ${eigen_sources}
     ${ipopt_sources}
+    ${llvm_source}
     general.cpp
     abs_normal.cpp
     acos.cpp

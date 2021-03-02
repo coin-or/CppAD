@@ -77,6 +77,7 @@ extern bool hes_sparsity(void);
 extern bool ipopt_solve(void);
 extern bool jacobian(void);
 extern bool json_graph(void);
+extern bool llvm_tst(void);
 extern bool log10(void);
 extern bool log1p(void);
 extern bool log(void);
@@ -244,7 +245,10 @@ int main(void)
     Run( VecAD,           "VecAD"          );
     Run( VecUnary,        "VecUnary"       );
     // END_SORT_THIS_LINE_MINUS_1
-#if CPPAD_HAS_ADOLC
+# if CPPAD_HAS_LLCM
+    Run( llvm_tst,        "llvm_tst"       );
+# endif
+# if CPPAD_HAS_ADOLC
     Run( base_adolc,      "base_adolc"     );
 # endif
 #if CPPAD_HAS_IPOPT
