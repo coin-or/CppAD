@@ -263,7 +263,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     //
     // index_vector
     std::vector<llvm::Value*> index_vector(1);
-    //
+    // ----------------------------------------------------------------------
+    // check for error in len_input or len_output
+    // ----------------------------------------------------------------------
     // error_len_input
     size_t n_input = n_dynamic_ind_ + n_variable_ind_;
     llvm::Value* expected_len_input = llvm::ConstantInt::get (
@@ -272,7 +274,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* error_len_input = builder.CreateICmpNE(
         len_input, expected_len_input, "error_len_input"
     );
-    //
     // error_len_output
     llvm::Value* expected_len_output = llvm::ConstantInt::get (
         *context_ir_, llvm::APInt(32, n_variable_dep_, true)
@@ -280,18 +281,29 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* error_len_output = builder.CreateICmpNE(
         len_output, expected_len_output, "error_len_output"
     );
-    //
     // error_len
     llvm::Value* error_len = builder.CreateOr(
         error_len_input, error_len_output, "error_len"
     );
-    //
     // error_no
     // convert to boolean value error_len 32 bit signed integer
     llvm::Value* error_no = builder.CreateZExtOrTrunc(
             error_len, int_32_t, "error_no"
     );
+    // error_bb, merge_bb
+    llvm::BasicBlock* error_bb =
+        llvm::BasicBlock::Create(*context_ir_, "error_bb");
+    llvm::BasicBlock* merge_bb =
+        llvm::BasicBlock::Create(*context_ir_, "merge_bb");
     //
+    // if error_len, return error_no
+    builder.CreateCondBr(error_len, error_bb, merge_bb);
+    function_ir->getBasicBlockList().push_back(error_bb);
+    builder.SetInsertPoint(error_bb);
+    builder.CreateRet(error_no);
+    function_ir->getBasicBlockList().push_back(merge_bb);
+    builder.SetInsertPoint(merge_bb);
+    // ------------------------------------------------------------------------
     // graph_ir
     // independent parameters
     for(size_t i = 0; i < n_dynamic_ind_; ++i)
@@ -594,6 +606,15 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( node != 0 );
             // result is the value that operand[0] points to
             llvm_value2graph_node.insert( pair(result , node) );
+            break;
+            //
+            // --------------------------------------------------------------
+            case llvm::Instruction::Br:
+            // branch used to abort and return error_no
+            CPPAD_ASSERT_UNKNOWN( n_operand = 3 );
+            CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::IntegerTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::LabelTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::LabelTyID );
             break;
             //
             // --------------------------------------------------------------

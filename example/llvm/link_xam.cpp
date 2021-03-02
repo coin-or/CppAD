@@ -69,18 +69,29 @@ bool link_xam(void)
     for(size_t i = 0; i < np + nx; ++i)
         input[i] = double(i) + 4.0;
     //
-    // call function
+    // vector to hold return value
     size_t ny = f.Range();
     CppAD::vector<double> output(ny);
-    int32_t len_input   = static_cast<int32_t>(np + nx);
-    int32_t len_output  = static_cast<int32_t>(ny);
+    for(size_t i = 0; i < ny; ++i)
+        output[i] = 0.0;
+    //
+    // incorrect call to function
+    int32_t len_input   = 0;
+    int32_t len_output  = 0;
     int32_t error_no    = function_ptr(
         len_input, input.data(), len_output, output.data()
     );
-    if( error_no != 0 )
-    {   std::cerr << "function returned error_no = " << error_no << "\n";
-        return false;
-    }
+    ok &= error_no != 0;
+    for(size_t i = 0; i < ny; ++i)
+        ok &= output[i] == 0.0;
+    //
+    // correct call function
+    len_input   = static_cast<int32_t>(np + nx);
+    len_output  = static_cast<int32_t>(ny);
+    error_no    = function_ptr(
+        len_input, input.data(), len_output, output.data()
+    );
+    ok &= error_no == 0;
     //
     // check output
     CppAD::vector<double> p(np), x(nx), check(ny);
@@ -91,6 +102,7 @@ bool link_xam(void)
     check = algo(p, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(output[i], check[i], eps99, eps99);
+    //
     //
     return ok;
 }
