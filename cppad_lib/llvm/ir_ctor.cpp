@@ -9,28 +9,6 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include <cppad/core/llvm_ir.hpp>
-//
-# include <llvm/IR/DerivedTypes.h>
-# include <llvm/IR/InstIterator.h>
-# include <llvm/IR/IRBuilder.h>
-# include <llvm/IR/LegacyPassManager.h>
-# include <llvm/IR/Type.h>
-# include <llvm/IR/Verifier.h>
-//
-# include <llvm/Support/FileSystem.h>
-# include <llvm/Support/Host.h>
-# include <llvm/Support/raw_os_ostream.h>
-# include <llvm/Support/TargetRegistry.h>
-# include <llvm/Support/TargetSelect.h>
-//
-# include <llvm/Target/TargetOptions.h>
-# include <llvm/Target/TargetMachine.h>
-//
-//
-# include <llvm/Transforms/InstCombine/InstCombine.h>
-# include <llvm/Transforms/Scalar.h>
-# include <llvm/Transforms/Scalar/GVN.h>
 /*
 ------------------------------------------------------------------------------
 $begin llvm_ir_ctor$$
@@ -49,6 +27,8 @@ The creates the empty $code llvm_ir$$ object $icode ir_obj$$.
 
 $end
 */
+# include <cppad/core/llvm_ir.hpp>
+//
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 llvm_ir::llvm_ir(void)
