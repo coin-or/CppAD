@@ -628,6 +628,7 @@ CppAD_MS_COMPILER_TRUE
 RANLIB
 cppad_has_gettimeofday
 cppad_cppadvector
+cppad_has_llvm
 compiler_has_conversion_warn
 cppad_has_tmpnam_s
 cppad_has_mkstemp
@@ -5762,6 +5763,8 @@ cppad_has_mkstemp=0
 cppad_has_tmpnam_s=0
 
 compiler_has_conversion_warn=0
+
+cppad_has_llvm=0
 
 
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then

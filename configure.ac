@@ -362,6 +362,7 @@ AC_SUBST(cppad_has_colpack, 0)
 AC_SUBST(cppad_has_mkstemp, 0)
 AC_SUBST(cppad_has_tmpnam_s, 0)
 AC_SUBST(compiler_has_conversion_warn, 0)
+AC_SUBST(cppad_has_llvm, 0)
 
 dnl -------------------------------------------------------------------------
 dnl Determine which definition we are using for CPPAD_TESTVECTOR

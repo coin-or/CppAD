@@ -302,6 +302,7 @@ cppad_has_eigen = @cppad_has_eigen@
 cppad_has_fadbad = @cppad_has_fadbad@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
 cppad_has_ipopt = @cppad_has_ipopt@
+cppad_has_llvm = @cppad_has_llvm@
 cppad_has_mkstemp = @cppad_has_mkstemp@
 cppad_has_sacado = @cppad_has_sacado@
 cppad_has_tmpnam_s = @cppad_has_tmpnam_s@

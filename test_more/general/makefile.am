@@ -48,6 +48,9 @@ else
 EIGEN_SRC_FILES     =
 endif
 # -------------------------------------------------------------------------
+# auttoools does not support llvm, need source here for bin/check_makefine.sh
+#	llvm_tst.cpp
+# -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
 #
 check_PROGRAMS    = general

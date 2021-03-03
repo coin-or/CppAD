@@ -24,10 +24,15 @@ libcppad_lib_a_SOURCES = \
 	json_lexer.cpp \
 	cpp_graph_op.cpp \
 	json_parser.cpp \
-	json_writer.cpp \
-	llvm/llvm_ir.cpp \
-	lllvm/llvm_link.cpp
+	json_writer.cpp
 
-# autotools version of install does not support CppADCodeGen but need source
-# here so that bin/check_makefile.sh knows not using it is OK.
+# autotools version of install does not support CppADCodeGen or llvm, but need
+# source here so that bin/check_makefile.sh knows not using it is OK.
 #	code_gen_fun.cpp
+#   llvm/ir_ctor.cpp
+#   llvm/ir_from_graph.cpp
+#   llvm/ir_optimize.cpp
+#   llvm/ir_print.cpp
+#   llvm/ir_to_graph.cpp
+#   llvm/ir_to_object_file.cpp
+#   llvm/llvm_link.cpp
