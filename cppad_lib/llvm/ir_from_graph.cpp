@@ -17,6 +17,8 @@ $spell
     obj
     vec
     op
+    mul
+    div
 $$
 
 $section Convert a C++ AD Graph to LLVM Intermediate Representation$$

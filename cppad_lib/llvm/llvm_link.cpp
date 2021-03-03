@@ -142,18 +142,13 @@ $icode%msg% = %link_obj%.compiled(%function_name%, %function_ptr%)%$$
 $head Prototype$$
 $srcthisfile%0%// BEGIN_COMPILED_AD_FUN%// END_COMPILED_AD_FUN%1%$$
 
-$head compiled$$
-This type is defined by
-$srcfile%include/cppad/core/llvm_compiled.hpp%
-    0%// BEGIN_LLVM_COMPILED_T%// END_LLVM_COMPILED_T%0
-%$$
-
 $head function_name$$
 This the is the name of the function we are getting a pointer to.
 
 $head function_ptr$$
 The input value of this argument does not matter.
-Upon return, it is a pointer to the corresponding C++ function.
+Upon return, it is a
+$cref llvm_compiled_t$$ pointer to the corresponding C++ function.
 This function pointer is no longer valid when the $icode link_obj$$ is
 deleted; e.g., drops out of scope.
 
@@ -165,6 +160,10 @@ $icode function_ptr$$ is unspecified.
 $head Example$$
 The file $cref llvm_link_xam.cpp$$ contains an example / test using
 this member function.
+
+$childtable%
+    include/cppad/core/llvm_compiled.hpp
+%$$
 
 $end
 */

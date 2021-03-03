@@ -18,6 +18,8 @@ $spell
     vec
     op
     Ptr
+    Mul
+    Div
 $$
 
 $section Convert an LLVM Intermediate Representation to a C++ AD Graph$$
@@ -40,14 +42,20 @@ of the function that is convert to a C++ AD graph representation.
 $subhead Restrictions$$
 Only the following $code llvm::Instruction$$ operator codes are supported
 so far (more are  expected in the future):
-$code Load$$,
+
+$subhead Arithmetic$$
 $code FAdd$$,
 $code FSub$$,
 $code FMul$$,
 $code FDiv$$,
+
+$subhead Memory Access$$
+$code Load$$,
 $code GetElementPtr$$,
-$code Ret$$,
 $code Store$$.
+
+$subhead Other$$
+$code Ret$$,
 
 $head msg$$
 If the return value $icode msg$$ is the empty string,
