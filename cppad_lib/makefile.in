@@ -707,7 +707,7 @@ uninstall-am: uninstall-libLIBRARIES
 .PRECIOUS: makefile
 
 
-# autotools version of install does not support CppADCodeGen or llvm, but need 
+# autotools version of install does not support CppADCodeGen or llvm, but need
 # source here so that bin/check_makefile.sh knows not using it is OK.
 #	code_gen_fun.cpp
 #   llvm/ir_ctor.cpp
