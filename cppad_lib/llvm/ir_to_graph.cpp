@@ -65,6 +65,8 @@ so far (more are  expected in the future):
 $code Load$$,
 $code FAdd$$,
 $code FSub$$,
+$code FMul$$,
+$code FDiv$$,
 $code GetElementPtr$$,
 $code Ret$$,
 $code Store$$.
@@ -245,6 +247,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // --------------------------------------------------------------
             case llvm::Instruction::FAdd:
             case llvm::Instruction::FSub:
+            case llvm::Instruction::FMul:
+            case llvm::Instruction::FDiv:
             // This instruction creates a new node in the graph that corresonds
             // to the sum of two other nodes.
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
@@ -263,6 +267,14 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
 
                 case llvm::Instruction::FSub:
                 graph_obj.operator_vec_push_back( CppAD::graph::sub_graph_op );
+                break;
+
+                case llvm::Instruction::FMul:
+                graph_obj.operator_vec_push_back( CppAD::graph::mul_graph_op );
+                break;
+
+                case llvm::Instruction::FDiv:
+                graph_obj.operator_vec_push_back( CppAD::graph::div_graph_op );
                 break;
 
                 default:

@@ -21,15 +21,40 @@ namespace { // BEGIN_EMPTY_NAMESPACE
     {   size_t nx = x.size();
         size_t np = p.size();
         size_t ny = nx + np;
+        typedef typename VectorFloat::value_type value_type;
+        //
+        // number of operator: add, sub, mul, div
+        size_t n_operator = 4;
+        //
+        // operation counter mod n_operator
+        size_t operation_count = 0;
         //
         // define the actual function
         VectorFloat y(ny);
-        for(size_t i = 0; i < np; ++i)
-            y[i] = p[i] - double(i);
-        for(size_t i = 0; i < nx; ++i)
-            y[i + np] = x[i] + double(i + np);
+        for(size_t i = 0; i < ny; ++i)
+        {   value_type arg;
+            if( i < np )
+                arg = p[i];
+            else
+                arg = x[i-np];
+            operation_count = (operation_count + 1) % n_operator;
+            switch( operation_count )
+            {   case 1:
+                y[i] = arg + double(i);
+                break;
+
+                case 2:
+                y[i] = double(i) - arg;
+
+                case 3:
+                y[i] = arg * double(i);
+
+                case 4:
+                y[i] = double(i) / arg;
+            }
+        }
         //
-        // some operations that optimizer should remove
+        // some operations that optimizer should get removed by optimizer
         typename VectorFloat::value_type sum = 0.0;
         for(size_t i = 0; i < ny; i++)
             sum += y[i];
@@ -68,7 +93,7 @@ bool tst_llvm_ir(void)
     //
     // np, nx
     size_t np = 1;
-    size_t nx = 2;
+    size_t nx = 3;
     //
     // f
     CppAD::ADFun<double> f;
@@ -134,7 +159,7 @@ bool tst_llvm_link(void)
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
     size_t np = 1;
-    size_t nx = 2;
+    size_t nx = 3;
     CppAD::ADFun<double> f;
     algo2adfun(np, nx, f);
     //
@@ -208,7 +233,6 @@ bool tst_llvm_link(void)
     check = algo(p, x);
     for(size_t i = 0; i < ny; ++i)
         ok &= CppAD::NearEqual(output[i], check[i], eps99, eps99);
-    //
     //
     return ok;
 }
