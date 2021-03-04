@@ -266,16 +266,20 @@ then
     exit 1
 fi
 # --------------------------------------------------------------------------
-if echo "$fun" | grep 'llvm' > /dev/null
+echo 'test_one.sh: OK'
+echo
+if echo "$dir" | grep '/llvm$' > /dev/null
 then
-    if [ -e 'algo.o' ]
+    if ls llvm_*.o >& /dev/null
     then
-        # llvm tests use the algo.o for the object file.
-        echo 'rm algo.o'
-        rm algo.o
+        echo 'Use the following commands to clean up this directory'
+        for name in $(ls llvm_*.o)
+        do
+            echo "    rm $name"
+        done
     fi
 fi
+echo 'Use the following command before running test_one.exe in debugger:'
+echo "    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 # --------------------------------------------------------------------------
-echo 'test_one.sh: OK'
-echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 exit 0

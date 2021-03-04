@@ -38,7 +38,7 @@ $subhead Operators$$
 Only a subset of the possible operators may appear in
 $cref/operator_vec/cpp_ad_graph/operator_vec/$$
 (more expected in the future).
-The allowed operators all end with $code _graph_op$$,
+The operators all end with $code _graph_op$$,
 which is omitted in the following list:
 $code add$$,
 $code azmul$$,

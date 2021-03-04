@@ -24,15 +24,15 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
-extern bool det_minor(void);
-extern bool link_xam(void);
 extern bool from_to_graph(void);
+extern bool grad_det_minor(void);
+extern bool link_xam(void);
 extern bool optimize(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/graph";
+{   std::string group = "example/llvm";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
@@ -40,8 +40,8 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
-    Run( det_minor,            "det_minor"         );
     Run( from_to_graph,        "from_to_graph"     );
+    Run( grad_det_minor,       "grad_det_minor"    );
     Run( link_xam,             "link_xam"          );
     Run( optimize,             "optimize"          );
     // END_SORT_THIS_LINE_MINUS_1

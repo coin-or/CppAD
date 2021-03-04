@@ -12,10 +12,10 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    det_minor.cpp
+    from_to_graph.cpp
+    grad_det_minor.cpp
     link_xam.cpp
     llvm.cpp
-    from_to_graph.cpp
     optimize.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

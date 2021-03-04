@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin llvm_det_minor$$
+$begin llvm_grad_det_minor$$
 
 $section Example: LLVM Complied Derivative of Determinant by Minors$$
 
@@ -27,7 +27,7 @@ $end
 # include <cppad/core/llvm_ir.hpp>
 # include <cppad/core/llvm_link.hpp>
 
-bool det_minor(void)
+bool grad_det_minor(void)
 {   using CppAD::AD;
     using CppAD::vector;
     bool ok         = true;
@@ -84,8 +84,8 @@ bool det_minor(void)
     CppAD::ADFun<double> g;
     g.Dependent(a_A, a_gradient);
     //
-    // Set name of this function to llvm_det_minor
-    std::string function_name = "llvm_det_minor";
+    // Set name of this function to llvm_grad_det_minor
+    std::string function_name = "grad_det_minor";
     g.function_name_set(function_name);
     //
     // graph_obj
@@ -100,8 +100,9 @@ bool det_minor(void)
         return false;
     }
     //
-    // llvm_det_minor.o
-    std::string file_name = function_name + ".o";
+    // llvm_grad_det_minor.o
+    // bin/test_one.sh.in assumes file name begins with llvm_
+    std::string file_name = "llvm_" + function_name + ".o";
     msg = ir_obj.to_object_file(file_name);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
