@@ -19,6 +19,7 @@ $spell
     op
     mul
     div
+    azmul
 $$
 
 $section Convert a C++ AD Graph to LLVM Intermediate Representation$$
@@ -33,9 +34,21 @@ $head graph_obj$$
 This a the $cref cpp_ad_graph$$ corresponding the function
 that is converted to llvm intermediate representation.
 
-$subhead Restrictions$$
+$subhead Operators$$
+Only a subset of the possible operators may appear in
+$cref/operator_vec/cpp_ad_graph/operator_vec/$$
+(more expected in the future).
+The allowed operators all end with $code _graph_op$$,
+which is omitted in the following list:
+$code add$$,
+$code azmul$$,
+$code sub$$,
+$code mul$$,
+$code div$$,
+
+$subhead Other Restrictions$$
 The following limitations are placed on $icode graph_obj$$
-(and expected to be removed in the future).
+(expected to be removed in the future).
 $list number$$
 $cref/function_name/cpp_ad_graph/function_name/$$ must not be empty.
 $lnext
@@ -44,13 +57,6 @@ $lnext
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ must be empty.
 $lnext
 $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$ must be empty.
-$lnext
-Only the following operators my appear in
-$cref/operator_vec/cpp_ad_graph/operator_vec/$$:
-$code add_graph_op$$,
-$code sub_graph_op$$,
-$code mul_graph_op$$,
-$code div_graph_op$$,
 $lend
 
 $head ir_obj$$
@@ -258,6 +264,11 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         graph_ir.push_back(value);
     }
     //
+    // The zero floating point constant
+    llvm::Value* fp_zero = llvm::ConstantFP::get(
+        *context_ir_, llvm::APFloat(0.0)
+    );
+    //
     // graph_ir
     // constants
     for(size_t i = 0; i < n_constant; ++i)
@@ -286,11 +297,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         size_t         n_str    = str_index.size();
         //
         switch( op_enum )
-        {
+        {   // Binary operators
             case CppAD::graph::add_graph_op:
             case CppAD::graph::sub_graph_op:
             case CppAD::graph::mul_graph_op:
             case CppAD::graph::div_graph_op:
+            case CppAD::graph::azmul_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1);
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
@@ -322,6 +334,18 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
 
             case CppAD::graph::div_graph_op:
             value = builder.CreateFDiv(graph_ir[arg[0]], graph_ir[arg[1]]);
+            graph_ir.push_back(value);
+            break;
+
+            case CppAD::graph::azmul_graph_op:
+            value = builder.CreateFMul(graph_ir[arg[0]], graph_ir[arg[1]]);
+            {   llvm::Value* is_zero = builder.CreateFCmpOEQ(
+                    graph_ir[arg[0]], fp_zero
+                );
+                value = builder.CreateSelect(
+                    is_zero, fp_zero, value
+                );
+            }
             graph_ir.push_back(value);
             break;
 

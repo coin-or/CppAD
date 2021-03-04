@@ -12,8 +12,9 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    llvm.cpp
+    det_minor.cpp
     link_xam.cpp
+    llvm.cpp
     from_to_graph.cpp
     optimize.cpp
 )
