@@ -83,7 +83,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
         adfun.Dependent(ax, ay);
         //
         // function_name
-        adfun.function_name_set("algo");
+        adfun.function_name_set("llvm_algo");
         return;
     }
 // tst_llvm_ir

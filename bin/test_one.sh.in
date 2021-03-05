@@ -268,16 +268,13 @@ fi
 # --------------------------------------------------------------------------
 echo 'test_one.sh: OK'
 echo
-if echo "$dir" | grep '/llvm$' > /dev/null
+if ls llvm_*.o >& /dev/null
 then
-    if ls llvm_*.o >& /dev/null
-    then
-        echo 'Use the following commands to clean up this directory'
-        for name in $(ls llvm_*.o)
-        do
-            echo "    rm $name"
-        done
-    fi
+    echo 'Use the following commands to clean up this directory'
+    for name in $(ls llvm_*.o)
+    do
+        echo "    rm $name"
+    done
 fi
 echo 'Use the following command before running test_one.exe in debugger:'
 echo "    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
