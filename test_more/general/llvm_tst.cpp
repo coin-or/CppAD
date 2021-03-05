@@ -177,7 +177,7 @@ bool tst_llvm_link(void)
     }
     //
     // create object file
-    // bin/test_one.sh.in assumes file_name == "algo.o"
+    // bin/test_one.sh.in assumes file_name matchees "llvm_*.o"
     std::string file_name = function_name + ".o";
     ir_obj.to_object_file(file_name);
     //

@@ -100,8 +100,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // Assumes the default constructor for size_t yields zero
     CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
     //
-    // type used by interface to DenseMap
-    typedef std::pair<const llvm::Value*, size_t> pair;
+    // types used by interface to DenseMap
+    typedef std::pair<const llvm::Value*, size_t> pair_size;
 # ifndef NDEBUG
     //
     // len_input
@@ -153,7 +153,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     node = 1 + n_dynamic_ind_ + n_variable_ind_ + n_constant;
                     //
                     // add this constant do data structure
-                    llvm_value2graph_node.insert( pair(operand, node) );
+                    llvm_value2graph_node.insert( pair_size(operand, node) );
                     graph_obj.constant_vec_push_back(dbl);
                 }
             }
@@ -163,11 +163,11 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     size_t n_constant = graph_obj.constant_vec_size();
     //
     // node index 1 corresponds to first element of input vector
-    llvm_ptr2graph_node.insert( pair(input_ptr, 1) );
+    llvm_ptr2graph_node.insert( pair_size(input_ptr, 1) );
     //
     // Dependent variable index 0 corresponds to first lement of output vector.
     // Add one to these indices so zero can be used for value not found.
-    llvm_ptr2dep_var_ind.insert( pair(output_ptr, 1) );
+    llvm_ptr2dep_var_ind.insert( pair_size(output_ptr, 1) );
     //
     // mapping from dependent variable index to graph node index
     CppAD::vector<size_t> dependent(n_variable_dep_);
@@ -223,7 +223,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             node = llvm_ptr2graph_node.lookup(operand[0]);
             CPPAD_ASSERT_UNKNOWN( node != 0 );
             // result is the value that operand[0] points to
-            llvm_value2graph_node.insert( pair(result , node) );
+            llvm_value2graph_node.insert( pair_size(result , node) );
             break;
             //
             // --------------------------------------------------------------
@@ -248,7 +248,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::DoubleTyID );
             //
             // mapping from this result to the correspondign new node in graph
-            llvm_value2graph_node.insert( pair(result , ++result_node) );
+            llvm_value2graph_node.insert( pair_size(result , ++result_node) );
             //
             // put this operator in the graph
             switch( op_code )
@@ -293,7 +293,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 // Use the actual dependent variable index plus 1
                 // so that we can use 0 to check for not found.
                 index = *uint64 + 1;
-                llvm_ptr2dep_var_ind.insert( pair(result, index) );
+                llvm_ptr2dep_var_ind.insert( pair_size(result, index) );
             }
             else
             {    CPPAD_ASSERT_UNKNOWN( operand[0] == input_ptr );
@@ -301,7 +301,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 //
                 // first element of input_ptr corresponds to node index 1
                 node = *uint64 + 1;
-                llvm_ptr2graph_node.insert( pair(result, node) );
+                llvm_ptr2graph_node.insert( pair_size(result, node) );
             }
             break;
             //
