@@ -131,20 +131,28 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     graph_obj.n_dynamic_ind_set(n_dynamic_ind_);
     graph_obj.n_variable_ind_set(n_variable_ind_);
     //
+    // The operands and corresponding type for each instruction
+    // Used by both passes
+    CppAD::vector<llvm::Value*>       operand;
+    CppAD::vector<llvm::Type::TypeID> type_id;
+    //
     // First Pass
     // determine the floating point constants in the graph
     CPPAD_ASSERT_UNKNOWN( graph_obj.constant_vec_size() == 0 );
     for(llvm::const_inst_iterator itr = begin_inst; itr != end_inst; ++itr)
     {   unsigned n_operand = itr->getNumOperands();
-        for(size_t i = 0; i < n_operand; ++i)
-        {   llvm::Value* operand = itr->getOperand( (unsigned int)(i) );
-            if( llvm::isa<llvm::ConstantFP>(operand) )
-            {   size_t node = llvm_value2graph_node.lookup(operand);
+        operand.resize(n_operand);
+        for(unsigned i = 0; i < n_operand; ++i)
+            operand[i] = itr->getOperand(i);
+
+        for(unsigned i = 0; i < n_operand; ++i)
+        {   if( llvm::isa<llvm::ConstantFP>(operand[i]) )
+            {   size_t node = llvm_value2graph_node.lookup(operand[i]);
                 if( node == 0 )
                 {   // First occurance of this constant
                     // dbl
                     const llvm::ConstantFP* constant_fp =
-                        llvm::dyn_cast<llvm::ConstantFP>(operand);
+                        llvm::dyn_cast<llvm::ConstantFP>(operand[i]);
                     const llvm::APFloat* apfloat = &constant_fp->getValue();
                     double  dbl = apfloat->convertToDouble();
                     //
@@ -153,7 +161,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     node = 1 + n_dynamic_ind_ + n_variable_ind_ + n_constant;
                     //
                     // add this constant do data structure
-                    llvm_value2graph_node.insert( pair_size(operand, node) );
+                    llvm_value2graph_node.insert(pair_size(operand[i], node));
                     graph_obj.constant_vec_push_back(dbl);
                 }
             }
@@ -176,10 +184,6 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         CPPAD_ASSERT_UNKNOWN( dependent[i] == 0 );
 # endif
     //
-    // The operands and corresponding type for each instruction
-    CppAD::vector<llvm::Value*>       operand;
-    CppAD::vector<llvm::Type::TypeID> type_id;
-    //
     // node index correspoding to first result
     size_t result_node = n_dynamic_ind_ + n_variable_ind_ + n_constant;
     //
@@ -194,8 +198,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         unsigned n_operand                = itr->getNumOperands();
         operand.resize(n_operand);
         type_id.resize(n_operand);
-        for(size_t i = 0; i < n_operand; ++i)
-        {   operand[i] = itr->getOperand((unsigned int)(i));
+        for(unsigned i = 0; i < n_operand; ++i)
+        {   operand[i] = itr->getOperand(i);
             type_id[i] = operand[i]->getType()->getTypeID();
         }
         //
