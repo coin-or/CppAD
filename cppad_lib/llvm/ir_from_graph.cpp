@@ -278,6 +278,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         );
         graph_ir.push_back(value);
     }
+# ifndef NDEBUG
+    // count_azmul
+    size_t count_azmul     = 0;
+    string count_azmul_str = "0";
+# endif
+    CppAD::vector<string> azmul_label(3);
+    //
     // graph_ir
     // operators in the graph
     CppAD::cpp_graph::const_iterator itr;
@@ -338,12 +345,21 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             break;
 
             case CppAD::graph::azmul_graph_op:
-            value = builder.CreateFMul(graph_ir[arg[0]], graph_ir[arg[1]]);
+# ifndef NDEBUG
+            ++count_azmul;
+            count_azmul_str = std::to_string(count_azmul);
+            azmul_label[0]  = "azmul_"  + count_azmul_str;
+            azmul_label[1]  = "fcmp_"   + count_azmul_str;
+            azmul_label[2]  = "select_" + count_azmul_str;
+# endif
+            value = builder.CreateFMul(
+                graph_ir[arg[0]], graph_ir[arg[1]], azmul_label[0]
+            );
             {   llvm::Value* is_zero = builder.CreateFCmpOEQ(
-                    graph_ir[arg[0]], fp_zero
+                    graph_ir[arg[0]], fp_zero, azmul_label[1]
                 );
                 value = builder.CreateSelect(
-                    is_zero, fp_zero, value
+                    is_zero, fp_zero, value, azmul_label[2]
                 );
             }
             graph_ir.push_back(value);
