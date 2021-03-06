@@ -14,78 +14,81 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/llvm_ir.hpp>
 # include <cppad/core/llvm_link.hpp>
 namespace { // BEGIN_EMPTY_NAMESPACE
-    // algo
-    template <class VectorFloat>
-    VectorFloat algo(const VectorFloat& p, const VectorFloat& x)
-    // END_PROTOTYPE
-    {   size_t nx = x.size();
-        size_t np = p.size();
-        size_t ny = nx + np;
-        typedef typename VectorFloat::value_type value_type;
-        //
-        // number of operator: add, sub, mul, div
-        size_t n_operator = 4;
-        //
-        // operation counter mod n_operator
-        size_t operation_count = 0;
-        //
-        // define the actual function
-        VectorFloat y(ny);
-        for(size_t i = 0; i < ny; ++i)
-        {   value_type arg;
-            if( i < np )
-                arg = p[i];
-            else
-                arg = x[i-np];
-            operation_count = (operation_count + 1) % n_operator;
-            switch( operation_count )
-            {   case 1:
-                y[i] = arg + double(i);
-                break;
+// -----------------------------------------------------------------------------
+// algo
+template <class VectorFloat>
+VectorFloat algo(const VectorFloat& p, const VectorFloat& x)
+// END_PROTOTYPE
+{   size_t nx = x.size();
+    size_t np = p.size();
+    size_t ny = nx + np;
+    typedef typename VectorFloat::value_type value_type;
+    //
+    // number of operator: add, sub, mul, div
+    size_t n_operator = 4;
+    //
+    // operation counter mod n_operator
+    size_t operation_count = 0;
+    //
+    // define the actual function
+    VectorFloat y(ny);
+    for(size_t i = 0; i < ny; ++i)
+    {   value_type arg;
+        if( i < np )
+            arg = p[i];
+        else
+            arg = x[i-np];
+        operation_count = (operation_count + 1) % n_operator;
+        switch( operation_count )
+        {   case 1:
+            y[i] = arg + double(i);
+            break;
 
-                case 2:
-                y[i] = double(i) - arg;
+            case 2:
+            y[i] = double(i) - arg;
 
-                case 3:
-                y[i] = arg * double(i);
+            case 3:
+            y[i] = arg * double(i);
 
-                case 4:
-                y[i] = double(i) / arg;
-            }
+            case 4:
+            y[i] = double(i) / arg;
         }
-        //
-        // some operations that optimizer should get removed by optimizer
-        typename VectorFloat::value_type sum = 0.0;
-        for(size_t i = 0; i < ny; i++)
-            sum += y[i];
-        //
-        return y;
     }
-    // algo2adfun
-    void algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
-    {   using CppAD::AD;
-        using CppAD::vector;
-        //
-        // ap, ax
-        vector< AD<double> > ap(np), ax(nx);
-        for(size_t i = 0; i < np; ++i)
-            ap[i] = AD<double>( i + 1 );
-        for(size_t i = 0; i < nx; ++i)
-            ax[i] = AD<double>( i + np );
-        //
-        // ax independent variables,  ap dynamic parameters
-        CppAD::Independent(ax, ap);
-        //
-        // ay
-        vector< AD<double> > ay = algo(ap, ax);
-        //
-        // f : x -> y
-        adfun.Dependent(ax, ay);
-        //
-        // function_name
-        adfun.function_name_set("llvm_algo");
-        return;
-    }
+    //
+    // some operations that optimizer should get removed by optimizer
+    typename VectorFloat::value_type sum = 0.0;
+    for(size_t i = 0; i < ny; i++)
+        sum += y[i];
+    //
+    return y;
+}
+// -----------------------------------------------------------------------------
+// algo2adfun
+void algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
+{   using CppAD::AD;
+    using CppAD::vector;
+    //
+    // ap, ax
+    vector< AD<double> > ap(np), ax(nx);
+    for(size_t i = 0; i < np; ++i)
+        ap[i] = AD<double>( i + 1 );
+    for(size_t i = 0; i < nx; ++i)
+        ax[i] = AD<double>( i + np );
+    //
+    // ax independent variables,  ap dynamic parameters
+    CppAD::Independent(ax, ap);
+    //
+    // ay
+    vector< AD<double> > ay = algo(ap, ax);
+    //
+    // f : x -> y
+    adfun.Dependent(ax, ay);
+    //
+    // function_name
+    adfun.function_name_set("llvm_algo");
+    return;
+}
+// -----------------------------------------------------------------------------
 // tst_llvm_ir
 bool tst_llvm_ir(void)
 {   bool ok = true;
