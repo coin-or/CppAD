@@ -239,6 +239,64 @@ bool tst_llvm_link(void)
     //
     return ok;
 }
+// -----------------------------------------------------------------------------
+// tst_azmul
+bool tst_azmul(void)
+{   bool ok = true;
+    using CppAD::AD;
+    using CppAD::vector;
+    //
+    // ax
+    size_t nx = 4;
+    vector< AD<double> > ax(nx);
+    CppAD::Independent(ax);
+    //
+    // ay
+    size_t ny = 3;
+    vector< AD<double> > ay(ny);
+    ay[0] = azmul(ax[0],  ax[1]);
+    ay[1] = ax[2] * ax[3];
+    ay[2] = ax[0] * ax[1];
+    //
+    // f
+    CppAD::ADFun<double> f(ax, ay);
+    f.function_name_set("llvm_tst_azmul");
+    f.check_for_nan(false);
+    //
+    // graph_obj
+    CppAD::cpp_graph graph_obj;
+    f.to_graph(graph_obj);
+    //
+    // ir_obj
+    CppAD::llvm_ir ir_obj;
+    std::string msg = ir_obj.from_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // optimize it
+    ir_obj.optimize();
+    //
+    // back to graph
+    ir_obj.to_graph(graph_obj);
+    //
+    // back to function
+    f.from_graph(graph_obj);
+    //
+    // test both forms of 0 * nan
+    vector<double> x(nx), y(ny);
+    x[2] = x[0] = 0.0;
+    x[1] = x[3] = std::numeric_limits<double>::quiet_NaN();
+    y    = f.Forward(0, x);
+    //
+    ok &= y[0] == 0.0;
+    ok &= std::isnan(y[1]);
+    // optimization should use same multiply for y[0] and y[2]
+    ok &= y[2] == 0.0;
+    //
+    return ok;
+}
 
 } // END_EMPTY_NAMESPACE
 
@@ -246,5 +304,6 @@ bool llvm_tst(void)
 {   bool ok = true;
     ok     &= tst_llvm_ir();
     ok     &= tst_llvm_link();
+    ok     &= tst_azmul();
     return ok;
 }
