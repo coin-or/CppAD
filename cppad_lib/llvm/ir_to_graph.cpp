@@ -97,11 +97,17 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // map llvm::Value* double* to a dependent variable index
     llvm::DenseMap<const llvm::Value*, size_t>  llvm_ptr2dep_var_ind;
     //
-    // Assumes the default constructor for size_t yields zero
+    // maps used to detect azmul operators
+    llvm::DenseMap<const llvm::Value*, const llvm::Value*>  llvm_left2cmp;
+    llvm::DenseMap<const llvm::Value*, const llvm::Value*>  llvm_cmp2select;
+    //
+    // Tse use of masps assumes the default constructor for size_t yeilds zero
     CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
     //
     // types used by interface to DenseMap
-    typedef std::pair<const llvm::Value*, size_t> pair_size;
+    typedef std::pair<const llvm::Value*, size_t>             pair_size;
+    typedef std::pair<const llvm::Value*, const llvm::Value*> pair_value;
+    //
 # ifndef NDEBUG
     //
     // len_input
@@ -136,6 +142,11 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     CppAD::vector<llvm::Value*>       operand;
     CppAD::vector<llvm::Type::TypeID> type_id;
     //
+    // The zero floating point constant
+    llvm::Value* fp_zero = llvm::ConstantFP::get(
+        *context_ir_, llvm::APFloat(0.0)
+    );
+    //
     // First Pass
     // determine the floating point constants in the graph
     CPPAD_ASSERT_UNKNOWN( graph_obj.constant_vec_size() == 0 );
@@ -144,7 +155,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         operand.resize(n_operand);
         for(unsigned i = 0; i < n_operand; ++i)
             operand[i] = itr->getOperand(i);
-
+        //
+        // constant_vec in graph.obj
         for(unsigned i = 0; i < n_operand; ++i)
         {   if( llvm::isa<llvm::ConstantFP>(operand[i]) )
             {   size_t node = llvm_value2graph_node.lookup(operand[i]);
@@ -165,6 +177,23 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     graph_obj.constant_vec_push_back(dbl);
                 }
             }
+        }
+        //
+        // azmul map chain
+        const unsigned op_code    = itr->getOpcode();
+        const llvm::Value* result = llvm::dyn_cast<llvm::Value>( &(*itr) );
+        switch( op_code )
+        {
+            case llvm::Instruction::FCmp:
+            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
+            CPPAD_ASSERT_UNKNOWN( operand[1] == fp_zero );
+            llvm_left2cmp.insert( pair_value( operand[0], result ) );
+            break;
+
+            case llvm::Instruction::Select:
+            CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
+            llvm_cmp2select.insert( pair_value( operand[0], result ) );
+            break;
         }
     }
     // n_constant
@@ -240,6 +269,10 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             break;
             //
             // --------------------------------------------------------------
+            case llvm::Instruction::FCmp:
+            break;
+            //
+            // --------------------------------------------------------------
             case llvm::Instruction::FAdd:
             case llvm::Instruction::FSub:
             case llvm::Instruction::FMul:
@@ -265,7 +298,16 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 break;
 
                 case llvm::Instruction::FMul:
-                graph_obj.operator_vec_push_back( CppAD::graph::mul_graph_op );
+                {   const llvm::Value* left   = operand[0];
+                    const llvm::Value* cmp    = llvm_left2cmp.lookup(left);
+                    const llvm::Value* select = llvm_cmp2select.lookup(cmp);
+                    CppAD::graph::graph_op_enum op;
+                    if( select == nullptr )
+                        op = CppAD::graph::mul_graph_op;
+                    else
+                        op = CppAD::graph::azmul_graph_op;
+                    graph_obj.operator_vec_push_back(op);
+                }
                 break;
 
                 case llvm::Instruction::FDiv:
@@ -332,6 +374,16 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             case llvm::Instruction::Ret:
             // returns int32_t error_no
             CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
+            break;
+            //
+            // --------------------------------------------------------------
+            case llvm::Instruction::Select:
+            CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
+            CPPAD_ASSERT_UNKNOWN( operand[1] == fp_zero );
+            {   const llvm::Value* mul = operand[2];
+                node  = llvm_value2graph_node.lookup(mul);
+                llvm_value2graph_node.insert( pair_size(result, node ) );
+            }
             break;
             //
             // --------------------------------------------------------------
