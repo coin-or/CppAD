@@ -45,10 +45,9 @@ namespace {
     }
     void algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
     {   using CppAD::AD;
-        using CppAD::vector;
         //
         // ap, ax
-        vector< AD<double> > ap(np), ax(nx);
+        CPPAD_TESTVECTOR( AD<double> ) ap(np), ax(nx);
         for(size_t i = 0; i < np; ++i)
             ap[i] = AD<double>( i + 1 );
         for(size_t i = 0; i < nx; ++i)
@@ -58,7 +57,7 @@ namespace {
         CppAD::Independent(ax, ap);
         //
         // ay
-        vector< AD<double> > ay = algo(ap, ax);
+        CPPAD_TESTVECTOR( AD<double> ) ay = algo(ap, ax);
         //
         // f : x -> y
         adfun.Dependent(ax, ay);
@@ -70,7 +69,6 @@ namespace {
 }
 bool link_xam(void)
 {   bool ok = true;
-    using CppAD::vector;
     using CppAD::llvm_ir;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
@@ -112,7 +110,7 @@ bool link_xam(void)
     }
     //
     // input
-    CppAD::vector<double> input(np + nx);
+    std::vector<double> input(np + nx);
     for(size_t i = 0; i < np + nx; ++i)
         input[i] = double(i) + 4.0;
     //
@@ -141,7 +139,7 @@ bool link_xam(void)
     ok &= error_no == 0;
     //
     // check output
-    CppAD::vector<double> p(np), x(nx), check(ny);
+    CPPAD_TESTVECTOR(double) p(np), x(nx), check(ny);
     for(size_t i = 0; i < np; ++i)
         p[i] = input[i];
     for(size_t i = 0; i < nx; ++i)

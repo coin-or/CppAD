@@ -29,7 +29,6 @@ $end
 
 bool grad_det_minor(void)
 {   using CppAD::AD;
-    using CppAD::vector;
     bool ok         = true;
     std::string msg = "";
     //
@@ -43,11 +42,11 @@ bool grad_det_minor(void)
     CppAD::det_by_minor< AD<double> > a_det(size);
     //
     // choose a matrix
-    CppAD::vector<double> matrix(nx);
+    CPPAD_TESTVECTOR(double) matrix(nx);
     CppAD::uniform_01(nx, matrix);
     //
     // copy to independent variables
-    vector< AD<double> >   a_A(nx);
+    CPPAD_TESTVECTOR( AD<double> )   a_A(nx);
     for(size_t j = 0; j < nx; ++j)
         a_A[j] = matrix[j];
     //
@@ -57,7 +56,7 @@ bool grad_det_minor(void)
     CppAD::Independent(a_A, abort_op_index, record_compare);
     //
     // AD computation of the determinant
-    vector< AD<double> > a_detA(1);
+    CPPAD_TESTVECTOR( AD<double> ) a_detA(1);
     a_detA[0] = a_det(a_A);
     //
     // create function objects for f : A -> detA
@@ -72,11 +71,11 @@ bool grad_det_minor(void)
     CppAD::Independent(a_A, abort_op_index, record_compare);
     //
     // vectors of reverse mode weights
-    vector< AD<double> > a_w(1);
+    CPPAD_TESTVECTOR( AD<double> ) a_w(1);
     a_w[0] = 1.0;
     //
     // AD computation of the gradient
-    vector< AD<double> >  a_gradient(nx);
+    CPPAD_TESTVECTOR( AD<double> )  a_gradient(nx);
     a_f.Forward(0, a_A);
     a_gradient = a_f.Reverse(1, a_w);
     //
@@ -137,9 +136,11 @@ bool grad_det_minor(void)
     }
     //
     // evaluate gradient
-    vector<double> gradient(nx);
+    std::vector<double> input(nx), gradient(nx);;
+    for(size_t i = 0; i < nx; ++i)
+        input[i] = matrix[i];
     int32_t error_no = function_ptr(
-        int32_t(nx), matrix.data(), int32_t(nx), gradient.data()
+        int32_t(nx), input.data(), int32_t(nx), gradient.data()
     );
     if( error_no != 0 )
     {   std::cerr << "\nerror_no != 0\n";
@@ -147,7 +148,7 @@ bool grad_det_minor(void)
     }
     //
     // check value of gradient
-    ok &= CppAD::det_grad_33(matrix, gradient);
+    ok &= CppAD::det_grad_33(input, gradient);
     //
     return ok;
 }

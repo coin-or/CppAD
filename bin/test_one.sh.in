@@ -120,6 +120,8 @@ then
     library_path=$(pkg-config adolc --libs | sed -e 's|.*-L\([^ ]*\).*|\1|')
     LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
 fi
+#
+# eigen
 if [ @cppad_has_eigen@ == 1 ]
 then
     include_flags="$include_flags $(pkg-config eigen3 --cflags)"

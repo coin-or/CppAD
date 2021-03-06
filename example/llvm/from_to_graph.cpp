@@ -45,10 +45,9 @@ namespace {
     }
     void algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
     {   using CppAD::AD;
-        using CppAD::vector;
         //
         // ap, ax
-        vector< AD<double> > ap(np), ax(nx);
+        CPPAD_TESTVECTOR( AD<double> ) ap(np), ax(nx);
         for(size_t i = 0; i < np; ++i)
             ap[i] = AD<double>( i + 1 );
         for(size_t i = 0; i < nx; ++i)
@@ -58,7 +57,7 @@ namespace {
         CppAD::Independent(ax, ap);
         //
         // ay
-        vector< AD<double> > ay = algo(ap, ax);
+        CPPAD_TESTVECTOR( AD<double> ) ay = algo(ap, ax);
         //
         // f : x -> y
         adfun.Dependent(ax, ay);
@@ -71,7 +70,6 @@ namespace {
 
 bool from_to_graph(void)
 {   bool ok = true;
-    using CppAD::vector;
     //
     // np, nx
     size_t np = 1;
@@ -110,7 +108,7 @@ bool from_to_graph(void)
     double rand_max = double(RAND_MAX);
     //
     // x, p
-    vector<double> p(np), x(nx);
+    CPPAD_TESTVECTOR(double) p(np), x(nx);
     for(size_t i = 0; i < np; ++i)
         p[i] = std::rand() / rand_max;
     for(size_t i = 0; i < nx; ++i)
@@ -118,11 +116,11 @@ bool from_to_graph(void)
     //
     // y = g(p; x)
     g.new_dynamic(p);
-    vector<double> y = g.Forward(0, x);
+    CPPAD_TESTVECTOR(double) y = g.Forward(0, x);
     //
     // check
     double         eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-    vector<double> check = algo(p, x);
+    CPPAD_TESTVECTOR(double) check = algo(p, x);
     size_t         ny    = g.Range();
     ok &= check.size() == ny;
     ok &= f.Range()    == ny;
