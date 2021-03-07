@@ -699,6 +699,7 @@ bool optimize_run(
             case Expm1Op:
             case LogOp:
             case Log1pOp:
+            case NegOp:
             case SignOp:
             case SinOp:
             case SinhOp:

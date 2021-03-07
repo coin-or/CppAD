@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_UNARY_MINUS_HPP
 # define CPPAD_CORE_UNARY_MINUS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -77,18 +77,50 @@ $end
 
 //  BEGIN CppAD namespace
 namespace CppAD {
-
-// Broken g++ compiler inhibits declaring unary minus a member or friend
+//
 template <class Base>
 AD<Base> AD<Base>::operator - (void) const
-{   // 2DO: make a more efficient by adding unary minus to op_code.h (some day)
+{
+    // compute the Base part of this AD object
+    AD<Base> result;
+    result.value_ = - value_;
+    CPPAD_ASSERT_UNKNOWN( Parameter(result) );
+
+    // check if there is a recording in progress
+    local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+    if( tape == nullptr )
+        return result;
+    // tape_id cannot match the default value for tape_id; i.e., 0
+    CPPAD_ASSERT_UNKNOWN( tape->id_ > 0 );
     //
-    AD<Base> result(0);
-    result  -= *this;
+    if( tape->id_ != tape_id_ )
+        return result;
+    //
+    if( ad_type_ == variable_enum )
+    {   // result is a variable
+        CPPAD_ASSERT_UNKNOWN( local::NumRes(local::NegOp) == 1 );
+        CPPAD_ASSERT_UNKNOWN( local::NumRes(local::NegOp) == 1 );
+        //
+        // put operand address in the tape
+        tape->Rec_.PutArg(taddr_);
+        // put operator in the tape
+        result.taddr_ = tape->Rec_.PutOp(local::NegOp);
+        // make result a variable
+        result.tape_id_ = tape_id_;
+        result.ad_type_ = variable_enum;
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( ad_type_ == dynamic_enum );
+        addr_t arg0 = taddr_;
+        result.taddr_ = tape->Rec_.put_dyn_par(
+            result.value_, local::neg_dyn, arg0
+        );
+        result.tape_id_  = tape_id_;
+        result.ad_type_  = dynamic_enum;
+    }
     return result;
 }
-
-
+//
 template <class Base>
 AD<Base> operator - (const VecAD_reference<Base> &right)
 {   return - right.ADBase(); }

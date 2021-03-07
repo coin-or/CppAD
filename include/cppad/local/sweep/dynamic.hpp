@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 # define CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -312,6 +312,12 @@ void dynamic(
             case mul_dyn:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
             all_par_vec[i_par] = *par[0] * *par[1];
+            break;
+
+            // neg
+            case neg_dyn:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+            all_par_vec[i_par] = - *par[0];
             break;
 
             // pow

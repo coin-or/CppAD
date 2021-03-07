@@ -330,6 +330,7 @@ void for_hes(
             case CoshOp:
             case ExpOp:
             case LogOp:
+            case NegOp:
             case SinOp:
             case SinhOp:
             case SqrtOp:

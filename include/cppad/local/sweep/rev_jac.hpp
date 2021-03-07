@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_REV_JAC_HPP
 # define CPPAD_LOCAL_SWEEP_REV_JAC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -444,6 +444,7 @@ void rev_jac(
             // -------------------------------------------------
 
             case LogOp:
+            case NegOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
             sparse::rev_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity
