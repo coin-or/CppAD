@@ -73,7 +73,7 @@ extern bool forward_order(void);
 extern bool Forward(void);
 extern bool FromBase(void);
 extern bool FunCheck(void);
-extern bool graph(void);
+extern bool cpp_graph(void);
 extern bool hes_sparsity(void);
 extern bool ipopt_solve(void);
 extern bool jacobian(void);
@@ -191,7 +191,7 @@ int main(void)
     Run( forward_order,   "forward_order"  );
     Run( FromBase,        "FromBase"       );
     Run( FunCheck,        "FunCheck"       );
-    Run( graph,           "graph"          );
+    Run( cpp_graph,       "cpp_graph"      );
     Run( hes_sparsity,    "hes_sparsity"   );
     Run( jacobian,        "jacobian"       );
     Run( json_graph,      "json_graph"     );

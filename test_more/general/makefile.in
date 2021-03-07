@@ -110,7 +110,7 @@ am__general_SOURCES_DIST = base_adolc.cpp cppad_eigen.cpp \
 	extern_value.cpp extern_value.hpp fabs.cpp for_hess.cpp \
 	for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
 	forward_dir.cpp forward_order.cpp from_base.cpp fun_check.cpp \
-	general.cpp graph.cpp hes_sparsity.cpp jacobian.cpp \
+	general.cpp cpp_graph.cpp hes_sparsity.cpp jacobian.cpp \
 	json_graph.cpp local/is_pod.cpp local/json_lexer.cpp \
 	local/json_parser.cpp local/vector_set.cpp log10.cpp log1p.cpp \
 	log.cpp mul_cond_rev.cpp mul.cpp mul_cskip.cpp mul_eq.cpp \
@@ -151,7 +151,7 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
 	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
 	from_base.$(OBJEXT) fun_check.$(OBJEXT) general.$(OBJEXT) \
-	graph.$(OBJEXT) hes_sparsity.$(OBJEXT) jacobian.$(OBJEXT) \
+	cpp_graph.$(OBJEXT) hes_sparsity.$(OBJEXT) jacobian.$(OBJEXT) \
 	json_graph.$(OBJEXT) local/is_pod.$(OBJEXT) \
 	local/json_lexer.$(OBJEXT) local/json_parser.$(OBJEXT) \
 	local/vector_set.$(OBJEXT) log10.$(OBJEXT) log1p.$(OBJEXT) \
@@ -210,28 +210,29 @@ am__depfiles_remade = ./$(DEPDIR)/abs_normal.Po ./$(DEPDIR)/acos.Po \
 	./$(DEPDIR)/compare_change.Po ./$(DEPDIR)/cond_exp.Po \
 	./$(DEPDIR)/cond_exp_ad.Po ./$(DEPDIR)/cond_exp_rev.Po \
 	./$(DEPDIR)/copy.Po ./$(DEPDIR)/cos.Po ./$(DEPDIR)/cosh.Po \
-	./$(DEPDIR)/cppad_eigen.Po ./$(DEPDIR)/cppad_vector.Po \
-	./$(DEPDIR)/dbl_epsilon.Po ./$(DEPDIR)/dependency.Po \
-	./$(DEPDIR)/div.Po ./$(DEPDIR)/div_eq.Po \
-	./$(DEPDIR)/div_zero_one.Po ./$(DEPDIR)/eigen_mat_inv.Po \
-	./$(DEPDIR)/erf.Po ./$(DEPDIR)/exp.Po ./$(DEPDIR)/expm1.Po \
+	./$(DEPDIR)/cpp_graph.Po ./$(DEPDIR)/cppad_eigen.Po \
+	./$(DEPDIR)/cppad_vector.Po ./$(DEPDIR)/dbl_epsilon.Po \
+	./$(DEPDIR)/dependency.Po ./$(DEPDIR)/div.Po \
+	./$(DEPDIR)/div_eq.Po ./$(DEPDIR)/div_zero_one.Po \
+	./$(DEPDIR)/eigen_mat_inv.Po ./$(DEPDIR)/erf.Po \
+	./$(DEPDIR)/exp.Po ./$(DEPDIR)/expm1.Po \
 	./$(DEPDIR)/extern_value.Po ./$(DEPDIR)/fabs.Po \
 	./$(DEPDIR)/for_hess.Po ./$(DEPDIR)/for_sparse_hes.Po \
 	./$(DEPDIR)/for_sparse_jac.Po ./$(DEPDIR)/forward.Po \
 	./$(DEPDIR)/forward_dir.Po ./$(DEPDIR)/forward_order.Po \
 	./$(DEPDIR)/from_base.Po ./$(DEPDIR)/fun_check.Po \
-	./$(DEPDIR)/general.Po ./$(DEPDIR)/graph.Po \
-	./$(DEPDIR)/hes_sparsity.Po ./$(DEPDIR)/ipopt_solve.Po \
-	./$(DEPDIR)/jacobian.Po ./$(DEPDIR)/json_graph.Po \
-	./$(DEPDIR)/log.Po ./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po \
-	./$(DEPDIR)/mul.Po ./$(DEPDIR)/mul_cond_rev.Po \
-	./$(DEPDIR)/mul_cskip.Po ./$(DEPDIR)/mul_eq.Po \
-	./$(DEPDIR)/mul_level.Po ./$(DEPDIR)/mul_zdouble.Po \
-	./$(DEPDIR)/mul_zero_one.Po ./$(DEPDIR)/near_equal_ext.Po \
-	./$(DEPDIR)/neg.Po ./$(DEPDIR)/new_dynamic.Po \
-	./$(DEPDIR)/num_limits.Po ./$(DEPDIR)/ode_err_control.Po \
-	./$(DEPDIR)/optimize.Po ./$(DEPDIR)/parameter.Po \
-	./$(DEPDIR)/poly.Po ./$(DEPDIR)/pow.Po ./$(DEPDIR)/pow_int.Po \
+	./$(DEPDIR)/general.Po ./$(DEPDIR)/hes_sparsity.Po \
+	./$(DEPDIR)/ipopt_solve.Po ./$(DEPDIR)/jacobian.Po \
+	./$(DEPDIR)/json_graph.Po ./$(DEPDIR)/log.Po \
+	./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po ./$(DEPDIR)/mul.Po \
+	./$(DEPDIR)/mul_cond_rev.Po ./$(DEPDIR)/mul_cskip.Po \
+	./$(DEPDIR)/mul_eq.Po ./$(DEPDIR)/mul_level.Po \
+	./$(DEPDIR)/mul_zdouble.Po ./$(DEPDIR)/mul_zero_one.Po \
+	./$(DEPDIR)/near_equal_ext.Po ./$(DEPDIR)/neg.Po \
+	./$(DEPDIR)/new_dynamic.Po ./$(DEPDIR)/num_limits.Po \
+	./$(DEPDIR)/ode_err_control.Po ./$(DEPDIR)/optimize.Po \
+	./$(DEPDIR)/parameter.Po ./$(DEPDIR)/poly.Po \
+	./$(DEPDIR)/pow.Po ./$(DEPDIR)/pow_int.Po \
 	./$(DEPDIR)/print_for.Po ./$(DEPDIR)/rev_sparse_jac.Po \
 	./$(DEPDIR)/rev_two.Po ./$(DEPDIR)/reverse.Po \
 	./$(DEPDIR)/romberg_one.Po ./$(DEPDIR)/rosen_34.Po \
@@ -571,7 +572,7 @@ general_SOURCES = \
 	from_base.cpp \
 	fun_check.cpp \
 	general.cpp \
-	graph.cpp \
+	cpp_graph.cpp \
 	hes_sparsity.cpp \
 	jacobian.cpp \
 	json_graph.cpp \
@@ -723,6 +724,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copy.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_graph.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_eigen.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_vector.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbl_epsilon.Po@am__quote@ # am--include-marker
@@ -745,7 +747,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/from_base.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_check.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/general.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/graph.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_sparsity.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_solve.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@ # am--include-marker
@@ -985,6 +986,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/copy.Po
 	-rm -f ./$(DEPDIR)/cos.Po
 	-rm -f ./$(DEPDIR)/cosh.Po
+	-rm -f ./$(DEPDIR)/cpp_graph.Po
 	-rm -f ./$(DEPDIR)/cppad_eigen.Po
 	-rm -f ./$(DEPDIR)/cppad_vector.Po
 	-rm -f ./$(DEPDIR)/dbl_epsilon.Po
@@ -1007,7 +1009,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/from_base.Po
 	-rm -f ./$(DEPDIR)/fun_check.Po
 	-rm -f ./$(DEPDIR)/general.Po
-	-rm -f ./$(DEPDIR)/graph.Po
 	-rm -f ./$(DEPDIR)/hes_sparsity.Po
 	-rm -f ./$(DEPDIR)/ipopt_solve.Po
 	-rm -f ./$(DEPDIR)/jacobian.Po
@@ -1142,6 +1143,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/copy.Po
 	-rm -f ./$(DEPDIR)/cos.Po
 	-rm -f ./$(DEPDIR)/cosh.Po
+	-rm -f ./$(DEPDIR)/cpp_graph.Po
 	-rm -f ./$(DEPDIR)/cppad_eigen.Po
 	-rm -f ./$(DEPDIR)/cppad_vector.Po
 	-rm -f ./$(DEPDIR)/dbl_epsilon.Po
@@ -1164,7 +1166,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/from_base.Po
 	-rm -f ./$(DEPDIR)/fun_check.Po
 	-rm -f ./$(DEPDIR)/general.Po
-	-rm -f ./$(DEPDIR)/graph.Po
 	-rm -f ./$(DEPDIR)/hes_sparsity.Po
 	-rm -f ./$(DEPDIR)/ipopt_solve.Po
 	-rm -f ./$(DEPDIR)/jacobian.Po

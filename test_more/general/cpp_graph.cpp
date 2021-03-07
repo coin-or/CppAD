@@ -118,7 +118,7 @@ double neg(double x)
 
 } // END_EMPTY_NAMESPACE
 
-bool graph(void)
+bool cpp_graph(void)
 {   bool ok = true;
     ok     &= test_unary_fun(std::fabs,   CppAD::graph::abs_graph_op);
     ok     &= test_unary_fun(std::acos,   CppAD::graph::acos_graph_op);

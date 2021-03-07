@@ -14,15 +14,16 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#   example/graph/CMakeLists.txt
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   omh/adfun.omh
+#   test_more/general/graph.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|omh/adfun.omh|include/cppad/core/ad_fun.omh|
+#   s|/graph.cpp|/cpp_graph.cpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -34,4 +35,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|omh/adfun.omh|include/cppad/core/ad_fun.omh|
+s|bool graph(void)|bool cpp_graph(void)|
+s|^    graph.cpp|    cpp_graph.cpp|
