@@ -551,6 +551,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/log1p_op.hpp \
 	cppad/local/log_op.hpp \
 	cppad/local/mul_op.hpp \
+	cppad/local/neg_op.hpp \
 	cppad/local/op.hpp \
 	cppad/local/op_code_dyn.hpp \
 	cppad/local/op_code_var.hpp \

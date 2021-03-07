@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_HPP
 # define CPPAD_LOCAL_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -40,6 +40,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/log_op.hpp>
 # include <cppad/local/log1p_op.hpp>
 # include <cppad/local/mul_op.hpp>
+# include <cppad/local/neg_op.hpp>
 # include <cppad/local/parameter_op.hpp>
 # include <cppad/local/pow_op.hpp>
 # include <cppad/local/print_op.hpp>

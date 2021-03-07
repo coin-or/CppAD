@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_CODE_DYN_HPP
 # define CPPAD_LOCAL_OP_CODE_DYN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -177,6 +177,7 @@ enum op_code_dyn {
     log1p_dyn,     // unary
     log_dyn,       // unary
     mul_dyn,       // binary
+    neg_dyn,       // unary
     pow_dyn,       // binary
     result_dyn,    // 0 arguments: atomic function result
     sign_dyn,      // unary
@@ -263,6 +264,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
         /* log1p_dyn */    1,
         /* log_dyn */      1,
         /* mul_dyn */      2,
+        /* neg_dyn */      1,
         /* pow_dyn */      2,
         /* result_dyn */   0,
         /* sign_dyn */     1,
@@ -352,6 +354,7 @@ inline const char* op_name_dyn(op_code_dyn op)
         /* log1p_dyn */    "log1p",
         /* log_dyn */      "log",
         /* mul_dyn */      "mul",
+        /* neg_dyn */      "neg",
         /* pow_dyn */      "pow",
         /* result_dyn */   "result",
         /* sign_dyn */     "sign",

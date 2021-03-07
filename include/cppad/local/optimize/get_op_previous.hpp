@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -207,6 +207,7 @@ bool get_op_previous(
             case LtvvOp:
             case MulpvOp:
             case MulvvOp:
+            case NegOp:
             case NepvOp:
             case NevvOp:
             case PowpvOp:

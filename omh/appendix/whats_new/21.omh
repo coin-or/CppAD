@@ -32,6 +32,10 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 03-07$$
+Make $cref UnaryMinus$$ an atomic operation,
+instead of using binary subtraction of zero minus the value being negated.
+
 $head 02-21$$
 Add specifications for what is conditionally installed by the
 $cref/include_eigen/cmake/include_eigen/$$ and

@@ -321,6 +321,7 @@ public:
                 case LogOp:
                 case Log1pOp:
                 case LtvpOp:
+                case NegOp:
                 case PowvpOp:
                 case SignOp:
                 case SinOp:

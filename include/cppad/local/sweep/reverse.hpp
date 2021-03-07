@@ -529,6 +529,13 @@ void reverse(
                 d, i_var, arg, parameter, J, Taylor, K, Partial
             );
             break;
+            // -------------------------------------------------
+
+            case NegOp:
+            reverse_neg_op(
+                d, i_var, size_t(arg[0]), J, Taylor, K, Partial
+            );
+            break;
             // --------------------------------------------------
 
             case ParOp:

@@ -416,6 +416,7 @@ void for_jac(
             // -------------------------------------------------
 
             case LogOp:
+            case NegOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1);
             sparse::for_jac_unary_op(
                 i_var, size_t(arg[0]), var_sparsity

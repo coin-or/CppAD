@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -411,6 +411,7 @@ void get_op_usage(
             case Expm1Op:
             case LogOp:
             case Log1pOp:
+            case NegOp:
             case PowvpOp:
             case SignOp:
             case SinOp:

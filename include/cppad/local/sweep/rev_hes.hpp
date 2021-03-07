@@ -437,6 +437,7 @@ void rev_hes(
             // -------------------------------------------------
 
             case LogOp:
+            case NegOp:
             CPPAD_ASSERT_NARG_NRES(op, 1, 1)
             sparse::rev_hes_nl_unary_op(
             i_var, size_t(arg[0]), RevJac, for_jac_sparse, rev_hes_sparse

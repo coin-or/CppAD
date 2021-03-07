@@ -507,6 +507,7 @@ void ADFun<Base,RecBase>::abs_normal_fun(ADFun& g, ADFun& a) const
             case Expm1Op:
             case LogOp:
             case Log1pOp:
+            case NegOp:
             case SignOp:
             case SinOp:
             case SinhOp:

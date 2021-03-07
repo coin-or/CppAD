@@ -450,6 +450,7 @@ enum OpCode {
     LtvvOp,   // ...
     MulpvOp,  // binary *
     MulvvOp,  // ...
+    NegOp,    // unary negative
     NeppOp,   // compare !=
     NepvOp,   // ...
     NevvOp,   // ...
@@ -556,6 +557,7 @@ inline size_t NumArg( OpCode op)
         2, // LtvvOp
         2, // MulpvOp
         2, // MulvvOp
+        1, // NegOp
         2, // NeppOp
         2, // NepvOp
         2, // NevvOp
@@ -674,6 +676,7 @@ inline size_t NumRes(OpCode op)
         0, // LtvvOp
         1, // MulpvOp
         1, // MulvvOp
+        1, // NegOp
         0, // NeppOp
         0, // NepvOp
         0, // NevvOp
@@ -770,6 +773,7 @@ inline const char* OpName(OpCode op)
         "Ltvv"  ,
         "Mulpv" ,
         "Mulvv" ,
+        "Neg"   ,
         "Nepp"  ,
         "Nepv"  ,
         "Nevv"  ,
@@ -1093,6 +1097,7 @@ void printOp(
         case Expm1Op:
         case LogOp:
         case Log1pOp:
+        case NegOp:
         case SignOp:
         case SinOp:
         case SinhOp:
@@ -1327,6 +1332,7 @@ void arg_is_variable(
         case ExpOp:
         case Log1pOp:
         case LogOp:
+        case NegOp:
         case SignOp:
         case SinhOp:
         case SinOp:
