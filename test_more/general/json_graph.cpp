@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -2547,6 +2547,86 @@ bool cumulative_sum(void)
     // std::cout << graph;
     return ok;
 }
+// ---------------------------------------------------------------------------
+// Test unary operators
+bool unary(bool p_first)
+{   bool ok   = true;
+    using CppAD::AD;
+    //
+    size_t np = 11;
+    size_t nx = 11;
+    size_t ny = np + nx;
+    CPPAD_TESTVECTOR(double)       p(np),  x(nx), y(ny);
+    CPPAD_TESTVECTOR( AD<double> ) ap(np), ax(nx), ay(ny);
+    for(size_t i = 0; i < np; ++i)
+    {   p[i]  = double(i + 1) / double( np + nx + 1 );
+        ap[i] = p[i] / 2.0;
+    }
+    for(size_t i = 0; i < nx; ++i)
+    {   x[i]  = double(i + 1 + np) / double( np + nx + 1);
+        ax[i] = x[i] / 2.0;
+    }
+    CppAD::Independent(ax, ap);
+    //
+    CPPAD_TESTVECTOR( AD<double> ) atmp(np + nx);
+    if( p_first )
+    {   for(size_t i = 0; i < np; ++i)
+            atmp[i] = ap[i];
+        for(size_t i = 0; i < nx; ++i)
+            atmp[i + np] = ax[i];
+    }
+    else
+    {   for(size_t i = 0; i < np; ++i)
+            atmp[i + nx] = ap[i];
+        for(size_t i = 0; i < nx; ++i)
+            atmp[i] = ax[i];
+    }
+    //
+    ay[0]  = fabs(atmp[0]);
+    ay[1]  = acos(atmp[1]);
+    ay[2]  = acosh(atmp[2] + 1.0);
+    ay[3]  = asin(atmp[3]);
+    ay[4]  = asinh(atmp[4]);
+    ay[5]  = atan(atmp[5]);
+    ay[6]  = atanh(atmp[6]);
+    ay[7]  = cos(atmp[7]);
+    ay[8]  = cosh(atmp[8]);
+    ay[9]  = erf(atmp[9]);
+    ay[10] = erfc(atmp[10]);
+    ay[11] = exp(atmp[11]);
+    ay[12] = expm1(atmp[12]);
+    ay[13] = log(atmp[13]);
+    ay[14] = log1p(atmp[14]);
+    ay[15] = - atmp[15];
+    ay[16] = sign(atmp[16]);
+    ay[17] = sin(atmp[17]);
+    ay[18] = sinh(atmp[18]);
+    ay[19] = sqrt(atmp[19]);
+    ay[20] = tan(atmp[20]);
+    ay[21] = sin(atmp[21]);
+    // Create function
+    CppAD::ADFun<double> f(ax, ay);
+    f.optimize();
+    //
+    // Evaluate function at x before
+    f.new_dynamic(p);
+    CPPAD_TESTVECTOR(double) y_before = f.Forward(0, x);
+    //
+    // Convert to Json and back again
+    std::string json = f.to_json();
+    // std::cout << graph;
+    f.from_json(json);
+    //
+    // Evaluate function at x after
+    f.new_dynamic(p);
+    CPPAD_TESTVECTOR(double) y_after = f.Forward(0, x);
+    //
+    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+    for(size_t i = 0; i < ny; ++i)
+        ok &= CppAD::NearEqual( y_before[i], y_after[i], eps99, eps99 );
+    //
+    return ok;
+}
 
 // ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
@@ -2587,6 +2667,8 @@ bool json_graph(void)
     ok     &= to_json_and_back();
     ok     &= binary_operators();
     ok     &= cumulative_sum();
+    ok     &= unary(true);
+    ok     &= unary(false);
     //
     return ok;
 }

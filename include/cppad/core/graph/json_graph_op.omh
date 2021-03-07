@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -40,6 +40,7 @@ $spell
     div
     chkpoint
     CppAD
+    neg
 $$
 
 $section Json AD Graph Operator Definitions$$
@@ -72,35 +73,35 @@ $codei%
 %$$
 The possible values for the string $icode name$$ are listed
 in the table below.
-The result is the node value as a function of the
-argument value.
-If c++11 is yes (no),
-then c++11 or higher is required to use the operator with CppAD.
+The corresponding result is the node value as a function of the argument value.
 
+$comment BEGIN_SORT_THIS_LINE_PLUS_3$$
 $table
-$icode name$$   $cnext result                           $cnext c++11 $rnext
-$code abs$$     $cnext absolute value                   $cnext no $rnext
-$code acos$$    $cnext inverse cosine                   $cnext no $rnext
-$code asin$$    $cnext inverse sine                     $cnext no $rnext
-$code atan$$    $cnext inverse tangent                  $cnext no $rnext
-$code cosh$$    $cnext hyperbolic cosine                $cnext no $rnext
-$code cos$$     $cnext cosine                           $cnext no $rnext
-$code exp$$     $cnext exponential                      $cnext no $rnext
-$code log$$     $cnext logarithm                        $cnext no $rnext
-$code sign$$    $cnext sign function                    $cnext no $rnext
-$code sinh$$    $cnext hyperbolic sine                  $cnext no $rnext
-$code sin$$     $cnext sine                             $cnext no $rnext
-$code sqrt$$    $cnext square root                      $cnext no $rnext
-$code tanh$$    $cnext hyperbolic tangent               $cnext no $rnext
-$code tan$$     $cnext tangent                          $cnext no $rnext
-$code asinh$$   $cnext inverse hyperbolic sine          $cnext yes $rnext
-$code atanh$$   $cnext inverse hyperbolic sine          $cnext yes $rnext
-$code erf$$     $cnext error functions                  $cnext yes $rnext
-$code erfc$$    $cnext complementary error function     $cnext yes $rnext
-$code expm1$$   $cnext minus one plus the exponential   $cnext yes $rnext
-$code log1p$$   $cnext log  plus one                    $cnext yes $rnext
-$code acosh$$   $cnext inverse hyperbolic cosine        $cnext yes
+$icode name$$   $cnext result                           $rnext
+$code abs$$     $cnext absolute value                   $rnext
+$code acos$$    $cnext inverse cosine                   $rnext
+$code acosh$$   $cnext inverse hyperbolic cosine        $rnext
+$code asin$$    $cnext inverse sine                     $rnext
+$code asinh$$   $cnext inverse hyperbolic sine          $rnext
+$code atan$$    $cnext inverse tangent                  $rnext
+$code atanh$$   $cnext inverse hyperbolic sine          $rnext
+$code cos$$     $cnext cosine                           $rnext
+$code cosh$$    $cnext hyperbolic cosine                $rnext
+$code erf$$     $cnext error functions                  $rnext
+$code erfc$$    $cnext complementary error function     $rnext
+$code exp$$     $cnext exponential                      $rnext
+$code expm1$$   $cnext minus one plus the exponential   $rnext
+$code log$$     $cnext logarithm                        $rnext
+$code log1p$$   $cnext log  plus one                    $rnext
+$code neg$$     $cnext negative                         $rnext
+$code sign$$    $cnext sign function                    $rnext
+$code sin$$     $cnext sine                             $rnext
+$code sinh$$    $cnext hyperbolic sine                  $rnext
+$code sqrt$$    $cnext square root                      $rnext
+$code tan$$     $cnext tangent                          $rnext
+$code tanh$$    $cnext hyperbolic tangent
 $tend
+$comment END_SORT_THIS_LINE_MINUS_2$$
 
 $subhead Example$$
 The file $cref json_unary_op.cpp$$ is an example and test

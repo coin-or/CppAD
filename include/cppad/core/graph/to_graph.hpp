@@ -198,6 +198,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // unary operators
 
             case local::abs_dyn:
+            case local::fabs_dyn:
             graph_op = abs_graph_op;
             break;
 
