@@ -99,7 +99,8 @@ bool grad_det_minor(void)
         return false;
     }
     /*
-    This is not yet working
+    // This is not yet working
+    ir_obj.optimize();
     msg = ir_obj.to_graph(graph_obj);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
