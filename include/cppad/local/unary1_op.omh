@@ -258,7 +258,7 @@ $subhead H$$
 We use $latex H(x, w, \ldots )$$ to denote the scalar valued function of the
 variables up to variable index $icode%i_z%-1%$$ defined by
 $latex \[
-    H(x, w, \ldots ) = G [ z(x), x, w, \lodts ) ]
+    H(x, w, \ldots ) = G [ z(x), x, w, \ldots ) ]
 \]$$
 
 $head Base$$
