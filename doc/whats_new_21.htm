@@ -94,10 +94,26 @@ A:active { color : purple }
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
 <br>
 <b><big><a name="03-07" id="03-07">03-07</a></big></b>
-<br>
+
+<ol type="1"><li>
+Fix bug in <a href="to_graph.htm" target="_top"><span style='white-space: nowrap'>f.to_graph</span></a>
+ that ocurred
+when 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ had <code><font color="blue">fabs</font></code> dynamic parameter operators.
+To be more specific, if <code><font color="blue">NDEBUG</font></code> was not defined,
+an error from an unknown source would be detected in the file <code><font color="blue">to_graph.hpp</font></code>.
+</li><li>
+
 Make <a href="unaryminus.htm" target="_top"><span style='white-space: nowrap'>UnaryMinus</span></a>
  an atomic operation,
 instead of using binary subtraction of zero minus the value being negated.
+In addition, add it to the <a href="json_graph_op.htm#Unary Operators" target="_top"><span style='white-space: nowrap'>json_graph&nbsp;unary&nbsp;operators</span></a>
+ and
+the <a href="graph_op_enum.htm#Enum Values" target="_top"><span style='white-space: nowrap'>graph_op_enum&nbsp;values</span></a>
+ values.
+</li></ol>
+
 
 <br>
 <br>

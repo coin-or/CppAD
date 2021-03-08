@@ -184,102 +184,81 @@ The possible values for the string
 <code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
  are listed
 in the table below.
-The result is the node value as a function of the
-argument value.
-If c++11 is yes (no),
-then c++11 or higher is required to use the operator with CppAD.
+The corresponding result is the node value as a function of the argument value.
+
 
 <table><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
    </td><td align='left'  valign='top'>
- result                           </td><td align='left'  valign='top'>
- c++11 </td></tr><tr><td align='left'  valign='top'>
+ result                           </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">abs</font></code>     </td><td align='left'  valign='top'>
- absolute value                   </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
+ absolute value                   </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">acos</font></code>    </td><td align='left'  valign='top'>
- inverse cosine                   </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">asin</font></code>    </td><td align='left'  valign='top'>
- inverse sine                     </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">atan</font></code>    </td><td align='left'  valign='top'>
- inverse tangent                  </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">cosh</font></code>    </td><td align='left'  valign='top'>
- hyperbolic cosine                </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">cos</font></code>     </td><td align='left'  valign='top'>
- cosine                           </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">exp</font></code>     </td><td align='left'  valign='top'>
- exponential                      </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">log</font></code>     </td><td align='left'  valign='top'>
- logarithm                        </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">sign</font></code>    </td><td align='left'  valign='top'>
- sign function                    </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">sinh</font></code>    </td><td align='left'  valign='top'>
- hyperbolic sine                  </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">sin</font></code>     </td><td align='left'  valign='top'>
- sine                             </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">sqrt</font></code>    </td><td align='left'  valign='top'>
- square root                      </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">tanh</font></code>    </td><td align='left'  valign='top'>
- hyperbolic tangent               </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">tan</font></code>     </td><td align='left'  valign='top'>
- tangent                          </td><td align='left'  valign='top'>
- no </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">asinh</font></code>   </td><td align='left'  valign='top'>
- inverse hyperbolic sine          </td><td align='left'  valign='top'>
- yes </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">atanh</font></code>   </td><td align='left'  valign='top'>
- inverse hyperbolic sine          </td><td align='left'  valign='top'>
- yes </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">erf</font></code>     </td><td align='left'  valign='top'>
- error functions                  </td><td align='left'  valign='top'>
- yes </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">erfc</font></code>    </td><td align='left'  valign='top'>
- complementary error function     </td><td align='left'  valign='top'>
- yes </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">expm1</font></code>   </td><td align='left'  valign='top'>
- minus one plus the exponential   </td><td align='left'  valign='top'>
- yes </td></tr><tr><td align='left'  valign='top'>
-
-<code><font color="blue">log1p</font></code>   </td><td align='left'  valign='top'>
- log  plus one                    </td><td align='left'  valign='top'>
- yes </td></tr><tr><td align='left'  valign='top'>
+ inverse cosine                   </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">acosh</font></code>   </td><td align='left'  valign='top'>
- inverse hyperbolic cosine        </td><td align='left'  valign='top'>
- yes
+ inverse hyperbolic cosine        </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">asin</font></code>    </td><td align='left'  valign='top'>
+ inverse sine                     </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">asinh</font></code>   </td><td align='left'  valign='top'>
+ inverse hyperbolic sine          </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">atan</font></code>    </td><td align='left'  valign='top'>
+ inverse tangent                  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">atanh</font></code>   </td><td align='left'  valign='top'>
+ inverse hyperbolic sine          </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">cos</font></code>     </td><td align='left'  valign='top'>
+ cosine                           </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">cosh</font></code>    </td><td align='left'  valign='top'>
+ hyperbolic cosine                </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">erf</font></code>     </td><td align='left'  valign='top'>
+ error functions                  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">erfc</font></code>    </td><td align='left'  valign='top'>
+ complementary error function     </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">exp</font></code>     </td><td align='left'  valign='top'>
+ exponential                      </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">expm1</font></code>   </td><td align='left'  valign='top'>
+ minus one plus the exponential   </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">log</font></code>     </td><td align='left'  valign='top'>
+ logarithm                        </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">log1p</font></code>   </td><td align='left'  valign='top'>
+ log  plus one                    </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">neg</font></code>     </td><td align='left'  valign='top'>
+ negative                         </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">sign</font></code>    </td><td align='left'  valign='top'>
+ sign function                    </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">sin</font></code>     </td><td align='left'  valign='top'>
+ sine                             </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">sinh</font></code>    </td><td align='left'  valign='top'>
+ hyperbolic sine                  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">sqrt</font></code>    </td><td align='left'  valign='top'>
+ square root                      </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">tan</font></code>     </td><td align='left'  valign='top'>
+ tangent                          </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">tanh</font></code>    </td><td align='left'  valign='top'>
+ hyperbolic tangent
 </td></tr>
 </table>
 <br>
