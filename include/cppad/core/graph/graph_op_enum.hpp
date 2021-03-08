@@ -217,6 +217,7 @@ namespace CppAD { namespace graph {
         expm1_graph_op,    // unary: exponential minus one
         log1p_graph_op,    // unary: logarithm of one plus argument
         log_graph_op,      // unary: logarithm
+        neg_graph_op,      // unary: minus
         mul_graph_op,      // binary: multiplication
         pow_graph_op,      // binary: first argument raised to second argument
         print_graph_op,    // print during zero order forward

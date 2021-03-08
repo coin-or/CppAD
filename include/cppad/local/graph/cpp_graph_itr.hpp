@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_GRAPH_CPP_GRAPH_ITR_HPP
 # define CPPAD_LOCAL_GRAPH_CPP_GRAPH_ITR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -149,6 +149,7 @@ $end
         case expm1_graph_op:
         case log1p_graph_op:
         case log_graph_op:
+        case neg_graph_op:
         case sign_graph_op:
         case sin_graph_op:
         case sinh_graph_op:

@@ -70,6 +70,7 @@ void set_operator_info(void)
         { expm1_graph_op,    "expm1",    1 }, // 1 result
         { log1p_graph_op,    "log1p",    1 }, // 1 result
         { log_graph_op,      "log",      1 }, // 1 result
+        { neg_graph_op,      "neg",      1 }, // 1 result
         { mul_graph_op,      "mul",      2 }, // 1 result
         { pow_graph_op,      "pow",      2 }, // 1 result
         { print_graph_op,    "print",    0 }, // See Print

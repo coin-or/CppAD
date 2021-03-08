@@ -875,6 +875,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 CPPAD_ASSERT_UNKNOWN( NumArg(local::LogOp) == 1 );
                 break;
 
+                case neg_graph_op:
+                i_result = rec.PutOp(local::NegOp);
+                rec.PutArg( arg[0] );
+                CPPAD_ASSERT_UNKNOWN( NumArg(local::NegOp) == 1 );
+                break;
+
                 case sign_graph_op:
                 i_result = rec.PutOp(local::SignOp);
                 rec.PutArg( arg[0] );
@@ -989,6 +995,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
                 case log_graph_op:
                 i_result = rec.put_dyn_par(nan, local::log_dyn, arg[0] );
+                CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
+                break;
+
+                case neg_graph_op:
+                i_result = rec.put_dyn_par(nan, local::neg_dyn, arg[0] );
                 CPPAD_ASSERT_UNKNOWN( isnan( parameter[i_result] ) );
                 break;
 
@@ -1114,6 +1125,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
                 case log_graph_op:
                 result    = CppAD::log( parameter[ arg[0] ] );
+                i_result  = rec.put_con_par(result);
+                CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
+                break;
+
+                case neg_graph_op:
+                result    = - parameter[ arg[0] ];
                 i_result  = rec.put_con_par(result);
                 CPPAD_ASSERT_UNKNOWN( parameter[i_result] == result );
                 break;

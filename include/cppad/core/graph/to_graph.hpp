@@ -198,6 +198,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // unary operators
 
             case local::abs_dyn:
+            case local::fabs_dyn:
             graph_op = abs_graph_op;
             break;
 
@@ -255,6 +256,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
 
             case local::log_dyn:
             graph_op = log_graph_op;
+            break;
+
+            case local::neg_dyn:
+            graph_op = neg_graph_op;
             break;
 
             case local::sign_dyn:
@@ -486,7 +491,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
         // operator is not ignored.
         // -------------------------------------------------------------------
         switch( var_op )
-        {
+        {   // 2DO: some of these cases can be joined
+
             // -------------------------------------------------------------
             // unary operators
             case local::AbsOp:
@@ -560,6 +566,11 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             break;
 
             case local::LogOp:
+            fixed_n_arg = 1;
+            is_var[0] = true;
+            break;
+
+            case local::NegOp:
             fixed_n_arg = 1;
             is_var[0] = true;
             break;
@@ -701,6 +712,10 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
 
                 case local::LogOp:
                 graph_op = log_graph_op;
+                break;
+
+                case local::NegOp:
+                graph_op = neg_graph_op;
                 break;
 
                 case local::SignOp:

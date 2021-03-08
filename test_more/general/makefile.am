@@ -125,6 +125,7 @@ general_SOURCES  = \
 	from_base.cpp \
 	fun_check.cpp \
 	general.cpp \
+	cpp_graph.cpp \
 	hes_sparsity.cpp \
 	jacobian.cpp \
 	json_graph.cpp \

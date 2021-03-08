@@ -93,6 +93,7 @@ SET(source_list
     forward_order.cpp
     from_base.cpp
     fun_check.cpp
+    cpp_graph.cpp
     hes_sparsity.cpp
     jacobian.cpp
     json_graph.cpp
