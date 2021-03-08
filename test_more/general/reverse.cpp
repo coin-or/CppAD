@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -452,6 +452,49 @@ bool reverse_mul(void)
     return ok;
 }
 // ----------------------------------------------------------------------------
+bool duplicate_dependent_var(void)
+{   bool ok = true;
+    using CppAD::AD;
+
+    // f(x) = [ y_0, y_1 ] = [ x_0 * x_0 , x_0 * x_0 ]
+    size_t nx = 1;
+    size_t ny = 2;
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx), ay(ny);
+    ax[0] = 1.0;
+    CppAD::Independent(ax);
+    ay[0] = ax[0] * ax[0];
+    ay[1] = ay[0];
+    CppAD::ADFun<double> f(ax, ay);
+    //
+    // Forward zero
+    CPPAD_TESTVECTOR(double) x0(nx), x1(nx), yk(ny);
+    x0[0] = 3.0;
+    yk = f.Forward(0, x0);
+    ok &= yk[0] == x0[0] * x0[0];
+    ok &= yk[1] == yk[0];
+    //
+    // Forward one
+    x1[0] = 1.0;
+    yk = f.Forward(1, x1);
+    ok &= yk[0] == 2.0 * x0[0];
+    ok &= yk[1] == yk[0];
+    //
+    // Reverse two
+    size_t q = 2; // number of orders
+    CPPAD_TESTVECTOR(double) w(ny * q), dw(nx * q);
+    for(size_t i = 0; i < ny; ++i)
+    {   w[ i * q + 0 ] = 0.0; // derivative w.r.t. zero order coefficient
+        w[ i * q + 1 ] = 1.0; // derivative w.r.t. first order coefficient
+    }
+    dw = f.Reverse(2, w);
+    // derivative w.r.t zero order coefficients
+    ok &= dw[nx * 0 + 0] == 4.0;
+    // derivative w.r.t first order coefficients
+    ok &= dw[nx * 0 + 1] == 4.0 * x0[0];
+    //
+    return ok;
+}
+
 } // End empty namespace
 
 # include <vector>
@@ -460,6 +503,7 @@ bool reverse(void)
 {   bool ok = true;
     ok &= reverse_one();
     ok &= reverse_mul();
+    ok &= duplicate_dependent_var();
 
     ok &= reverse_any_cases< CppAD::vector  <double> >();
     ok &= reverse_any_cases< std::vector    <double> >();
