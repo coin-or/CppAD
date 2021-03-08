@@ -2,7 +2,7 @@
 # define CPPAD_CORE_GRAPH_TO_GRAPH_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -204,6 +204,7 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             // unary operators
 
             case local::abs_dyn:
+            case local::fabs_dyn:
             graph_op = abs_graph_op;
             break;
 
