@@ -28,13 +28,25 @@ $spell
     eigen
     cppadcg
     ipopt
+    op_enum
+    fabs
+    hpp
 $$
 
 $section Changes and Additions to CppAD During 2021$$
 
 $head 03-07$$
+$list number$$
+Fix bug in $cref/f.to_graph/to_graph/$$ that ocurred
+when $icode f$$ had $code fabs$$ dynamic parameter operators.
+To be more specific, if $code NDEBUG$$ was not defined,
+an error from an unknown source would be detected in the file $code to_graph.hpp$$.
+$lnext
 Make $cref UnaryMinus$$ an atomic operation,
 instead of using binary subtraction of zero minus the value being negated.
+In addition, add it to the $cref/json_graph unary operators/json_graph_op/Unary Operators/$$ and
+the $cref/graph_op_enum values/graph_op_enum/Enum Values/$$ values.
+$lend
 
 $head 02-21$$
 Add specifications for what is conditionally installed by the
