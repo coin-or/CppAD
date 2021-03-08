@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>03-08</option>
 <option>03-07</option>
 <option>02-21</option>
 <option>02-16</option>
@@ -92,6 +93,27 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="03-08" id="03-08">03-08</a></big></b>
+<br>
+For years the following comment in reverse.hpp was forgotten:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;?&nbsp;should&nbsp;use&nbsp;+=&nbsp;here,&nbsp;first&nbsp;make&nbsp;test&nbsp;to&nbsp;demonstrate&nbsp;bug<br>
+</span></font></code>
+A test case was created to demonstrate this bug and it was fixed
+(see <code><font color="blue">duplicate_dependent_var</font></code> in <code><font color="blue">test_more/general/reverse.cpp</font></code>).
+This only affects reverse mode when
+<a href="reverse_any.htm#w" target="_top"><span style='white-space: nowrap'>w</span></a>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ and
+two of the dependent variables in the range of 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+
+are identically equal (actually the same variable).
+
+<br>
 <br>
 <b><big><a name="03-07" id="03-07">03-07</a></big></b>
 
