@@ -98,8 +98,10 @@ bool grad_det_minor(void)
     {   std::cerr << "\n" << msg << "\n";
         return false;
     }
-    // This is not yet working
+    // optimized version of ir_obj
     ir_obj.optimize();
+    //
+    // 2DO: remove this (used for testing and not part of example.
     msg = ir_obj.to_graph(graph_obj);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";

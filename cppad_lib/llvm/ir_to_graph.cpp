@@ -72,8 +72,10 @@ $end
 */
 # include <cppad/core/llvm_ir.hpp>
 //
+# include <llvm/IR/Instructions.h>
 # include <llvm/IR/InstIterator.h>
 # include <llvm/IR/Constants.h>
+
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -143,9 +145,11 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     CppAD::vector<llvm::Type::TypeID> type_id;
     //
     // The zero floating point constant
+# ifndef NDEBUG
     llvm::Value* fp_zero = llvm::ConstantFP::get(
         *context_ir_, llvm::APFloat(0.0)
     );
+# endif
     //
     // First Pass
     // determine the floating point constants in the graph
@@ -185,13 +189,24 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         switch( op_code )
         {
             case llvm::Instruction::FCmp:
+            // The assert below assume operator came from an azmul operation.
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
             CPPAD_ASSERT_UNKNOWN( operand[1] == fp_zero );
+# ifndef NDEBUG
+            {   const llvm::CmpInst* cmp_inst =
+                    llvm::dyn_cast<llvm::CmpInst>(&*itr);
+                CPPAD_ASSERT_UNKNOWN(
+                    cmp_inst->getPredicate() == llvm::CmpInst::FCMP_OEQ
+                );
+            }
+# endif
+            // start of chain from multiply left operand to select result
             llvm_left2cmp.insert( pair_value( operand[0], result ) );
             break;
 
             case llvm::Instruction::Select:
             CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
+            // end of chain from multiply left operand to select result
             llvm_cmp2select.insert( pair_value( operand[0], result ) );
             break;
         }
@@ -303,9 +318,13 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     const llvm::Value* select = llvm_cmp2select.lookup(cmp);
                     CppAD::graph::graph_op_enum op;
                     if( select == nullptr )
+                    {   // this is a normal multiply
                         op = CppAD::graph::mul_graph_op;
+                    }
                     else
+                    {   // this is an absolute zero multiply
                         op = CppAD::graph::azmul_graph_op;
+                    }
                     graph_obj.operator_vec_push_back(op);
                 }
                 break;

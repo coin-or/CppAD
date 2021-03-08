@@ -120,17 +120,17 @@ bool tst_llvm_ir(void)
     {   std::cout << "\n" << msg << "\n";
         return false;
     }
-    // optimize
+    // optimized ir_obj
     ir_obj.optimize();
     //
-    // graph_obj
+    // optimized graph_obj
     msg = ir_obj.to_graph(graph_obj);
     if( msg != "" )
     {   std::cout << "\n" << msg << "\n";
         return false;
     }
     //
-    // g
+    // g is an optimized verison of f
     CppAD::ADFun<double> g;
     g.from_graph(graph_obj);
     // ---------------------------------------------------------------------
