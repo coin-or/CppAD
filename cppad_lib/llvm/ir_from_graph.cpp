@@ -304,7 +304,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         size_t         n_str    = str_index.size();
         //
         switch( op_enum )
-        {   // Binary operators
+        {   // Unary operators
+            case CppAD::graph::neg_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 1);
+            CPPAD_ASSERT_UNKNOWN( n_str == 0 );
+            break;
+
+            // Binary operators
             case CppAD::graph::add_graph_op:
             case CppAD::graph::sub_graph_op:
             case CppAD::graph::mul_graph_op:
@@ -323,19 +330,11 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
 # endif
         llvm::Value* value;
         switch( op_enum )
-        {
+        {   // -------------------------------------------------------------
+            // simple operators that translate to one llvm instruction
+            // -------------------------------------------------------------
             case CppAD::graph::add_graph_op:
             value = builder.CreateFAdd(graph_ir[arg[0]], graph_ir[arg[1]]);
-            graph_ir.push_back(value);
-            break;
-
-            case CppAD::graph::sub_graph_op:
-            value = builder.CreateFSub(graph_ir[arg[0]], graph_ir[arg[1]]);
-            graph_ir.push_back(value);
-            break;
-
-            case CppAD::graph::mul_graph_op:
-            value = builder.CreateFMul(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
 
@@ -344,6 +343,24 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             graph_ir.push_back(value);
             break;
 
+            case CppAD::graph::mul_graph_op:
+            value = builder.CreateFMul(graph_ir[arg[0]], graph_ir[arg[1]]);
+            graph_ir.push_back(value);
+            break;
+
+            case CppAD::graph::neg_graph_op:
+            value = builder.CreateFNeg(graph_ir[arg[0]]);
+            graph_ir.push_back(value);
+            break;
+
+            case CppAD::graph::sub_graph_op:
+            value = builder.CreateFSub(graph_ir[arg[0]], graph_ir[arg[1]]);
+            graph_ir.push_back(value);
+            break;
+
+            // ---------------------------------------------------------------
+            // azmul
+            // --------------------------------------------------------------
             case CppAD::graph::azmul_graph_op:
 # ifndef NDEBUG
             ++count_azmul;
@@ -365,6 +382,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             graph_ir.push_back(value);
             break;
 
+            // --------------------------------------------------------------
+            // This operator is not yet supported
+            // --------------------------------------------------------------
             default:
             msg += "graph_obj has following unsupported operator ";
             msg += local::graph::op_enum2name[op_enum];

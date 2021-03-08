@@ -98,7 +98,6 @@ bool grad_det_minor(void)
     {   std::cerr << "\n" << msg << "\n";
         return false;
     }
-    /*
     // This is not yet working
     ir_obj.optimize();
     msg = ir_obj.to_graph(graph_obj);
@@ -106,7 +105,6 @@ bool grad_det_minor(void)
     {   std::cerr << "\n" << msg << "\n";
         return false;
     }
-    */
     //
     // llvm_grad_det_minor.o
     // bin/test_one.sh.in assumes file name begins with llvm_

@@ -365,6 +365,22 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             break;
             //
             // --------------------------------------------------------------
+            case llvm::Instruction::FNeg:
+            CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
+            CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::DoubleTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::DoubleTyID );
+            //
+            // mapping from this result to the correspondign new node in graph
+            llvm_value2graph_node.insert( pair_size(result , ++result_node) );
+            //
+            // put this operator in the graph
+            graph_obj.operator_vec_push_back( CppAD::graph::neg_graph_op );
+            node = llvm_value2graph_node.lookup(operand[0]);
+            CPPAD_ASSERT_UNKNOWN( node != 0 );
+            graph_obj.operator_arg_push_back( node );
+            break;
+            //
+            // --------------------------------------------------------------
             case llvm::Instruction::Or:
             // This operand is only used once to or the two ICmp operations
             CPPAD_ASSERT_UNKNOWN( ++or_count < 2 );

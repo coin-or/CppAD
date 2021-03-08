@@ -24,8 +24,8 @@ VectorFloat algo(const VectorFloat& p, const VectorFloat& x)
     size_t ny = nx + np;
     typedef typename VectorFloat::value_type value_type;
     //
-    // number of operator: add, sub, mul, div
-    size_t n_operator = 4;
+    // number of operator: add, sub, mul, div, neg
+    size_t n_operator = 5;
     //
     // operation counter mod n_operator
     size_t operation_count = 0;
@@ -40,18 +40,25 @@ VectorFloat algo(const VectorFloat& p, const VectorFloat& x)
             arg = x[i-np];
         operation_count = (operation_count + 1) % n_operator;
         switch( operation_count )
-        {   case 1:
+        {   case 0:
             y[i] = arg + double(i);
             break;
 
-            case 2:
+            case 1:
             y[i] = double(i) - arg;
+            break;
+
+            case 2:
+            y[i] = arg * double(i);
+            break;
 
             case 3:
-            y[i] = arg * double(i);
+            y[i] = double(i) / arg;
+            break;
 
             case 4:
-            y[i] = double(i) / arg;
+            y[i] = - arg;
+            break;
         }
     }
     //
@@ -95,8 +102,8 @@ bool tst_llvm_ir(void)
     using CppAD::vector;
     //
     // np, nx
-    size_t np = 1;
-    size_t nx = 3;
+    size_t np = 2;
+    size_t nx = 5;
     //
     // f
     CppAD::ADFun<double> f;
