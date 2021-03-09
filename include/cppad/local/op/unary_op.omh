@@ -10,8 +10,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin forward_unary1_op$$
+$begin forward_unary_op$$
 $spell
+    NumRes
     Taylor
     op
 $$
@@ -30,7 +31,9 @@ $subhead x$$
 We use $icode x$$ to denote the argument of this unary operation.
 
 $subhead z$$
-We use $icode z$$ to denote the result of this unary operation.
+We use $icode z$$ to denote the primary result of this unary operation.
+If this operator has two results, $codei%NumRes(%op%) == 2%$$,
+we call the other the auxillary result.
 
 $head Base$$
 is the base type for the operator; i.e., this operation was recorded
@@ -47,8 +50,10 @@ is highest order of the Taylor coefficient that we are computing.
 
 $head i_z$$
 This argument has type $code size_t$$ and
-is the variable index corresponding to the result for this operation;
+is the variable index corresponding to the primary result for this operation;
 i.e. the row index in taylor corresponding to $icode z$$.
+If this operator has an auxillary result, its variable index is
+$icode%i_z% - 1%$$.
 
 $head i_x$$
 This argument has type $code size_t$$ and
@@ -72,6 +77,10 @@ $list number$$
 The Taylor coefficients for variable $icode i_x$$ up to order $icode q$$.
 $lnext
 The Taylor coefficients for variable $icode i_z$$ up to order $icode%p%-1%$$.
+$lnext
+If this operator has an auxillary result,
+the Taylor coefficients for variable $icode%i_z%-1%$$
+up to order $icode%p%-1%$$.
 $lend
 
 $subhead Output$$
@@ -79,8 +88,9 @@ The Taylor coefficients for variable $icode i_z$$ up to order $icode q$$.
 
 $end
 ------------------------------------------------------------------------------
-$begin forward_unary1_op_dir$$
+$begin forward_unary_op_dir$$
 $spell
+    NumRes
     op
     tpv
     Taylor
@@ -100,7 +110,9 @@ $subhead x$$
 We use $icode x$$ to denote the argument of this unary operation.
 
 $subhead z$$
-We use $icode z$$ to denote the result of this unary operation.
+We use $icode z$$ to denote the primary result of this unary operation.
+If this operator has two results, $codei%NumRes(%op%) == 2%$$,
+we call the other the auxillary result.
 
 $head Base$$
 is the base type for the operator; i.e., this operation was recorded
@@ -118,8 +130,10 @@ is number of directions for Taylor coefficients that we are computing.
 
 $head i_z$$
 This argument has type $code size_t$$ and
-is the variable index corresponding to the result for this operation;
+is the variable index corresponding to the primary result for this operation;
 i.e. the row index in taylor corresponding to $icode z$$.
+If this operator has an auxillary result, its variable index is
+$icode%i_z% - 1%$$.
 
 $head i_x$$
 This argument has type $code size_t$$ and
@@ -157,6 +171,10 @@ and all $icode r$$ directions.
 $lnext
 The Taylor coefficients for variable $icode i_z$$ up to order $icode q-1$$
 and all $icode r$$ directions.
+$lnext
+If this operator has an auxillary result,
+the Taylor coefficients for variable $icode%i_z%-1%$$
+up to order $icode%q%-1%$$.
 $lend
 
 $head Output$$
@@ -166,8 +184,9 @@ and all $icode r$$ directions.
 $end
 -------------------------------------------------------------------------------
 /*
-$begin forward_unary1_op_0$$
+$begin forward_unary_op_0$$
 $spell
+    NumRes
     op
     Taylor
 $$
@@ -186,7 +205,9 @@ $subhead x$$
 We use $icode x$$ to denote the argument of this unary operation.
 
 $subhead z$$
-We use $icode z$$ to denote the result of this unary operation.
+We use $icode z$$ to denote the primary result of this unary operation.
+If this operator has two results, $codei%NumRes(%op%) == 2%$$,
+we call the other the auxillary result.
 
 $head Base$$
 is the base type for the operator; i.e., this operation was recorded
@@ -195,8 +216,10 @@ type $icode Base$$.
 
 $head i_z$$
 This argument has type $code size_t$$ and
-is the variable index corresponding to the result for this operation;
+is the variable index corresponding to the primary result for this operation;
 i.e. the row index in taylor corresponding to $icode z$$.
+If this operator has an auxillary result, its variable index is
+$icode%i_z% - 1%$$.
 
 $head i_x$$
 This argument has type $code size_t$$ and
@@ -220,12 +243,15 @@ The zero order Taylor coefficients for variable $icode i_x$$.
 
 $subhead Output$$
 The zero order Taylor coefficients for variable $icode i_z$$.
+If this operator has an auxillary result,
+the Taylor coefficient for variable $icode%i_z%-1%$$.
 
 $end
 ------------------------------------------------------------------------------
 /*
-$begin reverse_unary1_op$$
+$begin reverse_unary_op$$
 $spell
+    NumRes
     op
     Taylor
     nc
@@ -248,7 +274,9 @@ $subhead x$$
 We use $icode x$$ to denote the argument of this unary operation.
 
 $subhead z$$
-We use $icode z$$ to denote the result of this unary operation.
+We use $icode z$$ to denote the primary result of this unary operation.
+If this operator has two results, $codei%NumRes(%op%) == 2%$$,
+we call the other the auxillary result.
 
 $subhead G$$
 We use $latex G(z, x, w, \ldots )$$ to denote a scalar valued function of the
@@ -274,15 +302,16 @@ Furthermore $icode%d% < %cap_order%$$ and $icode%d% < %nc_partial%$$.
 
 $head i_z$$
 This argument has type $code size_t$$ and
-is the variable index corresponding to the result for this operation;
+is the variable index corresponding to the primary result for this operation;
 i.e. the row index in taylor corresponding to $icode z$$.
+If this operator has an auxillary result, its variable index is
+$icode%i_z% - 1%$$.
 
 $head i_x$$
 This argument has type $code size_t$$ and
 is variable index corresponding to the argument for this operator;
 i.e. the row index in taylor corresponding to $code x$$.
 Furthermore $icode%i_x% < %i_z%$$.
-
 
 $head cap_order$$
 This argument has type $code size_t$$ and
@@ -317,6 +346,9 @@ partial derivatives of $latex G(z, x, w, \ldots)$$.
 $subhead Output$$
 The array $icode partial$$ contains the
 partial derivatives of $latex H(x, w, \ldots)$$.
+The partial derivative for variable $icode i_z$$ is unspecified.
+If this operator has an auxillary result,
+The partial derivative for variable $icode%i_z% - 1%$$ is unspecified.
 
 $end
 ------------------------------------------------------------------------------
