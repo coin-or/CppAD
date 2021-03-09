@@ -14,22 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file sqrt_op.hpp
-Forward and reverse mode calculations for z = sqrt(x).
-*/
 
 
-/*!
-Compute forward mode Taylor coefficient for result of op = SqrtOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = sqrt(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_sqrt_op(
     size_t p           ,
@@ -65,16 +52,7 @@ void forward_sqrt_op(
     }
 }
 
-/*!
-Multiple direction forward mode Taylor coefficient for op = SqrtOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = sqrt(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op_dir
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_sqrt_op_dir(
     size_t q           ,
@@ -106,16 +84,7 @@ void forward_sqrt_op_dir(
     }
 }
 
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = SqrtOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = sqrt(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op_0
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_sqrt_op_0(
     size_t i_z         ,
@@ -134,17 +103,8 @@ void forward_sqrt_op_0(
 
     z[0] = sqrt( x[0] );
 }
-/*!
-Compute reverse mode partial derivatives for result of op = SqrtOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = sqrt(x)
-\endverbatim
-
-\copydetails CppAD::local::reverse_unary1_op
-*/
-
+// See dev documentation: reverse_unary_op
 template <class Base>
 void reverse_sqrt_op(
     size_t      d            ,

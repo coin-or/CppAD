@@ -14,28 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file acos_op.hpp
-Forward and reverse mode calculations for z = acos(x).
-*/
 
 
-/*!
-Compute forward mode Taylor coefficient for result of op = AcosOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = acos(x)
-\endverbatim
-The auxillary result is
-\verbatim
-    y = sqrt(1 - x * x)
-\endverbatim
-The value of y, and its derivatives, are computed along with the value
-and derivatives of z.
-
-\copydetails CppAD::local::forward_unary2_op
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_acos_op(
     size_t p           ,
@@ -84,22 +65,7 @@ void forward_acos_op(
         z[j] /= b[0];
     }
 }
-/*!
-Multiple directions forward mode Taylor coefficient for op = AcosOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = acos(x)
-\endverbatim
-The auxillary result is
-\verbatim
-    y = sqrt(1 - x * x)
-\endverbatim
-The value of y, and its derivatives, are computed along with the value
-and derivatives of z.
-
-\copydetails CppAD::local::forward_unary2_op_dir
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_acos_op_dir(
     size_t q           ,
@@ -138,21 +104,7 @@ void forward_acos_op_dir(
     }
 }
 
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = AcosOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = acos(x)
-\endverbatim
-The auxillary result is
-\verbatim
-    y = sqrt( 1 - x * x )
-\endverbatim
-The value of y is computed along with the value of z.
-
-\copydetails CppAD::local::forward_unary2_op_0
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_acos_op_0(
     size_t i_z         ,
@@ -173,22 +125,8 @@ void forward_acos_op_0(
     z[0] = acos( x[0] );
     b[0] = sqrt( Base(1.0) - x[0] * x[0] );
 }
-/*!
-Compute reverse mode partial derivatives for result of op = AcosOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = acos(x)
-\endverbatim
-The auxillary result is
-\verbatim
-    y = sqrt( 1 - x * x )
-\endverbatim
-The value of y is computed along with the value of z.
-
-\copydetails CppAD::local::reverse_unary2_op
-*/
-
+// See dev documentation: reverse_unary_op
 template <class Base>
 void reverse_acos_op(
     size_t      d            ,

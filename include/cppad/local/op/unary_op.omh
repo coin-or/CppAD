@@ -16,7 +16,7 @@ $spell
     op
 $$
 
-$section Variable Forward Unary Operators with One Result$$
+$section Variable Forward Unary Operators$$
 
 $head Syntax$$
 $codei%forward_%name%_op(%p%, %q%, %i_z%, %i_x%, %cap_order%, %taylor%)%$$
@@ -86,7 +86,7 @@ $spell
     Taylor
 $$
 
-$section Multiple Direction Forward Unary Operators with One Result$$
+$section Multiple Direction Forward Unary Operators$$
 
 $head Syntax$$
 $codei%forward_%name%_op(%q%, %r%, %i_z%, %i_x%, %cap_order%, %taylor%)%$$
@@ -172,7 +172,7 @@ $spell
     Taylor
 $$
 
-$section Zero Order Forward Unary Operators with One Result$$
+$section Zero Order Forward Unary Operators$$
 
 $head Syntax$$
 $codei%forward_%name%_op_0(%i_z%, %i_x%, %cap_order%, %taylor%)%$$
@@ -232,7 +232,7 @@ $spell
     const
 $$
 
-$section Reverse Unary Operators with One Result$$
+$section Reverse Unary Operators$$
 
 $head Syntax$$
 $codei%reverse_%name%_op(

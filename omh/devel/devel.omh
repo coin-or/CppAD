@@ -31,7 +31,7 @@ $childtable%
     include/cppad/local/op_code_var.hpp%
     omh/devel/vec_ad.omh%
     include/cppad/local/is_pod.hpp%
-    include/cppad/local/unary1_op.omh
+    include/cppad/local/op/unary_op.omh
 %$$
 
 

@@ -13,26 +13,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file add_op.hpp
-Forward and reverse mode calculations for z = x + y.
-*/
 
 // --------------------------- Addvv -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = AddvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x + y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_addvv_op(
     size_t        p           ,
@@ -57,20 +41,8 @@ void forward_addvv_op(
     for(size_t j = p; j <= q; j++)
         z[j] = x[j] + y[j];
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = AddvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x + y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_addvv_op_dir(
     size_t        q           ,
@@ -98,20 +70,8 @@ void forward_addvv_op_dir(
         z[m+ell] = x[m+ell] + y[m+ell];
 }
 
-/*!
-Compute zero order forward mode Taylor coefficients for result of op = AddvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x + y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_addvv_op_0(
     size_t        i_z         ,
@@ -132,20 +92,8 @@ void forward_addvv_op_0(
     z[0] = x[0] + y[0];
 }
 
-/*!
-Compute reverse mode partial derivatives for result of op = AddvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x + y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_unary_op
 template <class Base>
 void reverse_addvv_op(
     size_t        d           ,
@@ -178,18 +126,7 @@ void reverse_addvv_op(
 }
 
 // --------------------------- Addpv -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = AddpvOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x + y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_addpv_op(
     size_t        p           ,
@@ -219,18 +156,7 @@ void forward_addpv_op(
     for(size_t j = p; j <= q; j++)
         z[j] = y[j];
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = AddpvOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x + y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_addpv_op_dir(
     size_t        q           ,
@@ -256,19 +182,8 @@ void forward_addpv_op_dir(
     for(size_t ell = 0; ell < r; ell++)
         z[ell] = y[ell];
 }
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = AddpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x + y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_addpv_op_0(
     size_t        i_z         ,
@@ -291,19 +206,8 @@ void forward_addpv_op_0(
     z[0] = x + y[0];
 }
 
-/*!
-Compute reverse mode partial derivative for result of op = AddpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x + y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_unary_op
 template <class Base>
 void reverse_addpv_op(
     size_t        d           ,

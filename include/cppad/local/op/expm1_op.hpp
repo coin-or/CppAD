@@ -15,22 +15,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file expm1_op.hpp
-Forward and reverse mode calculations for z = expm1(x).
-*/
 
 
-/*!
-Forward mode Taylor coefficient for result of op = Expm1Op.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = expm1(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op
-*/
 template <class Base>
 void forward_expm1_op(
     size_t p           ,
@@ -66,16 +52,6 @@ void forward_expm1_op(
 }
 
 
-/*!
-Multiple direction forward mode Taylor coefficient for op = Expm1Op.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = expm1(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op_dir
-*/
 template <class Base>
 void forward_expm1_op_dir(
     size_t q           ,
@@ -106,16 +82,6 @@ void forward_expm1_op_dir(
     }
 }
 
-/*!
-Zero order forward mode Taylor coefficient for result of op = Expm1Op.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = expm1(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op_0
-*/
 template <class Base>
 void forward_expm1_op_0(
     size_t i_z         ,
@@ -134,16 +100,6 @@ void forward_expm1_op_0(
 
     z[0] = expm1( x[0] );
 }
-/*!
-Reverse mode partial derivatives for result of op = Expm1Op.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = expm1(x)
-\endverbatim
-
-\copydetails CppAD::local::reverse_unary1_op
-*/
 
 template <class Base>
 void reverse_expm1_op(

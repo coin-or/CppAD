@@ -14,21 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file sign_op.hpp
-Forward and reverse mode calculations for z = sign(x).
-*/
 
-/*!
-Compute forward mode Taylor coefficient for result of op = SignOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = sign(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_sign_op(
     size_t p           ,
@@ -55,16 +42,7 @@ void forward_sign_op(
     for(size_t j = p; j <= q; j++)
         z[j] = Base(0.);
 }
-/*!
-Multiple direction forward mode Taylor coefficient for op = SignOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = sign(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op_dir
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_sign_op_dir(
     size_t q           ,
@@ -89,16 +67,7 @@ void forward_sign_op_dir(
         z[m+ell] = Base(0.);
 }
 
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = SignOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = sign(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op_0
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_sign_op_0(
     size_t i_z         ,
@@ -118,17 +87,8 @@ void forward_sign_op_0(
 
     z[0] = sign(x0);
 }
-/*!
-Compute reverse mode partial derivatives for result of op = SignOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = sign(x)
-\endverbatim
-
-\copydetails CppAD::local::reverse_unary1_op
-*/
-
+// See dev documentation: reverse_unary_op
 template <class Base>
 void reverse_sign_op(
     size_t      d            ,

@@ -14,21 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file abs_op.hpp
-Forward and reverse mode calculations for z = fabs(x).
-*/
 
-/*!
-Compute forward mode Taylor coefficient for result of op = AbsOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = fabs(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_abs_op(
     size_t p           ,
@@ -52,16 +39,7 @@ void forward_abs_op(
         z[j] = sign(x[0]) * x[j];
 }
 
-/*!
-Multiple directions forward mode Taylor coefficient for op = AbsOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = fabs(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op_dir
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_abs_op_dir(
     size_t q           ,
@@ -87,16 +65,7 @@ void forward_abs_op_dir(
         z[m + ell] = sign(x[0]) * x[m + ell];
 }
 
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = AbsOp.
-
-The C++ source code corresponding to this operation is
-\verbatim
-    z = fabs(x)
-\endverbatim
-
-\copydetails CppAD::local::forward_unary1_op_0
-*/
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_abs_op_0(
     size_t i_z         ,
@@ -116,17 +85,8 @@ void forward_abs_op_0(
 
     z[0] = fabs(x0);
 }
-/*!
-Compute reverse mode partial derivatives for result of op = AbsOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = fabs(x)
-\endverbatim
-
-\copydetails CppAD::local::reverse_unary1_op
-*/
-
+// See dev documentation: reverse_unary_op
 template <class Base>
 void reverse_abs_op(
     size_t      d            ,

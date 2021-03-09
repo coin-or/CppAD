@@ -38,6 +38,7 @@ void forward_neg_op(
 }
 
 // See forward_unary1_op_dir in  developer documentation
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_neg_op_dir(
     size_t q           ,
@@ -64,6 +65,7 @@ void forward_neg_op_dir(
 }
 
 // See forward_unary1_op_0 in developer documentation
+// See dev documentation: forward_unary_op
 template <class Base>
 void forward_neg_op_0(
     size_t i_z         ,
@@ -84,6 +86,7 @@ void forward_neg_op_0(
 }
 
 // See reverse_unary1_op in developer documentation
+// See dev documentation: reverse_unary_op
 template <class Base>
 void reverse_neg_op(
     size_t      d            ,
