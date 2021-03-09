@@ -36,6 +36,9 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 03-09$$
+Simplify the $cref fabs.cpp$$ example.
+
 $head 03-08$$
 For years the following comment in reverse.hpp was forgotten:
 $codei%
