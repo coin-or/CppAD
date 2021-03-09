@@ -13,26 +13,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file div_op.hpp
-Forward and reverse mode calculations for z = x / y.
-*/
 
 // --------------------------- Divvv -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = DivvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divvv_op(
     size_t        p           ,
@@ -65,20 +49,8 @@ void forward_divvv_op(
         z[d] /= y[0];
     }
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = DivvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divvv_op_dir(
     size_t        q           ,
@@ -114,20 +86,8 @@ void forward_divvv_op_dir(
 }
 
 
-/*!
-Compute zero order forward mode Taylor coefficients for result of op = DivvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divvv_op_0(
     size_t        i_z         ,
@@ -148,20 +108,8 @@ void forward_divvv_op_0(
     z[0] = x[0] / y[0];
 }
 
-/*!
-Compute reverse mode partial derivatives for result of op = DivvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_divvv_op(
     size_t        d           ,
@@ -210,19 +158,8 @@ void reverse_divvv_op(
 }
 
 // --------------------------- Divpv -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = DivpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divpv_op(
     size_t        p           ,
@@ -260,19 +197,8 @@ void forward_divpv_op(
         z[d] /= y[0];
     }
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = DivpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divpv_op_dir(
     size_t        q           ,
@@ -305,19 +231,8 @@ void forward_divpv_op_dir(
     }
 }
 
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = DivpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divpv_op_0(
     size_t        i_z         ,
@@ -340,19 +255,8 @@ void forward_divpv_op_0(
     z[0] = x / y[0];
 }
 
-/*!
-Compute reverse mode partial derivative for result of op = DivpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_divpv_op(
     size_t        d           ,
@@ -400,19 +304,8 @@ void reverse_divpv_op(
 
 
 // --------------------------- Divvp -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = DivvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a variable and y is a parameter.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divvp_op(
     size_t        p           ,
@@ -441,19 +334,8 @@ void forward_divvp_op(
     for(size_t d = p; d <= q; d++)
         z[d] = x[d] / y;
 }
-/*!
-Multiple direction forward mode Taylor coefficients for op = DivvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a variable and y is a parameter.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divvp_op_dir(
     size_t        q           ,
@@ -486,19 +368,8 @@ void forward_divvp_op_dir(
 }
 
 
-/*!
-Compute zero order forward mode Taylor coefficients for result of op = DivvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a variable and y is a parameter.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_divvp_op_0(
     size_t        i_z         ,
@@ -521,19 +392,8 @@ void forward_divvp_op_0(
     z[0] = x[0] / y;
 }
 
-/*!
-Compute reverse mode partial derivative for result of op = DivvpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x / y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a variable and y is a parameter.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_divvp_op(
     size_t        d           ,

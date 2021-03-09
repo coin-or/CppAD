@@ -17,6 +17,7 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 // --------------------------- Addvv -----------------------------------------
 
 // See dev documentation: forward_unary_op
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_addvv_op(
     size_t        p           ,
@@ -43,6 +44,7 @@ void forward_addvv_op(
 }
 
 // See dev documentation: forward_unary_op
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_addvv_op_dir(
     size_t        q           ,
@@ -72,6 +74,7 @@ void forward_addvv_op_dir(
 
 
 // See dev documentation: forward_unary_op
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_addvv_op_0(
     size_t        i_z         ,
@@ -94,6 +97,7 @@ void forward_addvv_op_0(
 
 
 // See dev documentation: reverse_unary_op
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_addvv_op(
     size_t        d           ,
@@ -127,6 +131,7 @@ void reverse_addvv_op(
 
 // --------------------------- Addpv -----------------------------------------
 // See dev documentation: forward_unary_op
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_addpv_op(
     size_t        p           ,
@@ -157,6 +162,7 @@ void forward_addpv_op(
         z[j] = y[j];
 }
 // See dev documentation: forward_unary_op
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_addpv_op_dir(
     size_t        q           ,
@@ -184,6 +190,7 @@ void forward_addpv_op_dir(
 }
 
 // See dev documentation: forward_unary_op
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_addpv_op_0(
     size_t        i_z         ,
@@ -208,6 +215,7 @@ void forward_addpv_op_0(
 
 
 // See dev documentation: reverse_unary_op
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_addpv_op(
     size_t        d           ,

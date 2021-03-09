@@ -13,26 +13,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file mul_op.hpp
-Forward and reverse mode calculations for z = azmul(x, y).
-*/
 
 // --------------------------- Zmulvv -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = ZmulvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulvv_op(
     size_t        p           ,
@@ -61,20 +45,8 @@ void forward_zmulvv_op(
             z[d] += azmul(x[d-k], y[k]);
     }
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = ZmulvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulvv_op_dir(
     size_t        q           ,
@@ -106,20 +78,8 @@ void forward_zmulvv_op_dir(
     }
 }
 
-/*!
-Compute zero order forward mode Taylor coefficients for result of op = ZmulvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulvv_op_0(
     size_t        i_z         ,
@@ -140,20 +100,8 @@ void forward_zmulvv_op_0(
     z[0] = azmul(x[0], y[0]);
 }
 
-/*!
-Compute reverse mode partial derivatives for result of op = ZmulvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_zmulvv_op(
     size_t        d           ,
@@ -193,19 +141,8 @@ void reverse_zmulvv_op(
     }
 }
 // --------------------------- Zmulpv -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = ZmulpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulpv_op(
     size_t        p           ,
@@ -232,19 +169,8 @@ void forward_zmulpv_op(
     for(size_t d = p; d <= q; d++)
         z[d] = azmul(x, y[d]);
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = ZmulpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulpv_op_dir(
     size_t        q           ,
@@ -273,19 +199,8 @@ void forward_zmulpv_op_dir(
     for(size_t ell = 0; ell < r; ell++)
         z[ell] = azmul(x, y[ell]);
 }
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = ZmulpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulpv_op_0(
     size_t        i_z         ,
@@ -308,19 +223,8 @@ void forward_zmulpv_op_0(
     z[0] = azmul(x, y[0]);
 }
 
-/*!
-Compute reverse mode partial derivative for result of op = ZmulpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_zmulpv_op(
     size_t        d           ,
@@ -353,19 +257,8 @@ void reverse_zmulpv_op(
     }
 }
 // --------------------------- Zmulvp -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = ZmulvpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulvp_op(
     size_t        p           ,
@@ -392,19 +285,8 @@ void forward_zmulvp_op(
     for(size_t d = p; d <= q; d++)
         z[d] = azmul(x[d], y);
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = ZmulvpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulvp_op_dir(
     size_t        q           ,
@@ -433,19 +315,8 @@ void forward_zmulvp_op_dir(
     for(size_t ell = 0; ell < r; ell++)
         z[ell] = azmul(x[ell], y);
 }
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = ZmulvpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_zmulvp_op_0(
     size_t        i_z         ,
@@ -468,19 +339,8 @@ void forward_zmulvp_op_0(
     z[0] = azmul(x[0], y);
 }
 
-/*!
-Compute reverse mode partial derivative for result of op = ZmulvpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = azmul(x, y)
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_zmulvp_op(
     size_t        d           ,

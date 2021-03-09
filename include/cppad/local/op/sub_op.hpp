@@ -13,26 +13,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
-/*!
-\file sub_op.hpp
-Forward and reverse mode calculations for z = x - y.
-*/
 
 // --------------------------- Subvv -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = SubvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subvv_op(
     size_t        p           ,
@@ -57,20 +41,8 @@ void forward_subvv_op(
     for(size_t d = p; d <= q; d++)
         z[d] = x[d] - y[d];
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = SubvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subvv_op_dir(
     size_t        q           ,
@@ -98,20 +70,8 @@ void forward_subvv_op_dir(
         z[ell] = x[ell] - y[ell];
 }
 
-/*!
-Compute zero order forward mode Taylor coefficients for result of op = SubvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subvv_op_0(
     size_t        i_z         ,
@@ -132,20 +92,8 @@ void forward_subvv_op_0(
     z[0] = x[0] - y[0];
 }
 
-/*!
-Compute reverse mode partial derivatives for result of op = SubvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where both x and y are variables
-and the argument parameter is not used.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_subvv_op(
     size_t        d           ,
@@ -178,19 +126,8 @@ void reverse_subvv_op(
 }
 
 // --------------------------- Subpv -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = SubpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subpv_op(
     size_t        p           ,
@@ -220,19 +157,8 @@ void forward_subpv_op(
     for(size_t d = p; d <= q; d++)
         z[d] = - y[d];
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = SubpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subpv_op_dir(
     size_t        q           ,
@@ -259,19 +185,8 @@ void forward_subpv_op_dir(
     for(size_t ell = 0; ell < r; ell++)
         z[ell] = - y[ell];
 }
-/*!
-Compute zero order forward mode Taylor coefficient for result of op = SubpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subpv_op_0(
     size_t        i_z         ,
@@ -294,19 +209,8 @@ void forward_subpv_op_0(
     z[0] = x - y[0];
 }
 
-/*!
-Compute reverse mode partial derivative for result of op = SubpvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a parameter and y is a variable.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_subpv_op(
     size_t        d           ,
@@ -337,19 +241,8 @@ void reverse_subpv_op(
 }
 
 // --------------------------- Subvp -----------------------------------------
-/*!
-Compute forward mode Taylor coefficients for result of op = SubvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a variable and y is a parameter.
-
-\copydetails CppAD::local::forward_binary_op
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subvp_op(
     size_t        p           ,
@@ -379,19 +272,8 @@ void forward_subvp_op(
     for(size_t d = p; d <= q; d++)
         z[d] = x[d];
 }
-/*!
-Multiple directions forward mode Taylor coefficients for op = SubvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a variable and y is a parameter.
-
-\copydetails CppAD::local::forward_binary_op_dir
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subvp_op_dir(
     size_t        q           ,
@@ -419,19 +301,8 @@ void forward_subvp_op_dir(
         z[m+ell] = x[m+ell];
 }
 
-/*!
-Compute zero order forward mode Taylor coefficients for result of op = SubvvOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a variable and y is a parameter.
-
-\copydetails CppAD::local::forward_binary_op_0
-*/
-
+// See dev documentation: forward_binary_op
 template <class Base>
 void forward_subvp_op_0(
     size_t        i_z         ,
@@ -454,19 +325,8 @@ void forward_subvp_op_0(
     z[0] = x[0] - y;
 }
 
-/*!
-Compute reverse mode partial derivative for result of op = SubvpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-    z = x - y
-\endverbatim
-In the documentation below,
-this operations is for the case where x is a variable and y is a parameter.
-
-\copydetails CppAD::local::reverse_binary_op
-*/
-
+// See dev documentation: reverse_binary_op
 template <class Base>
 void reverse_subvp_op(
     size_t        d           ,
