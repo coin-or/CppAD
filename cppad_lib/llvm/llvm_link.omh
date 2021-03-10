@@ -15,7 +15,7 @@ $begin llvm_link$$
 $section Linking LLVM Compiled Function$$
 
 $childtable%
-    example/llvm/det_minor.cpp%
+    example/llvm/grad_det_minor.cpp%
     cppad_lib/llvm/llvm_link.cpp
 %$$
 
