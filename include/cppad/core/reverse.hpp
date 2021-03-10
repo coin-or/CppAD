@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_REVERSE_HPP
 # define CPPAD_CORE_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -150,8 +150,7 @@ BaseVector ADFun<Base,RecBase>::Reverse(size_t q, const BaseVector &w)
             Partial[dep_taddr_[i] * q + q - 1] += w[i];
         else
         {   for(k = 0; k < q; k++)
-                // ? should use += here, first make test to demonstrate bug
-                Partial[ dep_taddr_[i] * q + k ] = w[i * q + k ];
+                Partial[ dep_taddr_[i] * q + k ] += w[i * q + k ];
         }
     }
 

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -51,8 +51,7 @@ git ls-files | sed -n -e '/include\/cppad\/.*\.hpp$/p' | \
     sed \
         -e '1,1s|^|include/cppad/configure.hpp\n|' \
         -e '1,1s|^|include/cppad/local/is_pod.hpp\n|' \
-        -e '/include\/cppad\/local\/prototype_op.hpp/d' \
-        -e '/include\/cppad\/local\/optimize\/define_prototype.hpp/d' \
+        -e '/include\/cppad\/local\/op\/prototype_op.hpp/d' \
         -e '/include\/cppad\/example\/eigen_plugin.hpp/d' | \
     sed -e 's|^include/||' | \
     sort -u > check_include_file.3.$$

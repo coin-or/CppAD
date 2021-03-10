@@ -31,9 +31,25 @@ $spell
     op_enum
     fabs
     hpp
+    var
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 03-09$$
+Simplify the $cref fabs.cpp$$ example.
+
+$head 03-08$$
+For years the following comment in reverse.hpp was forgotten:
+$codei%
+    // ? should use += here, first make test to demonstrate bug
+%$$
+A test case was created to demonstrate this bug and it was fixed
+(see $code duplicate_dependent_var$$ in $code test_more/general/reverse.cpp$$).
+This only affects reverse mode when
+$cref/w/reverse_any/w/$$ has size $icode%q% * %m%$$ and
+two of the dependent variables in the range of $icode f$$
+are identically equal (actually the same variable).
 
 $head 03-07$$
 $list number$$
