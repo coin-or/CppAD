@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -57,15 +57,19 @@ namespace CppAD {
 For example, see
 $cref/base_alloc/base_alloc.hpp/EqualOpSeq/$$.
 
-$subhead More Complicated Cases$$
+$subhead More Complicated Case$$
 The variables
-$icode u$$ and $icode v$$ are not identically equal in the following case
-(which CppAD automatically defines $code EqualOpSeq$$ for):
-The type $icode Base$$ is $codei%AD<double>%$$,
-$icode x[0] = x[1] = 1.$$,
-then $cref independent$$ is used to make $icode x$$ the independent
-variable vector,
-and then $icode u = x[0]$$, $icode v = x[1]$$,
+$icode u$$ and $icode v$$ are not identically equal in the following case:
+$list number$$
+The type $icode Base$$ is $codei%AD<double>%$$.
+$lnext
+The following assignment made using type $icode Base$$: $icode x[0] = x[1] = 1.$$,
+$lnext
+The $cref independent$$ operations is used to make $icode x$$
+the independent variable vector,
+$lnext
+During the corresponding recording, $icode u = x[0]$$, $icode v = x[1]$$.
+$lend
 Note that during a future $cref Forward$$ calculation,
 $icode u$$ and $icode v$$ could correspond to different values.
 For example, see
@@ -77,18 +81,8 @@ $subhead IdenticalCon$$
 A $icode Base$$ object is a
 $cref/constant/glossary/Parameter/Constant/$$ parameter
 when used in an $codei%AD<%Base%>%$$ operation sequence.
-It is however still possible for a parameter to change its value.
-For example,
-the $icode Base$$ value $icode u$$ is not identically constant
-in the following case
-(which CppAD automatically defines $code IdenticalCon$$ for):
-The type $icode Base$$ is $codei%AD<double>%$$,
-$icode x[0] = 1.$$,
-then $cref independent$$ is used to make $icode x$$ the independent
-variable vector,
-and then $icode u = x[0]$$,
-Note that during a future $cref Forward$$ calculation,
-$icode u$$ could correspond to different values.
+It is however still possible for a parameter to change its value; e.g.,
+see the more complicated case above.
 
 $subhead Prototypes$$
 The argument $icode u$$ has prototype

@@ -36,6 +36,10 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 03-11$$
+Improve the discussion of identically equal; see
+$cref/more complicated case/base_identical/EqualOpSeq/More Complicated Case/$$.
+
 $head 03-09$$
 Simplify the $cref fabs.cpp$$ example.
 
