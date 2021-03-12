@@ -140,14 +140,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // int_32_t
     llvm::Type* int_32_t = llvm::Type::getInt32Ty(*context_ir_);
     //
-    // function_t
-    // void (*function_t) (double *, double*)
+    // adfun_t
+    // void (*adfun_t) (double *, double*)
     std::vector<llvm::Type*> param_types = {
         int_32_t, llvm_double_ptr, int_32_t, llvm_double_ptr
     };
     bool                     is_var_arg  = false;
     llvm::Type*              result_type = int_32_t;
-    llvm::FunctionType*      function_t  = llvm::FunctionType::get(
+    llvm::FunctionType*      adfun_t     = llvm::FunctionType::get(
             result_type, param_types, is_var_arg
     );
     //
@@ -155,7 +155,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // Create the IR function entry and insert this entry into the module
     auto            addr_space     = llvm::Function::ExternalLinkage;
     llvm::Function *function_ir    = llvm::Function::Create(
-        function_t, addr_space, function_name_, module_ir_.get()
+        adfun_t, addr_space, function_name_, module_ir_.get()
     );
     //
     // Make sure there are four arguments
