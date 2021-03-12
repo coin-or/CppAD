@@ -253,6 +253,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         const uint64_t*          uint64;
         size_t                   node;
         size_t                   index;
+        std::string              str;
         //
         // count or instructions
 # ifndef NDEBUG
@@ -277,10 +278,33 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // --------------------------------------------------------------
             case llvm::Instruction::Br:
             // branch used to abort and return error_no
-            CPPAD_ASSERT_UNKNOWN( n_operand = 3 );
+            CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
             CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::IntegerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::LabelTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::LabelTyID );
+            break;
+            //
+            // --------------------------------------------------------------
+            case llvm::Instruction::Call:
+            // We assume that this is a cmath call
+            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
+            CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
+            str = operand[1]->getName().str();
+            if( str == "acosh" )
+                graph_obj.operator_vec_push_back(CppAD::graph::acosh_graph_op);
+            else
+            {   msg += "Cannot call the function " + str;
+                return msg;
+            }
+            //
+            // mapping from this result to the correspondign new node in graph
+            llvm_value2graph_node.insert( pair_size(result , ++result_node) );
+            //
+            // put this operator in the graph
+            node = llvm_value2graph_node.lookup(operand[0]);
+            CPPAD_ASSERT_UNKNOWN( node != 0 );
+            graph_obj.operator_arg_push_back( node );
             break;
             //
             // --------------------------------------------------------------

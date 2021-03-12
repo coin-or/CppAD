@@ -286,7 +286,11 @@ bool tst_azmul(void)
     ir_obj.optimize();
     //
     // back to graph
-    ir_obj.to_graph(graph_obj);
+    msg = ir_obj.to_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
     //
     // back to function
     f.from_graph(graph_obj);
@@ -304,6 +308,62 @@ bool tst_azmul(void)
     //
     return ok;
 }
+// -----------------------------------------------------------------------------
+// tst_cmath
+bool tst_cmath(void)
+{   bool ok = true;
+    using CppAD::AD;
+    using CppAD::vector;
+    //
+    // nx, x
+    size_t nx = 1;
+    vector<double> x(nx);
+    x[0] = 2.0;
+    //
+    // ax
+    vector< AD<double> > ax(nx);
+    ax[0] = 2.0;
+    CppAD::Independent(ax);
+    //
+    // ny, ay
+    size_t ny = nx;
+    vector< AD<double> > ay(ny);
+    ay[0] = acosh(ax[0]);
+    //
+    // f
+    CppAD::ADFun<double> f(ax, ay);
+    f.function_name_set("llvm_tst_cmath");
+    //
+    // graph_obj
+    CppAD::cpp_graph graph_obj;
+    f.to_graph(graph_obj);
+    //
+    // ir_obj
+    CppAD::llvm_ir ir_obj;
+    std::string msg = ir_obj.from_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    // optimize it
+    ir_obj.optimize();
+    //
+    // back to graph
+    msg = ir_obj.to_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // back to function
+    f.from_graph(graph_obj);
+    //
+    // check
+    vector<double> y = f.Forward(0, x);
+    ok &= y[0] == std::acosh( x[0] );
+    //
+    return ok;
+}
 
 } // END_EMPTY_NAMESPACE
 
@@ -312,5 +372,6 @@ bool llvm_tst(void)
     ok     &= tst_llvm_ir();
     ok     &= tst_llvm_link();
     ok     &= tst_azmul();
+    ok     &= tst_cmath();
     return ok;
 }

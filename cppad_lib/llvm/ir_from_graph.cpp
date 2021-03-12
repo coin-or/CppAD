@@ -140,15 +140,38 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // int_32_t
     llvm::Type* int_32_t = llvm::Type::getInt32Ty(*context_ir_);
     //
-    // adfun_t
+    // arguments to FunctionType
+    std::vector<llvm::Type*> param_types;
+    bool                     is_var_arg;
+    llvm::Type*              result_type;
+    //
     // void (*adfun_t) (double *, double*)
-    std::vector<llvm::Type*> param_types = {
-        int_32_t, llvm_double_ptr, int_32_t, llvm_double_ptr
-    };
-    bool                     is_var_arg  = false;
-    llvm::Type*              result_type = int_32_t;
-    llvm::FunctionType*      adfun_t     = llvm::FunctionType::get(
+    param_types = { int_32_t, llvm_double_ptr, int_32_t, llvm_double_ptr };
+    is_var_arg  = false;
+    result_type = int_32_t;
+    llvm::FunctionType* adfun_t  = llvm::FunctionType::get(
             result_type, param_types, is_var_arg
+    );
+    //
+    // double (*cmath_t)(double)
+    param_types  = { llvm_double };
+    is_var_arg   = false;
+    result_type  = llvm_double;
+    llvm::FunctionType* cmath_t = llvm::FunctionType::get(
+        result_type, param_types, is_var_arg
+    );
+    //
+    // unary_args
+    // used to call c_math funcitons
+    std::vector<llvm::Value*> unary_args(1);
+    //
+    // cmake_attribures
+    // used to define cmath functions
+    llvm::AttributeList cmath_attributes = {};
+    //
+    // llvm_acosh
+    llvm::FunctionCallee llvm_acosh = module_ir_->getOrInsertFunction(
+        "acosh", cmath_t, cmath_attributes
     );
     //
     // function_ir
@@ -305,6 +328,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         //
         switch( op_enum )
         {   // Unary operators
+            case CppAD::graph::acosh_graph_op:
             case CppAD::graph::neg_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1);
@@ -333,6 +357,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         {   // -------------------------------------------------------------
             // simple operators that translate to one llvm instruction
             // -------------------------------------------------------------
+            case CppAD::graph::acosh_graph_op:
+            unary_args[0] = graph_ir[ arg[0] ];
+            value = builder.CreateCall(llvm_acosh, unary_args, "call acosh");
+            graph_ir.push_back(value);
+            break;
+
             case CppAD::graph::add_graph_op:
             value = builder.CreateFAdd(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
