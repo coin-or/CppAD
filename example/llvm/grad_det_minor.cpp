@@ -83,7 +83,7 @@ bool grad_det_minor(void)
     CppAD::ADFun<double> g;
     g.Dependent(a_A, a_gradient);
     //
-    // Set name of this function to llvm_grad_det_minor
+    // Set name of this function
     std::string function_name = "grad_det_minor";
     g.function_name_set(function_name);
     //

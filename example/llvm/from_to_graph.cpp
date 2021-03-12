@@ -63,7 +63,7 @@ namespace {
         adfun.Dependent(ax, ay);
         //
         // function_name
-        adfun.function_name_set("llvm_algo");
+        adfun.function_name_set("from_to_graph");
         return;
     }
 }

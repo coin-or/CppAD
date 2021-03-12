@@ -92,7 +92,7 @@ void algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
     adfun.Dependent(ax, ay);
     //
     // function_name
-    adfun.function_name_set("llvm_algo");
+    adfun.function_name_set("llvm_tst");
     return;
 }
 // -----------------------------------------------------------------------------
@@ -267,7 +267,7 @@ bool tst_azmul(void)
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
-    f.function_name_set("llvm_tst_azmul");
+    f.function_name_set("llvm_tst");
     f.check_for_nan(false);
     //
     // graph_obj
@@ -332,7 +332,7 @@ bool tst_cmath(void)
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
-    f.function_name_set("llvm_tst_cmath");
+    f.function_name_set("llvm_tst");
     //
     // graph_obj
     CppAD::cpp_graph graph_obj;
