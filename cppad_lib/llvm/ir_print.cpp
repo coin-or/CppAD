@@ -47,12 +47,11 @@ void llvm_ir::print(void) const
     }
     // os
     llvm::raw_os_ostream os( std::cout );
-    // function_ir
-    llvm::Function* function_ir = module_ir_->getFunction(function_name_);
-    CPPAD_ASSERT_UNKNOWN( function_ir != nullptr );
-    // output
-    os << *function_ir;
+    //
+    // print module
+    os << *module_ir_;
     os.flush();
+    //
     return;
 }
 

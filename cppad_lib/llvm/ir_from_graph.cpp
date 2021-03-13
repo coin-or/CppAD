@@ -128,7 +128,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     context_ir_ = std::make_unique<llvm::LLVMContext>();
     //
     // module_ir_
-    module_ir_ = std::make_unique<llvm::Module>("test", *context_ir_);
+    module_ir_ = std::make_unique<llvm::Module>("llvm_ir", *context_ir_);
     //
     // llvm_double
     llvm::Type* llvm_double = llvm::Type::getDoubleTy(*context_ir_);
@@ -165,9 +165,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // used to call c_math funcitons
     std::vector<llvm::Value*> unary_args(1);
     //
-    // cmake_attribures
+    // cmath_attributes
     // used to define cmath functions
-    llvm::AttributeList cmath_attributes = {};
+    llvm::AttributeList cmath_attributes;
     //
     // llvm_acosh
     llvm::FunctionCallee llvm_acosh = module_ir_->getOrInsertFunction(

@@ -187,7 +187,6 @@ bool tst_llvm_link(void)
     }
     //
     // create object file
-    // bin/test_one.sh.in assumes file_name matchees "llvm_*.o"
     std::string file_name = function_name + ".o";
     ir_obj.to_object_file(file_name);
     //
@@ -332,7 +331,8 @@ bool tst_cmath(void)
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
-    f.function_name_set("llvm_tst");
+    std::string function_name = "llvm_tst";
+    f.function_name_set(function_name);
     //
     // graph_obj
     CppAD::cpp_graph graph_obj;
@@ -359,8 +359,43 @@ bool tst_cmath(void)
     f.from_graph(graph_obj);
     //
     // check
-    vector<double> y = f.Forward(0, x);
+    vector<double> y(nx);
+    y = f.Forward(0, x);
     ok &= y[0] == std::acosh( x[0] );
+    //
+    // create object file
+    std::string file_name = function_name + ".o";
+    ir_obj.to_object_file(file_name);
+    // load the object file
+    CppAD::llvm_link link_obj;
+    link_obj.load(file_name);
+    //
+    // clang  -shared -o junk.o  junk.c
+    // where junk.c contains the following:
+    //  double acosh(double x)
+    //  {   return 5.0; }
+    /* -----------------------------------------------------------------------
+    Not working yet, fucntion returns zero instead of 5.0
+    link_obj.load("junk.o");
+    //
+    // function_ptr
+    CppAD::llvm_compiled_t function_ptr;
+    msg = link_obj.compiled(function_name, function_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    // call compiled version of function
+    x[0]             = x[0] + 1.0;
+    int32_t len_x    = int32_t (nx);
+    int32_t len_y    = int32_t (ny);
+    int32_t error_no = function_ptr(len_x, x.data(), len_y, y.data());
+    ok &= error_no == 0;
+    //
+    // check result
+    std::cout << "y = " << y << "\n";
+    ok &= y[0] == 5.0;
+    */
     //
     return ok;
 }
