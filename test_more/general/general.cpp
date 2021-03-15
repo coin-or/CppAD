@@ -247,7 +247,7 @@ int main(void)
     Run( VecAD,           "VecAD"          );
     Run( VecUnary,        "VecUnary"       );
     // END_SORT_THIS_LINE_MINUS_1
-# if CPPAD_HAS_LLCM
+# if CPPAD_HAS_LLVM
     Run( llvm_tst,        "llvm_tst"       );
 # endif
 # if CPPAD_HAS_ADOLC

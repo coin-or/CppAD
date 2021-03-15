@@ -44,7 +44,7 @@ SET(source_list
     ${adolc_sources}
     ${eigen_sources}
     ${ipopt_sources}
-    ${llvm_source}
+    ${llvm_sources}
     general.cpp
     abs_normal.cpp
     acos.cpp

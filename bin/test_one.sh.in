@@ -165,7 +165,7 @@ fi
 #
 # include_flags
 include_flags=$(echo $include_flags | \
-    sed -e 's| -I/usr/include | |' -e 's| -I| -isystem|g' -e 's|^-I|-isystem|'
+    sed -e 's|-I/usr/include||g' -e 's| -I| -isystem|g'
 )
 #
 include_flags="-I $original_dir/include $include_flags"
@@ -203,6 +203,14 @@ then
 fi
 #
 # compile command
+cat << EOF
+@CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe \\
+    $dir/$file $extra \\
+    -g $cxx_flags \\
+    $include_flags \\
+    $library_flags \\
+    2> test_one.err
+EOF
 compile_command="@CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe
     $dir/$file $extra
     -g
@@ -210,7 +218,6 @@ compile_command="@CMAKE_CXX_COMPILER@ test_one.cpp -o test_one.exe
     $include_flags
     $library_flags
 "
-echo "$compile_command 2> test_one.err"
 if ! $compile_command 2> test_one.err
 then
     tail test_one.err

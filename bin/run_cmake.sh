@@ -129,16 +129,28 @@ EOF
         yes_cppadcg='no'
         ;;
 
-        --no_llvm)
-        yes_llvm='no'
-        ;;
-
         --no_fadbad)
         yes_fadbad='no'
         ;;
 
         --no_sacado)
         yes_sacado='no'
+        ;;
+
+        --no_optional)
+        yes_adolc='no'
+        yes_colpack='no'
+        yes_eigen='no'
+        yes_ipopt='no'
+        yes_cppadcg='no'
+        yes_fadbad='no'
+        yes_sacado='no'
+        ;;
+
+        # 2DO when merging llvm branch into master:
+        # Include llvm in optional list above.
+        --no_llvm)
+        yes_llvm='no'
         ;;
 
         --no_documentation)
