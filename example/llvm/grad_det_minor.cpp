@@ -101,14 +101,13 @@ bool grad_det_minor(void)
     // optimized version of ir_obj
     ir_obj.optimize();
     //
-    // 2DO: remove this (used for testing and not part of example.
+    // 2DO: remove this (used for testing and not part of example).
     msg = ir_obj.to_graph(graph_obj);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
     }
     //
-    // llvm_grad_det_minor.o
     // bin/test_one.sh.in assumes file name begins with llvm_
     std::string file_name = "llvm_" + function_name + ".o";
     msg = ir_obj.to_object_file(file_name);

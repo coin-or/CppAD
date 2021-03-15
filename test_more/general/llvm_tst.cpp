@@ -366,18 +366,12 @@ bool tst_cmath(void)
     // create object file
     std::string file_name = function_name + ".o";
     ir_obj.to_object_file(file_name);
+    //
     // load the object file
     CppAD::llvm_link link_obj;
     link_obj.load(file_name);
     //
-    // clang  -shared -o junk.o  junk.c
-    // where junk.c contains the following:
-    //  double acosh(double x)
-    //  {   return 5.0; }
-    /* -----------------------------------------------------------------------
-    Not working yet, fucntion returns zero instead of 5.0
-    link_obj.load("junk.o");
-    //
+    /* Not yet working ------------------------------------------------------
     // function_ptr
     CppAD::llvm_compiled_t function_ptr;
     msg = link_obj.compiled(function_name, function_ptr);
@@ -393,10 +387,10 @@ bool tst_cmath(void)
     ok &= error_no == 0;
     //
     // check result
-    std::cout << "y = " << y << "\n";
-    ok &= y[0] == 5.0;
+    std::cout << "y[0] = " << y[0] << "\n";
+    std::cout << "std::cosh( x[0] ) = " << std::cosh( x[0] ) << "\n";
+    ok &= y[0] == std::acosh( x[0] );
     */
-    //
     return ok;
 }
 
