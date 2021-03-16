@@ -327,7 +327,7 @@ bool tst_cmath(void)
     // ny, ay
     size_t ny = nx;
     vector< AD<double> > ay(ny);
-    ay[0] = acosh(ax[0]);
+    ay[0] = sin(ax[0]);
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -361,7 +361,7 @@ bool tst_cmath(void)
     // check
     vector<double> y(nx);
     y = f.Forward(0, x);
-    ok &= y[0] == std::acosh( x[0] );
+    ok &= y[0] == std::sin( x[0] );
     //
     // create object file
     std::string file_name = function_name + ".o";
@@ -388,8 +388,8 @@ bool tst_cmath(void)
     //
     // check result
     std::cout << "y[0] = " << y[0] << "\n";
-    std::cout << "std::acosh( x[0] ) = " << std::acosh( x[0] ) << "\n";
-    ok &= y[0] == std::acosh( x[0] );
+    std::cout << "std::sin( x[0] ) = " << std::sin( x[0] ) << "\n";
+    ok &= y[0] == std::sin( x[0] );
     END NOT WORKING ------------------------------------------------------ */
     return ok;
 }

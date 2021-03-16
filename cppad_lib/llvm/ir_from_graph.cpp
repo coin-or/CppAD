@@ -169,9 +169,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // used to define cmath functions
     llvm::AttributeList cmath_attributes;
     //
-    // llvm_acosh
-    llvm::FunctionCallee llvm_acosh = module_ir_->getOrInsertFunction(
-        "acosh", cmath_t, cmath_attributes
+    // llvm_sin
+    llvm::FunctionCallee llvm_sin = module_ir_->getOrInsertFunction(
+        "sin", cmath_t, cmath_attributes
     );
     //
     // function_ir
@@ -328,7 +328,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         //
         switch( op_enum )
         {   // Unary operators
-            case CppAD::graph::acosh_graph_op:
+            case CppAD::graph::sin_graph_op:
             case CppAD::graph::neg_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1);
@@ -358,11 +358,11 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             // simple operators that translate to one llvm instruction
             // -------------------------------------------------------------
 
-            case CppAD::graph::acosh_graph_op:
+            case CppAD::graph::sin_graph_op:
             // The load / link step is not yet working for this operator.
             // see test_more/general/llvm_tst.cpp: bool tst_cmath(void)
             unary_args[0] = graph_ir[ arg[0] ];
-            value = builder.CreateCall(llvm_acosh, unary_args, "call acosh");
+            value = builder.CreateCall(llvm_sin, unary_args, "call sin");
             graph_ir.push_back(value);
             break;
 

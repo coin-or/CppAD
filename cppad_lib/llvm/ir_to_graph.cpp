@@ -291,8 +291,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
             str = operand[1]->getName().str();
-            if( str == "acosh" )
-                graph_obj.operator_vec_push_back(CppAD::graph::acosh_graph_op);
+            if( str == "sin" )
+                graph_obj.operator_vec_push_back(CppAD::graph::sin_graph_op);
             else
             {   msg += "Cannot call the function " + str;
                 return msg;
