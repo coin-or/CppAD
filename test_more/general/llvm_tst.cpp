@@ -371,7 +371,7 @@ bool tst_cmath(void)
     CppAD::llvm_link link_obj;
     link_obj.load(file_name);
     //
-    /* Not yet working ------------------------------------------------------
+    /* BEGIN NOT WORKING ----------------------------------------------------
     // function_ptr
     CppAD::llvm_compiled_t function_ptr;
     msg = link_obj.compiled(function_name, function_ptr);
@@ -388,9 +388,9 @@ bool tst_cmath(void)
     //
     // check result
     std::cout << "y[0] = " << y[0] << "\n";
-    std::cout << "std::cosh( x[0] ) = " << std::cosh( x[0] ) << "\n";
+    std::cout << "std::acosh( x[0] ) = " << std::acosh( x[0] ) << "\n";
     ok &= y[0] == std::acosh( x[0] );
-    */
+    END NOT WORKING ------------------------------------------------------ */
     return ok;
 }
 
