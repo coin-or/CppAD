@@ -161,8 +161,8 @@ bool tst_llvm_ir(void)
     //
     return ok;
 }
-// tst_llvm_link
-bool tst_llvm_link(void)
+// tst_llvm_load
+bool tst_load(void)
 {   bool ok = true;
     using CppAD::vector;
     using CppAD::llvm_ir;
@@ -193,7 +193,7 @@ bool tst_llvm_link(void)
     // link_obj
     CppAD::llvm_link link_obj;
     //
-    // load file
+    // load object file
     link_obj.load(file_name);
     //
     // function_ptr
@@ -390,7 +390,7 @@ bool tst_cmath(void)
     std::cout << "y[0] = " << y[0] << "\n";
     std::cout << "std::sin( x[0] ) = " << std::sin( x[0] ) << "\n";
     ok &= y[0] == std::sin( x[0] );
-    END NOT WORKING ------------------------------------------------------ */
+    // END NOT WORKING ----------------------------------------------------- */
     return ok;
 }
 
@@ -399,7 +399,7 @@ bool tst_cmath(void)
 bool llvm_tst(void)
 {   bool ok = true;
     ok     &= tst_llvm_ir();
-    ok     &= tst_llvm_link();
+    ok     &= tst_load();
     ok     &= tst_azmul();
     ok     &= tst_cmath();
     return ok;
