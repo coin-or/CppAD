@@ -39,10 +39,10 @@ $spell
     obj
 $$
 
-$section Convert On LLVM Intermediate Representation to an Object File$$
+$section Compile An LLVM IR and Store in Object File$$
 
 $head Syntax$$
-$icode%msg% = llvm_to_object_file(%file_name%)%$$
+$icode%msg% = %ir_obj%.to_object_file(%file_name%)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
@@ -54,6 +54,15 @@ that is created.  This can be a local or global path.
 $head Target Machine$$
 The llvm target information for the current host is used
 for the target machine; i.e, the machine that is currently executing.
+
+$head Function Type$$
+The function in the object file has the following type:
+$cref llvm_compiled_t$$.
+
+$head Function Name$$
+The function name is the same as in the graph object for the previous
+$cref llvm_ir_from_graph$$ operation for $icode ir_obj$$; see
+$cref/function_name/cpp_ad_graph/function_name/$$.
 
 $end
 */
