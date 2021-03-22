@@ -20,7 +20,7 @@ $end
 // BEGIN C++
 # include <limits>
 # include <cppad/cppad.hpp>
-# include <cppad/core/llvm_ir.hpp>
+# include <cppad/core/llvm/ir.hpp>
 namespace {
     template <class VectorFloat>
     VectorFloat algo(const VectorFloat& p, const VectorFloat& x)

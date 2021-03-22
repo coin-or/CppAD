@@ -79,7 +79,7 @@ of this operation.
 
 $end
 */
-# include <cppad/core/llvm_ir.hpp>
+# include <cppad/core/llvm/ir.hpp>
 //
 # include <llvm/IR/Verifier.h>
 # include <llvm/IR/Constants.h>

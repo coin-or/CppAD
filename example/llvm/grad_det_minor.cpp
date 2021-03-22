@@ -24,8 +24,8 @@ $end
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/core/llvm_ir.hpp>
-# include <cppad/core/llvm_link.hpp>
+# include <cppad/core/llvm/ir.hpp>
+# include <cppad/core/llvm/link.hpp>
 
 bool grad_det_minor(void)
 {   using CppAD::AD;

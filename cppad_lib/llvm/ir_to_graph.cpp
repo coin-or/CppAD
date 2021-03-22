@@ -70,7 +70,7 @@ of this operation.
 
 $end
 */
-# include <cppad/core/llvm_ir.hpp>
+# include <cppad/core/llvm/ir.hpp>
 //
 # include <llvm/IR/Instructions.h>
 # include <llvm/IR/InstIterator.h>

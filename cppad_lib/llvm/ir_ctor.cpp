@@ -27,7 +27,7 @@ The creates the empty $code llvm_ir$$ object $icode ir_obj$$.
 
 $end
 */
-# include <cppad/core/llvm_ir.hpp>
+# include <cppad/core/llvm/ir.hpp>
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 

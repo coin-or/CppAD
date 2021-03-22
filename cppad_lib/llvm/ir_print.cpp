@@ -28,7 +28,7 @@ This is a $code const$$  $cref/llvm_ir/llvm_ir_ctor/$$ object.
 
 $end
 */
-# include <cppad/core/llvm_ir.hpp>
+# include <cppad/core/llvm/ir.hpp>
 # include <llvm/Support/raw_os_ostream.h>
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

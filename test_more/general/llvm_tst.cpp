@@ -11,8 +11,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <limits>
 # include <cppad/cppad.hpp>
-# include <cppad/core/llvm_ir.hpp>
-# include <cppad/core/llvm_link.hpp>
+# include <cppad/core/llvm/ir.hpp>
+# include <cppad/core/llvm/link.hpp>
 namespace { // BEGIN_EMPTY_NAMESPACE
 // -----------------------------------------------------------------------------
 // algo

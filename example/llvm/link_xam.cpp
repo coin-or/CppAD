@@ -19,8 +19,8 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <cppad/core/llvm_ir.hpp>
-# include <cppad/core/llvm_link.hpp>
+# include <cppad/core/llvm/ir.hpp>
+# include <cppad/core/llvm/link.hpp>
 namespace {
     template <class VectorFloat>
     VectorFloat algo(const VectorFloat& p, const VectorFloat& x)
