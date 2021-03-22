@@ -13,6 +13,41 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/llvm/link.hpp>
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+
+// Under Construction
+std::string llvm_link::dynamic_lib(const std::string& file_name)
+{   typedef llvm::orc::DynamicLibrarySearchGenerator generator_t;
+    typedef llvm::orc::JITDylib                      jit_dylib_t;
+    //
+    // initialize msg
+    std::string msg = "llvm_link::dynamic_lib: ";
+    if( jit_ == nullptr )
+    {   msg += "The constructor failed for object linking library";
+        return msg;
+    }
+    // data_layout
+    const llvm::DataLayout& data_layout  = jit_->getDataLayout();
+    //
+    // error_or_generator
+    llvm::Expected< std::unique_ptr<generator_t> > error_or_generator =
+        generator_t::Load(file_name.c_str(), data_layout.getGlobalPrefix());
+    llvm::Error error = error_or_generator.takeError();
+    if( error )
+    {   msg += "error linking the library " + file_name;
+        return msg;
+    }
+    // gen
+    std::unique_ptr<generator_t> gen_ptr = std::move(error_or_generator.get());
+    //
+    // jit_dylib
+    jit_dylib_t& jit_dylib = jit_->getMainJITDylib();
+    //
+    jit_dylib.addGenerator( std::move(gen_ptr) );
+    //
+    msg = "";
+    return msg;
+}
+
 /*
 -------------------------------------------------------------------------------
 $begin llvm_link_ctor$$
@@ -51,8 +86,7 @@ jit_( nullptr )
         CPPAD_ASSERT_UNKNOWN( jit_ == nullptr);
         return;
     }
-    else
-        jit_ = std::move( error_or_link.get() );
+    jit_ = std::move( error_or_link.get() );
     CPPAD_ASSERT_UNKNOWN( jit_ != nullptr );
     return;
 }

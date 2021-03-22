@@ -371,7 +371,9 @@ bool tst_cmath(void)
     CppAD::llvm_link link_obj;
     link_obj.load(file_name);
     //
-    /* BEGIN NOT WORKING ----------------------------------------------------
+    // link the C++ standard math library
+    link_obj.dynamic_lib("/lib64/libmvec.so.1");
+    //
     // function_ptr
     CppAD::llvm_compiled_t function_ptr;
     msg = link_obj.compiled(function_name, function_ptr);
@@ -387,10 +389,8 @@ bool tst_cmath(void)
     ok &= error_no == 0;
     //
     // check result
-    std::cout << "y[0] = " << y[0] << "\n";
-    std::cout << "std::sin( x[0] ) = " << std::sin( x[0] ) << "\n";
     ok &= y[0] == std::sin( x[0] );
-    // END NOT WORKING ----------------------------------------------------- */
+    //
     return ok;
 }
 

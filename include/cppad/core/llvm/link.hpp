@@ -19,14 +19,19 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 class llvm_link {
 private:
-    // llvm jit representations of functions that is used for linking
+    // llvm jit representations of functions
     std::unique_ptr<llvm::orc::LLJIT> jit_;
 public:
-    // no-const member functions
+    // ctor
     llvm_link(void);
+    //
+    // load
     std::string load(const std::string& file_name);
     //
-    // const member functions
+    // dynamic_lib
+    std::string dynamic_lib(const std::string& file_name);
+    //
+    // compiled
     std::string compiled(
         const std::string&  file_name    ,
         llvm_compiled_t&    function_ptr
