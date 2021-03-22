@@ -92,7 +92,7 @@ jit_( nullptr )
 }
 /*
 -------------------------------------------------------------------------------
-$begin llvm_link_load$$
+$begin llvm_link_object_file$$
 $spell
     obj
     llvm
@@ -123,13 +123,13 @@ this member function.
 $end
 */
 // BEGIN_LOAD
-std::string llvm_link::load(const std::string& file_name)
+std::string llvm_link::object_file(const std::string& file_name)
 // END_LOAD
 {   // 2DO: Figure out how to get the message from an llvm::Error
     // becasue Error::getError() function is deprecated.
     //
     // initialize msg
-    std::string msg = "llvm_link::load: ";
+    std::string msg = "llvm_link::object_file: ";
     if( jit_ == nullptr )
     {   msg += "The constructor failed for object doing loading";
         return msg;

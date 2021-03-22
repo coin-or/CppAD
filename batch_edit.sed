@@ -6,7 +6,6 @@
 #
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
-#   include/cppad/core/llvm
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
@@ -18,14 +17,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/core/llvm_ir.hpp
-#   include/cppad/core/llvm_link.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|/llvm_ir.hpp|/llvm/ir.hpp|
-#   s|/llvm_link.hpp|/llvm/link.hpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -37,5 +32,8 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/llvm_ir.hpp|/llvm/ir.hpp|g
-s|/llvm_link.hpp|/llvm/link.hpp|g
+s|llvm_link_load|llvm_link_object_file|
+s|llvm_link::load|llvm_link::object_file|
+s|link_obj.load|link_obj.object_file|
+s|std::string load|std::string object_file|
+s|^    // load$|    // object_file|

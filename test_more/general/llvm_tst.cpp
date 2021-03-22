@@ -194,7 +194,7 @@ bool tst_load(void)
     CppAD::llvm_link link_obj;
     //
     // load object file
-    link_obj.load(file_name);
+    link_obj.object_file(file_name);
     //
     // function_ptr
     CppAD::llvm_compiled_t function_ptr;
@@ -369,7 +369,7 @@ bool tst_cmath(void)
     //
     // load the object file
     CppAD::llvm_link link_obj;
-    link_obj.load(file_name);
+    link_obj.object_file(file_name);
     //
     // link the C++ standard math library
     link_obj.dynamic_lib("/lib64/libmvec.so.1");

@@ -118,7 +118,7 @@ bool grad_det_minor(void)
     //
     // link_obj
     CppAD::llvm_link link_obj;
-    msg = link_obj.load(file_name);
+    msg = link_obj.object_file(file_name);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;

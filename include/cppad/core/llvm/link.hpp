@@ -25,8 +25,8 @@ public:
     // ctor
     llvm_link(void);
     //
-    // load
-    std::string load(const std::string& file_name);
+    // object_file
+    std::string object_file(const std::string& file_name);
     //
     // dynamic_lib
     std::string dynamic_lib(const std::string& file_name);

@@ -99,7 +99,7 @@ bool link_xam(void)
     CppAD::llvm_link link_obj;
     //
     // load file
-    link_obj.load(file_name);
+    link_obj.object_file(file_name);
     //
     // function_ptr
     CppAD::llvm_compiled_t function_ptr;
