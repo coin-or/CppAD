@@ -30,11 +30,12 @@ $head Purpose$$
 This creates the empty $code llvm_link$$ object $icode link_obj$$.
 
 $children%
-    example/llvm/link_xam.cpp
+    example/llvm/link_lib.cpp
+    example/llvm/link_adfun.cpp
 %$$
 $head Example$$
-The file $cref llvm_link_xam.cpp$$ contains an example / test using
-this member function.
+The files $cref llvm_link_lib.cpp$, $cref llvm_link_adfun.cpp$$
+contain examples / tests using this member function.
 
 $end
 */
@@ -86,7 +87,7 @@ If the return value $icode msg$$ is the empty string, no error was detected.
 Otherwise this is an error message and the object file was not loaded.
 
 $head Example$$
-The file $cref llvm_link_xam.cpp$$ contains an example / test using
+The file $cref llvm_link_adfun.cpp$$ contains an example / test using
 this member function.
 
 $end

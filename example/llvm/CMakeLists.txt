@@ -14,7 +14,8 @@
 SET(source_list
     from_to_graph.cpp
     grad_det_minor.cpp
-    link_xam.cpp
+    link_adfun.cpp
+    link_lib.cpp
     llvm.cpp
     optimize.cpp
 )

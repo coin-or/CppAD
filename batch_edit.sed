@@ -17,12 +17,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/core/llvm_compiled.hpp
+#   example/llvm/link_xam.cpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|/llvm_compiled.hpp|/llvm/compiled_ir.hpp|
+#   s|link_xam.cpp|link_adfun.cpp|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -34,5 +34,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/llvm_compiled.hpp|/llvm/compiled_ir.hpp|
-s|llvm_compiled|compiled_ir|g
+s|link_xam|link_adfun|g

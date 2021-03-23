@@ -86,7 +86,7 @@ $cref/CPPAD_TO_STRING/base_to_string/CPPAD_TO_STRING/$$
 $rnext
 $cref/
     CPPAD_STD_MATH_LIBRARY_PATH/
-    llvm_link_xam.cpp/
+    llvm_link_adfun.cpp/
     CPPAD_STD_MATH_LIBRARY_PATH
 /$$
 $tend

@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin llvm_link_xam.cpp$$
+$begin llvm_link_adfun.cpp$$
 
 $section Example Linking a Compiled AD Function$$
 
@@ -68,11 +68,11 @@ namespace {
         adfun.Dependent(ax, ay);
         //
         // function_name
-        adfun.function_name_set("link_xam");
+        adfun.function_name_set("link_adfun");
         return;
     }
 }
-bool link_xam(void)
+bool link_adfun(void)
 {   bool ok = true;
     using CppAD::llvm_ir;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();

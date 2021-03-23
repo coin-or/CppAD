@@ -42,7 +42,7 @@ If the return value $icode msg$$ is the empty string, no error was detected.
 Otherwise this is an error message and the object file was not loaded.
 
 $head Example$$
-The file $cref llvm_link_xam.cpp$$ contains an example / test using
+The file $cref llvm_link_adfun.cpp$$ contains an example / test using
 this member function.
 
 $end

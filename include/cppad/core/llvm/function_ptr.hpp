@@ -59,7 +59,7 @@ Otherwise this is an error message and the return value of
 $icode fun_ptr$$ is unspecified.
 
 $head Example$$
-The file $cref llvm_link_xam.cpp$$ contains an example / test using
+The file $cref llvm_link_adfun.cpp$$ contains an example / test using
 this member function.
 
 $childtable%
@@ -90,7 +90,7 @@ std::string llvm_link::function_ptr(
     llvm::JITEvaluatedSymbol symbol = error_or_symbol.get();
     //
     // fun_ptr
-    fun_ptr = reinterpret_cast<compiled_ir_t>( symbol.getAddress() );
+    fun_ptr = reinterpret_cast<function_ptr_t>( symbol.getAddress() );
     if( ! fun_ptr )
     {   msg += "Error looking up address for function " + fun_name;
         return msg;
