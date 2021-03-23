@@ -32,7 +32,8 @@ $childtable%
     omh/devel/vec_ad.omh%
     include/cppad/local/is_pod.hpp%
     include/cppad/local/op/unary_op.omh%
-    include/cppad/local/op/binary_op.omh
+    include/cppad/local/op/binary_op.omh%
+    cppad_lib/llvm/error_msg.cpp
 %$$
 
 

@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <fstream>
 # include <llvm/Support/raw_os_ostream.h>
 # include <cppad/core/llvm/link.hpp>
+# include "error_msg.hpp"
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
@@ -25,7 +26,7 @@ $$
 $section Add a Dynamic Library File into LLVM Linker$$
 
 $head Syntax$$
-$icode%msg% = %link%_obj.dynamic_lib( %file_name% )%$$
+$icode%msg% = %link_obj%.dynamic_lib( %file_name% )%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
@@ -114,16 +115,12 @@ std::string llvm_link::dynamic_lib(const std::string& file_name)
     // error_or_generator
     llvm::Expected< std::unique_ptr<generator_t> > error_or_generator =
         generator_t::Load(mapped_file_name.c_str(), global_prefix);
-    llvm::Error error = error_or_generator.takeError();
-    if( error )
-    {   std::stringstream ss;
-        llvm::raw_os_ostream os( ss );
-        os << error;
-        os.flush();
-        msg += "error linking the library " + file_name + "\n";
+    llvm::Error error_obj = error_or_generator.takeError();
+    if( error_obj )
+    {   msg += "error linking the library " + file_name + "\n";
         if( file_name != mapped_file_name )
             msg += "mapped file name = " + mapped_file_name + "\n";
-        msg += ss.str();
+        msg += llvm_error_msg(error_obj);
         return msg;
     }
     // gen

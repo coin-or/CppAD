@@ -69,7 +69,7 @@ $$
 $section Add an Object File into LLVM Linker$$
 
 $head Syntax$$
-$icode%msg% = %link%_obj.load( %file_name% )%$$
+$icode%msg% = %link_obj%.load( %file_name% )%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_OBJECT_FILE%// END_OBJECT_FILE%1%$$

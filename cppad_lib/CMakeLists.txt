@@ -22,6 +22,7 @@ IF( cppad_has_llvm )
         llvm/ir_to_object_file.cpp
         llvm/llvm_link.cpp
         llvm/dynamic_lib.cpp
+        llvm/error_msg.cpp
     )
     # llvm_config
     FIND_PROGRAM(
