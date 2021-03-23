@@ -38,6 +38,7 @@ $spell
     std
     hpp
     addr
+    llvm
 $$
 
 $section Preprocessor Symbols Set By CMake Command$$
@@ -212,6 +213,12 @@ $srccode%hpp% */
 # define CPPAD_HAS_TMPNAM_S @cppad_has_tmpnam_s@
 /* %$$
 
+$head CPPAD_STD_MATH_LIBRARY_PATH$$
+This symbol is a C string containing the path to the standard math library.
+$srccode%hpp% */
+# define CPPAD_STD_MATH_LIBRARY_PATH "@std_math_library_path@"
+/* %$$
+
 $head CPPAD_NULL$$
 Deprecated 2020-12-03:
 This preprocessor symbol was used for a null pointer before c++11.
@@ -226,7 +233,6 @@ $subhead CPPAD_NDEBUG_NOEXCEPT$$
 This preprocessor symbol is
 $code noexcept$$ when C++11 is available and $code NDEBUG$$ is defined.
 Otherwise it is empty.
-
 
 $end
 */

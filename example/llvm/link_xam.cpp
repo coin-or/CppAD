@@ -14,6 +14,11 @@ $begin llvm_link_xam.cpp$$
 
 $section Example Linking a Compiled AD Function$$
 
+$head CPPAD_STD_MATH_LIBRARY_PATH$$
+This is the path to the standard math library which is used
+by this example (to access the $code sin$$ function).
+
+$head Source Code$$
 $srcthisfile%8%// BEGIN C++%// END C++%1%$$
 $end
 */
@@ -32,9 +37,9 @@ namespace {
         // define the actual function
         VectorFloat y(ny);
         for(size_t i = 0; i < np; ++i)
-            y[i] = p[i] + double(i);
+            y[i] = sin( p[i] ) + double(i);
         for(size_t i = 0; i < nx; ++i)
-            y[i + np] = x[i] + double(i + np);
+            y[i + np] = sin( x[i] ) + double(i + np);
         //
         // some operations that optimizer should remove
         typename VectorFloat::value_type sum = 0.0;
@@ -98,8 +103,19 @@ bool link_xam(void)
     // link_obj
     CppAD::llvm_link link_obj;
     //
-    // load file
-    link_obj.object_file(file_name);
+    // load object file
+    msg = link_obj.object_file(file_name);
+    if( msg != "")
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // load the standard math library (for sin function)
+    msg = link_obj.dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
+    if( msg != "")
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
     //
     // function_ptr
     CppAD::llvm_compiled_t function_ptr;

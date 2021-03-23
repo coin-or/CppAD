@@ -365,14 +365,26 @@ bool tst_cmath(void)
     //
     // create object file
     std::string file_name = function_name + ".o";
-    ir_obj.to_object_file(file_name);
+    msg = ir_obj.to_object_file(file_name);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
     //
     // load the object file
     CppAD::llvm_link link_obj;
-    link_obj.object_file(file_name);
+    msg = link_obj.object_file(file_name);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
     //
     // link the C++ standard math library
-    link_obj.dynamic_lib("/lib64/libmvec.so.1");
+    msg = link_obj.dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
     //
     // function_ptr
     CppAD::llvm_compiled_t function_ptr;

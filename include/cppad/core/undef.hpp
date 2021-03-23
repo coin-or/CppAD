@@ -14,6 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 /*
 ----------------------------------------------------------------------------
+2DO: update which symbols are in deprecated api and sort each sublist.
+
 Preprecessor definitions that presist after cppad/cppad.hpp is included.
 These are part of the user API with some exceptions that are used
 by the CppAD examples and tests.
@@ -25,21 +27,22 @@ by the CppAD examples and tests.
 # undef EIGEN_MATRIXBASE_PLUGIN              example use of Eigen with CppAD
 # undef CPPAD_HAS_COLPACK                    used by speed/cppad/sparse_*.cpp
 
-# undef CPPAD_BOOL_BINARY         in user api
-# undef CPPAD_BOOL_UNARY          in user api
-# undef CPPAD_DEBUG_AND_RELEASE   in user api
-# undef CPPAD_DISCRETE_FUNCTION   in user api
-# undef CPPAD_EIGENVECTOR         in user api
-# undef CPPAD_MAX_NUM_THREADS     in user api
-# undef CPPAD_NUMERIC_LIMITS      in user api
-# undef CPPAD_NULL                in user api
-# undef CPPAD_PACKAGE_STRING      in user api
-# undef CPPAD_STANDARD_MATH_UNARY in user api
-# undef CPPAD_TAPE_ADDR_TYPE      in user api
-# undef CPPAD_TAPE_ID_TYPE        in user api
-# undef CPPAD_TESTVECTOR          in user api
-# undef CPPAD_TO_STRING           in user api
-# undef CPPAD_USE_CPLUSPLUS_2011  in user api
+# undef CPPAD_BOOL_BINARY            in user api
+# undef CPPAD_BOOL_UNARY             in user api
+# undef CPPAD_DEBUG_AND_RELEASE      in user api
+# undef CPPAD_DISCRETE_FUNCTION      in user api
+# undef CPPAD_EIGENVECTOR            in user api
+# undef CPPAD_MAX_NUM_THREADS        in user api
+# undef CPPAD_NUMERIC_LIMITS         in user api
+# undef CPPAD_NULL                   in user api
+# undef CPPAD_PACKAGE_STRING         in user api
+# undef CPPAD_STANDARD_MATH_UNARY    in user api
+# undef CPPAD_TAPE_ADDR_TYPE         in user api
+# undef CPPAD_TAPE_ID_TYPE           in user api
+# undef CPPAD_TESTVECTOR             in user api
+# undef CPPAD_TO_STRING              in user api
+# undef CPPAD_USE_CPLUSPLUS_2011     in user api
+# undef CPPAD_STD_MATH_LIBRARY_PATH  in user api
 
 # undef CPPAD_TRACK_COUNT    in deprecated api
 # undef CPPAD_TRACK_DEL_VEC  in deprecated api

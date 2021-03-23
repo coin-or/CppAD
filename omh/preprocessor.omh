@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -83,6 +83,12 @@ $rnext
 $cref/CPPAD_TESTVECTOR/testvector/$$
 $rnext
 $cref/CPPAD_TO_STRING/base_to_string/CPPAD_TO_STRING/$$
+$rnext
+$cref/
+    CPPAD_STD_MATH_LIBRARY_PATH/
+    llvm_link_xam.cpp/
+    CPPAD_STD_MATH_LIBRARY_PATH
+/$$
 $tend
 
 $head Deprecated$$
