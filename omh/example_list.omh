@@ -187,6 +187,7 @@ $rref json_sum_op.cpp$$
 $rref json_unary_op.cpp$$
 $rref llvm_from_to_graph.cpp$$
 $rref llvm_link_adfun.cpp$$
+$rref llvm_link_lib.cpp$$
 $rref llvm_optimize.cpp$$
 $rref log.cpp$$
 $rref log10.cpp$$

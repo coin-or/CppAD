@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <fstream>
 # include <llvm/Support/raw_os_ostream.h>
 # include <cppad/core/llvm/link.hpp>
-# include "error_msg.hpp"
+# include <cppad/local/llvm_error_msg.hpp>
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
@@ -69,7 +69,7 @@ std::string llvm_link::dynamic_lib(const std::string& file_name)
     //
     // length
     is.seekg(0, is.end);
-    size_t length = is.tellg();
+    size_t length = size_t( is.tellg() );
     length        = std::min(length, size_t(1000) );
     //
     // buffer
@@ -90,7 +90,7 @@ std::string llvm_link::dynamic_lib(const std::string& file_name)
         {   msg += "cannot find GROUP in GNU ld script " + file_name;
             return msg;
         }
-        size_t start = match + 5 - buffer;
+        size_t start = size_t( match + 5 - buffer);
         while( start < length && (buffer[start]==' ' || buffer[start]=='(') )
             ++start;
         size_t end = start;
@@ -120,7 +120,7 @@ std::string llvm_link::dynamic_lib(const std::string& file_name)
     {   msg += "error linking the library " + file_name + "\n";
         if( file_name != mapped_file_name )
             msg += "mapped file name = " + mapped_file_name + "\n";
-        msg += llvm_error_msg(error_obj);
+        msg += local::llvm_error_msg(error_obj);
         return msg;
     }
     // gen

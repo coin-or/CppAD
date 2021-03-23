@@ -1,5 +1,5 @@
-# ifndef CPPAD_CPPAD_LIB_LLVM_ERROR_MSG_HPP
-# define CPPAD_CPPAD_LIB_LLVM_ERROR_MSG_HPP
+# ifndef CPPAD_LOCAL_LLVM_ERROR_MSG_HPP
+# define CPPAD_LOCAL_LLVM_ERROR_MSG_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
@@ -15,8 +15,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <string>
 # include <llvm/Support/Error.h>
 
-namespace CppAD {
+namespace CppAD { namespace local {
     std::string llvm_error_msg(const llvm::Error& error_obj);
-}
+} }
 
 # endif

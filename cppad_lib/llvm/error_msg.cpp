@@ -12,9 +12,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <sstream>
 # include <llvm/Support/raw_os_ostream.h>
 # include <cppad/core/cppad_assert.hpp>
-# include "error_msg.hpp"
+# include <cppad/local/llvm_error_msg.hpp>
 //
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
 -------------------------------------------------------------------------------
 $begin llvm_error_msg$$
@@ -26,7 +26,7 @@ $$
 $section Get Message From an LLVM Error Object$$
 
 $head Syntax$$
-$icode%msg% = llvm_error_msg(%error_obj%)%$$
+$icode%msg% = local::llvm_error_msg(%error_obj%)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
@@ -50,4 +50,4 @@ std::string llvm_error_msg(const llvm::Error& error_obj)
     return ss.str();
 }
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE

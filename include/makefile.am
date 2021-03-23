@@ -207,6 +207,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/hash_code.hpp \
 	cppad/local/independent.hpp \
 	cppad/local/is_pod.hpp \
+	cppad/local/llvm_error_msg.hpp \
 	cppad/local/op.hpp \
 	cppad/local/op/abs_op.hpp \
 	cppad/local/op/acos_op.hpp \

@@ -30,11 +30,11 @@ $head Purpose$$
 This creates the empty $code llvm_link$$ object $icode link_obj$$.
 
 $children%
-    example/llvm/link_lib.cpp
+    example/llvm/link_lib.cpp%
     example/llvm/link_adfun.cpp
 %$$
 $head Example$$
-The files $cref llvm_link_lib.cpp$, $cref llvm_link_adfun.cpp$$
+The files $cref llvm_link_lib.cpp$$, $cref llvm_link_adfun.cpp$$
 contain examples / tests using this member function.
 
 $end
