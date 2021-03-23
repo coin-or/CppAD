@@ -79,10 +79,11 @@ std::string llvm_link::dynamic_lib(const std::string& file_name)
     //
     // data_layout
     const llvm::DataLayout& data_layout  = jit_->getDataLayout();
+    char  global_prefix                  = data_layout.getGlobalPrefix();
     //
     // error_or_generator
     llvm::Expected< std::unique_ptr<generator_t> > error_or_generator =
-        generator_t::Load(mapped_file_name.c_str(), data_layout.getGlobalPrefix());
+        generator_t::Load(mapped_file_name.c_str(), global_prefix);
     llvm::Error error = error_or_generator.takeError();
     if( error )
     {   std::stringstream ss;
