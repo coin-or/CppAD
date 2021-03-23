@@ -117,9 +117,9 @@ bool link_xam(void)
         return false;
     }
     //
-    // function_ptr
-    CppAD::compiled_ir_t function_ptr;
-    msg = link_obj.compiled(function_name, function_ptr);
+    // fun_ptr
+    CppAD::compiled_ir_t fun_ptr;
+    msg = link_obj.function_ptr(function_name, fun_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -139,7 +139,7 @@ bool link_xam(void)
     // incorrect call to function
     int32_t len_input   = 0;
     int32_t len_output  = 0;
-    int32_t error_no    = function_ptr(
+    int32_t error_no    = fun_ptr(
         len_input, input.data(), len_output, output.data()
     );
     ok &= error_no != 0;
@@ -149,7 +149,7 @@ bool link_xam(void)
     // correct call function
     len_input   = static_cast<int32_t>(np + nx);
     len_output  = static_cast<int32_t>(ny);
-    error_no    = function_ptr(
+    error_no    = fun_ptr(
         len_input, input.data(), len_output, output.data()
     );
     ok &= error_no == 0;

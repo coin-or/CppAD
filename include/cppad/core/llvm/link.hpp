@@ -31,13 +31,17 @@ public:
     // dynamic_lib
     std::string dynamic_lib(const std::string& file_name);
     //
-    // compiled
-    std::string compiled(
-        const std::string&  file_name    ,
-        compiled_ir_t&    function_ptr
+    // function_ptr
+    template <typename function_ptr_t>
+    std::string function_ptr(
+        const std::string&  fun_name    ,
+        function_ptr_t&     fun_ptr
     ) const;
 };
 
 } // END_CPPAD_NAMESPACE
+
+// implementation of function_ptr (a template member function)
+# include <cppad/core/llvm/function_ptr.hpp>
 
 # endif

@@ -128,8 +128,8 @@ bool grad_det_minor(void)
     CppAD::uniform_01(nx, matrix);
     //
     // get pointer to compiled version of function
-    CppAD::compiled_ir_t function_ptr;
-    msg = link_obj.compiled(function_name, function_ptr);
+    CppAD::compiled_ir_t fun_ptr;
+    msg = link_obj.function_ptr(function_name, fun_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -139,7 +139,7 @@ bool grad_det_minor(void)
     std::vector<double> input(nx), gradient(nx);;
     for(size_t i = 0; i < nx; ++i)
         input[i] = matrix[i];
-    int32_t error_no = function_ptr(
+    int32_t error_no = fun_ptr(
         int32_t(nx), input.data(), int32_t(nx), gradient.data()
     );
     if( error_no != 0 )

@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_LLVM_COMPILED_HPP
-# define CPPAD_CORE_LLVM_COMPILED_HPP
+# ifndef CPPAD_CORE_LLVM_COMPILED_IR_HPP
+# define CPPAD_CORE_LLVM_COMPILED_IR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
@@ -16,22 +16,23 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin compiled_ir_t$$
 $spell
     llvm
-    ptr
     len
+    ir
+    ptr
 $$
 
 $section C++ Function Type for a Compiled llvm_ir Object$$
 
 $head Syntax$$
-$codei%compiled_ir_t %function_ptr%
+$codei%compiled_ir_t %fun_ptr%
 %$$
-$icode%error_no% = %function_ptr%(%len_input%, %input%, %len_output%, %output%)
+$icode%error_no% = %fun_ptr%(%len_input%, %input%, %len_output%, %output%)
 %$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
-$head function_ptr$$
+$head fun_ptr$$
 This is a pointer to a function compiled, and stored in an object file,
 using $cref llvm_ir_to_object_file$$.
 

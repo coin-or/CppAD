@@ -134,6 +134,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/llvm/compiled_ir.hpp \
 	cppad/core/llvm/ir.hpp \
 	cppad/core/llvm/link.hpp \
+	cppad/core/llvm/function_ptr.hpp \
 	cppad/core/mul.hpp \
 	cppad/core/mul_eq.hpp \
 	cppad/core/near_equal_ext.hpp \

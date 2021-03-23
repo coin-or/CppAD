@@ -196,9 +196,9 @@ bool tst_load(void)
     // load object file
     link_obj.object_file(file_name);
     //
-    // function_ptr
-    CppAD::compiled_ir_t function_ptr;
-    msg = link_obj.compiled(function_name, function_ptr);
+    // fun_ptr
+    CppAD::compiled_ir_t fun_ptr;
+    msg = link_obj.function_ptr(function_name, fun_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -218,7 +218,7 @@ bool tst_load(void)
     // incorrect call to function
     int32_t len_input   = 0;
     int32_t len_output  = 0;
-    int32_t error_no    = function_ptr(
+    int32_t error_no    = fun_ptr(
         len_input, input.data(), len_output, output.data()
     );
     ok &= error_no != 0;
@@ -228,7 +228,7 @@ bool tst_load(void)
     // correct call function
     len_input   = static_cast<int32_t>(np + nx);
     len_output  = static_cast<int32_t>(ny);
-    error_no    = function_ptr(
+    error_no    = fun_ptr(
         len_input, input.data(), len_output, output.data()
     );
     ok &= error_no == 0;
@@ -386,9 +386,9 @@ bool tst_cmath(void)
         return false;
     }
     //
-    // function_ptr
-    CppAD::compiled_ir_t function_ptr;
-    msg = link_obj.compiled(function_name, function_ptr);
+    // fun_ptr
+    CppAD::compiled_ir_t fun_ptr;
+    msg = link_obj.function_ptr(function_name, fun_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -397,7 +397,7 @@ bool tst_cmath(void)
     x[0]             = x[0] + 1.0;
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
-    int32_t error_no = function_ptr(len_x, x.data(), len_y, y.data());
+    int32_t error_no = fun_ptr(len_x, x.data(), len_y, y.data());
     ok &= error_no == 0;
     //
     // check result
