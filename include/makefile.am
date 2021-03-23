@@ -131,7 +131,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/integer.hpp \
 	cppad/core/jacobian.hpp \
 	cppad/core/lu_ratio.hpp \
-	cppad/core/llvm_compiled.hpp \
+	cppad/core/llvm/compiled_ir.hpp \
 	cppad/core/llvm/ir.hpp \
 	cppad/core/llvm/link.hpp \
 	cppad/core/mul.hpp \

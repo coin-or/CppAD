@@ -128,7 +128,7 @@ bool grad_det_minor(void)
     CppAD::uniform_01(nx, matrix);
     //
     // get pointer to compiled version of function
-    CppAD::llvm_compiled_t function_ptr;
+    CppAD::compiled_ir_t function_ptr;
     msg = link_obj.compiled(function_name, function_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";

@@ -154,7 +154,7 @@ This the is the name of the function we are getting a pointer to.
 $head function_ptr$$
 The input value of this argument does not matter.
 Upon return, it is a
-$cref llvm_compiled_t$$ pointer to the corresponding C++ function.
+$cref compiled_ir_t$$ pointer to the corresponding C++ function.
 This function pointer is no longer valid when the $icode link_obj$$ is
 deleted; e.g., drops out of scope.
 
@@ -168,7 +168,7 @@ The file $cref llvm_link_xam.cpp$$ contains an example / test using
 this member function.
 
 $childtable%
-    include/cppad/core/llvm_compiled.hpp
+    include/cppad/core/llvm/compiled_ir.hpp
 %$$
 
 $end
@@ -176,7 +176,7 @@ $end
 // BEGIN_COMPILED_AD_FUN
 std::string llvm_link::compiled(
     const std::string& function_name ,
-    llvm_compiled_t&   function_ptr  ) const
+    compiled_ir_t&   function_ptr  ) const
 // END_COMPILED_AD_FUN
 {   // 2DO: Figure out how to get the message for an llvm::Error
     //
@@ -194,7 +194,7 @@ std::string llvm_link::compiled(
     llvm::JITEvaluatedSymbol symbol = error_or_symbol.get();
     //
     // function_cpp
-    function_ptr = reinterpret_cast<llvm_compiled_t>( symbol.getAddress() );
+    function_ptr = reinterpret_cast<compiled_ir_t>( symbol.getAddress() );
     if( ! function_ptr )
     {   msg += "Error looking up address for function " + function_name;
         return msg;

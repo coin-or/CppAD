@@ -57,7 +57,7 @@ for the target machine; i.e, the machine that is currently executing.
 
 $head Function Type$$
 The function in the object file has the following type:
-$cref llvm_compiled_t$$.
+$cref compiled_ir_t$$.
 
 $head Function Name$$
 The function name is the same as in the graph object for the previous

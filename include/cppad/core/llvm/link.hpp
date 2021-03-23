@@ -12,7 +12,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include <cppad/core/llvm_compiled.hpp>
+# include <cppad/core/llvm/compiled_ir.hpp>
 # include <llvm/ExecutionEngine/Orc/LLJIT.h>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -34,7 +34,7 @@ public:
     // compiled
     std::string compiled(
         const std::string&  file_name    ,
-        llvm_compiled_t&    function_ptr
+        compiled_ir_t&    function_ptr
     ) const;
 };
 

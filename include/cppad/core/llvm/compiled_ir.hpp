@@ -13,17 +13,17 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <cstdint>
 /*
-$begin llvm_compiled_t$$
+$begin compiled_ir_t$$
 $spell
     llvm
     ptr
     len
 $$
 
-$section C++ Function Type for LLVM Compiled Functions$$
+$section C++ Function Type for a Compiled llvm_ir Object$$
 
 $head Syntax$$
-$codei%llvm_compiled_t %function_ptr%
+$codei%compiled_ir_t %function_ptr%
 %$$
 $icode%error_no% = %function_ptr%(%len_input%, %input%, %len_output%, %output%)
 %$$
@@ -32,8 +32,8 @@ $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
 $head function_ptr$$
-This is a function pointer returned by
-$cref llvm_link_compiled$$.
+This is a pointer to a function compiled, and stored in an object file,
+using $cref llvm_ir_to_object_file$$.
 
 $head len_input$$
 This is the length of the input vector which is equal to
@@ -60,7 +60,7 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_PROTOTYPE
-typedef int32_t (*llvm_compiled_t)(int32_t, const double* , int32_t, double*);
+typedef int32_t (*compiled_ir_t)(int32_t, const double* , int32_t, double*);
 // END_PROTOTYPE
 
 } // END_CPPAD_NAMESPACE

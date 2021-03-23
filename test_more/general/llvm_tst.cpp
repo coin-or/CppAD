@@ -197,7 +197,7 @@ bool tst_load(void)
     link_obj.object_file(file_name);
     //
     // function_ptr
-    CppAD::llvm_compiled_t function_ptr;
+    CppAD::compiled_ir_t function_ptr;
     msg = link_obj.compiled(function_name, function_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
@@ -387,7 +387,7 @@ bool tst_cmath(void)
     }
     //
     // function_ptr
-    CppAD::llvm_compiled_t function_ptr;
+    CppAD::compiled_ir_t function_ptr;
     msg = link_obj.compiled(function_name, function_ptr);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
