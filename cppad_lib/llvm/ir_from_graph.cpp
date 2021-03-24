@@ -185,6 +185,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             case graph::atanh_graph_op:
             case graph::cos_graph_op:
             case graph::cosh_graph_op:
+            case graph::erf_graph_op:
+            case graph::erfc_graph_op:
             case graph::exp_graph_op:
             case graph::expm1_graph_op:
             case graph::log1p_graph_op:
@@ -368,6 +370,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             case graph::atanh_graph_op:
             case graph::cos_graph_op:
             case graph::cosh_graph_op:
+            case graph::erf_graph_op:
+            case graph::erfc_graph_op:
             case graph::exp_graph_op:
             case graph::expm1_graph_op:
             case graph::log1p_graph_op:
@@ -412,6 +416,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             case graph::atanh_graph_op:
             case graph::cos_graph_op:
             case graph::cosh_graph_op:
+            case graph::erf_graph_op:
+            case graph::erfc_graph_op:
             case graph::exp_graph_op:
             case graph::expm1_graph_op:
             case graph::log1p_graph_op:

@@ -315,7 +315,7 @@ bool tst_cmath(void)
     using CppAD::vector;
     //
     // nx, x
-    size_t nx = 16;
+    size_t nx = 18;
     vector<double> x(nx);
     x[0]  = 0.2;
     x[1]  = std::cos(x[0]);
@@ -335,6 +335,9 @@ bool tst_cmath(void)
     x[13] = std::exp(x[12]);
     x[14] = 0.8;
     x[15] = std::expm1(x[14]);
+    //
+    x[16] = 0.9;
+    x[17] = 1.0;
     //
     // ax
     vector< AD<double> > ax(nx);
@@ -363,6 +366,9 @@ bool tst_cmath(void)
     ay[13] = log(ax[13]);
     ay[14] = expm1(ax[14]);
     ay[15] = log1p(ax[15]);
+    //
+    ay[16] = erf(ax[16]);
+    ay[17] = erfc(ax[17]);
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -410,10 +416,13 @@ bool tst_cmath(void)
     ok &= y[10] == std::tanh(  x[10] );
     ok &= y[11] == std::atanh( x[11] );
     //
-    ok &= y[12] == std::exp( x[12] );
-    ok &= y[13] == std::log( x[13] );
+    ok &= y[12] == std::exp(   x[12] );
+    ok &= y[13] == std::log(   x[13] );
     ok &= y[14] == std::expm1( x[14] );
     ok &= y[15] == std::log1p( x[15] );
+    //
+    ok &= y[16] == std::erf(  x[16] );
+    ok &= y[17] == std::erfc( x[17] );
     //
     // create object file
     std::string file_name = function_name + ".o";
@@ -471,10 +480,13 @@ bool tst_cmath(void)
     ok &= y[10] == std::tanh(  x[10] );
     ok &= y[11] == std::atanh( x[11] );
     //
-    ok &= y[12] == std::exp( x[12] );
-    ok &= y[13] == std::log( x[13] );
+    ok &= y[12] == std::exp(   x[12] );
+    ok &= y[13] == std::log(   x[13] );
     ok &= y[14] == std::expm1( x[14] );
     ok &= y[15] == std::log1p( x[15] );
+    //
+    ok &= y[16] == std::erf(  x[16] );
+    ok &= y[17] == std::erfc( x[17] );
     //
     return ok;
 }
