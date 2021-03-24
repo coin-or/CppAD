@@ -315,14 +315,21 @@ bool tst_cmath(void)
     using CppAD::vector;
     //
     // nx, x
-    size_t nx = 6;
+    size_t nx = 12;
     vector<double> x(nx);
-    x[0] = 0.2;
-    x[1] = std::cos(x[0]);
-    x[2] = 0.3;
-    x[3] = std::sin(x[2]);
-    x[4] = 0.4;
-    x[5] = std::tan(x[4]);
+    x[0]  = 0.2;
+    x[1]  = std::cos(x[0]);
+    x[2]  = 0.3;
+    x[3]  = std::sin(x[2]);
+    x[4]  = 0.4;
+    x[5]  = std::tan(x[4]);
+    //
+    x[6]  = 0.5;
+    x[7]  = std::cosh(x[0]);
+    x[8]  = 0.6;
+    x[9]  = std::sinh(x[2]);
+    x[10] = 0.7;
+    x[11] = std::tanh(x[4]);
     //
     // ax
     vector< AD<double> > ax(nx);
@@ -333,13 +340,19 @@ bool tst_cmath(void)
     // ny, ay
     size_t ny = nx;
     vector< AD<double> > ay(ny);
-    ay[0] =  cos(ax[0]);
-    ay[1] = acos(ax[1]);
-    ay[2] =  sin(ax[2]);
-    ay[3] = asin(ax[3]);
-    ay[4] =  tan(ax[4]);
-    ay[5] = atan(ax[5]);
+    ay[0]  =  cos(ax[0]);
+    ay[1]  = acos(ax[1]);
+    ay[2]  =  sin(ax[2]);
+    ay[3]  = asin(ax[3]);
+    ay[4]  =  tan(ax[4]);
+    ay[5]  = atan(ax[5]);
     //
+    ay[6]  =  cosh(ax[6]);
+    ay[7]  = acosh(ax[7]);
+    ay[8]  =  sinh(ax[8]);
+    ay[9]  = asinh(ax[9]);
+    ay[10] =  tanh(ax[10]);
+    ay[11] = atanh(ax[11]);
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -373,12 +386,19 @@ bool tst_cmath(void)
     // check
     vector<double> y(nx);
     y = f.Forward(0, x);
-    ok &= y[0] == std::cos(  x[0] );
-    ok &= y[1] == std::acos( x[1] );
-    ok &= y[2] == std::sin(  x[2] );
-    ok &= y[3] == std::asin( x[3] );
-    ok &= y[4] == std::tan(  x[4] );
-    ok &= y[5] == std::atan( x[5] );
+    ok &= y[0]  == std::cos(  x[0] );
+    ok &= y[1]  == std::acos( x[1] );
+    ok &= y[2]  == std::sin(  x[2] );
+    ok &= y[3]  == std::asin( x[3] );
+    ok &= y[4]  == std::tan(  x[4] );
+    ok &= y[5]  == std::atan( x[5] );
+    //
+    ok &= y[6]  == std::cosh(  x[6] );
+    ok &= y[7]  == std::acosh( x[7] );
+    ok &= y[8]  == std::sinh(  x[8] );
+    ok &= y[9]  == std::asinh( x[9] );
+    ok &= y[10] == std::tanh(  x[10] );
+    ok &= y[11] == std::atanh( x[11] );
     //
     // create object file
     std::string file_name = function_name + ".o";
@@ -429,6 +449,12 @@ bool tst_cmath(void)
     ok &= y[4] == std::tan(  x[4] );
     ok &= y[5] == std::atan( x[5] );
     //
+    ok &= y[6]  == std::cosh(  x[6] );
+    ok &= y[7]  == std::acosh( x[7] );
+    ok &= y[8]  == std::sinh(  x[8] );
+    ok &= y[9]  == std::asinh( x[9] );
+    ok &= y[10] == std::tanh(  x[10] );
+    ok &= y[11] == std::atanh( x[11] );
     //
     return ok;
 }
