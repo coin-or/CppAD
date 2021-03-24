@@ -315,19 +315,31 @@ bool tst_cmath(void)
     using CppAD::vector;
     //
     // nx, x
-    size_t nx = 1;
+    size_t nx = 6;
     vector<double> x(nx);
-    x[0] = 2.0;
+    x[0] = 0.2;
+    x[1] = std::cos(x[0]);
+    x[2] = 0.3;
+    x[3] = std::sin(x[2]);
+    x[4] = 0.4;
+    x[5] = std::tan(x[4]);
     //
     // ax
     vector< AD<double> > ax(nx);
-    ax[0] = 2.0;
+    for(size_t i = 0; i < nx; ++i)
+        ax[i] = x[i];
     CppAD::Independent(ax);
     //
     // ny, ay
     size_t ny = nx;
     vector< AD<double> > ay(ny);
-    ay[0] = sin(ax[0]);
+    ay[0] =  cos(ax[0]);
+    ay[1] = acos(ax[1]);
+    ay[2] =  sin(ax[2]);
+    ay[3] = asin(ax[3]);
+    ay[4] =  tan(ax[4]);
+    ay[5] = atan(ax[5]);
+    //
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -361,7 +373,12 @@ bool tst_cmath(void)
     // check
     vector<double> y(nx);
     y = f.Forward(0, x);
-    ok &= y[0] == std::sin( x[0] );
+    ok &= y[0] == std::cos(  x[0] );
+    ok &= y[1] == std::acos( x[1] );
+    ok &= y[2] == std::sin(  x[2] );
+    ok &= y[3] == std::asin( x[3] );
+    ok &= y[4] == std::tan(  x[4] );
+    ok &= y[5] == std::atan( x[5] );
     //
     // create object file
     std::string file_name = function_name + ".o";
@@ -393,15 +410,25 @@ bool tst_cmath(void)
     {   std::cerr << "\n" << msg << "\n";
         return false;
     }
+    //
+    // clean out old value for y
+    for(size_t i = 0; i < ny; ++i)
+        y[i] = std::numeric_limits<double>::quiet_NaN();
+    //
     // call compiled version of function
-    x[0]             = x[0] + 1.0;
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
     int32_t error_no = fun_ptr(len_x, x.data(), len_y, y.data());
     ok &= error_no == 0;
     //
     // check result
-    ok &= y[0] == std::sin( x[0] );
+    ok &= y[0] == std::cos(  x[0] );
+    ok &= y[1] == std::acos( x[1] );
+    ok &= y[2] == std::sin(  x[2] );
+    ok &= y[3] == std::asin( x[3] );
+    ok &= y[4] == std::tan(  x[4] );
+    ok &= y[5] == std::atan( x[5] );
+    //
     //
     return ok;
 }

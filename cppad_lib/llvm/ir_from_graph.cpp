@@ -176,7 +176,24 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     {   graph_op_enum op_enum = graph_op_enum( i_op );
         const char* name = local::graph::op_enum2name[op_enum];
         switch( op_enum )
-        {   case graph::sin_graph_op:
+        {   // unary functions
+            case graph::acos_graph_op:
+            case graph::acosh_graph_op:
+            case graph::asin_graph_op:
+            case graph::asinh_graph_op:
+            case graph::atan_graph_op:
+            case graph::atanh_graph_op:
+            case graph::cos_graph_op:
+            case graph::cosh_graph_op:
+            case graph::exp_graph_op:
+            case graph::expm1_graph_op:
+            case graph::log1p_graph_op:
+            case graph::log_graph_op:
+            case graph::sin_graph_op:
+            case graph::sinh_graph_op:
+            case graph::sqrt_graph_op:
+            case graph::tan_graph_op:
+            case graph::tanh_graph_op:
             op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
                 name, unary_fun_t, empty_attributes
             );
@@ -341,8 +358,25 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         //
         switch( op_enum )
         {   // Unary operators
-            case graph::sin_graph_op:
             case graph::neg_graph_op:
+            //
+            case graph::acos_graph_op:
+            case graph::acosh_graph_op:
+            case graph::asin_graph_op:
+            case graph::asinh_graph_op:
+            case graph::atan_graph_op:
+            case graph::atanh_graph_op:
+            case graph::cos_graph_op:
+            case graph::cosh_graph_op:
+            case graph::exp_graph_op:
+            case graph::expm1_graph_op:
+            case graph::log1p_graph_op:
+            case graph::log_graph_op:
+            case graph::sin_graph_op:
+            case graph::sinh_graph_op:
+            case graph::sqrt_graph_op:
+            case graph::tan_graph_op:
+            case graph::tanh_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1);
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
@@ -370,7 +404,23 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         {   // -------------------------------------------------------------
             // simple operators that translate to one llvm instruction
             // -------------------------------------------------------------
+            case graph::acos_graph_op:
+            case graph::acosh_graph_op:
+            case graph::asin_graph_op:
+            case graph::asinh_graph_op:
+            case graph::atan_graph_op:
+            case graph::atanh_graph_op:
+            case graph::cos_graph_op:
+            case graph::cosh_graph_op:
+            case graph::exp_graph_op:
+            case graph::expm1_graph_op:
+            case graph::log1p_graph_op:
+            case graph::log_graph_op:
             case graph::sin_graph_op:
+            case graph::sinh_graph_op:
+            case graph::sqrt_graph_op:
+            case graph::tan_graph_op:
+            case graph::tanh_graph_op:
             unary_args[0] = graph_ir[ arg[0] ];
             value = builder.CreateCall(
                 op_enum2callee[op_enum], unary_args, op_enum2name[op_enum]

@@ -121,7 +121,24 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     {   graph_op_enum op_enum = graph_op_enum( i_op );
         const char* name = local::graph::op_enum2name[op_enum];
         switch( op_enum )
-        {   case graph::sin_graph_op:
+        {   // unary functions
+            case graph::acos_graph_op:
+            case graph::acosh_graph_op:
+            case graph::asin_graph_op:
+            case graph::asinh_graph_op:
+            case graph::atan_graph_op:
+            case graph::atanh_graph_op:
+            case graph::cos_graph_op:
+            case graph::cosh_graph_op:
+            case graph::exp_graph_op:
+            case graph::expm1_graph_op:
+            case graph::log1p_graph_op:
+            case graph::log_graph_op:
+            case graph::sin_graph_op:
+            case graph::sinh_graph_op:
+            case graph::sqrt_graph_op:
+            case graph::tan_graph_op:
+            case graph::tanh_graph_op:
             // add one to the operaotor value so we can use zero for not found
             name2graph_op.insert( string_pair(name, i_op + 1) );
             break;
