@@ -94,7 +94,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // initialize return valuse as an identifier of this routines
     std::string msg = "llvm_ir::from_graph: ";
     using std::string;
-    using CppAD::graph::graph_op_enum;
+    using graph::graph_op_enum;
+    using CppAD::local::graph::op_enum2name;
     //
     // Assumptions
     if( graph_obj.discrete_name_vec_size() != 0)
@@ -169,9 +170,22 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::AttributeList empty_attributes;
     //
     // llvm_sin
-    llvm::FunctionCallee llvm_sin = module_ir_->getOrInsertFunction(
-        "sin", unary_fun_t, empty_attributes
-    );
+    size_t n_graph_op = size_t( graph::n_graph_op );
+    std::vector<llvm::FunctionCallee> op_enum2callee( n_graph_op );
+    for(size_t i_op = 0; i_op < n_graph_op; ++i_op)
+    {   graph_op_enum op_enum = graph_op_enum( i_op );
+        const char* name = local::graph::op_enum2name[op_enum];
+        switch( op_enum )
+        {   case graph::sin_graph_op:
+            op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
+                name, unary_fun_t, empty_attributes
+            );
+            break;
+
+            default:
+            break;
+        }
+    }
     //
     // function_ir
     // Create the IR function entry and insert this entry into the module
@@ -327,19 +341,19 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         //
         switch( op_enum )
         {   // Unary operators
-            case CppAD::graph::sin_graph_op:
-            case CppAD::graph::neg_graph_op:
+            case graph::sin_graph_op:
+            case graph::neg_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1);
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
             break;
 
             // Binary operators
-            case CppAD::graph::add_graph_op:
-            case CppAD::graph::sub_graph_op:
-            case CppAD::graph::mul_graph_op:
-            case CppAD::graph::div_graph_op:
-            case CppAD::graph::azmul_graph_op:
+            case graph::add_graph_op:
+            case graph::sub_graph_op:
+            case graph::mul_graph_op:
+            case graph::div_graph_op:
+            case graph::azmul_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1);
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
@@ -356,36 +370,35 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         {   // -------------------------------------------------------------
             // simple operators that translate to one llvm instruction
             // -------------------------------------------------------------
-
-            case CppAD::graph::sin_graph_op:
-            // The load / link step is not yet working for this operator.
-            // see test_more/general/llvm_tst.cpp: bool tst_cmath(void)
+            case graph::sin_graph_op:
             unary_args[0] = graph_ir[ arg[0] ];
-            value = builder.CreateCall(llvm_sin, unary_args, "call sin");
+            value = builder.CreateCall(
+                op_enum2callee[op_enum], unary_args, op_enum2name[op_enum]
+            );
             graph_ir.push_back(value);
             break;
 
-            case CppAD::graph::add_graph_op:
+            case graph::add_graph_op:
             value = builder.CreateFAdd(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
 
-            case CppAD::graph::div_graph_op:
+            case graph::div_graph_op:
             value = builder.CreateFDiv(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
 
-            case CppAD::graph::mul_graph_op:
+            case graph::mul_graph_op:
             value = builder.CreateFMul(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
 
-            case CppAD::graph::neg_graph_op:
+            case graph::neg_graph_op:
             value = builder.CreateFNeg(graph_ir[arg[0]]);
             graph_ir.push_back(value);
             break;
 
-            case CppAD::graph::sub_graph_op:
+            case graph::sub_graph_op:
             value = builder.CreateFSub(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
@@ -393,7 +406,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             // ---------------------------------------------------------------
             // azmul
             // --------------------------------------------------------------
-            case CppAD::graph::azmul_graph_op:
+            case graph::azmul_graph_op:
 # ifndef NDEBUG
             ++count_azmul;
             count_azmul_str = std::to_string(count_azmul);

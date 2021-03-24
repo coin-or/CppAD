@@ -292,7 +292,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
             str = operand[1]->getName().str();
             if( str == "sin" )
-                graph_obj.operator_vec_push_back(CppAD::graph::sin_graph_op);
+                graph_obj.operator_vec_push_back(graph::sin_graph_op);
             else
             {   msg += "Cannot call the function " + str;
                 return msg;
@@ -329,32 +329,32 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // put this operator in the graph
             switch( op_code )
             {   case llvm::Instruction::FAdd:
-                graph_obj.operator_vec_push_back( CppAD::graph::add_graph_op );
+                graph_obj.operator_vec_push_back( graph::add_graph_op );
                 break;
 
                 case llvm::Instruction::FSub:
-                graph_obj.operator_vec_push_back( CppAD::graph::sub_graph_op );
+                graph_obj.operator_vec_push_back( graph::sub_graph_op );
                 break;
 
                 case llvm::Instruction::FMul:
                 {   const llvm::Value* left   = operand[0];
                     const llvm::Value* cmp    = llvm_left2cmp.lookup(left);
                     const llvm::Value* select = llvm_cmp2select.lookup(cmp);
-                    CppAD::graph::graph_op_enum op;
+                    graph::graph_op_enum op;
                     if( select == nullptr )
                     {   // this is a normal multiply
-                        op = CppAD::graph::mul_graph_op;
+                        op = graph::mul_graph_op;
                     }
                     else
                     {   // this is an absolute zero multiply
-                        op = CppAD::graph::azmul_graph_op;
+                        op = graph::azmul_graph_op;
                     }
                     graph_obj.operator_vec_push_back(op);
                 }
                 break;
 
                 case llvm::Instruction::FDiv:
-                graph_obj.operator_vec_push_back( CppAD::graph::div_graph_op );
+                graph_obj.operator_vec_push_back( graph::div_graph_op );
                 break;
 
                 default:
@@ -417,7 +417,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             llvm_value2graph_node.insert( pair_size(result , ++result_node) );
             //
             // put this operator in the graph
-            graph_obj.operator_vec_push_back( CppAD::graph::neg_graph_op );
+            graph_obj.operator_vec_push_back( graph::neg_graph_op );
             node = llvm_value2graph_node.lookup(operand[0]);
             CPPAD_ASSERT_UNKNOWN( node != 0 );
             graph_obj.operator_arg_push_back( node );
