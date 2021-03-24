@@ -30,7 +30,10 @@ size_t op_enum2fixed_n_arg[n_graph_op];
 // This routine is called by the first use of the cpp_graph constructor
 // see cpp_grpah.hpp.
 void set_operator_info(void)
-{   typedef std::pair<std::string, graph_op_enum> pair;
+{   // This routine cannot be called in parallel mode
+    CPPAD_ASSERT_UNKNOWN( ! ( CppAD::thread_alloc::in_parallel() ));
+    //
+    typedef std::pair<std::string, graph_op_enum> pair;
     struct op_info {
         graph_op_enum code;
         const char*  name;
