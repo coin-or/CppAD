@@ -145,7 +145,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     bool                     is_var_arg;
     llvm::Type*              result_type;
     //
-    // void (*adfun_t) (double *, double*)
+    // int void (*adfun_t) (int, double *, int, double*)
     param_types = { int_32_t, llvm_double_ptr, int_32_t, llvm_double_ptr };
     is_var_arg  = false;
     result_type = int_32_t;
@@ -153,11 +153,11 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             result_type, param_types, is_var_arg
     );
     //
-    // double (*cmath_t)(double)
+    // double (*unary_fun_t)(double)
     param_types  = { llvm_double };
     is_var_arg   = false;
     result_type  = llvm_double;
-    llvm::FunctionType* cmath_t = llvm::FunctionType::get(
+    llvm::FunctionType* unary_fun_t = llvm::FunctionType::get(
         result_type, param_types, is_var_arg
     );
     //
@@ -165,13 +165,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // used to call c_math funcitons
     std::vector<llvm::Value*> unary_args(1);
     //
-    // cmath_attributes
-    // used to define cmath functions
-    llvm::AttributeList cmath_attributes;
+    // empty_attributes
+    llvm::AttributeList empty_attributes;
     //
     // llvm_sin
     llvm::FunctionCallee llvm_sin = module_ir_->getOrInsertFunction(
-        "sin", cmath_t, cmath_attributes
+        "sin", unary_fun_t, empty_attributes
     );
     //
     // function_ir
