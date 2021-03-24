@@ -14,6 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/core/llvm/link.hpp>
+# include <cppad/local/llvm_error_msg.hpp>
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -74,8 +75,7 @@ std::string llvm_link::function_ptr(
     const std::string& fun_name  ,
     function_ptr_t&    fun_ptr   ) const
 // END_PROTOTYPE
-{   // 2DO: Figure out how to get the message for an llvm::Error
-    //
+{   //
     // initialize msg
     std::string msg = "llvm_link::functon_ptr:";
     //
@@ -84,7 +84,8 @@ std::string llvm_link::function_ptr(
         jit_->lookup(fun_name);
     llvm::Error error = error_or_symbol.takeError();
     if( error )
-    {   msg += "Error searching for " + fun_name + " in object file\n";
+    {   msg += "Error searching for " + fun_name + " in llvm_link object\n";
+        msg += local::llvm_error_msg(error);
         return msg;
     }
     llvm::JITEvaluatedSymbol symbol = error_or_symbol.get();
@@ -92,7 +93,7 @@ std::string llvm_link::function_ptr(
     // fun_ptr
     fun_ptr = reinterpret_cast<function_ptr_t>( symbol.getAddress() );
     if( ! fun_ptr )
-    {   msg += "Error looking up address for function " + fun_name;
+    {   msg += "Error getting address for function " + fun_name;
         return msg;
     }
     //
