@@ -14,7 +14,7 @@ var list_up0 = [
 var list_current0 = [
 'base_identical.htm#EqualOpSeq',
 'base_identical.htm#EqualOpSeq.The Simple Case',
-'base_identical.htm#EqualOpSeq.More Complicated Cases',
+'base_identical.htm#EqualOpSeq.More Complicated Case',
 'base_identical.htm#Identical',
 'base_identical.htm#Identical.IdenticalCon',
 'base_identical.htm#Identical.Prototypes',

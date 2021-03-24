@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ AD Graph Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ AD Graph Constructor">
-<meta name="keywords" id="keywords" content=" c++ ad graph constructor syntax function_name n_dynamic_ind n_variable_ind constant_vec operator_vec operator_arg dependent_vec ">
+<meta name="keywords" id="keywords" content=" c++ ad graph constructor syntax function_name n_dynamic_ind n_variable_ind constant_vec operator_vec operator_arg dependent_vec parallel mode ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,7 @@ A:active { color : purple }
 <option>operator_vec</option>
 <option>operator_arg</option>
 <option>dependent_vec</option>
+<option>Parallel Mode</option>
 </select>
 </td>
 </tr></table><br>
@@ -150,6 +151,14 @@ is initialized to the empty string.
 <br>
 <a href="cpp_ad_graph.htm#dependent_vec" target="_top"><span style='white-space: nowrap'>dependent_vec</span></a>
  is initialized as empty.
+
+<br>
+<br>
+<b><big><a name="Parallel Mode" id="Parallel Mode">Parallel Mode</a></big></b>
+<br>
+The first use of the <code><font color="blue">cpp_graph</font></code> constructor
+cannot be in <a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ execution mode.
 
 
 <hr>Input File: include/cppad/core/graph/cpp_graph.hpp

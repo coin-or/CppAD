@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Base Type Requirements for Identically Equal Comparisons</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Base Type Requirements for Identically Equal Comparisons">
-<meta name="keywords" id="keywords" content=" base type requirements identically equal comparisons equalopseq the simple case more complicated cases identical identicalcon prototypes functions examples ">
+<meta name="keywords" id="keywords" content=" base type requirements identically equal comparisons equalopseq the simple case more complicated identical identicalcon prototypes functions examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,7 +67,7 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>EqualOpSeq</option>
 <option>---..The Simple Case</option>
-<option>---..More Complicated Cases</option>
+<option>---..More Complicated Case</option>
 <option>Identical</option>
 <option>---..IdenticalCon</option>
 <option>---..Prototypes</option>
@@ -145,33 +145,43 @@ For example, see
 
 <br>
 <br>
-<big><a name="EqualOpSeq.More Complicated Cases" id="EqualOpSeq.More Complicated Cases">More Complicated Cases</a></big>
+<big><a name="EqualOpSeq.More Complicated Case" id="EqualOpSeq.More Complicated Case">More Complicated Case</a></big>
 <br>
 The variables
 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
  and 
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
- are not identically equal in the following case
-(which CppAD automatically defines <code><font color="blue">EqualOpSeq</font></code> for):
+ are not identically equal in the following case:
+<ol type="1"><li>
 The type 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
  is 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
-,
+.
+</li><li>
 
+The following assignment made using type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+: 
 <code><i><font color="black"><span style='white-space: nowrap'>x[0]&nbsp;=&nbsp;x[1]&nbsp;=&nbsp;1.</span></font></i></code>
 ,
-then <a href="independent.htm" target="_top"><span style='white-space: nowrap'>independent</span></a>
- is used to make 
+</li><li>
+
+The <a href="independent.htm" target="_top"><span style='white-space: nowrap'>independent</span></a>
+ operations is used to make 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- the independent
-variable vector,
-and then 
+
+the independent variable vector,
+</li><li>
+
+During the corresponding recording, 
 <code><i><font color="black"><span style='white-space: nowrap'>u&nbsp;=&nbsp;x[0]</span></font></i></code>
 , 
 <code><i><font color="black"><span style='white-space: nowrap'>v&nbsp;=&nbsp;x[1]</span></font></i></code>
-,
+.
+</li></ol>
+
 Note that during a future <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
  calculation,
 
@@ -200,36 +210,8 @@ A
 when used in an 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  operation sequence.
-It is however still possible for a parameter to change its value.
-For example,
-the 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- value 
-<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
- is not identically constant
-in the following case
-(which CppAD automatically defines <code><font color="blue">IdenticalCon</font></code> for):
-The type 
-<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
- is 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code>
-,
-
-<code><i><font color="black"><span style='white-space: nowrap'>x[0]&nbsp;=&nbsp;1.</span></font></i></code>
-,
-then <a href="independent.htm" target="_top"><span style='white-space: nowrap'>independent</span></a>
- is used to make 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- the independent
-variable vector,
-and then 
-<code><i><font color="black"><span style='white-space: nowrap'>u&nbsp;=&nbsp;x[0]</span></font></i></code>
-,
-Note that during a future <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
- calculation,
-
-<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
- could correspond to different values.
+It is however still possible for a parameter to change its value; e.g.,
+see the more complicated case above.
 
 <br>
 <br>

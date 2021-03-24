@@ -21,7 +21,8 @@ var list_current0 = [
 'cpp_graph_ctor.htm#constant_vec',
 'cpp_graph_ctor.htm#operator_vec',
 'cpp_graph_ctor.htm#operator_arg',
-'cpp_graph_ctor.htm#dependent_vec'
+'cpp_graph_ctor.htm#dependent_vec',
+'cpp_graph_ctor.htm#Parallel Mode'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
