@@ -86,6 +86,10 @@ $cref/operator_arg/cpp_ad_graph/operator_arg/$$ is initialized as empty.
 $head dependent_vec$$
 $cref/dependent_vec/cpp_ad_graph/dependent_vec/$$ is initialized as empty.
 
+$head Parallel Mode$$
+The first use of the $code cpp_graph$$ constructor
+cannot be in $cref/parallel/ta_in_parallel/$$ execution mode.
+
 $end
 --------------------------------------------------------------------------------
 */
@@ -104,7 +108,8 @@ public:
         return;
     }
     cpp_graph(void)
-    {   static bool first = true;
+    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+        static bool first = true;
         if( first )
         {   first = false;
             CPPAD_ASSERT_UNKNOWN( local::graph::op_name2enum.size() == 0 );

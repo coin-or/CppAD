@@ -36,6 +36,12 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 03-24$$
+The C++ AD graph constructor, $cref cpp_graph_ctor$$,
+cannot be called the first tile in parallel mode.
+This condition has been added to the documentation
+and assets were added to make sure it is true.
+
 $head 03-11$$
 Improve the discussion of identically equal; see
 $cref/more complicated case/base_identical/EqualOpSeq/More Complicated Case/$$.
