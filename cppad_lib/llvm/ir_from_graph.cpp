@@ -169,7 +169,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // empty_attributes
     llvm::AttributeList empty_attributes;
     //
-    // llvm_sin
+    // op_enum2callee
     size_t n_graph_op = size_t( graph::n_graph_op );
     std::vector<llvm::FunctionCallee> op_enum2callee( n_graph_op );
     for(size_t i_op = 0; i_op < n_graph_op; ++i_op)

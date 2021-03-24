@@ -82,7 +82,8 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_TO_GRAPH
 std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
 // END_TO_GRAPH
-{   //
+{   using graph::graph_op_enum;
+    //
     // initialize return value with name of this routine
     std::string msg = "llvm_ir::to_graph: ";
     //
@@ -99,16 +100,36 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // map llvm::Value* double* to a dependent variable index
     llvm::DenseMap<const llvm::Value*, size_t>  llvm_ptr2dep_var_ind;
     //
+    // The maps above assume the default constructor for size_t yeilds zero
+    CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
+    //
     // maps used to detect azmul operators
     llvm::DenseMap<const llvm::Value*, const llvm::Value*>  llvm_left2cmp;
     llvm::DenseMap<const llvm::Value*, const llvm::Value*>  llvm_cmp2select;
     //
-    // Tse use of masps assumes the default constructor for size_t yeilds zero
-    CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
+    // map from a name to a graph operator
+    llvm::StringMap<size_t> name2graph_op;
     //
     // types used by interface to DenseMap
     typedef std::pair<const llvm::Value*, size_t>             pair_size;
     typedef std::pair<const llvm::Value*, const llvm::Value*> pair_value;
+    typedef std::pair<llvm::StringRef,    size_t>             string_pair;
+    //
+    // name2graph_op
+    size_t n_graph_op = size_t( graph::n_graph_op );
+    for(size_t i_op = 0; i_op < n_graph_op; ++i_op)
+    {   graph_op_enum op_enum = graph_op_enum( i_op );
+        const char* name = local::graph::op_enum2name[op_enum];
+        switch( op_enum )
+        {   case graph::sin_graph_op:
+            // add one to the operaotor value so we can use zero for not found
+            name2graph_op.insert( string_pair(name, i_op + 1) );
+            break;
+
+            default:
+            break;
+        }
+    }
     //
 # ifndef NDEBUG
     //
@@ -253,6 +274,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         const uint64_t*          uint64;
         size_t                   node;
         size_t                   index;
+        size_t                   i_op;
         std::string              str;
         //
         // count or instructions
@@ -290,13 +312,14 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
             CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
-            str = operand[1]->getName().str();
-            if( str == "sin" )
-                graph_obj.operator_vec_push_back(graph::sin_graph_op);
-            else
+            str  = operand[1]->getName().str();
+            i_op = name2graph_op.lookup( str.c_str() );
+            if( i_op == 0 )
             {   msg += "Cannot call the function " + str;
                 return msg;
             }
+            // subtract one that was added so zero means not defined
+            graph_obj.operator_vec_push_back( graph_op_enum(i_op - 1) );
             //
             // mapping from this result to the correspondign new node in graph
             llvm_value2graph_node.insert( pair_size(result , ++result_node) );
@@ -340,7 +363,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 {   const llvm::Value* left   = operand[0];
                     const llvm::Value* cmp    = llvm_left2cmp.lookup(left);
                     const llvm::Value* select = llvm_cmp2select.lookup(cmp);
-                    graph::graph_op_enum op;
+                    graph_op_enum op;
                     if( select == nullptr )
                     {   // this is a normal multiply
                         op = graph::mul_graph_op;
