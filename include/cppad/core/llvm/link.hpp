@@ -23,7 +23,8 @@ private:
     std::unique_ptr<llvm::orc::LLJIT> jit_;
 public:
     // ctor
-    llvm_link(void);
+    llvm_link(void) = delete;
+    llvm_link(std::string& msg);
     //
     // object_file
     std::string object_file(const std::string& file_name);

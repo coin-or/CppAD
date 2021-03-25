@@ -30,10 +30,15 @@ bool link_lib(void)
 {   bool ok = true;
     //
     // link_obj
-    CppAD::llvm_link link_obj;
+    std::string msg;
+    CppAD::llvm_link link_obj(msg);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
     //
     // load the standard math library (for cosine function)
-    std::string msg = link_obj.dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
+    msg = link_obj.dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
     if( msg != "")
     {   std::cout << "\n" << msg << "\n";
         return false;

@@ -188,13 +188,25 @@ bool tst_load(void)
     //
     // create object file
     std::string file_name = function_name + ".o";
-    ir_obj.to_object_file(file_name);
+    msg = ir_obj.to_object_file(file_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
     //
     // link_obj
-    CppAD::llvm_link link_obj;
+    CppAD::llvm_link link_obj(msg);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
     //
     // load object file
-    link_obj.object_file(file_name);
+    msg = link_obj.object_file(file_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
     //
     // fun_ptr
     CppAD::compiled_ir_t fun_ptr;
@@ -433,7 +445,11 @@ bool tst_cmath(void)
     }
     //
     // load the object file
-    CppAD::llvm_link link_obj;
+    CppAD::llvm_link link_obj(msg);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
     msg = link_obj.object_file(file_name);
     if( msg != "" )
     {   std::cout << "\n" << msg << "\n";

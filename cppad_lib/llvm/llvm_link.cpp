@@ -24,37 +24,46 @@ $$
 $section Create an LLVM Object File Linker$$
 
 $head Syntax$$
-$codei%llvm_link %link_obj%;%$$
+$codei%llvm_link %link_obj%(%msg%);%$$
 
 $head Purpose$$
 This creates the empty $code llvm_link$$ object $icode link_obj$$.
+
+$head msg$$
+If input value of $icode msg$$ does not matter.
+If it is the empty string upon return, no error was detected.
+Otherwise it is an error message and $icode link_obj$$ cannot be used.
 
 $children%
     example/llvm/link_lib.cpp%
     example/llvm/link_adfun.cpp
 %$$
+
 $head Example$$
 The files $cref llvm_link_lib.cpp$$, $cref llvm_link_adfun.cpp$$
 contain examples / tests using this member function.
 
 $end
 */
-llvm_link::llvm_link(void)
-:
-jit_( nullptr )
-{   //
+// BEGIN_CTOR
+llvm_link::llvm_link(std::string& msg)
+// END_CTOR
+{   msg = "llvm_link:";
+    //
     // jit_
     llvm::Expected< std::unique_ptr<llvm::orc::LLJIT> > error_or_link =
         llvm::orc::LLJITBuilder().create();
     llvm::Error error = error_or_link.takeError();
     //
     if( error )
-    {   // Error condition that must be checked for by other member functions
-        CPPAD_ASSERT_UNKNOWN( jit_ == nullptr);
+    {   msg += local::llvm_error_msg(error);
+        jit_ = nullptr;
         return;
     }
     jit_ = std::move( error_or_link.get() );
     CPPAD_ASSERT_UNKNOWN( jit_ != nullptr );
+    //
+    msg = "";
     return;
 }
 /*

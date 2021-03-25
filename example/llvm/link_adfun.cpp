@@ -101,7 +101,11 @@ bool link_adfun(void)
     ir_obj.to_object_file(file_name);
     //
     // link_obj
-    CppAD::llvm_link link_obj;
+    CppAD::llvm_link link_obj(msg);
+    if( msg != "")
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
     //
     // load object file
     msg = link_obj.object_file(file_name);
