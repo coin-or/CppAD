@@ -384,7 +384,7 @@ bool tst_cmath(void)
     ay[16] = erf(ax[16]);
     ay[17] = erfc(ax[17]);
     ay[18] = fabs(ax[18]);
-    ay[19] = fabs(ax[19]);
+    ay[19] = sign(ax[19]);
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -440,7 +440,7 @@ bool tst_cmath(void)
     ok &= y[16] == std::erf(  x[16] );
     ok &= y[17] == std::erfc( x[17] );
     ok &= y[18] == std::fabs( x[18] );
-    ok &= y[19] == std::fabs( x[19] );
+    ok &= y[19] == CppAD::sign( x[19] );
     //
     // create object file
     std::string file_name = function_name + ".o";
@@ -503,7 +503,7 @@ bool tst_cmath(void)
     ok &= y[16] == std::erf(  x[16] );
     ok &= y[17] == std::erfc( x[17] );
     ok &= y[18] == std::fabs( x[18] );
-    ok &= y[19] == std::fabs( x[19] );
+    ok &= y[19] == CppAD::sign( x[19] );
     //
     return ok;
 }

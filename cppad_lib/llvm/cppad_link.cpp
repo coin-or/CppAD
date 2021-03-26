@@ -32,11 +32,17 @@ of the function $codei%std::%unary_fun%$$ at the argument $icode x$$.
 
 $head unary_fun$$
 Only the following functions need linking (so far):
-$code fabs$$.
+$code fabs$$,
+$code sign$$.
 
 $end
 */
 # include <cmath>
 
+// fabs
 extern "C" double cppad_link_fabs(double x)
 {   return std::fabs(x); }
+//
+// sign
+extern "C" double cppad_link_sign(double x)
+{   return double(x > 0.0) - double(x < 0.0); }
