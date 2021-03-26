@@ -155,10 +155,16 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     );
     //
     // double (*unary_fun_t)(double)
+    // double (*binary_fun_t)(double)
     param_types  = { llvm_double };
     is_var_arg   = false;
     result_type  = llvm_double;
     llvm::FunctionType* unary_fun_t = llvm::FunctionType::get(
+        result_type, param_types, is_var_arg
+    );
+    //
+    param_types  = { llvm_double, llvm_double };
+    llvm::FunctionType* binary_fun_t = llvm::FunctionType::get(
         result_type, param_types, is_var_arg
     );
     //
@@ -192,7 +198,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             case graph::expm1_graph_op:
             case graph::log1p_graph_op:
             case graph::log_graph_op:
-            case graph::pow_graph_op:
             case graph::sin_graph_op:
             case graph::sinh_graph_op:
             case graph::sqrt_graph_op:
@@ -207,6 +212,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             case graph::abs_graph_op:
             op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
                 "cppad_link_fabs", unary_fun_t, empty_attributes
+            );
+            break;
+            //
+            // pow
+            case graph::pow_graph_op:
+            op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
+                name, binary_fun_t, empty_attributes
             );
             break;
             //
@@ -466,32 +478,33 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             );
             graph_ir.push_back(value);
             break;
-
+            //
+            // binary operators
             case graph::add_graph_op:
             value = builder.CreateFAdd(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
-
+            //
             case graph::div_graph_op:
             value = builder.CreateFDiv(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
-
+            //
             case graph::mul_graph_op:
             value = builder.CreateFMul(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
-
+            //
             case graph::neg_graph_op:
             value = builder.CreateFNeg(graph_ir[arg[0]]);
             graph_ir.push_back(value);
             break;
-
+            //
             case graph::sub_graph_op:
             value = builder.CreateFSub(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
-
+            //
             // ---------------------------------------------------------------
             // azmul
             // --------------------------------------------------------------

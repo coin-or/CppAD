@@ -507,6 +507,107 @@ bool tst_unary(void)
     //
     return ok;
 }
+// -----------------------------------------------------------------------------
+// tst_binary
+bool tst_binary(void)
+{   bool ok = true;
+    using CppAD::AD;
+    using CppAD::vector;
+    //
+    // nx, x
+    size_t nx = 2;
+    vector<double> x(nx);
+    x[0]  = 0.2;
+    x[1]  = 0.3;
+    //
+    // ax
+    vector< AD<double> > ax(nx);
+    for(size_t i = 0; i < nx; ++i)
+        ax[i] = x[i];
+    CppAD::Independent(ax);
+    //
+    // ny, ay
+    size_t ny = nx / 2;
+    vector< AD<double> > ay(ny);
+    ay[0]  =  pow(ax[0], ax[1] );
+    //
+    // f
+    CppAD::ADFun<double> f(ax, ay);
+    std::string function_name = "llvm_tst";
+    f.function_name_set(function_name);
+    //
+    // graph_obj
+    CppAD::cpp_graph graph_obj;
+    f.to_graph(graph_obj);
+    //
+    // ir_obj
+    CppAD::llvm_ir ir_obj;
+    std::string msg = ir_obj.from_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    // optimize it
+    ir_obj.optimize();
+    //
+    // back to graph
+    msg = ir_obj.to_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // back to function
+    f.from_graph(graph_obj);
+    //
+    // check
+    vector<double> y(ny);
+    y = f.Forward(0, x);
+    ok &= y[0]  == std::pow(  x[0], x[1] );
+    //
+    // create object file
+    std::string file_name = function_name + ".o";
+    msg = ir_obj.to_object_file(file_name);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // load the object file
+    CppAD::llvm_link link_obj(msg);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    msg = link_obj.object_file(file_name);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // fun_ptr
+    CppAD::compiled_ir_t fun_ptr;
+    msg = link_obj.function_ptr(function_name, fun_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // clean out old value for y
+    for(size_t i = 0; i < ny; ++i)
+        y[i] = std::numeric_limits<double>::quiet_NaN();
+    //
+    // call compiled version of function
+    int32_t len_x    = int32_t (nx);
+    int32_t len_y    = int32_t (ny);
+    int32_t error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+    ok &= error_no == 0;
+    //
+    // check result
+    ok &= y[0] == std::pow(  x[0], x[1] );
+    //
+    return ok;
+}
 
 } // END_EMPTY_NAMESPACE
 
@@ -516,5 +617,6 @@ bool llvm_tst(void)
     ok     &= tst_load();
     ok     &= tst_azmul();
     ok     &= tst_unary();
+    ok     &= tst_binary();
     return ok;
 }
