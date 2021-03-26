@@ -145,6 +145,10 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             name2graph_op.insert( string_pair(name, i_op + 1) );
             break;
 
+            case graph::abs_graph_op:
+            name2graph_op.insert( string_pair("cppad_link_fabs", i_op + 1) );
+            break;
+
             default:
             break;
         }

@@ -176,7 +176,15 @@ cd build
 if ! make cppad_lib
 then
     echo 'test_one.sh: Error during make cppad_lib in build directory'
-    exit
+    exit 1
+fi
+if [ @cppad_has_llvm@ == 1 ]
+then
+    if ! make cppad_link
+    then
+        echo 'test_one.sh: Error during make cppad_link in build directory'
+        exit 1
+    fi
 fi
 cd ..
 # --------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 # -----------------------------------------------------------------------------
 SET(llvm_soruce_list "")
 IF( cppad_has_llvm )
+    # BEGIN_SORT_THIS_LINE_PLUS_2
     SET(llvm_source_list
         llvm/ir_ctor.cpp
         llvm/ir_from_graph.cpp
@@ -24,6 +25,7 @@ IF( cppad_has_llvm )
         llvm/dynamic_lib.cpp
         llvm/error_msg.cpp
     )
+    # END_SORT_THIS_LINE_MINUS_2
     # llvm_config
     FIND_PROGRAM(
         llvm_config
@@ -110,16 +112,27 @@ set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
     MESSAGE( STATUS "Windows system so building static cppad_lib")
     ADD_LIBRARY( cppad_lib STATIC ${source_list} )
+    IF( cppad_has_llvm )
+        ADD_LIBRARY( cppad_link STATIC llvm/cppad_link.cpp )
+    ENDIF( cppad_has_llvm )
 ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
     MESSAGE( STATUS "Not Windows system so building shared cppad_lib")
     ADD_LIBRARY( cppad_lib SHARED ${source_list} )
     SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )
+    IF( cppad_has_llvm )
+        ADD_LIBRARY( cppad_link SHARED llvm/cppad_link.cpp )
+        SET_TARGET_PROPERTIES(
+            cppad_link PROPERTIES SOVERSION ${soversion}
+        )
+    ENDIF( cppad_has_llvm )
     #
     FIND_LIBRARY(dl_LIBRARY dl)
     IF( dl_LIBRARY )
         TARGET_LINK_LIBRARIES(cppad_lib ${dl_LIBRARY})
     ENDIF( dl_LIBRARY )
 ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+#
+# cppad_link is used for runtime (JIT) linking
 IF( cppad_has_llvm )
     TARGET_LINK_LIBRARIES(cppad_lib ${llvm_libs} )
 ENDIF( cppad_has_llvm )
@@ -130,3 +143,6 @@ ENDIF( cppad_has_llvm )
 #   LIBRARY DESTINATION lib
 #   ARCHIVE DESTINATION lib/static)
 INSTALL(TARGETS cppad_lib DESTINATION ${cppad_abs_libdir})
+IF( cppad_has_llvm )
+    INSTALL(TARGETS cppad_link DESTINATION ${cppad_abs_libdir})
+ENDIF( cppad_has_llvm )

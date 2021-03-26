@@ -11,12 +11,22 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 /*
 $begin llvm_link_lib.cpp$$
+$spell
+    llvm
+    obj
+    cos
+$$
 
 $section Example Linking a Library Function$$
 
-$head CPPAD_STD_MATH_LIBRARY_PATH$$
-This is the path to the standard math library which is used
-by this example (to access the $code sin$$ function).
+$head Standard Math Library$$
+is automatically included using
+$codei%
+    %link_obj%.dynamic_lib("%path%");
+%$$
+where $icode path$$ is the path to the standard math library; see
+The $cref/llvm_link constructor/llvm_link_ctor/Standard Math Library/$$.
+This example calls the $code cos$$ function which is in this library.
 
 $head Source Code$$
 $srcthisfile%8%// BEGIN C++%// END C++%1%$$
@@ -34,13 +44,6 @@ bool link_lib(void)
     CppAD::llvm_link link_obj(msg);
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
-        return false;
-    }
-    //
-    // load the standard math library (for cosine function)
-    msg = link_obj.dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
-    if( msg != "")
-    {   std::cout << "\n" << msg << "\n";
         return false;
     }
     //

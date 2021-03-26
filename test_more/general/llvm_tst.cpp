@@ -456,13 +456,6 @@ bool tst_cmath(void)
         return false;
     }
     //
-    // link the C++ standard math library
-    msg = link_obj.dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
-    if( msg != "" )
-    {   std::cout << "\n" << msg << "\n";
-        return false;
-    }
-    //
     // fun_ptr
     CppAD::compiled_ir_t fun_ptr;
     msg = link_obj.function_ptr(function_name, fun_ptr);

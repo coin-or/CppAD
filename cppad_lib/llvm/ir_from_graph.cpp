@@ -201,6 +201,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             );
             break;
 
+            case graph::abs_graph_op:
+            op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
+                "cppad_link_fabs", unary_fun_t, empty_attributes
+            );
+            break;
+
             default:
             break;
         }
@@ -360,6 +366,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         //
         switch( op_enum )
         {   // Unary operators
+            case graph::abs_graph_op:
             case graph::neg_graph_op:
             //
             case graph::acos_graph_op:
@@ -408,6 +415,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         {   // -------------------------------------------------------------
             // simple operators that translate to one llvm instruction
             // -------------------------------------------------------------
+            case graph::abs_graph_op:
             case graph::acos_graph_op:
             case graph::acosh_graph_op:
             case graph::asin_graph_op:

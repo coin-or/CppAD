@@ -34,6 +34,10 @@ If input value of $icode msg$$ does not matter.
 If it is the empty string upon return, no error was detected.
 Otherwise it is an error message and $icode link_obj$$ cannot be used.
 
+$head Standard Math Library$$
+The standard math library is automatically included in
+$icode link_obj$$ during the constructor.
+
 $children%
     example/llvm/link_lib.cpp%
     example/llvm/link_adfun.cpp
@@ -63,7 +67,13 @@ llvm_link::llvm_link(std::string& msg)
     jit_ = std::move( error_or_link.get() );
     CPPAD_ASSERT_UNKNOWN( jit_ != nullptr );
     //
-    msg = "";
+    // link the standard math library
+    msg = dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
+    if( msg != "" )
+    {   jit_ = nullptr;
+        return;
+    }
+    //
     return;
 }
 /*
