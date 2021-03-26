@@ -410,6 +410,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
             break;
 
+            // Conditional Expressions
+            case graph::cexp_eq_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 4 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 1);
+            CPPAD_ASSERT_UNKNOWN( n_str == 0 );
+            break;
+
             default:
             msg += "graph_obj has following unsupported operator ";
             msg += local::graph::op_enum2name[op_enum];
@@ -417,6 +424,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         }
 # endif
         llvm::Value* value;
+        llvm::Value* compare;
         switch( op_enum )
         {   // -------------------------------------------------------------
             // simple operators that translate to one llvm instruction
@@ -485,6 +493,18 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             //
             case graph::sub_graph_op:
             value = builder.CreateFSub(graph_ir[arg[0]], graph_ir[arg[1]]);
+            graph_ir.push_back(value);
+            break;
+            // --------------------------------------------------------------
+            // Contitional Expressions
+            // --------------------------------------------------------------
+            case graph::cexp_eq_graph_op:
+            compare = builder.CreateFCmpOEQ(
+                graph_ir[arg[0]], graph_ir[arg[1]]
+            );
+            value = builder.CreateSelect(
+                compare, graph_ir[arg[2]], graph_ir[arg[3]]
+            );
             graph_ir.push_back(value);
             break;
             //

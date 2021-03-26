@@ -75,6 +75,7 @@ $end
 # include <llvm/IR/Instructions.h>
 # include <llvm/IR/InstIterator.h>
 # include <llvm/IR/Constants.h>
+# include <llvm/IR/InstrTypes.h>
 
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -100,6 +101,15 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // map llvm::Value* double* to a dependent variable index
     llvm::DenseMap<const llvm::Value*, size_t>  llvm_ptr2dep_var_ind;
     //
+    // map compare operator result to operands
+    struct compare_info {
+        llvm::CmpInst::Predicate pred;
+        llvm::Value*             left;
+        llvm::Value*             right;
+    };
+    llvm::DenseMap<const llvm::Value*, compare_info>  llvm_compare2info;
+
+    //
     // The maps above assume the default constructor for size_t yeilds zero
     CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
     //
@@ -107,8 +117,9 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     llvm::StringMap<size_t> name2graph_op;
     //
     // types used by interface to DenseMap
-    typedef std::pair<const llvm::Value*, size_t>             value_size;
-    typedef std::pair<llvm::StringRef,    size_t>             string_size;
+    typedef std::pair<const llvm::Value*, size_t>         value_size;
+    typedef std::pair<llvm::StringRef,    size_t>         string_size;
+    typedef std::pair<const llvm::Value*, compare_info>   value_compare_info;
     //
     // name2graph_op
     size_t n_graph_op = size_t( graph::n_graph_op );
@@ -193,11 +204,9 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     CppAD::vector<llvm::Type::TypeID> type_id;
     //
     // The zero floating point constant
-# ifndef NDEBUG
-    llvm::Value* fp_zero = llvm::ConstantFP::get(
-        *context_ir_, llvm::APFloat(0.0)
-    );
-# endif
+    // llvm::Value* fp_zero = llvm::ConstantFP::get(
+    //   *context_ir_, llvm::APFloat(0.0)
+    //  );
     //
     // First Pass
     // determine the floating point constants in the graph
@@ -284,7 +293,9 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         //
         // op_code values are defined in llvm/IR/Instructions.def
         switch( op_code )
-        {   // --------------------------------------------------------------
+        {
+            //
+            // --------------------------------------------------------------
             case llvm::Instruction::Load:
             // This instruction is only used to load the first element
             // in the input vector.
@@ -342,10 +353,6 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             break;
             //
             // --------------------------------------------------------------
-            case llvm::Instruction::FCmp:
-            break;
-            //
-            // --------------------------------------------------------------
             case llvm::Instruction::FAdd:
             case llvm::Instruction::FSub:
             case llvm::Instruction::FMul:
@@ -386,6 +393,21 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             {   node = llvm_value2graph_node.lookup(operand[i]);
                 CPPAD_ASSERT_UNKNOWN( node != 0 );
                 graph_obj.operator_arg_push_back( node );
+            }
+            break;
+            // --------------------------------------------------------------
+            case llvm::Instruction::FCmp:
+            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
+            CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
+            CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::DoubleTyID );
+            {   const llvm::CmpInst* cmp_inst =
+                    llvm::dyn_cast<llvm::CmpInst>(&*itr);
+                compare_info cmp_info = {
+                    cmp_inst->getPredicate(), operand[0], operand[1]
+                };
+                llvm_compare2info.insert(
+                    value_compare_info(result, cmp_info)
+                );
             }
             break;
             //
@@ -455,15 +477,29 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // returns int32_t error_no
             CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
             break;
-            //
             // --------------------------------------------------------------
             case llvm::Instruction::Select:
             CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
-            CPPAD_ASSERT_UNKNOWN( operand[1] == fp_zero );
-            {   const llvm::Value* mul = operand[2];
-                node  = llvm_value2graph_node.lookup(mul);
-                llvm_value2graph_node.insert( value_size(result, node ) );
+            {   llvm::Value* compare = operand[0];
+                compare_info cmp_info = llvm_compare2info.lookup(compare);
+                //
+                // cexp_eq_graph_op
+                CPPAD_ASSERT_UNKNOWN(cmp_info.pred == llvm::CmpInst::FCMP_OEQ);
+                graph_obj.operator_vec_push_back( graph::cexp_eq_graph_op );
+                // left
+                node = llvm_value2graph_node.lookup( cmp_info.left );
+                graph_obj.operator_arg_push_back(node);
+                // right
+                node = llvm_value2graph_node.lookup( cmp_info.right );
+                graph_obj.operator_arg_push_back(node);
+                // if_true
+                node = llvm_value2graph_node.lookup( operand[1] );
+                graph_obj.operator_arg_push_back(node);
+                // if_false
+                node = llvm_value2graph_node.lookup( operand[2] );
+                graph_obj.operator_arg_push_back(node);
             }
+            llvm_value2graph_node.insert( value_size(result , ++result_node) );
             break;
             //
             // --------------------------------------------------------------
