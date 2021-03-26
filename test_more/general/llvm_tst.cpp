@@ -320,8 +320,8 @@ bool tst_azmul(void)
     return ok;
 }
 // -----------------------------------------------------------------------------
-// tst_cmath
-bool tst_cmath(void)
+// tst_unary
+bool tst_unary(void)
 {   bool ok = true;
     using CppAD::AD;
     using CppAD::vector;
@@ -515,6 +515,6 @@ bool llvm_tst(void)
     ok     &= tst_llvm_ir();
     ok     &= tst_load();
     ok     &= tst_azmul();
-    ok     &= tst_cmath();
+    ok     &= tst_unary();
     return ok;
 }

@@ -14,10 +14,6 @@ $begin llvm_link_adfun.cpp$$
 
 $section Example Linking a Compiled AD Function$$
 
-$head CPPAD_STD_MATH_LIBRARY_PATH$$
-This is the path to the standard math library which is used
-by this example (to access the $code sin$$ function).
-
 $head Source Code$$
 $srcthisfile%8%// BEGIN C++%// END C++%1%$$
 $end
@@ -109,13 +105,6 @@ bool link_adfun(void)
     //
     // load object file
     msg = link_obj.object_file(file_name);
-    if( msg != "")
-    {   std::cout << "\n" << msg << "\n";
-        return false;
-    }
-    //
-    // load the standard math library (for sin function)
-    msg = link_obj.dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
     if( msg != "")
     {   std::cout << "\n" << msg << "\n";
         return false;

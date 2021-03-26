@@ -162,9 +162,10 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         result_type, param_types, is_var_arg
     );
     //
-    // unary_args
-    // used to call c_math funcitons
+    // unary_args, binary_args
+    // used to call funcitons
     std::vector<llvm::Value*> unary_args(1);
+    std::vector<llvm::Value*> binary_args(2);
     //
     // empty_attributes
     llvm::AttributeList empty_attributes;
@@ -176,7 +177,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     {   graph_op_enum op_enum = graph_op_enum( i_op );
         const char* name = local::graph::op_enum2name[op_enum];
         switch( op_enum )
-        {   // unary functions
+        {   // functions that call name
             case graph::acos_graph_op:
             case graph::acosh_graph_op:
             case graph::asin_graph_op:
@@ -191,6 +192,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             case graph::expm1_graph_op:
             case graph::log1p_graph_op:
             case graph::log_graph_op:
+            case graph::pow_graph_op:
             case graph::sin_graph_op:
             case graph::sinh_graph_op:
             case graph::sqrt_graph_op:
@@ -200,19 +202,21 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 name, unary_fun_t, empty_attributes
             );
             break;
-
+            //
+            // abs
             case graph::abs_graph_op:
             op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
                 "cppad_link_fabs", unary_fun_t, empty_attributes
             );
             break;
-
+            //
+            // sign
             case graph::sign_graph_op:
             op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
                 "cppad_link_sign", unary_fun_t, empty_attributes
             );
             break;
-
+            //
             default:
             break;
         }
@@ -401,11 +405,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             break;
 
             // Binary operators
-            case graph::add_graph_op:
-            case graph::sub_graph_op:
-            case graph::mul_graph_op:
-            case graph::div_graph_op:
             case graph::azmul_graph_op:
+            case graph::add_graph_op:
+            case graph::div_graph_op:
+            case graph::mul_graph_op:
+            case graph::pow_graph_op:
+            case graph::sub_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1);
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
@@ -422,6 +427,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         {   // -------------------------------------------------------------
             // simple operators that translate to one llvm instruction
             // -------------------------------------------------------------
+            //
+            // unary functions
             case graph::abs_graph_op:
             case graph::acos_graph_op:
             case graph::acosh_graph_op:
@@ -446,6 +453,16 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             unary_args[0] = graph_ir[ arg[0] ];
             value = builder.CreateCall(
                 op_enum2callee[op_enum], unary_args, op_enum2name[op_enum]
+            );
+            graph_ir.push_back(value);
+            break;
+            //
+            // binary functions
+            case graph::pow_graph_op:
+            binary_args[0] = graph_ir[ arg[0] ];
+            binary_args[1] = graph_ir[ arg[1] ];
+            value = builder.CreateCall(
+                op_enum2callee[op_enum], binary_args, op_enum2name[op_enum]
             );
             graph_ir.push_back(value);
             break;

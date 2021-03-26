@@ -224,7 +224,7 @@ This symbol is a C string containing the path to the build of the
 $code cppad_link$$ library:
 $srccode%hpp% */
 # define CPPAD_LINK_LOCAL_PATH \
-    "@CMAKE_BINARY_DIR@/cppad_lib/cppad_link.@CMAKE_SHARED_LIBRARY_SUFFIX@"
+    "@CMAKE_BINARY_DIR@/cppad_lib/libcppad_link@CMAKE_SHARED_LIBRARY_SUFFIX@"
 /* %$$
 
 $head CPPAD_LINK_INSTALLED_PATH$$
@@ -232,7 +232,7 @@ This symbold is a C string containing the path to the install of the
 $code cppad_link$$ library:
 $srccode%hpp% */
 # define CPPAD_LINK_INSTALLED_PATH \
-    "@cppad_abs_libdir@/cppad_link.@CMAKE_SHARED_LIBRARY_SUFFIX@"
+    "@cppad_abs_libdir@/libcppad_link@CMAKE_SHARED_LIBRARY_SUFFIX@"
 /* %$$
 
 $head CPPAD_NULL$$

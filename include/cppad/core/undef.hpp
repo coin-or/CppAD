@@ -42,7 +42,6 @@ by the CppAD examples and tests.
 # undef CPPAD_TESTVECTOR             in user api
 # undef CPPAD_TO_STRING              in user api
 # undef CPPAD_USE_CPLUSPLUS_2011     in user api
-# undef CPPAD_STD_MATH_LIBRARY_PATH  in user api
 
 # undef CPPAD_TRACK_COUNT    in deprecated api
 # undef CPPAD_TRACK_DEL_VEC  in deprecated api
@@ -86,12 +85,15 @@ by the CppAD examples and tests.
 # undef CPPAD_HAS_TMPNAM_S
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # undef CPPAD_LIB_EXPORT
+# undef CPPAD_LINK_INSTALLED_PATH
+# undef CPPAD_LINK_LOCAL_PATH
 # undef CPPAD_MAX_NUM_CAPACITY
 # undef CPPAD_MIN_DOUBLE_CAPACITY
 # undef CPPAD_NDEBUG_NOEXCEPT
 # undef CPPAD_NOEXCEPT
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 # undef CPPAD_STDVECTOR
+# undef CPPAD_STD_MATH_LIBRARY_PATH
 # undef CPPAD_TRACE_CAPACITY
 # undef CPPAD_TRACE_THREAD
 # undef CPPAD_TRACK_DEBUG

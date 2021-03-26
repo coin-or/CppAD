@@ -26,8 +26,14 @@ set_compile_flags(example_llvm "${cppad_debug_which}" "${source_list}" )
 ADD_EXECUTABLE(example_llvm EXCLUDE_FROM_ALL ${source_list})
 
 # List of libraries to be linked into the specified target
+IF( cppad_has_llvm )
+    SET(cppad_link "cppad_link")
+ELSE( cppad_has_llvm )
+    SET(cppad_link "")
+ENDIF( cppad_has_llvm )
 TARGET_LINK_LIBRARIES(example_llvm
     ${cppad_lib}
+    ${cppad_link}
     ${colpack_libs}
 )
 #

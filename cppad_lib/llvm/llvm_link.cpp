@@ -19,6 +19,8 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 $begin llvm_link_ctor$$
 $spell
     llvm_obj
+    cppad
+    CppAD
 $$
 
 $section Create an LLVM Object File Linker$$

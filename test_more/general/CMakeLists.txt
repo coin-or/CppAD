@@ -158,11 +158,14 @@ set_compile_flags( test_more_general "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
 #
-# must first build cppad_lib
+# must first build cppad_lib, cppad_link
 STRING(COMPARE EQUAL "${cppad_lib}" "" empty_cppad_lib )
 IF( NOT  empty_cppad_lib )
     ADD_DEPENDENCIES(test_more_general ${cppad_lib} )
 ENDIF( NOT  empty_cppad_lib )
+IF( cppad_has_llvm )
+    ADD_DEPENDENCIES(test_more_general cppad_link)
+ENDIF( cppad_has_llvm )
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more_general

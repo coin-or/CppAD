@@ -121,7 +121,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     {   graph_op_enum op_enum = graph_op_enum( i_op );
         const char* name = local::graph::op_enum2name[op_enum];
         switch( op_enum )
-        {   // unary functions
+        {   // functions that call name
             case graph::acos_graph_op:
             case graph::acosh_graph_op:
             case graph::asin_graph_op:
@@ -136,6 +136,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             case graph::expm1_graph_op:
             case graph::log1p_graph_op:
             case graph::log_graph_op:
+            case graph::pow_graph_op:
             case graph::sin_graph_op:
             case graph::sinh_graph_op:
             case graph::sqrt_graph_op:
@@ -335,11 +336,18 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             //
             // --------------------------------------------------------------
             case llvm::Instruction::Call:
-            // We assume that this is a cmath call
-            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
-            CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
-            CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
-            str  = operand[1]->getName().str();
+            if( n_operand == 2 )
+            {   CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
+                str  = operand[1]->getName().str();
+            }
+            else
+            {   CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
+                CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::DoubleTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::PointerTyID );
+                str  = operand[2]->getName().str();
+            }
             i_op = name2graph_op.lookup( str.c_str() );
             if( i_op == 0 )
             {   msg += "Cannot call the function " + str;
@@ -355,6 +363,11 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             node = llvm_value2graph_node.lookup(operand[0]);
             CPPAD_ASSERT_UNKNOWN( node != 0 );
             graph_obj.operator_arg_push_back( node );
+            if( n_operand == 3 )
+            {   node = llvm_value2graph_node.lookup(operand[1]);
+                CPPAD_ASSERT_UNKNOWN( node != 0 );
+                graph_obj.operator_arg_push_back( node );
+            }
             break;
             //
             // --------------------------------------------------------------
