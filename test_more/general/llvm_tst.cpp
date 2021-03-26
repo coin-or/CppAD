@@ -270,11 +270,10 @@ bool tst_azmul(void)
     CppAD::Independent(ax);
     //
     // ay
-    size_t ny = 3;
+    size_t ny = 2;
     vector< AD<double> > ay(ny);
     ay[0] = azmul(ax[0],  ax[1]);
-    ay[1] = ax[2] * ax[3];
-    ay[2] = ax[0] * ax[1];
+    ay[1] = azmul(ax[2], ax[3]);
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -308,14 +307,14 @@ bool tst_azmul(void)
     //
     // test both forms of 0 * nan
     vector<double> x(nx), y(ny);
-    x[2] = x[0] = 0.0;
-    x[1] = x[3] = std::numeric_limits<double>::quiet_NaN();
+    x[0] = 0.0;
+    x[1] = std::numeric_limits<double>::quiet_NaN();
+    x[2] = 2.0;
+    x[3] = 3.0;
     y    = f.Forward(0, x);
     //
     ok &= y[0] == 0.0;
-    ok &= std::isnan(y[1]);
-    // optimization should use same multiply for y[0] and y[2]
-    ok &= y[2] == 0.0;
+    ok &= y[1] == x[2] * x[3];
     //
     return ok;
 }

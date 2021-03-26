@@ -19,7 +19,6 @@ $spell
     op
     mul
     div
-    azmul
 $$
 
 $section Convert a C++ AD Graph to LLVM Intermediate Representation$$
@@ -34,19 +33,7 @@ $head graph_obj$$
 This a the $cref cpp_ad_graph$$ corresponding the function
 that is converted to llvm intermediate representation.
 
-$subhead Operators$$
-Only a subset of the possible operators may appear in
-$cref/operator_vec/cpp_ad_graph/operator_vec/$$
-(more expected in the future).
-The operators all end with $code _graph_op$$,
-which is omitted in the following list:
-$code add$$,
-$code azmul$$,
-$code sub$$,
-$code mul$$,
-$code div$$,
-
-$subhead Other Restrictions$$
+$subhead Restrictions$$
 The following limitations are placed on $icode graph_obj$$
 (expected to be removed in the future).
 $list number$$
@@ -215,6 +202,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             );
             break;
             //
+            // azmul
+            case graph::azmul_graph_op:
+            op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
+                "cppad_link_azmul", binary_fun_t, empty_attributes
+            );
+            break;
+            //
             // pow
             case graph::pow_graph_op:
             op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
@@ -283,7 +277,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // ----------------------------------------------------------------------
     // error_len_input
     size_t n_input = n_dynamic_ind_ + n_variable_ind_;
-    llvm::Value* expected_len_input = llvm::ConstantInt::get (
+    llvm::Value* expected_len_input = llvm::ConstantInt::get(
         *context_ir_, llvm::APInt(32, n_input, true)
     );
     llvm::Value* error_len_input = builder.CreateICmpNE(
@@ -347,11 +341,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         graph_ir.push_back(value);
     }
     //
-    // The zero floating point constant
-    llvm::Value* fp_zero = llvm::ConstantFP::get(
-        *context_ir_, llvm::APFloat(0.0)
-    );
-    //
     // graph_ir
     // constants
     for(size_t i = 0; i < n_constant; ++i)
@@ -361,13 +350,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         );
         graph_ir.push_back(value);
     }
-# ifndef NDEBUG
-    // count_azmul
-    size_t count_azmul     = 0;
-    string count_azmul_str = "0";
-# endif
-    CppAD::vector<string> azmul_label(3);
-    //
     // graph_ir
     // operators in the graph
     CppAD::cpp_graph::const_iterator itr;
@@ -471,6 +453,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             //
             // binary functions
             case graph::pow_graph_op:
+            case graph::azmul_graph_op:
             binary_args[0] = graph_ir[ arg[0] ];
             binary_args[1] = graph_ir[ arg[1] ];
             value = builder.CreateCall(
@@ -505,30 +488,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             graph_ir.push_back(value);
             break;
             //
-            // ---------------------------------------------------------------
-            // azmul
-            // --------------------------------------------------------------
-            case graph::azmul_graph_op:
-# ifndef NDEBUG
-            ++count_azmul;
-            count_azmul_str = std::to_string(count_azmul);
-            azmul_label[0]  = "azmul_"  + count_azmul_str;
-            azmul_label[1]  = "fcmp_"   + count_azmul_str;
-            azmul_label[2]  = "select_" + count_azmul_str;
-# endif
-            value = builder.CreateFMul(
-                graph_ir[arg[0]], graph_ir[arg[1]], azmul_label[0]
-            );
-            {   llvm::Value* is_zero = builder.CreateFCmpOEQ(
-                    graph_ir[arg[0]], fp_zero, azmul_label[1]
-                );
-                value = builder.CreateSelect(
-                    is_zero, fp_zero, value, azmul_label[2]
-                );
-            }
-            graph_ir.push_back(value);
-            break;
-
             // --------------------------------------------------------------
             // This operator is not yet supported
             // --------------------------------------------------------------

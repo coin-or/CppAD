@@ -10,35 +10,23 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin cppad_link_unary$$
+$begin cppad_link$$
 
-$section Extern C Links To Unary Functions Needed by llvm_link Objects$$
+$section Extern C Links To Functions Needed by llvm_link Objects$$
 
-$head Syntax$$
-$icode%y% = cppad_link_%unary_fun%(%x%)
+$srcthisfile%
+    0%// BEGIN_C++%// END_C++%1
 %$$
-
-$head Prototype$$
-$codei%
-    extern "C" double cppad_link_%unary_fun%(double %x%)
-%$$
-
-$head x$$
-This argument has prototype $codei%double %x%$$.
-
-$head z$$
-The result has prototype $codei%double %z%$$ and is the value of
-of the function $codei%std::%unary_fun%$$ at the argument $icode x$$.
-
-$head unary_fun$$
-Only the following functions need linking (so far):
-$code fabs$$,
-$code sign$$.
 
 $end
 */
 # include <cmath>
-
+// BEGIN_C++
+//
+// azmul
+extern "C" double cppad_link_azmul(double left, double right)
+{   return (left == 0.0) ? 0.0 : left * right; }
+//
 // fabs
 extern "C" double cppad_link_fabs(double x)
 {   return std::fabs(x); }
@@ -46,3 +34,5 @@ extern "C" double cppad_link_fabs(double x)
 // sign
 extern "C" double cppad_link_sign(double x)
 {   return double(x > 0.0) - double(x < 0.0); }
+//
+// END_C++

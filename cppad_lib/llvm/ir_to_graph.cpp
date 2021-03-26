@@ -103,16 +103,11 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // The maps above assume the default constructor for size_t yeilds zero
     CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
     //
-    // maps used to detect azmul operators
-    llvm::DenseMap<const llvm::Value*, const llvm::Value*>  llvm_left2cmp;
-    llvm::DenseMap<const llvm::Value*, const llvm::Value*>  llvm_cmp2select;
-    //
     // map from a name to a graph operator
     llvm::StringMap<size_t> name2graph_op;
     //
     // types used by interface to DenseMap
     typedef std::pair<const llvm::Value*, size_t>             pair_size;
-    typedef std::pair<const llvm::Value*, const llvm::Value*> pair_value;
     typedef std::pair<llvm::StringRef,    size_t>             string_pair;
     //
     // name2graph_op
@@ -144,6 +139,10 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             case graph::tanh_graph_op:
             // add one to the operaotor value so we can use zero for not found
             name2graph_op.insert( string_pair(name, i_op + 1) );
+            break;
+
+            case graph::azmul_graph_op:
+            name2graph_op.insert( string_pair("cppad_link_azmul", i_op + 1) );
             break;
 
             case graph::abs_graph_op:
@@ -230,34 +229,6 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     graph_obj.constant_vec_push_back(dbl);
                 }
             }
-        }
-        //
-        // azmul map chain
-        const unsigned op_code    = itr->getOpcode();
-        const llvm::Value* result = llvm::dyn_cast<llvm::Value>( &(*itr) );
-        switch( op_code )
-        {
-            case llvm::Instruction::FCmp:
-            // The assert below assume operator came from an azmul operation.
-            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
-            CPPAD_ASSERT_UNKNOWN( operand[1] == fp_zero );
-# ifndef NDEBUG
-            {   const llvm::CmpInst* cmp_inst =
-                    llvm::dyn_cast<llvm::CmpInst>(&*itr);
-                CPPAD_ASSERT_UNKNOWN(
-                    cmp_inst->getPredicate() == llvm::CmpInst::FCMP_OEQ
-                );
-            }
-# endif
-            // start of chain from multiply left operand to select result
-            llvm_left2cmp.insert( pair_value( operand[0], result ) );
-            break;
-
-            case llvm::Instruction::Select:
-            CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
-            // end of chain from multiply left operand to select result
-            llvm_cmp2select.insert( pair_value( operand[0], result ) );
-            break;
         }
     }
     // n_constant
@@ -400,20 +371,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 break;
 
                 case llvm::Instruction::FMul:
-                {   const llvm::Value* left   = operand[0];
-                    const llvm::Value* cmp    = llvm_left2cmp.lookup(left);
-                    const llvm::Value* select = llvm_cmp2select.lookup(cmp);
-                    graph_op_enum op;
-                    if( select == nullptr )
-                    {   // this is a normal multiply
-                        op = graph::mul_graph_op;
-                    }
-                    else
-                    {   // this is an absolute zero multiply
-                        op = graph::azmul_graph_op;
-                    }
-                    graph_obj.operator_vec_push_back(op);
-                }
+                graph_obj.operator_vec_push_back( graph::mul_graph_op );
                 break;
 
                 case llvm::Instruction::FDiv:
