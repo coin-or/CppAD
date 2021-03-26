@@ -219,6 +219,22 @@ $srccode%hpp% */
 # define CPPAD_STD_MATH_LIBRARY_PATH "@std_math_library_path@"
 /* %$$
 
+$head CPPAD_LINK_LOCAL_PATH$$
+This symbol is a C string containing the path to the build of the
+$code cppad_link$$ library:
+$srccode%hpp% */
+# define CPPAD_LINK_LOCAL_PATH \
+    "@CMAKE_BINARY_DIR@/cppad_lib/cppad_link.@CMAKE_SHARED_LIBRARY_SUFFIX@"
+/* %$$
+
+$head CPPAD_LINK_INSTALLED_PATH$$
+This symbold is a C string containing the path to the install of the
+$code cppad_link$$ library:
+$srccode%hpp% */
+# define CPPAD_LINK_INSTALLED_PATH \
+    "@cppad_abs_libdir@/cppad_link.@CMAKE_SHARED_LIBRARY_SUFFIX@"
+/* %$$
+
 $head CPPAD_NULL$$
 Deprecated 2020-12-03:
 This preprocessor symbol was used for a null pointer before c++11.

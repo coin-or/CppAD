@@ -327,7 +327,7 @@ bool tst_cmath(void)
     using CppAD::vector;
     //
     // nx, x
-    size_t nx = 18;
+    size_t nx = 20;
     vector<double> x(nx);
     x[0]  = 0.2;
     x[1]  = std::cos(x[0]);
@@ -350,6 +350,8 @@ bool tst_cmath(void)
     //
     x[16] = 0.9;
     x[17] = 1.0;
+    x[18] = -1.0;
+    x[19] = 1.1;
     //
     // ax
     vector< AD<double> > ax(nx);
@@ -381,6 +383,8 @@ bool tst_cmath(void)
     //
     ay[16] = erf(ax[16]);
     ay[17] = erfc(ax[17]);
+    ay[18] = fabs(ax[18]);
+    ay[19] = fabs(ax[19]);
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -435,6 +439,8 @@ bool tst_cmath(void)
     //
     ok &= y[16] == std::erf(  x[16] );
     ok &= y[17] == std::erfc( x[17] );
+    ok &= y[18] == std::fabs( x[18] );
+    ok &= y[19] == std::fabs( x[19] );
     //
     // create object file
     std::string file_name = function_name + ".o";
@@ -496,6 +502,8 @@ bool tst_cmath(void)
     //
     ok &= y[16] == std::erf(  x[16] );
     ok &= y[17] == std::erfc( x[17] );
+    ok &= y[18] == std::fabs( x[18] );
+    ok &= y[19] == std::fabs( x[19] );
     //
     return ok;
 }

@@ -38,6 +38,10 @@ $head Standard Math Library$$
 The standard math library is automatically included in
 $icode link_obj$$ during the constructor.
 
+$head cppad_link_$$
+Function names that begin with $code cppad_link_$$ are reserved
+for use by CppAD.
+
 $children%
     example/llvm/link_lib.cpp%
     example/llvm/link_adfun.cpp
@@ -52,15 +56,14 @@ $end
 // BEGIN_CTOR
 llvm_link::llvm_link(std::string& msg)
 // END_CTOR
-{   msg = "llvm_link:";
-    //
+{   //
     // jit_
     llvm::Expected< std::unique_ptr<llvm::orc::LLJIT> > error_or_link =
         llvm::orc::LLJITBuilder().create();
     llvm::Error error = error_or_link.takeError();
     //
     if( error )
-    {   msg += local::llvm_error_msg(error);
+    {   msg += "llvm_link_ctor: " + local::llvm_error_msg(error);
         jit_ = nullptr;
         return;
     }
@@ -72,6 +75,17 @@ llvm_link::llvm_link(std::string& msg)
     if( msg != "" )
     {   jit_ = nullptr;
         return;
+    }
+    //
+    // add cppad_link library
+    msg = dynamic_lib(CPPAD_LINK_LOCAL_PATH);
+    if( msg != "" )
+    {   msg = dynamic_lib(CPPAD_LINK_INSTALLED_PATH);
+        if( msg != "" )
+        {   msg = "llvm_link_ctor: " + msg;
+            jit_ = nullptr;
+            return;
+        }
     }
     //
     return;
