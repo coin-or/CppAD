@@ -228,7 +228,7 @@ $srccode%hpp% */
 /* %$$
 
 $head CPPAD_LINK_INSTALLED_PATH$$
-This symbold is a C string containing the path to the install of the
+This symbol is a C string containing the path to the install of the
 $code cppad_link$$ library:
 $srccode%hpp% */
 # define CPPAD_LINK_INSTALLED_PATH \

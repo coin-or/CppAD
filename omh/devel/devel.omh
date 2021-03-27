@@ -33,7 +33,7 @@ $childtable%
     include/cppad/local/is_pod.hpp%
     include/cppad/local/op/unary_op.omh%
     include/cppad/local/op/binary_op.omh%
-    cppad_lib/llvm/error_msg.cpp
+    cppad_lib/llvm/devel.omh
 %$$
 
 

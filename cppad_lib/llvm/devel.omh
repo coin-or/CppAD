@@ -9,33 +9,17 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-/*
-$begin cppad_link$$
+
+$begin llvm_devel$$
 $spell
     llvm
 $$
 
-$section Extern C Links To Functions Needed by llvm_link Objects$$
+$section llvm Developer Documentation$$
 
-$srcthisfile%
-    0%// BEGIN_C++%// END_C++%1
+$childtable%
+    cppad_lib/llvm/error_msg.cpp%
+    cppad_lib/llvm/cppad_link.cpp
 %$$
 
 $end
-*/
-# include <cmath>
-// BEGIN_C++
-//
-// azmul
-extern "C" double cppad_link_azmul(double left, double right)
-{   return (left == 0.0) ? 0.0 : left * right; }
-//
-// fabs
-extern "C" double cppad_link_fabs(double x)
-{   return std::fabs(x); }
-//
-// sign
-extern "C" double cppad_link_sign(double x)
-{   return double(x > 0.0) - double(x < 0.0); }
-//
-// END_C++
