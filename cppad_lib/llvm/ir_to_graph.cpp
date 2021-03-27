@@ -292,6 +292,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
 # endif
         //
         // op_code values are defined in llvm/IR/Instructions.def
+        graph_op_enum op_enum;
         switch( op_code )
         {
             //
@@ -484,8 +485,16 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 compare_info cmp_info = llvm_compare2info.lookup(compare);
                 //
                 // cexp_eq_graph_op
-                CPPAD_ASSERT_UNKNOWN(cmp_info.pred == llvm::CmpInst::FCMP_OEQ);
-                graph_obj.operator_vec_push_back( graph::cexp_eq_graph_op );
+                if(cmp_info.pred == llvm::CmpInst::FCMP_OEQ)
+                    op_enum = graph::cexp_eq_graph_op;
+                else if(cmp_info.pred == llvm::CmpInst::FCMP_OLE)
+                    op_enum = graph::cexp_le_graph_op;
+                else if(cmp_info.pred == llvm::CmpInst::FCMP_OLT)
+                    op_enum = graph::cexp_lt_graph_op;
+                else
+                {   CPPAD_ASSERT_UNKNOWN(false);
+                }
+                graph_obj.operator_vec_push_back( op_enum );
                 // left
                 node = llvm_value2graph_node.lookup( cmp_info.left );
                 graph_obj.operator_arg_push_back(node);

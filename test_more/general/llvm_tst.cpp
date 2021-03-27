@@ -635,9 +635,11 @@ bool tst_cexp(void)
 
     //
     // ny, ay
-    size_t ny = 1;
+    size_t ny = 3;
     vector< AD<double> > ay(ny);
     ay[0]  =  CondExpEq(left, right, if_true, if_false);
+    ay[1]  =  CondExpLe(left, right, if_true, if_false);
+    ay[2]  =  CondExpLt(left, right, if_true, if_false);
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -673,10 +675,14 @@ bool tst_cexp(void)
     x[1] = x[0] + .1;
     y = f.Forward(0, x);
     ok &= y[0] == x[3];
+    ok &= y[1] == x[2];
+    ok &= y[2] == x[2];
     //
     x[1] = x[0];
     y = f.Forward(0, x);
     ok &= y[0] == x[2];
+    ok &= y[1] == x[2];
+    ok &= y[2] == x[3];
     //
     // create object file
     std::string file_name = function_name + ".o";
@@ -720,11 +726,15 @@ bool tst_cexp(void)
     error_no = fun_ptr(len_x, x.data(), len_y, y.data());
     ok &= error_no == 0;
     ok &= y[0] == x[3];
+    ok &= y[1] == x[2];
+    ok &= y[2] == x[2];
     //
     x[1] = x[0];
     error_no = fun_ptr(len_x, x.data(), len_y, y.data());
     ok &= error_no == 0;
     ok &= y[0] == x[2];
+    ok &= y[1] == x[2];
+    ok &= y[2] == x[3];
     //
     return ok;
 }

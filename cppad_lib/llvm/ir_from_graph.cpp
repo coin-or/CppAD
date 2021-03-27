@@ -412,6 +412,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
 
             // Conditional Expressions
             case graph::cexp_eq_graph_op:
+            case graph::cexp_le_graph_op:
+            case graph::cexp_lt_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_arg == 4 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1);
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
@@ -423,8 +425,10 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             return msg;
         }
 # endif
-        llvm::Value* value;
-        llvm::Value* compare;
+        // temporaries used in switch cases
+        llvm::Value*             value;
+        llvm::Value*             compare;
+        llvm::CmpInst::Predicate pred;
         switch( op_enum )
         {   // -------------------------------------------------------------
             // simple operators that translate to one llvm instruction
@@ -499,8 +503,18 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             // Contitional Expressions
             // --------------------------------------------------------------
             case graph::cexp_eq_graph_op:
-            compare = builder.CreateFCmpOEQ(
-                graph_ir[arg[0]], graph_ir[arg[1]]
+            case graph::cexp_le_graph_op:
+            case graph::cexp_lt_graph_op:
+            //
+            if( op_enum == graph::cexp_eq_graph_op )
+                pred = llvm::FCmpInst::FCMP_OEQ;
+            else if( op_enum == graph::cexp_le_graph_op )
+                pred = llvm::FCmpInst::FCMP_OLE;
+            else
+                pred = llvm::FCmpInst::FCMP_OLT;
+            //
+            compare = builder.CreateFCmp(
+                pred, graph_ir[arg[0]], graph_ir[arg[1]]
             );
             value = builder.CreateSelect(
                 compare, graph_ir[arg[2]], graph_ir[arg[3]]
