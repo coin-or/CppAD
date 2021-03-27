@@ -202,13 +202,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             );
             break;
             //
-            // azmul
-            case graph::azmul_graph_op:
-            op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
-                "cppad_link_azmul", binary_fun_t, empty_attributes
-            );
-            break;
-            //
             // pow
             case graph::pow_graph_op:
             op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
@@ -425,6 +418,11 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             return msg;
         }
 # endif
+        //
+        // The zero floating point constant
+        llvm::Value* fp_zero = llvm::ConstantFP::get(
+            *context_ir_, llvm::APFloat(0.0)
+        );
         // temporaries used in switch cases
         llvm::Value*             value;
         llvm::Value*             compare;
@@ -465,7 +463,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             //
             // binary functions
             case graph::pow_graph_op:
-            case graph::azmul_graph_op:
             binary_args[0] = graph_ir[ arg[0] ];
             binary_args[1] = graph_ir[ arg[1] ];
             value = builder.CreateCall(
@@ -519,6 +516,19 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             value = builder.CreateSelect(
                 compare, graph_ir[arg[2]], graph_ir[arg[3]]
             );
+            graph_ir.push_back(value);
+            break;
+            // --------------------------------------------------------------
+            // azmul(x, y)
+            // --------------------------------------------------------------
+            case graph::azmul_graph_op:
+            // value = x * y
+            value   = builder.CreateFMul(graph_ir[arg[0]], graph_ir[arg[1]]);
+            // compare = x == 0.0
+            pred    = llvm::FCmpInst::FCMP_OEQ;
+            compare = builder.CreateFCmp( pred, graph_ir[arg[0]], fp_zero );
+            // value = azmul(x, y);
+            value = builder.CreateSelect(compare, fp_zero, value);
             graph_ir.push_back(value);
             break;
             //
