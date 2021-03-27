@@ -268,41 +268,55 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // ----------------------------------------------------------------------
     // check for error in len_input or len_output
     // ----------------------------------------------------------------------
-    // error_len_input
+    // int_zero, int_two, int_three
+    llvm::Value* int_zero = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(32, 0, true)
+    );
+    llvm::Value* int_two = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(32, 2, true)
+    );
+    llvm::Value* int_three = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(32, 3, true)
+    );
+    // error_no_2
     size_t n_input = n_dynamic_ind_ + n_variable_ind_;
     llvm::Value* expected_len_input = llvm::ConstantInt::get(
         *context_ir_, llvm::APInt(32, n_input, true)
     );
-    llvm::Value* error_len_input = builder.CreateICmpNE(
-        len_input, expected_len_input, "error_len_input"
+    llvm::Value* compare_len_input = builder.CreateICmpNE(
+        len_input, expected_len_input
     );
-    // error_len_output
+    llvm::Value* error_no_2 = builder.CreateSelect(
+        compare_len_input, int_two, int_zero, "error_no_2"
+    );
+    //
+    // error_no_3
     llvm::Value* expected_len_output = llvm::ConstantInt::get (
         *context_ir_, llvm::APInt(32, n_variable_dep_, true)
     );
-    llvm::Value* error_len_output = builder.CreateICmpNE(
-        len_output, expected_len_output, "error_len_output"
+    llvm::Value* compare_len_output = builder.CreateICmpNE(
+        len_output, expected_len_output
     );
-    // error_len
-    llvm::Value* error_len = builder.CreateOr(
-        error_len_input, error_len_output, "error_len"
+    llvm::Value* error_no_3 = builder.CreateSelect(
+        compare_len_output, int_three,  error_no_2, "error_no_3"
     );
-    // error_no
-    // convert to boolean value error_len 32 bit signed integer
-    llvm::Value* error_no = builder.CreateZExtOrTrunc(
-            error_len, int_32_t, "error_no"
+    //
+    // length_error
+    llvm::Value* length_error = builder.CreateICmpNE(
+        error_no_3, int_zero, "length_error"
     );
+    //
     // error_bb, merge_bb
     llvm::BasicBlock* error_bb =
         llvm::BasicBlock::Create(*context_ir_, "error_bb");
     llvm::BasicBlock* merge_bb =
         llvm::BasicBlock::Create(*context_ir_, "merge_bb");
     //
-    // if error_len, return error_no
-    builder.CreateCondBr(error_len, error_bb, merge_bb);
+    // if length_error, return error_no_3
+    builder.CreateCondBr(length_error, error_bb, merge_bb);
     function_ir->getBasicBlockList().push_back(error_bb);
     builder.SetInsertPoint(error_bb);
-    builder.CreateRet(error_no);
+    builder.CreateRet(error_no_3);
     function_ir->getBasicBlockList().push_back(merge_bb);
     builder.SetInsertPoint(merge_bb);
     // ------------------------------------------------------------------------
@@ -558,7 +572,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         graph_ir[node_index]->setName(name);
     }
     // return zero for no error
-    builder.CreateRet(error_no);
+    builder.CreateRet(int_zero);
     //
     // check retreiving this function from this module
     CPPAD_ASSERT_UNKNOWN(

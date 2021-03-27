@@ -129,13 +129,21 @@ bool link_adfun(void)
     for(size_t i = 0; i < ny; ++i)
         output[i] = 0.0;
     //
-    // incorrect call to function
+    // incorrect value for len_input
     int32_t len_input   = 0;
-    int32_t len_output  = 0;
+    int32_t len_output  = static_cast<int32_t>(ny);
     int32_t error_no    = fun_ptr(
         len_input, input.data(), len_output, output.data()
     );
-    ok &= error_no != 0;
+    ok &= error_no == 2;
+    //
+    // incorrect value for len_output
+    len_input   = static_cast<int32_t>(np + nx);
+    len_output  = 0;
+    error_no    = fun_ptr(
+        len_input, input.data(), len_output, output.data()
+    );
+    ok &= error_no == 3;
     for(size_t i = 0; i < ny; ++i)
         ok &= output[i] == 0.0;
     //

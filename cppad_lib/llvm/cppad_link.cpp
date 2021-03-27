@@ -26,10 +26,6 @@ $end
 # include <cmath>
 // BEGIN_C++
 //
-// azmul
-extern "C" double cppad_link_azmul(double left, double right)
-{   return (left == 0.0) ? 0.0 : left * right; }
-//
 // fabs
 extern "C" double cppad_link_fabs(double x)
 {   return std::fabs(x); }

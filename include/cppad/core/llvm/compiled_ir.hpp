@@ -55,6 +55,34 @@ The input value of the elements of this vector does not matter.
 Upon return, it contains the dependent variable values corresponding
 to the independent variables.
 
+$head error_no$$
+
+$subhead Zero$$
+If the return value $icode error_no$$ is zero, no error was detected.
+
+$subhead One$$
+If the return value $icode error_no$$ is one,
+one or more of the comparisons did not match its operator value.
+
+$subhead Two$$
+If the return value $icode error_no$$ is two,
+the value of $icode len_input$$ is not correct.
+In this case $icode output$$ is not changed.
+
+$subhead Three$$
+If the return value $icode error_no$$ is three,
+the value of $icode len_output$$ is not correct.
+In this case $icode output$$ is not changed.
+
+$table
+$icode error_no$$ $pre $$ $cnext Meaning  $rnext
+0  $cnext No error occurred                                         $rnext
+1  $cnext One (or more) comparison did not match its operator value $rnext
+2  $cnext $icode len_input$$ is incorrect                           $rnext
+3  $cnext $icode len_output$$ is incorrect
+$tend
+
+
 $end
 */
 

@@ -169,14 +169,9 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         }
     }
     //
-# ifndef NDEBUG
-    //
-    // len_input
-    const llvm::Argument* len_input  = function_ir->arg_begin() + 0;
-    //
-    // len_output
-    const llvm::Argument* len_output = function_ir->arg_begin() + 2;
-# endif
+    // No longer used for error checking
+    // const llvm::Argument* len_input  = function_ir->arg_begin() + 0;
+    // const llvm::Argument* len_output = function_ir->arg_begin() + 2;
     //
     // input_ptr
     const llvm::Argument* input_ptr  = function_ir->arg_begin() + 1;
@@ -440,15 +435,21 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             //
             // --------------------------------------------------------------
             case llvm::Instruction::ICmp:
-            // This operand is only used to check len_input and len_output
+            // This operand is used to check len_input and len_output
+            // and to set returned error number
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
             CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::IntegerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::IntegerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::IntegerTyID );
-            CPPAD_ASSERT_UNKNOWN(
-                operand[0] == len_input  || operand[0] == len_output ||
-                operand[1] == len_input  || operand[1] == len_output
-            );
+            {   const llvm::CmpInst* cmp_inst =
+                    llvm::dyn_cast<llvm::CmpInst>(&*itr);
+                compare_info cmp_info = {
+                    cmp_inst->getPredicate(), operand[0], operand[1]
+                };
+                llvm_compare2info.insert(
+                    value_compare_info(result, cmp_info)
+                );
+            }
             break;
             //
             // --------------------------------------------------------------
@@ -483,33 +484,50 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
             {   llvm::Value* compare = operand[0];
                 compare_info cmp_info = llvm_compare2info.lookup(compare);
-                //
-                // cexp_eq_graph_op
-                if(cmp_info.pred == llvm::CmpInst::FCMP_OEQ)
+                op_enum = graph::n_graph_op;
+                switch( cmp_info.pred )
+                {   // integer comparisions used to check vector lengths
+                    case  llvm::CmpInst::ICMP_NE:
+                    case  llvm::CmpInst::ICMP_EQ:
+                    break;
+                    //
+                    // conditional expression comparisons
+                    case llvm::CmpInst::FCMP_OEQ:
                     op_enum = graph::cexp_eq_graph_op;
-                else if(cmp_info.pred == llvm::CmpInst::FCMP_OLE)
+                    break;
+                    case llvm::CmpInst::FCMP_OLE:
                     op_enum = graph::cexp_le_graph_op;
-                else
-                {   CPPAD_ASSERT_UNKNOWN(
-                        cmp_info.pred == llvm::CmpInst::FCMP_OLT
-                    );
+                    break;
+                    case llvm::CmpInst::FCMP_OLT:
                     op_enum = graph::cexp_lt_graph_op;
+                    break;
+
+                    default:
+                    CPPAD_ASSERT_UNKNOWN(false);
+                    break;
                 }
-                graph_obj.operator_vec_push_back( op_enum );
-                // left
-                node = llvm_value2graph_node.lookup( cmp_info.left );
-                graph_obj.operator_arg_push_back(node);
-                // right
-                node = llvm_value2graph_node.lookup( cmp_info.right );
-                graph_obj.operator_arg_push_back(node);
-                // if_true
-                node = llvm_value2graph_node.lookup( operand[1] );
-                graph_obj.operator_arg_push_back(node);
-                // if_false
-                node = llvm_value2graph_node.lookup( operand[2] );
-                graph_obj.operator_arg_push_back(node);
+                if( op_enum != graph::n_graph_op)
+                {   // conditional expression operator
+                    graph_obj.operator_vec_push_back( op_enum );
+                    // left
+                    node = llvm_value2graph_node.lookup( cmp_info.left );
+                    graph_obj.operator_arg_push_back(node);
+                    // right
+                    node = llvm_value2graph_node.lookup( cmp_info.right );
+                    graph_obj.operator_arg_push_back(node);
+                    // if_true
+                    node = llvm_value2graph_node.lookup( operand[1] );
+                    graph_obj.operator_arg_push_back(node);
+                    // if_false
+                    node = llvm_value2graph_node.lookup( operand[2] );
+                    graph_obj.operator_arg_push_back(node);
+                    //
+                    // mapping from this result to new node in graph
+                    llvm_value2graph_node.insert(
+                        value_size(result , ++result_node)
+                    );
+                }
             }
-            llvm_value2graph_node.insert( value_size(result , ++result_node) );
             break;
             //
             // --------------------------------------------------------------
