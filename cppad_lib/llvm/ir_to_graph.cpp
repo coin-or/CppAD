@@ -489,10 +489,11 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     op_enum = graph::cexp_eq_graph_op;
                 else if(cmp_info.pred == llvm::CmpInst::FCMP_OLE)
                     op_enum = graph::cexp_le_graph_op;
-                else if(cmp_info.pred == llvm::CmpInst::FCMP_OLT)
-                    op_enum = graph::cexp_lt_graph_op;
                 else
-                {   CPPAD_ASSERT_UNKNOWN(false);
+                {   CPPAD_ASSERT_UNKNOWN(
+                        cmp_info.pred == llvm::CmpInst::FCMP_OLT
+                    );
+                    op_enum = graph::cexp_lt_graph_op;
                 }
                 graph_obj.operator_vec_push_back( op_enum );
                 // left
