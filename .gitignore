@@ -24,6 +24,8 @@
 /*.err
 /*.log
 /*.warn
+# llvm_link object files created when running bin/test_one.sh
+/llvm_*.o
 # ----------------------------------------------------------------------------
 # vim swap files in any directory
 *.swp

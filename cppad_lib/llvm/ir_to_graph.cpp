@@ -272,6 +272,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         }
         //
         // temporaries used in switch cases
+        const llvm::Value*       compare;
+        compare_info             cmp_info;
         const llvm::ConstantInt* cint;
         const llvm::APInt*       apint;
         const uint64_t*          uint64;
@@ -398,7 +400,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::DoubleTyID );
             {   const llvm::CmpInst* cmp_inst =
                     llvm::dyn_cast<llvm::CmpInst>(&*itr);
-                compare_info cmp_info = {
+                cmp_info = {
                     cmp_inst->getPredicate(), operand[0], operand[1]
                 };
                 llvm_compare2info.insert(
@@ -443,7 +445,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::IntegerTyID );
             {   const llvm::CmpInst* cmp_inst =
                     llvm::dyn_cast<llvm::CmpInst>(&*itr);
-                compare_info cmp_info = {
+                cmp_info = {
                     cmp_inst->getPredicate(), operand[0], operand[1]
                 };
                 llvm_compare2info.insert(
@@ -482,51 +484,51 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // --------------------------------------------------------------
             case llvm::Instruction::Select:
             CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
-            {   llvm::Value* compare = operand[0];
-                compare_info cmp_info = llvm_compare2info.lookup(compare);
-                op_enum = graph::n_graph_op;
+            compare  = operand[0];
+            cmp_info = llvm_compare2info.lookup(compare);
+            if( type_id[1] == llvm::Type::DoubleTyID )
+            {   // This is a conditional expression
+                CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::DoubleTyID );
+                //
+                // op_enum
                 switch( cmp_info.pred )
-                {   // integer comparisions used to check vector lengths
-                    case  llvm::CmpInst::ICMP_NE:
-                    case  llvm::CmpInst::ICMP_EQ:
-                    break;
-                    //
+                {   //
                     // conditional expression comparisons
                     case llvm::CmpInst::FCMP_OEQ:
                     op_enum = graph::cexp_eq_graph_op;
                     break;
+                    //
                     case llvm::CmpInst::FCMP_OLE:
                     op_enum = graph::cexp_le_graph_op;
                     break;
+                    //
                     case llvm::CmpInst::FCMP_OLT:
                     op_enum = graph::cexp_lt_graph_op;
                     break;
-
+                    //
                     default:
                     CPPAD_ASSERT_UNKNOWN(false);
                     break;
                 }
-                if( op_enum != graph::n_graph_op)
-                {   // conditional expression operator
-                    graph_obj.operator_vec_push_back( op_enum );
-                    // left
-                    node = llvm_value2graph_node.lookup( cmp_info.left );
-                    graph_obj.operator_arg_push_back(node);
-                    // right
-                    node = llvm_value2graph_node.lookup( cmp_info.right );
-                    graph_obj.operator_arg_push_back(node);
-                    // if_true
-                    node = llvm_value2graph_node.lookup( operand[1] );
-                    graph_obj.operator_arg_push_back(node);
-                    // if_false
-                    node = llvm_value2graph_node.lookup( operand[2] );
-                    graph_obj.operator_arg_push_back(node);
-                    //
-                    // mapping from this result to new node in graph
-                    llvm_value2graph_node.insert(
-                        value_size(result , ++result_node)
-                    );
-                }
+                // conditional expression operator
+                graph_obj.operator_vec_push_back( op_enum );
+                // left
+                node = llvm_value2graph_node.lookup( cmp_info.left );
+                graph_obj.operator_arg_push_back(node);
+                // right
+                node = llvm_value2graph_node.lookup( cmp_info.right );
+                graph_obj.operator_arg_push_back(node);
+                // if_true
+                node = llvm_value2graph_node.lookup( operand[1] );
+                graph_obj.operator_arg_push_back(node);
+                // if_false
+                node = llvm_value2graph_node.lookup( operand[2] );
+                graph_obj.operator_arg_push_back(node);
+                //
+                // mapping from this result to new node in graph
+                llvm_value2graph_node.insert(
+                    value_size(result , ++result_node)
+                );
             }
             break;
             //
