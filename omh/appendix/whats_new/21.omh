@@ -32,9 +32,15 @@ $spell
     fabs
     hpp
     var
+    vec
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 03-29$$
+Include the $cref/dependent_vec/cpp_ad_graph/dependent_vec/$$
+in the output of $cref cpp_graph_print$$; see $code y nodes$$ in
+$cref print_graph.cpp$$ example output.
 
 $head 03-24$$
 The C++ AD graph constructor, $cref cpp_graph_ctor$$,

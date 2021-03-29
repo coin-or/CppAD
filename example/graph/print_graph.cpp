@@ -75,8 +75,10 @@ bool print_graph(void)
         "          3      x[0]\n"
         "          4       add    1    2\n"
         "          5       add    3    4\n"
+        "y nodes = 5\n"
     ;
-    ok &= os.str() == check;
+    std::string str = os.str();
+    ok &= str == check;
     //
     return ok;
 }
