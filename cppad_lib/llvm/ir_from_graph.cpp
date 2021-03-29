@@ -272,13 +272,16 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* int_zero = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 0, true)
     );
+    llvm::Value* int_one = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(32, 1, true)
+    );
     llvm::Value* int_two = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 2, true)
     );
     llvm::Value* int_three = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 3, true)
     );
-    // error_no_2
+    // error_no
     size_t n_input = n_dynamic_ind_ + n_variable_ind_;
     llvm::Value* expected_len_input = llvm::ConstantInt::get(
         *context_ir_, llvm::APInt(32, n_input, true)
@@ -286,24 +289,24 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* compare_len_input = builder.CreateICmpNE(
         len_input, expected_len_input
     );
-    llvm::Value* error_no_2 = builder.CreateSelect(
-        compare_len_input, int_two, int_zero, "error_no_2"
+    llvm::Value* error_no = builder.CreateSelect(
+        compare_len_input, int_two, int_zero, "error_no"
     );
     //
-    // error_no_3
+    // error_no
     llvm::Value* expected_len_output = llvm::ConstantInt::get (
         *context_ir_, llvm::APInt(32, n_variable_dep_, true)
     );
     llvm::Value* compare_len_output = builder.CreateICmpNE(
         len_output, expected_len_output
     );
-    llvm::Value* error_no_3 = builder.CreateSelect(
-        compare_len_output, int_three,  error_no_2, "error_no_3"
+    error_no = builder.CreateSelect(
+        compare_len_output, int_three,  error_no, "error_no"
     );
     //
     // length_error
     llvm::Value* length_error = builder.CreateICmpNE(
-        error_no_3, int_zero, "length_error"
+        error_no, int_zero, "length_error"
     );
     //
     // error_bb, merge_bb
@@ -312,11 +315,11 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::BasicBlock* merge_bb =
         llvm::BasicBlock::Create(*context_ir_, "merge_bb");
     //
-    // if length_error, return error_no_3
+    // if length_error, return error_no
     builder.CreateCondBr(length_error, error_bb, merge_bb);
     function_ir->getBasicBlockList().push_back(error_bb);
     builder.SetInsertPoint(error_bb);
-    builder.CreateRet(error_no_3);
+    builder.CreateRet(error_no);
     function_ir->getBasicBlockList().push_back(merge_bb);
     builder.SetInsertPoint(merge_bb);
     // ------------------------------------------------------------------------
@@ -426,6 +429,16 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
             break;
 
+            // Comparison Operators
+            case graph::comp_eq_graph_op:
+            case graph::comp_le_graph_op:
+            case graph::comp_lt_graph_op:
+            case graph::comp_ne_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 0);
+            CPPAD_ASSERT_UNKNOWN( n_str == 0 );
+            break;
+
             default:
             msg += "graph_obj has following unsupported operator ";
             msg += local::graph::op_enum2name[op_enum];
@@ -527,6 +540,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             compare = builder.CreateFCmp(
                 pred, graph_ir[arg[0]], graph_ir[arg[1]]
             );
+            // Note that only conditional expressions use select with
+            // double operands
             value = builder.CreateSelect(
                 compare, graph_ir[arg[2]], graph_ir[arg[3]]
             );
@@ -545,7 +560,40 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             value = builder.CreateSelect(compare, fp_zero, value);
             graph_ir.push_back(value);
             break;
-            //
+            // --------------------------------------------------------------
+            // Comparison operators
+            // --------------------------------------------------------------
+            case graph::comp_eq_graph_op:
+            case graph::comp_le_graph_op:
+            case graph::comp_lt_graph_op:
+            case graph::comp_ne_graph_op:
+            // pred
+            switch( op_enum )
+            {   case graph::comp_eq_graph_op:
+                pred    = llvm::FCmpInst::FCMP_OEQ;
+                break;
+                case graph::comp_le_graph_op:
+                pred    = llvm::FCmpInst::FCMP_OLE;
+                break;
+                case graph::comp_lt_graph_op:
+                pred    = llvm::FCmpInst::FCMP_OLT;
+                break;
+                case graph::comp_ne_graph_op:
+                pred    = llvm::FCmpInst::FCMP_ONE;
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN(false);
+            }
+            compare = builder.CreateFCmp(
+                pred, graph_ir[arg[0]], graph_ir[arg[1]]
+            );
+            // Note that comparision operators use select with integer operands
+            // (double operands are reserved for conditional expressions).
+            error_no = builder.CreateSelect(
+                compare, error_no, int_one, "error_no"
+            );
+            break;
             // --------------------------------------------------------------
             // This operator is not yet supported
             // --------------------------------------------------------------
@@ -572,7 +620,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         graph_ir[node_index]->setName(name);
     }
     // return zero for no error
-    builder.CreateRet(int_zero);
+    builder.CreateRet(error_no);
     //
     // check retreiving this function from this module
     CPPAD_ASSERT_UNKNOWN(

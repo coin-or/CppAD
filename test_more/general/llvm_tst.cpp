@@ -738,6 +738,200 @@ bool tst_cexp(void)
     //
     return ok;
 }
+// -----------------------------------------------------------------------------
+// tst_compare
+bool tst_compare(void)
+{   bool ok = true;
+    using CppAD::AD;
+    using CppAD::vector;
+    //
+    for(size_t comp_case = 3; comp_case < 4; ++comp_case)
+    {
+        //
+        // nx, x
+        size_t nx = 4;
+        vector<double> x(nx);
+        //
+        // ax
+        vector< AD<double> > ax(nx);
+        for(size_t i = 0; i < nx; ++i)
+            ax[i] = x[i] = double(i);
+        CppAD::Independent(ax);
+        //
+        // ny, ay
+        size_t ny = 1;
+        vector< AD<double> > ay(ny);
+        std::string comp_op = "";
+        switch(comp_case )
+        {   //
+            // comp_eq_graph_op
+            case 0:
+            comp_op = "eq";
+            if( ax[0] == ax[1] )
+                ay[0]  =  ax[2];
+            else
+                ay[0]  =  ax[3];
+            break;
+            //
+            // comp_le_graph_op
+            case 1:
+            comp_op = "le";
+            if( ax[0] <= ax[1] )
+                ay[0]  =  ax[2];
+            else
+                ay[0]  =  ax[3];
+            break;
+            //
+            // comp_le_graph_op
+            case 2:
+            comp_op = "lt";
+            if( ax[0]  <  ax[1] )
+                ay[0]  =  ax[2];
+            else
+                ay[0]  =  ax[3];
+            break;
+            //
+            // comp_ne_graph_op
+            case 3:
+            comp_op = "ne";
+            if( ax[0] !=  ax[1] )
+                ay[0]  =  ax[2];
+            else
+                ay[0]  =  ax[3];
+            break;
+        }
+        //
+        // f
+        CppAD::ADFun<double> f(ax, ay);
+        std::string function_name = "llvm_tst";
+        f.function_name_set(function_name);
+        //
+        // graph_obj
+        CppAD::cpp_graph graph_obj;
+        f.to_graph(graph_obj);
+        //
+        // ir_obj
+        CppAD::llvm_ir ir_obj;
+        std::string msg = ir_obj.from_graph(graph_obj);
+        if( msg != "" )
+        {   std::cout << "\n" << msg << "\n";
+            return false;
+        }
+        // optimize it
+        ir_obj.optimize();
+        //
+        // back to graph
+        msg = ir_obj.to_graph(graph_obj);
+        if( msg != "" )
+        {   std::cout << "\n" << msg << "\n";
+            return false;
+        }
+        //
+        // back to function
+        f.from_graph(graph_obj);
+        //
+        // x[0] < x[1] (same as during recording)
+        vector<double> y(ny);
+        size_t number;
+        x[0] = 0.2;
+        x[1] = 0.3;
+        y       = f.Forward(0, x);
+        number = f.compare_change_number();
+        if( comp_op == "eq" )
+        {   ok &= y[0] == x[3];
+            ok &= number  == 0;
+        }
+        else
+        {   ok &= y[0] == x[2];
+            ok &= number  == 0;
+        }
+        //
+        // x[0] ==  x[1]
+        x[0] = 0.3;
+        x[1] = 0.3;
+        y       = f.Forward(0, x);
+        number = f.compare_change_number();
+        if( comp_op == "eq" )
+        {   ok &= y[0] == x[3];
+            ok &= number  == 1;
+        }
+        else
+        {   ok &= y[0] == x[2];
+            if( comp_op != "le" )
+                ok &= number == 1;
+            else
+                ok &= number  == 0;
+        }
+        //
+        // create object file
+        std::string file_name = function_name + ".o";
+        msg = ir_obj.to_object_file(file_name);
+        if( msg != "" )
+        {   std::cout << "\n" << msg << "\n";
+            return false;
+        }
+        //
+        // load the object file
+         CppAD::llvm_link link_obj(msg);
+        if( msg != "" )
+        {   std::cout << "\n" << msg << "\n";
+            return false;
+        }
+        msg = link_obj.object_file(file_name);
+        if( msg != "" )
+        {   std::cout << "\n" << msg << "\n";
+            return false;
+        }
+        //
+        // fun_ptr
+        CppAD::compiled_ir_t fun_ptr;
+        msg = link_obj.function_ptr(function_name, fun_ptr);
+        if( msg != "" )
+        {   std::cerr << "\n" << msg << "\n";
+            return false;
+        }
+        //
+        // clean out old value for y
+        for(size_t i = 0; i < ny; ++i)
+            y[i] = std::numeric_limits<double>::quiet_NaN();
+        //
+        // call compiled version of function
+        int32_t len_x    = int32_t (nx);
+        int32_t len_y    = int32_t (ny);
+        int32_t error_no;
+        //
+        // x[0] < x[1] (same as during recording)
+        x[0] = 0.2;
+        x[1] = 0.3;
+        error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+        if( comp_op == "eq" )
+        {   ok &= y[0] == x[3];
+            ok &= error_no  == 0;
+        }
+        else
+        {   ok &= y[0] == x[2];
+            ok &= error_no  == 0;
+        }
+        //
+        // x[0] ==  x[1]
+        x[0] = 0.3;
+        x[1] = 0.3;
+        error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+        if( comp_op == "eq" )
+        {   ok &= y[0] == x[3];
+            ok &= error_no  == 1;
+        }
+        else
+        {   ok &= y[0] == x[2];
+            if( comp_op != "le" )
+                ok &= error_no == 1;
+            else
+                ok &= error_no  == 0;
+        }
+    }
+    //
+    return ok;
+}
 
 } // END_EMPTY_NAMESPACE
 
@@ -749,5 +943,6 @@ bool llvm_tst(void)
     ok     &= tst_unary();
     ok     &= tst_binary();
     ok     &= tst_cexp();
+    ok     &= tst_compare();
     return ok;
 }

@@ -77,6 +77,12 @@ $end
 # include <llvm/IR/Constants.h>
 # include <llvm/IR/InstrTypes.h>
 
+namespace {
+    llvm::Type::TypeID get_type_id(const llvm::Value* value)
+    {   return value->getType()->getTypeID(); }
+}
+
+
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -252,7 +258,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         CPPAD_ASSERT_UNKNOWN( dependent[i] == 0 );
 # endif
     //
-    // node index correspoding to first result
+    // initial result_node corresponds to first result
     size_t result_node = n_dynamic_ind_ + n_variable_ind_ + n_constant;
     //
     // Second Pass
@@ -260,7 +266,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     {
         const llvm::Value* result = llvm::dyn_cast<llvm::Value>( &(*itr) );
 # ifndef NDEBUG
-        llvm::Type::TypeID result_type_id = result->getType()->getTypeID();
+        llvm::Type::TypeID result_type_id = get_type_id(result);
 # endif
         unsigned op_code                  = itr->getOpcode();
         unsigned n_operand                = itr->getNumOperands();
@@ -268,7 +274,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         type_id.resize(n_operand);
         for(unsigned i = 0; i < n_operand; ++i)
         {   operand[i] = itr->getOperand(i);
-            type_id[i] = operand[i]->getType()->getTypeID();
+            type_id[i] = get_type_id(operand[i]);
         }
         //
         // temporaries used in switch cases
@@ -282,17 +288,10 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         size_t                   i_op;
         std::string              str;
         //
-        // count or instructions
-# ifndef NDEBUG
-        size_t or_count   = 0;
-        size_t zext_count = 0;
-# endif
-        //
         // op_code values are defined in llvm/IR/Instructions.def
         graph_op_enum op_enum;
         switch( op_code )
         {
-            //
             // --------------------------------------------------------------
             case llvm::Instruction::Load:
             // This instruction is only used to load the first element
@@ -472,8 +471,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             //
             // --------------------------------------------------------------
             case llvm::Instruction::Or:
-            // This operand is only used once to or the two ICmp operations
-            CPPAD_ASSERT_UNKNOWN( ++or_count < 2 );
+            // This operand is no longer used
+            CPPAD_ASSERT_UNKNOWN( false );
             break;
             //
             // --------------------------------------------------------------
@@ -484,16 +483,23 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // --------------------------------------------------------------
             case llvm::Instruction::Select:
             CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
+            // cmp_info
             compare  = operand[0];
             cmp_info = llvm_compare2info.lookup(compare);
+            CPPAD_ASSERT_UNKNOWN( cmp_info.left  != nullptr ); // not found ?
+            CPPAD_ASSERT_UNKNOWN( cmp_info.right != nullptr );
+            //
             if( type_id[1] == llvm::Type::DoubleTyID )
             {   // This is a conditional expression
                 CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::DoubleTyID );
+                CPPAD_ASSERT_UNKNOWN(
+                    get_type_id(cmp_info.left)  == llvm::Type::DoubleTyID &&
+                    get_type_id(cmp_info.right) == llvm::Type::DoubleTyID
+                );
                 //
                 // op_enum
                 switch( cmp_info.pred )
-                {   //
-                    // conditional expression comparisons
+                {
                     case llvm::CmpInst::FCMP_OEQ:
                     op_enum = graph::cexp_eq_graph_op;
                     break;
@@ -530,6 +536,45 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     value_size(result , ++result_node)
                 );
             }
+            else if( get_type_id(cmp_info.left) == llvm::Type::DoubleTyID )
+            {   // This is a compare instruction
+                CPPAD_ASSERT_UNKNOWN(
+                    get_type_id(cmp_info.right) == llvm::Type::DoubleTyID
+                );
+                //
+                // op_enum
+                switch( cmp_info.pred )
+                {
+                    case llvm::CmpInst::FCMP_OEQ:
+                    op_enum = graph::comp_eq_graph_op;
+                    break;
+                    //
+                    case llvm::CmpInst::FCMP_OLE:
+                    op_enum = graph::comp_le_graph_op;
+                    break;
+                    //
+                    case llvm::CmpInst::FCMP_OLT:
+                    op_enum = graph::comp_lt_graph_op;
+                    break;
+                    //
+                    case llvm::CmpInst::FCMP_ONE:
+                    op_enum = graph::comp_ne_graph_op;
+                    break;
+                    //
+                    default:
+                    CPPAD_ASSERT_UNKNOWN(false);
+                    break;
+                }
+                // comparison operator
+                graph_obj.operator_vec_push_back( op_enum );
+                // left
+                node = llvm_value2graph_node.lookup( cmp_info.left );
+                graph_obj.operator_arg_push_back(node);
+                // right
+                node = llvm_value2graph_node.lookup( cmp_info.right );
+                graph_obj.operator_arg_push_back(node);
+                // no node in graph for this operation
+            }
             break;
             //
             // --------------------------------------------------------------
@@ -546,9 +591,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             //
             // --------------------------------------------------------------
             case llvm::Instruction::ZExt:
-            // This operand is only used once to convert return value fron
-            // one bit integer to 32 bit integer.
-            CPPAD_ASSERT_UNKNOWN( ++zext_count < 2 );
+            // This operand is no longer used
+            CPPAD_ASSERT_UNKNOWN( false );
             break;
             //
             // --------------------------------------------------------------
