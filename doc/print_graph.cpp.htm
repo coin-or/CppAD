@@ -138,8 +138,10 @@ A:active { color : purple }
         <font color="#FF0000">"          3      x[0]</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"          4       add    1    2</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
         <font color="#FF0000">"          5       add    3    4</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
+        <font color="#FF0000">"y nodes = 5</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font>
     <font color="#990000">;</font>
-    ok <font color="#990000">&amp;=</font> os<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">()</font> <font color="#990000">==</font> check<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> str <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> str <font color="#990000">==</font> check<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
