@@ -537,7 +537,16 @@ $end
             os << "\n";
             node_index += n_result;
         }
-
+        //
+        //  dependent vector
+        size_t n_dependent = dependent_vec_.size();
+        os << "y nodes = ";
+        for(size_t i = 0; i < n_dependent; i++)
+        {   os << dependent_vec_[i];
+            if( i + 1 < n_dependent )
+                os << ", ";
+        }
+        os << "\n";
     }
 
 }; // END CPP_GRAPH_CLASS
