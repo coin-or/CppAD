@@ -538,10 +538,35 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             }
             else if( get_type_id(cmp_info.left) == llvm::Type::DoubleTyID )
             {   // This is a compare instruction
+# ifndef NDEBUG
                 CPPAD_ASSERT_UNKNOWN(
                     get_type_id(cmp_info.right) == llvm::Type::DoubleTyID
                 );
-                //
+                str = compare->getName().str();
+                str = str.substr(0, 2);
+                switch( cmp_info.pred )
+                {
+                    case llvm::CmpInst::FCMP_OEQ:
+                    CPPAD_ASSERT_UNKNOWN( str == "eq");
+                    break;
+                    //
+                    case llvm::CmpInst::FCMP_OLE:
+                    CPPAD_ASSERT_UNKNOWN( str == "le");
+                    break;
+                    //
+                    case llvm::CmpInst::FCMP_OLT:
+                    CPPAD_ASSERT_UNKNOWN( str == "lt");
+                    break;
+                    //
+                    case llvm::CmpInst::FCMP_ONE:
+                    CPPAD_ASSERT_UNKNOWN( str == "ne");
+                    break;
+                    //
+                    default:
+                    CPPAD_ASSERT_UNKNOWN(false);
+                    break;
+                }
+# endif
                 // op_enum
                 switch( cmp_info.pred )
                 {
@@ -562,7 +587,6 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     break;
                     //
                     default:
-                    CPPAD_ASSERT_UNKNOWN(false);
                     break;
                 }
                 // comparison operator
