@@ -268,12 +268,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // ----------------------------------------------------------------------
     // some constants
     // ----------------------------------------------------------------------
+    // bool_zero
+    llvm::Value* bool_zero = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(1, 0, false)
+    );
     // int_zero, int_two, int_three
     llvm::Value* int_zero = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 0, true)
-    );
-    llvm::Value* int_one = llvm::ConstantInt::get(
-            *context_ir_, llvm::APInt(32, 1, true)
     );
     llvm::Value* int_two = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 2, true)
@@ -330,6 +331,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     builder.CreateRet(error_no);
     function_ir->getBasicBlockList().push_back(merge_bb);
     builder.SetInsertPoint(merge_bb);
+    //
+    // initilaize compare_change
+    llvm::Value* compare_change = bool_zero;
     // ------------------------------------------------------------------------
     // graph_ir
     // independent parameters
@@ -623,10 +627,10 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 );
             }
 # endif
-            // Note that comparision operators use select with integer operands
-            // (double operands are reserved for conditional expressions).
-            error_no = builder.CreateSelect(
-                compare, int_one, error_no, "error_no"
+            // compare is one of operands in Or instructions
+            // (this is assumed by llvm_ir.to_graph).
+            compare_change = builder.CreateOr(
+                compare, compare_change, "compare_change"
             );
             break;
             // --------------------------------------------------------------
@@ -655,6 +659,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         graph_ir[node_index]->setName(name);
     }
     // return zero for no error
+    error_no = builder.CreateZExtOrTrunc(
+        compare_change, int_32_t, "error_no"
+    );
     builder.CreateRet(error_no);
     //
     // check retreiving this function from this module
