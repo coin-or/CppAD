@@ -31,6 +31,17 @@ This is a $cref/llvm_ir/llvm_ir_ctor/$$ object.
 It contains an LLVM Intermediate Representation (IR)
 that is optimized.
 
+$head Compare Change$$
+This optimization may reduce the number of comparisons that
+are checked (because some are redundant).
+If you convert an optimized IR representation back to an ADFun object,
+$cref compare_change$$ may be different from the original function.
+What is preserved is detecting if any of the comparisons have changed; i.e.,
+checking if
+$codei%
+    %f%.compare_change_number() != 0
+%$$.
+
 $children%
     example/llvm/optimize.cpp
 %$$
