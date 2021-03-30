@@ -745,7 +745,7 @@ bool tst_compare(void)
     using CppAD::AD;
     using CppAD::vector;
     //
-    for(size_t comp_case = 3; comp_case < 4; ++comp_case)
+    for(size_t comp_case = 0; comp_case < 4; ++comp_case)
     {
         //
         // nx, x

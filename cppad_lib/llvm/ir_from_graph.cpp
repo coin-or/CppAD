@@ -266,7 +266,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // index_vector
     std::vector<llvm::Value*> index_vector(1);
     // ----------------------------------------------------------------------
-    // check for error in len_input or len_output
+    // some constants
     // ----------------------------------------------------------------------
     // int_zero, int_two, int_three
     llvm::Value* int_zero = llvm::ConstantInt::get(
@@ -281,6 +281,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* int_three = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 3, true)
     );
+    //
+    // The zero floating point constant
+    llvm::Value* fp_zero = llvm::ConstantFP::get(
+        *context_ir_, llvm::APFloat(0.0)
+    );
+    // ----------------------------------------------------------------------
+    // check for error in len_input or len_output
+    // ----------------------------------------------------------------------
     // error_no
     size_t n_input = n_dynamic_ind_ + n_variable_ind_;
     llvm::Value* expected_len_input = llvm::ConstantInt::get(
@@ -445,11 +453,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             return msg;
         }
 # endif
-        //
-        // The zero floating point constant
-        llvm::Value* fp_zero = llvm::ConstantFP::get(
-            *context_ir_, llvm::APFloat(0.0)
-        );
         // temporaries used in switch cases
         llvm::Value*             value;
         llvm::Value*             compare;
