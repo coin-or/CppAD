@@ -571,26 +571,27 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             case graph::comp_lt_graph_op:
             case graph::comp_ne_graph_op:
 # ifdef NDEBUG
-            // pred
+            // Change the comparisions so that true corresponds to
+            // comparison changed.
             switch( op_enum )
             {   case graph::comp_eq_graph_op:
-                pred    = llvm::FCmpInst::FCMP_OEQ;
+                pred    = llvm::FCmpInst::FCMP_ONE;
                 break;
                 case graph::comp_le_graph_op:
-                pred    = llvm::FCmpInst::FCMP_OLE;
-                break;
-                case graph::comp_lt_graph_op:
                 pred    = llvm::FCmpInst::FCMP_OLT;
                 break;
+                case graph::comp_lt_graph_op:
+                pred    = llvm::FCmpInst::FCMP_OLE;
+                break;
                 case graph::comp_ne_graph_op:
-                pred    = llvm::FCmpInst::FCMP_ONE;
+                pred    = llvm::FCmpInst::FCMP_OEQ;
                 break;
 
                 default:
                 CPPAD_ASSERT_UNKNOWN(false);
             }
             compare = builder.CreateFCmp(
-                pred, graph_ir[arg[0]], graph_ir[arg[1]]
+                pred, graph_ir[arg[1]], graph_ir[arg[0]]
             );
 # else
             // name is used by llvm_ir.to_graph to check that optimizer did
@@ -598,19 +599,19 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             {   const char* name = "";
                 switch( op_enum )
                 {   case graph::comp_eq_graph_op:
-                    pred    = llvm::FCmpInst::FCMP_OEQ;
+                    pred    = llvm::FCmpInst::FCMP_ONE;
                     name    = "eq";
                     break;
                     case graph::comp_le_graph_op:
-                    pred    = llvm::FCmpInst::FCMP_OLE;
+                    pred    = llvm::FCmpInst::FCMP_OLT;
                     name    = "le";
                     break;
                     case graph::comp_lt_graph_op:
-                    pred    = llvm::FCmpInst::FCMP_OLT;
+                    pred    = llvm::FCmpInst::FCMP_OLE;
                     name    = "lt";
                     break;
                     case graph::comp_ne_graph_op:
-                    pred    = llvm::FCmpInst::FCMP_ONE;
+                    pred    = llvm::FCmpInst::FCMP_OEQ;
                     name    = "ne";
                     break;
 
@@ -618,14 +619,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                     CPPAD_ASSERT_UNKNOWN(false);
                 }
                 compare = builder.CreateFCmp(
-                    pred, graph_ir[arg[0]], graph_ir[arg[1]], name
+                    pred, graph_ir[arg[1]], graph_ir[arg[0]], name
                 );
             }
 # endif
             // Note that comparision operators use select with integer operands
             // (double operands are reserved for conditional expressions).
             error_no = builder.CreateSelect(
-                compare, error_no, int_one, "error_no"
+                compare, int_one, error_no, "error_no"
             );
             break;
             // --------------------------------------------------------------

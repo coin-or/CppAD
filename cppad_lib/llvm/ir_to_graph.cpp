@@ -538,6 +538,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             }
             else if( get_type_id(cmp_info.left) == llvm::Type::DoubleTyID )
             {   // This is a compare instruction
+                // llvm_ir::from_graph changed comparisions so true corresponds
+                // to comparison changed.
 # ifndef NDEBUG
                 CPPAD_ASSERT_UNKNOWN(
                     get_type_id(cmp_info.right) == llvm::Type::DoubleTyID
@@ -546,19 +548,19 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 str = str.substr(0, 2);
                 switch( cmp_info.pred )
                 {
-                    case llvm::CmpInst::FCMP_OEQ:
+                    case llvm::CmpInst::FCMP_ONE:
                     CPPAD_ASSERT_UNKNOWN( str == "eq");
                     break;
                     //
-                    case llvm::CmpInst::FCMP_OLE:
+                    case llvm::CmpInst::FCMP_OLT:
                     CPPAD_ASSERT_UNKNOWN( str == "le");
                     break;
                     //
-                    case llvm::CmpInst::FCMP_OLT:
+                    case llvm::CmpInst::FCMP_OLE:
                     CPPAD_ASSERT_UNKNOWN( str == "lt");
                     break;
                     //
-                    case llvm::CmpInst::FCMP_ONE:
+                    case llvm::CmpInst::FCMP_OEQ:
                     CPPAD_ASSERT_UNKNOWN( str == "ne");
                     break;
                     //
@@ -570,32 +572,32 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 // op_enum
                 switch( cmp_info.pred )
                 {
-                    case llvm::CmpInst::FCMP_OEQ:
+                    case llvm::CmpInst::FCMP_ONE:
                     op_enum = graph::comp_eq_graph_op;
                     break;
                     //
-                    case llvm::CmpInst::FCMP_OLE:
+                    case llvm::CmpInst::FCMP_OLT:
                     op_enum = graph::comp_le_graph_op;
                     break;
                     //
-                    case llvm::CmpInst::FCMP_OLT:
+                    case llvm::CmpInst::FCMP_OLE:
                     op_enum = graph::comp_lt_graph_op;
                     break;
                     //
-                    case llvm::CmpInst::FCMP_ONE:
+                    case llvm::CmpInst::FCMP_OEQ:
                     op_enum = graph::comp_ne_graph_op;
                     break;
                     //
                     default:
                     break;
                 }
-                // comparison operator
+                // comparison operator with order of operands switched
                 graph_obj.operator_vec_push_back( op_enum );
-                // left
-                node = llvm_value2graph_node.lookup( cmp_info.left );
-                graph_obj.operator_arg_push_back(node);
                 // right
                 node = llvm_value2graph_node.lookup( cmp_info.right );
+                graph_obj.operator_arg_push_back(node);
+                // left
+                node = llvm_value2graph_node.lookup( cmp_info.left );
                 graph_obj.operator_arg_push_back(node);
                 // no node in graph for this operation
             }
