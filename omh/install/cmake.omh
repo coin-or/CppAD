@@ -405,9 +405,10 @@ This option, and the script $cref get_cppadcg.sh$$ are only intended
 for testing purposes.
 
 $head include_llvm$$
-The llvm examples
+The llvm examples and library routines
 will be compiled and tested if $code include_llvm=true$$
 is on the command line.
+In this case the C++ standard must be 14 or greater.
 
 
 $head package_prefix$$

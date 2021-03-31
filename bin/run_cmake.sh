@@ -62,6 +62,7 @@ usage: bin/run_cmake.sh: \\
     [--addr_t_size_t] \\
     [--verbose] \\
     [--c++11] \\
+    [--c++14] \\
     [--profile_speed] \\
     [--callgrind] \\
     [--clang ] \\
@@ -95,6 +96,10 @@ EOF
 
         --c++11)
         standard='c++11'
+        ;;
+
+        --c++14)
+        standard='c++14'
         ;;
 
         --profile_speed)

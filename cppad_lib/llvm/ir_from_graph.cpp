@@ -593,6 +593,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
 
                 default:
                 CPPAD_ASSERT_UNKNOWN(false);
+                // set pred to avoid warning
+                pred    = llvm::FCmpInst::FCMP_ONE;
+                break;
             }
             compare = builder.CreateFCmp(
                 pred, graph_ir[arg[1]], graph_ir[arg[0]]
@@ -620,7 +623,10 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                     break;
 
                     default:
+                    // set pred to avoid warning
+                    pred    = llvm::FCmpInst::FCMP_ONE;
                     CPPAD_ASSERT_UNKNOWN(false);
+                    break;
                 }
                 compare = builder.CreateFCmp(
                     pred, graph_ir[arg[1]], graph_ir[arg[0]], name

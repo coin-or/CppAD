@@ -80,19 +80,34 @@ INCLUDE(cmake/set_compile_flags.cmake)
 # pkgconfig_info(name, system)
 INCLUDE(cmake/pkgconfig_info.cmake)
 # ============================================================================
-# Ensure c++11 support
-SET(source "
+IF( include_llvm )
+    # Check for c++14 support
+    SET(source "
+int main(void)
+{   if( __cplusplus < 201402 )
+        return 1;
+    return 0;
+}"
+)
+    run_source_test("${source}" cplusplus_201400_ok )
+    IF( NOT cplusplus_201400_ok  )
+        MESSAGE(FATAL_ERROR "include_llvm and c++ standard less than 14")
+    ENDIF( NOT cplusplus_201400_ok  )
+ELSE( include_llvm )
+    # Ensure c++11 support
+    SET(source "
 int main(void)
 {   if( __cplusplus < 201103 )
         return 1;
     return 0;
 }"
 )
-run_source_test("${source}" cplusplus_201100_ok )
-IF( NOT cplusplus_201100_ok  )
-    SET(CMAKE_CXX_STANDARD 11)
-    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-ENDIF( NOT cplusplus_201100_ok  )
+    run_source_test("${source}" cplusplus_201100_ok )
+    IF( NOT cplusplus_201100_ok  )
+        SET(CMAKE_CXX_STANDARD 11)
+        SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+    ENDIF( NOT cplusplus_201100_ok  )
+ENDIF( include_llvm )
 # =============================================================================
 # command line arguments
 # =============================================================================

@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -127,7 +127,9 @@ then
     random_01 standard
     if [ "$random_01_standard" == '0' ]
     then
-        standard='--c++11'
+        # 2DO: when merge into master have a random setting to include llvm
+        # and used --c++11 when llvm not included.
+        standard='--c++14'
     else
         standard='--c++17'
     fi
