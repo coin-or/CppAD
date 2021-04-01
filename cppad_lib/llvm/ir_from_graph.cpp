@@ -451,6 +451,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             CPPAD_ASSERT_UNKNOWN( n_str == 0 );
             break;
 
+            // Summation Operator
+            case graph::sum_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+            CPPAD_ASSERT_UNKNOWN( n_str == 0 );
+            CPPAD_ASSERT_UNKNOWN( n_arg >= 2 );
+            break;
+
             default:
             msg += "graph_obj has following unsupported operator ";
             msg += local::graph::op_enum2name[op_enum];
@@ -565,6 +572,15 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             compare = builder.CreateFCmp( pred, graph_ir[arg[0]], fp_zero );
             // value = azmul(x, y);
             value = builder.CreateSelect(compare, fp_zero, value);
+            graph_ir.push_back(value);
+            break;
+            // -------------------------------------------------------------
+            // Summation Operator
+            // -------------------------------------------------------------
+            case graph::sum_graph_op:
+            value = graph_ir[arg[0]];
+            for(size_t i = 1; i < n_arg; ++i)
+                value = builder.CreateFAdd(value, graph_ir[arg[i]]);
             graph_ir.push_back(value);
             break;
             // --------------------------------------------------------------

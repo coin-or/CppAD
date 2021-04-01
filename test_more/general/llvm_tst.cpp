@@ -1092,6 +1092,136 @@ bool tst_compare_2(void)
     //
     return ok;
 }
+// -----------------------------------------------------------------------------
+// tst_sum
+bool tst_sum(void)
+{   bool ok = true;
+    using CppAD::AD;
+    using CppAD::vector;
+    std::string function_name = "llvm_tst";
+    //
+    // AD graph example
+    // node_1 : p[0]
+    // node_2 : p[1]
+    // node_3 : p[2]
+    // node_4 : x[0]
+    // node_5 : p[0] + p[1] + p[2]
+    // node_6 : x[0] + p[0] + p[1] + p[2]
+    // y[0]   = x[0] + p[0] + p[1] + p[2]
+    //
+    //
+    // C++ graph object
+    CppAD::cpp_graph graph_obj;
+    //
+    // operator being used
+    CppAD::graph::graph_op_enum op_enum;
+    //
+    // set scalars
+    graph_obj.function_name_set(function_name);
+    size_t n_dynamic_ind = 3;
+    graph_obj.n_dynamic_ind_set(n_dynamic_ind);
+    size_t n_variable_ind = 1;
+    graph_obj.n_variable_ind_set(n_variable_ind);
+    //
+    // node_5 : p[0] + p[1] + p[2]
+    //
+    op_enum = CppAD::graph::sum_graph_op;
+    graph_obj.operator_vec_push_back(op_enum);
+    graph_obj.operator_arg_push_back(3);  // n_node_arg
+    graph_obj.operator_arg_push_back(1);  // first node arg
+    graph_obj.operator_arg_push_back(2);  // second node arg
+    graph_obj.operator_arg_push_back(3);  // third node are
+    //
+    // node_6 : x[0] + p[0] + p[1] + p[2]
+    //
+    // n_arg comes before first_node
+    graph_obj.operator_arg_push_back(2);
+    graph_obj.operator_vec_push_back(op_enum);
+    graph_obj.operator_arg_push_back(4);
+    graph_obj.operator_arg_push_back(5);
+    //
+    // y[0]   = x[0] + p[0] + p[1] + p[2]
+    graph_obj.dependent_vec_push_back(6);
+    //
+    // ir_obj
+    CppAD::llvm_ir ir_obj;
+    std::string msg = ir_obj.from_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    // optimize it
+    ir_obj.optimize();
+    //
+    // back to graph
+    msg = ir_obj.to_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // back to function
+    CppAD::ADFun<double> f;
+    f.from_graph(graph_obj);
+    //
+    size_t np = 3, nx = 1, ny = 1;
+    vector<double> p(np), x(nx), y(ny);
+    p[0] = 1.0;
+    p[1] = 2.0;
+    p[2] = 3.0;
+    x[0] = 4.0;
+    f.new_dynamic(p);
+    y   = f.Forward(0, x);
+    ok &= y[0] == x[0] + p[0] + p[1] + p[2];
+    //
+    // create object file
+    std::string file_name = function_name + ".o";
+    msg = ir_obj.to_object_file(file_name);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // load the object file
+     CppAD::llvm_link link_obj(msg);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    msg = link_obj.object_file(file_name);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // fun_ptr
+    CppAD::compiled_ir_t fun_ptr;
+    msg = link_obj.function_ptr(function_name, fun_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // clean out old value for y
+    for(size_t i = 0; i < ny; ++i)
+        y[i] = std::numeric_limits<double>::quiet_NaN();
+    //
+    // call compiled version of function
+    int32_t len_px   = int32_t (np + nx);
+    int32_t len_y    = int32_t (ny);
+    int32_t error_no;
+    //
+    vector<double>  px(np + nx);
+    px[0] = p[0];
+    px[1] = p[1];
+    px[2] = p[2];
+    px[3] = x[0];
+    error_no = fun_ptr(len_px, px.data(), len_y, y.data());
+    ok      &= error_no == 0;
+    ok      &= y[0] == x[0] + p[0] + p[1] + p[2];
+    //
+    return ok;
+}
 
 } // END_EMPTY_NAMESPACE
 
@@ -1105,5 +1235,6 @@ bool llvm_tst(void)
     ok     &= tst_cexp();
     ok     &= tst_compare_1();
     ok     &= tst_compare_2();
+    ok     &= tst_sum();
     return ok;
 }
