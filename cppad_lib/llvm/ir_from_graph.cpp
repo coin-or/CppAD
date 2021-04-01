@@ -118,12 +118,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // module_ir_
     module_ir_ = std::make_unique<llvm::Module>("llvm_ir", *context_ir_);
     //
-    // llvm_double
-    llvm::Type* llvm_double = llvm::Type::getDoubleTy(*context_ir_);
+    // double_t
+    llvm::Type* double_t = llvm::Type::getDoubleTy(*context_ir_);
     //
-    // llvm_double_ptr
-    llvm::PointerType* llvm_double_ptr =
-        llvm::PointerType::getUnqual(llvm_double);
+    // double_ptr_t
+    llvm::PointerType* double_ptr_t =
+        llvm::PointerType::getUnqual(double_t);
     //
     // int_32_t
     llvm::Type* int_32_t = llvm::Type::getInt32Ty(*context_ir_);
@@ -134,7 +134,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Type*              result_type;
     //
     // int void (*adfun_t) (int, double *, int, double*)
-    param_types = { int_32_t, llvm_double_ptr, int_32_t, llvm_double_ptr };
+    param_types = { int_32_t, double_ptr_t, int_32_t, double_ptr_t };
     is_var_arg  = false;
     result_type = int_32_t;
     llvm::FunctionType* adfun_t  = llvm::FunctionType::get(
@@ -143,14 +143,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     //
     // double (*unary_fun_t)(double)
     // double (*binary_fun_t)(double)
-    param_types  = { llvm_double };
+    param_types  = { double_t };
     is_var_arg   = false;
-    result_type  = llvm_double;
+    result_type  = double_t;
     llvm::FunctionType* unary_fun_t = llvm::FunctionType::get(
         result_type, param_types, is_var_arg
     );
     //
-    param_types  = { llvm_double, llvm_double };
+    param_types  = { double_t, double_t };
     llvm::FunctionType* binary_fun_t = llvm::FunctionType::get(
         result_type, param_types, is_var_arg
     );
@@ -343,9 +343,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         );
         string name        = "p_" + std::to_string(i);
         llvm::Value* ptr   = builder.CreateGEP(
-            llvm_double, input_ptr, index_vector
+            double_t, input_ptr, index_vector
         );
-        llvm::Value* value = builder.CreateLoad(llvm_double, ptr, name);
+        llvm::Value* value = builder.CreateLoad(double_t, ptr, name);
         graph_ir.push_back(value);
     }
     //
@@ -357,9 +357,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         );
         string name        = "x_" + std::to_string(i);
         llvm::Value* ptr   = builder.CreateGEP(
-            llvm_double, input_ptr, index_vector
+            double_t, input_ptr, index_vector
         );
-        llvm::Value* value = builder.CreateLoad(llvm_double, ptr, name);
+        llvm::Value* value = builder.CreateLoad(double_t, ptr, name);
         graph_ir.push_back(value);
     }
     //
@@ -673,7 +673,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         );
         string name        = "y_" + std::to_string(i);
         llvm::Value* ptr   = builder.CreateGEP(
-            llvm_double, output_ptr, index_vector
+            double_t, output_ptr, index_vector
         );
         size_t node_index  = graph_obj.dependent_vec_get(i);
         bool is_volatile   = false;
