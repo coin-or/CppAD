@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -14,6 +14,12 @@ if [ ! -e "bin/check_makefile.sh" ]
 then
     echo "bin/check_makefile.sh: must be executed from its parent directory"
     exit 1
+fi
+if ! which automake >& /dev/null
+then
+    echo 'check_makefile.sh: No automake available so skipping check'
+    exit 0
+
 fi
 # -----------------------------------------------------------------------------
 echo 'Checking if any makfile.in has changed'

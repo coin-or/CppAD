@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -14,6 +14,12 @@ if [  "$0" != 'bin/check_automake.sh' ]
 then
     echo "bin/check_automake: must be executed from its parent directory"
     exit 1
+fi
+if ! which automake >& /dev/null
+then
+    echo 'check_automake.sh: No automake available so skipping check'
+    exit 0
+
 fi
 dir=$(ls /usr/share | grep automake)
 dir="/usr/share/$dir"
