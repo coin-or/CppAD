@@ -504,6 +504,9 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                         break;
                         //
                         default:
+                        CPPAD_ASSERT_UNKNOWN(false);
+                        // only used to avoid compiler warning
+                        op_enum = graph::n_graph_op;
                         break;
                     }
                     // comparison operator with order of operands switched
@@ -558,6 +561,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     //
                     default:
                     CPPAD_ASSERT_UNKNOWN(false);
+                    // only used avoid a compiler warning
+                    op_enum = graph::n_graph_op;
                     break;
                 }
                 // conditional expression operator

@@ -579,7 +579,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             // -------------------------------------------------------------
             case graph::sum_graph_op:
             value = graph_ir[arg[0]];
-            for(size_t i = 1; i < n_arg; ++i)
+            for(size_t i = 1; i < arg.size(); ++i)
                 value = builder.CreateFAdd(value, graph_ir[arg[i]]);
             graph_ir.push_back(value);
             break;
