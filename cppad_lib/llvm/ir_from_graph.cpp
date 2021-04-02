@@ -133,7 +133,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     bool                     is_var_arg;
     llvm::Type*              result_type;
     //
-    // int void (*adfun_t) (int, double *, int, double*)
+    // int (*adfun_t) (int, double *, int, double*)
     param_types = { int_32_t, double_ptr_t, int_32_t, double_ptr_t };
     is_var_arg  = false;
     result_type = int_32_t;
@@ -142,7 +142,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     );
     //
     // double (*unary_fun_t)(double)
-    // double (*binary_fun_t)(double)
+    // double (*binary_fun_t)(double, double)
     param_types  = { double_t };
     is_var_arg   = false;
     result_type  = double_t;
