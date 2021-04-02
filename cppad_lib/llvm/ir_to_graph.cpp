@@ -330,25 +330,54 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::PointerTyID );
                 str  = operand[2]->getName().str();
             }
-            i_op = name2graph_op.lookup( str.c_str() );
-            if( i_op == 0 )
-            {   msg += "Cannot call the function " + str;
-                return msg;
-            }
-            // subtract one that was added so zero means not defined
-            graph_obj.operator_vec_push_back( graph_op_enum(i_op - 1) );
-            //
-            // mapping from this result to the correspondign new node in graph
-            llvm_value2graph_node.insert( value_size(result , ++result_node) );
-            //
-            // put this operator in the graph
-            node = llvm_value2graph_node.lookup(operand[0]);
-            CPPAD_ASSERT_UNKNOWN( node != 0 );
-            graph_obj.operator_arg_push_back( node );
-            if( n_operand == 3 )
-            {   node = llvm_value2graph_node.lookup(operand[1]);
+            if( str.size() > 9 && str.substr(0, 9) == "discrete_" )
+            {   str = str.substr(9, std::string::npos);
+                CPPAD_ASSERT_UNKNOWN( n_operand == 2);
+                //
+                // This must be a discrete function
+                graph_obj.operator_vec_push_back( graph::discrete_graph_op );
+                // mapping this result to the correspondign new node in graph
+                llvm_value2graph_node.insert(
+                    value_size(result , ++result_node)
+                );
+                // determine index of this function in discrete_name_vec
+                index = graph_obj.discrete_name_vec_size();
+                for(size_t i = 0; i < index; ++i)
+                    if( graph_obj.discrete_name_vec_get(i) == str )
+                        index = i;
+                if( index == graph_obj.discrete_name_vec_size() )
+                    graph_obj.discrete_name_vec_push_back( str );
+                //
+                // put arguments for this operator in the graph
+                graph_obj.operator_arg_push_back( index );
+                node = llvm_value2graph_node.lookup(operand[0]);
                 CPPAD_ASSERT_UNKNOWN( node != 0 );
                 graph_obj.operator_arg_push_back( node );
+            }
+            else
+            {
+                i_op = name2graph_op.lookup( str.c_str() );
+                if( i_op == 0 )
+                {   msg += "Cannot call the function " + str;
+                    return msg;
+                }
+                // subtract one that was added so zero means not defined
+                graph_obj.operator_vec_push_back( graph_op_enum(i_op - 1) );
+                //
+                // mapping this result to the correspondign new node in graph
+                llvm_value2graph_node.insert(
+                    value_size(result , ++result_node)
+                );
+                //
+                // put this operator in the graph
+                node = llvm_value2graph_node.lookup(operand[0]);
+                CPPAD_ASSERT_UNKNOWN( node != 0 );
+                graph_obj.operator_arg_push_back( node );
+                if( n_operand == 3 )
+                {   node = llvm_value2graph_node.lookup(operand[1]);
+                    CPPAD_ASSERT_UNKNOWN( node != 0 );
+                    graph_obj.operator_arg_push_back( node );
+                }
             }
             break;
             //

@@ -94,7 +94,12 @@ bool link_adfun(void)
     // create object file
     // bin/test_one.sh.in assumes filename begins with llvm_
     std::string file_name = "llvm_" + function_name + ".o";
-    ir_obj.to_object_file(file_name);
+    msg = ir_obj.to_object_file(file_name);
+    if( msg != "")
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
     //
     // link_obj
     CppAD::llvm_link link_obj(msg);

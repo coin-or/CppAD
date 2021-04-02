@@ -27,6 +27,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 extern bool from_to_graph(void);
 extern bool grad_det_minor(void);
 extern bool link_adfun(void);
+extern bool link_discrete(void);
 extern bool link_lib(void);
 extern bool optimize(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -44,6 +45,7 @@ int main(void)
     Run( from_to_graph,        "from_to_graph"     );
     Run( grad_det_minor,       "grad_det_minor"    );
     Run( link_adfun,           "link_adfun"        );
+    Run( link_discrete,        "link_discrete"     );
     Run( link_lib,             "link_lib"          );
     Run( optimize,             "optimize"          );
     // END_SORT_THIS_LINE_MINUS_1

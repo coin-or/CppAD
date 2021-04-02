@@ -39,8 +39,6 @@ The following limitations are placed on $icode graph_obj$$
 $list number$$
 $cref/function_name/cpp_ad_graph/function_name/$$ must not be empty.
 $lnext
-$cref/discrete_name_vec/cpp_ad_graph/discrete_name_vec/$$ must be empty.
-$lnext
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ must be empty.
 $lnext
 $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$ must be empty.
@@ -85,10 +83,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     using CppAD::local::graph::op_enum2name;
     //
     // Assumptions
-    if( graph_obj.discrete_name_vec_size() != 0)
-    {   msg += "graph_obj.discrete_name_vec_size() != 0";
-        return msg;
-    }
     if( graph_obj.atomic_name_vec_size() != 0)
     {   msg += "graph_obj.atomic_name_vec_size() != 0";
         return msg;
@@ -458,6 +452,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             CPPAD_ASSERT_UNKNOWN( n_arg >= 2 );
             break;
 
+            // discrete functions
+            case graph::discrete_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+            CPPAD_ASSERT_UNKNOWN( n_str == 1 );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+            break;
+
             default:
             msg += "graph_obj has following unsupported operator ";
             msg += local::graph::op_enum2name[op_enum];
@@ -500,6 +501,23 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 op_enum2callee[op_enum], unary_args, op_enum2name[op_enum]
             );
             graph_ir.push_back(value);
+            break;
+            //
+            // discrete functions
+            case graph::discrete_graph_op:
+            unary_args[0] = graph_ir[ arg[0] ];
+            {   const CppAD::vector<size_t>& index(*itr_value.str_index_ptr);
+                const std::string fun_name = "discrete_" +
+                    graph_obj.discrete_name_vec_get(index[0]);
+                llvm::FunctionCallee callee = module_ir_->getOrInsertFunction(
+                    fun_name.c_str(), unary_fun_t, empty_attributes
+                );
+                unary_args[0] = graph_ir[ arg[0] ];
+                value = builder.CreateCall(
+                    callee, unary_args, fun_name.c_str()
+                );
+                graph_ir.push_back(value);
+            }
             break;
             //
             // binary functions

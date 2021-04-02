@@ -134,7 +134,7 @@ std::string llvm_link::object_file(const std::string& file_name)
     // becasue Error::getError() function is deprecated.
     //
     // initialize msg
-    std::string msg = "llvm_link::object_file: ";
+    std::string msg = "llvm_link::object_file: " + file_name + ": ";
     if( jit_ == nullptr )
     {   msg += "The constructor failed for object doing loading";
         return msg;

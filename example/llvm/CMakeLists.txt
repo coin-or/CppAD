@@ -15,6 +15,7 @@ SET(source_list
     from_to_graph.cpp
     grad_det_minor.cpp
     link_adfun.cpp
+    link_discrete.cpp
     link_lib.cpp
     llvm.cpp
     optimize.cpp
@@ -32,10 +33,14 @@ ELSE( cppad_has_llvm )
     SET(cppad_link "")
 ENDIF( cppad_has_llvm )
 TARGET_LINK_LIBRARIES(example_llvm
+    discrete
     ${cppad_lib}
     ${cppad_link}
     ${colpack_libs}
 )
+#
+# This library contains call backs from discrete functions
+ADD_LIBRARY(discrete SHARED discrete.cpp)
 #
 # Add the check_example_llvm target
 ADD_CUSTOM_TARGET(check_example_llvm
