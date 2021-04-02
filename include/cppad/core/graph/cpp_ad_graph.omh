@@ -96,7 +96,7 @@ A discrete function has one argument, one result, and it derivative
 is always zero; e.g., the Heaviside function.
 Calls by this function to discrete functions use the index in this
 vector to identify the discrete functions; see
-$cref/dis_graph_op/cpp_ad_graph/operator_arg/dis_graph_op/$$ below.
+$cref/discrete_graph_op/cpp_ad_graph/operator_arg/discrete_graph_op/$$ below.
 If there are no calls to discrete functions, this vector can be empty.
 
 $head atomic_name_vec$$
@@ -152,13 +152,14 @@ $codei%
     %operator_arg%[ %first_node%[%i%] + %j% ]
 %$$
 Except for the
-$code dis_graph_op$$, $code atom_graph_op$$, and $code sum_graph_op$$ cases,
+$code discrete_graph_op$$, $code atom_graph_op$$, and
+$code sum_graph_op$$ cases,
 the $icode operator_arg$$ sub-vector for the $th i$$ operator starts are
 $icode%first_node%[%i%]%$$ and has $icode%n_node_arg%[%i%]%$$ elements.
 
-$subhead dis_graph_op$$
+$subhead discrete_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
-$code dis_graph_op$$:
+$code discrete_graph_op$$:
 $codei%
     %name_index%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
