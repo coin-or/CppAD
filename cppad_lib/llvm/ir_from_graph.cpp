@@ -374,12 +374,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             itr = graph_obj.begin();
         else
             ++itr;
-        CppAD::cpp_graph::const_iterator::value_type itr_value = *itr;
         //
-        const CppAD::vector<size_t>&       arg( *itr_value.arg_node_ptr );
-        graph_op_enum  op_enum  = itr_value.op_enum;
-# ifndef NDEBUG
+        // arg, op_enum, str_index
+        CppAD::cpp_graph::const_iterator::value_type itr_value = *itr;
+        const CppAD::vector<size_t>& arg( *itr_value.arg_node_ptr );
+        graph_op_enum                op_enum  = itr_value.op_enum;
         const CppAD::vector<size_t>& str_index( *itr_value.str_index_ptr );
+# ifndef NDEBUG
         size_t         n_result = itr_value.n_result;
         size_t         n_arg    = arg.size();
         size_t         n_str    = str_index.size();
@@ -506,9 +507,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             // discrete functions
             case graph::discrete_graph_op:
             unary_args[0] = graph_ir[ arg[0] ];
-            {   const CppAD::vector<size_t>& index(*itr_value.str_index_ptr);
-                const std::string fun_name = "discrete_" +
-                    graph_obj.discrete_name_vec_get(index[0]);
+            {   const std::string fun_name = "discrete_" +
+                    graph_obj.discrete_name_vec_get(str_index[0]);
                 llvm::FunctionCallee callee = module_ir_->getOrInsertFunction(
                     fun_name.c_str(), unary_fun_t, empty_attributes
                 );
