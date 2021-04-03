@@ -16,6 +16,7 @@ SET(source_list
     grad_det_minor.cpp
     link_adfun.cpp
     link_discrete.cpp
+    link_atomic.cpp
     link_lib.cpp
     llvm.cpp
     optimize.cpp
@@ -42,10 +43,13 @@ TARGET_LINK_LIBRARIES(example_llvm
 # This library contains call backs from discrete functions
 ADD_LIBRARY(discrete SHARED discrete.cpp)
 #
+# This library contains call backs from atomic functions
+ADD_LIBRARY(atomic SHARED atomic.cpp)
+#
 # Add the check_example_llvm target
 ADD_CUSTOM_TARGET(check_example_llvm
     example_llvm
-    DEPENDS example_llvm
+    DEPENDS example_llvm atomic
 )
 MESSAGE(STATUS "make check_example_llvm: available")
 #

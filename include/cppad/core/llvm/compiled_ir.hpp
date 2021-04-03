@@ -19,6 +19,7 @@ $spell
     len
     ir
     ptr
+    cpp
 $$
 
 $section C++ Function Type for a Compiled llvm_ir Object$$
@@ -45,6 +46,7 @@ $head input$$
 This is the input vector for the function.
 The independent dynamic parameters come first,
 and then the independent variables.
+This vector is not modified.
 
 $head len_output$$
 This is the length of the output vector which is equal to
@@ -53,7 +55,7 @@ the sum of the number of dependent variables.
 $head output$$
 The input value of the elements of this vector does not matter.
 Upon return, it contains the dependent variable values corresponding
-to the independent variables.
+to the independent variables and dynamic parameters.
 
 $head error_no$$
 
@@ -82,6 +84,14 @@ $icode error_no$$ $pre $$ $cnext Meaning  $rnext
 3  $cnext $icode len_output$$ is incorrect
 $tend
 
+$head Atomic Functions$$
+The function type $code compiled_ir_t$$
+is also used for the $code double$$ implementation of
+zero order forward mode for atomic functions; e.g.,
+$cref/atomic.cpp/llvm_link_atomic.cpp/atomic.cpp/$$.
+The difference is that $icode input$$ and $icode output$$
+are relative to the atomic function,
+not variables and parameters in a corresponding ADFun object.
 
 $end
 */

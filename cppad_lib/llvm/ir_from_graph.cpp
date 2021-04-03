@@ -39,8 +39,6 @@ The following limitations are placed on $icode graph_obj$$
 $list number$$
 $cref/function_name/cpp_ad_graph/function_name/$$ must not be empty.
 $lnext
-$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ must be empty.
-$lnext
 $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$ must be empty.
 $lend
 
@@ -83,10 +81,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     using CppAD::local::graph::op_enum2name;
     //
     // Assumptions
-    if( graph_obj.atomic_name_vec_size() != 0)
-    {   msg += "graph_obj.atomic_name_vec_size() != 0";
-        return msg;
-    }
     if( graph_obj.print_text_vec_size() != 0)
     {   msg += "graph_obj.print_text_vec_size() != 0";
         return msg;
@@ -257,8 +251,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     std::vector<llvm::Value*> graph_ir;
     graph_ir.push_back(nullptr);
     //
-    // index_vector
-    std::vector<llvm::Value*> index_vector(1);
+    // one_index
+    std::vector<llvm::Value*> one_index(1);
     // ----------------------------------------------------------------------
     // some constants
     // ----------------------------------------------------------------------
@@ -332,12 +326,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // graph_ir
     // independent parameters
     for(size_t i = 0; i < n_dynamic_ind_; ++i)
-    {   index_vector[0] = llvm::ConstantInt::get(
+    {   one_index[0] = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, i, false)
         );
         string name        = "p_" + std::to_string(i);
         llvm::Value* ptr   = builder.CreateGEP(
-            double_t, input_ptr, index_vector
+            double_t, input_ptr, one_index
         );
         llvm::Value* value = builder.CreateLoad(double_t, ptr, name);
         graph_ir.push_back(value);
@@ -346,12 +340,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // graph_ir
     // independent variables
     for(size_t i = 0; i < n_variable_ind_; ++i)
-    {   index_vector[0] = llvm::ConstantInt::get(
+    {   one_index[0] = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, n_dynamic_ind_ + i, false)
         );
         string name        = "x_" + std::to_string(i);
         llvm::Value* ptr   = builder.CreateGEP(
-            double_t, input_ptr, index_vector
+            double_t, input_ptr, one_index
         );
         llvm::Value* value = builder.CreateLoad(double_t, ptr, name);
         graph_ir.push_back(value);
@@ -380,9 +374,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         const CppAD::vector<size_t>& arg( *itr_value.arg_node_ptr );
         graph_op_enum                op_enum  = itr_value.op_enum;
         const CppAD::vector<size_t>& str_index( *itr_value.str_index_ptr );
-# ifndef NDEBUG
         size_t         n_result = itr_value.n_result;
         size_t         n_arg    = arg.size();
+# ifndef NDEBUG
         size_t         n_str    = str_index.size();
         //
         switch( op_enum )
@@ -458,6 +452,11 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             CPPAD_ASSERT_UNKNOWN( n_str == 1 );
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+            break;
+
+            // atmiic functions
+            case graph::atom_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_str == 1 );
             break;
 
             default:
@@ -674,6 +673,92 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             );
             break;
             // --------------------------------------------------------------
+            // atomic functions
+            // --------------------------------------------------------------
+            case graph::atom_graph_op:
+            {   // fun_name
+                const std::string fun_name = "atomic_" +
+                    graph_obj.atomic_name_vec_get(str_index[0]);
+                //
+                // callee
+                llvm::FunctionCallee callee = module_ir_->getOrInsertFunction(
+                    fun_name.c_str(), adfun_t, empty_attributes
+                );
+                //
+                // atom_args
+                std::vector<llvm::Value*> atom_args(4);
+                //
+                // atom_args[0]
+                value = llvm::ConstantInt::get(
+                    *context_ir_, llvm::APInt(32, n_arg, true)
+                );
+                atom_args[0] = value;
+                //
+                // atom_args[2]
+                value = llvm::ConstantInt::get(
+                    *context_ir_, llvm::APInt(32, n_result, true)
+                );
+                atom_args[2] = value;
+                //
+                // atom_args[1]
+                llvm::Value* atom_in = builder.CreateAlloca(
+                    double_t,       // Type*  Ty
+                    atom_args[0],   // Value* ArraySize
+                    "atom_in"       // const Twine& Name
+                );
+                one_index[0]   = int_zero;
+                atom_args[1] = builder.CreateGEP(
+                        double_t, atom_in, one_index, "atom_in_ptr"
+                );
+                // copy arguments to atom_in
+                for(size_t i = 0; i < n_arg; ++i)
+                {   // index for this element
+                    one_index[0] = llvm::ConstantInt::get(
+                        *context_ir_, llvm::APInt(32, i, false)
+                    );
+                    // pointer to this element
+                    string name = std::to_string(i) + "_in";
+                    llvm::Value* ptr = builder.CreateGEP(
+                        double_t, atom_in, one_index, name
+                    );
+                    // store value for this element
+                    bool is_volatile = false;
+                    builder.CreateStore(graph_ir[ arg[i] ], ptr, is_volatile);
+                }
+                //
+                // atom_args[3]
+                llvm::Value* atom_out = builder.CreateAlloca(
+                    double_t,       // Type*  Ty
+                    atom_args[2],   // Value* ArraySize
+                    "atom_out"      // const Twine& Name
+                );
+                atom_args[3] = builder.CreateGEP(
+                        double_t, atom_out, one_index, "atom_out_ptr"
+                );
+                //
+                // call the atomic function
+                value = builder.CreateCall(
+                    callee, atom_args, fun_name.c_str()
+                );
+                //
+                // copy results to graph_ir
+                for(size_t i = 0; i < n_result; ++i)
+                {   // index for this element
+                    one_index[0] = llvm::ConstantInt::get(
+                        *context_ir_, llvm::APInt(32, i, false)
+                    );
+                    // pointer to this element
+                    string name = std::to_string(i) + "_out";
+                    llvm::Value* ptr = builder.CreateGEP(
+                        double_t, atom_out, one_index, name
+                    );
+                    // get this element
+                    value = builder.CreateLoad(double_t, ptr);
+                    graph_ir.push_back(value);
+                }
+            }
+            break;
+            // --------------------------------------------------------------
             // This operator is not yet supported
             // --------------------------------------------------------------
             default:
@@ -686,12 +771,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     for(size_t i = 0; i < n_variable_dep_; ++i)
     {
         bool is_signed = false;
-        index_vector[0] = llvm::ConstantInt::get(
+        one_index[0] = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, i, is_signed)
         );
         string name        = "y_" + std::to_string(i);
         llvm::Value* ptr   = builder.CreateGEP(
-            double_t, output_ptr, index_vector
+            double_t, output_ptr, one_index
         );
         size_t node_index  = graph_obj.dependent_vec_get(i);
         bool is_volatile   = false;
