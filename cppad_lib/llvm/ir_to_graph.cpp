@@ -115,9 +115,6 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // map llvm::Value* for a pointer to graph node index
     llvm::DenseMap<const llvm::Value*, size_t>  llvm_ptr2graph_node;
     //
-    // map llvm::Value* double* to a dependent variable index
-    llvm::DenseMap<const llvm::Value*, size_t>  llvm_ptr2dep_var_ind;
-    //
     // map compare operator result to operands
     struct compare_info {
         llvm::CmpInst::Predicate pred;
@@ -125,7 +122,13 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         llvm::Value*             right;
     };
     llvm::DenseMap<const llvm::Value*, compare_info>  llvm_compare2info;
-
+    //
+    // map llvm::Value* element pointer to base pointer and index value
+    struct element_info {
+        const llvm::Value*  base;
+        size_t              index;
+    };
+    llvm::DenseMap<const llvm::Value*, element_info>  llvm_element2info;
     //
     // The maps above assume the default constructor for size_t yeilds zero
     CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
@@ -137,6 +140,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     typedef std::pair<const llvm::Value*, size_t>         value_size;
     typedef std::pair<llvm::StringRef,    size_t>         string_size;
     typedef std::pair<const llvm::Value*, compare_info>   value_compare_info;
+    typedef std::pair<const llvm::Value*, element_info>   value_element_info;
     //
     // name2graph_op
     // map function name in IR to correspond to operators in graph
@@ -259,9 +263,12 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // node index 1 corresponds to first element of input vector
     llvm_ptr2graph_node.insert( value_size(input_ptr, 1) );
     //
-    // Dependent variable index 0 corresponds to first lement of output vector.
-    // Add one to these indices so zero can be used for value not found.
-    llvm_ptr2dep_var_ind.insert( value_size(output_ptr, 1) );
+    // Index 0 corresponds to first lement of output vector.
+    {   element_info info;
+        info.base = output_ptr;
+        info.index = 0;
+        llvm_element2info.insert( value_element_info(output_ptr, info) );
+    }
     //
     // mapping from dependent variable index to graph node index
     CppAD::vector<size_t> dependent(n_variable_dep_);
@@ -295,6 +302,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         // temporaries used in switch cases
         const llvm::Value*       compare;
         compare_info             cmp_info;
+        element_info             ele_info;
         size_t                   node;
         size_t                   index;
         size_t                   i_op;
@@ -458,10 +466,10 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             index  = get_int_constant(operand[1]);
             if( operand[0] == output_ptr )
             {   // The only use of output_ptr is to store values.
-                // Use the actual dependent variable index plus 1
-                // so that we can use 0 to check for not found.
-                index = index + 1;
-                llvm_ptr2dep_var_ind.insert( value_size(result, index) );
+                element_info info;
+                info.base  = output_ptr;
+                info.index = index;
+                llvm_element2info.insert( value_element_info(result, info) );
             }
             else
             {    CPPAD_ASSERT_UNKNOWN( operand[0] == input_ptr );
@@ -628,11 +636,11 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
             CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
-            node  = llvm_value2graph_node.lookup(operand[0]);
-            index = llvm_ptr2dep_var_ind.lookup(operand[1]);
+            node     = llvm_value2graph_node.lookup(operand[0]);
+            ele_info = llvm_element2info.lookup(operand[1]);
+            CPPAD_ASSERT_UNKNOWN( ele_info.base == output_ptr );
             CPPAD_ASSERT_UNKNOWN( node != 0 );
-            CPPAD_ASSERT_UNKNOWN( index != 0 );
-            dependent[ index - 1 ] = node;
+            dependent[ele_info.index] = node;
             break;
             //
             // --------------------------------------------------------------
