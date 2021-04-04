@@ -128,6 +128,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     typedef std::pair<const llvm::Value*, compare_info>   value_compare_info;
     //
     // name2graph_op
+    // map function name in IR to correspond to operators in graph
     size_t n_graph_op = size_t( graph::n_graph_op );
     for(size_t i_op = 0; i_op < n_graph_op; ++i_op)
     {   graph_op_enum op_enum = graph_op_enum( i_op );
@@ -441,7 +442,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             break;
             //
             // --------------------------------------------------------------
-            case llvm::Instruction::Instruction::GetElementPtr:
+            case llvm::Instruction::GetElementPtr:
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
             CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::PointerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::PointerTyID );
