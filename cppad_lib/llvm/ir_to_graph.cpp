@@ -78,8 +78,19 @@ $end
 # include <llvm/IR/InstrTypes.h>
 
 namespace {
+    //
+    // get_type_id
     llvm::Type::TypeID get_type_id(const llvm::Value* value)
     {   return value->getType()->getTypeID(); }
+    //
+    // get_int_constant
+    size_t get_int_constant(llvm::Value* value)
+    {   const llvm::ConstantInt* cint =
+            llvm::dyn_cast<const llvm::ConstantInt>(value);
+        const llvm::APInt*       apint  = &cint->getValue();
+        const uint64_t*          uint64 = apint->getRawData();
+        return size_t( *uint64 );
+    }
 }
 
 
@@ -284,9 +295,6 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         // temporaries used in switch cases
         const llvm::Value*       compare;
         compare_info             cmp_info;
-        const llvm::ConstantInt* cint;
-        const llvm::APInt*       apint;
-        const uint64_t*          uint64;
         size_t                   node;
         size_t                   index;
         size_t                   i_op;
@@ -447,14 +455,12 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::PointerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::PointerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::IntegerTyID );
-            cint   = llvm::dyn_cast<const llvm::ConstantInt>(operand[1]);
-            apint  = &cint->getValue();
-            uint64 = apint->getRawData();
+            index  = get_int_constant(operand[1]);
             if( operand[0] == output_ptr )
             {   // The only use of output_ptr is to store values.
                 // Use the actual dependent variable index plus 1
                 // so that we can use 0 to check for not found.
-                index = *uint64 + 1;
+                index = index + 1;
                 llvm_ptr2dep_var_ind.insert( value_size(result, index) );
             }
             else
@@ -462,7 +468,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 // The only use of input_ptr is load values
                 //
                 // first element of input_ptr corresponds to node index 1
-                node = *uint64 + 1;
+                node = index + 1;
                 llvm_ptr2graph_node.insert( value_size(result, node) );
             }
             break;
