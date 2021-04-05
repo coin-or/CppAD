@@ -374,23 +374,83 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // --------------------------------------------------------------
             case llvm::Instruction::Call:
             if( n_operand == 2 )
-            {   CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
+            {   // unary function is nameed by operator or discrete call
+                CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
                 CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
                 str  = operand[1]->getName().str();
             }
-            else
-            {   CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
+            else if( n_operand == 3 )
+            {   // binary function is named by operator
                 CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
                 CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::DoubleTyID );
                 CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::PointerTyID );
                 str  = operand[2]->getName().str();
             }
-            if( str.size() > 9 && str.substr(0, 9) == "discrete_" )
-            {   str = str.substr(9, std::string::npos);
-                CPPAD_ASSERT_UNKNOWN( n_operand == 2);
+            else
+            {   // atomic function call
+                CPPAD_ASSERT_UNKNOWN( n_operand == 5 );
+                CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::IntegerTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::IntegerTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[3] == llvm::Type::PointerTyID );
+                str  = operand[2]->getName().str();
+                CPPAD_ASSERT_UNKNOWN(
+                    str.size() > 7 && str.substr(0, 7) == "atomic_"
+                );
+            }
+            if( n_operand == 5 )
+            {   // name of this atomic function
+                str = str.substr(7, std::string::npos);
+                //
+                // must be an atomic function call
+                graph_obj.operator_vec_push_back( graph::atom_graph_op );
+                //
+                // determine index of this function in atomic_name_vec
+                index = graph_obj.atomic_name_vec_size();
+                for(size_t i = 0; i < index; ++i)
+                    if( graph_obj.atomic_name_vec_get(i) == str )
+                        index = i;
+                if( index == graph_obj.atomic_name_vec_size() )
+                    graph_obj.atomic_name_vec_push_back( str );
+                //
+                // put name index in argument vector for this operator
+                graph_obj.operator_arg_push_back(index);
+                //
+                // put number of results in argument vector
+                size_t n_result = get_int_constant( operand[2] );
+                graph_obj.operator_arg_push_back(n_result);
+                //
+                // put number of arguments in argument vector
+                size_t n_arg = get_int_constant( operand[0] );
+                graph_obj.operator_arg_push_back(n_arg);
+                //
+                // pointer to argument vector
+                llvm::Value* base = operand[1];
+                //
+                // index2node for argument vector
+                size_t vec_index = llvm_base2index2node.lookup(base);
+                CPPAD_ASSERT_UNKNOWN( vec_index != 0 );
+                CppAD::vector<size_t>& index2node( vec_index2node[vec_index] );
+                CPPAD_ASSERT_UNKNOWN( index2node.size() == n_arg );
+                //
+                // put argument nodes in argument vector
+                for(size_t i = 0; i < n_arg; ++i)
+                {   // The store instruction for arguments come before call
+                    CPPAD_ASSERT_UNKNOWN( index2node[i] != 0 );
+                    node = index2node[i];
+                    graph_obj.operator_arg_push_back(node);
+                }
+                // !!! Stopped Here !!!
+            }
+            else if( str.size() > 9 && str.substr(0, 9) == "discrete_" )
+            {   CPPAD_ASSERT_UNKNOWN( n_operand == 2);
+                //
+                // name of this discrete function
+                str = str.substr(9, std::string::npos);
                 //
                 // This must be a discrete function
                 graph_obj.operator_vec_push_back( graph::discrete_graph_op );
+                //
                 // mapping this result to the correspondign new node in graph
                 llvm_value2graph_node.insert(
                     value_size(result , ++result_node)
