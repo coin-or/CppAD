@@ -1222,6 +1222,112 @@ bool tst_sum(void)
     //
     return ok;
 }
+// -----------------------------------------------------------------------------
+/*
+Begin not yet working
+namespace {
+    class atomic_reciprocal : public CppAD::atomic_three<double> {
+    public:
+        atomic_reciprocal(const std::string& name) :
+        CppAD::atomic_three<double>(name)
+        { }
+    private:
+        virtual bool for_type(
+            const CppAD::vector<double>&               parameter_x ,
+            const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
+            CppAD::vector<CppAD::ad_type_enum>&        type_y      )
+        {   assert( parameter_x.size() == type_x.size() );
+            bool ok = type_x.size() == 1; // n
+            ok     &= type_y.size() == 1; // m
+            if( ! ok )
+                return false;
+            type_y[0] = type_x[0];
+            return true;
+        }
+        virtual bool forward(
+            const CppAD::vector<double>&               parameter_x  ,
+            const CppAD::vector<CppAD::ad_type_enum>&  type_x       ,
+            size_t                                     need_y       ,
+            size_t                                     order_low    ,
+            size_t                                     order_up     ,
+            const CppAD::vector<double>&               taylor_x     ,
+            CppAD::vector<double>&                     taylor_y     )
+        {
+    # ifndef NDEBUG
+            size_t n = taylor_x.size() / (order_up + 1);
+            size_t m = taylor_y.size() / (order_up + 1);
+    # endif
+            assert( n == 1 );
+            assert( m == 1 );
+            assert( order_low <= order_up );
+
+            // return flag
+            bool ok = order_up == 0;
+            if( ! ok )
+                return ok;
+
+            // Order zero forward mode.
+            // This case must always be implemented
+            // y^0 = g( x^0 ) = 1 / x^0
+            taylor_y[0] = 1. / taylor_x[0];
+            //
+            return ok;
+        }
+    }; // END_ATOMIC_RECIPROCAL
+}
+bool tst_atomic(void)
+{   bool ok = true;
+    using CppAD::llvm_ir;
+    using CppAD::AD;
+    //
+    atomic_reciprocal afun("reciprocal");
+    //
+    size_t nx = 1, ny = 1;
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx), ay(ny);
+    ax[0] = 1.0;
+    CppAD::Independent(ax);
+    afun(ax, ay);
+    CppAD::ADFun<double> f(ax, ay);
+    f.function_name_set("link_tst");
+    //
+    // create a cpp_graph from this function
+    CppAD::cpp_graph graph_obj;
+    f.to_graph(graph_obj);
+    std::string function_name = graph_obj.function_name_get();
+    std::cout << "\n";
+    graph_obj.print( std::cout );
+    //
+    // llvm_ir object
+    llvm_ir ir_obj;
+    std::string msg = ir_obj.from_graph(graph_obj);
+    if( msg != "")
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    // optimize
+    // ir_obj.optimize();
+    ir_obj.print();
+    //
+    // back to graph
+    msg = ir_obj.to_graph(graph_obj);
+    if( msg != "")
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // back to function
+    CppAD::ADFun<double> g;
+    g.from_graph(graph_obj);
+    //
+    CPPAD_TESTVECTOR(double) x(nx), y(ny);
+    x[0] = 4.0;
+    y    = g.Forward(0, x);
+    //
+    ok  &= y[0] == 1.0 / x[0];
+    //
+    return ok;
+}
+End Not yet working */
 
 } // END_EMPTY_NAMESPACE
 
@@ -1236,5 +1342,6 @@ bool llvm_tst(void)
     ok     &= tst_compare_1();
     ok     &= tst_compare_2();
     ok     &= tst_sum();
+    // ok     &= tst_atomic();
     return ok;
 }

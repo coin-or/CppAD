@@ -16,7 +16,7 @@ $spell
     ir
 $$
 
-$section Example Linking a Discrete AD Function$$
+$section Example Linking an Atomic AD Function$$
 
 $head atomic.cpp$$
 The prototype for this function is the same as for

@@ -365,6 +365,12 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         switch( op_code )
         {
             // --------------------------------------------------------------
+            case llvm::Instruction::Alloca:
+            // This instruction is used to get memrory for atomic
+            // function input and output vectors.
+            break;
+            //
+            // --------------------------------------------------------------
             case llvm::Instruction::Load:
             // This instruction is only used to load the first element
             // in the input vector.
@@ -779,20 +785,19 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             break;
         }
     }
-    {   // set dependent_vec in graph_obj
-        const llvm::Value* base = output_ptr;
-        size_t        vec_index = llvm_base2index2node.lookup(base);
-        CPPAD_ASSERT_UNKNOWN( vec_index != 0 );
-        CppAD::vector<size_t>& index2node( vec_index2node[vec_index] );
-        CPPAD_ASSERT_UNKNOWN( index2node.size() == n_variable_dep_ );
-        for(size_t i = 0; i < n_variable_dep_; ++i)
-        {   if( index2node[i] == 0 )
-            {   msg += "No store instruction for dependent variable index ";
-                msg += std::to_string(i);
-                return msg;
-            }
-            graph_obj.dependent_vec_push_back( index2node[i] );
+    // set dependent_vec in graph_obj
+    const llvm::Value* base = output_ptr;
+    size_t        vec_index = llvm_base2index2node.lookup(base);
+    CPPAD_ASSERT_UNKNOWN( vec_index != 0 );
+    CppAD::vector<size_t>& index2node( vec_index2node[vec_index] );
+    CPPAD_ASSERT_UNKNOWN( index2node.size() == n_variable_dep_ );
+    for(size_t i = 0; i < n_variable_dep_; ++i)
+    {   if( index2node[i] == 0 )
+        {   msg += "No store instruction for dependent variable index ";
+            msg += std::to_string(i);
+            return msg;
         }
+        graph_obj.dependent_vec_push_back( index2node[i] );
     }
     // No error
     msg = "";
