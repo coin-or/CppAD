@@ -136,7 +136,15 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     CppAD::vector< CppAD::vector<size_t> > vec_index2node(1);
     //
     // Map from base pointer to index in vec_index2node.
+    // This is used for vectors where the nodes are scatterd
     llvm::DenseMap<const llvm::Value*, size_t> llvm_base2index2node;
+    //
+    // Map from base pointer to first node
+    // This is used for vectors where the nodes are contigous
+    llvm::DenseMap<const llvm::Value*, size_t> llvm_base2first_node;
+# ifndef NDEBUG
+    llvm::DenseMap<const llvm::Value*, size_t> llvm_base2length;
+# endif
     //
     // The maps above assume the default constructor for size_t yeilds zero
     CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
@@ -290,6 +298,12 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     //
     // node index 1 corresponds to first element of input vector
     llvm_ptr2graph_node.insert( value_size(input_ptr, 1) );
+    llvm_base2first_node.insert( value_size(input_ptr, 1) );
+# ifndef NDEBUG
+    {   size_t length = n_dynamic_ind_ + n_variable_ind_;
+        llvm_base2length.insert( value_size(input_ptr, length) );
+    }
+# endif
     //
     {   // base pointer for the results of this function
         const llvm::Value* base = output_ptr;
@@ -440,7 +454,15 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     node = index2node[i];
                     graph_obj.operator_arg_push_back(node);
                 }
-                // !!! Stopped Here !!!
+                //
+                // result vector
+                base                = operand[3];
+                size_t first_node   = result_node + 1;
+                result_node        += n_result;
+                llvm_base2first_node.insert( value_size(base, first_node) );
+# ifndef NDEBUG
+                llvm_base2length.insert( value_size(base, n_result) );
+# endif
             }
             else if( str.size() > 9 && str.substr(0, 9) == "discrete_" )
             {   CPPAD_ASSERT_UNKNOWN( n_operand == 2);
@@ -561,21 +583,23 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::PointerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::PointerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::IntegerTyID );
-            index  = get_int_constant(operand[1]);
-            if( operand[0] == output_ptr )
-            {   // The only use of output_ptr is to store values.
-                element_info info;
-                info.base  = output_ptr;
-                info.index = index;
+            index  = llvm_base2index2node.lookup( operand[0] );
+            if( index != 0 )
+            {   element_info info;
+                info.index = get_int_constant(operand[1]);
+                info.base  = operand[0];
                 llvm_element2info.insert( value_element_info(result, info) );
             }
             else
-            {    CPPAD_ASSERT_UNKNOWN( operand[0] == input_ptr );
-                // The only use of input_ptr is load values
-                //
-                // first element of input_ptr corresponds to node index 1
-                node = index + 1;
+            {   size_t first_node  = llvm_base2first_node.lookup( operand[0] );
+                CPPAD_ASSERT_UNKNOWN( first_node !=  0 );
+                index = get_int_constant( operand[1] );
+                node  = first_node + index;
                 llvm_ptr2graph_node.insert( value_size(result, node) );
+# ifndef NDEBUG
+                size_t length  = llvm_base2length.lookup( operand[0] );
+                CPPAD_ASSERT_UNKNOWN(index < length);
+# endif
             }
             break;
             //
