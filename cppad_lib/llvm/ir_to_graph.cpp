@@ -84,9 +84,10 @@ namespace {
     {   return value->getType()->getTypeID(); }
     //
     // get_int_constant
-    size_t get_int_constant(llvm::Value* value)
+    size_t get_int_constant(const llvm::Value* value)
     {   const llvm::ConstantInt* cint =
             llvm::dyn_cast<const llvm::ConstantInt>(value);
+        CPPAD_ASSERT_UNKNOWN( cint != nullptr );
         const llvm::APInt*       apint  = &cint->getValue();
         const uint64_t*          uint64 = apint->getRawData();
         return size_t( *uint64 );
@@ -129,6 +130,13 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         size_t              index;
     };
     llvm::DenseMap<const llvm::Value*, element_info>  llvm_element2info;
+    //
+    // Map base pointer to mapping from index value to graph node
+    // Index zero in this vector is not used.
+    CppAD::vector< CppAD::vector<size_t> > vec_index2node(1);
+    //
+    // Map from base pointer to index in vec_index2node.
+    llvm::DenseMap<const llvm::Value*, size_t> llvm_base2index2node;
     //
     // The maps above assume the default constructor for size_t yeilds zero
     CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
@@ -256,6 +264,26 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 }
             }
         }
+        if( n_operand == 5 && itr->getOpcode() == llvm::Instruction::Call )
+        {   // atomic function call
+            //
+            // number of arguments in call
+            size_t n_arg = get_int_constant(operand[0]);
+            //
+            // base pointer for the arguments in this call
+            llvm::Value* base = operand[1];
+            //
+            // Mapping from argument index to graph node for this atomic call.
+            // The elements of this are set during store operations.
+            CppAD::vector<size_t> index2node(n_arg);
+            //
+            // put this index2node map in vec_index2node vector
+            size_t vec_index = vec_index2node.size();
+            vec_index2node.push_back(index2node);
+            //
+            // Corresponding entry in llvm_base2index2node
+            llvm_base2index2node.insert( value_size(base, vec_index) );
+        }
     }
     // n_constant
     size_t n_constant = graph_obj.constant_vec_size();
@@ -263,19 +291,29 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // node index 1 corresponds to first element of input vector
     llvm_ptr2graph_node.insert( value_size(input_ptr, 1) );
     //
-    // Index 0 corresponds to first lement of output vector.
-    {   element_info info;
-        info.base = output_ptr;
+    {   // base pointer for the results of this function
+        const llvm::Value* base = output_ptr;
+        //
+        // Index 0 corresponds to first lement of output vector.
+        // There may be no GetElementPtr instruction for this element.
+        element_info info;
+        info.base = base;
         info.index = 0;
         llvm_element2info.insert( value_element_info(output_ptr, info) );
+        //
+        // Mapping from index to graph node for results of this function.
+        // The elements of this are set during store operations.
+        CppAD::vector<size_t> index2node(n_variable_dep_);
+        //
+        // put this index2node map in vec_index2node vector
+        size_t vec_index = vec_index2node.size();
+        vec_index2node.push_back(index2node);
+        //
+        // Corresponding entry in llvm_base2index2node
+        llvm_base2index2node.insert( value_size(base, vec_index) );
     }
     //
-    // mapping from dependent variable index to graph node index
-    CppAD::vector<size_t> dependent(n_variable_dep_);
 # ifndef NDEBUG
-    for(size_t i = 0; i < n_variable_dep_; ++i)
-        CPPAD_ASSERT_UNKNOWN( dependent[i] == 0 );
-    //
     // initialize counter for ZExt instructions
     size_t count_zext = 0;
 # endif
@@ -640,7 +678,12 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             ele_info = llvm_element2info.lookup(operand[1]);
             CPPAD_ASSERT_UNKNOWN( ele_info.base == output_ptr );
             CPPAD_ASSERT_UNKNOWN( node != 0 );
-            dependent[ele_info.index] = node;
+            {   const llvm::Value* base = ele_info.base;
+                size_t        vec_index = llvm_base2index2node.lookup(base);
+                CPPAD_ASSERT_UNKNOWN( vec_index != 0 );
+                CppAD::vector<size_t>& index2node( vec_index2node[vec_index] );
+                index2node[ele_info.index] = node;
+            }
             break;
             //
             // --------------------------------------------------------------
@@ -652,13 +695,20 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             break;
         }
     }
-    for(size_t i = 0; i < n_variable_dep_; ++i)
-    {   if( dependent[i] == 0 )
-        {   msg += "No store instruction for dependent variable index ";
-            msg += std::to_string(i);
-            return msg;
+    {   // set dependent_vec in graph_obj
+        const llvm::Value* base = output_ptr;
+        size_t        vec_index = llvm_base2index2node.lookup(base);
+        CPPAD_ASSERT_UNKNOWN( vec_index != 0 );
+        CppAD::vector<size_t>& index2node( vec_index2node[vec_index] );
+        CPPAD_ASSERT_UNKNOWN( index2node.size() == n_variable_dep_ );
+        for(size_t i = 0; i < n_variable_dep_; ++i)
+        {   if( index2node[i] == 0 )
+            {   msg += "No store instruction for dependent variable index ";
+                msg += std::to_string(i);
+                return msg;
+            }
+            graph_obj.dependent_vec_push_back( index2node[i] );
         }
-        graph_obj.dependent_vec_push_back( dependent[i] );
     }
     // No error
     msg = "";
