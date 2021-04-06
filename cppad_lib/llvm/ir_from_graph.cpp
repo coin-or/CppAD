@@ -706,10 +706,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                     atom_args[0],   // Value* ArraySize
                     "atom_in"       // const Twine& Name
                 );
-                one_index[0]   = int_zero;
-                atom_args[1] = builder.CreateGEP(
-                        double_t, atom_in, one_index, "atom_in_ptr"
-                );
+                atom_args[1] = atom_in;
+                //
                 // copy arguments to atom_in
                 for(size_t i = 0; i < n_arg; ++i)
                 {   // index for this element
@@ -732,9 +730,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                     atom_args[2],   // Value* ArraySize
                     "atom_out"      // const Twine& Name
                 );
-                atom_args[3] = builder.CreateGEP(
-                        double_t, atom_out, one_index, "atom_out_ptr"
-                );
+                atom_args[3] = atom_out;
                 //
                 // call the atomic function
                 value = builder.CreateCall(

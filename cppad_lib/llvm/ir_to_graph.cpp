@@ -285,6 +285,12 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // The elements of this are set during store operations.
             CppAD::vector<size_t> index2node(n_arg);
             //
+            // Do not need a GetElementPtr instruction for first element
+            element_info info;
+            info.base  = base;
+            info.index = 0;
+            llvm_element2info.insert( value_element_info(base, info) );
+            //
             // put this index2node map in vec_index2node vector
             size_t vec_index = vec_index2node.size();
             vec_index2node.push_back(index2node);
@@ -308,8 +314,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     {   // base pointer for the results of this function
         const llvm::Value* base = output_ptr;
         //
-        // Index 0 corresponds to first lement of output vector.
-        // There may be no GetElementPtr instruction for this element.
+        // Do not need a GetElementPtr instruction for first element
         element_info info;
         info.base = base;
         info.index = 0;
@@ -413,7 +418,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
                 CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::IntegerTyID );
                 CPPAD_ASSERT_UNKNOWN( type_id[3] == llvm::Type::PointerTyID );
-                str  = operand[2]->getName().str();
+                str  = operand[4]->getName().str();
                 CPPAD_ASSERT_UNKNOWN(
                     str.size() > 7 && str.substr(0, 7) == "atomic_"
                 );
@@ -465,6 +470,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 base                = operand[3];
                 size_t first_node   = result_node + 1;
                 result_node        += n_result;
+                llvm_ptr2graph_node.insert( value_size(base, first_node) );
                 llvm_base2first_node.insert( value_size(base, first_node) );
 # ifndef NDEBUG
                 llvm_base2length.insert( value_size(base, n_result) );
@@ -766,7 +772,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
             node     = llvm_value2graph_node.lookup(operand[0]);
             ele_info = llvm_element2info.lookup(operand[1]);
-            CPPAD_ASSERT_UNKNOWN( ele_info.base == output_ptr );
+            CPPAD_ASSERT_UNKNOWN( ele_info.base != nullptr );
             CPPAD_ASSERT_UNKNOWN( node != 0 );
             {   const llvm::Value* base = ele_info.base;
                 size_t        vec_index = llvm_base2index2node.lookup(base);

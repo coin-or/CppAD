@@ -1223,8 +1223,6 @@ bool tst_sum(void)
     return ok;
 }
 // -----------------------------------------------------------------------------
-/*
-Begin not yet working
 namespace {
     class atomic_reciprocal : public CppAD::atomic_three<double> {
     public:
@@ -1294,8 +1292,6 @@ bool tst_atomic(void)
     CppAD::cpp_graph graph_obj;
     f.to_graph(graph_obj);
     std::string function_name = graph_obj.function_name_get();
-    std::cout << "\n";
-    graph_obj.print( std::cout );
     //
     // llvm_ir object
     llvm_ir ir_obj;
@@ -1305,8 +1301,7 @@ bool tst_atomic(void)
         return false;
     }
     // optimize
-    // ir_obj.optimize();
-    ir_obj.print();
+    ir_obj.optimize();
     //
     // back to graph
     msg = ir_obj.to_graph(graph_obj);
@@ -1327,7 +1322,6 @@ bool tst_atomic(void)
     //
     return ok;
 }
-End Not yet working */
 
 } // END_EMPTY_NAMESPACE
 
@@ -1342,6 +1336,6 @@ bool llvm_tst(void)
     ok     &= tst_compare_1();
     ok     &= tst_compare_2();
     ok     &= tst_sum();
-    // ok     &= tst_atomic();
+    ok     &= tst_atomic();
     return ok;
 }
