@@ -150,27 +150,35 @@ then
     set_libdir @colpack_prefix@ ColPack
 fi
 #
-# llvm
-if [ @cppad_has_llvm@ == 1 ]
-then
-    llvm_cxxflags=$(llvm-config --cxxflags | sed -e 's|-fno-exceptions||')
-    include_flags="$include_flags $llvm_cxxflags"
-    #
-    llvm_ldflags=$(llvm-config --ldflags)
-    library_flags="$library_flags $llvm_ldflags"
-    #
-    llvm_libs=$(llvm-config --libs)
-    library_flags="$library_flags $llvm_libs"
-fi
-#
-# include_flags
-include_flags=$(echo $include_flags | \
-    sed -e 's|-I/usr/include||g' -e 's| -I| -isystem|g'
-)
+# initialize compiler flags
+cxx_flags='@cppad_cxx_flags@'
 #
 include_flags="-I $original_dir/include $include_flags"
 cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
-library_flags="$library_flags $cppad_lib_path -lpthread"
+library_flags="$library_flags $cppad_lib_path"
+#
+# llvm
+if [ @cppad_has_llvm@ == 1 ]
+then
+    llvm_cxxflags=$(llvm-config --cxxflags | \
+        sed -e 's|-fno-exceptions||' -e 's|-I[^ ]*||' \
+    )
+    cxx_flags="$cxx_flags $llvm_cxxflags"
+    #
+    llvm_includedir=$(llvm-config --includedir)
+    if [ "$llvm_includedir" != '/usr/include' ]
+    then
+        include_flags="$include_flags -isystem $llvm_includedir"
+    fi
+    #
+    llvm_libdir=$(llvm-config --libdir)
+    library_flags="$library_flags -L $llvm_libdir"
+    #
+    llvm_libs="LLVM"
+    library_flags="$library_flags -l$llvm_libs"
+    #
+fi
+library_flags="$library_flags -lpthread"
 # --------------------------------------------------------------------------
 cd build
 if ! make cppad_lib
@@ -202,9 +210,6 @@ sed < $dir/$main > test_one.cpp \
 -e "s/.*This line is used by test_one.sh.*/    Run( $fun, \"$fun\");/"
 # --------------------------------------------------------------------------
 # Create test_one.exe
-#
-# compiler flags
-cxx_flags='@cppad_cxx_flags@'
 if [ "$dir" == 'test_more/cppad_for_tmb' ]
 then
     cxx_flags="$cxx_flags @OpenMP_CXX_FLAGS@ -DCPPAD_FOR_TMB"
@@ -242,6 +247,13 @@ then
         export LD_LIBRARY_PATH="$my_path"
     else
         export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$my_path"
+    fi
+fi
+if [ @cppad_has_llvm@ == 1 ]
+then
+    if ! echo $LD_LIBRARY_PATH | grep "$llvm_libdir" > /dev/null
+    then
+        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$llvm_libdir"
     fi
 fi
 # --------------------------------------------------------------------------

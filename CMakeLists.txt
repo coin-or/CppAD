@@ -79,6 +79,9 @@ INCLUDE(cmake/set_compile_flags.cmake)
 #
 # pkgconfig_info(name, system)
 INCLUDE(cmake/pkgconfig_info.cmake)
+#
+# llvm_info(llvm_cxxflags llvm_includedir llvm_libdir)
+INCLUDE(cmake/llvm_info.cmake)
 # ============================================================================
 IF( include_llvm )
     # Check for c++14 support
