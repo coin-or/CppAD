@@ -512,7 +512,6 @@ $end
             graph_op_enum          op_enum  = itr_value.op_enum;
             size_t                n_result  = itr_value.n_result;
             size_t                   n_arg  = arg.size();
-            size_t                   n_str  = str_index.size();
             CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
             //
             string op_name = local::graph::op_enum2name[ op_enum ];
@@ -530,9 +529,23 @@ $end
             for(size_t i = 0; i < n_arg; ++i)
                 os << setw(5) << arg[i];
 
-            for(size_t i = 0; i < n_str; ++i)
-            {   string s_i = "s[" + std::to_string(str_index[i]) + "]";
-                os << setw(10) << s_i;
+            switch( op_enum )
+            {
+                case graph::atom_graph_op:
+                case graph::discrete_graph_op:
+                CPPAD_ASSERT_UNKNOWN( str_index.size() == 1 );
+                os << atomic_name_vec_get( str_index[0] );
+                break;
+
+                case graph::print_graph_op:
+                CPPAD_ASSERT_UNKNOWN( str_index.size() == 2 );
+                os << atomic_name_vec_get( str_index[0] ) << ",";
+                os << atomic_name_vec_get( str_index[1] );
+                break;
+
+                default:
+                CPPAD_ASSERT_UNKNOWN( str_index.size() == 0 );
+                break;
             }
             os << "\n";
             node_index += n_result;

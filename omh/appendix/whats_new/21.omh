@@ -37,6 +37,11 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 04-05$$
+The $cref cpp_graph_print$$ operation was modified so that it printed the
+text corresponding to atomic function names, discrete function names,
+and print operators.
+
 $head 04-02$$
 The enum value $code dis_graph_op$$ was corrected to $code discrete_graph_op$$
 in the documentation for
