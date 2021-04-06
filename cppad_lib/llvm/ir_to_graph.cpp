@@ -136,13 +136,14 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     CppAD::vector< CppAD::vector<size_t> > vec_index2node(1);
     //
     // Map from base pointer to index in vec_index2node.
-    // This is used for vectors where the nodes are scatterd
+    // This is used for vectors where the nodes are scatterd.
     llvm::DenseMap<const llvm::Value*, size_t> llvm_base2index2node;
     //
     // Map from base pointer to first node
-    // This is used for vectors where the nodes are contigous
+    // This is used for vectors where the nodes are contiguous.
     llvm::DenseMap<const llvm::Value*, size_t> llvm_base2first_node;
 # ifndef NDEBUG
+    // THis is used to check the indices where nodes are contiguous.
     llvm::DenseMap<const llvm::Value*, size_t> llvm_base2length;
 # endif
     //
@@ -273,7 +274,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             }
         }
         if( n_operand == 5 && itr->getOpcode() == llvm::Instruction::Call )
-        {   // atomic function call
+        {   // Atomic function call argument vector
+            // (the corresponding  nodes are scattered).
             //
             // number of arguments in call
             size_t n_arg = get_int_constant(operand[0]);
@@ -302,7 +304,9 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // n_constant
     size_t n_constant = graph_obj.constant_vec_size();
     //
-    // node index 1 corresponds to first element of input vector
+    // Input vector for this fucntion, node 1
+    // corresponds to first element of this input vector
+    // (the corresponding nodes are contiguous).
     llvm_ptr2graph_node.insert( value_size(input_ptr, 1) );
     llvm_base2first_node.insert( value_size(input_ptr, 1) );
 # ifndef NDEBUG
@@ -311,7 +315,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     }
 # endif
     //
-    {   // base pointer for the results of this function
+    {   // Output vector for this fuction
+        // (the corresponding nodes are scattered).
         const llvm::Value* base = output_ptr;
         //
         // Do not need a GetElementPtr instruction for first element
@@ -449,7 +454,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 size_t n_arg = get_int_constant( operand[0] );
                 graph_obj.operator_arg_push_back(n_arg);
                 //
-                // pointer to argument vector
+                // The nodes for an atomic argument vector are scattered.
                 llvm::Value* base = operand[1];
                 //
                 // index2node for argument vector
@@ -466,7 +471,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     graph_obj.operator_arg_push_back(node);
                 }
                 //
-                // result vector
+                // The nodes for an atomic resutl vector are contiguous.
                 base                = operand[3];
                 size_t first_node   = result_node + 1;
                 result_node        += n_result;
@@ -597,13 +602,15 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::IntegerTyID );
             index  = llvm_base2index2node.lookup( operand[0] );
             if( index != 0 )
-            {   element_info info;
+            {   // This vectors nodes are scattered
+                element_info info;
                 info.index = get_int_constant(operand[1]);
                 info.base  = operand[0];
                 llvm_element2info.insert( value_element_info(result, info) );
             }
             else
-            {   size_t first_node  = llvm_base2first_node.lookup( operand[0] );
+            {   // This vectors nodes are contiguous
+                size_t first_node  = llvm_base2first_node.lookup( operand[0] );
                 CPPAD_ASSERT_UNKNOWN( first_node !=  0 );
                 index = get_int_constant( operand[1] );
                 node  = first_node + index;
@@ -791,7 +798,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             break;
         }
     }
-    // set dependent_vec in graph_obj
+    // Set dependent_vec in graph_obj
+    // (the corresponding nodes are scattered).
     const llvm::Value* base = output_ptr;
     size_t        vec_index = llvm_base2index2node.lookup(base);
     CPPAD_ASSERT_UNKNOWN( vec_index != 0 );
