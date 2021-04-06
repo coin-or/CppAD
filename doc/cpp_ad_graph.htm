@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ Representation of an AD Graph</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ Representation of an AD Graph">
-<meta name="keywords" id="keywords" content=" c++ representation ad graph see also function node indices p x c r function_name discrete_name_vec atomic_name_vec print_text_vec n_dynamic_ind n_variable_ind constant_vec operator_vec operator_arg dis_graph_op atom_graph_op sum_graph_op dependent_vec cpp_graph ">
+<meta name="keywords" id="keywords" content=" c++ representation ad graph see also function node indices p x c r function_name discrete_name_vec atomic_name_vec print_text_vec n_dynamic_ind n_variable_ind constant_vec operator_vec operator_arg discrete_graph_op atom_graph_op sum_graph_op dependent_vec cpp_graph ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -83,7 +83,7 @@ A:active { color : purple }
 <option>constant_vec</option>
 <option>operator_vec</option>
 <option>operator_arg</option>
-<option>---..dis_graph_op</option>
+<option>---..discrete_graph_op</option>
 <option>---..atom_graph_op</option>
 <option>---..sum_graph_op</option>
 <option>dependent_vec</option>
@@ -226,7 +226,7 @@ A discrete function has one argument, one result, and it derivative
 is always zero; e.g., the Heaviside function.
 Calls by this function to discrete functions use the index in this
 vector to identify the discrete functions; see
-<a href="cpp_ad_graph.htm#operator_arg.dis_graph_op" target="_top"><span style='white-space: nowrap'>dis_graph_op</span></a>
+<a href="cpp_ad_graph.htm#operator_arg.discrete_graph_op" target="_top"><span style='white-space: nowrap'>discrete_graph_op</span></a>
  below.
 If there are no calls to discrete functions, this vector can be empty.
 
@@ -335,7 +335,8 @@ the <code><i>j</i></code>-th node argument for the <code><i>i</i></code>-th oper
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
 Except for the
-<code><font color="blue">dis_graph_op</font></code>, <code><font color="blue">atom_graph_op</font></code>, and <code><font color="blue">sum_graph_op</font></code> cases,
+<code><font color="blue">discrete_graph_op</font></code>, <code><font color="blue">atom_graph_op</font></code>, and
+<code><font color="blue">sum_graph_op</font></code> cases,
 the 
 <code><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i></code>
  sub-vector for the <code><i>i</i></code>-th operator starts are
@@ -347,12 +348,12 @@ the
 
 <br>
 <br>
-<big><a name="operator_arg.dis_graph_op" id="operator_arg.dis_graph_op">dis_graph_op</a></big>
+<big><a name="operator_arg.discrete_graph_op" id="operator_arg.discrete_graph_op">discrete_graph_op</a></big>
 <br>
 In the case where 
 <code><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>].op_enum</span></font></code>
  is
-<code><font color="blue">dis_graph_op</font></code>:
+<code><font color="blue">discrete_graph_op</font></code>:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name_index</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;1&nbsp;]<br>
