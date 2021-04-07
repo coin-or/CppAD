@@ -29,6 +29,7 @@ $spell
     enum
     cpp
     Heaviside
+    notpos
 $$
 
 $section C++ Representation of an AD Graph$$
@@ -151,11 +152,39 @@ the $th j$$ node argument for the $th i$$ operator has node index
 $codei%
     %operator_arg%[ %first_node%[%i%] + %j% ]
 %$$
-Except for the
-$code discrete_graph_op$$, $code atom_graph_op$$, and
-$code sum_graph_op$$ cases,
-the $icode operator_arg$$ sub-vector for the $th i$$ operator starts are
-$icode%first_node%[%i%]%$$ and has $icode%n_node_arg%[%i%]%$$ elements.
+The $icode operator_arg$$ sub-vector for the $th i$$ operator starts are
+$icode%first_node%[%i%]%$$ and has $icode%n_node_arg%[%i%]%$$ elements
+except for the following operators:
+$code sum_graph_op$$,
+$code discrete_graph_op$$,
+$code atom_graph_op$$,
+$code print_graph_op$$.
+
+$subhead print_graph_op$$
+In the case where $icode%operator_vec%[%i%].op_enum%$$ is
+$code print_graph_op$$:
+$codei%
+    %before%[%i%] = %operator_arg%[ %first_node%[%i%] - 2 ]
+%$$
+is the index in $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$
+of the text that is printed before the value and
+$codei%
+    %after%[%i%] = %operator_arg%[ %first_node%[%i%] - 2 ]
+%$$
+is the index in $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$
+of the text that is printed after the value.
+The $icode operator_arg$$ sub-vector for the $th i$$ operator
+starts at index $icode%first_node%[%i%]-2%$$
+and has $codei%4 = %n_node_arg%[%i%]+2%$$ elements.
+The node with index
+$codei%
+    %notpos%[%i%] = %operator_arg%[ %first_node%[%i%] ]
+%$$
+is checked and if it is positive, nothing is printed by this operator.
+Otherwise, the value corresponding to the following node is printed:
+$codei%
+    %value%[%i%] = %operator_arg%[ %first_node%[%i%] + 1 ]
+%$$
 
 $subhead discrete_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
