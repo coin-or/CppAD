@@ -37,6 +37,13 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 04-07$$
+Documentation was added for the
+$cref/print_graph_op/cpp_ad_graph/operator_arg/print_graph_op/$$ operator.
+This is different from the function
+$cref cpp_graph_print$$ which prints an entire graph.
+
+
 $head 04-05$$
 The $cref cpp_graph_print$$ operation was modified so that it printed the
 text corresponding to atomic function names, discrete function names,
