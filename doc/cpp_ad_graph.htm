@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++ Representation of an AD Graph</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++ Representation of an AD Graph">
-<meta name="keywords" id="keywords" content=" c++ representation ad graph see also function node indices p x c r function_name discrete_name_vec atomic_name_vec print_text_vec n_dynamic_ind n_variable_ind constant_vec operator_vec operator_arg discrete_graph_op atom_graph_op sum_graph_op dependent_vec cpp_graph ">
+<meta name="keywords" id="keywords" content=" c++ representation ad graph see also function node indices p x c r function_name discrete_name_vec atomic_name_vec print_text_vec n_dynamic_ind n_variable_ind constant_vec operator_vec operator_arg print_graph_op discrete_graph_op atom_graph_op sum_graph_op dependent_vec cpp_graph ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -83,6 +83,7 @@ A:active { color : purple }
 <option>constant_vec</option>
 <option>operator_vec</option>
 <option>operator_arg</option>
+<option>---..print_graph_op</option>
 <option>---..discrete_graph_op</option>
 <option>---..atom_graph_op</option>
 <option>---..sum_graph_op</option>
@@ -334,19 +335,62 @@ the <code><i>j</i></code>-th node argument for the <code><i>i</i></code>-th oper
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
-Except for the
-<code><font color="blue">discrete_graph_op</font></code>, <code><font color="blue">atom_graph_op</font></code>, and
-<code><font color="blue">sum_graph_op</font></code> cases,
-the 
+The 
 <code><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i></code>
  sub-vector for the <code><i>i</i></code>-th operator starts are
 
 <code><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  and has 
 <code><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- elements.
+ elements
+except for the following operators:
+<code><font color="blue">sum_graph_op</font></code>,
+<code><font color="blue">discrete_graph_op</font></code>,
+<code><font color="blue">atom_graph_op</font></code>,
+<code><font color="blue">print_graph_op</font></code>.
 
 <br>
+<br>
+<big><a name="operator_arg.print_graph_op" id="operator_arg.print_graph_op">print_graph_op</a></big>
+<br>
+In the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>].op_enum</span></font></code>
+ is
+<code><font color="blue">print_graph_op</font></code>:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>before</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;2&nbsp;]<br>
+</span></font></code>
+is the index in <a href="cpp_ad_graph.htm#print_text_vec" target="_top"><span style='white-space: nowrap'>print_text_vec</span></a>
+
+of the text that is printed before the value and
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;-&nbsp;2&nbsp;]<br>
+</span></font></code>
+is the index in <a href="cpp_ad_graph.htm#print_text_vec" target="_top"><span style='white-space: nowrap'>print_text_vec</span></a>
+
+of the text that is printed after the value.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i></code>
+ sub-vector for the <code><i>i</i></code>-th operator
+starts at index 
+<code><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]-2</span></font></code>
+
+and has 
+<code><font color="blue"><span style='white-space: nowrap'>4&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_node_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]+2</span></font></code>
+ elements.
+The node with index
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>notpos</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;]<br>
+</span></font></code>
+is checked and if it is positive, nothing is printed by this operator.
+Otherwise, the value corresponding to the following node is printed:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>operator_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_node</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;+&nbsp;1&nbsp;]<br>
+</span></font></code>
 <br>
 <big><a name="operator_arg.discrete_graph_op" id="operator_arg.discrete_graph_op">discrete_graph_op</a></big>
 <br>

@@ -28,6 +28,7 @@ var list_current0 = [
 'cpp_ad_graph.htm#constant_vec',
 'cpp_ad_graph.htm#operator_vec',
 'cpp_ad_graph.htm#operator_arg',
+'cpp_ad_graph.htm#operator_arg.print_graph_op',
 'cpp_ad_graph.htm#operator_arg.discrete_graph_op',
 'cpp_ad_graph.htm#operator_arg.atom_graph_op',
 'cpp_ad_graph.htm#operator_arg.sum_graph_op',
