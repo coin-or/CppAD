@@ -247,6 +247,7 @@ bool tst_load(void)
     // correct call function
     len_input   = static_cast<int32_t>(np + nx);
     len_output  = static_cast<int32_t>(ny);
+    len_message = static_cast<int32_t>(nm);
     error_no    = fun_ptr(
         len_input,   input.data(),
         len_output,  output.data(),

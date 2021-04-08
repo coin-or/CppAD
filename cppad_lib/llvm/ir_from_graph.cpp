@@ -245,8 +245,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     output_ptr->setName("output_ptr");
     //
     // len_msg
-    // llvm::Argument* len_msg  = function_ir->arg_begin() + 4;
-    // len_msg->setName("len_msg");
+    llvm::Argument* len_msg  = function_ir->arg_begin() + 4;
+    len_msg->setName("len_msg");
     //
     // msg_ptr
     // llvm::Argument* msg_ptr  = function_ir->arg_begin() + 5;
@@ -285,13 +285,16 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* int_three = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 3, true)
     );
+    llvm::Value* int_four = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(32, 4, true)
+    );
     //
     // The zero floating point constant
     llvm::Value* fp_zero = llvm::ConstantFP::get(
         *context_ir_, llvm::APFloat(0.0)
     );
     // ----------------------------------------------------------------------
-    // check for error in len_input or len_output
+    // check for error in len_input, len_output, or len_msg
     // ----------------------------------------------------------------------
     // error_no
     size_t n_input = n_dynamic_ind_ + n_variable_ind_;
@@ -314,6 +317,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     );
     error_no = builder.CreateSelect(
         compare_len_output, int_three,  error_no, "error_no"
+    );
+    //
+    // error_no
+    llvm::Value* compare_len_msg = builder.CreateICmpSLE(
+        len_msg, int_zero
+    );
+    error_no = builder.CreateSelect(
+        compare_len_msg, int_four,  error_no, "error_no"
     );
     //
     // length_error

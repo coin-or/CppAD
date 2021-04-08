@@ -162,10 +162,10 @@ bool link_adfun(void)
     ok &= error_no == 3;
     for(size_t i = 0; i < ny; ++i)
         ok &= output[i] == 0.0;
-    /* Not yet working
+    //
     // invalid value for len_msg
     len_output  = static_cast<int32_t>(ny);
-    len_message = 0;
+    len_message = -1;
     error_no    = fun_ptr(
         len_input,   input.data(),
         len_output,  output.data(),
@@ -174,7 +174,6 @@ bool link_adfun(void)
     ok &= error_no == 4;
     for(size_t i = 0; i < ny; ++i)
         ok &= output[i] == 0.0;
-    */
     //
     // correct call function
     len_input   = static_cast<int32_t>(np + nx);
