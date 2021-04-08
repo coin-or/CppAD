@@ -141,11 +141,11 @@ bool link_adfun(void)
     // incorrect value for len_input
     int32_t len_input   = 0;
     int32_t len_output  = static_cast<int32_t>(ny);
-    int32_t len_msg     = static_cast<int32_t>(nm);
+    int32_t len_message = static_cast<int32_t>(nm);
     int32_t error_no    = fun_ptr(
-        len_input,  input.data(),
-        len_output, output.data(),
-        len_msg,    message.data()
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
     );
     ok &= error_no == 2;
     for(size_t i = 0; i < ny; ++i)
@@ -155,9 +155,9 @@ bool link_adfun(void)
     len_input   = static_cast<int32_t>(np + nx);
     len_output  = 0;
     error_no    = fun_ptr(
-        len_input,  input.data(),
-        len_output, output.data(),
-        len_msg,    message.data()
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
     );
     ok &= error_no == 3;
     for(size_t i = 0; i < ny; ++i)
@@ -165,11 +165,11 @@ bool link_adfun(void)
     /* Not yet working
     // invalid value for len_msg
     len_output  = static_cast<int32_t>(ny);
-    len_msg     = 0;
+    len_message = 0;
     error_no    = fun_ptr(
-        len_input,  input.data(),
-        len_output, output.data(),
-        len_msg,    message.data()
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
     );
     ok &= error_no == 4;
     for(size_t i = 0; i < ny; ++i)
@@ -179,11 +179,11 @@ bool link_adfun(void)
     // correct call function
     len_input   = static_cast<int32_t>(np + nx);
     len_output  = static_cast<int32_t>(ny);
-    len_msg     = static_cast<int32_t>(nm);
+    len_message = static_cast<int32_t>(nm);
     error_no    = fun_ptr(
-        len_input,  input.data(),
-        len_output, output.data(),
-        len_msg,    message.data()
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
     );
     ok &= error_no == 0;
     //

@@ -234,11 +234,11 @@ bool tst_load(void)
     // incorrect call to function
     int32_t len_input   = 0;
     int32_t len_output  = 0;
-    int32_t len_msg     = 0;
+    int32_t len_message = 0;
     int32_t error_no    = fun_ptr(
-        len_input,  input.data(),
-        len_output, output.data(),
-        len_msg,    message.data()
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
     );
     ok &= error_no != 0;
     for(size_t i = 0; i < ny; ++i)
@@ -248,9 +248,9 @@ bool tst_load(void)
     len_input   = static_cast<int32_t>(np + nx);
     len_output  = static_cast<int32_t>(ny);
     error_no    = fun_ptr(
-        len_input,  input.data(),
-        len_output, output.data(),
-        len_msg,    message.data()
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
     );
     ok &= error_no == 0;
     //
@@ -489,9 +489,9 @@ bool tst_unary(void)
     // call compiled version of function
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
-    int32_t len_msg  = int32_t (nm);
+    int32_t len_message = int32_t (nm);
     int32_t error_no = fun_ptr(
-        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+        len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok &= error_no == 0;
     //
@@ -619,9 +619,9 @@ bool tst_binary(void)
     // call compiled version of function
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
-    int32_t len_msg  = int32_t (nm);
+    int32_t len_message = int32_t (nm);
     int32_t error_no = fun_ptr(
-        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+        len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok &= error_no == 0;
     //
@@ -746,13 +746,13 @@ bool tst_cexp(void)
     // call compiled version of function
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
-    int32_t len_msg  = int32_t (nm);
+    int32_t len_message = int32_t (nm);
     int32_t error_no;
     //
     // check result
     x[1] = x[0] + .1;
     error_no = fun_ptr(
-        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+        len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok &= error_no == 0;
     ok &= y[0] == x[3];
@@ -761,7 +761,7 @@ bool tst_cexp(void)
     //
     x[1] = x[0];
     error_no = fun_ptr(
-        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+        len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok &= error_no == 0;
     ok &= y[0] == x[2];
@@ -934,14 +934,14 @@ bool tst_compare_1(void)
         // call compiled version of function
         int32_t len_x    = int32_t (nx);
         int32_t len_y    = int32_t (ny);
-        int32_t len_msg  = int32_t (nm);
+        int32_t len_message = int32_t (nm);
         int32_t error_no;
         //
         // x[0] < x[1] (same as during recording)
         x[0] = 0.2;
         x[1] = 0.3;
         error_no = fun_ptr(
-            len_x, x.data(), len_y, y.data(), len_msg, message.data()
+            len_x, x.data(), len_y, y.data(), len_message, message.data()
         );
         if( comp_op == "eq" )
         {   ok &= y[0] == x[3];
@@ -956,7 +956,7 @@ bool tst_compare_1(void)
         x[0] = 0.3;
         x[1] = 0.3;
         error_no = fun_ptr(
-            len_x, x.data(), len_y, y.data(), len_msg, message.data()
+            len_x, x.data(), len_y, y.data(), len_message, message.data()
         );
         if( comp_op == "eq" )
         {   ok &= y[0] == x[3];
@@ -1112,14 +1112,14 @@ bool tst_compare_2(void)
     // call compiled version of function
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
-    int32_t len_msg  = int32_t (nm);
+    int32_t len_message = int32_t (nm);
     int32_t error_no;
     //
     // x[0] < x[1] (same as during recording)
     x[0] = 0.2;
     x[1] = 0.3;
     error_no = fun_ptr(
-        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+        len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok    &= error_no == 0;
     ok    &= y[0] == x[3];
@@ -1132,7 +1132,7 @@ bool tst_compare_2(void)
     x[0] = 0.3;
     x[1] = 0.3;
     error_no = fun_ptr(
-        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+        len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok    &= error_no == 1;
     ok    &= y[0] == x[3];
@@ -1263,7 +1263,7 @@ bool tst_sum(void)
     // call compiled version of function
     int32_t len_px   = int32_t (np + nx);
     int32_t len_y    = int32_t (ny);
-    int32_t len_msg  = int32_t (nm);
+    int32_t len_message = int32_t (nm);
     int32_t error_no;
     //
     vector<double>  px(np + nx);
@@ -1272,7 +1272,7 @@ bool tst_sum(void)
     px[2] = p[2];
     px[3] = x[0];
     error_no = fun_ptr(
-        len_px, px.data(), len_y, y.data(), len_msg, message.data()
+        len_px, px.data(), len_y, y.data(), len_message, message.data()
     );
     ok      &= error_no == 0;
     ok      &= y[0] == x[0] + p[0] + p[1] + p[2];
