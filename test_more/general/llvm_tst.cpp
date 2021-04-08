@@ -254,6 +254,7 @@ bool tst_load(void)
         len_message, message.data()
     );
     ok &= error_no == 0;
+    ok &= message[0] == '\0';
     //
     // check output
     CppAD::vector<double> p(np), x(nx), check(ny);
@@ -495,6 +496,7 @@ bool tst_unary(void)
         len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok &= error_no == 0;
+    ok &= message[0] == '\0';
     //
     // check result
     ok &= y[0] == std::cos(  x[0] );
@@ -625,6 +627,7 @@ bool tst_binary(void)
         len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok &= error_no == 0;
+    ok &= message[0] == '\0';
     //
     // check result
     ok &= y[0] == std::pow(  x[0], x[1] );
@@ -756,6 +759,7 @@ bool tst_cexp(void)
         len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok &= error_no == 0;
+    ok &= message[0] == '\0';
     ok &= y[0] == x[3];
     ok &= y[1] == x[2];
     ok &= y[2] == x[2];
@@ -765,6 +769,7 @@ bool tst_cexp(void)
         len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok &= error_no == 0;
+    ok &= message[0] == '\0';
     ok &= y[0] == x[2];
     ok &= y[1] == x[2];
     ok &= y[2] == x[3];
@@ -944,6 +949,7 @@ bool tst_compare_1(void)
         error_no = fun_ptr(
             len_x, x.data(), len_y, y.data(), len_message, message.data()
         );
+        ok &= message[0] == '\0';
         if( comp_op == "eq" )
         {   ok &= y[0] == x[3];
             ok &= error_no  == 0;
@@ -959,6 +965,7 @@ bool tst_compare_1(void)
         error_no = fun_ptr(
             len_x, x.data(), len_y, y.data(), len_message, message.data()
         );
+        ok &= message[0] == '\0';
         if( comp_op == "eq" )
         {   ok &= y[0] == x[3];
             ok &= error_no  == 1;
@@ -1123,6 +1130,7 @@ bool tst_compare_2(void)
         len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok    &= error_no == 0;
+    ok    &= message[0] == '\0';
     ok    &= y[0] == x[3];
     ok    &= y[1] == x[2];
     ok    &= y[2] == x[2];
@@ -1136,6 +1144,7 @@ bool tst_compare_2(void)
         len_x, x.data(), len_y, y.data(), len_message, message.data()
     );
     ok    &= error_no == 1;
+    ok    &= message[0] == '\0';
     ok    &= y[0] == x[3];
     ok    &= y[1] == x[2];
     ok    &= y[2] == x[2];
@@ -1276,6 +1285,7 @@ bool tst_sum(void)
         len_px, px.data(), len_y, y.data(), len_message, message.data()
     );
     ok      &= error_no == 0;
+    ok      &= message[0] == '\0';
     ok      &= y[0] == x[0] + p[0] + p[1] + p[2];
     //
     return ok;

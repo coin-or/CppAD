@@ -185,6 +185,7 @@ bool link_adfun(void)
         len_message, message.data()
     );
     ok &= error_no == 0;
+    ok &= message[0] == '\0';
     //
     // check output
     CPPAD_TESTVECTOR(double) p(np), x(nx), check(ny);

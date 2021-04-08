@@ -249,8 +249,8 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     len_msg->setName("len_msg");
     //
     // msg_ptr
-    // llvm::Argument* msg_ptr  = function_ir->arg_begin() + 5;
-    // msg_ptr->setName("msg_ptr");
+    llvm::Argument* msg_ptr  = function_ir->arg_begin() + 5;
+    msg_ptr->setName("msg_ptr");
     //
     // Add a basic block at entry point to the function.
     llvm::BasicBlock* basic_block = llvm::BasicBlock::Create(
@@ -274,6 +274,11 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // bool_zero
     llvm::Value* bool_zero = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(1, 0, false)
+    );
+    // char_zero
+    // (the C++ specifications do not say if char is signed or unsigned)
+    llvm::Value* char_zero = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(8, 0, false)
     );
     // int_zero, int_two, int_three
     llvm::Value* int_zero = llvm::ConstantInt::get(
@@ -348,6 +353,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     //
     // initilaize compare_change
     llvm::Value* compare_change = bool_zero;
+    //
+    // initialize msg as empty
+    // (There must be at lease one element in the msg vector.)
+    bool is_volatile = false;
+    builder.CreateStore(char_zero, msg_ptr, is_volatile);
+    //
     // ------------------------------------------------------------------------
     // graph_ir
     // independent parameters
@@ -753,7 +764,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                         double_t, atom_in, one_index, name
                     );
                     // store value for this element
-                    bool is_volatile = false;
+                    is_volatile = false;
                     builder.CreateStore(graph_ir[ arg[i] ], ptr, is_volatile);
                 }
                 //
@@ -817,7 +828,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             double_t, output_ptr, one_index
         );
         size_t node_index  = graph_obj.dependent_vec_get(i);
-        bool is_volatile   = false;
+        is_volatile   = false;
         builder.CreateStore(graph_ir[node_index], ptr, is_volatile);
         graph_ir[node_index]->setName(name);
     }

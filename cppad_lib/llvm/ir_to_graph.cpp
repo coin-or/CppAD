@@ -224,7 +224,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // const llvm::Argument* len_msg = function_ir->arg_begin() + 4;
     //
     // msg_ptr
-    // const llvm::Argument* msg_ptr = function_ir->arg_begin() + 5;
+    const llvm::Argument* msg_ptr = function_ir->arg_begin() + 5;
     //
     /// begin_inst
     const llvm::const_inst_iterator begin_inst = llvm::inst_begin(function_ir);
@@ -785,13 +785,14 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // --------------------------------------------------------------
             case llvm::Instruction::Store:
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
-            CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
-            CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
-            node     = llvm_value2graph_node.lookup(operand[0]);
-            ele_info = llvm_element2info.lookup(operand[1]);
-            CPPAD_ASSERT_UNKNOWN( ele_info.base != nullptr );
-            CPPAD_ASSERT_UNKNOWN( node != 0 );
-            {   const llvm::Value* base = ele_info.base;
+            if( operand[1] != msg_ptr )
+            {   CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
+                node     = llvm_value2graph_node.lookup(operand[0]);
+                ele_info = llvm_element2info.lookup(operand[1]);
+                CPPAD_ASSERT_UNKNOWN( ele_info.base != nullptr );
+                CPPAD_ASSERT_UNKNOWN( node != 0 );
+                const llvm::Value* base = ele_info.base;
                 size_t        vec_index = llvm_base2index2node.lookup(base);
                 CPPAD_ASSERT_UNKNOWN( vec_index != 0 );
                 CppAD::vector<size_t>& index2node( vec_index2node[vec_index] );

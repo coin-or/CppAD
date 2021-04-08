@@ -84,16 +84,17 @@ one or more of the comparisons did not match its operator value.
 $subhead Two$$
 If $icode error_no$$ is two,
 the value of $icode len_input$$ is not correct.
-In this case $icode output$$ is not changed.
+In this case $icode output$$ and $icode msg$$ are not changed.
 
 $subhead Three$$
 If $icode error_no$$ is three,
 the value of $icode len_output$$ is not correct.
-In this case $icode output$$ is not changed.
+In this case $icode output$$ and $icode msg$$ are not changed.
 
 $subhead Four$$
 If $icode error_no$$ is four,
 the value of $icode len_msg$$ is less than one.
+In this case $icode output$$ and $icode msg$$ are not changed.
 
 $table
 $icode error_no$$ $pre $$ $cnext Meaning  $rnext
@@ -101,7 +102,7 @@ $icode error_no$$ $pre $$ $cnext Meaning  $rnext
 1  $cnext One (or more) comparison did not match its operator value $rnext
 2  $cnext $icode len_input$$ is incorrect                           $rnext
 3  $cnext $icode len_output$$ is incorrect                          $rnext
-4  $cnext $icode len_msg$$ is less thant one
+4  $cnext $icode len_msg$$ is less than one
 $tend
 
 $head Atomic Functions$$
