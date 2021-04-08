@@ -208,15 +208,23 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         }
     }
     //
-    // No longer used for error checking
+    // len_input
     // const llvm::Argument* len_input  = function_ir->arg_begin() + 0;
-    // const llvm::Argument* len_output = function_ir->arg_begin() + 2;
     //
     // input_ptr
     const llvm::Argument* input_ptr  = function_ir->arg_begin() + 1;
     //
+    // len_output
+    // const llvm::Argument* len_output = function_ir->arg_begin() + 2;
+    //
     // output_ptr
     const llvm::Argument* output_ptr = function_ir->arg_begin() + 3;
+    //
+    // len_msg
+    // const llvm::Argument* len_msg = function_ir->arg_begin() + 4;
+    //
+    // msg_ptr
+    // const llvm::Argument* msg_ptr = function_ir->arg_begin() + 5;
     //
     /// begin_inst
     const llvm::const_inst_iterator begin_inst = llvm::inst_begin(function_ir);
@@ -273,7 +281,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 }
             }
         }
-        if( n_operand == 5 && itr->getOpcode() == llvm::Instruction::Call )
+        if( n_operand == 7 && itr->getOpcode() == llvm::Instruction::Call )
         {   // Atomic function call argument vector
             // (the corresponding  nodes are scattered).
             //
@@ -418,17 +426,19 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             }
             else
             {   // atomic function call
-                CPPAD_ASSERT_UNKNOWN( n_operand == 5 );
+                CPPAD_ASSERT_UNKNOWN( n_operand == 7 );
                 CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::IntegerTyID );
                 CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
                 CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::IntegerTyID );
                 CPPAD_ASSERT_UNKNOWN( type_id[3] == llvm::Type::PointerTyID );
-                str  = operand[4]->getName().str();
+                CPPAD_ASSERT_UNKNOWN( type_id[4] == llvm::Type::IntegerTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[5] == llvm::Type::PointerTyID );
+                str  = operand[6]->getName().str();
                 CPPAD_ASSERT_UNKNOWN(
                     str.size() > 7 && str.substr(0, 7) == "atomic_"
                 );
             }
-            if( n_operand == 5 )
+            if( n_operand == 7 )
             {   // name of this atomic function
                 str = str.substr(7, std::string::npos);
                 //

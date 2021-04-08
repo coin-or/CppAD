@@ -227,11 +227,18 @@ bool tst_load(void)
     for(size_t i = 0; i < ny; ++i)
         output[i] = 0.0;
     //
+    // vector to hold message
+    size_t nm = 1;
+    CppAD::vector<char> message(nm);
+    //
     // incorrect call to function
     int32_t len_input   = 0;
     int32_t len_output  = 0;
+    int32_t len_msg     = 0;
     int32_t error_no    = fun_ptr(
-        len_input, input.data(), len_output, output.data()
+        len_input,  input.data(),
+        len_output, output.data(),
+        len_msg,    message.data()
     );
     ok &= error_no != 0;
     for(size_t i = 0; i < ny; ++i)
@@ -241,7 +248,9 @@ bool tst_load(void)
     len_input   = static_cast<int32_t>(np + nx);
     len_output  = static_cast<int32_t>(ny);
     error_no    = fun_ptr(
-        len_input, input.data(), len_output, output.data()
+        len_input,  input.data(),
+        len_output, output.data(),
+        len_msg,    message.data()
     );
     ok &= error_no == 0;
     //
@@ -473,10 +482,17 @@ bool tst_unary(void)
     for(size_t i = 0; i < ny; ++i)
         y[i] = std::numeric_limits<double>::quiet_NaN();
     //
+    // vector where message is placed
+    size_t nm = 1;
+    vector<char> message(nm);
+    //
     // call compiled version of function
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
-    int32_t error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+    int32_t len_msg  = int32_t (nm);
+    int32_t error_no = fun_ptr(
+        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+    );
     ok &= error_no == 0;
     //
     // check result
@@ -596,10 +612,17 @@ bool tst_binary(void)
     for(size_t i = 0; i < ny; ++i)
         y[i] = std::numeric_limits<double>::quiet_NaN();
     //
+    // vector where message is placed
+    size_t nm = 1;
+    vector<char> message(nm);
+    //
     // call compiled version of function
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
-    int32_t error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+    int32_t len_msg  = int32_t (nm);
+    int32_t error_no = fun_ptr(
+        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+    );
     ok &= error_no == 0;
     //
     // check result
@@ -716,21 +739,30 @@ bool tst_cexp(void)
     for(size_t i = 0; i < ny; ++i)
         y[i] = std::numeric_limits<double>::quiet_NaN();
     //
+    // vector where message is placed
+    size_t nm = 1;
+    vector<char> message(nm);
+    //
     // call compiled version of function
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
+    int32_t len_msg  = int32_t (nm);
     int32_t error_no;
     //
     // check result
     x[1] = x[0] + .1;
-    error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+    error_no = fun_ptr(
+        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+    );
     ok &= error_no == 0;
     ok &= y[0] == x[3];
     ok &= y[1] == x[2];
     ok &= y[2] == x[2];
     //
     x[1] = x[0];
-    error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+    error_no = fun_ptr(
+        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+    );
     ok &= error_no == 0;
     ok &= y[0] == x[2];
     ok &= y[1] == x[2];
@@ -895,15 +927,22 @@ bool tst_compare_1(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         //
+        // vector where message is placed
+        size_t nm = 1;
+        vector<char> message(nm);
+        //
         // call compiled version of function
         int32_t len_x    = int32_t (nx);
         int32_t len_y    = int32_t (ny);
+        int32_t len_msg  = int32_t (nm);
         int32_t error_no;
         //
         // x[0] < x[1] (same as during recording)
         x[0] = 0.2;
         x[1] = 0.3;
-        error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+        error_no = fun_ptr(
+            len_x, x.data(), len_y, y.data(), len_msg, message.data()
+        );
         if( comp_op == "eq" )
         {   ok &= y[0] == x[3];
             ok &= error_no  == 0;
@@ -916,7 +955,9 @@ bool tst_compare_1(void)
         // x[0] ==  x[1]
         x[0] = 0.3;
         x[1] = 0.3;
-        error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+        error_no = fun_ptr(
+            len_x, x.data(), len_y, y.data(), len_msg, message.data()
+        );
         if( comp_op == "eq" )
         {   ok &= y[0] == x[3];
             ok &= error_no  == 1;
@@ -1064,15 +1105,22 @@ bool tst_compare_2(void)
     for(size_t i = 0; i < ny; ++i)
         y[i] = std::numeric_limits<double>::quiet_NaN();
     //
+    // vector where message is placed
+    size_t nm = 1;
+    vector<char> message(nm);
+    //
     // call compiled version of function
     int32_t len_x    = int32_t (nx);
     int32_t len_y    = int32_t (ny);
+    int32_t len_msg  = int32_t (nm);
     int32_t error_no;
     //
     // x[0] < x[1] (same as during recording)
     x[0] = 0.2;
     x[1] = 0.3;
-    error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+    error_no = fun_ptr(
+        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+    );
     ok    &= error_no == 0;
     ok    &= y[0] == x[3];
     ok    &= y[1] == x[2];
@@ -1083,7 +1131,9 @@ bool tst_compare_2(void)
     // ==, <=, and != change
     x[0] = 0.3;
     x[1] = 0.3;
-    error_no = fun_ptr(len_x, x.data(), len_y, y.data());
+    error_no = fun_ptr(
+        len_x, x.data(), len_y, y.data(), len_msg, message.data()
+    );
     ok    &= error_no == 1;
     ok    &= y[0] == x[3];
     ok    &= y[1] == x[2];
@@ -1206,9 +1256,14 @@ bool tst_sum(void)
     for(size_t i = 0; i < ny; ++i)
         y[i] = std::numeric_limits<double>::quiet_NaN();
     //
+    // vector where message is placed
+    size_t nm = 1;
+    vector<char> message(nm);
+    //
     // call compiled version of function
     int32_t len_px   = int32_t (np + nx);
     int32_t len_y    = int32_t (ny);
+    int32_t len_msg  = int32_t (nm);
     int32_t error_no;
     //
     vector<double>  px(np + nx);
@@ -1216,7 +1271,9 @@ bool tst_sum(void)
     px[1] = p[1];
     px[2] = p[2];
     px[3] = x[0];
-    error_no = fun_ptr(len_px, px.data(), len_y, y.data());
+    error_no = fun_ptr(
+        len_px, px.data(), len_y, y.data(), len_msg, message.data()
+    );
     ok      &= error_no == 0;
     ok      &= y[0] == x[0] + p[0] + p[1] + p[2];
     //

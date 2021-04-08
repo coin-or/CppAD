@@ -163,15 +163,22 @@ bool link_atomic(void)
     CppAD::vector<double> output(ny);
     output[0] = std::numeric_limits<double>::quiet_NaN();
     //
+    // vector where return message is placed
+    size_t nm = 1;
+    CppAD::vector<char> message(nm);
+    //
     // call
     int32_t error_no;
     int32_t len_input   = static_cast<int32_t>(nx);
     int32_t len_output  = static_cast<int32_t>(ny);
+    int32_t len_msg     = static_cast<int32_t>(nm);
     //
     // reciprocal(2.0)
     input[0] = 2.0;
     error_no = fun_ptr(
-        len_input, input.data(), len_output, output.data()
+        len_input,  input.data(),
+        len_output, output.data(),
+        len_msg,    message.data()
     );
     ok &= error_no == 0;
     ok &= output[0] == 0.5;

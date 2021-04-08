@@ -140,11 +140,15 @@ bool grad_det_minor(void)
     }
     //
     // evaluate gradient
-    std::vector<double> input(nx), gradient(nx);;
+    std::vector<double> input(nx), gradient(nx);
+    size_t nm = 1;
+    std::vector<char>   message(nm);
     for(size_t i = 0; i < nx; ++i)
         input[i] = matrix[i];
     int32_t error_no = fun_ptr(
-        int32_t(nx), input.data(), int32_t(nx), gradient.data()
+        int32_t(nx), input.data(),
+        int32_t(nx), gradient.data(),
+        int32_t(nm), message.data()
     );
     if( error_no != 0 )
     {   std::cerr << "\nerror_no != 0\n";

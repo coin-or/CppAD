@@ -13,15 +13,22 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cstdint>
 
 extern "C" int32_t atomic_reciprocal( // return value is called error_no
-    int32_t len_input, double* input, int32_t len_output, double* output
+    int32_t len_input,  double* input,
+    int32_t len_output, double* output,
+    int32_t len_msg,    char*   msg
 )
-{   if( len_input != 1 )
+{   // check for error cases
+    if( len_input != 1 )
         return 2;
     if( len_output != 1 )
         return 3;
+    if( len_msg < 1 )
+        return 4;
     //
+    // compute output
     output[0] = 1.0 / input[0];
     //
+    // return no error
     return 0;
 }
 // END C++

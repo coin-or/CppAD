@@ -110,22 +110,29 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Type* double_t = llvm::Type::getDoubleTy(*context_ir_);
     //
     // double_ptr_t
-    llvm::PointerType* double_ptr_t =
-        llvm::PointerType::getUnqual(double_t);
+    llvm::PointerType* double_ptr_t = llvm::PointerType::getUnqual(double_t);
     //
     // int_32_t
     llvm::Type* int_32_t = llvm::Type::getInt32Ty(*context_ir_);
+    //
+    // int_8_t
+    llvm::Type* int_8_t = llvm::Type::getInt8Ty(*context_ir_);
+    //
+    // int_8_ptr
+    llvm::PointerType* int_8_ptr_t = llvm::PointerType::getUnqual(int_8_t);
     //
     // arguments to FunctionType
     std::vector<llvm::Type*> param_types;
     bool                     is_var_arg;
     llvm::Type*              result_type;
     //
-    // int (*adfun_t) (int, double *, int, double*)
-    param_types = { int_32_t, double_ptr_t, int_32_t, double_ptr_t };
+    // int (*ad_fun_t) (int, double *, int, double*, int, char*)
     is_var_arg  = false;
     result_type = int_32_t;
-    llvm::FunctionType* adfun_t  = llvm::FunctionType::get(
+    param_types = {
+        int_32_t, double_ptr_t, int_32_t, double_ptr_t, int_32_t, int_8_ptr_t
+    };
+    llvm::FunctionType* ad_fun_t  = llvm::FunctionType::get(
             result_type, param_types, is_var_arg
     );
     //
@@ -213,12 +220,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // Create the IR function entry and insert this entry into the module
     auto            addr_space     = llvm::Function::ExternalLinkage;
     llvm::Function *function_ir    = llvm::Function::Create(
-        adfun_t, addr_space, function_name_, module_ir_.get()
+        ad_fun_t, addr_space, function_name_, module_ir_.get()
     );
     //
-    // Make sure there are four arguments
+    // Make sure there are six arguments
     CPPAD_ASSERT_UNKNOWN(
-        function_ir->arg_begin() + 4  == function_ir->arg_end()
+        function_ir->arg_begin() + 6  == function_ir->arg_end()
     );
     //
     // len_input
@@ -236,6 +243,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // output_ptr
     llvm::Argument* output_ptr  = function_ir->arg_begin() + 3;
     output_ptr->setName("output_ptr");
+    //
+    // len_msg
+    // llvm::Argument* len_msg  = function_ir->arg_begin() + 4;
+    // len_msg->setName("len_msg");
+    //
+    // msg_ptr
+    // llvm::Argument* msg_ptr  = function_ir->arg_begin() + 5;
+    // msg_ptr->setName("msg_ptr");
     //
     // Add a basic block at entry point to the function.
     llvm::BasicBlock* basic_block = llvm::BasicBlock::Create(
@@ -682,25 +697,32 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 //
                 // callee
                 llvm::FunctionCallee callee = module_ir_->getOrInsertFunction(
-                    fun_name.c_str(), adfun_t, empty_attributes
+                    fun_name.c_str(), ad_fun_t, empty_attributes
                 );
                 //
                 // atom_args
-                std::vector<llvm::Value*> atom_args(4);
+                std::vector<llvm::Value*> atom_args(6);
                 //
-                // atom_args[0]
+                // atom_args[0] = len_input
                 value = llvm::ConstantInt::get(
                     *context_ir_, llvm::APInt(32, n_arg, true)
                 );
                 atom_args[0] = value;
                 //
-                // atom_args[2]
+                // atom_args[2] = len_output
                 value = llvm::ConstantInt::get(
                     *context_ir_, llvm::APInt(32, n_result, true)
                 );
                 atom_args[2] = value;
                 //
-                // atom_args[1]
+                // 2DO: include message returned by atomic fucntion
+                // atom_args[4] = len_msg
+                value = llvm::ConstantInt::get(
+                    *context_ir_, llvm::APInt(32, 1, true)
+                );
+                atom_args[4] = value;
+                //
+                // atom_args[1] = input
                 llvm::Value* atom_in = builder.CreateAlloca(
                     double_t,       // Type*  Ty
                     atom_args[0],   // Value* ArraySize
@@ -724,13 +746,22 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                     builder.CreateStore(graph_ir[ arg[i] ], ptr, is_volatile);
                 }
                 //
-                // atom_args[3]
+                // atom_args[3] = output
                 llvm::Value* atom_out = builder.CreateAlloca(
                     double_t,       // Type*  Ty
                     atom_args[2],   // Value* ArraySize
                     "atom_out"      // const Twine& Name
                 );
                 atom_args[3] = atom_out;
+                //
+                // 2DO: include message returned by atomic function
+                // atom_args[5] = msg
+                value = builder.CreateAlloca(
+                    int_8_t,        // Type*  Ty
+                    atom_args[4],   // Value* ArraySize
+                    "atom_msg"      // const Twine& Name
+                );
+                atom_args[5] = value;
                 //
                 // call the atomic function
                 value = builder.CreateCall(

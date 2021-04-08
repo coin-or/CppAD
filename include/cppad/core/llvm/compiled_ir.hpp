@@ -27,8 +27,9 @@ $section C++ Function Type for a Compiled llvm_ir Object$$
 $head Syntax$$
 $codei%compiled_ir_t %fun_ptr%
 %$$
-$icode%error_no% = %fun_ptr%(%len_input%, %input%, %len_output%, %output%)
-%$$
+$icode%error_no% = %fun_ptr%(
+    %len_input%, %input%, %len_output%, %output%, %len_msg%, %msg%
+)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
@@ -57,31 +58,50 @@ The input value of the elements of this vector does not matter.
 Upon return, it contains the dependent variable values corresponding
 to the independent variables and dynamic parameters.
 
+$head len_msg$$
+This is the length of the message vector.
+It must be greater than zero.
+
+$head msg$$
+The input value of the elements of this vector does not matter.
+Upon return, it is a $code '0'$$ terminated string containing
+supplemental information about the function call.
+If $icode fun_ptr$$ corresponds to zero order forward mode for an AD function,
+the supplemental information is the output of the corresponding
+$cref PrintFor$$ instructions.
+If there are more that $icode%len_msg% - 1%$$ characters of supplemental
+information, that characters past that index are lost.
+
 $head error_no$$
 
 $subhead Zero$$
 If the return value $icode error_no$$ is zero, no error was detected.
 
 $subhead One$$
-If the return value $icode error_no$$ is one,
+If $icode error_no$$ is one,
 one or more of the comparisons did not match its operator value.
 
 $subhead Two$$
-If the return value $icode error_no$$ is two,
+If $icode error_no$$ is two,
 the value of $icode len_input$$ is not correct.
 In this case $icode output$$ is not changed.
 
 $subhead Three$$
-If the return value $icode error_no$$ is three,
+If $icode error_no$$ is three,
 the value of $icode len_output$$ is not correct.
 In this case $icode output$$ is not changed.
+
+$subhead Four$$
+If $icode error_no$$ is four,
+the value of $icode len_msg$$ is less than one.
 
 $table
 $icode error_no$$ $pre $$ $cnext Meaning  $rnext
 0  $cnext No error occurred                                         $rnext
 1  $cnext One (or more) comparison did not match its operator value $rnext
 2  $cnext $icode len_input$$ is incorrect                           $rnext
-3  $cnext $icode len_output$$ is incorrect
+3  $cnext $icode len_output$$ is incorrect                          $rnext
+4  $cnext $icode len_msg$$ is less thant one
 $tend
 
 $head Atomic Functions$$
@@ -89,9 +109,10 @@ The function type $code compiled_ir_t$$
 is also used for the $code double$$ implementation of
 zero order forward mode for atomic functions; e.g.,
 $cref/atomic.cpp/llvm_link_atomic.cpp/atomic.cpp/$$.
-The difference is that $icode input$$ and $icode output$$
+The difference is that $icode input$$, $icode output$$, and $icode msg$$
 are relative to the atomic function,
-not variables and parameters in a corresponding ADFun object.
+not variables,  parameters, and $cref PrintFor$$ output
+for a corresponding ADFun object.
 
 $end
 */
@@ -99,7 +120,9 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_PROTOTYPE
-typedef int32_t (*compiled_ir_t)(int32_t, const double* , int32_t, double*);
+typedef int32_t (*compiled_ir_t)(
+    int32_t, const double* , int32_t, double*, int32_t, char*
+);
 // END_PROTOTYPE
 
 } // END_CPPAD_NAMESPACE
