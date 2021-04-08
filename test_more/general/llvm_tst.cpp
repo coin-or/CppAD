@@ -15,6 +15,78 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/llvm/link.hpp>
 namespace { // BEGIN_EMPTY_NAMESPACE
 // -----------------------------------------------------------------------------
+bool tst_cppad_link_print(void)
+{   bool ok = true;
+    //
+    // link_obj
+    std::string msg;
+    CppAD::llvm_link link_obj(msg);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // fun_ptr
+    std::string          fun_name = "cppad_link_print";
+    int (*fun_ptr)(int, int, char*, double, const char*, double, const char*);
+    msg = link_obj.function_ptr(fun_name, fun_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    int n_in           = 0;
+    int len_message    = 100;
+    double notpos      = 1.0;
+    std::string before = "before ";
+    double value       = 45.678;
+    std::string after  = " after\n";
+    char message[101];
+    int n_out;
+    //
+    n_out = fun_ptr(
+        n_in, len_message, message, notpos, before.data(), value, after.data()
+    );
+    n_in  = n_out;
+    n_out = fun_ptr(
+        n_in, len_message, message, notpos, before.data(), value, after.data()
+    );
+    n_in  = n_out;
+    message[n_out] = '\0';
+    //
+    std::string str(message);
+    std::string line = before + "+4.5678e+1" + after;
+    ok &= str == line + line;
+    //
+    return ok;
+}
+// -----------------------------------------------------------------------------
+bool tst_link_lib(void)
+{   bool ok = true;
+    //
+    // link_obj
+    std::string msg;
+    CppAD::llvm_link link_obj(msg);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // fun_ptr
+    std::string          fun_name = "cos";
+    double (*fun_ptr)(double);
+    msg = link_obj.function_ptr(fun_name, fun_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    double cos2 = fun_ptr(2.0);
+    ok         &= cos2 == std::cos(2.0);
+    //
+    return ok;
+}
+// -----------------------------------------------------------------------------
 // algo
 template <class VectorFloat>
 VectorFloat algo(const VectorFloat& p, const VectorFloat& x)
@@ -1453,6 +1525,8 @@ bool tst_atomic(void)
 
 bool llvm_tst(void)
 {   bool ok = true;
+    ok     &= tst_cppad_link_print();
+    ok     &= tst_link_lib();
     ok     &= tst_llvm_ir();
     ok     &= tst_load();
     ok     &= tst_azmul();
