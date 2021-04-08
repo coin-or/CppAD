@@ -9,17 +9,15 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-
-$begin llvm_devel$$
+$begin cppad_link$$
 $spell
     llvm
 $$
 
-$section llvm Developer Documentation$$
+$section Extern C Links To Functions Needed by llvm_link Objects$$
 
 $childtable%
-    cppad_lib/llvm/error_msg.cpp%
-    cppad_lib/llvm/cppad_link.omh
+    cppad_lib/llvm/cppad_link.cpp
 %$$
 
 $end
