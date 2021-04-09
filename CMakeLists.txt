@@ -79,9 +79,6 @@ INCLUDE(cmake/set_compile_flags.cmake)
 #
 # pkgconfig_info(name, system)
 INCLUDE(cmake/pkgconfig_info.cmake)
-#
-# llvm_info(llvm_cxxflags llvm_includedir llvm_libdir)
-INCLUDE(cmake/llvm_info.cmake)
 # ============================================================================
 IF( include_llvm )
     # Check for c++14 support
@@ -293,6 +290,49 @@ optional_package(fadbad ${system_include} "fadbad install prefix")
 #
 # xpackage_prefix is an example package prefix that is not really used
 SET(xpackage_prefix "/usr")
+# -----------------------------------------------------------------------------
+IF( include_llvm )
+    #
+    # llvm_config
+    FIND_PROGRAM( llvm_config NAMES "llvm-config")
+    #
+    # llvm_cxxflags
+    EXECUTE_PROCESS(
+        COMMAND "${llvm_config}" --cxxflags
+        OUTPUT_VARIABLE llvm_cxxflags
+    )
+    #
+    # llvm_includedir
+    EXECUTE_PROCESS(
+        COMMAND "${llvm_config}" --includedir
+        OUTPUT_VARIABLE llvm_includedir
+    )
+    STRING(REPLACE "-fno-exceptions" "" llvm_cxxflags "${llvm_cxxflags}")
+    STRING(REPLACE "-fno-rtti"       "" llvm_cxxflags "${llvm_cxxflags}")
+    STRING(REGEX REPLACE "-I[^ ]*"   ""  llvm_cxxflags "${llvm_cxxflags}")
+    #
+    # llvm_libdir
+    EXECUTE_PROCESS(
+        COMMAND "${llvm_config}" --libdir
+        OUTPUT_VARIABLE llvm_libdir
+    )
+    #
+    # Remove newline at end of variables
+    FOREACH(variable llvm_cxxflags llvm_includedir llvm_libdir)
+        STRING(REPLACE "\n" "" "${variable}" "${${variable}}")
+        print_variable( ${variable} )
+    ENDFOREACH(variable)
+    #
+    #
+    # add include directory
+    INCLUDE_DIRECTORIES( SYSTEM ${llvm_includedir} )
+    #
+    # add llvm link directory
+    LINK_DIRECTORIES( ${llvm_libdir} )
+    #
+    # add llvm compiler flags
+    SET(cppad_cxx_flags "${cppad_cxx_flags} ${llvm_cxxflags}" )
+ENDIF( include_llvm )
 # -----------------------------------------------------------------------------
 # =============================================================================
 # cppad_lib

@@ -26,18 +26,6 @@ IF( cppad_has_llvm )
         llvm/error_msg.cpp
     )
     # END_SORT_THIS_LINE_MINUS_2
-    #
-    llvm_info()
-    #
-    # add include directory
-    INCLUDE_DIRECTORIES( SYSTEM ${llvm_includedir} )
-    #
-    # add llvm link directory
-    LINK_DIRECTORIES( ${llvm_libdir} )
-    #
-    # add llvm compiler flags
-    SET(cppad_cxx_flags "${cppad_cxx_flags} ${llvm_cxxflags}" )
-    #
 ENDIF( cppad_has_llvm )
 # ---------------------------------------------------------------------------
 # split cppad_version into year;month;day;release

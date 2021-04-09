@@ -1,4 +1,4 @@
-#! /bin/bash -e
+ler#! /bin/bash -e
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
@@ -237,14 +237,6 @@ echo_log_eval cd build
 # can comment out this make check to if only running tests below it
 n_job=`nproc`
 echo_log_eval make -j $n_job check
-# -----------------------------------------------------------------------------
-for package in adolc cppadcg eigen ipopt fadbad sacado
-do
-    if echo $standard | grep "no_$package" > /dev/null
-    then
-        skip="$skip $package"
-    fi
-done
 # ----------------------------------------------------------------------------
 # extra speed tests not run with option specified
 #

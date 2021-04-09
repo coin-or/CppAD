@@ -23,32 +23,15 @@ SET(source_list
 )
 # END_SORT_THIS_LINE_MINUS_2
 #
-# llvm_cxxflags, llvm_includedir, llvm_libdir
-llvm_info()
-#
-# add include directory
-INCLUDE_DIRECTORIES( SYSTEM ${llvm_includedir} )
-#
-# add llvm link directory
-LINK_DIRECTORIES( ${llvm_libdir} )
-#
-# add llvm compiler flags
-SET(cppad_cxx_flags "${cppad_cxx_flags} ${llvm_cxxflags}" )
-#
 set_compile_flags(example_llvm "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_llvm EXCLUDE_FROM_ALL ${source_list})
-
+#
 # List of libraries to be linked into the specified target
-IF( cppad_has_llvm )
-    SET(cppad_link "cppad_link")
-ELSE( cppad_has_llvm )
-    SET(cppad_link "")
-ENDIF( cppad_has_llvm )
 TARGET_LINK_LIBRARIES(example_llvm
     discrete
     ${cppad_lib}
-    ${cppad_link}
+    cppad_link
     ${colpack_libs}
 )
 #
