@@ -37,6 +37,10 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 04-09$$
+The $cref cpp_graph_print$$ operation was failing when there were
+atomic or discrete functions. This has been fixed.
+
 $head 04-07$$
 Documentation was added for the
 $cref/print_graph_op/cpp_ad_graph/operator_arg/print_graph_op/$$ operator.

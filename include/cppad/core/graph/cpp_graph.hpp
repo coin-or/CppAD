@@ -531,16 +531,20 @@ $end
 
             switch( op_enum )
             {
-                case graph::atom_graph_op:
                 case graph::discrete_graph_op:
+                CPPAD_ASSERT_UNKNOWN( str_index.size() == 1 );
+                os << discrete_name_vec_get( str_index[0] );
+                break;
+
+                case graph::atom_graph_op:
                 CPPAD_ASSERT_UNKNOWN( str_index.size() == 1 );
                 os << atomic_name_vec_get( str_index[0] );
                 break;
 
                 case graph::print_graph_op:
                 CPPAD_ASSERT_UNKNOWN( str_index.size() == 2 );
-                os << atomic_name_vec_get( str_index[0] ) << ",";
-                os << atomic_name_vec_get( str_index[1] );
+                os << print_text_vec_get( str_index[0] ) << ",";
+                os << print_text_vec_get( str_index[1] );
                 break;
 
                 default:
