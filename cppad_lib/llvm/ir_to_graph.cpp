@@ -618,7 +618,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 info.base  = operand[0];
                 llvm_element2info.insert( value_element_info(result, info) );
             }
-            else
+            // GEP is used to store a '\0' character at the end of the message
+            else if( operand[0] != msg_ptr )
             {   // This vectors nodes are contiguous
                 size_t first_node  = llvm_base2first_node.lookup( operand[0] );
                 CPPAD_ASSERT_UNKNOWN( first_node !=  0 );
@@ -785,9 +786,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // --------------------------------------------------------------
             case llvm::Instruction::Store:
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
-            if( operand[1] != msg_ptr )
-            {   CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::DoubleTyID );
-                CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
+            if( type_id[0] == llvm::Type::DoubleTyID )
+            {   CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
                 node     = llvm_value2graph_node.lookup(operand[0]);
                 ele_info = llvm_element2info.lookup(operand[1]);
                 CPPAD_ASSERT_UNKNOWN( ele_info.base != nullptr );

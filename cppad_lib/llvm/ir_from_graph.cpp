@@ -38,8 +38,6 @@ The following limitations are placed on $icode graph_obj$$
 (expected to be removed in the future).
 $list number$$
 $cref/function_name/cpp_ad_graph/function_name/$$ must not be empty.
-$lnext
-$cref/print_text_vec/cpp_ad_graph/print_text_vec/$$ must be empty.
 $lend
 
 $head ir_obj$$
@@ -127,6 +125,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Type*              result_type;
     //
     // int (*ad_fun_t) (int, double *, int, double*, int, char*)
+    // used for this function and atomic functions
     is_var_arg  = false;
     result_type = int_32_t;
     param_types = {
@@ -144,7 +143,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::FunctionType* unary_fun_t = llvm::FunctionType::get(
         result_type, param_types, is_var_arg
     );
-    //
     param_types  = { double_t, double_t };
     llvm::FunctionType* binary_fun_t = llvm::FunctionType::get(
         result_type, param_types, is_var_arg
@@ -154,6 +152,18 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // used to call funcitons
     std::vector<llvm::Value*> unary_args(1);
     std::vector<llvm::Value*> binary_args(2);
+    //
+    // int (*print_fun_t) (int, int, char*, double. char*, double, char*)
+    // used for print operators
+    is_var_arg   = false;
+    result_type  = int_32_t;
+    param_types = {int_32_t, int_32_t,
+        int_8_ptr_t, double_t, int_8_ptr_t, double_t, int_8_ptr_t
+    };
+    llvm::FunctionType* print_fun_t = llvm::FunctionType::get(
+        result_type, param_types, is_var_arg
+    );
+    //
     //
     // empty_attributes
     llvm::AttributeList empty_attributes;
@@ -210,6 +220,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 "cppad_link_sign", unary_fun_t, empty_attributes
             );
             break;
+            // print
+            case graph::print_graph_op:
+            op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
+                "cppad_link_print", print_fun_t, empty_attributes
+            );
+            break;
             //
             default:
             break;
@@ -260,6 +276,15 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // Create a basic block builder with default parameters.  The builder will
     // automatically append instructions to the basic block `basic_block'.
     llvm::IRBuilder<> builder(basic_block);
+    //
+    // print_text_value
+    size_t n_print_text = graph_obj.print_text_vec_size();
+    CppAD::vector<llvm::Value*> print_text_vec_value(n_print_text);
+    for(size_t i = 0; i < n_print_text; ++i)
+    {   print_text_vec_value[i] = builder.CreateGlobalString(
+            graph_obj.print_text_vec_get(i)
+        );
+    }
     //
     // graph_ir
     // Initialize with nothing at index zero
@@ -355,9 +380,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* compare_change = bool_zero;
     //
     // initialize msg as empty
-    // (There must be at lease one element in the msg vector.)
-    bool is_volatile = false;
-    builder.CreateStore(char_zero, msg_ptr, is_volatile);
+    llvm::Value* print_n_in = int_zero;
     //
     // ------------------------------------------------------------------------
     // graph_ir
@@ -491,10 +514,18 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
             break;
 
-            // atmiic functions
+            // atomic functions
             case graph::atom_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_str == 1 );
             break;
+
+            // Print Operator
+            case graph::print_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_result == 0 );
+            CPPAD_ASSERT_UNKNOWN( n_str == 2 );
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            break;
+
 
             default:
             msg += "graph_obj has following unsupported operator ";
@@ -591,6 +622,42 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             value = builder.CreateFSub(graph_ir[arg[0]], graph_ir[arg[1]]);
             graph_ir.push_back(value);
             break;
+            // --------------------------------------------------------------
+            // Print Operator
+            // --------------------------------------------------------------
+            case graph::print_graph_op:
+            {   std::vector<llvm::Value*> print_args(7);
+                //
+                // n_in
+                print_args[0] = print_n_in;
+                //
+                // len_msg
+                print_args[1] = len_msg;
+                //
+                // msg
+                print_args[2] = msg_ptr;
+                //
+                // notpos
+                print_args[3] = graph_ir[ arg[0] ];
+                //
+                // before
+                print_args[4] = print_text_vec_value[ str_index[0] ];
+                //
+                // value
+                print_args[5] = graph_ir[ arg[1] ];
+                //
+                // after
+                print_args[6] = print_text_vec_value[ str_index[1] ];
+                //
+                // call cppad_link_print
+                value = builder.CreateCall(
+                    op_enum2callee[op_enum], print_args, op_enum2name[op_enum]
+                );
+                //
+                // update message length
+                print_n_in = value;
+            }
+            //
             // --------------------------------------------------------------
             // Contitional Expressions
             // --------------------------------------------------------------
@@ -764,7 +831,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                         double_t, atom_in, one_index, name
                     );
                     // store value for this element
-                    is_volatile = false;
+                    bool is_volatile = false;
                     builder.CreateStore(graph_ir[ arg[i] ], ptr, is_volatile);
                 }
                 //
@@ -828,10 +895,19 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             double_t, output_ptr, one_index
         );
         size_t node_index  = graph_obj.dependent_vec_get(i);
-        is_volatile   = false;
+        bool is_volatile   = false;
         builder.CreateStore(graph_ir[node_index], ptr, is_volatile);
         graph_ir[node_index]->setName(name);
     }
+    //
+    // terminate the msg_ptr vector with a '\0' character
+    one_index[0] = print_n_in;
+    llvm::Value* msg_end = builder.CreateGEP(
+        int_8_t, msg_ptr, one_index
+    );
+    bool is_volatile = false;
+    builder.CreateStore(char_zero, msg_end, is_volatile);
+    //
     // return zero for no error
     error_no = builder.CreateZExtOrTrunc(
         compare_change, int_32_t, "error_no"
