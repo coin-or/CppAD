@@ -232,7 +232,8 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
         //
         // convert digits to ascii
         for(int i = 0; i < n_exponent; ++i)
-            buffer[2+n_mantissa+2+i] = '0' + exponent[n_exponent - i - 1];
+            buffer[2 + n_mantissa + 2 + i] =
+                static_cast<char>('0' + exponent[n_exponent - i - 1]);
         //
         n_char = 2 + n_mantissa + 2 + n_exponent;
     }

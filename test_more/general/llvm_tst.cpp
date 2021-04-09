@@ -36,27 +36,60 @@ bool tst_cppad_link_print(void)
     }
     //
     int n_in           = 0;
-    int len_message    = 100;
-    double notpos      = 1.0;
+    int len_message    = 200;
+    double notpos      = -1.0;
     std::string before = "before ";
-    double value       = 45.678;
     std::string after  = " after\n";
-    char message[101];
+    char message[201];
     int n_out;
+    double value;
     //
+    // +4.5678
+    value = 45.678;
     n_out = fun_ptr(
         n_in, len_message, message, notpos, before.data(), value, after.data()
     );
     n_in  = n_out;
+    //
+    // +inf
+    value = 1.0 / 0.0;
     n_out = fun_ptr(
         n_in, len_message, message, notpos, before.data(), value, after.data()
     );
     n_in  = n_out;
+    //
+    // nan
+    value = 0.0 / 0.0;
+    n_out = fun_ptr(
+        n_in, len_message, message, notpos, before.data(), value, after.data()
+    );
+    n_in  = n_out;
+    //
+    // +0.0
+    value = 0.0;
+    n_out = fun_ptr(
+        n_in, len_message, message, notpos, before.data(), value, after.data()
+    );
+    n_in  = n_out;
+    //
+    // -1.0e-100
+    value = -1e-100;
+    n_out = fun_ptr(
+        n_in, len_message, message, notpos, before.data(), value, after.data()
+    );
+    n_in  = n_out;
+    //
+    // terminate string
     message[n_out] = '\0';
     //
     std::string str(message);
-    std::string line = before + "+4.5678e+1" + after;
-    ok &= str == line + line;
+    std::string line1 = before + "+4.5678e+1" + after;
+    std::string line2 = before + "+inf" + after;
+    std::string line3 = before + "nan" + after;
+    std::string line4 = before + "+0.0" + after;
+    std::string line5 = before + "-1.0e-100" + after;
+    //
+    ok &= str == line1 + line2 + line3 + line4 + line5;
     //
     return ok;
 }

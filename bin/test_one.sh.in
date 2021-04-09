@@ -102,10 +102,24 @@ then
 fi
 original_dir=`pwd`
 # ---------------------------------------------------------------------------
+# path to pkg-config files
 cwd=$(pwd)
 PKG_CONFIG_PATH="$cwd/build/prefix/lib64/pkgconfig"
 PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/share/pkgconfig"
 PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$cwd/build/prefix/lib/pkgconfig"
+# ---------------------------------------------------------------------------
+# remove installed cppad libraries and build local versions
+cd build
+for name in cppad_lib cppad_link
+do
+    list=$(find prefix -name "lib$name.*")
+    for file in $list
+    do
+        echo_eval rm $file
+    done
+    make $name
+done
+cd ..
 # ---------------------------------------------------------------------------
 # initialize
 export LD_LIBRARY_PATH=''
@@ -154,8 +168,8 @@ fi
 cxx_flags='@cppad_cxx_flags@'
 #
 include_flags="-I $original_dir/include $include_flags"
-cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
-library_flags="$library_flags $cppad_lib_path"
+cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib"
+library_flags="$library_flags -L $cppad_lib_path -lcppad_lib -l cppad_link"
 #
 # llvm
 if [ @cppad_has_llvm@ == 1 ]
