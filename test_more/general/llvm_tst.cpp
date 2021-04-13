@@ -15,6 +15,96 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/llvm/link.hpp>
 namespace { // BEGIN_EMPTY_NAMESPACE
 // -----------------------------------------------------------------------------
+bool tst_adfun_print(void)
+{   bool ok = true;
+    using CppAD::AD;
+
+    size_t nx = 1, ny = 1;
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx), ay(ny);
+    ax[0] = 1.0;
+    CppAD::Independent(ax);
+    //
+    PrintFor(ax[0], "x[0] = ", ax[0], "");
+    ay[0] = ax[0];
+    //
+    // f
+    CppAD::ADFun<double> f(ax, ay);
+    std::string function_name = "llvm_tst";
+    f.function_name_set(function_name);
+    //
+    // graph_obj
+    CppAD::cpp_graph graph_obj;
+    f.to_graph(graph_obj);
+    //
+    // ir_obj
+    CppAD::llvm_ir ir_obj;
+    std::string msg = ir_obj.from_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // optimize ir_obj
+    ir_obj.optimize();
+    //
+    // create object file
+    std::string file_name = function_name + ".o";
+    msg = ir_obj.to_object_file(file_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // link_obj
+    CppAD::llvm_link link_obj(msg);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // load object file
+    msg = link_obj.object_file(file_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // fun_ptr
+    CppAD::compiled_ir_t fun_ptr;
+    msg = link_obj.function_ptr(function_name, fun_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // input
+    CppAD::vector<double> input(nx);
+    input[0] = -1.0; // x[0] < 0.0;
+    //
+    // vector to hold return value
+    CppAD::vector<double> output(ny);
+    output[0] = 0.0;
+    //
+    // vector to hold message
+    size_t nm = 200;
+    CppAD::vector<char> message(nm);
+    //
+    // incorrect call to function
+    int32_t len_input   = int32_t(nx);
+    int32_t len_output  = int32_t(ny);
+    int32_t len_message = int32_t(nm);
+    int32_t error_no    = fun_ptr(
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
+    );
+    ok &= error_no == 0;
+    ok &= input[0]  == -1.0;
+    ok &= output[0] == input[0];
+    ok &= std::string(message.data()) == "x[0] = -1.0";
+    return ok;
+}
+// -----------------------------------------------------------------------------
 bool tst_cppad_link_print(void)
 {   bool ok = true;
     //
@@ -1558,6 +1648,7 @@ bool tst_atomic(void)
 
 bool llvm_tst(void)
 {   bool ok = true;
+    ok     &= tst_adfun_print();
     ok     &= tst_cppad_link_print();
     ok     &= tst_link_lib();
     ok     &= tst_llvm_ir();

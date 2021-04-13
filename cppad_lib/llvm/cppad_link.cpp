@@ -83,28 +83,28 @@ This routine works without linking in any I/O library routines.
 
 $end
 */
-extern "C" int cppad_link_special(int len_ascii, char* ascii, const char* value)
-{   int len_value = 0;
+extern "C" int32_t cppad_link_special(int32_t len_ascii, char* ascii, const char* value)
+{   int32_t len_value = 0;
     while( value[len_value] != '\0' )
         ++len_value;
     if(len_ascii < len_value )
-    {   for(int i = 0; i < len_ascii; ++i)
+    {   for(int32_t i = 0; i < len_ascii; ++i)
             ascii[i] = 'x';
         return len_ascii;
     }
-    for(int i = 0; i < len_value; ++i)
+    for(int32_t i = 0; i < len_value; ++i)
         ascii[i] = value[i];
     return len_value;
 }
 // BEGIN_DOUBLE2ASCII
-extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
+extern "C" int32_t cppad_link_double2ascii(int32_t len_ascii, char* ascii, double value)
 // END_DOUBLE2ASCII
 {   // mantissa has one extra digit for rounding off
-    int n_mantissa = 6;
-    int mantissa[7];
+    int32_t n_mantissa = 6;
+    int32_t mantissa[7];
     //
-    int n_exponent = 3;
-    int exponent[3];
+    int32_t n_exponent = 3;
+    int32_t exponent[3];
     //
     // size of buffere is greater thant or equal
     // 2 + n_mantissa + 2 + n_exponent
@@ -136,11 +136,11 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
     // ---------------------------------------------------------------------
     // normalize the value
     // ---------------------------------------------------------------------
-    int value_negative = value < 0.0;
+    int32_t value_negative = value < 0.0;
     if( value_negative )
         value = - value;
     //
-    int pow10 = 0;
+    int32_t pow10 = 0;
     while( value < 1.0 )
     {   --pow10;
         value *= 10.0;
@@ -158,7 +158,7 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
         }
     }
     // assert( 1.0 < value && value < 10.0 );
-    int pow10_negative = pow10 < 0;
+    int32_t pow10_negative = pow10 < 0;
     if( pow10_negative )
         pow10 = - pow10;
     // -------------------------------------------------------------------
@@ -166,8 +166,8 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
     // -------------------------------------------------------------------
     //
     // compute n_mantissa + 1 digits
-    for(int i = 0; i <= n_mantissa; ++i)
-    {   mantissa[i] = (int) value;
+    for(int32_t i = 0; i <= n_mantissa; ++i)
+    {   mantissa[i] = (int32_t) value;
         // assert( mantissa[i] < 10 );
         value -= (double) mantissa[i];
         value *= 10.0;
@@ -175,7 +175,7 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
     //
     // round off to n_mantissa
     if( mantissa[n_mantissa] >= 5 )
-    {   int i        = n_mantissa - 1;
+    {   int32_t i        = n_mantissa - 1;
         mantissa[i] += 1;
         while( i > 0 && mantissa[i] == 10 )
         {   mantissa[i-1] += 1;
@@ -199,7 +199,7 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
     // -------------------------------------------------------------------
     //
     // compute exponents in reverse order
-    for(int i = 0; i < n_exponent; ++i)
+    for(int32_t i = 0; i < n_exponent; ++i)
     {   exponent[i] = pow10 % 10;
         pow10      /= 10;
     }
@@ -210,14 +210,14 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
     // ---------------------------------------------------------------------
     // convert digits to ascii in buffer
     // ---------------------------------------------------------------------
-    int n_char = 0;
+    int32_t n_char = 0;
     if( value_negative )
         buffer[0] = '-';
     else
         buffer[0] = '+';
     buffer[1] = static_cast<char>('0' + mantissa[0]);
     buffer[2] = '.';
-    for(int i = 1; i < n_mantissa; ++i)
+    for(int32_t i = 1; i < n_mantissa; ++i)
         buffer[2 + i] = static_cast<char>('0' + mantissa[i]);
     if( n_exponent == 0 )
     {   buffer[2 + n_mantissa] = '\0';
@@ -231,7 +231,7 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
             buffer[2 + n_mantissa + 1] = '+';
         //
         // convert digits to ascii
-        for(int i = 0; i < n_exponent; ++i)
+        for(int32_t i = 0; i < n_exponent; ++i)
             buffer[2 + n_mantissa + 2 + i] =
                 static_cast<char>('0' + exponent[n_exponent - i - 1]);
         //
@@ -242,11 +242,11 @@ extern "C" int cppad_link_double2ascii(int len_ascii, char* ascii, double value)
     // ---------------------------------------------------------------------
     if( n_char > len_ascii )
     {   n_char = len_ascii;
-        for(int i = 0; i < len_ascii; ++i)
+        for(int32_t i = 0; i < len_ascii; ++i)
             ascii[i] = 'x';
     }
     else
-    {   for(int i = 0; i < n_char; ++i)
+    {   for(int32_t i = 0; i < n_char; ++i)
             ascii[i] = buffer[i];
     }
     //
@@ -314,19 +314,19 @@ they are truncated and $icode%n_out% = %len_msg%$$.
 $end
 */
 // BEGIN_PRINT
-extern "C" int cppad_link_print(int n_in, int len_msg,
+extern "C" int32_t cppad_link_print(int32_t n_in, int32_t len_msg,
 char* msg, double notpos, const char* before, double value, const char* after
 )
 // END_PRINT
 {   //
     // initialize n_out
-    int n_out = n_in;
+    int32_t n_out = n_in;
     //
     if( 0.0 < notpos || n_in == len_msg )
         return n_out;
     //
     // copy before
-    int i = 0;
+    int32_t i = 0;
     while( before[i] != '\0' )
     {   msg[n_out++] = before[i++];
         if( n_out == len_msg )
@@ -334,9 +334,9 @@ char* msg, double notpos, const char* before, double value, const char* after
     }
     //
     // copy characters corresponding to value
-    int   len_ascii = len_msg - n_out;
+    int32_t   len_ascii = len_msg - n_out;
     char* ascii     = msg + n_out;
-    int   n_char    = cppad_link_double2ascii(len_ascii, ascii, value);
+    int32_t   n_char    = cppad_link_double2ascii(len_ascii, ascii, value);
     n_out            += n_char;
     if( n_out == len_msg )
         return n_out;

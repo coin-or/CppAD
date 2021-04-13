@@ -78,12 +78,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     using graph::graph_op_enum;
     using CppAD::local::graph::op_enum2name;
     //
-    // Assumptions
-    if( graph_obj.print_text_vec_size() != 0)
-    {   msg += "graph_obj.print_text_vec_size() != 0";
-        return msg;
-    }
-    //
     // scalar values
     n_dynamic_ind_     = graph_obj.n_dynamic_ind_get();
     n_variable_ind_    = graph_obj.n_variable_ind_get();
@@ -277,22 +271,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     // automatically append instructions to the basic block `basic_block'.
     llvm::IRBuilder<> builder(basic_block);
     //
-    // print_text_value
-    size_t n_print_text = graph_obj.print_text_vec_size();
-    CppAD::vector<llvm::Value*> print_text_vec_value(n_print_text);
-    for(size_t i = 0; i < n_print_text; ++i)
-    {   print_text_vec_value[i] = builder.CreateGlobalString(
-            graph_obj.print_text_vec_get(i)
-        );
-    }
-    //
     // graph_ir
     // Initialize with nothing at index zero
     std::vector<llvm::Value*> graph_ir;
     graph_ir.push_back(nullptr);
     //
-    // one_index
+    // one_index, two_index
     std::vector<llvm::Value*> one_index(1);
+    std::vector<llvm::Value*> two_index(2);
     // ----------------------------------------------------------------------
     // some constants
     // ----------------------------------------------------------------------
@@ -305,9 +291,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* char_zero = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(8, 0, false)
     );
-    // int_zero, int_two, int_three
+    // int_zero, int_one, int_two, int_three
     llvm::Value* int_zero = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 0, true)
+    );
+    llvm::Value* int_one = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(32, 1, true)
     );
     llvm::Value* int_two = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 2, true)
@@ -375,6 +364,41 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     builder.CreateRet(error_no);
     function_ir->getBasicBlockList().push_back(merge_bb);
     builder.SetInsertPoint(merge_bb);
+    // ------------------------------------------------------------------------
+    // print_text_value
+    // ------------------------------------------------------------------------
+    size_t n_print_text = graph_obj.print_text_vec_size();
+    CppAD::vector<llvm::Value*> print_text_vec_value(n_print_text);
+    for(size_t i = 0; i < n_print_text; ++i)
+    {
+        // str
+        std::string str = graph_obj.print_text_vec_get(i);
+        //
+        // global_str
+        llvm::Value* global_ptr = builder.CreateGlobalStringPtr(str);
+        //
+        // lenp1
+        unsigned lenp1  = static_cast<unsigned>(str.size() + 1);
+        //
+        // local_ptr
+        llvm::Value* local_ptr = builder.CreateAlloca(int_8_t, int_one);
+        //
+        // *local_ptr = global_str
+        for(size_t j = 0; j < lenp1; ++j)
+        {   // i-th element of global
+            one_index[0] = llvm::ConstantInt::get(
+                *context_ir_, llvm::APInt(32, j, false)
+            );
+            llvm::Value *value, *ptr;
+            bool is_volatile = false;
+            ptr   = builder.CreateGEP(int_8_t, global_ptr, one_index);
+            value = builder.CreateLoad(int_8_t, ptr);
+            ptr   = builder.CreateGEP(int_8_t, local_ptr,  one_index);
+            builder.CreateStore(value, ptr, is_volatile);
+        }
+        //
+        print_text_vec_value[i] = local_ptr;
+    }
     //
     // initilaize compare_change
     llvm::Value* compare_change = bool_zero;
@@ -651,13 +675,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 //
                 // call cppad_link_print
                 value = builder.CreateCall(
-                    op_enum2callee[op_enum], print_args, op_enum2name[op_enum]
+                    op_enum2callee[op_enum], print_args, "no_out"
                 );
                 //
                 // update message length
                 print_n_in = value;
             }
-            //
+            break;
             // --------------------------------------------------------------
             // Contitional Expressions
             // --------------------------------------------------------------
