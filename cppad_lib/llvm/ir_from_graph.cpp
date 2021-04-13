@@ -295,9 +295,6 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* int_zero = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 0, true)
     );
-    llvm::Value* int_one = llvm::ConstantInt::get(
-            *context_ir_, llvm::APInt(32, 1, true)
-    );
     llvm::Value* int_two = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 2, true)
     );
@@ -380,8 +377,13 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         // lenp1
         unsigned lenp1  = static_cast<unsigned>(str.size() + 1);
         //
+        // int_lenp1
+        llvm::Value* int_lenp1 = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(8, lenp1, false)
+        );
+        //
         // local_ptr
-        llvm::Value* local_ptr = builder.CreateAlloca(int_8_t, int_one);
+        llvm::Value* local_ptr = builder.CreateAlloca(int_8_t, int_lenp1);
         //
         // *local_ptr = global_str
         for(size_t j = 0; j < lenp1; ++j)
