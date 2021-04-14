@@ -367,35 +367,42 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     size_t n_print_text = graph_obj.print_text_vec_size();
     CppAD::vector<llvm::Value*> print_text_vec_value(n_print_text);
     for(size_t i = 0; i < n_print_text; ++i)
-    {
+    {   // Attempting to pass the result of CreateGlobalStringPtr to a dynamic
+        // library routine generates linker assertion, so pass a local copy.
+        // In addition, the optimizer changes copying the string to
+        // element, by element initialization of the local copy.
+        //
         // str
         std::string str = graph_obj.print_text_vec_get(i);
         //
-        // global_str
-        llvm::Value* global_ptr = builder.CreateGlobalStringPtr(str);
-        //
         // lenp1
-        unsigned lenp1  = static_cast<unsigned>(str.size() + 1);
-        //
-        // int_lenp1
-        llvm::Value* int_lenp1 = llvm::ConstantInt::get(
-            *context_ir_, llvm::APInt(8, lenp1, false)
+        llvm::Value* lenp1  = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(32, str.size() + 1, false)
         );
         //
         // local_ptr
-        llvm::Value* local_ptr = builder.CreateAlloca(int_8_t, int_lenp1);
+        llvm::Value* local_ptr = builder.CreateAlloca(int_8_t, lenp1);
         //
-        // *local_ptr = global_str
-        for(size_t j = 0; j < lenp1; ++j)
-        {   // i-th element of global
+        // *local_ptr = str
+        for(size_t j = 0; j <= str.size(); ++j)
+        {   // value
+            llvm::Value* value = char_zero;  // terminating null character
+            if( j < str.size() )
+            {   unsigned char ch = static_cast<unsigned char>( str[j] );
+                value = llvm::ConstantInt::get(
+                    *context_ir_, llvm::APInt(8, ch, false)
+                );
+            }
+            // ptr
             one_index[0] = llvm::ConstantInt::get(
                 *context_ir_, llvm::APInt(32, j, false)
             );
-            llvm::Value *value, *ptr;
+            llvm::Value* ptr   = builder.CreateGEP(
+                int_8_t, local_ptr,  one_index
+            );
+            //
+            // local[j] = str[j]
             bool is_volatile = false;
-            ptr   = builder.CreateGEP(int_8_t, global_ptr, one_index);
-            value = builder.CreateLoad(int_8_t, ptr);
-            ptr   = builder.CreateGEP(int_8_t, local_ptr,  one_index);
             builder.CreateStore(value, ptr, is_volatile);
         }
         //
