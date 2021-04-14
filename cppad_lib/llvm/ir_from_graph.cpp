@@ -590,7 +590,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 );
             }
             value = builder.CreateCall(
-                op_enum2callee[op_enum], binary_args, name
+                op_enum2callee[op_enum], binary_args, op_enum2name[op_enum]
             );
             graph_ir.push_back(value);
             break;
