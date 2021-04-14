@@ -501,7 +501,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
 
             default:
             msg += "graph_obj has following unsupported operator ";
-            msg += local::graph::op_enum2name[op_enum];
+            msg += op_enum2name[op_enum];
             return msg;
         }
 # endif
@@ -549,7 +549,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                     break;
 
                     default:
-                    name = local::graph::op_enum2name[op_enum];
+                    name = op_enum2name[op_enum];
                     break;
                 }
                 op_enum2callee[op_enum] = module_ir_->getOrInsertFunction(
@@ -558,7 +558,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             }
             unary_args[0] = graph_ir[ arg[0] ];
             value = builder.CreateCall(
-                op_enum2callee[op_enum], unary_args, name
+                op_enum2callee[op_enum], unary_args, op_enum2name[op_enum]
             );
             graph_ir.push_back(value);
             break;
@@ -744,35 +744,33 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
 # else
             // name is used by llvm_ir.to_graph to check that optimizer did
             // not change the sense of comparison operators.
-            {
-                switch( op_enum )
-                {   case graph::comp_eq_graph_op:
-                    pred    = llvm::FCmpInst::FCMP_ONE;
-                    name    = "eq";
-                    break;
-                    case graph::comp_le_graph_op:
-                    pred    = llvm::FCmpInst::FCMP_OLT;
-                    name    = "le";
-                    break;
-                    case graph::comp_lt_graph_op:
-                    pred    = llvm::FCmpInst::FCMP_OLE;
-                    name    = "lt";
-                    break;
-                    case graph::comp_ne_graph_op:
-                    pred    = llvm::FCmpInst::FCMP_OEQ;
-                    name    = "ne";
-                    break;
+            switch( op_enum )
+            {   case graph::comp_eq_graph_op:
+                pred    = llvm::FCmpInst::FCMP_ONE;
+                name    = "eq";
+                break;
+                case graph::comp_le_graph_op:
+                pred    = llvm::FCmpInst::FCMP_OLT;
+                name    = "le";
+                break;
+                case graph::comp_lt_graph_op:
+                pred    = llvm::FCmpInst::FCMP_OLE;
+                name    = "lt";
+                break;
+                case graph::comp_ne_graph_op:
+                pred    = llvm::FCmpInst::FCMP_OEQ;
+                name    = "ne";
+                break;
 
-                    default:
-                    // set pred to avoid warning
-                    pred    = llvm::FCmpInst::FCMP_ONE;
-                    CPPAD_ASSERT_UNKNOWN(false);
-                    break;
-                }
-                compare = builder.CreateFCmp(
-                    pred, graph_ir[arg[1]], graph_ir[arg[0]], name
-                );
+                default:
+                // set pred to avoid warning
+                pred    = llvm::FCmpInst::FCMP_ONE;
+                CPPAD_ASSERT_UNKNOWN(false);
+                break;
             }
+            compare = builder.CreateFCmp(
+                pred, graph_ir[arg[1]], graph_ir[arg[0]], name
+            );
 # endif
             // compare is one of operands in Or instructions
             // (this is assumed by llvm_ir.to_graph).
@@ -883,7 +881,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             // --------------------------------------------------------------
             default:
             msg += "graph_obj has following unsupported operator ";
-            msg += local::graph::op_enum2name[op_enum];
+            msg += op_enum2name[op_enum];
             return msg;
         }
     }
