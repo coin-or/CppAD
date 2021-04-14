@@ -45,14 +45,16 @@ void llvm_ir::print(void) const
         std::cout << "llvm_ir::print: empty function\n";
         return;
     }
+# ifndef NDEBUG
     // function
     llvm::Function* ir_function = module_ir_->getFunction(function_name_);
     CPPAD_ASSERT_UNKNOWN( ir_function != nullptr );
+# endif
     // os
     llvm::raw_os_ostream os( std::cout );
     //
     // print module
-    os << *ir_function;
+    os << *module_ir_;
     os.flush();
     //
     return;
