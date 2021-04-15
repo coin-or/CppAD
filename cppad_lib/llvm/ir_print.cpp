@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 -----------------------------------------------------------------------------
 $begin llvm_ir_print$$
 $spell
+    CppAD
     std::ostream
     llvm_ir
     const
@@ -28,15 +29,15 @@ $head ir_obj$$
 This is a const $cref/llvm_ir/llvm_ir_ctor/$$ object.
 
 $head os$$
-Is the $code std::ostream$$ where the IR is printed.
+Is the $code std::ostream$$ where the
+Internal Representation (IR) is printed.
 
 $head Discussion$$
 This function is included to help with using the $code llvm_ir$$ class.
-The formatting of it's output is not part of the API; i.e., it may change
-it the future.
-
-$head IR Specifications$$
-see $href%https://llvm.org/docs/LangRef.html%$$
+The formatting of it's output is not part of the CppAD API;
+i.e., it may change it the future.
+For specifications of IR see the LLVM language
+$href%https://llvm.org/docs/LangRef.html%reference manual%$$
 
 $children%
     example/llvm/print_ir.cpp
