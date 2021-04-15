@@ -320,7 +320,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         // array_t, array_ptr
         std::string name = std::to_string(i) + "_print";
         llvm::Type* array_t = llvm::ArrayType::get(int_8_t, lenp1);
-        llvm::Value* array_ptr = builder.CreateAlloca(array_t, int_one);
+        llvm::Value* array_ptr = builder.CreateAlloca(
+            array_t, int_one, "print_"
+        );
         //
         // *array_ptr = str
         for(size_t j = 0; j < lenp1; ++j)
@@ -664,7 +666,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 // after
                 print_args[6] = print_text_vec_value[ str_index[1] ];
                 //
-                // call cppad_link_print
+                // n_out = cppad_link_print(n_in, ...)
                 value = builder.CreateCall(
                     op_enum2callee[op_enum], print_args, "n_out_"
                 );
@@ -828,7 +830,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 llvm::Value* atom_in = builder.CreateAlloca(
                     double_t,       // Type*  Ty
                     atom_args[0],   // Value* ArraySize
-                    "atom_in"       // const Twine& Name
+                    "atom_in_"      // const Twine& Name
                 );
                 atom_args[1] = atom_in;
                 //
@@ -852,7 +854,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 llvm::Value* atom_out = builder.CreateAlloca(
                     double_t,       // Type*  Ty
                     atom_args[2],   // Value* ArraySize
-                    "atom_out"      // const Twine& Name
+                    "atom_out_"     // const Twine& Name
                 );
                 atom_args[3] = atom_out;
                 //
@@ -861,7 +863,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 value = builder.CreateAlloca(
                     int_8_t,        // Type*  Ty
                     atom_args[4],   // Value* ArraySize
-                    "atom_msg"      // const Twine& Name
+                    "atom_msg_"     // const Twine& Name
                 );
                 atom_args[5] = value;
                 //

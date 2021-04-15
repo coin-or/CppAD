@@ -147,6 +147,13 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     llvm::DenseMap<const llvm::Value*, size_t> llvm_base2length;
 # endif
     //
+    // print_text_vec vector in cpp_graph (first index is not used).
+    CppAD::vector< std::string> print_text_vec(1);
+    //
+    // Map from allocated pointer to index in print_text_vec
+    // (index zero not used can detect not found).
+    llvm::DenseMap<const llvm::Value*, size_t> llvm_ptr2print_index;
+    //
     // The maps above assume the default constructor for size_t yeilds zero
     CPPAD_ASSERT_UNKNOWN( size_t() == 0 );
     //
@@ -244,11 +251,6 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     // Used by both passes
     CppAD::vector<llvm::Value*>       operand;
     CppAD::vector<llvm::Type::TypeID> type_id;
-    //
-    // The zero floating point constant
-    // llvm::Value* fp_zero = llvm::ConstantFP::get(
-    //   *context_ir_, llvm::APFloat(0.0)
-    //  );
     //
     // First Pass
     // determine the floating point constants in the graph
@@ -359,6 +361,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         const llvm::Value* result = llvm::dyn_cast<llvm::Value>( &(*itr) );
 # ifndef NDEBUG
         llvm::Type::TypeID result_type_id = get_type_id(result);
+        // itr->dump();
 # endif
         unsigned op_code                  = itr->getOpcode();
         unsigned n_operand                = itr->getNumOperands();
@@ -384,13 +387,57 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
         {
             // --------------------------------------------------------------
             case llvm::Instruction::Alloca:
-            // This instruction is used to get memrory for atomic
-            // function input and output vectors.
+            // This instruction is used to get memrory for atomic and print
+            str = result->getName().str();
+# ifndef NDEBUG
+            // check type of memory allocation
+            {   // str
+                bool print  = str.size() >= 6 && str.substr(0, 6) == "print_";
+                bool a_in   = str.size() >= 8 && str.substr(0, 8) == "atom_in_";
+                bool a_out = str.size() >= 9 && str.substr(0, 9) == "atom_out_";
+                bool a_msg = str.size() >= 9 && str.substr(0, 9) == "atom_msg_";
+                CPPAD_ASSERT_UNKNOWN( print || a_in || a_out || a_msg );
+                //
+                // result type
+                llvm::Type::TypeID id = get_type_id(result);
+                CPPAD_ASSERT_UNKNOWN(  id == llvm::Type::PointerTyID );
+                llvm::PointerType* result_type =
+                    llvm::dyn_cast<llvm::PointerType>(result->getType());
+                //
+                // element type
+                id = result_type->getElementType()->getTypeID();
+                if( a_in || a_out )
+                    CPPAD_ASSERT_UNKNOWN( id == llvm::Type::DoubleTyID );
+                if( a_msg )
+                    CPPAD_ASSERT_UNKNOWN( id == llvm::Type::IntegerTyID );
+                if( print )
+                    CPPAD_ASSERT_UNKNOWN( id == llvm::Type::ArrayTyID );
+            }
+# endif
+            if( str.size() >= 6 && str.substr(0, 6) == "print_" )
+            {   llvm::PointerType* result_type =
+                llvm::dyn_cast<llvm::PointerType>(result->getType());
+                //
+                llvm::ArrayType* element_type =
+                llvm::dyn_cast<llvm::ArrayType>(result_type->getElementType());
+                //
+                size_t n_element = element_type->getArrayNumElements();
+                index            = print_text_vec.size();
+                print_text_vec.push_back("");
+                print_text_vec[index].resize( n_element );
+                llvm_ptr2print_index.insert( value_size(result, index) );
+            }
             break;
             // --------------------------------------------------------------
             case llvm::Instruction::BitCast:
-            // The ‘bitcast’ instruction converts value to type ty2. It is
-            // always a no-op cast because no bits change with this conversion.
+            // bitcast is used to convert print_ alloca pointers from
+            // array ponters to first eleemnt pointers (index zero in array).
+            CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
+            index = llvm_ptr2print_index.lookup( operand[0] );
+            CPPAD_ASSERT_UNKNOWN( index != 0 );
+            ele_info.base  = operand[0];
+            ele_info.index = 0;
+            llvm_element2info.insert( value_element_info(result, ele_info) );
             break;
             // --------------------------------------------------------------
             case llvm::Instruction::SExt:
@@ -662,6 +709,11 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             {   // This GEP is used to assign elements of a print message
                 CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
                 CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::IntegerTyID );
+                CPPAD_ASSERT_UNKNOWN( get_int_constant(operand[1]) == 0 );
+                element_info info;
+                info.index = get_int_constant(operand[2] );
+                info.base  = operand[0];
+                llvm_element2info.insert(value_element_info(result, info));
             }
             break;
             //
@@ -818,8 +870,9 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // --------------------------------------------------------------
             case llvm::Instruction::Store:
             CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
+            CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID )
             if( type_id[0] == llvm::Type::DoubleTyID )
-            {   CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::PointerTyID );
+            {   // Used to set dependent variables and arguments to functions
                 node     = llvm_value2graph_node.lookup(operand[0]);
                 ele_info = llvm_element2info.lookup(operand[1]);
                 CPPAD_ASSERT_UNKNOWN( ele_info.base != nullptr );
@@ -829,6 +882,12 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 CPPAD_ASSERT_UNKNOWN( vec_index != 0 );
                 CppAD::vector<size_t>& index2node( vec_index2node[vec_index] );
                 index2node[ele_info.index] = node;
+            }
+            if( operand[0]->getType() == llvm::Type::getInt8Ty(*context_ir_) )
+            {   // used to set characters in print_text_vec
+                ele_info = llvm_element2info.lookup(operand[1]);
+                // 2DO: this assert not yet working due to SExt .
+                // CPPAD_ASSERT_UNKNOWN( ele_info.base != nullptr );
             }
             break;
             //
