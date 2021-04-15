@@ -39,7 +39,7 @@ public:
     // const member functions
     std::string to_graph(cpp_graph& graph_obj) const;
     std::string to_object_file(const std::string& file_name) const;
-    void print(void) const;
+    void print(std::ostream& os) const;
 };
 
 } // END_CPPAD_NAMESPACE

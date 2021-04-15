@@ -20,6 +20,7 @@ SET(source_list
     link_lib.cpp
     llvm.cpp
     optimize.cpp
+    print_ir.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #

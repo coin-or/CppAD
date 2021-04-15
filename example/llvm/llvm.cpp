@@ -31,6 +31,7 @@ extern bool link_atomic(void);
 extern bool link_discrete(void);
 extern bool link_lib(void);
 extern bool optimize(void);
+extern bool print_ir(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -50,6 +51,7 @@ int main(void)
     Run( link_discrete,        "link_discrete"     );
     Run( link_lib,             "link_lib"          );
     Run( optimize,             "optimize"          );
+    Run( print_ir,             "print_ir"          );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak

@@ -191,6 +191,7 @@ $rref llvm_link_atomic.cpp$$
 $rref llvm_link_discrete.cpp$$
 $rref llvm_link_lib.cpp$$
 $rref llvm_optimize.cpp$$
+$rref llvm_print_ir.cpp$$
 $rref log.cpp$$
 $rref log10.cpp$$
 $rref log1p.cpp$$

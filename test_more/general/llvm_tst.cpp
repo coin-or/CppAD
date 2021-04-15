@@ -46,6 +46,7 @@ bool tst_adfun_print(void)
     //
     // optimize ir_obj
     ir_obj.optimize();
+    ir_obj.print( std::cout );
     //
     // create object file
     std::string file_name = function_name + ".o";

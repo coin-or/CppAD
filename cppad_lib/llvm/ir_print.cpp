@@ -13,6 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 -----------------------------------------------------------------------------
 $begin llvm_ir_print$$
 $spell
+    std::ostream
     llvm_ir
     const
     obj
@@ -21,10 +22,28 @@ $$
 $section Print LLVM Intermediate Representation$$
 
 $head Syntax$$
-$icode%ir_obj%.print()%$$
+$icode%ir_obj%.print(%os%)%$$
 
 $head ir_obj$$
-This is a $code const$$  $cref/llvm_ir/llvm_ir_ctor/$$ object.
+This is a const $cref/llvm_ir/llvm_ir_ctor/$$ object.
+
+$head os$$
+Is the $code std::ostream$$ where the IR is printed.
+
+$head Discussion$$
+This function is included to help with using the $code llvm_ir$$ class.
+The formatting of it's output is not part of the API; i.e., it may change
+it the future.
+
+$head IR Specifications$$
+see $href%https://llvm.org/docs/LangRef.html%$$
+
+$children%
+    example/llvm/print_ir.cpp
+%$$
+$head Example$$
+The file $cref llvm_print_ir.cpp$$ contains an example and test
+of this operation.
 
 $end
 */
@@ -33,7 +52,7 @@ $end
 //
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
-void llvm_ir::print(void) const
+void llvm_ir::print(std::ostream& os) const
 {
     if( function_name_ == "" )
     {   CPPAD_ASSERT_UNKNOWN( n_dynamic_ind_ == 0 );
@@ -45,18 +64,18 @@ void llvm_ir::print(void) const
         std::cout << "llvm_ir::print: empty function\n";
         return;
     }
-# ifndef NDEBUG
-    // function
-    llvm::Function* ir_function = module_ir_->getFunction(function_name_);
-    CPPAD_ASSERT_UNKNOWN( ir_function != nullptr );
-# endif
-    // os
-    llvm::raw_os_ostream os( std::cout );
+    // llvm_os
+    llvm::raw_os_ostream llvm_os( os );
     //
     // print module
-    os << *module_ir_;
-    os.flush();
+    llvm_os << *module_ir_;
     //
+    /* only print function
+    llvm::Function* ir_function = module_ir_->getFunction(function_name_);
+    CPPAD_ASSERT_UNKNOWN( ir_function != nullptr );
+    llvm_os << *ir_function;
+    */
+    llvm_os.flush();
     return;
 }
 
