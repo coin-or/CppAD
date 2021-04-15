@@ -666,7 +666,7 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 //
                 // call cppad_link_print
                 value = builder.CreateCall(
-                    op_enum2callee[op_enum], print_args, "no_out"
+                    op_enum2callee[op_enum], print_args, "n_out_"
                 );
                 //
                 // update message length

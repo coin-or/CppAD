@@ -387,6 +387,16 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // This instruction is used to get memrory for atomic
             // function input and output vectors.
             break;
+            // --------------------------------------------------------------
+            case llvm::Instruction::BitCast:
+            // The ‘bitcast’ instruction converts value to type ty2. It is
+            // always a no-op cast because no bits change with this conversion.
+            break;
+            // --------------------------------------------------------------
+            case llvm::Instruction::SExt:
+            // Sign extension of integers is used to convert i32 to i64 for
+            // index of '\0' character at end print message output.
+            break;
             //
             // --------------------------------------------------------------
             case llvm::Instruction::Load:
@@ -424,7 +434,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::PointerTyID );
                 str  = operand[2]->getName().str();
             }
-            else
+            else if( n_operand == 7 )
             {   // atomic function call
                 CPPAD_ASSERT_UNKNOWN( n_operand == 7 );
                 CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::IntegerTyID );
@@ -438,7 +448,23 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                     str.size() > 7 && str.substr(0, 7) == "atomic_"
                 );
             }
-            if( n_operand == 7 )
+            else
+            {   // call to cppad_link_print
+                CPPAD_ASSERT_UNKNOWN( n_operand == 8 );
+                CPPAD_ASSERT_UNKNOWN( type_id[0] == llvm::Type::IntegerTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[1] == llvm::Type::IntegerTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::PointerTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[3] == llvm::Type::DoubleTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[4] == llvm::Type::PointerTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[5] == llvm::Type::DoubleTyID );
+                CPPAD_ASSERT_UNKNOWN( type_id[6] == llvm::Type::PointerTyID );
+                str  = operand[7]->getName().str();
+                CPPAD_ASSERT_UNKNOWN( str == "cppad_link_print" );
+            }
+            if( n_operand == 8 )
+            {   // 2DO: call to cppad_link_print
+            }
+            else if( n_operand == 7 )
             {   // name of this atomic function
                 str = str.substr(7, std::string::npos);
                 //
@@ -606,30 +632,36 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             //
             // --------------------------------------------------------------
             case llvm::Instruction::GetElementPtr:
-            CPPAD_ASSERT_UNKNOWN( n_operand == 2 );
             CPPAD_ASSERT_UNKNOWN( result_type_id == llvm::Type::PointerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[0]     == llvm::Type::PointerTyID );
             CPPAD_ASSERT_UNKNOWN( type_id[1]     == llvm::Type::IntegerTyID );
-            index  = llvm_base2index2node.lookup( operand[0] );
-            if( index != 0 )
-            {   // This vectors nodes are scattered
-                element_info info;
-                info.index = get_int_constant(operand[1]);
-                info.base  = operand[0];
-                llvm_element2info.insert( value_element_info(result, info) );
-            }
-            // GEP is used to store a '\0' character at the end of the message
-            else if( operand[0] != msg_ptr )
-            {   // This vectors nodes are contiguous
-                size_t first_node  = llvm_base2first_node.lookup( operand[0] );
-                CPPAD_ASSERT_UNKNOWN( first_node !=  0 );
-                index = get_int_constant( operand[1] );
-                node  = first_node + index;
-                llvm_ptr2graph_node.insert( value_size(result, node) );
+            if( n_operand == 2 )
+            {   index  = llvm_base2index2node.lookup( operand[0] );
+                if( index != 0 )
+                {   // This vectors nodes are scattered
+                    element_info info;
+                    info.index = get_int_constant(operand[1]);
+                    info.base  = operand[0];
+                    llvm_element2info.insert(value_element_info(result, info));
+                }
+                // GEP is used to store a '\0' character at the end of message
+                else if( operand[0] != msg_ptr )
+                {   // This vectors nodes are contiguous
+                    size_t first_node  = llvm_base2first_node.lookup( operand[0] );
+                    CPPAD_ASSERT_UNKNOWN( first_node !=  0 );
+                    index = get_int_constant( operand[1] );
+                    node  = first_node + index;
+                    llvm_ptr2graph_node.insert( value_size(result, node) );
 # ifndef NDEBUG
-                size_t length  = llvm_base2length.lookup( operand[0] );
-                CPPAD_ASSERT_UNKNOWN(index < length);
+                    size_t length  = llvm_base2length.lookup( operand[0] );
+                    CPPAD_ASSERT_UNKNOWN(index < length);
 # endif
+                }
+            }
+            else
+            {   // This GEP is used to assign elements of a print message
+                CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
+                CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::IntegerTyID );
             }
             break;
             //

@@ -25,7 +25,7 @@ bool tst_adfun_print(void)
     CppAD::Independent(ax);
     //
     PrintFor(ax[0], "x[0] = ", ax[0], "");
-    ay[0] = ax[0];
+    ay[0] = ax[0] * ax[0];
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -46,7 +46,6 @@ bool tst_adfun_print(void)
     //
     // optimize ir_obj
     ir_obj.optimize();
-    ir_obj.print( std::cout );
     //
     // create object file
     std::string file_name = function_name + ".o";
@@ -80,7 +79,7 @@ bool tst_adfun_print(void)
     //
     // input
     CppAD::vector<double> input(nx);
-    input[0] = -1.0; // x[0] < 0.0;
+    input[0] = -2.0; // x[0] < 0.0;
     //
     // vector to hold return value
     CppAD::vector<double> output(ny);
@@ -100,9 +99,31 @@ bool tst_adfun_print(void)
         len_message, message.data()
     );
     ok &= error_no == 0;
-    ok &= input[0]  == -1.0;
-    ok &= output[0] == input[0];
-    ok &= std::string(message.data()) == "x[0] = -1.0";
+    ok &= input[0]  == -2.0;
+    ok &= output[0] == input[0] * input[0];
+    ok &= std::string(message.data()) == "x[0] = -2.0";
+    //
+    // convert from IR object back to cpp_graph object
+    msg = ir_obj.to_graph(graph_obj);
+    if( msg != "" )
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // convert from cpp_graph object back to ADFun object
+    f.from_graph(graph_obj);
+    //
+    // Test PrintFor operation
+    std::stringstream os;
+    CPPAD_TESTVECTOR(double) x(nx), y(ny);
+    x[0] = -2.0;
+    y = f.Forward(0, x, os);
+    //
+    ok &= y[0] == x[0] * x[0];
+    // Not Yet Working
+    // ok &= os.str() == "x[0] = -2.0";
+    ok &= os.str() == "";
+    //
     return ok;
 }
 // -----------------------------------------------------------------------------
