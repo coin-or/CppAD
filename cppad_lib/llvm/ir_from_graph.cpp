@@ -231,6 +231,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
     llvm::Value* int_zero = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 0, true)
     );
+    llvm::Value* int_one = llvm::ConstantInt::get(
+            *context_ir_, llvm::APInt(32, 1, true)
+    );
     llvm::Value* int_two = llvm::ConstantInt::get(
             *context_ir_, llvm::APInt(32, 2, true)
     );
@@ -312,15 +315,15 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
         std::string str = graph_obj.print_text_vec_get(i);
         //
         // lenp1
-        llvm::Value* lenp1  = llvm::ConstantInt::get(
-            *context_ir_, llvm::APInt(32, str.size() + 1, false)
-        );
+        size_t lenp1  = str.size() + 1;
         //
-        // local_ptr
-        llvm::Value* local_ptr = builder.CreateAlloca(int_8_t, lenp1);
+        // array_t, array_ptr
+        std::string name = std::to_string(i) + "_print";
+        llvm::Type* array_t = llvm::ArrayType::get(int_8_t, lenp1);
+        llvm::Value* array_ptr = builder.CreateAlloca(array_t, int_one);
         //
-        // *local_ptr = str
-        for(size_t j = 0; j <= str.size(); ++j)
+        // *array_ptr = str
+        for(size_t j = 0; j < lenp1; ++j)
         {   // value
             llvm::Value* value = char_zero;  // terminating null character
             if( j < str.size() )
@@ -330,11 +333,12 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 );
             }
             // ptr
-            one_index[0] = llvm::ConstantInt::get(
+            two_index[0] = int_zero;
+            two_index[1] = llvm::ConstantInt::get(
                 *context_ir_, llvm::APInt(32, j, false)
             );
-            llvm::Value* ptr   = builder.CreateGEP(
-                int_8_t, local_ptr,  one_index
+            llvm::Value* ptr   = builder.CreateInBoundsGEP(
+                array_t, array_ptr, two_index
             );
             //
             // local[j] = str[j]
@@ -342,7 +346,14 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
             builder.CreateStore(value, ptr, is_volatile);
         }
         //
-        print_text_vec_value[i] = local_ptr;
+        // char_ptr
+        two_index[0] = int_zero;
+        two_index[1] = int_zero;
+        llvm::Value* char_ptr = builder.CreateInBoundsGEP(
+            array_t, array_ptr, two_index
+        );
+        //
+        print_text_vec_value[i] = char_ptr;
     }
     //
     // initilaize compare_change
