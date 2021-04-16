@@ -120,9 +120,7 @@ bool tst_adfun_print(void)
     y = f.Forward(0, x, os);
     //
     ok &= y[0] == x[0] * x[0];
-    // Not Yet Working
-    // ok &= os.str() == "x[0] = -2.0";
-    ok &= os.str() == "";
+    ok &= os.str() == "x[0] = -2";
     //
     return ok;
 }

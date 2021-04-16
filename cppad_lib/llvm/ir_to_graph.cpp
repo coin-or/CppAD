@@ -125,6 +125,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     llvm::DenseMap<const llvm::Value*, compare_info>  llvm_compare2info;
     //
     // map llvm::Value* element pointer to base pointer and index value
+    // use base == nullptr to detect when lookup fails (index = 0 is ok)
     struct element_info {
         const llvm::Value*  base;
         size_t              index;
@@ -147,8 +148,9 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
     llvm::DenseMap<const llvm::Value*, size_t> llvm_base2length;
 # endif
     //
-    // print_text_vec vector in cpp_graph (first index is not used).
-    CppAD::vector< std::string> print_text_vec(1);
+    // print_text_vec vector in cpp_graph (index zero is not used
+    // so it can detect when lookup fails).
+    CppAD::vector< CppAD::vector<char> > print_text_vec(1);
     //
     // Map from allocated pointer to index in print_text_vec
     // (index zero not used can detect not found).
@@ -423,8 +425,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 //
                 size_t n_element = element_type->getArrayNumElements();
                 index            = print_text_vec.size();
-                print_text_vec.push_back("");
-                print_text_vec[index].resize( n_element );
+                CppAD::vector<char> vec(n_element);
+                print_text_vec.push_back(vec);
                 llvm_ptr2print_index.insert( value_size(result, index) );
             }
             break;
@@ -434,7 +436,8 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             // array ponters to first eleemnt pointers (index zero in array).
             CPPAD_ASSERT_UNKNOWN( n_operand == 1 );
             index = llvm_ptr2print_index.lookup( operand[0] );
-            CPPAD_ASSERT_UNKNOWN( index != 0 );
+            CPPAD_ASSERT_UNKNOWN( 0 < index );
+            llvm_ptr2print_index.insert( value_size(result, index) );
             ele_info.base  = operand[0];
             ele_info.index = 0;
             llvm_element2info.insert( value_element_info(result, ele_info) );
@@ -509,7 +512,26 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 CPPAD_ASSERT_UNKNOWN( str == "cppad_link_print" );
             }
             if( n_operand == 8 )
-            {   // 2DO: call to cppad_link_print
+            {   // must be an print operator
+                graph_obj.operator_vec_push_back( graph::print_graph_op );
+                //
+                // before
+                index = llvm_ptr2print_index.lookup( operand[4] );
+                CPPAD_ASSERT_UNKNOWN( index > 0 );
+                graph_obj.operator_arg_push_back(index - 1);
+                //
+                // after
+                index = llvm_ptr2print_index.lookup( operand[6] );
+                CPPAD_ASSERT_UNKNOWN( index > 0 );
+                graph_obj.operator_arg_push_back(index - 1);
+                //
+                // notpos
+                node = llvm_value2graph_node.lookup(operand[3]);
+                graph_obj.operator_arg_push_back(node);
+                //
+                // value
+                node = llvm_value2graph_node.lookup(operand[5]);
+                graph_obj.operator_arg_push_back(node);
             }
             else if( n_operand == 7 )
             {   // name of this atomic function
@@ -707,6 +729,7 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             }
             else
             {   // This GEP is used to assign elements of a print message
+                // operand[2] is the index of this character in the string
                 CPPAD_ASSERT_UNKNOWN( n_operand == 3 );
                 CPPAD_ASSERT_UNKNOWN( type_id[2] == llvm::Type::IntegerTyID );
                 CPPAD_ASSERT_UNKNOWN( get_int_constant(operand[1]) == 0 );
@@ -884,10 +907,18 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
                 index2node[ele_info.index] = node;
             }
             if( operand[0]->getType() == llvm::Type::getInt8Ty(*context_ir_) )
-            {   // used to set characters in print_text_vec
-                ele_info = llvm_element2info.lookup(operand[1]);
-                // 2DO: this assert not yet working due to SExt .
-                // CPPAD_ASSERT_UNKNOWN( ele_info.base != nullptr );
+            {   // We do not need to store the '\0' at the end of print strings
+                // and we need to ignore the '\0' at end of return message
+                char ch = static_cast<char>( get_int_constant(operand[0]) );
+                if( ch != '\0' )
+                {   ele_info = llvm_element2info.lookup(operand[1]);
+                    CPPAD_ASSERT_UNKNOWN( ele_info.base != nullptr );
+                    index    = llvm_ptr2print_index.lookup( ele_info.base );
+                    CPPAD_ASSERT_UNKNOWN( index > 0 );
+                    CppAD::vector<char>& text(print_text_vec[index]);
+                    CPPAD_ASSERT_UNKNOWN( ele_info.index < text.size() );
+                    text[ele_info.index] = ch;
+                }
             }
             break;
             //
@@ -914,6 +945,16 @@ std::string llvm_ir::to_graph(CppAD::cpp_graph&  graph_obj) const
             return msg;
         }
         graph_obj.dependent_vec_push_back( index2node[i] );
+    }
+    //
+    // print_text_vec
+    // (skip first index in local copy)
+    CPPAD_ASSERT_UNKNOWN( graph_obj.print_text_vec_size() == 0 );
+    for(size_t i = 1; i < print_text_vec.size(); ++i)
+    {   std::string str = "";
+        for(size_t j = 0; j < print_text_vec[i].size(); ++j)
+            str += print_text_vec[i][j];
+        graph_obj.print_text_vec_push_back( str );
     }
     // No error
     msg = "";
