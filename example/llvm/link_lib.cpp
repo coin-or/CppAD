@@ -25,7 +25,7 @@ $codei%
     %link_obj%.dynamic_lib("%path%");
 %$$
 where $icode path$$ is the path to the standard math library; see
-The $cref/llvm_link constructor/llvm_link_ctor/Standard Math Library/$$.
+The $cref/llvm_link initialize/llvm_link_initialize/Standard Math Library/$$.
 This example calls the $code cos$$ function which is in this library.
 
 $head Source Code$$
@@ -41,7 +41,8 @@ bool link_lib(void)
     //
     // link_obj
     std::string msg;
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;

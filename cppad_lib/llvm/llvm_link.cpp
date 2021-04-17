@@ -24,26 +24,15 @@ $spell
     CppAD
 $$
 
-$section Create an LLVM Object File Linker$$
+$section Create an LLVM Linker Object$$
 
 $head Syntax$$
-$codei%llvm_link %link_obj%(%msg%);%$$
+$codei%llvm_link %link_obj%$$
 
 $head Purpose$$
 This creates the empty $code llvm_link$$ object $icode link_obj$$.
-
-$head msg$$
-If input value of $icode msg$$ does not matter.
-If it is the empty string upon return, no error was detected.
-Otherwise it is an error message and $icode link_obj$$ cannot be used.
-
-$head Standard Math Library$$
-The standard math library is automatically included in
-$icode link_obj$$ during the constructor.
-
-$head cppad_link_$$
-Function names that begin with $code cppad_link_$$ are reserved
-for use by CppAD.
+The object must be
+$cref/initialized/llvm_link_initialize/$$ before it can be used.
 
 $children%
     example/llvm/link_lib.cpp%
@@ -57,9 +46,51 @@ contain examples / tests using this member function.
 $end
 */
 // BEGIN_CTOR
-llvm_link::llvm_link(std::string& msg)
+llvm_link::llvm_link(void)
 // END_CTOR
-{   //
+: jit_ (nullptr)
+{ }
+/*
+-------------------------------------------------------------------------------
+$begin llvm_link_initialize$$
+$spell
+    llvm_obj
+    cppad
+    CppAD
+$$
+
+$section Initialize an LLVM Linker$$
+
+$head Syntax$$
+$icode%msg% = llvm_link %link_obj%.initialize();%$$
+
+$head Purpose$$
+Drops all routines currently in $icode link_obj$$
+and then loads the routines that are necessary for use by CppAD
+(see below).
+
+$head Standard Math Library$$
+The standard math library is automatically included in
+$icode link_obj$$ during the constructor.
+
+$head cppad_link_$$
+Some functions that begin with $code cppad_link_$$ loaded and reserved
+for use by CppAD.
+
+$head msg$$
+If the return value $icode msg$$ is the empty, no error was detected.
+Otherwise it is an error message and $icode link_obj$$ cannot be used.
+
+$head Example$$
+The files $cref llvm_link_lib.cpp$$, $cref llvm_link_adfun.cpp$$
+contain examples / tests using this member function.
+
+$end
+*/
+// BEGIN_CTOR
+std::string llvm_link::initialize()
+// END_CTOR
+{   std::string msg = "";
     //
     // Initialize llvm Target functions
     llvm::InitializeNativeTarget();
@@ -71,9 +102,9 @@ llvm_link::llvm_link(std::string& msg)
     llvm::Error error = error_or_link.takeError();
     //
     if( error )
-    {   msg += "llvm_link_ctor: " + local::llvm_error_msg(error);
+    {   msg  = "llvm_link_ctor: " + local::llvm_error_msg(error);
         jit_ = nullptr;
-        return;
+        return msg;
     }
     jit_ = std::move( error_or_link.get() );
     CPPAD_ASSERT_UNKNOWN( jit_ != nullptr );
@@ -82,7 +113,8 @@ llvm_link::llvm_link(std::string& msg)
     msg = dynamic_lib(CPPAD_STD_MATH_LIBRARY_PATH);
     if( msg != "" )
     {   jit_ = nullptr;
-        return;
+        msg  = "llvm_link_initialize: " + msg;
+        return msg;
     }
     //
     // add cppad_link library
@@ -92,11 +124,11 @@ llvm_link::llvm_link(std::string& msg)
         if( msg != "" )
         {   msg = "llvm_link_ctor: " + msg;
             jit_ = nullptr;
-            return;
+            return msg;
         }
     }
     //
-    return;
+    return msg;
 }
 /*
 -------------------------------------------------------------------------------

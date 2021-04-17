@@ -56,7 +56,8 @@ bool tst_adfun_print(void)
     }
     //
     // link_obj
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -130,7 +131,8 @@ bool tst_cppad_link_print(void)
     //
     // link_obj
     std::string msg;
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -209,7 +211,8 @@ bool tst_link_lib(void)
     //
     // link_obj
     std::string msg;
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -410,7 +413,8 @@ bool tst_load(void)
     }
     //
     // link_obj
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cerr << "\n" << msg << "\n";
         return false;
@@ -676,7 +680,8 @@ bool tst_unary(void)
     }
     //
     // load the object file
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cout << "\n" << msg << "\n";
         return false;
@@ -807,7 +812,8 @@ bool tst_binary(void)
     }
     //
     // load the object file
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cout << "\n" << msg << "\n";
         return false;
@@ -935,7 +941,8 @@ bool tst_cexp(void)
     }
     //
     // load the object file
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cout << "\n" << msg << "\n";
         return false;
@@ -1125,7 +1132,8 @@ bool tst_compare_1(void)
         }
         //
         // load the object file
-         CppAD::llvm_link link_obj(msg);
+         CppAD::llvm_link link_obj;
+        msg = link_obj.initialize();
         if( msg != "" )
         {   std::cout << "\n" << msg << "\n";
             return false;
@@ -1305,7 +1313,8 @@ bool tst_compare_2(void)
     }
     //
     // load the object file
-     CppAD::llvm_link link_obj(msg);
+     CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cout << "\n" << msg << "\n";
         return false;
@@ -1458,7 +1467,8 @@ bool tst_sum(void)
     }
     //
     // load the object file
-     CppAD::llvm_link link_obj(msg);
+     CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "" )
     {   std::cout << "\n" << msg << "\n";
         return false;

@@ -102,7 +102,8 @@ bool link_adfun(void)
     //
     //
     // link_obj
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "")
     {   std::cout << "\n" << msg << "\n";
         return false;

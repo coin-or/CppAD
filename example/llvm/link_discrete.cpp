@@ -74,7 +74,8 @@ bool link_discrete(void)
         return false;
     }
     // link_obj
-    CppAD::llvm_link link_obj(msg);
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
     if( msg != "")
     {   std::cout << "\n" << msg << "\n";
         return false;
