@@ -150,10 +150,10 @@ bool link_det_minor(
     }
     // --------------------------------------------------------------------
     //
-    // function object mapping matrix to gradiend of determinant
+    // function object mapping matrix to gradient of determinant
     static code_gen_fun static_fun;
     //
-    // size correspmnding to static_fun
+    // size corresponding static_fun
     static size_t static_size = 0;
     //
     // number of independent variables

@@ -56,12 +56,14 @@ $codei%
     for file in `ls speed/%your_package%`
     do
         sed -i speed/%your_package%/@file -e 's|xpackage|%your_package%|'
+        sed -i speed/%your_package%/@file -e 's|Xpackage|%Your_package%|'
     done
     git checkout speed/CMakeLists.txt
     sed -i speed/CMakeLists.txt \
         -e 's|^.*(xpackage)|ADD_SUBDIRECTORY(%your_package%)\n&|'
 %$$
-where $icode your_package$$ has been replaced by the name of the new package.
+where $icode your_package$$ has been replaced by the name of the new package
+and $icode Your_package$$ is a capitalized version of the name.
 
 
 $head Running Tests$$
