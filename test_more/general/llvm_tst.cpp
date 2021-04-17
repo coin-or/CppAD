@@ -15,6 +15,136 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/core/llvm/link.hpp>
 namespace { // BEGIN_EMPTY_NAMESPACE
 // -----------------------------------------------------------------------------
+bool tst_initialize(void)
+{   bool ok = true;
+    using CppAD::vector;
+    using CppAD::llvm_ir;
+    using CppAD::AD;
+    //
+    size_t nx = 1, ny = 1;
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx), ay(ny);
+    ax[0]  = 0.0;
+    CppAD::Independent(ax);
+    ay[0] = ax[0] * ax[0];
+    CppAD::ADFun<double> f(ax, ay);
+    std::string function_name = "llvm_tst";
+    f.function_name_set(function_name);
+    //
+    // create a cpp_graph from this function
+    CppAD::cpp_graph graph_obj;
+    f.to_graph(graph_obj);
+    //
+    // llvm_ir object
+    llvm_ir ir_obj;
+    std::string msg = ir_obj.from_graph(graph_obj);
+    if( msg != "")
+    {   std::cout << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // create object file
+    std::string file_name = function_name + ".o";
+    msg = ir_obj.to_object_file(file_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // link_obj
+    CppAD::llvm_link link_obj;
+    msg = link_obj.initialize();
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // load object file
+    msg = link_obj.object_file(file_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // fun_ptr
+    CppAD::compiled_ir_t fun_ptr;
+    msg = link_obj.function_ptr(function_name, fun_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // input
+    CppAD::vector<double> input(nx);
+    input[0] = -2.0;
+    //
+    // vector to hold return value
+    CppAD::vector<double> output(ny);
+    output[0] = 0.0;
+    //
+    // vector to hold message
+    size_t nm = 1;
+    CppAD::vector<char> message(nm);
+    //
+    // call function
+    int32_t len_input   = static_cast<int32_t>(nx);
+    int32_t len_output  = static_cast<int32_t>(ny);
+    int32_t len_message = static_cast<int32_t>(nm);
+    int32_t error_no;
+    error_no    = fun_ptr(
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
+    );
+    ok &= error_no == 0;
+    ok &= message[0] == '\0';
+    //
+    // check output
+    ok &= input[0] == -2.0;
+    ok &= output[0] == input[0] * input[0];
+    //
+    // re-initialize link_obj
+    msg = link_obj.initialize();
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // Searching for this function should fail
+    msg = link_obj.function_ptr(function_name, fun_ptr);
+    ok &= msg != "";
+    //
+    // re-load object file
+    msg = link_obj.object_file(file_name);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // get fun_ptr
+    msg = link_obj.function_ptr(function_name, fun_ptr);
+    if( msg != "" )
+    {   std::cerr << "\n" << msg << "\n";
+        return false;
+    }
+    //
+    // call function
+    output[0] = 0.0;
+    input[0]  = -3.0;
+    error_no    = fun_ptr(
+        len_input,   input.data(),
+        len_output,  output.data(),
+        len_message, message.data()
+    );
+    ok &= error_no == 0;
+    ok &= message[0] == '\0';
+    //
+    // check output
+    ok &= input[0] == -3.0;
+    ok &= output[0] == input[0] * input[0];
+    //
+    return ok;
+}
+// -----------------------------------------------------------------------------
 bool tst_adfun_print(void)
 {   bool ok = true;
     using CppAD::AD;
@@ -314,7 +444,6 @@ void algo2adfun(size_t np, size_t nx, CppAD::ADFun<double>& adfun)
     return;
 }
 // -----------------------------------------------------------------------------
-// tst_llvm_ir
 bool tst_llvm_ir(void)
 {   bool ok = true;
     using CppAD::vector;
@@ -379,7 +508,7 @@ bool tst_llvm_ir(void)
     //
     return ok;
 }
-// tst_llvm_load
+// -----------------------------------------------------------------------------
 bool tst_load(void)
 {   bool ok = true;
     using CppAD::vector;
@@ -1612,6 +1741,7 @@ namespace {
         }
     };
 }
+// ---------------------------------------------------------------------------
 bool tst_atomic(void)
 {   bool ok = true;
     using CppAD::llvm_ir;
@@ -1678,6 +1808,7 @@ bool tst_atomic(void)
 
 bool llvm_tst(void)
 {   bool ok = true;
+    ok     &= tst_initialize();
     ok     &= tst_adfun_print();
     ok     &= tst_cppad_link_print();
     ok     &= tst_link_lib();

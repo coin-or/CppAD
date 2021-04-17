@@ -77,7 +77,7 @@ std::string llvm_link::function_ptr(
 // END_PROTOTYPE
 {   //
     // initialize msg
-    std::string msg = "llvm_link::functon_ptr:";
+    std::string msg = "llvm_link::functon_ptr: ";
     //
     // symbol
     llvm::Expected<llvm::JITEvaluatedSymbol> error_or_symbol =
@@ -86,6 +86,14 @@ std::string llvm_link::function_ptr(
     if( error )
     {   msg += "Error searching for " + fun_name + " in llvm_link object\n";
         msg += local::llvm_error_msg(error);
+        //
+        // Calling this handler clears the error and avoids an abort.  It
+        // would be nice to make this part of llvm_error_msg, but that leads to
+        // "undefined reference to `typeinfo for llvm::ErrorInfoBase'"
+        llvm::handleAllErrors(
+            std::move(error),
+            [](const llvm::ErrorInfoBase& eib) {}
+        );
         return msg;
     }
     llvm::JITEvaluatedSymbol symbol = error_or_symbol.get();
