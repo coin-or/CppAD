@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -12,8 +12,8 @@
 # Build the speed/xpackage directory tests
 # Inherit build type from ../CMakeList.txt
 
-# assert xpackage_prefix is defined
-assert ( xpackage_prefix )
+# Set the install prefix for this package
+SET(xpackage_prefix "/usr")
 
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally
@@ -21,7 +21,10 @@ assert ( xpackage_prefix )
 ADD_DEFINITIONS("-DCPPAD_XPACKAGE_SPEED")
 
 # Local include directories to search (not in package_prefix/includdir)
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
+INCLUDE_DIRECTORIES(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src
+    ${xpackage_prefix}/include
+)
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN

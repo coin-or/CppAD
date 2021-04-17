@@ -265,9 +265,6 @@ optional_package(sacado ${system_include} "sacado install prefix")
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")
 #
-# xpackage_prefix is an example package prefix that is not really used
-SET(xpackage_prefix "/usr")
-# -----------------------------------------------------------------------------
 # =============================================================================
 # cppad_lib
 # Perhaps in the future cppad_lib will depend on cmake header only flag ?
