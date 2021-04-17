@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <llvm/Support/Error.h>
 
 namespace CppAD { namespace local {
-    std::string llvm_error_msg(const llvm::Error& error_obj);
+    std::string llvm_error_msg(llvm::Error& error_obj);
 } }
 
 # endif

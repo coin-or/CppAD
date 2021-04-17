@@ -86,11 +86,6 @@ std::string llvm_link::function_ptr(
     if( error )
     {   msg += "Error searching for " + fun_name + " in llvm_link object\n";
         msg += local::llvm_error_msg(error);
-        //
-        llvm::handleAllErrors(
-            std::move(error),
-            [](const llvm::ErrorInfoBase& eib) {}
-        );
         return msg;
     }
     llvm::JITEvaluatedSymbol symbol = error_or_symbol.get();

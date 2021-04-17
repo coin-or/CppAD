@@ -32,7 +32,10 @@ $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
 $head error_obj$$
-Is a llvm error object.
+Is a llvm error object that $codei%if( %errro_obj% )%$$ is true.
+Upon return, the error has been cleared $icode error_obj$$
+is no longer usable.
+
 
 $head msg$$
 The return value $icode msg$$ is the message corresponding to the error.
@@ -40,13 +43,21 @@ The return value $icode msg$$ is the message corresponding to the error.
 $end
 */
 // BEGIN_PROTOTYPE
-std::string llvm_error_msg(const llvm::Error& error_obj)
+std::string llvm_error_msg(llvm::Error& error_obj)
 // END_PROTOTYPE
-{
+{   // ss
     std::stringstream ss;
+    //
+    // put error messsag in ss
     llvm::raw_os_ostream os( ss );
     os << error_obj;
     os.flush();
+    //
+    // clear error_obj
+    llvm::handleAllErrors(
+        std::move(error_obj),
+        [](const llvm::ErrorInfoBase& eib) {}
+    );
     return ss.str();
 }
 
