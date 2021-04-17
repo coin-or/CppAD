@@ -11,8 +11,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/core/llvm/link.hpp>
-# include <llvm/Support/TargetSelect.h>
-//
+# include <cppad/local/llvm_initialize.hpp>
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*
@@ -93,8 +93,7 @@ std::string llvm_link::initialize()
 {   std::string msg = "";
     //
     // Initialize llvm Target functions
-    llvm::InitializeNativeTarget();
-    llvm::InitializeNativeTargetAsmPrinter();
+    local::llvm_initialize();
     //
     // jit_
     llvm::Expected< std::unique_ptr<llvm::orc::LLJIT> > error_or_link =

@@ -24,6 +24,7 @@ IF( cppad_has_llvm )
         llvm/llvm_link.cpp
         llvm/dynamic_lib.cpp
         llvm/error_msg.cpp
+        llvm/initialize.cpp
     )
     # END_SORT_THIS_LINE_MINUS_2
 ENDIF( cppad_has_llvm )

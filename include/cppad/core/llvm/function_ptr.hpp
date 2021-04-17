@@ -87,9 +87,6 @@ std::string llvm_link::function_ptr(
     {   msg += "Error searching for " + fun_name + " in llvm_link object\n";
         msg += local::llvm_error_msg(error);
         //
-        // Calling this handler clears the error and avoids an abort.  It
-        // would be nice to make this part of llvm_error_msg, but that leads to
-        // "undefined reference to `typeinfo for llvm::ErrorInfoBase'"
         llvm::handleAllErrors(
             std::move(error),
             [](const llvm::ErrorInfoBase& eib) {}

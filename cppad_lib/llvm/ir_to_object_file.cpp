@@ -10,6 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/core/llvm/ir.hpp>
+# include <cppad/local/llvm_initialize.hpp>
 //
 # include <llvm/IR/DerivedTypes.h>
 # include <llvm/IR/InstIterator.h>
@@ -22,7 +23,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <llvm/Support/Host.h>
 # include <llvm/Support/raw_os_ostream.h>
 # include <llvm/Support/TargetRegistry.h>
-# include <llvm/Support/TargetSelect.h>
 //
 # include <llvm/Target/TargetOptions.h>
 # include <llvm/Target/TargetMachine.h>
@@ -76,8 +76,7 @@ std::string llvm_ir::to_object_file(const std::string& file_name) const
     std::string msg = "llvm_ir::to_object_file: ";
     //
     // Initialize llvm Target functions
-    llvm::InitializeNativeTarget();
-    llvm::InitializeNativeTargetAsmPrinter();
+    local::llvm_initialize();
     //
     // target
     std::string          target_triple = llvm::sys::getDefaultTargetTriple();

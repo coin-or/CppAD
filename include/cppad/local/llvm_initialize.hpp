@@ -1,3 +1,6 @@
+# ifndef CPPAD_LOCAL_LLVM_INITIALIZE_HPP
+# define CPPAD_LOCAL_LLVM_INITIALIZE_HPP
+
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
@@ -10,17 +13,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 
-$begin llvm_devel$$
-$spell
-    llvm
-$$
+namespace CppAD { namespace local {
+    void llvm_initialize(void);
+} }
 
-$section llvm Developer Documentation$$
-
-$childtable%
-    cppad_lib/llvm/error_msg.cpp%
-    cppad_lib/llvm/initialize.cpp%
-    cppad_lib/llvm/cppad_link.omh
-%$$
-
-$end
+# endif
