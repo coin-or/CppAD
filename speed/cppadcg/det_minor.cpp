@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -150,10 +150,10 @@ bool link_det_minor(
     }
     // --------------------------------------------------------------------
     //
-    // function object mapping matrix to gradiend of determinant
+    // function object mapping matrix to gradient of determinant
     static code_gen_fun static_fun;
     //
-    // size correspmnding to static_fun
+    // size corresponding static_fun
     static size_t static_size = 0;
     //
     // number of independent variables
