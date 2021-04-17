@@ -116,6 +116,9 @@ will use <code><font color="blue">xpackage</font></code> as a template for your 
 &nbsp;&nbsp;&nbsp;&nbsp;do<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sed&nbsp;-i&nbsp;speed/</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>/$file&nbsp;-e&nbsp;'s|xpackage|</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>|'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;done<br>
+&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;speed/CMakeLists.txt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sed&nbsp;-i&nbsp;speed/CMakeLists.txt&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-e&nbsp;'s|^.*(xpackage)|ADD_SUBDIRECTORY(</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>)\n&amp;|'<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i></code>
@@ -126,26 +129,42 @@ where
 <br>
 <b><big><a name="Running Tests" id="Running Tests">Running Tests</a></big></b>
 <br>
-To build the xpackage version of the tests,
-execute the following commands starting in the
-<a href="cmake.htm#Build Directory" target="_top"><span style='white-space: nowrap'>build&nbsp;directory</span></a>
-:
+Starting in the distribution directory,
+the following commands will build the new package version of the tests:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;speed/xpackage<br>
-&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_xpackage&nbsp;VERBOSE=1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bin/run_cmake.sh&nbsp;--no_optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;build/speed/</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;VERBOSE=1<br>
 </span></font></code>
-You can then run the corresponding speed tests
-with the following command
+This should result in the following output:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;./speed_xpackage&nbsp;speed&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>_det_lu_available&nbsp;=&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>_det_minor_available&nbsp;=&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>_mat_mul_available&nbsp;=&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>_ode_available&nbsp;=&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>_poly_available&nbsp;=&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>_sparse_hessian_available&nbsp;=&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>_sparse_jacobian_available&nbsp;=&nbsp;false<br>
+&nbsp;&nbsp;&nbsp;&nbsp;All&nbsp;0&nbsp;correctness&nbsp;tests&nbsp;passed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;memory&nbsp;leak&nbsp;detected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;speed&nbsp;main:&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[100%]&nbsp;Built&nbsp;target&nbsp;check_speed_</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-where 
-<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
- is a positive integer.
-See <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
- for more options.
+You can not edit one or more of the 
+<code><i><font color="black"><span style='white-space: nowrap'>*</span></font></i><font color="blue"><span style='white-space: nowrap'>.cpp</span></font></code>
+ files in the
+
+<code><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i></code>
+ directory so that the corresponding speed test
+is available and then run the corresponding test using the
+<a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ instructions.
+See <a href="speed_cppad.htm" target="_top"><span style='white-space: nowrap'>speed_cppad</span></a>
+ for examples of how to do this for each
+of the speed tests.
 
 <br>
 <br>
