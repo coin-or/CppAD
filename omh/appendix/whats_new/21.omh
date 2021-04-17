@@ -37,6 +37,10 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 04-16$$
+Improve the instruction for adding a new speed test package; see
+$cref speed_xpackage$$.
+
 $head 04-09$$
 The $cref cpp_graph_print$$ operation was failing when there were
 atomic or discrete functions. This has been fixed.

@@ -23,7 +23,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20210409")
+SET(cppad_version "20210416")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 #
@@ -288,8 +288,6 @@ optional_package(sacado ${system_include} "sacado install prefix")
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")
 #
-# xpackage_prefix is an example package prefix that is not really used
-SET(xpackage_prefix "/usr")
 # -----------------------------------------------------------------------------
 IF( include_llvm )
     #

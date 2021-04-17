@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -19,6 +19,12 @@ $spell
     cp
     ls
     sed
+    txt
+    cmake
+    det
+    lu
+    mul
+    jacobian
 $$
 
 
@@ -51,25 +57,42 @@ $codei%
     do
         sed -i speed/%your_package%/@file -e 's|xpackage|%your_package%|'
     done
+    git checkout speed/CMakeLists.txt
+    sed -i speed/CMakeLists.txt \
+        -e 's|^.*(xpackage)|ADD_SUBDIRECTORY(%your_package%)\n&|'
 %$$
 where $icode your_package$$ has been replaced by the name of the new package.
 
 
 $head Running Tests$$
-To build the xpackage version of the tests,
-execute the following commands starting in the
-$cref/build directory/cmake/Build Directory/$$:
+Starting in the distribution directory,
+the following commands will build the new package version of the tests:
 $codei%
-    cd speed/xpackage
-    make check_speed_xpackage VERBOSE=1
+    bin/run_cmake.sh --no_optional
+    cd build/speed/%your_package%
+    make check_speed_%your_package% VERBOSE=1
 %$$
-You can then run the corresponding speed tests
-with the following command
-$codei%
-    ./speed_xpackage speed %seed%
-%$$
-where $icode seed$$ is a positive integer.
-See $cref speed_main$$ for more options.
+This should result in the following output:
+$codei|
+    |...|
+    |your_package|_det_lu_available = false
+    |your_package|_det_minor_available = false
+    |your_package|_mat_mul_available = false
+    |your_package|_ode_available = false
+    |your_package|_poly_available = false
+    |your_package|_sparse_hessian_available = false
+    |your_package|_sparse_jacobian_available = false
+    All 0 correctness tests passed.
+    No memory leak detected
+    speed main: OK
+    [100%] Built target check_speed_|your_package|
+|$$
+You can not edit one or more of the $icode%*%.cpp%$$ files in the
+$icode your_package$$ directory so that the corresponding speed test
+is available and then run the corresponding test using the
+$cref speed_main$$ instructions.
+See $cref speed_cppad$$ for examples of how to do this for each
+of the speed tests.
 
 $contents%
     speed/xpackage/det_minor.cpp%
