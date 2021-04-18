@@ -114,15 +114,30 @@ will use <code><font color="blue">xpackage</font></code> as a template for your 
 &nbsp;&nbsp;&nbsp;&nbsp;cp&nbsp;-r&nbsp;speed/xpackage&nbsp;speed/</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;file&nbsp;in&nbsp;`ls&nbsp;speed/</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>`<br>
 &nbsp;&nbsp;&nbsp;&nbsp;do<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sed&nbsp;-i&nbsp;speed/</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>/$file&nbsp;-e&nbsp;'s|xpackage|</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>|'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sed&nbsp;-i&nbsp;speed/</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>/$file&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-e&nbsp;'s|xpackage|</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>|'&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-e&nbsp;'s|Xpackage|</span></font><i><font color="black"><span style='white-space: nowrap'>Your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>|'&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-e&nbsp;'s|CPPAD_XPACKAGE_SPEED|</span></font><i><font color="black"><span style='white-space: nowrap'>YOUR_PACKGE</span></font></i><font color="blue"><span style='white-space: nowrap'>|'<br>
 &nbsp;&nbsp;&nbsp;&nbsp;done<br>
 &nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;speed/CMakeLists.txt<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sed&nbsp;-i&nbsp;speed/CMakeLists.txt&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-e&nbsp;'s|^.*(xpackage)|ADD_SUBDIRECTORY(</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>)\n&amp;|'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;speed/main.cpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;line1='#&nbsp;ifdef&nbsp;CPPAD_</span></font><i><font color="black"><span style='white-space: nowrap'>YOUR_PACKAGE</span></font></i><font color="blue"><span style='white-space: nowrap'>_SPEED'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;line2='#&nbsp;define&nbsp;AD_PACKAGE&nbsp;&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;line3='#&nbsp;endif'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sed&nbsp;-i&nbsp;speed/main.cpp&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-e&nbsp;&quot;/CPPAD_XPACKAGE_SPEED/s|^|$line1\n$line2\n$line3\n|&quot;<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>your_package</span></font></i></code>
- has been replaced by the name of the new package.
+ has been replaced by the name of the new package
+
+<code><i><font color="black"><span style='white-space: nowrap'>Your_package</span></font></i></code>
+ is a capitalized version of the name, and
+
+<code><i><font color="black"><span style='white-space: nowrap'>YOUR_PACKAGE</span></font></i></code>
+ is an all caps version of the name.
 
 
 <br>
