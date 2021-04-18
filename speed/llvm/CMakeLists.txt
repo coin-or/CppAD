@@ -18,7 +18,7 @@ SET(llvm_prefix "/usr")
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally
 # intended to add preprocessor definitions.
-ADD_DEFINITIONS("-DCPPAD_XPACKAGE_SPEED")
+ADD_DEFINITIONS("-DCPPAD_LLVM_SPEED")
 
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES(
@@ -43,7 +43,7 @@ set_compile_flags( speed_llvm "${cppad_debug_which}" "${source_list}" )
 ADD_EXECUTABLE( speed_llvm EXCLUDE_FROM_ALL ${source_list} )
 
 # llvm is an include file only library
-TARGET_LINK_LIBRARIES(speed_llvm speed_src )
+TARGET_LINK_LIBRARIES(speed_llvm speed_src ${cppad_lib} ${colpack_libs} )
 
 # Add the check_speed_llvm target
 ADD_CUSTOM_TARGET(check_speed_llvm
