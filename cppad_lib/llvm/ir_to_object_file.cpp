@@ -89,11 +89,15 @@ std::string llvm_ir::to_object_file(const std::string& file_name) const
         return msg;
     }
     //
+    // reloc_model
+    // Static generates assert in the following routine
+    //  llvm::RuntimeDyldELF::resolveX86_64Relocation
+    llvm::Optional<llvm::Reloc::Model> reloc_model = llvm::Reloc:: PIC_;
+    //
     // target_machine
     const char*                        cpu      = "generic";
     const char*                        features = "";
     llvm::TargetOptions                target_options;
-    llvm::Optional<llvm::Reloc::Model> reloc_model;
     llvm::TargetMachine*  target_machine = target->createTargetMachine(
         target_triple, cpu, features, target_options, reloc_model
     );

@@ -1,4 +1,4 @@
-ler#! /bin/bash -e
+#! /bin/bash -e
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
