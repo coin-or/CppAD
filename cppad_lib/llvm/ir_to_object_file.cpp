@@ -101,6 +101,8 @@ std::string llvm_ir::to_object_file(const std::string& file_name) const
     llvm::TargetMachine*  target_machine = target->createTargetMachine(
         target_triple, cpu, features, target_options, reloc_model
     );
+    // like -O2 on clang
+    target_machine->setOptLevel( llvm::CodeGenOpt::Default );
     //
     // set target for this module
     module_ir_->setTargetTriple(target_triple);
