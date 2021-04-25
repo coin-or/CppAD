@@ -43,7 +43,12 @@ set_compile_flags( speed_llvm "${cppad_debug_which}" "${source_list}" )
 ADD_EXECUTABLE( speed_llvm EXCLUDE_FROM_ALL ${source_list} )
 
 # llvm is an include file only library
-TARGET_LINK_LIBRARIES(speed_llvm speed_src ${cppad_lib} ${colpack_libs} )
+TARGET_LINK_LIBRARIES(speed_llvm
+    speed_src
+    ${cppad_lib}
+    cppad_link
+    ${colpack_libs}
+)
 
 # Add the check_speed_llvm target
 ADD_CUSTOM_TARGET(check_speed_llvm
