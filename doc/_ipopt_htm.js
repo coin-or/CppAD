@@ -15,7 +15,8 @@ var list_current0 = [
 'ipopt.htm#Examples and Tests',
 'ipopt.htm#include_ipopt',
 'ipopt.htm#Deprecated Library',
-'ipopt.htm#get_ipopt'
+'ipopt.htm#get_ipopt',
+'ipopt.htm#Include Directories'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

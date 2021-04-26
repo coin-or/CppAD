@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Including Ipopt Library Examples, Tests, and pkg-config</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Including Ipopt Library Examples, Tests, and pkg-config">
-<meta name="keywords" id="keywords" content=" including ipopt library examples tests pkg-config include_ipopt deprecated get_ipopt ">
+<meta name="keywords" id="keywords" content=" including ipopt library examples tests pkg-config include_ipopt deprecated get_ipopt include directories ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,6 +69,7 @@ A:active { color : purple }
 <option>include_ipopt</option>
 <option>Deprecated Library</option>
 <option>get_ipopt</option>
+<option>Include Directories</option>
 </select>
 </td>
 </tr></table><br>
@@ -127,6 +128,16 @@ a copy of Ipopt using <a href="get_ipopt.sh.htm" target="_top"><span style='whit
 The corresponding install prefix is
 <code><font color="blue">build/prefix</font></code>.
 
+<br>
+<br>
+<b><big><a name="Include Directories" id="Include Directories">Include Directories</a></big></b>
+<br>
+It may be necessary to remove <code><font color="blue">/coin-or</font></code> from the end of the
+include directories reported by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;ipopt&nbsp;--cflags<br>
+</span></font></code>
 
 <hr>Input File: omh/install/ipopt.omh
 
