@@ -37,6 +37,12 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 04-26$$
+There was a problem with the $cref cmake$$ command when
+$cref ipopt$$ was the only optional package installed.
+This was related to the ipopt
+$cref/include directories/ipopt/Include Directories/$$ problem.
+
 $head 04-16$$
 Improve the instruction for adding a new speed test package; see
 $cref speed_xpackage$$.

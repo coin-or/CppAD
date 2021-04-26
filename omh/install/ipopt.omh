@@ -1,4 +1,4 @@
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -19,6 +19,7 @@ $spell
     hpp
     config
     CppAD
+    cflags
 $$
 
 $section Including Ipopt Library Examples, Tests, and pkg-config$$
@@ -49,5 +50,12 @@ If you are using Unix, you can download and install
 a copy of Ipopt using $cref get_ipopt.sh$$.
 The corresponding install prefix is
 $code build/prefix$$.
+
+$head Include Directories$$
+It may be necessary to remove $code /coin-or$$ from the end of the
+include directories reported by
+$codei%
+    pkg-config ipopt --cflags
+%$$
 
 $end

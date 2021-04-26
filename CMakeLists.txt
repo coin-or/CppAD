@@ -223,10 +223,11 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 # -----------------------------------------------------------------------------
 # External package information
 SET(system_include TRUE)
+SET(remove_coin_or FALSE)
 #
 # eigen
 IF( include_eigen )
-    pkgconfig_info(eigen3 ${system_include})
+    pkgconfig_info(eigen3 ${system_include} ${remove_coin_or})
     SET(eigen_LIBRARIES "${eigen3_LIBRARIES}")
     SET(cppad_has_eigen 1)
 ELSE( include_eigen )
@@ -235,7 +236,7 @@ ENDIF( include_eigen )
 #
 # adolc
 IF( include_adolc )
-    pkgconfig_info(adolc ${system_include})
+    pkgconfig_info(adolc ${system_include} ${remove_coin_or})
     SET(cppad_has_adolc 1)
 ELSE( include_adolc )
     SET(cppad_has_adolc 0)
@@ -243,8 +244,10 @@ ENDIF( include_adolc )
 #
 # ipopt
 IF( include_ipopt )
-    pkgconfig_info(ipopt ${system_include})
+    SET(remove_coin_or TRUE)
+    pkgconfig_info(ipopt ${system_include} ${remove_coin_or})
     SET(cppad_has_ipopt 1)
+    SET(remove_coin_or FALSE)
 ELSE( include_ipopt )
     SET(cppad_has_ipopt 0)
 ENDIF( include_ipopt )
