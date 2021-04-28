@@ -144,6 +144,7 @@ EOF
         yes_cppadcg='no'
         yes_fadbad='no'
         yes_sacado='no'
+        testvector='cppad'
         ;;
 
         --no_documentation)

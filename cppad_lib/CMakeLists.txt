@@ -47,10 +47,14 @@ ENDIF( cppad_has_cppadcg )
 #
 set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
 #
-IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+# is_windows
+STRING( REGEX MATCH "^MSYS" is_msys "${CMAKE_SYSTEM_NAME}" )
+STRING( REGEX MATCH "^CYGWIN" is_cygwin "${CMAKE_SYSTEM_NAME}" )
+STRING( REGEX MATCH "^Windows" is_windows "${CMAKE_SYSTEM_NAME}" )
+IF( is_msys OR is_cygwin OR is_windows )
     MESSAGE( STATUS "Windows system so building static cppad_lib")
     ADD_LIBRARY( cppad_lib STATIC ${source_list} )
-ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+ELSE( )
     MESSAGE( STATUS "Not Windows system so building shared cppad_lib")
     ADD_LIBRARY( cppad_lib SHARED ${source_list} )
     SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )
@@ -59,7 +63,7 @@ ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
     IF( dl_LIBRARY )
         TARGET_LINK_LIBRARIES(cppad_lib ${dl_LIBRARY})
     ENDIF( dl_LIBRARY )
-ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+ENDIF( )
 #
 # install(TARGETS myExe mySharedLib myStaticLib
 #   RUNTIME DESTINATION bin
