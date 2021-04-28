@@ -33,9 +33,17 @@ $spell
     hpp
     var
     vec
+    msys
+    cygwin
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 04-27$$
+Fix the msys2 and cygwin system builds so that they use static
+(instead of dynamic) libraries.
+This is necessary so that static variables (in include files) can not have
+multiple instances in Windows.
 
 $head 04-26$$
 There was a problem with the $cref cmake$$ command when
