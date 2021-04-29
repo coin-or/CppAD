@@ -39,6 +39,13 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 04-28$$
+The change to the $cref/pow(x,y)/pow/$$ function on
+$cref/02-06/whats_new_21/02-06/$$ handled the case where $icode x$$
+is zero.
+The $cref pow_nan.cpp$$ example was modified to show when the new
+version of this function generates nans.
+
 $head 04-27$$
 Fix the msys2 and cygwin system builds so that they use static
 (instead of dynamic) libraries.
