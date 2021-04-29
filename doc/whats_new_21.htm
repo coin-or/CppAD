@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 04-27 04-26 04-16 04-09 04-07 04-05 04-02 03-29 03-24 03-11 03-09 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 04-28 04-27 04-26 04-16 04-09 04-07 04-05 04-02 03-29 03-24 03-11 03-09 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>04-28</option>
 <option>04-27</option>
 <option>04-26</option>
 <option>04-16</option>
@@ -104,6 +105,21 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="04-28" id="04-28">04-28</a></big></b>
+<br>
+The change to the <a href="pow.htm" target="_top"><span style='white-space: nowrap'>pow(x,y)</span></a>
+ function on
+<a href="whats_new_21.htm#02-06" target="_top"><span style='white-space: nowrap'>02-06</span></a>
+ handled the case where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+
+is zero.
+The <a href="pow_nan.cpp.htm" target="_top"><span style='white-space: nowrap'>pow_nan.cpp</span></a>
+ example was modified to show when the new
+version of this function generates nans.
+
+<br>
 <br>
 <b><big><a name="04-27" id="04-27">04-27</a></big></b>
 <br>
