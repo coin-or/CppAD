@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -268,7 +268,7 @@ namespace {
             // case where ODE does not make sense
             if( x[0] < 0. || x[1] < 0. )
             {   was_negative_ = true;
-                f[0] = CppAD::nan(0.);
+                f[0] = std::numeric_limits<double>::quiet_NaN();
             }
         }
         // set f_t = df / dt
@@ -281,7 +281,7 @@ namespace {
             f_t[1] = 0.;
             if( x[0] < 0. || x[1] < 0. )
             {   was_negative_ = true;
-                f_t[0] = CppAD::nan(0.);
+                f_t[0] = std::numeric_limits<double>::quiet_NaN();
             }
         }
         // set f_x = df / dx
@@ -296,7 +296,7 @@ namespace {
             f_x[1 * 2 + 1] = 0.;                // f1 w.r.t. x1
             if( x[0] < 0. || x[1] < 0. )
             {   was_negative_ = true;
-                f_x[0] = CppAD::nan(0.);
+                f_x[0] = std::numeric_limits<double>::quiet_NaN();
             }
         }
         bool was_negative(void)
@@ -391,7 +391,7 @@ namespace {
             const CppAD::vector<double> &x,
             CppAD::vector<double>       &f)
         {   size_t i;
-            f[0] = CppAD::nan(0.);
+            f[0] = std::numeric_limits<double>::quiet_NaN();
             for(i = 1; i < n; i++)
                 f[i] = double(i+1) * x[i-1];
         }
@@ -469,4 +469,3 @@ bool ode_err_control(void)
     ok     &= OdeErrControl_four();
     return ok;
 }
-

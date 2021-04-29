@@ -40,11 +40,15 @@ $$
 $section Changes and Additions to CppAD During 2021$$
 
 $head 04-28$$
+$list number$$
 The change to the $cref/pow(x,y)/pow/$$ function on
-$cref/02-06/whats_new_21/02-06/$$ handled the case where $icode x$$
-is zero.
+$cref/02-06/whats_new_21/02-06/$$ handled the case where $icode x$$ is zero.
 The $cref pow_nan.cpp$$ example was modified to show when the new
 version of this function generates nans.
+$lnext
+Remove some uses of the deprecated
+$cref/nan(zero)/nan/nan(zero)/ Deprecated 2015-10-04/$$ function.
+$lend
 
 $head 04-27$$
 Fix the msys2 and cygwin system builds so that they use static
