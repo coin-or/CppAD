@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -129,7 +129,11 @@ $cref/sparse_rc/sparse_rc/other/swap/$$ and
 $cref/sparse_rcv/sparse_rcv/other/swap/$$ template classes.
 $lnext
 A move semantics version of the assignment operator was added to the
-$cref/sparse_rc/sparse_rc/other/Assignment/$$ and
+$cref/sparse_rc/
+    sparse_rc/
+    other/
+    Move Semantics Assignment and Constructor
+/$$
 $cref/sparse_rcv/sparse_rcv/other/Assignment/$$ template classes.
 $lnext
 The $icode job$$ option was added to the
