@@ -39,6 +39,9 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 04-30$$
+The conditional expression example $cref cond_exp.cpp$$ was improved.
+
 $head 04-28$$
 $list number$$
 The change to the $cref/pow(x,y)/pow/$$ function on
