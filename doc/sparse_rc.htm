@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Row and Column Index Sparsity Patterns</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Row and Column Index Sparsity Patterns">
-<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax sizevector empty pattern other assignment swap nr nc nnz resize set k r c col row_major col_major example ">
+<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax sizevector empty pattern other assignment constructor move semantics swap nr nc nnz resize set k r c col row_major col_major example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,7 +68,8 @@ A:active { color : purple }
 <option>empty</option>
 <option>pattern</option>
 <option>other</option>
-<option>---..Assignment</option>
+<option>---..Assignment and Constructor</option>
+<option>---..Move Semantics Assignment and Constructor</option>
 <option>---..swap</option>
 <option>nr</option>
 <option>nc</option>
@@ -105,6 +106,9 @@ A:active { color : purple }
 </span></font></code>
 
 <code><font color="blue"><span style='white-space: nowrap'>sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>nr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
@@ -183,40 +187,60 @@ except during its constructor, <code><font color="blue">resize</font></code>, an
 <br>
 <br>
 <b><big><a name="other" id="other">other</a></big></b>
+
+
 <br>
-The 
+<br>
+<big><a name="other.Assignment and Constructor" id="other.Assignment and Constructor">Assignment and Constructor</a></big>
+<br>
+In the assignment and constructor, 
 <code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
- variable has prototype
+ has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-<br>
-<big><a name="other.Assignment" id="other.Assignment">Assignment</a></big>
-<br>
-After the assignment statement, 
-<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+After the assignment and constructor, 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
  is an independent copy
 of 
-<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
 ; i.e. it has all the same values as 
-<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
 
 and changes to 
-<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
- do not affect 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
-.
-A move semantics version of the assignment operator is defined; e.g.,
-it is used when 
+ do not affect 
 <code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
- in the assignment syntax
-is a function return value.
+.
+
+<br>
+<br>
+<big><a name="other.Move Semantics Assignment and Constructor" id="other.Move Semantics Assignment and Constructor">Move Semantics Assignment and Constructor</a></big>
+<br>
+In the assignment and constructor, if 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+A move semantics version of the assignment or constructor is used; e.g.,
+when 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ is a function return value.
 
 <br>
 <br>
 <big><a name="other.swap" id="other.swap">swap</a></big>
 <br>
+In the swap operation, 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 After the swap operation 
 <code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
  (

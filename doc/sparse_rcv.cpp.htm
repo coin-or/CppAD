@@ -150,6 +150,17 @@ A:active { color : purple }
         ok <font color="#990000">&amp;=</font> matrix<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">]</font> <font color="#990000">==</font> other<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
         ok <font color="#990000">&amp;=</font> matrix<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()[</font>k<font color="#990000">]</font> <font color="#990000">==</font> other<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
     <font color="#FF0000">}</font>
+
+    <i><font color="#9A1900">// now use the copy constructor</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">sparse_rcv&lt;SizeVector, ValueVector&gt;</font> <b><font color="#000000">copy</font></b><font color="#990000">(</font>matrix<font color="#990000">);</font>
+    ok    <font color="#990000">&amp;=</font> copy<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font>  <font color="#990000">==</font> matrix<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">();</font>
+    ok    <font color="#990000">&amp;=</font> copy<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font>  <font color="#990000">==</font> matrix<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">();</font>
+    ok    <font color="#990000">&amp;=</font> copy<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">()</font> <font color="#990000">==</font> matrix<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> matrix<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">]</font> <font color="#990000">==</font> copy<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        ok <font color="#990000">&amp;=</font> matrix<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">]</font> <font color="#990000">==</font> copy<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        ok <font color="#990000">&amp;=</font> matrix<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()[</font>k<font color="#990000">]</font> <font color="#990000">==</font> copy<font color="#990000">.</font><b><font color="#000000">val</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>

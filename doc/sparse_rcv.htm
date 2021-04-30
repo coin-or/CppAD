@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sparse Matrix Row, Column, Value Representation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sparse Matrix Row, Column, Value Representation">
-<meta name="keywords" id="keywords" content=" sparse matrix row column value representation syntax sizevector valuevector empty pattern other assignment swap nr nc nnz set k v col val pat row_major col_major eigen example ">
+<meta name="keywords" id="keywords" content=" sparse matrix row column value representation syntax sizevector valuevector empty pattern other assignment constructor move semantics swap nr nc nnz set k v col val pat row_major col_major eigen example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,7 +70,8 @@ A:active { color : purple }
 <option>pattern</option>
 <option>matrix</option>
 <option>other</option>
-<option>---..Assignment</option>
+<option>---..Assignment and Constructor</option>
+<option>---..Move Semantics Assignment and Constructor</option>
 <option>---..swap</option>
 <option>nr</option>
 <option>nc</option>
@@ -183,7 +184,6 @@ and number of possibly non-zero values
 ,
 are all zero.
 
-
 <br>
 <br>
 <b><big><a name="pattern" id="pattern">pattern</a></big></b>
@@ -223,18 +223,20 @@ assignment and swap syntax.
 <br>
 <br>
 <b><big><a name="other" id="other">other</a></big></b>
+
+
 <br>
-The 
+<br>
+<big><a name="other.Assignment and Constructor" id="other.Assignment and Constructor">Assignment and Constructor</a></big>
+<br>
+In the assignment and constructor, 
 <code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
- variable has prototype
+ has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;sparse_rcv&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ValueVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;sparse_rcv&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ValueVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-<br>
-<big><a name="other.Assignment" id="other.Assignment">Assignment</a></big>
-<br>
-After this assignment statement, 
+After this assignment and constructor, 
 <code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
  is an independent copy
 of 
@@ -243,15 +245,26 @@ of
 <code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
 
 and changes to 
-<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
- do not affect 
 <code><i><font color="black"><span style='white-space: nowrap'>matrix</span></font></i></code>
-.
-A move semantics version of the assignment operator is defined; e.g.,
-it is used when 
+ do not affect 
 <code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
- in the assignment syntax
-is a function return value;
+.
+
+<br>
+<br>
+<big><a name="other.Move Semantics Assignment and Constructor" id="other.Move Semantics Assignment and Constructor">Move Semantics Assignment and Constructor</a></big>
+<br>
+In the assignment and constructor, if 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;sparse_rcv&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ValueVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+A move semantics version of the assignment operator is used; e.g.,
+when 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ is a function return value;
 
 <br>
 <br>
