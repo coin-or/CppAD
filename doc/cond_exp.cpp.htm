@@ -112,7 +112,7 @@ x_j \downarrow 0
 we need to handle the case <small>@(@
 x_j = 0
 @)@</small>
-in a special way to avoid multiplying zero by infinity.
+in a special way to avoid returning zero times minus infinity.
 
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
@@ -178,23 +178,20 @@ in a special way to avoid multiplying zero by infinity.
     <i><font color="#9A1900">// a case where x[3] is equal to zero</font></i>
     check <font color="#990000">-=</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">);</font>
     x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">isnan</font></b><font color="#990000">(</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">log</font></b><font color="#990000">(</font> x<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">);</font>
 
     <i><font color="#9A1900">// function value</font></i>
     y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
 
     <i><font color="#9A1900">// check derivative of y[0]</font></i>
-    f<font color="#990000">.</font><b><font color="#000000">check_for_nan</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
     dw   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&gt;</font> <font color="#993399">0</font> <font color="#990000">)</font>
             ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">],</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>x<font color="#990000">[</font>j<font color="#990000">])</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">.,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
         <b><font color="#0000FF">else</font></b>
-        <font color="#FF0000">{</font>   <i><font color="#9A1900">// Note that in case where dw has type AD&lt;double&gt; and is a variable</font></i>
-            <i><font color="#9A1900">// this dw[j] can be nan (zero times nan is not zero).</font></i>
             ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">],</font> <font color="#993399">0.0</font><font color="#990000">,</font> eps<font color="#990000">,</font> eps<font color="#990000">);</font>
-        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
