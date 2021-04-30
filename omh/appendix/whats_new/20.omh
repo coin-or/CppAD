@@ -134,7 +134,11 @@ $cref/sparse_rc/
     other/
     Move Semantics Assignment and Constructor
 /$$
-$cref/sparse_rcv/sparse_rcv/other/Assignment/$$ template classes.
+$cref/sparse_rcv/
+    sparse_rcv/
+    other/
+    Move Semantics Assignment and Constructor
+/$$ template classes.
 $lnext
 The $icode job$$ option was added to the
 $cref/det_minor/link_det_minor/job/$$ and

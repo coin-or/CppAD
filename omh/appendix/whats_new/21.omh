@@ -35,12 +35,25 @@ $spell
     vec
     msys
     cygwin
+    rcv
 $$
 
 $section Changes and Additions to CppAD During 2021$$
 
 $head 04-30$$
+$list number$$
 The conditional expression example $cref cond_exp.cpp$$ was improved.
+$lnext
+Restore the
+$cref/
+    sparse_rcv copy constructor
+    /sparse_rcv
+    /other
+    /Assignment and Constructor
+/$$
+which was removed by mistake when the $code sparse_rcv$$
+move semantics constructor was added.
+$lend
 
 $head 04-28$$
 $list number$$

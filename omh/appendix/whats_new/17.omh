@@ -470,10 +470,13 @@ Add sparse assignment statements; see $icode other$$ for
 $cref/sparse_rc/
     sparse_rc/
     other/
-    Move Semantics Assignment and Constructor
+    Assignment and Constructor
 /$$ and
-$cref/sparse_rcv/sparse_rcv/other/Assignment/$$.
-
+$cref/sparse_rcv/
+    sparse_rcv/
+    other/
+    Assignment and Constructor
+/$$.
 $head 03-10$$
 Add the a sizing constructor to the
 $cref/sparse_rc syntax/sparse_rc/Syntax/$$; i.e.,
