@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -101,6 +101,17 @@ bool sparse_rcv(void)
     {   ok &= matrix.row()[k] == other.row()[k];
         ok &= matrix.col()[k] == other.col()[k];
         ok &= matrix.val()[k] == other.val()[k];
+    }
+
+    // now use the copy constructor
+    CppAD::sparse_rcv<SizeVector, ValueVector> copy(matrix);
+    ok    &= copy.nr()  == matrix.nr();
+    ok    &= copy.nc()  == matrix.nc();
+    ok    &= copy.nnz() == matrix.nnz();
+    for(size_t k = 0; k < nnz; k++)
+    {   ok &= matrix.row()[k] == copy.row()[k];
+        ok &= matrix.col()[k] == copy.col()[k];
+        ok &= matrix.val()[k] == copy.val()[k];
     }
     return ok;
 }

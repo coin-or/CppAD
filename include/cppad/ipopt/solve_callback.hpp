@@ -1,7 +1,7 @@
 # ifndef CPPAD_IPOPT_SOLVE_CALLBACK_HPP
 # define CPPAD_IPOPT_SOLVE_CALLBACK_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -254,9 +254,9 @@ public:
         x0_.resize(nx);
         fg0_.resize(nfg);
         for(i = 0; i < nx_; i++)
-            x0_[i] = CppAD::nan(0.0);
+            x0_[i] = std::numeric_limits<double>::quiet_NaN();
         for(i = 0; i < nfg; i++)
-            fg0_[i] = CppAD::nan(0.0);
+            fg0_[i] = std::numeric_limits<double>::quiet_NaN();
 
         if( ! retape_ )
         {   // make adfun_ correspond to x -> [ f(x), g(x) ]

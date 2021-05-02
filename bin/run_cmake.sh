@@ -150,6 +150,7 @@ EOF
         yes_cppadcg='no'
         yes_fadbad='no'
         yes_sacado='no'
+        testvector='cppad'
         ;;
 
         # 2DO when merging llvm branch into master:

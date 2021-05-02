@@ -15,23 +15,22 @@ $begin pow_nan.cpp$$
 $spell
 $$
 
-$section pow: Avoiding Nan in Derivatives: Example and Test$$
+$section pow: Nan in Result of Pow Function: Example and Test$$
 
 $head Purpose$$
 The $cref%pow(x, y)%pow%$$ function will work when $latex x < 0$$ and
-$latex y$$  is integer valued. It will often generate nan or infinity when
-$latex x = 0$$ and one tries to compute a derivatives
+$latex y$$  is a parameter. It will often generate nan or infinity when
+$latex x < 0$$ and one tries to compute a derivatives
 (even if $latex y$$ is a positive integer).
 This is because the derivative of the log is $latex 1 / x$$
 and the power function uses the representation
 $latex \[
     \R{pow}(x, y) = \exp [ y \cdot \log(x) ]
 \] $$
-The example below  uses a $cref/conditional expression/condexp/$$
-to avoid this problem.
 
 $head Problem$$
-There is a problem with this representation. For example,
+There is a problem with this representation when $latex y$$ is a parameter
+and $latex x = 0$$. For example,
 when $latex x = 0$$ and $latex y = 1$$, it returns zero for the derivative,
 but the actual derivative w.r.t $latex x$$ is one.
 
@@ -49,51 +48,43 @@ bool pow_nan(void)
     using std::cout;
     using CppAD::AD;
     using CppAD::vector;
-    using CppAD::NearEqual;
-    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
-    vector< double>      x(1), y(1), z(1), dx(1), dz(1), w(1), dw(2);
-    vector< AD<double> > ax(1), ay(1), az(1);
-    AD<double> azero( 0.0 );
+    vector<double>       x(2), y(2), dx(2), dy(2), ddx(2), ddy(2);
+    vector< AD<double> > ax(2), ay(2);
     //
     // variable vector
-    x[0]  = 1.0;
-    ax[0] = x[0];
+    ax[0] = x[0]  = -1.0;
+    ax[1] = x[1] = 2.0;
     //
-    // dynamic parameter vector
-    y[0]  = 2.0;
-    ay[0] = y[0];
+    CppAD::Independent(ax);
     //
-    CppAD::Independent(ax, ay);
+    ay[0] = pow( ax[0], ax[1] );
+    ay[1] = pow( ax[0], 2.0 );
     //
-    // if x == 0 then z = 0 else z = pow(x, y)
-    az[0] = CppAD::CondExpEq( ax[0], azero, azero,  pow(ax[0],  ay[0]) );
+    CppAD::ADFun<double> f(ax, ay);
     //
-    CppAD::ADFun<double> f(ax, az);
-    f.check_for_nan(true);
-    // -----------------------------------------------------------------------
-    for(size_t ix = 0; ix < 2; ++ix)
-    {   x[0] = 2.0 * double(ix);
-        y[0] = 3.0 + double(ix);
-        //
-        double check;
-        f.new_dynamic(y);
-        z     = f.Forward(0, x);
-        check = std::pow(x[0], y[0]);
-        ok   &= NearEqual(z[0], check, eps99, eps99);
-            //
-        dx[0] = 1.0;
-        dz    = f.Forward(1, dx);
-        check = y[0] * pow(x[0], y[0] - 1.0 );
-        ok   &= NearEqual(dz[0], check, eps99, eps99);
-        //
-        w[0]   = 1.0;
-        dw     = f.Reverse(2, w);
-        check = y[0] * pow(x[0], y[0] - 1.0 );
-        ok    &= NearEqual(dw[0], check, eps99, eps99);
-        check = y[0] * (y[0] - 1.0) * pow(x[0], y[0] - 2.0 );
-        ok    &= NearEqual(dw[1], check, eps99, eps99);
-    }
+    // check_for_nan is set false so it does not generate an assert
+    // when compiling with debugging
+    f.check_for_nan(false);
+    //
+    // Zero order forward does not generate nan
+    y  = f.Forward(0, x);
+    ok &= y[0] == 1.0;
+    ok &= y[1] == 1.0;
+    //
+    // First order forward generates a nan
+    dx[0] = 1.0;
+    dx[1] = 1.0;
+    dy = f.Forward(1, dx);
+    ok &= std::isnan( dy[0] );
+    ok &= dy[1] == -2.0;
+    //
+    // Second order Taylor coefficient is 1/2 times second derivative
+    ddx[0] = 0.0;
+    ddx[1] = 0.0;
+    ddy = f.Forward(2, ddx);
+    ok &= std::isnan( ddy[0] );
+    ok &= ddy[1] == 1.0;
     //
     return ok;
 }

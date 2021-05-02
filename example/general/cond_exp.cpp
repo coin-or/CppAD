@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -36,7 +36,7 @@ using only one $cref ADFun$$ object.
 Note that $latex x_j \log ( x_j ) \rightarrow 0 $$
 as $latex x_j \downarrow 0$$ and
 we need to handle the case $latex x_j = 0$$
-in a special way to avoid multiplying zero by infinity.
+in a special way to avoid returning zero times minus infinity.
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
@@ -107,23 +107,20 @@ bool CondExp(void)
     // a case where x[3] is equal to zero
     check -= x[3] * log( x[3] );
     x[3]   = 0.;
+    ok &= std::isnan( x[3] * log( x[3] ) );
 
     // function value
     y   = f.Forward(0, x);
     ok &= NearEqual(y[0], check, eps, eps);
 
     // check derivative of y[0]
-    f.check_for_nan(false);
     w[0] = 1.;
     dw   = f.Reverse(1, w);
     for(j = 0; j < n; j++)
     {   if( x[j] > 0 )
             ok &= NearEqual(dw[j], log(x[j]) + 1., eps, eps);
         else
-        {   // Note that in case where dw has type AD<double> and is a variable
-            // this dw[j] can be nan (zero times nan is not zero).
             ok &= NearEqual(dw[j], 0.0, eps, eps);
-        }
     }
 
     return ok;

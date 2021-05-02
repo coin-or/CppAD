@@ -33,9 +33,50 @@ $spell
     hpp
     var
     vec
+    msys
+    cygwin
+    rcv
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 04-30$$
+$list number$$
+The conditional expression example $cref cond_exp.cpp$$ was improved.
+$lnext
+Restore the
+$cref/
+    sparse_rcv copy constructor
+    /sparse_rcv
+    /other
+    /Assignment and Constructor
+/$$
+which was removed by mistake when the $code sparse_rcv$$
+move semantics constructor was added.
+$lend
+
+$head 04-28$$
+$list number$$
+The change to the $cref/pow(x,y)/pow/$$ function on
+$cref/02-06/whats_new_21/02-06/$$ handled the case where $icode x$$ is zero.
+The $cref pow_nan.cpp$$ example was modified to show when the new
+version of this function generates nans.
+$lnext
+Remove some uses of the deprecated
+$cref/nan(zero)/nan/nan(zero)/ Deprecated 2015-10-04/$$ function.
+$lend
+
+$head 04-27$$
+Fix the msys2 and cygwin system builds so that they use static
+(instead of dynamic) libraries.
+This is necessary so that static variables (in include files) can not have
+multiple instances in Windows.
+
+$head 04-26$$
+There was a problem with the $cref cmake$$ command when
+$cref ipopt$$ was the only optional package installed.
+This was related to the ipopt
+$cref/include directories/ipopt/Include Directories/$$ problem.
 
 $head 04-16$$
 Improve the instruction for adding a new speed test package; see

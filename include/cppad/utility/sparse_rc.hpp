@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_SPARSE_RC_HPP
 # define CPPAD_UTILITY_SPARSE_RC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -33,6 +33,8 @@ $codei%# include <cppad/utility/sparse_rc.hpp>
 $codei%sparse_rc<%SizeVector%>  %empty%
 %$$
 $codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
+%$$
+$codei%sparse_rc<%SizeVector%>  %pattern%(%other%)
 %$$
 $icode%pattern% = %other%
 %$$
@@ -77,20 +79,29 @@ The sparsity $icode pattern$$ is $code const$$
 except during its constructor, $code resize$$, and $code set$$.
 
 $head other$$
-The $icode other$$ variable has prototype
-$codei%
-    sparse_rc<%SizeVector%>  %other%
-%$$
 
-$subhead Assignment$$
-After the assignment statement, $icode other$$ is an independent copy
-of $icode pattern$$; i.e. it has all the same values as $icode pattern$$
-and changes to $icode other$$ do not affect $icode pattern$$.
-A move semantics version of the assignment operator is defined; e.g.,
-it is used when $icode other$$ in the assignment syntax
-is a function return value.
+$subhead Assignment and Constructor$$
+In the assignment and constructor, $icode other$$ has prototype
+$codei%
+    const sparse_rc<%SizeVector%>&  %other%
+%$$
+After the assignment and constructor, $icode pattern$$ is an independent copy
+of $icode other$$; i.e. it has all the same values as $icode other$$
+and changes to $icode pattern$$ do not affect $icode other$$.
+
+$subhead Move Semantics Assignment and Constructor$$
+In the assignment and constructor, if $icode other$$ has prototype
+$codei%
+    sparse_rc<%SizeVector%>&&  %other%
+%$$
+A move semantics version of the assignment or constructor is used; e.g.,
+when $icode other$$ is a function return value.
 
 $subhead swap$$
+In the swap operation, $icode other$$ has prototype
+$codei%
+    sparse_rc<%SizeVector%>&  %other%
+%$$
 After the swap operation $icode other$$ ($icode pattern$$) is equivalent
 to $icode pattern$$ ($icode other$$) before the operation.
 

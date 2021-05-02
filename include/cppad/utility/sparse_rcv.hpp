@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_SPARSE_RCV_HPP
 # define CPPAD_UTILITY_SPARSE_RCV_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -77,7 +77,6 @@ number of columns $icode nc$$,
 and number of possibly non-zero values $icode nnz$$,
 are all zero.
 
-
 $head pattern$$
 This constructor argument has prototype
 $codei%
@@ -96,18 +95,23 @@ There are two exceptions to this rule, where $icode other$$ appears in the
 assignment and swap syntax.
 
 $head other$$
-The $icode other$$ variable has prototype
-$codei%
-    sparse_rcv<%SizeVector%, %ValueVector%>  %other%
-%$$
 
-$subhead Assignment$$
-After this assignment statement, $icode other$$ is an independent copy
+$subhead Assignment and Constructor$$
+In the assignment and constructor, $icode other$$ has prototype
+$codei%
+    const sparse_rcv<%SizeVector%, %ValueVector%>& %other%
+%$$
+After this assignment and constructor, $icode other$$ is an independent copy
 of $icode matrix$$; i.e. it has all the same values as $icode matrix$$
-and changes to $icode other$$ do not affect $icode matrix$$.
-A move semantics version of the assignment operator is defined; e.g.,
-it is used when $icode other$$ in the assignment syntax
-is a function return value;
+and changes to $icode matrix$$ do not affect $icode other$$.
+
+$subhead Move Semantics Assignment and Constructor$$
+In the assignment and constructor, if $icode other$$ has prototype
+$codei%
+    sparse_rcv<%SizeVector%, %ValueVector%>&& %other%
+%$$
+A move semantics version of the assignment operator is used; e.g.,
+when $icode other$$ is a function return value;
 
 $subhead swap$$
 After the swap operation $icode other$$ ($icode matrix$$) is equivalent
@@ -244,6 +248,12 @@ public:
     /// default constructor
     sparse_rcv(void)
     : pattern_(0, 0, 0)
+    { }
+    /// copy constructor
+    sparse_rcv(const sparse_rcv& other)
+    :
+    pattern_( other.pat() ) ,
+    val_( other.val() )
     { }
     /// move semantics constructor
     /// (none of the default constructor values are used by destructor)

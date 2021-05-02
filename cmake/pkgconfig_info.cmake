@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -9,12 +9,15 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-# pkgconfig_info(name system)
+# pkgconfig_info(name system coin_or)
 #
 # Inputs:
-# name:   is the name of the package config file without the .pc extension
-# system: if true (false) include directory will (will not) be
-#         treated like a system directory; i.e., no warnings.
+# name:    is the name of the package config file without the .pc extension
+# system:  if true (false) include directories will (will not) be
+#          treated like a system directory; i.e., no warnings.
+# coin_or: if true (false) the string '/coin-or' at the end of an include
+#          include directory is (is not) removed because CppAD explicitly
+#           includes it in include commands.
 #
 # Outputs:
 # ${name}_LIBRARIES:     list of libraries necessary to use this package.
@@ -27,7 +30,7 @@
 # Assumptions:
 # FIND_PACKAGE(PkgConfig) was successful
 # It is a fatal error if ${name}.pc is not in PKG_CONFIG_PATH
-MACRO(pkgconfig_info name system)
+MACRO(pkgconfig_info name system coin_or)
     IF( NOT PKG_CONFIG_FOUND )
         FIND_PACKAGE(PkgConfig REQUIRED)
     ENDIF( NOT PKG_CONFIG_FOUND )
@@ -41,11 +44,16 @@ MACRO(pkgconfig_info name system)
         )
     ENDIF( ${name}_FOUND )
     #
+    IF( ${coin_or} )
+        STRING(REPLACE "/coin-or" "" include_dirs "${${name}_INCLUDE_DIRS}" )
+        SET(${name}_INCLUDE_DIRS "${include_dirs}")
+    ENDIF( ${coin_or} )
+    #
     # INLCUDE_DIRECTORIES
     IF( ${system} )
-        INCLUDE_DIRECTORIES( SYSTEM ${${name}_INCLUDE_DIRS} )
+        INCLUDE_DIRECTORIES( SYSTEM ${include_dirs} )
     ELSE( ${system}  )
-        INCLUDE_DIRECTORIES( ${${name}_INCLUDE_DIRS} )
+        INCLUDE_DIRECTORIES( ${include_dirs} )
     ENDIF( ${system} )
     #
     # LINK_DIRECTORIES
