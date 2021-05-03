@@ -776,8 +776,9 @@ std::string llvm_ir::from_graph(const CppAD::cpp_graph&  graph_obj)
                 break;
 
                 default:
-                // set pred to avoid warning
+                // These settings avoid warnings
                 pred    = llvm::FCmpInst::FCMP_ONE;
+                name    = "";
                 CPPAD_ASSERT_UNKNOWN(false);
                 break;
             }
