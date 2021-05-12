@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -12,7 +12,7 @@
 # -----------------------------------------------------------------------------
 if [  "$0" != 'bin/check_if.sh' ]
 then
-    echo "bin/check_if: must be executed from its parent directory"
+    echo "bin/check_if.sh: must be executed from its parent directory"
     exit 1
 fi
 # -----------------------------------------------------------------------------
