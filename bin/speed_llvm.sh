@@ -23,6 +23,9 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 #
+# local copy of cppadcg
+bin/get_cppadcg.sh
+#
 # run_cmake.sh
 bin/run_cmake.sh \
     --c++14 \
