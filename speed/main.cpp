@@ -608,7 +608,7 @@ int main(int argc, char *argv[])
     CppAD::vector<size_t> size_sparse_hessian(n_size);
     CppAD::vector<size_t> size_sparse_jacobian(n_size);
     for(size_t i = 0; i < n_size; i++)
-    {   size_det_minor[i]   = i + 1;
+    {   size_det_minor[i]   = i + 2;
         size_det_lu[i]      = 10 * i + 1;
         size_mat_mul[i]     = 10 * i + 1;
         size_ode[i]         = 10 * i + 1;

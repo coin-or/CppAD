@@ -36,15 +36,22 @@ $spell
     msys
     cygwin
     rcv
+    det
 $$
 
 $section Changes and Additions to CppAD During 2021$$
 
 $head 05-12$$
+$list number$$
 The cmake
 $cref/include_cppadcg/cmake/include_cppadcg/$$ option was not working
 when cppadcg was the only optional package.
 This has been fixed.
+$lnext
+The smallest size
+for the $cref/det_minor/link_det_minor/$$ speed test
+was changed from one to two (a 2 by 2 matrix).
+$lend
 
 
 $head 04-30$$
