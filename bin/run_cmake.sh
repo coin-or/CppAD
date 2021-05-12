@@ -29,7 +29,6 @@ if [[ "$prefix" =~ ^[^/] ]]
 then
     prefix="$(pwd)/$prefix"
 fi
-echo "prefix=$prefix"
 #
 # PKG_CONFIG_PATH
 PKG_CONFIG_PATH="$prefix/lib64/pkgconfig:$prefix/lib/pkgconfig"
