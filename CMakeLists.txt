@@ -254,6 +254,10 @@ ENDIF( include_ipopt )
 #
 # cppadcg
 IF( include_cppadcg )
+    # Assume bin/get_cppadcg.sh puts include files in this directory
+    SET(cppadcg_include_dir "${CMAKE_BINARY_DIR}/prefix/include" )
+    print_variable(cppadcg_include_dir)
+    INCLUDE_DIRECTORIES( SYSTEM ${cppadcg_include_dir})
     SET(cppad_has_cppadcg 1)
 ELSE( include_cppadcg )
     SET(cppad_has_cppadcg 0)

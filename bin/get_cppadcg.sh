@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -134,8 +134,7 @@ then
 fi
 echo_eval cd $package.git
 # -----------------------------------------------------------------------------
-# 2DO: get following code into CppADCodeGen
-# Must modify FindCppAD.cmake so can used git repository
+# Modify FindCppAD.cmake so can use git repository
 # version of CppAD (not yet installed).
 cat << EOF > get_cppadcg.sed
 s|IF *( *DEFINED *CPPAD_HOME *)|IF (DEFINED CPPAD_GIT_REPO)\\
