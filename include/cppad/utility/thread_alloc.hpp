@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_THREAD_ALLOC_HPP
 # define CPPAD_UTILITY_THREAD_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -845,6 +845,7 @@ $end
         // This uses the system allocator, which is thread safe, but slower,
         // because the thread might wait for a lock on the allocator.
         v_node          = ::operator new(sizeof(block_t) + cap_bytes);
+        CPPAD_ASSERT_UNKNOWN( v_node != nullptr );
         node            = reinterpret_cast<block_t*>(v_node);
         node->tc_index_ = tc_index;
         void* v_ptr     = reinterpret_cast<void*>(node + 1);
