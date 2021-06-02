@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -15,8 +15,6 @@
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-# We do not add ../src/speed_src library to avoid undefined externals.
-# Instead we build our own copy of ../src/microsoft_timer.cpp.
 SET(source_list example.cpp
     det_by_lu.cpp
     det_by_minor.cpp
@@ -28,7 +26,6 @@ SET(source_list example.cpp
     sparse_jac_fun.cpp
     speed_test.cpp
     time_test.cpp
-    "../src/microsoft_timer.cpp"
 )
 set_compile_flags( speed_example "${cppad_debug_which}" "${source_list}" )
 #

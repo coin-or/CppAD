@@ -41,6 +41,14 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 06-02$$
+Remove $code microsoft_timer$$ which is no longer needed by
+$cref elapsed_seconds$$ because c++11 required (starting this year).
+This also has the advantage that it removes any use of
+$code CMAKE_SOURCE_DIR$$ and thereby allows CppAD's top source directory
+to be used as a subdirectory of a larger CMake package
+(this feature is not tested).
+
 $head 05-12$$
 $list number$$
 The cmake

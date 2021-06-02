@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -45,8 +45,7 @@ $childtable%
     speed/src/link_ode.cpp%
     speed/src/link_poly.cpp%
     speed/src/link_sparse_hessian.hpp%
-    speed/src/link_sparse_jacobian.hpp%
-    speed/src/microsoft_timer.cpp
+    speed/src/link_sparse_jacobian.hpp
 %$$
 
 $head Namespace$$

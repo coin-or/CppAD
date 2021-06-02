@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -26,7 +26,6 @@ SET(source_list
     link_poly.cpp
     link_sparse_hessian.cpp
     link_sparse_jacobian.cpp
-    microsoft_timer.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

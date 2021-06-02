@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -184,7 +184,7 @@ $code sizeof(size_t))$$.
 $head 02-11$$
 The $code speed$$ directory has been reorganized and the
 common part of the $cref/link routines/speed_main/Link Routines/$$,
-as well as the $cref microsoft_timer$$,
+as well as the $code microsoft_timer$$,
 have been moved to the subdirectory $code speed/src$$
 where a library is built.
 

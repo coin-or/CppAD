@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -19,7 +19,6 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../thread_test.cpp
-    ${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
     ../team_example.cpp
     ../harmonic.cpp
     ../multi_atomic_two.cpp
