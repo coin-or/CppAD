@@ -13,7 +13,7 @@ var list_up0 = [
 ];
 var list_current0 = [
 'elapsed_seconds.htm#Syntax',
-'elapsed_seconds.htm#Purpose',
+'elapsed_seconds.htm#Accuracy',
 'elapsed_seconds.htm#s',
 'elapsed_seconds.htm#Example'
 ];

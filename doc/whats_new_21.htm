@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 05-12 04-30 04-28 04-27 04-26 04-16 04-09 04-07 04-05 04-02 03-29 03-24 03-11 03-09 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 06-02 05-12 04-30 04-28 04-27 04-26 04-16 04-09 04-07 04-05 04-02 03-29 03-24 03-11 03-09 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>06-02</option>
 <option>05-12</option>
 <option>04-30</option>
 <option>04-28</option>
@@ -107,6 +108,22 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="06-02" id="06-02">06-02</a></big></b>
+
+<ol type="1"><li>
+Remove <code><font color="blue">microsoft_timer</font></code> which is no longer needed by
+<a href="elapsed_seconds.htm" target="_top"><span style='white-space: nowrap'>elapsed_seconds</span></a>
+ because c++11 required (starting this year).
+</li><li>
+
+Remove any use of <code><font color="blue">CMAKE_SOURCE_DIR</font></code>.
+This allows CppAD's top source directory
+to be used as a subdirectory of a larger CMake package.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="05-12" id="05-12">05-12</a></big></b>
 

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Returns Elapsed Number of Seconds</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Returns Elapsed Number of Seconds">
-<meta name="keywords" id="keywords" content=" returns elapsed number seconds syntax purpose s example ">
+<meta name="keywords" id="keywords" content=" returns elapsed number seconds syntax accuracy s example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,7 +68,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
-<option>Purpose</option>
+<option>Accuracy</option>
 <option>s</option>
 <option>Example</option>
 </select>
@@ -97,27 +97,9 @@ A:active { color : purple }
 
 <br>
 <br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<b><big><a name="Accuracy" id="Accuracy">Accuracy</a></big></b>
 <br>
-This routine is accurate to within .02 seconds
-(see <a href="elapsed_seconds.cpp.htm" target="_top"><span style='white-space: nowrap'>elapsed_seconds.cpp</span></a>
-).
-It does not necessary work for time intervals that are greater than a day.
-<ol type="1"><li>
-If the C++11 <code><font color="blue">std::chrono::steady_clock</font></code> is available,
-it will be used for timing.
-</li><li>
-
-Otherwise, if running under the Microsoft compiler,
-<code><font color="blue">::GetSystemTime</font></code> will be used for timing.
-</li><li>
-
-Otherwise, if <code><font color="blue">gettimeofday</font></code> is available, it is used for timing.
-</li><li>
-
-Otherwise, <code><font color="blue">std::clock()</font></code> will be used for timing.
-</li></ol>
-
+This routine uses <code><font color="blue">std::chrono::steady_clock</font></code> to do its timing.
 
 <br>
 <br>

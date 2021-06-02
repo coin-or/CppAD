@@ -9,7 +9,6 @@ document.write('\
 <option>link_poly</option>\
 <option>link_sparse_hessian</option>\
 <option>link_sparse_jacobian</option>\
-<option>microsoft_timer</option>\
 </select>\
 ');
 function link_routines_child(item)
@@ -20,8 +19,7 @@ function link_routines_child(item)
 		'link_ode.htm',
 		'link_poly.htm',
 		'link_sparse_hessian.htm',
-		'link_sparse_jacobian.htm',
-		'microsoft_timer.htm'
+		'link_sparse_jacobian.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
