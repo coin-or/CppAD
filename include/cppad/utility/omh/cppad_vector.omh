@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -116,20 +116,9 @@ $cref/simple vector assignment/SimpleVector/Assignment/$$
 plus the following:
 
 $subhead Check Size$$
-The size of $icode vec$$ must be either zero
-or the same size as $icode other$$ before doing the assignment.
-If this is not the case, and $code NDEBUG$$ is not defined,
-$code CppAD::vector$$ will use
-$cref ErrorHandler$$
-to generate an appropriate error report.
-Requiring the sizes to agree checks that memory will not need to
-be allocated to do the assignment (except when $icode vec$$ is empty).
-Allowing for assignment to a vector with size zero makes the following
-code work:
-$codei%
-    CppAD::vector<%Scalar%> %vec%;
-    %vec% = %other%;
-%$$
+It is no longer necessary for $icode vec$$ to have the
+same size as $icode other$$.
+This makes $code CppAD::vector$$ more like $code std::vector$$.
 
 $subhead Return Reference$$
 A reference to the vector $icode vec$$ is returned.

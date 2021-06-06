@@ -41,6 +41,11 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 06-06$$
+The $code CppAD::vector$$ assignment statement no longer requires the
+size of the vectors to be the same; see
+$cref/check size/CppAD_vector/Assignment/Check Size/$$.
+
 $head 06-02$$
 $list number$$
 Remove $code microsoft_timer$$ which is no longer needed by

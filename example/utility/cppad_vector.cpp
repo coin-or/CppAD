@@ -115,9 +115,13 @@ bool CppAD_vector(void)
     for(size_t i = 0; i < n; i++)
         ok &= vec[i] == Scalar(n - i);
 
-    // vector assignment OK when target has size zero
-    other.resize(0);
-    other = vec;
+    // vector assignment OK no matter what target size was before assignment
+    other[0] = vec[0] + 1;
+    ok &= other.size() < vec.size();
+    other    = vec;
+    ok &= other.size() == vec.size();
+    for(size_t i = 0; i < vec.size(); i++)
+        ok &= other[i] == vec[i];
 
     // create a const vector equal to vec
     const vector<Scalar> cvec = vec;
@@ -158,23 +162,10 @@ bool CppAD_vector(void)
 
 # ifndef NDEBUG
     // -----------------------------------------------------------------------
-    // check that size mismatch throws an exception when NDEBUG not defined
-    other.resize(0);
-    bool detected_error = false;
-    try
-    {   another = other; }
-    catch(const std::string& file)
-    {   // This location for the error is not part of user API and may change
-        size_t pos    = file.find("/vector.hpp");
-        ok           &=  pos != std::string::npos;
-        detected_error = true;
-    }
-    ok &= detected_error;
-    // -----------------------------------------------------------------------
     // check that iterator access out of range generates an error
     itr = vec.begin();
     ok  &= *itr == Scalar(1);  // this access OK
-    detected_error = false;
+    bool detected_error = false;
     try
     {   vec.clear();
         // The iterator knows that the vector has changed and that

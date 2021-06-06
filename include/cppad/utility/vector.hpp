@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_VECTOR_HPP
 # define CPPAD_UTILITY_VECTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -285,7 +285,7 @@ $head Assignment$$
 see $cref/user API assignment/CppAD_vector/Assignment/$$
 
 $head Move Semantics$$
-A move semantics version of the assignment operator
+The move semantics version of the assignment operator
 is implemented using $code swap$$.
 
 $end
@@ -293,6 +293,7 @@ $end
 */
 // BEGIN_SWAP
 public:
+    // swap does not do any allocation and hence is declared noexcept
     void swap(vector& other) noexcept
 // END_SWAP
     {  // special case where vec and other are the same vector
@@ -306,27 +307,21 @@ public:
     }
 
 // BEGIN_MOVE_ASSIGN
-    // Move semantics should not do any allocation.
-    // If NDEBUG is defined, this should not throw an exception.
-    vector& operator=(vector&& other) CPPAD_NDEBUG_NOEXCEPT
+    // move assingment does not doe any allocation and hence is declared noexcept
+    vector& operator=(vector&& other) noexcept
 // END_MOVE_ASSIGN
-    {   CPPAD_ASSERT_KNOWN(
-            length_ == other.length_ || (length_ == 0),
-            "vector: size miss match in assignment operation"
-        );
-        swap(other);
+    {   swap(other);
         return *this;
     }
 
 // BEGIN_ASSIGN
     vector& operator=(const vector& other)
 // END_ASSIGN
-    { if( length_ == 0 )
-            resize( other.length_ );
-        CPPAD_ASSERT_KNOWN(
-            length_ == other.length_ ,
-            "vector: size miss match in assignment operation"
-        );
+    {   // avoid copying old elements
+        resize(0);
+        // new size for this vector
+        resize( other.length_ );
+        // copy elements from other
         for(size_t i = 0; i < length_; i++)
             data_[i] = other.data_[i];
         return *this;
