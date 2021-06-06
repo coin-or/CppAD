@@ -172,9 +172,13 @@ This is an example and test of the features of the
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n<font color="#990000">;</font> i<font color="#990000">++)</font>
         ok <font color="#990000">&amp;=</font> vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font>n <font color="#990000">-</font> i<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// vector assignment OK when target has size zero</font></i>
-    other<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-    other <font color="#990000">=</font> vec<font color="#990000">;</font>
+    <i><font color="#9A1900">// vector assignment OK no matter what target size was before assignment</font></i>
+    other<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> other<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">&lt;</font> vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    other    <font color="#990000">=</font> vec<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> other<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> i<font color="#990000">++)</font>
+        ok <font color="#990000">&amp;=</font> other<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> vec<font color="#990000">[</font>i<font color="#990000">];</font>
 
     <i><font color="#9A1900">// create a const vector equal to vec</font></i>
     <b><font color="#0000FF">const</font></b> <font color="#008080">vector&lt;Scalar&gt;</font> cvec <font color="#990000">=</font> vec<font color="#990000">;</font>
@@ -215,23 +219,10 @@ This is an example and test of the features of the
 
 <b><font color="#000080"># ifndef</font></b> NDEBUG
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// check that size mismatch throws an exception when NDEBUG not defined</font></i>
-    other<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-    <font color="#009900">bool</font> detected_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-    <b><font color="#0000FF">try</font></b>
-    <font color="#FF0000">{</font>   another <font color="#990000">=</font> other<font color="#990000">;</font> <font color="#FF0000">}</font>
-    <b><font color="#0000FF">catch</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> file<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   <i><font color="#9A1900">// This location for the error is not part of user API and may change</font></i>
-        <font color="#008080">size_t</font> pos    <font color="#990000">=</font> file<font color="#990000">.</font><b><font color="#000000">find</font></b><font color="#990000">(</font><font color="#FF0000">"/vector.hpp"</font><font color="#990000">);</font>
-        ok           <font color="#990000">&amp;=</font>  pos <font color="#990000">!=</font> std<font color="#990000">::</font>string<font color="#990000">::</font>npos<font color="#990000">;</font>
-        detected_error <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    <font color="#FF0000">}</font>
-    ok <font color="#990000">&amp;=</font> detected_error<font color="#990000">;</font>
-    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// check that iterator access out of range generates an error</font></i>
     itr <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font>
     ok  <font color="#990000">&amp;=</font> <font color="#990000">*</font>itr <font color="#990000">==</font> <b><font color="#000000">Scalar</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>  <i><font color="#9A1900">// this access OK</font></i>
-    detected_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#009900">bool</font> detected_error <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">try</font></b>
     <font color="#FF0000">{</font>   vec<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">();</font>
         <i><font color="#9A1900">// The iterator knows that the vector has changed and that</font></i>

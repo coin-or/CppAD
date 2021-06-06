@@ -251,28 +251,15 @@ plus the following:
 <br>
 <big><a name="Assignment.Check Size" id="Assignment.Check Size">Check Size</a></big>
 <br>
-The size of 
+It is no longer necessary for 
 <code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
- must be either zero
-or the same size as 
+ to have the
+same size as 
 <code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
- before doing the assignment.
-If this is not the case, and <code><font color="blue">NDEBUG</font></code> is not defined,
-<code><font color="blue">CppAD::vector</font></code> will use
-<a href="errorhandler.htm" target="_top"><span style='white-space: nowrap'>ErrorHandler</span></a>
+.
+This makes <code><font color="blue">CppAD::vector</font></code> more like <code><font color="blue">std::vector</font></code>.
 
-to generate an appropriate error report.
-Requiring the sizes to agree checks that memory will not need to
-be allocated to do the assignment (except when 
-<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
- is empty).
-Allowing for assignment to a vector with size zero makes the following
-code work:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>;<br>
-</span></font></code>
+<br>
 <br>
 <big><a name="Assignment.Return Reference" id="Assignment.Return Reference">Return Reference</a></big>
 <br>
