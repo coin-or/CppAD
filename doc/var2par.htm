@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Convert an AD Variable to a Parameter</title>
+<title>Convert an AD Variable or Dynamic Parameter to a Constant</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Convert an AD Variable to a Parameter">
-<meta name="keywords" id="keywords" content=" convert ad variable to parameter syntax see also purpose x y example ">
+<meta name="description" id="description" content="Convert an AD Variable or Dynamic Parameter to a Constant">
+<meta name="keywords" id="keywords" content=" convert ad variable dynamic parameter to constant syntax see also purpose x y example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -82,7 +82,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Convert an AD Variable to a Parameter</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Convert an AD Variable or Dynamic Parameter to a Constant</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -104,13 +104,11 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 Returns a
-<a href="glossary.htm#Parameter" target="_top"><span style='white-space: nowrap'>parameter</span></a>
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameter</span></a>
  
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
 
-with the same value as the
-<a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
- 
+with the same value as 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
 .
 
@@ -127,8 +125,8 @@ The argument
 </span></font></code>
 The argument 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- may be a variable, parameter, or dynamic parameter.
-
+ may be a
+variable, dynamic parameter, or constant parameter.
 
 <br>
 <br>
@@ -141,10 +139,7 @@ The result
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;y<br>
 </span></font></code>
-The return value 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
- will be a parameter.
-
+and is a constant parameter.
 
 <br>
 <br>

@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Convert an AD Variable to a Parameter: Example and Test</title>
+<title>Convert a Variable or Dynamic Parameter a Constant: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Convert an AD Variable to a Parameter: Example and Test">
-<meta name="keywords" id="keywords" content=" convert ad variable to parameter: example test ">
+<meta name="description" id="description" content="Convert a Variable or Dynamic Parameter a Constant: Example and Test">
+<meta name="keywords" id="keywords" content=" convert variable dynamic parameter constant: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,7 +74,7 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
 
-<center><b><big><big>Convert an AD Variable to a Parameter: Example and Test</big></big></b></center>
+<center><b><big><big>Convert a Variable or Dynamic Parameter a Constant: Example and Test</big></big></b></center>
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 
@@ -85,40 +85,53 @@ A:active { color : purple }
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Value<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Var2Par<font color="#990000">;</font>
 
-    <i><font color="#9A1900">// domain space vector</font></i>
-    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
-    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
+    <i><font color="#9A1900">// independent variables</font></i>
+    <font color="#008080">size_t</font> nx <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">.;</font>
+    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">.;</font>
 
-    <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
+    <i><font color="#9A1900">// independent dynamic paramers</font></i>
+    <font color="#008080">size_t</font> np <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ap</font></b><font color="#990000">(</font>np<font color="#990000">);</font>
+    ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">.;</font>
+
+    <i><font color="#9A1900">// declare independent variables and dynamic parameters</font></i>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ap<font color="#990000">);</font>
 
     <i><font color="#9A1900">// range space vector</font></i>
-    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>    <i><font color="#9A1900">// same as y[0] = -x[1] * 3.;</font></i>
+    <font color="#008080">size_t</font> ny <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>    <i><font color="#9A1900">// same as ay[0] = -ax[1] * 3.;</font></i>
+    ay<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">-</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>    <i><font color="#9A1900">// same as ay[1] = -ax[1] * 5.;</font></i>
 
-    <i><font color="#9A1900">// cannot call Value(x[j]) or Value(y[0]) here (currently variables)</font></i>
-    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">);</font>
-    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">.</font> <font color="#990000">);</font>
-    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">12</font><font color="#990000">.</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">// Must convert these objects to constants before calling Value</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">.</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">.</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">5</font><font color="#990000">.</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">12</font><font color="#990000">.</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font> <b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">20</font><font color="#990000">.</font> <font color="#990000">);</font>
 
     <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
 
-    <i><font color="#9A1900">// can call Value(x[j]) or Value(y[0]) here (currently parameters)</font></i>
-    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">3</font><font color="#990000">.);</font>
-    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">4</font><font color="#990000">.);</font>
-    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">12</font><font color="#990000">.);</font>
+    <i><font color="#9A1900">// All AD object are currently constants</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">3</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">4</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font>  <font color="#993399">5</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">12</font><font color="#990000">.);</font>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">(</font><b><font color="#000000">Value</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">20</font><font color="#990000">.);</font>
 
-    <i><font color="#9A1900">// evaluate derivative of y w.r.t x</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-    w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-    dw   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
-    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.);</font>  <i><font color="#9A1900">// derivative of y[0] w.r.t x[0] is zero</font></i>
-    ok  <font color="#990000">&amp;=</font> <font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">3</font><font color="#990000">.);</font> <i><font color="#9A1900">// derivative of y[0] w.r.t x[1] is 3</font></i>
+    <i><font color="#9A1900">// evaluate zero order forward mode</font></i>
+    <i><font color="#9A1900">// (note that the only real variable in this recording is x[1])</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">p</font></b><font color="#990000">(</font>np<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">6</font><font color="#990000">.;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">7</font><font color="#990000">.;</font>
+    p<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">8</font><font color="#990000">.;</font>
+    f<font color="#990000">.</font><b><font color="#000000">new_dynamic</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+    y    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok  <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+    ok  <font color="#990000">&amp;=</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">5.0</font><font color="#990000">;</font>
 
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
