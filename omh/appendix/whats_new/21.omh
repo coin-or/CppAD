@@ -41,7 +41,7 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
-$head 06-25$$
+$head 06-22$$
 Improve $cref Var2Par$$ documentation and $cref var2par.cpp$$ example
 by separating dynamic and constant parameters.
 
