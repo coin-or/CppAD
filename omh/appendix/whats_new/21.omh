@@ -41,6 +41,10 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 06-25$$
+Improve $cref Var2Par$$ documentation and $cref var2par.cpp$$ example
+by separating dynamic and constant parameters.
+
 $head 06-06$$
 The $code CppAD::vector$$ assignment statement no longer requires the
 size of the vectors to be the same; see

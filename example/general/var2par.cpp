@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -17,7 +17,7 @@ $spell
     Cpp
 $$
 
-$section Convert an AD Variable to a Parameter: Example and Test$$
+$section Convert a Variable or Dynamic Parameter a Constant: Example and Test$$
 
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -35,40 +35,53 @@ bool Var2Par(void)
     using CppAD::Value;
     using CppAD::Var2Par;
 
-    // domain space vector
-    size_t n = 2;
-    CPPAD_TESTVECTOR(AD<double>) x(n);
-    x[0] = 3.;
-    x[1] = 4.;
+    // independent variables
+    size_t nx = 2;
+    CPPAD_TESTVECTOR(AD<double>) ax(nx);
+    ax[0] = 3.;
+    ax[1] = 4.;
 
-    // declare independent variables and start tape recording
-    CppAD::Independent(x);
+    // independent dynamic paramers
+    size_t np = 1;
+    CPPAD_TESTVECTOR(AD<double>) ap(np);
+    ap[0] = 5.;
+
+    // declare independent variables and dynamic parameters
+    CppAD::Independent(ax, ap);
 
     // range space vector
-    size_t m = 1;
-    CPPAD_TESTVECTOR(AD<double>) y(m);
-    y[0] = - x[1] * Var2Par(x[0]);    // same as y[0] = -x[1] * 3.;
+    size_t ny = 2;
+    CPPAD_TESTVECTOR(AD<double>) ay(ny);
+    ay[0] = - ax[1] * Var2Par(ax[0]);    // same as ay[0] = -ax[1] * 3.;
+    ay[1] = - ax[1] * Var2Par(ap[0]);    // same as ay[1] = -ax[1] * 5.;
 
-    // cannot call Value(x[j]) or Value(y[0]) here (currently variables)
-    ok &= ( Value( Var2Par(x[0]) ) == 3. );
-    ok &= ( Value( Var2Par(x[1]) ) == 4. );
-    ok &= ( Value( Var2Par(y[0]) ) == -12. );
+    // Must convert these objects to constants before calling Value
+    ok &= ( Value( Var2Par(ax[0]) ) == 3. );
+    ok &= ( Value( Var2Par(ax[1]) ) == 4. );
+    ok &= ( Value( Var2Par(ap[0]) ) == 5. );
+    ok &= ( Value( Var2Par(ay[0]) ) == -12. );
+    ok &= ( Value( Var2Par(ay[1]) ) == -20. );
 
     // create f: x -> y and stop tape recording
-    CppAD::ADFun<double> f(x, y);
+    CppAD::ADFun<double> f(ax, ay);
 
-    // can call Value(x[j]) or Value(y[0]) here (currently parameters)
-    ok &= (Value(x[0]) ==  3.);
-    ok &= (Value(x[1]) ==  4.);
-    ok &= (Value(y[0]) == -12.);
+    // All AD object are currently constants
+    ok &= (Value(ax[0]) ==  3.);
+    ok &= (Value(ax[1]) ==  4.);
+    ok &= (Value(ap[0]) ==  5.);
+    ok &= (Value(ay[0]) == -12.);
+    ok &= (Value(ay[1]) == -20.);
 
-    // evaluate derivative of y w.r.t x
-    CPPAD_TESTVECTOR(double) w(m);
-    CPPAD_TESTVECTOR(double) dw(n);
-    w[0] = 1.;
-    dw   = f.Reverse(1, w);
-    ok  &= (dw[0] == 0.);  // derivative of y[0] w.r.t x[0] is zero
-    ok  &= (dw[1] == -3.); // derivative of y[0] w.r.t x[1] is 3
+    // evaluate zero order forward mode
+    // (note that the only real variable in this recording is x[1])
+    CPPAD_TESTVECTOR(double) x(nx), p(np), y(ny);
+    x[0] = 6.;
+    x[1] = 7.;
+    p[0] = 8.;
+    f.new_dynamic(p);
+    y    = f.Forward(0, x);
+    ok  &= y[0] == - x[1] * 3.0;
+    ok  &= y[1] == - x[1] * 5.0;
 
     return ok;
 }

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_VAR2PAR_HPP
 # define CPPAD_CORE_VAR2PAR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -22,7 +22,7 @@ $spell
 $$
 
 
-$section Convert an AD Variable to a Parameter$$
+$section Convert an AD Variable or Dynamic Parameter to a Constant$$
 
 $head Syntax$$
 $icode%y% = Var2Par(%x%)%$$
@@ -32,25 +32,23 @@ $cref value$$
 
 $head Purpose$$
 Returns a
-$cref/parameter/glossary/Parameter/$$ $icode y$$
-with the same value as the
-$cref/variable/glossary/Variable/$$ $icode x$$.
+$cref/constant parameter/glossary/Parameter/Constant/$$ $icode y$$
+with the same value as $icode x$$.
 
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
     const AD<%Base%> &x
 %$$
-The argument $icode x$$ may be a variable, parameter, or dynamic parameter.
-
+The argument $icode x$$ may be a
+variable, dynamic parameter, or constant parameter.
 
 $head y$$
 The result $icode y$$ has prototype
 $codei%
     AD<%Base%> &y
 %$$
-The return value $icode y$$ will be a parameter.
-
+and is a constant parameter.
 
 $head Example$$
 $children%
