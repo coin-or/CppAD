@@ -50,6 +50,10 @@ and linking the optional packages.
 $lnext
 Fix $cref get_colpack.sh$$ so that it does not leave behind
 $code ltmain.sh$$ and $code test-driver$$ in the top source directory.
+$lnext
+Change the $cref cmake$$ script use of $code CHECK_CXX_SOURCE_RUNS$$
+to $code CHECK_CXX_SOURCE_COMPILES$$.
+This makes it easier to use CppAD in a cross compiling context.
 $lend
 
 $head 06-22$$

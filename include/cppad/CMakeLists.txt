@@ -22,6 +22,12 @@ MACRO(check_match match_variable match_constant output_variable)
     print_variable(${output_variable})
 ENDMACRO(check_match)
 # -----------------------------------------------------------------------------
+# CMAKE_REQUIRED_name
+SET(CMAKE_REQUIRED_DEFINITIONS "")
+SET(CMAKE_REQUIRED_FLAGS       "")
+SET(CMAKE_REQUIRED_INCLUDES    "")
+SET(CMAKE_REQUIRED_LIBRARIES   "")
+# -----------------------------------------------------------------------------
 # compiler_has_conversion_warn
 SET( clang_or_gnu 0 )
 IF( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" )
@@ -31,13 +37,14 @@ IF( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
     SET(clang_or_gnu 1)
 ENDIF( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
 IF( clang_or_gnu )
-    SET(backup "${cppad_cxx_flags}")
-    SET(cppad_cxx_flags "${backup} -Wfloat-conversion -Wconversion -Werror")
+    SET(CMAKE_REQUIRED_FLAGS
+        "${cppad_cxx_flags} -Wfloat-conversion -Wconversion -Werror"
+    )
     #
     SET(source "int main(void) { return 0; }")
-    run_source_test("${source}" compiler_has_conversion_warn )
+    compile_source_test("${source}" compiler_has_conversion_warn )
     #
-    SET(cppad_cxx_flags "${backup}")
+    SET(CMAKE_REQUIRED_FLAGS "")
 ELSE( clang_or_gnu )
     SET( compiler_has_conversion_warn 0 )
 ENDIF( clang_or_gnu )
@@ -60,7 +67,7 @@ ENDIF( NOT cppad_stdvector )
 ENDIF( NOT cppad_eigenvector )
 ENDIF( NOT cppad_cppadvector )
 ENDIF( NOT cppad_boostvector )
-
+#
 IF( cppad_boostvector )
     # FIND_PACKAGE(Boost) done by ../CMakeLists.txt
     IF( NOT Boost_FOUND )
@@ -88,25 +95,29 @@ int main(void)
     return 0;
 }"
 )
-run_source_test("${source}" cppad_has_gettimeofday)
+compile_source_test("${source}" cppad_has_gettimeofday)
 # -----------------------------------------------------------------------------
-# cppad_tape_addr_type, cppad_tape_id_type
-#
+# Warn user of the following types are signed:
+#   cppad_tape_addr_type, cppad_tape_id_type
 FOREACH(cmake_var cppad_tape_id_type cppad_tape_addr_type )
     SET(source "
 # include <limits>
+# include <cstddef>
 int main(void)
-{   bool is_unsigned = ! std::numeric_limits<${${cmake_var}}>::is_signed;
-    return int(! is_unsigned);
+{   static_assert(
+        ! std::numeric_limits<${${cmake_var}}>::is_signed ,
+        \"${cmake_var} is a signed type\"
+    );
+    return 0;
 }
 "
     )
-    run_source_test("${source}" ${cmake_var}_is_unsigned)
-    IF( ${cmake_var}_is_unsigned STREQUAL 0  )
+    compile_source_test("${source}" ${cmake_var}_is_unsigned)
+    IF( NOT ${${cmake_var}_is_unsigned} )
         MESSAGE(STATUS
-"Warning: using a signed ${cmake_var} is for CppAD developers only !"
-    )
-    ENDIF( ${cmake_var}_is_unsigned STREQUAL 0  )
+"Warning: using a signed type for ${cmake_var} is for CppAD developers only !"
+        )
+    ENDIF( NOT ${${cmake_var}_is_unsigned} )
 ENDFOREACH( cmake_var )
 # -----------------------------------------------------------------------------
 # cppad_has_mkstemp
@@ -121,7 +132,7 @@ int main(void)
     return 0;
 }
 " )
-run_source_test("${source}" cppad_has_mkstemp )
+compile_source_test("${source}" cppad_has_mkstemp )
 # -----------------------------------------------------------------------------
 # cppad_has_tmpname_s
 #
@@ -134,7 +145,7 @@ int main(void)
     return 0;
 }
 " )
-run_source_test("${source}" cppad_has_tmpnam_s )
+compile_source_test("${source}" cppad_has_tmpnam_s )
 # -----------------------------------------------------------------------------
 # configure.hpp
 CONFIGURE_FILE(

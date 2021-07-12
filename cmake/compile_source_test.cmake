@@ -21,7 +21,7 @@
 #
 # CMAKE_REQUIRED_name (in)
 # For name equal to DEFINITIONS, INCLUDES, LIBRARIES, FLAGS, the variable
-# CMAKE_REQUIRED_name is an input to routine; see CHECK_CXX_SOURCE_RUNS
+# CMAKE_REQUIRED_name is an input to routine; see CHECK_CXX_SOURCE_COMPILES
 # documentation.
 #
 MACRO(compile_source_test source variable)
@@ -34,7 +34,7 @@ MACRO(compile_source_test source variable)
     ENDIF( DEFINED ${variable} )
     #
     # check that source codee compiles
-    CHECK_CXX_SOURCE_RUNS("${source}" ${variable} )
+    CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
     #
     # check that varialbe is defined
     IF( NOT DEFINED ${variable} )

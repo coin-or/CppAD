@@ -46,13 +46,6 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR}/include )
 # CMAKE_REQUIRED_LIBRARIES, CMAKE_REQUIRED_FLAGS and CMAKE_REQUIRED_INCLUDES
 # accordingly if additional libraries or compiler flags are required.
 INCLUDE(CheckCXXSourceCompiles)
-# =============================================================================
-# CHECK_CXX_SOURCE_RUNS(source variable)
-# Checks whether the code given in source will compile, link and run and
-# return zero status. You can set
-# CMAKE_REQUIRED_LIBRARIES, CMAKE_REQUIRED_FLAGS and CMAKE_REQUIRED_INCLUDES
-# accordingly if additional libraries or compiler flags are required.
-INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
 # Some local cmake language
 # ============================================================================
@@ -74,9 +67,6 @@ INCLUDE(cmake/optional_package.cmake)
 # compile_source_test(source variable)
 INCLUDE(cmake/compile_source_test.cmake)
 #
-# run_source_test(source variable)
-INCLUDE(cmake/run_source_test.cmake)
-#
 # assert(variable)
 INCLUDE(cmake/assert.cmake)
 #
@@ -90,14 +80,17 @@ INCLUDE(cmake/set_compile_flags.cmake)
 INCLUDE(cmake/pkgconfig_info.cmake)
 # ============================================================================
 # Ensure c++11 support
+SET(CMAKE_REQUIRED_DEFINITIONS "")
+SET(CMAKE_REQUIRED_FLAGS       "")
+SET(CMAKE_REQUIRED_INCLUDES    "")
+SET(CMAKE_REQUIRED_LIBRARIES   "")
 SET(source "
 int main(void)
-{   if( __cplusplus < 201103 )
-        return 1;
+{   static_assert( __cplusplus >= 201103 , \"c++11 or higher required\" );
     return 0;
 }"
 )
-run_source_test("${source}" cplusplus_201100_ok )
+compile_source_test("${source}" cplusplus_201100_ok )
 IF( NOT cplusplus_201100_ok  )
     SET(CMAKE_CXX_STANDARD 11)
     SET(CMAKE_CXX_STANDARD_REQUIRED ON)
