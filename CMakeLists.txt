@@ -45,8 +45,14 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR}/include )
 # return zero status. You can set
 # CMAKE_REQUIRED_LIBRARIES, CMAKE_REQUIRED_FLAGS and CMAKE_REQUIRED_INCLUDES
 # accordingly if additional libraries or compiler flags are required.
+INCLUDE(CheckCXXSourceCompiles)
+# =============================================================================
+# CHECK_CXX_SOURCE_RUNS(source variable)
+# Checks whether the code given in source will compile, link and run and
+# return zero status. You can set
+# CMAKE_REQUIRED_LIBRARIES, CMAKE_REQUIRED_FLAGS and CMAKE_REQUIRED_INCLUDES
+# accordingly if additional libraries or compiler flags are required.
 INCLUDE(CheckCXXSourceRuns)
-
 # ============================================================================
 # Some local cmake language
 # ============================================================================
@@ -64,6 +70,9 @@ INCLUDE(cmake/command_line_arg.cmake)
 #
 # optional_package(package description)
 INCLUDE(cmake/optional_package.cmake)
+#
+# compile_source_test(source variable)
+INCLUDE(cmake/compile_source_test.cmake)
 #
 # run_source_test(source variable)
 INCLUDE(cmake/run_source_test.cmake)
@@ -180,6 +189,11 @@ assert_value_in_set(cppad_testvector boost cppad eigen std)
 command_line_arg(cppad_max_num_threads 48 STRING
     "maximum number of threads that CppAD can use use"
 )
+IF( "${cppad_max_num_threads}" LESS "4" )
+    MESSAGE(FATAL_ERROR
+        "cppad_max_num_threads is not an integer greater than or equal 4"
+    )
+ENDIF( "${cppad_max_num_threads}" LESS "4" )
 #
 # cppad_tape_id_type
 command_line_arg(cppad_tape_id_type "unsigned int" STRING

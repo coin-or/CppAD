@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -55,10 +55,7 @@ int main(void)
     return 0;
 }"
     )
-    IF( DEFINED boost_multi_thread_ok )
-        MESSAGE( ERROR "boost_multi_thread_ok is defined before expected" )
-    ENDIF( DEFINED boost_multi_thread_ok )
-    CHECK_CXX_SOURCE_RUNS("${source}" boost_multi_thread_ok )
+    compile_source_test("${source}" boost_multi_thread_ok )
     #
     IF( boost_multi_thread_ok )
         ADD_SUBDIRECTORY(bthread)

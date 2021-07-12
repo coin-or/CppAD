@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -108,44 +108,6 @@ int main(void)
     )
     ENDIF( ${cmake_var}_is_unsigned STREQUAL 0  )
 ENDFOREACH( cmake_var )
-# -----------------------------------------------------------------------------
-# check that cppad_max_num_threads is >= 4
-#
-SET(CMAKE_REQUIRED_DERINITIONS "")
-SET(CMAKE_REQUIRED_INCLUDES    "")
-SET(CMAKE_REQUIRED_LIBRARIES   "")
-SET(CMAKE_REQUIRED_FLAGS       "")
-SET(source "
-int main(void)
-{   const char* number = \"${cppad_max_num_threads}\";
-    int value = 0;
-    while( *number == ' ' )
-        number++;
-    while( '0' <= *number && *number <= '9' )
-    {   value = 10 * value + (int)(*number - '0');
-        number++;
-    }
-    while( *number == ' ' )
-        number++;
-    if( *number != char(0) )
-        return 1;
-    if( value < 4 )
-        return 1;
-    return 0;
-}
-" )
-# Using CHECK_CXX_SOURCE_RUNS directly (instead of run_source_test).
-IF( DEFINED cppad_max_num_threads_is_integer_ge_4 )
-    MESSAGE( ERROR
-        "cppad_max_num_threads_is_integer_ge_4 is defined before expected"
-    )
-ENDIF( DEFINED cppad_max_num_threads_is_integer_ge_4 )
-CHECK_CXX_SOURCE_RUNS("${source}" cppad_max_num_threads_is_integer_ge_4 )
-IF( NOT cppad_max_num_threads_is_integer_ge_4 )
-    MESSAGE(FATAL_ERROR
-    "cppad_max_num_threads is not an integer greater than or equal 4"
-    )
-ENDIF( NOT cppad_max_num_threads_is_integer_ge_4 )
 # -----------------------------------------------------------------------------
 # cppad_has_mkstemp
 #
