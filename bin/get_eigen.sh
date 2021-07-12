@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -70,6 +70,14 @@ echo_eval() {
 web_page='https://gitlab.com/libeigen/$package.git'
 cppad_dir=`pwd`
 # -----------------------------------------------------------------------------
+# n_job
+if which nproc > /dev/null
+then
+    n_job=$(nproc)
+else
+    n_job=$(sysctl -n hw.ncpu)
+fi
+# ----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
@@ -84,7 +92,7 @@ if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
     echo_eval cd external/$package.git/build
-    echo_eval make install
+    echo_eval make -j $n_job install
     if [ -e $prefix/include/Eigen ]
     then
         echo_eval rm $prefix/include/Eigen
@@ -114,7 +122,7 @@ then
 fi
 echo_eval cd build
 echo_eval cmake .. -DCMAKE_INSTALL_PREFIX=$prefix
-echo_eval make install
+echo_eval make -j $n_job install
 if [ -e $prefix/include/Eigen ]
 then
     echo_eval rm $prefix/include/Eigen

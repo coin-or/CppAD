@@ -15,9 +15,17 @@ echo_eval() {
 name='omhelp'
 if [ "$0" != "bin/get_$name.sh" ]
 then
-    echo "get_$name.sh should be in the ./bin directory and executed using" 
+    echo "get_$name.sh should be in the ./bin directory and executed using"
     echo "bin/get_$name.sh"
     exit 1
+fi
+# -----------------------------------------------------------------------------
+# n_proc
+if which nproc >& /dev/null
+then
+    n_job=$(nproc)
+else
+    n_job=$(sysctl -n hw.ncpu)
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
@@ -52,7 +60,7 @@ then
     echo "get_$name.sh: aborting due to cmake command warnings"
     exit 1
 fi
-echo_eval make install
+echo_eval make -j $n_job install
 # -----------------------------------------------------------------------------
 echo "get_$name.sh: OK"
 exit 1

@@ -37,9 +37,20 @@ $spell
     cygwin
     rcv
     det
+    ltmain
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 07-12$$
+$list number$$
+Change all the scripts called by $cref get_optional.sh$$ to use
+all the processing units available on the system when compiling
+and linking the optional packages.
+$lnext
+Fix $cref get_colpack.sh$$ so that it does not leave behind
+$code ltmain.sh$$ and $code test-driver$$ in the top source directory.
+$lend
 
 $head 06-22$$
 Improve $cref Var2Par$$ documentation and $cref var2par.cpp$$ example

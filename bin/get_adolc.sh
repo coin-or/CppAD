@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -79,6 +79,14 @@ echo_eval() {
 web_page='https://github.com/coin-or/ADOL-C.git'
 cppad_dir=`pwd`
 # -----------------------------------------------------------------------------
+# n_job
+if which nproc > /dev/null
+then
+    n_job=$(nproc)
+else
+    n_job=$(sysctl -n hw.ncpu)
+fi
+# ----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
@@ -93,7 +101,7 @@ if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
     echo_eval cd external/$package.git/build
-    echo_eval make install
+    echo_eval make -j $n_job install
     echo "get_$package.sh: OK"
     exit 0
 fi
@@ -136,7 +144,7 @@ flags="--prefix=$prefix --with-colpack=$prefix --libdir=$prefix/$libdir"
 flags="$flags --enable-static --enable-shared --enable-atrig-erf"
 #
 echo_eval ../configure $flags
-echo_eval make install
+echo_eval make -j $n_job install
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$configured_flag
 echo "get_$package: OK"

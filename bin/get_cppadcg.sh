@@ -87,6 +87,14 @@ echo_eval() {
 web_page='https://github.com/joaoleal/CppADCodeGen.git'
 cppad_repo=$(pwd)
 # -----------------------------------------------------------------------------
+# n_job
+if which nproc > /dev/null
+then
+    n_job=$(nproc)
+else
+    n_job=$(sysctl -n hw.ncpu)
+fi
+# ----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
@@ -101,7 +109,7 @@ if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
     echo_eval cd external/$package.git/build
-    echo_eval make install
+    echo_eval make -j $n_job install
     echo "get_$package.sh: OK"
     exit 0
 fi
@@ -194,7 +202,7 @@ echo_eval cmake \
     -D GOOGLETEST_GIT=ON \
     -D CREATE_DOXYGEN_DOC=OFF \
     ..
-echo_eval make install
+echo_eval make -j $n_job install
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_repo/$configured_flag
 echo "get_$package.sh: OK"

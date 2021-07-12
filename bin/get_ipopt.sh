@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -77,6 +77,14 @@ echo_eval() {
 coinbrew='https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew'
 cppad_dir=`pwd`
 # -----------------------------------------------------------------------------
+# n_proc
+if which nproc >& /dev/null
+then
+    n_job=$(nproc)
+else
+    n_job=$(sysctl -n hw.ncpu)
+fi
+# -----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
@@ -91,7 +99,7 @@ if [ -e "$configured_flag" ]
 then
     echo "Skipping configuration because $configured_flag exits"
     echo_eval cd external
-    ./coinbrew install Ipopt --no-prompt
+    ./coinbrew -j $n_job install Ipopt --no-prompt
     echo "get_$package.sh: OK"
     exit 0
 fi
@@ -126,9 +134,9 @@ else
     ADD_FCFLAGS=''
 fi
 # -----------------------------------------------------------------------------
-echo_eval ./coinbrew build Ipopt@$version \
+echo_eval ./coinbrew -j $n_job build Ipopt@$version \
     --prefix=$prefix --test --no-prompt --verbosity=3 $ADD_FCFLAGS
-echo_eval ./coinbrew install Ipopt@$version \
+echo_eval ./coinbrew -j $n_job install Ipopt@$version \
     --no-prompt
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$configured_flag

@@ -15,9 +15,17 @@ echo_eval() {
 name='highlight'
 if [ "$0" != "bin/get_$name.sh" ]
 then
-    echo "get_$name.sh should be in the ./bin directory and executed using" 
+    echo "get_$name.sh should be in the ./bin directory and executed using"
     echo "bin/get_$name.sh"
     exit 1
+fi
+# -----------------------------------------------------------------------------
+# n_proc
+if which nproc >& /dev/null
+then
+    n_job=$(nproc)
+else
+    n_job=$(sysctl -n hw.ncpu)
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
@@ -42,7 +50,7 @@ fi
 echo_eval cd build
 #
 echo_eval ../configure --prefix="$start_dir/build/prefix"
-echo_eval make install
+echo_eval make -j $n_job install
 # -----------------------------------------------------------------------------
 echo "get_$name.sh: OK"
 exit 1

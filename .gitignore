@@ -28,8 +28,6 @@
 # vim swap files in any directory
 *.swp
 # ----------------------------------------------------------------------------
-# junk and temp files in any directory
-junk
-junk.*
+# temp files in any directory
 temp
 temp.*
