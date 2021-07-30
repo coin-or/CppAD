@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -159,11 +159,13 @@ ENDIF( cppad_has_ipopt )
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/cppad.pc.in
     ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
+    @ONLY
 )
 # cppad-uninstalled.pc
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/cppad-uninstalled.pc.in
     ${CMAKE_CURRENT_BINARY_DIR}/cppad-uninstalled.pc
+    @ONLY
 )
 # During install copy cppad.pc to datadir
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
