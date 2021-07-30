@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -72,7 +72,11 @@ echo_log_eval() {
         exit 1
     fi
     check_all_warn
-    count=`wc -l $top_srcdir/check_all.warn | sed -e 's|^\([0-9]*\) .*|\1|'`
+    # ignore CMake Warning about old CMAKE_MINIMUM_REQUIRED
+    count=$( sed -e '/^CMake Deprecation Warning/d' -e '/^ *$/d' \
+        $top_srcdir/check_all.warn | \
+        wc -l | sed -e 's|^\([0-9]*\) .*|\1|'
+    )
     if [ "$count" != '0' ]
     then
         head "$top_srcdir/check_all.warn"
