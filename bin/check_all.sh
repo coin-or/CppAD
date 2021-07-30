@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -202,10 +202,13 @@ then
 fi
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
-list=`ls bin/check_* | sed \
+list=$(
+    ls bin/check_* | sed \
     -e '/check_all.sh/d' \
     -e '/check_jenkins.sh/d' \
-    -e '/check_doxygen.sh/d'`
+    -e '/check_doxygen.sh/d' \
+    -e '/check_install.sh/d'
+)
 # ~/devel/check_copyright.sh not included in batch_edit branch
 for check in $list
 do
@@ -220,10 +223,11 @@ echo_log_eval cd build
 echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
+mkdir build
+echo_log_eval cp -r ../prefix build/prefix
 # -----------------------------------------------------------------------------
-# run_cmake.sh with proper prefix
-echo_log "sed -i bin/get_optional.sh -e 's|^prefix=.*|prefix=$prefix|'"
-sed -i bin/get_optional.sh -e "s|^prefix=.*|prefix=$prefix|"
+# run_cmake.sh
+# prefix is extracted from bin/get_optional
 echo_log_eval bin/run_cmake.sh \
     --profile_speed \
     $compiler \
@@ -322,7 +326,11 @@ else
     exit 1
 fi
 #
+# ---------------------------------------------------------------------------
+# check install
 echo_log_eval make install
+echo_log_eval bin/check_install.sh
+# ---------------------------------------------------------------------------
 #
 echo "date >> check_all.log"
 date  | sed -e 's|^|date: |' >> $top_srcdir/check_all.log

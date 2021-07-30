@@ -38,9 +38,16 @@ $spell
     rcv
     det
     ltmain
+    lcppad
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 07-30$$
+Fix a bug in the $cref pkgconfig$$ files.
+To be specific, there was an extra $code -l$$ at the front of the list
+of library flags; e.g.,
+$code -l-lcppad_lib$$ was changed to $code -lcppad_lib$$.
 
 $head 07-12$$
 $list number$$
