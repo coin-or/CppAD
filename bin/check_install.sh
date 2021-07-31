@@ -39,20 +39,41 @@ done
 # dir=$(pkg-config cppad --variable pcfiledir)
 # cat $dir/cppad.pc
 # -----------------------------------------------------------------------------
+# cflags
+# libs
+cflags=$(pkg-config cppad --cflags)
+libs=$(pkg-config cppad --libs)
+# -----------------------------------------------------------------------------
 if [ ! -e build/check_install ]
 then
     mkdir build/check_install
 fi
-cp example/get_started/get_started.cpp build/check_install/get_started.cpp
 cd build/check_install
 # -----------------------------------------------------------------------------
-cflags=$(pkg-config cppad --cflags)
-libs=$(pkg-config cppad --libs)
+# CppAD get_started
+cp ../../example/get_started/get_started.cpp get_started.cpp
 echo_eval g++ $cflags $libs get_started.cpp -o get_started
-echo './get_started'
+echo 'CppAD: ./get_started'
 if ! ./get_started
 then
-    echo 'check_install.sh: ./get_started test failed.'
+    echo "check_install.sh: $(pwd)/get_started test failed."
+    exit 1
+fi
+# -----------------------------------------------------------------------------
+# ipopt_solve get_started
+cp ../../example/ipopt_solve/get_started.cpp get_started.cpp
+cat << EOF >> get_started.cpp
+int main(void)
+{   if( ! get_started() )
+        return 1;
+    return 0;
+}
+EOF
+echo_eval g++ $cflags $libs get_started.cpp -o get_started
+echo 'ipopt_solve: ./get_started'
+if ! ./get_started
+then
+    echo "check_install.sh: $(pwd)/get_started test failed."
     exit 1
 fi
 # -----------------------------------------------------------------------------
