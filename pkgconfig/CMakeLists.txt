@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -126,10 +126,24 @@ LIST(GET cmake_install_includedirs 0 cppad_includedir)
 #
 # cppad_libdir
 LIST(GET cmake_install_libdirs 0 cppad_libdir)
+#
+# add_to_set
+MACRO(add_to_set variable_name element)
+    IF( "${${variable_name}}" STREQUAL "" )
+        SET(${variable_name} ${element} )
+    ELSE( "${${variable_name}}" STREQUAL "" )
+        LIST(FIND ${variable_name} ${element} index)
+        IF( index EQUAL -1 )
+            SET(${variable_name} "${${variable_name}} ${element}")
+        ENDIF( index EQUAL -1 )
+    ENDIF( "${${variable_name}}" STREQUAL "" )
+ENDMACRO(add_to_set variable_name element)
 # -----------------------------------------------------------------------------
 # initialize
-SET(cppad_lib_list "-l${cppad_lib}")
-SET(cppad_libs_private "")
+SET(cppad_libdir_list "-L${prefix}/${cppad_libdir}")
+SET(cppad_lib_list    "-l${cppad_lib}")
+SET(cppad_requires         "")
+SET(cppad_libs_private     "")
 SET(cppad_requires_private "")
 #
 # Colpack does not have a pkgconfig file.
@@ -144,15 +158,14 @@ IF( cppad_has_colpack )
     IF( NOT colpack_libdir )
         MESSAGE(FATAL_ERROR "Cannit find libColPack.* below ${colpack_prefix}")
     ENDIF( NOT colpack_libdir )
-    SET(cppad_libs_private
-        "${cppad_libs_private} -L${colpack_libdir} -lColPack"
-    )
+    add_to_set(cppad_libdir_list "-L${colpack_libdir}")
+    add_to_set(cppad_lib_list    "-lColPack")
 ENDIF( cppad_has_colpack )
 #
 # Ipopt has a pkgconfig file.
 IF( cppad_has_ipopt )
-    SET(cppad_requires_private  "${cppad_requires} ipopt")
-    SET(cppad_lib_list          "${cppad_lib_list} -lcppad_ipopt")
+    SET(cppad_requires         "${cppad_requires} ipopt")
+    add_to_set(cppad_lib_list  "-lcppad_ipopt" )
 ENDIF( cppad_has_ipopt )
 # -----------------------------------------------------------------------------
 # cppad.pc

@@ -39,9 +39,16 @@ $spell
     det
     ltmain
     lcppad
+    pkgconfig
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 07-31$$
+Do more work on pkgconfig files:
+Remove duplicates and put $code -L$$ entries
+before $code -l$$ entries in $code Libs$$ section.
+Furthermore, move all information from private to normal section.
 
 $head 07-30$$
 Fix a bug in the $cref pkgconfig$$ files.

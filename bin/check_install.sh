@@ -30,37 +30,31 @@ then
 fi
 # -----------------------------------------------------------------------------
 PKG_CONFIG_PATH="$prefix/share/pkgconfig"
-# -----------------------------------------------------------------------------
-# libdir
-if ls $prefix/lib/libcppad_lib.* >& /dev/null
-then
-    libdir='lib'
-else
-    libdir='lib64'
-fi
-# -----------------------------------------------------------------------------
-list="
-    include/cppad
-    share/pkgconfig/cppad.pc
-    $libdir/pkgconfig/cppad.pc
-"
-for name in $list
+LD_LIBRARY_PATH=""
+for dir in lib lib64
 do
-    if [ ! -e $prefix/$name ]
-    then
-        echo "check_install.sh: cannot find $prefix/$name"
-        exit 1
-    fi
+    PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$prefix/$dir/pkgconfig"
+    LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$prefix/$dir"
 done
+# dir=$(pkg-config cppad --variable pcfiledir)
+# cat $dir/cppad.pc
 # -----------------------------------------------------------------------------
-# check pkgconfig file
-pkg-config cppad --libs > check_install.$$
-if ! grep ' -lcppad_lib \| -lcppad_lib$' check_install.$$ > /dev/null
+if [ ! -e build/check_install ]
 then
-    echo 'check_install.sh: cannot find -lcppad_lib in Libs section of'
-    echo "$PKG_CONFIG_PATH/cppad.pc"
+    mkdir build/check_install
 fi
-rm check_install.$$
+cp example/get_started/get_started.cpp build/check_install/get_started.cpp
+cd build/check_install
+# -----------------------------------------------------------------------------
+cflags=$(pkg-config cppad --cflags)
+libs=$(pkg-config cppad --libs)
+echo_eval g++ $cflags $libs get_started.cpp -o get_started
+echo './get_started'
+if ! ./get_started
+then
+    echo 'check_install.sh: ./get_started test failed.'
+    exit 1
+fi
 # -----------------------------------------------------------------------------
 echo 'check_install.sh: OK'
 exit 0
