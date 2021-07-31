@@ -24,7 +24,7 @@ Version:               @cppad_version@
 URL:                   @cppad_url@
 #
 Cflags:                -I${includedir}
-Libs:                  -L{libdir} @cppad_lib_list@
-Requires:
+Libs:                  @cppad_lib_list@
+Requires:              @cppad_requires@
 Libs.private           @cppad_libs_private@
 Requires.private:      @cppad_requires_private@
