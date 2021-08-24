@@ -65,7 +65,7 @@ class ADTape {
         (const AD<Base> &u);
     // operators -----------------------------------------------------------
     // arithematic binary operators
-# if _MSC_VER
+# if _MSC_VER && !defined(__clang__)
     // see https://stackoverflow.com/questions/63288453
     template <class Type> friend AD<Type> CppAD::operator * <Type>
         (const AD<Type> &left, const AD<Type> &right);
@@ -81,7 +81,7 @@ class ADTape {
         (const AD<Base> &left, const AD<Base> &right);
 
     // comparison operators
-# if _MSC_VER
+# if _MSC_VER && !defined(__clang__)
     template <class Type> friend bool CppAD::operator == <Type>
         (const AD<Type> &left, const AD<Type> &right);
     template <class Type> friend bool CppAD::operator != <Type>
