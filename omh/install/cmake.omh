@@ -543,6 +543,11 @@ all the $icode CMAKE_BUILD_TYPE$$ will be $code Debug$$ ($code Release$$).
 If $icode cppad_debug_which$$ does not appear on the command line,
 the default value $code debug_all$$ is used.
 
+$subhead CMAKE_BUILD_TYPE$$
+If $code CMAKE_BUILD_TYPE$$ is specified on the command line,
+then $icode cppad_debug_which$$ must not be specified.
+
+
 $children%
     bin/get_optional.sh%
     omh/install/adolc.omh%
