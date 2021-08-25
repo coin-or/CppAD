@@ -26,7 +26,7 @@
 # The files with an odd (even) index in source_list have debug (release) flags.
 # In addition the compiler flag -DCPPAD_DEBUG_AND_RELEASE is added.
 #
-# Case debug_all or debug_none:
+# Case debug_all, debug_none, or empty string:
 # The debug and release flags are not set by this routine.
 #
 # source_list: (in)

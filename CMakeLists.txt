@@ -199,11 +199,17 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 )
 #
 # cppad_debug_which
+# CMAKE_BUILD_TYPE
 IF( NOT debug_which )
     SET(debug_which "" CACHE STRING
-        "debug_even, debug_odd, debug_all, or debug_none"
+        "debug_even, debug_odd, debug_all, debug_none, or empty string"
     )
 ENDIF( NOT debug_which )
+IF( NOT ${cppad_debug_which} STREQUAL "" )
+	assert_value_in_set(
+		cppad_debug_which debug_even debug_odd debug_all debug_none
+	)
+ENDIF( NOT ${cppad_debug_which} STREQUAL "" )
 IF( CMAKE_BUILD_TYPE )
     IF( NOT ${cppad_debug_which} STREQUAL "" )
         print_variable(CMAKE_BUILD_TYPE)
@@ -212,21 +218,7 @@ IF( CMAKE_BUILD_TYPE )
             "Both CMAKE_BUILD_TYPE and cppad_debug_which specified"
         )
     ENDIF( NOT ${cppad_debug_which} STREQUAL "" )
-    #
-    STRING( TOLOWER "${CMAKE_BUILD_TYPE}" build_type )
-    IF( build_type STREQUAL "debug" )
-        SET(cppad_debug_which "debug_all")
-    ELSEIF( build_type STREQUAL "release" )
-        SET(cppad_debug_which "debug_none")
-    ELSE( build_type )
-        print_variable(CMAKE_BUILD_TYPE)
-        MESSAGE(FATAL_ERROR "CMAKE_BUILD_TYPE is not debug or release")
-    ENDIF( build_type STREQUAL "debug" )
 ELSE( CMAKE_BUILD_TYPE )
-    IF( "${cppad_debug_which}" STREQUAL "" )
-        SET(cppad_debug_which debug_all)
-    ENDIF( "${cppad_debug_which}" STREQUAL "" )
-    #
     IF( "${cppad_debug_which}" STREQUAL debug_all)
         SET(CMAKE_BUILD_TYPE Debug)
     ELSEIF( "${cppad_debug_which}" STREQUAL debug_none)
@@ -238,9 +230,7 @@ ELSE( CMAKE_BUILD_TYPE )
     ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
 ENDIF( CMAKE_BUILD_TYPE )
 print_variable(cppad_debug_which)
-assert_value_in_set(
-    cppad_debug_which debug_even debug_odd debug_all debug_none
-)
+print_variable(CMAKE_BUILD_TYPE)
 #
 # include_eigen
 # include_adolc
