@@ -206,9 +206,9 @@ IF( NOT debug_which )
     )
 ENDIF( NOT debug_which )
 IF( NOT ${cppad_debug_which} STREQUAL "" )
-	assert_value_in_set(
-		cppad_debug_which debug_even debug_odd debug_all debug_none
-	)
+    assert_value_in_set(
+        cppad_debug_which debug_even debug_odd debug_all debug_none
+    )
 ENDIF( NOT ${cppad_debug_which} STREQUAL "" )
 IF( CMAKE_BUILD_TYPE )
     IF( NOT ${cppad_debug_which} STREQUAL "" )

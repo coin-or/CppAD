@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 $begin cmake$$
 $escape $$
 $spell
+    Rel
     cppadcg
     msys
     Hsc
@@ -131,6 +132,7 @@ The full version of the command, with all its optional arguments is:
 $codei%
 cmake %%                                                                     \
     -D CMAKE_VERBOSE_MAKEFILE=%cmake_verbose_makefile%                       \
+    -D CMAKE_BUILD_TYPE=%cmake_build_type%                                   \
     -G %generator%                                                           \
     \
     -D cppad_prefix=%cppad_prefix%                                           \
@@ -249,6 +251,16 @@ If it is $code YES$$, then the output of the $code make$$ commands
 will include all of the files and flags used to run the compiler
 and linker. This can be useful for seeing how to compile and link
 your own applications.
+
+$head cmake_build_type$$
+This value should be one of the valid CMake build types; e.g.,
+$code Debug$$,
+$code Release$$,
+$code RelWithDebInfo$$,
+$code MinSizeRel$$.
+If this value is specified,
+$cref/cppad_debug_which/cmake/cppad_debug_which/$$
+must not be the empty string.
 
 $head generator$$
 The CMake program is capable of generating different kinds of files.
@@ -536,13 +548,6 @@ $code debug_even$$         $cnext not specified             $rnext
 $code debug_odd$$          $cnext not specified             $rnext
 empty string               $cnext not changed               $rnext
 $tend
-If $icode cppad_debug_which$$ is $code debug_even$$ ($code debug_odd$$),
-files with an even (old) index in a list for each case will be compiled
-in debug mode. The remaining files will be compiled in release mode.
-If it is $code debug_all$$ ($code debug_none$$),
-all the $icode CMAKE_BUILD_TYPE$$ will be $code Debug$$ ($code Release$$).
-
-$subhead CMAKE_BUILD_TYPE$$
 If $code CMAKE_BUILD_TYPE$$ is specified on the command line,
 then $icode cppad_debug_which$$ must be the empty string (its default value).
 

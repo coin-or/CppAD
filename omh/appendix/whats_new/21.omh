@@ -44,9 +44,12 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
-$head 08-24$$
-The cmake command was extended to allow for one to specify Debug or Release build using
-$cref/CMAKE_BUILD_TYPE/cmake/cppad_debug_which/CMAKE_BUILD_TYPE/$$.
+$head 08-26$$
+The cmake command was extended to allow for one to specify
+$cref/CMAKE_BUILD_TYPE/cmake/cmake_build_type/$$.
+This forced changing the default for
+$cref/cppad_debug_which/cmake/cppad_debug_which/$$ from
+$code debug_all$$ to the empty string.
 
 $head 07-31$$
 Do more work on pkgconfig files:
