@@ -22,6 +22,7 @@ var list_current0 = [
 'cmake.htm#CMake Command.autotools',
 'cmake.htm#make check',
 'cmake.htm#cmake_verbose_makefile',
+'cmake.htm#cmake_build_type',
 'cmake.htm#generator',
 'cmake.htm#cppad_prefix',
 'cmake.htm#cppad_postfix',

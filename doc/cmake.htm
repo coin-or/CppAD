@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile cmake_build_type generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,6 +74,7 @@ A:active { color : purple }
 <option>---..autotools</option>
 <option>make check</option>
 <option>cmake_verbose_makefile</option>
+<option>cmake_build_type</option>
 <option>generator</option>
 <option>cppad_prefix</option>
 <option>cppad_postfix</option>
@@ -183,6 +184,7 @@ The full version of the command, with all its optional arguments is:
 <code><font color="blue"><span style='white-space: nowrap'><br>
 cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_VERBOSE_MAKEFILE=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_verbose_makefile</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_BUILD_TYPE=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_build_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-G&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>generator</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cppad_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>cppad_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
@@ -314,6 +316,20 @@ If it is <code><font color="blue">YES</font></code>, then the output of the <cod
 will include all of the files and flags used to run the compiler
 and linker. This can be useful for seeing how to compile and link
 your own applications.
+
+<br>
+<br>
+<b><big><a name="cmake_build_type" id="cmake_build_type">cmake_build_type</a></big></b>
+<br>
+This value should be one of the valid CMake build types; e.g.,
+<code><font color="blue">Debug</font></code>,
+<code><font color="blue">Release</font></code>,
+<code><font color="blue">RelWithDebInfo</font></code>,
+<code><font color="blue">MinSizeRel</font></code>.
+If this value is specified,
+<a href="cmake.htm#cppad_debug_which" target="_top"><span style='white-space: nowrap'>cppad_debug_which</span></a>
+
+must not be the empty string.
 
 <br>
 <br>
@@ -818,21 +834,15 @@ The value
 <code><font color="blue">debug_odd</font></code>          </td><td align='left'  valign='top'>
  not specified             </td></tr><tr><td align='left'  valign='top'>
 
+empty string               </td><td align='left'  valign='top'>
+ not changed               </td></tr><tr><td align='left'  valign='top'>
+
 </td></tr>
 </table>
-If 
+If <code><font color="blue">CMAKE_BUILD_TYPE</font></code> is specified on the command line,
+then 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i></code>
- is <code><font color="blue">debug_even</font></code> (<code><font color="blue">debug_odd</font></code>),
-files with an even (old) index in a list for each case will be compiled
-in debug mode. The remaining files will be compiled in release mode.
-If it is <code><font color="blue">debug_all</font></code> (<code><font color="blue">debug_none</font></code>),
-all the 
-<code><i><font color="black"><span style='white-space: nowrap'>CMAKE_BUILD_TYPE</span></font></i></code>
- will be <code><font color="blue">Debug</font></code> (<code><font color="blue">Release</font></code>).
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>cppad_debug_which</span></font></i></code>
- does not appear on the command line,
-the default value <code><font color="blue">debug_all</font></code> is used.
+ must be the empty string (its default value).
 
 
 

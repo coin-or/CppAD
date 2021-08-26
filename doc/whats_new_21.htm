@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 07-30 07-12 06-22 06-06 06-02 05-12 04-30 04-28 04-27 04-26 04-16 04-09 04-07 04-05 04-02 03-29 03-24 03-11 03-09 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 08-26 07-31 07-30 07-12 06-22 06-06 06-02 05-12 04-30 04-28 04-27 04-26 04-16 04-09 04-07 04-05 04-02 03-29 03-24 03-11 03-09 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>08-26</option>
+<option>07-31</option>
 <option>07-30</option>
 <option>07-12</option>
 <option>06-22</option>
@@ -112,6 +114,27 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="08-26" id="08-26">08-26</a></big></b>
+<br>
+The cmake command was extended to allow for one to specify
+<a href="cmake.htm#cmake_build_type" target="_top"><span style='white-space: nowrap'>CMAKE_BUILD_TYPE</span></a>
+.
+This forced changing the default for
+<a href="cmake.htm#cppad_debug_which" target="_top"><span style='white-space: nowrap'>cppad_debug_which</span></a>
+ from
+<code><font color="blue">debug_all</font></code> to the empty string.
+
+<br>
+<br>
+<b><big><a name="07-31" id="07-31">07-31</a></big></b>
+<br>
+Do more work on pkgconfig files:
+Remove duplicates and put <code><font color="blue">-L</font></code> entries
+before <code><font color="blue">-l</font></code> entries in <code><font color="blue">Libs</font></code> section.
+Furthermore, move all information from private to normal section.
+
+<br>
 <br>
 <b><big><a name="07-30" id="07-30">07-30</a></big></b>
 <br>
