@@ -534,14 +534,17 @@ $code debug_all$$          $cnext $code Debug$$             $rnext
 $code debug_none$$         $cnext $code Release$$           $rnext
 $code debug_even$$         $cnext not specified             $rnext
 $code debug_odd$$          $cnext not specified             $rnext
+empty string               $cnext not changed               $rnext
 $tend
 If $icode cppad_debug_which$$ is $code debug_even$$ ($code debug_odd$$),
 files with an even (old) index in a list for each case will be compiled
 in debug mode. The remaining files will be compiled in release mode.
 If it is $code debug_all$$ ($code debug_none$$),
 all the $icode CMAKE_BUILD_TYPE$$ will be $code Debug$$ ($code Release$$).
-If $icode cppad_debug_which$$ does not appear on the command line,
-the default value $code debug_all$$ is used.
+
+$subhead CMAKE_BUILD_TYPE$$
+If $code CMAKE_BUILD_TYPE$$ is specified on the command line,
+then $icode cppad_debug_which$$ must be the empty string (its default value).
 
 $children%
     bin/get_optional.sh%
