@@ -40,9 +40,21 @@ $spell
     ltmain
     lcppad
     pkgconfig
+    cplusplus
+    txt
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 08-27$$
+The following error occurred
+$codei%
+    compile_source_test: cplusplus_201100_ok is defined before expected
+%$$
+if the $cref cmake$$ command was run twice,
+without first removing the $code CMakeCache.txt$$ file.
+This has been fixed.
+
 
 $head 08-26$$
 The cmake command was extended to allow for one to specify

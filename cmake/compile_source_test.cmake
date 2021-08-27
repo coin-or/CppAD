@@ -33,8 +33,19 @@ MACRO(compile_source_test source variable)
         )
     ENDIF( DEFINED ${variable} )
     #
+    IF( DEFINED compiles_source_test_result)
+        UNSET(compiles_source_test_result)
+    ENDIF( DEFINED compiles_source_test_result )
+    #
     # check that source codee compiles
-    CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
+    CHECK_CXX_SOURCE_COMPILES("${source}" compiles_source_test_result )
+    #
+    # change result varialbe to 0 (1) for fail (succeed).
+    IF( compiles_source_test_result )
+        SET(${variable} 1)
+    ELSE( compiles_source_test_result )
+        SET(${variable} 0)
+    ENDIF( compiles_source_test_result )
     #
     # check that varialbe is defined
     IF( NOT DEFINED ${variable} )
@@ -43,12 +54,5 @@ MACRO(compile_source_test source variable)
         )
     ENDIF( NOT DEFINED ${variable} )
     #
-    # change result varialbe to 0 (1) for fail (succeed).
-    IF( ${variable} )
-        SET(${variable} 1)
-    ELSE( ${variable} )
-        SET(${variable} 0)
-    ENDIF( ${variable} )
     MESSAGE(STATUS "${variable} = ${${variable}}" )
-    #
 ENDMACRO( compile_source_test )
