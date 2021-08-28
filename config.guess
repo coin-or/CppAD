@@ -663,7 +663,12 @@ EOF
 
 		#define _HPUX_SOURCE
 		#include <stdlib.h>
-		#include <unistd.h>
+                # if _MSC_VER
+                # include <io.h>  
+                # else
+                # include <unistd.h>
+                # endif
+
 
 		int main ()
 		{
