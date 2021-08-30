@@ -1,0 +1,63 @@
+name: CppAD CI for Windows - (v142)
+on:
+  pull_request:
+  push:
+      
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+  
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        name: [windows-latest]
+
+        include:
+          - name: windows-latest
+            os: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Checkout submodules
+      run: |
+        git submodule update --init
+    - uses: goanpeca/setup-miniconda@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      with:
+        activate-environment: pycppad
+        environment-file: .github/workflows/conda/conda-env.yml
+        python-version: 3.7
+    - name: Install cmake and update conda
+      run: |
+        conda install cmake -c main
+    
+    - name: Build CppAD
+      shell: cmd /C CALL {0}
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      run: |
+        :: unset extra Boost envs
+        set Boost_ROOT=
+        set BOOST_ROOT_1_69_0=
+        set BOOST_ROOT_1_72_0=
+        set PATH=%PATH:C:\hostedtoolcache\windows\Boost\1.72.0;=%
+
+        call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
+    
+        :: Create build directory
+        mkdir build
+        pushd build
+
+        :: Configure
+        cmake ^
+          -G "Visual Studio 16 2019" -T "v142" -DCMAKE_GENERATOR_PLATFORM=x64 ^
+          -DCMAKE_INSTALL_PREFIX=%CONDA_PREFIX%\Library ^
+          -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} ^
+          ..
+
+        :: Build, check and Install
+        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check install
