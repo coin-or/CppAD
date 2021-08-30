@@ -1,0 +1,7 @@
+name: cppad
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - boost
+  - python
