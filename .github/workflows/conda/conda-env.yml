@@ -1,0 +1,7 @@
+name: pycppad
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - boost
+  - python
