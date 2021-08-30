@@ -1,0 +1,63 @@
+name: CppAD CI for MacOS/Linux
+
+on:
+  pull_request:
+  push:
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "macos-latest"]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Checkout submodules
+      run: |
+        git submodule update --init
+
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: pycppad
+        auto-update-conda: true
+        environment-file: .github/workflows/conda/conda-env.yml
+        python-version: 3.8
+
+    - name: Install cmake and update conda
+      shell: bash -l {0}
+      run: |
+        conda activate pycppad
+        conda install cmake -c main
+
+    - name: Build CppAD
+      shell: bash -l {0}
+      run: |
+        conda activate pycppad
+        echo $CONDA_PREFIX
+        
+        mkdir build
+        cd build
+
+        cmake .. -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DPYTHON_EXECUTABLE=$(which python3) -DBUILD_WITH_CPPAD_CODEGEN_BINDINGS=ON
+        make
+        export CTEST_OUTPUT_ON_FAILURE=1
+        make check
+        make install
+
+    - name: Uninstall CppAD
+      shell: bash -l {0}
+      run: |
+        cd build
+        make uninstall
