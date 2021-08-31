@@ -17,6 +17,11 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 
 # Cannot find specifications for CMAKE_CXX_FLAGS in version 2.6 documentation
 # so using ADD_DEFINITIONS instead.
+
+IF((CMAKE_CXX_COMPILER_ID STREQUAL "Clang") AND (WIN32))
+  ADD_DEFINITIONS("-openmp:llvm")
+ENDIF((CMAKE_CXX_COMPILER_ID STREQUAL "Clang") AND (WIN32))
+
 ADD_DEFINITIONS( ${OpenMP_CXX_FLAGS} )
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
@@ -41,7 +46,6 @@ ADD_EXECUTABLE( example_multi_thread_openmp EXCLUDE_FROM_ALL ${source_list} )
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 
-TARGET_LINK_LIBRARIES(example_multi_thread_openmp ${OpenMP_omp_LIBRARY})
 # Add the check_example_multi_thread_openmp target
 ADD_CUSTOM_TARGET(check_example_multi_thread_openmp
     example_multi_thread_openmp simple_ad
