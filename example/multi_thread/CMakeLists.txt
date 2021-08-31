@@ -73,7 +73,7 @@ IF( NOT( "${check_example_multi_thread_depends}" STREQUAL "" ) )
     MESSAGE(STATUS "make check_example_multi_thread: available")
     #
     # Change check depends in parent environment
-    add_to_list(check_depends check_example_multi_thread)
-    SET(check_depends "${check_depends}" PARENT_SCOPE)
+    add_to_list(check_example_depends check_example_multi_thread)
+    SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
     #
 ENDIF( NOT( "${check_example_multi_thread_depends}" STREQUAL "" ) )

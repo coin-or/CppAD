@@ -46,6 +46,12 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 08-31$$
+There was a bug in the CMake configuration files such that
+$code make check_example_multi_thread$$ was not being constructed.
+Hence $code make check$$ did not include the multi_thread tests.
+This has been fixed.
+
 $head 08-27$$
 The following error occurred
 $codei%
