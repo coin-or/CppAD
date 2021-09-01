@@ -1,4 +1,4 @@
-name: pycppad
+name: cppad
 channels:
   - conda-forge
   - nodefaults
