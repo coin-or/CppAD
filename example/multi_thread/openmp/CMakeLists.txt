@@ -17,11 +17,6 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 
 # Cannot find specifications for CMAKE_CXX_FLAGS in version 2.6 documentation
 # so using ADD_DEFINITIONS instead.
-
-IF((CMAKE_CXX_COMPILER_ID STREQUAL "Clang") AND (WIN32))
-  ADD_DEFINITIONS("-openmp:llvm")
-ENDIF((CMAKE_CXX_COMPILER_ID STREQUAL "Clang") AND (WIN32))
-
 ADD_DEFINITIONS( ${OpenMP_CXX_FLAGS} )
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
