@@ -30,7 +30,7 @@ jobs:
 
     - uses: conda-incubator/setup-miniconda@v2
       with:
-        activate-environment: pycppad
+        activate-environment: cppad
         auto-update-conda: true
         environment-file: .github/workflows/conda/conda-env.yml
         python-version: 3.8
@@ -38,13 +38,13 @@ jobs:
     - name: Install cmake and update conda
       shell: bash -l {0}
       run: |
-        conda activate pycppad
+        conda activate cppad
         conda install cmake -c main
 
     - name: Build CppAD
       shell: bash -l {0}
       run: |
-        conda activate pycppad
+        conda activate cppad
         echo $CONDA_PREFIX
         
         mkdir build
