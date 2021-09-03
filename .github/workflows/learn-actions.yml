@@ -17,13 +17,16 @@ jobs:
         run: |
           mkdir build
           cd build
+          set +e
           random_01=$(expr $RANDOM % 2)
+          set -e
           if [ "$random_01" == '0' ]
           then
             build_type='debug'
           else
             build_type='release'
           fi
+          echo "build_type=$build_type"
           cmake -D CMAKE_BUILD_TYPE="$build_type" ..
           make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
