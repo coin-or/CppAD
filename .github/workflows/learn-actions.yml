@@ -19,16 +19,16 @@ jobs:
           set +e
           random_03=$(expr $RANDOM % 4)
           set -e
-          if [ "$random_03" == '0' ]
-          then
-            debug_which='debug_all'
-          elif [ "$random_03" == '1' ]
-            debug_which='debug_even'
-          elif [ "$random_03" == '2' ]
-            debug_which='debug_odd'
-          else
-            debug_which='debug_none'
-          fi
+          case $random_03 in
+            0) debug_which='debug_all'
+            ;;
+            1) debug_which='debug_even'
+            ;;
+            2) debug_which='debug_odd'
+            ;;
+            3) debug_which='debug_none'
+            ;;
+          esac
           echo "cmake -D cppad_debug_which=$debug_which" ..
           cmake -D cppad_debug_which=$debug_which ..
           echo "make -j $(nproc) check"
