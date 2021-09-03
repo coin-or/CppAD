@@ -13,6 +13,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: echo "The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: ls .
+      - name: run make check in build subdirectory
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make check
       - run: echo "job.status = ${{ job.status }}"
