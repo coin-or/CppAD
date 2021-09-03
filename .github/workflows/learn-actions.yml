@@ -24,6 +24,6 @@ jobs:
           else
             build_type='release'
           fi
-          cmake .. -D CMAKE_BUILD_TYPE="$type"
+          cmake -D CMAKE_BUILD_TYPE="$build_type" ..
           make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
