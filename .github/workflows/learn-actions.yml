@@ -9,7 +9,6 @@ jobs:
       - run: echo "github.ref = ${{ github.ref }}"
       - run: echo "github.repository = ${{ github.repository }}"
       - run: echo "github.workspace = ${{ github.workspace }}"
-      - run: echo "pwd = $(pwd)"
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: echo "The workflow is now ready to test your code on the runner."
@@ -18,15 +17,20 @@ jobs:
           mkdir build
           cd build
           set +e
-          random_01=$(expr $RANDOM % 2)
+          random_03=$(expr $RANDOM % 4)
           set -e
-          if [ "$random_01" == '0' ]
+          if [ "$random_03" == '0' ]
           then
-            build_type='debug'
+            debug_which='debug_all'
+          elif [ "$random_03" == '1' ]
+            debug_which='debug_even'
+          elif [ "$random_03" == '2' ]
+            debug_which='debug_odd'
           else
-            build_type='release'
+            debug_which='debug_none'
           fi
-          echo "build_type=$build_type"
-          cmake -D CMAKE_BUILD_TYPE="$build_type" ..
+          echo "cmake -D cppad_debug_which=$debug_which" ..
+          cmake -D cppad_debug_which=$debug_which ..
+          echo "make -j $(nproc) check"
           make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
