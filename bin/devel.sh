@@ -23,6 +23,7 @@ version_files='
 # Names that begin with a / are relative to top source directroy.
 # All other names are relavie paths somewhere below the top source directory.
 ignore_files='
+    /.github/workflows/
     /.gitignore
     /.coin-or/projDesc.xml
 

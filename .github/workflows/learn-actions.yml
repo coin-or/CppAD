@@ -1,0 +1,12 @@
+name: learn-actions
+on: [push]
+jobs:
+  lean-actions-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          mkdir build
+          cd buld
+          cmake ..
+          make check
