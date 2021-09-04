@@ -4,8 +4,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-
       - name : debug_which
+        run: |
           set +e
           random_03=$(expr $RANDOM % 4)
           set -e
@@ -20,16 +20,13 @@ jobs:
             ;;
           esac
           echo "debug_which=$debug_which"
-
       - name: cmake
         run: |
           mkdir build
           cd build
           echo "cmake -D cppad_debug_which=$debug_which" ..
           cmake -D cppad_debug_which=$debug_which ..
-
       - name: check
           echo "make -j $(nproc) check"
           make -j $(nproc) check
-
       - run: echo "job.status = ${{ job.status }}"
