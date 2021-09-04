@@ -11,7 +11,6 @@ jobs:
         uses: actions/checkout@v2
       - name: set debug_which
         run: |
-          echo "pwd = $(pwd)"
           mkdir build
           cd build
           set +e
@@ -30,15 +29,19 @@ jobs:
           echo "$debug_which" > debug_which
       - name: run cmake
         run: |
-          echo "pwd = $(pwd)"
           cd build
           debug_which=$(cat debug_which)
           echo "cmake -D cppad_debug_which=$debug_which" ..
           # cmake -D cppad_debug_which=$debug_which ..
       - name: run make check
         run: |
-          echo "pwd = $(pwd)"
           cd build
-          echo "make -j $(nproc) check"
+          if which nproc >& /dev/null
+          then
+              n_job=$(nproc)
+          else
+              n_job=$(sysctl -n hw.ncpu)
+          fi
+          echo "make -j $n_job check"
           # make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
