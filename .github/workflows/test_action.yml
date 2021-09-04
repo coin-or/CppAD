@@ -29,11 +29,12 @@ jobs:
         run: |
           echo "pwd = $(pwd)"
           cd build
-          debug_which=$(cat $debug_which)
+          debug_which=$(cat debug_which)
           echo "cmake -D cppad_debug_which=$debug_which" ..
           # cmake -D cppad_debug_which=$debug_which ..
-      - name: Check that pwd and debug_which are the same
+      - name: run make check
         run: |
+          echo "pwd = $(pwd)"
           cd build
           echo "make -j $(nproc) check"
           # make -j $(nproc) check
