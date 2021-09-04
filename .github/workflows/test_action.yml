@@ -28,6 +28,7 @@ jobs:
           echo "pwd = $(pwd)"
           echo "debug_which=$debug_which"
       - name: Check that pwd and debug_which are the same
+        run: |
           echo "pwd = $(pwd)"
           echo "debug_which=$debug_which"
           echo "make -j $(nproc) check"
