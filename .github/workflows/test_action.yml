@@ -1,7 +1,7 @@
 name: Test GitHub Actions
 on: [push]
 jobs:
-  current-test: Do directory and variables persist between run commands
+  current-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
