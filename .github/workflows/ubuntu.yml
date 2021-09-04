@@ -1,11 +1,21 @@
-name: CppAD CI for ubuntu
+name: GitHub Actions Demo
 on: [push]
 jobs:
-  test:
+  learn-actions:
     runs-on: ubuntu-latest
     steps:
-      - name : debug_which
+      - run: echo "github.event.name = ${{ github.event_name }}"
+      - run: echo "runner.os = ${{ runner.os }}"
+      - run: echo "github.ref = ${{ github.ref }}"
+      - run: echo "github.repository = ${{ github.repository }}"
+      - run: echo "github.workspace = ${{ github.workspace }}"
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "The workflow is now ready to test your code on the runner."
+      - name: run make check in build subdirectory
         run: |
+          mkdir build
+          cd build
           set +e
           random_03=$(expr $RANDOM % 4)
           set -e
@@ -19,14 +29,8 @@ jobs:
             3) debug_which='debug_none'
             ;;
           esac
-          echo "debug_which=$debug_which"
-      - name: cmake
-        run: |
-          mkdir build
-          cd build
           echo "cmake -D cppad_debug_which=$debug_which" ..
           cmake -D cppad_debug_which=$debug_which ..
-      - name: check
           echo "make -j $(nproc) check"
           make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
