@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches:
-      - main:
+      - master
 jobs:
   learn-actions:
     runs-on: ${{ matrix.os }}
