@@ -1,13 +1,13 @@
-name: Test GitHub Actions
+name: GitHub Actions Demo
 on: [push]
 jobs:
-  current-test:
+  learn-actions:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
         uses: actions/checkout@v2
-      - name: run cmake
-      - run: |
-          pwd
+      - name: run make check in build subdirectory
+        run: |
           mkdir build
           cd build
           set +e
@@ -25,9 +25,6 @@ jobs:
           esac
           echo "cmake -D cppad_debug_which=$debug_which" ..
           # cmake -D cppad_debug_which=$debug_which ..
-      - name: run make check
-          echo "pwd = $(pwd)"
-          echo "debug_which=$debug_which"
           echo "make -j $(nproc) check"
           # make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
