@@ -1,0 +1,33 @@
+name: Test GitHub Actions
+on: [push]
+jobs:
+  current-test: Do directory and variables persist between run commands
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: run cmake
+      - run: |
+          pwd
+          mkdir build
+          cd build
+          set +e
+          random_03=$(expr $RANDOM % 4)
+          set -e
+          case $random_03 in
+            0) debug_which='debug_all'
+            ;;
+            1) debug_which='debug_even'
+            ;;
+            2) debug_which='debug_odd'
+            ;;
+            3) debug_which='debug_none'
+            ;;
+          esac
+          echo "cmake -D cppad_debug_which=$debug_which" ..
+          # cmake -D cppad_debug_which=$debug_which ..
+      - name: run make check
+          echo "pwd = $(pwd)"
+          echo "debug_which=$debug_which"
+          echo "make -j $(nproc) check"
+          # make -j $(nproc) check
+      - run: echo "job.status = ${{ job.status }}"
