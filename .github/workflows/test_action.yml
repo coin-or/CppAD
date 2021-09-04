@@ -32,7 +32,7 @@ jobs:
           cd build
           debug_which=$(cat debug_which)
           echo "cmake -D cppad_debug_which=$debug_which" ..
-          # cmake -D cppad_debug_which=$debug_which ..
+          cmake -D cppad_debug_which=$debug_which ..
       - name: run make check
         run: |
           cd build
@@ -43,5 +43,5 @@ jobs:
               n_job=$(sysctl -n hw.ncpu)
           fi
           echo "make -j $n_job check"
-          # make -j $(nproc) check
+          make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
