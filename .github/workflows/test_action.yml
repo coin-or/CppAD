@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: run make check in build subdirectory
+      - name: run cmake
         run: |
           mkdir build
           cd build
@@ -25,6 +25,11 @@ jobs:
           esac
           echo "cmake -D cppad_debug_which=$debug_which" ..
           # cmake -D cppad_debug_which=$debug_which ..
+          echo "pwd = $(pwd)"
+          echo "debug_which=$debug_which"
+      - name: Check that pwd and debug_which are the same
+          echo "pwd = $(pwd)"
+          echo "debug_which=$debug_which"
           echo "make -j $(nproc) check"
           # make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
