@@ -6,8 +6,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: run cmake
+      - name: set debug_which
         run: |
+          echo "pwd = $(pwd)"
           mkdir build
           cd build
           set +e
@@ -23,14 +24,17 @@ jobs:
             3) debug_which='debug_none'
             ;;
           esac
+          echo "$debug_which" > debug_which
+      - name: run cmake
+          echo "pwd = $(pwd)"
+          cd build
+          debug_which=$(cat $debug_which)
           echo "cmake -D cppad_debug_which=$debug_which" ..
           # cmake -D cppad_debug_which=$debug_which ..
-          echo "pwd = $(pwd)"
-          echo "debug_which=$debug_which"
       - name: Check that pwd and debug_which are the same
         run: |
           echo "pwd = $(pwd)"
-          echo "debug_which=$debug_which"
+          cd build
           echo "make -j $(nproc) check"
           # make -j $(nproc) check
       - run: echo "job.status = ${{ job.status }}"
