@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -13,6 +13,11 @@
 # build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform:
   - x64
+
+# branches to build on push
+branches:
+  only:
+    - master
 
 # msys2 environment
 environment:
