@@ -78,61 +78,68 @@ A:active { color : purple }
 <center><b><big><big>The AD atan2 Function: Example and Test</big></big></b></center>
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># define</font></b> N_THETA <font color="#993399">20</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">atan2</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-
+    <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-
-    <i><font color="#9A1900">// domain space vector</font></i>
-    <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-    <font color="#009900">double</font> x0 <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> x0<font color="#990000">;</font>
-
-    <i><font color="#9A1900">// declare independent variables and start tape recording</font></i>
-    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// a temporary value</font></i>
-    <font color="#008080">AD&lt;double&gt;</font> sin_of_x0 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-    <font color="#008080">AD&lt;double&gt;</font> cos_of_x0 <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
-
-    <i><font color="#9A1900">// range space vector</font></i>
-    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">atan2</font></b><font color="#990000">(</font>sin_of_x0<font color="#990000">,</font> cos_of_x0<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// create f: x -&gt; y and stop tape recording</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// check value</font></i>
-    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> x0<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// forward computation of first partial w.r.t. x[0]</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dx</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dy</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    dx<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-    dy    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> dx<font color="#990000">);</font>
-    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dy<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// reverse computation of derivative of y[0]</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-    w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
-    dw    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
-    ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#993399">1</font><font color="#990000">.,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// use a VecAD&lt;Base&gt;::reference object with atan2</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
-    <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">one</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-    v<font color="#990000">[</font>zero<font color="#990000">]</font>           <font color="#990000">=</font> sin_of_x0<font color="#990000">;</font>
-    v<font color="#990000">[</font>one<font color="#990000">]</font>            <font color="#990000">=</font> cos_of_x0<font color="#990000">;</font>
-    <font color="#008080">AD&lt;double&gt;</font> result <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">atan2</font></b><font color="#990000">(</font>v<font color="#990000">[</font>zero<font color="#990000">],</font> v<font color="#990000">[</font>one<font color="#990000">]);</font>
-    ok               <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>result<font color="#990000">,</font> x0<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-
+    <font color="#009900">double</font> pi    <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1.0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> N_THETA<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// theta</font></i>
+        <font color="#009900">double</font> theta <font color="#990000">=</font>  <font color="#993399">2.0</font> <font color="#990000">*</font> pi <font color="#990000">*</font> <font color="#009900">double</font><font color="#990000">(</font>k<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>N_THETA<font color="#990000">)</font> <font color="#990000">-</font> pi<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// radius</font></i>
+        <font color="#009900">double</font> radius <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>k<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>N_THETA<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// x, y</font></i>
+        <font color="#009900">double</font> x <font color="#990000">=</font> radius <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>theta<font color="#990000">);</font>
+        <font color="#009900">double</font> y <font color="#990000">=</font> radius <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>theta<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// au</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">au</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+        au<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">;</font>
+        au<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> y<font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>au<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// av</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;)</font> <b><font color="#000000">av</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        av<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">atan2</font></b><font color="#990000">(</font>au<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> au<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// f(x, y) = atan2(y, x)</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>au<font color="#990000">,</font> av<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// check value</font></i>
+        ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>av<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> theta<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// partial_x, partial_y</font></i>
+        <i><font color="#9A1900">// see https://en.wikipedia.org/wiki/Atan2#Derivative</font></i>
+        <font color="#009900">double</font> partial_x <font color="#990000">=</font> <font color="#990000">-</font> y <font color="#990000">/</font> <font color="#990000">(</font>radius <font color="#990000">*</font> radius<font color="#990000">);</font>
+        <font color="#009900">double</font> partial_y <font color="#990000">=</font>   x <font color="#990000">/</font> <font color="#990000">(</font>radius <font color="#990000">*</font> radius<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// check forward mode</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">du</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">),</font> <b><font color="#000000">dv</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        du<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+        du<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        dv    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> du<font color="#990000">);</font>
+        ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> partial_x<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        du<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        du<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+        dv    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> du<font color="#990000">);</font>
+        ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> partial_y<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// check reverse mode</font></i>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">w</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+        w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+        dw    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> w<font color="#990000">);</font>
+        ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> partial_x<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        ok   <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">],</font> partial_y<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+    <font color="#FF0000">}</font>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 08-31 08-27 08-26 07-31 07-30 07-12 06-22 06-06 06-02 05-12 04-30 04-28 04-27 04-26 04-16 04-09 04-07 04-05 04-02 03-29 03-24 03-11 03-09 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2021 09-04 08-31 08-27 08-26 07-31 07-30 07-12 06-22 06-06 06-02 05-12 04-30 04-28 04-27 04-26 04-16 04-09 04-07 04-05 04-02 03-29 03-24 03-11 03-09 03-08 03-07 02-21 02-16 02-14 02-12 02-11 02-08 02-06 01-27 01-26 01-08 01-07 01-05 01-03 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>09-04</option>
 <option>08-31</option>
 <option>08-27</option>
 <option>08-26</option>
@@ -116,6 +117,19 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2021</big></big></b></center>
+<br>
+<b><big><a name="09-04" id="09-04">09-04</a></big></b>
+<br>
+There was a bug in the <a href="atan2.htm" target="_top"><span style='white-space: nowrap'>atan2</span></a>
+ function.
+For example, the derivative of <code><font color="blue">atan2(0,1)</font></code> was incorrect; see
+<a href="https://github.com/coin-or/CppAD/issues/120" target="_top"><span style='white-space: nowrap'>issue&nbsp;120</span></a>
+.
+This has been fixed and the <a href="atan2.cpp.htm" target="_top"><span style='white-space: nowrap'>atan2.cpp</span></a>
+ example has been
+extended to do more testing.
+
+<br>
 <br>
 <b><big><a name="08-31" id="08-31">08-31</a></big></b>
 <br>

@@ -321,33 +321,46 @@ AD <a href="atan2.htm" target="_top"><span style='white-space: nowrap'>atan2</sp
 example of using conditional expressions:
 <pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#008080">AD&lt;Base&gt; atan2 (const AD&lt;Base&gt; &amp;y, const AD&lt;Base&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
-<font color="#FF0000">{</font>   <font color="#008080">AD&lt;Base&gt;</font> alpha<font color="#990000">;</font>
-    <font color="#008080">AD&lt;Base&gt;</font> beta<font color="#990000">;</font>
-    <font color="#008080">AD&lt;Base&gt;</font> theta<font color="#990000">;</font>
-
+<font color="#FF0000">{</font>   <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// zero, pi2, pi</font></i>
     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">zero</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">.);</font>
     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">pi2</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.));</font>
     <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">pi</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">.</font> <font color="#990000">*</font> pi2<font color="#990000">);</font>
-
-    <font color="#008080">AD&lt;Base&gt;</font> ax <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>x<font color="#990000">);</font>
-    <font color="#008080">AD&lt;Base&gt;</font> ay <font color="#990000">=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font>y<font color="#990000">);</font>
-
-    <i><font color="#9A1900">// if( ax &gt; ay )</font></i>
-    <i><font color="#9A1900">//      theta = atan(ay / ax);</font></i>
-    <i><font color="#9A1900">// else theta = pi2 - atan(ax / ay);</font></i>
-    alpha <font color="#990000">=</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ay <font color="#990000">/</font> ax<font color="#990000">);</font>
-    beta  <font color="#990000">=</font> pi2 <font color="#990000">-</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>ax <font color="#990000">/</font> ay<font color="#990000">);</font>
-    theta <font color="#990000">=</font> <b><font color="#000000">CondExpGt</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">,</font> alpha<font color="#990000">,</font> beta<font color="#990000">);</font>         <i><font color="#9A1900">// use of CondExp</font></i>
-
-    <i><font color="#9A1900">// if( x &lt;= 0 )</font></i>
-    <i><font color="#9A1900">//     theta = pi - theta;</font></i>
-    theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>x<font color="#990000">,</font> zero<font color="#990000">,</font> pi <font color="#990000">-</font> theta<font color="#990000">,</font> theta<font color="#990000">);</font>  <i><font color="#9A1900">// use of CondExp</font></i>
-
-    <i><font color="#9A1900">// if( y &lt;= 0 )</font></i>
-    <i><font color="#9A1900">//     theta = - theta;</font></i>
-    theta <font color="#990000">=</font> <b><font color="#000000">CondExpLe</font></b><font color="#990000">(</font>y<font color="#990000">,</font> zero<font color="#990000">,</font> <font color="#990000">-</font>theta<font color="#990000">,</font> theta<font color="#990000">);</font>      <i><font color="#9A1900">// use of CondExp</font></i>
-
-    <b><font color="#0000FF">return</font></b> theta<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// abs_x, abs_y</font></i>
+    <i><font color="#9A1900">// Not using fabs because its derivative is zero at zero</font></i>
+    <font color="#008080">AD&lt;Base&gt;</font> abs_x <font color="#990000">=</font> <b><font color="#000000">CondExpGe</font></b><font color="#990000">(</font>x<font color="#990000">,</font> zero<font color="#990000">,</font> x<font color="#990000">,</font> <font color="#990000">-</font>x<font color="#990000">);</font>
+    <font color="#008080">AD&lt;Base&gt;</font> abs_y <font color="#990000">=</font> <b><font color="#000000">CondExpGe</font></b><font color="#990000">(</font>y<font color="#990000">,</font> zero<font color="#990000">,</font> y<font color="#990000">,</font> <font color="#990000">-</font>y<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// first</font></i>
+    <i><font color="#9A1900">// This is the result for first quadrant: x &gt;= 0 , y &gt;= 0</font></i>
+    <font color="#008080">AD&lt;Base&gt;</font> alpha <font color="#990000">=</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>abs_y <font color="#990000">/</font> abs_x<font color="#990000">);</font>
+    <font color="#008080">AD&lt;Base&gt;</font> beta  <font color="#990000">=</font> pi2 <font color="#990000">-</font> <b><font color="#000000">atan</font></b><font color="#990000">(</font>abs_x <font color="#990000">/</font> abs_y<font color="#990000">);</font>
+    <font color="#008080">AD&lt;Base&gt;</font> first <font color="#990000">=</font> <b><font color="#000000">CondExpGt</font></b><font color="#990000">(</font>abs_x<font color="#990000">,</font> abs_y<font color="#990000">,</font> alpha<font color="#990000">,</font> beta<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// second</font></i>
+    <i><font color="#9A1900">// This is the result for second quadrant: x &lt;= 0 , y &gt;= 0</font></i>
+    <font color="#008080">AD&lt;Base&gt;</font> second <font color="#990000">=</font> pi <font color="#990000">-</font> first<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// third</font></i>
+    <i><font color="#9A1900">// This is the result for third quadrant: x &lt;= 0 , y &lt;= 0</font></i>
+    <font color="#008080">AD&lt;Base&gt;</font> third <font color="#990000">=</font> <font color="#990000">-</font> pi <font color="#990000">+</font> first<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// fourth</font></i>
+    <i><font color="#9A1900">// This is the result for fourth quadrant: x &gt;= 0 , y &lt;= 0</font></i>
+    <font color="#008080">AD&lt;Base&gt;</font> fourth <font color="#990000">=</font> <font color="#990000">-</font> first<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// alpha</font></i>
+    <i><font color="#9A1900">// This is the result for x &gt;= 0</font></i>
+    alpha <font color="#990000">=</font> <b><font color="#000000">CondExpGe</font></b><font color="#990000">(</font>y<font color="#990000">,</font> zero<font color="#990000">,</font> first<font color="#990000">,</font> fourth<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// beta</font></i>
+    <i><font color="#9A1900">// This is the result for x &lt;= 0</font></i>
+    beta <font color="#990000">=</font> <b><font color="#000000">CondExpGe</font></b><font color="#990000">(</font>y<font color="#990000">,</font> zero<font color="#990000">,</font> second<font color="#990000">,</font> third<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <font color="#008080">AD&lt;Base&gt;</font> result <font color="#990000">=</font> <b><font color="#000000">CondExpGe</font></b><font color="#990000">(</font>x<font color="#990000">,</font> zero<font color="#990000">,</font> alpha<font color="#990000">,</font> beta<font color="#990000">);</font>
+    <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: include/cppad/core/cond_exp.hpp
