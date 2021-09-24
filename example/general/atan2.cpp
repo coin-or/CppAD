@@ -39,10 +39,10 @@ bool atan2(void)
     //
     for(size_t k = 0; k < N_THETA; ++k)
     {   // theta
-        double theta =  2.0 * pi * (k+1) / double(N_THETA) - pi;
+        double theta =  2.0 * pi * double(k+1) / double(N_THETA) - pi;
         //
         // radius
-        double radius = 1.0 + k / double(N_THETA);
+        double radius = 1.0 + double(k) / double(N_THETA);
         //
         // x, y
         double x = radius * std::cos(theta);
