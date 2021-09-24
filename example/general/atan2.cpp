@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -27,61 +27,68 @@ $end
 // BEGIN C++
 
 # include <cppad/cppad.hpp>
+# define N_THETA 20
 
 bool atan2(void)
 {   bool ok = true;
-
+    //
     using CppAD::AD;
     using CppAD::NearEqual;
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-
-    // domain space vector
-    size_t n  = 1;
-    double x0 = 0.5;
-    CPPAD_TESTVECTOR(AD<double>) x(n);
-    x[0]      = x0;
-
-    // declare independent variables and start tape recording
-    CppAD::Independent(x);
-
-    // a temporary value
-    AD<double> sin_of_x0 = CppAD::sin(x[0]);
-    AD<double> cos_of_x0 = CppAD::cos(x[0]);
-
-    // range space vector
-    size_t m = 1;
-    CPPAD_TESTVECTOR(AD<double>) y(m);
-    y[0] = CppAD::atan2(sin_of_x0, cos_of_x0);
-
-    // create f: x -> y and stop tape recording
-    CppAD::ADFun<double> f(x, y);
-
-    // check value
-    ok &= NearEqual(y[0] , x0, eps99, eps99);
-
-    // forward computation of first partial w.r.t. x[0]
-    CPPAD_TESTVECTOR(double) dx(n);
-    CPPAD_TESTVECTOR(double) dy(m);
-    dx[0] = 1.;
-    dy    = f.Forward(1, dx);
-    ok   &= NearEqual(dy[0], 1., eps99, eps99);
-
-    // reverse computation of derivative of y[0]
-    CPPAD_TESTVECTOR(double)  w(m);
-    CPPAD_TESTVECTOR(double) dw(n);
-    w[0]  = 1.;
-    dw    = f.Reverse(1, w);
-    ok   &= NearEqual(dw[0], 1., eps99, eps99);
-
-    // use a VecAD<Base>::reference object with atan2
-    CppAD::VecAD<double> v(2);
-    AD<double> zero(0);
-    AD<double> one(1);
-    v[zero]           = sin_of_x0;
-    v[one]            = cos_of_x0;
-    AD<double> result = CppAD::atan2(v[zero], v[one]);
-    ok               &= NearEqual(result, x0, eps99, eps99);
-
+    double pi    = 2.0 * std::atan(1.0);
+    //
+    for(size_t k = 0; k < N_THETA; ++k)
+    {   // theta
+        double theta =  2.0 * pi * (k+1) / double(N_THETA) - pi;
+        //
+        // radius
+        double radius = 1.0 + k / double(N_THETA);
+        //
+        // x, y
+        double x = radius * std::cos(theta);
+        double y = radius * std::sin(theta);
+        //
+        // au
+        CPPAD_TESTVECTOR(AD<double>) au(2);
+        au[0] = x;
+        au[1] = y;
+        CppAD::Independent(au);
+        //
+        // av
+        CPPAD_TESTVECTOR(AD<double>) av(1);
+        av[0] = CppAD::atan2(au[1], au[0]);
+        //
+        // f(x, y) = atan2(y, x)
+        CppAD::ADFun<double> f(au, av);
+        //
+        // check value
+        ok &= NearEqual(av[0] , theta, eps99, eps99);
+        //
+        // partial_x, partial_y
+        // see https://en.wikipedia.org/wiki/Atan2#Derivative
+        double partial_x = - y / (radius * radius);
+        double partial_y =   x / (radius * radius);
+        //
+        // check forward mode
+        CPPAD_TESTVECTOR(double) du(2), dv(1);
+        du[0] = 1.0;
+        du[1] = 0.0;
+        dv    = f.Forward(1, du);
+        ok   &= NearEqual(dv[0], partial_x, eps99, eps99);
+        du[0] = 0.0;
+        du[1] = 1.0;
+        dv    = f.Forward(1, du);
+        ok   &= NearEqual(dv[0], partial_y, eps99, eps99);
+        //
+        // check reverse mode
+        CPPAD_TESTVECTOR(double)  w(1);
+        CPPAD_TESTVECTOR(double) dw(2);
+        w[0]  = 1.;
+        dw    = f.Reverse(1, w);
+        ok   &= NearEqual(dw[0], partial_x, eps99, eps99);
+        ok   &= NearEqual(dw[1], partial_y, eps99, eps99);
+        //
+    }
     return ok;
 }
 

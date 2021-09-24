@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATAN2_HPP
 # define CPPAD_CORE_ATAN2_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -91,33 +91,46 @@ inline double atan2(double x, double y)
 // BEGIN CondExp
 template <class Base>
 AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
-{   AD<Base> alpha;
-    AD<Base> beta;
-    AD<Base> theta;
-
+{   //
+    // zero, pi2, pi
     AD<Base> zero(0.);
     AD<Base> pi2(2. * atan(1.));
     AD<Base> pi(2. * pi2);
-
-    AD<Base> ax = fabs(x);
-    AD<Base> ay = fabs(y);
-
-    // if( ax > ay )
-    //      theta = atan(ay / ax);
-    // else theta = pi2 - atan(ax / ay);
-    alpha = atan(ay / ax);
-    beta  = pi2 - atan(ax / ay);
-    theta = CondExpGt(ax, ay, alpha, beta);         // use of CondExp
-
-    // if( x <= 0 )
-    //     theta = pi - theta;
-    theta = CondExpLe(x, zero, pi - theta, theta);  // use of CondExp
-
-    // if( y <= 0 )
-    //     theta = - theta;
-    theta = CondExpLe(y, zero, -theta, theta);      // use of CondExp
-
-    return theta;
+    //
+    // abs_x, abs_y
+    // Not using fabs because its derivative is zero at zero
+    AD<Base> abs_x = CondExpGe(x, zero, x, -x);
+    AD<Base> abs_y = CondExpGe(y, zero, y, -y);
+    //
+    // first
+    // This is the result for first quadrant: x >= 0 , y >= 0
+    AD<Base> alpha = atan(abs_y / abs_x);
+    AD<Base> beta  = pi2 - atan(abs_x / abs_y);
+    AD<Base> first = CondExpGt(abs_x, abs_y, alpha, beta);
+    //
+    // second
+    // This is the result for second quadrant: x <= 0 , y >= 0
+    AD<Base> second = pi - first;
+    //
+    // third
+    // This is the result for third quadrant: x <= 0 , y <= 0
+    AD<Base> third = - pi + first;
+    //
+    // fourth
+    // This is the result for fourth quadrant: x >= 0 , y <= 0
+    AD<Base> fourth = - first;
+    //
+    // alpha
+    // This is the result for x >= 0
+    alpha = CondExpGe(y, zero, first, fourth);
+    //
+    // beta
+    // This is the result for x <= 0
+    beta = CondExpGe(y, zero, second, third);
+    //
+    //
+    AD<Base> result = CondExpGe(x, zero, alpha, beta);
+    return result;
 }
 // END CondExp
 

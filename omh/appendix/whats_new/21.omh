@@ -42,9 +42,17 @@ $spell
     pkgconfig
     cplusplus
     txt
+    atan
 $$
 
 $section Changes and Additions to CppAD During 2021$$
+
+$head 09-04$$
+There was a bug in the $cref atan2$$ function.
+For example, the derivative of $code atan2(0,1)$$ was incorrect; see
+$href%https://github.com/coin-or/CppAD/issues/120%issue 120%$$.
+This has been fixed and the $cref atan2.cpp$$ example has been
+extended to do more testing.
 
 $head 08-31$$
 There was a bug in the CMake configuration files such that
