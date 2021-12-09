@@ -47,6 +47,9 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 12-08$$
+Update to a newer version of the $cref autotools$$.
+
 $head 09-04$$
 There was a bug in the $cref atan2$$ function.
 For example, the derivative of $code atan2(0,1)$$ was incorrect; see
