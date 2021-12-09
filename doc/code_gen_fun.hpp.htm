@@ -111,7 +111,7 @@ A:active { color : purple }
 <b><font color="#0000FF">class</font></b> <font color="#008080">CPPAD_LIB_EXPORT</font> code_gen_fun <font color="#FF0000">{</font>
 <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
     <i><font color="#9A1900">// type of evaluation for Jacobians (possibly Hessians in the future)</font></i>
-    <b><font color="#0000FF">enum</font></b> evaluation_enum <font color="#FF0000">{</font> none_enum<font color="#990000">,</font> dense_enum<font color="#990000">,</font> sparse_enum <font color="#FF0000">}</font><font color="#990000">;</font>
+    <b><font color="#0000FF">enum</font></b> <font color="#008080">evaluation_enum</font> <font color="#FF0000">{</font> none_enum<font color="#990000">,</font> dense_enum<font color="#990000">,</font> sparse_enum <font color="#FF0000">}</font><font color="#990000">;</font>
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
     <i><font color="#9A1900">// dynamic_lib_</font></i>
     std<font color="#990000">::</font><font color="#008080">unique_ptr&lt; CppAD::cg::DynamicLib&lt;double&gt; &gt;</font> dynamic_lib_<font color="#990000">;</font>

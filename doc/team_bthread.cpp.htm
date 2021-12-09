@@ -94,7 +94,7 @@ See <a href="team_thread.hpp.htm" target="_top"><span style='white-space: nowrap
     boost<font color="#990000">::</font><font color="#008080">thread_specific_ptr&lt;size_t&gt;</font> <b><font color="#000000">thread_num_ptr_</font></b><font color="#990000">(</font>cleanup<font color="#990000">);</font>
 
     <i><font color="#9A1900">// type of the job currently being done by each thread</font></i>
-    <b><font color="#0000FF">enum</font></b> thread_job_t <font color="#FF0000">{</font> init_enum<font color="#990000">,</font> work_enum<font color="#990000">,</font> join_enum <font color="#FF0000">}</font> thread_job_<font color="#990000">;</font>
+    <b><font color="#0000FF">enum</font></b> <font color="#008080">thread_job_t</font> <font color="#FF0000">{</font> init_enum<font color="#990000">,</font> work_enum<font color="#990000">,</font> join_enum <font color="#FF0000">}</font> thread_job_<font color="#990000">;</font>
 
     <i><font color="#9A1900">// barrier used to wait for other threads to finish work</font></i>
     boost<font color="#990000">::</font>barrier<font color="#990000">*</font> wait_for_work_ <font color="#990000">=</font> nullptr<font color="#990000">;</font>

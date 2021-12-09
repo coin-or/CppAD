@@ -152,7 +152,7 @@ values of the independent variables
  function).
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
     <b><font color="#0000FF">inline</font></b> <font color="#008080">adouble</font> <b><font color="#000000">CondExpOp</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">enum</font></b>  CppAD<font color="#990000">::</font><font color="#008080">CompareOp</font>     cop <font color="#990000">,</font>
+        <b><font color="#0000FF">enum</font></b>  <font color="#008080">CppAD</font><font color="#990000">::</font><font color="#008080">CompareOp</font>     cop <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>            <font color="#990000">&amp;</font>left <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>           <font color="#990000">&amp;</font>right <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> <font color="#008080">adouble</font>        <font color="#990000">&amp;</font>trueCase <font color="#990000">,</font>
@@ -180,7 +180,7 @@ values of the independent variables
             <b><font color="#0000FF">case</font></b> CompareGt<font color="#990000">:</font> <i><font color="#9A1900">// left &gt; right</font></i>
             <b><font color="#000000">condassign</font></b><font color="#990000">(</font>result<font color="#990000">,</font> left <font color="#990000">-</font> right<font color="#990000">,</font> trueCase<font color="#990000">,</font> falseCase<font color="#990000">);</font>
             <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
-<b><font color="#008080">            default:</font></b>
+            <b><font color="#0000FF">default</font></b><font color="#990000">:</font>
             CppAD<font color="#990000">::</font>ErrorHandler<font color="#990000">::</font><b><font color="#000000">Call</font></b><font color="#990000">(</font>
                 <b><font color="#0000FF">true</font></b>     <font color="#990000">,</font> __LINE__ <font color="#990000">,</font> __FILE__ <font color="#990000">,</font>
                 <font color="#FF0000">"CppAD::CondExp"</font><font color="#990000">,</font>
