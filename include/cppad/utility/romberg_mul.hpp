@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_ROMBERG_MUL_HPP
 # define CPPAD_UTILITY_ROMBERG_MUL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -268,13 +268,16 @@ public:
 
         size_t i, j;
         Float prod = 1;
+        for(i = 0; i < m-1; i++)
+            prod *= (b[i] - a[i]);
+
+# ifndef NDEBUG
         size_t pow2 = 1;
         for(i = 0; i < m-1; i++)
-        {   prod *= (b[i] - a[i]);
             for(j = 0; j < (n[i] - 1); j++)
                 pow2 *= 2;
-        }
         assert( Fm1.GetEcount() == (pow2+1) );
+# endif
 
         e = e + Fm1.GetEsum() * prod / Float( double(Fm1.GetEcount()) );
 

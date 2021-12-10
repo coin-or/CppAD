@@ -101,7 +101,8 @@ am_atomic_OBJECTS = atomic_three.$(OBJEXT) mat_mul.$(OBJEXT) \
 	norm_sq.$(OBJEXT) tangent.$(OBJEXT) base2ad.$(OBJEXT) \
 	reciprocal.$(OBJEXT) dynamic.$(OBJEXT) forward.$(OBJEXT) \
 	get_started.$(OBJEXT) hes_sparsity.$(OBJEXT) \
-	jac_sparsity.$(OBJEXT) reverse.$(OBJEXT) rev_depend.$(OBJEXT)
+	jac_sparsity.$(OBJEXT) reverse.$(OBJEXT) rev_depend.$(OBJEXT) \
+	vector_math.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -125,7 +126,8 @@ am__depfiles_remade = ./$(DEPDIR)/atomic_three.Po \
 	./$(DEPDIR)/hes_sparsity.Po ./$(DEPDIR)/jac_sparsity.Po \
 	./$(DEPDIR)/mat_mul.Po ./$(DEPDIR)/norm_sq.Po \
 	./$(DEPDIR)/reciprocal.Po ./$(DEPDIR)/rev_depend.Po \
-	./$(DEPDIR)/reverse.Po ./$(DEPDIR)/tangent.Po
+	./$(DEPDIR)/reverse.Po ./$(DEPDIR)/tangent.Po \
+	./$(DEPDIR)/vector_math.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -365,7 +367,8 @@ atomic_SOURCES = \
 	hes_sparsity.cpp \
 	jac_sparsity.cpp \
 	reverse.cpp \
-	rev_depend.cpp
+	rev_depend.cpp \
+	vector_math.cpp
 
 all: all-am
 
@@ -427,6 +430,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_depend.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tangent.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vector_math.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -588,6 +592,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/rev_depend.Po
 	-rm -f ./$(DEPDIR)/reverse.Po
 	-rm -f ./$(DEPDIR)/tangent.Po
+	-rm -f ./$(DEPDIR)/vector_math.Po
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -646,6 +651,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/rev_depend.Po
 	-rm -f ./$(DEPDIR)/reverse.Po
 	-rm -f ./$(DEPDIR)/tangent.Po
+	-rm -f ./$(DEPDIR)/vector_math.Po
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

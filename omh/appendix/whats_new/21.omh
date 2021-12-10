@@ -47,6 +47,9 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 12-10$$
+Added the example $cref atomic_three_vector_math.cpp$$.
+
 $head 12-08$$
 Update to a newer version of the $cref autotools$$.
 
