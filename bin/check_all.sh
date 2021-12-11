@@ -77,9 +77,7 @@ echo_log_eval() {
     then
         head "$top_srcdir/check_all.warn"
         echo 'Warning: see check_all.warn, check_all.log'
-        #
-        # 2DO: fix the warnings and uncomment exit 1 below
-        # exit 1
+        exit 1
     fi
     rm $top_srcdir/check_all.warn $top_srcdir/check_all.err
 }

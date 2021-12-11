@@ -266,15 +266,14 @@ public:
 
         r  = RombergMulM1(Fm1, a, b, n, p, e);
 
-        size_t i, j;
         Float prod = 1;
-        for(i = 0; i < m-1; i++)
+        for(size_t i = 0; i < m-1; i++)
             prod *= (b[i] - a[i]);
 
 # ifndef NDEBUG
         size_t pow2 = 1;
-        for(i = 0; i < m-1; i++)
-            for(j = 0; j < (n[i] - 1); j++)
+        for(size_t i = 0; i < m-1; i++)
+            for(size_t j = 0; j < (n[i] - 1); j++)
                 pow2 *= 2;
         assert( Fm1.GetEcount() == (pow2+1) );
 # endif

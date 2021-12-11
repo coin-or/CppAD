@@ -159,7 +159,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     size_t start_dynamic_ind = 1;
     size_t start_independent = start_dynamic_ind + n_dynamic_ind;
     size_t start_constant    = start_independent + n_variable_ind;
+# ifndef NDEBUG
     size_t start_operator    = start_constant    + n_constant;
+# endif
     //
     // initialize mappings from node index as empty
     // (there is no node zero)
@@ -338,7 +340,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     cpp_graph::const_iterator       graph_itr;
     //
     // loop over operators in the recording
+# ifndef NDEBUG
     size_t start_result = start_operator;
+# endif
     for(size_t op_index = 0; op_index < n_usage; ++op_index)
     {   // op_enum, str_index, n_result, arg_node
         if( op_index == 0 )
@@ -1412,7 +1416,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             node2fun.push_back(i_result);
         }
         //
+# ifndef NDEBUG
         start_result          += n_result;
+# endif
         CPPAD_ASSERT_UNKNOWN( node2fun.size() == start_result );
         CPPAD_ASSERT_UNKNOWN( node_type.size() == start_result );
     }
