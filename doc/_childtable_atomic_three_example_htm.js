@@ -8,6 +8,7 @@ document.write('\
 <option>atomic_three_base2ad.cpp</option>\
 <option>atomic_three_reciprocal.cpp</option>\
 <option>atomic_three_mat_mul.cpp</option>\
+<option>atomic_three_vector_math.cpp</option>\
 </select>\
 ');
 function atomic_three_example_child(item)
@@ -17,7 +18,8 @@ function atomic_three_example_child(item)
 		'atomic_three_tangent.cpp.htm',
 		'atomic_three_base2ad.cpp.htm',
 		'atomic_three_reciprocal.cpp.htm',
-		'atomic_three_mat_mul.cpp.htm'
+		'atomic_three_mat_mul.cpp.htm',
+		'atomic_three_vector_math.cpp.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
