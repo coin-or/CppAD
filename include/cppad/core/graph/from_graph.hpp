@@ -156,10 +156,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     }
     //
     // Start of node indices
+# ifndef NDEBUG
     size_t start_dynamic_ind = 1;
     size_t start_independent = start_dynamic_ind + n_dynamic_ind;
     size_t start_constant    = start_independent + n_variable_ind;
-# ifndef NDEBUG
     size_t start_operator    = start_constant    + n_constant;
 # endif
     //

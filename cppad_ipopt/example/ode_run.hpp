@@ -1,7 +1,7 @@
 # ifndef CPPAD_CPPAD_IPOPT_EXAMPLE_ODE_RUN_HPP
 # define CPPAD_CPPAD_IPOPT_EXAMPLE_ODE_RUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -36,7 +36,7 @@ void ipopt_ode_case(
     bool  retape        ,
     const SizeVector& N ,
     NumberVector&     x )
-{   bool ok = true;
+{
     size_t i, j;
 
     // compute the partial sums of the number of grid points
@@ -103,13 +103,22 @@ void ipopt_ode_case(
     app->Options()-> SetStringValue( "derivative_test", "second-order");
     app->Options()-> SetNumericValue( "point_perturbation_radius", 0.);
 
+# ifndef NDEBUG
+    bool ok = true;
+    //
     // Initialize the application and process the options
     Ipopt::ApplicationReturnStatus status = app->Initialize();
     ok    &= status == Ipopt::Solve_Succeeded;
-
+    //
     // Run the application
     status = app->OptimizeTNLP(cppad_nlp);
     ok    &= status == Ipopt::Solve_Succeeded;
+    //
+    assert(ok);
+# else
+    app->Initialize();
+    app->OptimizeTNLP(cppad_nlp);
+# endif
 
     // return the solution
     x.resize( solution.x.size() );
