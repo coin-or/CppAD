@@ -99,7 +99,91 @@ private:
         return true;
     }
     // ----------------------------------------------------------------------
-    // forward mode
+    // template_forward_op
+    // ----------------------------------------------------------------------
+    template <class Scalar>
+    void template_forward_add(
+        size_t                             n           ,
+        size_t                             m           ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector<Scalar>&              tx          ,
+        vector<Scalar>&                    ty          )
+    {
+        for(size_t i = 0; i < m; ++i)
+        {   for(size_t k = p; k <= q; ++k)
+            {   size_t left_index   = (1 + i) * (q+1) + k;
+                size_t right_index  = (1 + m + i) * (q+1) + k;
+                size_t y_index      = i * (q+1) + k;
+                ty[y_index]         = tx[left_index] + tx[right_index];
+            }
+        }
+    }
+    template <class Scalar>
+    void template_forward_sub(
+        size_t                             n           ,
+        size_t                             m           ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector<Scalar>&              tx          ,
+        vector<Scalar>&                    ty          )
+    {
+        for(size_t i = 0; i < m; ++i)
+        {   for(size_t k = p; k <= q; ++k)
+            {   size_t left_index   = (1 + i) * (q+1) + k;
+                size_t right_index  = (1 + m + i) * (q+1) + k;
+                size_t y_index      = i * (q+1) + k;
+                ty[y_index]         = tx[left_index] - tx[right_index];
+            }
+        }
+    }
+    template <class Scalar>
+    void template_forward_mul(
+        size_t                             n           ,
+        size_t                             m           ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector<Scalar>&              tx          ,
+        vector<Scalar>&                    ty          )
+    {
+        for(size_t i = 0; i < m; ++i)
+        {   for(size_t k = p; k <= q; ++k)
+            {   size_t y_index = i * (q+1) + k;
+                ty[y_index]    = 0.0;
+                for(size_t d = 0; d <= k; d++)
+                {   size_t left_index   = (1 + i) * (q+1) + (k-d);
+                    size_t right_index  = (1 + m + i) * (q+1) + k;
+                    ty[y_index]        += tx[left_index] * tx[right_index];
+                }
+            }
+        }
+    }
+    template <class Scalar>
+    void template_forward_div(
+        size_t                             n           ,
+        size_t                             m           ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector<Scalar>&              tx          ,
+        vector<Scalar>&                    ty          )
+    {
+        for(size_t i = 0; i < m; ++i)
+        {   for(size_t k = p; k <= q; ++k)
+            {   size_t y_index     = i * (q+1) + k;
+                size_t left_index  = (1 + i) * (q+1) + k;
+                ty[y_index]        = tx[left_index];
+                for(size_t d = 1; d <= k; d++)
+                {   size_t y_other      = i * (q+1) + (k-d);
+                    size_t right_index  = (1 + m + i) * (q+1) + d;
+                    ty[y_index]        -= ty[y_other] * tx[right_index];
+                }
+                size_t right_index = (1 + m + i ) * (q+1) + 0;
+                ty[y_index] /= tx[right_index];
+            }
+        }
+    }
+    // ----------------------------------------------------------------------
+    // template_forward
     // ----------------------------------------------------------------------
     template <class Scalar>
     bool template_forward(
@@ -120,59 +204,22 @@ private:
         {
             // addition
             case 0:
-            for(size_t i = 0; i < m; ++i)
-            {   for(size_t k = p; k <= q; ++k)
-                {   size_t left_index   = (1 + i) * (q+1) + k;
-                    size_t right_index  = (1 + m + i) * (q+1) + k;
-                    size_t y_index      = i * (q+1) + k;
-                    ty[y_index]         = tx[left_index] + tx[right_index];
-                }
-            }
+            template_forward_add(n, m, q, p, tx, ty);
             break;
 
             // subtraction
             case 1:
-            for(size_t i = 0; i < m; ++i)
-            {   for(size_t k = p; k <= q; ++k)
-                {   size_t left_index   = (1 + i) * (q+1) + k;
-                    size_t right_index  = (1 + m + i) * (q+1) + k;
-                    size_t y_index      = i * (q+1) + k;
-                    ty[y_index]         = tx[left_index] - tx[right_index];
-                }
-            }
+            template_forward_sub(n, m, q, p, tx, ty);
             break;
 
             // multiplication
             case 2:
-            for(size_t i = 0; i < m; ++i)
-            {   for(size_t k = p; k <= q; ++k)
-                {   size_t y_index = i * (q+1) + k;
-                    ty[y_index]    = 0.0;
-                    for(size_t d = 0; d <= k; d++)
-                    {   size_t left_index   = (1 + i) * (q+1) + (k-d);
-                        size_t right_index  = (1 + m + i) * (q+1) + k;
-                        ty[y_index]        += tx[left_index] * tx[right_index];
-                    }
-                }
-            }
+            template_forward_mul(n, m, q, p, tx, ty);
             break;
 
             // division
             case 3:
-            for(size_t i = 0; i < m; ++i)
-            {   for(size_t k = p; k <= q; ++k)
-                {   size_t y_index     = i * (q+1) + k;
-                    size_t left_index  = (1 + i) * (q+1) + k;
-                    ty[y_index]        = tx[left_index];
-                    for(size_t d = 1; d <= k; d++)
-                    {   size_t y_other      = i * (q+1) + (k-d);
-                        size_t right_index  = (1 + m + i) * (q+1) + d;
-                        ty[y_index]        -= ty[y_other] * tx[right_index];
-                    }
-                    size_t right_index = (1 + m + i ) * (q+1) + 0;
-                    ty[y_index] /= tx[right_index];
-                }
-            }
+            template_forward_div(n, m, q, p, tx, ty);
             break;
 
             // error
@@ -183,7 +230,10 @@ private:
         //
         return true;
     }
+    // ----------------------------------------------------------------------
+    // forward
     // forward mode routines called by ADFun<Base> objects
+    // ----------------------------------------------------------------------
     virtual bool forward(
         const vector<double>&              parameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
