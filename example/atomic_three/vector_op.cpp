@@ -113,19 +113,18 @@ private:
         return true;
     }
     // ----------------------------------------------------------------------
-    // template_forward_op
+    // forward_add
     // ----------------------------------------------------------------------
-    template <class Scalar>
-    void template_forward_add(
+    void forward_add(
         size_t                             n           ,
         size_t                             m           ,
         size_t                             p           ,
         size_t                             q           ,
-        const vector<Scalar>&              tx          ,
-        vector<Scalar>&                    ty          )
+        const vector<double>&              tx          ,
+        vector<double>&                    ty          )
     {
-        for(size_t i = 0; i < m; ++i)
-        {   for(size_t k = p; k <= q; ++k)
+        for(size_t k = p; k <= q; ++k)
+        {   for(size_t i = 0; i < m; ++i)
             {   size_t left_index   = (1 + i) * (q+1) + k;
                 size_t right_index  = (1 + m + i) * (q+1) + k;
                 size_t y_index      = i * (q+1) + k;
@@ -133,14 +132,40 @@ private:
             }
         }
     }
-    template <class Scalar>
-    void template_forward_sub(
+    void forward_add(
         size_t                             n           ,
         size_t                             m           ,
         size_t                             p           ,
         size_t                             q           ,
-        const vector<Scalar>&              tx          ,
-        vector<Scalar>&                    ty          )
+        const vector< AD<double> >&        atx         ,
+        vector< AD<double> >&              aty         )
+    {   vector< AD<double> > ax(n), ay(m);
+        ax[0] = AD<double>( add_enum );
+        for(size_t k = p; k <= q; ++k)
+        {   for(size_t i = 0; i < m; ++i)
+            {   size_t left_index   = (1 + i) * (q+1) + k;
+                size_t right_index  = (1 + m + i) * (q+1) + k;
+                ax[1+i]             = atx[left_index];
+                ax[1+ m+i]          = atx[right_index];
+            }
+            // atomic add operation
+            (*this)(ax, ay);
+            for(size_t i = 0; i < m; ++i)
+            {   size_t y_index   = i * (q+1) + k;
+                aty[y_index]     = ay[i];
+            }
+        }
+    }
+    // ----------------------------------------------------------------------
+    // forward_sub
+    // ----------------------------------------------------------------------
+    void forward_sub(
+        size_t                             n           ,
+        size_t                             m           ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector<double>&              tx          ,
+        vector<double>&                    ty          )
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
@@ -151,14 +176,16 @@ private:
             }
         }
     }
-    template <class Scalar>
-    void template_forward_mul(
+    // ----------------------------------------------------------------------
+    // forward_mul
+    // ----------------------------------------------------------------------
+    void forward_mul(
         size_t                             n           ,
         size_t                             m           ,
         size_t                             p           ,
         size_t                             q           ,
-        const vector<Scalar>&              tx          ,
-        vector<Scalar>&                    ty          )
+        const vector<double>&              tx          ,
+        vector<double>&                    ty          )
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
@@ -172,14 +199,16 @@ private:
             }
         }
     }
-    template <class Scalar>
-    void template_forward_div(
+    // ----------------------------------------------------------------------
+    // forward_div
+    // ----------------------------------------------------------------------
+    void forward_div(
         size_t                             n           ,
         size_t                             m           ,
         size_t                             p           ,
         size_t                             q           ,
-        const vector<Scalar>&              tx          ,
-        vector<Scalar>&                    ty          )
+        const vector<double>&              tx          ,
+        vector<double>&                    ty          )
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
@@ -197,54 +226,6 @@ private:
         }
     }
     // ----------------------------------------------------------------------
-    // template_forward
-    // ----------------------------------------------------------------------
-    template <class Scalar>
-    bool template_forward(
-        size_t                             n           ,
-        op_enum_t                          op          ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const vector<Scalar>&              tx          ,
-        vector<Scalar>&                    ty          )
-    {
-        // m
-        size_t m = (n - 1) / 2;
-        //
-        assert( tx.size() == (q+1) * n );
-        assert( ty.size() == (q+1) * m );
-        //
-        switch(op)
-        {
-            // addition
-            case add_enum:
-            template_forward_add(n, m, q, p, tx, ty);
-            break;
-
-            // subtraction
-            case sub_enum:
-            template_forward_sub(n, m, q, p, tx, ty);
-            break;
-
-            // multiplication
-            case mul_enum:
-            template_forward_mul(n, m, q, p, tx, ty);
-            break;
-
-            // division
-            case div_enum:
-            template_forward_div(n, m, q, p, tx, ty);
-            break;
-
-            // error
-            default:
-            assert(false);
-            break;
-        }
-        //
-        return true;
-    }
-    // ----------------------------------------------------------------------
     // forward
     // forward mode routines called by ADFun<Base> objects
     // ----------------------------------------------------------------------
@@ -256,11 +237,48 @@ private:
         size_t                             q           ,
         const vector<double>&              tx          ,
         vector<double>&                    ty          )
-    {   op_enum_t op = op_enum_t( parameter_x[0] );
+    {
+        // op, n, m
+        op_enum_t op = op_enum_t( parameter_x[0] );
         size_t n     = parameter_x.size();
-        return template_forward(n, op, p, q, tx, ty);
+        size_t m     = (n - 1) / 2;
+        //
+        assert( tx.size() == (q+1) * n );
+        assert( ty.size() == (q+1) * m );
+        //
+        switch(op)
+        {
+            // addition
+            case add_enum:
+            forward_add(n, m, q, p, tx, ty);
+            break;
+
+            // subtraction
+            case sub_enum:
+            forward_sub(n, m, q, p, tx, ty);
+            break;
+
+            // multiplication
+            case mul_enum:
+            forward_mul(n, m, q, p, tx, ty);
+            break;
+
+            // division
+            case div_enum:
+            forward_div(n, m, q, p, tx, ty);
+            break;
+
+            // error
+            case num_op:
+            assert(false);
+            break;
+        }
+        return true;
     }
+    // ----------------------------------------------------------------------
+    // forward
     // forward mode routines called by ADFun< AD<Base> , Base> objects
+    // ----------------------------------------------------------------------
     virtual bool forward(
         const vector< AD<double> >&        aparameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
@@ -269,10 +287,48 @@ private:
         size_t                             q           ,
         const vector< AD<double> >&        atx         ,
         vector< AD<double> >&              aty         )
-    {   op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );
+    {   //
+        // op, n, m
+        op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );
         size_t n     = aparameter_x.size();
-        return template_forward(n, op, p, q, atx, aty);
+        size_t m     = (n - 1) / 2;
+        //
+        assert( atx.size() == (q+1) * n );
+        assert( aty.size() == (q+1) * m );
+        //
+        bool ok;
+        switch(op)
+        {
+            // addition
+            case add_enum:
+            forward_add(n, m, q, p, atx, aty);
+            ok = true;
+            break;
+
+            // subtraction
+            case sub_enum:
+            ok = false;
+            break;
+
+            // multiplication
+            case mul_enum:
+            ok = false;
+            break;
+
+            // division
+            case div_enum:
+            ok = false;
+            break;
+
+            // error
+            case num_op:
+            assert(false);
+            ok = false;
+            break;
+        }
+        return ok;
     }
+
 }; // End of atomic_vector_op class
 }  // End empty namespace
 
@@ -290,10 +346,16 @@ bool vector_op(void)
     size_t m = 2;
     size_t n = 1 + 2 * m;
     //
-    // x
+    // ax
     CPPAD_TESTVECTOR( AD<double> ) ax(n);
+    //
+    // op_enum_t
     typedef atomic_vector_op::op_enum_t op_enum_t;
+    //
+    // num_op
     size_t num_op = size_t( atomic_vector_op::num_op );
+    //
+    // i_op
     for(size_t i_op = 0; i_op < num_op; ++i_op)
     {   //
         // op
@@ -339,8 +401,25 @@ bool vector_op(void)
                 case atomic_vector_op::div_enum:
                 check = ax[1 + i] / ax[1 + m + i];
                 break;
+
+                case atomic_vector_op::num_op:
+                assert( false );
+                break;
             }
             ok &= NearEqual( ay[i] , check,  eps99, eps99);
+        }
+        if( op == atomic_vector_op::add_enum )
+        {   CPPAD_TESTVECTOR(double) x(n), dx(n), dy(m);
+            for(size_t j = 0; j < n; ++j)
+            {   x[j]  = double(j);
+                dx[j] = double(j);
+            }
+            f.Forward(0, x);
+            dy = f.Forward(1, dx);
+            for(size_t i = 0; i < m; i++)
+            {   double check = double( (1 + i) + (1 + m + i) );
+                ok &= dy[i] == check;
+            }
         }
     }
     return ok;
