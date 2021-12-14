@@ -14,6 +14,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin atomic_three_vector_op.cpp$$
 $spell
     op
+    enum
+    mul
+    div
 $$
 
 $section Atomic Vector Math Operators: Example and Test$$
@@ -33,10 +36,11 @@ We use the notation $icode%m% = (%n% - 1) / 2%$$.
 $head op$$
 The value $icode%x%[0]%$$
 is a constant parameter with the following possible values:
-$code 0$$ for addition,
-$code 1$$ for subtraction,
-$code 2$$ for multiplication,
-$code 2$$ for division.
+$code add_enum$$,
+$code sub_enum$$,
+$code mul_enum$$,
+$code div_enum$$,
+(These enum value are defined in the $code atomic_vector_op$$ class.)
 We use $icode op$$ for the corresponding operator.
 
 $head left$$
@@ -72,12 +76,22 @@ using CppAD::vector;
 class atomic_vector_op : public CppAD::atomic_three<double> {
 //
 public:
+    // op_enum_t
+    typedef enum {
+        add_enum,
+        sub_enum,
+        mul_enum,
+        div_enum,
+        num_op,
+    } op_enum_t;
+    //
+    // atomic_vector_op
     atomic_vector_op(const std::string& name) :
     CppAD::atomic_three<double>(name)
     { }
 private:
     // ------------------------------------------------------------------------
-    // type
+    // for_type
     virtual bool for_type(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
@@ -188,7 +202,7 @@ private:
     template <class Scalar>
     bool template_forward(
         size_t                             n           ,
-        size_t                             op          ,
+        op_enum_t                          op          ,
         size_t                             p           ,
         size_t                             q           ,
         const vector<Scalar>&              tx          ,
@@ -203,22 +217,22 @@ private:
         switch(op)
         {
             // addition
-            case 0:
+            case add_enum:
             template_forward_add(n, m, q, p, tx, ty);
             break;
 
             // subtraction
-            case 1:
+            case sub_enum:
             template_forward_sub(n, m, q, p, tx, ty);
             break;
 
             // multiplication
-            case 2:
+            case mul_enum:
             template_forward_mul(n, m, q, p, tx, ty);
             break;
 
             // division
-            case 3:
+            case div_enum:
             template_forward_div(n, m, q, p, tx, ty);
             break;
 
@@ -242,8 +256,8 @@ private:
         size_t                             q           ,
         const vector<double>&              tx          ,
         vector<double>&                    ty          )
-    {   size_t op = size_t( parameter_x[0] );
-        size_t n  = parameter_x.size();
+    {   op_enum_t op = op_enum_t( parameter_x[0] );
+        size_t n     = parameter_x.size();
         return template_forward(n, op, p, q, tx, ty);
     }
     // forward mode routines called by ADFun< AD<Base> , Base> objects
@@ -255,8 +269,8 @@ private:
         size_t                             q           ,
         const vector< AD<double> >&        atx         ,
         vector< AD<double> >&              aty         )
-    {   size_t op = size_t( Value( aparameter_x[0] ) );
-        size_t n  = aparameter_x.size();
+    {   op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );
+        size_t n     = aparameter_x.size();
         return template_forward(n, op, p, q, atx, aty);
     }
 }; // End of atomic_vector_op class
@@ -278,8 +292,13 @@ bool vector_op(void)
     //
     // x
     CPPAD_TESTVECTOR( AD<double> ) ax(n);
-    for(size_t op = 0; op < 4; ++op)
-    {
+    typedef atomic_vector_op::op_enum_t op_enum_t;
+    size_t num_op = size_t( atomic_vector_op::num_op );
+    for(size_t i_op = 0; i_op < num_op; ++i_op)
+    {   //
+        // op
+        op_enum_t op = op_enum_t(i_op);
+        //
         // Create the function f(x) = left op right
         //
         ax[0] = AD<double>(op); // code for this operator
@@ -305,19 +324,19 @@ bool vector_op(void)
         {   AD<double> check;
             switch(op)
             {
-                case 0:
+                case atomic_vector_op::add_enum:
                 check = ax[1 + i] + ax[1 + m + i];
                 break;
 
-                case 1:
+                case atomic_vector_op::sub_enum:
                 check = ax[1 + i] - ax[1 + m + i];
                 break;
 
-                case 2:
+                case atomic_vector_op::mul_enum:
                 check = ax[1 + i] * ax[1 + m + i];
                 break;
 
-                case 3:
+                case atomic_vector_op::div_enum:
                 check = ax[1 + i] / ax[1 + m + i];
                 break;
             }
