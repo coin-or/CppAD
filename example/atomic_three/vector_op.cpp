@@ -11,7 +11,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin atomic_three_vector_math.cpp$$
+$begin atomic_three_vector_op.cpp$$
 $spell
     op
 $$
@@ -69,10 +69,10 @@ namespace {          // isolate items below to this file
 using CppAD::AD;
 using CppAD::vector;
 //
-class atomic_vector_math : public CppAD::atomic_three<double> {
+class atomic_vector_op : public CppAD::atomic_three<double> {
 //
 public:
-    atomic_vector_math(const std::string& name) :
+    atomic_vector_op(const std::string& name) :
     CppAD::atomic_three<double>(name)
     { }
 private:
@@ -259,17 +259,17 @@ private:
         size_t n  = aparameter_x.size();
         return template_forward(n, op, p, q, atx, aty);
     }
-}; // End of atomic_vector_math class
+}; // End of atomic_vector_op class
 }  // End empty namespace
 
-bool vector_math(void)
+bool vector_op(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     double eps99 = 99.0 * CppAD::numeric_limits<double>::epsilon();
     //
     // afun
-    // atomic vector_math object
-    atomic_vector_math afun("atomic_vector_math");
+    // atomic vector_op object
+    atomic_vector_op afun("atomic_vector_math");
     //
     // m, n
     // size of x and y

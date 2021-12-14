@@ -62,7 +62,7 @@ $rref atomic_three_reciprocal.cpp$$
 $rref atomic_three_rev_depend.cpp$$
 $rref atomic_three_reverse.cpp$$
 $rref atomic_three_tangent.cpp$$
-$rref atomic_three_vector_math.cpp$$
+$rref atomic_three_vector_op.cpp$$
 $rref atomic_two_eigen_cholesky.cpp$$
 $rref atomic_two_eigen_cholesky.hpp$$
 $rref atomic_two_eigen_mat_inv.cpp$$

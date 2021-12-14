@@ -25,7 +25,7 @@ SET(source_list
     rev_depend.cpp
     reverse.cpp
     tangent.cpp
-    vector_math.cpp
+    vector_op.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

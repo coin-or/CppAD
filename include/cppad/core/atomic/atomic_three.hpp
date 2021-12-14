@@ -201,7 +201,7 @@ $childtable%example/atomic_three/get_started.cpp
     %example/atomic_three/base2ad.cpp
     %example/atomic_three/reciprocal.cpp
     %example/atomic_three/mat_mul.cpp
-    %example/atomic_three/vector_math.cpp
+    %example/atomic_three/vector_op.cpp
 %$$
 
 $end

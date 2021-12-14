@@ -49,7 +49,7 @@ $section Changes and Additions to CppAD During 2021$$
 
 $head 12-10$$
 $list number$$
-Added the example $cref atomic_three_vector_math.cpp$$.
+Added the example $cref atomic_three_vector_op.cpp$$.
 $lnext
 Fix some compiler warnings when building with $code NDEBUG$$ defined.
 $lend

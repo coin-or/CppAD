@@ -38,7 +38,7 @@ extern bool reciprocal(void);
 extern bool rev_depend(void);
 extern bool reverse(void);
 extern bool tangent(void);
-extern bool vector_math(void);
+extern bool vector_op(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -62,7 +62,7 @@ int main(void)
     Run( rev_depend,          "rev_depend"     );
     Run( reverse,             "reverse"        );
     Run( tangent,             "tangent"        );
-    Run( vector_math,         "vector_math"    );
+    Run( vector_op,           "vector_op"      );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak
