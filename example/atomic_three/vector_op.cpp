@@ -96,6 +96,39 @@ public:
     { }
 private:
     // ------------------------------------------------------------------------
+    static void copy_atx_to_ax(
+        size_t                        n,
+        size_t                        m,
+        size_t                        q,
+        size_t                        k_u,
+        size_t                        k_v,
+        const vector< AD<double> >&   atx,
+        vector< AD<double> >&         ax)
+    {   assert( atx.size() == n * (q+1) );
+        assert( ax.size()  == n );
+        for(size_t i = 0; i < m; ++i)
+        {   size_t u_index  = (1 + i)     * (q+1) + k_u;
+            size_t v_index  = (1 + m + i) * (q+1) + k_v;
+            ax[1+i]         = atx[u_index];
+            ax[1+ m+i]      = atx[v_index];
+        }
+    }
+    // ------------------------------------------------------------------------
+    static void copy_ay_to_aty(
+        size_t                        n,
+        size_t                        m,
+        size_t                        q,
+        size_t                        k,
+        const vector< AD<double> >&   ay,
+        vector< AD<double> >&         aty)
+    {   assert( aty.size() == m * (q+1) );
+        assert( ay.size()  == m );
+        for(size_t i = 0; i < m; ++i)
+        {   size_t y_index  = i * (q+1) + k;
+            aty[y_index]    = ay[i];
+        }
+    }
+    // ------------------------------------------------------------------------
     // for_type
     bool for_type(
         const vector<double>&               parameter_x ,
@@ -113,7 +146,7 @@ private:
         //
         // type_y
         for(size_t i = 0; i < m; ++i)
-            type_y[i] = std::max( type_x[1 + i] , type_x[m + i] );
+            type_y[i] = std::max( type_x[1 + i] , type_x[1 + m + i] );
         //
         return true;
     }
@@ -130,9 +163,9 @@ private:
     {
         for(size_t k = p; k <= q; ++k)
         {   for(size_t i = 0; i < m; ++i)
-            {   size_t u_index  = (1 + i) * (q+1) + k;
+            {   size_t u_index  = (1 + i)     * (q+1) + k;
                 size_t v_index  = (1 + m + i) * (q+1) + k;
-                size_t y_index  = i * (q+1) + k;
+                size_t y_index  = i *           (q+1) + k;
                 ty[y_index]     = tx[u_index] + tx[v_index];
             }
         }
@@ -147,18 +180,9 @@ private:
     {   vector< AD<double> > ax(n), ay(m);
         ax[0] = AD<double>( add_enum );
         for(size_t k = p; k <= q; ++k)
-        {   for(size_t i = 0; i < m; ++i)
-            {   size_t u_index  = (1 + i) * (q+1) + k;
-                size_t v_index  = (1 + m + i) * (q+1) + k;
-                ax[1+i]         = atx[u_index];
-                ax[1+ m+i]      = atx[v_index];
-            }
-            // atomic add operation
-            (*this)(ax, ay);
-            for(size_t i = 0; i < m; ++i)
-            {   size_t y_index  = i * (q+1) + k;
-                aty[y_index]    = ay[i];
-            }
+        {   copy_atx_to_ax(n, m, q, k, k, atx, ax);
+            (*this)(ax, ay); // atomic add operation
+            copy_ay_to_aty(n, m, q, k, ay, aty);
         }
     }
     // ----------------------------------------------------------------------
@@ -174,11 +198,26 @@ private:
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
-            {   size_t u_index  = (1 + i) * (q+1) + k;
+            {   size_t u_index  = (1 + i)     * (q+1) + k;
                 size_t v_index  = (1 + m + i) * (q+1) + k;
-                size_t y_index  = i * (q+1) + k;
+                size_t y_index  = i           * (q+1) + k;
                 ty[y_index]     = tx[u_index] - tx[v_index];
             }
+        }
+    }
+    void forward_sub(
+        size_t                             n           ,
+        size_t                             m           ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector< AD<double> >&        atx         ,
+        vector< AD<double> >&              aty         )
+    {   vector< AD<double> > ax(n), ay(m);
+        ax[0] = AD<double>( sub_enum );
+        for(size_t k = p; k <= q; ++k)
+        {   copy_atx_to_ax(n, m, q, k, k, atx, ax);
+            (*this)(ax, ay); // atomic add operation
+            copy_ay_to_aty(n, m, q, k, ay, aty);
         }
     }
     // ----------------------------------------------------------------------
@@ -197,8 +236,8 @@ private:
             {   size_t y_index = i * (q+1) + k;
                 ty[y_index]    = 0.0;
                 for(size_t d = 0; d <= k; d++)
-                {   size_t u_index  = (1 + i) * (q+1) + (k-d);
-                    size_t v_index  = (1 + m + i) * (q+1) + k;
+                {   size_t u_index  = (1 + i)     * (q+1) + (k-d);
+                    size_t v_index  = (1 + m + i) * (q+1) + d;
                     ty[y_index]    += tx[u_index] * tx[v_index];
                 }
             }
@@ -217,11 +256,11 @@ private:
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
-            {   size_t y_index  = i * (q+1) + k;
+            {   size_t y_index  = i *       (q+1) + k;
                 size_t u_index  = (1 + i) * (q+1) + k;
                 ty[y_index]     = tx[u_index];
                 for(size_t d = 1; d <= k; d++)
-                {   size_t y_other      = i * (q+1) + (k-d);
+                {   size_t y_other      = i       * (q+1) + (k-d);
                     size_t v_index  = (1 + m + i) * (q+1) + d;
                     ty[y_index] -= ty[y_other] * tx[v_index];
                 }
@@ -312,7 +351,8 @@ private:
 
             // subtraction
             case sub_enum:
-            ok = false;
+            forward_sub(n, m, q, p, atx, aty);
+            ok = true;
             break;
 
             // multiplication
@@ -351,9 +391,6 @@ bool vector_op(void)
     size_t m = 2;
     size_t n = 1 + 2 * m;
     //
-    // ax
-    CPPAD_TESTVECTOR( AD<double> ) ax(n);
-    //
     // op_enum_t
     typedef atomic_vector_op::op_enum_t op_enum_t;
     //
@@ -367,64 +404,71 @@ bool vector_op(void)
         op_enum_t op = op_enum_t(i_op);
         //
         // Create the function f(x) = u op v
-        //
-        ax[0] = AD<double>(op); // code for this operator
+        CPPAD_TESTVECTOR( AD<double> ) auv(2 * m);
         for(size_t i = 0; i < m; i++)
-        {   ax[1 + i]     = double(i+1);   // u[i]
-            ax[1 + m + i] = double(m+2*i); // v[i]
+        {   auv[i]     = double(i+1);   // u[i]
+            auv[m + i] = double(m+2*i); // v[i]
         }
         // declare independent variables and start tape recording
-        CppAD::Independent(ax);
+        CppAD::Independent(auv);
         //
-        // y
-        CPPAD_TESTVECTOR( AD<double> ) ay(m);
+        // ax, ay
+        CPPAD_TESTVECTOR( AD<double> ) ax(n), ay(m);
+        ax[0] = AD<double>(op); // code for this operator
+        for(size_t i = 0; i < m; ++i)
+        {   ax[1 + i]     = auv[i];
+            ax[1 + m + i] = auv[m + i];
+        }
         //
         // ay = u op v
         vec_op(ax, ay);
         //
         // create f: x -> y and stop tape recording
         CppAD::ADFun<double> f;
-        f.Dependent (ax, ay);
+        f.Dependent (auv, ay);
         //
-        // check ay
+        // uv, y
+        CPPAD_TESTVECTOR(double) uv(2*m), duv(2*m), y(m), dy(m);
+        for(size_t j = 0; j < 2*m; ++j)
+        {   uv[j]  = double(1 + j);
+            duv[j] = double(1);
+        }
+        y  = f.Forward(0, uv);
+        dy = f.Forward(1, duv);
+        //
         for(size_t i = 0; i < m; ++i)
-        {   AD<double> check;
+        {   double check_y, check_dy, den_sq;
             switch(op)
             {
                 case atomic_vector_op::add_enum:
-                check = ax[1 + i] + ax[1 + m + i];
+                check_y  =   uv[i] +  uv[m + i];
+                check_dy =  duv[i] + duv[m + i];
                 break;
 
                 case atomic_vector_op::sub_enum:
-                check = ax[1 + i] - ax[1 + m + i];
+                check_y  =  uv[i] -  uv[m + i];
+                check_dy = duv[i] - duv[m + i];
                 break;
 
                 case atomic_vector_op::mul_enum:
-                check = ax[1 + i] * ax[1 + m + i];
+                check_y  =  uv[i] *  uv[m + i];
+                check_dy = duv[i + 1] *  uv[m + i]
+                         +  uv[i] * duv[m + i];
                 break;
 
                 case atomic_vector_op::div_enum:
-                check = ax[1 + i] / ax[1 + m + i];
+                den_sq   =  uv[m + i] *  uv[m + i];
+                check_y  =  uv[i] /  uv[m + i];
+                check_dy = duv[i] /  uv[m + i]
+                         -  uv[i] * duv[m + i] / den_sq;
                 break;
 
                 case atomic_vector_op::num_op:
                 assert( false );
                 break;
             }
-            ok &= NearEqual( ay[i] , check,  eps99, eps99);
-        }
-        if( op == atomic_vector_op::add_enum )
-        {   CPPAD_TESTVECTOR(double) x(n), dx(n), dy(m);
-            for(size_t j = 0; j < n; ++j)
-            {   x[j]  = double(j);
-                dx[j] = double(j);
-            }
-            f.Forward(0, x);
-            dy = f.Forward(1, dx);
-            for(size_t i = 0; i < m; i++)
-            {   double check = double( (1 + i) + (1 + m + i) );
-                ok &= dy[i] == check;
-            }
+            ok &= NearEqual( y[i] ,  check_y,  eps99, eps99);
+            ok &= NearEqual( dy[i] , check_dy,  eps99, eps99);
         }
     }
     return ok;
