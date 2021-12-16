@@ -17,16 +17,23 @@ $spell
     enum
     mul
     div
+    vec_op
 $$
 
 $section Atomic Vector Math Operators: Example and Test$$
 
+$head Syntax$$
+$codei%atomic_vector_op %vec_op%(%name%)
+%$$
+$icode%vec_op%(%x%, %y%)
+%$$
+
 $head Purpose$$
 The atomic function implements
 $codei%
-    %y% = %left% %op% %right%
+    %y% = %u% %op% %v%
 %$$
-where $icode op$$, $icode left$$ and $icode right$$ are defined below.
+where $icode op$$, $icode u$$ and $icode v$$ are defined below.
 
 $head x$$
 We use $icode x$$ to denote the argument to the atomic function.
@@ -36,23 +43,19 @@ We use the notation $icode%m% = (%n% - 1) / 2%$$.
 $head op$$
 The value $icode%x%[0]%$$
 is a constant parameter with the following possible values:
-$code add_enum$$,
-$code sub_enum$$,
-$code mul_enum$$,
-$code div_enum$$,
-(These enum value are defined in the $code atomic_vector_op$$ class.)
+$srcthisfile%0%// BEGIN op_enum_t%// END op_enum_t%1%$$
 We use $icode op$$ for the corresponding operator.
 
-$head left$$
-We use $icode left$$ to denote the following sub-vector of $icode x$$:
+$head u$$
+We use $icode u$$ to denote the following sub-vector of $icode x$$:
 $codei%
-    %left% = ( %x%[1] , %...% , %x%[%m%] )
+    %u% = ( %x%[1] , %...% , %x%[%m%] )
 %$$
 
-$head right$$
-We use $icode right$$ to denote the following sub-vector of $icode x$$:
+$head v$$
+We use $icode v$$ to denote the following sub-vector of $icode x$$:
 $codei%
-    %left% = ( %x%[%m% + 1] , %...% , %x%[2 * %m%] )
+    %v% = ( %x%[%m% + 1] , %...% , %x%[2 * %m%] )
 %$$
 
 $head y$$
@@ -76,7 +79,8 @@ using CppAD::vector;
 class atomic_vector_op : public CppAD::atomic_three<double> {
 //
 public:
-    // op_enum_t
+    // BEGIN op_enum_t
+    // atomic_vector_op::op_enum_t
     typedef enum {
         add_enum,
         sub_enum,
@@ -84,8 +88,9 @@ public:
         div_enum,
         num_op,
     } op_enum_t;
+    // END op_enum_t
     //
-    // atomic_vector_op
+    // ctor
     atomic_vector_op(const std::string& name) :
     CppAD::atomic_three<double>(name)
     { }
@@ -125,10 +130,10 @@ private:
     {
         for(size_t k = p; k <= q; ++k)
         {   for(size_t i = 0; i < m; ++i)
-            {   size_t left_index   = (1 + i) * (q+1) + k;
-                size_t right_index  = (1 + m + i) * (q+1) + k;
-                size_t y_index      = i * (q+1) + k;
-                ty[y_index]         = tx[left_index] + tx[right_index];
+            {   size_t u_index  = (1 + i) * (q+1) + k;
+                size_t v_index  = (1 + m + i) * (q+1) + k;
+                size_t y_index  = i * (q+1) + k;
+                ty[y_index]     = tx[u_index] + tx[v_index];
             }
         }
     }
@@ -143,16 +148,16 @@ private:
         ax[0] = AD<double>( add_enum );
         for(size_t k = p; k <= q; ++k)
         {   for(size_t i = 0; i < m; ++i)
-            {   size_t left_index   = (1 + i) * (q+1) + k;
-                size_t right_index  = (1 + m + i) * (q+1) + k;
-                ax[1+i]             = atx[left_index];
-                ax[1+ m+i]          = atx[right_index];
+            {   size_t u_index  = (1 + i) * (q+1) + k;
+                size_t v_index  = (1 + m + i) * (q+1) + k;
+                ax[1+i]         = atx[u_index];
+                ax[1+ m+i]      = atx[v_index];
             }
             // atomic add operation
             (*this)(ax, ay);
             for(size_t i = 0; i < m; ++i)
-            {   size_t y_index   = i * (q+1) + k;
-                aty[y_index]     = ay[i];
+            {   size_t y_index  = i * (q+1) + k;
+                aty[y_index]    = ay[i];
             }
         }
     }
@@ -169,10 +174,10 @@ private:
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
-            {   size_t left_index   = (1 + i) * (q+1) + k;
-                size_t right_index  = (1 + m + i) * (q+1) + k;
-                size_t y_index      = i * (q+1) + k;
-                ty[y_index]         = tx[left_index] - tx[right_index];
+            {   size_t u_index  = (1 + i) * (q+1) + k;
+                size_t v_index  = (1 + m + i) * (q+1) + k;
+                size_t y_index  = i * (q+1) + k;
+                ty[y_index]     = tx[u_index] - tx[v_index];
             }
         }
     }
@@ -192,9 +197,9 @@ private:
             {   size_t y_index = i * (q+1) + k;
                 ty[y_index]    = 0.0;
                 for(size_t d = 0; d <= k; d++)
-                {   size_t left_index   = (1 + i) * (q+1) + (k-d);
-                    size_t right_index  = (1 + m + i) * (q+1) + k;
-                    ty[y_index]        += tx[left_index] * tx[right_index];
+                {   size_t u_index  = (1 + i) * (q+1) + (k-d);
+                    size_t v_index  = (1 + m + i) * (q+1) + k;
+                    ty[y_index]    += tx[u_index] * tx[v_index];
                 }
             }
         }
@@ -212,16 +217,16 @@ private:
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
-            {   size_t y_index     = i * (q+1) + k;
-                size_t left_index  = (1 + i) * (q+1) + k;
-                ty[y_index]        = tx[left_index];
+            {   size_t y_index  = i * (q+1) + k;
+                size_t u_index  = (1 + i) * (q+1) + k;
+                ty[y_index]     = tx[u_index];
                 for(size_t d = 1; d <= k; d++)
                 {   size_t y_other      = i * (q+1) + (k-d);
-                    size_t right_index  = (1 + m + i) * (q+1) + d;
-                    ty[y_index]        -= ty[y_other] * tx[right_index];
+                    size_t v_index  = (1 + m + i) * (q+1) + d;
+                    ty[y_index] -= ty[y_other] * tx[v_index];
                 }
-                size_t right_index = (1 + m + i ) * (q+1) + 0;
-                ty[y_index] /= tx[right_index];
+                size_t v_index = (1 + m + i ) * (q+1) + 0;
+                ty[y_index] /= tx[v_index];
             }
         }
     }
@@ -337,9 +342,9 @@ bool vector_op(void)
     using CppAD::NearEqual;
     double eps99 = 99.0 * CppAD::numeric_limits<double>::epsilon();
     //
-    // afun
+    // vec_op
     // atomic vector_op object
-    atomic_vector_op afun("atomic_vector_math");
+    atomic_vector_op vec_op("atomic_vector_op");
     //
     // m, n
     // size of x and y
@@ -361,12 +366,12 @@ bool vector_op(void)
         // op
         op_enum_t op = op_enum_t(i_op);
         //
-        // Create the function f(x) = left op right
+        // Create the function f(x) = u op v
         //
         ax[0] = AD<double>(op); // code for this operator
         for(size_t i = 0; i < m; i++)
-        {   ax[1 + i]     = double(i+1);   // left[i]
-            ax[1 + m + i] = double(m+2*i); // right[i]
+        {   ax[1 + i]     = double(i+1);   // u[i]
+            ax[1 + m + i] = double(m+2*i); // v[i]
         }
         // declare independent variables and start tape recording
         CppAD::Independent(ax);
@@ -374,8 +379,8 @@ bool vector_op(void)
         // y
         CPPAD_TESTVECTOR( AD<double> ) ay(m);
         //
-        // ay = left op right
-        afun(ax, ay);
+        // ay = u op v
+        vec_op(ax, ay);
         //
         // create f: x -> y and stop tape recording
         CppAD::ADFun<double> f;
