@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -49,10 +49,10 @@ private:
 $head for_type$$
 $srccode%cpp% */
     // calculate type_y
-    virtual bool for_type(
+    bool for_type(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
-        vector<CppAD::ad_type_enum>&        type_y      )
+        vector<CppAD::ad_type_enum>&        type_y      ) override
     {   assert( parameter_x.size() == type_x.size() );
         bool ok = type_x.size() == 3; // n
         ok     &= type_y.size() == 3; // m
@@ -67,11 +67,11 @@ $srccode%cpp% */
 $head rev_depend$$
 $srccode%cpp% */
     // calculate depend_x
-    virtual bool rev_depend(
+    bool rev_depend(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
         vector<bool>&                       depend_x    ,
-        const vector<bool>&                 depend_y    )
+        const vector<bool>&                 depend_y    ) override
     {   assert( parameter_x.size() == depend_x.size() );
         bool ok = depend_x.size() == 3; // n
         ok     &= depend_y.size() == 3; // m
@@ -86,7 +86,7 @@ $srccode%cpp% */
 $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
-    virtual bool forward(
+    bool forward(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
         size_t                              need_y      ,
@@ -94,7 +94,7 @@ $srccode%cpp% */
         size_t                              order_up    ,
         const vector<double>&               taylor_x    ,
         vector<double>&                     taylor_y
-    )
+    ) override
     {
 # ifndef NDEBUG
         size_t n = taylor_x.size() / (order_up + 1);

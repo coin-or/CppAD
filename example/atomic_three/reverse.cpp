@@ -77,10 +77,10 @@ private:
 $head for_type$$
 $srccode%cpp% */
     // calculate type_y
-    virtual bool for_type(
+    bool for_type(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
-        vector<CppAD::ad_type_enum>&        type_y      )
+        vector<CppAD::ad_type_enum>&        type_y      ) override
     {   assert( parameter_x.size() == type_x.size() );
         bool ok = type_x.size() == 3; // n
         ok     &= type_y.size() == 2; // m
@@ -94,14 +94,14 @@ $srccode%cpp% */
 $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
-    virtual bool forward(
+    bool forward(
         const vector<double>&                   parameter_x ,
         const vector<CppAD::ad_type_enum>&      type_x      ,
         size_t                                  need_y      ,
         size_t                                  order_low   ,
         size_t                                  order_up    ,
         const vector<double>&                   taylor_x    ,
-        vector<double>&                         taylor_y    )
+        vector<double>&                         taylor_y    ) override
     {
         size_t q1 = order_up + 1;
 # ifndef NDEBUG
@@ -151,14 +151,14 @@ $srccode%cpp% */
 $head reverse$$
 $srccode%cpp% */
     // reverse mode routine called by CppAD
-    virtual bool reverse(
+    bool reverse(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
         size_t                              order_up    ,
         const vector<double>&               taylor_x    ,
         const vector<double>&               taylor_y    ,
         vector<double>&                     partial_x   ,
-        const vector<double>&               partial_y   )
+        const vector<double>&               partial_y   ) override
     {
         size_t q1 = order_up + 1;
         size_t n = taylor_x.size() / q1;

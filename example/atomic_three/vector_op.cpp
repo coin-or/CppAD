@@ -92,10 +92,10 @@ public:
 private:
     // ------------------------------------------------------------------------
     // for_type
-    virtual bool for_type(
+    bool for_type(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
-        vector<CppAD::ad_type_enum>&        type_y      )
+        vector<CppAD::ad_type_enum>&        type_y      ) override
     {   // n, m
         size_t n = parameter_x.size();
         size_t m = (n - 1) / 2;
@@ -229,14 +229,14 @@ private:
     // forward
     // forward mode routines called by ADFun<Base> objects
     // ----------------------------------------------------------------------
-    virtual bool forward(
+    bool forward(
         const vector<double>&              parameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
         size_t                             need_y      ,
         size_t                             p           ,
         size_t                             q           ,
         const vector<double>&              tx          ,
-        vector<double>&                    ty          )
+        vector<double>&                    ty          ) override
     {
         // op, n, m
         op_enum_t op = op_enum_t( parameter_x[0] );
@@ -279,14 +279,14 @@ private:
     // forward
     // forward mode routines called by ADFun< AD<Base> , Base> objects
     // ----------------------------------------------------------------------
-    virtual bool forward(
+    bool forward(
         const vector< AD<double> >&        aparameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
         size_t                             need_y      ,
         size_t                             p           ,
         size_t                             q           ,
         const vector< AD<double> >&        atx         ,
-        vector< AD<double> >&              aty         )
+        vector< AD<double> >&              aty         ) override
     {   //
         // op, n, m
         op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );

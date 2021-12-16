@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -52,10 +52,10 @@ private:
 $head for_type$$
 $srccode%cpp% */
     // calculate type_y
-    virtual bool for_type(
+    bool for_type(
         const vector<float>&                parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
-        vector<CppAD::ad_type_enum>&        type_y      )
+        vector<CppAD::ad_type_enum>&        type_y      ) override
     {   assert( parameter_x.size() == type_x.size() );
         bool ok = type_x.size() == 1; // n
         ok     &= type_y.size() == 2; // m
@@ -69,14 +69,14 @@ $srccode%cpp% */
 $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
-    virtual bool forward(
+    bool forward(
         const vector<float>&               parameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
         size_t                             need_y      ,
         size_t                             p           ,
         size_t                             q           ,
         const vector<float>&               tx          ,
-        vector<float>&                     tzy         )
+        vector<float>&                     tzy         ) override
     {   size_t q1 = q + 1;
 # ifndef NDEBUG
         size_t n  = tx.size()  / q1;
@@ -123,14 +123,14 @@ $srccode%cpp% */
 $head reverse$$
 $srccode%cpp% */
     // reverse mode routine called by CppAD
-    virtual bool reverse(
+    bool reverse(
         const vector<float>&               parameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
         size_t                             q           ,
         const vector<float>&               tx          ,
         const vector<float>&               tzy         ,
         vector<float>&                     px          ,
-        const vector<float>&               pzy         )
+        const vector<float>&               pzy         ) override
     {   size_t q1 = q + 1;
 # ifndef NDEBUG
         size_t n  = tx.size()  / q1;
@@ -182,13 +182,13 @@ $srccode%cpp% */
 $head jac_sparsity$$
 $srccode%cpp% */
     // Jacobian sparsity routine called by CppAD
-    virtual bool jac_sparsity(
+    bool jac_sparsity(
         const vector<float>&                parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
         bool                                dependency  ,
         const vector<bool>&                 select_x    ,
         const vector<bool>&                 select_y    ,
-        CppAD::sparse_rc< vector<size_t> >& pattern_out )
+        CppAD::sparse_rc< vector<size_t> >& pattern_out ) override
     {
         size_t n = select_x.size();
         size_t m = select_y.size();
@@ -222,12 +222,12 @@ $srccode%cpp% */
 $head hes_sparsity$$
 $srccode%cpp% */
     // Hessian sparsity routine called by CppAD
-    virtual bool hes_sparsity(
+    bool hes_sparsity(
         const vector<float>&                parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
         const vector<bool>&                 select_x    ,
         const vector<bool>&                 select_y    ,
-        CppAD::sparse_rc< vector<size_t> >& pattern_out )
+        CppAD::sparse_rc< vector<size_t> >& pattern_out ) override
     {
         assert( parameter_x.size() == select_x.size() );
         assert( select_y.size() == 2 );

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -101,13 +101,13 @@ public:
     { }
 private:
     // forward mode routine called by CppAD
-    virtual bool forward(
+    bool forward(
         size_t                   p   ,
         size_t                   q   ,
         const vector<bool>&      vu  ,
         vector<bool>&            vy  ,
         const vector<double>&    tu  ,
-        vector<double>&          ty  )
+        vector<double>&          ty  ) override
     {
 # ifndef NDEBUG
         size_t n = tu.size() / (q + 1);

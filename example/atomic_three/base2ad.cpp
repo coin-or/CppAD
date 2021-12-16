@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -37,10 +37,10 @@ public:
 private:
     // ------------------------------------------------------------------------
     // type
-    virtual bool for_type(
+    bool for_type(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
-        vector<CppAD::ad_type_enum>&        type_y      )
+        vector<CppAD::ad_type_enum>&        type_y      ) override
     {   assert( parameter_x.size() == type_x.size() );
         bool ok = type_x.size() == 1; // n
         ok     &= type_y.size() == 1; // m
@@ -80,25 +80,25 @@ private:
         return ok;
     }
     // forward mode routines called by ADFun<Base> objects
-    virtual bool forward(
+    bool forward(
         const vector<double>&              parameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
         size_t                             need_y      ,
         size_t                             p           ,
         size_t                             q           ,
         const vector<double>&              tx          ,
-        vector<double>&                    ty          )
+        vector<double>&                    ty          ) override
     {   return template_forward(p, q, tx, ty);
     }
     // forward mode routines called by ADFun< AD<Base> , Base> objects
-    virtual bool forward(
+    bool forward(
         const vector< AD<double> >&        aparameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
         size_t                             need_y      ,
         size_t                             p           ,
         size_t                             q           ,
         const vector< AD<double> >&        atx         ,
-        vector< AD<double> >&              aty         )
+        vector< AD<double> >&              aty         ) override
     {   return template_forward(p, q, atx, aty);
     }
     // ----------------------------------------------------------------------
@@ -131,25 +131,25 @@ private:
         return ok;
     }
     // reverse mode routines called by ADFun<Base> objects
-    virtual bool reverse(
+    bool reverse(
         const vector<double>&              parameter_x ,
         const vector<CppAD::ad_type_enum>& type_x      ,
         size_t                             q           ,
         const vector<double>&              tx          ,
         const vector<double>&              ty          ,
         vector<double>&                    px          ,
-        const vector<double>&              py          )
+        const vector<double>&              py          ) override
     {   return template_reverse(q, tx, ty, px, py);
     }
     // reverse mode routines called by ADFun<Base> objects
-    virtual bool reverse(
+    bool reverse(
         const vector< AD<double> >&        aparameter_x ,
         const vector<CppAD::ad_type_enum>& type_x       ,
         size_t                             q            ,
         const vector< AD<double> >&        atx          ,
         const vector< AD<double> >&        aty          ,
         vector< AD<double> >&              apx          ,
-        const vector< AD<double> >&        apy          )
+        const vector< AD<double> >&        apy          ) override
     {   return template_reverse(q, atx, aty, apx, apy);
     }
 }; // End of atomic_base2ad class

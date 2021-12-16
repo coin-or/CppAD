@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -42,10 +42,10 @@ private:
 $head for_type$$
 $srccode%cpp% */
     // calculate type_y
-    virtual bool for_type(
+    bool for_type(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
-        vector<CppAD::ad_type_enum>&        type_y      )
+        vector<CppAD::ad_type_enum>&        type_y      ) override
     {   assert( parameter_x.size() == type_x.size() );
         bool ok = type_x.size() == 1; // n
         ok     &= type_y.size() == 1; // m
@@ -58,14 +58,14 @@ $srccode%cpp% */
 $head forward$$
 $srccode%cpp% */
     // forward mode routine called by CppAD
-    virtual bool forward(
+    bool forward(
         const vector<double>&               parameter_x  ,
         const vector<CppAD::ad_type_enum>&  type_x       ,
         size_t                              need_y       ,
         size_t                              order_low    ,
         size_t                              order_up     ,
         const vector<double>&               taylor_x     ,
-        vector<double>&                     taylor_y     )
+        vector<double>&                     taylor_y     ) override
     {
 # ifndef NDEBUG
         size_t n = taylor_x.size() / (order_up + 1);

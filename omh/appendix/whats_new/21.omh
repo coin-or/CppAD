@@ -47,6 +47,11 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 12-16$$
+Change $code virtual$$ to $code override$$ in all the
+$cref atomic_three_example$$ files and
+$cref  multi_atomic_three_user$$.
+
 $head 12-10$$
 $list number$$
 Added the example $cref atomic_three_vector_op.cpp$$.
