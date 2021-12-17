@@ -75,7 +75,7 @@ namespace {          // isolate items below to this file
 // abbreviations
 using CppAD::AD;
 using CppAD::vector;
-//
+// ===========================================================================
 class atomic_vector_op : public CppAD::atomic_three<double> {
 //
 public:
@@ -243,6 +243,37 @@ private:
             }
         }
     }
+    void forward_mul(
+        size_t                             n           ,
+        size_t                             m           ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector< AD<double> >&        atx         ,
+        vector< AD<double> >&              aty         )
+    {   vector< AD<double> > ax_mul(n), ax_sum(n), ay(m);
+        ax_mul[0] = AD<double>( mul_enum );
+        ax_sum[0] = AD<double>( add_enum );
+        for(size_t k = p; k <= q; ++k)
+        {   // y = 0
+            for(size_t i = 0; i < m; ++i)
+                ay[i] = 0.0;
+            for(size_t d = 0; d <= k; d++)
+            {   // sum = y
+                for(size_t i = 0; i < m; ++i)
+                    ax_sum[1 + i] = ay[i];
+                //
+                // y = u^{k-d} * v^k
+                copy_atx_to_ax(n, m, q, k-d, d, atx, ax_mul);
+                (*this)(ax_mul, ay); // atomic multiply operation
+                //
+                // y = y + sum
+                for(size_t i = 0; i < m; ++i)
+                    ax_sum[1 + m + i] = ay[i];
+                (*this)(ax_sum, ay); // atomic add operation
+            }
+            copy_ay_to_aty(n, m, q, k, ay, aty);
+        }
+    }
     // ----------------------------------------------------------------------
     // forward_div
     // ----------------------------------------------------------------------
@@ -357,7 +388,8 @@ private:
 
             // multiplication
             case mul_enum:
-            ok = false;
+            forward_mul(n, m, q, p, atx, aty);
+            ok = true;
             break;
 
             // division
@@ -375,9 +407,8 @@ private:
     }
 
 }; // End of atomic_vector_op class
-}  // End empty namespace
-
-bool vector_op(void)
+// ============================================================================
+bool test_atom_double(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     double eps99 = 99.0 * CppAD::numeric_limits<double>::epsilon();
@@ -471,6 +502,114 @@ bool vector_op(void)
             ok &= NearEqual( dy[i] , check_dy,  eps99, eps99);
         }
     }
+    return ok;
+}
+// ============================================================================
+bool test_atom_ad_double(void)
+{   bool ok = true;
+    using CppAD::NearEqual;
+    double eps99 = 99.0 * CppAD::numeric_limits<double>::epsilon();
+    //
+    // vec_op
+    // atomic vector_op object
+    atomic_vector_op vec_op("atomic_vector_op");
+    //
+    // m, n
+    // size of x and y
+    size_t m = 2;
+    size_t n = 1 + 2 * m;
+    //
+    // op_enum_t
+    typedef atomic_vector_op::op_enum_t op_enum_t;
+    //
+    // num_op
+    size_t num_op = size_t( atomic_vector_op::num_op );
+    //
+    // i_op
+    for(size_t i_op = 0; i_op < num_op - 1; ++i_op)
+    {   //
+        // op
+        op_enum_t op = op_enum_t(i_op);
+        //
+        // Create the function f(x) = u op v
+        CPPAD_TESTVECTOR( AD<double> ) auv(2 * m);
+        for(size_t i = 0; i < m; i++)
+        {   auv[i]     = double(i+1);   // u[i]
+            auv[m + i] = double(m+i+1); // v[i]
+        }
+        // declare independent variables and start tape recording
+        CppAD::Independent(auv);
+        //
+        // ax, ay
+        CPPAD_TESTVECTOR( AD<double> ) ax(n), ay(m);
+        ax[0] = AD<double>(op); // code for this operator
+        for(size_t i = 0; i < m; ++i)
+        {   ax[1 + i]     = auv[i];
+            ax[1 + m + i] = auv[m + i];
+        }
+        //
+        // ay = u op v
+        vec_op(ax, ay);
+        //
+        // create f: x -> y and stop tape recording
+        CppAD::ADFun<double> f(auv, ay);
+        //
+        // af
+        CppAD::ADFun< AD<double>, double> af = f.base2ad();
+        //
+        // Create the function g(x) where g_i(x) = d/dv[i] f_i(x) using the
+        // fact that d/dv[j] f_i (x) is zero when i is not equal to j
+        CppAD::Independent(auv);
+        CPPAD_TESTVECTOR( AD<double> ) aduv(2 * m), az(m);
+        for(size_t i = 0; i < m; ++i)
+        {   aduv[i]     = 0.0; // du[i]
+            aduv[m + i] = 1.0; // dv[i]
+        }
+        af.Forward(0, auv);
+        az = af.Forward(1, aduv);
+        CppAD::ADFun<double> g(auv, az);
+        //
+        // uv, y
+        CPPAD_TESTVECTOR(double) uv(2 * m), z(m);
+        for(size_t j = 0; j < 2 * m; ++j)
+            uv[j]  = double(1 + j);
+        z  = g.Forward(0, uv);
+        //
+        for(size_t i = 0; i < m; ++i)
+        {   double check_z;
+            switch(op)
+            {
+                case atomic_vector_op::add_enum:
+                check_z =  1.0;
+                break;
+
+                case atomic_vector_op::sub_enum:
+                check_z  =  - 1.0;
+                break;
+
+                case atomic_vector_op::mul_enum:
+                check_z  = uv[i];
+                break;
+
+                case atomic_vector_op::div_enum:
+                check_z = 1.0 /  uv[i];
+                break;
+
+                case atomic_vector_op::num_op:
+                assert( false );
+                break;
+            }
+            ok &= NearEqual( z[i] ,  check_z,  eps99, eps99);
+        }
+    }
+    return ok;
+}
+}  // End empty namespace
+
+bool vector_op(void)
+{   bool ok = true;
+    ok &= test_atom_double();
+    ok &= test_atom_ad_double();
     return ok;
 }
 // END C++
