@@ -11,16 +11,19 @@ var list_up0 = [
 'advalued.htm',
 'atomic.htm',
 'atomic_three_example.htm',
-'atomic_three_vector_math.cpp.htm'
+'atomic_three_vector_op.cpp.htm'
 ];
 var list_current0 = [
-'atomic_three_vector_math.cpp.htm#Purpose',
-'atomic_three_vector_math.cpp.htm#x',
-'atomic_three_vector_math.cpp.htm#op',
-'atomic_three_vector_math.cpp.htm#left',
-'atomic_three_vector_math.cpp.htm#right',
-'atomic_three_vector_math.cpp.htm#y',
-'atomic_three_vector_math.cpp.htm#Source Code'
+'atomic_three_vector_op.cpp.htm#Syntax',
+'atomic_three_vector_op.cpp.htm#Purpose',
+'atomic_three_vector_op.cpp.htm#Purpose.Vector Operations',
+'atomic_three_vector_op.cpp.htm#Purpose.base2ad',
+'atomic_three_vector_op.cpp.htm#x',
+'atomic_three_vector_op.cpp.htm#op',
+'atomic_three_vector_op.cpp.htm#u',
+'atomic_three_vector_op.cpp.htm#v',
+'atomic_three_vector_op.cpp.htm#y',
+'atomic_three_vector_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

@@ -207,13 +207,13 @@ Only zero order forward mode is implements for the
     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
     <i><font color="#9A1900">// forward mode routine called by CppAD</font></i>
-    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+    <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
         <font color="#008080">size_t</font>                   p   <font color="#990000">,</font>
         <font color="#008080">size_t</font>                   q   <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>      vu  <font color="#990000">,</font>
         vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>            vy  <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>    tu  <font color="#990000">,</font>
-        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          ty  <font color="#990000">)</font>
+        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          ty  <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
     <font color="#FF0000">{</font>
 <b><font color="#000080"># ifndef</font></b> NDEBUG
         <font color="#008080">size_t</font> n <font color="#990000">=</font> tu<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#990000">(</font>q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>

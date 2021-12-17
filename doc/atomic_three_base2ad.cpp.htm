@@ -98,10 +98,10 @@ A:active { color : purple }
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
     <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// type</font></i>
-    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">for_type</font></b><font color="#990000">(</font>
+    <font color="#009900">bool</font> <b><font color="#000000">for_type</font></b><font color="#990000">(</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>               parameter_x <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
-        vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font>
+        vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
     <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> parameter_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
         <font color="#009900">bool</font> ok <font color="#990000">=</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// n</font></i>
         ok     <font color="#990000">&amp;=</font> type_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// m</font></i>
@@ -141,25 +141,25 @@ A:active { color : purple }
         <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// forward mode routines called by ADFun&lt;Base&gt; objects</font></i>
-    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+    <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              parameter_x <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x      <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             need_y      <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             p           <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             q           <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              tx          <font color="#990000">,</font>
-        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                    ty          <font color="#990000">)</font>
+        vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                    ty          <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">template_forward</font></b><font color="#990000">(</font>p<font color="#990000">,</font> q<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// forward mode routines called by ADFun&lt; AD&lt;Base&gt; , Base&gt; objects</font></i>
-    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+    <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aparameter_x <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x      <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             need_y      <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             p           <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             q           <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx         <font color="#990000">,</font>
-        vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty         <font color="#990000">)</font>
+        vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty         <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">template_forward</font></b><font color="#990000">(</font>p<font color="#990000">,</font> q<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
@@ -192,25 +192,25 @@ A:active { color : purple }
         <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// reverse mode routines called by ADFun&lt;Base&gt; objects</font></i>
-    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
+    <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              parameter_x <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x      <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             q           <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              tx          <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              ty          <font color="#990000">,</font>
         vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                    px          <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              py          <font color="#990000">)</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              py          <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">template_reverse</font></b><font color="#990000">(</font>q<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">,</font> px<font color="#990000">,</font> py<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// reverse mode routines called by ADFun&lt;Base&gt; objects</font></i>
-    <b><font color="#0000FF">virtual</font></b> <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
+    <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aparameter_x <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font> type_x       <font color="#990000">,</font>
         <font color="#008080">size_t</font>                             q            <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx          <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aty          <font color="#990000">,</font>
         vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              apx          <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy          <font color="#990000">)</font>
+        <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy          <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">template_reverse</font></b><font color="#990000">(</font>q<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">,</font> apx<font color="#990000">,</font> apy<font color="#990000">);</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font><font color="#990000">;</font> <i><font color="#9A1900">// End of atomic_base2ad class</font></i>
