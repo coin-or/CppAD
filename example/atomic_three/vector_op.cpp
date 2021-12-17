@@ -20,7 +20,7 @@ $spell
     vec_op
 $$
 
-$section Atomic Vector Math Operators: Example and Test$$
+$section Atomic Vector Element-wise Operators: Example and Test$$
 
 $head Syntax$$
 $codei%atomic_vector_op %vec_op%(%name%)
@@ -29,11 +29,23 @@ $icode%vec_op%(%x%, %y%)
 %$$
 
 $head Purpose$$
-The atomic function implements
+
+$subhead Vector Operations$$
+This atomic function implements
 $codei%
     %y% = %u% %op% %v%
 %$$
 where $icode op$$, $icode u$$ and $icode v$$ are defined below.
+
+$subhead base2ad$$
+This also serves as an example for how one can
+define $codei%AD<%Base%>%$$ atomic operations use
+atomic operators (instead of element-wise operators).
+This avoids expanding the atomic operator to may operations when
+recording derivative calculations.
+For example, notice the difference between $code forward_add$$
+for the $code double$$ and the $code AD<double>$$ cases:
+$srcthisfile%0%// BEGIN forward_add%// END forward_add%1%$$.
 
 $head x$$
 We use $icode x$$ to denote the argument to the atomic function.
@@ -197,6 +209,7 @@ private:
     // ----------------------------------------------------------------------
     // forward_add
     // ----------------------------------------------------------------------
+    // BEGIN forward_add
     void forward_add(
         size_t                             n           ,
         size_t                             m           ,
@@ -229,6 +242,7 @@ private:
             copy_ay_to_aty(n, m, q, k, ay, aty);
         }
     }
+    // END forward_add
     // ----------------------------------------------------------------------
     // forward_sub
     // ----------------------------------------------------------------------

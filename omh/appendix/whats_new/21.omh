@@ -47,6 +47,10 @@ $$
 
 $section Changes and Additions to CppAD During 2021$$
 
+$head 12-17$$
+Add forward mode calculations using $code AD<double>$$ to the
+$cref atomic_three_vector_op.cpp$$ example.
+
 $head 12-16$$
 Change $code virtual$$ to $code override$$ in all the
 $cref atomic_three_example$$ files and
