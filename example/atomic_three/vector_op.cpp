@@ -96,6 +96,8 @@ public:
     { }
 private:
     // ------------------------------------------------------------------------
+    // copy routines
+    // ------------------------------------------------------------------------
     static void copy_atx_to_ax(
         size_t                        n,
         size_t                        m,
@@ -109,11 +111,10 @@ private:
         for(size_t i = 0; i < m; ++i)
         {   size_t u_index  = (1 + i)     * (q+1) + k_u;
             size_t v_index  = (1 + m + i) * (q+1) + k_v;
-            ax[1+i]         = atx[u_index];
-            ax[1+ m+i]      = atx[v_index];
+            ax[1 + i]       = atx[u_index];
+            ax[1 + m +i]    = atx[v_index];
         }
     }
-    // ------------------------------------------------------------------------
     static void copy_ay_to_aty(
         size_t                        n,
         size_t                        m,
@@ -128,8 +129,51 @@ private:
             aty[y_index]    = ay[i];
         }
     }
+    static void copy_aty_to_au(
+        size_t                        n,
+        size_t                        m,
+        size_t                        q,
+        size_t                        k,
+        const vector< AD<double> >&   aty,
+        vector< AD<double> >&         ax)
+    {   assert( aty.size() == m * (q+1) );
+        assert( ax.size()  == n );
+        for(size_t i = 0; i < m; ++i)
+        {   size_t y_index  = i  * (q+1) + k;
+            ax[1 + i]       = aty[y_index];
+        }
+    }
+    static void copy_atx_to_av(
+        size_t                        n,
+        size_t                        m,
+        size_t                        q,
+        size_t                        k,
+        const vector< AD<double> >&   atx,
+        vector< AD<double> >&         ax)
+    {   assert( atx.size() == n * (q+1) );
+        assert( ax.size()  == n );
+        for(size_t i = 0; i < m; ++i)
+        {   size_t v_index  = (1 +  m + i) * (q+1) + k;
+            ax[1 + m + i]   = atx[v_index];
+        }
+    }
+    static void copy_atx_to_au(
+        size_t                        n,
+        size_t                        m,
+        size_t                        q,
+        size_t                        k,
+        const vector< AD<double> >&   atx,
+        vector< AD<double> >&         ax)
+    {   assert( atx.size() == n * (q+1) );
+        assert( ax.size()  == n );
+        for(size_t i = 0; i < m; ++i)
+        {   size_t u_index  = (1 + i) * (q+1) + k;
+            ax[1 + i]       = atx[u_index];
+        }
+    }
     // ------------------------------------------------------------------------
     // for_type
+    // ------------------------------------------------------------------------
     bool for_type(
         const vector<double>&               parameter_x ,
         const vector<CppAD::ad_type_enum>&  type_x      ,
@@ -250,9 +294,9 @@ private:
         size_t                             q           ,
         const vector< AD<double> >&        atx         ,
         vector< AD<double> >&              aty         )
-    {   vector< AD<double> > ax_mul(n), ax_sum(n), ay(m);
+    {   vector< AD<double> > ax_mul(n), ax_add(n), ay(m);
         ax_mul[0] = AD<double>( mul_enum );
-        ax_sum[0] = AD<double>( add_enum );
+        ax_add[0] = AD<double>( add_enum );
         for(size_t k = p; k <= q; ++k)
         {   // y = 0
             for(size_t i = 0; i < m; ++i)
@@ -260,7 +304,7 @@ private:
             for(size_t d = 0; d <= k; d++)
             {   // sum = y
                 for(size_t i = 0; i < m; ++i)
-                    ax_sum[1 + i] = ay[i];
+                    ax_add[1 + i] = ay[i];
                 //
                 // y = u^{k-d} * v^k
                 copy_atx_to_ax(n, m, q, k-d, d, atx, ax_mul);
@@ -268,8 +312,8 @@ private:
                 //
                 // y = y + sum
                 for(size_t i = 0; i < m; ++i)
-                    ax_sum[1 + m + i] = ay[i];
-                (*this)(ax_sum, ay); // atomic add operation
+                    ax_add[1 + m + i] = ay[i];
+                (*this)(ax_add, ay); // atomic add operation
             }
             copy_ay_to_aty(n, m, q, k, ay, aty);
         }
@@ -298,6 +342,40 @@ private:
                 size_t v_index = (1 + m + i ) * (q+1) + 0;
                 ty[y_index] /= tx[v_index];
             }
+        }
+    }
+    void forward_div(
+        size_t                             n           ,
+        size_t                             m           ,
+        size_t                             p           ,
+        size_t                             q           ,
+        const vector< AD<double> >&        atx         ,
+        vector< AD<double> >&              aty         )
+    {   vector< AD<double> > ax_div(n), ax_mul(n), ax_sub(n), ay(m);
+        ax_div[0] = AD<double>( div_enum );
+        ax_mul[0] = AD<double>( mul_enum );
+        ax_sub[0] = AD<double>( sub_enum );
+        for(size_t k = p; k <= q; ++k)
+        {   // ty[y_index] = tx[u_index]
+            copy_atx_to_au(n, m, q, k, atx, ax_sub);
+            for(size_t d = 1; d <= k; d++)
+            {   // ty[y_other] * tx[v_index];
+                copy_aty_to_au(n, m, q, k-d, aty, ax_mul);
+                copy_atx_to_av(n, m, q, d, atx, ax_mul);
+                (*this)(ax_mul, ay);
+                // ty[y_index] -= ty[y_other] * tx[v_index];
+                for(size_t i = 0; i < m; ++i)
+                    ax_sub[1 + m + i] = ay[i];
+                (*this)(ax_sub, ay);
+                for(size_t i = 0; i < m; ++i)
+                    ax_sub[1 + i] = ay[i];
+            }
+            // ty[y_index] /= tx[v_index];
+            for(size_t i = 0; i < m; ++i)
+                ax_div[1 + i] = ax_sub[1 + i];
+            copy_atx_to_av(n, m, q, 0, atx, ax_div);
+            (*this)(ax_div, ay);
+            copy_ay_to_aty(n, m, q, k, ay, aty);
         }
     }
     // ----------------------------------------------------------------------
@@ -394,7 +472,8 @@ private:
 
             // division
             case div_enum:
-            ok = false;
+            forward_div(n, m, q, p, atx, aty);
+            ok = true;
             break;
 
             // error
@@ -437,8 +516,8 @@ bool test_atom_double(void)
         // Create the function f(x) = u op v
         CPPAD_TESTVECTOR( AD<double> ) auv(2 * m);
         for(size_t i = 0; i < m; i++)
-        {   auv[i]     = double(i+1);   // u[i]
-            auv[m + i] = double(m+2*i); // v[i]
+        {   auv[i]     = double(i+1); // u[i]
+            auv[m + i] = double(i+2); // v[i]
         }
         // declare independent variables and start tape recording
         CppAD::Independent(auv);
@@ -533,10 +612,9 @@ bool test_atom_ad_double(void)
         //
         // Create the function f(x) = u op v
         CPPAD_TESTVECTOR( AD<double> ) auv(2 * m);
-        for(size_t i = 0; i < m; i++)
-        {   auv[i]     = double(i+1);   // u[i]
-            auv[m + i] = double(m+i+1); // v[i]
-        }
+        for(size_t j = 0; j < 2 * m; ++j)
+            auv[j] = double(1 + j);
+        //
         // declare independent variables and start tape recording
         CppAD::Independent(auv);
         //
@@ -592,7 +670,7 @@ bool test_atom_ad_double(void)
                 break;
 
                 case atomic_vector_op::div_enum:
-                check_z = 1.0 /  uv[i];
+                check_z = - uv[i] / (uv[m + i] * uv[m + i]);
                 break;
 
                 case atomic_vector_op::num_op:
