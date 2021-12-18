@@ -74,6 +74,11 @@ $head y$$
 We use $icode y$$ to denote the atomic function return value.
 The length of $icode y$$ is equal to $icode m$$.
 
+$head AD<double>$$
+During $code AD<double>$$ operations, copying variables
+from one vector to another does not add any operations to the
+resulting tape.
+
 
 $head Source Code$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -223,6 +228,7 @@ private:
             {   size_t u_index  = (1 + i)     * (q+1) + k;
                 size_t v_index  = (1 + m + i) * (q+1) + k;
                 size_t y_index  = i *           (q+1) + k;
+                // y_i^k = u_i^k + v_i^k
                 ty[y_index]     = tx[u_index] + tx[v_index];
             }
         }
@@ -237,8 +243,11 @@ private:
     {   vector< AD<double> > ax(n), ay(m);
         ax[0] = AD<double>( add_enum );
         for(size_t k = p; k <= q; ++k)
-        {   copy_atx_to_ax(n, m, q, k, k, atx, ax);
-            (*this)(ax, ay); // atomic add operation
+        {   // ax = (op, u^k, v^k)
+            copy_atx_to_ax(n, m, q, k, k, atx, ax);
+            // ay = u^k + v^k
+            (*this)(ax, ay); // atomic vector add
+            // y^k = ay
             copy_ay_to_aty(n, m, q, k, ay, aty);
         }
     }
@@ -259,6 +268,7 @@ private:
             {   size_t u_index  = (1 + i)     * (q+1) + k;
                 size_t v_index  = (1 + m + i) * (q+1) + k;
                 size_t y_index  = i           * (q+1) + k;
+                // y_i^k = u_i^k - v_i^k
                 ty[y_index]     = tx[u_index] - tx[v_index];
             }
         }
@@ -273,8 +283,11 @@ private:
     {   vector< AD<double> > ax(n), ay(m);
         ax[0] = AD<double>( sub_enum );
         for(size_t k = p; k <= q; ++k)
-        {   copy_atx_to_ax(n, m, q, k, k, atx, ax);
-            (*this)(ax, ay); // atomic add operation
+        {   // ax = (op, u^k, v^k)
+            copy_atx_to_ax(n, m, q, k, k, atx, ax);
+            // ay = u^k - v^k
+            (*this)(ax, ay); // atomic vector subtract
+            // y^k = ay
             copy_ay_to_aty(n, m, q, k, ay, aty);
         }
     }
@@ -292,10 +305,12 @@ private:
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
             {   size_t y_index = i * (q+1) + k;
+                // y^k = 0
                 ty[y_index]    = 0.0;
                 for(size_t d = 0; d <= k; d++)
                 {   size_t u_index  = (1 + i)     * (q+1) + (k-d);
                     size_t v_index  = (1 + m + i) * (q+1) + d;
+                    // y^k += u^{k-d} * v^d
                     ty[y_index]    += tx[u_index] * tx[v_index];
                 }
             }
@@ -312,23 +327,28 @@ private:
         ax_mul[0] = AD<double>( mul_enum );
         ax_add[0] = AD<double>( add_enum );
         for(size_t k = p; k <= q; ++k)
-        {   // y = 0
+        {   // ay = 0
             for(size_t i = 0; i < m; ++i)
                 ay[i] = 0.0;
             for(size_t d = 0; d <= k; d++)
-            {   // sum = y
+            {   // u_add = ay
                 for(size_t i = 0; i < m; ++i)
                     ax_add[1 + i] = ay[i];
                 //
-                // y = u^{k-d} * v^k
+                // ax_mul = (op, u^{k-d},  v^d)
                 copy_atx_to_ax(n, m, q, k-d, d, atx, ax_mul);
-                (*this)(ax_mul, ay); // atomic multiply operation
                 //
-                // y = y + sum
+                // ay = u^{k-d} * v^d
+                (*this)(ax_mul, ay); // atomic vector multiply
+                //
+                // v_add = ay
                 for(size_t i = 0; i < m; ++i)
                     ax_add[1 + m + i] = ay[i];
-                (*this)(ax_add, ay); // atomic add operation
+                //
+                // ay = u_add + v_add
+                (*this)(ax_add, ay); // atomic vector add
             }
+            // y^k = ay
             copy_ay_to_aty(n, m, q, k, ay, aty);
         }
     }
@@ -347,13 +367,16 @@ private:
         {   for(size_t k = p; k <= q; ++k)
             {   size_t y_index  = i *       (q+1) + k;
                 size_t u_index  = (1 + i) * (q+1) + k;
+                // y^k = u^k
                 ty[y_index]     = tx[u_index];
                 for(size_t d = 1; d <= k; d++)
                 {   size_t y_other      = i       * (q+1) + (k-d);
                     size_t v_index  = (1 + m + i) * (q+1) + d;
+                    // y^k -= y^{k-d} * v^d
                     ty[y_index] -= ty[y_other] * tx[v_index];
                 }
                 size_t v_index = (1 + m + i ) * (q+1) + 0;
+                // y^k /= v^0
                 ty[y_index] /= tx[v_index];
             }
         }
@@ -370,25 +393,32 @@ private:
         ax_mul[0] = AD<double>( mul_enum );
         ax_sub[0] = AD<double>( sub_enum );
         for(size_t k = p; k <= q; ++k)
-        {   // ty[y_index] = tx[u_index]
+        {   // u_sub = u^k
             copy_atx_to_au(n, m, q, k, atx, ax_sub);
             for(size_t d = 1; d <= k; d++)
-            {   // ty[y_other] * tx[v_index];
+            {   // u_mul = y^{k-d}
                 copy_aty_to_au(n, m, q, k-d, aty, ax_mul);
+                // v_mul = v^d
                 copy_atx_to_av(n, m, q, d, atx, ax_mul);
-                (*this)(ax_mul, ay);
-                // ty[y_index] -= ty[y_other] * tx[v_index];
+                // ay = y^{k-d} * v^d
+                (*this)(ax_mul, ay); // atomic vector multiply
+                // v_sub = ay
                 for(size_t i = 0; i < m; ++i)
                     ax_sub[1 + m + i] = ay[i];
-                (*this)(ax_sub, ay);
+                // ay = u_sub - v_sub
+                (*this)(ax_sub, ay); // atomic vector subtract
+                // u_sub = ay
                 for(size_t i = 0; i < m; ++i)
                     ax_sub[1 + i] = ay[i];
             }
-            // ty[y_index] /= tx[v_index];
+            // u_div = u_sub
             for(size_t i = 0; i < m; ++i)
                 ax_div[1 + i] = ax_sub[1 + i];
+            // v_div = v^0
             copy_atx_to_av(n, m, q, 0, atx, ax_div);
-            (*this)(ax_div, ay);
+            // ay = u_div / v_div
+            (*this)(ax_div, ay); // atomic vector divide
+            // y^k = ay
             copy_ay_to_aty(n, m, q, k, ay, aty);
         }
     }
