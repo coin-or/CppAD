@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-{ tag: 'CppAD', title:'cppad-20211217: A C++ Algorithmic Differentiation Package', other:' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example' },
+{ tag: 'CppAD', title:'cppad-20211223: A C++ Algorithmic Differentiation Package', other:' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example' },
 { tag: 'Install', title:'CppAD Download, Test, and Install Instructions', other:' step 1: 2: cmake 3: check 4: installation deprecated' },
 { tag: 'download', title:'Download The CppAD Source Code', other:' purpose distribution directory version release git compressed archives documentation building' },
 { tag: 'cmake', title:'Using CMake to Configure CppAD', other:' the program build directory command simple warning options msys2 visual studio autotools check cmake_verbose_makefile cmake_build_type generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which' },
@@ -207,7 +207,7 @@ Keyword =
 { tag: 'atomic_three_reciprocal.cpp', title:'Reciprocal as an Atomic Operation: Example and Test', other:' function start class definition constructor for_type forward reverse jac_sparsity hes_sparsity end use recording for_jac_sparsity rev_sparse_jac rev_sparse_hes for_sparse_hes' },
 { tag: 'atomic_three_mat_mul.cpp', title:'User Atomic Matrix Multiply: Example and Test', other:' see also class definition function constructor recording forward reverse jac_sparsity hes_sparsity' },
 { tag: 'atomic_three_mat_mul.hpp', title:'Matrix Multiply as an Atomic Operation', other:' see also purpose parameter_x type_x dimensions left right result start class definition constructor operand element index forward reverse for_type jac_sparsity hes_sparsity rev_depend' },
-{ tag: 'atomic_three_vector_op.cpp', title:'Atomic Vector Element-wise Operators: Example and Test', other:' syntax purpose operations base2ad source code' },
+{ tag: 'atomic_three_vector_op.cpp', title:'Atomic Vector Element-wise Operators: Example and Test', other:' syntax purpose operations base2ad ad<double> source code' },
 { tag: 'chkpoint_two', title:'Checkpoint Functions: Second Generation', other:' syntax constructor use new_dynamic reduce memory faster recording repeating forward operation sequence atomic_three base' },
 { tag: 'chkpoint_two_ctor', title:'Checkpoint Function Constructor', other:' syntax prototype parallel base name internal_bool use_hes_sparsity use_base2ad use_in_parallel chk_fun' },
 { tag: 'chkpoint_two_chk_fun', title:'Using Checkpoint Functions', other:' syntax purpose advector ay' },

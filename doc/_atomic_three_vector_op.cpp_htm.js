@@ -23,6 +23,7 @@ var list_current0 = [
 'atomic_three_vector_op.cpp.htm#u',
 'atomic_three_vector_op.cpp.htm#v',
 'atomic_three_vector_op.cpp.htm#y',
+'atomic_three_vector_op.cpp.htm#AD&lt;double&gt;',
 'atomic_three_vector_op.cpp.htm#Source Code'
 ];
 function choose_across0(item)

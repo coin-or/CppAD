@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Vector Element-wise Operators: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Vector Element-wise Operators: Example and Test">
-<meta name="keywords" id="keywords" content=" atomic vector element-wise operators: example test syntax purpose operations base2ad x op u v y source code ">
+<meta name="keywords" id="keywords" content=" atomic vector element-wise operators: example test syntax purpose operations base2ad x op u v y ad&lt;double&gt; source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,6 +76,7 @@ A:active { color : purple }
 <option>u</option>
 <option>v</option>
 <option>y</option>
+<option>AD&lt;double&gt;</option>
 <option>Source Code</option>
 </select>
 </td>
@@ -144,6 +145,7 @@ for the <code><font color="blue">double</font></code> and the <code><font color=
             <font color="#FF0000">{</font>   <font color="#008080">size_t</font> u_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font>     <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
                 <font color="#008080">size_t</font> v_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
                 <font color="#008080">size_t</font> y_index  <font color="#990000">=</font> i <font color="#990000">*</font>           <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                <i><font color="#9A1900">// y_i^k = u_i^k + v_i^k</font></i>
                 ty<font color="#990000">[</font>y_index<font color="#990000">]</font>     <font color="#990000">=</font> tx<font color="#990000">[</font>u_index<font color="#990000">]</font> <font color="#990000">+</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>
@@ -158,8 +160,11 @@ for the <code><font color="blue">double</font></code> and the <code><font color=
     <font color="#FF0000">{</font>   <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
         ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> add_enum <font color="#990000">);</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <b><font color="#000000">copy_atx_to_ax</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> k<font color="#990000">,</font> atx<font color="#990000">,</font> ax<font color="#990000">);</font>
-            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic add operation</font></i>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// ax = (op, u^k, v^k)</font></i>
+            <b><font color="#000000">copy_atx_to_ax</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> k<font color="#990000">,</font> atx<font color="#990000">,</font> ax<font color="#990000">);</font>
+            <i><font color="#9A1900">// ay = u^k + v^k</font></i>
+            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector add</font></i>
+            <i><font color="#9A1900">// y^k = ay</font></i>
             <b><font color="#000000">copy_ay_to_aty</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">,</font> aty<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>    </tt></pre>
@@ -237,6 +242,14 @@ The length of
  is equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
 .
+
+<br>
+<br>
+<b><big><a name="AD&lt;double&gt;" id="AD&lt;double&gt;">AD&lt;double&gt;</a></big></b>
+<br>
+During <code><font color="blue">AD&lt;double&gt;</font></code> operations, copying variables
+from one vector to another does not add any operations to the
+resulting tape.
 
 
 <br>
@@ -386,6 +399,7 @@ The length of
             <font color="#FF0000">{</font>   <font color="#008080">size_t</font> u_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font>     <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
                 <font color="#008080">size_t</font> v_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
                 <font color="#008080">size_t</font> y_index  <font color="#990000">=</font> i <font color="#990000">*</font>           <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                <i><font color="#9A1900">// y_i^k = u_i^k + v_i^k</font></i>
                 ty<font color="#990000">[</font>y_index<font color="#990000">]</font>     <font color="#990000">=</font> tx<font color="#990000">[</font>u_index<font color="#990000">]</font> <font color="#990000">+</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>
@@ -400,8 +414,11 @@ The length of
     <font color="#FF0000">{</font>   <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
         ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> add_enum <font color="#990000">);</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <b><font color="#000000">copy_atx_to_ax</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> k<font color="#990000">,</font> atx<font color="#990000">,</font> ax<font color="#990000">);</font>
-            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic add operation</font></i>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// ax = (op, u^k, v^k)</font></i>
+            <b><font color="#000000">copy_atx_to_ax</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> k<font color="#990000">,</font> atx<font color="#990000">,</font> ax<font color="#990000">);</font>
+            <i><font color="#9A1900">// ay = u^k + v^k</font></i>
+            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector add</font></i>
+            <i><font color="#9A1900">// y^k = ay</font></i>
             <b><font color="#000000">copy_ay_to_aty</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">,</font> aty<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
@@ -422,6 +439,7 @@ The length of
             <font color="#FF0000">{</font>   <font color="#008080">size_t</font> u_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font>     <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
                 <font color="#008080">size_t</font> v_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
                 <font color="#008080">size_t</font> y_index  <font color="#990000">=</font> i           <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                <i><font color="#9A1900">// y_i^k = u_i^k - v_i^k</font></i>
                 ty<font color="#990000">[</font>y_index<font color="#990000">]</font>     <font color="#990000">=</font> tx<font color="#990000">[</font>u_index<font color="#990000">]</font> <font color="#990000">-</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>
@@ -436,8 +454,11 @@ The length of
     <font color="#FF0000">{</font>   <font color="#008080">vector&lt; AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
         ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> sub_enum <font color="#990000">);</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <b><font color="#000000">copy_atx_to_ax</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> k<font color="#990000">,</font> atx<font color="#990000">,</font> ax<font color="#990000">);</font>
-            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic add operation</font></i>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// ax = (op, u^k, v^k)</font></i>
+            <b><font color="#000000">copy_atx_to_ax</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> k<font color="#990000">,</font> atx<font color="#990000">,</font> ax<font color="#990000">);</font>
+            <i><font color="#9A1900">// ay = u^k - v^k</font></i>
+            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector subtract</font></i>
+            <i><font color="#9A1900">// y^k = ay</font></i>
             <b><font color="#000000">copy_ay_to_aty</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">,</font> aty<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
@@ -455,10 +476,12 @@ The length of
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
             <font color="#FF0000">{</font>   <font color="#008080">size_t</font> y_index <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                <i><font color="#9A1900">// y^k = 0</font></i>
                 ty<font color="#990000">[</font>y_index<font color="#990000">]</font>    <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
                 <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> d <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> d <font color="#990000">&lt;=</font> k<font color="#990000">;</font> d<font color="#990000">++)</font>
                 <font color="#FF0000">{</font>   <font color="#008080">size_t</font> u_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font>     <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>k<font color="#990000">-</font>d<font color="#990000">);</font>
                     <font color="#008080">size_t</font> v_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> d<font color="#990000">;</font>
+                    <i><font color="#9A1900">// y^k += u^{k-d} * v^d</font></i>
                     ty<font color="#990000">[</font>y_index<font color="#990000">]</font>    <font color="#990000">+=</font> tx<font color="#990000">[</font>u_index<font color="#990000">]</font> <font color="#990000">*</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
                 <font color="#FF0000">}</font>
             <font color="#FF0000">}</font>
@@ -475,23 +498,28 @@ The length of
         ax_mul<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> mul_enum <font color="#990000">);</font>
         ax_add<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> add_enum <font color="#990000">);</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <i><font color="#9A1900">// y = 0</font></i>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// ay = 0</font></i>
             <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
                 ay<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
             <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> d <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> d <font color="#990000">&lt;=</font> k<font color="#990000">;</font> d<font color="#990000">++)</font>
-            <font color="#FF0000">{</font>   <i><font color="#9A1900">// sum = y</font></i>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// u_add = ay</font></i>
                 <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
                     ax_add<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
                 <i><font color="#9A1900">//</font></i>
-                <i><font color="#9A1900">// y = u^{k-d} * v^k</font></i>
+                <i><font color="#9A1900">// ax_mul = (op, u^{k-d},  v^d)</font></i>
                 <b><font color="#000000">copy_atx_to_ax</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">-</font>d<font color="#990000">,</font> d<font color="#990000">,</font> atx<font color="#990000">,</font> ax_mul<font color="#990000">);</font>
-                <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_mul<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic multiply operation</font></i>
                 <i><font color="#9A1900">//</font></i>
-                <i><font color="#9A1900">// y = y + sum</font></i>
+                <i><font color="#9A1900">// ay = u^{k-d} * v^d</font></i>
+                <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_mul<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector multiply</font></i>
+                <i><font color="#9A1900">//</font></i>
+                <i><font color="#9A1900">// v_add = ay</font></i>
                 <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
                     ax_add<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
-                <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_add<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic add operation</font></i>
+                <i><font color="#9A1900">//</font></i>
+                <i><font color="#9A1900">// ay = u_add + v_add</font></i>
+                <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_add<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector add</font></i>
             <font color="#FF0000">}</font>
+            <i><font color="#9A1900">// y^k = ay</font></i>
             <b><font color="#000000">copy_ay_to_aty</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">,</font> aty<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
@@ -510,13 +538,16 @@ The length of
         <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
             <font color="#FF0000">{</font>   <font color="#008080">size_t</font> y_index  <font color="#990000">=</font> i <font color="#990000">*</font>       <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
                 <font color="#008080">size_t</font> u_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                <i><font color="#9A1900">// y^k = u^k</font></i>
                 ty<font color="#990000">[</font>y_index<font color="#990000">]</font>     <font color="#990000">=</font> tx<font color="#990000">[</font>u_index<font color="#990000">];</font>
                 <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> d <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> d <font color="#990000">&lt;=</font> k<font color="#990000">;</font> d<font color="#990000">++)</font>
                 <font color="#FF0000">{</font>   <font color="#008080">size_t</font> y_other      <font color="#990000">=</font> i       <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>k<font color="#990000">-</font>d<font color="#990000">);</font>
                     <font color="#008080">size_t</font> v_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> d<font color="#990000">;</font>
+                    <i><font color="#9A1900">// y^k -= y^{k-d} * v^d</font></i>
                     ty<font color="#990000">[</font>y_index<font color="#990000">]</font> <font color="#990000">-=</font> ty<font color="#990000">[</font>y_other<font color="#990000">]</font> <font color="#990000">*</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
                 <font color="#FF0000">}</font>
                 <font color="#008080">size_t</font> v_index <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i <font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">;</font>
+                <i><font color="#9A1900">// y^k /= v^0</font></i>
                 ty<font color="#990000">[</font>y_index<font color="#990000">]</font> <font color="#990000">/=</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>
@@ -533,25 +564,32 @@ The length of
         ax_mul<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> mul_enum <font color="#990000">);</font>
         ax_sub<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> sub_enum <font color="#990000">);</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <i><font color="#9A1900">// ty[y_index] = tx[u_index]</font></i>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">// u_sub = u^k</font></i>
             <b><font color="#000000">copy_atx_to_au</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> atx<font color="#990000">,</font> ax_sub<font color="#990000">);</font>
             <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> d <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> d <font color="#990000">&lt;=</font> k<font color="#990000">;</font> d<font color="#990000">++)</font>
-            <font color="#FF0000">{</font>   <i><font color="#9A1900">// ty[y_other] * tx[v_index];</font></i>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// u_mul = y^{k-d}</font></i>
                 <b><font color="#000000">copy_aty_to_au</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">-</font>d<font color="#990000">,</font> aty<font color="#990000">,</font> ax_mul<font color="#990000">);</font>
+                <i><font color="#9A1900">// v_mul = v^d</font></i>
                 <b><font color="#000000">copy_atx_to_av</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> d<font color="#990000">,</font> atx<font color="#990000">,</font> ax_mul<font color="#990000">);</font>
-                <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_mul<font color="#990000">,</font> ay<font color="#990000">);</font>
-                <i><font color="#9A1900">// ty[y_index] -= ty[y_other] * tx[v_index];</font></i>
+                <i><font color="#9A1900">// ay = y^{k-d} * v^d</font></i>
+                <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_mul<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector multiply</font></i>
+                <i><font color="#9A1900">// v_sub = ay</font></i>
                 <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
                     ax_sub<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
-                <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_sub<font color="#990000">,</font> ay<font color="#990000">);</font>
+                <i><font color="#9A1900">// ay = u_sub - v_sub</font></i>
+                <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_sub<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector subtract</font></i>
+                <i><font color="#9A1900">// u_sub = ay</font></i>
                 <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
                     ax_sub<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
             <font color="#FF0000">}</font>
-            <i><font color="#9A1900">// ty[y_index] /= tx[v_index];</font></i>
+            <i><font color="#9A1900">// u_div = u_sub</font></i>
             <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
                 ax_div<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ax_sub<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">];</font>
+            <i><font color="#9A1900">// v_div = v^0</font></i>
             <b><font color="#000000">copy_atx_to_av</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> atx<font color="#990000">,</font> ax_div<font color="#990000">);</font>
-            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_div<font color="#990000">,</font> ay<font color="#990000">);</font>
+            <i><font color="#9A1900">// ay = u_div / v_div</font></i>
+            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_div<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector divide</font></i>
+            <i><font color="#9A1900">// y^k = ay</font></i>
             <b><font color="#000000">copy_ay_to_aty</font></b><font color="#990000">(</font>n<font color="#990000">,</font> m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">,</font> aty<font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
