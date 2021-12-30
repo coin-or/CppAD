@@ -10,8 +10,8 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-stable_version='20210000' # date at which this stable branch started
-release='8'               # first release for each stable version is 0
+stable_version='20220000' # date at which this stable branch started
+release='0'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
