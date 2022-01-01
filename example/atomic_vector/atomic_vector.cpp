@@ -26,41 +26,21 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
-extern bool base2ad(void);
-extern bool dynamic(void);
-extern bool forward(void);
-extern bool get_started(void);
-extern bool hes_sparsity(void);
-extern bool jac_sparsity(void);
-extern bool mat_mul(void);
-extern bool norm_sq(void);
-extern bool reciprocal(void);
-extern bool rev_depend(void);
-extern bool reverse(void);
-extern bool tangent(void);
+extern bool ad_double(void);
+extern bool in_double(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/atomic";
+{   std::string group = "example/atomic_vector";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
     // This line is used by test_one.sh
 
     // BEGIN_SORT_THIS_LINE_PLUS_1
-    Run( base2ad,             "base2ad"        );
-    Run( dynamic,             "dynamic"        );
-    Run( forward,             "forward"        );
-    Run( get_started,         "get_started"    );
-    Run( hes_sparsity,        "hes_sparsity"   );
-    Run( jac_sparsity,        "jac_sparsity"   );
-    Run( mat_mul,             "mat_mul"        );
-    Run( norm_sq,             "norm_sq"        );
-    Run( reciprocal,          "reciprocal"     );
-    Run( rev_depend,          "rev_depend"     );
-    Run( reverse,             "reverse"        );
-    Run( tangent,             "tangent"        );
+    Run( ad_double,           "ad_double"      );
+    Run( in_double,           "in_double"      );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak

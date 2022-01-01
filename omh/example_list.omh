@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -62,13 +62,15 @@ $rref atomic_three_reciprocal.cpp$$
 $rref atomic_three_rev_depend.cpp$$
 $rref atomic_three_reverse.cpp$$
 $rref atomic_three_tangent.cpp$$
-$rref atomic_three_vector_op.cpp$$
 $rref atomic_two_eigen_cholesky.cpp$$
 $rref atomic_two_eigen_cholesky.hpp$$
 $rref atomic_two_eigen_mat_inv.cpp$$
 $rref atomic_two_eigen_mat_inv.hpp$$
 $rref atomic_two_eigen_mat_mul.cpp$$
 $rref atomic_two_eigen_mat_mul.hpp$$
+$rref atomic_vector.hpp$$
+$rref atomic_vector_ad_double.cpp$$
+$rref atomic_vector_in_double.cpp$$
 $rref azmul.cpp$$
 $rref base2ad.cpp$$
 $rref base_adolc.hpp$$

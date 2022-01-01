@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ATOMIC_ATOMIC_THREE_HPP
 # define CPPAD_CORE_ATOMIC_ATOMIC_THREE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -201,7 +201,6 @@ $childtable%example/atomic_three/get_started.cpp
     %example/atomic_three/base2ad.cpp
     %example/atomic_three/reciprocal.cpp
     %example/atomic_three/mat_mul.cpp
-    %example/atomic_three/vector_op.cpp
 %$$
 
 $end
