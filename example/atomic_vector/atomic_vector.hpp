@@ -175,36 +175,16 @@ private:
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
-        CppAD::vector<double>&                           ty)
-    {
-        for(size_t i = 0; i < m; ++i)
-        {   for(size_t k = p; k <= q; ++k)
-            {   size_t u_index  = (1 + i)     * (q+1) + k;
-                size_t v_index  = (1 + m + i) * (q+1) + k;
-                size_t y_index  = i           * (q+1) + k;
-                // y_i^k = u_i^k - v_i^k
-                ty[y_index]     = tx[u_index] - tx[v_index];
-            }
-        }
-    }
+        CppAD::vector<double>&                           ty
+    );
     void forward_sub(
         size_t                                           n,
         size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
-        CppAD::vector< CppAD::AD<double> >&              aty)
-    {   CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
-        ax[0] = CppAD::AD<double>( sub_enum );
-        for(size_t k = p; k <= q; ++k)
-        {   // ax = (op, u^k, v^k)
-            copy_atx_to_ax(n, m, q, k, k, atx, ax);
-            // ay = u^k - v^k
-            (*this)(ax, ay); // atomic vector subtract
-            // y^k = ay
-            copy_ay_to_aty(n, m, q, k, ay, aty);
-        }
-    }
+        CppAD::vector< CppAD::AD<double> >&              aty
+    );
     // ----------------------------------------------------------------------
     // forward_mul
     // ----------------------------------------------------------------------
