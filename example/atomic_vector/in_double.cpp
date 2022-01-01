@@ -28,7 +28,7 @@ bool in_double(void)
     //
     // vec_op
     // atomic vector_op object
-    atomic_vector_op vec_op("atomic_vector_op");
+    atomic_vector vec_op("atomic_vector");
     //
     // m, n
     // size of x and y
@@ -36,10 +36,10 @@ bool in_double(void)
     size_t n = 1 + 2 * m;
     //
     // op_enum_t
-    typedef atomic_vector_op::op_enum_t op_enum_t;
+    typedef atomic_vector::op_enum_t op_enum_t;
     //
     // num_op
-    size_t num_op = size_t( atomic_vector_op::num_op );
+    size_t num_op = size_t( atomic_vector::num_op );
     //
     // i_op
     for(size_t i_op = 0; i_op < num_op; ++i_op)
@@ -84,30 +84,30 @@ bool in_double(void)
         {   double check_y, check_dy, den_sq;
             switch(op)
             {
-                case atomic_vector_op::add_enum:
+                case atomic_vector::add_enum:
                 check_y  =   uv[i] +  uv[m + i];
                 check_dy =  duv[i] + duv[m + i];
                 break;
 
-                case atomic_vector_op::sub_enum:
+                case atomic_vector::sub_enum:
                 check_y  =  uv[i] -  uv[m + i];
                 check_dy = duv[i] - duv[m + i];
                 break;
 
-                case atomic_vector_op::mul_enum:
+                case atomic_vector::mul_enum:
                 check_y  =  uv[i] *  uv[m + i];
                 check_dy = duv[i + 1] *  uv[m + i]
                          +  uv[i] * duv[m + i];
                 break;
 
-                case atomic_vector_op::div_enum:
+                case atomic_vector::div_enum:
                 den_sq   =  uv[m + i] *  uv[m + i];
                 check_y  =  uv[i] /  uv[m + i];
                 check_dy = duv[i] /  uv[m + i]
                          -  uv[i] * duv[m + i] / den_sq;
                 break;
 
-                case atomic_vector_op::num_op:
+                case atomic_vector::num_op:
                 assert( false );
                 break;
             }

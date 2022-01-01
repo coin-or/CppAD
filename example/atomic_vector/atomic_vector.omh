@@ -44,7 +44,7 @@ recording derivative calculations.
 For example, notice the difference between $code forward_add$$
 for the $code double$$ and the $code AD<double>$$ cases:
 $srcfile%
-    example/atomic_vector/atomic_vector.hpp%
+    example/atomic_vector/add.cpp%
     0%// BEGIN forward_add%// END forward_add%0
 %$$
 
@@ -86,6 +86,7 @@ resulting tape.
 
 $childtable%
     example/atomic_vector/atomic_vector.hpp%
+    example/atomic_vector/add.cpp%
     example/atomic_vector/in_double.cpp%
     example/atomic_vector/ad_double.cpp
 %$$

@@ -23,11 +23,11 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-class atomic_vector_op : public CppAD::atomic_three<double> {
+class atomic_vector : public CppAD::atomic_three<double> {
 //
 public:
     // BEGIN op_enum_t
-    // atomic_vector_op::op_enum_t
+    // atomic_vector::op_enum_t
     typedef enum {
         add_enum,
         sub_enum,
@@ -38,13 +38,15 @@ public:
     // END op_enum_t
     //
     // ctor
-    atomic_vector_op(const std::string& name) :
+    atomic_vector(const std::string& name) :
     CppAD::atomic_three<double>(name)
     { }
 private:
     // ------------------------------------------------------------------------
     // copy routines
     // ------------------------------------------------------------------------
+    // au = atu^k_u
+    // av = atv^k_v
     static void copy_atx_to_ax(
         size_t                                      n,
         size_t                                      m,
@@ -62,6 +64,7 @@ private:
             ax[1 + m +i]    = atx[v_index];
         }
     }
+    // aty^k = ay
     static void copy_ay_to_aty(
         size_t                                      n,
         size_t                                      m,
@@ -76,6 +79,7 @@ private:
             aty[y_index]    = ay[i];
         }
     }
+    // au = aty^k
     static void copy_aty_to_au(
         size_t                                      n,
         size_t                                      m,
@@ -90,6 +94,7 @@ private:
             ax[1 + i]       = aty[y_index];
         }
     }
+    // av = atv^k
     static void copy_atx_to_av(
         size_t                                      n,
         size_t                                      m,
@@ -104,6 +109,7 @@ private:
             ax[1 + m + i]   = atx[v_index];
         }
     }
+    // au = atu^k
     static void copy_atx_to_au(
         size_t                                      n,
         size_t                                      m,
@@ -144,44 +150,22 @@ private:
     // ----------------------------------------------------------------------
     // forward_add
     // ----------------------------------------------------------------------
-    // BEGIN forward_add
     void forward_add(
         size_t                                           n,
         size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
-        CppAD::vector<double>&                           ty)
-    {
-        for(size_t k = p; k <= q; ++k)
-        {   for(size_t i = 0; i < m; ++i)
-            {   size_t u_index  = (1 + i)     * (q+1) + k;
-                size_t v_index  = (1 + m + i) * (q+1) + k;
-                size_t y_index  = i *           (q+1) + k;
-                // y_i^k = u_i^k + v_i^k
-                ty[y_index]     = tx[u_index] + tx[v_index];
-            }
-        }
-    }
+        CppAD::vector<double>&                           ty
+    );
     void forward_add(
         size_t                                           n,
         size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
-        CppAD::vector< CppAD::AD<double> >&              aty)
-    {   CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
-        ax[0] = CppAD::AD<double>( add_enum );
-        for(size_t k = p; k <= q; ++k)
-        {   // ax = (op, u^k, v^k)
-            copy_atx_to_ax(n, m, q, k, k, atx, ax);
-            // ay = u^k + v^k
-            (*this)(ax, ay); // atomic vector add
-            // y^k = ay
-            copy_ay_to_aty(n, m, q, k, ay, aty);
-        }
-    }
-    // END forward_add
+        CppAD::vector< CppAD::AD<double> >&              aty
+    );
     // ----------------------------------------------------------------------
     // forward_sub
     // ----------------------------------------------------------------------
