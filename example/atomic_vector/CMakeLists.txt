@@ -16,6 +16,7 @@ SET(source_list
     add.cpp
     atomic_vector.cpp
     in_double.cpp
+    mul.cpp
     sub.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
