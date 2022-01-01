@@ -1,0 +1,26 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
+
+  CppAD is distributed under the terms of the
+               Eclipse Public License Version 2.0.
+
+  This Source Code may also be made available under the following
+  Secondary License when the conditions for such availability set forth
+  in the Eclipse Public License, Version 2.0 are satisfied:
+        GNU General Public License, Version 2.0 or later.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_22$$
+$spell
+    CppAD
+    op
+$$
+
+$section Changes and Additions to CppAD During 2022$$
+
+$head 01-01$$
+The $code example/atomic_three/vector_op.cpp$$ example
+(see $cref atomic_vector$$) was split into multiple files and moved into the
+$code example/atomic_vector$$ directory.
+
+$end
