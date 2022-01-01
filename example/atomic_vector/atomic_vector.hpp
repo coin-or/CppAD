@@ -46,11 +46,11 @@ private:
     // copy routines
     // ------------------------------------------------------------------------
     static void copy_atx_to_ax(
-        size_t                        n,
-        size_t                        m,
-        size_t                        q,
-        size_t                        k_u,
-        size_t                        k_v,
+        size_t                                      n,
+        size_t                                      m,
+        size_t                                      q,
+        size_t                                      k_u,
+        size_t                                      k_v,
         const CppAD::vector< CppAD::AD<double> >&   atx,
         CppAD::vector< CppAD::AD<double> >&         ax)
     {   assert( atx.size() == n * (q+1) );
@@ -63,10 +63,10 @@ private:
         }
     }
     static void copy_ay_to_aty(
-        size_t                        n,
-        size_t                        m,
-        size_t                        q,
-        size_t                        k,
+        size_t                                      n,
+        size_t                                      m,
+        size_t                                      q,
+        size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   ay,
         CppAD::vector< CppAD::AD<double> >&         aty)
     {   assert( aty.size() == m * (q+1) );
@@ -77,10 +77,10 @@ private:
         }
     }
     static void copy_aty_to_au(
-        size_t                        n,
-        size_t                        m,
-        size_t                        q,
-        size_t                        k,
+        size_t                                      n,
+        size_t                                      m,
+        size_t                                      q,
+        size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   aty,
         CppAD::vector< CppAD::AD<double> >&         ax)
     {   assert( aty.size() == m * (q+1) );
@@ -91,10 +91,10 @@ private:
         }
     }
     static void copy_atx_to_av(
-        size_t                        n,
-        size_t                        m,
-        size_t                        q,
-        size_t                        k,
+        size_t                                      n,
+        size_t                                      m,
+        size_t                                      q,
+        size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   atx,
         CppAD::vector< CppAD::AD<double> >&         ax)
     {   assert( atx.size() == n * (q+1) );
@@ -105,10 +105,10 @@ private:
         }
     }
     static void copy_atx_to_au(
-        size_t                        n,
-        size_t                        m,
-        size_t                        q,
-        size_t                        k,
+        size_t                                      n,
+        size_t                                      m,
+        size_t                                      q,
+        size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   atx,
         CppAD::vector< CppAD::AD<double> >&         ax)
     {   assert( atx.size() == n * (q+1) );
@@ -146,12 +146,12 @@ private:
     // ----------------------------------------------------------------------
     // BEGIN forward_add
     void forward_add(
-        size_t                             n           ,
-        size_t                             m           ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector<double>&              tx          ,
-        CppAD::vector<double>&                    ty          )
+        size_t                                           n,
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        CppAD::vector<double>&                           ty)
     {
         for(size_t k = p; k <= q; ++k)
         {   for(size_t i = 0; i < m; ++i)
@@ -164,12 +164,12 @@ private:
         }
     }
     void forward_add(
-        size_t                             n           ,
-        size_t                             m           ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector< CppAD::AD<double> >&        atx         ,
-        CppAD::vector< CppAD::AD<double> >&              aty         )
+        size_t                                           n,
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        CppAD::vector< CppAD::AD<double> >&              aty)
     {   CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
         ax[0] = CppAD::AD<double>( add_enum );
         for(size_t k = p; k <= q; ++k)
@@ -186,12 +186,12 @@ private:
     // forward_sub
     // ----------------------------------------------------------------------
     void forward_sub(
-        size_t                             n           ,
-        size_t                             m           ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector<double>&              tx          ,
-        CppAD::vector<double>&                    ty          )
+        size_t                                           n,
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        CppAD::vector<double>&                           ty)
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
@@ -204,12 +204,12 @@ private:
         }
     }
     void forward_sub(
-        size_t                             n           ,
-        size_t                             m           ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector< CppAD::AD<double> >&        atx         ,
-        CppAD::vector< CppAD::AD<double> >&              aty         )
+        size_t                                           n,
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        CppAD::vector< CppAD::AD<double> >&              aty)
     {   CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
         ax[0] = CppAD::AD<double>( sub_enum );
         for(size_t k = p; k <= q; ++k)
@@ -225,12 +225,12 @@ private:
     // forward_mul
     // ----------------------------------------------------------------------
     void forward_mul(
-        size_t                             n           ,
-        size_t                             m           ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector<double>&              tx          ,
-        CppAD::vector<double>&                    ty          )
+        size_t                                           n,
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        CppAD::vector<double>&                           ty)
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
@@ -247,12 +247,12 @@ private:
         }
     }
     void forward_mul(
-        size_t                             n           ,
-        size_t                             m           ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector< CppAD::AD<double> >&        atx         ,
-        CppAD::vector< CppAD::AD<double> >&              aty         )
+        size_t                                           n,
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        CppAD::vector< CppAD::AD<double> >&              aty)
     {   CppAD::vector< CppAD::AD<double> > ax_mul(n), ax_add(n), ay(m);
         ax_mul[0] = CppAD::AD<double>( mul_enum );
         ax_add[0] = CppAD::AD<double>( add_enum );
@@ -286,12 +286,12 @@ private:
     // forward_div
     // ----------------------------------------------------------------------
     void forward_div(
-        size_t                             n           ,
-        size_t                             m           ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector<double>&              tx          ,
-        CppAD::vector<double>&                    ty          )
+        size_t                                           n,
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        CppAD::vector<double>&                           ty)
     {
         for(size_t i = 0; i < m; ++i)
         {   for(size_t k = p; k <= q; ++k)
@@ -312,12 +312,12 @@ private:
         }
     }
     void forward_div(
-        size_t                             n           ,
-        size_t                             m           ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector< CppAD::AD<double> >&        atx         ,
-        CppAD::vector< CppAD::AD<double> >&              aty         )
+        size_t                                           n,
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        CppAD::vector< CppAD::AD<double> >&              aty)
     {   CppAD::vector< CppAD::AD<double> > ax_div(n), ax_mul(n), ax_sub(n), ay(m);
         ax_div[0] = CppAD::AD<double>( div_enum );
         ax_mul[0] = CppAD::AD<double>( mul_enum );
@@ -357,13 +357,13 @@ private:
     // forward mode routines called by ADFun<Base> objects
     // ----------------------------------------------------------------------
     bool forward(
-        const CppAD::vector<double>&              parameter_x ,
-        const CppAD::vector<CppAD::ad_type_enum>& type_x      ,
-        size_t                             need_y      ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector<double>&              tx          ,
-        CppAD::vector<double>&                    ty          ) override
+        const CppAD::vector<double>&                     parameter_x,
+        const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+        size_t                                           need_y,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        CppAD::vector<double>&                           ty) override
     {
         // op, n, m
         op_enum_t op = op_enum_t( parameter_x[0] );
@@ -407,12 +407,12 @@ private:
     // forward mode routines called by ADFun< CppAD::AD<Base> , Base> objects
     // ----------------------------------------------------------------------
     bool forward(
-        const CppAD::vector< CppAD::AD<double> >&        aparameter_x ,
-        const CppAD::vector<CppAD::ad_type_enum>& type_x      ,
-        size_t                             need_y      ,
-        size_t                             p           ,
-        size_t                             q           ,
-        const CppAD::vector< CppAD::AD<double> >&        atx         ,
+        const CppAD::vector< CppAD::AD<double> >&        aparameter_x,
+        const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+        size_t                                           need_y,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
         CppAD::vector< CppAD::AD<double> >&              aty         ) override
     {   //
         // op, n, m
