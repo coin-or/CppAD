@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_vector_sub.cpp$$
 
-$section Atomic Vector Add Operator: Example Implementation$$
+$section Atomic Vector Subtract Operator: Example Implementation$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 

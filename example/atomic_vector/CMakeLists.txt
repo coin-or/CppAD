@@ -15,6 +15,7 @@ SET(source_list
     ad_double.cpp
     add.cpp
     atomic_vector.cpp
+    div.cpp
     in_double.cpp
     mul.cpp
     sub.cpp
