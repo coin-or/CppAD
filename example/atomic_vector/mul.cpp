@@ -62,10 +62,10 @@ void atomic_vector::forward_mul(
             for(size_t i = 0; i < m; ++i)
                 ax_add[1 + i] = ay[i];
             //
-            // ax_mul = (op, u^{k-d},  v^d)
+            // au_mul = u^{k-d},  av_mul =  v^d
             copy_atx_to_ax(n, m, q, k-d, d, atx, ax_mul);
             //
-            // ay = u^{k-d} * v^d
+            // ay = au_mul * av_mul
             (*this)(ax_mul, ay); // atomic vector multiply
             //
             // v_add = ay

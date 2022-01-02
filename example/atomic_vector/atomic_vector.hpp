@@ -17,6 +17,13 @@ $begin atomic_vector.hpp$$
 
 $section Atomic Vector Operations$$
 
+$childtable%
+    example/atomic_vector/add.cpp
+    %example/atomic_vector/sub.cpp
+    %example/atomic_vector/mul.cpp
+    %example/atomic_vector/div.cpp
+%$$
+
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end

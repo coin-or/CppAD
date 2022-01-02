@@ -66,7 +66,7 @@ void atomic_vector::forward_div(
             copy_aty_to_au(n, m, q, k-d, aty, ax_mul);
             // v_mul = v^d
             copy_atx_to_av(n, m, q, d, atx, ax_mul);
-            // ay = y^{k-d} * v^d
+            // ay = u_mul * v_mul
             (*this)(ax_mul, ay); // atomic vector multiply
             // v_sub = ay
             for(size_t i = 0; i < m; ++i)

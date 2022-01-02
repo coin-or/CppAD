@@ -50,9 +50,9 @@ void atomic_vector::forward_add(
 {   CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
     ax[0] = CppAD::AD<double>( add_enum );
     for(size_t k = p; k <= q; ++k)
-    {   // ax = (op, u^k, v^k)
+    {   // au = u^k, av = v^k
         copy_atx_to_ax(n, m, q, k, k, atx, ax);
-        // ay = u^k + v^k
+        // ay = au + av
         (*this)(ax, ay); // atomic vector add
         // y^k = ay
         copy_ay_to_aty(n, m, q, k, ay, aty);

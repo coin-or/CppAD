@@ -39,10 +39,11 @@ $subhead base2ad$$
 This also serves as an example for how one can
 define $codei%AD<%Base%>%$$ atomic operations use
 atomic operators (instead of element-wise operators).
-This avoids expanding the atomic operator to may operations when
-recording derivative calculations.
+This avoids expanding the atomic operator to an operator for each element
+when recording derivative calculations.
 For example, notice the difference between $code forward_add$$
-for the $code double$$ and the $code AD<double>$$ cases:
+for the $code double$$ and the $code AD<double>$$ cases
+(note that copying an AD variable does not create a new variable):
 $srcfile%
     example/atomic_vector/add.cpp%
     0%// BEGIN forward_add%// END forward_add%0
@@ -86,7 +87,6 @@ resulting tape.
 
 $childtable%
     example/atomic_vector/atomic_vector.hpp%
-    example/atomic_vector/add.cpp%
     example/atomic_vector/in_double.cpp%
     example/atomic_vector/ad_double.cpp
 %$$

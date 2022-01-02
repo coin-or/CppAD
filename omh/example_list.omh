@@ -70,7 +70,11 @@ $rref atomic_two_eigen_mat_mul.cpp$$
 $rref atomic_two_eigen_mat_mul.hpp$$
 $rref atomic_vector.hpp$$
 $rref atomic_vector_ad_double.cpp$$
+$rref atomic_vector_add.cpp$$
+$rref atomic_vector_div.cpp$$
 $rref atomic_vector_in_double.cpp$$
+$rref atomic_vector_mul.cpp$$
+$rref atomic_vector_sub.cpp$$
 $rref azmul.cpp$$
 $rref base2ad.cpp$$
 $rref base_adolc.hpp$$
