@@ -14,6 +14,10 @@ $begin atomic_vector_sub.cpp$$
 
 $section Atomic Vector Subtract Operator: Example Implementation$$
 
+$head Forward Mode$$
+see theory for forward mode
+$cref/subtraction/ForwardTheory/Binary Operators/Subtraction/$$.
+
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end

@@ -14,6 +14,10 @@ $begin atomic_vector_div.cpp$$
 
 $section Atomic Vector Divide Operator: Example Implementation$$
 
+$head Forward Mode$$
+see theory for forward mode
+$cref/division/ForwardTheory/Binary Operators/Division/$$.
+
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end

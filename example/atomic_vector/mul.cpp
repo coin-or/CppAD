@@ -14,6 +14,10 @@ $begin atomic_vector_mul.cpp$$
 
 $section Atomic Vector Multiply Operator: Example Implementation$$
 
+$head Forward Mode$$
+see theory for forward mode
+$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$.
+
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end

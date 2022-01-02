@@ -14,6 +14,10 @@ $begin atomic_vector_add.cpp$$
 
 $section Atomic Vector Add Operator: Example Implementation$$
 
+$head Forward Mode$$
+see theory for forward mode
+$cref/addition/ForwardTheory/Binary Operators/Addition/$$.
+
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
