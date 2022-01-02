@@ -56,13 +56,15 @@ private:
     // av = atv^k_v
     static void copy_atx_to_ax(
         size_t                                      n,
-        size_t                                      m,
         size_t                                      q,
         size_t                                      k_u,
         size_t                                      k_v,
         const CppAD::vector< CppAD::AD<double> >&   atx,
         CppAD::vector< CppAD::AD<double> >&         ax)
-    {   assert( atx.size() == n * (q+1) );
+    {   assert( n % 2 == 1 );
+        size_t m = (n - 1) / 2;
+        //
+        assert( atx.size() == n * (q+1) );
         assert( ax.size()  == n );
         for(size_t i = 0; i < m; ++i)
         {   size_t u_index  = (1 + i)     * (q+1) + k_u;
@@ -74,12 +76,14 @@ private:
     // aty^k = ay
     static void copy_ay_to_aty(
         size_t                                      n,
-        size_t                                      m,
         size_t                                      q,
         size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   ay,
         CppAD::vector< CppAD::AD<double> >&         aty)
-    {   assert( aty.size() == m * (q+1) );
+    {   assert( n % 2 == 1 );
+        size_t m = (n - 1) / 2;
+        //
+        assert( aty.size() == m * (q+1) );
         assert( ay.size()  == m );
         for(size_t i = 0; i < m; ++i)
         {   size_t y_index  = i * (q+1) + k;
@@ -89,12 +93,14 @@ private:
     // au = aty^k
     static void copy_aty_to_au(
         size_t                                      n,
-        size_t                                      m,
         size_t                                      q,
         size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   aty,
         CppAD::vector< CppAD::AD<double> >&         ax)
-    {   assert( aty.size() == m * (q+1) );
+    {   assert( n % 2 == 1 );
+        size_t m = (n - 1) / 2;
+        //
+        assert( aty.size() == m * (q+1) );
         assert( ax.size()  == n );
         for(size_t i = 0; i < m; ++i)
         {   size_t y_index  = i  * (q+1) + k;
@@ -104,12 +110,14 @@ private:
     // av = atv^k
     static void copy_atx_to_av(
         size_t                                      n,
-        size_t                                      m,
         size_t                                      q,
         size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   atx,
         CppAD::vector< CppAD::AD<double> >&         ax)
-    {   assert( atx.size() == n * (q+1) );
+    {   assert( n % 2 == 1 );
+        size_t m = (n - 1) / 2;
+        //
+        assert( atx.size() == n * (q+1) );
         assert( ax.size()  == n );
         for(size_t i = 0; i < m; ++i)
         {   size_t v_index  = (1 +  m + i) * (q+1) + k;
@@ -119,12 +127,14 @@ private:
     // au = atu^k
     static void copy_atx_to_au(
         size_t                                      n,
-        size_t                                      m,
         size_t                                      q,
         size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   atx,
         CppAD::vector< CppAD::AD<double> >&         ax)
-    {   assert( atx.size() == n * (q+1) );
+    {   assert( n % 2 == 1 );
+        size_t m = (n - 1) / 2;
+        //
+        assert( atx.size() == n * (q+1) );
         assert( ax.size()  == n );
         for(size_t i = 0; i < m; ++i)
         {   size_t u_index  = (1 + i) * (q+1) + k;
@@ -159,7 +169,6 @@ private:
     // ----------------------------------------------------------------------
     void forward_add(
         size_t                                           n,
-        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
@@ -167,7 +176,6 @@ private:
     );
     void forward_add(
         size_t                                           n,
-        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -178,7 +186,6 @@ private:
     // ----------------------------------------------------------------------
     void forward_sub(
         size_t                                           n,
-        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
@@ -186,7 +193,6 @@ private:
     );
     void forward_sub(
         size_t                                           n,
-        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -197,7 +203,6 @@ private:
     // ----------------------------------------------------------------------
     void forward_mul(
         size_t                                           n,
-        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
@@ -205,7 +210,6 @@ private:
     );
     void forward_mul(
         size_t                                           n,
-        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -216,7 +220,6 @@ private:
     // ----------------------------------------------------------------------
     void forward_div(
         size_t                                           n,
-        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
@@ -224,7 +227,6 @@ private:
     );
     void forward_div(
         size_t                                           n,
-        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -255,22 +257,22 @@ private:
         {
             // addition
             case add_enum:
-            forward_add(n, m, q, p, tx, ty);
+            forward_add(n, q, p, tx, ty);
             break;
 
             // subtraction
             case sub_enum:
-            forward_sub(n, m, q, p, tx, ty);
+            forward_sub(n, q, p, tx, ty);
             break;
 
             // multiplication
             case mul_enum:
-            forward_mul(n, m, q, p, tx, ty);
+            forward_mul(n, q, p, tx, ty);
             break;
 
             // division
             case div_enum:
-            forward_div(n, m, q, p, tx, ty);
+            forward_div(n, q, p, tx, ty);
             break;
 
             // error
@@ -306,25 +308,25 @@ private:
         {
             // addition
             case add_enum:
-            forward_add(n, m, q, p, atx, aty);
+            forward_add(n, q, p, atx, aty);
             ok = true;
             break;
 
             // subtraction
             case sub_enum:
-            forward_sub(n, m, q, p, atx, aty);
+            forward_sub(n, q, p, atx, aty);
             ok = true;
             break;
 
             // multiplication
             case mul_enum:
-            forward_mul(n, m, q, p, atx, aty);
+            forward_mul(n, q, p, atx, aty);
             ok = true;
             break;
 
             // division
             case div_enum:
-            forward_div(n, m, q, p, atx, aty);
+            forward_div(n, q, p, atx, aty);
             ok = true;
             break;
 
