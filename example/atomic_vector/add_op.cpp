@@ -18,6 +18,13 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/addition/ForwardTheory/Binary Operators/Addition/$$.
 
+$children%
+    example/atomic_vector/add.cpp
+%$$
+$head Example$$
+The file $cref atomic_vector_add.cpp$$ contains an example
+and test for this operator.
+
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
