@@ -19,6 +19,7 @@ SET(source_list
     div_op.cpp
     in_double.cpp
     mul_op.cpp
+    sub.cpp
     sub_op.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

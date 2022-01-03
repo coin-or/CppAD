@@ -26,9 +26,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/test_boolofvoid.hpp>
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
-extern bool add(void);
 extern bool ad_double(void);
+extern bool add(void);
 extern bool in_double(void);
+extern bool sub(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -40,9 +41,10 @@ int main(void)
     // This line is used by test_one.sh
 
     // BEGIN_SORT_THIS_LINE_PLUS_1
-    Run( add,                 "add"            );
     Run( ad_double,           "ad_double"      );
+    Run( add,                 "add"            );
     Run( in_double,           "in_double"      );
+    Run( sub,                 "sub"            );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak
