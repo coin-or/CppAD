@@ -10,13 +10,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_div.cpp$$
+$begin atomic_vector_mul_op.cpp$$
 
-$section Atomic Vector Divide Operator: Example Implementation$$
+$section Atomic Vector Multiply Operator: Example Implementation$$
 
 $head Forward Mode$$
 see theory for forward mode
-$cref/division/ForwardTheory/Binary Operators/Division/$$.
+$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$.
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
@@ -25,7 +25,7 @@ $end
 // BEGIN C++
 # include "atomic_vector.hpp"
 
-void atomic_vector::forward_div(
+void atomic_vector::forward_mul(
     size_t                                           n,
     size_t                                           p,
     size_t                                           q,
@@ -36,23 +36,19 @@ void atomic_vector::forward_div(
     //
     for(size_t i = 0; i < m; ++i)
     {   for(size_t k = p; k <= q; ++k)
-        {   size_t y_index  = i *       (q+1) + k;
-            size_t u_index  = (1 + i) * (q+1) + k;
-            // y^k = u^k
-            ty[y_index]     = tx[u_index];
-            for(size_t d = 1; d <= k; d++)
-            {   size_t y_other      = i       * (q+1) + (k-d);
+        {   size_t y_index = i * (q+1) + k;
+            // y^k = 0
+            ty[y_index]    = 0.0;
+            for(size_t d = 0; d <= k; d++)
+            {   size_t u_index  = (1 + i)     * (q+1) + (k-d);
                 size_t v_index  = (1 + m + i) * (q+1) + d;
-                // y^k -= y^{k-d} * v^d
-                ty[y_index] -= ty[y_other] * tx[v_index];
+                // y^k += u^{k-d} * v^d
+                ty[y_index]    += tx[u_index] * tx[v_index];
             }
-            size_t v_index = (1 + m + i ) * (q+1) + 0;
-            // y^k /= v^0
-            ty[y_index] /= tx[v_index];
         }
     }
 }
-void atomic_vector::forward_div(
+void atomic_vector::forward_mul(
     size_t                                           n,
     size_t                                           p,
     size_t                                           q,
@@ -61,36 +57,31 @@ void atomic_vector::forward_div(
 {   assert( n % 2 == 1 );
     size_t m = (n - 1) / 2;
     //
-    CppAD::vector< CppAD::AD<double> > ax_div(n), ax_mul(n), ax_sub(n), ay(m);
-    ax_div[0] = CppAD::AD<double>( div_enum );
+    CppAD::vector< CppAD::AD<double> > ax_mul(n), ax_add(n), ay(m);
     ax_mul[0] = CppAD::AD<double>( mul_enum );
-    ax_sub[0] = CppAD::AD<double>( sub_enum );
+    ax_add[0] = CppAD::AD<double>( add_enum );
     for(size_t k = p; k <= q; ++k)
-    {   // u_sub = u^k
-        copy_atx_to_au(n, q, k, atx, ax_sub);
-        for(size_t d = 1; d <= k; d++)
-        {   // u_mul = y^{k-d}
-            copy_aty_to_au(n, q, k-d, aty, ax_mul);
-            // v_mul = v^d
-            copy_atx_to_av(n, q, d, atx, ax_mul);
-            // ay = u_mul * v_mul
-            (*this)(ax_mul, ay); // atomic vector multiply
-            // v_sub = ay
-            for(size_t i = 0; i < m; ++i)
-                ax_sub[1 + m + i] = ay[i];
-            // ay = u_sub - v_sub
-            (*this)(ax_sub, ay); // atomic vector subtract
-            // u_sub = ay
-            for(size_t i = 0; i < m; ++i)
-                ax_sub[1 + i] = ay[i];
-        }
-        // u_div = u_sub
+    {   // ay = 0
         for(size_t i = 0; i < m; ++i)
-            ax_div[1 + i] = ax_sub[1 + i];
-        // v_div = v^0
-        copy_atx_to_av(n, q, 0, atx, ax_div);
-        // ay = u_div / v_div
-        (*this)(ax_div, ay); // atomic vector divide
+            ay[i] = 0.0;
+        for(size_t d = 0; d <= k; d++)
+        {   // u_add = ay
+            for(size_t i = 0; i < m; ++i)
+                ax_add[1 + i] = ay[i];
+            //
+            // au_mul = u^{k-d},  av_mul =  v^d
+            copy_atx_to_ax(n, q, k-d, d, atx, ax_mul);
+            //
+            // ay = au_mul * av_mul
+            (*this)(ax_mul, ay); // atomic vector multiply
+            //
+            // v_add = ay
+            for(size_t i = 0; i < m; ++i)
+                ax_add[1 + m + i] = ay[i];
+            //
+            // ay = u_add + v_add
+            (*this)(ax_add, ay); // atomic vector add
+        }
         // y^k = ay
         copy_ay_to_aty(n, q, k, ay, aty);
     }

@@ -18,10 +18,10 @@ $begin atomic_vector.hpp$$
 $section Atomic Vector Operations$$
 
 $childtable%
-    example/atomic_vector/add.cpp
-    %example/atomic_vector/sub.cpp
-    %example/atomic_vector/mul.cpp
-    %example/atomic_vector/div.cpp
+    example/atomic_vector/add_op.cpp
+    %example/atomic_vector/sub_op.cpp
+    %example/atomic_vector/mul_op.cpp
+    %example/atomic_vector/div_op.cpp
 %$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

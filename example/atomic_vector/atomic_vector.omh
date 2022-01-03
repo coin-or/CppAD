@@ -45,7 +45,7 @@ For example, notice the difference between $code forward_add$$
 for the $code double$$ and the $code AD<double>$$ cases
 (note that copying an AD variable does not create a new variable):
 $srcfile%
-    example/atomic_vector/add.cpp%
+    example/atomic_vector/add_op.cpp%
     0%// BEGIN forward_add%// END forward_add%0
 %$$
 
