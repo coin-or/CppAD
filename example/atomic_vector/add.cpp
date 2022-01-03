@@ -43,7 +43,7 @@ bool add(void)
     //
     // m
     // size of u, v, and w
-    size_t m = 2;
+    size_t m = 5;
     //
     // op
     typedef atomic_vector::op_enum_t op_enum_t;
@@ -109,7 +109,7 @@ bool add(void)
     for(size_t i = 0; i < m; ++i)
     {   double check_z  = uvw[0 *m + i] + uvw[1 * m + i] + uvw[2 * m + i];
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
-        double check_dz = double( (0 * m + i)  + (1 * m + i) + (2 + m + i) );
+        double check_dz = double( (0 * m + i)  + (1 * m + i) + (2 * m + i) );
         ok             &= NearEqual( dz[i] ,  check_dz,  eps99, eps99);
     }
     // -----------------------------------------------------------------------
