@@ -18,6 +18,13 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/division/ForwardTheory/Binary Operators/Division/$$.
 
+$children%
+    example/atomic_vector/div.cpp
+%$$
+$head Example$$
+The file $cref atomic_vector_div.cpp$$ contains an example
+and test for this operator.
+
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
