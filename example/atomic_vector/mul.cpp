@@ -10,9 +10,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_add.cpp$$
+$begin atomic_vector_mul.cpp$$
 
-$section Atomic Vector Addition$$
+$section Atomic Vector Multiplication$$
 
 $head f(u, v, w)$$
 For this example,
@@ -22,7 +22,7 @@ where $icode u$$, $icode v$$, and $icode w$$ are in $latex \B{R}^m$$.
 
 $head g(u, v, w)$$
 For this example $latex g : \B{R}^{3m} \rightarrow \B{R}^m$$
-is defined by $latex g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)$$
+is defined by $latex g_i (u, v, w) = \partial_{u[i]}  f_i (u, v, w)$$
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -32,7 +32,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include "atomic_vector.hpp"
-bool add(void)
+bool mul(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     using CppAD::AD;
@@ -46,11 +46,11 @@ bool add(void)
     // size of u, v, and w
     size_t m = 5;
     //
-    // add_op
+    // mul_op
     typedef atomic_vector::op_enum_t op_enum_t;
-    op_enum_t add_op = atomic_vector::add_enum;
+    op_enum_t mul_op = atomic_vector::mul_enum;
     // -----------------------------------------------------------------------
-    // Record f(u, v, w) = u + v + w
+    // Record f(u, v, w) = u * v * w
     // -----------------------------------------------------------------------
     // Independent variable vector
     CPPAD_TESTVECTOR( CppAD::AD<double> ) auvw(3 * m);
@@ -66,19 +66,19 @@ bool add(void)
         aw[i] = auvw[2 * m + i];
     }
     //
-    // ax = (add_op, au, av)
+    // ax = (mul_op, au, av)
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(1 + 2 * m);
-    ax[0] = CppAD::AD<double>(add_op);
+    ax[0] = CppAD::AD<double>(mul_op);
     for(size_t i = 0; i < m; ++i)
     {   ax[1 + i]     = au[i];
         ax[1 + m + i] = av[i];
     }
     //
-    // ay = u + v
+    // ay = u * v
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
     vec_op(ax, ay);
     //
-    // ax = (add_op, ay, aw)
+    // ax = (mul_op, ay, aw)
     for(size_t i = 0; i < m; ++i)
     {   ax[1 + i]     = ay[i];
         ax[1 + m + i] = aw[i];
@@ -98,7 +98,7 @@ bool add(void)
     CPPAD_TESTVECTOR(double) uvw(3 * m), duvw(3 * m);
     for(size_t j = 0; j < 3 * m; ++j)
     {   uvw[j]  = double(1 + j);
-        duvw[j] = double(j);
+        duvw[j] = 1.0;
     }
     //
     // z, dz
@@ -108,9 +108,14 @@ bool add(void)
     //
     // ok
     for(size_t i = 0; i < m; ++i)
-    {   double check_z  = uvw[0 * m + i] + uvw[1 * m + i] + uvw[2 * m + i];
+    {   double ui  = uvw[0 * m + i];
+        double vi  = uvw[1 * m + i];
+        double wi  = uvw[2 * m + i];
+        //
+        double check_z  = ui * vi * wi;
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
-        double check_dz = double( (0 * m + i)  + (1 * m + i) + (2 * m + i) );
+        //
+        double check_dz = (vi * wi) + (ui * wi) + (ui * vi);
         ok             &= NearEqual( dz[i] ,  check_dz,  eps99, eps99);
     }
     // -----------------------------------------------------------------------
@@ -126,13 +131,13 @@ bool add(void)
     // aduvw
     CPPAD_TESTVECTOR( AD<double> ) aduvw(3 * m);
     for(size_t i = 0; i < m; ++i)
-    {   aduvw[0 * m + i]  = 0.0; // du[i]
-        aduvw[1 * m + i]  = 1.0; // dv[i]
+    {   aduvw[0 * m + i]  = 1.0; // du[i]
+        aduvw[1 * m + i]  = 0.0; // dv[i]
         aduvw[2 * m + i]  = 0.0; // dw[i]
     }
     //
     // az
-    // use the fact that d_v[i] f_k (u, v, w) is zero when i != k
+    // use the fact that d_u[i] f_k (u, v, w) is zero when i != k
     af.Forward(0, auvw);
     az = af.Forward(1, aduvw);
     CppAD::ADFun<double> g(auvw, az);
@@ -145,7 +150,9 @@ bool add(void)
     //
     // ok
     for(size_t i = 0; i < m; ++i)
-    {   double check_z  = 1.0;
+    {   double vi       = uvw[1 * m + i];
+        double wi       = uvw[2 * m + i];
+        double check_z  = vi * wi;
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
     }
     return ok;

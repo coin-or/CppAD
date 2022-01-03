@@ -14,6 +14,7 @@ $begin atomic_vector_in_double.cpp$$
 
 $section Atomic Vector Operations in double$$
 
+$head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end

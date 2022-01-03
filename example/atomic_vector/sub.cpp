@@ -24,6 +24,7 @@ $head g(u, v, w)$$
 For this example $latex g : \B{R}^{3m} \rightarrow \B{R}^m$$
 is defined by $latex g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)$$
 
+$head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
@@ -109,7 +110,7 @@ bool sub(void)
     //
     // ok
     for(size_t i = 0; i < m; ++i)
-    {   double check_z  = uvw[0 *m + i] - ( uvw[1 * m + i] + uvw[2 * m + i] );
+    {   double check_z  = uvw[0 * m + i] - ( uvw[1 * m + i] + uvw[2 * m + i] );
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
         double check_dz = double(0 * m + i) - double(1 * m + i + 2 * m + i);
         ok             &= NearEqual( dz[i] ,  check_dz,  eps99, eps99);

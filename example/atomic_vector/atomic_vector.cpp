@@ -29,6 +29,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 extern bool ad_double(void);
 extern bool add(void);
 extern bool in_double(void);
+extern bool mul(void);
 extern bool sub(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -44,6 +45,7 @@ int main(void)
     Run( ad_double,           "ad_double"      );
     Run( add,                 "add"            );
     Run( in_double,           "in_double"      );
+    Run( mul,                 "mul"            );
     Run( sub,                 "sub"            );
     // END_SORT_THIS_LINE_MINUS_1
 

@@ -25,6 +25,7 @@ $head Example$$
 The file $cref atomic_vector_add.cpp$$ contains an example
 and test for this operator.
 
+$head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
