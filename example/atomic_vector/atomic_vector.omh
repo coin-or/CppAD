@@ -86,9 +86,7 @@ resulting tape.
 
 
 $childtable%
-    example/atomic_vector/atomic_vector.hpp%
-    example/atomic_vector/in_double.cpp%
-    example/atomic_vector/ad_double.cpp
+    example/atomic_vector/atomic_vector.hpp
 %$$
 
 $end

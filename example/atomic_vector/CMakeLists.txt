@@ -12,13 +12,11 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    ad_double.cpp
     add.cpp
     add_op.cpp
     atomic_vector.cpp
     div.cpp
     div_op.cpp
-    in_double.cpp
     mul.cpp
     mul_op.cpp
     sub.cpp
