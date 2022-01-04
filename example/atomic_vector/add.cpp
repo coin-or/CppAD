@@ -133,7 +133,7 @@ bool add(void)
         ok           &= NearEqual(dweight[j], check, eps99, eps99);
     }
     // -----------------------------------------------------------------------
-    // Record g_i (u, v, w) = \partial d/dv[i] f_i (u + v + w)
+    // Record g_i (u, v, w) = \partial d/dv[i] f_i (u , v , w)
     // -----------------------------------------------------------------------
     //
     // af
@@ -156,6 +156,23 @@ bool add(void)
     az = af.Forward(1, aduvw);
     CppAD::ADFun<double> g(auvw, az);
     // -----------------------------------------------------------------------
+    // Record h (u, v, w) = sum f_i^(1) (u , v , w)
+    // -----------------------------------------------------------------------
+    //
+    // auvw
+    CppAD::Independent(auvw);
+    //
+    // aweight
+    CPPAD_TESTVECTOR( AD<double> ) aweight(m);
+    for(size_t i = 0; i < m; ++i)
+        aweight[i] = 1.0;
+    //
+    // az
+    CPPAD_TESTVECTOR( AD<double> ) adweight(3 * m);
+    af.Forward(0, auvw);
+    az = af.Reverse(1, aweight);
+    CppAD::ADFun<double> h(auvw, az);
+    // -----------------------------------------------------------------------
     // check forward mode on g
     // -----------------------------------------------------------------------
     //
@@ -166,6 +183,18 @@ bool add(void)
     for(size_t i = 0; i < m; ++i)
     {   double check_z  = 1.0;
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
+    }
+    // -----------------------------------------------------------------------
+    // check forward mode on h
+    // -----------------------------------------------------------------------
+    //
+    // z
+    z = h.Forward(0, uvw);
+    //
+    // ok
+    for(size_t j = 0; j < 3 * m; ++j)
+    {   double check_z  = 1.0;
+        ok             &= NearEqual( z[j] ,  check_z,  eps99, eps99);
     }
     return ok;
 }

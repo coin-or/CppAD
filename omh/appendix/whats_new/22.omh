@@ -24,6 +24,6 @@ The $code example/atomic_three/vector_op.cpp$$ example
 $code example/atomic_vector$$ directory.
 
 $head 01-04$$
-Add $cref atomic_vector_reverse_op.cpp$$ for add, $code double$$.
+Add $cref atomic_vector_reverse_op.cpp$$ for add operator.
 
 $end

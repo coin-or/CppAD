@@ -263,6 +263,14 @@ private:
         CppAD::vector<double>&                           px,
         const CppAD::vector<double>&                     py
     );
+    void reverse_add(
+        size_t                                           n,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        const CppAD::vector< CppAD::AD<double> >&        aty,
+        CppAD::vector< CppAD::AD<double> >&              apx,
+        const CppAD::vector< CppAD::AD<double> >&        apy
+    );
 };
 // END C++
 

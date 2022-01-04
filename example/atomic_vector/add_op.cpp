@@ -97,5 +97,27 @@ void atomic_vector::reverse_add(
         }
     }
 }
+void atomic_vector::reverse_add(
+    size_t                                           n,
+    size_t                                           q,
+    const CppAD::vector< CppAD::AD<double> >&        atx,
+    const CppAD::vector< CppAD::AD<double> >&        aty,
+    CppAD::vector< CppAD::AD<double> >&              apx,
+    const CppAD::vector< CppAD::AD<double> >&        apy)
+{   assert( n % 2 == 1 );
+    size_t m = (n - 1) / 2;
+    //
+    // just copying values does not add any operators to the tape.
+    for(size_t k = 0; k <= q; ++k)
+    {   for(size_t i = 0; i < m; ++i)
+        {   size_t u_index  = (1 + i)     * (q+1) + k;
+            size_t v_index  = (1 + m + i) * (q+1) + k;
+            size_t y_index  = i *           (q+1) + k;
+            // y_i^k = u_i^k + v_i^k
+            apx[u_index] = apy[y_index];
+            apx[v_index] = apy[y_index];
+        }
+    }
+}
 
 // END C++

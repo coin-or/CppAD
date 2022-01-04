@@ -91,8 +91,8 @@ bool atomic_vector::reverse(
 {   //
     // op, n, m
     op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );
-# ifndef NDEBUG
     size_t n     = aparameter_x.size();
+# ifndef NDEBUG
     size_t m     = (n - 1) / 2;
     assert( atx.size() == (q+1) * n );
     assert( aty.size() == (q+1) * m );
@@ -102,6 +102,7 @@ bool atomic_vector::reverse(
     {
         // addition
         case add_enum:
+        reverse_add(n, q, atx, aty, apx, apy);
         break;
 
         // subtraction
