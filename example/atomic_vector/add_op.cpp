@@ -33,14 +33,12 @@ $end
 // ---------------------------------------------------------------------------
 // BEGIN forward_add
 void atomic_vector::forward_add(
-    size_t                                           n,
+    size_t                                           m,
     size_t                                           p,
     size_t                                           q,
     const CppAD::vector<double>&                     tx,
     CppAD::vector<double>&                           ty)
-{   assert( n % 2 == 1 );
-    size_t m = (n - 1) / 2;
-    //
+{
     for(size_t k = p; k <= q; ++k)
     {   for(size_t i = 0; i < m; ++i)
         {   size_t u_index  = (1 + i)     * (q+1) + k;
@@ -52,40 +50,38 @@ void atomic_vector::forward_add(
     }
 }
 void atomic_vector::forward_add(
-    size_t                                           n,
+    size_t                                           m,
     size_t                                           p,
     size_t                                           q,
     const CppAD::vector< CppAD::AD<double> >&        atx,
     CppAD::vector< CppAD::AD<double> >&              aty)
-{   assert( n % 2 == 1 );
-    size_t m = (n - 1) / 2;
+{
+    size_t n = 2 * m + 1;
     //
     CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
     ax[0] = CppAD::AD<double>( add_enum );
     for(size_t k = p; k <= q; ++k)
     {   // au = u^k
-        copy_atx_to_au(n, q, k, atx, ax);
+        copy_atx_to_au(m, q, k, atx, ax);
         // av = v^k
-        copy_atx_to_av(n, q, k, atx, ax);
+        copy_atx_to_av(m, q, k, atx, ax);
         // ay = au + av
         (*this)(ax, ay); // atomic vector add
         // y^k = ay
-        copy_ay_to_aty(n, q, k, ay, aty);
+        copy_ay_to_aty(m, q, k, ay, aty);
     }
 }
 // END forward_add
 // ---------------------------------------------------------------------------
 // reverse_add
 void atomic_vector::reverse_add(
-    size_t                                           n,
+    size_t                                           m,
     size_t                                           q,
     const CppAD::vector<double>&                     tx,
     const CppAD::vector<double>&                     ty,
     CppAD::vector<double>&                           px,
     const CppAD::vector<double>&                     py)
-{   assert( n % 2 == 1 );
-    size_t m = (n - 1) / 2;
-    //
+{
     for(size_t k = 0; k <= q; ++k)
     {   for(size_t i = 0; i < m; ++i)
         {   size_t u_index  = (1 + i)     * (q+1) + k;
@@ -98,14 +94,13 @@ void atomic_vector::reverse_add(
     }
 }
 void atomic_vector::reverse_add(
-    size_t                                           n,
+    size_t                                           m,
     size_t                                           q,
     const CppAD::vector< CppAD::AD<double> >&        atx,
     const CppAD::vector< CppAD::AD<double> >&        aty,
     CppAD::vector< CppAD::AD<double> >&              apx,
     const CppAD::vector< CppAD::AD<double> >&        apy)
-{   assert( n % 2 == 1 );
-    size_t m = (n - 1) / 2;
+{
     //
     // just copying values does not add any operators to the tape.
     for(size_t k = 0; k <= q; ++k)

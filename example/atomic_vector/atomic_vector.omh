@@ -29,7 +29,11 @@ $icode%vec_op%(%x%, %y%)
 $head Purpose$$
 
 $subhead Vector Operations$$
-This atomic function implements
+This atomic function unary operations
+$codei%
+    %y% = %op%(u)
+%$$
+and binary operations
 $codei%
     %y% = %u% %op% %v%
 %$$
@@ -51,8 +55,12 @@ $srcfile%
 
 $head x$$
 We use $icode x$$ to denote the argument to the atomic function.
-The length of $icode x$$ is denoted by $icode n$$ and must be odd.
-We use the notation $icode%m% = (%n% - 1) / 2%$$.
+The length of $icode x$$ is denoted by $icode n$$.
+
+$head m$$
+This is the length of the vectors in the operations.
+In the case of unary (binary) operators
+$code%m% = %n% - 1$$  ( $icode%m% = (%n% - 1) / 2%$$ ).
 
 $head op$$
 The value $icode%x%[0]%$$
@@ -70,7 +78,8 @@ $codei%
 %$$
 
 $head v$$
-We use $icode v$$ to denote the following sub-vector of $icode x$$:
+For binary operators,
+we use $icode v$$ to denote the following sub-vector of $icode x$$:
 $codei%
     %v% = ( %x%[%m% + 1] , %...% , %x%[2 * %m%] )
 %$$

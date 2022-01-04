@@ -41,21 +41,21 @@ bool atomic_vector::reverse(
     CppAD::vector<double>&                           px,
     const CppAD::vector<double>&                     py)
 {
-    // op, n, m
+    // op, m
     op_enum_t op = op_enum_t( parameter_x[0] );
     size_t n     = parameter_x.size();
-# ifndef NDEBUG
-    size_t m     = (n - 1) / 2;
+    size_t m  = (n - 1) / 2;
+    if( is_unary(op) )
+        m = n - 1;
     assert( tx.size() == (q+1) * n );
     assert( ty.size() == (q+1) * m );
-# endif
     //
     bool ok = false;
     switch(op)
     {
         // addition
         case add_enum:
-        reverse_add(n, q, tx, ty, px, py);
+        reverse_add(m, q, tx, ty, px, py);
         ok = true;
         break;
 
@@ -89,20 +89,20 @@ bool atomic_vector::reverse(
     CppAD::vector< CppAD::AD<double> >&              apx,
     const CppAD::vector< CppAD::AD<double> >&        apy)
 {   //
-    // op, n, m
+    // op, m
     op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );
     size_t n     = aparameter_x.size();
-# ifndef NDEBUG
-    size_t m     = (n - 1) / 2;
+    size_t m  = (n - 1) / 2;
+    if( is_unary(op) )
+        m = n - 1;
     assert( atx.size() == (q+1) * n );
     assert( aty.size() == (q+1) * m );
-# endif
     bool ok = false;
     switch(op)
     {
         // addition
         case add_enum:
-        reverse_add(n, q, atx, aty, apx, apy);
+        reverse_add(m, q, atx, aty, apx, apy);
         break;
 
         // subtraction

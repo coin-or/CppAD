@@ -41,35 +41,35 @@ bool atomic_vector::forward(
     const CppAD::vector<double>&                     tx,
     CppAD::vector<double>&                           ty)
 {
-    // op, n, m
+    // op, m
     op_enum_t op = op_enum_t( parameter_x[0] );
     size_t n     = parameter_x.size();
-# ifndef NDEBUG
-    size_t m     = (n - 1) / 2;
+    size_t m = (n - 1) / 2;
+    if( is_unary(op) )
+        m = n - 1;
     assert( tx.size() == (q+1) * n );
     assert( ty.size() == (q+1) * m );
-# endif
     //
     switch(op)
     {
         // addition
         case add_enum:
-        forward_add(n, q, p, tx, ty);
+        forward_add(m, q, p, tx, ty);
         break;
 
         // subtraction
         case sub_enum:
-        forward_sub(n, q, p, tx, ty);
+        forward_sub(m, q, p, tx, ty);
         break;
 
         // multiplication
         case mul_enum:
-        forward_mul(n, q, p, tx, ty);
+        forward_mul(m, q, p, tx, ty);
         break;
 
         // division
         case div_enum:
-        forward_div(n, q, p, tx, ty);
+        forward_div(m, q, p, tx, ty);
         break;
 
         // error
@@ -90,38 +90,38 @@ bool atomic_vector::forward(
     const CppAD::vector< CppAD::AD<double> >&        atx,
     CppAD::vector< CppAD::AD<double> >&              aty         )
 {   //
-    // op, n, m
+    // op, m
     op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );
     size_t n     = aparameter_x.size();
-# ifndef NDEBUG
     size_t m     = (n - 1) / 2;
+    if( is_unary(op) )
+        m = n - 1;
     assert( atx.size() == (q+1) * n );
     assert( aty.size() == (q+1) * m );
-# endif
     bool ok = false;
     switch(op)
     {
         // addition
         case add_enum:
-        forward_add(n, q, p, atx, aty);
+        forward_add(m, q, p, atx, aty);
         ok = true;
         break;
 
         // subtraction
         case sub_enum:
-        forward_sub(n, q, p, atx, aty);
+        forward_sub(m, q, p, atx, aty);
         ok = true;
         break;
 
         // multiplication
         case mul_enum:
-        forward_mul(n, q, p, atx, aty);
+        forward_mul(m, q, p, atx, aty);
         ok = true;
         break;
 
         // division
         case div_enum:
-        forward_div(n, q, p, atx, aty);
+        forward_div(m, q, p, atx, aty);
         ok = true;
         break;
 

@@ -31,14 +31,12 @@ $end
 # include "atomic_vector.hpp"
 
 void atomic_vector::forward_mul(
-    size_t                                           n,
+    size_t                                           m,
     size_t                                           p,
     size_t                                           q,
     const CppAD::vector<double>&                     tx,
     CppAD::vector<double>&                           ty)
-{   assert( n % 2 == 1 );
-    size_t m = (n - 1) / 2;
-    //
+{
     for(size_t i = 0; i < m; ++i)
     {   for(size_t k = p; k <= q; ++k)
         {   size_t y_index = i * (q+1) + k;
@@ -54,13 +52,13 @@ void atomic_vector::forward_mul(
     }
 }
 void atomic_vector::forward_mul(
-    size_t                                           n,
+    size_t                                           m,
     size_t                                           p,
     size_t                                           q,
     const CppAD::vector< CppAD::AD<double> >&        atx,
     CppAD::vector< CppAD::AD<double> >&              aty)
-{   assert( n % 2 == 1 );
-    size_t m = (n - 1) / 2;
+{
+    size_t n = 2 * m + 1;
     //
     CppAD::vector< CppAD::AD<double> > ax_mul(n), ax_add(n), ay(m);
     ax_mul[0] = CppAD::AD<double>( mul_enum );
@@ -75,10 +73,10 @@ void atomic_vector::forward_mul(
                 ax_add[1 + i] = ay[i];
             //
             // au_mul = u^{k-d}
-            copy_atx_to_au(n, q, k-d, atx, ax_mul);
+            copy_atx_to_au(m, q, k-d, atx, ax_mul);
             //
             // av_mul =  v^d
-            copy_atx_to_av(n, q, d, atx, ax_mul);
+            copy_atx_to_av(m, q, d, atx, ax_mul);
             //
             // ay = au_mul * av_mul
             (*this)(ax_mul, ay); // atomic vector multiply
@@ -91,7 +89,7 @@ void atomic_vector::forward_mul(
             (*this)(ax_add, ay); // atomic vector add
         }
         // y^k = ay
-        copy_ay_to_aty(n, q, k, ay, aty);
+        copy_ay_to_aty(m, q, k, ay, aty);
     }
 }
 // END C++

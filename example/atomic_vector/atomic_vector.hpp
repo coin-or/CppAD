@@ -51,19 +51,32 @@ public:
     CppAD::atomic_three<double>(name)
     { }
 private:
+    static bool is_unary(op_enum_t op)
+    {   bool result = true;
+        switch(op)
+        {   case add_enum:
+            case sub_enum:
+            case mul_enum:
+            case div_enum:
+            result = false;
+            break;
+
+            default:
+            break;
+        }
+        return result;
+    }
     // ------------------------------------------------------------------------
     // copy routines
     // ------------------------------------------------------------------------
     // aty^k = ay
     static void copy_ay_to_aty(
-        size_t                                      n,
+        size_t                                      m,
         size_t                                      q,
         size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   ay,
         CppAD::vector< CppAD::AD<double> >&         aty)
-    {   assert( n % 2 == 1 );
-        size_t m = (n - 1) / 2;
-        //
+    {
         assert( aty.size() == m * (q+1) );
         assert( ay.size()  == m );
         for(size_t i = 0; i < m; ++i)
@@ -73,16 +86,18 @@ private:
     }
     // au = aty^k
     static void copy_aty_to_au(
-        size_t                                      n,
+        size_t                                      m,
         size_t                                      q,
         size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   aty,
         CppAD::vector< CppAD::AD<double> >&         ax)
-    {   assert( n % 2 == 1 );
-        size_t m = (n - 1) / 2;
-        //
+    {
+# ifndef NDEBUG
+        size_t n = ax.size();
+        assert( n == m + 1 || n == 2 * m + 1 ); // binary or unary operator
         assert( aty.size() == m * (q+1) );
-        assert( ax.size()  == n );
+# endif
+        //
         for(size_t i = 0; i < m; ++i)
         {   size_t y_index  = i  * (q+1) + k;
             ax[1 + i]       = aty[y_index];
@@ -90,16 +105,17 @@ private:
     }
     // av = atx^k
     static void copy_atx_to_av(
-        size_t                                      n,
+        size_t                                      m,
         size_t                                      q,
         size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   atx,
         CppAD::vector< CppAD::AD<double> >&         ax)
-    {   assert( n % 2 == 1 );
-        size_t m = (n - 1) / 2;
-        //
+    {
+# ifndef NDEBUG
+        size_t n = ax.size();
+        assert( n == 2 * m + 1 ); // must be binary operator
         assert( atx.size() == n * (q+1) );
-        assert( ax.size()  == n );
+# endif
         for(size_t i = 0; i < m; ++i)
         {   size_t v_index  = (1 +  m + i) * (q+1) + k;
             ax[1 + m + i]   = atx[v_index];
@@ -107,16 +123,17 @@ private:
     }
     // au = atu^k
     static void copy_atx_to_au(
-        size_t                                      n,
+        size_t                                      m,
         size_t                                      q,
         size_t                                      k,
         const CppAD::vector< CppAD::AD<double> >&   atx,
         CppAD::vector< CppAD::AD<double> >&         ax)
-    {   assert( n % 2 == 1 );
-        size_t m = (n - 1) / 2;
-        //
+    {
+# ifndef NDEBUG
+        size_t n = ax.size();
+        assert( n == m + 1 || n == 2 * m + 1 ); // binary or unary operator
         assert( atx.size() == n * (q+1) );
-        assert( ax.size()  == n );
+# endif
         for(size_t i = 0; i < m; ++i)
         {   size_t u_index  = (1 + i) * (q+1) + k;
             ax[1 + i]       = atx[u_index];
@@ -170,14 +187,14 @@ private:
     // ----------------------------------------------------------------------
     // forward_add
     void forward_add(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
         CppAD::vector<double>&                           ty
     );
     void forward_add(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -186,14 +203,14 @@ private:
     // ----------------------------------------------------------------------
     // forward_sub
     void forward_sub(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
         CppAD::vector<double>&                           ty
     );
     void forward_sub(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -202,14 +219,14 @@ private:
     // ----------------------------------------------------------------------
     // forward_mul
     void forward_mul(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
         CppAD::vector<double>&                           ty
     );
     void forward_mul(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -218,14 +235,14 @@ private:
     // ----------------------------------------------------------------------
     // forward_div
     void forward_div(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
         CppAD::vector<double>&                           ty
     );
     void forward_div(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -256,7 +273,7 @@ private:
     // ----------------------------------------------------------------------
     // reverse_add
     void reverse_add(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
         const CppAD::vector<double>&                     ty,
@@ -264,7 +281,7 @@ private:
         const CppAD::vector<double>&                     py
     );
     void reverse_add(
-        size_t                                           n,
+        size_t                                           m,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
         const CppAD::vector< CppAD::AD<double> >&        aty,
