@@ -50,34 +50,45 @@ bool atomic_vector::forward(
     assert( tx.size() == (q+1) * n );
     assert( ty.size() == (q+1) * m );
     //
+    bool ok = false;
     switch(op)
     {
         // addition
         case add_enum:
         forward_add(m, q, p, tx, ty);
+        ok = true;
         break;
 
         // subtraction
         case sub_enum:
         forward_sub(m, q, p, tx, ty);
+        ok = true;
         break;
 
         // multiplication
         case mul_enum:
         forward_mul(m, q, p, tx, ty);
+        ok = true;
         break;
 
         // division
         case div_enum:
         forward_div(m, q, p, tx, ty);
+        ok = true;
+        break;
+
+        // unary minus
+        case neg_enum:
+        forward_neg(m, q, p, tx, ty);
+        ok = true;
         break;
 
         // error
-        case num_op:
+        case number_op_enum:
         assert(false);
         break;
     }
-    return true;
+    return ok;
 }
 // forward
 // this routine called by ADFun< CppAD::AD<Base> , Base> objects
@@ -98,6 +109,7 @@ bool atomic_vector::forward(
         m = n - 1;
     assert( atx.size() == (q+1) * n );
     assert( aty.size() == (q+1) * m );
+    //
     bool ok = false;
     switch(op)
     {
@@ -125,8 +137,14 @@ bool atomic_vector::forward(
         ok = true;
         break;
 
+        // unary minus
+        case neg_enum:
+        forward_neg(m, q, p, atx, aty);
+        ok = true;
+        break;
+
         // error
-        case num_op:
+        case number_op_enum:
         assert(false);
         break;
     }

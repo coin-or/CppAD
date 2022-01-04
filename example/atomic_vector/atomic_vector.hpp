@@ -35,16 +35,19 @@ $end
 class atomic_vector : public CppAD::atomic_three<double> {
 //
 public:
+    // BEGIN_SORT_THIS_LINE_PLUS_4
     // BEGIN op_enum_t
     // atomic_vector::op_enum_t
     typedef enum {
         add_enum,
-        sub_enum,
-        mul_enum,
         div_enum,
-        num_op,
+        mul_enum,
+        neg_enum,
+        sub_enum,
+        number_op_enum
     } op_enum_t;
     // END op_enum_t
+    // END_SORT_THIS_LINE_MINUS_4
     //
     // ctor
     atomic_vector(const std::string& name) :
@@ -202,6 +205,22 @@ private:
         const CppAD::vector< CppAD::AD<double> >&        atx,
         CppAD::vector< CppAD::AD<double> >&              aty
     );
+    // ----------------------------------------------------------------------
+    // forward_neg
+    void forward_neg(
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        CppAD::vector<double>&                           ty
+    );
+    void forward_neg(
+        size_t                                           m,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        CppAD::vector< CppAD::AD<double> >&              aty
+    );
     // =====================================================================
     // Reverse Routines
     // =====================================================================
@@ -235,6 +254,24 @@ private:
         const CppAD::vector<double>&                     py
     );
     void reverse_add(
+        size_t                                           m,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        const CppAD::vector< CppAD::AD<double> >&        aty,
+        CppAD::vector< CppAD::AD<double> >&              apx,
+        const CppAD::vector< CppAD::AD<double> >&        apy
+    );
+    // ----------------------------------------------------------------------
+    // reverse_neg
+    void reverse_neg(
+        size_t                                           m,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        const CppAD::vector<double>&                     ty,
+        CppAD::vector<double>&                           px,
+        const CppAD::vector<double>&                     py
+    );
+    void reverse_neg(
         size_t                                           m,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,

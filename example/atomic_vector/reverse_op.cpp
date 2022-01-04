@@ -71,8 +71,14 @@ bool atomic_vector::reverse(
         case div_enum:
         break;
 
+        // unary minus
+        case neg_enum:
+        reverse_neg(m, q, tx, ty, px, py);
+        ok = true;
+        break;
+
         // error
-        case num_op:
+        case number_op_enum:
         assert(false);
         break;
     }
@@ -103,6 +109,7 @@ bool atomic_vector::reverse(
         // addition
         case add_enum:
         reverse_add(m, q, atx, aty, apx, apy);
+        ok = true;
         break;
 
         // subtraction
@@ -117,8 +124,14 @@ bool atomic_vector::reverse(
         case div_enum:
         break;
 
+        // unary minus
+        case neg_enum:
+        reverse_neg(m, q, atx, aty, apx, apy);
+        ok = true;
+        break;
+
         // error
-        case num_op:
+        case number_op_enum:
         assert(false);
         break;
     }
