@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_vector_div.cpp$$
 
-$section Atomic Vector Division$$
+$section Atomic Vector Division Example$$
 
 $head f(u, v, w)$$
 For this example,

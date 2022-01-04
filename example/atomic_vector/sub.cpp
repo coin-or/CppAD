@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_vector_sub.cpp$$
 
-$section Atomic Vector Subtraction$$
+$section Atomic Vector Subtraction Example$$
 
 $head f(u, v, w)$$
 For this example,

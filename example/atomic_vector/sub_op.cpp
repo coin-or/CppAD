@@ -18,9 +18,6 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/subtraction/ForwardTheory/Binary Operators/Subtraction/$$.
 
-$children%
-    example/atomic_vector/sub.cpp
-%$$
 $head Example$$
 The file $cref atomic_vector_sub.cpp$$ contains an example
 and test for this operator.
@@ -64,8 +61,10 @@ void atomic_vector::forward_sub(
     CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
     ax[0] = CppAD::AD<double>( sub_enum );
     for(size_t k = p; k <= q; ++k)
-    {   // au = u^k , av = v^k
-        copy_atx_to_ax(n, q, k, k, atx, ax);
+    {   // au = u^k
+        copy_atx_to_au(n, q, k, atx, ax);
+        // av = v^k
+        copy_atx_to_av(n, q, k, atx, ax);
         // ay = au - av
         (*this)(ax, ay); // atomic vector sub
         // y^k = ay

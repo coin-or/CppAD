@@ -18,9 +18,6 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$.
 
-$children%
-    example/atomic_vector/mul.cpp
-%$$
 $head Example$$
 The file $cref atomic_vector_mul.cpp$$ contains an example
 and test for this operator.
@@ -77,8 +74,11 @@ void atomic_vector::forward_mul(
             for(size_t i = 0; i < m; ++i)
                 ax_add[1 + i] = ay[i];
             //
-            // au_mul = u^{k-d},  av_mul =  v^d
-            copy_atx_to_ax(n, q, k-d, d, atx, ax_mul);
+            // au_mul = u^{k-d}
+            copy_atx_to_au(n, q, k-d, atx, ax_mul);
+            //
+            // av_mul =  v^d
+            copy_atx_to_av(n, q, d, atx, ax_mul);
             //
             // ay = au_mul * av_mul
             (*this)(ax_mul, ay); // atomic vector multiply

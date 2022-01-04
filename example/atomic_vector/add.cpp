@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_vector_add.cpp$$
 
-$section Atomic Vector Addition$$
+$section Atomic Vector Addition Example$$
 
 $head f(u, v, w)$$
 For this example,

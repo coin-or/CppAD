@@ -15,7 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_vector.hpp$$
 
-$section Atomic Vector Operations$$
+$section Implementing Atomic Vector Operations$$
 
 $childtable%
     example/atomic_vector/add_op.cpp
@@ -52,27 +52,6 @@ private:
     // ------------------------------------------------------------------------
     // copy routines
     // ------------------------------------------------------------------------
-    // au = atu^k_u
-    // av = atv^k_v
-    static void copy_atx_to_ax(
-        size_t                                      n,
-        size_t                                      q,
-        size_t                                      k_u,
-        size_t                                      k_v,
-        const CppAD::vector< CppAD::AD<double> >&   atx,
-        CppAD::vector< CppAD::AD<double> >&         ax)
-    {   assert( n % 2 == 1 );
-        size_t m = (n - 1) / 2;
-        //
-        assert( atx.size() == n * (q+1) );
-        assert( ax.size()  == n );
-        for(size_t i = 0; i < m; ++i)
-        {   size_t u_index  = (1 + i)     * (q+1) + k_u;
-            size_t v_index  = (1 + m + i) * (q+1) + k_v;
-            ax[1 + i]       = atx[u_index];
-            ax[1 + m +i]    = atx[v_index];
-        }
-    }
     // aty^k = ay
     static void copy_ay_to_aty(
         size_t                                      n,
@@ -107,7 +86,7 @@ private:
             ax[1 + i]       = aty[y_index];
         }
     }
-    // av = atv^k
+    // av = atx^k
     static void copy_atx_to_av(
         size_t                                      n,
         size_t                                      q,

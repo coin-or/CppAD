@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_vector_mul.cpp$$
 
-$section Atomic Vector Multiplication$$
+$section Atomic Vector Multiplication Example$$
 
 $head f(u, v, w)$$
 For this example,
