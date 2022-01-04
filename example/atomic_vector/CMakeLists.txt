@@ -17,6 +17,7 @@ SET(source_list
     atomic_vector.cpp
     div.cpp
     div_op.cpp
+    forward_op.cpp
     mul.cpp
     mul_op.cpp
     sub.cpp

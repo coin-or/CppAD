@@ -18,7 +18,8 @@ $begin atomic_vector.hpp$$
 $section Implementing Atomic Vector Operations$$
 
 $childtable%
-    example/atomic_vector/add_op.cpp
+    example/atomic_vector/forward_op.cpp
+    %example/atomic_vector/add_op.cpp
     %example/atomic_vector/sub_op.cpp
     %example/atomic_vector/mul_op.cpp
     %example/atomic_vector/div_op.cpp
@@ -143,9 +144,10 @@ private:
         //
         return true;
     }
-    // ----------------------------------------------------------------------
+    // =====================================================================
+    // Foreard Routines
+    // =====================================================================
     // forward_add
-    // ----------------------------------------------------------------------
     void forward_add(
         size_t                                           n,
         size_t                                           p,
@@ -162,7 +164,6 @@ private:
     );
     // ----------------------------------------------------------------------
     // forward_sub
-    // ----------------------------------------------------------------------
     void forward_sub(
         size_t                                           n,
         size_t                                           p,
@@ -179,7 +180,6 @@ private:
     );
     // ----------------------------------------------------------------------
     // forward_mul
-    // ----------------------------------------------------------------------
     void forward_mul(
         size_t                                           n,
         size_t                                           p,
@@ -196,7 +196,6 @@ private:
     );
     // ----------------------------------------------------------------------
     // forward_div
-    // ----------------------------------------------------------------------
     void forward_div(
         size_t                                           n,
         size_t                                           p,
@@ -213,8 +212,6 @@ private:
     );
     // ----------------------------------------------------------------------
     // forward
-    // forward mode routines called by ADFun<Base> objects
-    // ----------------------------------------------------------------------
     bool forward(
         const CppAD::vector<double>&                     parameter_x,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
@@ -222,50 +219,8 @@ private:
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
-        CppAD::vector<double>&                           ty) override
-    {
-        // op, n, m
-        op_enum_t op = op_enum_t( parameter_x[0] );
-        size_t n     = parameter_x.size();
-# ifndef NDEBUG
-        size_t m     = (n - 1) / 2;
-        assert( tx.size() == (q+1) * n );
-        assert( ty.size() == (q+1) * m );
-# endif
-        //
-        switch(op)
-        {
-            // addition
-            case add_enum:
-            forward_add(n, q, p, tx, ty);
-            break;
-
-            // subtraction
-            case sub_enum:
-            forward_sub(n, q, p, tx, ty);
-            break;
-
-            // multiplication
-            case mul_enum:
-            forward_mul(n, q, p, tx, ty);
-            break;
-
-            // division
-            case div_enum:
-            forward_div(n, q, p, tx, ty);
-            break;
-
-            // error
-            case num_op:
-            assert(false);
-            break;
-        }
-        return true;
-    }
-    // ----------------------------------------------------------------------
-    // forward
-    // forward mode routines called by ADFun< CppAD::AD<Base> , Base> objects
-    // ----------------------------------------------------------------------
+        CppAD::vector<double>&                           ty
+    ) override;
     bool forward(
         const CppAD::vector< CppAD::AD<double> >&        aparameter_x,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
@@ -273,51 +228,8 @@ private:
         size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
-        CppAD::vector< CppAD::AD<double> >&              aty         ) override
-    {   //
-        // op, n, m
-        op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );
-        size_t n     = aparameter_x.size();
-# ifndef NDEBUG
-        size_t m     = (n - 1) / 2;
-        assert( atx.size() == (q+1) * n );
-        assert( aty.size() == (q+1) * m );
-# endif
-        bool ok = false;
-        switch(op)
-        {
-            // addition
-            case add_enum:
-            forward_add(n, q, p, atx, aty);
-            ok = true;
-            break;
-
-            // subtraction
-            case sub_enum:
-            forward_sub(n, q, p, atx, aty);
-            ok = true;
-            break;
-
-            // multiplication
-            case mul_enum:
-            forward_mul(n, q, p, atx, aty);
-            ok = true;
-            break;
-
-            // division
-            case div_enum:
-            forward_div(n, q, p, atx, aty);
-            ok = true;
-            break;
-
-            // error
-            case num_op:
-            assert(false);
-            break;
-        }
-        return ok;
-    }
-
+        CppAD::vector< CppAD::AD<double> >&              aty
+    ) override;
 };
 // END C++
 
