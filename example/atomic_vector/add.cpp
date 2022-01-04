@@ -44,7 +44,7 @@ bool add(void)
     //
     // m
     // size of u, v, and w
-    size_t m = 5;
+    size_t m = 1;
     //
     // add_op
     typedef atomic_vector::op_enum_t op_enum_t;
@@ -112,6 +112,25 @@ bool add(void)
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
         double check_dz = double( (0 * m + i)  + (1 * m + i) + (2 * m + i) );
         ok             &= NearEqual( dz[i] ,  check_dz,  eps99, eps99);
+    }
+    // -----------------------------------------------------------------------
+    // check reverse mode on f
+    // -----------------------------------------------------------------------
+    //
+    // weight
+    CPPAD_TESTVECTOR(double) weight(m);
+    for(size_t i = 0; i < m; ++i)
+        weight[i] = 1.0;
+    //
+    // dweight
+    CPPAD_TESTVECTOR(double) dweight(3 * m);
+    f.Forward(0, uvw);
+    dweight = f.Reverse(1, weight);
+    //
+    // ok
+    for(size_t j = 0; j < 3 * m; ++j)
+    {   double check  = 1.0;
+        ok           &= NearEqual(dweight[j], check, eps99, eps99);
     }
     // -----------------------------------------------------------------------
     // Record g_i (u, v, w) = \partial d/dv[i] f_i (u + v + w)

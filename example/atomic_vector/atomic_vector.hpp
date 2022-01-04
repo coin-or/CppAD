@@ -19,6 +19,7 @@ $section Implementing Atomic Vector Operations$$
 
 $childtable%
     example/atomic_vector/forward_op.cpp
+    %example/atomic_vector/reverse_op.cpp
     %example/atomic_vector/add_op.cpp
     %example/atomic_vector/sub_op.cpp
     %example/atomic_vector/mul_op.cpp
@@ -145,8 +146,28 @@ private:
         return true;
     }
     // =====================================================================
-    // Foreard Routines
+    // Forward Routines
     // =====================================================================
+    // forward
+    bool forward(
+        const CppAD::vector<double>&                     parameter_x,
+        const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+        size_t                                           need_y,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        CppAD::vector<double>&                           ty
+    ) override;
+    bool forward(
+        const CppAD::vector< CppAD::AD<double> >&        aparameter_x,
+        const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+        size_t                                           need_y,
+        size_t                                           p,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        CppAD::vector< CppAD::AD<double> >&              aty
+    ) override;
+    // ----------------------------------------------------------------------
     // forward_add
     void forward_add(
         size_t                                           n,
@@ -210,26 +231,38 @@ private:
         const CppAD::vector< CppAD::AD<double> >&        atx,
         CppAD::vector< CppAD::AD<double> >&              aty
     );
-    // ----------------------------------------------------------------------
-    // forward
-    bool forward(
+    // =====================================================================
+    // Reverse Routines
+    // =====================================================================
+    // reverse
+    bool reverse(
         const CppAD::vector<double>&                     parameter_x,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-        size_t                                           need_y,
-        size_t                                           p,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
-        CppAD::vector<double>&                           ty
+        const CppAD::vector<double>&                     ty,
+        CppAD::vector<double>&                           px,
+        const CppAD::vector<double>&                     py
     ) override;
-    bool forward(
+    bool reverse(
         const CppAD::vector< CppAD::AD<double> >&        aparameter_x,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-        size_t                                           need_y,
-        size_t                                           p,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,
-        CppAD::vector< CppAD::AD<double> >&              aty
+        const CppAD::vector< CppAD::AD<double> >&        aty,
+        CppAD::vector< CppAD::AD<double> >&              apx,
+        const CppAD::vector< CppAD::AD<double> >&        apy
     ) override;
+    // ----------------------------------------------------------------------
+    // reverse_add
+    void reverse_add(
+        size_t                                           n,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        const CppAD::vector<double>&                     ty,
+        CppAD::vector<double>&                           px,
+        const CppAD::vector<double>&                     py
+    );
 };
 // END C++
 

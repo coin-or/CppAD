@@ -12,6 +12,7 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
+    reverse_op.cpp
     add.cpp
     add_op.cpp
     atomic_vector.cpp

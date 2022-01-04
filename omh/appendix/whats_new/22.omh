@@ -23,4 +23,7 @@ The $code example/atomic_three/vector_op.cpp$$ example
 (see $cref atomic_vector$$) was split into multiple files and moved into the
 $code example/atomic_vector$$ directory.
 
+$head 01-04$$
+Add $cref atomic_vector_reverse_op.cpp$$ for add, $code double$$.
+
 $end
