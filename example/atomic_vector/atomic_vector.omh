@@ -94,12 +94,15 @@ from one vector to another does not add any operations to the
 resulting tape.
 
 
+$comment BEGIN_SORT_THIS_LINE_PLUS_3$$
 $childtable%
-    example/atomic_vector/atomic_vector.hpp%
-    example/atomic_vector/add.cpp%
-    example/atomic_vector/sub.cpp%
-    example/atomic_vector/mul.cpp%
-    example/atomic_vector/div.cpp
+    example/atomic_vector/atomic_vector.hpp
+    %example/atomic_vector/add.cpp
+    %example/atomic_vector/div.cpp
+    %example/atomic_vector/mul.cpp
+    %example/atomic_vector/neg.cpp
+    %example/atomic_vector/sub.cpp
 %$$
+$comment END_SORT_THIS_LINE_MINUS_2$$
 
 $end

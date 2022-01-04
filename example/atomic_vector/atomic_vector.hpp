@@ -103,9 +103,13 @@ private:
         const CppAD::vector<double>&               parameter_x ,
         const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
         CppAD::vector<CppAD::ad_type_enum>&        type_y      ) override
-    {   // n, m
-        size_t n = parameter_x.size();
+    {
+        // op, m
+        op_enum_t op = op_enum_t( parameter_x[0] );
+        size_t n     = parameter_x.size();
         size_t m = (n - 1) / 2;
+        if( is_unary(op) )
+            m = n - 1;
         //
         // ok
         bool ok  = type_x.size() == n;
@@ -114,8 +118,12 @@ private:
             return false;
         //
         // type_y
-        for(size_t i = 0; i < m; ++i)
-            type_y[i] = std::max( type_x[1 + i] , type_x[1 + m + i] );
+        if( is_unary(op) )
+            for(size_t i = 0; i < m; ++i)
+                type_y[i] = type_x[1 + i];
+        else
+            for(size_t i = 0; i < m; ++i)
+                type_y[i] = std::max( type_x[1 + i] , type_x[1 + m + i] );
         //
         return true;
     }
