@@ -63,39 +63,62 @@ void atomic_vector::forward_div(
     CppAD::vector< CppAD::AD<double> >&              aty)
 {
     size_t n = 2 * m + 1;
+    assert( atx.size() == n * (q+1) );
+    assert( aty.size() == m * (q+1) );
     //
-    CppAD::vector< CppAD::AD<double> > ax_div(n), ax_mul(n), ax_sub(n), ay(m);
+    // atu, atv
+    const CppAD::AD<double>* atu = atx.data() + (q+1);
+    const CppAD::AD<double>* atv = atu + m * (q+1);
+    //
+    // ax_div
+    CppAD::vector< CppAD::AD<double> > ax_div(n);
     ax_div[0] = CppAD::AD<double>( div_enum );
+    CppAD::AD<double>* au_div = ax_div.data() + 1;
+    CppAD::AD<double>* av_div = ax_div.data() + 1 + m;
+    //
+    // ax_mul
+    CppAD::vector< CppAD::AD<double> > ax_mul(n);
     ax_mul[0] = CppAD::AD<double>( mul_enum );
+    CppAD::AD<double>* au_mul = ax_mul.data() + 1;
+    CppAD::AD<double>* av_mul = ax_mul.data() + 1 + m;
+    //
+    // ax_sub
+    CppAD::vector< CppAD::AD<double> > ax_sub(n);
     ax_sub[0] = CppAD::AD<double>( sub_enum );
+    CppAD::AD<double>* au_sub = ax_sub.data() + 1;
+    CppAD::AD<double>* av_sub = ax_sub.data() + 1 + m;
+    //
+    // ay
+    CppAD::vector< CppAD::AD<double> > ay(m);
+    //
     for(size_t k = p; k <= q; ++k)
     {   // u_sub = u^k
-        copy_atx_to_au(m, q, k, atx, ax_sub);
+        copy_mat_to_vec(m, q, k, atu, au_sub);
         for(size_t d = 1; d <= k; d++)
         {   // u_mul = y^{k-d}
-            copy_aty_to_au(m, q, k-d, aty, ax_mul);
+            copy_mat_to_vec(m, q, k-d, aty.data(), au_mul);
             // v_mul = v^d
-            copy_atx_to_av(m, q, d, atx, ax_mul);
+            copy_mat_to_vec(m, q, d, atv, av_mul);
             // ay = u_mul * v_mul
             (*this)(ax_mul, ay); // atomic vector multiply
             // v_sub = ay
             for(size_t i = 0; i < m; ++i)
-                ax_sub[1 + m + i] = ay[i];
+                av_sub[i] = ay[i];
             // ay = u_sub - v_sub
             (*this)(ax_sub, ay); // atomic vector subtract
             // u_sub = ay
             for(size_t i = 0; i < m; ++i)
-                ax_sub[1 + i] = ay[i];
+                au_sub[i] = ay[i];
         }
         // u_div = u_sub
         for(size_t i = 0; i < m; ++i)
-            ax_div[1 + i] = ax_sub[1 + i];
+            au_div[i] = au_sub[i];
         // v_div = v^0
-        copy_atx_to_av(m, q, 0, atx, ax_div);
+        copy_mat_to_vec(m, q, 0, atv, av_div);
         // ay = u_div / v_div
         (*this)(ax_div, ay); // atomic vector divide
         // y^k = ay
-        copy_ay_to_aty(m, q, k, ay, aty);
+        copy_vec_to_mat(m, q, k, ay.data(), aty.data());
     }
 }
 // END C++

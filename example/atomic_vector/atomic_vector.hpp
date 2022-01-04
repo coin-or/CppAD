@@ -69,74 +69,28 @@ private:
     // ------------------------------------------------------------------------
     // copy routines
     // ------------------------------------------------------------------------
-    // aty^k = ay
-    static void copy_ay_to_aty(
-        size_t                                      m,
-        size_t                                      q,
-        size_t                                      k,
-        const CppAD::vector< CppAD::AD<double> >&   ay,
-        CppAD::vector< CppAD::AD<double> >&         aty)
-    {
-        assert( aty.size() == m * (q+1) );
-        assert( ay.size()  == m );
-        for(size_t i = 0; i < m; ++i)
-        {   size_t y_index  = i * (q+1) + k;
-            aty[y_index]    = ay[i];
+    // copy_vec_to_mat
+    static void copy_vec_to_mat(
+        size_t                   m,
+        size_t                   q,
+        size_t                   k,
+        const CppAD::AD<double>* vec,
+        CppAD::AD<double>*       mat)
+    {   for(size_t i = 0; i < m; ++i)
+        {   size_t index  = i * (q+1) + k;
+            mat[index]    = vec[i];
         }
     }
-    // au = aty^k
-    static void copy_aty_to_au(
-        size_t                                      m,
-        size_t                                      q,
-        size_t                                      k,
-        const CppAD::vector< CppAD::AD<double> >&   aty,
-        CppAD::vector< CppAD::AD<double> >&         ax)
-    {
-# ifndef NDEBUG
-        size_t n = ax.size();
-        assert( n == m + 1 || n == 2 * m + 1 ); // binary or unary operator
-        assert( aty.size() == m * (q+1) );
-# endif
-        //
-        for(size_t i = 0; i < m; ++i)
-        {   size_t y_index  = i  * (q+1) + k;
-            ax[1 + i]       = aty[y_index];
-        }
-    }
-    // av = atx^k
-    static void copy_atx_to_av(
-        size_t                                      m,
-        size_t                                      q,
-        size_t                                      k,
-        const CppAD::vector< CppAD::AD<double> >&   atx,
-        CppAD::vector< CppAD::AD<double> >&         ax)
-    {
-# ifndef NDEBUG
-        size_t n = ax.size();
-        assert( n == 2 * m + 1 ); // must be binary operator
-        assert( atx.size() == n * (q+1) );
-# endif
-        for(size_t i = 0; i < m; ++i)
-        {   size_t v_index  = (1 +  m + i) * (q+1) + k;
-            ax[1 + m + i]   = atx[v_index];
-        }
-    }
-    // au = atu^k
-    static void copy_atx_to_au(
-        size_t                                      m,
-        size_t                                      q,
-        size_t                                      k,
-        const CppAD::vector< CppAD::AD<double> >&   atx,
-        CppAD::vector< CppAD::AD<double> >&         ax)
-    {
-# ifndef NDEBUG
-        size_t n = ax.size();
-        assert( n == m + 1 || n == 2 * m + 1 ); // binary or unary operator
-        assert( atx.size() == n * (q+1) );
-# endif
-        for(size_t i = 0; i < m; ++i)
-        {   size_t u_index  = (1 + i) * (q+1) + k;
-            ax[1 + i]       = atx[u_index];
+    // copy_mat_to_vec
+    static void copy_mat_to_vec(
+        size_t                   m,
+        size_t                   q,
+        size_t                   k,
+        const CppAD::AD<double>* mat,
+        CppAD::AD<double>*       vec)
+    {   for(size_t i = 0; i < m; ++i)
+        {   size_t index  = i * (q+1) + k;
+            vec[i]        = mat[index];
         }
     }
     // ------------------------------------------------------------------------

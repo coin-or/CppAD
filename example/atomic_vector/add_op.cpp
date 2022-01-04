@@ -55,20 +55,27 @@ void atomic_vector::forward_add(
     size_t                                           q,
     const CppAD::vector< CppAD::AD<double> >&        atx,
     CppAD::vector< CppAD::AD<double> >&              aty)
-{
-    size_t n = 2 * m + 1;
+{   size_t n = 2 * m + 1;
+    assert( atx.size() == n * (q+1) );
+    assert( aty.size() == m * (q+1) );
+    //
+    const CppAD::AD<double>* atu = atx.data() + (q+1);
+    const CppAD::AD<double>* atv = atu + m * (q+1);
     //
     CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
+    CppAD::AD<double>* au = ax.data() + 1;
+    CppAD::AD<double>* av = ax.data() + 1 + m;
+    //
     ax[0] = CppAD::AD<double>( add_enum );
     for(size_t k = p; k <= q; ++k)
     {   // au = u^k
-        copy_atx_to_au(m, q, k, atx, ax);
+        copy_mat_to_vec(m, q, k, atu, au);
         // av = v^k
-        copy_atx_to_av(m, q, k, atx, ax);
+        copy_mat_to_vec(m, q, k, atv, av);
         // ay = au + av
         (*this)(ax, ay); // atomic vector add
         // y^k = ay
-        copy_ay_to_aty(m, q, k, ay, aty);
+        copy_vec_to_mat(m, q, k, ay.data(), aty.data() );
     }
 }
 // END forward_add

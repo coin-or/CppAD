@@ -55,18 +55,31 @@ void atomic_vector::forward_sub(
     CppAD::vector< CppAD::AD<double> >&              aty)
 {
     size_t n = 2 * m + 1;
+    assert( atx.size() == n * (q+1) );
+    assert( aty.size() == m * (q+1) );
     //
-    CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
+    // atx
+    const CppAD::AD<double>* atu = atx.data() + (q+1);
+    const CppAD::AD<double>* atv = atu + m * (q+1);
+    //
+    // ax
+    CppAD::vector< CppAD::AD<double> > ax(n);
     ax[0] = CppAD::AD<double>( sub_enum );
+    CppAD::AD<double>* au = ax.data() + 1;
+    CppAD::AD<double>* av = ax.data() + 1 + m;
+    //
+    // ay
+    CppAD::vector< CppAD::AD<double> > ay(m);
+    //
     for(size_t k = p; k <= q; ++k)
     {   // au = u^k
-        copy_atx_to_au(m, q, k, atx, ax);
+        copy_mat_to_vec(m, q, k, atu, au);
         // av = v^k
-        copy_atx_to_av(m, q, k, atx, ax);
+        copy_mat_to_vec(m, q, k, atv, av);
         // ay = au - av
         (*this)(ax, ay); // atomic vector sub
         // y^k = ay
-        copy_ay_to_aty(m, q, k, ay, aty);
+        copy_vec_to_mat(m, q, k, ay.data(), aty.data());
     }
 }
 // END C++
