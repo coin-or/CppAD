@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_MUL_OP_HPP
 # define CPPAD_LOCAL_OP_MUL_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -136,6 +136,8 @@ void reverse_mulvv_op(
     {   --j;
         for(k = 0; k <= j; k++)
         {
+            // must use azmul becasue pz[j] = 0 may mean that this
+            // component of the function was not selected.
             px[j-k] += azmul(pz[j], y[k]);
             py[k]   += azmul(pz[j], x[j-k]);
         }
@@ -254,6 +256,8 @@ void reverse_mulpv_op(
     size_t j = d + 1;
     while(j)
     {   --j;
+        // must use azmul becasue pz[j] = 0 may mean that this
+        // component of the function was not selected.
         py[j] += azmul(pz[j], x);
     }
 }

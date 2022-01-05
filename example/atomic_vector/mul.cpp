@@ -17,7 +17,7 @@ $section Atomic Vector Multiplication Example$$
 $head f(u, v, w)$$
 For this example,
 $latex f : \B{R}^{3m} \rightarrow \B{R}^m$$
-is defined by $latex f(u, v, w) = u + v + w$$.
+is defined by $latex f(u, v, w) = u * v * w$$.
 where $icode u$$, $icode v$$, and $icode w$$ are in $latex \B{R}^m$$.
 
 $head g(u, v, w)$$
@@ -117,6 +117,33 @@ bool mul(void)
         //
         double check_dz = (vi * wi) + (ui * wi) + (ui * vi);
         ok             &= NearEqual( dz[i] ,  check_dz,  eps99, eps99);
+    }
+    // -----------------------------------------------------------------------
+    // check reverse mode on f
+    // -----------------------------------------------------------------------
+    //
+    // weight
+    CPPAD_TESTVECTOR(double) weight(m);
+    for(size_t i = 0; i < m; ++i)
+        weight[i] = 1.0;
+    //
+    // dweight
+    CPPAD_TESTVECTOR(double) dweight(3 * m);
+    f.Forward(0, uvw);
+    dweight = f.Reverse(1, weight);
+    //
+    // ok
+    for(size_t i = 0; i < m; ++i)
+    {   double ui  = uvw[0 * m + i];
+        double vi  = uvw[1 * m + i];
+        double wi  = uvw[2 * m + i];
+        //
+        double dfi_dui = vi * wi;
+        ok           &= NearEqual(dweight[0 * m + i], dfi_dui, eps99, eps99);
+        double dfi_dvi = ui * wi;
+        ok           &= NearEqual(dweight[1 * m + i], dfi_dvi, eps99, eps99);
+        double dfi_dwi = ui * vi;
+        ok           &= NearEqual(dweight[2 * m + i], dfi_dwi, eps99, eps99);
     }
     // -----------------------------------------------------------------------
     // Record g_i (u, v, w) = \partial d/dv[i] f_i (u , v , w)

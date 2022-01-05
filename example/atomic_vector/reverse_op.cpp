@@ -67,6 +67,8 @@ bool atomic_vector::reverse(
 
         // multiplication
         case mul_enum:
+        reverse_mul(m, q, tx, ty, px, py);
+        ok = true;
         break;
 
         // division

@@ -30,6 +30,8 @@ $end
 // BEGIN C++
 # include "atomic_vector.hpp"
 
+// --------------------------------------------------------------------------
+// forward_mul
 void atomic_vector::forward_mul(
     size_t                                           m,
     size_t                                           p,
@@ -110,4 +112,49 @@ void atomic_vector::forward_mul(
         copy_vec_to_mat(m, q, k, ay.begin(), aty.begin());
     }
 }
+// --------------------------------------------------------------------------
+// reverse_mul
+void atomic_vector::reverse_mul(
+    size_t                                           m,
+    size_t                                           q,
+    const CppAD::vector<double>&                     tx,
+    const CppAD::vector<double>&                     ty,
+    CppAD::vector<double>&                           px,
+    const CppAD::vector<double>&                     py)
+{   size_t n = 1 + 2 * m;
+    assert( tx.size() == n * (q+1) );
+    assert( ty.size() == m * (q+1) );
+    assert( px.size() == n * (q+1) );
+    assert( py.size() == m * (q+1) );
+    //
+    // px
+    for(size_t j = 0; j < n; ++j)
+    {   for(size_t k = 0; k <= q; ++k)
+            px[j * (q+1) + k] = 0.0;
+    }
+    //
+    // px
+    for(size_t i = 0; i < m; ++i)
+    {   // k
+        size_t k = q + 1;
+        while(k)
+        {   --k;
+            //
+            // y_index
+            size_t y_index = i * (q+1) + k;
+            //
+            // px
+            for(size_t d = 0; d <= k; d++)
+            {   size_t u_index  = (1 + i)     * (q+1) + (k-d);
+                size_t v_index  = (1 + m + i) * (q+1) + d;
+                //
+                // must use azmul becasue py[y_index] = 0 may mean that this
+                // component of the function was not selected.
+                px[u_index]    += CppAD::azmul( py[y_index] , tx[v_index] );
+                px[v_index]    += CppAD::azmul( py[y_index] , tx[u_index] );
+            }
+        }
+    }
+}
+
 // END C++
