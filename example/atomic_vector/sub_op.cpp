@@ -30,6 +30,8 @@ $end
 // BEGIN C++
 # include "atomic_vector.hpp"
 
+// --------------------------------------------------------------------------
+// forward_sub
 void atomic_vector::forward_sub(
     size_t                                           m,
     size_t                                           p,
@@ -82,4 +84,64 @@ void atomic_vector::forward_sub(
         copy_vec_to_mat(m, q, k, ay.data(), aty.data());
     }
 }
+// --------------------------------------------------------------------------
+// reverse_sub
+void atomic_vector::reverse_sub(
+    size_t                                           m,
+    size_t                                           q,
+    const CppAD::vector<double>&                     tx,
+    const CppAD::vector<double>&                     ty,
+    CppAD::vector<double>&                           px,
+    const CppAD::vector<double>&                     py)
+{
+    for(size_t k = 0; k <= q; ++k)
+    {   for(size_t i = 0; i < m; ++i)
+        {   size_t u_index  = (1 + i)     * (q+1) + k;
+            size_t v_index  = (1 + m + i) * (q+1) + k;
+            size_t y_index  = i *           (q+1) + k;
+            // y_i^k = u_i^k + v_i^k
+            px[u_index] =   py[y_index];
+            px[v_index] = - py[y_index];
+        }
+    }
+}
+void atomic_vector::reverse_sub(
+    size_t                                           m,
+    size_t                                           q,
+    const CppAD::vector< CppAD::AD<double> >&        atx,
+    const CppAD::vector< CppAD::AD<double> >&        aty,
+    CppAD::vector< CppAD::AD<double> >&              apx,
+    const CppAD::vector< CppAD::AD<double> >&        apy)
+{
+    size_t n = 2 * m + 1;
+    assert( atx.size() == n * (q+1) );
+    assert( aty.size() == m * (q+1) );
+    assert( apx.size() == n * (q+1) );
+    assert( apy.size() == m * (q+1) );
+    //
+    // apu, apv
+    CppAD::AD<double>* apu = apx.data() + (q+1);
+    CppAD::AD<double>* apv = apu + m * (q+1);
+    //
+    // ax
+    CppAD::vector< CppAD::AD<double> > ax(1 + m);
+    ax[0] = CppAD::AD<double>( neg_enum );
+    CppAD::AD<double>* au = ax.data() + 1;
+    //
+    // ay
+    CppAD::vector< CppAD::AD<double> > ay(m);
+    //
+    for(size_t k = 0; k <= q; ++k)
+    {   // au = apy^k
+        copy_mat_to_vec(m, q, k, apy.data(), au);
+        // apu^k = au
+        copy_vec_to_mat(m, q, k, au, apu);
+        // ay = - au
+        (*this)(ax, ay); // atomic vector neg
+        // apv^k = ay
+        copy_vec_to_mat(m, q, k, ay.data(), apv);
+    }
+}
+
+
 // END C++

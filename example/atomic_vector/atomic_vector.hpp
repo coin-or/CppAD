@@ -270,6 +270,24 @@ private:
         const CppAD::vector< CppAD::AD<double> >&        apy
     );
     // ----------------------------------------------------------------------
+    // reverse_sub
+    void reverse_sub(
+        size_t                                           m,
+        size_t                                           q,
+        const CppAD::vector<double>&                     tx,
+        const CppAD::vector<double>&                     ty,
+        CppAD::vector<double>&                           px,
+        const CppAD::vector<double>&                     py
+    );
+    void reverse_sub(
+        size_t                                           m,
+        size_t                                           q,
+        const CppAD::vector< CppAD::AD<double> >&        atx,
+        const CppAD::vector< CppAD::AD<double> >&        aty,
+        CppAD::vector< CppAD::AD<double> >&              apx,
+        const CppAD::vector< CppAD::AD<double> >&        apy
+    );
+    // ----------------------------------------------------------------------
     // reverse_neg
     void reverse_neg(
         size_t                                           m,

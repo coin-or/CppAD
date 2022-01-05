@@ -17,7 +17,7 @@ $section Atomic Vector Subtraction Example$$
 $head f(u, v, w)$$
 For this example,
 $latex f : \B{R}^{3m} \rightarrow \B{R}^m$$
-is defined by $latex f(u, v, w) = u - ( v + w)$$.
+is defined by $latex f(u, v, w) = u - (v + w)$$.
 where $icode u$$, $icode v$$, and $icode w$$ are in $latex \B{R}^m$$.
 
 $head g(u, v, w)$$
@@ -139,6 +139,23 @@ bool sub(void)
     az = af.Forward(1, aduvw);
     CppAD::ADFun<double> g(auvw, az);
     // -----------------------------------------------------------------------
+    // Record h (u, v, w) = sum f_i^(1) (u , v , w)
+    // -----------------------------------------------------------------------
+    //
+    // auvw
+    CppAD::Independent(auvw);
+    //
+    // aweight
+    CPPAD_TESTVECTOR( AD<double> ) aweight(m);
+    for(size_t i = 0; i < m; ++i)
+        aweight[i] = 1.0;
+    //
+    // az
+    CPPAD_TESTVECTOR( AD<double> ) adweight(3 * m);
+    af.Forward(0, auvw);
+    az = af.Reverse(1, aweight);
+    CppAD::ADFun<double> h(auvw, az);
+    // -----------------------------------------------------------------------
     // check forward mode on g
     // -----------------------------------------------------------------------
     //
@@ -149,6 +166,22 @@ bool sub(void)
     for(size_t i = 0; i < m; ++i)
     {   double check_z  = - 1.0;
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
+    }
+    return ok;
+    // -----------------------------------------------------------------------
+    // check forward mode on h
+    // -----------------------------------------------------------------------
+    //
+    // z
+    z = h.Forward(0, uvw);
+    //
+    // ok
+    for(size_t i = 0; i < m; ++i)
+    {   double check_z  =  1.0;
+        ok             &= NearEqual( z[0 * m + i] ,  check_z,  eps99, eps99);
+        check_z         =  - 1.0;
+        ok             &= NearEqual( z[1 * m + i] ,  check_z,  eps99, eps99);
+        ok             &= NearEqual( z[2 * m + i] ,  check_z,  eps99, eps99);
     }
     return ok;
 }

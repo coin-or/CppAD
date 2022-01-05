@@ -61,6 +61,8 @@ bool atomic_vector::reverse(
 
         // subtraction
         case sub_enum:
+        reverse_sub(m, q, tx, ty, px, py);
+        ok = true;
         break;
 
         // multiplication
@@ -114,6 +116,8 @@ bool atomic_vector::reverse(
 
         // subtraction
         case sub_enum:
+        reverse_sub(m, q, atx, aty, apx, apy);
+        ok = true;
         break;
 
         // multiplication
