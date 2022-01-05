@@ -24,6 +24,7 @@ $childtable%
     %example/atomic_vector/sub_op.cpp
     %example/atomic_vector/mul_op.cpp
     %example/atomic_vector/div_op.cpp
+    %example/atomic_vector/neg_op.cpp
 %$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
