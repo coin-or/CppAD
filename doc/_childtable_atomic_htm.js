@@ -4,6 +4,7 @@ document.write('\
 <option>atomic-&gt;</option>\
 <option>atomic_three</option>\
 <option>atomic_three_example</option>\
+<option>atomic_vector</option>\
 <option>chkpoint_two</option>\
 </select>\
 ');
@@ -11,6 +12,7 @@ function atomic_child(item)
 {	var child_list = [
 		'atomic_three.htm',
 		'atomic_three_example.htm',
+		'atomic_vector.htm',
 		'chkpoint_two.htm'
 	];
 	var index = item.selectedIndex;

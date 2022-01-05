@@ -2,6 +2,7 @@
 document.write('\
 <select onchange="whats_new_child(this)">\
 <option>whats_new-&gt;</option>\
+<option>whats_new_22</option>\
 <option>whats_new_21</option>\
 <option>whats_new_20</option>\
 <option>whats_new_19</option>\
@@ -25,6 +26,7 @@ document.write('\
 ');
 function whats_new_child(item)
 {	var child_list = [
+		'whats_new_22.htm',
 		'whats_new_21.htm',
 		'whats_new_20.htm',
 		'whats_new_19.htm',
