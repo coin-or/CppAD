@@ -144,7 +144,7 @@ void atomic_vector::reverse_mul(
             size_t y_index = i * (q+1) + k;
             //
             // px
-            for(size_t d = 0; d <= k; d++)
+            for(size_t d = 0; d <= k; ++d)
             {   size_t u_index  = (1 + i)     * (q+1) + (k-d);
                 size_t v_index  = (1 + m + i) * (q+1) + d;
                 //
@@ -153,6 +153,106 @@ void atomic_vector::reverse_mul(
                 px[u_index]    += CppAD::azmul( py[y_index] , tx[v_index] );
                 px[v_index]    += CppAD::azmul( py[y_index] , tx[u_index] );
             }
+        }
+    }
+}
+void atomic_vector::reverse_mul(
+    size_t                                           m,
+    size_t                                           q,
+    const CppAD::vector< CppAD::AD<double> >&        atx,
+    const CppAD::vector< CppAD::AD<double> >&        aty,
+    CppAD::vector< CppAD::AD<double> >&              apx,
+    const CppAD::vector< CppAD::AD<double> >&        apy)
+{   size_t n = 1 + 2 * m;
+    assert( atx.size() == n * (q+1) );
+    assert( aty.size() == m * (q+1) );
+    assert( apx.size() == n * (q+1) );
+    assert( apy.size() == m * (q+1) );
+    //
+    // atu, atv, apu, apv
+    ad_vector::const_iterator atu = atx.begin() + (q+1);
+    ad_vector::const_iterator atv = atu + m * (q+1);
+    ad_vector::iterator       apu = apx.begin() + (q+1);
+    ad_vector::iterator       apv = apu + m * (q+1);
+    //
+    // ax_mul
+    // need azmul_op but it is not yet available
+    ad_vector ax_mul(n);
+    ax_mul[0] = CppAD::AD<double>( mul_enum );
+    ad_vector::iterator au_mul = ax_mul.begin() + 1;
+    ad_vector::iterator av_mul = ax_mul.begin() + 1 + m;
+    //
+    // ax_add
+    ad_vector ax_add(n);
+    ax_add[0] = CppAD::AD<double>( add_enum );
+    ad_vector::iterator au_add = ax_add.begin() + 1;
+    ad_vector::iterator av_add = ax_add.begin() + 1 + m;
+    //
+    // ay
+    ad_vector ay(m);
+    //
+    // px
+    // assigning to the value zero does not create operators on the tape
+    for(size_t j = 0; j < n; ++j)
+    {   for(size_t k = 0; k <= q; ++k)
+            apx[j * (q+1) + k] = 0.0;
+    }
+    //
+    // k
+    size_t k = q + 1;
+    while(k)
+    {   --k;
+        //
+        // au_mul = apy^k
+        copy_mat_to_vec(m, q, k, apy.begin(), au_mul);
+        //
+        // d
+        for(size_t d = 0; d <=k; ++d)
+        {   // -------------------------------------------------------------
+            // reverse:
+            //  px[v_index] += CppAD::azmul( py[y_index] , tx[u_index] );
+            // -------------------------------------------------------------
+
+            // av_mul = atu^{k-d}
+            copy_mat_to_vec(m, q, k-d, atu, av_mul);
+            //
+            // ay = au_mul * av_mul
+            (*this)(ax_mul, ay);
+            //
+            // au_add = ay
+            for(size_t i = 0; i < m; ++i)
+                *(au_add + i) = ay[i];
+            //
+            // av_add = apv^d
+            copy_mat_to_vec(m, q, d, apv, av_add);
+            //
+            // ay = au_add + av_add
+            (*this)(ax_add, ay);
+            //
+            // apv^d =  ay
+            copy_vec_to_mat(m, q, d, ay.begin(), apv);
+            // -------------------------------------------------------------
+            // reverse:
+            //  px[u_index] += CppAD::azmul( py[y_index] , tx[v_index] );
+            // -------------------------------------------------------------
+            // av_mul = atv^{k-d}
+            copy_mat_to_vec(m, q, k-d, atv, av_mul);
+            //
+            // ay = au_mul * av_mul
+            (*this)(ax_mul, ay);
+            //
+            // au_add = ay
+            for(size_t i = 0; i < m; ++i)
+                *(au_add + i) = ay[i];
+            //
+            // av_add = apu^d
+            copy_mat_to_vec(m, q, d, apu, av_add);
+            //
+            // ay = au_add + av_add
+            (*this)(ax_add, ay);
+            //
+            // apu^d =  ay
+            copy_vec_to_mat(m, q, d, ay.begin(), apu);
         }
     }
 }

@@ -169,6 +169,23 @@ bool mul(void)
     az = af.Forward(1, aduvw);
     CppAD::ADFun<double> g(auvw, az);
     // -----------------------------------------------------------------------
+    // Record h (u, v, w) = sum f_i^(1) (u , v , w)
+    // -----------------------------------------------------------------------
+    //
+    // auvw
+    CppAD::Independent(auvw);
+    //
+    // aweight
+    CPPAD_TESTVECTOR( AD<double> ) aweight(m);
+    for(size_t i = 0; i < m; ++i)
+        aweight[i] = 1.0;
+    //
+    // az
+    CPPAD_TESTVECTOR( AD<double> ) adweight(3 * m);
+    af.Forward(0, auvw);
+    az = af.Reverse(1, aweight);
+    CppAD::ADFun<double> h(auvw, az);
+    // -----------------------------------------------------------------------
     // check forward mode on g
     // -----------------------------------------------------------------------
     //
@@ -181,6 +198,29 @@ bool mul(void)
         double wi       = uvw[2 * m + i];
         double check_z  = vi * wi;
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
+    }
+    return ok;
+    // -----------------------------------------------------------------------
+    // check forward mode on h
+    // -----------------------------------------------------------------------
+    //
+    // z
+    z = h.Forward(0, uvw);
+    //
+    // ok
+    for(size_t i = 0; i < m; ++i)
+    {   double ui  = uvw[0 * m + i];
+        double vi  = uvw[1 * m + i];
+        double wi  = uvw[2 * m + i];
+        //
+        double dfi_dui  = vi * wi;
+        ok             &= NearEqual(z[0 * m + i] ,  dfi_dui,  eps99, eps99);
+        //
+        double dfi_dvi  = ui * wi;
+        ok             &= NearEqual(z[1 * m + i] ,  dfi_dvi,  eps99, eps99);
+        //
+        double dfi_dwi  = ui * vi;
+        ok             &= NearEqual(z[2 * m + i] ,  dfi_dwi,  eps99, eps99);
     }
     return ok;
 }

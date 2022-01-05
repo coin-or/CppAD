@@ -124,6 +124,8 @@ bool atomic_vector::reverse(
 
         // multiplication
         case mul_enum:
+        reverse_mul(m, q, atx, aty, apx, apy);
+        ok = true;
         break;
 
         // division
