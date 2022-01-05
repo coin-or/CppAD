@@ -54,15 +54,15 @@ void atomic_vector::forward_neg(
     assert( aty.size() == m * (q+1) );
     //
     // atu
-    const CppAD::AD<double>* atu = atx.data() + (q+1);
+    ad_vector::const_iterator atu = atx.begin() + (q+1);
     //
     // ax
-    CppAD::vector< CppAD::AD<double> > ax(n);
+    ad_vector ax(n);
     ax[0] = CppAD::AD<double>( neg_enum );
-    CppAD::AD<double>* au = ax.data() + 1;
+    ad_vector::iterator au = ax.begin() + 1;
     //
     // ay
-    CppAD::vector< CppAD::AD<double> > ay(m);
+    ad_vector ay(m);
     //
     for(size_t k = p; k <= q; ++k)
     {   // au = u^k
@@ -70,7 +70,7 @@ void atomic_vector::forward_neg(
         // ay = - au
         (*this)(ax, ay); // atomic vector neg
         // y^k = ay
-        copy_vec_to_mat(m, q, k, ay.data(), aty.data() );
+        copy_vec_to_mat(m, q, k, ay.begin(), aty.begin() );
     }
 }
 // ---------------------------------------------------------------------------
@@ -104,23 +104,23 @@ void atomic_vector::reverse_neg(
     assert( aty.size() == m * (q+1) );
     //
     // apu
-    CppAD::AD<double>* apu = apx.data() + (q+1);
+    ad_vector::iterator apu = apx.begin() + (q+1);
     //
     // ax
-    CppAD::vector< CppAD::AD<double> > ax(n);
+    ad_vector ax(n);
     ax[0] = CppAD::AD<double>( neg_enum );
-    CppAD::AD<double>* au = ax.data() + 1;
+    ad_vector::iterator au = ax.begin() + 1;
     //
     // ay
-    CppAD::vector< CppAD::AD<double> > ay(m);
+    ad_vector ay(m);
     //
     for(size_t k = 0; k <= q; ++k)
     {   // au = py^k
-        copy_mat_to_vec(m, q, k, apy.data(), au);
+        copy_mat_to_vec(m, q, k, apy.begin(), au);
         // ay = - au
         (*this)(ax, ay); // atomic vector neg
         // pu^k = ay
-        copy_vec_to_mat(m, q, k, ay.data(), apu);
+        copy_vec_to_mat(m, q, k, ay.begin(), apu);
     }
 }
 

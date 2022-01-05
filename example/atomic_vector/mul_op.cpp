@@ -63,23 +63,23 @@ void atomic_vector::forward_mul(
     assert( aty.size() == m * (q+1) );
     //
     // atu, atv
-    const CppAD::AD<double>* atu = atx.data() + (q+1);
-    const CppAD::AD<double>* atv = atu + m * (q+1);
+    ad_vector::const_iterator atu = atx.begin() + (q+1);
+    ad_vector::const_iterator atv = atu + m * (q+1);
     //
     // ax_mul
-    CppAD::vector< CppAD::AD<double> > ax_mul(n);
+    ad_vector ax_mul(n);
     ax_mul[0] = CppAD::AD<double>( mul_enum );
-    CppAD::AD<double>* au_mul = ax_mul.data() + 1;
-    CppAD::AD<double>* av_mul = ax_mul.data() + 1 + m;
+    ad_vector::iterator au_mul = ax_mul.begin() + 1;
+    ad_vector::iterator av_mul = ax_mul.begin() + 1 + m;
     //
     // ax_add
-    CppAD::vector< CppAD::AD<double> > ax_add(n);
+    ad_vector ax_add(n);
     ax_add[0] = CppAD::AD<double>( add_enum );
-    CppAD::AD<double>* au_add = ax_add.data() + 1;
-    CppAD::AD<double>* av_add = ax_add.data() + 1 + m;
+    ad_vector::iterator au_add = ax_add.begin() + 1;
+    ad_vector::iterator av_add = ax_add.begin() + 1 + m;
     //
     // ay
-    CppAD::vector< CppAD::AD<double> > ay(m);
+    ad_vector ay(m);
     //
     for(size_t k = p; k <= q; ++k)
     {   // ay = 0
@@ -88,7 +88,7 @@ void atomic_vector::forward_mul(
         for(size_t d = 0; d <= k; d++)
         {   // u_add = ay
             for(size_t i = 0; i < m; ++i)
-                au_add[i] = ay[i];
+                *(au_add + i) = ay[i];
             //
             // au_mul = u^{k-d}
             copy_mat_to_vec(m, q, k-d, atu, au_mul);
@@ -101,13 +101,13 @@ void atomic_vector::forward_mul(
             //
             // v_add = ay
             for(size_t i = 0; i < m; ++i)
-                av_add[i] = ay[i];
+                *(av_add + i) = ay[i];
             //
             // ay = u_add + v_add
             (*this)(ax_add, ay); // atomic vector add
         }
         // y^k = ay
-        copy_vec_to_mat(m, q, k, ay.data(), aty.data());
+        copy_vec_to_mat(m, q, k, ay.begin(), aty.begin());
     }
 }
 // END C++

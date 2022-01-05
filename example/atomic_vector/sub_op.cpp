@@ -60,18 +60,18 @@ void atomic_vector::forward_sub(
     assert( atx.size() == n * (q+1) );
     assert( aty.size() == m * (q+1) );
     //
-    // atx
-    const CppAD::AD<double>* atu = atx.data() + (q+1);
-    const CppAD::AD<double>* atv = atu + m * (q+1);
+    // atu, atv
+    ad_vector::const_iterator atu = atx.begin() + (q+1);
+    ad_vector::const_iterator atv = atu + m * (q+1);
     //
     // ax
-    CppAD::vector< CppAD::AD<double> > ax(n);
+    ad_vector ax(n);
     ax[0] = CppAD::AD<double>( sub_enum );
-    CppAD::AD<double>* au = ax.data() + 1;
-    CppAD::AD<double>* av = ax.data() + 1 + m;
+    ad_vector::iterator au = ax.begin() + 1;
+    ad_vector::iterator av = au + m;
     //
     // ay
-    CppAD::vector< CppAD::AD<double> > ay(m);
+    ad_vector ay(m);
     //
     for(size_t k = p; k <= q; ++k)
     {   // au = u^k
@@ -81,7 +81,7 @@ void atomic_vector::forward_sub(
         // ay = au - av
         (*this)(ax, ay); // atomic vector sub
         // y^k = ay
-        copy_vec_to_mat(m, q, k, ay.data(), aty.data());
+        copy_vec_to_mat(m, q, k, ay.begin(), aty.begin());
     }
 }
 // --------------------------------------------------------------------------
@@ -120,26 +120,26 @@ void atomic_vector::reverse_sub(
     assert( apy.size() == m * (q+1) );
     //
     // apu, apv
-    CppAD::AD<double>* apu = apx.data() + (q+1);
-    CppAD::AD<double>* apv = apu + m * (q+1);
+    ad_vector::iterator apu = apx.begin() + (q+1);
+    ad_vector::iterator apv = apu + m * (q+1);
     //
     // ax
-    CppAD::vector< CppAD::AD<double> > ax(1 + m);
+    ad_vector ax(1 + m);
     ax[0] = CppAD::AD<double>( neg_enum );
-    CppAD::AD<double>* au = ax.data() + 1;
+    ad_vector::iterator au = ax.begin() + 1;
     //
     // ay
-    CppAD::vector< CppAD::AD<double> > ay(m);
+    ad_vector ay(m);
     //
     for(size_t k = 0; k <= q; ++k)
     {   // au = apy^k
-        copy_mat_to_vec(m, q, k, apy.data(), au);
+        copy_mat_to_vec(m, q, k, apy.begin(), au);
         // apu^k = au
         copy_vec_to_mat(m, q, k, au, apu);
         // ay = - au
         (*this)(ax, ay); // atomic vector neg
         // apv^k = ay
-        copy_vec_to_mat(m, q, k, ay.data(), apv);
+        copy_vec_to_mat(m, q, k, ay.begin(), apv);
     }
 }
 

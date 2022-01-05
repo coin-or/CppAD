@@ -55,6 +55,8 @@ public:
     CppAD::atomic_three<double>(name)
     { }
 private:
+    typedef CppAD::vector< CppAD::AD<double> >    ad_vector;
+    //
     static bool is_unary(op_enum_t op)
     {   bool result = true;
         switch(op)
@@ -73,28 +75,27 @@ private:
     // ------------------------------------------------------------------------
     // copy routines
     // ------------------------------------------------------------------------
-    // copy_vec_to_mat
     static void copy_vec_to_mat(
-        size_t                   m,
-        size_t                   q,
-        size_t                   k,
-        const CppAD::AD<double>* vec,
-        CppAD::AD<double>*       mat)
+        size_t                    m,
+        size_t                    q,
+        size_t                    k ,
+        ad_vector::const_iterator vec,
+        ad_vector::iterator       mat)
     {   for(size_t i = 0; i < m; ++i)
         {   size_t index  = i * (q+1) + k;
-            mat[index]    = vec[i];
+            *(mat + index) = *(vec + i);
         }
     }
     // copy_mat_to_vec
     static void copy_mat_to_vec(
-        size_t                   m,
-        size_t                   q,
-        size_t                   k,
-        const CppAD::AD<double>* mat,
-        CppAD::AD<double>*       vec)
+        size_t                    m,
+        size_t                    q,
+        size_t                    k,
+        ad_vector::const_iterator mat,
+        ad_vector::iterator       vec)
     {   for(size_t i = 0; i < m; ++i)
         {   size_t index  = i * (q+1) + k;
-            vec[i]        = mat[index];
+            *(vec + i)    = *(mat + index);
         }
     }
     // ------------------------------------------------------------------------

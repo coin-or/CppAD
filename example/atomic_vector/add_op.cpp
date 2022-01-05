@@ -60,17 +60,17 @@ void atomic_vector::forward_add(
     assert( aty.size() == m * (q+1) );
     //
     // atu, atv
-    const CppAD::AD<double>* atu = atx.data() + (q+1);
-    const CppAD::AD<double>* atv = atu + m * (q+1);
+    ad_vector::const_iterator atu = atx.begin() + (q+1);
+    ad_vector::const_iterator atv = atu + m * (q+1);
     //
     // ax
-    CppAD::vector< CppAD::AD<double> > ax(n);
+    ad_vector ax(n);
     ax[0] = CppAD::AD<double>( add_enum );
-    CppAD::AD<double>* au = ax.data() + 1;
-    CppAD::AD<double>* av = ax.data() + 1 + m;
+    ad_vector::iterator au = ax.begin() + 1;
+    ad_vector::iterator av = au + m;
     //
     // ay
-    CppAD::vector< CppAD::AD<double> > ay(m);
+    ad_vector ay(m);
     //
     for(size_t k = p; k <= q; ++k)
     {   // au = u^k
@@ -80,7 +80,7 @@ void atomic_vector::forward_add(
         // ay = au + av
         (*this)(ax, ay); // atomic vector add
         // y^k = ay
-        copy_vec_to_mat(m, q, k, ay.data(), aty.data() );
+        copy_vec_to_mat(m, q, k, ay.begin(), aty.begin() );
     }
 }
 // END forward_add
