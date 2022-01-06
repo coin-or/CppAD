@@ -44,7 +44,7 @@ bool div(void)
     //
     // m
     // size of u and v
-    size_t m = 1;
+    size_t m = 4;
     //
     // mul_op, div_op
     typedef atomic_vector::op_enum_t op_enum_t;
@@ -162,6 +162,23 @@ bool div(void)
     az = af.Forward(1, aduv);
     CppAD::ADFun<double> g(auv, az);
     // -----------------------------------------------------------------------
+    // Record h (u, v) = sum f_i^(1) (u , v)
+    // -----------------------------------------------------------------------
+    //
+    // auv
+    CppAD::Independent(auv);
+    //
+    // aweight
+    CPPAD_TESTVECTOR( AD<double> ) aweight(m);
+    for(size_t i = 0; i < m; ++i)
+        aweight[i] = 1.0;
+    //
+    // az
+    CPPAD_TESTVECTOR( AD<double> ) adweight(3 * m);
+    af.Forward(0, auv);
+    az = af.Reverse(1, aweight);
+    CppAD::ADFun<double> h(auv, az);
+    // -----------------------------------------------------------------------
     // check forward mode on g
     // -----------------------------------------------------------------------
     //
@@ -175,6 +192,25 @@ bool div(void)
         double check   = - ui * ui / (vi * vi);
         ok           &= NearEqual( z[i] ,  check,  eps99, eps99);
     }
+    // -----------------------------------------------------------------------
+    // check forward mode on h
+    // -----------------------------------------------------------------------
+    //
+    // z
+    z = h.Forward(0, uv);
+    //
+    // ok
+    for(size_t i = 0; i < m; ++i)
+    {   double ui  = uv[0 * m + i];
+        double vi  = uv[1 * m + i];
+        //
+        double dfi_dui  = 2.0 * ui / vi;
+        ok             &= NearEqual(z[0 * m + i] ,  dfi_dui,  eps99, eps99);
+        //
+        double dfi_dvi  = - ui * ui / (vi * vi);
+        ok             &= NearEqual(z[1 * m + i] ,  dfi_dvi,  eps99, eps99);
+    }
+    return ok;
     return ok;
 }
 // END C++

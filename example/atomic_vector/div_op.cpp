@@ -147,9 +147,7 @@ void atomic_vector::reverse_div(
             px[v_index] = 0.0;
         }
     }
-    //
     // px
-    // x^j = u^k, z^j = y^k, y^k = v^k
     for(size_t i = 0; i < m; ++i)
     {   size_t v0_index = (1 + m + i) * (q+1) + 0;
         //
@@ -164,7 +162,6 @@ void atomic_vector::reverse_div(
             // py_scaled
             double py_scaled = py_copy[y_index] / tx[v0_index];
             //
-            //
             for(size_t d = 1; d <= k; d++)
             {   size_t y_other  =           i * (q+1) + (k-d);
                 size_t v_index  = (1 + m + i) * (q+1) + d;
@@ -178,5 +175,140 @@ void atomic_vector::reverse_div(
         }
     }
 }
+void atomic_vector::reverse_div(
+    size_t                                           m,
+    size_t                                           q,
+    const CppAD::vector< CppAD::AD<double> >&        atx,
+    const CppAD::vector< CppAD::AD<double> >&        aty,
+    CppAD::vector< CppAD::AD<double> >&              apx,
+    const CppAD::vector< CppAD::AD<double> >&        apy)
+{   size_t n = 1 + 2 * m;
+    assert( atx.size() == n * (q+1) );
+    assert( aty.size() == m * (q+1) );
+    assert( apx.size() == n * (q+1) );
+    assert( apy.size() == m * (q+1) );
+    //
+    // atu, atv, apu, apv
+    ad_vector::const_iterator atu = atx.begin() + (q+1);
+    ad_vector::const_iterator atv = atu + m * (q+1);
+    ad_vector::iterator       apu = apx.begin() + (q+1);
+    ad_vector::iterator       apv = apu + m * (q+1);
+    //
+    // ax_sub
+    ad_vector ax_sub(n);
+    ax_sub[0] = CppAD::AD<double>( sub_enum );
+    ad_vector::iterator au_sub = ax_sub.begin() + 1;
+    ad_vector::iterator av_sub = ax_sub.begin() + 1 + m;
+    //
+    // ax_mul
+    ad_vector ax_mul(n);
+    ax_mul[0] = CppAD::AD<double>( mul_enum );
+    ad_vector::iterator au_mul = ax_mul.begin() + 1;
+    ad_vector::iterator av_mul = ax_mul.begin() + 1 + m;
+    //
+    // ax_div
+    ad_vector ax_div(n);
+    ax_div[0] = CppAD::AD<double>( div_enum );
+    ad_vector::iterator au_div = ax_div.begin() + 1;
+    ad_vector::iterator av_div = ax_div.begin() + 1 + m;
+    //
+    // ay, apy_scaled
+    ad_vector ay(m), apy_scaled(m);
+    //
+    // apy_copy
+    ad_vector apy_copy( apy );
+    //
+    // apv
+    for(size_t i = 0; i < m; ++i)
+    {   for(size_t k = 0; k <= q; ++k)
+        {   size_t v_index = (1 + m + i) * (q+1) + k;
+            apx[v_index] = 0.0;
+        }
+    }
+    //
+    // av_div = atv^0
+    copy_mat_to_vec(m, q, 0, atv, av_div);
+    //
+    // k
+    size_t k = q + 1;
+    while(k)
+    {   --k;
+        //
+        // au_div = apy^k
+        copy_mat_to_vec(m, q, k, apy_copy.begin(), au_div);
+        //
+        // apy_scaled = au_div / av_dir
+        (*this)(ax_div, apy_scaled);
+        //
+        // au_mul = apy_scaled
+        for(size_t i = 0; i < m; ++i)
+            *(au_mul + i) = apy_scaled[i];
+        //
+        for(size_t d = 1; d <= k; ++d)
+        {   //
+            // av_mul = atv^d
+            copy_mat_to_vec(m, q, d, atv, av_mul);
+            //
+            // ay = au_mul * av_mul
+            (*this)(ax_mul, ay);
+            //
+            // au_sub = apy^{k-d}
+            copy_mat_to_vec(m, q, k-d, apy_copy.begin(), au_sub);
+            //
+            // av_sub = ay
+            for(size_t i = 0; i < m; ++i)
+                *(av_sub + i) = ay[i];
+            //
+            // ay = au_sub - av_sub
+            (*this)(ax_sub, ay);
+            //
+            // apy^{k-d} = ay
+            copy_vec_to_mat(m, q, k-d, ay.begin(), apy_copy.begin());
+            //
+            // av_mul = aty^{k-d}
+            copy_mat_to_vec(m, q, k-d, aty.begin(), av_mul);
+            //
+            // ay = au_mul * av_mul
+            (*this)(ax_mul, ay);
+            //
+            // au_sub = apv^d
+            copy_mat_to_vec(m, q, d, apv, au_sub);
+            //
+            // av_sub = ay
+            for(size_t i = 0; i < m; ++i)
+                *(av_sub + i) = ay[i];
+            //
+            // ay = au_sub - av_sub
+            (*this)(ax_sub, ay);
+            //
+            // apv^d = ay
+            copy_vec_to_mat(m, q, d, ay.begin(), apv);
+        }
+        //
+        // apu^k = apy_scaled
+        copy_vec_to_mat(m, q, k, apy_scaled.begin(), apu);
+        //
+        // av_mul = aty^k
+        copy_mat_to_vec(m, q, k, aty.begin(), av_mul);
+        //
+        // ay = au_mul * av_mul
+        (*this)(ax_mul, ay);
+        //
+        // au_sub = apv^0
+        copy_mat_to_vec(m, q, 0, apv, au_sub);
+        //
+        // av_sub = ay
+        for(size_t i = 0; i < m; ++i)
+            *(av_sub + i) = ay[i];
+        //
+        // ay = au_sub - av_sub
+        (*this)(ax_sub, ay);
+        //
+        // apv^0 = ay
+        copy_vec_to_mat(m, q, 0, ay.begin(), apv);
+    }
+}
+
+
 
 // END C++

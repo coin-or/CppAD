@@ -132,6 +132,8 @@ bool atomic_vector::reverse(
 
         // division
         case div_enum:
+        reverse_div(m, q, atx, aty, apx, apy);
+        ok = true;
         break;
 
         // unary minus
