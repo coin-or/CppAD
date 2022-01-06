@@ -73,6 +73,8 @@ bool atomic_vector::reverse(
 
         // division
         case div_enum:
+        reverse_div(m, q, tx, ty, px, py);
+        ok = true;
         break;
 
         // unary minus

@@ -29,7 +29,8 @@ $end
 */
 // BEGIN C++
 # include "atomic_vector.hpp"
-
+// ---------------------------------------------------------------------------
+// forward_div
 void atomic_vector::forward_div(
     size_t                                           m,
     size_t                                           p,
@@ -49,9 +50,9 @@ void atomic_vector::forward_div(
                 // y^k -= y^{k-d} * v^d
                 ty[y_index] -= ty[y_other] * tx[v_index];
             }
-            size_t v_index = (1 + m + i ) * (q+1) + 0;
+            size_t v0_index = (1 + m + i ) * (q+1) + 0;
             // y^k /= v^0
-            ty[y_index] /= tx[v_index];
+            ty[y_index] /= tx[v0_index];
         }
     }
 }
@@ -121,4 +122,61 @@ void atomic_vector::forward_div(
         copy_vec_to_mat(m, q, k, ay.begin(), aty.begin());
     }
 }
+// ---------------------------------------------------------------------------
+// reverse_div
+void atomic_vector::reverse_div(
+    size_t                                           m,
+    size_t                                           q,
+    const CppAD::vector<double>&                     tx,
+    const CppAD::vector<double>&                     ty,
+    CppAD::vector<double>&                           px,
+    const CppAD::vector<double>&                     py)
+{   size_t n = 1 + 2 * m;
+    assert( tx.size() == n * (q+1) );
+    assert( ty.size() == m * (q+1) );
+    assert( px.size() == n * (q+1) );
+    assert( py.size() == m * (q+1) );
+    //
+    // py_copy
+    CppAD::vector<double> py_copy( py );
+    //
+    // pv
+    for(size_t i = 0; i < m; ++i)
+    {   for(size_t k = 0; k <= q; ++k)
+        {   size_t v_index = (1 + m + i) * (q+1) + k;
+            px[v_index] = 0.0;
+        }
+    }
+    //
+    // px
+    // x^j = u^k, z^j = y^k, y^k = v^k
+    for(size_t i = 0; i < m; ++i)
+    {   size_t v0_index = (1 + m + i) * (q+1) + 0;
+        //
+        // k
+        size_t k = q + 1;
+        while(k)
+        {   --k;
+            //
+            // y_index
+            size_t y_index = i * (q+1) + k;
+            //
+            // py_scaled
+            double py_scaled = py_copy[y_index] / tx[v0_index];
+            //
+            //
+            for(size_t d = 1; d <= k; d++)
+            {   size_t y_other  =           i * (q+1) + (k-d);
+                size_t v_index  = (1 + m + i) * (q+1) + d;
+                //
+                py_copy[y_other] -= py_scaled * tx[v_index];
+                px[v_index]      -= py_scaled * ty[y_other];
+            }
+            size_t u_index = (1 + i) * (q+1) + k;
+            px[u_index]   = py_scaled;
+            px[v0_index] -= py_scaled * ty[y_index];
+        }
+    }
+}
+
 // END C++

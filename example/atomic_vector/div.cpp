@@ -17,7 +17,7 @@ $section Atomic Vector Division Example$$
 $head f(u, v, w)$$
 For this example,
 $latex f : \B{R}^{2m} \rightarrow \B{R}^m$$
-is defined by $latex f(u, v) = u * v / u$$.
+is defined by $latex f(u, v) = u * u / v$$.
 where $icode u$$ and $icode v$$ are in $latex \B{R}^m$$.
 
 $head g(u, v)$$
@@ -44,14 +44,14 @@ bool div(void)
     //
     // m
     // size of u and v
-    size_t m = 2;
+    size_t m = 1;
     //
     // mul_op, div_op
     typedef atomic_vector::op_enum_t op_enum_t;
     op_enum_t mul_op = atomic_vector::mul_enum;
     op_enum_t div_op = atomic_vector::div_enum;
     // -----------------------------------------------------------------------
-    // Record f(u, v) = u * v / u
+    // Record f(u, v) = u * u / v
     // -----------------------------------------------------------------------
     // Independent variable vector
     CPPAD_TESTVECTOR( CppAD::AD<double> ) auv(2 * m);
@@ -66,23 +66,23 @@ bool div(void)
         av[i] = auv[1 * m + i];
     }
     //
-    // ax = (mul_op, au, av)
+    // ax = (mul_op, au, au)
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(1 + 2 * m);
     ax[0] = CppAD::AD<double>(mul_op);
     for(size_t i = 0; i < m; ++i)
     {   ax[1 + i]     = au[i];
-        ax[1 + m + i] = av[i];
+        ax[1 + m + i] = au[i];
     }
     //
-    // ay = u * v
+    // ay = u * u
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
     vec_op(ax, ay);
     //
-    // ax = (div_op, ay, au)
+    // ax = (div_op, ay, av)
     ax[0] = CppAD::AD<double>(div_op);
     for(size_t i = 0; i < m; ++i)
     {   ax[1 + i]     = ay[i];
-        ax[1 + m + i] = au[i];
+        ax[1 + m + i] = av[i];
     }
     //
     // az = au / ay
@@ -98,8 +98,8 @@ bool div(void)
     // uv, duv
     CPPAD_TESTVECTOR(double) uv(2 * m), duv(2 * m);
     for(size_t j = 0; j < 2 * m; ++j)
-    {   uv[j]  = double(1 + j);
-        duv[j] = double(j);
+    {   uv[j]  = double(2 + j);
+        duv[j] = 1.0;
     }
     //
     // z, dz
@@ -109,13 +109,38 @@ bool div(void)
     //
     // ok
     for(size_t i = 0; i < m; ++i)
-    {   double vi   = uv[1 * m + i];
-        ok         &= NearEqual( z[i] ,  vi,  eps99, eps99);
-        double dvi  = double(1 * m + i);
-        ok         &= NearEqual( dz[i] ,  dvi,  eps99, eps99);
+    {   double ui     = uv[0 * m + i];
+        double vi     = uv[1 * m + i];
+        double check  = ui * ui / vi;
+        ok           &= NearEqual( z[i] ,  check,  eps99, eps99);
+        check         = 2.0 * ui / vi - ui * ui / (vi * vi);
+        ok         &= NearEqual( dz[i] ,  check,  eps99, eps99);
     }
     // -----------------------------------------------------------------------
-    // Record g_i (u, v) = \partial d/du[i] f_i (u, v)
+    // check reverse mode on f
+    // -----------------------------------------------------------------------
+    //
+    // weight
+    CPPAD_TESTVECTOR(double) weight(m);
+    for(size_t i = 0; i < m; ++i)
+        weight[i] = 1.0;
+    //
+    // dweight
+    CPPAD_TESTVECTOR(double) dweight(2 * m);
+    f.Forward(0, uv);
+    dweight = f.Reverse(1, weight);
+    //
+    // ok
+    for(size_t i = 0; i < m; ++i)
+    {   double ui      = uv[0 * m + i];
+        double vi      = uv[1 * m + i];
+        double dfi_dui = 2.0 * ui / vi;
+        ok           &= NearEqual(dweight[0 * m + i], dfi_dui, eps99, eps99);
+        double dfi_dvi = - ui * ui / (vi * vi);
+        ok           &= NearEqual(dweight[1 * m + i], dfi_dvi, eps99, eps99);
+    }
+    // -----------------------------------------------------------------------
+    // Record g_i (u, v) = \partial d/dv[i] f_i (u, v)
     // -----------------------------------------------------------------------
     //
     // af
@@ -132,7 +157,7 @@ bool div(void)
     }
     //
     // az
-    // use the fact that d_v[i] f_k (u, v, w) is zero when i != k
+    // use the fact that d_u[i] f_k (u, v, w) is zero when i != k
     af.Forward(0, auv);
     az = af.Forward(1, aduv);
     CppAD::ADFun<double> g(auv, az);
@@ -145,7 +170,9 @@ bool div(void)
     //
     // ok
     for(size_t i = 0; i < m; ++i)
-    {   double check  = 1.0;
+    {   double ui      = uv[0 * m + i];
+        double vi      = uv[1 * m + i];
+        double check   = - ui * ui / (vi * vi);
         ok           &= NearEqual( z[i] ,  check,  eps99, eps99);
     }
     return ok;
