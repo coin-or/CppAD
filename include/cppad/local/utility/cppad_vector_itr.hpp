@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
 # define CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -306,18 +306,35 @@ $icode%element% = *%itr%
 %$$
 $codei%*%itr% = %element%
 %$$
+$icode%element% = %itr%[%n%]
+%$$
+$icode%itr%[%n%] = %element%
+%$$
 
 $head Source$$
 $srccode%hpp% */
 public:
+# if CPPAD_CONST
     const Type& operator*(void) const
     {   check_element();
         return (*data_)[index_];
     }
-# if ! CPPAD_CONST
+    const Type& operator[](difference_type n)
+    {   return *(*this + n);
+    }
+    const Type& operator[](size_t n)
+    {   return *( *this + difference_type(n) );
+    }
+# else
     Type& operator*(void)
     {   check_element();
         return (*data_)[index_];
+    }
+    Type& operator[](difference_type n)
+    {   return *(*this + n);
+    }
+    Type& operator[](size_t n)
+    {   return *( *this + difference_type(n) );
     }
 # endif
 /* %$$
@@ -334,10 +351,6 @@ $$
 $section Vector Class Iterator Random Access$$
 
 $head Syntax$$
-$icode%element% = %itr%[%n%]
-%$$
-$icode%itr%[%n%] = %element%
-%$$
 $icode%itr% %+-% = %n%
 %$$
 $icode%itr% = %other% %+-% %n%
@@ -373,9 +386,6 @@ $code data_$$ vectors
 $head Source$$
 $srccode%hpp% */
 public:
-    CPPAD_VECTOR_ITR operator[](difference_type n)
-    {   return *(*this + n);
-    }
     // sum and difference operators
     CPPAD_VECTOR_ITR& operator+=(difference_type n) noexcept
     {   index_ += n;

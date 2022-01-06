@@ -104,16 +104,16 @@ void atomic_vector::forward_div(
             (*this)(ax_mul, ay); // atomic vector multiply
             // v_sub = ay
             for(size_t i = 0; i < m; ++i)
-                *(av_sub + i) = ay[i];
+                av_sub[i] = ay[i];
             // ay = u_sub - v_sub
             (*this)(ax_sub, ay); // atomic vector subtract
             // u_sub = ay
             for(size_t i = 0; i < m; ++i)
-                *(au_sub + i) = ay[i];
+                au_sub[i] = ay[i];
         }
         // u_div = u_sub
         for(size_t i = 0; i < m; ++i)
-            *(au_div + i) = *(au_sub + i);
+            au_div[i] = *(au_sub + i);
         // v_div = v^0
         copy_mat_to_vec(m, q, 0, atv, av_div);
         // ay = u_div / v_div
@@ -131,11 +131,14 @@ void atomic_vector::reverse_div(
     const CppAD::vector<double>&                     ty,
     CppAD::vector<double>&                           px,
     const CppAD::vector<double>&                     py)
-{   size_t n = 1 + 2 * m;
+{
+# ifndef NDEBUG
+    size_t n = 1 + 2 * m;
     assert( tx.size() == n * (q+1) );
     assert( ty.size() == m * (q+1) );
     assert( px.size() == n * (q+1) );
     assert( py.size() == m * (q+1) );
+# endif
     //
     // py_copy
     CppAD::vector<double> py_copy( py );
@@ -242,7 +245,7 @@ void atomic_vector::reverse_div(
         //
         // au_mul = apy_scaled
         for(size_t i = 0; i < m; ++i)
-            *(au_mul + i) = apy_scaled[i];
+            au_mul[i] = apy_scaled[i];
         //
         for(size_t d = 1; d <= k; ++d)
         {   //
@@ -257,7 +260,7 @@ void atomic_vector::reverse_div(
             //
             // av_sub = ay
             for(size_t i = 0; i < m; ++i)
-                *(av_sub + i) = ay[i];
+                av_sub[i] = ay[i];
             //
             // ay = au_sub - av_sub
             (*this)(ax_sub, ay);
@@ -276,7 +279,7 @@ void atomic_vector::reverse_div(
             //
             // av_sub = ay
             for(size_t i = 0; i < m; ++i)
-                *(av_sub + i) = ay[i];
+                av_sub[i] = ay[i];
             //
             // ay = au_sub - av_sub
             (*this)(ax_sub, ay);
@@ -299,7 +302,7 @@ void atomic_vector::reverse_div(
         //
         // av_sub = ay
         for(size_t i = 0; i < m; ++i)
-            *(av_sub + i) = ay[i];
+            av_sub[i] = ay[i];
         //
         // ay = au_sub - av_sub
         (*this)(ax_sub, ay);

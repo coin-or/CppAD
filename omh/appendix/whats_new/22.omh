@@ -17,12 +17,20 @@ $spell
     neg
     mul
     div
+    iterators
 $$
 
 $section Changes and Additions to CppAD During 2022$$
 
 $head 01-06$$
-Add reverse mode to the $cref atomic_vector$$,  mul, div, operators.
+$list number$$
+Fix the $code []$$ operator using CppAD vector
+$cref/iterators/CppAD_vector/Iterators/operator[]/$$.
+In addition it was extended to include $code size_t$$ indices.
+$lnext
+Add reverse mode to the $cref atomic_vector$$,  mul, div, operators
+and fix some warning used $code size_t$$ iterator indices.
+$lend
 
 $head 01-04$$
 $list number$$

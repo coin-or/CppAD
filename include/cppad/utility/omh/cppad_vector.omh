@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -30,6 +30,8 @@ $spell
     iterator
     resized
     dereference
+    itr
+    citr
 $$
 
 
@@ -244,19 +246,19 @@ assignment to another vector when original size of $icode vec$$ is zero.
 $head Iterators$$
 
 $subhead Syntax$$
-$codei%typename CppAD::vector<%Scalar%>::iterator
+$codei%typename CppAD::vector<%Scalar%>::iterator %itr%
 %$$
-$codei%typename CppAD::vector<%Scalar%>::const_iterator
+$codei%typename CppAD::vector<%Scalar%>::const_iterator %citr%
 %$$
 $icode%vec%.begin()
 %$$
 $icode%vec%.end()
 %$$
 
-$subhead iterator$$
+$subhead itr$$
 is a random access iterator type for non $code const$$ objects.
 
-$subhead const_iterator$$
+$subhead citr$$
 is a random access iterator type for a $code const$$ objects.
 An $code iterator$$ can be converted to a $code const_iterator$$,
 but not the other way around.
@@ -270,6 +272,12 @@ $subhead end$$
 is an iterator corresponding to just beyond the last element of the vector.
 It is a $code const_iterator$$ ($code iterator$$)
 depending on if $icode vec$$ is $code const$$ (not $code const$$)
+
+$subhead operator[]$$
+The syntax $icode%itr%[%i%]%$$
+and $icode%citr%[%i%]%$$ is extended
+(from a normal random access iterator) to include the case where
+$icode i$$ is $code size_t$$ object.
 
 $subhead Error Checking$$
 Each element access (dereference of the iterator)

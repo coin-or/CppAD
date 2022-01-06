@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -156,6 +156,15 @@ bool CppAD_vector(void)
     citr = vec.begin();
     ok  &= *citr == vec[0];
 
+    // test use of [] operator with const_itr
+    for(size_t i = 0; i < n; ++i)
+        ok &= citr[i] == vec[i];
+
+    // test use of [] operator with iterator
+    itr = vec.begin();
+    for(size_t i = 0; i < n; ++i)
+        itr[i] = Scalar(i + 1);
+
     // Replace the default CppAD error handler with myhandler (defined above).
     // This replacement is in effect until info drops out of scope.
     CppAD::ErrorHandler info(myhandler);
@@ -163,7 +172,6 @@ bool CppAD_vector(void)
 # ifndef NDEBUG
     // -----------------------------------------------------------------------
     // check that iterator access out of range generates an error
-    itr = vec.begin();
     ok  &= *itr == Scalar(1);  // this access OK
     bool detected_error = false;
     try

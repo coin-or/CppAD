@@ -90,7 +90,7 @@ void atomic_vector::forward_mul(
         for(size_t d = 0; d <= k; d++)
         {   // u_add = ay
             for(size_t i = 0; i < m; ++i)
-                *(au_add + i) = ay[i];
+                au_add[i] = ay[i];
             //
             // au_mul = u^{k-d}
             copy_mat_to_vec(m, q, k-d, atu, au_mul);
@@ -103,7 +103,7 @@ void atomic_vector::forward_mul(
             //
             // v_add = ay
             for(size_t i = 0; i < m; ++i)
-                *(av_add + i) = ay[i];
+                av_add[i] = ay[i];
             //
             // ay = u_add + v_add
             (*this)(ax_add, ay); // atomic vector add
@@ -221,7 +221,7 @@ void atomic_vector::reverse_mul(
             //
             // au_add = ay
             for(size_t i = 0; i < m; ++i)
-                *(au_add + i) = ay[i];
+                au_add[i] = ay[i];
             //
             // av_add = apv^d
             copy_mat_to_vec(m, q, d, apv, av_add);
@@ -243,7 +243,7 @@ void atomic_vector::reverse_mul(
             //
             // au_add = ay
             for(size_t i = 0; i < m; ++i)
-                *(au_add + i) = ay[i];
+                au_add[i] = ay[i];
             //
             // av_add = apu^d
             copy_mat_to_vec(m, q, d, apu, av_add);

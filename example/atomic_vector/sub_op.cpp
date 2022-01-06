@@ -113,11 +113,13 @@ void atomic_vector::reverse_sub(
     CppAD::vector< CppAD::AD<double> >&              apx,
     const CppAD::vector< CppAD::AD<double> >&        apy)
 {
+# ifndef NDEBUG
     size_t n = 2 * m + 1;
     assert( atx.size() == n * (q+1) );
     assert( aty.size() == m * (q+1) );
     assert( apx.size() == n * (q+1) );
     assert( apy.size() == m * (q+1) );
+# endif
     //
     // apu, apv
     ad_vector::iterator apu = apx.begin() + (q+1);
