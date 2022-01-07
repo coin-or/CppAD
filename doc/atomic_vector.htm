@@ -168,17 +168,17 @@ for the <code><font color="blue">double</font></code> and the <code><font color=
     <b><font color="#000000">assert</font></b><font color="#990000">(</font> aty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// atu, atv</font></i>
-    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
-    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> atv <font color="#990000">=</font> atu <font color="#990000">+</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atv <font color="#990000">=</font> atu <font color="#990000">+</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ax</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
     ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> add_enum <font color="#990000">);</font>
-    CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> au <font color="#990000">=</font> ax<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-    CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> av <font color="#990000">=</font> ax<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au <font color="#990000">=</font> ax<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> av <font color="#990000">=</font> au <font color="#990000">+</font> m<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ay</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// au = u^k</font></i>
@@ -188,7 +188,7 @@ for the <code><font color="blue">double</font></code> and the <code><font color=
         <i><font color="#9A1900">// ay = au + av</font></i>
         <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector add</font></i>
         <i><font color="#9A1900">// y^k = ay</font></i>
-        <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> aty<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+        <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> aty<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">);</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD::vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD::vector Template Class">
-<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 integer size capacity swap assignment check return reference move semantics element access i error checking push_back push_vector output resize data memory clear iterators iterator const_iterator begin end vectorbool bit_per_unit type parallel mode example exercise ">
+<meta name="keywords" id="keywords" content=" the cppad::vector template class syntax description include deprecated 2019-08-19 integer size capacity swap assignment check return reference move semantics element access i error checking push_back push_vector output resize data memory clear iterators itr citr begin end operator[] vectorbool bit_per_unit type parallel mode example exercise ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -87,10 +87,11 @@ A:active { color : purple }
 <option>data</option>
 <option>Iterators</option>
 <option>---..Syntax</option>
-<option>---..iterator</option>
-<option>---..const_iterator</option>
+<option>---..itr</option>
+<option>---..citr</option>
 <option>---..begin</option>
 <option>---..end</option>
+<option>---..operator[]</option>
 <option>---..Error Checking</option>
 <option>vectorBool</option>
 <option>---..Memory</option>
@@ -551,10 +552,10 @@ assignment to another vector when original size of
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>typename&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::iterator<br>
+<code><font color="blue"><span style='white-space: nowrap'>typename&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::iterator&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>itr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>typename&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::const_iterator<br>
+<code><font color="blue"><span style='white-space: nowrap'>typename&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::const_iterator&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>citr</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.begin()<br>
@@ -563,13 +564,13 @@ assignment to another vector when original size of
 <code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.end()<br>
 </span></font></code>
 <br>
-<big><a name="Iterators.iterator" id="Iterators.iterator">iterator</a></big>
+<big><a name="Iterators.itr" id="Iterators.itr">itr</a></big>
 <br>
 is a random access iterator type for non <code><font color="blue">const</font></code> objects.
 
 <br>
 <br>
-<big><a name="Iterators.const_iterator" id="Iterators.const_iterator">const_iterator</a></big>
+<big><a name="Iterators.citr" id="Iterators.citr">citr</a></big>
 <br>
 is a random access iterator type for a <code><font color="blue">const</font></code> objects.
 An <code><font color="blue">iterator</font></code> can be converted to a <code><font color="blue">const_iterator</font></code>,
@@ -594,6 +595,21 @@ It is a <code><font color="blue">const_iterator</font></code> (<code><font color
 depending on if 
 <code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i></code>
  is <code><font color="blue">const</font></code> (not <code><font color="blue">const</font></code>)
+
+<br>
+<br>
+<big><a name="Iterators.operator[]" id="Iterators.operator[]">operator[]</a></big>
+<br>
+The syntax 
+<code><i><font color="black"><span style='white-space: nowrap'>itr</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>citr</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is extended
+(from a normal random access iterator) to include the case where
+
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ is <code><font color="blue">size_t</font></code> object.
 
 <br>
 <br>

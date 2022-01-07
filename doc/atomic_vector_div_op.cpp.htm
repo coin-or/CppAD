@@ -102,7 +102,8 @@ and test for this operator.
 
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">"atomic_vector.hpp"</font>
-
+<i><font color="#9A1900">// ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">// forward_div</font></i>
 <font color="#009900">void</font> atomic_vector<font color="#990000">::</font><b><font color="#000000">forward_div</font></b><font color="#990000">(</font>
     <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
     <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
@@ -122,9 +123,9 @@ and test for this operator.
                 <i><font color="#9A1900">// y^k -= y^{k-d} * v^d</font></i>
                 ty<font color="#990000">[</font>y_index<font color="#990000">]</font> <font color="#990000">-=</font> ty<font color="#990000">[</font>y_other<font color="#990000">]</font> <font color="#990000">*</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
             <font color="#FF0000">}</font>
-            <font color="#008080">size_t</font> v_index <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i <font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">;</font>
+            <font color="#008080">size_t</font> v0_index <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i <font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">;</font>
             <i><font color="#9A1900">// y^k /= v^0</font></i>
-            ty<font color="#990000">[</font>y_index<font color="#990000">]</font> <font color="#990000">/=</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
+            ty<font color="#990000">[</font>y_index<font color="#990000">]</font> <font color="#990000">/=</font> tx<font color="#990000">[</font>v0_index<font color="#990000">];</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
@@ -140,36 +141,36 @@ and test for this operator.
     <b><font color="#000000">assert</font></b><font color="#990000">(</font> aty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// atu, atv</font></i>
-    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
-    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> atv <font color="#990000">=</font> atu <font color="#990000">+</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atv <font color="#990000">=</font> atu <font color="#990000">+</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ax_div</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax_div</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ax_div</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
     ax_div<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> div_enum <font color="#990000">);</font>
-    CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> au_div <font color="#990000">=</font> ax_div<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-    CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> av_div <font color="#990000">=</font> ax_div<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au_div <font color="#990000">=</font> ax_div<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> av_div <font color="#990000">=</font> ax_div<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ax_mul</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax_mul</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ax_mul</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
     ax_mul<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> mul_enum <font color="#990000">);</font>
-    CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> au_mul <font color="#990000">=</font> ax_mul<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-    CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> av_mul <font color="#990000">=</font> ax_mul<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au_mul <font color="#990000">=</font> ax_mul<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> av_mul <font color="#990000">=</font> ax_mul<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ax_sub</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> <b><font color="#000000">ax_sub</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ax_sub</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
     ax_sub<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> sub_enum <font color="#990000">);</font>
-    CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> au_sub <font color="#990000">=</font> ax_sub<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-    CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;*</font> av_sub <font color="#990000">=</font> ax_sub<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au_sub <font color="#990000">=</font> ax_sub<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> av_sub <font color="#990000">=</font> ax_sub<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ay</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// u_sub = u^k</font></i>
         <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> atu<font color="#990000">,</font> au_sub<font color="#990000">);</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> d <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> d <font color="#990000">&lt;=</font> k<font color="#990000">;</font> d<font color="#990000">++)</font>
         <font color="#FF0000">{</font>   <i><font color="#9A1900">// u_mul = y^{k-d}</font></i>
-            <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">-</font>d<font color="#990000">,</font> aty<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> au_mul<font color="#990000">);</font>
+            <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">-</font>d<font color="#990000">,</font> aty<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> au_mul<font color="#990000">);</font>
             <i><font color="#9A1900">// v_mul = v^d</font></i>
             <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> d<font color="#990000">,</font> atv<font color="#990000">,</font> av_mul<font color="#990000">);</font>
             <i><font color="#9A1900">// ay = u_mul * v_mul</font></i>
@@ -185,15 +186,207 @@ and test for this operator.
         <font color="#FF0000">}</font>
         <i><font color="#9A1900">// u_div = u_sub</font></i>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-            au_div<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> au_sub<font color="#990000">[</font>i<font color="#990000">];</font>
+            au_div<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">*(</font>au_sub <font color="#990000">+</font> i<font color="#990000">);</font>
         <i><font color="#9A1900">// v_div = v^0</font></i>
         <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> atv<font color="#990000">,</font> av_div<font color="#990000">);</font>
         <i><font color="#9A1900">// ay = u_div / v_div</font></i>
         <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_div<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector divide</font></i>
         <i><font color="#9A1900">// y^k = ay</font></i>
-        <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> aty<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">());</font>
+        <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> aty<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">());</font>
     <font color="#FF0000">}</font>
-<font color="#FF0000">}</font></tt></pre>
+<font color="#FF0000">}</font>
+<i><font color="#9A1900">// ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">// reverse_div</font></i>
+<font color="#009900">void</font> atomic_vector<font color="#990000">::</font><b><font color="#000000">reverse_div</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
+    <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     ty<font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           px<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     py<font color="#990000">)</font>
+<font color="#FF0000">{</font>
+<b><font color="#000080"># ifndef</font></b> NDEBUG
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">;</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> px<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> py<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+<b><font color="#000080"># endif</font></b>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// py_copy</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">py_copy</font></b><font color="#990000">(</font> py <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pv</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> v_index <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+            px<font color="#990000">[</font>v_index<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// px</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> v0_index <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// k</font></i>
+        <font color="#008080">size_t</font> k <font color="#990000">=</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+        <b><font color="#0000FF">while</font></b><font color="#990000">(</font>k<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#990000">--</font>k<font color="#990000">;</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// y_index</font></i>
+            <font color="#008080">size_t</font> y_index <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// py_scaled</font></i>
+            <font color="#009900">double</font> py_scaled <font color="#990000">=</font> py_copy<font color="#990000">[</font>y_index<font color="#990000">]</font> <font color="#990000">/</font> tx<font color="#990000">[</font>v0_index<font color="#990000">];</font>
+            <i><font color="#9A1900">//</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> d <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> d <font color="#990000">&lt;=</font> k<font color="#990000">;</font> d<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   <font color="#008080">size_t</font> y_other  <font color="#990000">=</font>           i <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>k<font color="#990000">-</font>d<font color="#990000">);</font>
+                <font color="#008080">size_t</font> v_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> d<font color="#990000">;</font>
+                <i><font color="#9A1900">//</font></i>
+                py_copy<font color="#990000">[</font>y_other<font color="#990000">]</font> <font color="#990000">-=</font> py_scaled <font color="#990000">*</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
+                px<font color="#990000">[</font>v_index<font color="#990000">]</font>      <font color="#990000">-=</font> py_scaled <font color="#990000">*</font> ty<font color="#990000">[</font>y_other<font color="#990000">];</font>
+            <font color="#FF0000">}</font>
+            <font color="#008080">size_t</font> u_index <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+            px<font color="#990000">[</font>u_index<font color="#990000">]</font>   <font color="#990000">=</font> py_scaled<font color="#990000">;</font>
+            px<font color="#990000">[</font>v0_index<font color="#990000">]</font> <font color="#990000">-=</font> py_scaled <font color="#990000">*</font> ty<font color="#990000">[</font>y_index<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+<font color="#009900">void</font> atomic_vector<font color="#990000">::</font><b><font color="#000000">reverse_div</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
+    <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aty<font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              apx<font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">1</font> <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">;</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> atx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> aty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> apx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> apy<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// atu, atv, apu, apv</font></i>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atv <font color="#990000">=</font> atu <font color="#990000">+</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font>       apu <font color="#990000">=</font> apx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font>       apv <font color="#990000">=</font> apu <font color="#990000">+</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ax_sub</font></i>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ax_sub</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    ax_sub<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> sub_enum <font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au_sub <font color="#990000">=</font> ax_sub<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> av_sub <font color="#990000">=</font> ax_sub<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ax_mul</font></i>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ax_mul</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    ax_mul<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> mul_enum <font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au_mul <font color="#990000">=</font> ax_mul<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> av_mul <font color="#990000">=</font> ax_mul<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ax_div</font></i>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ax_div</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    ax_div<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> div_enum <font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au_div <font color="#990000">=</font> ax_div<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> av_div <font color="#990000">=</font> ax_div<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ay, apy_scaled</font></i>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">apy_scaled</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// apy_copy</font></i>
+    <font color="#008080">ad_vector</font> <b><font color="#000000">apy_copy</font></b><font color="#990000">(</font> apy <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// apv</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> v_index <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+            apx<font color="#990000">[</font>v_index<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// av_div = atv^0</font></i>
+    <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> atv<font color="#990000">,</font> av_div<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// k</font></i>
+    <font color="#008080">size_t</font> k <font color="#990000">=</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#0000FF">while</font></b><font color="#990000">(</font>k<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#990000">--</font>k<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// au_div = apy^k</font></i>
+        <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> apy_copy<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> au_div<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// apy_scaled = au_div / av_dir</font></i>
+        <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_div<font color="#990000">,</font> apy_scaled<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// au_mul = apy_scaled</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+            au_mul<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> apy_scaled<font color="#990000">[</font>i<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> d <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> d <font color="#990000">&lt;=</font> k<font color="#990000">;</font> <font color="#990000">++</font>d<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// av_mul = atv^d</font></i>
+            <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> d<font color="#990000">,</font> atv<font color="#990000">,</font> av_mul<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// ay = au_mul * av_mul</font></i>
+            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_mul<font color="#990000">,</font> ay<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// au_sub = apy^{k-d}</font></i>
+            <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">-</font>d<font color="#990000">,</font> apy_copy<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> au_sub<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// av_sub = ay</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+                av_sub<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// ay = au_sub - av_sub</font></i>
+            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_sub<font color="#990000">,</font> ay<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// apy^{k-d} = ay</font></i>
+            <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">-</font>d<font color="#990000">,</font> ay<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> apy_copy<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">());</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// av_mul = aty^{k-d}</font></i>
+            <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">-</font>d<font color="#990000">,</font> aty<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> av_mul<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// ay = au_mul * av_mul</font></i>
+            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_mul<font color="#990000">,</font> ay<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// au_sub = apv^d</font></i>
+            <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> d<font color="#990000">,</font> apv<font color="#990000">,</font> au_sub<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// av_sub = ay</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+                av_sub<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// ay = au_sub - av_sub</font></i>
+            <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_sub<font color="#990000">,</font> ay<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// apv^d = ay</font></i>
+            <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> d<font color="#990000">,</font> ay<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> apv<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// apu^k = apy_scaled</font></i>
+        <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> apy_scaled<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> apu<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// av_mul = aty^k</font></i>
+        <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> aty<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> av_mul<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// ay = au_mul * av_mul</font></i>
+        <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_mul<font color="#990000">,</font> ay<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// au_sub = apv^0</font></i>
+        <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> apv<font color="#990000">,</font> au_sub<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// av_sub = ay</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+            av_sub<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// ay = au_sub - av_sub</font></i>
+        <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax_sub<font color="#990000">,</font> ay<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// apv^0 = ay</font></i>
+        <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> ay<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> apv<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+
+</tt></pre>
 
 <hr>Input File: example/atomic_vector/div_op.cpp
 
