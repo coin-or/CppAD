@@ -17,6 +17,7 @@ $spell
     neg
     mul
     div
+    iterator
     iterators
 $$
 
