@@ -1,7 +1,7 @@
-# ifndef CPPAD_CORE_ATOMIC_ATOMIC_TWO_HPP
-# define CPPAD_CORE_ATOMIC_ATOMIC_TWO_HPP
+# ifndef CPPAD_CORE_ATOMIC_TWO_ATOMIC_HPP
+# define CPPAD_CORE_ATOMIC_TWO_ATOMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -94,16 +94,16 @@ $head Examples$$
 See $cref atomic_two_example$$.
 
 $childtable%
-    include/cppad/core/atomic/two_ctor.hpp%
-    include/cppad/core/atomic/two_option.hpp%
-    include/cppad/core/atomic/two_afun.hpp%
-    include/cppad/core/atomic/two_forward.hpp%
-    include/cppad/core/atomic/two_reverse.hpp%
-    include/cppad/core/atomic/two_for_sparse_jac.hpp%
-    include/cppad/core/atomic/two_rev_sparse_jac.hpp%
-    include/cppad/core/atomic/two_for_sparse_hes.hpp%
-    include/cppad/core/atomic/two_rev_sparse_hes.hpp%
-    include/cppad/core/atomic/two_clear.hpp
+    include/cppad/core/atomic/two/ctor.hpp%
+    include/cppad/core/atomic/two/option.hpp%
+    include/cppad/core/atomic/two/afun.hpp%
+    include/cppad/core/atomic/two/forward.hpp%
+    include/cppad/core/atomic/two/reverse.hpp%
+    include/cppad/core/atomic/two/for_sparse_jac.hpp%
+    include/cppad/core/atomic/two/rev_sparse_jac.hpp%
+    include/cppad/core/atomic/two/for_sparse_hes.hpp%
+    include/cppad/core/atomic/two/rev_sparse_hes.hpp%
+    include/cppad/core/atomic/two/clear.hpp
 %$$
 
 $end
@@ -598,16 +598,16 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // functitons implemented in cppad/core/atomic_base files
-# include <cppad/core/atomic/two_ctor.hpp>
-# include <cppad/core/atomic/two_option.hpp>
-# include <cppad/core/atomic/two_afun.hpp>
-# include <cppad/core/atomic/two_forward.hpp>
-# include <cppad/core/atomic/two_reverse.hpp>
-# include <cppad/core/atomic/two_for_sparse_jac.hpp>
-# include <cppad/core/atomic/two_rev_sparse_jac.hpp>
-# include <cppad/core/atomic/two_for_sparse_hes.hpp>
-# include <cppad/core/atomic/two_rev_sparse_hes.hpp>
-# include <cppad/core/atomic/two_rev_depend.hpp>
-# include <cppad/core/atomic/two_clear.hpp>
+# include <cppad/core/atomic/two/ctor.hpp>
+# include <cppad/core/atomic/two/option.hpp>
+# include <cppad/core/atomic/two/afun.hpp>
+# include <cppad/core/atomic/two/forward.hpp>
+# include <cppad/core/atomic/two/reverse.hpp>
+# include <cppad/core/atomic/two/for_sparse_jac.hpp>
+# include <cppad/core/atomic/two/rev_sparse_jac.hpp>
+# include <cppad/core/atomic/two/for_sparse_hes.hpp>
+# include <cppad/core/atomic/two/rev_sparse_hes.hpp>
+# include <cppad/core/atomic/two/rev_depend.hpp>
+# include <cppad/core/atomic/two/clear.hpp>
 
 # endif

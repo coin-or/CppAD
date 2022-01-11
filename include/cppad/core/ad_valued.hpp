@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_VALUED_HPP
 # define CPPAD_CORE_AD_VALUED_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -41,10 +41,10 @@ $end
 # include <cppad/core/azmul.hpp>
 # include <cppad/core/cond_exp.hpp>
 # include <cppad/core/discrete/discrete.hpp>
-# include <cppad/core/atomic/atomic_three.hpp>
+# include <cppad/core/atomic/three/atomic.hpp>
 # include <cppad/core/chkpoint_two/chkpoint_two.hpp>
-# include <cppad/core/atomic/atomic_two.hpp>
-# include <cppad/core/atomic/atomic_one.hpp>
+# include <cppad/core/atomic/two/atomic.hpp>
+# include <cppad/core/atomic/one/atomic.hpp>
 # include <cppad/core/chkpoint_one/chkpoint_one.hpp>
 
 # endif

@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_ATOMIC_THREE_HPP
-# define CPPAD_CORE_ATOMIC_ATOMIC_THREE_HPP
+# ifndef CPPAD_CORE_ATOMIC_THREE_ATOMIC_HPP
+# define CPPAD_CORE_ATOMIC_THREE_ATOMIC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -179,14 +179,14 @@ $cref/atomic_three_mat_mul.hpp/atomic_three_mat_mul.hpp/Purpose/type_x/$$
 for an example using $icode type_x$$.
 
 
-$childtable%include/cppad/core/atomic/three_ctor.hpp
-    %include/cppad/core/atomic/three_afun.hpp
-    %include/cppad/core/atomic/three_for_type.hpp
-    %include/cppad/core/atomic/three_forward.hpp
-    %include/cppad/core/atomic/three_reverse.hpp
-    %include/cppad/core/atomic/three_jac_sparsity.hpp
-    %include/cppad/core/atomic/three_hes_sparsity.hpp
-    %include/cppad/core/atomic/three_rev_depend.hpp
+$childtable%include/cppad/core/atomic/three/ctor.hpp
+    %include/cppad/core/atomic/three/afun.hpp
+    %include/cppad/core/atomic/three/for_type.hpp
+    %include/cppad/core/atomic/three/forward.hpp
+    %include/cppad/core/atomic/three/reverse.hpp
+    %include/cppad/core/atomic/three/jac_sparsity.hpp
+    %include/cppad/core/atomic/three/hes_sparsity.hpp
+    %include/cppad/core/atomic/three/rev_depend.hpp
 %$$
 
 $end
@@ -474,13 +474,13 @@ public:
 } // END_CPPAD_NAMESPACE
 
 // member functions
-# include <cppad/core/atomic/three_ctor.hpp>
-# include <cppad/core/atomic/three_afun.hpp>
-# include <cppad/core/atomic/three_for_type.hpp>
-# include <cppad/core/atomic/three_rev_depend.hpp>
-# include <cppad/core/atomic/three_forward.hpp>
-# include <cppad/core/atomic/three_reverse.hpp>
-# include <cppad/core/atomic/three_jac_sparsity.hpp>
-# include <cppad/core/atomic/three_hes_sparsity.hpp>
+# include <cppad/core/atomic/three/ctor.hpp>
+# include <cppad/core/atomic/three/afun.hpp>
+# include <cppad/core/atomic/three/for_type.hpp>
+# include <cppad/core/atomic/three/rev_depend.hpp>
+# include <cppad/core/atomic/three/forward.hpp>
+# include <cppad/core/atomic/three/reverse.hpp>
+# include <cppad/core/atomic/three/jac_sparsity.hpp>
+# include <cppad/core/atomic/three/hes_sparsity.hpp>
 
 # endif

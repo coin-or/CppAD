@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_CALL_ATOMIC_HPP
 # define CPPAD_LOCAL_SWEEP_CALL_ATOMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -13,8 +13,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 # include <cppad/local/atomic_index.hpp>
-# include <cppad/core/atomic/atomic_two.hpp>
-# include <cppad/core/atomic/atomic_three.hpp>
+# include <cppad/core/atomic/two/atomic.hpp>
+# include <cppad/core/atomic/three/atomic.hpp>
 
 // BEGIN_CPAPD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
