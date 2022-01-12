@@ -364,10 +364,18 @@ nobase_myinclude_HEADERS = \
 	cppad/core/add_eq.hpp \
 	cppad/core/arithmetic.hpp \
 	cppad/core/atan2.hpp \
+	cppad/core/atomic/four/afun.hpp \
+	cppad/core/atomic/four/atomic.hpp \
+	cppad/core/atomic/four/ctor.hpp \
+	cppad/core/atomic/four/for_type.hpp \
+	cppad/core/atomic/four/forward.hpp \
+	cppad/core/atomic/four/hes_sparsity.hpp \
+	cppad/core/atomic/four/jac_sparsity.hpp \
+	cppad/core/atomic/four/rev_depend.hpp \
+	cppad/core/atomic/four/reverse.hpp \
 	cppad/core/atomic/one/atomic.hpp \
-	cppad/core/atomic/three/atomic.hpp \
-	cppad/core/atomic/two/atomic.hpp \
 	cppad/core/atomic/three/afun.hpp \
+	cppad/core/atomic/three/atomic.hpp \
 	cppad/core/atomic/three/ctor.hpp \
 	cppad/core/atomic/three/for_type.hpp \
 	cppad/core/atomic/three/forward.hpp \
@@ -376,6 +384,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/atomic/three/rev_depend.hpp \
 	cppad/core/atomic/three/reverse.hpp \
 	cppad/core/atomic/two/afun.hpp \
+	cppad/core/atomic/two/atomic.hpp \
 	cppad/core/atomic/two/clear.hpp \
 	cppad/core/atomic/two/ctor.hpp \
 	cppad/core/atomic/two/for_sparse_hes.hpp \

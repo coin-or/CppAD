@@ -14,6 +14,7 @@ $begin atomic$$
 $section Atomic AD Functions$$
 
 $childtable%
+    include/cppad/core/atomic/four/atomic.hpp%
     include/cppad/core/atomic/three/atomic.hpp%
     example/atomic_vector/atomic_vector.omh%
     include/cppad/core/chkpoint_two/chkpoint_two.hpp
