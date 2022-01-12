@@ -112,7 +112,7 @@ specifies which components of y affect values of interest.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::rev_depend(
-    const vector<Base>&         call_id     ,
+    size_t                      call_id     ,
     const vector<ad_type_enum>& type_x      ,
     vector<bool>&               depend_x    ,
     const vector<bool>&         depend_y    )

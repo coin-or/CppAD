@@ -21,12 +21,17 @@ $spell
     const
     CppAD
     mat_mul.cpp
+    std
+    cppad
 $$
 
-$section Using AD Version of an Atomic Function$$
+$section Calling an Atomic Function$$
 
 $head Syntax$$
-$icode%afun%(%call_id%, %ax%, %ay%)%$$
+$icode%afun%(%ax%, %ay%)
+%$$
+$icode%ay% = %afun%(%call_id%, %ax%, %ay%)
+%$$
 
 $head Prototype$$
 $srcthisfile%
@@ -77,44 +82,41 @@ are not specified (must not matter).
 Upon return, it is an $codei%AD<%Base%>%$$ version of
 $latex y = g(x)$$.
 
+$head call_id$$
+This optional argument has prototype
+$codei%
+    size_t %call_id%
+%$$
+It can be used to specify additional information about this call to
+$icode afun$$; e.g., it could specify the index in vector of structures
+in the $icode afun$$ object where the actual information is placed.
+
+$subhead Restriction$$
+The value of $icode call_id$$ must be less than or equal
+$codei%
+    std::numeric_limits<%cppad_tape_id_type%>::max()
+%$$
+see $cref/cppad_tape_id_type/cmake/cppad_tape_id_type/$$.
+
 $end
 -----------------------------------------------------------------------------
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file atomic/four_afun.hpp
-Implement user call to an atomic_four function.
-*/
 
-/*!
-Implement the user call to afun(call_id, ax, ay)
-
-\tparam ADVector
-A simple vector class with elements of type AD<Base>.
-
-\param ax
-is the argument vector for this call,
-ax.size() determines the number of arguments.
-
-\param ay
-is the result vector for this call,
-ay.size() determines the number of results.
-*/
-// BEGIN_PROTOTYPE
-template <class Base>
-template <class ADVector>
+// BEGIN_PROTOTYPE_3_ARGUMENTS
+template <class Base> template <class ADVector>
 void atomic_four<Base>::operator()(
-    const ADVector&  ax     ,
-    ADVector&        ay     )
-// END_PROTOTYPE
+    size_t           call_id ,
+    const ADVector&  ax      ,
+    ADVector&        ay      )
+// END_PROTOTYPE_3_ARGUMENTS
 {
-
     size_t n = ax.size();
     size_t m = ay.size();
 # ifndef NDEBUG
     bool ok = true;
-    std::string msg = "atomic_four: " + atomic_name() + ".eval: ";
+    std::string msg = "atomic_four: call " + atomic_name() + " ";
     if( (n == 0) | (m == 0) )
     {   msg += "ax.size() or ay.size() is zero";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );

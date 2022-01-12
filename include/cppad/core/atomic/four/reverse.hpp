@@ -305,7 +305,7 @@ See atomic_four_reverse mode use documentation
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_four<Base>::reverse(
-    const vector<Base>&         call_id     ,
+    size_t                      call_id     ,
     const vector<ad_type_enum>& type_x      ,
     size_t                      order_end   ,
     const vector<Base>&         taylor_x    ,
@@ -345,7 +345,7 @@ See atomic_four_reverse mode use documentation
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_four<Base>::reverse(
-    const vector< AD<Base> >&       call_id      ,
+    size_t                          call_id      ,
     const vector<ad_type_enum>&     type_x       ,
     size_t                          order_end    ,
     const vector< AD<Base> >&       ataylor_x    ,

@@ -83,9 +83,9 @@ where the user specifies how to compute the derivatives
 and sparsity patterns for $latex g(x)$$.
 
 $subhead Reduce Memory$$
-If the function $latex g(x)$$ is many times during the recording
+If the function $latex g(x)$$ is used many times during the recording
 of an $cref ADFun$$ object,
-using an atomic version of $latex g(x)$$ removed the need for repeated
+using an atomic version of $latex g(x)$$ removes the need for repeated
 copies of the corresponding $codei%AD<%Base%>%$$ operations and variables
 in the recording.
 
@@ -126,9 +126,11 @@ $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
 $head Base$$
-This is the type of the elements of
+This is the base type of the elements of
 $cref/ax/atomic_three_afun/ax/$$ and $cref/ay/atomic_three_afun/ay/$$
-in the corresponding $icode%afun%(%ax%, %ay%)%$$ call.
+in the corresponding $icode%afun%(%ax%, %ay%)%$$ call; i.e.,
+the elements of $icode ax$$ and $icode ay$$ have type
+$codei%AD<%Base%>%$$.
 
 $head parameter_x$$
 All the virtual functions include this argument which has prototype

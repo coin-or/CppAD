@@ -124,7 +124,7 @@ is the sparsity pattern for Hessian.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::hes_sparsity(
-    const vector<Base>&                     call_id      ,
+    size_t                                  call_id      ,
     const vector<ad_type_enum>&             type_x       ,
     const vector<bool>&                     select_x     ,
     const vector<bool>&                     select_y     ,
@@ -174,7 +174,7 @@ have been included.
 template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::for_hes_sparsity(
-    const vector<Base>&              call_id          ,
+    size_t                           call_id          ,
     const vector<ad_type_enum>&      type_x           ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
@@ -317,7 +317,7 @@ have been included.
 template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::rev_hes_sparsity(
-    const vector<Base>&              call_id          ,
+    size_t                           call_id          ,
     const vector<ad_type_enum>&      type_x           ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,

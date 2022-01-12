@@ -145,7 +145,7 @@ is the dependency or sparsity pattern.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::jac_sparsity(
-    const vector<Base>&                     call_id      ,
+    size_t                                  call_id      ,
     const vector<ad_type_enum>&             type_x       ,
     bool                                    dependency   ,
     const vector<bool>&                     select_x     ,
@@ -193,7 +193,7 @@ template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::for_jac_sparsity(
     bool                             dependency   ,
-    const vector<Base>&              call_id      ,
+    size_t                           call_id      ,
     const vector<ad_type_enum>&      type_x       ,
     const local::pod_vector<size_t>& x_index      ,
     const local::pod_vector<size_t>& y_index      ,
@@ -293,7 +293,7 @@ template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::rev_jac_sparsity(
     bool                             dependency   ,
-    const vector<Base>&              call_id      ,
+    size_t                           call_id      ,
     const vector<ad_type_enum>&      type_x       ,
     const local::pod_vector<size_t>& x_index      ,
     const local::pod_vector<size_t>& y_index      ,

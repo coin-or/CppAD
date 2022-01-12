@@ -36,13 +36,16 @@ $codei%class %atomic_user% : public CppAD::atomic_four<%Base%> {
     %...%
 };%$$
 
-$subhead Construct Atomic Function$$
+$subhead Constructor$$
 $icode%atomic_user% %afun%(%ctor_arg_list%)%$$
 
-$subhead Use Atomic Function$$
-$icode%afun%(%call_id%, %ax%, %ay%)%$$
+$subhead Call$$
+$icode%afun%(%ax%, %ay%)
+%$$
+$icode%afun%(%call_id%, %ax%, %ay%)
+%$$
 
-$subhead Class Member Callbacks$$
+$subhead Callbacks$$
 $icode%ok% = %afun%.for_type(
     %call_id%, %type_x%, %type_y%
 )
@@ -65,7 +68,7 @@ $icode%ok% = %afun%.for_type(
 )%$$
 
 $head See Also$$
-$cref chkpoint_two$$, $cref atomic_two$$
+$cref chkpoint_two$$, $cref atomic_three$$
 
 $head Purpose$$
 
@@ -83,9 +86,9 @@ where the user specifies how to compute the derivatives
 and sparsity patterns for $latex g(x)$$.
 
 $subhead Reduce Memory$$
-If the function $latex g(x)$$ is many times during the recording
+If the function $latex g(x)$$ is used many times during the recording
 of an $cref ADFun$$ object,
-using an atomic version of $latex g(x)$$ removed the need for repeated
+an atomic version of $latex g(x)$$ removes the need for repeated
 copies of the corresponding $codei%AD<%Base%>%$$ operations and variables
 in the recording.
 
@@ -108,7 +111,7 @@ In addition,
 $code constant_enum < dynamic_enum < variable_enum$$.
 
 $head Virtual Functions$$
-The $cref/callback functions/atomic_four/Syntax/Class Member Callbacks/$$
+The $cref/callback functions/atomic_four/Syntax/Callbacks/$$
 are implemented by defining the virtual functions in the
 $icode atomic_user$$ class.
 These functions compute derivatives,
@@ -117,50 +120,38 @@ Each virtual function has a default implementation
 that returns $icode%ok% == false%$$.
 The $cref/for_type/atomic_four_for_type/$$
 and $cref/forward/atomic_four_forward/$$ function
-(for the case $icode%order_end% == 0%$$) must be implemented.
-Otherwise, only those functions and orders
-required by the your calculations need to be implemented.
+(for the case $icode%order_end% == 1%$$) are used by an atomic function
+$cref/call/atomic_four/Syntax/Call/$$.
+Hence, they are required for one to use an atomic function.
+Other functions and orders are only required if they are used
+for your calculations.
 For example,
-$icode forward$$ for the case $icode%order_end% == 2%$$ can just return
+$icode forward$$ for the case $icode%order_end% == 3%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
 $head Base$$
-This is the type of the elements of
-$cref/ax/atomic_four_afun/ax/$$ and $cref/ay/atomic_four_afun/ay/$$
-in the corresponding $icode%afun%(%call_id%, %ax%, %ay%)%$$ call.
+This is the base type of the elements of
+$cref/ax/atomic_three_afun/ax/$$ and $cref/ay/atomic_three_afun/ay/$$
+in the corresponding $icode%afun%(%ax%, %ay%)%$$ call; i.e.,
+the elements of $icode ax$$ and $icode ay$$ have type
+$codei%AD<%Base%>%$$.
 
 $head call_id$$
-All the virtual functions include this argument which has prototype
+This argument has prototype
 $codei%
-    const CppAD::vector<%Base%> %call_id%
+    size_t %call_id%
 %$$
-Its size is equal to $icode%n% = %ax%.size()%$$
-in corresponding $icode%afun%(%call_id%, %ax%, %ay%)%$$ call.
-
-$subhead Constant$$
-For $icode%j% =0,%...%,%n%-1%$$,
-if $icode%ax%[%j%]%$$ is a $cref/constant/con_dyn_var/Constant/$$ parameter,
-$codei%
-    %call_id%[%j%] == %ax%[%j%]
-%$$
-
-$subhead Dynamic$$
-If $icode%ax%[%j%]%$$ is a $cref/dynamic/con_dyn_var/Dynamic/$$ parameter,
-$icode%call_id%[%j%]%$$ value of $icode%ax%[%j%]%$$ corresponding to the
-previous call to $cref new_dynamic$$ for the corresponding function object.
-
-$subhead Variable$$
-If $icode%ax%[%j%]%$$ is a variable,
-the value of $icode%call_id%[%j%]%$$ is not specified.
-See the
-$comment/atomic_four_mat_mul.hpp/atomic_four_mat_mul.hpp/Purpose/call_id/$$
-for an example using $icode call_id$$.
+It is optional in the atomic function
+$cref/call/atomic_four/Syntax/Call/$$ and can be used to
+specify additional information about this atomic function call.
+If it is not present in an atomic function call, its value in the
+$cref/callbacks/atomic_four/Syntax/Callbacks/$$ will be zero.
 
 $head type_x$$
 All the virtual functions include this argument.
 Its size is equal to $icode%n% = %ax%.size()%$$
-in corresponding $icode%afun%(%call_id%, %ax%, %ay%)%$$ call.
+in corresponding atomic function call.
 For $icode%j% =0,%...%,%n%-1%$$,
 if $icode%ax%[%j%]%$$ is a constant parameter,
 $codei%
@@ -174,10 +165,6 @@ if $icode%ax%[%j%]%$$ is a variable,
 $codei%
     %type_x%[%j%] == CppAD::variable_enum
 %$$
-See the
-$comment/atomic_four_mat_mul.hpp/atomic_four_mat_mul.hpp/Purpose/type_x/$$
-for an example using $icode type_x$$.
-
 
 $childtable%include/cppad/core/atomic/four/ctor.hpp
     %include/cppad/core/atomic/four/afun.hpp
@@ -263,10 +250,15 @@ public:
     atomic_four(const std::string& name);
 
     // ------------------------------------------------------------------------
-    // operator(): see doxygen in atomic_four/afun.hpp
     template <class ADVector>
     void operator()(
         const ADVector&  ax     ,
+              ADVector&  ay
+    );
+    template <class ADVector>
+    void operator()(
+        size_t           call_id ,
+        const ADVector&  ax      ,
               ADVector&  ay
     );
     // ------------------------------------------------------------------------
@@ -337,7 +329,7 @@ public:
     template <class InternalSparsity>
     bool for_jac_sparsity(
         bool                             dependency   ,
-        const vector<Base>&              call_id      ,
+        size_t                           call_id      ,
         const vector<ad_type_enum>&      type_x       ,
         const local::pod_vector<size_t>& x_index      ,
         const local::pod_vector<size_t>& y_index      ,
@@ -346,7 +338,7 @@ public:
     template <class InternalSparsity>
     bool rev_jac_sparsity(
         bool                             dependency   ,
-        const vector<Base>&              call_id      ,
+        size_t                           call_id      ,
         const vector<ad_type_enum>&      type_x       ,
         const local::pod_vector<size_t>& x_index      ,
         const local::pod_vector<size_t>& y_index      ,
@@ -355,7 +347,7 @@ public:
     // ------------------------------------------------------------
     // hes_sparsity: see doxygen in atomic/four_jac_sparsity.hpp
     virtual bool hes_sparsity(
-        const vector<Base>&                     call_id      ,
+        size_t                                  call_id      ,
         const vector<ad_type_enum>&             type_x       ,
         const vector<bool>&                     select_x     ,
         const vector<bool>&                     select_y     ,
@@ -363,7 +355,7 @@ public:
     );
     template <class InternalSparsity>
     bool for_hes_sparsity(
-        const vector<Base>&              call_id          ,
+        size_t                           call_id          ,
         const vector<ad_type_enum>&      type_x           ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
@@ -374,7 +366,7 @@ public:
     );
     template <class InternalSparsity>
     bool rev_hes_sparsity(
-        const vector<Base>&              call_id          ,
+        size_t                           call_id          ,
         const vector<ad_type_enum>&      type_x           ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
