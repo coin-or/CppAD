@@ -217,7 +217,9 @@ void atomic_three<Base>::operator()(
     }
     // case where result contains a variable
     if( record_variable )
-    {   tape->Rec_.put_var_atomic(tape_id, index_, type_x, type_y, ax, ay);
+    {   size_t call_id = 0; // atomic_three does not user call_id
+        tape->Rec_.put_var_atomic(
+            tape_id, index_, call_id, type_x, type_y, ax, ay);
     }
 # ifndef NDEBUG
     for(size_t i = 0; i < m; ++i) switch( type_y[i] )

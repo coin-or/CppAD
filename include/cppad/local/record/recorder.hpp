@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_RECORD_RECORDER_HPP
 # define CPPAD_LOCAL_RECORD_RECORDER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -187,6 +187,7 @@ public:
     void put_var_atomic(
         tape_id_t                   tape_id    ,
         size_t                      atom_index ,
+        size_t                      call_id    ,
         const vector<ad_type_enum>& type_x     ,
         const vector<ad_type_enum>& type_y     ,
         const VectorAD&             ax         ,

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_RECORD_PUT_VAR_ATOMIC_HPP
 # define CPPAD_LOCAL_RECORD_PUT_VAR_ATOMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -43,6 +43,10 @@ $codei%AD<%Base%>.tape_ptr()%$$ is null.
 $head atomic_index$$
 is the $cref atomic_index$$ for this atomic function.
 
+$head call_id$$
+Is the $cref/call_id/atomic_four_afun/call_id/$$ for this
+atomic function call.
+
 $head type_x$$
 is the $cref ad_type_enum$$ for each of the atomic function arguments.
 
@@ -83,6 +87,7 @@ template <class Base> template <class VectorAD>
 void recorder<Base>::put_var_atomic(
     tape_id_t                   tape_id      ,
     size_t                      atomic_index ,
+    size_t                      call_id      ,
     const vector<ad_type_enum>& type_x       ,
     const vector<ad_type_enum>& type_y       ,
     const VectorAD&             ax           ,
@@ -98,10 +103,9 @@ void recorder<Base>::put_var_atomic(
     );
     // Operator that marks beginning of this atomic operation
     CPPAD_ASSERT_NARG_NRES(local::AFunOp, 4, 0 );
-    addr_t old_id = 0; // used by atomic_two to implement atomic_one interface
     size_t n = ax.size();
     size_t m = ay.size();
-    PutArg(addr_t(atomic_index), old_id, addr_t(n), addr_t(m));
+    PutArg(addr_t(atomic_index), addr_t(call_id), addr_t(n), addr_t(m));
     PutOp(local::AFunOp);
 
     // Now put n operators, one for each element of argument vector
@@ -142,7 +146,7 @@ void recorder<Base>::put_var_atomic(
     }
 
     // Put a duplicate AFunOp at end of AFunOp sequence
-    PutArg(addr_t(atomic_index), old_id, addr_t(n), addr_t(m));
+    PutArg(addr_t(atomic_index), addr_t(call_id), addr_t(n), addr_t(m));
     PutOp(local::AFunOp);
 }
 

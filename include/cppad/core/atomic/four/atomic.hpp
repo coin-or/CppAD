@@ -250,14 +250,12 @@ public:
     atomic_four(const std::string& name);
 
     // ------------------------------------------------------------------------
-    template <class ADVector>
-    void operator()(
-        const ADVector&  ax     ,
+    template <class ADVector> void operator()(
+        size_t           call_id ,
+        const ADVector&  ax      ,
               ADVector&  ay
     );
-    template <class ADVector>
-    void operator()(
-        size_t           call_id ,
+    template <class ADVector> void operator()(
         const ADVector&  ax      ,
               ADVector&  ay
     );

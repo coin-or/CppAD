@@ -61,34 +61,23 @@ and this $icode afun$$ function call is implemented by the
 $cref/atomic_four/atomic_four_ctor/atomic_four/$$ class.
 
 $head ax$$
-This argument has prototype
-$codei%
-    const %ADVector%& %ax%
-%$$
-and size must be equal to $icode n$$.
+The size of this vector determines$icode n$$.
 It specifies vector $latex x \in \B{R}^n$$
 at which an $codei%AD<%Base%>%$$ version of
 $latex y = g(x)$$ is to be evaluated; see
 $cref/Base/atomic_four_ctor/atomic_four/Base/$$.
 
 $head ay$$
-This argument has prototype
-$codei%
-    %ADVector%& %ay%
-%$$
-and size must be equal to $icode m$$.
+The size of this vector determines $icode m$$.
 The input values of its elements
 are not specified (must not matter).
 Upon return, it is an $codei%AD<%Base%>%$$ version of
 $latex y = g(x)$$.
 
 $head call_id$$
-This optional argument has prototype
-$codei%
-    size_t %call_id%
-%$$
+This optional argument has default value zero.
 It can be used to specify additional information about this call to
-$icode afun$$; e.g., it could specify the index in vector of structures
+$icode afun$$. For example, it could specify the index in vector of structures
 in the $icode afun$$ object where the actual information is placed.
 
 $subhead Restriction$$
@@ -104,13 +93,13 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
-// BEGIN_PROTOTYPE_3_ARGUMENTS
+// BEGIN_PROTOTYPE
 template <class Base> template <class ADVector>
 void atomic_four<Base>::operator()(
     size_t           call_id ,
     const ADVector&  ax      ,
     ADVector&        ay      )
-// END_PROTOTYPE_3_ARGUMENTS
+// END_PROTOTYPE
 {
     size_t n = ax.size();
     size_t m = ay.size();
@@ -215,11 +204,14 @@ void atomic_four<Base>::operator()(
     }
 # endif
     if( record_dynamic)
-    {   tape->Rec_.put_dyn_atomic(tape_id, index_, type_x, type_y, ax, ay);
+    {   // 2DO: add call_id to this call
+        tape->Rec_.put_dyn_atomic(tape_id, index_, type_x, type_y, ax, ay);
     }
     // case where result contains a variable
     if( record_variable )
-    {   tape->Rec_.put_var_atomic(tape_id, index_, type_x, type_y, ax, ay);
+    {   tape->Rec_.put_var_atomic(
+            tape_id, index_, call_id, type_x, type_y, ax, ay
+        );
     }
 # ifndef NDEBUG
     for(size_t i = 0; i < m; ++i) switch( type_y[i] )
@@ -244,6 +236,13 @@ void atomic_four<Base>::operator()(
     }
 # endif
     return;
+}
+template <class Base> template <class ADVector>
+void atomic_four<Base>::operator()(
+    const ADVector&  ax      ,
+    ADVector&        ay      )
+{   size_t call_id = 0;
+    (*this)(call_id, ax, ay);
 }
 
 } // END_CPPAD_NAMESPACE
