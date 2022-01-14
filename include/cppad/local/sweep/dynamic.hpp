@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 # define CPPAD_LOCAL_SWEEP_DYNAMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -418,23 +418,23 @@ void dynamic(
             // atomic function call
             case atom_dyn:
             {   size_t atom_index = size_t( dyn_par_arg[i_arg + 0] );
-                size_t n          = size_t( dyn_par_arg[i_arg + 1] );
-                size_t m          = size_t( dyn_par_arg[i_arg + 2] );
-                n_dyn             = size_t( dyn_par_arg[i_arg + 3] );
-                n_arg             = 5 + n + m;
+                size_t call_id    = size_t( dyn_par_arg[i_arg + 1] );
+                size_t n          = size_t( dyn_par_arg[i_arg + 2] );
+                size_t m          = size_t( dyn_par_arg[i_arg + 3] );
+                n_dyn             = size_t( dyn_par_arg[i_arg + 4] );
+                n_arg             = 6 + n + m;
                 CPPAD_ASSERT_UNKNOWN(
-                    size_t( dyn_par_arg[i_arg + 4 + n + m] ) == n_arg
+                    size_t( dyn_par_arg[i_arg + 5 + n + m] ) == n_arg
                 );
                 //
                 size_t need_y    = size_t(dynamic_enum);
                 size_t order_low = 0;
                 size_t order_up  = 0;
-                size_t atom_old  = 0; // not used
                 type_x.resize(n);
                 taylor_x.resize(n);
                 taylor_y.resize(m);
                 for(size_t j = 0; j < n; ++j)
-                {   addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
+                {   addr_t arg_j = dyn_par_arg[i_arg + 5 + j];
                     taylor_x[j]   = all_par_vec[ arg_j ];
                     if( arg_j == 0 )
                         type_x[j] = variable_enum;
@@ -450,7 +450,7 @@ void dynamic(
                     order_low,
                     order_up,
                     atom_index,
-                    atom_old,
+                    call_id,
                     taylor_x,
                     taylor_y
                 );
@@ -474,7 +474,7 @@ void dynamic(
                 size_t count_dyn = 0;
 # endif
                 for(size_t i = 0; i < m; ++i)
-                {   i_par = size_t( dyn_par_arg[i_arg + 4 + n + i] );
+                {   i_par = size_t( dyn_par_arg[i_arg + 5 + n + i] );
                     if( dyn_par_is[i_par] )
                     {   CPPAD_ASSERT_UNKNOWN( i_par != 0 );
                         all_par_vec[i_par] = taylor_y[i];

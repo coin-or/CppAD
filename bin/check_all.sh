@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -229,6 +229,7 @@ echo_log_eval cp -r ../prefix build/prefix
 # run_cmake.sh
 # prefix is extracted from bin/get_optional
 echo_log_eval bin/run_cmake.sh \
+    --verbose \
     --profile_speed \
     $compiler \
     $standard \

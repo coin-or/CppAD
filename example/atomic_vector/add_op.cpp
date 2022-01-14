@@ -60,14 +60,14 @@ void atomic_vector::forward_add(
     assert( aty.size() == m * (q+1) );
     //
     // atu, atv
-    ad_vector::const_iterator atu = atx.begin() + (q+1);
-    ad_vector::const_iterator atv = atu + m * (q+1);
+    ad_vector::const_iterator atu = atx.begin() + difference_type(q+1);
+    ad_vector::const_iterator atv = atu + difference_type( m * (q+1) );
     //
     // ax
     ad_vector ax(n);
     ax[0] = CppAD::AD<double>( add_enum );
     ad_vector::iterator au = ax.begin() + 1;
-    ad_vector::iterator av = au + m;
+    ad_vector::iterator av = au + difference_type(m);
     //
     // ay
     ad_vector ay(m);

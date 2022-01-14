@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_RECORD_PUT_DYN_ATOMIC_HPP
 # define CPPAD_LOCAL_RECORD_PUT_DYN_ATOMIC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -27,7 +27,7 @@ $section Put a Dynamic Parameter Atomic Call Operator in Recording$$
 
 $head Syntax$$
 $icode%rec%.put_dyn_atomic(
-    %tape_id%, %atomic_index%, %type_x%, %type_y%, %ax%, %ay%
+    %tape_id%, %atomic_index%, %call_id%, %type_x%, %type_y%, %ax%, %ay%
 )%$$
 
 $head Prototype$$
@@ -42,6 +42,9 @@ $codei%AD<%Base%>.tape_ptr()%$$ is null.
 
 $head atomic_index$$
 is the $cref atomic_index$$ for this atomic function.
+
+$head call_id$$
+is the $cref/call_id/atomic_four/call_id/$$ for this atomic function.
 
 $head type_x$$
 is the $cref ad_type_enum$$ for each of the atomic function arguments.
@@ -85,6 +88,7 @@ template <class Base> template <class VectorAD>
 void recorder<Base>::put_dyn_atomic(
     tape_id_t                   tape_id      ,
     size_t                      atomic_index ,
+    size_t                      call_id      ,
     const vector<ad_type_enum>& type_x       ,
     const vector<ad_type_enum>& type_y       ,
     const VectorAD&             ax           ,
@@ -104,10 +108,11 @@ void recorder<Base>::put_dyn_atomic(
     CPPAD_ASSERT_UNKNOWN( num_dyn > 0 );
     //
     dyn_par_arg_.push_back( addr_t(atomic_index )); // arg[0] = atomic_index
-    dyn_par_arg_.push_back( addr_t( n ) );          // arg[1] = n
-    dyn_par_arg_.push_back( addr_t( m ) );          // arg[2] = m
-    dyn_par_arg_.push_back( addr_t( num_dyn ) );    // arg[3] = num_dyn
-    // arg[4 + j] for j = 0, ... , n-1
+    dyn_par_arg_.push_back( addr_t(call_id ));      // arg[1] = call_id
+    dyn_par_arg_.push_back( addr_t( n ) );          // arg[2] = n
+    dyn_par_arg_.push_back( addr_t( m ) );          // arg[3] = m
+    dyn_par_arg_.push_back( addr_t( num_dyn ) );    // arg[4] = num_dyn
+    // arg[5 + j] for j = 0, ... , n-1
     for(size_t j = 0; j < n; ++j)
     {   addr_t arg = 0;
         switch( type_x[j] )
@@ -128,9 +133,9 @@ void recorder<Base>::put_dyn_atomic(
             arg = 0;
             CPPAD_ASSERT_UNKNOWN( false );
         }
-        dyn_par_arg_.push_back( arg ); // arg[4 + j]
+        dyn_par_arg_.push_back( arg );              // arg[5 + j]
     }
-    // arg[4 + n + i] for i = 0, ... , m-1
+    // arg[5 + n + i] for i = 0, ... , m-1
     bool first_dynamic_result = true;
     for(size_t i = 0; i < m; ++i)
     {   addr_t arg;
@@ -160,9 +165,9 @@ void recorder<Base>::put_dyn_atomic(
             arg = 0;
             CPPAD_ASSERT_UNKNOWN( false );
         }
-        dyn_par_arg_.push_back( arg ); // arg[4 + n + i]
+        dyn_par_arg_.push_back( arg );              // arg[5 + n + i]
     }
-    dyn_par_arg_.push_back( addr_t(5 + n + m) ); // arg[4 + n + m]
+    dyn_par_arg_.push_back( addr_t(6 + n + m) );    // arg[5 + n + m]
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

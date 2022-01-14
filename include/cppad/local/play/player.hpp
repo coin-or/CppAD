@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_PLAY_PLAYER_HPP
 # define CPPAD_LOCAL_PLAY_PLAYER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -462,16 +462,16 @@ public:
             // number of arguments for this dynamic parameter
             size_t n_arg       = num_arg_dyn(op);
             if( op == atom_dyn )
-            {   size_t n = size_t( dyn_par_arg_[i_arg + 1] );
-                size_t m = size_t( dyn_par_arg_[i_arg + 2] );
-                n_arg    = 5 + n + m;
+            {   size_t n = size_t( dyn_par_arg_[i_arg + 2] );
+                size_t m = size_t( dyn_par_arg_[i_arg + 3] );
+                n_arg    = 6 + n + m;
                 CPPAD_ASSERT_UNKNOWN(
-                    n_arg == size_t( dyn_par_arg_[i_arg + 4 + n + m] )
+                    n_arg == size_t( dyn_par_arg_[i_arg + 5 + n + m] )
                 );
-                for(size_t i = 4; i < n - 1; ++i)
+                for(size_t i = 5; i < n - 1; ++i)
                     CPPAD_ASSERT_UNKNOWN( dyn_par_arg_[i_arg + i] <  i_par );
 # ifndef NDEBUG
-                for(size_t i = 4+n; i < 4+n+m; ++i)
+                for(size_t i = 5+n; i < 5+n+m; ++i)
                 {   addr_t j_par = dyn_par_arg_[i_arg + i];
                     CPPAD_ASSERT_UNKNOWN( (j_par == 0) || (j_par >= i_par) );
                 }

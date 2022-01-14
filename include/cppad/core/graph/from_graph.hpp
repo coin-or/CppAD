@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
 # define CPPAD_CORE_GRAPH_FROM_GRAPH_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -729,11 +729,14 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                     ay[i].taddr_ = 0;
                 }
             }
+            // 2DO: Need to add call_id as optional argument to atom_graph_op
+            // and the json graph representation.
+            size_t call_id = 0;
             if( record_dynamic ) rec.put_dyn_atomic(
-                    tape_id, atomic_index, type_x, type_y, ax, ay
+                    tape_id, atomic_index, call_id, type_x, type_y, ax, ay
             );
             if( record_variable ) rec.put_var_atomic(
-                    tape_id, atomic_index, type_x, type_y, ax, ay
+                    tape_id, atomic_index, call_id, type_x, type_y, ax, ay
             );
             //
             // node_type, node2fun

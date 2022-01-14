@@ -56,6 +56,7 @@ public:
     { }
 private:
     typedef CppAD::vector< CppAD::AD<double> >    ad_vector;
+    typedef ad_vector::iterator::difference_type  difference_type;
     //
     static bool is_unary(op_enum_t op)
     {   bool result = true;
@@ -83,7 +84,7 @@ private:
         ad_vector::iterator       mat)
     {   for(size_t i = 0; i < m; ++i)
         {   size_t index  = i * (q+1) + k;
-            *(mat + index) = *(vec + i);
+            *(mat + difference_type(index) ) = *(vec + difference_type(i) );
         }
     }
     // copy_mat_to_vec
@@ -95,7 +96,7 @@ private:
         ad_vector::iterator       vec)
     {   for(size_t i = 0; i < m; ++i)
         {   size_t index  = i * (q+1) + k;
-            *(vec + i)    = *(mat + index);
+            *(vec + difference_type(i) ) = *(mat + difference_type(index) );
         }
     }
     // ------------------------------------------------------------------------

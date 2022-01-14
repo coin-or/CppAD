@@ -54,7 +54,7 @@ void atomic_vector::forward_neg(
     assert( aty.size() == m * (q+1) );
     //
     // atu
-    ad_vector::const_iterator atu = atx.begin() + (q+1);
+    ad_vector::const_iterator atu = atx.begin() + difference_type(q+1);
     //
     // ax
     ad_vector ax(n);
@@ -104,7 +104,7 @@ void atomic_vector::reverse_neg(
     assert( aty.size() == m * (q+1) );
     //
     // apu
-    ad_vector::iterator apu = apx.begin() + (q+1);
+    ad_vector::iterator apu = apx.begin() + difference_type(q+1);
     //
     // ax
     ad_vector ax(n);

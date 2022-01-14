@@ -2,7 +2,7 @@
 # define CPPAD_CORE_GRAPH_TO_GRAPH_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -359,10 +359,20 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             {
                 // arg[0]: atomic function index
                 size_t atom_index  = size_t( dyn_par_arg[i_arg + 0] );
-                // arg[1]: number of arguments to function
-                n_arg              = size_t( dyn_par_arg[i_arg + 1] );
-                // arg[2]: number of results from function
-                size_t n_result    = size_t( dyn_par_arg[i_arg + 2] );
+                //
+# ifndef NDEBUG
+                // 2DO: put call_id in graph version of atomic funciton call
+                size_t call_id = size_t( dyn_par_arg[i_arg + 1] );
+                CPPAD_ASSERT_KNOWN( call_id == 0,
+                    "to_graph: atomic functions with non-zero call_id "
+                    "not yet implemented"
+                )
+# endif
+                //
+                // arg[2]: number of arguments to function
+                n_arg              = size_t( dyn_par_arg[i_arg + 2] );
+                // arg[3]: number of results from function
+                size_t n_result    = size_t( dyn_par_arg[i_arg + 3] );
                 //
                 // get the name for this atomic function
                 std::string     name;
@@ -388,8 +398,8 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 graph_obj.operator_vec_push_back( graph_op );
                 //
                 for(size_t j  = 0; j < n_arg; ++j)
-                {   // arg[4 + j] is j-th argument to the function
-                    size_t node_j = par2node[ dyn_par_arg[i_arg + 4 + j] ];
+                {   // arg[5 + j] is j-th argument to the function
+                    size_t node_j = par2node[ dyn_par_arg[i_arg + 5 + j] ];
                     CPPAD_ASSERT_UNKNOWN( node_j < i_par );
                     graph_obj.operator_arg_push_back( node_j );
                 }
@@ -1075,6 +1085,14 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             else
             {   // This is the AFunOp at the end of the call
                 size_t atom_index   = size_t( arg[0] );
+# ifndef NDEBUG
+                // 2DO: put call_id in graph version of atomic funciton call
+                size_t call_id = size_t( arg[1] );
+                CPPAD_ASSERT_KNOWN( call_id == 0,
+                    "to_graph: atomic functions with non-zero call_id "
+                    "not yet implemented"
+                )
+# endif
                 size_t n_arg        = size_t( arg[2] );
                 size_t n_result     = size_t( arg[3] );
                 CPPAD_ASSERT_UNKNOWN( atom_node_arg.size() == n_arg );

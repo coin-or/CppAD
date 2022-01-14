@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_CODE_DYN_HPP
 # define CPPAD_LOCAL_OP_CODE_DYN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -74,30 +74,34 @@ This is the index that identifies this atomic function; see
 $code local/atomic_index.hpp$$.
 
 $subhead arg[1]$$
+This is the $cref/call_id/atomic_four_adfun/call_id/$$ for this
+function call.
+
+$subhead arg[2]$$
 This is the number of arguments to this atomic function.
 We use the notation $icode%n% = %arg%[1]%$$ below.
 
-$subhead arg[2]$$
+$subhead arg[3]$$
 This is the number of results for this atomic function.
 We use the notation $icode%m% = %arg%[2]%$$ below.
 
-$subhead arg[3]$$
+$subhead arg[4]$$
 This is the number of result values that are dynamic parameters
 for this function call.
 
-$subhead arg[4+j]$$
+$subhead arg[5+j]$$
 For $icode%j% = 0 , %...% , %n%-1%$$,
 this is the parameter index for the $th j$$ argument to this atomic
 function call.
 
-$subhead arg[4+n+i]$$
+$subhead arg[5+n+i]$$
 For $icode%i% = 0 , %...% , %m%-1%$$,
 this is the parameter index for the $th i$$ result to this atomic
 function call.
 
-$subhead arg[4+n+m]$$
+$subhead arg[5+n+m]$$
 This is the number of arguments to this operator; i.e.,
-$codei%5+%n%+%m%$$.
+$codei%6+%n%+%m%$$.
 
 $head result_dyn$$
 This is a place holder for a result of an atomic function call
@@ -422,7 +426,7 @@ inline size_t num_non_par_arg_dyn(op_code_dyn op)
     size_t num;
     switch(op)
     {   case atom_dyn:
-        num = 4;
+        num = 5;
         break;
 
         case cond_exp_dyn:

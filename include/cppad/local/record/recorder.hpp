@@ -176,6 +176,7 @@ public:
     void put_dyn_atomic(
         tape_id_t                   tape_id    ,
         size_t                      atom_index ,
+        size_t                      call_id    ,
         const vector<ad_type_enum>& type_x     ,
         const vector<ad_type_enum>& type_y     ,
         const VectorAD&             ax         ,

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 # define CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -393,17 +393,18 @@ bool optimize_run(
         //
         if( op == atom_dyn )
         {   size_t atom_index = size_t( dyn_par_arg[i_arg + 0]  );
-            size_t atom_n     = size_t( dyn_par_arg[i_arg + 1]  );
-            size_t atom_m     = size_t( dyn_par_arg[i_arg + 2]  );
-            n_dyn             = size_t( dyn_par_arg[i_arg + 3]  );
-            n_arg             = 5 + atom_n + atom_m;
+            size_t call_id    = size_t( dyn_par_arg[i_arg + 1]  );
+            size_t atom_n     = size_t( dyn_par_arg[i_arg + 2]  );
+            size_t atom_m     = size_t( dyn_par_arg[i_arg + 3]  );
+            n_dyn             = size_t( dyn_par_arg[i_arg + 4]  );
+            n_arg             = 6 + atom_n + atom_m;
             //
             // check if any dynamic parameter result for this operator is used
             bool call_used = false;
 # ifndef NDEBUG
             bool found_i_par = false;
             for(size_t i = 0; i < atom_m; ++i)
-            {   size_t j_par = size_t( dyn_par_arg[i_arg + 4 + atom_n + i] );
+            {   size_t j_par = size_t( dyn_par_arg[i_arg + 5 + atom_n + i] );
                 if( dyn_par_is[j_par] )
                 {   call_used |= par_usage[j_par];
                     CPPAD_ASSERT_UNKNOWN( j_par == i_par || found_i_par );
@@ -415,7 +416,7 @@ bool optimize_run(
             CPPAD_ASSERT_UNKNOWN( found_i_par );
 # else
             for(size_t i = 0; i < atom_m; ++i)
-            {   size_t j_par = size_t( dyn_par_arg[i_arg + 4 + atom_n + i] );
+            {   size_t j_par = size_t( dyn_par_arg[i_arg + 5 + atom_n + i] );
                 if( dyn_par_is[j_par] )
                     call_used |= par_usage[j_par];
             }
@@ -423,11 +424,12 @@ bool optimize_run(
             if( call_used )
             {   arg_vec.resize(0);
                 arg_vec.push_back( addr_t( atom_index ) );
+                arg_vec.push_back( addr_t( call_id ) );
                 arg_vec.push_back( addr_t( atom_n ) );
                 arg_vec.push_back( addr_t( atom_m ) );
                 arg_vec.push_back( addr_t( n_dyn ) );
                 for(size_t j = 0; j < atom_n; ++j)
-                {   addr_t arg_j = dyn_par_arg[i_arg + 4 + j];
+                {   addr_t arg_j = dyn_par_arg[i_arg + 5 + j];
                     if( arg_j > 0 && par_usage[arg_j] )
                         arg_vec.push_back( new_par[ arg_j ] );
                     else
@@ -435,7 +437,7 @@ bool optimize_run(
                 }
                 bool first_dynamic_result = true;
                 for(size_t i = 0; i < atom_m; ++i)
-                {   addr_t res_i = dyn_par_arg[i_arg + 4 + atom_n + i];
+                {   addr_t res_i = dyn_par_arg[i_arg + 5 + atom_n + i];
                     CPPAD_ASSERT_UNKNOWN( dyn_par_is[res_i] || res_i == 0 );
                     //
                     if( dyn_par_is[res_i] )
@@ -458,7 +460,7 @@ bool optimize_run(
                         }
                     }
                 }
-                arg_vec.push_back( addr_t(5 + atom_n + atom_m ) );
+                arg_vec.push_back( addr_t(6 + atom_n + atom_m ) );
                 rec->put_dyn_arg_vec( arg_vec );
             }
         }

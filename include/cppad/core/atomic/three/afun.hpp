@@ -213,7 +213,10 @@ void atomic_three<Base>::operator()(
     }
 # endif
     if( record_dynamic)
-    {   tape->Rec_.put_dyn_atomic(tape_id, index_, type_x, type_y, ax, ay);
+    {   size_t call_id = 0;
+        tape->Rec_.put_dyn_atomic(
+            tape_id, index_, call_id, type_x, type_y, ax, ay
+        );
     }
     // case where result contains a variable
     if( record_variable )

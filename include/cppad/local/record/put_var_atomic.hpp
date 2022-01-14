@@ -27,7 +27,7 @@ $section Put a Variable Atomic Call Operator in Recording$$
 
 $head Syntax$$
 $icode%rec%.put_var_atomic(
-    %tape_id%, %atomic_index%, %type_x%, %type_y%, %ax%, %ay%
+    %tape_id%, %atomic_index%, %call_id%, %type_x%, %type_y%, %ax%, %ay%
 )%$$
 
 $head Prototype$$

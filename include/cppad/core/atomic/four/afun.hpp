@@ -204,8 +204,9 @@ void atomic_four<Base>::operator()(
     }
 # endif
     if( record_dynamic)
-    {   // 2DO: add call_id to this call
-        tape->Rec_.put_dyn_atomic(tape_id, index_, type_x, type_y, ax, ay);
+    {   tape->Rec_.put_dyn_atomic(
+            tape_id, index_, call_id, type_x, type_y, ax, ay
+        );
     }
     // case where result contains a variable
     if( record_variable )
