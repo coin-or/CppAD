@@ -108,6 +108,7 @@ A:active { color : purple }
     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font>    ad_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> ad_vector<font color="#990000">::</font>iterator<font color="#990000">::</font><font color="#008080">difference_type</font>  difference_type<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">static</font></b> <font color="#009900">bool</font> <b><font color="#000000">is_unary</font></b><font color="#990000">(</font><font color="#008080">op_enum_t</font> op<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <font color="#009900">bool</font> result <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
@@ -135,7 +136,7 @@ A:active { color : purple }
         ad_vector<font color="#990000">::</font><font color="#008080">iterator</font>       mat<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         <font color="#FF0000">{</font>   <font color="#008080">size_t</font> index  <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
-            <font color="#990000">*(</font>mat <font color="#990000">+</font> index<font color="#990000">)</font> <font color="#990000">=</font> <font color="#990000">*(</font>vec <font color="#990000">+</font> i<font color="#990000">);</font>
+            <font color="#990000">*(</font>mat <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>index<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">=</font> <font color="#990000">*(</font>vec <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// copy_mat_to_vec</font></i>
@@ -147,7 +148,7 @@ A:active { color : purple }
         ad_vector<font color="#990000">::</font><font color="#008080">iterator</font>       vec<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         <font color="#FF0000">{</font>   <font color="#008080">size_t</font> index  <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
-            <font color="#990000">*(</font>vec <font color="#990000">+</font> i<font color="#990000">)</font>    <font color="#990000">=</font> <font color="#990000">*(</font>mat <font color="#990000">+</font> index<font color="#990000">);</font>
+            <font color="#990000">*(</font>vec <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">=</font> <font color="#990000">*(</font>mat <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>index<font color="#990000">)</font> <font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>

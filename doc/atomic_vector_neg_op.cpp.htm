@@ -122,7 +122,7 @@ and test for this operator.
     <b><font color="#000000">assert</font></b><font color="#990000">(</font> aty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// atu</font></i>
-    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ax</font></i>
     <font color="#008080">ad_vector</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
@@ -172,7 +172,7 @@ and test for this operator.
     <b><font color="#000000">assert</font></b><font color="#990000">(</font> aty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// apu</font></i>
-    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> apu <font color="#990000">=</font> apx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> apu <font color="#990000">=</font> apx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ax</font></i>
     <font color="#008080">ad_vector</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
