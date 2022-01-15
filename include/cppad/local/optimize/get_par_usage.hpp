@@ -381,9 +381,7 @@ void get_par_usage(
             if( dyn_par_is[arg[0]] )
                 type_x[atom_j] = dynamic_enum;
             else
-            {   // BUG: must fix on master branch
-                type_x[atom_j] = dynamic_enum;
-            }
+                type_x[atom_j] = constant_enum;
             ++atom_j;
             if( atom_j == atom_n )
                 atom_state = ret_atom;
