@@ -32,16 +32,12 @@ $head Dependency Analysis$$
 This calculation is sometimes referred to as a forward dependency analysis.
 
 $head Usage$$
-This syntax and prototype are used by
-$codei%
-    %afun%(%call_id%, %ax%, %ay%)
-%$$
-where $cref/afun/atomic_four_ctor/atomic_user/afun/$$
-is a user defined atomic function.
+This syntax and prototype are used a
+$cref/call/atomic_four_call/$$ to an atomic function.
 
 $head Implementation$$
 This virtual function must be defined by the
-$cref/atomic_user/atomic_four_ctor/atomic_user/$$ class.
+$cref/atomic_user/atomic_four_ctor/atomic_user/$$ derived class.
 
 $head Base$$
 See $cref/Base/atomic_four/Base/$$.
@@ -53,8 +49,9 @@ $head type_x$$
 See $cref/type_x/atomic_four/type_x/$$.
 
 $head type_y$$
-This vector has size equal to the number of results for this atomic function;
-i.e. $icode%m%=%ay%.size()%$$.
+This vector has size equal to the number of results for the call
+to this atomic function; i.e., the size of
+$cref/ay/atomic_four_call/ay/$$ which we denote by $icode m$$.
 The input values of the elements of $icode type_y$$
 are not specified (must not matter).
 Upon return, for $latex i = 0 , \ldots , m-1$$,
@@ -84,24 +81,7 @@ $end
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file atomic/four_for_type.hpp
-Third generation atomic type computation.
-*/
-/*!
-Link from atomic_four to type calculation
 
-\param call_id [in]
-is the value of call_id in the corresponding call to afun(call_id, ax, ay).
-
-\param type_x [in]
-specifies which components of x are
-constants, dynamics, and variables
-
-\param type_y [out]
-specifies which components of y are
-constants, dynamics, and variables
-*/
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::for_type(

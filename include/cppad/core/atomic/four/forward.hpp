@@ -25,10 +25,36 @@ $$
 
 $section Atomic Function Forward Mode$$
 
-$head Base$$
-This syntax and prototype are used by
-$cref/afun(call_id, ax, ay)/atomic_four_call/$$; see
-$cref/Base/atomic_four_call/Base/$$.
+$head Syntax$$
+
+$subhead Base$$
+$icode%ok% = %afun%.forward(
+    %call_id%, %type_x%,
+    %need_y%, %order_begin%, %order_end%, %type_x%, %taylor_x%, %taylor_y%
+)%$$
+
+$subhead AD<Base>$$
+$icode%ok% = %afun%.forward(
+    %call_id%, %type_x%,
+    %need_y%, %order_begin%, %order_end%, %type_x%, %ataylor_x%, %ataylor_y%
+)%$$
+
+$head Prototype$$
+
+$subhead Base$$
+$srcthisfile%0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
+%$$
+
+$subhead AD<Base>$$
+$srcthisfile%0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
+%$$
+
+
+$head Usage$$
+
+$subhead Base$$
+This syntax and prototype are used by a
+$cref/call/atomic_four_call/$$ to the atomic function $icode afun$$.
 They are also used by
 $icode%f%.Forward%$$ and $icode%f%.new_dynamic%$$
 where $icode f$$ has prototype
@@ -37,44 +63,24 @@ $codei%
 %$$
 and $icode afun$$ is used during the recording of $icode f$$.
 
-$subhead Syntax$$
-$icode%ok% = %afun%.forward(
-    %call_id%, %type_x%,
-    %need_y%, %order_begin%, %order_end%, %type_x%, %taylor_x%, %taylor_y%
-)%$$
-
-$subhead Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
-%$$
-
-$head AD<Base>$$
+$subhead AD<Base>$$
 This syntax and prototype are used by
 $icode%af%.Forward%$$ and $icode%af%.new_dynamic%$$
 where $icode af$$ has prototype
 $codei%
     ADFun< AD<%Base%> , %Base% > %af%
 %$$
-and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
-
-$subhead Syntax$$
-$icode%ok% = %afun%.forward(
-    %call_id%, %type_x%,
-    %need_y%, %order_begin%, %order_end%, %type_x%, %ataylor_x%, %ataylor_y%
-)%$$
-
-$subhead Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
-%$$
+and $icode afun$$ is used in $icode af$$; see $cref base2ad$$.
 
 $head Implementation$$
 The $icode taylor_x$$, $icode taylor_y$$ version of this function
 must be defined by the
 $cref/atomic_user/atomic_four_ctor/atomic_user/$$ class.
-It can just return $icode%ok% == false%$$
+It can return $icode%ok% == false%$$
 (and not compute anything) for values
 of $icode%order_end%$$ that are greater than those used by your
-$cref/forward/Forward/$$ mode calculations
-(order zero must be implemented).
+$cref/forward/Forward/$$ mode calculations.
+Order zero ($icode order_end$$ equal to one) must be implemented.
 
 $head call_id$$
 See $cref/call_id/atomic_four/call_id/$$.
@@ -83,11 +89,10 @@ $head type_x$$
 See $cref/type_x/atomic_four/type_x/$$.
 
 $head need_y$$
-One can ignore this argument and compute all the $icode taylor_y$$
-Taylor coefficient.
-Often, this is not necessary and $icode need_y$$ is used to specify this.
+One can ignore this argument and compute all the
+$icode taylor_y$$ Taylor coefficients.
 The value $cref/type_y/atomic_four_for_type/type_y/$$ is used
-to determine which coefficients are necessary as follows:
+to specify which coefficients in $icode taylor_y$$ are necessary as follows:
 
 $subhead Constant Parameters$$
 If $icode%need_y% == size_t(constant_enum)%$$,
@@ -110,13 +115,12 @@ then only the taylor coefficients
 for $latex Y_i (t)$$ where $icode%type_y%[%i%] == variable_enum%$$
 are necessary.
 This is the case during a $cref/f.Forward/Forward/$$ operation.
-T
 
 $subhead All$$
 If $icode%need_y > size_t(variable_enum)%$$,
 then the taylor coefficients for all $latex Y_i (t)$$ are necessary.
-This is the case during an $icode%afun%(%call_id%, %ax%, %ay%)%$$ operation.
-
+This is the case during an atomic function
+$cref/call/atomic_four_call/$$.
 
 $head order_begin$$
 This argument
@@ -126,12 +130,13 @@ $subhead p$$
 We sometimes use the notation $icode%p% = %order_begin%$$ below.
 
 $head order_end$$
-This argument
-specifies the highest order Taylor coefficient that we are computing
-($icode%order_begin% <= %order_end%$$).
+This argument is one greater than the highest order Taylor coefficient that we
+are computing ($icode%order_begin% < %order_end%$$).
+This is also equal to the number of Taylor coefficients for each
+component of $icode x$$ and $icode y$$.
 
 $subhead q$$
-We sometimes use the notation $icode%q% = %order_end%$$ below.
+We use the notation $icode%q% = %order_end%$$ below.
 
 $head taylor_x$$
 The size of $icode taylor_x$$ is $icode%q%*%n%$$.
@@ -157,13 +162,7 @@ If the $th j$$ component of $icode x$$ corresponds to a parameter,
 $codei%
     %type_x%[%j%] < CppAD::variable_enum
 %$$
-In this case,
-the $th j$$ component of $icode call_id$$ is equal to $latex x_j^0$$;
-i.e.,
-$codei%
-    %call_id%[%j%] == %taylor_x%[ %j% * %q% + 0 ]
-%$$
-Furthermore, for $icode%k% > 0%$$,
+In this case, for $icode%k% > 0%$$,
 $codei%
     %taylor_x%[ %j% * %q% + %k% ] == 0
 %$$
@@ -180,7 +179,7 @@ $latex \[
 \begin{array}{rcl}
     Y_i (t)  & = & g_i [ X(t) ]
     \\
-    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^{q-1} t^{q-1} + o ( t^{q-1} )
+    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^{q-1} t^{q-1} + o( t^{q-1} )
     \\
     \R{taylor\_y}  [ i * q + k ] & = & y_i^k
 \end{array}
@@ -211,9 +210,9 @@ If this calculation succeeded, $icode ok$$ is true.
 Otherwise, it is false.
 
 $head Discussion$$
-For example, suppose that $icode%order_end% == 2%$$,
+For example, suppose that $icode%order_end% == 3%$$,
 and you know how to compute the function $latex g(x)$$,
-its first derivative $latex f^{(1)} (x)$$,
+its first derivative $latex g^{(1)} (x)$$,
 and it component wise Hessian $latex g_i^{(2)} (x)$$.
 Then you can compute $icode taylor_x$$ using the following formulas:
 $latex \[
@@ -254,36 +253,7 @@ $end
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file atomic/four_forward.hpp
-Third generation atomic forward mode.
-*/
-/*!
-Link from atomic_four to forward mode
 
-\param call_id [in]
-is the value of call_id in the corresponding call to afun(call_id, ax, ay).
-
-\param type_x [in]
-what is the type, in afun(call_id, ax, ay), for each component of x.
-
-\param need_y [in]
-specifies which components of taylor_y are needed,
-
-\param order_begin [in]
-lowerest order for this forward mode calculation.
-
-\param order_end [in]
-highest order for this forward mode calculation.
-
-\param taylor_x [in]
-Taylor coefficients corresponding to x for this calculation.
-
-\param taylor_y [out]
-Taylor coefficient corresponding to y for this calculation
-
-See the forward mode in user's documentation for atomic_four
-*/
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_four<Base>::forward(
@@ -297,32 +267,6 @@ bool atomic_four<Base>::forward(
 // END_PROTOTYPE_BASE
 {   return false; }
 
-/*!
-Link from atomic_four to forward mode
-
-\param call_id [in]
-contains the values, in afun(call_id, ax, ay), for arguments that are parameters.
-
-\param type_x [in]
-what is the type, in afun(call_id, ax, ay), for each component of x.
-
-\param need_y [in]
-specifies which components of taylor_y are needed,
-
-\param order_begin [in]
-lowerest order for this forward mode calculation.
-
-\param order_end [in]
-highest order for this forward mode calculation.
-
-\param ataylor_x [in]
-Taylor coefficients corresponding to x for this calculation.
-
-\param ataylor_y [out]
-Taylor coefficient corresponding to y for this calculation
-
-See the forward mode in user's documentation for base_three
-*/
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_four<Base>::forward(

@@ -218,7 +218,7 @@ Otherwise, it is false.
 $head Discussion$$
 For example, suppose that $icode%order_up% == 2%$$,
 and you know how to compute the function $latex g(x)$$,
-its first derivative $latex f^{(1)} (x)$$,
+its first derivative $latex g^{(1)} (x)$$,
 and it component wise Hessian $latex g_i^{(2)} (x)$$.
 Then you can compute $icode taylor_x$$ using the following formulas:
 $latex \[

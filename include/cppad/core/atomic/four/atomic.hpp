@@ -149,9 +149,10 @@ If it is not present in an atomic function call, its value in the
 $cref/callbacks/atomic_four/Syntax/Callbacks/$$ will be zero.
 
 $head type_x$$
-All the virtual functions include this argument.
-Its size is equal to $icode%n% = %ax%.size()%$$
-in corresponding atomic function call.
+All the virtual functions include this vector.
+It has size equal to the number of arguments for the call
+to this atomic function; i.e., the size of
+$cref/ax/atomic_four_call/ax/$$ which we denote by $icode n$$.
 For $icode%j% =0,%...%,%n%-1%$$,
 if $icode%ax%[%j%]%$$ is a constant parameter,
 $codei%
