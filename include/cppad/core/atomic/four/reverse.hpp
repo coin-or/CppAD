@@ -37,47 +37,55 @@ $$
 
 $section Atomic Function Reverse Mode$$
 
-$head Base$$
-This syntax is used by $icode%f%.Reverse%$$ where $icode f$$ has prototype
-$codei%
-    ADFun<%Base%> %f%
-%$$
-and $icode afun$$ is used in $icode f$$;
-see $cref/Base/atomic_four_call/Base/$$.
+$head Syntax$$
 
-$subhead Syntax$$
+$subhead Base$$
 $icode%ok% = %afun%.reverse(
     %call_id%, %type_x%,
     %order_end%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %$$
 
-$subhead Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
-%$$
-
-$head AD<Base>$$
-This syntax is used by $icode%af%.Reverse%$$ where $icode af$$ has prototype
-$codei%
-    ADFun< AD<%Base%> , %Base% > %af%
-%$$
-and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
-
-$subhead Syntax$$
+$subhead AD<Base>$$
 $icode%ok% = %afun%.reverse(
     %call_id%, %type_x%,
     %order_end%, %ataylor_x%, %ataylor_y%, %apartial_x%, %apartial_y%
 )
 %$$
 
-$subhead Prototype$$
+$head Prototype$$
+
+$subhead Base$$
+$srcthisfile%0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
+%$$
+
+$subhead AD<Base>$$
 $srcthisfile%0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
 %$$
+
+
+$head Usage$$
+
+$subhead Base$$
+This syntax is used by $icode%f%.Reverse%$$ where $icode f$$ has prototype
+$codei%
+    ADFun<%Base%> %f%
+%$$
+and atomic function $icode afun$$ is used in $icode f$$;
+see $cref/Base/atomic_four_call/Base/$$.
+
+$subhead AD<Base>$$
+This syntax is used by $icode%af%.Reverse%$$ where $icode af$$ has prototype
+$codei%
+    ADFun< AD<%Base%> , %Base% > %af%
+%$$
+and the atomic function $icode afun$$ is used in
+$icode af$$; see $cref base2ad$$.
 
 $head Implementation$$
 This function must be defined if
 $cref/afun/atomic_four_ctor/atomic_user/afun/$$ is
-used to define an $cref ADFun$$ object $icode f$$,
+used during the recording of an $cref ADFun$$ object $icode f$$,
 and reverse mode derivatives are computed for $icode f$$.
 It can return $icode%ok% == false%$$
 (and not compute anything) for values
@@ -91,8 +99,13 @@ $head type_x$$
 See $cref/type_x/atomic_four/type_x/$$.
 
 $head order_end$$
-This argument specifies the highest order Taylor coefficient that
+This argument is one greater than highest order Taylor coefficient that
 computing the derivative of.
+This is equal to the number of Taylor coefficients for each component
+of $icode x$$ and $icode y$$.
+
+$head q$$
+We use the notation $icode%q% = %order_end%$$ below.
 
 $head taylor_x$$
 The size of $icode taylor_x$$ is $icode%q%*%n%$$.
@@ -114,17 +127,11 @@ $latex \[
 \] $$
 
 $subhead parameters$$
-If the $th j$$ component of $icode x$$ corresponds to a parameter,
+If the $th j$$ component of $icode x$$ is a parameter,
 $codei%
     %type_x%[%j%] < CppAD::variable_enum
 %$$
-In this case,
-the $th j$$ component of $icode call_id$$ is equal to $latex x_j^0$$;
-i.e.,
-$codei%
-    %call_id%[%j%] == %taylor_x%[ %j% * %q% + 0 ]
-%$$
-Furthermore, for $icode%k% > 0%$$,
+In this case, for $icode%k% > 0%$$,
 $codei%
     %taylor_x%[ %j% * %q% + %k% ] == 0
 %$$
@@ -141,7 +148,8 @@ $latex \[
 \begin{array}{rcl}
     Y_i (t)  & = & g_i [ X(t) ]
     \\
-    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^{q-1} t^{q-1} + o ( t^{q-1} )
+    Y_i (t)  & = &
+        y_i^0 + y_i^1 t^1 + \cdots + y_i^{q-1} t^{q-1} + o ( t^{q-1} )
     \\
     y_i^k    & = & \R{taylor\_y} [ i * q + k ]
 \end{array}
@@ -162,14 +170,15 @@ The specifications for $icode ataylor_y$$ is the same as for $icode taylor_y$$
 $head F$$
 We use the notation $latex \{ x_j^k \} \in \B{R}^{n \times q}$$ for
 $latex \[
-    \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
+    \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q-1 \}
 \]$$
 We use the notation $latex \{ y_i^k \} \in \B{R}^{m \times q}$$ for
 $latex \[
-    \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
+    \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q-1 \}
 \]$$
-We define the function
+We use
 $latex F : \B{R}^{n \times q} \rightarrow \B{R}^{m \times q}$$ by
+to denote the function corresponding to the forward mode calculations
 $latex \[
     y_i^k = F_i^k [ \{ x_j^k \} ]
 \] $$
@@ -179,8 +188,8 @@ $latex \[
 \] $$
 We also note that
 $latex F_i^\ell ( \{ x_j^k \} )$$ is a function of
-$latex x^0 , \ldots , x^\ell$$
-and is determined by the derivatives of $latex g_i (x)$$
+$latex x^0 , \ldots , x^\ell$$; i.e.,
+it is determined by the derivatives of $latex g_i (x)$$
 up to order $latex \ell$$.
 
 $head G, H$$
@@ -232,7 +241,7 @@ Note that we have used the fact that for $latex k < \ell$$,
 $latex \partial F_i^k / \partial x_j^\ell = 0$$.
 
 $subhead Short Circuit Operations$$
-Note that if
+For the $cref/Base/atomic_four_reverse/Prototype/Base/$$ prototype, if
 $codei%IdenticalZero(%partial_y%[%i%*%q%+%k%])%$$ is true,
 one does not need to compute $latex ( \partial F_i^k / \partial x_j^\ell )$$;
 see $cref base_identical$$.
@@ -250,7 +259,6 @@ if the corresponding value in $icode partial_y$$ is zero.
 To be careful, if you do divide by
 $icode taylor_x$$ or $icode taylor_y$$, use $cref azmul$$
 for to avoid zero over zero calculations.
-
 
 $head apartial_x$$
 The specifications for $icode apartial_x$$ is the same as for
@@ -272,36 +280,7 @@ $end
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file atomic/four_reverse.hpp
-Fourth Generation Atomic reverse mode.
-*/
-/*!
-Link from reverse mode sweep to users routine.
 
-\param call_id [in]
-is the value of call_id in the corresponding call to afun(call_id, ax, ay).
-
-\param type_x [in]
-what is the type, in afun(call_id, ax, ay), for each component of x.
-
-\param order_end [in]
-highest order for this reverse mode calculation.
-
-\param taylor_x [in]
-Taylor coefficients corresponding to x for this calculation.
-
-\param taylor_y [in]
-Taylor coefficient corresponding to y for this calculation
-
-\param partial_x [out]
-Partials w.r.t. the x Taylor coefficients.
-
-\param partial_y [in]
-Partials w.r.t. the y Taylor coefficients.
-
-See atomic_four_reverse mode use documentation
-*/
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_four<Base>::reverse(
@@ -315,33 +294,6 @@ bool atomic_four<Base>::reverse(
 // END_PROTOTYPE_BASE
 {   return false; }
 
-/*!
-Link from reverse mode sweep to users routine.
-
-\param call_id [in]
-contains the values, in afun(call_id, ax, ay), for arguments that are parameters.
-
-\param type_x [in]
-what is the type, in afun(call_id, ax, ay), for each component of x.
-
-
-\param order_end [in]
-highest order for this reverse mode calculation.
-
-\param ataylor_x [in]
-Taylor coefficients corresponding to x for this calculation.
-
-\param ataylor_y [in]
-Taylor coefficient corresponding to y for this calculation
-
-\param apartial_x [out]
-Partials w.r.t. the x Taylor coefficients.
-
-\param apartial_y [in]
-Partials w.r.t. the y Taylor coefficients.
-
-See atomic_four_reverse mode use documentation
-*/
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_four<Base>::reverse(

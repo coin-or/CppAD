@@ -237,7 +237,7 @@ Note that we have used the fact that for $latex k < \ell$$,
 $latex \partial F_i^k / \partial x_j^\ell = 0$$.
 
 $subhead Short Circuit Operations$$
-Note that if
+For the $cref/Base/atomic_three_reverse/Base/$$ prototype, if
 $codei%IdenticalZero(%partial_y%[%i%*(%q%+1)+%k%])%$$ is true,
 one does not need to compute $latex ( \partial F_i^k / \partial x_j^\ell )$$;
 see $cref base_identical$$.

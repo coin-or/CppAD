@@ -132,7 +132,7 @@ We sometimes use the notation $icode%p% = %order_begin%$$ below.
 $head order_end$$
 This argument is one greater than the highest order Taylor coefficient that we
 are computing ($icode%order_begin% < %order_end%$$).
-This is also equal to the number of Taylor coefficients for each
+This is equal to the number of Taylor coefficients for each
 component of $icode x$$ and $icode y$$.
 
 $subhead q$$
@@ -158,7 +158,7 @@ $latex \[
 \] $$
 
 $subhead parameters$$
-If the $th j$$ component of $icode x$$ corresponds to a parameter,
+If the $th j$$ component of $icode x$$ is a parameter,
 $codei%
     %type_x%[%j%] < CppAD::variable_enum
 %$$
