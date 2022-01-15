@@ -68,26 +68,26 @@ void atomic_vector::forward_div(
     assert( aty.size() == m * (q+1) );
     //
     // atu, atv
-    ad_vector::const_iterator atu = atx.begin() + (q+1);
-    ad_vector::const_iterator atv = atu + m * (q+1);
+    ad_vector::const_iterator atu = atx.begin() + difference_type( (q+1) );
+    ad_vector::const_iterator atv = atu + difference_type( m * (q+1) );
     //
     // ax_div
     ad_vector ax_div(n);
     ax_div[0] = CppAD::AD<double>( div_enum );
     ad_vector::iterator au_div = ax_div.begin() + 1;
-    ad_vector::iterator av_div = ax_div.begin() + 1 + m;
+    ad_vector::iterator av_div = ax_div.begin() + 1 + difference_type(m);
     //
     // ax_mul
     ad_vector ax_mul(n);
     ax_mul[0] = CppAD::AD<double>( mul_enum );
     ad_vector::iterator au_mul = ax_mul.begin() + 1;
-    ad_vector::iterator av_mul = ax_mul.begin() + 1 + m;
+    ad_vector::iterator av_mul = ax_mul.begin() + 1 + difference_type(m);
     //
     // ax_sub
     ad_vector ax_sub(n);
     ax_sub[0] = CppAD::AD<double>( sub_enum );
     ad_vector::iterator au_sub = ax_sub.begin() + 1;
-    ad_vector::iterator av_sub = ax_sub.begin() + 1 + m;
+    ad_vector::iterator av_sub = ax_sub.begin() + 1 + difference_type(m);
     //
     // ay
     ad_vector ay(m);
@@ -113,7 +113,7 @@ void atomic_vector::forward_div(
         }
         // u_div = u_sub
         for(size_t i = 0; i < m; ++i)
-            au_div[i] = *(au_sub + i);
+            au_div[i] = *(au_sub + difference_type(i));
         // v_div = v^0
         copy_mat_to_vec(m, q, 0, atv, av_div);
         // ay = u_div / v_div
@@ -192,28 +192,28 @@ void atomic_vector::reverse_div(
     assert( apy.size() == m * (q+1) );
     //
     // atu, atv, apu, apv
-    ad_vector::const_iterator atu = atx.begin() + (q+1);
-    ad_vector::const_iterator atv = atu + m * (q+1);
-    ad_vector::iterator       apu = apx.begin() + (q+1);
-    ad_vector::iterator       apv = apu + m * (q+1);
+    ad_vector::const_iterator atu = atx.begin() + difference_type(q+1);
+    ad_vector::const_iterator atv = atu         + difference_type( m * (q+1) );
+    ad_vector::iterator       apu = apx.begin() + difference_type(q+1);
+    ad_vector::iterator       apv = apu         + difference_type( m * (q+1) );
     //
     // ax_sub
     ad_vector ax_sub(n);
     ax_sub[0] = CppAD::AD<double>( sub_enum );
     ad_vector::iterator au_sub = ax_sub.begin() + 1;
-    ad_vector::iterator av_sub = ax_sub.begin() + 1 + m;
+    ad_vector::iterator av_sub = ax_sub.begin() + 1 + difference_type(m);
     //
     // ax_mul
     ad_vector ax_mul(n);
     ax_mul[0] = CppAD::AD<double>( mul_enum );
     ad_vector::iterator au_mul = ax_mul.begin() + 1;
-    ad_vector::iterator av_mul = ax_mul.begin() + 1 + m;
+    ad_vector::iterator av_mul = ax_mul.begin() + 1 + difference_type(m);
     //
     // ax_div
     ad_vector ax_div(n);
     ax_div[0] = CppAD::AD<double>( div_enum );
     ad_vector::iterator au_div = ax_div.begin() + 1;
-    ad_vector::iterator av_div = ax_div.begin() + 1 + m;
+    ad_vector::iterator av_div = ax_div.begin() + 1 + difference_type(m);
     //
     // ay, apy_scaled
     ad_vector ay(m), apy_scaled(m);

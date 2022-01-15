@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_PAR_USAGE_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_PAR_USAGE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -356,8 +356,7 @@ void get_par_usage(
                 for(size_t j = 0; j < atom_n; j++)
                 if( depend_x[j] && type_x[j] != variable_enum )
                 {   // This user argument is a parameter that is needed
-
-                       CPPAD_ASSERT_UNKNOWN( atom_ix[j] > 0 );
+                    CPPAD_ASSERT_UNKNOWN( atom_ix[j] > 0 );
                     par_usage[ atom_ix[j] ] = true;
                 }
             }
@@ -380,9 +379,9 @@ void get_par_usage(
             atom_ix[atom_j]     = size_t( arg[0] );
             parameter_x[atom_j] = all_par_vec[arg[0]]; // parameter value
             if( dyn_par_is[arg[0]] )
-                    type_x[atom_j] = dynamic_enum;
+                type_x[atom_j] = dynamic_enum;
             else
-                    type_x[atom_j] = dynamic_enum;
+                type_x[atom_j] = constant_enum;
             ++atom_j;
             if( atom_j == atom_n )
                 atom_state = ret_atom;

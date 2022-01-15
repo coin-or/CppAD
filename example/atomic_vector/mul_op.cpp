@@ -65,20 +65,20 @@ void atomic_vector::forward_mul(
     assert( aty.size() == m * (q+1) );
     //
     // atu, atv
-    ad_vector::const_iterator atu = atx.begin() + (q+1);
-    ad_vector::const_iterator atv = atu + m * (q+1);
+    ad_vector::const_iterator atu = atx.begin() + difference_type(q+1);
+    ad_vector::const_iterator atv = atu         + difference_type( m * (q+1) );
     //
     // ax_mul
     ad_vector ax_mul(n);
     ax_mul[0] = CppAD::AD<double>( mul_enum );
     ad_vector::iterator au_mul = ax_mul.begin() + 1;
-    ad_vector::iterator av_mul = ax_mul.begin() + 1 + m;
+    ad_vector::iterator av_mul = ax_mul.begin() + 1 + difference_type(m);
     //
     // ax_add
     ad_vector ax_add(n);
     ax_add[0] = CppAD::AD<double>( add_enum );
     ad_vector::iterator au_add = ax_add.begin() + 1;
-    ad_vector::iterator av_add = ax_add.begin() + 1 + m;
+    ad_vector::iterator av_add = ax_add.begin() + 1 + difference_type(m);
     //
     // ay
     ad_vector ay(m);
@@ -170,23 +170,23 @@ void atomic_vector::reverse_mul(
     assert( apy.size() == m * (q+1) );
     //
     // atu, atv, apu, apv
-    ad_vector::const_iterator atu = atx.begin() + (q+1);
-    ad_vector::const_iterator atv = atu + m * (q+1);
-    ad_vector::iterator       apu = apx.begin() + (q+1);
-    ad_vector::iterator       apv = apu + m * (q+1);
+    ad_vector::const_iterator atu = atx.begin() + difference_type(q+1);
+    ad_vector::const_iterator atv = atu         + difference_type( m * (q+1) );
+    ad_vector::iterator       apu = apx.begin() + difference_type(q+1);
+    ad_vector::iterator       apv = apu         + difference_type( m * (q+1) );
     //
     // ax_mul
     // need azmul_op but it is not yet available
     ad_vector ax_mul(n);
     ax_mul[0] = CppAD::AD<double>( mul_enum );
     ad_vector::iterator au_mul = ax_mul.begin() + 1;
-    ad_vector::iterator av_mul = ax_mul.begin() + 1 + m;
+    ad_vector::iterator av_mul = ax_mul.begin() + 1 + difference_type(m);
     //
     // ax_add
     ad_vector ax_add(n);
     ax_add[0] = CppAD::AD<double>( add_enum );
     ad_vector::iterator au_add = ax_add.begin() + 1;
-    ad_vector::iterator av_add = ax_add.begin() + 1 + m;
+    ad_vector::iterator av_add = ax_add.begin() + 1 + difference_type(m);
     //
     // ay
     ad_vector ay(m);
