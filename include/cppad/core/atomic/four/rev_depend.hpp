@@ -41,7 +41,7 @@ used to define an $cref ADFun$$ object $icode f$$,
 and $cref/f.optimize()/optimize/$$ is used.
 
 $head Base$$
-See $cref/Base/atomic_four_afun/Base/$$.
+See $cref/Base/atomic_four_call/Base/$$.
 
 $head call_id$$
 See $cref/call_id/atomic_four/call_id/$$.
@@ -56,7 +56,7 @@ The input values of the elements of $icode depend_x$$
 are not specified (must not matter).
 Upon return, for $latex j = 0 , \ldots , n-1$$,
 $icode%depend_x%[%j%]%$$ is true if the values of interest depend
-on the value of $cref/ax[j]/atomic_four_afun/ax/$$ in the corresponding
+on the value of $cref/ax[j]/atomic_four_call/ax/$$ in the corresponding
 $icode%afun%(%call_id%, %ax%, %ay%)%$$ call.
 Note that parameters and variables,
 that the values of interest do not depend on,
@@ -70,7 +70,7 @@ This vector has size equal to the number of results for this atomic function;
 i.e. $icode%m%=%ay%.size()%$$.
 For $latex i = 0 , \ldots , m-1$$,
 $icode%depend_y%[%i%]%$$ is true if the values of interest depend
-on the value of $cref/ay[i]/atomic_four_afun/ay/$$ in the corresponding
+on the value of $cref/ay[i]/atomic_four_call/ay/$$ in the corresponding
 $icode%afun%(%call_id%, %ax%, %ay%)%$$ call.
 
 $head ok$$

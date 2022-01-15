@@ -27,8 +27,8 @@ $section Atomic Function Forward Mode$$
 
 $head Base$$
 This syntax and prototype are used by
-$cref/afun(call_id, ax, ay)/atomic_four_afun/$$; see
-$cref/Base/atomic_four_afun/Base/$$.
+$cref/afun(call_id, ax, ay)/atomic_four_call/$$; see
+$cref/Base/atomic_four_call/Base/$$.
 They are also used by
 $icode%f%.Forward%$$ and $icode%f%.new_dynamic%$$
 where $icode f$$ has prototype

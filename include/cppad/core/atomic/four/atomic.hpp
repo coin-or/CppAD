@@ -167,7 +167,7 @@ $codei%
 %$$
 
 $childtable%include/cppad/core/atomic/four/ctor.hpp
-    %include/cppad/core/atomic/four/afun.hpp
+    %include/cppad/core/atomic/four/call.hpp
     %include/cppad/core/atomic/four/for_type.hpp
     %include/cppad/core/atomic/four/forward.hpp
     %include/cppad/core/atomic/four/reverse.hpp
@@ -465,7 +465,7 @@ public:
 
 // member functions
 # include <cppad/core/atomic/four/ctor.hpp>
-# include <cppad/core/atomic/four/afun.hpp>
+# include <cppad/core/atomic/four/call.hpp>
 # include <cppad/core/atomic/four/for_type.hpp>
 # include <cppad/core/atomic/four/rev_depend.hpp>
 # include <cppad/core/atomic/four/forward.hpp>

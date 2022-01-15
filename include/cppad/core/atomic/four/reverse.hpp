@@ -43,7 +43,7 @@ $codei%
     ADFun<%Base%> %f%
 %$$
 and $icode afun$$ is used in $icode f$$;
-see $cref/Base/atomic_four_afun/Base/$$.
+see $cref/Base/atomic_four_call/Base/$$.
 
 $subhead Syntax$$
 $icode%ok% = %afun%.reverse(

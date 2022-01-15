@@ -82,7 +82,7 @@ $cref/parallel/ta_in_parallel/$$ mode.
 
 $subhead Base$$
 The template parameter determines the
-$cref/Base/atomic_four_afun/Base/$$
+$cref/Base/atomic_four_call/Base/$$
 type for this $codei%AD<%Base%>%$$ atomic operation.
 
 $subhead name$$
