@@ -40,13 +40,13 @@ void atomic_vector::forward_mul(
     CppAD::vector<double>&                           ty)
 {
     for(size_t i = 0; i < m; ++i)
-    {   for(size_t k = p; k <= q; ++k)
-        {   size_t y_index = i * (q+1) + k;
+    {   for(size_t k = p; k < q; ++k)
+        {   size_t y_index = i * q + k;
             // y^k = 0
             ty[y_index]    = 0.0;
             for(size_t d = 0; d <= k; d++)
-            {   size_t u_index  = (1 + i)     * (q+1) + (k-d);
-                size_t v_index  = (1 + m + i) * (q+1) + d;
+            {   size_t u_index  =       i * q + (k-d);
+                size_t v_index  = (m + i) * q + d;
                 // y^k += u^{k-d} * v^d
                 ty[y_index]    += tx[u_index] * tx[v_index];
             }
@@ -60,30 +60,28 @@ void atomic_vector::forward_mul(
     const CppAD::vector< CppAD::AD<double> >&        atx,
     CppAD::vector< CppAD::AD<double> >&              aty)
 {
-    size_t n = 2 * m + 1;
-    assert( atx.size() == n * (q+1) );
-    assert( aty.size() == m * (q+1) );
+    size_t n = 2 * m;
+    assert( atx.size() == n * q );
+    assert( aty.size() == m * q );
     //
     // atu, atv
-    ad_vector::const_iterator atu = atx.begin() + difference_type(q+1);
-    ad_vector::const_iterator atv = atu         + difference_type( m * (q+1) );
+    ad_vector::const_iterator atu = atx.begin();
+    ad_vector::const_iterator atv = atu + difference_type(m * q);
     //
     // ax_mul
     ad_vector ax_mul(n);
-    ax_mul[0] = CppAD::AD<double>( mul_enum );
-    ad_vector::iterator au_mul = ax_mul.begin() + 1;
-    ad_vector::iterator av_mul = ax_mul.begin() + 1 + difference_type(m);
+    ad_vector::iterator au_mul = ax_mul.begin();
+    ad_vector::iterator av_mul = ax_mul.begin() + difference_type(m);
     //
     // ax_add
     ad_vector ax_add(n);
-    ax_add[0] = CppAD::AD<double>( add_enum );
-    ad_vector::iterator au_add = ax_add.begin() + 1;
-    ad_vector::iterator av_add = ax_add.begin() + 1 + difference_type(m);
+    ad_vector::iterator au_add = ax_add.begin();
+    ad_vector::iterator av_add = ax_add.begin() + difference_type(m);
     //
     // ay
     ad_vector ay(m);
     //
-    for(size_t k = p; k <= q; ++k)
+    for(size_t k = p; k < q; ++k)
     {   // ay = 0
         for(size_t i = 0; i < m; ++i)
             ay[i] = 0.0;
@@ -99,14 +97,14 @@ void atomic_vector::forward_mul(
             copy_mat_to_vec(m, q, d, atv, av_mul);
             //
             // ay = au_mul * av_mul
-            (*this)(ax_mul, ay); // atomic vector multiply
+            (*this)(mul_enum, ax_mul, ay); // atomic vector multiply
             //
             // v_add = ay
             for(size_t i = 0; i < m; ++i)
                 av_add[i] = ay[i];
             //
             // ay = u_add + v_add
-            (*this)(ax_add, ay); // atomic vector add
+            (*this)(add_enum, ax_add, ay); // atomic vector add
         }
         // y^k = ay
         copy_vec_to_mat(m, q, k, ay.begin(), aty.begin());
@@ -121,32 +119,32 @@ void atomic_vector::reverse_mul(
     const CppAD::vector<double>&                     ty,
     CppAD::vector<double>&                           px,
     const CppAD::vector<double>&                     py)
-{   size_t n = 1 + 2 * m;
-    assert( tx.size() == n * (q+1) );
-    assert( ty.size() == m * (q+1) );
-    assert( px.size() == n * (q+1) );
-    assert( py.size() == m * (q+1) );
+{   size_t n = 2 * m;
+    assert( tx.size() == n * q );
+    assert( ty.size() == m * q );
+    assert( px.size() == n * q );
+    assert( py.size() == m * q );
     //
     // px
     for(size_t j = 0; j < n; ++j)
-    {   for(size_t k = 0; k <= q; ++k)
-            px[j * (q+1) + k] = 0.0;
+    {   for(size_t k = 0; k < q; ++k)
+            px[j * q + k] = 0.0;
     }
     //
     // px
     for(size_t i = 0; i < m; ++i)
     {   // k
-        size_t k = q + 1;
+        size_t k = q;
         while(k)
         {   --k;
             //
             // y_index
-            size_t y_index = i * (q+1) + k;
+            size_t y_index = i * q + k;
             //
             // px
             for(size_t d = 0; d <= k; ++d)
-            {   size_t u_index  = (1 + i)     * (q+1) + (k-d);
-                size_t v_index  = (1 + m + i) * (q+1) + d;
+            {   size_t u_index  =       i * q + (k-d);
+                size_t v_index  = (m + i) * q + d;
                 //
                 // must use azmul becasue py[y_index] = 0 may mean that this
                 // component of the function was not selected.
@@ -163,30 +161,28 @@ void atomic_vector::reverse_mul(
     const CppAD::vector< CppAD::AD<double> >&        aty,
     CppAD::vector< CppAD::AD<double> >&              apx,
     const CppAD::vector< CppAD::AD<double> >&        apy)
-{   size_t n = 1 + 2 * m;
-    assert( atx.size() == n * (q+1) );
-    assert( aty.size() == m * (q+1) );
-    assert( apx.size() == n * (q+1) );
-    assert( apy.size() == m * (q+1) );
+{   size_t n = 2 * m;
+    assert( atx.size() == n * q );
+    assert( aty.size() == m * q );
+    assert( apx.size() == n * q );
+    assert( apy.size() == m * q );
     //
     // atu, atv, apu, apv
-    ad_vector::const_iterator atu = atx.begin() + difference_type(q+1);
-    ad_vector::const_iterator atv = atu         + difference_type( m * (q+1) );
-    ad_vector::iterator       apu = apx.begin() + difference_type(q+1);
-    ad_vector::iterator       apv = apu         + difference_type( m * (q+1) );
+    ad_vector::const_iterator atu = atx.begin();
+    ad_vector::const_iterator atv = atu + difference_type(m * q);
+    ad_vector::iterator       apu = apx.begin();
+    ad_vector::iterator       apv = apu + difference_type(m * q);
     //
     // ax_mul
     // need azmul_op but it is not yet available
     ad_vector ax_mul(n);
-    ax_mul[0] = CppAD::AD<double>( mul_enum );
-    ad_vector::iterator au_mul = ax_mul.begin() + 1;
-    ad_vector::iterator av_mul = ax_mul.begin() + 1 + difference_type(m);
+    ad_vector::iterator au_mul = ax_mul.begin();
+    ad_vector::iterator av_mul = ax_mul.begin() + difference_type(m);
     //
     // ax_add
     ad_vector ax_add(n);
-    ax_add[0] = CppAD::AD<double>( add_enum );
-    ad_vector::iterator au_add = ax_add.begin() + 1;
-    ad_vector::iterator av_add = ax_add.begin() + 1 + difference_type(m);
+    ad_vector::iterator au_add = ax_add.begin();
+    ad_vector::iterator av_add = ax_add.begin() + difference_type(m);
     //
     // ay
     ad_vector ay(m);
@@ -194,12 +190,12 @@ void atomic_vector::reverse_mul(
     // px
     // assigning to the value zero does not create operators on the tape
     for(size_t j = 0; j < n; ++j)
-    {   for(size_t k = 0; k <= q; ++k)
-            apx[j * (q+1) + k] = 0.0;
+    {   for(size_t k = 0; k < q; ++k)
+            apx[j * q + k] = 0.0;
     }
     //
     // k
-    size_t k = q + 1;
+    size_t k = q;
     while(k)
     {   --k;
         //
@@ -217,7 +213,7 @@ void atomic_vector::reverse_mul(
             copy_mat_to_vec(m, q, k-d, atu, av_mul);
             //
             // ay = au_mul * av_mul
-            (*this)(ax_mul, ay);
+            (*this)(mul_enum, ax_mul, ay);
             //
             // au_add = ay
             for(size_t i = 0; i < m; ++i)
@@ -227,7 +223,7 @@ void atomic_vector::reverse_mul(
             copy_mat_to_vec(m, q, d, apv, av_add);
             //
             // ay = au_add + av_add
-            (*this)(ax_add, ay);
+            (*this)(add_enum, ax_add, ay);
             //
             // apv^d =  ay
             copy_vec_to_mat(m, q, d, ay.begin(), apv);
@@ -239,7 +235,7 @@ void atomic_vector::reverse_mul(
             copy_mat_to_vec(m, q, k-d, atv, av_mul);
             //
             // ay = au_mul * av_mul
-            (*this)(ax_mul, ay);
+            (*this)(mul_enum, ax_mul, ay);
             //
             // au_add = ay
             for(size_t i = 0; i < m; ++i)
@@ -249,7 +245,7 @@ void atomic_vector::reverse_mul(
             copy_mat_to_vec(m, q, d, apu, av_add);
             //
             // ay = au_add + av_add
-            (*this)(ax_add, ay);
+            (*this)(add_enum, ax_add, ay);
             //
             // apu^d =  ay
             copy_vec_to_mat(m, q, d, ay.begin(), apu);

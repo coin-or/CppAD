@@ -67,26 +67,25 @@ bool mul(void)
     }
     //
     // ax = (mul_op, au, av)
-    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(1 + 2 * m);
-    ax[0] = CppAD::AD<double>(mul_op);
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(2 * m);
     for(size_t i = 0; i < m; ++i)
-    {   ax[1 + i]     = au[i];
-        ax[1 + m + i] = av[i];
+    {   ax[i]     = au[i];
+        ax[m + i] = av[i];
     }
     //
     // ay = u * v
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
-    vec_op(ax, ay);
+    vec_op(mul_op, ax, ay);
     //
-    // ax = (mul_op, ay, aw)
+    // ax = (ay, aw)
     for(size_t i = 0; i < m; ++i)
-    {   ax[1 + i]     = ay[i];
-        ax[1 + m + i] = aw[i];
+    {   ax[i]     = ay[i];
+        ax[m + i] = aw[i];
     }
     //
-    // az = ay + v
+    // az = ay * aw
     CPPAD_TESTVECTOR( CppAD::AD<double> ) az(m);
-    vec_op(ax, az);
+    vec_op(mul_op, ax, az);
     //
     // f
     CppAD::ADFun<double> f(auvw, az);

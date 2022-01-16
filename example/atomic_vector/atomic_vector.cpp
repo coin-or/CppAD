@@ -43,6 +43,7 @@ int main(void)
     Run( add,                 "add"            );
     Run( neg,                 "neg"            );
     Run( sub,                 "sub"            );
+    Run( mul,                 "mul"            );
 
 # if 0
     // BEGIN_SORT_THIS_LINE_PLUS_1
