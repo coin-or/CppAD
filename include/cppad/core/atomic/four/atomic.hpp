@@ -385,7 +385,7 @@ public:
         std::string name;
         void*       v_ptr = nullptr; // set to avoid warning
         local::atomic_index<Base>(set_null, index_, type, &name, v_ptr);
-        CPPAD_ASSERT_UNKNOWN( type == 3 );
+        CPPAD_ASSERT_UNKNOWN( type == 4 );
         return name;
     }
     /// destructor informs CppAD that this atomic function with this index
@@ -397,7 +397,7 @@ public:
         std::string* name  = nullptr;
         void*        v_ptr = nullptr; // set to avoid warning
         local::atomic_index<Base>(set_null, index_, type, name, v_ptr);
-        CPPAD_ASSERT_UNKNOWN( type == 3 );
+        CPPAD_ASSERT_UNKNOWN( type == 4 );
         //
         // free temporary work memory
         for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
@@ -438,7 +438,7 @@ public:
         std::string* name  = nullptr;
         void*        v_ptr = nullptr; // set to avoid warning
         local::atomic_index<Base>(set_null, index, type, name, v_ptr);
-        CPPAD_ASSERT_UNKNOWN( type == 3 );
+        CPPAD_ASSERT_UNKNOWN( type == 4 );
         return reinterpret_cast<atomic_four*>( v_ptr );
     }
     /// atomic_four function name corresponding to a certain index
@@ -448,7 +448,7 @@ public:
         std::string name;
         void*       v_ptr = nullptr; // set to avoid warning
         local::atomic_index<Base>(set_null, index, type, &name, v_ptr);
-        CPPAD_ASSERT_UNKNOWN( type == 3 );
+        CPPAD_ASSERT_UNKNOWN( type == 4 );
         return name;
     }
 

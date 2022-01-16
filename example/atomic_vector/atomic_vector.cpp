@@ -40,7 +40,9 @@ int main(void)
     CppAD::test_boolofvoid Run(group, width);
 
     // This line is used by test_one.sh
+    Run( add,                 "add"            );
 
+# if 0
     // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( add,                 "add"            );
     Run( div,                 "div"            );
@@ -48,6 +50,7 @@ int main(void)
     Run( neg,                 "neg"            );
     Run( sub,                 "sub"            );
     // END_SORT_THIS_LINE_MINUS_1
+# endif
 
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();

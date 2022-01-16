@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_DECLARE_AD_HPP
 # define CPPAD_LOCAL_DECLARE_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -51,6 +51,7 @@ namespace CppAD {
     template <class Base, class RecBase=Base> class ADFun;
     template <class Base> class atomic_base;
     template <class Base> class atomic_three;
+    template <class Base> class atomic_four;
     template <class Base> class discrete;
     template <class Base> class VecAD;
     template <class Base> class VecAD_reference;

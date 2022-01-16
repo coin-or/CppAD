@@ -43,6 +43,7 @@ $end
 # include <cppad/core/discrete/discrete.hpp>
 # include <cppad/core/atomic/four/atomic.hpp>
 # include <cppad/core/atomic/three/atomic.hpp>
+# include <cppad/core/atomic/four/atomic.hpp>
 # include <cppad/core/chkpoint_two/chkpoint_two.hpp>
 # include <cppad/core/atomic/two/atomic.hpp>
 # include <cppad/core/atomic/one/atomic.hpp>

@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_HPP
 # define CPPAD_CORE_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -135,6 +135,7 @@ private :
     friend class ADFun<Base>;
     friend class atomic_base<Base>;
     friend class atomic_three<Base>;
+    friend class atomic_four<Base>;
     friend class discrete<Base>;
     friend class VecAD<Base>;
     friend class VecAD_reference<Base>;

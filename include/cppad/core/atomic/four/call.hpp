@@ -157,22 +157,18 @@ void atomic_four<Base>::operator()(
     // Use zero order forward mode to compute all the components of y
     size_t need_y    = size_t(variable_enum) + 1;
     size_t order_begin = 0;
-    size_t order_end  = 0;
+    size_t order_end   = 1;
     CPPAD_ASSERT_UNKNOWN( need_y > size_t(variable_enum) );
 # ifdef NDEBUG
-    forward(taylor_x, type_x, need_y, order_begin, order_end, taylor_x, taylor_y);
-    for(size_t j = 0; j < n; ++j)
-        if( type_x[j] == variable_enum )
-            taylor_x[j] = CppAD::numeric_limits<Base>::quiet_NaN();
-    for_type(taylor_x, type_x, type_y);
+    forward(
+        call_id, type_x, need_y, order_begin, order_end, taylor_x, taylor_y
+    );
+    for_type(call_id, type_x, type_y);
 # else
     ok &= forward(
-        taylor_x, type_x, need_y, order_begin, order_end, taylor_x, taylor_y
+        call_id, type_x, need_y, order_begin, order_end, taylor_x, taylor_y
     );
-    for(size_t j = 0; j < n; ++j)
-        if( type_x[j] == variable_enum )
-            taylor_x[j] = CppAD::numeric_limits<Base>::quiet_NaN();
-    ok &= for_type(taylor_x, type_x, type_y);
+    ok &= for_type(call_id, type_x, type_y);
     if( ! ok )
     {   msg += atomic_name() + ": ok is false for "
             "type or zero order forward mode calculation.";

@@ -15,6 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/atomic_index.hpp>
 # include <cppad/core/atomic/two/atomic.hpp>
 # include <cppad/core/atomic/three/atomic.hpp>
+# include <cppad/core/atomic/four/atomic.hpp>
 
 // BEGIN_CPAPD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {

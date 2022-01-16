@@ -33,7 +33,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-class atomic_vector : public CppAD::atomic_three<double> {
+class atomic_vector : public CppAD::atomic_four<double> {
 //
 public:
     // BEGIN_SORT_THIS_LINE_PLUS_4
@@ -52,7 +52,7 @@ public:
     //
     // ctor
     atomic_vector(const std::string& name) :
-    CppAD::atomic_three<double>(name)
+    CppAD::atomic_four<double>(name)
     { }
 private:
     typedef CppAD::vector< CppAD::AD<double> >    ad_vector;
@@ -83,7 +83,7 @@ private:
         ad_vector::const_iterator vec,
         ad_vector::iterator       mat)
     {   for(size_t i = 0; i < m; ++i)
-        {   size_t index  = i * (q+1) + k;
+        {   size_t index  = i * q + k;
             *(mat + difference_type(index) ) = *(vec + difference_type(i) );
         }
     }
@@ -95,7 +95,7 @@ private:
         ad_vector::const_iterator mat,
         ad_vector::iterator       vec)
     {   for(size_t i = 0; i < m; ++i)
-        {   size_t index  = i * (q+1) + k;
+        {   size_t index  = i * q + k;
             *(vec + difference_type(i) ) = *(mat + difference_type(index) );
         }
     }
@@ -103,16 +103,16 @@ private:
     // for_type
     // ------------------------------------------------------------------------
     bool for_type(
-        const CppAD::vector<double>&               parameter_x ,
+        size_t                                     call_id     ,
         const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
         CppAD::vector<CppAD::ad_type_enum>&        type_y      ) override
     {
         // op, m
-        op_enum_t op = op_enum_t( parameter_x[0] );
-        size_t n     = parameter_x.size();
-        size_t m = (n - 1) / 2;
+        op_enum_t op = op_enum_t( call_id );
+        size_t n     = type_x.size();
+        size_t m = n / 2;
         if( is_unary(op) )
-            m = n - 1;
+            m = n;
         //
         // ok
         bool ok  = type_x.size() == n;
@@ -123,10 +123,10 @@ private:
         // type_y
         if( is_unary(op) )
             for(size_t i = 0; i < m; ++i)
-                type_y[i] = type_x[1 + i];
+                type_y[i] = type_x[i];
         else
             for(size_t i = 0; i < m; ++i)
-                type_y[i] = std::max( type_x[1 + i] , type_x[1 + m + i] );
+                type_y[i] = std::max( type_x[i] , type_x[m + i] );
         //
         return true;
     }
@@ -135,7 +135,7 @@ private:
     // =====================================================================
     // forward
     bool forward(
-        const CppAD::vector<double>&                     parameter_x,
+        size_t                                           call_id,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
         size_t                                           need_y,
         size_t                                           p,
@@ -144,7 +144,7 @@ private:
         CppAD::vector<double>&                           ty
     ) override;
     bool forward(
-        const CppAD::vector< CppAD::AD<double> >&        aparameter_x,
+        size_t                                           call_id,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
         size_t                                           need_y,
         size_t                                           p,
@@ -237,7 +237,7 @@ private:
     // =====================================================================
     // reverse
     bool reverse(
-        const CppAD::vector<double>&                     parameter_x,
+        size_t                                           call_id,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
         size_t                                           q,
         const CppAD::vector<double>&                     tx,
@@ -246,7 +246,7 @@ private:
         const CppAD::vector<double>&                     py
     ) override;
     bool reverse(
-        const CppAD::vector< CppAD::AD<double> >&        aparameter_x,
+        size_t                                           call_id,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
         size_t                                           q,
         const CppAD::vector< CppAD::AD<double> >&        atx,

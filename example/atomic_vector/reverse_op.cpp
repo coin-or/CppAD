@@ -33,7 +33,7 @@ $end
 // reverse
 // this routine called by ADFun<Base> objects
 bool atomic_vector::reverse(
-    const CppAD::vector<double>&                     parameter_x,
+    size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
     size_t                                           q,
     const CppAD::vector<double>&                     tx,
@@ -42,13 +42,13 @@ bool atomic_vector::reverse(
     const CppAD::vector<double>&                     py)
 {
     // op, m
-    op_enum_t op = op_enum_t( parameter_x[0] );
-    size_t n     = parameter_x.size();
-    size_t m  = (n - 1) / 2;
+    op_enum_t op = op_enum_t( call_id );
+    size_t n     = type_x.size();
+    size_t m  = n / 2;
     if( is_unary(op) )
-        m = n - 1;
-    assert( tx.size() == (q+1) * n );
-    assert( ty.size() == (q+1) * m );
+        m = n;
+    assert( tx.size() == q * n );
+    assert( ty.size() == q * m );
     //
     bool ok = false;
     switch(op)
@@ -93,7 +93,7 @@ bool atomic_vector::reverse(
 // reverse
 // this routine called by ADFun< CppAD::AD<Base> , Base> objects
 bool atomic_vector::reverse(
-    const CppAD::vector< CppAD::AD<double> >&        aparameter_x,
+    size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
     size_t                                           q,
     const CppAD::vector< CppAD::AD<double> >&        atx,
@@ -102,13 +102,13 @@ bool atomic_vector::reverse(
     const CppAD::vector< CppAD::AD<double> >&        apy)
 {   //
     // op, m
-    op_enum_t op = op_enum_t( Value( aparameter_x[0] ) );
-    size_t n     = aparameter_x.size();
-    size_t m  = (n - 1) / 2;
+    op_enum_t op = op_enum_t( call_id );
+    size_t n     = type_x.size();
+    size_t m  = n / 2;
     if( is_unary(op) )
-        m = n - 1;
-    assert( atx.size() == (q+1) * n );
-    assert( aty.size() == (q+1) * m );
+        m = n;
+    assert( atx.size() == q * n );
+    assert( aty.size() == q * m );
     bool ok = false;
     switch(op)
     {
