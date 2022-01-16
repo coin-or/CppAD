@@ -36,11 +36,15 @@ bool atomic_vector::forward(
     size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
     size_t                                           need_y,
-    size_t                                           p,
-    size_t                                           q,
+    size_t                                           order_low,
+    size_t                                           order_up,
     const CppAD::vector<double>&                     tx,
     CppAD::vector<double>&                           ty)
 {
+    // p, q
+    size_t p = order_low;
+    size_t q = order_up + 1;
+    //
     // op, m
     op_enum_t op = op_enum_t( call_id );
     size_t n     = type_x.size();
@@ -96,11 +100,15 @@ bool atomic_vector::forward(
     size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
     size_t                                           need_y,
-    size_t                                           p,
-    size_t                                           q,
+    size_t                                           order_low,
+    size_t                                           order_up,
     const CppAD::vector< CppAD::AD<double> >&        atx,
     CppAD::vector< CppAD::AD<double> >&              aty         )
-{   //
+{
+    // p, q
+    size_t p = order_low;
+    size_t q = order_up + 1;
+    //
     // op, m
     op_enum_t op = op_enum_t( call_id );
     size_t n     = type_x.size();

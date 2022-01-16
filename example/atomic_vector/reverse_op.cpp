@@ -35,13 +35,16 @@ $end
 bool atomic_vector::reverse(
     size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-    size_t                                           q,
+    size_t                                           order_up,
     const CppAD::vector<double>&                     tx,
     const CppAD::vector<double>&                     ty,
     CppAD::vector<double>&                           px,
     const CppAD::vector<double>&                     py)
 {
-    // op, m
+    // q
+    size_t q = order_up + 1;
+    //
+    // op, n, m
     op_enum_t op = op_enum_t( call_id );
     size_t n     = type_x.size();
     size_t m  = n / 2;
@@ -95,12 +98,15 @@ bool atomic_vector::reverse(
 bool atomic_vector::reverse(
     size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-    size_t                                           q,
+    size_t                                           order_up,
     const CppAD::vector< CppAD::AD<double> >&        atx,
     const CppAD::vector< CppAD::AD<double> >&        aty,
     CppAD::vector< CppAD::AD<double> >&              apx,
     const CppAD::vector< CppAD::AD<double> >&        apy)
-{   //
+{
+    // q
+    size_t q = order_up + 1;
+    //
     // op, m
     op_enum_t op = op_enum_t( call_id );
     size_t n     = type_x.size();

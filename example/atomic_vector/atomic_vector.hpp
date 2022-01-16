@@ -138,8 +138,8 @@ private:
         size_t                                           call_id,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
         size_t                                           need_y,
-        size_t                                           p,
-        size_t                                           q,
+        size_t                                           order_low,
+        size_t                                           order_up,
         const CppAD::vector<double>&                     tx,
         CppAD::vector<double>&                           ty
     ) override;
@@ -147,8 +147,8 @@ private:
         size_t                                           call_id,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
         size_t                                           need_y,
-        size_t                                           p,
-        size_t                                           q,
+        size_t                                           order_low,
+        size_t                                           order_up,
         const CppAD::vector< CppAD::AD<double> >&        atx,
         CppAD::vector< CppAD::AD<double> >&              aty
     ) override;
@@ -239,7 +239,7 @@ private:
     bool reverse(
         size_t                                           call_id,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-        size_t                                           q,
+        size_t                                           order_up,
         const CppAD::vector<double>&                     tx,
         const CppAD::vector<double>&                     ty,
         CppAD::vector<double>&                           px,
@@ -248,7 +248,7 @@ private:
     bool reverse(
         size_t                                           call_id,
         const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-        size_t                                           q,
+        size_t                                           order_up,
         const CppAD::vector< CppAD::AD<double> >&        atx,
         const CppAD::vector< CppAD::AD<double> >&        aty,
         CppAD::vector< CppAD::AD<double> >&              apx,

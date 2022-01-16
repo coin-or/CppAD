@@ -42,14 +42,14 @@ $head Syntax$$
 $subhead Base$$
 $icode%ok% = %afun%.reverse(
     %call_id%, %type_x%,
-    %order_end%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
+    %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %$$
 
 $subhead AD<Base>$$
 $icode%ok% = %afun%.reverse(
     %call_id%, %type_x%,
-    %order_end%, %ataylor_x%, %ataylor_y%, %apartial_x%, %apartial_y%
+    %order_up%, %ataylor_x%, %ataylor_y%, %apartial_x%, %apartial_y%
 )
 %$$
 
@@ -89,7 +89,7 @@ used during the recording of an $cref ADFun$$ object $icode f$$,
 and reverse mode derivatives are computed for $icode f$$.
 It can return $icode%ok% == false%$$
 (and not compute anything) for values
-of $icode order_end$$ that are greater than those used by your
+of $icode order_up$$ that are greater than those used by your
 $cref/reverse/Reverse/$$ mode calculations.
 
 $head call_id$$
@@ -98,14 +98,14 @@ See $cref/call_id/atomic_four/call_id/$$.
 $head type_x$$
 See $cref/type_x/atomic_four/type_x/$$.
 
-$head order_end$$
+$head order_up$$
 This argument is one greater than highest order Taylor coefficient that
 computing the derivative of.
-This is equal to the number of Taylor coefficients for each component
-of $icode x$$ and $icode y$$.
 
 $head q$$
-We use the notation $icode%q% = %order_end%$$ below.
+We use the notation $icode%q% = %order_up% + 1%$$ below.
+This is one less than the number of Taylor coefficients for each component
+of $icode x$$ and $icode y$$.
 
 $head taylor_x$$
 The size of $icode taylor_x$$ is $icode%q%*%n%$$.
@@ -286,7 +286,7 @@ template <class Base>
 bool atomic_four<Base>::reverse(
     size_t                      call_id     ,
     const vector<ad_type_enum>& type_x      ,
-    size_t                      order_end   ,
+    size_t                      order_up    ,
     const vector<Base>&         taylor_x    ,
     const vector<Base>&         taylor_y    ,
     vector<Base>&               partial_x   ,
@@ -299,7 +299,7 @@ template <class Base>
 bool atomic_four<Base>::reverse(
     size_t                          call_id      ,
     const vector<ad_type_enum>&     type_x       ,
-    size_t                          order_end    ,
+    size_t                          order_up     ,
     const vector< AD<Base> >&       ataylor_x    ,
     const vector< AD<Base> >&       ataylor_y    ,
     vector< AD<Base> >&             apartial_x   ,

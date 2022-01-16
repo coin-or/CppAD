@@ -30,13 +30,13 @@ $head Syntax$$
 $subhead Base$$
 $icode%ok% = %afun%.forward(
     %call_id%, %type_x%,
-    %need_y%, %order_begin%, %order_end%, %type_x%, %taylor_x%, %taylor_y%
+    %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )%$$
 
 $subhead AD<Base>$$
 $icode%ok% = %afun%.forward(
     %call_id%, %type_x%,
-    %need_y%, %order_begin%, %order_end%, %type_x%, %ataylor_x%, %ataylor_y%
+    %need_y%, %order_low%, %order_up%, %type_x%, %ataylor_x%, %ataylor_y%
 )%$$
 
 $head Prototype$$
@@ -78,9 +78,9 @@ must be defined by the
 $cref/atomic_user/atomic_four_ctor/atomic_user/$$ class.
 It can return $icode%ok% == false%$$
 (and not compute anything) for values
-of $icode%order_end%$$ that are greater than those used by your
+of $icode%order_up%$$ that are greater than those used by your
 $cref/forward/Forward/$$ mode calculations.
-Order zero ($icode order_end$$ equal to one) must be implemented.
+Order zero must be implemented.
 
 $head call_id$$
 See $cref/call_id/atomic_four/call_id/$$.
@@ -122,21 +122,21 @@ then the taylor coefficients for all $latex Y_i (t)$$ are necessary.
 This is the case during an atomic function
 $cref/call/atomic_four_call/$$.
 
-$head order_begin$$
+$head order_low$$
 This argument
 specifies the lowest order Taylor coefficient that we are computing.
 
 $subhead p$$
-We sometimes use the notation $icode%p% = %order_begin%$$ below.
+We sometimes use the notation $icode%p% = %order_low%$$ below.
 
-$head order_end$$
-This argument is one greater than the highest order Taylor coefficient that we
-are computing ($icode%order_begin% < %order_end%$$).
-This is equal to the number of Taylor coefficients for each
-component of $icode x$$ and $icode y$$.
+$head order_up$$
+This argument is the highest order Taylor coefficient that we
+are computing ($icode%order_low% <= %order_up%$$).
 
 $subhead q$$
-We use the notation $icode%q% = %order_end%$$ below.
+We use the notation $icode%q% = %order_up% + 1%$$ below.
+This is the number of Taylor coefficients for each
+component of $icode x$$ and $icode y$$.
 
 $head taylor_x$$
 The size of $icode taylor_x$$ is $icode%q%*%n%$$.
@@ -210,7 +210,7 @@ If this calculation succeeded, $icode ok$$ is true.
 Otherwise, it is false.
 
 $head Discussion$$
-For example, suppose that $icode%order_end% == 3%$$,
+For example, suppose that $icode%order_up% == 2%$$,
 and you know how to compute the function $latex g(x)$$,
 its first derivative $latex g^{(1)} (x)$$,
 and it component wise Hessian $latex g_i^{(2)} (x)$$.
@@ -260,8 +260,8 @@ bool atomic_four<Base>::forward(
     size_t                       call_id     ,
     const vector<ad_type_enum>&  type_x      ,
     size_t                       need_y      ,
-    size_t                       order_begin ,
-    size_t                       order_end   ,
+    size_t                       order_low   ,
+    size_t                       order_up    ,
     const vector<Base>&          taylor_x    ,
     vector<Base>&                taylor_y    )
 // END_PROTOTYPE_BASE
@@ -273,8 +273,8 @@ bool atomic_four<Base>::forward(
     size_t                       call_id      ,
     const vector<ad_type_enum>&  type_x       ,
     size_t                       need_y       ,
-    size_t                       order_begin  ,
-    size_t                       order_end    ,
+    size_t                       order_low    ,
+    size_t                       order_up     ,
     const vector< AD<Base> >&    ataylor_x    ,
     vector< AD<Base> >&          ataylor_y    )
 // END_PROTOTYPE_AD_BASE

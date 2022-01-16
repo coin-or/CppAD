@@ -115,7 +115,7 @@ void call_atomic_forward(
                 reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
             ok = afun->forward(
                 call_id, type_x,
-                need_y, order_low, order_up + 1, taylor_x, taylor_y
+                need_y, order_low, order_up, taylor_x, taylor_y
             );
         }
     }
@@ -153,7 +153,7 @@ void call_atomic_forward(
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->forward(
             call_id, type_x,
-            need_y, order_low, order_up + 1, taylor_x, taylor_y
+            need_y, order_low, order_up, taylor_x, taylor_y
         );
     }
 # endif
@@ -251,7 +251,7 @@ void call_atomic_reverse(
                 reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
             ok = afun->reverse(
                 call_id, type_x,
-                order_up + 1, taylor_x, taylor_y, partial_x, partial_y
+                order_up, taylor_x, taylor_y, partial_x, partial_y
             );
         }
     }
@@ -288,7 +288,7 @@ void call_atomic_reverse(
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->reverse(
             call_id, type_x,
-            order_up + 1, taylor_x, taylor_y, partial_x, partial_y
+            order_up, taylor_x, taylor_y, partial_x, partial_y
         );
     }
 # endif

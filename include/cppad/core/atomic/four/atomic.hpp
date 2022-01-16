@@ -51,11 +51,11 @@ $icode%ok% = %afun%.for_type(
 )
 %ok% = %afun%.forward(
     %call_id%, %type_x%,
-    %need_y%, %order_begin%, %order_end%, %taylor_x%, %taylor_y%
+    %need_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
 )
 %ok% = %afun%.reverse(
     %call_id%, %type_x%,
-    %order_end%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
+    %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %ok% = %afun%.jac_sparsity(
     %call_id%, %type_x%, %dependency%, %select_x% %select_y%, %pattern_out%
@@ -120,13 +120,13 @@ Each virtual function has a default implementation
 that returns $icode%ok% == false%$$.
 The $cref/for_type/atomic_four_for_type/$$
 and $cref/forward/atomic_four_forward/$$ function
-(for the case $icode%order_end% == 1%$$) are used by an atomic function
+(for the case $icode%order_up% == 0%$$) are used by an atomic function
 $cref/call/atomic_four/Syntax/Call/$$.
 Hence, they are required for one to use an atomic function.
 Other functions and orders are only required if they are used
 for your calculations.
 For example,
-$icode forward$$ for the case $icode%order_end% == 3%$$ can just return
+$icode forward$$ for the case $icode%order_up% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
@@ -281,8 +281,8 @@ public:
         size_t                       call_id     ,
         const vector<ad_type_enum>&  type_x      ,
         size_t                       need_y      ,
-        size_t                       order_begin ,
-        size_t                       order_end   ,
+        size_t                       order_low   ,
+        size_t                       order_up    ,
         const vector<Base>&          taylor_x    ,
         vector<Base>&                taylor_y
     );
@@ -290,8 +290,8 @@ public:
         size_t                       call_id      ,
         const vector<ad_type_enum>&  type_x       ,
         size_t                       need_y       ,
-        size_t                       order_begin  ,
-        size_t                       order_end    ,
+        size_t                       order_low    ,
+        size_t                       order_up     ,
         const vector< AD<Base> >&    ataylor_x    ,
         vector< AD<Base> >&          ataylor_y
     );
@@ -300,7 +300,7 @@ public:
     virtual bool reverse(
         size_t                       call_id     ,
         const vector<ad_type_enum>&  type_x      ,
-        size_t                       order_end   ,
+        size_t                       order_up    ,
         const vector<Base>&          taylor_x    ,
         const vector<Base>&          taylor_y    ,
         vector<Base>&                partial_x   ,
@@ -309,7 +309,7 @@ public:
     virtual bool reverse(
         size_t                       call_id      ,
         const vector<ad_type_enum>&  type_x       ,
-        size_t                       order_end   ,
+        size_t                       order_up    ,
         const vector< AD<Base> >&    ataylor_x   ,
         const vector< AD<Base> >&    ataylor_y   ,
         vector< AD<Base> >&          apartial_x  ,
