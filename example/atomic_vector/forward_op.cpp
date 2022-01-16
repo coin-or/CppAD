@@ -55,31 +55,31 @@ bool atomic_vector::forward(
     {
         // addition
         case add_enum:
-        forward_add(m, q, p, tx, ty);
+        forward_add(m, p, q, tx, ty);
         ok = true;
         break;
 
         // subtraction
         case sub_enum:
-        forward_sub(m, q, p, tx, ty);
+        forward_sub(m, p, q, tx, ty);
         ok = true;
         break;
 
         // multiplication
         case mul_enum:
-        forward_mul(m, q, p, tx, ty);
+        forward_mul(m, p, q, tx, ty);
         ok = true;
         break;
 
         // division
         case div_enum:
-        forward_div(m, q, p, tx, ty);
+        forward_div(m, p, q, tx, ty);
         ok = true;
         break;
 
         // unary minus
         case neg_enum:
-        forward_neg(m, q, p, tx, ty);
+        forward_neg(m, p, q, tx, ty);
         ok = true;
         break;
 
@@ -115,31 +115,31 @@ bool atomic_vector::forward(
     {
         // addition
         case add_enum:
-        forward_add(m, q, p, atx, aty);
+        forward_add(m, p, q, atx, aty);
         ok = true;
         break;
 
         // subtraction
         case sub_enum:
-        forward_sub(m, q, p, atx, aty);
+        forward_sub(m, p, q, atx, aty);
         ok = true;
         break;
 
         // multiplication
         case mul_enum:
-        forward_mul(m, q, p, atx, aty);
+        forward_mul(m, p, q, atx, aty);
         ok = true;
         break;
 
         // division
         case div_enum:
-        forward_div(m, q, p, atx, aty);
+        forward_div(m, p, q, atx, aty);
         ok = true;
         break;
 
         // unary minus
         case neg_enum:
-        forward_neg(m, q, p, atx, aty);
+        forward_neg(m, p, q, atx, aty);
         ok = true;
         break;
 
