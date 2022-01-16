@@ -66,27 +66,25 @@ bool neg(void)
         av[i] = auv[1 * m + i];
     }
     //
-    // ax = (neg_op, av)
-    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(1 + m);
-    ax[0] = CppAD::AD<double>(neg_op);
+    // ax = av
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(m);
     for(size_t i = 0; i < m; ++i)
-        ax[1 + i] = av[i];
+        ax[i] = av[i];
     //
     // ay = - av
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
-    vec_op(ax, ay);
+    vec_op(neg_op, ax, ay);
     //
-    // ax = (add_op, au, ay)
-    ax.resize(2 * m + 1);
-    ax[0] = CppAD::AD<double>(add_op);
+    // ax = (au, ay)
+    ax.resize(2 * m);
     for(size_t i = 0; i < m; ++i)
-    {   ax[1 + i]     = au[i];
-        ax[1 + m + i] = ay[i];
+    {   ax[i]     = au[i];
+        ax[m + i] = ay[i];
     }
     //
     // az = au + ay
     CPPAD_TESTVECTOR( CppAD::AD<double> ) az(m);
-    vec_op(ax, az);
+    vec_op(add_op, ax, az);
     //
     // f
     CppAD::ADFun<double> f(auv, az);
