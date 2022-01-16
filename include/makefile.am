@@ -38,8 +38,8 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/add_eq.hpp \
 	cppad/core/arithmetic.hpp \
 	cppad/core/atan2.hpp \
-	cppad/core/atomic/four/afun.hpp \
 	cppad/core/atomic/four/atomic.hpp \
+	cppad/core/atomic/four/call.hpp \
 	cppad/core/atomic/four/ctor.hpp \
 	cppad/core/atomic/four/for_type.hpp \
 	cppad/core/atomic/four/forward.hpp \

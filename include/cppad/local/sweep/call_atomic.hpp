@@ -18,47 +18,56 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_CPAPD_LOCAL_SWEEP_NAMESPACE
 namespace CppAD { namespace local { namespace sweep {
-/*!
-\file call_atomic.hpp
-Callbacks to atomic functions corresponding to atomic_index.
-*/
-// ----------------------------------------------------------------------------
-/*!
-Forward mode callback to atomic functions.
 
-\tparam Base
+// ----------------------------------------------------------------------------
+/*
+$begin atomic_forward_callback$$
+$spell
+    Taylor
+    afun
+$$
+
+$section Forward Mode Callback to Atomic Functions$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_FORWARD_PROTOTYPE%// END_FORWARD_PROTOTYPE%1%$$
+
+$head Base$$
 Is the type corresponding to the Taylor coefficients.
 
-\tparam RecBase
-Is the type corresponding to this atomic function.
+$head RecBase$$
+Is the base type corresponding to this atomic function call.
 
-\param parameter_x [in]
+$head parameter_x$$
 contains the values, in afun(ax, ay), for arguments that are parameters.
 
-\param type_x [in]
+$head type_x$$
 what is the type, in afun(ax, ay), for each component of x.
 
-\param need_y
+$head need_y$$
 specifies which components of taylor_y are necessary.
 
-\param order_low [in]
-lowerest order for this forward mode calculation.
+$head order_low$$
+lowest order for this forward mode calculation.
 
-\param order_up [in]
+$head order_up$$
 highest order for this forward mode calculation.
 
-\param atom_index [in]
+$head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
-\param atom_old [in]
-is the extra id information for this atomic function in the atomic_one case.
+$head call_id$$
+is the $icode call_id$$ for the corresponding atomic function call.
 
-\param taylor_x [in]
+$head taylor_x$$
 Taylor coefficients corresponding to x.
 
-\param taylor_y [out]
+$head taylor_y$$
 Taylor coefficient corresponding to y.
+
+$end
 */
+// BEGIN_FORWARD_PROTOTYPE
 template <class Base, class RecBase>
 void call_atomic_forward(
     const vector<Base>&          parameter_x ,
@@ -67,9 +76,10 @@ void call_atomic_forward(
     size_t                       order_low   ,
     size_t                       order_up    ,
     size_t                       atom_index  ,
-    size_t                       atom_old    ,
+    size_t                       call_id     ,
     const vector<Base>&          taylor_x    ,
     vector<Base>&                taylor_y    )
+// END_FORWARD_PROTOTYPE
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
@@ -83,19 +93,28 @@ void call_atomic_forward(
         if( type == 2 )
         {   atomic_base<RecBase>* afun =
                 reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(atom_old);
+            afun->set_old(call_id);
             vector<ad_type_enum> empty;
             ok = afun->forward(
                 order_low, order_up, empty, empty, taylor_x, taylor_y
             );
         }
-        else
+        else if( type == 3 )
         {   CPPAD_ASSERT_UNKNOWN( type == 3 );
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->forward(
                 parameter_x, type_x,
                 need_y, order_low, order_up, taylor_x, taylor_y
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+            atomic_four<RecBase>* afun =
+                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+            ok = afun->forward(
+                call_id, type_x,
+                need_y, order_low, order_up + 1, taylor_x, taylor_y
             );
         }
     }
@@ -105,7 +124,7 @@ void call_atomic_forward(
         local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
         std::string msg = name;
         if( v_ptr == nullptr )
-            msg += ": this atomic_three function has been deleted";
+            msg += ": this atomic function has been deleted";
         else
             msg += ": atomic forward returned false";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -115,12 +134,12 @@ void call_atomic_forward(
     {   atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
         vector<ad_type_enum> empty;
-        afun->set_old(atom_old);
+        afun->set_old(call_id);
         afun->forward(
             order_low, order_up, empty, empty, taylor_x, taylor_y
         );
     }
-    else
+    else if( type == 3 )
     {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->forward(
@@ -128,57 +147,77 @@ void call_atomic_forward(
             need_y, order_low, order_up, taylor_x, taylor_y
         );
     }
+    else
+    {   atomic_four<RecBase>* afun =
+            reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+        afun->forward(
+            call_id, type_x,
+            need_y, order_low, order_up + 1, taylor_x, taylor_y
+        );
+    }
 # endif
 }
 // ----------------------------------------------------------------------------
 /*!
-Reverse mode callback to atomic functions.
+$begin atomic_reverse_callback$$
+$spell
+    Taylor
+$$
 
-\tparam Base
+$section Reverse Mode callback to Atomic Functions$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_REVERSE_PROTOTYPE%// END_REVERSE_PROTOTYPE%1%$$
+
+$head Base$$
 Is the type corresponding to the Taylor coefficients.
 
-\tparam RecBase
-Is the type corresponding to this atomic function.
+$head RecBase$$
+Is the base type corresponding to this atomic function call.
 
-\param parameter_x [in]
+$head parameter_x$$
 value of the parameter arguments to the atomic function
 (other arguments have the value nan).
 
-\param type_x [in]
+$head type_x$$
 type for each component of x (not used by atomic_two interface).
 
-\param order_up [in]
+$head order_up$$
 highest order for this reverse mode calculation.
 
-\param atom_index [in]
+$head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
-\param atom_old [in]
-is the extra id information for this atomic function in the atomic_one case.
+$head call_id$$
+is the $icode call_id$$ for the corresponding atomic function call.
 
-\param taylor_x [in]
+$head taylor_x$$
 Taylor coefficients corresponding to x.
 
-\param taylor_y [in]
+$head taylor_y$$
 Taylor coefficient corresponding to y.
 
-\param partial_x [out]
+$head partial_x$$
 Partials w.r.t the x Taylor coefficients.
 
-\param partial_y [in]
+$head partial_y$$
 Partials w.r.t the y Taylor coefficients.
+
+$end
 */
+// BEGIN_REVERSE_PROTOTYPE
 template <class Base, class RecBase>
 void call_atomic_reverse(
     const vector<Base>&          parameter_x ,
     const vector<ad_type_enum>&  type_x      ,
     size_t                       order_up    ,
     size_t                       atom_index  ,
-    size_t                       atom_old    ,
+    size_t                       call_id     ,
     const vector<Base>&          taylor_x    ,
     const vector<Base>&          taylor_y    ,
     vector<Base>&                partial_x   ,
     const vector<Base>&          partial_y   )
+// END_REVERSE_PROTOTYPE
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
@@ -192,18 +231,26 @@ void call_atomic_reverse(
         if( type == 2 )
         {   atomic_base<RecBase>* afun =
                 reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(atom_old);
+            afun->set_old(call_id);
             ok = afun->reverse(
                 order_up, taylor_x, taylor_y, partial_x, partial_y
             );
         }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-            atomic_three<RecBase>* afun =
+        else if( type == 3 )
+        {   atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->reverse(
                 parameter_x, type_x,
                 order_up, taylor_x, taylor_y, partial_x, partial_y
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+            atomic_four<RecBase>* afun =
+                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+            ok = afun->reverse(
+                call_id, type_x,
+                order_up + 1, taylor_x, taylor_y, partial_x, partial_y
             );
         }
     }
@@ -213,7 +260,7 @@ void call_atomic_reverse(
         local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
         std::string msg = name;
         if( v_ptr == nullptr )
-            msg += ": this atomic_three function has been deleted";
+            msg += ": this atomic function has been deleted";
         else
             msg += ": atomic reverse returned false";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -222,17 +269,25 @@ void call_atomic_reverse(
     if( type == 2 )
     {   atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(atom_old);
+        afun->set_old(call_id);
         afun->reverse(
             order_up, taylor_x, taylor_y, partial_x, partial_y
         );
     }
-    else
+    else if( type == 3 )
     {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->reverse(
             parameter_x, type_x,
             order_up, taylor_x, taylor_y, partial_x, partial_y
+        );
+    }
+    else
+    {   atomic_four<RecBase>* afun =
+            reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+        afun->reverse(
+            call_id, type_x,
+            order_up + 1, taylor_x, taylor_y, partial_x, partial_y
         );
     }
 # endif

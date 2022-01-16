@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ATOMIC_FOUR_AFUN_HPP
-# define CPPAD_CORE_ATOMIC_FOUR_AFUN_HPP
+# ifndef CPPAD_CORE_ATOMIC_FOUR_CALL_HPP
+# define CPPAD_CORE_ATOMIC_FOUR_CALL_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 

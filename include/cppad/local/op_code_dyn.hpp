@@ -74,7 +74,7 @@ This is the index that identifies this atomic function; see
 $code local/atomic_index.hpp$$.
 
 $subhead arg[1]$$
-This is the $cref/call_id/atomic_four_adfun/call_id/$$ for this
+This is the $cref/call_id/atomic_four_call/call_id/$$ for this
 function call.
 
 $subhead arg[2]$$

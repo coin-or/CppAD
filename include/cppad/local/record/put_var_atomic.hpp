@@ -44,7 +44,7 @@ $head atomic_index$$
 is the $cref atomic_index$$ for this atomic function.
 
 $head call_id$$
-Is the $cref/call_id/atomic_four_afun/call_id/$$ for this
+Is the $cref/call_id/atomic_four_call/call_id/$$ for this
 atomic function call.
 
 $head type_x$$
