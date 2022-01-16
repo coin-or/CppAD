@@ -42,6 +42,7 @@ int main(void)
     // This line is used by test_one.sh
     Run( add,                 "add"            );
     Run( neg,                 "neg"            );
+    Run( sub,                 "sub"            );
 
 # if 0
     // BEGIN_SORT_THIS_LINE_PLUS_1

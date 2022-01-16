@@ -67,28 +67,26 @@ bool sub(void)
         aw[i] = auvw[2 * m + i];
     }
     //
-    // ax = (add_op, av, aw)
-    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(1 + 2 * m);
-    ax[0] = CppAD::AD<double>(add_op);
+    // ax = (av, aw)
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(2 * m);
     for(size_t i = 0; i < m; ++i)
-    {   ax[1 + i]     = av[i];
-        ax[1 + m + i] = aw[i];
+    {   ax[i]     = av[i];
+        ax[m + i] = aw[i];
     }
     //
     // ay = v + w
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
-    vec_op(ax, ay);
+    vec_op(add_op, ax, ay);
     //
     // ax = (sub_op, au, ay)
-    ax[0] = CppAD::AD<double>(sub_op);
     for(size_t i = 0; i < m; ++i)
-    {   ax[1 + i]     = au[i];
-        ax[1 + m + i] = ay[i];
+    {   ax[i]     = au[i];
+        ax[m + i] = ay[i];
     }
     //
     // az = au - ay
     CPPAD_TESTVECTOR( CppAD::AD<double> ) az(m);
-    vec_op(ax, az);
+    vec_op(sub_op, ax, az);
     //
     // f
     CppAD::ADFun<double> f(auvw, az);
