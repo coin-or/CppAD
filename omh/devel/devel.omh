@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -32,7 +32,8 @@ $childtable%
     omh/devel/vec_ad.omh%
     include/cppad/local/is_pod.hpp%
     include/cppad/local/op/unary_op.omh%
-    include/cppad/local/op/binary_op.omh
+    include/cppad/local/op/binary_op.omh%
+    include/cppad/core/atomic/four/devel/devel.omh
 %$$
 
 

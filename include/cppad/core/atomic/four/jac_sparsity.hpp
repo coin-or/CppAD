@@ -11,6 +11,8 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
+# include <cppad/core/atomic/four/devel/jac_sparsity.hpp>
+
 /*
 $begin atomic_four_jac_sparsity$$
 $spell
@@ -23,7 +25,7 @@ $section Atomic Function Jacobian Sparsity Patterns$$
 
 $head Syntax$$
 $icode%ok% = %afun%.jac_sparsity(
-    %call_id%, %type_x%, %dependency%, %select_x%, %select_y%, %pattern_out%
+    %call_id%, %dependency%, %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $head Prototype$$
@@ -43,9 +45,6 @@ See $cref/Base/atomic_four_call/Base/$$.
 
 $head call_id$$
 See $cref/call_id/atomic_four/call_id/$$.
-
-$head type_x$$
-See $cref/type_x/atomic_four/type_x/$$.
 
 $head dependency$$
 If $icode dependency$$ is true,
@@ -114,242 +113,16 @@ $end
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-\file atomic/four_jac_sparsity.hpp
-Third generation atomic Jacobian dependency and sparsity patterns.
-*/
-/*!
-atomic_four to Jacobian dependency and sparsity calculations.
-
-\param call_id [in]
-is the value of call_id in the corresponding call to afun(call_id, ax, ay).
-
-\param type_x [in]
-what is the type, in afun(call_id, ax, ay), for each component of x.
-
-\param dependency [in]
-if true, calculate dependency pattern,
-otherwise calcuate sparsity pattern.
-
-\param select_x [in]
-which domain components to include in the dependency or sparsity pattern.
-The index zero is used for parameters.
-
-\param select_y [in]
-which range components to include in the dependency or sparsity pattern.
-The index zero is used for parameters.
-
-\param pattern_out [out]
-is the dependency or sparsity pattern.
-*/
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::jac_sparsity(
     size_t                                  call_id      ,
-    const vector<ad_type_enum>&             type_x       ,
     bool                                    dependency   ,
     const vector<bool>&                     select_x     ,
     const vector<bool>&                     select_y     ,
     sparse_rc< vector<size_t> >&            pattern_out  )
 // END_PROTOTYPE
 {   return false; }
-/*!
-Link from forward Jacobian sparsity calcuations to atomic_four
-
-\tparam InternalSparsity
-Is the type used for internal sparsity calculations; i.e.,
-sparse_pack or sparse_list.
-
-\param dependency
-if true, calcuate dependency pattern,
-otherwise calcuate sparsity pattern.
-
-\param call_id [in]
-is the value of call_id in the corresponding call to afun(call_id, ax, ay).
-
-\param type_x [in]
-what is the type, in afun(call_id, ax, ay), for each component of x.
-
-\param x_index
-is the variable index, on the tape, for the arguments to this atomic function.
-This size of x_index is n, the number of arguments to this atomic function.
-The index zero is used for parameters.
-
-\param y_index
-is the variable index, on the tape, for the results for this atomic function.
-This size of y_index is m, the number of results for this atomic function.
-The index zero is used for parameters.
-
-\param var_sparsity
-On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
-is the sparsity for the j-th argument to this atomic function.
-On output, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
-is the sparsity for the i-th result for this atomic function.
-
-\return
-is true if the computation succeeds.
-*/
-template <class Base>
-template <class InternalSparsity>
-bool atomic_four<Base>::for_jac_sparsity(
-    bool                             dependency   ,
-    size_t                           call_id      ,
-    const vector<ad_type_enum>&      type_x       ,
-    const local::pod_vector<size_t>& x_index      ,
-    const local::pod_vector<size_t>& y_index      ,
-    InternalSparsity&                var_sparsity )
-{   typedef typename InternalSparsity::const_iterator iterator;
-
-    // number of arguments and resutls for this atomic function
-    size_t n = x_index.size();
-    size_t m = y_index.size();
-
-    // select_y
-    vector<bool> select_y(m);
-    for(size_t i = 0; i < m; ++i)
-        select_y[i] = y_index[i] != 0;
-
-    // determine select_x
-    vector<bool> select_x(n);
-    for(size_t j = 0; j < n; ++j)
-    {   // check if x_j depends on any previous variable
-        iterator itr(var_sparsity, x_index[j]);
-        size_t ell = *itr;
-        select_x[j] = ell < var_sparsity.end();
-        CPPAD_ASSERT_UNKNOWN( x_index[j] > 0 || ! select_x[j] );
-    }
-    sparse_rc< vector<size_t> > pattern_out;
-    bool ok = jac_sparsity(
-        call_id, type_x, dependency, select_x, select_y, pattern_out
-    );
-    if( ! ok )
-        return false;
-    //
-    // transfer sparsity patterns from pattern_out to var_sparsity
-    size_t                nnz = pattern_out.nnz();
-    const vector<size_t>& row( pattern_out.row() );
-    const vector<size_t>& col( pattern_out.col() );
-    for(size_t k = 0; k < nnz; ++k)
-    {   size_t i = row[k];
-        size_t j = col[k];
-        CPPAD_ASSERT_KNOWN(
-            select_y[i] & select_x[j],
-            "atomic: jac_sparsity: pattern_out not in "
-            "select_x or select_y range"
-        );
-        iterator itr(var_sparsity, x_index[j]);
-        size_t ell = *itr;
-        while( ell < var_sparsity.end() )
-        {   var_sparsity.post_element( y_index[i], ell );
-            ell = *(++itr);
-        }
-    }
-    for(size_t i = 0; i < m; ++i)
-        var_sparsity.process_post( y_index[i] );
-    //
-    return true;
-}
-/*!
-Link from reverse Jacobian sparsity calcuations to atomic_four
-
-\tparam InternalSparsity
-Is the type used for internal sparsity calculations; i.e.,
-sparse_pack or sparse_list.
-
-\param dependency
-if true, calcuate dependency pattern,
-otherwise calcuate sparsity pattern.
-
-\param call_id [in]
-is the value of call_id in the corresponding call to afun(call_id, ax, ay).
-
-\param type_x [in]
-what is the type, in afun(call_id, ax, ay), for each component of x.
-
-\param x_index
-is the variable index, on the tape, for the arguments to this atomic function.
-This size of x_index is n, the number of arguments to this atomic function.
-
-\param y_index
-is the variable index, on the tape, for the results for this atomic function.
-This size of y_index is m, the number of results for this atomic function.
-
-\param var_sparsity
-On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
-is the sparsity of the outter function with respect to the i-th
-result for this atomic function.
-On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
-is the sparsity for the outter function with repsect to the j-th
-argument to this atomic function.
-On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
-is the sparsity for the outter function with repsect to the j-th
-argument to this atomic function with the atomic function results
-removed as arguments to the outter function.
-
-\return
-is true if the computation succeeds.
-*/
-template <class Base>
-template <class InternalSparsity>
-bool atomic_four<Base>::rev_jac_sparsity(
-    bool                             dependency   ,
-    size_t                           call_id      ,
-    const vector<ad_type_enum>&      type_x       ,
-    const local::pod_vector<size_t>& x_index      ,
-    const local::pod_vector<size_t>& y_index      ,
-    InternalSparsity&                var_sparsity )
-{   typedef typename InternalSparsity::const_iterator iterator;
-
-    // number of arguments and resutls for this atomic function
-    size_t n = x_index.size();
-    size_t m = y_index.size();
-
-    // selection vectors
-    vector<bool> select_x(n), select_y(m);
-
-    // 2DO: perhaps we could use for_type(type_x, type_y)
-    // to reduce the true components in select_x
-    for(size_t j = 0; j < n; ++j)
-        select_x[j] = true;
-
-    // determine select_y
-    for(size_t i = 0; i < m; ++i)
-    {   // check if y_i has sparsity is non-empty
-        iterator itr(var_sparsity, y_index[i]);
-        size_t ell = *itr;
-        select_y[i] = ell < var_sparsity.end();
-    }
-    sparse_rc< vector<size_t> > pattern_out;
-    bool ok = jac_sparsity(
-        call_id, type_x, dependency, select_x, select_y, pattern_out
-    );
-    if( ! ok )
-        return false;
-    //
-    // transfer sparsity patterns from pattern_out to var_sparsity
-    size_t                nnz = pattern_out.nnz();
-    const vector<size_t>& row( pattern_out.row() );
-    const vector<size_t>& col( pattern_out.col() );
-    for(size_t k = 0; k < nnz; ++k)
-    {   size_t i = row[k];
-        size_t j = col[k];
-        CPPAD_ASSERT_KNOWN(
-            select_y[i] & select_x[j],
-            "atomic: jac_sparsity: pattern_out not in "
-            "select_x or select_y range"
-        );
-        iterator itr(var_sparsity, y_index[i]);
-        size_t ell = *itr;
-        while( ell < var_sparsity.end() )
-        {   var_sparsity.post_element( x_index[j], ell );
-            ell = *(++itr);
-        }
-    }
-    for(size_t j = 0; j < n; ++j)
-        var_sparsity.process_post( x_index[j] );
-    //
-    return true;
-}
-
 } // END_CPPAD_NAMESPACE
+
 # endif

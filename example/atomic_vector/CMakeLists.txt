@@ -18,11 +18,13 @@ SET(source_list
     div.cpp
     div_op.cpp
     forward_op.cpp
+    jac_sparsity.cpp
     mul.cpp
     mul_op.cpp
     neg.cpp
     neg_op.cpp
     reverse_op.cpp
+    sparsity.cpp
     sub.cpp
     sub_op.cpp
 )

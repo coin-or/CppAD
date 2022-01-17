@@ -10,19 +10,15 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_add.cpp$$
+$begin atomic_vector_sparsity.cpp$$
 
-$section Atomic Vector Addition Example$$
+$section Atomic Vector Sparsity Patterns Example$$
 
-$head f(u, v, w)$$
+$head f(u, v)$$
 For this example,
 $latex f : \B{R}^{3m} \rightarrow \B{R}^m$$
-is defined by $latex f(u, v, w) = u + v + w$$.
+is defined by $latex f(u, v, w) = u + v - w$$.
 where $icode u$$, $icode v$$, and $icode w$$ are in $latex \B{R}^m$$.
-
-$head g(u, v, w)$$
-For this example $latex g : \B{R}^{3m} \rightarrow \B{R}^m$$
-is defined by $latex g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)$$
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -32,7 +28,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include "atomic_vector.hpp"
-bool add(void)
+bool sparsity(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     using CppAD::AD;
@@ -44,7 +40,7 @@ bool add(void)
     //
     // m
     // size of u, v, and w
-    size_t m = 5;
+    size_t m = 6;
     //
     // add_op
     typedef atomic_vector::op_enum_t op_enum_t;
@@ -77,13 +73,13 @@ bool add(void)
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
     vec_op(add_op, ax, ay);
     //
-    // ax = (ay, aw)
+    // ax = (add_op, ay, aw)
     for(size_t i = 0; i < m; ++i)
     {   ax[i]     = ay[i];
         ax[m + i] = aw[i];
     }
     //
-    // az = ay + w
+    // az = ay + v
     CPPAD_TESTVECTOR( CppAD::AD<double> ) az(m);
     vec_op(add_op, ax, az);
     //

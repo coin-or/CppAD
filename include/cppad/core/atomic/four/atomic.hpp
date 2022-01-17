@@ -58,7 +58,7 @@ $icode%ok% = %afun%.for_type(
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %ok% = %afun%.jac_sparsity(
-    %call_id%, %type_x%, %dependency%, %select_x% %select_y%, %pattern_out%
+    %call_id%, %dependency%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.hes_sparsity(
     %call_id%, %type_x%, %select_x% %select_y%, %pattern_out%
@@ -149,7 +149,7 @@ If it is not present in an atomic function call, its value in the
 $cref/callbacks/atomic_four/Syntax/Callbacks/$$ will be zero.
 
 $head type_x$$
-All the virtual functions include this vector.
+Many of the virtual functions include this vector.
 It has size equal to the number of arguments for the call
 to this atomic function; i.e., the size of
 $cref/ax/atomic_four_call/ax/$$ which we denote by $icode n$$.
@@ -319,7 +319,6 @@ public:
     // jac_sparsity: see doxygen in atomic/four_jac_sparsity.hpp
     virtual bool jac_sparsity(
         size_t                       call_id     ,
-        const vector<ad_type_enum>&  type_x      ,
         bool                         dependency  ,
         const vector<bool>&          select_x    ,
         const vector<bool>&          select_y    ,
@@ -329,7 +328,6 @@ public:
     bool for_jac_sparsity(
         bool                             dependency   ,
         size_t                           call_id      ,
-        const vector<ad_type_enum>&      type_x       ,
         const local::pod_vector<size_t>& x_index      ,
         const local::pod_vector<size_t>& y_index      ,
         InternalSparsity&                var_sparsity
@@ -338,7 +336,6 @@ public:
     bool rev_jac_sparsity(
         bool                             dependency   ,
         size_t                           call_id      ,
-        const vector<ad_type_enum>&      type_x       ,
         const local::pod_vector<size_t>& x_index      ,
         const local::pod_vector<size_t>& y_index      ,
         InternalSparsity&                var_sparsity
