@@ -91,52 +91,101 @@ bool sparsity(void)
     //
     // f
     CppAD::ADFun<double> f(auvw, ay);
-    // -----------------------------------------------------------------------
-    // check Jacobian sparsity
-    // -----------------------------------------------------------------------
+    //
+    // size_vector, sparsity_pattern
     typedef CPPAD_TESTVECTOR(size_t) size_vector;
     typedef CppAD::sparse_rc<size_vector> sparsity_pattern;
-    //
-    // pattern_in
-    // sparsity pattern for identity matrix
-    sparsity_pattern pattern_in(n, n, n);
-    for(size_t k = 0; k < n; ++k)
-        pattern_in.set(k, k, k);
-    //
-    // pattern_out
-    bool transpose     = false;
-    bool dependency    = false;
-    bool internal_bool = false;
-    sparsity_pattern pattern_out;
-    f.for_jac_sparsity(
-        pattern_in, transpose, dependency, internal_bool, pattern_out
-    );
-    //
-    // ok
-    ok &= pattern_out.nnz() == 3 * m;
-    ok &= pattern_out.nr()  == m;
-    ok &= pattern_out.nc()  == n;
-    //
-    // row, col, row_major
-    const size_vector& row = pattern_out.row();
-    const size_vector& col = pattern_out.col();
-    size_vector row_major  = pattern_out.row_major();
-    //
-    // ok
-    size_t ell = 0;
-    for(size_t i = 0; i < m; ++i)
-    {   // first non-zero in row i
-        size_t k = row_major[ell++];
-        ok      &= row[k] == i;
-        ok      &= col[k] == i;
-        // second non-zero in row i
-        k        = row_major[ell++];
-        ok      &= row[k] == i;
-        ok      &= col[k] == m + i;
-        // third non-zero in row i
-        k        = row_major[ell++];
-        ok      &= row[k] == i;
-        ok      &= col[k] == 2 * m + i;
+    // -----------------------------------------------------------------------
+    // Forward Jacobian sparsity
+    // -----------------------------------------------------------------------
+    {   //
+        // pattern_in
+        // sparsity pattern for identity matrix
+        sparsity_pattern pattern_in(n, n, n);
+        for(size_t k = 0; k < n; ++k)
+            pattern_in.set(k, k, k);
+        //
+        // pattern_out
+        bool transpose     = false;
+        bool dependency    = false;
+        bool internal_bool = false;
+        sparsity_pattern pattern_out;
+        f.for_jac_sparsity(
+            pattern_in, transpose, dependency, internal_bool, pattern_out
+        );
+        //
+        // ok
+        ok &= pattern_out.nnz() == 3 * m;
+        ok &= pattern_out.nr()  == m;
+        ok &= pattern_out.nc()  == n;
+        //
+        // row, col, row_major
+        const size_vector& row = pattern_out.row();
+        const size_vector& col = pattern_out.col();
+        size_vector row_major  = pattern_out.row_major();
+        //
+        // ok
+        size_t ell = 0;
+        for(size_t i = 0; i < m; ++i)
+        {   // first non-zero in row i
+            size_t k = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == i;
+            // second non-zero in row i
+            k        = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == m + i;
+            // third non-zero in row i
+            k        = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == 2 * m + i;
+        }
+    }
+    // -----------------------------------------------------------------------
+    // Reverse Jacobian sparsity
+    // -----------------------------------------------------------------------
+    {   //
+        // pattern_in
+        // sparsity pattern for identity matrix
+        sparsity_pattern pattern_in(m, m, m);
+        for(size_t k = 0; k < m; ++k)
+            pattern_in.set(k, k, k);
+        //
+        // pattern_out
+        bool transpose     = false;
+        bool dependency    = false;
+        bool internal_bool = false;
+        sparsity_pattern pattern_out;
+        f.rev_jac_sparsity(
+            pattern_in, transpose, dependency, internal_bool, pattern_out
+        );
+        //
+        // ok
+        ok &= pattern_out.nnz() == 3 * m;
+        ok &= pattern_out.nr()  == m;
+        ok &= pattern_out.nc()  == n;
+        //
+        // row, col, row_major
+        const size_vector& row = pattern_out.row();
+        const size_vector& col = pattern_out.col();
+        size_vector row_major  = pattern_out.row_major();
+        //
+        // ok
+        size_t ell = 0;
+        for(size_t i = 0; i < m; ++i)
+        {   // first non-zero in row i
+            size_t k = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == i;
+            // second non-zero in row i
+            k        = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == m + i;
+            // third non-zero in row i
+            k        = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == 2 * m + i;
+        }
     }
     //
     return ok;

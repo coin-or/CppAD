@@ -101,6 +101,7 @@ $childtable%
     %example/atomic_vector/div.cpp
     %example/atomic_vector/mul.cpp
     %example/atomic_vector/neg.cpp
+    %example/atomic_vector/sparsity.cpp
     %example/atomic_vector/sub.cpp
 %$$
 $comment END_SORT_THIS_LINE_MINUS_2$$

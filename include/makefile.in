@@ -367,6 +367,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/atomic/four/atomic.hpp \
 	cppad/core/atomic/four/call.hpp \
 	cppad/core/atomic/four/ctor.hpp \
+	cppad/core/atomic/four/devel/jac_sparsity.hpp\
 	cppad/core/atomic/four/for_type.hpp \
 	cppad/core/atomic/four/forward.hpp \
 	cppad/core/atomic/four/hes_sparsity.hpp \

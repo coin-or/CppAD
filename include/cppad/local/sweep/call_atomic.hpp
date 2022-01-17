@@ -164,7 +164,7 @@ void call_atomic_forward(
 # endif
 }
 // ----------------------------------------------------------------------------
-/*!
+/*
 $begin atomic_reverse_callback$$
 $spell
     CppAD
@@ -304,7 +304,7 @@ void call_atomic_reverse(
 # endif
 }
 // ----------------------------------------------------------------------------
-/*!
+/*
 $begin atomic_for_jac_sparsity_callback$$
 $spell
     CppAD
@@ -445,57 +445,71 @@ void call_atomic_for_jac_sparsity(
 # endif
 }
 // ----------------------------------------------------------------------------
-/*!
-Reverse Jacobian sparsity callback to atomic functions.
+/*
+$begin atomic_rev_jac_sparsity_callback$$
+$spell
+    Jacobian
+    setvec
+    var
+$$
 
-\tparam Base
+$section Reverse Jacobian sparsity Callback to Atomic Functions$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_REV_JAC_SPARSITY%// END_REV_JAC_SPARSITY%1%$$
+
+$head Base$$
 is the type corresponding to parameter_x
 and to this atomic function.
 
-\tparam InternalSparsity
+$head InternalSparsity$$
 is the internal type used to represent sparsity; i.e.,
 sparse::pack_setvec or sparse::list_setvec.
 
-\param atom_index [in]
+$head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
-\param atom_old [in]
-is the extra id information for this atomic function in the atomic_one case.
+$head call_id$$
+is the $icode call_id$$ information for this atomic function.
 
-\param dependency [in]
+$head dependency$$
 is this a dependency or sparsity calculation.
 
-\param parameter_x [in]
+$head parameter_x$$
 value of the parameter arguments to the atomic function
 (other arguments have the value nan).
 
-\param type_x [in]
+$head type_x$$
 type for each component of x (not used by atomic_two interface).
 
-\param x_index [in]
+$head x_index$$
 is a mapping from the index of an atomic function argument
 to the corresponding variable on the tape.
 
-\param y_index [in]
+$head y_index$$
 is a mapping from the index of an atomic function result
 to the corresponding variable on the tape.
 
-\param var_sparsity [in/out]
+$head var_sparsity [in/out]$$
 On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
 is the sparsity for the i-th argument to this atomic function.
 On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 the sparsity has been updated to remove y as a function of x.
+
+$end
 */
+// BEGIN_REV_JAC_SPARSITY
 template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_rev_jac_sparsity(
     size_t                       atom_index    ,
-    size_t                       atom_old      ,
+    size_t                       call_id       ,
     bool                         dependency    ,
     const vector<Base>&          parameter_x   ,
     const vector<ad_type_enum>&  type_x        ,
     const pod_vector<size_t>&    x_index       ,
     const pod_vector<size_t>&    y_index       ,
     InternalSparsity&            var_sparsity  )
+// END_REV_JAC_SPARSITY
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
@@ -509,17 +523,24 @@ void call_atomic_rev_jac_sparsity(
         if( type == 2 )
         {   atomic_base<RecBase>* afun =
                 reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(atom_old);
+            afun->set_old(call_id);
             ok = afun->rev_sparse_jac(
                 parameter_x, x_index, y_index, var_sparsity
             );
         }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-            atomic_three<RecBase>* afun =
+        else if( type == 3 )
+        {   atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->rev_jac_sparsity(
             dependency, parameter_x, type_x, x_index, y_index, var_sparsity
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+            atomic_four<RecBase>* afun =
+                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+            ok = afun->rev_jac_sparsity(
+            dependency, call_id, x_index, y_index, var_sparsity
             );
         }
     }
@@ -531,7 +552,7 @@ void call_atomic_rev_jac_sparsity(
         );
         std::string msg = name;
         if( v_ptr == nullptr )
-            msg += ": this atomic_three function has been deleted";
+            msg += ": this atomic function has been deleted";
         else
             msg += ": atomic jac_sparsity returned false";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -540,17 +561,24 @@ void call_atomic_rev_jac_sparsity(
     if( type == 2 )
     {   atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(atom_old);
+        afun->set_old(call_id);
         afun->rev_sparse_jac(
             parameter_x, x_index, y_index, var_sparsity
         );
     }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-        atomic_three<RecBase>* afun =
+    else if( type == 3 )
+    {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->rev_jac_sparsity(
             dependency, parameter_x, type_x, x_index, y_index, var_sparsity
+        );
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+        atomic_four<RecBase>* afun =
+            reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+        afun->rev_jac_sparsity(
+            dependency, call_id, x_index, y_index, var_sparsity
         );
     }
 # endif
@@ -766,7 +794,7 @@ void call_atomic_for_hes_sparsity(
 # endif
 }
 // ----------------------------------------------------------------------------
-/*!
+/*
 Reverse Hessian sparsity callback to atomic functions.
 
 \tparam Base
@@ -911,7 +939,7 @@ void call_atomic_rev_hes_sparsity(
 # endif
 }
 // ----------------------------------------------------------------------------
-/*!
+/*
 Reverse dependency callback to atomic functions.
 
 \param atom_index [in]

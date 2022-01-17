@@ -11,6 +11,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 /*
 $begin atomic_vector_jac_sparsity.cpp$$
+$spell
+    Jacobian
+    jac
+$$
 
 $section Atomic Vector Jacobian Sparsity Pattern: Example Implementation$$
 
