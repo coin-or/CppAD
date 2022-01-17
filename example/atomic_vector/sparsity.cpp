@@ -17,7 +17,7 @@ $section Atomic Vector Sparsity Patterns Example$$
 $head f(u, v)$$
 For this example,
 $latex f : \B{R}^{3m} \rightarrow \B{R}^m$$
-is defined by $latex f(u, v, w) = u + v - w$$.
+is defined by $latex f(u, v, w) = - u * v * w$$.
 where $icode u$$, $icode v$$, and $icode w$$ are in $latex \B{R}^m$$.
 
 $head Source$$
@@ -32,7 +32,6 @@ bool sparsity(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     using CppAD::AD;
-    double eps99 = 99.0 * CppAD::numeric_limits<double>::epsilon();
     //
     // vec_op
     // atomic vector_op object
@@ -42,15 +41,19 @@ bool sparsity(void)
     // size of u, v, and w
     size_t m = 6;
     //
-    // add_op
+    // n
+    size_t n = 3 * m;
+    //
+    // mul_op, add_op
     typedef atomic_vector::op_enum_t op_enum_t;
-    op_enum_t add_op = atomic_vector::add_enum;
+    op_enum_t mul_op = atomic_vector::add_enum;
+    op_enum_t neg_op = atomic_vector::neg_enum;
     // -----------------------------------------------------------------------
-    // Record f(u, v, w) = u + v + w
+    // Record f(u, v, w) = - u * v * w
     // -----------------------------------------------------------------------
     // Independent variable vector
-    CPPAD_TESTVECTOR( CppAD::AD<double> ) auvw(3 * m);
-    for(size_t j = 0; j < 3 * m; ++j)
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) auvw(n);
+    for(size_t j = 0; j < n; ++j)
         auvw[j] = AD<double>(1 + j);
     CppAD::Independent(auvw);
     //
@@ -69,128 +72,73 @@ bool sparsity(void)
         ax[m + i] = av[i];
     }
     //
-    // ay = u + v
+    // ay = u * v
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
-    vec_op(add_op, ax, ay);
+    vec_op(mul_op, ax, ay);
     //
-    // ax = (add_op, ay, aw)
+    // ax = (ay, aw)
     for(size_t i = 0; i < m; ++i)
     {   ax[i]     = ay[i];
         ax[m + i] = aw[i];
     }
     //
-    // az = ay + v
+    // az = ay * w
     CPPAD_TESTVECTOR( CppAD::AD<double> ) az(m);
-    vec_op(add_op, ax, az);
+    vec_op(mul_op, ax, az);
+    //
+    // ay = - az
+    vec_op(neg_op, az, ay);
     //
     // f
-    CppAD::ADFun<double> f(auvw, az);
+    CppAD::ADFun<double> f(auvw, ay);
     // -----------------------------------------------------------------------
-    // check forward mode on f
+    // check Jacobian sparsity
     // -----------------------------------------------------------------------
+    typedef CPPAD_TESTVECTOR(size_t) size_vector;
+    typedef CppAD::sparse_rc<size_vector> sparsity_pattern;
     //
-    // uvw, duvw
-    CPPAD_TESTVECTOR(double) uvw(3 * m), duvw(3 * m);
-    for(size_t j = 0; j < 3 * m; ++j)
-    {   uvw[j]  = double(1 + j);
-        duvw[j] = double(j);
-    }
+    // pattern_in
+    // sparsity pattern for identity matrix
+    sparsity_pattern pattern_in(n, n, n);
+    for(size_t k = 0; k < n; ++k)
+        pattern_in.set(k, k, k);
     //
-    // z, dz
-    CPPAD_TESTVECTOR(double) z(m), dz(m);
-    z  = f.Forward(0, uvw);
-    dz = f.Forward(1, duvw);
+    // pattern_out
+    bool transpose     = false;
+    bool dependency    = false;
+    bool internal_bool = false;
+    sparsity_pattern pattern_out;
+    f.for_jac_sparsity(
+        pattern_in, transpose, dependency, internal_bool, pattern_out
+    );
     //
     // ok
-    for(size_t i = 0; i < m; ++i)
-    {   double check_z  = uvw[0 * m + i] + uvw[1 * m + i] + uvw[2 * m + i];
-        ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
-        double check_dz = double( (0 * m + i)  + (1 * m + i) + (2 * m + i) );
-        ok             &= NearEqual( dz[i] ,  check_dz,  eps99, eps99);
-    }
-    // -----------------------------------------------------------------------
-    // check reverse mode on f
-    // -----------------------------------------------------------------------
+    ok &= pattern_out.nnz() == 3 * m;
+    ok &= pattern_out.nr()  == m;
+    ok &= pattern_out.nc()  == n;
     //
-    // weight
-    CPPAD_TESTVECTOR(double) weight(m);
-    for(size_t i = 0; i < m; ++i)
-        weight[i] = 1.0;
-    //
-    // dweight
-    CPPAD_TESTVECTOR(double) dweight(3 * m);
-    f.Forward(0, uvw);
-    dweight = f.Reverse(1, weight);
+    // row, col, row_major
+    const size_vector& row = pattern_out.row();
+    const size_vector& col = pattern_out.col();
+    size_vector row_major  = pattern_out.row_major();
     //
     // ok
-    for(size_t j = 0; j < 3 * m; ++j)
-    {   double check  = 1.0;
-        ok           &= NearEqual(dweight[j], check, eps99, eps99);
-    }
-    // -----------------------------------------------------------------------
-    // Record g_i (u, v, w) = \partial d/dv[i] f_i (u , v , w)
-    // -----------------------------------------------------------------------
-    //
-    // af
-    CppAD::ADFun< AD<double>, double > af = f.base2ad();
-    //
-    // auvw
-    CppAD::Independent(auvw);
-    //
-    // aduvw
-    CPPAD_TESTVECTOR( AD<double> ) aduvw(3 * m);
+    size_t ell = 0;
     for(size_t i = 0; i < m; ++i)
-    {   aduvw[0 * m + i]  = 0.0; // du[i]
-        aduvw[1 * m + i]  = 1.0; // dv[i]
-        aduvw[2 * m + i]  = 0.0; // dw[i]
+    {   // first non-zero in row i
+        size_t k = row_major[ell++];
+        ok      &= row[k] == i;
+        ok      &= col[k] == i;
+        // second non-zero in row i
+        k        = row_major[ell++];
+        ok      &= row[k] == i;
+        ok      &= col[k] == m + i;
+        // third non-zero in row i
+        k        = row_major[ell++];
+        ok      &= row[k] == i;
+        ok      &= col[k] == 2 * m + i;
     }
     //
-    // az
-    // use the fact that d_v[i] f_k (u, v, w) is zero when i != k
-    af.Forward(0, auvw);
-    az = af.Forward(1, aduvw);
-    CppAD::ADFun<double> g(auvw, az);
-    // -----------------------------------------------------------------------
-    // Record h (u, v, w) = sum f_i^(1) (u , v , w)
-    // -----------------------------------------------------------------------
-    //
-    // auvw
-    CppAD::Independent(auvw);
-    //
-    // aweight
-    CPPAD_TESTVECTOR( AD<double> ) aweight(m);
-    for(size_t i = 0; i < m; ++i)
-        aweight[i] = 1.0;
-    //
-    // az
-    CPPAD_TESTVECTOR( AD<double> ) adweight(3 * m);
-    af.Forward(0, auvw);
-    az = af.Reverse(1, aweight);
-    CppAD::ADFun<double> h(auvw, az);
-    // -----------------------------------------------------------------------
-    // check forward mode on g
-    // -----------------------------------------------------------------------
-    //
-    // z
-    z = g.Forward(0, uvw);
-    //
-    // ok
-    for(size_t i = 0; i < m; ++i)
-    {   double check_z  = 1.0;
-        ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
-    }
-    // -----------------------------------------------------------------------
-    // check forward mode on h
-    // -----------------------------------------------------------------------
-    //
-    // z
-    z = h.Forward(0, uvw);
-    //
-    // ok
-    for(size_t j = 0; j < 3 * m; ++j)
-    {   double check_z  = 1.0;
-        ok             &= NearEqual( z[j] ,  check_z,  eps99, eps99);
-    }
     return ok;
 }
 // END C++
