@@ -588,7 +588,7 @@ void call_atomic_rev_jac_sparsity(
 }
 // ----------------------------------------------------------------------------
 /*
-$begin call_atomic_for_hes_sparsiy$$
+$begin atomic_for_hes_sparsiy_callback$$
 $spell
     hes
     np
@@ -599,11 +599,11 @@ $spell
     setvec
 $$
 
-$section Forward Hessian Sparsity Callback to Atomic Functions.$$
+$section Forward Hessian Sparsity Callback to Atomic Functions$$
 
 $head Syntax$$
 $codei%call_atomic_for_hes_sparsity(
-    %atom_index%, %atom_old%, %parameter_x%, %type_x%, %x_index%, %y_index%,
+    %atom_index%, %call_id%, %parameter_x%, %type_x%, %x_index%, %y_index%,
     %np1%, %numvar%, %rev_jac_sparsity%, %for_sparsity%
 )%$$
 
@@ -620,7 +620,6 @@ $code sparse::pack_setvec$$ or $code sparse::list_setvec$$.
 
 $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
-
 
 $head call_id$$
 see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
@@ -816,42 +815,42 @@ void call_atomic_for_hes_sparsity(
 }
 // ----------------------------------------------------------------------------
 /*
-Reverse Hessian sparsity callback to atomic functions.
+$begin atomic_rev_hes_sparsity_callback$$
 
-\tparam Base
+$section Reverse Hessian Sparsity Callback to Atomic Functions$$
+
+$head Base$$
 is the type corresponding to parameter_x
 and to this atomic function.
 
-\tparam InternalSparsity
+$head InternalSparsity$$
 is the internal type used to represent sparsity; i.e.,
 sparse::pack_setvec or sparse::list_setvec.
 
-\param atom_index [in]
-is the index, in local::atomic_index, corresponding to this atomic function.
+$head call_id$$
+see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+the atomic_one $cref/id/atomic_one/id/$$.
 
-\param atom_old [in]
-is the extra id information for this atomic function in the atomic_one case.
-
-\param parameter_x [in]
+$head parameter_x$$
 value of the parameter arguments to the atomic function
 (other arguments have the value nan).
 
-\param type_x [in]
+$head type_x$$
 type for each component of x (not used by atomic_two interface).
 
-\param x_index [in]
+$head x_index$$
 is a mapping from the index of an atomic function argument
 to the corresponding variable on the tape.
 
-\param y_index [in]
+$head y_index$$
 is a mapping from the index of an atomic function result
 to the corresponding variable on the tape.
 
-\param for_jac_sparsity
+$head for_jac_sparsity$$
 For j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 is the forward Jacobian sparsity for the j-th argument to this atomic function.
 
-\param rev_jac_flag
+$head rev_jac_flag$$
 On input, for i = 0, ... , m-1, rev_jac_flag[ y_index[i] ] is true
 if the fuction (we are computing the sparsity for)
 depends on the variable y_index[i].
@@ -859,18 +858,20 @@ Upon return, for j = 0, ..., n-1, rev_jac_flag[ x_index[j] ] has been set to
 true any of the y_index variables are flagged depnend on x_index[j].
 Otherwise, rev_jac_flag[ x_index[j] ] is not modified.
 
-\param rev_hes_sparsity
+$head rev_hes_sparsity$$
 This is the sparsity pattern for the Hessian.
 On input, for i = 0, ... , m-1, row y_index[i] is the reverse Hessian sparsity
 with one of the partials with respect to to y_index[i].
 Upon return, for j = 0, ..., n-1, the row x_index[j] has been
 modified to include components that have a non-zero hessian through
 the atomic fucntion with one of the partials w.r.t. x_index[j].
+
+$end
 */
 template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_rev_hes_sparsity(
     size_t                       atom_index        ,
-    size_t                       atom_old          ,
+    size_t                       call_id           ,
     const vector<Base>&          parameter_x       ,
     const vector<ad_type_enum>&  type_x            ,
     const pod_vector<size_t>&    x_index           ,
@@ -891,7 +892,7 @@ void call_atomic_rev_hes_sparsity(
         if( type == 2 )
         {   atomic_base<RecBase>* afun =
                 reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(atom_old);
+            afun->set_old(call_id);
             ok = afun->rev_sparse_hes(
                 parameter_x,
                 x_index,
@@ -901,13 +902,25 @@ void call_atomic_rev_hes_sparsity(
                 rev_hes_sparsity
             );
         }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-            atomic_three<RecBase>* afun =
+        else if( type == 3 )
+        {   atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->rev_hes_sparsity(
                 parameter_x,
                 type_x,
+                x_index,
+                y_index,
+                for_jac_sparsity,
+                rev_jac_flag,
+                rev_hes_sparsity
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+            atomic_four<RecBase>* afun =
+                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+            ok = afun->rev_hes_sparsity(
+                call_id,
                 x_index,
                 y_index,
                 for_jac_sparsity,
@@ -933,7 +946,7 @@ void call_atomic_rev_hes_sparsity(
     if( type == 2 )
     {   atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(atom_old);
+        afun->set_old(call_id);
         afun->rev_sparse_hes(
             parameter_x,
             x_index,
@@ -943,13 +956,25 @@ void call_atomic_rev_hes_sparsity(
             rev_hes_sparsity
         );
     }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-        atomic_three<RecBase>* afun =
+    else if( type == 3 )
+    {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->rev_hes_sparsity(
             parameter_x,
             type_x,
+            x_index,
+            y_index,
+            for_jac_sparsity,
+            rev_jac_flag,
+            rev_hes_sparsity
+        );
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+        atomic_four<RecBase>* afun =
+            reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+        afun->rev_hes_sparsity(
+            call_id,
             x_index,
             y_index,
             for_jac_sparsity,

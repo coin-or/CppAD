@@ -17,7 +17,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 -----------------------------------------------------------------------------
 $begin atomic_four_for_hes_sparsity$$
 
-$section Link from Forward Hesswian Sparsity Sweep to atomic_four Callbacks$$
+$section Link from Forward Hesswian Sparsity Sweep to atomic_four Callback$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_FOR_HES_SPARSITY%// END_FOR_HES_SPARSITY%1%$$
@@ -183,34 +183,37 @@ bool atomic_four<Base>::for_hes_sparsity(
     }
     return ok;
 }
-/*!
-Link from for_reverse Hessian sweep to atomic_four.
+/*
+$begin atomic_four_rev_hes_sparsity$$
 
-\tparam InternalSparsity
+$section Link from Reverse Hessian Sparsity Sweep to atomic_four Callback$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_REV_HES_SPARSITY%// END_REV_HES_SPARSITY%1%$$
+
+$head InternalSparsity$$
 Is the used internaly for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
-\param call_id [in]
-is the value of call_id in the corresponding call to afun(call_id, ax, ay).
 
-\param type_x [in]
-what is the type, in afun(call_id, ax, ay), for each component of x.
+$head call_id [in]$$
+see $cref/call_id/atomic_four_call/call_id/$$.
 
-\param x_index
+$head x_index$$
 is the variable index, on the tape, for the arguments to this function.
 This size of x_index is n, the number of arguments to this function.
 The index zero is used for parameters.
 
-\param y_index
+$head y_index$$
 is the variable index, on the tape, for the results for this function.
 This size of y_index is m, the number of results for this function.
 The index zero is used for parameters.
 
-\param for_jac_pattern
+$head for_jac_pattern$$
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 is the forward Jacobian pattern for the j-th argument to this atomic function.
 
-\param rev_jac_flag
+$head rev_jac_flag$$
 On input, for i = 0, ... , m-1, rev_jac_flag[ y_index[i] ] is true
 if the function we are computing the Hessian of has possibly non-zero Jacobian
 w.r.t varialbe y_index[i].
@@ -219,48 +222,43 @@ if the varialbe with index x_index[j] has possible non-zero Jacobian
 with repect to one of the true y_index[i] cases.
 Otherwise, rev_jac_flag [ x_inde[j] ] is not changed.
 
-\param hes_sparsity_rev
+$head hes_sparsity_rev$$
 Is the reverse mode sparsity pattern for the Hessian. On input, the non-linear
 terms in the atomic fuction have not been included. Upon return, they
 have been included.
+
+$end
 */
 template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::rev_hes_sparsity(
     size_t                           call_id          ,
-    const vector<ad_type_enum>&      type_x           ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
     const InternalSparsity&          for_jac_pattern  ,
     bool*                            rev_jac_flag     ,
     InternalSparsity&                hes_sparsity_rev )
-{   typedef typename InternalSparsity::const_iterator const_iterator;
+{   CPPAD_ASSERT_UNKNOWN( for_jac_pattern.number_elements(0) == 0 );
+    CPPAD_ASSERT_UNKNOWN( ! rev_jac_flag[0] );
+    //
     size_t n      = x_index.size();
     size_t m      = y_index.size();
     //
     // select_x
     vector<bool> select_x(n);
     for(size_t j = 0; j < n; j++)
-    {   // check if should compute pattern w.r.t x[j]
-        const_iterator itr(for_jac_pattern, x_index[j]);
-        size_t i = *itr;
-        select_x[j] = i < for_jac_pattern.end();
-        CPPAD_ASSERT_UNKNOWN( x_index[j] > 0 || ! select_x[j] );
-    }
+        select_x[j] = for_jac_pattern.number_elements( x_index[j] ) > 0;
     //
-    // bool select_y
+    // select_y
     vector<bool> select_y(m);
     for(size_t i = 0; i < m; i++)
-    {   // check if we should include y[i]
         select_y[i] = rev_jac_flag[ y_index[i] ];
-        CPPAD_ASSERT_UNKNOWN( y_index[i] > 0 || ! select_y[i] );
-    }
     //
     // call atomic function for Jacobain sparsity
     bool dependency = false;
     sparse_rc< vector<size_t> > pattern_jac;
     bool ok = jac_sparsity(
-        call_id, type_x, dependency, select_x, select_y, pattern_jac
+        call_id, dependency, select_x, select_y, pattern_jac
     );
     const vector<size_t>& row_jac( pattern_jac.row() );
     const vector<size_t>& col_jac( pattern_jac.col() );
@@ -270,7 +268,7 @@ bool atomic_four<Base>::rev_hes_sparsity(
     //
     // call atomic function for Hessian sparsity
     sparse_rc< vector<size_t> > pattern_hes;
-    ok = hes_sparsity(call_id, type_x, select_x, select_y, pattern_hes);
+    ok = hes_sparsity(call_id, select_x, select_y, pattern_hes);
     const vector<size_t>& row_hes( pattern_hes.row() );
     const vector<size_t>& col_hes( pattern_hes.col() );
     size_t nnz_hes = pattern_hes.nnz();

@@ -276,7 +276,7 @@ public:
         const vector<bool>&          depend_y
     );
     // ------------------------------------------------------------------------
-    // forward: see docygen in atomic/four_forward.hpp
+    // forward
     virtual bool forward(
         size_t                       call_id     ,
         const vector<ad_type_enum>&  type_x      ,
@@ -296,7 +296,7 @@ public:
         vector< AD<Base> >&          ataylor_y
     );
     // ------------------------------------------------------------------------
-    // reverse: see docygen in atomic/four_reverse.hpp
+    // reverse
     virtual bool reverse(
         size_t                       call_id     ,
         const vector<ad_type_enum>&  type_x      ,
@@ -316,7 +316,7 @@ public:
         const vector< AD<Base> >&    apartial_y
     );
     // ------------------------------------------------------------
-    // jac_sparsity: see doxygen in atomic/four_jac_sparsity.hpp
+    // jac_sparsity
     virtual bool jac_sparsity(
         size_t                       call_id     ,
         bool                         dependency  ,
@@ -341,7 +341,7 @@ public:
         InternalSparsity&                var_sparsity
     );
     // ------------------------------------------------------------
-    // hes_sparsity: see doxygen in atomic/four_jac_sparsity.hpp
+    // hes_sparsity
     virtual bool hes_sparsity(
         size_t                                  call_id      ,
         const vector<bool>&                     select_x     ,
@@ -361,7 +361,6 @@ public:
     template <class InternalSparsity>
     bool rev_hes_sparsity(
         size_t                           call_id          ,
-        const vector<ad_type_enum>&      type_x           ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
         const InternalSparsity&          for_jac_pattern  ,
