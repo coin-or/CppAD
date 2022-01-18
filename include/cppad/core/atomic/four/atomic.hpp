@@ -344,7 +344,6 @@ public:
     // hes_sparsity: see doxygen in atomic/four_jac_sparsity.hpp
     virtual bool hes_sparsity(
         size_t                                  call_id      ,
-        const vector<ad_type_enum>&             type_x       ,
         const vector<bool>&                     select_x     ,
         const vector<bool>&                     select_y     ,
         sparse_rc< vector<size_t> >&            pattern_out
@@ -352,7 +351,6 @@ public:
     template <class InternalSparsity>
     bool for_hes_sparsity(
         size_t                           call_id          ,
-        const vector<ad_type_enum>&      type_x           ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
         size_t                           np1              ,

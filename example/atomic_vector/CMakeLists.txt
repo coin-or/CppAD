@@ -18,6 +18,7 @@ SET(source_list
     div.cpp
     div_op.cpp
     forward_op.cpp
+    hes_sparsity.cpp
     jac_sparsity.cpp
     mul.cpp
     mul_op.cpp

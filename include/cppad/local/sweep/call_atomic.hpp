@@ -200,7 +200,8 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-is the $icode call_id$$ for the corresponding atomic function call.
+see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+the atomic_one $cref/id/atomic_one/id/$$.
 
 $head taylor_x$$
 Taylor coefficients corresponding to x.
@@ -332,7 +333,8 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-is the $icode call_id$$ for the corresponding atomic function call.
+see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+the atomic_one $cref/id/atomic_one/id/$$.
 
 $head dependency$$
 is this a dependency or sparsity calculation.
@@ -470,7 +472,8 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-is the $icode call_id$$ information for this atomic function.
+see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+the atomic_one $cref/id/atomic_one/id/$$.
 
 $head dependency$$
 is this a dependency or sparsity calculation.
@@ -605,17 +608,7 @@ $codei%call_atomic_for_hes_sparsity(
 )%$$
 
 $head Prototype$$
-$srcthisfile%
-0%// BEGIN_call_atomic_for_hes_sparsity%// END_call_atomic_for_hes_sparsity%1
-%$$
-
-$head C++ Source$$
-The C++ source code corresponding to this operation is a
-$cref/atomic function call/atomic_three/Syntax/Use Atomic Function/$$
-$codei%
-    %afun%(%ax%, %ay%)
-%$$
-We refer to the corresponding function using $latex y = f(x)$$.
+$srcthisfile%0%// BEGIN_FOR_HES_SPARSITY%// END_FOR_HES_SPARSITY%1%$$
 
 $head Base$$
 is the type corresponding to $icode parameter_x$$
@@ -628,8 +621,10 @@ $code sparse::pack_setvec$$ or $code sparse::list_setvec$$.
 $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
-$head atom_old$$
-is the extra id information for this atomic function in the atomic_one case.
+
+$head call_id$$
+see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+the atomic_one $cref/id/atomic_one/id/$$.
 
 $head parameter_x$$
 value of the parameter arguments to the atomic function
@@ -691,11 +686,11 @@ after including the function $latex y = f(x)$$.
 
 $end
 */
-// BEGIN_call_atomic_for_hes_sparsity
+// BEGIN_FOR_HES_SPARSITY
 template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_for_hes_sparsity(
     size_t                       atom_index        ,
-    size_t                       atom_old          ,
+    size_t                       call_id           ,
     const vector<Base>&          parameter_x       ,
     const vector<ad_type_enum>&  type_x            ,
     const pod_vector<size_t>&    x_index           ,
@@ -704,7 +699,7 @@ void call_atomic_for_hes_sparsity(
     size_t                       numvar            ,
     const InternalSparsity&      rev_jac_sparsity  ,
     InternalSparsity&            for_sparsity      )
-// END_call_atomic_for_hes_sparsity
+// END_FOR_HES_SPARSITY
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
     CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
@@ -721,7 +716,7 @@ void call_atomic_for_hes_sparsity(
         if( type == 2 )
         {   atomic_base<RecBase>* afun =
                 reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(atom_old);
+            afun->set_old(call_id);
             ok = afun->for_sparse_hes(
                 parameter_x,
                 x_index,
@@ -732,13 +727,26 @@ void call_atomic_for_hes_sparsity(
                 for_sparsity
             );
         }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-            atomic_three<RecBase>* afun =
+        else if( type == 3 )
+        {   atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->for_hes_sparsity(
                 parameter_x,
                 type_x,
+                x_index,
+                y_index,
+                np1,
+                numvar,
+                rev_jac_sparsity,
+                for_sparsity
+            );
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+            atomic_four<RecBase>* afun =
+                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+            ok = afun->for_hes_sparsity(
+                call_id,
                 x_index,
                 y_index,
                 np1,
@@ -765,7 +773,7 @@ void call_atomic_for_hes_sparsity(
     if( type == 2 )
     {   atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(atom_old);
+        afun->set_old(call_id);
         afun->for_sparse_hes(
             parameter_x,
             x_index,
@@ -776,13 +784,26 @@ void call_atomic_for_hes_sparsity(
             for_sparsity
         );
     }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-        atomic_three<RecBase>* afun =
+    else if( type == 3 )
+    {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->for_hes_sparsity(
             parameter_x,
             type_x,
+            x_index,
+            y_index,
+            np1,
+            numvar,
+            rev_jac_sparsity,
+            for_sparsity
+        );
+    }
+    else
+    {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+        atomic_four<RecBase>* afun =
+            reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+        afun->for_hes_sparsity(
+            call_id,
             x_index,
             y_index,
             np1,

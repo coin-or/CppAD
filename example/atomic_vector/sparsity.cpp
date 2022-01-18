@@ -46,7 +46,7 @@ bool sparsity(void)
     //
     // mul_op, add_op
     typedef atomic_vector::op_enum_t op_enum_t;
-    op_enum_t mul_op = atomic_vector::add_enum;
+    op_enum_t mul_op = atomic_vector::mul_enum;
     op_enum_t neg_op = atomic_vector::neg_enum;
     // -----------------------------------------------------------------------
     // Record f(u, v, w) = - u * v * w
@@ -185,6 +185,70 @@ bool sparsity(void)
             k        = row_major[ell++];
             ok      &= row[k] == i;
             ok      &= col[k] == 2 * m + i;
+        }
+    }
+    // -----------------------------------------------------------------------
+    // Forward Hessian sparsity
+    // -----------------------------------------------------------------------
+    {   //
+        // select_domain
+        CPPAD_TESTVECTOR(bool) select_domain(n);
+        for(size_t j = 0; j < n; ++j)
+            select_domain[j] = true;
+        //
+        // select_range
+        CPPAD_TESTVECTOR(bool) select_range(m);
+        for(size_t i = 0; i < m; ++i)
+            select_range[i] = true;
+        //
+        // pattern_out
+        bool internal_bool = false;
+        sparsity_pattern pattern_out;
+        f.for_hes_sparsity(
+            select_domain, select_range, internal_bool, pattern_out
+        );
+        //
+        // ok
+        ok &= pattern_out.nnz() == 2 * n;
+        ok &= pattern_out.nr()  == n;
+        ok &= pattern_out.nc()  == n;
+        //
+        // row, col, row_major
+        const size_vector& row = pattern_out.row();
+        const size_vector& col = pattern_out.col();
+        size_vector row_major  = pattern_out.row_major();
+        //
+        // ok
+        size_t ell = 0;
+        for(size_t i = 0; i < m; ++i)
+        {   // first non-zero in row i
+            size_t k = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == m + i;
+            // second non-zero in row i
+            k        = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == 2 * m + i;
+        }
+        for(size_t i = m; i < 2 * m; ++i)
+        {   // first non-zero in row i
+            size_t k = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == i - m;
+            // second non-zero in row i
+            k        = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == i + m;
+        }
+        for(size_t i = 2 * m; i < 3 * m; ++i)
+        {   // first non-zero in row i
+            size_t k = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == i - 2 * m;
+            // second non-zero in row i
+            k        = row_major[ell++];
+            ok      &= row[k] == i;
+            ok      &= col[k] == i - m;
         }
     }
     //

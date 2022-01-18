@@ -75,7 +75,7 @@ then
 fi
 if [ "$dir" == 'example/atomic_vector' ]
 then
-    extra=$(ls $dir/*_op.cpp $dir/jac_sparsity.cpp)
+    extra=$(ls $dir/*_op.cpp $dir/jac_sparsity.cpp $dir/hes_sparsity.cpp)
 fi
 # ---------------------------------------------------------------------------
 # Check command line arguments

@@ -21,6 +21,7 @@ $childtable%
     example/atomic_vector/forward_op.cpp
     %example/atomic_vector/reverse_op.cpp
     %example/atomic_vector/jac_sparsity.cpp
+    %example/atomic_vector/hes_sparsity.cpp
     %example/atomic_vector/add_op.cpp
     %example/atomic_vector/sub_op.cpp
     %example/atomic_vector/mul_op.cpp
@@ -351,6 +352,15 @@ private:
     bool jac_sparsity(
         size_t                                         call_id      ,
         bool                                           dependency   ,
+        const CppAD::vector<bool>&                     select_x     ,
+        const CppAD::vector<bool>&                     select_y     ,
+        CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
+    ) override;
+    // =====================================================================
+    // Hessian Sparsity
+    // =====================================================================
+    bool hes_sparsity(
+        size_t                                         call_id      ,
         const CppAD::vector<bool>&                     select_x     ,
         const CppAD::vector<bool>&                     select_y     ,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
