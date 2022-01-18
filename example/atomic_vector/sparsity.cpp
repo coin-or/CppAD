@@ -96,23 +96,41 @@ bool sparsity(void)
     typedef CPPAD_TESTVECTOR(size_t) size_vector;
     typedef CppAD::sparse_rc<size_vector> sparsity_pattern;
     // -----------------------------------------------------------------------
-    // Forward Jacobian sparsity
+    // Jacobian sparsity
     // -----------------------------------------------------------------------
-    {   //
-        // pattern_in
-        // sparsity pattern for identity matrix
-        sparsity_pattern pattern_in(n, n, n);
-        for(size_t k = 0; k < n; ++k)
-            pattern_in.set(k, k, k);
-        //
-        // pattern_out
+    for(size_t direction = 0; direction < 2; ++direction)
+    {   sparsity_pattern pattern_out;
         bool transpose     = false;
         bool dependency    = false;
         bool internal_bool = false;
-        sparsity_pattern pattern_out;
-        f.for_jac_sparsity(
-            pattern_in, transpose, dependency, internal_bool, pattern_out
-        );
+        if( direction == 0 )
+        {   // Forward direction
+            //
+            // pattern_in
+            // sparsity pattern for identity matrix
+            sparsity_pattern pattern_in(n, n, n);
+            for(size_t k = 0; k < n; ++k)
+                pattern_in.set(k, k, k);
+            //
+            // pattern_out
+            f.for_jac_sparsity(
+                pattern_in, transpose, dependency, internal_bool, pattern_out
+            );
+        }
+        else
+        {   // Reverse direction
+            //
+            // pattern_in
+            // sparsity pattern for identity matrix
+            sparsity_pattern pattern_in(m, m, m);
+            for(size_t k = 0; k < m; ++k)
+                pattern_in.set(k, k, k);
+            //
+            // pattern_out
+            f.rev_jac_sparsity(
+                pattern_in, transpose, dependency, internal_bool, pattern_out
+            );
+        }
         //
         // ok
         ok &= pattern_out.nnz() == 3 * m;
@@ -142,131 +160,40 @@ bool sparsity(void)
         }
     }
     // -----------------------------------------------------------------------
-    // Reverse Jacobian sparsity
+    // Hessian sparsity
     // -----------------------------------------------------------------------
-    {   //
-        // pattern_in
-        // sparsity pattern for identity matrix
-        sparsity_pattern pattern_in(m, m, m);
-        for(size_t k = 0; k < m; ++k)
-            pattern_in.set(k, k, k);
-        //
-        // pattern_out
-        bool transpose     = false;
-        bool dependency    = false;
-        bool internal_bool = false;
-        sparsity_pattern pattern_out;
-        f.rev_jac_sparsity(
-            pattern_in, transpose, dependency, internal_bool, pattern_out
-        );
-        //
-        // ok
-        ok &= pattern_out.nnz() == 3 * m;
-        ok &= pattern_out.nr()  == m;
-        ok &= pattern_out.nc()  == n;
-        //
-        // row, col, row_major
-        const size_vector& row = pattern_out.row();
-        const size_vector& col = pattern_out.col();
-        size_vector row_major  = pattern_out.row_major();
-        //
-        // ok
-        size_t ell = 0;
-        for(size_t i = 0; i < m; ++i)
-        {   // first non-zero in row i
-            size_t k = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i;
-            // second non-zero in row i
-            k        = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == m + i;
-            // third non-zero in row i
-            k        = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == 2 * m + i;
-        }
-    }
-    // -----------------------------------------------------------------------
-    // Forward Hessian sparsity
-    // -----------------------------------------------------------------------
-    {   //
-        // select_domain
-        CPPAD_TESTVECTOR(bool) select_domain(n);
-        for(size_t j = 0; j < n; ++j)
-            select_domain[j] = true;
+    for(size_t direction = 0; direction < 2; ++direction)
+    {   sparsity_pattern pattern_out;
         //
         // select_range
         CPPAD_TESTVECTOR(bool) select_range(m);
         for(size_t i = 0; i < m; ++i)
             select_range[i] = true;
         //
-        // pattern_out
-        bool internal_bool = false;
-        sparsity_pattern pattern_out;
-        f.for_hes_sparsity(
-            select_domain, select_range, internal_bool, pattern_out
-        );
-        //
-        // ok
-        ok &= pattern_out.nnz() == 2 * n;
-        ok &= pattern_out.nr()  == n;
-        ok &= pattern_out.nc()  == n;
-        //
-        // row, col, row_major
-        const size_vector& row = pattern_out.row();
-        const size_vector& col = pattern_out.col();
-        size_vector row_major  = pattern_out.row_major();
-        //
-        // ok
-        size_t ell = 0;
-        for(size_t i = 0; i < m; ++i)
-        {   // first non-zero in row i
-            size_t k = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == m + i;
-            // second non-zero in row i
-            k        = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == 2 * m + i;
+        if( direction == 0 )
+        {   // Forward
+            //
+            // select_domain
+            CPPAD_TESTVECTOR(bool) select_domain(n);
+            for(size_t j = 0; j < n; ++j)
+                select_domain[j] = true;
+            //
+            // pattern_out
+            bool internal_bool = false;
+            f.for_hes_sparsity(
+                select_domain, select_range, internal_bool, pattern_out
+            );
         }
-        for(size_t i = m; i < 2 * m; ++i)
-        {   // first non-zero in row i
-            size_t k = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i - m;
-            // second non-zero in row i
-            k        = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i + m;
+        else
+        {   // Reverse
+            //
+            // pattern_out
+            bool transpose     = false;
+            bool internal_bool = false;
+            f.rev_hes_sparsity(
+                select_range, transpose, internal_bool, pattern_out
+            );
         }
-        for(size_t i = 2 * m; i < 3 * m; ++i)
-        {   // first non-zero in row i
-            size_t k = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i - 2 * m;
-            // second non-zero in row i
-            k        = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i - m;
-        }
-    }
-    // -----------------------------------------------------------------------
-    // Reverse Hessian sparsity
-    // -----------------------------------------------------------------------
-    {   //
-        // select_range
-        CPPAD_TESTVECTOR(bool) select_range(m);
-        for(size_t i = 0; i < m; ++i)
-            select_range[i] = true;
-        //
-        // pattern_out
-        bool transpose     = false;
-        bool internal_bool = false;
-        sparsity_pattern pattern_out;
-        f.rev_hes_sparsity(
-            select_range, transpose, internal_bool, pattern_out
-        );
         //
         // ok
         ok &= pattern_out.nnz() == 2 * n;
