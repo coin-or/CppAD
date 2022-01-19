@@ -94,6 +94,7 @@ void dynamic(
     // vectors used in call to atomic fuctions
     vector<ad_type_enum> type_x;
     vector<Base>         taylor_x, taylor_y;
+    vector<bool>         select_y;
 # ifndef NDEBUG
     for(size_t j = 0; j < ind_dynamic.size(); ++j)
         CPPAD_ASSERT_UNKNOWN(
@@ -433,6 +434,9 @@ void dynamic(
                 type_x.resize(n);
                 taylor_x.resize(n);
                 taylor_y.resize(m);
+                select_y.resize(m);
+                //
+                // taylor_x, type_x
                 for(size_t j = 0; j < n; ++j)
                 {   addr_t arg_j = dyn_par_arg[i_arg + 5 + j];
                     taylor_x[j]   = all_par_vec[ arg_j ];
@@ -443,10 +447,16 @@ void dynamic(
                     else
                         type_x[j] = constant_enum;
                 }
+                // select_y
+                for(size_t i = 0; i < m; ++i)
+                {   i_par = size_t( dyn_par_arg[i_arg + 5 + n + i] );
+                    select_y[i] = dyn_par_is[i_par];
+                }
                 call_atomic_forward<Base, RecBase>(
                     taylor_x,
                     type_x,
                     need_y,
+                    select_y,
                     order_low,
                     order_up,
                     atom_index,

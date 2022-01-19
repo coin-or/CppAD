@@ -79,6 +79,7 @@ void call_atomic_forward(
     const vector<Base>&          parameter_x ,
     const vector<ad_type_enum>&  type_x      ,
     size_t                       need_y      ,
+    const vector<bool>&          select_y    ,
     size_t                       order_low   ,
     size_t                       order_up    ,
     size_t                       atom_index  ,

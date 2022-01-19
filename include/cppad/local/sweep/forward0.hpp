@@ -216,9 +216,10 @@ void forward0(
     vector<Base>         atom_tx;     // argument vector Taylor coefficients
     vector<Base>         atom_ty;     // result vector Taylor coefficients
     vector<size_t>       atom_iy;     // variable indices for result vector
+    vector<bool>         atom_sy;     // select_y for this atomic function
     //
     // information defined by atomic function operators
-    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
+    size_t atom_index=0, atom_id=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
     enum_atom_state atom_state = start_atom; // proper initialization
 
     // length of the parameter vector (used by CppAD assert macros)
@@ -269,7 +270,7 @@ void forward0(
                 {   // get information for this atomic function call
                     CPPAD_ASSERT_UNKNOWN( atom_state == start_atom );
                     play::atom_op_info<Base>(
-                        op, arg, atom_index, atom_old, atom_m, atom_n
+                        op, arg, atom_index, atom_id, atom_m, atom_n
                     );
                     //
                     // skip to the second AFunOp
@@ -811,7 +812,7 @@ void forward0(
             // start or end an atomic function call
             flag = atom_state == start_atom;
             play::atom_op_info<RecBase>(
-                op, arg, atom_index, atom_old, atom_m, atom_n
+                op, arg, atom_index, atom_id, atom_m, atom_n
             );
             if( flag )
             {   atom_state = arg_atom;
@@ -823,16 +824,20 @@ void forward0(
                 atom_tx.resize(atom_n);
                 atom_ty.resize(atom_m);
                 atom_iy.resize(atom_m);
+                atom_sy.resize(atom_m);
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
                 CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
                 atom_state = start_atom;
                 //
+                for(size_t i = 0; i < atom_m; ++i)
+                    atom_sy[i] = atom_iy[i] != 0;
+                //
                 // call atomic function for this operation
                 call_atomic_forward<Base, RecBase>(
-                    atom_par_x, atom_type_x, need_y,
-                    order_low, order_up, atom_index, atom_old, atom_tx, atom_ty
+                    atom_par_x, atom_type_x, need_y, atom_sy,
+                    order_low, order_up, atom_index, atom_id, atom_tx, atom_ty
                 );
                 for(size_t i = 0; i < atom_m; ++i)
                     if( atom_iy[i] > 0 )
