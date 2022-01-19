@@ -124,31 +124,31 @@ and one for <code><font color="blue">AD&lt;double&gt;</font></code>.
     <font color="#FF0000">{</font>
         <i><font color="#9A1900">// addition</font></i>
         <b><font color="#0000FF">case</font></b> add_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_add</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
+        <b><font color="#000000">forward_add</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// subtraction</font></i>
         <b><font color="#0000FF">case</font></b> sub_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_sub</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
+        <b><font color="#000000">forward_sub</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// multiplication</font></i>
         <b><font color="#0000FF">case</font></b> mul_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_mul</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
+        <b><font color="#000000">forward_mul</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// division</font></i>
         <b><font color="#0000FF">case</font></b> div_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_div</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
+        <b><font color="#000000">forward_div</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// unary minus</font></i>
         <b><font color="#0000FF">case</font></b> neg_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_neg</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
+        <b><font color="#000000">forward_neg</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> tx<font color="#990000">,</font> ty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
@@ -184,31 +184,31 @@ and one for <code><font color="blue">AD&lt;double&gt;</font></code>.
     <font color="#FF0000">{</font>
         <i><font color="#9A1900">// addition</font></i>
         <b><font color="#0000FF">case</font></b> add_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_add</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
+        <b><font color="#000000">forward_add</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// subtraction</font></i>
         <b><font color="#0000FF">case</font></b> sub_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_sub</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
+        <b><font color="#000000">forward_sub</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// multiplication</font></i>
         <b><font color="#0000FF">case</font></b> mul_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_mul</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
+        <b><font color="#000000">forward_mul</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// division</font></i>
         <b><font color="#0000FF">case</font></b> div_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_div</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
+        <b><font color="#000000">forward_div</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 
         <i><font color="#9A1900">// unary minus</font></i>
         <b><font color="#0000FF">case</font></b> neg_enum<font color="#990000">:</font>
-        <b><font color="#000000">forward_neg</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> p<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
+        <b><font color="#000000">forward_neg</font></b><font color="#990000">(</font>m<font color="#990000">,</font> p<font color="#990000">,</font> q<font color="#990000">,</font> atx<font color="#990000">,</font> aty<font color="#990000">);</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
 

@@ -39,6 +39,7 @@ var list_current0 = [
 'wish_list.htm#test_boolofvoid',
 'wish_list.htm#Example',
 'wish_list.htm#Optimization',
+'wish_list.htm#Optimization.Atomic Functions',
 'wish_list.htm#Optimization.Taping',
 'wish_list.htm#Optimization.Special Operators',
 'wish_list.htm#Base Requirements',
