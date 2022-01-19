@@ -68,6 +68,8 @@ $rref atomic_two_eigen_mat_inv.cpp$$
 $rref atomic_two_eigen_mat_inv.hpp$$
 $rref atomic_two_eigen_mat_mul.cpp$$
 $rref atomic_two_eigen_mat_mul.hpp$$
+$rref atomic_vector_for_type.cpp$$
+$rref atomic_vector_rev_depend.cpp$$
 $rref atomic_vector.hpp$$
 $rref atomic_vector_add.cpp$$
 $rref atomic_vector_add_op.cpp$$

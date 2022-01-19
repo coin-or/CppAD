@@ -30,8 +30,7 @@ $end
 // BEGIN C++
 # include "atomic_vector.hpp"
 //
-// forward
-// this routine called by ADFun<Base> objects
+// jac_sparsity override
 bool atomic_vector::jac_sparsity(
     size_t                                         call_id      ,
     bool                                           dependency   ,

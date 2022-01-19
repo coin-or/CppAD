@@ -17,6 +17,7 @@ SET(source_list
     atomic_vector.cpp
     div.cpp
     div_op.cpp
+    for_type.cpp
     forward_op.cpp
     hes_sparsity.cpp
     jac_sparsity.cpp
@@ -25,6 +26,7 @@ SET(source_list
     neg.cpp
     neg_op.cpp
     optimize.cpp
+    rev_depend.cpp
     reverse_op.cpp
     sparsity.cpp
     sub.cpp

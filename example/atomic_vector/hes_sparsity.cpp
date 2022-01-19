@@ -30,8 +30,7 @@ $end
 // BEGIN C++
 # include "atomic_vector.hpp"
 //
-// forward
-// this routine called by ADFun<Base> objects
+// hes_sparsity override
 bool atomic_vector::hes_sparsity(
     size_t                                         call_id      ,
     const CppAD::vector<bool>&                     select_x     ,

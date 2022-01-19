@@ -22,6 +22,8 @@ $childtable%
     %example/atomic_vector/reverse_op.cpp
     %example/atomic_vector/jac_sparsity.cpp
     %example/atomic_vector/hes_sparsity.cpp
+    %example/atomic_vector/for_type.cpp
+    %example/atomic_vector/rev_depend.cpp
     %example/atomic_vector/add_op.cpp
     %example/atomic_vector/sub_op.cpp
     %example/atomic_vector/mul_op.cpp
@@ -107,52 +109,35 @@ private:
     bool for_type(
         size_t                                     call_id     ,
         const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
-        CppAD::vector<CppAD::ad_type_enum>&        type_y      ) override
-    {
-        // n, m
-        size_t n     = type_x.size();
-        size_t m     = type_y.size();
-        //
-        // type_y
-        if( n == m )
-        {   // unary operator
-            for(size_t i = 0; i < m; ++i)
-                type_y[i] = type_x[i];
-        }
-        else
-        {   // binary operator
-            for(size_t i = 0; i < m; ++i)
-                type_y[i] = std::max( type_x[i] , type_x[m + i] );
-        }
-        return true;
-    }
+        CppAD::vector<CppAD::ad_type_enum>&        type_y
+    ) override;
     // ------------------------------------------------------------------------
     // rev_depend
     // ------------------------------------------------------------------------
     bool rev_depend(
         size_t                         call_id     ,
         CppAD::vector<bool>&           depend_x    ,
-        const CppAD::vector<bool>&     depend_y    ) override
-    {
-        // n, m
-        size_t n     = depend_x.size();
-        size_t m     = depend_y.size();
-        //
-        // type_y
-        if( n == m  )
-        {   // unary operator
-            for(size_t i = 0; i < m; ++i)
-                depend_x[i] = depend_y[i];
-        }
-        else
-        {   // binary operator
-            for(size_t i = 0; i < m; ++i)
-            {   depend_x[i]     = depend_y[i];
-                depend_x[m + i] = depend_y[i];
-            }
-        }
-        return true;
-    }
+        const CppAD::vector<bool>&     depend_y
+    ) override;
+    // ---------------------------------------------------------------------
+    // Jacobain Sparsity
+    // ---------------------------------------------------------------------
+    bool jac_sparsity(
+        size_t                                         call_id      ,
+        bool                                           dependency   ,
+        const CppAD::vector<bool>&                     select_x     ,
+        const CppAD::vector<bool>&                     select_y     ,
+        CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
+    ) override;
+    // ---------------------------------------------------------------------
+    // Hessian Sparsity
+    // ---------------------------------------------------------------------
+    bool hes_sparsity(
+        size_t                                         call_id      ,
+        const CppAD::vector<bool>&                     select_x     ,
+        const CppAD::vector<bool>&                     select_y     ,
+        CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
+    ) override;
     // =====================================================================
     // Forward Routines
     // =====================================================================
@@ -367,25 +352,6 @@ private:
         CppAD::vector< CppAD::AD<double> >&              apx,
         const CppAD::vector< CppAD::AD<double> >&        apy
     );
-    // =====================================================================
-    // Jacobain Sparsity
-    // =====================================================================
-    bool jac_sparsity(
-        size_t                                         call_id      ,
-        bool                                           dependency   ,
-        const CppAD::vector<bool>&                     select_x     ,
-        const CppAD::vector<bool>&                     select_y     ,
-        CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
-    ) override;
-    // =====================================================================
-    // Hessian Sparsity
-    // =====================================================================
-    bool hes_sparsity(
-        size_t                                         call_id      ,
-        const CppAD::vector<bool>&                     select_x     ,
-        const CppAD::vector<bool>&                     select_y     ,
-        CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
-    ) override;
 };
 // END C++
 

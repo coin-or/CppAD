@@ -30,7 +30,7 @@ $end
 // BEGIN C++
 # include "atomic_vector.hpp"
 //
-// forward
+// forward override
 // this routine called by ADFun<Base> objects
 bool atomic_vector::forward(
     size_t                                           call_id,
@@ -94,7 +94,7 @@ bool atomic_vector::forward(
     }
     return ok;
 }
-// forward
+// forward override
 // this routine called by ADFun< CppAD::AD<Base> , Base> objects
 bool atomic_vector::forward(
     size_t                                           call_id,

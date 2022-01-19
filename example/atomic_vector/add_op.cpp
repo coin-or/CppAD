@@ -31,6 +31,7 @@ $end
 # include "atomic_vector.hpp"
 
 // ---------------------------------------------------------------------------
+// comment below is used by atomic_vector.omh
 // BEGIN forward_add
 void atomic_vector::forward_add(
     size_t                                           m,
@@ -83,6 +84,7 @@ void atomic_vector::forward_add(
     }
 }
 // END forward_add
+// comment above is used by atomic_vector.omh
 // ---------------------------------------------------------------------------
 // reverse_add
 void atomic_vector::reverse_add(

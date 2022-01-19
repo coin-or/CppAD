@@ -30,8 +30,8 @@ $end
 // BEGIN C++
 # include "atomic_vector.hpp"
 //
-// reverse
-// this routine called by ADFun<Base> objects
+// reverse override
+// this routine used by ADFun<Base> objects
 bool atomic_vector::reverse(
     size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
@@ -93,8 +93,8 @@ bool atomic_vector::reverse(
     }
     return ok;
 }
-// reverse
-// this routine called by ADFun< CppAD::AD<Base> , Base> objects
+// reverse override
+// this routine used by ADFun< CppAD::AD<Base> , Base> objects
 bool atomic_vector::reverse(
     size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
