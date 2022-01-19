@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 # define CPPAD_LOCAL_SWEEP_FORWARD0_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -215,6 +215,7 @@ void forward0(
     vector<ad_type_enum> atom_type_x; // argument type
     vector<Base>         atom_tx;     // argument vector Taylor coefficients
     vector<Base>         atom_ty;     // result vector Taylor coefficients
+    vector<size_t>       atom_iy;     // variable indices for result vector
     //
     // information defined by atomic function operators
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -238,10 +239,6 @@ void forward0(
 # if CPPAD_FORWARD0_TRACE
     // flag as to when to trace atomic function values
     bool atom_trace            = false;
-
-    // variable indices for results vector
-    // (done differently for order zero).
-    vector<size_t> atom_iy;
 # endif
 
     // skip the BeginOp at the beginning of the recording
@@ -825,14 +822,21 @@ void forward0(
                 atom_type_x.resize(atom_n);
                 atom_tx.resize(atom_n);
                 atom_ty.resize(atom_m);
-# if CPPAD_FORWARD0_TRACE
                 atom_iy.resize(atom_m);
-# endif
             }
             else
             {   CPPAD_ASSERT_UNKNOWN( atom_i == atom_m );
                 CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
                 atom_state = start_atom;
+                //
+                // call atomic function for this operation
+                call_atomic_forward<Base, RecBase>(
+                    atom_par_x, atom_type_x, need_y,
+                    order_low, order_up, atom_index, atom_old, atom_tx, atom_ty
+                );
+                for(size_t i = 0; i < atom_m; ++i)
+                    if( atom_iy[i] > 0 )
+                        taylor[ atom_iy[i] * J + 0 ] = atom_ty[i];
 # if CPPAD_FORWARD0_TRACE
                 atom_trace = true;
 # endif
@@ -856,10 +860,6 @@ void forward0(
             //
             if( atom_j == atom_n )
             {   // call atomic function for this operation
-                call_atomic_forward<Base, RecBase>(
-                    atom_par_x, atom_type_x, need_y,
-                    order_low, order_up, atom_index, atom_old, atom_tx, atom_ty
-                );
                 atom_state = ret_atom;
             }
             break;
@@ -876,13 +876,7 @@ void forward0(
             atom_tx[atom_j++]   = taylor[ size_t(arg[0]) * J + 0 ];
             //
             if( atom_j == atom_n )
-            {   // call atomic function for this operation
-                call_atomic_forward<Base, RecBase>(
-                    atom_par_x, atom_type_x, need_y,
-                    order_low, order_up, atom_index, atom_old, atom_tx, atom_ty
-                );
                 atom_state = ret_atom;
-            }
             break;
 
             case FunrpOp:
@@ -892,10 +886,7 @@ void forward0(
             CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
             CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
             CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
-# if CPPAD_FORWARD0_TRACE
-            atom_iy[atom_i] = 0;
-# endif
-            atom_i++;
+            atom_iy[atom_i++] = 0;
             if( atom_i == atom_m )
                 atom_state = end_atom;
             break;
@@ -906,10 +897,7 @@ void forward0(
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
             CPPAD_ASSERT_UNKNOWN( atom_j == atom_n );
-# if CPPAD_FORWARD0_TRACE
-            atom_iy[atom_i] = i_var;
-# endif
-            taylor[ i_var * J + 0 ] = atom_ty[atom_i++];
+            atom_iy[atom_i++] = i_var;
             if( atom_i == atom_m )
                 atom_state = end_atom;
             break;

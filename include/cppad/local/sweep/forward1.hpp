@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FORWARD1_HPP
 # define CPPAD_LOCAL_SWEEP_FORWARD1_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -233,6 +233,7 @@ void forward1(
     vector<ad_type_enum> atom_type_x; // argument type
     vector<Base>         atom_tx;     // argument vector Taylor coefficients
     vector<Base>         atom_ty;     // result vector Taylor coefficients
+    vector<size_t>       atom_iy;     // variable indices for result vector
     //
     // information defined by atomic function operators
     size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0, atom_i=0, atom_j=0;
@@ -261,10 +262,6 @@ void forward1(
     // number of orders for this atomic calculation
     // (not needed for order zero)
     const size_t atom_q1 = q+1;
-
-    // variable indices for results vector
-    // (done differently for order zero).
-    vector<size_t> atom_iy;
 
     // skip the BeginOp at the beginning of the recording
     play::const_sequential_iterator itr = play->begin();
