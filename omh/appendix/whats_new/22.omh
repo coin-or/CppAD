@@ -19,9 +19,16 @@ $spell
     div
     iterator
     iterators
+    cppad_lib
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 01-19$$
+Edit wish_list cppad_lib
+$cref/requirement/wish_list/cppad_lib/Requirement/$$ item.
+Add an $cref/atomic functions/wish_list/Optimization/Atomic Functions/$$
+item to the optimization wish list.
 
 $head 01-15$$
 $list number$$

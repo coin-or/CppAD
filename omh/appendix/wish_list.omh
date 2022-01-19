@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -11,6 +11,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
 -------------------------------------------------------------------------- */
 $begin wish_list$$
 $spell
+    Taylor
     Subgraphs
     subgraph
     Jacobians
@@ -119,8 +120,9 @@ $head cppad_lib$$
 $subhead Requirement$$
 Currently $code cppad_lib$$ library is only needed if one uses
 $cref/colpack/colpack_prefix/$$,
-$cref json_ad_graph$$, or
-$cref cpp_ad_graph$$.
+$cref json_ad_graph$$,
+$cref cpp_ad_graph$$, or
+$cref code_gen_fun$$..
 
 $subhead inline$$
 The C++ $code inline$$ specifier is used to avoid multiple copies
@@ -213,6 +215,12 @@ into separate groups by the corresponding example subdirectory.
 
 $comment ----------------------------------------------------------------- $$
 $head Optimization$$
+
+$subhead Atomic Functions$$
+There is some confusion as to the value of the Taylor coefficients
+for atomic function arguments and results that have been optimized out.
+See $cref/atomic functions/optimize/Atomic Functions/$$ in optimize, and
+$cref/02-16/whats_new_21/02-16/$$ in whats new for 2021.
 
 $subhead Taping$$
 Perhaps some of the optimization done while taping forward mode
