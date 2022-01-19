@@ -437,8 +437,7 @@ void call_atomic_for_jac_sparsity(
         );
     }
     else
-    {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-        atomic_four<RecBase>* afun =
+    {   atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->for_jac_sparsity(
             dependency, call_id, x_index, y_index, var_sparsity
@@ -577,8 +576,7 @@ void call_atomic_rev_jac_sparsity(
         );
     }
     else
-    {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-        atomic_four<RecBase>* afun =
+    {   atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->rev_jac_sparsity(
             dependency, call_id, x_index, y_index, var_sparsity
@@ -600,12 +598,6 @@ $spell
 $$
 
 $section Forward Hessian Sparsity Callback to Atomic Functions$$
-
-$head Syntax$$
-$codei%call_atomic_for_hes_sparsity(
-    %atom_index%, %call_id%, %parameter_x%, %type_x%, %x_index%, %y_index%,
-    %np1%, %numvar%, %rev_jac_sparsity%, %for_sparsity%
-)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_FOR_HES_SPARSITY%// END_FOR_HES_SPARSITY%1%$$
@@ -798,8 +790,7 @@ void call_atomic_for_hes_sparsity(
         );
     }
     else
-    {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-        atomic_four<RecBase>* afun =
+    {   atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->for_hes_sparsity(
             call_id,
@@ -818,6 +809,9 @@ void call_atomic_for_hes_sparsity(
 $begin atomic_rev_hes_sparsity_callback$$
 
 $section Reverse Hessian Sparsity Callback to Atomic Functions$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_REV_HES_SPARSITY%// END_REV_HES_SPARSITY%1%$$
 
 $head Base$$
 is the type corresponding to parameter_x
@@ -868,6 +862,7 @@ the atomic fucntion with one of the partials w.r.t. x_index[j].
 
 $end
 */
+// BEGIN_REV_HES_SPARSITY
 template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_rev_hes_sparsity(
     size_t                       atom_index        ,
@@ -879,6 +874,7 @@ void call_atomic_rev_hes_sparsity(
     const InternalSparsity&      for_jac_sparsity  ,
     bool*                        rev_jac_flag      ,
     InternalSparsity&            rev_hes_sparsity  )
+// END_REV_HES_SPARSITY
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
@@ -970,8 +966,7 @@ void call_atomic_rev_hes_sparsity(
         );
     }
     else
-    {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-        atomic_four<RecBase>* afun =
+    {   atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->rev_hes_sparsity(
             call_id,
@@ -986,36 +981,45 @@ void call_atomic_rev_hes_sparsity(
 }
 // ----------------------------------------------------------------------------
 /*
-Reverse dependency callback to atomic functions.
+$begin atomic_rev_depend_callback$$
 
-\param atom_index [in]
+$section Reverse Dependency Callback to Atomic Functions$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_REV_DEPEND%// END_REV_DEPEND%1%$$
+
+$head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
-\param atom_old [in]
-is the extra id information for this atomic function in the atomic_one case.
+$head call_id$$
+see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+the atomic_one $cref/id/atomic_one/id/$$.
 
-\param parameter_x [in]
-is the value of the parameters in the corresponding function call
-afun(ax, ay).
+$head parameter_x$$
+is the value of the parameters in the corresponding atomic function call.
 
-\param type_x [in]
-is the type for each x component in the corresponding function call
-afun(ax, ay).
+$head type_x$$
+is the type for each x component in the corresponding atomic function call.
 
-\param depend_x [out]
-specifies which components of x affect values we are interested in.
+$head depend_x$$
+which components of x affect values we are interested in.
+This is the only output for this routine.
 
-\param depend_y [in]
-specifies which components of y affect values we are interested in.
+$head depend_y$$
+which components of y affect values we are interested in.
+
+$end
 */
+// BEGIN_REV_DEPEND
 template <class Base, class RecBase>
 void call_atomic_rev_depend(
     size_t                      atom_index   ,
-    size_t                      atom_old     ,
+    size_t                      call_id      ,
     const vector<Base>&         parameter_x  ,
     const vector<ad_type_enum>& type_x       ,
     vector<bool>&               depend_x     ,
     const vector<bool>&         depend_y     )
+// END_REV_DEPEND
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
     size_t       type     = 0;          // set to avoid warning
@@ -1029,15 +1033,20 @@ void call_atomic_rev_depend(
         if( type == 2 )
         {   atomic_base<RecBase>* afun =
                 reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(atom_old);
+            afun->set_old(call_id);
             vector<ad_type_enum> empty;
             ok = afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
         }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-            atomic_three<RecBase>* afun =
+        else if( type == 3 )
+        {   atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
             ok = afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
+        }
+        else
+        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+            atomic_four<RecBase>* afun =
+                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+            ok = afun->rev_depend(call_id, depend_x, depend_y);
         }
     }
     if( ! ok )
@@ -1056,13 +1065,18 @@ void call_atomic_rev_depend(
     {   atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
         vector<ad_type_enum> empty;
-        afun->set_old(atom_old);
+        afun->set_old(call_id);
         afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
     }
-    else
+    else if( type == 3 )
     {   atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
         afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
+    }
+    else
+    {   atomic_four<RecBase>* afun =
+            reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+        afun->rev_depend(call_id, depend_x, depend_y);
     }
 # endif
 }

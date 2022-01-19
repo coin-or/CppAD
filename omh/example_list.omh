@@ -80,6 +80,7 @@ $rref atomic_vector_mul.cpp$$
 $rref atomic_vector_mul_op.cpp$$
 $rref atomic_vector_neg.cpp$$
 $rref atomic_vector_neg_op.cpp$$
+$rref atomic_vector_optimize.cpp$$
 $rref atomic_vector_reverse_op.cpp$$
 $rref atomic_vector_sparsity.cpp$$
 $rref atomic_vector_sub.cpp$$

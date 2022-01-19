@@ -44,7 +44,7 @@ bool sparsity(void)
     // n
     size_t n = 3 * m;
     //
-    // mul_op, add_op
+    // mul_op, neg_op
     typedef atomic_vector::op_enum_t op_enum_t;
     op_enum_t mul_op = atomic_vector::mul_enum;
     op_enum_t neg_op = atomic_vector::neg_enum;

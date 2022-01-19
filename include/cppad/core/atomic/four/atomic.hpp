@@ -61,10 +61,10 @@ $icode%ok% = %afun%.for_type(
     %call_id%, %dependency%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.hes_sparsity(
-    %call_id%, %type_x%, %select_x% %select_y%, %pattern_out%
+    %call_id%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.rev_depend(
-    %call_id%, %type_x%, %depend_x%, %depend_y%
+    %call_id%, %depend_x%, %depend_y%
 )%$$
 
 $head See Also$$
@@ -271,7 +271,6 @@ public:
     // type: doxygen in atomic/four_rev_depend.hpp
     virtual bool rev_depend(
         size_t                       call_id     ,
-        const vector<ad_type_enum>&  type_x      ,
         vector<bool>&                depend_x    ,
         const vector<bool>&          depend_y
     );

@@ -24,6 +24,7 @@ SET(source_list
     mul_op.cpp
     neg.cpp
     neg_op.cpp
+    optimize.cpp
     reverse_op.cpp
     sparsity.cpp
     sub.cpp

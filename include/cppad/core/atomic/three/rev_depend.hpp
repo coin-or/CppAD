@@ -58,7 +58,9 @@ Upon return, for $latex j = 0 , \ldots , n-1$$,
 $icode%depend_x%[%j%]%$$ is true if the values of interest depend
 on the value of $cref/ax[j]/atomic_three_afun/ax/$$ in the corresponding
 $icode%afun%(%ax%, %ay%)%$$ call.
-Note that parameters and variables,
+
+$subhead Optimize$$
+Parameters and variables,
 that the values of interest do not depend on,
 may get removed by $cref/optimization/optimize/$$.
 The corresponding values in $cref/parameter_x/atomic_three/parameter_x/$$,

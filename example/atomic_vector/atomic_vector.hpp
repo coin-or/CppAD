@@ -109,27 +109,48 @@ private:
         const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
         CppAD::vector<CppAD::ad_type_enum>&        type_y      ) override
     {
-        // op, m
-        op_enum_t op = op_enum_t( call_id );
+        // n, m
         size_t n     = type_x.size();
-        size_t m = n / 2;
-        if( is_unary(op) )
-            m = n;
-        //
-        // ok
-        bool ok  = type_x.size() == n;
-        ok      &= type_y.size() == m;
-        if( ! ok )
-            return false;
+        size_t m     = type_y.size();
         //
         // type_y
-        if( is_unary(op) )
+        if( n == m )
+        {   // unary operator
             for(size_t i = 0; i < m; ++i)
                 type_y[i] = type_x[i];
+        }
         else
+        {   // binary operator
             for(size_t i = 0; i < m; ++i)
                 type_y[i] = std::max( type_x[i] , type_x[m + i] );
+        }
+        return true;
+    }
+    // ------------------------------------------------------------------------
+    // rev_depend
+    // ------------------------------------------------------------------------
+    bool rev_depend(
+        size_t                         call_id     ,
+        CppAD::vector<bool>&           depend_x    ,
+        const CppAD::vector<bool>&     depend_y    ) override
+    {
+        // n, m
+        size_t n     = depend_x.size();
+        size_t m     = depend_y.size();
         //
+        // type_y
+        if( n == m  )
+        {   // unary operator
+            for(size_t i = 0; i < m; ++i)
+                depend_x[i] = depend_y[i];
+        }
+        else
+        {   // binary operator
+            for(size_t i = 0; i < m; ++i)
+            {   depend_x[i]     = depend_y[i];
+                depend_x[m + i] = depend_y[i];
+            }
+        }
         return true;
     }
     // =====================================================================
