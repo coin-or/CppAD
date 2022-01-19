@@ -1,3 +1,5 @@
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_FORWARD_OP_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_FORWARD_OP_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -10,17 +12,17 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_reverse_op.cpp$$
+$begin atomic_vector_forward_op.hpp$$
 
 $section Atomic Vector Forward Mode: Example Implementation$$
 
 $head Purpose$$
-The $code reverse$$ routine overrides the virtual functions
-used by the atomic_three base class for reverse mode calculations; see
-$cref/reverse/atomic_three_reverse/$$.
+The $code forward$$ routine overrides the virtual functions
+used by the atomic_three base class for forward mode calculations; see
+$cref/forward/atomic_three_forward/$$.
 It determines which operator is specified for this call and transfers
 the call to the operator's implementation.
-There are two versions of the $code reverse$$ routine, one for $code double$$
+There are two versions of the $code forward$$ routine, one for $code double$$
 and one for $code AD<double>$$.
 
 $head Source$$
@@ -30,24 +32,26 @@ $end
 // BEGIN C++
 # include "atomic_vector.hpp"
 //
-// reverse override
-// this routine used by ADFun<Base> objects
-bool atomic_vector::reverse(
+// forward override
+// this routine called by ADFun<Base> objects
+template <class Base>
+bool atomic_vector<Base>::forward(
     size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+    size_t                                           need_y,
+    size_t                                           order_low,
     size_t                                           order_up,
-    const CppAD::vector<double>&                     tx,
-    const CppAD::vector<double>&                     ty,
-    CppAD::vector<double>&                           px,
-    const CppAD::vector<double>&                     py)
+    const CppAD::vector<Base>&                       tx,
+    CppAD::vector<Base>&                             ty)
 {
-    // q
+    // p, q
+    size_t p = order_low;
     size_t q = order_up + 1;
     //
-    // op, n, m
+    // op, m
     op_enum_t op = op_enum_t( call_id );
     size_t n     = type_x.size();
-    size_t m  = n / 2;
+    size_t m = n / 2;
     if( is_unary(op) )
         m = n;
     assert( tx.size() == q * n );
@@ -58,31 +62,31 @@ bool atomic_vector::reverse(
     {
         // addition
         case add_enum:
-        reverse_add(m, q, tx, ty, px, py);
+        forward_add(m, p, q, tx, ty);
         ok = true;
         break;
 
         // subtraction
         case sub_enum:
-        reverse_sub(m, q, tx, ty, px, py);
+        forward_sub(m, p, q, tx, ty);
         ok = true;
         break;
 
         // multiplication
         case mul_enum:
-        reverse_mul(m, q, tx, ty, px, py);
+        forward_mul(m, p, q, tx, ty);
         ok = true;
         break;
 
         // division
         case div_enum:
-        reverse_div(m, q, tx, ty, px, py);
+        forward_div(m, p, q, tx, ty);
         ok = true;
         break;
 
         // unary minus
         case neg_enum:
-        reverse_neg(m, q, tx, ty, px, py);
+        forward_neg(m, p, q, tx, ty);
         ok = true;
         break;
 
@@ -93,58 +97,61 @@ bool atomic_vector::reverse(
     }
     return ok;
 }
-// reverse override
-// this routine used by ADFun< CppAD::AD<Base> , Base> objects
-bool atomic_vector::reverse(
+// forward override
+// this routine called by ADFun< CppAD::AD<Base> , Base> objects
+template <class Base>
+bool atomic_vector<Base>::forward(
     size_t                                           call_id,
     const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+    size_t                                           need_y,
+    size_t                                           order_low,
     size_t                                           order_up,
-    const CppAD::vector< CppAD::AD<double> >&        atx,
-    const CppAD::vector< CppAD::AD<double> >&        aty,
-    CppAD::vector< CppAD::AD<double> >&              apx,
-    const CppAD::vector< CppAD::AD<double> >&        apy)
+    const CppAD::vector< CppAD::AD<Base> >&          atx,
+    CppAD::vector< CppAD::AD<Base> >&                aty         )
 {
-    // q
+    // p, q
+    size_t p = order_low;
     size_t q = order_up + 1;
     //
     // op, m
     op_enum_t op = op_enum_t( call_id );
     size_t n     = type_x.size();
-    size_t m  = n / 2;
+    size_t m     = n / 2;
     if( is_unary(op) )
         m = n;
     assert( atx.size() == q * n );
     assert( aty.size() == q * m );
+    //
     bool ok = false;
     switch(op)
     {
         // addition
         case add_enum:
-        reverse_add(m, q, atx, aty, apx, apy);
+        forward_add(m, p, q, atx, aty);
         ok = true;
         break;
 
         // subtraction
         case sub_enum:
-        reverse_sub(m, q, atx, aty, apx, apy);
+        forward_sub(m, p, q, atx, aty);
         ok = true;
         break;
 
         // multiplication
         case mul_enum:
-        reverse_mul(m, q, atx, aty, apx, apy);
+        forward_mul(m, p, q, atx, aty);
         ok = true;
         break;
 
         // division
         case div_enum:
-        reverse_div(m, q, atx, aty, apx, apy);
+        forward_div(m, p, q, atx, aty);
         ok = true;
         break;
 
         // unary minus
         case neg_enum:
-        reverse_neg(m, q, atx, aty, apx, apy);
+        forward_neg(m, p, q, atx, aty);
         ok = true;
         break;
 
@@ -156,3 +163,4 @@ bool atomic_vector::reverse(
     return ok;
 }
 // END C++
+# endif

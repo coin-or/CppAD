@@ -1,3 +1,5 @@
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_JAC_SPARSITY_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_JAC_SPARSITY_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -10,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_jac_sparsity.cpp$$
+$begin atomic_vector_jac_sparsity.hpp$$
 $spell
     Jacobian
     jac
@@ -31,7 +33,8 @@ $end
 # include "atomic_vector.hpp"
 //
 // jac_sparsity override
-bool atomic_vector::jac_sparsity(
+template <class Base>
+bool atomic_vector<Base>::jac_sparsity(
     size_t                                         call_id      ,
     bool                                           dependency   ,
     const CppAD::vector<bool>&                     select_x     ,
@@ -76,3 +79,4 @@ bool atomic_vector::jac_sparsity(
     return true;
 }
 // END C++
+# endif

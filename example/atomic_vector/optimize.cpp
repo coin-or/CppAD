@@ -35,7 +35,7 @@ bool optimize(void)
     //
     // vec_op
     // atomic vector_op object
-    atomic_vector vec_op("atomic_vector");
+    atomic_vector<double> vec_op("atomic_vector");
     //
     // m
     // size of u, v, and w
@@ -45,10 +45,10 @@ bool optimize(void)
     size_t n = 3 * m;
     //
     // add_op, mul_op, neg_op
-    typedef atomic_vector::op_enum_t op_enum_t;
-    op_enum_t add_op = atomic_vector::add_enum;
-    op_enum_t mul_op = atomic_vector::mul_enum;
-    op_enum_t neg_op = atomic_vector::neg_enum;
+    typedef atomic_vector<double>::op_enum_t op_enum_t;
+    op_enum_t add_op = atomic_vector<double>::add_enum;
+    op_enum_t mul_op = atomic_vector<double>::mul_enum;
+    op_enum_t neg_op = atomic_vector<double>::neg_enum;
     // -----------------------------------------------------------------------
     // Record f(u, v, w) = - (u + v) * w
     // -----------------------------------------------------------------------

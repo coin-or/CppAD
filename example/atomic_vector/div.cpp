@@ -40,16 +40,16 @@ bool div(void)
     //
     // vec_op
     // atomic vector_op object
-    atomic_vector vec_op("atomic_vector");
+    atomic_vector<double> vec_op("atomic_vector");
     //
     // m
     // size of u and v
     size_t m = 4;
     //
     // mul_op, div_op
-    typedef atomic_vector::op_enum_t op_enum_t;
-    op_enum_t mul_op = atomic_vector::mul_enum;
-    op_enum_t div_op = atomic_vector::div_enum;
+    typedef atomic_vector<double>::op_enum_t op_enum_t;
+    op_enum_t mul_op = atomic_vector<double>::mul_enum;
+    op_enum_t div_op = atomic_vector<double>::div_enum;
     // -----------------------------------------------------------------------
     // Record f(u, v) = u * u / v
     // -----------------------------------------------------------------------

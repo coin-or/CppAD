@@ -1,3 +1,5 @@
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_FOR_TYPE_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_FOR_TYPE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -10,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_for_type.cpp$$
+$begin atomic_vector_for_type.hpp$$
 $spell
     Jacobian
     jac
@@ -31,7 +33,8 @@ $end
 # include "atomic_vector.hpp"
 //
 // for_type override
-bool atomic_vector::for_type(
+template <class Base>
+bool atomic_vector<Base>::for_type(
     size_t                                     call_id     ,
     const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
     CppAD::vector<CppAD::ad_type_enum>&        type_y      )
@@ -54,3 +57,4 @@ bool atomic_vector::for_type(
     return true;
 }
 // END C++
+# endif

@@ -40,15 +40,15 @@ bool add(void)
     //
     // vec_op
     // atomic vector_op object
-    atomic_vector vec_op("atomic_vector");
+    atomic_vector<double> vec_op("atomic_vector");
     //
     // m
     // size of u, v, and w
     size_t m = 5;
     //
     // add_op
-    typedef atomic_vector::op_enum_t op_enum_t;
-    op_enum_t add_op = atomic_vector::add_enum;
+    typedef atomic_vector<double>::op_enum_t op_enum_t;
+    op_enum_t add_op = atomic_vector<double>::add_enum;
     // -----------------------------------------------------------------------
     // Record f(u, v, w) = u + v + w
     // -----------------------------------------------------------------------

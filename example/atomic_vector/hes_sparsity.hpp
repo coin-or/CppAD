@@ -1,3 +1,5 @@
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_HES_SPARSITY_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_HES_SPARSITY_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -10,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_hes_sparsity.cpp$$
+$begin atomic_vector_hes_sparsity.hpp$$
 $spell
     Jacobian
     hes
@@ -31,7 +33,8 @@ $end
 # include "atomic_vector.hpp"
 //
 // hes_sparsity override
-bool atomic_vector::hes_sparsity(
+template <class Base>
+bool atomic_vector<Base>::hes_sparsity(
     size_t                                         call_id      ,
     const CppAD::vector<bool>&                     select_x     ,
     const CppAD::vector<bool>&                     select_y     ,
@@ -94,3 +97,4 @@ bool atomic_vector::hes_sparsity(
     return true;
 }
 // END C++
+# endif

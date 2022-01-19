@@ -1,3 +1,5 @@
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_REV_DEPEND_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_REV_DEPEND_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -10,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_rev_depend.cpp$$
+$begin atomic_vector_rev_depend.hpp$$
 $spell
     Jacobian
     jac
@@ -31,7 +33,8 @@ $end
 # include "atomic_vector.hpp"
 //
 // rev_depend override
-bool atomic_vector::rev_depend(
+template <class Base>
+bool atomic_vector<Base>::rev_depend(
     size_t                         call_id     ,
     CppAD::vector<bool>&           depend_x    ,
     const CppAD::vector<bool>&     depend_y    )
@@ -56,3 +59,4 @@ bool atomic_vector::rev_depend(
     return true;
 }
 // END C++
+# endif

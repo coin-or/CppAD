@@ -807,6 +807,12 @@ void call_atomic_for_hes_sparsity(
 // ----------------------------------------------------------------------------
 /*
 $begin atomic_rev_hes_sparsity_callback$$
+$spell
+    setvec
+    jac
+    Jacobian
+    hes
+$$
 
 $section Reverse Hessian Sparsity Callback to Atomic Functions$$
 
@@ -846,19 +852,19 @@ is the forward Jacobian sparsity for the j-th argument to this atomic function.
 
 $head rev_jac_flag$$
 On input, for i = 0, ... , m-1, rev_jac_flag[ y_index[i] ] is true
-if the fuction (we are computing the sparsity for)
+if the function (we are computing the sparsity for)
 depends on the variable y_index[i].
 Upon return, for j = 0, ..., n-1, rev_jac_flag[ x_index[j] ] has been set to
-true any of the y_index variables are flagged depnend on x_index[j].
+true any of the y_index variables are flagged depend on x_index[j].
 Otherwise, rev_jac_flag[ x_index[j] ] is not modified.
 
 $head rev_hes_sparsity$$
 This is the sparsity pattern for the Hessian.
 On input, for i = 0, ... , m-1, row y_index[i] is the reverse Hessian sparsity
-with one of the partials with respect to to y_index[i].
+with one of the partials with respect to y_index[i].
 Upon return, for j = 0, ..., n-1, the row x_index[j] has been
 modified to include components that have a non-zero hessian through
-the atomic fucntion with one of the partials w.r.t. x_index[j].
+the atomic function with one of the partials w.r.t. x_index[j].
 
 $end
 */

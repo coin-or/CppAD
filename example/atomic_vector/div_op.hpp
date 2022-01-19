@@ -1,3 +1,5 @@
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_DIV_OP_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_DIV_OP_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -10,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_div_op.cpp$$
+$begin atomic_vector_div_op.hpp$$
 
 $section Atomic Vector Divide Operator: Example Implementation$$
 
@@ -31,12 +33,13 @@ $end
 # include "atomic_vector.hpp"
 // ---------------------------------------------------------------------------
 // forward_div
-void atomic_vector::forward_div(
+template <class Base>
+void atomic_vector<Base>::forward_div(
     size_t                                           m,
     size_t                                           p,
     size_t                                           q,
-    const CppAD::vector<double>&                     tx,
-    CppAD::vector<double>&                           ty)
+    const CppAD::vector<Base>&                       tx,
+    CppAD::vector<Base>&                             ty)
 {
     for(size_t i = 0; i < m; ++i)
     {   for(size_t k = p; k < q; ++k)
@@ -56,12 +59,13 @@ void atomic_vector::forward_div(
         }
     }
 }
-void atomic_vector::forward_div(
+template <class Base>
+void atomic_vector<Base>::forward_div(
     size_t                                           m,
     size_t                                           p,
     size_t                                           q,
-    const CppAD::vector< CppAD::AD<double> >&        atx,
-    CppAD::vector< CppAD::AD<double> >&              aty)
+    const CppAD::vector< CppAD::AD<Base> >&          atx,
+    CppAD::vector< CppAD::AD<Base> >&                aty)
 {
     size_t n = 2 * m;
     assert( atx.size() == n * q );
@@ -121,13 +125,14 @@ void atomic_vector::forward_div(
 }
 // ---------------------------------------------------------------------------
 // reverse_div
-void atomic_vector::reverse_div(
+template <class Base>
+void atomic_vector<Base>::reverse_div(
     size_t                                           m,
     size_t                                           q,
-    const CppAD::vector<double>&                     tx,
-    const CppAD::vector<double>&                     ty,
-    CppAD::vector<double>&                           px,
-    const CppAD::vector<double>&                     py)
+    const CppAD::vector<Base>&                       tx,
+    const CppAD::vector<Base>&                       ty,
+    CppAD::vector<Base>&                             px,
+    const CppAD::vector<Base>&                       py)
 {
 # ifndef NDEBUG
     size_t n = 2 * m;
@@ -175,13 +180,14 @@ void atomic_vector::reverse_div(
         }
     }
 }
-void atomic_vector::reverse_div(
+template <class Base>
+void atomic_vector<Base>::reverse_div(
     size_t                                           m,
     size_t                                           q,
-    const CppAD::vector< CppAD::AD<double> >&        atx,
-    const CppAD::vector< CppAD::AD<double> >&        aty,
-    CppAD::vector< CppAD::AD<double> >&              apx,
-    const CppAD::vector< CppAD::AD<double> >&        apy)
+    const CppAD::vector< CppAD::AD<Base> >&          atx,
+    const CppAD::vector< CppAD::AD<Base> >&          aty,
+    CppAD::vector< CppAD::AD<Base> >&                apx,
+    const CppAD::vector< CppAD::AD<Base> >&          apy)
 {   size_t n = 2 * m;
     assert( atx.size() == n * q );
     assert( aty.size() == m * q );
@@ -309,3 +315,4 @@ void atomic_vector::reverse_div(
 
 
 // END C++
+# endif

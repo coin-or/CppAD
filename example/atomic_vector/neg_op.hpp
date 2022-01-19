@@ -1,3 +1,5 @@
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_NEG_OP_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_NEG_OP_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -10,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_neg_op.cpp$$
+$begin atomic_vector_neg_op.hpp$$
 
 $section Atomic Vector Negative Operator: Example Implementation$$
 
@@ -27,12 +29,13 @@ $end
 # include "atomic_vector.hpp"
 
 // ---------------------------------------------------------------------------
-void atomic_vector::forward_neg(
+template <class Base>
+void atomic_vector<Base>::forward_neg(
     size_t                                           m,
     size_t                                           p,
     size_t                                           q,
-    const CppAD::vector<double>&                     tx,
-    CppAD::vector<double>&                           ty)
+    const CppAD::vector<Base>&                       tx,
+    CppAD::vector<Base>&                             ty)
 {
     for(size_t k = p; k < q; ++k)
     {   for(size_t i = 0; i < m; ++i)
@@ -43,12 +46,13 @@ void atomic_vector::forward_neg(
         }
     }
 }
-void atomic_vector::forward_neg(
+template <class Base>
+void atomic_vector<Base>::forward_neg(
     size_t                                           m,
     size_t                                           p,
     size_t                                           q,
-    const CppAD::vector< CppAD::AD<double> >&        atx,
-    CppAD::vector< CppAD::AD<double> >&              aty)
+    const CppAD::vector< CppAD::AD<Base> >&          atx,
+    CppAD::vector< CppAD::AD<Base> >&                aty)
 {   size_t n = m;
     assert( atx.size() == n * q );
     assert( aty.size() == m * q );
@@ -74,13 +78,14 @@ void atomic_vector::forward_neg(
 }
 // ---------------------------------------------------------------------------
 // reverse_neg
-void atomic_vector::reverse_neg(
+template <class Base>
+void atomic_vector<Base>::reverse_neg(
     size_t                                           m,
     size_t                                           q,
-    const CppAD::vector<double>&                     tx,
-    const CppAD::vector<double>&                     ty,
-    CppAD::vector<double>&                           px,
-    const CppAD::vector<double>&                     py)
+    const CppAD::vector<Base>&                       tx,
+    const CppAD::vector<Base>&                       ty,
+    CppAD::vector<Base>&                             px,
+    const CppAD::vector<Base>&                       py)
 {
     for(size_t k = 0; k < q; ++k)
     {   for(size_t i = 0; i < m; ++i)
@@ -91,13 +96,14 @@ void atomic_vector::reverse_neg(
         }
     }
 }
-void atomic_vector::reverse_neg(
+template <class Base>
+void atomic_vector<Base>::reverse_neg(
     size_t                                           m,
     size_t                                           q,
-    const CppAD::vector< CppAD::AD<double> >&        atx,
-    const CppAD::vector< CppAD::AD<double> >&        aty,
-    CppAD::vector< CppAD::AD<double> >&              apx,
-    const CppAD::vector< CppAD::AD<double> >&        apy)
+    const CppAD::vector< CppAD::AD<Base> >&          atx,
+    const CppAD::vector< CppAD::AD<Base> >&          aty,
+    CppAD::vector< CppAD::AD<Base> >&                apx,
+    const CppAD::vector< CppAD::AD<Base> >&          apy)
 {   size_t n = m;
     assert( atx.size() == n * q );
     assert( aty.size() == m * q );
@@ -123,3 +129,4 @@ void atomic_vector::reverse_neg(
 }
 
 // END C++
+# endif

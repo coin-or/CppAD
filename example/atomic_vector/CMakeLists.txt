@@ -13,24 +13,13 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     add.cpp
-    add_op.cpp
     atomic_vector.cpp
     div.cpp
-    div_op.cpp
-    for_type.cpp
-    forward_op.cpp
-    hes_sparsity.cpp
-    jac_sparsity.cpp
     mul.cpp
-    mul_op.cpp
     neg.cpp
-    neg_op.cpp
     optimize.cpp
-    rev_depend.cpp
-    reverse_op.cpp
     sparsity.cpp
     sub.cpp
-    sub_op.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
