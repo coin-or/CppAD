@@ -45,8 +45,10 @@ it enters the computation as an atomic operation in the recording;
 see $cref/start recording/Independent/Start Recording/$$.
 
 $head Base$$
-This is the $icode Base$$ type of the elements of $icode ax$$ and $icode ay$$
-in the call to the $icode afun$$ atomic operation.
+This is the $cref/Base/atomic_four_ctor/atomic_four/Base/$$
+in the $icode afun$$ constructor.
+It is also the $icode Base$$ type of the elements of
+$icode ax$$ and $icode ay$$ in the atomic function call.
 To be specific, the elements of $icode ax$$ and $icode ay$$ have type
 $codei%AD%<%Base%>%$$.
 
@@ -64,8 +66,7 @@ $head ax$$
 The size of this vector determines$icode n$$.
 It specifies vector $latex x \in \B{R}^n$$
 at which an $codei%AD<%Base%>%$$ version of
-$latex y = g(x)$$ is to be evaluated; see
-$cref/Base/atomic_four_ctor/atomic_four/Base/$$.
+$latex y = g(x)$$ is to be evaluated.
 
 $head ay$$
 The size of this vector determines $icode m$$.

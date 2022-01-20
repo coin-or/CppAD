@@ -53,7 +53,7 @@ $icode%ok% = %afun%.for_type(
     %call_id%, %select_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
 )
 %ok% = %afun%.reverse(
-    %call_id%, %type_x%,
+    %call_id%, %select_x%,
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %ok% = %afun%.jac_sparsity(
@@ -91,24 +91,6 @@ an atomic version of $latex g(x)$$ removes the need for repeated
 copies of the corresponding $codei%AD<%Base%>%$$ operations and variables
 in the recording.
 
-$head ad_type$$
-The type $code CppAD::ad_type_enum$$
-is used to specify if an AD object is a
-$cref/constant parameter/glossary/Parameter/Constant/$$
-$cref/dynamic parameter/glossary/Parameter/Dynamic/$$
-or $cref/variable/glossary/Variable/$$.
-It has the following possible values:
-$center
-$table
-$icode ad_type_enum$$  $pre  $$   $cnext Meaning $rnext
-$code constant_enum$$  $pre  $$   $cnext constant parameter $rnext
-$code dynamic_enum$$   $pre  $$   $cnext dynamic parameter  $rnext
-$code variable_enum$$  $pre  $$   $cnext variable
-$tend
-$$
-In addition,
-$code constant_enum < dynamic_enum < variable_enum$$.
-
 $head Virtual Functions$$
 The $cref/callback functions/atomic_four/Syntax/Callbacks/$$
 are implemented by defining the virtual functions in the
@@ -128,43 +110,6 @@ For example,
 $icode forward$$ for the case $icode%order_up% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
-
-$head Base$$
-This is the base type of the elements of
-$cref/ax/atomic_three_afun/ax/$$ and $cref/ay/atomic_three_afun/ay/$$
-in the corresponding $icode%afun%(%ax%, %ay%)%$$ call; i.e.,
-the elements of $icode ax$$ and $icode ay$$ have type
-$codei%AD<%Base%>%$$.
-
-$head call_id$$
-This argument has prototype
-$codei%
-    size_t %call_id%
-%$$
-It is optional in the atomic function
-$cref/call/atomic_four/Syntax/Call/$$ and can be used to
-specify additional information about this atomic function call.
-If it is not present in an atomic function call, its value in the
-$cref/callbacks/atomic_four/Syntax/Callbacks/$$ will be zero.
-
-$head type_x$$
-Many of the virtual functions include this vector.
-It has size equal to the number of arguments for the call
-to this atomic function; i.e., the size of
-$cref/ax/atomic_four_call/ax/$$ which we denote by $icode n$$.
-For $icode%j% =0,%...%,%n%-1%$$,
-if $icode%ax%[%j%]%$$ is a constant parameter,
-$codei%
-    %type_x%[%j%] == CppAD::constant_enum
-%$$
-if $icode%ax%[%j%]%$$ is a dynamic parameter,
-$codei%
-    %type_x%[%j%] == CppAD::dynamic_enum
-%$$
-if $icode%ax%[%j%]%$$ is a variable,
-$codei%
-    %type_x%[%j%] == CppAD::variable_enum
-%$$
 
 $childtable%include/cppad/core/atomic/four/ctor.hpp
     %include/cppad/core/atomic/four/call.hpp

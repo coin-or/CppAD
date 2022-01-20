@@ -24,7 +24,7 @@ $section Atomic Function Forward Type Calculation$$
 $head Syntax$$
 $icode%ok% = %afun%.for_type(%call_id%, %type_x%, %type_y%)%$$
 
-$subhead Prototype$$
+$head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
@@ -40,17 +40,50 @@ This virtual function must be defined by the
 $cref/atomic_user/atomic_four_ctor/atomic_user/$$ derived class.
 
 $head Base$$
-See $cref/Base/atomic_four/Base/$$.
+See $cref/Base/atomic_four_call/Base/$$.
 
 $head call_id$$
-See $cref/call_id/atomic_four/call_id/$$.
+See $cref/call_id/atomic_four_call/call_id/$$.
+
+$head ad_type$$
+The type $code CppAD::ad_type_enum$$
+is used to specify if an AD object is a
+$cref/constant parameter/glossary/Parameter/Constant/$$
+$cref/dynamic parameter/glossary/Parameter/Dynamic/$$
+or $cref/variable/glossary/Variable/$$.
+It has the following possible values:
+$center
+$table
+$icode ad_type_enum$$  $pre  $$   $cnext Meaning $rnext
+$code constant_enum$$  $pre  $$   $cnext constant parameter $rnext
+$code dynamic_enum$$   $pre  $$   $cnext dynamic parameter  $rnext
+$code variable_enum$$  $pre  $$   $cnext variable
+$tend
+$$
+In addition,
+$code constant_enum < dynamic_enum < variable_enum$$.
 
 $head type_x$$
-See $cref/type_x/atomic_four/type_x/$$.
+This vector has size equal to the number of arguments in the
+atomic function call; i.e., the size of
+$cref/ax/atomic_four_call/ax/$$ which we denote by $icode n$$.
+For $icode%j% =0,%...%,%n%-1%$$,
+if $icode%ax%[%j%]%$$ is a constant parameter,
+$codei%
+    %type_x%[%j%] == CppAD::constant_enum
+%$$
+if $icode%ax%[%j%]%$$ is a dynamic parameter,
+$codei%
+    %type_x%[%j%] == CppAD::dynamic_enum
+%$$
+if $icode%ax%[%j%]%$$ is a variable,
+$codei%
+    %type_x%[%j%] == CppAD::variable_enum
+%$$
 
 $head type_y$$
-This vector has size equal to the number of results for the call
-to this atomic function; i.e., the size of
+This vector has size equal to the number of results in the
+atomic function call; i.e., the size of
 $cref/ay/atomic_four_call/ay/$$ which we denote by $icode m$$.
 The input values of the elements of $icode type_y$$
 are not specified (must not matter).
@@ -74,7 +107,6 @@ Otherwise, it is false.
 $head Example$$
 The following is an example of a atomic function $code for_type$$ definition:
 $comment%get_started.cpp%atomic_four_get_started.cpp%for_type%$$.
-
 
 $end
 -----------------------------------------------------------------------------

@@ -37,6 +37,9 @@ $$
 
 $section Atomic Function Reverse Mode$$
 
+$head Base$$
+see $cref/Base/atomic_four_call/Base/$$.
+
 $head Syntax$$
 
 $subhead Base$$
@@ -93,7 +96,7 @@ of $icode order_up$$ that are greater than those used by your
 $cref/reverse/Reverse/$$ mode calculations.
 
 $head call_id$$
-See $cref/call_id/atomic_four/call_id/$$.
+See $cref/call_id/atomic_four_call/call_id/$$.
 
 $head select_x$$
 This argument has size equal to the number of arguments to this

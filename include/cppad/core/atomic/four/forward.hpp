@@ -25,6 +25,9 @@ $$
 
 $section Atomic Function Forward Mode$$
 
+$head Base$$
+see $cref/Base/atomic_four_call/Base/$$.
+
 $head Syntax$$
 
 $subhead Base$$
@@ -53,7 +56,7 @@ $srcthisfile%0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
 $head Usage$$
 
 $subhead Base$$
-This syntax and prototype are used by a
+The $icode Base$$ syntax and prototype are used by a
 $cref/call/atomic_four_call/$$ to the atomic function $icode afun$$.
 They are also used by
 $icode%f%.Forward%$$ and $icode%f%.new_dynamic%$$
@@ -64,13 +67,14 @@ $codei%
 and $icode afun$$ is used during the recording of $icode f$$.
 
 $subhead AD<Base>$$
-This syntax and prototype are used by
+The $codei%AD<%Base%>%$$ syntax and prototype are used by
 $icode%af%.Forward%$$ and $icode%af%.new_dynamic%$$
 where $icode af$$ has prototype
 $codei%
     ADFun< AD<%Base%> , %Base% > %af%
 %$$
-and $icode afun$$ is used in $icode af$$; see $cref base2ad$$.
+and $icode afun$$ is used in a function $icode af$$,
+created from $icode f$$ using $cref base2ad$$.
 
 $head Implementation$$
 The $icode taylor_x$$, $icode taylor_y$$ version of this function
@@ -83,7 +87,7 @@ $cref/forward/Forward/$$ mode calculations.
 Order zero must be implemented.
 
 $head call_id$$
-See $cref/call_id/atomic_four/call_id/$$.
+See $cref/call_id/atomic_four_call/call_id/$$.
 
 $head select_y$$
 This argument has size equal to the number of results to this

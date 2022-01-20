@@ -37,14 +37,14 @@ This function must be defined if
 $cref/afun/atomic_four_ctor/atomic_user/afun/$$ is
 used to define an $cref ADFun$$ object $icode f$$,
 and Jacobian sparsity patterns are computed for $icode f$$.
-(Computing Hessian sparsity patterns and optimizing
+(Computing Hessian sparsity patterns
 requires Jacobian sparsity patterns.)
 
 $head Base$$
 See $cref/Base/atomic_four_call/Base/$$.
 
 $head call_id$$
-See $cref/call_id/atomic_four/call_id/$$.
+See $cref/call_id/atomic_four_call/call_id/$$.
 
 $head dependency$$
 If $icode dependency$$ is true,
@@ -82,8 +82,7 @@ This input value of $icode pattern_out$$ does not matter.
 Upon return it is a
 dependency or sparsity pattern for the Jacobian of $latex g(x)$$,
 the function corresponding to
-$cref/afun/atomic_four_ctor/atomic_user/afun/$$;
-$icode dependency$$ above.
+$cref/afun/atomic_four_ctor/atomic_user/afun/$$.
 To be specific, there are non-negative indices
 $icode i$$, $icode j$$, $icode k$$ such that
 $codei%

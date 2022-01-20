@@ -52,7 +52,7 @@ Is a list of arguments for the $icode atomic_user$$ constructor.
 $subhead afun$$
 The object $icode afun$$ must stay in scope for as long
 as the corresponding atomic function is used.
-This includes use by any $cref/ADFun<Base>/ADFun/$$ that
+This includes use by any $cref/ADFun<Base>/ADFun/$$ object that
 has this $icode atomic_user$$ operation in its
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 

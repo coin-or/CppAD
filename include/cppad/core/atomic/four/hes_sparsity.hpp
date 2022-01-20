@@ -41,7 +41,7 @@ $head Base$$
 See $cref/Base/atomic_four_call/Base/$$.
 
 $head call_id$$
-See $cref/call_id/atomic_four/call_id/$$.
+See $cref/call_id/atomic_four_call/call_id/$$.
 
 $head select_x$$
 This argument has size equal to the number of arguments to this
