@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_optimize.cpp$$
+$begin atomic_vector_rev_depend.cpp$$
 
 $section Example Optimizing Atomic Vector Usage$$
 
@@ -28,7 +28,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <cppad/example/atomic_vector.hpp>
-bool optimize(void)
+bool rev_depend(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     using CppAD::AD;
@@ -100,6 +100,7 @@ bool optimize(void)
     ok   &= f.size_var() == 1 + n + 3 * m;
     //
     // optimize
+    // The atomic funciton rev_depend routine is called by optimizer
     f.optimize();
     //
     // size_var

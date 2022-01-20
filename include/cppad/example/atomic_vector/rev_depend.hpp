@@ -25,6 +25,13 @@ The $code rev_depend$$ routine overrides the virtual functions
 used by the atomic_four base class for Jacobian sparsity calculations; see
 $cref/rev_depend/atomic_four_rev_depend/$$.
 
+$children%
+    example/atomic_vector/rev_depend.cpp
+%$$
+$head Example$$
+The file $cref atomic_vector_rev_depend.cpp$$
+contains an example and test that uses this member function.
+
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end

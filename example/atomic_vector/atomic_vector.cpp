@@ -32,7 +32,7 @@ extern bool hes_sparsity(void);
 extern bool jac_sparsity(void);
 extern bool mul(void);
 extern bool neg(void);
-extern bool optimize(void);
+extern bool rev_depend(void);
 extern bool sub(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -51,7 +51,7 @@ int main(void)
     Run( jac_sparsity,        "jac_sparsity"   );
     Run( mul,                 "mul"            );
     Run( neg,                 "neg"            );
-    Run( optimize,            "optimize"       );
+    Run( rev_depend,          "rev_depend"     );
     Run( sub,                 "sub"            );
     // END_SORT_THIS_LINE_MINUS_1
 

@@ -19,7 +19,7 @@ SET(source_list
     jac_sparsity.cpp
     mul.cpp
     neg.cpp
-    optimize.cpp
+    rev_depend.cpp
     sub.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
