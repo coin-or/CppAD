@@ -37,6 +37,41 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
+
+// declare forward_op and reverse_op for Base and AD<Base> cases
+// where op is an operator name; e.g., forward_add and reverse_add.
+# define CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE(op)             \
+    static void forward_ ## op(                                \
+        size_t                                           m,    \
+        size_t                                           p,    \
+        size_t                                           q,    \
+        const CppAD::vector<Base>&                       tx,   \
+        CppAD::vector<Base>&                             ty    \
+    );                                                         \
+    void forward_ ## op(                                       \
+        size_t                                           m,    \
+        size_t                                           p,    \
+        size_t                                           q,    \
+        const CppAD::vector< CppAD::AD<Base> >&          atx,  \
+        CppAD::vector< CppAD::AD<Base> >&                aty   \
+    );                                                         \
+    static void reverse_ ## op(                                \
+        size_t                                           m,    \
+        size_t                                           q,    \
+        const CppAD::vector<Base>&                       tx,   \
+        const CppAD::vector<Base>&                       ty,   \
+        CppAD::vector<Base>&                             px,   \
+        const CppAD::vector<Base>&                       py    \
+    );                                                         \
+    void reverse_ ## op(                                       \
+        size_t                                           m,    \
+        size_t                                           q,    \
+        const CppAD::vector< CppAD::AD<Base> >&          atx,  \
+        const CppAD::vector< CppAD::AD<Base> >&          aty,  \
+        CppAD::vector< CppAD::AD<Base> >&                apx,  \
+        const CppAD::vector< CppAD::AD<Base> >&          apy   \
+    );
+
 template <class Base>
 class atomic_vector : public CppAD::atomic_four<double> {
 //
@@ -105,24 +140,24 @@ private:
         }
     }
     // ------------------------------------------------------------------------
-    // for_type
+    // overrides
     // ------------------------------------------------------------------------
+    //
+    // for_type
     bool for_type(
         size_t                                     call_id     ,
         const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
         CppAD::vector<CppAD::ad_type_enum>&        type_y
     ) override;
-    // ------------------------------------------------------------------------
+    //
     // rev_depend
-    // ------------------------------------------------------------------------
     bool rev_depend(
         size_t                         call_id     ,
         CppAD::vector<bool>&           depend_x    ,
         const CppAD::vector<bool>&     depend_y
     ) override;
-    // ---------------------------------------------------------------------
-    // Jacobain Sparsity
-    // ---------------------------------------------------------------------
+    //
+    // jac_sparsity
     bool jac_sparsity(
         size_t                                         call_id      ,
         bool                                           dependency   ,
@@ -130,19 +165,16 @@ private:
         const CppAD::vector<bool>&                     select_y     ,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
     ) override;
-    // ---------------------------------------------------------------------
-    // Hessian Sparsity
-    // ---------------------------------------------------------------------
+    //
+    // hes_sparsity
     bool hes_sparsity(
         size_t                                         call_id      ,
         const CppAD::vector<bool>&                     select_x     ,
         const CppAD::vector<bool>&                     select_y     ,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
     ) override;
-    // =====================================================================
-    // Forward Routines
-    // =====================================================================
-    // forward
+    //
+    // Base forward
     bool forward(
         size_t                                           call_id,
         const CppAD::vector<bool>&                       select_y,
@@ -151,6 +183,8 @@ private:
         const CppAD::vector<Base>&                       tx,
         CppAD::vector<Base>&                             ty
     ) override;
+    //
+    // AD<Base> forward
     bool forward(
         size_t                                           call_id,
         const CppAD::vector<bool>&                       select_y,
@@ -159,90 +193,8 @@ private:
         const CppAD::vector< CppAD::AD<Base> >&          atx,
         CppAD::vector< CppAD::AD<Base> >&                aty
     ) override;
-    // ----------------------------------------------------------------------
-    // forward_add
-    static void forward_add(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        CppAD::vector<Base>&                             ty
-    );
-    void forward_add(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        CppAD::vector< CppAD::AD<Base> >&                aty
-    );
-    // ----------------------------------------------------------------------
-    // forward_sub
-    static void forward_sub(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        CppAD::vector<Base>&                             ty
-    );
-    void forward_sub(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        CppAD::vector< CppAD::AD<Base> >&                aty
-    );
-    // ----------------------------------------------------------------------
-    // forward_mul
-    static void forward_mul(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        CppAD::vector<Base>&                             ty
-    );
-    void forward_mul(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        CppAD::vector< CppAD::AD<Base> >&                aty
-    );
-    // ----------------------------------------------------------------------
-    // forward_div
-    static void forward_div(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        CppAD::vector<Base>&                             ty
-    );
-    void forward_div(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        CppAD::vector< CppAD::AD<Base> >&                aty
-    );
-    // ----------------------------------------------------------------------
-    // forward_neg
-    static void forward_neg(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        CppAD::vector<Base>&                             ty
-    );
-    void forward_neg(
-        size_t                                           m,
-        size_t                                           p,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        CppAD::vector< CppAD::AD<Base> >&                aty
-    );
-    // =====================================================================
-    // Reverse Routines
-    // =====================================================================
-    // reverse
+    //
+    // Base reverse
     bool reverse(
         size_t                                           call_id,
         const CppAD::vector<bool>&                       select_x,
@@ -252,6 +204,8 @@ private:
         CppAD::vector<Base>&                             px,
         const CppAD::vector<Base>&                       py
     ) override;
+    //
+    // AD<Base> reverse
     bool reverse(
         size_t                                           call_id,
         const CppAD::vector<bool>&                       select_x,
@@ -262,96 +216,16 @@ private:
         const CppAD::vector< CppAD::AD<Base> >&          apy
     ) override;
     // ----------------------------------------------------------------------
-    // reverse_add
-    static void reverse_add(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        const CppAD::vector<Base>&                       ty,
-        CppAD::vector<Base>&                             px,
-        const CppAD::vector<Base>&                       py
-    );
-    void reverse_add(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        const CppAD::vector< CppAD::AD<Base> >&          aty,
-        CppAD::vector< CppAD::AD<Base> >&                apx,
-        const CppAD::vector< CppAD::AD<Base> >&          apy
-    );
+    // Forward and Reverse Implementation Routines
     // ----------------------------------------------------------------------
-    // reverse_sub
-    static void reverse_sub(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        const CppAD::vector<Base>&                       ty,
-        CppAD::vector<Base>&                             px,
-        const CppAD::vector<Base>&                       py
-    );
-    void reverse_sub(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        const CppAD::vector< CppAD::AD<Base> >&          aty,
-        CppAD::vector< CppAD::AD<Base> >&                apx,
-        const CppAD::vector< CppAD::AD<Base> >&          apy
-    );
-    // ----------------------------------------------------------------------
-    // reverse_mul
-    static void reverse_mul(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        const CppAD::vector<Base>&                       ty,
-        CppAD::vector<Base>&                             px,
-        const CppAD::vector<Base>&                       py
-    );
-    void reverse_mul(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        const CppAD::vector< CppAD::AD<Base> >&          aty,
-        CppAD::vector< CppAD::AD<Base> >&                apx,
-        const CppAD::vector< CppAD::AD<Base> >&          apy
-    );
-    // ----------------------------------------------------------------------
-    // reverse_div
-    static void reverse_div(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        const CppAD::vector<Base>&                       ty,
-        CppAD::vector<Base>&                             px,
-        const CppAD::vector<Base>&                       py
-    );
-    void reverse_div(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        const CppAD::vector< CppAD::AD<Base> >&          aty,
-        CppAD::vector< CppAD::AD<Base> >&                apx,
-        const CppAD::vector< CppAD::AD<Base> >&          apy
-    );
-    // ----------------------------------------------------------------------
-    // reverse_neg
-    static void reverse_neg(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector<Base>&                       tx,
-        const CppAD::vector<Base>&                       ty,
-        CppAD::vector<Base>&                             px,
-        const CppAD::vector<Base>&                       py
-    );
-    void reverse_neg(
-        size_t                                           m,
-        size_t                                           q,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        const CppAD::vector< CppAD::AD<Base> >&          aty,
-        CppAD::vector< CppAD::AD<Base> >&                apx,
-        const CppAD::vector< CppAD::AD<Base> >&          apy
-    );
+    CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE(add)
+    CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE(sub)
+    CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE(mul)
+    CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE(div)
+    CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE(neg)
 };
+# undef CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE
+
 # include <cppad/example/atomic_vector/rev_depend.hpp>
 # include <cppad/example/atomic_vector/for_type.hpp>
 # include <cppad/example/atomic_vector/jac_sparsity.hpp>
