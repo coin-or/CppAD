@@ -113,12 +113,12 @@ void atomic_four<Base>::operator()(
     }
 # endif
     //
-    // work space
+    // type_x, type_y, taylor_x, taylor_y, select_y
     size_t thread = thread_alloc::thread_num();
     allocate_work(thread);
     vector<ad_type_enum>& type_x   = work_[thread]->type_x;
-    vector<Base>&         taylor_x = work_[thread]->taylor_x;
     vector<ad_type_enum>& type_y   = work_[thread]->type_y;
+    vector<Base>&         taylor_x = work_[thread]->taylor_x;
     vector<Base>&         taylor_y = work_[thread]->taylor_y;
     vector<bool>&         select_y = work_[thread]->select_y;
     type_x.resize(n);

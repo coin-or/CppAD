@@ -165,13 +165,11 @@ private:
     //
     // -----------------------------------------------------
     //
-    /// temporary work space used by member functions, declared here to avoid
-    // memory allocation/deallocation for each usage
+    /// temporary work space used by call member functions, declared here
+    // to avoid memory allocation/deallocation for each call
     struct work_struct {
         vector<ad_type_enum>        type_x;
         vector<ad_type_enum>        type_y;
-        //
-        vector<bool>                select_y;
         //
         vector<Base>                taylor_x;
         vector<Base>                taylor_y;
@@ -179,7 +177,7 @@ private:
         vector< AD<Base> >          ataylor_x;
         vector< AD<Base> >          ataylor_y;
         //
-        sparse_rc< vector<size_t> > pattern;
+        vector<bool>                select_y;
     };
     // Use pointers, to avoid false sharing between threads.
     // Not using: vector<work_struct*> work_;
