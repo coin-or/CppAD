@@ -245,7 +245,7 @@ private:
     // reverse
     bool reverse(
         size_t                                           call_id,
-        const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+        const CppAD::vector<bool>&                       select_x,
         size_t                                           order_up,
         const CppAD::vector<Base>&                       tx,
         const CppAD::vector<Base>&                       ty,
@@ -254,7 +254,7 @@ private:
     ) override;
     bool reverse(
         size_t                                           call_id,
-        const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+        const CppAD::vector<bool>&                       select_x,
         size_t                                           order_up,
         const CppAD::vector< CppAD::AD<Base> >&          atx,
         const CppAD::vector< CppAD::AD<Base> >&          aty,

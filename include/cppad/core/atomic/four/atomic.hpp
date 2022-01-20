@@ -297,7 +297,7 @@ public:
     // reverse
     virtual bool reverse(
         size_t                       call_id     ,
-        const vector<ad_type_enum>&  type_x      ,
+        const vector<bool>&          select_x    ,
         size_t                       order_up    ,
         const vector<Base>&          taylor_x    ,
         const vector<Base>&          taylor_y    ,
@@ -305,8 +305,8 @@ public:
         const vector<Base>&          partial_y
     );
     virtual bool reverse(
-        size_t                       call_id      ,
-        const vector<ad_type_enum>&  type_x       ,
+        size_t                       call_id     ,
+        const vector<bool>&          select_x    ,
         size_t                       order_up    ,
         const vector< AD<Base> >&    ataylor_x   ,
         const vector< AD<Base> >&    ataylor_y   ,

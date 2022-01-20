@@ -41,14 +41,14 @@ $head Syntax$$
 
 $subhead Base$$
 $icode%ok% = %afun%.reverse(
-    %call_id%, %type_x%,
+    %call_id%, %select_x%,
     %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %$$
 
 $subhead AD<Base>$$
 $icode%ok% = %afun%.reverse(
-    %call_id%, %type_x%,
+    %call_id%, %select_x%,
     %order_up%, %ataylor_x%, %ataylor_y%, %apartial_x%, %apartial_y%
 )
 %$$
@@ -95,8 +95,11 @@ $cref/reverse/Reverse/$$ mode calculations.
 $head call_id$$
 See $cref/call_id/atomic_four/call_id/$$.
 
-$head type_x$$
-See $cref/type_x/atomic_four/type_x/$$.
+$head select_x$$
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of $cref/ax/atomic_four_call/ax/$$.
+It specifies which components of $icode x$$ the corresponding
+partial derivatives $icode partial_x$$ must be computed.
 
 $head order_up$$
 This argument is one greater than highest order Taylor coefficient that
@@ -240,15 +243,6 @@ $latex \[
 Note that we have used the fact that for $latex k < \ell$$,
 $latex \partial F_i^k / \partial x_j^\ell = 0$$.
 
-$subhead Short Circuit Operations$$
-For the $cref/Base/atomic_four_reverse/Prototype/Base/$$ prototype, if
-$codei%IdenticalZero(%partial_y%[%i%*%q%+%k%])%$$ is true,
-one does not need to compute $latex ( \partial F_i^k / \partial x_j^\ell )$$;
-see $cref base_identical$$.
-This can be used,
-in a similar way to $cref/need_y/atomic_four_forward/need_y/$$,
-to avoid unnecessary operations.
-
 $subhead azmul$$
 An $cref/optimized/optimize/$$ function will use zero
 for values in $icode taylor_x$$ and $icode taylor_y$$ that are
@@ -285,7 +279,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Base>
 bool atomic_four<Base>::reverse(
     size_t                      call_id     ,
-    const vector<ad_type_enum>& type_x      ,
+    const vector<bool>&         select_x    ,
     size_t                      order_up    ,
     const vector<Base>&         taylor_x    ,
     const vector<Base>&         taylor_y    ,
@@ -298,7 +292,7 @@ bool atomic_four<Base>::reverse(
 template <class Base>
 bool atomic_four<Base>::reverse(
     size_t                          call_id      ,
-    const vector<ad_type_enum>&     type_x       ,
+    const vector<bool>&             select_x     ,
     size_t                          order_up     ,
     const vector< AD<Base> >&       ataylor_x    ,
     const vector< AD<Base> >&       ataylor_y    ,

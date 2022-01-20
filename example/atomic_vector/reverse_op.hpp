@@ -37,7 +37,7 @@ $end
 template <class Base>
 bool atomic_vector<Base>::reverse(
     size_t                                           call_id,
-    const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+    const CppAD::vector<bool>&                       select_x,
     size_t                                           order_up,
     const CppAD::vector<Base>&                       tx,
     const CppAD::vector<Base>&                       ty,
@@ -49,7 +49,7 @@ bool atomic_vector<Base>::reverse(
     //
     // op, n, m
     op_enum_t op = op_enum_t( call_id );
-    size_t n     = type_x.size();
+    size_t n     = select_x.size();
     size_t m  = n / 2;
     if( is_unary(op) )
         m = n;
@@ -101,7 +101,7 @@ bool atomic_vector<Base>::reverse(
 template <class Base>
 bool atomic_vector<Base>::reverse(
     size_t                                           call_id,
-    const CppAD::vector<CppAD::ad_type_enum>&        type_x,
+    const CppAD::vector<bool>&                       select_x,
     size_t                                           order_up,
     const CppAD::vector< CppAD::AD<Base> >&          atx,
     const CppAD::vector< CppAD::AD<Base> >&          aty,
@@ -113,7 +113,7 @@ bool atomic_vector<Base>::reverse(
     //
     // op, m
     op_enum_t op = op_enum_t( call_id );
-    size_t n     = type_x.size();
+    size_t n     = select_x.size();
     size_t m  = n / 2;
     if( is_unary(op) )
         m = n;

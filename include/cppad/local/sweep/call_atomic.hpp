@@ -52,6 +52,9 @@ what is the type, in the call, for each component of x.
 $head need_y$$
 specifies which components of taylor_y are necessary.
 
+$head select_y$$
+specifies which components of taylor_x are necessary.
+
 $head order_low$$
 lowest order for this forward mode calculation.
 
@@ -192,6 +195,9 @@ value of the parameter arguments to the atomic function
 $head type_x$$
 type for each component of x (not used by atomic_two interface).
 
+$head select_x$$
+specifies which components of partial_x are necessary.
+
 $head order_up$$
 highest order for this reverse mode calculation.
 
@@ -221,6 +227,7 @@ template <class Base, class RecBase>
 void call_atomic_reverse(
     const vector<Base>&          parameter_x ,
     const vector<ad_type_enum>&  type_x      ,
+    const vector<bool>&          select_x    ,
     size_t                       order_up    ,
     size_t                       atom_index  ,
     size_t                       call_id     ,
@@ -260,7 +267,7 @@ void call_atomic_reverse(
             atomic_four<RecBase>* afun =
                 reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
             ok = afun->reverse(
-                call_id, type_x,
+                call_id, select_x,
                 order_up, taylor_x, taylor_y, partial_x, partial_y
             );
         }
@@ -297,7 +304,7 @@ void call_atomic_reverse(
     {   atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->reverse(
-            call_id, type_x,
+            call_id, select_x,
             order_up, taylor_x, taylor_y, partial_x, partial_y
         );
     }

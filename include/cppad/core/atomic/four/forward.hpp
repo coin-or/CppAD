@@ -89,7 +89,7 @@ $head select_y$$
 This argument has size equal to the number of results to this
 atomic function; i.e. the size of $cref/ay/atomic_four_call/ay/$$.
 It specifies which components of $icode y$$ the corresponding
-Taylor coefficients are needed for.
+Taylor coefficients must be computed.
 
 $head order_low$$
 This argument

@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_REVERSE_HPP
 # define CPPAD_LOCAL_SWEEP_REVERSE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -200,6 +200,7 @@ void reverse(
     const size_t         atom_k1 = d+1; // number orders for this calculation
     vector<Base>         atom_par_x;    // argument parameter values
     vector<ad_type_enum> atom_type_x;   // argument type
+    vector<bool>         atom_sx;       // slect_x for this function call
     vector<size_t>       atom_ix;       // variable indices for argument vector
     vector<Base>         atom_tx;       // argument vector Taylor coefficients
     vector<Base>         atom_ty;       // result vector Taylor coefficients
@@ -670,6 +671,7 @@ void reverse(
                 atom_ix.resize(atom_n);
                 atom_par_x.resize(atom_n);
                 atom_type_x.resize(atom_n);
+                atom_sx.resize(atom_n);
                 atom_tx.resize(atom_n * atom_k1);
                 atom_px.resize(atom_n * atom_k1);
                 atom_ty.resize(atom_m * atom_k1);
@@ -684,6 +686,7 @@ void reverse(
                 call_atomic_reverse<Base, RecBase>(
                     atom_par_x,
                     atom_type_x,
+                    atom_sx,
                     atom_k,
                     atom_index,
                     atom_old,
@@ -710,6 +713,7 @@ void reverse(
             //
             --atom_j;
             atom_ix[atom_j]               = 0;
+            atom_sx[atom_j]               = false;
             if( play->dyn_par_is()[ arg[0] ] )
                 atom_type_x[atom_j]       = dynamic_enum;
             else
@@ -732,6 +736,7 @@ void reverse(
             //
             --atom_j;
             atom_ix[atom_j]     = size_t( arg[0] );
+            atom_sx[atom_j]     = true;
             atom_type_x[atom_j] = variable_enum;
             atom_par_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
             for(ell = 0; ell < atom_k1; ell++)
