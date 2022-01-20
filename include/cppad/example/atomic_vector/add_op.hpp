@@ -20,6 +20,10 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/addition/ForwardTheory/Binary Operators/Addition/$$.
 
+$head Reverse Mode$$
+see theory for reverse mode
+$cref/addition/ReverseTheory/Binary Operators/Addition/$$.
+
 $children%
     example/atomic_vector/add.cpp
 %$$

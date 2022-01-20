@@ -20,6 +20,10 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/division/ForwardTheory/Binary Operators/Division/$$.
 
+$head Reverse Mode$$
+see theory for reverse mode
+$cref/division/ReverseTheory/Binary Operators/Division/$$.
+
 $children%
     example/atomic_vector/div.cpp
 %$$

@@ -20,6 +20,10 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$.
 
+$head Reverse Mode$$
+see theory for reverse mode
+$cref/multiplication/ReverseTheory/Binary Operators/Multiplication/$$.
+
 $children%
     example/atomic_vector/mul.cpp
 %$$

@@ -20,6 +20,10 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/subtraction/ForwardTheory/Binary Operators/Subtraction/$$.
 
+$head Reverse Mode$$
+see theory for reverse mode
+$cref/subtraction/ReverseTheory/Binary Operators/Subtraction/$$.
+
 $children%
     example/atomic_vector/sub.cpp
 %$$
