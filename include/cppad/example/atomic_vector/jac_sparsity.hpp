@@ -25,6 +25,13 @@ The $code jac_sparsity$$ routine overrides the virtual functions
 used by the atomic_four base class for Jacobian sparsity calculations; see
 $cref/jac_sparsity/atomic_four_jac_sparsity/$$.
 
+$children%
+    example/atomic_vector/jac_sparsity.cpp
+%$$
+$head Example$$
+The file $cref atomic_vector_jac_sparsity.cpp$$
+contains an example and test using this operator.
+
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end

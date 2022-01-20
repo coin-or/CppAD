@@ -20,6 +20,9 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/subtraction/ForwardTheory/Binary Operators/Subtraction/$$.
 
+$children%
+    example/atomic_vector/sub.cpp
+%$$
 $head Example$$
 The file $cref atomic_vector_sub.cpp$$ contains an example
 and test for this operator.

@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_sparsity.cpp$$
+$begin atomic_vector_jac_sparsity.cpp$$
 
 $section Atomic Vector Sparsity Patterns Example$$
 
@@ -28,7 +28,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <cppad/example/atomic_vector.hpp>
-bool sparsity(void)
+bool jac_sparsity(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     using CppAD::AD;
@@ -157,85 +157,6 @@ bool sparsity(void)
             k        = row_major[ell++];
             ok      &= row[k] == i;
             ok      &= col[k] == 2 * m + i;
-        }
-    }
-    // -----------------------------------------------------------------------
-    // Hessian sparsity
-    // -----------------------------------------------------------------------
-    for(size_t direction = 0; direction < 2; ++direction)
-    {   sparsity_pattern pattern_out;
-        //
-        // select_range
-        CPPAD_TESTVECTOR(bool) select_range(m);
-        for(size_t i = 0; i < m; ++i)
-            select_range[i] = true;
-        //
-        if( direction == 0 )
-        {   // Forward
-            //
-            // select_domain
-            CPPAD_TESTVECTOR(bool) select_domain(n);
-            for(size_t j = 0; j < n; ++j)
-                select_domain[j] = true;
-            //
-            // pattern_out
-            bool internal_bool = false;
-            f.for_hes_sparsity(
-                select_domain, select_range, internal_bool, pattern_out
-            );
-        }
-        else
-        {   // Reverse
-            //
-            // pattern_out
-            bool transpose     = false;
-            bool internal_bool = false;
-            f.rev_hes_sparsity(
-                select_range, transpose, internal_bool, pattern_out
-            );
-        }
-        //
-        // ok
-        ok &= pattern_out.nnz() == 2 * n;
-        ok &= pattern_out.nr()  == n;
-        ok &= pattern_out.nc()  == n;
-        //
-        // row, col, row_major
-        const size_vector& row = pattern_out.row();
-        const size_vector& col = pattern_out.col();
-        size_vector row_major  = pattern_out.row_major();
-        //
-        // ok
-        size_t ell = 0;
-        for(size_t i = 0; i < m; ++i)
-        {   // first non-zero in row i
-            size_t k = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == m + i;
-            // second non-zero in row i
-            k        = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == 2 * m + i;
-        }
-        for(size_t i = m; i < 2 * m; ++i)
-        {   // first non-zero in row i
-            size_t k = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i - m;
-            // second non-zero in row i
-            k        = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i + m;
-        }
-        for(size_t i = 2 * m; i < 3 * m; ++i)
-        {   // first non-zero in row i
-            size_t k = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i - 2 * m;
-            // second non-zero in row i
-            k        = row_major[ell++];
-            ok      &= row[k] == i;
-            ok      &= col[k] == i - m;
         }
     }
     //

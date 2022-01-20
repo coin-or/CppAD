@@ -84,7 +84,8 @@ $rref atomic_vector_neg.cpp$$
 $rref atomic_vector_neg_op.hpp$$
 $rref atomic_vector_optimize.cpp$$
 $rref atomic_vector_reverse_op.hpp$$
-$rref atomic_vector_sparsity.cpp$$
+$rref atomic_vector_jac_sparsity.cpp$$
+$rref atomic_vector_hes_sparsity.cpp$$
 $rref atomic_vector_sub.cpp$$
 $rref atomic_vector_sub_op.hpp$$
 $rref azmul.cpp$$

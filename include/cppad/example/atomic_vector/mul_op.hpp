@@ -20,6 +20,9 @@ $head Forward Mode$$
 see theory for forward mode
 $cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$.
 
+$children%
+    example/atomic_vector/mul.cpp
+%$$
 $head Example$$
 The file $cref atomic_vector_mul.cpp$$ contains an example
 and test for this operator.

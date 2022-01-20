@@ -15,10 +15,11 @@ SET(source_list
     add.cpp
     atomic_vector.cpp
     div.cpp
+    hes_sparsity.cpp
+    jac_sparsity.cpp
     mul.cpp
     neg.cpp
     optimize.cpp
-    sparsity.cpp
     sub.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

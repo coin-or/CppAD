@@ -73,10 +73,6 @@ then
     dir='test_more/general'
     file="local/$file"
 fi
-if [ "$dir" == 'example/atomic_vector' ]
-then
-    extra=$(ls $dir/*_op.cpp $dir/jac_sparsity.cpp $dir/hes_sparsity.cpp)
-fi
 # ---------------------------------------------------------------------------
 # Check command line arguments
 if [ "$dir" == '' ]

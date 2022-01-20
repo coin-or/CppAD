@@ -28,10 +28,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool add(void);
 extern bool div(void);
+extern bool hes_sparsity(void);
+extern bool jac_sparsity(void);
 extern bool mul(void);
 extern bool neg(void);
 extern bool optimize(void);
-extern bool sparsity(void);
 extern bool sub(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -46,10 +47,11 @@ int main(void)
     // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( add,                 "add"            );
     Run( div,                 "div"            );
+    Run( hes_sparsity,        "hes_sparsity"   );
+    Run( jac_sparsity,        "jac_sparsity"   );
     Run( mul,                 "mul"            );
     Run( neg,                 "neg"            );
     Run( optimize,            "optimize"       );
-    Run( sparsity,            "sparsity"       );
     Run( sub,                 "sub"            );
     // END_SORT_THIS_LINE_MINUS_1
 
