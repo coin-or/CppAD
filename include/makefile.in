@@ -517,6 +517,18 @@ nobase_myinclude_HEADERS = \
 	cppad/example/atomic_two/eigen_cholesky.hpp \
 	cppad/example/atomic_two/eigen_mat_inv.hpp \
 	cppad/example/atomic_two/eigen_mat_mul.hpp \
+	cppad/example/atomic_vector.hpp \
+	cppad/example/atomic_vector/add_op.hpp \
+	cppad/example/atomic_vector/div_op.hpp \
+	cppad/example/atomic_vector/for_type.hpp \
+	cppad/example/atomic_vector/forward_op.hpp \
+	cppad/example/atomic_vector/hes_sparsity.hpp \
+	cppad/example/atomic_vector/jac_sparsity.hpp \
+	cppad/example/atomic_vector/mul_op.hpp \
+	cppad/example/atomic_vector/neg_op.hpp \
+	cppad/example/atomic_vector/rev_depend.hpp \
+	cppad/example/atomic_vector/reverse_op.hpp \
+	cppad/example/atomic_vector/sub_op.hpp \
 	cppad/example/base_adolc.hpp \
 	cppad/example/code_gen_fun.hpp \
 	cppad/example/cppad_eigen.hpp \

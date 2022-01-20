@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_NEG_OP_HPP
-# define CPPAD_EXAMPLE_ATOMIC_VECTOR_NEG_OP_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_ADD_OP_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_ADD_OP_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -12,12 +12,16 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_neg_op.hpp$$
+$begin atomic_vector_add_op.hpp$$
 
-$section Atomic Vector Negative Operator: Example Implementation$$
+$section Atomic Vector Add Operator: Example Implementation$$
+
+$head Forward Mode$$
+see theory for forward mode
+$cref/addition/ForwardTheory/Binary Operators/Addition/$$.
 
 $head Example$$
-The file $cref atomic_vector_neg.cpp$$ contains an example
+The file $cref atomic_vector_add.cpp$$ contains an example
 and test for this operator.
 
 $head Source$$
@@ -26,11 +30,13 @@ $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
-# include "atomic_vector.hpp"
+# include <cppad/example/atomic_vector.hpp>
 
 // ---------------------------------------------------------------------------
+// comment below is used by atomic_vector.omh
+// BEGIN forward_add
 template <class Base>
-void atomic_vector<Base>::forward_neg(
+void atomic_vector<Base>::forward_add(
     size_t                                           m,
     size_t                                           p,
     size_t                                           q,
@@ -39,30 +45,33 @@ void atomic_vector<Base>::forward_neg(
 {
     for(size_t k = p; k < q; ++k)
     {   for(size_t i = 0; i < m; ++i)
-        {   size_t u_index  = i * q + k;
-            size_t y_index  = i * q + k;
-            // y_i^k = - u_i^k
-            ty[y_index] = - tx[u_index];
+        {   size_t u_index  =       i * q + k;
+            size_t v_index  = (m + i) * q + k;
+            size_t y_index  =       i * q + k;
+            // y_i^k = u_i^k + v_i^k
+            ty[y_index]     = tx[u_index] + tx[v_index];
         }
     }
 }
 template <class Base>
-void atomic_vector<Base>::forward_neg(
+void atomic_vector<Base>::forward_add(
     size_t                                           m,
     size_t                                           p,
     size_t                                           q,
     const CppAD::vector< CppAD::AD<Base> >&          atx,
     CppAD::vector< CppAD::AD<Base> >&                aty)
-{   size_t n = m;
+{   size_t n = 2 * m;
     assert( atx.size() == n * q );
     assert( aty.size() == m * q );
     //
-    // atu
+    // atu, atv
     ad_vector::const_iterator atu = atx.begin();
+    ad_vector::const_iterator atv = atu + difference_type(m * q);
     //
     // ax
     ad_vector ax(n);
     ad_vector::iterator au = ax.begin();
+    ad_vector::iterator av = au + difference_type(m);
     //
     // ay
     ad_vector ay(m);
@@ -70,16 +79,20 @@ void atomic_vector<Base>::forward_neg(
     for(size_t k = p; k < q; ++k)
     {   // au = u^k
         copy_mat_to_vec(m, q, k, atu, au);
-        // ay = - au
-        (*this)(neg_enum, ax, ay); // atomic vector neg
+        // av = v^k
+        copy_mat_to_vec(m, q, k, atv, av);
+        // ay = au + av
+        (*this)(add_enum, ax, ay); // atomic vector add
         // y^k = ay
         copy_vec_to_mat(m, q, k, ay.begin(), aty.begin() );
     }
 }
+// END forward_add
+// comment above is used by atomic_vector.omh
 // ---------------------------------------------------------------------------
-// reverse_neg
+// reverse_add
 template <class Base>
-void atomic_vector<Base>::reverse_neg(
+void atomic_vector<Base>::reverse_add(
     size_t                                           m,
     size_t                                           q,
     const CppAD::vector<Base>&                       tx,
@@ -89,42 +102,35 @@ void atomic_vector<Base>::reverse_neg(
 {
     for(size_t k = 0; k < q; ++k)
     {   for(size_t i = 0; i < m; ++i)
-        {   size_t u_index  = i * q + k;
-            size_t y_index  = i * q + k;
-            // y_i^k = - u_i^k
-            px[u_index] = - py[y_index];
+        {   size_t u_index  =       i * q + k;
+            size_t v_index  = (m + i) * q + k;
+            size_t y_index  =       i * q + k;
+            // y_i^k = u_i^k + v_i^k
+            px[u_index] = py[y_index];
+            px[v_index] = py[y_index];
         }
     }
 }
 template <class Base>
-void atomic_vector<Base>::reverse_neg(
+void atomic_vector<Base>::reverse_add(
     size_t                                           m,
     size_t                                           q,
     const CppAD::vector< CppAD::AD<Base> >&          atx,
     const CppAD::vector< CppAD::AD<Base> >&          aty,
     CppAD::vector< CppAD::AD<Base> >&                apx,
     const CppAD::vector< CppAD::AD<Base> >&          apy)
-{   size_t n = m;
-    assert( atx.size() == n * q );
-    assert( aty.size() == m * q );
+{
     //
-    // apu
-    ad_vector::iterator apu = apx.begin();
-    //
-    // ax
-    ad_vector ax(n);
-    ad_vector::iterator au = ax.begin();
-    //
-    // ay
-    ad_vector ay(m);
-    //
+    // just copying values does not add any operators to the tape.
     for(size_t k = 0; k < q; ++k)
-    {   // au = py^k
-        copy_mat_to_vec(m, q, k, apy.begin(), au);
-        // ay = - au
-        (*this)(neg_enum, ax, ay); // atomic vector neg
-        // pu^k = ay
-        copy_vec_to_mat(m, q, k, ay.begin(), apu);
+    {   for(size_t i = 0; i < m; ++i)
+        {   size_t u_index  =       i * q + k;
+            size_t v_index  = (m + i) * q + k;
+            size_t y_index  =       i * q + k;
+            // y_i^k = u_i^k + v_i^k
+            apx[u_index] = apy[y_index];
+            apx[v_index] = apy[y_index];
+        }
     }
 }
 

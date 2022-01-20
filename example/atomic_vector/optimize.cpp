@@ -27,7 +27,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include "atomic_vector.hpp"
+# include <cppad/example/atomic_vector.hpp>
 bool optimize(void)
 {   bool ok = true;
     using CppAD::NearEqual;

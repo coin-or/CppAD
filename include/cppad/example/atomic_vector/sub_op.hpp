@@ -30,7 +30,7 @@ $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
-# include "atomic_vector.hpp"
+# include <cppad/example/atomic_vector.hpp>
 
 // --------------------------------------------------------------------------
 // forward_sub

@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_ATOMIC_VECTOR_HPP
-# define CPPAD_EXAMPLE_ATOMIC_VECTOR_ATOMIC_VECTOR_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
@@ -18,17 +18,17 @@ $begin atomic_vector.hpp$$
 $section Implementing Atomic Vector Operations$$
 
 $childtable%
-    example/atomic_vector/forward_op.hpp
-    %example/atomic_vector/reverse_op.hpp
-    %example/atomic_vector/jac_sparsity.hpp
-    %example/atomic_vector/hes_sparsity.hpp
-    %example/atomic_vector/for_type.hpp
-    %example/atomic_vector/rev_depend.hpp
-    %example/atomic_vector/add_op.hpp
-    %example/atomic_vector/sub_op.hpp
-    %example/atomic_vector/mul_op.hpp
-    %example/atomic_vector/div_op.hpp
-    %example/atomic_vector/neg_op.hpp
+    include/cppad/example/atomic_vector/forward_op.hpp
+    %include/cppad/example/atomic_vector/reverse_op.hpp
+    %include/cppad/example/atomic_vector/jac_sparsity.hpp
+    %include/cppad/example/atomic_vector/hes_sparsity.hpp
+    %include/cppad/example/atomic_vector/for_type.hpp
+    %include/cppad/example/atomic_vector/rev_depend.hpp
+    %include/cppad/example/atomic_vector/add_op.hpp
+    %include/cppad/example/atomic_vector/sub_op.hpp
+    %include/cppad/example/atomic_vector/mul_op.hpp
+    %include/cppad/example/atomic_vector/div_op.hpp
+    %include/cppad/example/atomic_vector/neg_op.hpp
 %$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -352,17 +352,17 @@ private:
         const CppAD::vector< CppAD::AD<Base> >&          apy
     );
 };
-# include "rev_depend.hpp"
-# include "for_type.hpp"
-# include "jac_sparsity.hpp"
-# include "hes_sparsity.hpp"
-# include "reverse_op.hpp"
-# include "forward_op.hpp"
-# include "neg_op.hpp"
-# include "div_op.hpp"
-# include "mul_op.hpp"
-# include "sub_op.hpp"
-# include "add_op.hpp"
+# include <cppad/example/atomic_vector/rev_depend.hpp>
+# include <cppad/example/atomic_vector/for_type.hpp>
+# include <cppad/example/atomic_vector/jac_sparsity.hpp>
+# include <cppad/example/atomic_vector/hes_sparsity.hpp>
+# include <cppad/example/atomic_vector/reverse_op.hpp>
+# include <cppad/example/atomic_vector/forward_op.hpp>
+# include <cppad/example/atomic_vector/neg_op.hpp>
+# include <cppad/example/atomic_vector/div_op.hpp>
+# include <cppad/example/atomic_vector/mul_op.hpp>
+# include <cppad/example/atomic_vector/sub_op.hpp>
+# include <cppad/example/atomic_vector/add_op.hpp>
 // END C++
 
 # endif

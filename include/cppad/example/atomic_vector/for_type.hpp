@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_REV_DEPEND_HPP
-# define CPPAD_EXAMPLE_ATOMIC_VECTOR_REV_DEPEND_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_FOR_TYPE_HPP
+# define CPPAD_EXAMPLE_ATOMIC_VECTOR_FOR_TYPE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_rev_depend.hpp$$
+$begin atomic_vector_for_type.hpp$$
 $spell
     Jacobian
     jac
@@ -21,40 +21,38 @@ $$
 $section Atomic Vector Forward Type Calculation: Example Implementation$$
 
 $head Purpose$$
-The $code rev_depend$$ routine overrides the virtual functions
+The $code for_type$$ routine overrides the virtual functions
 used by the atomic_four base class for Jacobian sparsity calculations; see
-$cref/rev_depend/atomic_four_rev_depend/$$.
+$cref/for_type/atomic_four_for_type/$$.
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
-# include "atomic_vector.hpp"
+# include <cppad/example/atomic_vector.hpp>
 //
-// rev_depend override
+// for_type override
 template <class Base>
-bool atomic_vector<Base>::rev_depend(
-    size_t                         call_id     ,
-    CppAD::vector<bool>&           depend_x    ,
-    const CppAD::vector<bool>&     depend_y    )
+bool atomic_vector<Base>::for_type(
+    size_t                                     call_id     ,
+    const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
+    CppAD::vector<CppAD::ad_type_enum>&        type_y      )
 {
     // n, m
-    size_t n     = depend_x.size();
-    size_t m     = depend_y.size();
+    size_t n     = type_x.size();
+    size_t m     = type_y.size();
     //
     // type_y
-    if( n == m  )
+    if( n == m )
     {   // unary operator
         for(size_t i = 0; i < m; ++i)
-            depend_x[i] = depend_y[i];
+            type_y[i] = type_x[i];
     }
     else
     {   // binary operator
         for(size_t i = 0; i < m; ++i)
-        {   depend_x[i]     = depend_y[i];
-            depend_x[m + i] = depend_y[i];
-        }
+            type_y[i] = std::max( type_x[i] , type_x[m + i] );
     }
     return true;
 }
