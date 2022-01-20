@@ -161,7 +161,7 @@ private:
     ) override;
     // ----------------------------------------------------------------------
     // forward_add
-    void forward_add(
+    static void forward_add(
         size_t                                           m,
         size_t                                           p,
         size_t                                           q,
@@ -177,7 +177,7 @@ private:
     );
     // ----------------------------------------------------------------------
     // forward_sub
-    void forward_sub(
+    static void forward_sub(
         size_t                                           m,
         size_t                                           p,
         size_t                                           q,
@@ -193,7 +193,7 @@ private:
     );
     // ----------------------------------------------------------------------
     // forward_mul
-    void forward_mul(
+    static void forward_mul(
         size_t                                           m,
         size_t                                           p,
         size_t                                           q,
@@ -209,7 +209,7 @@ private:
     );
     // ----------------------------------------------------------------------
     // forward_div
-    void forward_div(
+    static void forward_div(
         size_t                                           m,
         size_t                                           p,
         size_t                                           q,
@@ -225,7 +225,7 @@ private:
     );
     // ----------------------------------------------------------------------
     // forward_neg
-    void forward_neg(
+    static void forward_neg(
         size_t                                           m,
         size_t                                           p,
         size_t                                           q,
@@ -263,7 +263,7 @@ private:
     ) override;
     // ----------------------------------------------------------------------
     // reverse_add
-    void reverse_add(
+    static void reverse_add(
         size_t                                           m,
         size_t                                           q,
         const CppAD::vector<Base>&                       tx,
@@ -281,7 +281,7 @@ private:
     );
     // ----------------------------------------------------------------------
     // reverse_sub
-    void reverse_sub(
+    static void reverse_sub(
         size_t                                           m,
         size_t                                           q,
         const CppAD::vector<Base>&                       tx,
@@ -299,7 +299,7 @@ private:
     );
     // ----------------------------------------------------------------------
     // reverse_mul
-    void reverse_mul(
+    static void reverse_mul(
         size_t                                           m,
         size_t                                           q,
         const CppAD::vector<Base>&                       tx,
@@ -317,7 +317,7 @@ private:
     );
     // ----------------------------------------------------------------------
     // reverse_div
-    void reverse_div(
+    static void reverse_div(
         size_t                                           m,
         size_t                                           q,
         const CppAD::vector<Base>&                       tx,
@@ -335,7 +335,7 @@ private:
     );
     // ----------------------------------------------------------------------
     // reverse_neg
-    void reverse_neg(
+    static void reverse_neg(
         size_t                                           m,
         size_t                                           q,
         const CppAD::vector<Base>&                       tx,
