@@ -145,8 +145,7 @@ private:
     // forward
     bool forward(
         size_t                                           call_id,
-        const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-        size_t                                           need_y,
+        const CppAD::vector<bool>&                       select_y,
         size_t                                           order_low,
         size_t                                           order_up,
         const CppAD::vector<Base>&                       tx,
@@ -154,8 +153,7 @@ private:
     ) override;
     bool forward(
         size_t                                           call_id,
-        const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-        size_t                                           need_y,
+        const CppAD::vector<bool>&                       select_y,
         size_t                                           order_low,
         size_t                                           order_up,
         const CppAD::vector< CppAD::AD<Base> >&          atx,

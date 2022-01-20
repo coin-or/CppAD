@@ -50,8 +50,7 @@ $icode%ok% = %afun%.for_type(
     %call_id%, %type_x%, %type_y%
 )
 %ok% = %afun%.forward(
-    %call_id%, %type_x%,
-    %need_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
+    %call_id%, %select_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
 )
 %ok% = %afun%.reverse(
     %call_id%, %type_x%,
@@ -227,6 +226,8 @@ private:
         vector<ad_type_enum>        type_x;
         vector<ad_type_enum>        type_y;
         //
+        vector<bool>                select_y;
+        //
         vector<Base>                taylor_x;
         vector<Base>                taylor_y;
         //
@@ -278,8 +279,7 @@ public:
     // forward
     virtual bool forward(
         size_t                       call_id     ,
-        const vector<ad_type_enum>&  type_x      ,
-        size_t                       need_y      ,
+        const vector<bool>&          select_y    ,
         size_t                       order_low   ,
         size_t                       order_up    ,
         const vector<Base>&          taylor_x    ,
@@ -287,8 +287,7 @@ public:
     );
     virtual bool forward(
         size_t                       call_id      ,
-        const vector<ad_type_enum>&  type_x       ,
-        size_t                       need_y       ,
+        const vector<bool>&          select_y    ,
         size_t                       order_low    ,
         size_t                       order_up     ,
         const vector< AD<Base> >&    ataylor_x    ,

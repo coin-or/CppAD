@@ -29,14 +29,14 @@ $head Syntax$$
 
 $subhead Base$$
 $icode%ok% = %afun%.forward(
-    %call_id%, %type_x%,
-    %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
+    %call_id%, %select_y%,
+    %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
 )%$$
 
 $subhead AD<Base>$$
 $icode%ok% = %afun%.forward(
-    %call_id%, %type_x%,
-    %need_y%, %order_low%, %order_up%, %type_x%, %ataylor_x%, %ataylor_y%
+    %call_id%, %select_y%,
+    %order_low%, %order_up%, %type_x%, %ataylor_x%, %ataylor_y%
 )%$$
 
 $head Prototype$$
@@ -85,42 +85,11 @@ Order zero must be implemented.
 $head call_id$$
 See $cref/call_id/atomic_four/call_id/$$.
 
-$head type_x$$
-See $cref/type_x/atomic_four/type_x/$$.
-
-$head need_y$$
-One can ignore this argument and compute all the
-$icode taylor_y$$ Taylor coefficients.
-The value $cref/type_y/atomic_four_for_type/type_y/$$ is used
-to specify which coefficients in $icode taylor_y$$ are necessary as follows:
-
-$subhead Constant Parameters$$
-If $icode%need_y% == size_t(constant_enum)%$$,
-then only the taylor coefficients
-for $latex Y_i (t)$$ where $icode%type_y%[%i%] == constant_enum%$$
-are necessary.
-This is the case during a $cref from_json$$ operation.
-
-$subhead Dynamic Parameters$$
-If $icode%need_y% == size_t(dynamic_enum)%$$,
-then only the taylor coefficients
-for $latex Y_i (t)$$ where $icode%type_y%[%i%] == dynamic_enum%$$
-are necessary.
-This is the case during an $cref new_dynamic$$ operation.
-
-$subhead Variables$$
-If $icode%need_y% == size_t(variable_enum)%$$,
-If $codei%ad_type_enum(%need_y%)% == variable_enum%$$,
-then only the taylor coefficients
-for $latex Y_i (t)$$ where $icode%type_y%[%i%] == variable_enum%$$
-are necessary.
-This is the case during a $cref/f.Forward/Forward/$$ operation.
-
-$subhead All$$
-If $icode%need_y > size_t(variable_enum)%$$,
-then the taylor coefficients for all $latex Y_i (t)$$ are necessary.
-This is the case during an atomic function
-$cref/call/atomic_four_call/$$.
+$head select_y$$
+This argument has size equal to the number of results to this
+atomic function; i.e. the size of $cref/ay/atomic_four_call/ay/$$.
+It specifies which components of $icode y$$ the corresponding
+Taylor coefficients are needed for.
 
 $head order_low$$
 This argument
@@ -175,6 +144,7 @@ $head taylor_y$$
 The size of $icode taylor_y$$ is $icode%q%*%m%$$.
 Upon return,
 For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q-1$$,
+if $icode select_y[i]$$ is true,
 $latex \[
 \begin{array}{rcl}
     Y_i (t)  & = & g_i [ X(t) ]
@@ -184,7 +154,8 @@ $latex \[
     \R{taylor\_y}  [ i * q + k ] & = & y_i^k
 \end{array}
 \] $$
-where $latex o( t^{q-1} ) / t^{q-1} \rightarrow 0$$ as $latex t \rightarrow 0$$.
+where $latex o( t^{q-1} ) / t^{q-1} \rightarrow 0$$
+as $latex t \rightarrow 0$$.
 Note that superscripts represent an index for $latex y_j^k$$
 and an exponent for $latex t^k$$.
 Also note that the Taylor coefficients for $latex Y(t)$$ correspond
@@ -258,8 +229,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Base>
 bool atomic_four<Base>::forward(
     size_t                       call_id     ,
-    const vector<ad_type_enum>&  type_x      ,
-    size_t                       need_y      ,
+    const vector<bool>&          select_y    ,
     size_t                       order_low   ,
     size_t                       order_up    ,
     const vector<Base>&          taylor_x    ,
@@ -271,8 +241,7 @@ bool atomic_four<Base>::forward(
 template <class Base>
 bool atomic_four<Base>::forward(
     size_t                       call_id      ,
-    const vector<ad_type_enum>&  type_x       ,
-    size_t                       need_y       ,
+    const vector<bool>&          select_y    ,
     size_t                       order_low    ,
     size_t                       order_up     ,
     const vector< AD<Base> >&    ataylor_x    ,

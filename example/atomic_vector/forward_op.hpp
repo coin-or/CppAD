@@ -37,8 +37,7 @@ $end
 template <class Base>
 bool atomic_vector<Base>::forward(
     size_t                                           call_id,
-    const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-    size_t                                           need_y,
+    const CppAD::vector<bool>&                       select_y,
     size_t                                           order_low,
     size_t                                           order_up,
     const CppAD::vector<Base>&                       tx,
@@ -47,15 +46,15 @@ bool atomic_vector<Base>::forward(
     // p, q
     size_t p = order_low;
     size_t q = order_up + 1;
+    CPPAD_ASSERT_UNKNOWN( tx.size() % q == 0 );
     //
     // op, m
     op_enum_t op = op_enum_t( call_id );
-    size_t n     = type_x.size();
+    size_t n     = tx.size() / q;
     size_t m = n / 2;
     if( is_unary(op) )
         m = n;
-    assert( tx.size() == q * n );
-    assert( ty.size() == q * m );
+    CPPAD_ASSERT_UNKNOWN( ty.size() == m * q );
     //
     bool ok = false;
     switch(op)
@@ -102,8 +101,7 @@ bool atomic_vector<Base>::forward(
 template <class Base>
 bool atomic_vector<Base>::forward(
     size_t                                           call_id,
-    const CppAD::vector<CppAD::ad_type_enum>&        type_x,
-    size_t                                           need_y,
+    const CppAD::vector<bool>&                       select_y,
     size_t                                           order_low,
     size_t                                           order_up,
     const CppAD::vector< CppAD::AD<Base> >&          atx,
@@ -112,15 +110,15 @@ bool atomic_vector<Base>::forward(
     // p, q
     size_t p = order_low;
     size_t q = order_up + 1;
+    CPPAD_ASSERT_UNKNOWN( atx.size() % q == 0 );
     //
     // op, m
     op_enum_t op = op_enum_t( call_id );
-    size_t n     = type_x.size();
+    size_t n     = atx.size() / q;
     size_t m     = n / 2;
     if( is_unary(op) )
         m = n;
-    assert( atx.size() == q * n );
-    assert( aty.size() == q * m );
+    CPPAD_ASSERT_UNKNOWN( aty.size() == q * m );
     //
     bool ok = false;
     switch(op)

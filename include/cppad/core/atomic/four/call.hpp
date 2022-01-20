@@ -111,20 +111,22 @@ void atomic_four<Base>::operator()(
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
     }
 # endif
+    //
+    // work space
     size_t thread = thread_alloc::thread_num();
     allocate_work(thread);
-    vector<Base>& taylor_x        = work_[thread]->taylor_x;
-    vector<Base>& taylor_y        = work_[thread]->taylor_y;
-    vector<ad_type_enum>& type_x  = work_[thread]->type_x;
-    vector<ad_type_enum>& type_y  = work_[thread]->type_y;
-    //
+    vector<ad_type_enum>& type_x   = work_[thread]->type_x;
+    vector<Base>&         taylor_x = work_[thread]->taylor_x;
+    vector<ad_type_enum>& type_y   = work_[thread]->type_y;
+    vector<Base>&         taylor_y = work_[thread]->taylor_y;
+    vector<bool>&         select_y = work_[thread]->select_y;
     type_x.resize(n);
     taylor_x.resize(n);
-    //
     type_y.resize(m);
     taylor_y.resize(m);
+    select_y.resize(m);
     //
-    // Determine tape corresponding to variables in ax
+    // tape_id, tape, taylor_x, type_x
     tape_id_t            tape_id  = 0;
     local::ADTape<Base>* tape     = nullptr;
     for(size_t j = 0; j < n; j++)
@@ -155,18 +157,18 @@ void atomic_four<Base>::operator()(
         }
     }
     // Use zero order forward mode to compute all the components of y
-    size_t need_y    = size_t(variable_enum) + 1;
+    for(size_t i = 0; i < m; ++i)
+        select_y[i] = true;
     size_t order_low   = 0;
     size_t order_up    = 0;
-    CPPAD_ASSERT_UNKNOWN( need_y > size_t(variable_enum) );
 # ifdef NDEBUG
     forward(
-        call_id, type_x, need_y, order_low, order_up, taylor_x, taylor_y
+        call_id, select_y, order_low, order_up, taylor_x, taylor_y
     );
     for_type(call_id, type_x, type_y);
 # else
     ok &= forward(
-        call_id, type_x, need_y, order_low, order_up, taylor_x, taylor_y
+        call_id, select_y, order_low, order_up, taylor_x, taylor_y
     );
     ok &= for_type(call_id, type_x, type_y);
     if( ! ok )
