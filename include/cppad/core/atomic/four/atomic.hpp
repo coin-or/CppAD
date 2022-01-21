@@ -129,9 +129,9 @@ $section Example Defining Atomic Functions: Fourth Generation$$
 
 $childtable%
     example/atomic_four/get_started.cpp
-%$$
-$comment%
     %example/atomic_four/norm_sq.cpp
+%$$
+$comment
     %example/atomic_four/tangent.cpp
     %example/atomic_four/base2ad.cpp
     %example/atomic_four/reciprocal.cpp

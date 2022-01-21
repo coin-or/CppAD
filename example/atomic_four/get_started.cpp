@@ -33,9 +33,9 @@ $end
 */
 # include <cppad/cppad.hpp>  // CppAD include file
 
+// BEGIN_DEFINE_ATOMIC_FUNCTION
 // empty namespace
 namespace {
-// BEGIN_DEFINE_ATOMIC_FUNCTION
     // atomic_get_started
     class atomic_get_started : public CppAD::atomic_four<double> {
     public:
@@ -68,14 +68,14 @@ namespace {
         {
 # ifndef NDEBUG
             size_t q = order_up + 1;
-            size_t m = select_y.size();
             size_t n = taylor_x.size() / q;
+            size_t m = taylor_y.size() / q;
             assert( call_id == 0 );
             assert( order_low == 0);
             assert( order_up == 0);
             assert( n == 1 );
             assert( m == 1 );
-            assert( m == taylor_y.size() / q);
+            assert( m == select_y.size() );
 # endif
             // return flag
             bool ok = order_up == 0;
@@ -89,8 +89,8 @@ namespace {
             return ok;
         }
     };
-// END_DEFINE_ATOMIC_FUNCTION
 }
+// END_DEFINE_ATOMIC_FUNCTION
 
 // BEGIN_USE_ATOMIC_FUNCTION
 bool get_started(void)

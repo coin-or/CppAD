@@ -14,6 +14,7 @@
 SET(source_list
     atomic_four.cpp
     get_started.cpp
+    norm_sq.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

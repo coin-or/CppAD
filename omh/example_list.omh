@@ -49,6 +49,8 @@ $rref asinh.cpp$$
 $rref atan.cpp$$
 $rref atan2.cpp$$
 $rref atanh.cpp$$
+$rref atomic_four_get_started.cpp$$
+$rref atomic_four_norm_sq.cpp$$
 $rref atomic_three_base2ad.cpp$$
 $rref atomic_three_dynamic.cpp$$
 $rref atomic_three_forward.cpp$$

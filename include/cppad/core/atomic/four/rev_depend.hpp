@@ -41,6 +41,9 @@ and $cref/f.optimize()/optimize/$$ is used.
 $head Base$$
 See $cref/Base/atomic_four_call/Base/$$.
 
+$head vector$$
+is the $cref CppAD_vector$$ template class.
+
 $head call_id$$
 See $cref/call_id/atomic_four_call/call_id/$$.
 

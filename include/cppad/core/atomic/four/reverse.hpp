@@ -40,6 +40,9 @@ $section Atomic Function Reverse Mode$$
 $head Base$$
 see $cref/Base/atomic_four_call/Base/$$.
 
+$head vector$$
+is the $cref CppAD_vector$$ template class.
+
 $head Syntax$$
 
 $subhead Base$$
