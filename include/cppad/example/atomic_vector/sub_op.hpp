@@ -24,9 +24,6 @@ $head Reverse Mode$$
 see theory for reverse mode
 $cref/subtraction/ReverseTheory/Binary Operators/Subtraction/$$.
 
-$children%
-    example/atomic_vector/sub.cpp
-%$$
 $head Example$$
 The file $cref atomic_vector_sub.cpp$$ contains an example
 and test for this operator.

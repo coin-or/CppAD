@@ -96,7 +96,15 @@ resulting tape.
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_3$$
 $childtable%
-    include/cppad/example/atomic_vector.hpp
+    include/cppad/example/atomic_vector/implement.omh
+    %example/atomic_vector/add.cpp
+    %example/atomic_vector/div.cpp
+    %example/atomic_vector/hes_sparsity.cpp
+    %example/atomic_vector/jac_sparsity.cpp
+    %example/atomic_vector/mul.cpp
+    %example/atomic_vector/neg.cpp
+    %example/atomic_vector/rev_depend.cpp
+    %example/atomic_vector/sub.cpp
 %$$
 $comment END_SORT_THIS_LINE_MINUS_2$$
 

@@ -24,9 +24,6 @@ $head Reverse Mode$$
 see theory for reverse mode
 $cref/addition/ReverseTheory/Binary Operators/Addition/$$.
 
-$children%
-    example/atomic_vector/add.cpp
-%$$
 $head Example$$
 The file $cref atomic_vector_add.cpp$$ contains an example
 and test for this operator.

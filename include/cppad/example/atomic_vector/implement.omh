@@ -1,0 +1,31 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
+
+CppAD is distributed under the terms of the
+             Eclipse Public License Version 2.0.
+
+This Source Code may also be made available under the following
+Secondary License when the conditions for such availability set forth
+in the Eclipse Public License, Version 2.0 are satisfied:
+      GNU General Public License, Version 2.0 or later.
+---------------------------------------------------------------------------- */
+$begin atomic_vector_implement$$
+
+$section Implementing Atomic Vector Operations$$
+
+$childtable%
+    include/cppad/example/atomic_vector.hpp
+    %include/cppad/example/atomic_vector/forward_op.hpp
+    %include/cppad/example/atomic_vector/reverse_op.hpp
+    %include/cppad/example/atomic_vector/jac_sparsity.hpp
+    %include/cppad/example/atomic_vector/hes_sparsity.hpp
+    %include/cppad/example/atomic_vector/for_type.hpp
+    %include/cppad/example/atomic_vector/rev_depend.hpp
+    %include/cppad/example/atomic_vector/add_op.hpp
+    %include/cppad/example/atomic_vector/sub_op.hpp
+    %include/cppad/example/atomic_vector/mul_op.hpp
+    %include/cppad/example/atomic_vector/div_op.hpp
+    %include/cppad/example/atomic_vector/neg_op.hpp
+%$$
+
+$end

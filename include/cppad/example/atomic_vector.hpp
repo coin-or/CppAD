@@ -15,24 +15,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_vector.hpp$$
 
-$section Implementing Atomic Vector Operations$$
-
-$childtable%
-    include/cppad/example/atomic_vector/forward_op.hpp
-    %include/cppad/example/atomic_vector/reverse_op.hpp
-    %include/cppad/example/atomic_vector/jac_sparsity.hpp
-    %include/cppad/example/atomic_vector/hes_sparsity.hpp
-    %include/cppad/example/atomic_vector/for_type.hpp
-    %include/cppad/example/atomic_vector/rev_depend.hpp
-    %include/cppad/example/atomic_vector/add_op.hpp
-    %include/cppad/example/atomic_vector/sub_op.hpp
-    %include/cppad/example/atomic_vector/mul_op.hpp
-    %include/cppad/example/atomic_vector/div_op.hpp
-    %include/cppad/example/atomic_vector/neg_op.hpp
-%$$
+$section Atomic Vector Class: Example Implementation$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
 $end
 */
 // BEGIN C++

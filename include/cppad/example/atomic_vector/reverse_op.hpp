@@ -18,8 +18,8 @@ $section Atomic Vector Forward Mode: Example Implementation$$
 
 $head Purpose$$
 The $code reverse$$ routine overrides the virtual functions
-used by the atomic_three base class for reverse mode calculations; see
-$cref/reverse/atomic_three_reverse/$$.
+used by the atomic_four base class for reverse mode calculations; see
+$cref/reverse/atomic_four_reverse/$$.
 It determines which operator is specified for this call and transfers
 the call to the operator's implementation.
 There are two versions of the $code reverse$$ routine, one for $code double$$

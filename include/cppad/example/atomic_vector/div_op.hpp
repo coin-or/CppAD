@@ -24,9 +24,6 @@ $head Reverse Mode$$
 see theory for reverse mode
 $cref/division/ReverseTheory/Binary Operators/Division/$$.
 
-$children%
-    example/atomic_vector/div.cpp
-%$$
 $head Example$$
 The file $cref atomic_vector_div.cpp$$ contains an example
 and test for this operator.

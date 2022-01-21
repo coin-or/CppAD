@@ -25,9 +25,6 @@ The $code hes_sparsity$$ routine overrides the virtual functions
 used by the atomic_four base class for Jacobian sparsity calculations; see
 $cref/hes_sparsity/atomic_four_hes_sparsity/$$.
 
-$children%
-    example/atomic_vector/hes_sparsity.cpp
-%$$
 $head Example$$
 The file $cref atomic_vector_hes_sparsity.cpp$$
 contains an example and test using this operator.

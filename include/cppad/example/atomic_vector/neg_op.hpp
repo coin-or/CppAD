@@ -16,9 +16,6 @@ $begin atomic_vector_neg_op.hpp$$
 
 $section Atomic Vector Negative Operator: Example Implementation$$
 
-$children%
-    example/atomic_vector/neg.cpp
-%$$
 $head Example$$
 The file $cref atomic_vector_neg.cpp$$ contains an example
 and test for this operator.

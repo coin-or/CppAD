@@ -18,8 +18,8 @@ $section Atomic Vector Forward Mode: Example Implementation$$
 
 $head Purpose$$
 The $code forward$$ routine overrides the virtual functions
-used by the atomic_three base class for forward mode calculations; see
-$cref/forward/atomic_three_forward/$$.
+used by the atomic_four base class for forward mode calculations; see
+$cref/forward/atomic_four_forward/$$.
 It determines which operator is specified for this call and transfers
 the call to the operator's implementation.
 There are two versions of the $code forward$$ routine, one for $code double$$
