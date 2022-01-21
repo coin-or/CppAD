@@ -27,6 +27,11 @@ $icode%vec_op%(%x%, %y%)
 %$$
 
 $head Purpose$$
+This atomic function class can be used as a general purpose utility.
+It is unclear how much benefit there is do doing so.
+This is because the number of operations internal to an element-wise
+atomic function is not much more than the work required to pass the
+arguments to the atomic function.
 
 $subhead Vector Operations$$
 This atomic function unary operations
@@ -39,10 +44,13 @@ $codei%
 %$$
 where $icode op$$, $icode u$$ and $icode v$$ are defined below.
 
+$subhead atomic_four$$
+This example demonstrates all the callbacks for an
+$cref atomic_four$$ function.
+
 $subhead base2ad$$
-This also serves as an example for how one can
-define $codei%AD<%Base%>%$$ atomic operations use
-atomic operators (instead of element-wise operators).
+It include examples for how one can
+define $codei%AD<%Base%>%$$ atomic operations using atomic operators.
 This avoids expanding the atomic operator to an operator for each element
 when recording derivative calculations.
 For example, notice the difference between $code forward_add$$
