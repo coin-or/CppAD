@@ -31,6 +31,8 @@ $end
 */
 // BEGIN C++
 # include <cppad/example/atomic_vector.hpp>
+
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 // reverse override
 // this routine used by ADFun<Base> objects
@@ -159,5 +161,6 @@ bool atomic_vector<Base>::reverse(
     }
     return ok;
 }
+} // END_CPPAD_NAMESPACE
 // END C++
 # endif

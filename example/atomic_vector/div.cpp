@@ -40,16 +40,16 @@ bool div(void)
     //
     // vec_op
     // atomic vector_op object
-    atomic_vector<double> vec_op("atomic_vector");
+    CppAD::atomic_vector<double> vec_op("atomic_vector");
     //
     // m
     // size of u and v
     size_t m = 4;
     //
     // mul_op, div_op
-    typedef atomic_vector<double>::op_enum_t op_enum_t;
-    op_enum_t mul_op = atomic_vector<double>::mul_enum;
-    op_enum_t div_op = atomic_vector<double>::div_enum;
+    typedef CppAD::atomic_vector<double>::op_enum_t op_enum_t;
+    op_enum_t mul_op = CppAD::atomic_vector<double>::mul_enum;
+    op_enum_t div_op = CppAD::atomic_vector<double>::div_enum;
     // -----------------------------------------------------------------------
     // Record f(u, v) = u * u / v
     // -----------------------------------------------------------------------

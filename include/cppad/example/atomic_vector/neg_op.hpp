@@ -31,6 +31,7 @@ $end
 // BEGIN C++
 # include <cppad/example/atomic_vector.hpp>
 
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // ---------------------------------------------------------------------------
 template <class Base>
 void atomic_vector<Base>::forward_neg(
@@ -130,6 +131,6 @@ void atomic_vector<Base>::reverse_neg(
         copy_vec_to_mat(m, q, k, ay.begin(), apu);
     }
 }
-
+} // END_CPPAD_NAMESPACE
 // END C++
 # endif

@@ -38,6 +38,8 @@ $end
 */
 // BEGIN C++
 # include <cppad/example/atomic_vector.hpp>
+
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // ---------------------------------------------------------------------------
 // forward_div
 template <class Base>
@@ -318,8 +320,6 @@ void atomic_vector<Base>::reverse_div(
         copy_vec_to_mat(m, q, 0, ay.begin(), apv);
     }
 }
-
-
-
+} // END_CPPAD_NAMESPACE
 // END C++
 # endif

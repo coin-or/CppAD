@@ -38,6 +38,8 @@ $end
 */
 // BEGIN C++
 # include <cppad/example/atomic_vector.hpp>
+
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 // hes_sparsity override
 template <class Base>
@@ -103,5 +105,6 @@ bool atomic_vector<Base>::hes_sparsity(
     //
     return true;
 }
+} // END_CPPAD_NAMESPACE
 // END C++
 # endif

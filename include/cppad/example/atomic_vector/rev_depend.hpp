@@ -38,6 +38,8 @@ $end
 */
 // BEGIN C++
 # include <cppad/example/atomic_vector.hpp>
+
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 // rev_depend override
 template <class Base>
@@ -65,5 +67,6 @@ bool atomic_vector<Base>::rev_depend(
     }
     return true;
 }
+} // END_CPPAD_NAMESPACE
 // END C++
 # endif

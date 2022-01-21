@@ -39,6 +39,7 @@ $end
 // BEGIN C++
 # include <cppad/example/atomic_vector.hpp>
 
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // ---------------------------------------------------------------------------
 // comment below is used by atomic_vector.omh
 // BEGIN forward_add
@@ -140,6 +141,6 @@ void atomic_vector<Base>::reverse_add(
         }
     }
 }
-
+} // END_CPPAD_NAMESPACE
 // END C++
 # endif

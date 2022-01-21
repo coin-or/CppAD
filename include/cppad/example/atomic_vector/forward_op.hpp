@@ -31,6 +31,8 @@ $end
 */
 // BEGIN C++
 # include <cppad/example/atomic_vector.hpp>
+
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 // forward override
 // this routine called by ADFun<Base> objects
@@ -160,5 +162,6 @@ bool atomic_vector<Base>::forward(
     }
     return ok;
 }
+} // END_CPPAD_NAMESPACE
 // END C++
 # endif

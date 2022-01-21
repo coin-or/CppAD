@@ -39,6 +39,7 @@ $end
 // BEGIN C++
 # include <cppad/example/atomic_vector.hpp>
 
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // --------------------------------------------------------------------------
 // forward_mul
 template <class Base>
@@ -265,6 +266,6 @@ void atomic_vector<Base>::reverse_mul(
         }
     }
 }
-
+} // END_CPPAD_NAMESPACE
 // END C++
 # endif

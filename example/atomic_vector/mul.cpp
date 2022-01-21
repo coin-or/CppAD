@@ -40,15 +40,15 @@ bool mul(void)
     //
     // vec_op
     // atomic vector_op object
-    atomic_vector<double> vec_op("atomic_vector");
+    CppAD::atomic_vector<double> vec_op("atomic_vector");
     //
     // m
     // size of u, v, and w
     size_t m = 5;
     //
     // mul_op
-    typedef atomic_vector<double>::op_enum_t op_enum_t;
-    op_enum_t mul_op = atomic_vector<double>::mul_enum;
+    typedef CppAD::atomic_vector<double>::op_enum_t op_enum_t;
+    op_enum_t mul_op = CppAD::atomic_vector<double>::mul_enum;
     // -----------------------------------------------------------------------
     // Record f(u, v, w) = u * v * w
     // -----------------------------------------------------------------------

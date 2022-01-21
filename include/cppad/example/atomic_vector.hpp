@@ -72,6 +72,8 @@ $end
         const CppAD::vector< CppAD::AD<Base> >&          apy   \
     );
 
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+//
 template <class Base>
 class atomic_vector : public CppAD::atomic_four<double> {
 //
@@ -224,6 +226,8 @@ private:
     CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE(div)
     CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE(neg)
 };
+} // END_CPPAD_NAMESPACE
+
 # undef CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE
 
 # include <cppad/example/atomic_vector/rev_depend.hpp>
