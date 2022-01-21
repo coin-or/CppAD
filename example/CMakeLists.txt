@@ -21,6 +21,7 @@ ADD_SUBDIRECTORY(abs_normal)
 # atomic examples
 ADD_SUBDIRECTORY(atomic_two)
 ADD_SUBDIRECTORY(atomic_three)
+ADD_SUBDIRECTORY(atomic_four)
 ADD_SUBDIRECTORY(atomic_vector)
 
 # checkpoint exmaples
