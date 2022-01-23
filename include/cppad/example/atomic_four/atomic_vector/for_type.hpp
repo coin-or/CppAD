@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_VECTOR_FOR_TYPE_HPP
-# define CPPAD_EXAMPLE_ATOMIC_VECTOR_FOR_TYPE_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_FOR_TYPE_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_FOR_TYPE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -30,7 +30,7 @@ $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
-# include <cppad/example/atomic_vector.hpp>
+# include <cppad/example/atomic_four/atomic_vector.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //

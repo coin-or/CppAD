@@ -57,7 +57,7 @@ For example, notice the difference between $code forward_add$$
 for the $code double$$ and the $code AD<double>$$ cases
 (note that copying an AD variable does not create a new variable):
 $srcfile%
-    include/cppad/example/atomic_vector/add_op.hpp%
+    include/cppad/example/atomic_four/atomic_vector/add_op.hpp%
     0%// BEGIN forward_add%// END forward_add%0
 %$$
 
@@ -74,7 +74,7 @@ $head op$$
 The value $icode%x%[0]%$$
 is a constant parameter with the following possible values:
 $srcfile%
-    include/cppad/example/atomic_vector.hpp%
+    include/cppad/example/atomic_four/atomic_vector.hpp%
     0%// BEGIN op_enum_t%// END op_enum_t%0
 %$$
 We use $icode op$$ for the corresponding operator.
@@ -104,7 +104,7 @@ resulting tape.
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_3$$
 $childtable%
-    include/cppad/example/atomic_vector/implement.omh
+    include/cppad/example/atomic_four/atomic_vector/implement.omh
     %example/atomic_four/atomic_vector/add.cpp
     %example/atomic_four/atomic_vector/div.cpp
     %example/atomic_four/atomic_vector/hes_sparsity.cpp
