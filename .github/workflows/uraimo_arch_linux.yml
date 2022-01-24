@@ -6,8 +6,10 @@ on:
     branches:
       - master
 jobs:
-  learn-actions:
-    runs-on: ${{ matrix.os }}
+  run_tests:
+    runs-on: ubuntu-10.04
+    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
+
     strategy:
       matrix:
         include:
