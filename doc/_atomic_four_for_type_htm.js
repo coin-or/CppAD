@@ -10,13 +10,23 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
-'atomic_vector.htm',
-'atomic_vector.hpp.htm',
-'atomic_vector_neg_op.cpp.htm'
+'atomic_four.htm',
+'atomic_four_for_type.htm'
 ];
 var list_current0 = [
-'atomic_vector_neg_op.cpp.htm#Example',
-'atomic_vector_neg_op.cpp.htm#Source'
+'atomic_four_for_type.htm#Syntax',
+'atomic_four_for_type.htm#Prototype',
+'atomic_four_for_type.htm#Dependency Analysis',
+'atomic_four_for_type.htm#Usage',
+'atomic_four_for_type.htm#Implementation',
+'atomic_four_for_type.htm#Base',
+'atomic_four_for_type.htm#vector',
+'atomic_four_for_type.htm#call_id',
+'atomic_four_for_type.htm#ad_type',
+'atomic_four_for_type.htm#type_x',
+'atomic_four_for_type.htm#type_y',
+'atomic_four_for_type.htm#ok',
+'atomic_four_for_type.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

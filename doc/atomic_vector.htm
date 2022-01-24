@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Vector Element-wise Operators: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Vector Element-wise Operators: Example and Test">
-<meta name="keywords" id="keywords" content=" atomic vector element-wise operators: example test syntax purpose operations base2ad x m op u v y ad&lt;double&gt; ">
+<meta name="keywords" id="keywords" content=" atomic vector element-wise operators: example test syntax op purpose operations atomic_four base2ad x m u v y ad&lt;double&gt; ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic_three_mat_mul.hpp.htm" target="_top">Prev</a>
-</td><td><a href="atomic_vector.hpp.htm" target="_top">Next</a>
+<td><a href="atomic_four_norm_sq.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_vector_implement.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,11 +50,9 @@ A:active { color : purple }
 <option>AD</option>
 <option>ADValued</option>
 <option>atomic</option>
+<option>atomic_four_example</option>
 <option>atomic_vector</option>
 </select>
-</td>
-<td>
-<script type='text/javascript' language='JavaScript' src='_childtable_ad_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_advalued_htm.js'></script>
@@ -63,18 +61,22 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
 </td>
 <td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_vector_htm.js'></script>
 </td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>op</option>
 <option>Purpose</option>
 <option>---..Vector Operations</option>
+<option>---..atomic_four</option>
 <option>---..base2ad</option>
 <option>x</option>
 <option>m</option>
-<option>op</option>
 <option>u</option>
 <option>v</option>
 <option>y</option>
@@ -98,11 +100,31 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'>atomic_vector_op&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>vec_op</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>vec_op</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>vec_op</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>op</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
+<b><big><a name="op" id="op">op</a></big></b>
+<br>
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
+ has the following possible values:
+<pre><tt>    <i><font color="#9A1900">// atomic_vector::op_enum_t</font></i>
+    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">enum</font></b> <font color="#FF0000">{</font>
+        add_enum<font color="#990000">,</font>
+        div_enum<font color="#990000">,</font>
+        mul_enum<font color="#990000">,</font>
+        neg_enum<font color="#990000">,</font>
+        sub_enum<font color="#990000">,</font>
+        number_op_enum
+    <font color="#FF0000">}</font> op_enum_t<font color="#990000">;</font>    </tt></pre>
+<br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
-
+<br>
+This atomic function class can be used as a general purpose utility.
+It is unclear how much benefit there is do doing so.
+This is because the number of operations internal to an element-wise
+atomic function is not much more than the work required to pass the
+arguments to the atomic function.
 
 <br>
 <br>
@@ -128,65 +150,73 @@ where
 
 <br>
 <br>
+<big><a name="Purpose.atomic_four" id="Purpose.atomic_four">atomic_four</a></big>
+<br>
+This example demonstrates all the callbacks for an
+<a href="atomic_four.htm" target="_top"><span style='white-space: nowrap'>atomic_four</span></a>
+ function.
+
+<br>
+<br>
 <big><a name="Purpose.base2ad" id="Purpose.base2ad">base2ad</a></big>
 <br>
-This also serves as an example for how one can
+It include examples for how one can
 define 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- atomic operations use
-atomic operators (instead of element-wise operators).
+ atomic operations using atomic operators.
 This avoids expanding the atomic operator to an operator for each element
 when recording derivative calculations.
 For example, notice the difference between <code><font color="blue">forward_add</font></code>
 for the <code><font color="blue">double</font></code> and the <code><font color="blue">AD&lt;double&gt;</font></code> cases
 (note that copying an AD variable does not create a new variable):
-<pre><tt><font color="#009900">void</font> atomic_vector<font color="#990000">::</font><b><font color="#000000">forward_add</font></b><font color="#990000">(</font>
+<pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> atomic_vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">forward_add</font></b><font color="#990000">(</font>
     <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
     <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
     <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           ty<font color="#990000">)</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       tx<font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                             ty<font color="#990000">)</font>
 <font color="#FF0000">{</font>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> u_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">)</font>     <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
-            <font color="#008080">size_t</font> v_index  <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
-            <font color="#008080">size_t</font> y_index  <font color="#990000">=</font> i <font color="#990000">*</font>           <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> u_index  <font color="#990000">=</font>       i <font color="#990000">*</font> q <font color="#990000">+</font> k<font color="#990000">;</font>
+            <font color="#008080">size_t</font> v_index  <font color="#990000">=</font> <font color="#990000">(</font>m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">+</font> k<font color="#990000">;</font>
+            <font color="#008080">size_t</font> y_index  <font color="#990000">=</font>       i <font color="#990000">*</font> q <font color="#990000">+</font> k<font color="#990000">;</font>
             <i><font color="#9A1900">// y_i^k = u_i^k + v_i^k</font></i>
             ty<font color="#990000">[</font>y_index<font color="#990000">]</font>     <font color="#990000">=</font> tx<font color="#990000">[</font>u_index<font color="#990000">]</font> <font color="#990000">+</font> tx<font color="#990000">[</font>v_index<font color="#990000">];</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
-<font color="#009900">void</font> atomic_vector<font color="#990000">::</font><b><font color="#000000">forward_add</font></b><font color="#990000">(</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> atomic_vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">forward_add</font></b><font color="#990000">(</font>
     <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
     <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
     <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty<font color="#990000">)</font>
-<font color="#FF0000">{</font>   <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> atx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> aty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          atx<font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>                aty<font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">;</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> atx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">*</font> q <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> aty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">*</font> q <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// atu, atv</font></i>
-    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
-    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atv <font color="#990000">=</font> atu <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font> m <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">);</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atu <font color="#990000">=</font> atx<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> atv <font color="#990000">=</font> atu <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>m <font color="#990000">*</font> q<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ax</font></i>
     <font color="#008080">ad_vector</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> add_enum <font color="#990000">);</font>
-    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au <font color="#990000">=</font> ax<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+    ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> au <font color="#990000">=</font> ax<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font>
     ad_vector<font color="#990000">::</font><font color="#008080">iterator</font> av <font color="#990000">=</font> au <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ay</font></i>
     <font color="#008080">ad_vector</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;=</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> p<font color="#990000">;</font> k <font color="#990000">&lt;</font> q<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// au = u^k</font></i>
         <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> atu<font color="#990000">,</font> au<font color="#990000">);</font>
         <i><font color="#9A1900">// av = v^k</font></i>
         <b><font color="#000000">copy_mat_to_vec</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> atv<font color="#990000">,</font> av<font color="#990000">);</font>
         <i><font color="#9A1900">// ay = au + av</font></i>
-        <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector add</font></i>
+        <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>add_enum<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">);</font> <i><font color="#9A1900">// atomic vector add</font></i>
         <i><font color="#9A1900">// y^k = ay</font></i>
         <b><font color="#000000">copy_vec_to_mat</font></b><font color="#990000">(</font>m<font color="#990000">,</font> q<font color="#990000">,</font> k<font color="#990000">,</font> ay<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">(),</font> aty<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">()</font> <font color="#990000">);</font>
     <font color="#FF0000">}</font>
@@ -212,27 +242,6 @@ In the case of unary (binary) operators
 <code><font color="blue">%m% = %n% - 1</font></code>  ( 
 <code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;1)&nbsp;/&nbsp;2</span></font></code>
  ).
-
-<br>
-<br>
-<b><big><a name="op" id="op">op</a></big></b>
-<br>
-The value 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>[0]</span></font></code>
-
-is a constant parameter with the following possible values:
-<pre><tt>    <i><font color="#9A1900">// atomic_vector::op_enum_t</font></i>
-    <b><font color="#0000FF">typedef</font></b> <b><font color="#0000FF">enum</font></b> <font color="#FF0000">{</font>
-        add_enum<font color="#990000">,</font>
-        div_enum<font color="#990000">,</font>
-        mul_enum<font color="#990000">,</font>
-        neg_enum<font color="#990000">,</font>
-        sub_enum<font color="#990000">,</font>
-        number_op_enum
-    <font color="#FF0000">}</font> op_enum_t<font color="#990000">;</font>    </tt></pre>
-We use 
-<code><i><font color="black"><span style='white-space: nowrap'>op</span></font></i></code>
- for the corresponding operator.
 
 <br>
 <br>
@@ -287,8 +296,8 @@ resulting tape.
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="atomic_vector.hpp.htm" target="_top">atomic_vector.hpp</a></td><td>Implementing&nbsp;Atomic&nbsp;Vector&nbsp;Operations</td></tr><tr><td><a href="atomic_vector_add.cpp.htm" target="_top">atomic_vector_add.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Addition&nbsp;Example</td></tr><tr><td><a href="atomic_vector_div.cpp.htm" target="_top">atomic_vector_div.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Division&nbsp;Example</td></tr><tr><td><a href="atomic_vector_mul.cpp.htm" target="_top">atomic_vector_mul.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Multiplication&nbsp;Example</td></tr><tr><td><a href="atomic_vector_neg.cpp.htm" target="_top">atomic_vector_neg.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Negation&nbsp;Example</td></tr><tr><td><a href="atomic_vector_sub.cpp.htm" target="_top">atomic_vector_sub.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Subtraction&nbsp;Example</td></tr></table>
-<hr>Input File: example/atomic_vector/atomic_vector.omh
+<tr><td><a href="atomic_vector_implement.htm" target="_top">atomic_vector_implement</a></td><td>Implementing&nbsp;Atomic&nbsp;Vector&nbsp;Operations</td></tr><tr><td><a href="atomic_vector_add.cpp.htm" target="_top">atomic_vector_add.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Addition&nbsp;Example</td></tr><tr><td><a href="atomic_vector_div.cpp.htm" target="_top">atomic_vector_div.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Division&nbsp;Example</td></tr><tr><td><a href="atomic_vector_hes_sparsity.cpp.htm" target="_top">atomic_vector_hes_sparsity.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Sparsity&nbsp;Patterns&nbsp;Example</td></tr><tr><td><a href="atomic_vector_jac_sparsity.cpp.htm" target="_top">atomic_vector_jac_sparsity.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Sparsity&nbsp;Patterns&nbsp;Example</td></tr><tr><td><a href="atomic_vector_mul.cpp.htm" target="_top">atomic_vector_mul.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Multiplication&nbsp;Example</td></tr><tr><td><a href="atomic_vector_neg.cpp.htm" target="_top">atomic_vector_neg.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Negation&nbsp;Example</td></tr><tr><td><a href="atomic_vector_rev_depend.cpp.htm" target="_top">atomic_vector_rev_depend.cpp</a></td><td>Example&nbsp;Optimizing&nbsp;Atomic&nbsp;Vector&nbsp;Usage</td></tr><tr><td><a href="atomic_vector_sub.cpp.htm" target="_top">atomic_vector_sub.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Subtraction&nbsp;Example</td></tr></table>
+<hr>Input File: include/cppad/example/atomic_four/atomic_vector/atomic_vector.omh
 
 </body>
 </html>

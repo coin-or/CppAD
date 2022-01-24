@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The CppAD Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The CppAD Wish List">
-<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose dynamic parameters comparison operators vecad vectors graph reverse mode atomic examples abs-normal functions return cancellation cppad_lib requirement inline compilation speed checkpoint tapeless ad re-taping testing subgraph forward sparsity element-wise operations check_finite test_boolofvoid example optimization taping special base requirements adolc recomputation iterator interface tracing atan2 ">
+<meta name="keywords" id="keywords" content=" the cppad wish list see also purpose dynamic parameters comparison operators vecad vectors graph reverse mode atomic examples abs-normal functions return cancellation cppad_lib requirement inline compilation speed checkpoint tapeless ad re-taping testing subgraph forward sparsity check_finite test_boolofvoid example optimization taping special base requirements adolc recomputation iterator interface tracing atan2 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -84,7 +84,6 @@ A:active { color : purple }
 <option>Subgraph</option>
 <option>---..Forward Mode</option>
 <option>---..Sparsity</option>
-<option>Element-wise Atomic Operations</option>
 <option>check_finite</option>
 <option>test_boolofvoid</option>
 <option>Example</option>
@@ -205,9 +204,12 @@ This may also be faster that using <code><font color="blue">azmul</font></code>.
 <br>
 <b><big><a name="Atomic Examples" id="Atomic Examples">Atomic Examples</a></big></b>
 <br>
-Convert the remaining <a href="atomic_two_example.htm" target="_top"><span style='white-space: nowrap'>atomic_two_examples</span></a>
+Convert the remaining
+<a href="atomic_two_example.htm" target="_top"><span style='white-space: nowrap'>atomic_two_examples</span></a>
+, and
+<a href="atomic_three_example.htm" target="_top"><span style='white-space: nowrap'>atomic_three_examples</span></a>
 
-to use the <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+to use the <a href="atomic_four.htm" target="_top"><span style='white-space: nowrap'>atomic_four</span></a>
  interface.
 
 
@@ -385,17 +387,6 @@ These sparsity patterns could be made more efficient
 by using the sparsity patterns for the atomic functions.
 
 
-<br>
-<br>
-<b><big><a name="Element-wise Atomic Operations" id="Element-wise Atomic Operations">Element-wise Atomic Operations</a></big></b>
-<br>
-Add atomic functions for element-wise addition, subtraction,
-multiplication, and division.
-Where the operands are <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>simple&nbsp;vectors</span></a>
-
-with elements of type 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
-.
 
 <br>
 <br>
@@ -447,9 +438,14 @@ into separate groups by the corresponding example subdirectory.
 There is some confusion as to the value of the Taylor coefficients
 for atomic function arguments and results that have been optimized out.
 See <a href="optimize.htm#Atomic Functions" target="_top"><span style='white-space: nowrap'>atomic&nbsp;functions</span></a>
- in optimize, and
+ in optimize,
 <a href="whats_new_21.htm#02-16" target="_top"><span style='white-space: nowrap'>02-16</span></a>
- in whats new for 2021.
+ in whats new for 2021,
+<a href="atomic_three_rev_depend.htm#depend_x.Optimize" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+
+in atomic_three, and
+<a href="atomic_four_rev_depend.htm#depend_x.Optimize" target="_top"><span style='white-space: nowrap'>optimize</span></a>
+ in atomic_four.
 
 <br>
 <br>

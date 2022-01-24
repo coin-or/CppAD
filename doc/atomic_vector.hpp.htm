@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Implementing Atomic Vector Operations</title>
+<title>Atomic Vector Class: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Implementing Atomic Vector Operations">
-<meta name="keywords" id="keywords" content=" implementing atomic vector operations ">
+<meta name="description" id="description" content="Atomic Vector Class: Example Implementation">
+<meta name="keywords" id="keywords" content=" atomic vector class: example implementation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic_vector.htm" target="_top">Prev</a>
-</td><td><a href="atomic_vector_forward_op.cpp.htm" target="_top">Next</a>
+<td><a href="atomic_vector_implement.htm" target="_top">Prev</a>
+</td><td><a href="atomic_vector_forward_op.hpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,28 +50,23 @@ A:active { color : purple }
 <option>AD</option>
 <option>ADValued</option>
 <option>atomic</option>
+<option>atomic_four_example</option>
 <option>atomic_vector</option>
+<option>atomic_vector_implement</option>
 <option>atomic_vector.hpp</option>
 </select>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_advalued_htm.js'></script>
-</td>
-<td>
-<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_vector_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_atomic_vector.hpp_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_vector_implement_htm.js'></script>
 </td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>Contents</option>
-</select>
-</td>
+<td>atomic_vector.hpp</td>
+<td>Headings</td>
 </tr></table><br>
 @(@\newcommand{\W}[1]{ \; #1 \; }
 \newcommand{\R}[1]{ {\rm #1} }
@@ -79,13 +74,47 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Implementing Atomic Vector Operations</big></big></b></center>
-<br>
-<b><big><a name="Contents" id="Contents">Contents</a></big></b>
-<br>
-<table>
-<tr><td><a href="atomic_vector_forward_op.cpp.htm" target="_top">atomic_vector_forward_op.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Forward&nbsp;Mode:&nbsp;Example&nbsp;Implementation</td></tr><tr><td><a href="atomic_vector_reverse_op.cpp.htm" target="_top">atomic_vector_reverse_op.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Forward&nbsp;Mode:&nbsp;Example&nbsp;Implementation</td></tr><tr><td><a href="atomic_vector_add_op.cpp.htm" target="_top">atomic_vector_add_op.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Add&nbsp;Operator:&nbsp;Example&nbsp;Implementation</td></tr><tr><td><a href="atomic_vector_sub_op.cpp.htm" target="_top">atomic_vector_sub_op.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Subtract&nbsp;Operator:&nbsp;Example&nbsp;Implementation</td></tr><tr><td><a href="atomic_vector_mul_op.cpp.htm" target="_top">atomic_vector_mul_op.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Multiply&nbsp;Operator:&nbsp;Example&nbsp;Implementation</td></tr><tr><td><a href="atomic_vector_div_op.cpp.htm" target="_top">atomic_vector_div_op.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Divide&nbsp;Operator:&nbsp;Example&nbsp;Implementation</td></tr><tr><td><a href="atomic_vector_neg_op.cpp.htm" target="_top">atomic_vector_neg_op.cpp</a></td><td>Atomic&nbsp;Vector&nbsp;Negative&nbsp;Operator:&nbsp;Example&nbsp;Implementation</td></tr></table><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
-<b><font color="#0000FF">class</font></b> <font color="#008080">atomic_vector</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_three<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Vector Class: Example Implementation</big></big></b></center>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+
+<i><font color="#9A1900">// declare forward_op and reverse_op for Base and AD&lt;Base&gt; cases</font></i>
+<i><font color="#9A1900">// where op is an operator name; e.g., forward_add and reverse_add.</font></i>
+<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE</font></b><font color="#990000">(</font>op<font color="#990000">)</font>             <font color="#990000">\</font>
+    <b><font color="#0000FF">static</font></b> <font color="#009900">void</font> forward_ ## <b><font color="#000000">op</font></b><font color="#990000">(</font>                                <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>    <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>    <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>    <font color="#990000">\</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       tx<font color="#990000">,</font>   <font color="#990000">\</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                             ty    <font color="#990000">\</font>
+    <font color="#990000">);</font>                                                         <font color="#990000">\</font>
+    <font color="#009900">void</font> forward_ ## <b><font color="#000000">op</font></b><font color="#990000">(</font>                                       <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>    <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>    <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>    <font color="#990000">\</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          atx<font color="#990000">,</font>  <font color="#990000">\</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>                aty   <font color="#990000">\</font>
+    <font color="#990000">);</font>                                                         <font color="#990000">\</font>
+    <b><font color="#0000FF">static</font></b> <font color="#009900">void</font> reverse_ ## <b><font color="#000000">op</font></b><font color="#990000">(</font>                                <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>    <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>    <font color="#990000">\</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       tx<font color="#990000">,</font>   <font color="#990000">\</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       ty<font color="#990000">,</font>   <font color="#990000">\</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                             px<font color="#990000">,</font>   <font color="#990000">\</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       py    <font color="#990000">\</font>
+    <font color="#990000">);</font>                                                         <font color="#990000">\</font>
+    <font color="#009900">void</font> reverse_ ## <b><font color="#000000">op</font></b><font color="#990000">(</font>                                       <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>    <font color="#990000">\</font>
+        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>    <font color="#990000">\</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          atx<font color="#990000">,</font>  <font color="#990000">\</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          aty<font color="#990000">,</font>  <font color="#990000">\</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>                apx<font color="#990000">,</font>  <font color="#990000">\</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          apy   <font color="#990000">\</font>
+    <font color="#990000">);</font>
+
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_CPPAD_NAMESPACE</font></i>
+<i><font color="#9A1900">//</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">class</font></b> <font color="#008080">atomic_vector</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
 <i><font color="#9A1900">//</font></i>
 <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
     <i><font color="#9A1900">// BEGIN_SORT_THIS_LINE_PLUS_4</font></i>
@@ -104,7 +133,7 @@ A:active { color : purple }
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ctor</font></i>
     <b><font color="#000000">atomic_vector</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> name<font color="#990000">)</font> <font color="#990000">:</font>
-    CppAD<font color="#990000">::</font>atomic_three<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>name<font color="#990000">)</font>
+    CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>name<font color="#990000">)</font>
     <font color="#FF0000">{</font> <font color="#FF0000">}</font>
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;double&gt; &gt;</font>    ad_vector<font color="#990000">;</font>
@@ -135,7 +164,7 @@ A:active { color : purple }
         ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> vec<font color="#990000">,</font>
         ad_vector<font color="#990000">::</font><font color="#008080">iterator</font>       mat<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> index  <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> index  <font color="#990000">=</font> i <font color="#990000">*</font> q <font color="#990000">+</font> k<font color="#990000">;</font>
             <font color="#990000">*(</font>mat <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>index<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">=</font> <font color="#990000">*(</font>vec <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
@@ -147,258 +176,112 @@ A:active { color : purple }
         ad_vector<font color="#990000">::</font><font color="#008080">const_iterator</font> mat<font color="#990000">,</font>
         ad_vector<font color="#990000">::</font><font color="#008080">iterator</font>       vec<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> index  <font color="#990000">=</font> i <font color="#990000">*</font> <font color="#990000">(</font>q<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> index  <font color="#990000">=</font> i <font color="#990000">*</font> q <font color="#990000">+</font> k<font color="#990000">;</font>
             <font color="#990000">*(</font>vec <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">=</font> <font color="#990000">*(</font>mat <font color="#990000">+</font> <b><font color="#000000">difference_type</font></b><font color="#990000">(</font>index<font color="#990000">)</font> <font color="#990000">);</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// for_type</font></i>
+    <i><font color="#9A1900">// overrides</font></i>
     <i><font color="#9A1900">// ------------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// for_type</font></i>
     <font color="#009900">bool</font> <b><font color="#000000">for_type</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>               parameter_x <font color="#990000">,</font>
+        <font color="#008080">size_t</font>                                     call_id     <font color="#990000">,</font>
         <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
-    <font color="#FF0000">{</font>
-        <i><font color="#9A1900">// op, m</font></i>
-        <font color="#008080">op_enum_t</font> op <font color="#990000">=</font> <b><font color="#000000">op_enum_t</font></b><font color="#990000">(</font> parameter_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">);</font>
-        <font color="#008080">size_t</font> n     <font color="#990000">=</font> parameter_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-        <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#990000">(</font>n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">;</font>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">is_unary</font></b><font color="#990000">(</font>op<font color="#990000">)</font> <font color="#990000">)</font>
-            m <font color="#990000">=</font> n <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
-        <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// ok</font></i>
-        <font color="#009900">bool</font> ok  <font color="#990000">=</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n<font color="#990000">;</font>
-        ok      <font color="#990000">&amp;=</font> type_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m<font color="#990000">;</font>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
-            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-        <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// type_y</font></i>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">is_unary</font></b><font color="#990000">(</font>op<font color="#990000">)</font> <font color="#990000">)</font>
-            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-                type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> type_x<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">];</font>
-        <b><font color="#0000FF">else</font></b>
-            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-                type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">,</font> type_x<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
-        <i><font color="#9A1900">//</font></i>
-        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-    <font color="#FF0000">}</font>
-    <i><font color="#9A1900">// =====================================================================</font></i>
-    <i><font color="#9A1900">// Forward Routines</font></i>
-    <i><font color="#9A1900">// =====================================================================</font></i>
-    <i><font color="#9A1900">// forward</font></i>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y
+    <font color="#990000">)</font> <b><font color="#0000FF">override</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// rev_depend</font></i>
+    <font color="#009900">bool</font> <b><font color="#000000">rev_depend</font></b><font color="#990000">(</font>
+        <font color="#008080">size_t</font>                         call_id     <font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>           depend_x    <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>     depend_y
+    <font color="#990000">)</font> <b><font color="#0000FF">override</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// jac_sparsity</font></i>
+    <font color="#009900">bool</font> <b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
+        <font color="#008080">size_t</font>                                         call_id      <font color="#990000">,</font>
+        <font color="#009900">bool</font>                                           dependency   <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>     pattern_out
+    <font color="#990000">)</font> <b><font color="#0000FF">override</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// hes_sparsity</font></i>
+    <font color="#009900">bool</font> <b><font color="#000000">hes_sparsity</font></b><font color="#990000">(</font>
+        <font color="#008080">size_t</font>                                         call_id      <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>     pattern_out
+    <font color="#990000">)</font> <b><font color="#0000FF">override</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Base forward</font></i>
     <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     parameter_x<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_x<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           need_y<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           ty
+        <font color="#008080">size_t</font>                                           call_id<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                       select_y<font color="#990000">,</font>
+        <font color="#008080">size_t</font>                                           order_low<font color="#990000">,</font>
+        <font color="#008080">size_t</font>                                           order_up<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       tx<font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                             ty
     <font color="#990000">)</font> <b><font color="#0000FF">override</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// AD&lt;Base&gt; forward</font></i>
     <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aparameter_x<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_x<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           need_y<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty
+        <font color="#008080">size_t</font>                                           call_id<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                       select_y<font color="#990000">,</font>
+        <font color="#008080">size_t</font>                                           order_low<font color="#990000">,</font>
+        <font color="#008080">size_t</font>                                           order_up<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          atx<font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>                aty
     <font color="#990000">)</font> <b><font color="#0000FF">override</font></b><font color="#990000">;</font>
-    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// forward_add</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">forward_add</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           ty
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">forward_add</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty
-    <font color="#990000">);</font>
-    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// forward_sub</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">forward_sub</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           ty
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">forward_sub</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty
-    <font color="#990000">);</font>
-    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// forward_mul</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">forward_mul</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           ty
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">forward_mul</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty
-    <font color="#990000">);</font>
-    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// forward_div</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">forward_div</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           ty
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">forward_div</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty
-    <font color="#990000">);</font>
-    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// forward_neg</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">forward_neg</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           ty
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">forward_neg</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           p<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              aty
-    <font color="#990000">);</font>
-    <i><font color="#9A1900">// =====================================================================</font></i>
-    <i><font color="#9A1900">// Reverse Routines</font></i>
-    <i><font color="#9A1900">// =====================================================================</font></i>
-    <i><font color="#9A1900">// reverse</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Base reverse</font></i>
     <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     parameter_x<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_x<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     ty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           px<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     py
+        <font color="#008080">size_t</font>                                           call_id<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                       select_x<font color="#990000">,</font>
+        <font color="#008080">size_t</font>                                           order_up<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       tx<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       ty<font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                             px<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>                       py
     <font color="#990000">)</font> <b><font color="#0000FF">override</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// AD&lt;Base&gt; reverse</font></i>
     <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aparameter_x<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_x<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              apx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy
+        <font color="#008080">size_t</font>                                           call_id<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                       select_x<font color="#990000">,</font>
+        <font color="#008080">size_t</font>                                           order_up<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          atx<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          aty<font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>                apx<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          apy
     <font color="#990000">)</font> <b><font color="#0000FF">override</font></b><font color="#990000">;</font>
     <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// reverse_add</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_add</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     ty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           px<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     py
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_add</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              apx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy
-    <font color="#990000">);</font>
+    <i><font color="#9A1900">// Forward and Reverse Implementation Routines</font></i>
     <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// reverse_sub</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_sub</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     ty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           px<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     py
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_sub</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              apx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy
-    <font color="#990000">);</font>
-    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// reverse_mul</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_mul</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     ty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           px<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     py
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_mul</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              apx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy
-    <font color="#990000">);</font>
-    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// reverse_div</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_div</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     ty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           px<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     py
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_div</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              apx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy
-    <font color="#990000">);</font>
-    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// reverse_neg</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_neg</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     tx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     ty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                           px<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>                     py
-    <font color="#990000">);</font>
-    <font color="#009900">void</font> <b><font color="#000000">reverse_neg</font></b><font color="#990000">(</font>
-        <font color="#008080">size_t</font>                                           m<font color="#990000">,</font>
-        <font color="#008080">size_t</font>                                           q<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        atx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        aty<font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>              apx<font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>        apy
-    <font color="#990000">);</font>
-<font color="#FF0000">}</font><font color="#990000">;</font></tt></pre>
+    <b><font color="#000000">CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE</font></b><font color="#990000">(</font>add<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE</font></b><font color="#990000">(</font>sub<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE</font></b><font color="#990000">(</font>mul<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE</font></b><font color="#990000">(</font>div<font color="#990000">)</font>
+    <b><font color="#000000">CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE</font></b><font color="#990000">(</font>neg<font color="#990000">)</font>
+<font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i>
 
-<hr>Input File: example/atomic_vector/atomic_vector.hpp
+<b><font color="#000080"># undef</font></b> CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE
+
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/rev_depend.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/for_type.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/jac_sparsity.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/hes_sparsity.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/reverse_op.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/forward_op.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/neg_op.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/div_op.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/mul_op.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/sub_op.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector/add_op.hpp&gt;</font></tt></pre>
+
+<hr>Input File: include/cppad/example/atomic_four/atomic_vector.hpp
 
 </body>
 </html>

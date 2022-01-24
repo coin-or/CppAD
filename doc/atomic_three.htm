@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic.htm" target="_top">Prev</a>
+<td><a href="atomic_vector_sub.cpp.htm" target="_top">Prev</a>
 </td><td><a href="atomic_three_ctor.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -95,10 +95,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
-
-
-<center><b><big><big>Defining Atomic Functions: Third Generation</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Defining Atomic Functions: Third Generation</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -207,12 +204,12 @@ g(x)
 <br>
 If the function <small>@(@
 g(x)
-@)@</small> is many times during the recording
+@)@</small> is used many times during the recording
 of an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
  object,
 using an atomic version of <small>@(@
 g(x)
-@)@</small> removed the need for repeated
+@)@</small> removes the need for repeated
 copies of the corresponding 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  operations and variables
@@ -292,13 +289,21 @@ forward mode calculation of second derivatives.
 <br>
 <b><big><a name="Base" id="Base">Base</a></big></b>
 <br>
-This is the type of the elements of
+This is the base type of the elements of
 <a href="atomic_three_afun.htm#ax" target="_top"><span style='white-space: nowrap'>ax</span></a>
  and <a href="atomic_three_afun.htm#ay" target="_top"><span style='white-space: nowrap'>ay</span></a>
 
 in the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
- call.
+ call; i.e.,
+the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ have type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
 
 <br>
 <br>

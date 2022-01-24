@@ -1,0 +1,427 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Euclidean Norm Squared: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Euclidean Norm Squared: Example and Test">
+<meta name="keywords" id="keywords" content=" atomic euclidean norm squared: example test function purpose define use ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_norm_sq.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_four_get_started.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_vector.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four_example</option>
+<option>atomic_four_norm_sq.cpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_advalued_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
+</td>
+<td>atomic_four_norm_sq.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Function</option>
+<option>Purpose</option>
+<option>Define Atomic Function</option>
+<option>Use Atomic Function</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Euclidean Norm Squared: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Function" id="Function">Function</a></big></b>
+<br>
+This example demonstrates using <a href="atomic_four.htm" target="_top"><span style='white-space: nowrap'>atomic_four</span></a>
+
+to define the operation
+<small>@(@
+g : \B{R}^n \rightarrow \B{R}
+@)@</small> where
+<small>@[@
+
+    g(x) =  x_0^2 + \cdots + x_{n-1}^2
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This atomic function demonstrates the following cases:
+<ol type="1"><li>
+an arbitrary number of arguments 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+
+</li><li>
+
+zero and first order forward mode.
+</li><li>
+
+first order derivatives using reverse mode.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Define Atomic Function" id="Define Atomic Function">Define Atomic Function</a></big></b>
+
+<pre><tt>
+<i><font color="#9A1900">// empty namespace</font></i>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+    <i><font color="#9A1900">// atomic_norm_sq</font></i>
+    <b><font color="#0000FF">class</font></b> <font color="#008080">atomic_norm_sq</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <b><font color="#000000">atomic_norm_sq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> name<font color="#990000">)</font> <font color="#990000">:</font>
+        CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>name<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
+        <i><font color="#9A1900">// for_type</font></i>
+        <font color="#009900">bool</font> <b><font color="#000000">for_type</font></b><font color="#990000">(</font>
+            <font color="#008080">size_t</font>                                     call_id     <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
+            CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
+        <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> call_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>       <i><font color="#9A1900">// default value</font></i>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font>type_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>  <i><font color="#9A1900">// m</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// type_y</font></i>
+            <font color="#008080">size_t</font> n     <font color="#990000">=</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+            type_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>constant_enum<font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+                type_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>type_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> type_x<font color="#990000">[</font>j<font color="#990000">]);</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// forward</font></i>
+        <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+            <font color="#008080">size_t</font>                             call_id     <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>         select_y    <font color="#990000">,</font>
+            <font color="#008080">size_t</font>                             order_low   <font color="#990000">,</font>
+            <font color="#008080">size_t</font>                             order_up    <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>       tx          <font color="#990000">,</font>
+            CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>             ty          <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
+        <font color="#FF0000">{</font>
+            <font color="#008080">size_t</font> q <font color="#990000">=</font> order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+            <font color="#008080">size_t</font> n <font color="#990000">=</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> q<font color="#990000">;</font>
+<b><font color="#000080">    # ifndef</font></b> NDEBUG
+            <font color="#008080">size_t</font> m <font color="#990000">=</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> q<font color="#990000">;</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> call_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> select_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+<b><font color="#000080">    # endif</font></b>
+            <i><font color="#9A1900">// ok</font></i>
+            <font color="#009900">bool</font> ok <font color="#990000">=</font> order_up <font color="#990000">&lt;=</font> <font color="#993399">1</font> <font color="#990000">&amp;&amp;</font> order_low <font color="#990000">&lt;=</font> order_up<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// sum = x_0^0 * x_0^0 + x_1^0 * x_1^0 + ...</font></i>
+            <font color="#009900">double</font> sum <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <font color="#009900">double</font> xj0 <font color="#990000">=</font> tx<font color="#990000">[</font> j <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+                sum       <font color="#990000">+=</font> xj0 <font color="#990000">*</font> xj0<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// ty[0] = sum</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_low <font color="#990000">&lt;=</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                ty<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> sum<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_up <font color="#990000">&lt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+
+            <i><font color="#9A1900">// sum = x_0^0 * x_0^1 + x_1^0 ^ x_1^1 + ...</font></i>
+            sum   <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <font color="#009900">double</font> xj0 <font color="#990000">=</font> tx<font color="#990000">[</font> j <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+                <font color="#009900">double</font> xj1 <font color="#990000">=</font> tx<font color="#990000">[</font> j <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
+                sum       <font color="#990000">+=</font> xj0 <font color="#990000">*</font> xj1<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">// ty[1] = 2.0 * sum</font></i>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+            ty<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> sum<font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+
+            <i><font color="#9A1900">// Assume we are not using forward mode with order &gt; 1</font></i>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// reverse</font></i>
+        <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font>
+            <font color="#008080">size_t</font>                              call_id     <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>          select_x    <font color="#990000">,</font>
+            <font color="#008080">size_t</font>                              order_up    <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>        tx          <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>        ty          <font color="#990000">,</font>
+            CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              px          <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>        py          <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
+        <font color="#FF0000">{</font>
+            <font color="#008080">size_t</font> q <font color="#990000">=</font> order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+            <font color="#008080">size_t</font> n <font color="#990000">=</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> q<font color="#990000">;</font>
+<b><font color="#000080">    # ifndef</font></b> NDEBUG
+            <font color="#008080">size_t</font> m <font color="#990000">=</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> q<font color="#990000">;</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> call_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> px<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> py<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> n <font color="#990000">==</font> select_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+<b><font color="#000080">    # endif</font></b>
+            <i><font color="#9A1900">// ok</font></i>
+            <font color="#009900">bool</font> ok <font color="#990000">=</font> order_up <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+
+            <i><font color="#9A1900">// first order reverse mode</font></i>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// x_0^0</font></i>
+                <font color="#009900">double</font> xj0 <font color="#990000">=</font> tx<font color="#990000">[</font> j <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+                <i><font color="#9A1900">//</font></i>
+                <i><font color="#9A1900">// H = G( F( { x_j^k } ) )</font></i>
+                <font color="#009900">double</font> dF <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> xj0<font color="#990000">;</font> <i><font color="#9A1900">// partial F w.r.t x_j^0</font></i>
+                <font color="#009900">double</font> dG <font color="#990000">=</font> py<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>     <i><font color="#9A1900">// partial of G w.r.t. y[0]</font></i>
+                <font color="#009900">double</font> dH <font color="#990000">=</font> dG <font color="#990000">*</font> dF<font color="#990000">;</font>   <i><font color="#9A1900">// partial of H w.r.t. x_j^0</font></i>
+
+                <i><font color="#9A1900">// px[j]</font></i>
+                px<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> dH<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// jac_sparsity</font></i>
+        <font color="#009900">bool</font> <b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
+            <font color="#008080">size_t</font>                                     call_id     <font color="#990000">,</font>
+            <font color="#009900">bool</font>                                       dependency  <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_x    <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_y    <font color="#990000">,</font>
+            CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font> pattern_out <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n <font color="#990000">=</font> select_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+            <font color="#008080">size_t</font> m <font color="#990000">=</font> select_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+<b><font color="#000080"># ifndef</font></b> NDEBUG
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> call_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+<b><font color="#000080"># endif</font></b>
+            <i><font color="#9A1900">// nnz</font></i>
+            <font color="#008080">size_t</font> nnz <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+                <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+                        <font color="#990000">++</font>nnz<font color="#990000">;</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">// pattern_out</font></i>
+            pattern_out<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> nnz<font color="#990000">);</font>
+            <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+                <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+                        pattern_out<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">++,</font> <font color="#993399">0</font><font color="#990000">,</font> j<font color="#990000">);</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> k <font color="#990000">==</font> nnz <font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// hes_sparsity</font></i>
+        <font color="#009900">bool</font> <b><font color="#000000">hes_sparsity</font></b><font color="#990000">(</font>
+            <font color="#008080">size_t</font>                                     call_id     <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_x    <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_y    <font color="#990000">,</font>
+            CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font> pattern_out <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> n <font color="#990000">=</font> select_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+<b><font color="#000080"># ifndef</font></b> NDEBUG
+            <font color="#008080">size_t</font> m <font color="#990000">=</font> select_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> call_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+<b><font color="#000080"># endif</font></b>
+            <i><font color="#9A1900">// nnz</font></i>
+            <font color="#008080">size_t</font> nnz <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+                <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+                        <font color="#990000">++</font>nnz<font color="#990000">;</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">// pattern_out</font></i>
+            pattern_out<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n<font color="#990000">,</font> n<font color="#990000">,</font> nnz<font color="#990000">);</font>
+            <font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+                <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+                        pattern_out<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">++,</font> j<font color="#990000">,</font> j<font color="#990000">);</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Use Atomic Function" id="Use Atomic Function">Use Atomic Function</a></big></b>
+
+<pre><tt>
+<font color="#009900">bool</font> <b><font color="#000000">norm_sq</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// ok, eps</font></i>
+    <font color="#009900">bool</font> ok    <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#009900">double</font> eps <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">.</font> <font color="#990000">*</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// atom_norm_sq</font></i>
+    <font color="#008080">atomic_norm_sq</font> <b><font color="#000000">afun</font></b><font color="#990000">(</font><font color="#FF0000">"atomic_norm_sq"</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// n, m</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// x</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1.0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ax</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+    CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ay</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#000000">afun</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// f</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> f<font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b> <font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check</font></i>
+    <font color="#009900">double</font> check <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        check <font color="#990000">+=</font> x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// check ay[0]</font></i>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// check zero order forward mode</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    y   <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// n2, check</font></i>
+    <font color="#008080">size_t</font> n2  <font color="#990000">=</font> n <font color="#990000">/</font> <font color="#993399">2</font><font color="#990000">;</font>
+    check      <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> x<font color="#990000">[</font>n2<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// check first order forward mode partial w.r.t. x[n2]</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">x1</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">y1</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+            x1<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    x1<font color="#990000">[</font>n2<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    y1     <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> x1<font color="#990000">);</font>
+    ok    <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// first order reverse mode</font></i>
+    <font color="#008080">size_t</font> q <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font>  <b><font color="#000000">w</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">dw</font></b><font color="#990000">(</font>n <font color="#990000">*</font> q<font color="#990000">);</font>
+    w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    dw    <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font>q<font color="#990000">,</font> w<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   check <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> x<font color="#990000">[</font>j<font color="#990000">];</font>
+        ok <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dw<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">,</font> check<font color="#990000">,</font>  eps<font color="#990000">,</font> eps<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_out</font></i>
+    <i><font color="#9A1900">// reverse mode Jacobian sparstiy pattern</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt; CPPAD_TESTVECTOR(size_t) &gt;</font> pattern_in<font color="#990000">,</font> pattern_out<font color="#990000">;</font>
+    pattern_in<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>m<font color="#990000">,</font> m<font color="#990000">,</font> m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        pattern_in<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>i<font color="#990000">,</font> i<font color="#990000">,</font> i<font color="#990000">);</font>
+    <font color="#009900">bool</font> transpose     <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#009900">bool</font> dependency    <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#009900">bool</font> internal_bool <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">rev_jac_sparsity</font></b><font color="#990000">(</font>
+        pattern_in<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">,</font> internal_bool<font color="#990000">,</font> pattern_out
+    <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    ok <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">()</font> <font color="#990000">==</font> n<font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>size_t<font color="#990000">)</font> row_major  <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">row_major</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> r <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font> row_major<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+        <font color="#008080">size_t</font> c <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font> row_major<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+        ok      <font color="#990000">&amp;=</font> r <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">&amp;&amp;</font> c <font color="#990000">==</font> j<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_out</font></i>
+    <i><font color="#9A1900">// forward mode Hessian sparsity pattern</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <b><font color="#000000">select_x</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">select_y</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        select_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    internal_bool <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">for_hes_sparsity</font></b><font color="#990000">(</font>
+        select_x<font color="#990000">,</font> select_y<font color="#990000">,</font> internal_bool<font color="#990000">,</font> pattern_out
+    <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    ok <font color="#990000">&amp;=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">()</font> <font color="#990000">==</font> n<font color="#990000">;</font>
+    row_major  <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">row_major</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> r   <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font> row_major<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+        <font color="#008080">size_t</font> c   <font color="#990000">=</font> pattern_out<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font> row_major<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">];</font>
+        ok        <font color="#990000">&amp;=</font> r <font color="#990000">==</font> j <font color="#990000">&amp;&amp;</font> c <font color="#990000">==</font> j<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/atomic_four/norm_sq.cpp
+
+</body>
+</html>

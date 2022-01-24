@@ -1,0 +1,261 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Function Hessian Sparsity Patterns</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Function Hessian Sparsity Patterns">
+<meta name="keywords" id="keywords" content=" atomic function hessian sparsity patterns syntax prototype implementation base vector call_id select_x select_y pattern_out ok examples ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_hes_sparsity_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_four_jac_sparsity.htm" target="_top">Prev</a>
+</td><td><a href="atomic_four_rev_depend.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four</option>
+<option>atomic_four_hes_sparsity</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_advalued_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_htm.js'></script>
+</td>
+<td>atomic_four_hes_sparsity</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Implementation</option>
+<option>Base</option>
+<option>vector</option>
+<option>call_id</option>
+<option>select_x</option>
+<option>select_y</option>
+<option>pattern_out</option>
+<option>ok</option>
+<option>Examples</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Atomic Function Hessian Sparsity Patterns</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.hes_sparsity(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_four<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">hes_sparsity</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                                  call_id      <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
+    sparse_rc<font color="#990000">&lt;</font> vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>            pattern_out  <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+This function must be defined if
+<a href="atomic_four_ctor.htm#atomic_user.afun" target="_top"><span style='white-space: nowrap'>afun</span></a>
+ is
+used to define an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+,
+and Hessian sparsity patterns are computed for 
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+See <a href="atomic_four_call.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="vector" id="vector">vector</a></big></b>
+<br>
+is the <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD_vector</span></a>
+ template class.
+
+<br>
+<br>
+<b><big><a name="call_id" id="call_id">call_id</a></big></b>
+<br>
+See <a href="atomic_four_call.htm#call_id" target="_top"><span style='white-space: nowrap'>call_id</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="select_x" id="select_x">select_x</a></big></b>
+<br>
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+.
+It specifies which domain components are included in
+the calculation of 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is false, then there will be no indices
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ such that either of the following hold:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.row()[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.col()[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="select_y" id="select_y">select_y</a></big></b>
+<br>
+This argument has size equal to the number of results to this
+atomic function; i.e. the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+.
+It specifies which range component functions <small>@(@
+g_i (x)
+@)@</small> are included in
+of 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="pattern_out" id="pattern_out">pattern_out</a></big></b>
+<br>
+This input value of 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
+ does not matter.
+Upon return it is the union,
+with respect to 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ such that 
+<code><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true,
+of the sparsity pattern for Hessian of <small>@(@
+g_i (x)
+@)@</small>.
+To be specific, there are non-negative indices
+
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+, and 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.row()[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.col()[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+if and only if
+there exists an index 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ such that,
+
+<code><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true,
+
+<code><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true,
+
+<code><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true,
+and
+<small>@[@
+
+    \partial_{x(r)} \partial_{x(c)} g_i(x)
+
+@]@</small>
+is possibly non-zero.
+Note that the sparsity pattern should be symmetric.
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+If this calculation succeeded, 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ is true.
+Otherwise it is false.
+
+
+<br>
+<br>
+<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+<br>
+The file  contains an example and test
+that uses this routine.
+
+<hr>Input File: include/cppad/core/atomic/four/hes_sparsity.hpp
+
+</body>
+</html>

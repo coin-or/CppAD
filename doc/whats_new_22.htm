@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>01-23</option>
 <option>01-19</option>
 <option>01-15</option>
 <option>01-06</option>
@@ -83,6 +84,35 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
+<br>
+<b><big><a name="01-23" id="01-23">01-23</a></big></b>
+
+<ol type="1"><li>
+Add <a href="atomic_four.htm" target="_top"><span style='white-space: nowrap'>atomic_four</span></a>
+, a simpler interface to atomic functions.
+This has the optional <a href="atomic_four_call.htm#call_id" target="_top"><span style='white-space: nowrap'>call_id</span></a>
+ argument
+which can be used to attach extra information to an atomic function call.
+</li><li>
+
+The <a href="atomic_vector.htm" target="_top"><span style='white-space: nowrap'>atomic_vector</span></a>
+ is a good example that uses
+
+<code><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i></code>
+ to specify which
+element by element operator is being called; see
+<a href="atomic_vector.htm#op" target="_top"><span style='white-space: nowrap'>call_id</span></a>
+.
+</li><li>
+
+Remove element-by-element atomic operations from <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wish_list</span></a>
+
+(completed by the atomic_vector class).
+</li></ol>
+
+
+
+<br>
 <br>
 <b><big><a name="01-19" id="01-19">01-19</a></big></b>
 <br>
@@ -104,7 +134,7 @@ for the <a href="atomic_vector.htm" target="_top"><span style='white-space: nowr
 </li><li>
 
 Correct the order of p, q in function calls in
-<a href="atomic_vector_forward_op.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_vector_forward_op.cpp</span></a>
+<a href="atomic_vector_forward_op.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_vector_forward_op.hpp</span></a>
 .
 </li></ol>
 

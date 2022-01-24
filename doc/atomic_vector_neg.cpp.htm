@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic_vector_mul.cpp.htm" target="_top">Prev</a>
-</td><td><a href="atomic_vector_sub.cpp.htm" target="_top">Next</a>
+</td><td><a href="atomic_vector_rev_depend.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,15 +50,16 @@ A:active { color : purple }
 <option>AD</option>
 <option>ADValued</option>
 <option>atomic</option>
+<option>atomic_four_example</option>
 <option>atomic_vector</option>
 <option>atomic_vector_neg.cpp</option>
 </select>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_advalued_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_vector_htm.js'></script>
@@ -115,7 +116,7 @@ g_i (u, w) = \partial_{w[i]}  f_i (u, w)
 
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">"atomic_vector.hpp"</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector.hpp&gt;</font>
 <font color="#009900">bool</font> <b><font color="#000000">neg</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
@@ -124,16 +125,16 @@ g_i (u, w) = \partial_{w[i]}  f_i (u, w)
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// vec_op</font></i>
     <i><font color="#9A1900">// atomic vector_op object</font></i>
-    <font color="#008080">atomic_vector</font> <b><font color="#000000">vec_op</font></b><font color="#990000">(</font><font color="#FF0000">"atomic_vector"</font><font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">atomic_vector&lt;double&gt;</font> <b><font color="#000000">vec_op</font></b><font color="#990000">(</font><font color="#FF0000">"atomic_vector"</font><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// m</font></i>
     <i><font color="#9A1900">// size of u, v</font></i>
     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// add_op, neg_op</font></i>
-    <b><font color="#0000FF">typedef</font></b> atomic_vector<font color="#990000">::</font><font color="#008080">op_enum_t</font> op_enum_t<font color="#990000">;</font>
-    <font color="#008080">op_enum_t</font> add_op <font color="#990000">=</font> atomic_vector<font color="#990000">::</font>add_enum<font color="#990000">;</font>
-    <font color="#008080">op_enum_t</font> neg_op <font color="#990000">=</font> atomic_vector<font color="#990000">::</font>neg_enum<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>atomic_vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><font color="#008080">op_enum_t</font> op_enum_t<font color="#990000">;</font>
+    <font color="#008080">op_enum_t</font> add_op <font color="#990000">=</font> CppAD<font color="#990000">::</font>atomic_vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>add_enum<font color="#990000">;</font>
+    <font color="#008080">op_enum_t</font> neg_op <font color="#990000">=</font> CppAD<font color="#990000">::</font>atomic_vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>neg_enum<font color="#990000">;</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Record f(u, v) = u - v</font></i>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
@@ -150,27 +151,25 @@ g_i (u, w) = \partial_{w[i]}  f_i (u, w)
         av<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> auv<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// ax = (neg_op, av)</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> m<font color="#990000">);</font>
-    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>neg_op<font color="#990000">);</font>
+    <i><font color="#9A1900">// ax = av</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-        ax<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> av<font color="#990000">[</font>i<font color="#990000">];</font>
+        ax<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> av<font color="#990000">[</font>i<font color="#990000">];</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ay = - av</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">vec_op</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <b><font color="#000000">vec_op</font></b><font color="#990000">(</font>neg_op<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// ax = (add_op, au, ay)</font></i>
-    ax<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
-    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>add_op<font color="#990000">);</font>
+    <i><font color="#9A1900">// ax = (au, ay)</font></i>
+    ax<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   ax<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> i<font color="#990000">]</font>     <font color="#990000">=</font> au<font color="#990000">[</font>i<font color="#990000">];</font>
-        ax<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
+    <font color="#FF0000">{</font>   ax<font color="#990000">[</font>i<font color="#990000">]</font>     <font color="#990000">=</font> au<font color="#990000">[</font>i<font color="#990000">];</font>
+        ax<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// az = au + ay</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">az</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">vec_op</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az<font color="#990000">);</font>
+    <b><font color="#000000">vec_op</font></b><font color="#990000">(</font>add_op<font color="#990000">,</font> ax<font color="#990000">,</font> az<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// f</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>auv<font color="#990000">,</font> az<font color="#990000">);</font>
@@ -234,7 +233,7 @@ g_i (u, w) = \partial_{w[i]}  f_i (u, w)
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: example/atomic_vector/neg.cpp
+<hr>Input File: example/atomic_four/atomic_vector/neg.cpp
 
 </body>
 </html>

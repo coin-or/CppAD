@@ -1,0 +1,283 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Function Forward Type Calculation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Function Forward Type Calculation">
+<meta name="keywords" id="keywords" content=" atomic function forward type calculation syntax prototype dependency analysis usage implementation base vector call_id ad_type type_x type_y ok example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_for_type_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_four_call.htm" target="_top">Prev</a>
+</td><td><a href="atomic_four_forward.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four</option>
+<option>atomic_four_for_type</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_advalued_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_htm.js'></script>
+</td>
+<td>atomic_four_for_type</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Dependency Analysis</option>
+<option>Usage</option>
+<option>Implementation</option>
+<option>Base</option>
+<option>vector</option>
+<option>call_id</option>
+<option>ad_type</option>
+<option>type_x</option>
+<option>type_y</option>
+<option>ok</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
+
+
+<center><b><big><big>Atomic Function Forward Type Calculation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.for_type(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_four<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">for_type</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                       call_id     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Dependency Analysis" id="Dependency Analysis">Dependency Analysis</a></big></b>
+<br>
+This calculation is sometimes referred to as a forward dependency analysis.
+
+<br>
+<br>
+<b><big><a name="Usage" id="Usage">Usage</a></big></b>
+<br>
+This syntax and prototype are used a
+<a href="atomic_four_call.htm" target="_top"><span style='white-space: nowrap'>call</span></a>
+ to an atomic function.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+<br>
+This virtual function must be defined by the
+<a href="atomic_four_ctor.htm#atomic_user" target="_top"><span style='white-space: nowrap'>atomic_user</span></a>
+ derived class.
+
+<br>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+See <a href="atomic_four_call.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="vector" id="vector">vector</a></big></b>
+<br>
+is the <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD_vector</span></a>
+ template class.
+
+<br>
+<br>
+<b><big><a name="call_id" id="call_id">call_id</a></big></b>
+<br>
+See <a href="atomic_four_call.htm#call_id" target="_top"><span style='white-space: nowrap'>call_id</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="ad_type" id="ad_type">ad_type</a></big></b>
+<br>
+The type <code><font color="blue">CppAD::ad_type_enum</font></code>
+is used to specify if an AD object is a
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameter</span></a>
+
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
+
+or <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+.
+It has the following possible values:
+<center>
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>ad_type_enum</span></font></i></code>
+  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ Meaning </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">constant_enum</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ constant parameter </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">dynamic_enum</font></code>   <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ dynamic parameter  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">variable_enum</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ variable
+</td></tr>
+</table>
+</center>In addition,
+<code><font color="blue">constant_enum &lt; dynamic_enum &lt; variable_enum</font></code>.
+
+<br>
+<br>
+<b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+This vector has size equal to the number of arguments in the
+atomic function call; i.e., the size of
+<a href="atomic_four_call.htm#ax" target="_top"><span style='white-space: nowrap'>ax</span></a>
+ which we denote by 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+.
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=0,</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a constant parameter,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::constant_enum<br>
+</span></font></code>
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a dynamic parameter,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::dynamic_enum<br>
+</span></font></code>
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a variable,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::variable_enum<br>
+</span></font></code>
+<br>
+<b><big><a name="type_y" id="type_y">type_y</a></big></b>
+<br>
+This vector has size equal to the number of results in the
+atomic function call; i.e., the size of
+<a href="atomic_four_call.htm#ay" target="_top"><span style='white-space: nowrap'>ay</span></a>
+ which we denote by 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+.
+The input values of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i></code>
+
+are not specified (must not matter).
+Upon return, for <small>@(@
+i = 0 , \ldots , m-1
+@)@</small>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is set to one of the following values:
+<ol type="1"><li>
+It is <code><font color="blue">constant_enum</font></code> if 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ only depends on
+the arguments that are constants.
+</li><li>
+
+It is <code><font color="blue">dynamic_enum</font></code> if 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ depends on
+a dynamic parameter and does not depend on any variables.
+</li><li>
+
+It is <code><font color="blue">variable_enum</font></code> if 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ depends on
+a variable.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="ok" id="ok">ok</a></big></b>
+<br>
+If this calculation succeeded, 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i></code>
+ is true.
+Otherwise, it is false.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The following is an example of a atomic function <code><font color="blue">for_type</font></code> definition:
+.
+
+
+<hr>Input File: include/cppad/core/atomic/four/for_type.hpp
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Function Constructor</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Function Constructor">
+<meta name="keywords" id="keywords" content=" atomic function constructor syntax prototype atomic_user ctor_arg_list afun implementation atomic_four restrictions base name example define use ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_ctor_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_four.htm" target="_top">Prev</a>
+</td><td><a href="atomic_four_call.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four</option>
+<option>atomic_four_ctor</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_advalued_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_htm.js'></script>
+</td>
+<td>atomic_four_ctor</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>atomic_user</option>
+<option>---..ctor_arg_list</option>
+<option>---..afun</option>
+<option>---..Implementation</option>
+<option>atomic_four</option>
+<option>---..Restrictions</option>
+<option>---..Base</option>
+<option>---..name</option>
+<option>Example</option>
+<option>---..Define Constructor</option>
+<option>---..Use Constructor</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Function Constructor</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;public&nbsp;CppAD::atomic_four&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;{<br>
+public:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;:&nbsp;CppAD::atomic_four&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+};<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user&nbsp;afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre style='display:inline'><tt>
+
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+atomic_four<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">atomic_four</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> name <font color="#990000">)</font>
+</tt></pre>
+<br>
+<b><big><a name="atomic_user" id="atomic_user">atomic_user</a></big></b>
+
+
+<br>
+<br>
+<big><a name="atomic_user.ctor_arg_list" id="atomic_user.ctor_arg_list">ctor_arg_list</a></big>
+<br>
+Is a list of arguments for the 
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i></code>
+ constructor.
+
+<br>
+<br>
+<big><a name="atomic_user.afun" id="atomic_user.afun">afun</a></big>
+<br>
+The object 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ must stay in scope for as long
+as the corresponding atomic function is used.
+This includes use by any <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;</span></a>
+ object that
+has this 
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i></code>
+ operation in its
+<a href="glossary.htm#Operation.Sequence" target="_top"><span style='white-space: nowrap'>operation&nbsp;sequence</span></a>
+.
+
+<br>
+<br>
+<big><a name="atomic_user.Implementation" id="atomic_user.Implementation">Implementation</a></big>
+<br>
+The user defined 
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i></code>
+ class is a publicly derived class of
+
+<code><font color="blue"><span style='white-space: nowrap'>atomic_four&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+It should be declared as follows:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;public&nbsp;CppAD::atomic_four&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;:&nbsp;atomic_four&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>...</span></font></i></code>
+
+denotes the rest of the implementation of the derived class.
+This includes completing the constructor and
+all the virtual functions that have their
+<code><font color="blue">atomic_four</font></code> implementations replaced by
+
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i></code>
+ implementations.
+
+<br>
+<br>
+<b><big><a name="atomic_four" id="atomic_four">atomic_four</a></big></b>
+
+
+<br>
+<br>
+<big><a name="atomic_four.Restrictions" id="atomic_four.Restrictions">Restrictions</a></big>
+<br>
+The <code><font color="blue">atomic_four</font></code> constructor and destructor cannot be called in
+<a href="ta_in_parallel.htm" target="_top"><span style='white-space: nowrap'>parallel</span></a>
+ mode.
+
+<br>
+<br>
+<big><a name="atomic_four.Base" id="atomic_four.Base">Base</a></big>
+<br>
+The template parameter determines the
+<a href="atomic_four_call.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
+
+type for this 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ atomic operation.
+
+<br>
+<br>
+<big><a name="atomic_four.name" id="atomic_four.name">name</a></big>
+<br>
+This <code><font color="blue">atomic_four</font></code> constructor argument has the following prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::string&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+It is the name for this atomic function and is used for error reporting.
+The suggested value for 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i></code>
+,
+i.e., the name of the corresponding atomic object or class.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Example.Define Constructor" id="Example.Define Constructor">Define Constructor</a></big>
+<br>
+The following is an example of a atomic function constructor definition:
+.
+
+<br>
+<br>
+<big><a name="Example.Use Constructor" id="Example.Use Constructor">Use Constructor</a></big>
+<br>
+The following is an example using a atomic function constructor:
+.
+
+
+<hr>Input File: include/cppad/core/atomic/four/ctor.hpp
+
+</body>
+</html>

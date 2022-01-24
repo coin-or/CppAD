@@ -10,14 +10,12 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
+'atomic_four_example.htm',
 'atomic_vector.htm',
-'atomic_vector.hpp.htm',
-'atomic_vector_mul_op.cpp.htm'
+'atomic_vector_implement.htm'
 ];
 var list_current0 = [
-'atomic_vector_mul_op.cpp.htm#Forward Mode',
-'atomic_vector_mul_op.cpp.htm#Example',
-'atomic_vector_mul_op.cpp.htm#Source'
+'atomic_vector_implement.htm#Contents'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

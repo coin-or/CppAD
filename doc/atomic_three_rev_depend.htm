@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Reverse Dependency Calculation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Reverse Dependency Calculation">
-<meta name="keywords" id="keywords" content=" atomic function reverse dependency calculation syntax prototype analysis implementation base parameter_x type_x depend_x depend_y ok example ">
+<meta name="keywords" id="keywords" content=" atomic function reverse dependency calculation syntax prototype analysis implementation base parameter_x type_x depend_x optimize depend_y ok example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,7 @@ A:active { color : purple }
 <option>parameter_x</option>
 <option>type_x</option>
 <option>depend_x</option>
+<option>---..Optimize</option>
 <option>depend_y</option>
 <option>ok</option>
 <option>Contents</option>
@@ -175,7 +176,12 @@ on the value of <a href="atomic_three_afun.htm#ax" target="_top"><span style='wh
 
 <code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
  call.
-Note that parameters and variables,
+
+<br>
+<br>
+<big><a name="depend_x.Optimize" id="depend_x.Optimize">Optimize</a></big>
+<br>
+Parameters and variables,
 that the values of interest do not depend on,
 may get removed by <a href="optimize.htm" target="_top"><span style='white-space: nowrap'>optimization</span></a>
 .

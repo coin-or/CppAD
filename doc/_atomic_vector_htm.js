@@ -10,16 +10,18 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
+'atomic_four_example.htm',
 'atomic_vector.htm'
 ];
 var list_current0 = [
 'atomic_vector.htm#Syntax',
+'atomic_vector.htm#op',
 'atomic_vector.htm#Purpose',
 'atomic_vector.htm#Purpose.Vector Operations',
+'atomic_vector.htm#Purpose.atomic_four',
 'atomic_vector.htm#Purpose.base2ad',
 'atomic_vector.htm#x',
 'atomic_vector.htm#m',
-'atomic_vector.htm#op',
 'atomic_vector.htm#u',
 'atomic_vector.htm#v',
 'atomic_vector.htm#y',

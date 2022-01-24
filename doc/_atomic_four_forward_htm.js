@@ -10,13 +10,36 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
-'atomic_vector.htm',
-'atomic_vector.hpp.htm',
-'atomic_vector_reverse_op.cpp.htm'
+'atomic_four.htm',
+'atomic_four_forward.htm'
 ];
 var list_current0 = [
-'atomic_vector_reverse_op.cpp.htm#Purpose',
-'atomic_vector_reverse_op.cpp.htm#Source'
+'atomic_four_forward.htm#Base',
+'atomic_four_forward.htm#vector',
+'atomic_four_forward.htm#Syntax',
+'atomic_four_forward.htm#Syntax.Base',
+'atomic_four_forward.htm#Syntax.AD&lt;Base&gt;',
+'atomic_four_forward.htm#Prototype',
+'atomic_four_forward.htm#Prototype.Base',
+'atomic_four_forward.htm#Prototype.AD&lt;Base&gt;',
+'atomic_four_forward.htm#Usage',
+'atomic_four_forward.htm#Usage.Base',
+'atomic_four_forward.htm#Usage.AD&lt;Base&gt;',
+'atomic_four_forward.htm#Implementation',
+'atomic_four_forward.htm#call_id',
+'atomic_four_forward.htm#select_y',
+'atomic_four_forward.htm#order_low',
+'atomic_four_forward.htm#order_low.p',
+'atomic_four_forward.htm#order_up',
+'atomic_four_forward.htm#order_up.q',
+'atomic_four_forward.htm#taylor_x',
+'atomic_four_forward.htm#taylor_x.parameters',
+'atomic_four_forward.htm#ataylor_x',
+'atomic_four_forward.htm#taylor_y',
+'atomic_four_forward.htm#ataylor_y',
+'atomic_four_forward.htm#ok',
+'atomic_four_forward.htm#Discussion',
+'atomic_four_forward.htm#Examples'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

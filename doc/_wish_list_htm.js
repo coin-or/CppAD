@@ -34,7 +34,6 @@ var list_current0 = [
 'wish_list.htm#Subgraph',
 'wish_list.htm#Subgraph.Forward Mode',
 'wish_list.htm#Subgraph.Sparsity',
-'wish_list.htm#Element-wise Atomic Operations',
 'wish_list.htm#check_finite',
 'wish_list.htm#test_boolofvoid',
 'wish_list.htm#Example',
