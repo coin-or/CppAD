@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -501,11 +501,8 @@ Fix warning during $cref cmake$$ command,
 on $href%https://www.cygwin.com/%cygwin%$$ systems,
 about $code WIN32$$ not being defined.
 $lnext
-Add $cref/element-wise atomic operations
-    /wish_list
-    /Element-wise Atomic Operations
-/$$
-to the wish list.
+Add element-wise atomic operations to the wish list.
+This was completed by the $cref atomic_vector$$ example.
 $lend
 
 $head 02-21$$

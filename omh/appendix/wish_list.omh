@@ -87,8 +87,10 @@ and the function above would return $code nan$$ for the derivative value.
 This may also be faster that using $code azmul$$.
 
 $head Atomic Examples$$
-Convert the remaining $cref/atomic_two_examples/atomic_two_example/$$
-to use the $cref atomic_three$$ interface.
+Convert the remaining
+$cref/atomic_two_examples/atomic_two_example/$$, and
+$cref/atomic_three_examples/atomic_three_example/$$
+to use the $cref atomic_four$$ interface.
 
 $comment ------------------------------------------------------------------- $$
 $head Abs-normal$$
@@ -185,11 +187,6 @@ These sparsity patterns could be made more efficient
 by using the sparsity patterns for the atomic functions.
 
 $comment ------------------------------------------------------------------- $$
-$head Element-wise Atomic Operations$$
-Add atomic functions for element-wise addition, subtraction,
-multiplication, and division.
-Where the operands are $cref/simple vectors/SimpleVector/$$
-with elements of type $codei%AD<%Base%>%$$.
 
 $head check_finite$$
 $list number$$
