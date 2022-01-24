@@ -24,6 +24,15 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 01-23$$
+Add $cref atomic_four$$, a simpler interface to atomic functions.
+This has the optional $cref/call_id/atomic_four_call/call_id/$$ argument
+which can be used to attach extra information to an atomic function call.
+The $cref atomic_vector$$ example uses this parameter to specify which
+element by element operator is being called; see
+$cref/call_id/atomic_vector/op/$$.
+
+
 $head 01-19$$
 Edit wish_list cppad_lib
 $cref/requirement/wish_list/cppad_lib/Requirement/$$ item.

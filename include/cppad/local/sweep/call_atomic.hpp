@@ -65,7 +65,7 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+see the atomic_four $cref/call_id/atomic_four_call/call_id/$$ and
 the atomic_one $cref/id/atomic_one/id/$$.
 
 $head taylor_x$$
@@ -205,7 +205,7 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+see the atomic_four $cref/call_id/atomic_four_call/call_id/$$ and
 the atomic_one $cref/id/atomic_one/id/$$.
 
 $head taylor_x$$
@@ -339,7 +339,7 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+see the atomic_four $cref/call_id/atomic_four_call/call_id/$$ and
 the atomic_one $cref/id/atomic_one/id/$$.
 
 $head dependency$$
@@ -477,7 +477,7 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+see the atomic_four $cref/call_id/atomic_four_call/call_id/$$ and
 the atomic_one $cref/id/atomic_one/id/$$.
 
 $head dependency$$
@@ -620,7 +620,7 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+see the atomic_four $cref/call_id/atomic_four_call/call_id/$$ and
 the atomic_one $cref/id/atomic_one/id/$$.
 
 $head parameter_x$$
@@ -834,7 +834,7 @@ is the internal type used to represent sparsity; i.e.,
 sparse::pack_setvec or sparse::list_setvec.
 
 $head call_id$$
-see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+see the atomic_four $cref/call_id/atomic_four_call/call_id/$$ and
 the atomic_one $cref/id/atomic_one/id/$$.
 
 $head parameter_x$$
@@ -1004,7 +1004,7 @@ $head atom_index$$
 is the index, in local::atomic_index, corresponding to this atomic function.
 
 $head call_id$$
-see the atomic_four $cref/call_id/atomic_four/call_id/$$ and
+see the atomic_four $cref/call_id/atomic_four_call/call_id/$$ and
 the atomic_one $cref/id/atomic_one/id/$$.
 
 $head parameter_x$$
