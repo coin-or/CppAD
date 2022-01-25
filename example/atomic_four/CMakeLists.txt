@@ -18,6 +18,7 @@ ADD_SUBDIRECTORY(atomic_vector)
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     atomic_four.cpp
+    dynamic.cpp
     get_started.cpp
     norm_sq.cpp
 )

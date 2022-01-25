@@ -129,6 +129,7 @@ $section Example Defining Atomic Functions: Fourth Generation$$
 
 $childtable%
     example/atomic_four/get_started.cpp
+    %example/atomic_four/dynamic.cpp
     %example/atomic_four/norm_sq.cpp
     %include/cppad/example/atomic_four/atomic_vector/atomic_vector.omh
 %$$
