@@ -1,11 +1,12 @@
-name: Linux Github Actions
+name: github_linux
 on:
   pull_request:
   push:
     branches:
-      - master
+      # comment out becasue not working
+      # - master
 jobs:
-  learn-actions:
+  run_tests:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
