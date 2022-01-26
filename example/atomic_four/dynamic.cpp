@@ -75,10 +75,10 @@ namespace {
             const CppAD::vector<double>&  taylor_x     ,
             CppAD::vector<double>&        taylor_y     ) override
         {
+# ifndef NDEBUG
             size_t q = order_up + 1;
             size_t n = taylor_x.size() / q;
-# ifndef NDEBUG
-            size_t m = taylor_y.size() / (order_up + 1);
+            size_t m = taylor_y.size() / q;
             assert( n == 3 );
             assert( m == 3 );
 # endif

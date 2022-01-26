@@ -22,7 +22,7 @@ $section Atomic Vector Forward Type Calculation: Example Implementation$$
 
 $head Purpose$$
 The $code for_type$$ routine overrides the virtual functions
-used by the atomic_four base class for Jacobian sparsity calculations; see
+used by the atomic_four base; see
 $cref/for_type/atomic_four_for_type/$$.
 
 $head Source$$
