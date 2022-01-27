@@ -1,6 +1,8 @@
 # see https://github.com/uraimo/run-on-arch-action
-name: uraimo_linux_arch
-on:
+name: uraimo_linux
+# Comment out for now; see
+# https://github.com/coin-or/CppAD/discussions/119#discussioncomment-2041373
+# on:
   # pull_request:
   # push:
   #   branches:
