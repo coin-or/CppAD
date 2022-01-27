@@ -1,10 +1,10 @@
 # see https://github.com/uraimo/run-on-arch-action
 name: uraimo_linux_arch
 on:
-  pull_request:
-  push:
-    branches:
-      - master
+  # pull_request:
+  # push:
+  #   branches:
+  #     - master
 jobs:
   run_tests:
     runs-on: ubuntu-10.04
