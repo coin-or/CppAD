@@ -56,7 +56,7 @@ namespace {
         size_t                                     call_id     ,
         const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
         CppAD::vector<CppAD::ad_type_enum>&        type_y      ) override
-        {   assert( call_id == 0 ); // default value
+        {   assert( call_id == 0 );       // default value
             assert( type_x.size() == 3 ); // n
             assert( type_y.size() == 3 ); // m
             //
@@ -82,7 +82,7 @@ namespace {
             assert( n == 3 );
             assert( m == 3 );
 # endif
-            // return flag
+            // ok
             bool ok = order_low == 0 && order_up == 0;
             if( ! ok )
                 return ok;

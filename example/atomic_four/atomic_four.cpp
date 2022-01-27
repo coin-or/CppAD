@@ -27,6 +27,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool dynamic(void);
+extern bool forward(void);
 extern bool get_started(void);
 extern bool norm_sq(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -41,6 +42,7 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( dynamic,             "dynamic"        );
+    Run( forward,             "forward"        );
     Run( get_started,         "get_started"    );
     Run( norm_sq,             "norm_sq"        );
     // END_SORT_THIS_LINE_MINUS_1

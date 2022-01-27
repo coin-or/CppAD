@@ -19,6 +19,7 @@ ADD_SUBDIRECTORY(atomic_vector)
 SET(source_list
     atomic_four.cpp
     dynamic.cpp
+    forward.cpp
     get_started.cpp
     norm_sq.cpp
 )

@@ -24,6 +24,10 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 01-27$$
+Convert $cref atomic_four_forward.cpp$$ from an atomic_three
+to an atomic_four example.
+
 $head 01-25$$
 Convert $cref atomic_four_dynamic.cpp$$ from an atomic_three
 to an atomic_four example.

@@ -217,13 +217,13 @@ $latex \[
     \R{taylor\_y} [ i * q + k ] = y_i^k
 \] $$
 
-$comment%
+$children%
     example/atomic_four/forward.cpp%
     example/atomic_four/dynamic.cpp
 %$$
 $head Examples$$
 The files
-$comment atomic_four_forward.cpp$$ and $comment atomic_four_dynamic.cpp$$
+$cref atomic_four_forward.cpp$$ and $cref atomic_four_dynamic.cpp$$
 contain examples and tests that uses this routine.
 
 $end
