@@ -7,19 +7,20 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'whats_new.htm',
-'whats_new_22.htm'
+'ad.htm',
+'advalued.htm',
+'atomic.htm',
+'atomic_four.htm',
+'atomic_four_forward.htm',
+'atomic_four_forward.cpp.htm'
 ];
 var list_current0 = [
-'whats_new_22.htm#01-27',
-'whats_new_22.htm#01-25',
-'whats_new_22.htm#01-23',
-'whats_new_22.htm#01-19',
-'whats_new_22.htm#01-15',
-'whats_new_22.htm#01-06',
-'whats_new_22.htm#01-04',
-'whats_new_22.htm#01-01'
+'atomic_four_forward.cpp.htm#Purpose',
+'atomic_four_forward.cpp.htm#Function',
+'atomic_four_forward.cpp.htm#Jacobian',
+'atomic_four_forward.cpp.htm#Hessian',
+'atomic_four_forward.cpp.htm#Define Atomic Function',
+'atomic_four_forward.cpp.htm#Use Atomic Function'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
