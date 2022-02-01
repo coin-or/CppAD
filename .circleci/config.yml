@@ -11,7 +11,8 @@ jobs:
     # Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/
     # configuration-reference/#docker-machine-macos-windows-executor
-    docker:
+    machine:
+      # https://circleci.com/developer/machine/image/ubuntu-2004
       - image: ubuntu-2004:202111-02
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
