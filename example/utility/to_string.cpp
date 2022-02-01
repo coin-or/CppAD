@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -29,11 +29,14 @@ namespace {
     {   Integer result = 0;
         size_t index   = 0;
         if( s[0] == '-' )
-            ++index;
-        while( index < s.size() )
-            result = Integer( 10 * result + (s[index++] - '0') );
-        if( s[0] == '-' )
-            return - result;
+        {   ++index;
+            while( index < s.size() )
+                result = Integer(10) * result - Integer(s[index++] - '0' );
+        }
+        else
+        {   while( index < s.size() )
+                result = Integer(10) * result + Integer(s[index++] - '0' );
+        }
         return result;
     }
     template <class Integer>
