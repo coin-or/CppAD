@@ -75,7 +75,7 @@ The length of $icode x$$ is denoted by $icode n$$.
 $head m$$
 This is the length of the vectors in the operations.
 In the case of unary (binary) operators
-$code%m% = %n% - 1$$  ( $icode%m% = (%n% - 1) / 2%$$ ).
+$code%m% = %n%$$  ( $icode%m% = %n% / 2%$$ ).
 
 $head u$$
 We use $icode u$$ to denote the following sub-vector of $icode x$$:

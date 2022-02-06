@@ -1,0 +1,169 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
+
+CppAD is distributed under the terms of the
+             Eclipse Public License Version 2.0.
+
+This Source Code may also be made available under the following
+Secondary License when the conditions for such availability set forth
+in the Eclipse Public License, Version 2.0 are satisfied:
+      GNU General Public License, Version 2.0 or later.
+---------------------------------------------------------------------------- */
+$begin atomic_mat_mul$$
+$spell
+    Taylor
+    nr
+    nc
+    mul
+$$
+
+$section Atomic Matrix Multiply Class: Example Implementation$$
+
+$head Under Construction$$
+This example is under construction and not yet usable.
+
+$head Syntax$$
+$codei%atomic_mat_mul %mat_mul%(%name%)
+%$$
+$icode%call_id% = %mat_mul%.set(%n_left%, %n_middle%, %n_right%)
+%$$
+$icode%mat_mul%.get(%call_id%, %n_left%, %n_middle%, %n_right%)
+%$$
+$icode%mat_mul%(%call_id%, %x%, %y%)
+%$$
+
+$head Purpose$$
+Construct an atomic operation that computes the matrix product
+$icode%R% = %A% * %B%$$.
+
+$head n_left$$
+This is the row dimension of the matrices $icode A$$ and $icode R$$.
+This is an argument (return value) for the $code set$$ ($code get$$) routine.
+
+$head n_middle$$
+This is the column dimension of the matrix $icode A$$
+and row dimension of the matrix $icode B$$
+This is an argument (return value) for the $code set$$ ($code get$$) routine.
+
+$head n_right$$
+This is the column dimension of the matrices $icode B$$ and $icode R$$.
+This is an argument (return value) for the $code set$$ ($code get$$) routine.
+
+$head call_id$$
+This is a return value (argument) for the $code set$$ ($code get$$) routine.
+
+$head x$$
+We use $icode x$$ to denote the argument to the atomic function.
+The size of this vector must be
+$icode%
+    n = n_left * n_middle + n_middle * n_right
+%$$
+The matrix $icode A$$ is stored in row major order at the beginning of
+$icode x$$; i.e. its $icode (i,k)$$ element is
+$icode%
+    A(i,k) = x[ i * n_middle + k]
+%$$
+The matrix $icode B$$ is stored in row major order at the end of
+$icode x$$; i.e. its $icode (k,j)$$ element is
+$icode%
+    B(k,j) = x[ n_left * n_middle + k * n_right + j ]
+%$$
+
+$head y$$
+We use $icode y$$ to denote the result of the atomic function.
+The size of this vector must be
+$icode m = n_middle * n_right$$.
+The matrix $icode R$$ is stored in row major order in $icode y$$;
+i.e. its $icode (i,k)$$ element is
+$icode%
+    R(i,j) = y[ i * n_right + j]
+%$$
+
+$head Theory$$
+
+$subhead Forward$$
+For $latex k = 0 , \ldots $$, the $th k$$ order Taylor coefficient
+$latex R_k$$ is given by
+$latex \[
+    R_k = \sum_{\ell = 0}^{k} A_\ell B_{k-\ell}
+\] $$
+
+$subhead Matrix Argument Scalar Valued Function$$
+Suppose $latex \bar{E}$$ is the derivative of the
+scalar value function $latex s(E)$$ with respect to the matrix $latex E$$; i.e.,
+$latex \[
+    \bar{E}_{i,j} = \frac{ \partial s } { \partial E_{i,j} }
+\] $$
+Also suppose that $latex t$$ is a scalar valued argument and
+$latex \[
+    E(t) = C(t) D(t)
+\] $$
+It follows that
+$latex \[
+    E'(t) = C'(t) D(t) +  C(t) D'(t)
+\] $$
+
+$latex \[
+    (s \circ E)'(t)
+    =
+    \R{tr} [ \bar{E}^\R{T} E'(t) ]
+\] $$
+$latex \[
+    =
+    \R{tr} [ \bar{E}^\R{T} C'(t) D(t) ] +
+    \R{tr} [ \bar{E}^\R{T} C(t) D'(t) ]
+\] $$
+$latex \[
+    =
+    \R{tr} [ D(t) \bar{E}^\R{T} C'(t) ] +
+    \R{tr} [ \bar{E}^\R{T} C(t) D'(t) ]
+\] $$
+Letting $latex D(t) = 0$$ and $latex C(t) = \Delta^{i,j} (t)$$
+(where $latex \Delta^{i,j} (t)$$ is the matrix that is zero,
+except for $latex i = j$$ where it is $latex t$$) we have
+$latex \[
+    \bar{C}_{i,j}
+    = \frac{ \partial s } { \partial C_{i,j} }
+    = (s \circ E)'(t)
+    = \R{tr} [ D(t) \bar{E}^\R{T} \Delta^{i,j}(1) ]
+\] $$
+$latex \[
+    \bar{C}_{i,j}
+    = \sum_k D_{j,k} \bar{E}^\R{T}_{k,i}
+    = \sum_k \bar{E}_{i,k} D^\R{T}_{k,j}
+\] $$
+$latex \[
+    \bar{C} = \bar{E} D^\R{T}
+\] $$
+Letting $latex C(t) = 0$$ and $latex D(t) = \Delta^{i,j} (t)$$
+we have
+$latex \[
+    \bar{D}_{i,j}
+    = \frac{ \partial s } { \partial D_{i,j} }
+    = (s \circ E)'(t)
+    = \R{tr} [ \bar{E}^\R{T} C(t) \Delta^{i,j} ]
+\] $$
+$latex \[
+    \bar{D}_{i,j}
+    = \sum_k \bar{E}^\R{T}_{j,k} C_{k,i}
+    = \sum_k C^\R{T}_{i,k} \bar{E}_{k,j}
+\] $$
+$latex \[
+    \bar{D} = C^\R{T} \bar{E}
+\] $$
+
+$subhead Reverse$$
+Reverse mode eliminates $latex R_k$$ as follows:
+for $latex \ell = 0, \ldots , k-1$$,
+$latex \[
+\bar{A}_\ell     = \bar{A}_\ell     + \bar{R}_k B_{k-\ell}^\R{T}
+\] $$
+$latex \[
+\bar{B}_{k-\ell} =  \bar{B}_{k-\ell} + A_\ell^\R{T} \bar{R}_k
+\] $$
+
+$childtable%
+    include/cppad/example/atomic_four/atomic_mat_mul/implement.omh
+%$$
+
+$end
