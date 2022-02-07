@@ -138,6 +138,8 @@ private:
 
 # undef CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE
 # include <cppad/example/atomic_four/atomic_mat_mul/set.hpp>
+# include <cppad/example/atomic_four/atomic_mat_mul/get.hpp>
+# include <cppad/example/atomic_four/atomic_mat_mul/for_type.hpp>
 // END C++
 
 # endif
