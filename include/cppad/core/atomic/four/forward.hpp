@@ -25,12 +25,6 @@ $$
 
 $section Atomic Function Forward Mode$$
 
-$head Base$$
-see $cref/Base/atomic_four_call/Base/$$.
-
-$head vector$$
-is the $cref CppAD_vector$$ template class.
-
 $head Syntax$$
 
 $subhead Base$$
@@ -54,6 +48,12 @@ $srcthisfile%0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
 $subhead AD<Base>$$
 $srcthisfile%0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
 %$$
+
+$head Base$$
+see $cref/Base/atomic_four_call/Base/$$.
+
+$head vector$$
+is the $cref CppAD_vector$$ template class.
 
 
 $head Usage$$

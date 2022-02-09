@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_FOR_TYPE_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_FOR_TYPE_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_FOR_TYPE_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_FOR_TYPE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -50,8 +50,8 @@ bool atomic_mat_mul<Base>::for_type(
     get(call_id, n_left, n_middle, n_right);
     //
     // check sizes
-    assert( n_left * n_middle + n_middle * n_right == n );
-    assert( n_middle * n_right == m );
+    assert( n == n_left * n_middle + n_middle * n_right );
+    assert( m == n_left * n_right );
     //
     // offset
     offset = n_left * n_middle;
@@ -64,7 +64,7 @@ bool atomic_mat_mul<Base>::for_type(
     {   for(size_t j = 0; j < n_right; ++j)
         {   CppAD::ad_type_enum type_ij = CppAD::const_enum;
             for(size_t k = 0; k < n_middle; ++k)
-            {   type_ij = std::max(type_ij, type_x[i * middle + k]);
+            {   type_ij = std::max(type_ij, type_x[i * n_middle + k]);
                 type_ij = std::max(type_ij, type_x[offset + k * n_right + j]);
             }
         }
