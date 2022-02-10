@@ -38,7 +38,7 @@ extern bool sub(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/atomic_vector";
+{   std::string group = "example/atomic_four/vector";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 

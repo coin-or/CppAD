@@ -13,7 +13,7 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     add.cpp
-    atomic_vector.cpp
+    vector.cpp
     div.cpp
     hes_sparsity.cpp
     jac_sparsity.cpp
@@ -24,17 +24,19 @@ SET(source_list
 )
 # END_SORT_THIS_LINE_MINUS_2
 
-set_compile_flags(example_atomic_four_atomic_vector "${cppad_debug_which}" "${source_list}" )
+set_compile_flags(example_atomic_four_vector "${cppad_debug_which}" "${source_list}" )
 #
-ADD_EXECUTABLE(example_atomic_four_atomic_vector EXCLUDE_FROM_ALL ${source_list})
+ADD_EXECUTABLE(example_atomic_four_vector EXCLUDE_FROM_ALL ${source_list})
 #
-# Add the check_example_atomic_four_atomic_vector target
-ADD_CUSTOM_TARGET(check_example_atomic_four_atomic_vector
-    example_atomic_four_atomic_vector
-    DEPENDS example_atomic_four_atomic_vector
+# Add the check_example_atomic_four_vector target
+ADD_CUSTOM_TARGET(check_example_atomic_four_vector
+    example_atomic_four_vector
+    DEPENDS example_atomic_four_vector
 )
-MESSAGE(STATUS "make check_example_atomic_four_atomic_vector: available")
+MESSAGE(STATUS "make check_example_atomic_four_vector: available")
 #
 # add to check check_example_atomic_four_depends in parent environment
-add_to_list(check_example_atomic_four_depends check_example_atomic_four_atomic_vector)
-SET(check_example_atomic_four_depends "${check_example_atomic_four_depends}" PARENT_SCOPE)
+add_to_list(check_example_atomic_four_depends check_example_atomic_four_vector)
+SET(check_example_atomic_four_depends
+    "${check_example_atomic_four_depends}" PARENT_SCOPE
+)
