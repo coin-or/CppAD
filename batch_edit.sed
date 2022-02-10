@@ -17,14 +17,14 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/example/atomic_four/atomic_vector.hpp
-#   include/cppad/example/atomic_four/atomic_mat_mul.hpp
+#   include/cppad/example/atomic_four/vector/atomic_vector.omh
+#   include/cppad/example/atomic_four/mat_mul/atomic_mat_mul.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|atomic_vector.hpp|vector/vector.hpp|
-#   s|atomic_mat_mul.hpp|mat_mul/mat_mul.hpp|
+#   s|atomic_vector.omh|vector.omh|
+#   s|atomic_mat_mul.omh|mat_mul.omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -36,7 +36,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|example/atomic_four/atomic_vector.hpp|example/atomic_four/vector/vector.hpp|
-s|EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_HPP|EXAMPLE_ATOMIC_FOUR_VECTOR_VECTOR_HPP|
-s|example/atomic_four/atomic_mat_mul.hpp|example/atomic_four/mat_mul/mat_mul.hpp|
-s|EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_HPP|EXAMPLE_ATOMIC_FOUR_MAT_MUL_MAT_MUL_HPP|
+s|example/atomic_four/vector/atomic_vector.omh|example/atomic_four/vector/vector.omh|
+s|example/atomic_four/mat_mul/atomic_mat_mul.omh|example/atomic_four/mat_mul/mat_mul.omh|
