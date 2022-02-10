@@ -96,6 +96,16 @@ private:
         const CppAD::vector<Base>&                       taylor_x,
         CppAD::vector<Base>&                             taylor_y
     ) override;
+    //
+    // AD<Base> forward
+    bool forward(
+        size_t                                           call_id,
+        const CppAD::vector<bool>&                       select_y,
+        size_t                                           order_low,
+        size_t                                           order_up,
+        const CppAD::vector< CppAD::AD<Base> >&          ataylor_x,
+        CppAD::vector< CppAD::AD<Base> >&                ataylor_y
+    ) override;
 /*
     //
     // rev_depend
@@ -120,16 +130,6 @@ private:
         const CppAD::vector<bool>&                     select_x,
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
-    ) override;
-    //
-    // AD<Base> forward
-    bool forward(
-        size_t                                           call_id,
-        const CppAD::vector<bool>&                       select_y,
-        size_t                                           order_low,
-        size_t                                           order_up,
-        const CppAD::vector< CppAD::AD<Base> >&          taylor_x,
-        CppAD::vector< CppAD::AD<Base> >&                taylor_y
     ) override;
     //
     // Base reverse

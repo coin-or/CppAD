@@ -20,11 +20,10 @@ $section Atomic Matrix Multiply: Example and Test$$
 $head Purpose$$
 This example demonstrates using the $cref atomic_mat_mul$$ class.
 
-$head Function$$
-For this example, function is
+$head f(x)$$
+For this example, the function $latex f(x)$$ is
 $latex \[
 f(x) =
-
 \left( \begin{array}{cc}
 x_0 & x_1  \\
 x_2 & x_3  \\
@@ -42,8 +41,8 @@ x_4 x_6 + x_5 x_7
 \end{array} \right)
 \] $$
 
-$head Jacobian$$
-The corresponding Jacobian is
+$head Jacobian of f(x)$$
+The Jacobian of $latex f(x)$$ is
 $latex \[
 f^{(1)} (x) = \left( \begin{array}{ccc}
 x_6 & x_7 & 0   & 0    & 0    & 0   & x_0  & x_1 \\
@@ -52,11 +51,19 @@ x_6 & x_7 & 0   & 0    & 0    & 0   & x_0  & x_1 \\
 \end{array} \right)
 \] $$
 
+$head g(x)$$
+We define the function $latex g(x) = f_1^{(1)} (x)^\R{T}$$; i.e.,
+$latex \[
+g_1(x) = ( 0,  0,  x_6,  x_7,  0,  0,  x_2,  x_3 )^\R{T}
+\] $$
+
 $head Hessian$$
 The Hessian of $latex f_1(x)$$ is the Jacobian
-of the second row of the Jacobian above; i.e.,
+of $latex g(x)$$; i.e.,
 $latex \[
 f_1^{(2)} (x)
+=
+g^{(1)} (x)
 =
 \left( \begin{array}{cccccccc}
     0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
@@ -85,6 +92,9 @@ bool mat_mul(void)
     // AD, NearEqual
     using CppAD::AD;
     using CppAD::NearEqual;
+    // -----------------------------------------------------------------------
+    // Record f
+    // -----------------------------------------------------------------------
     //
     // afun
     CppAD::atomic_mat_mul<double> afun("atomic_mat_mul");
@@ -109,6 +119,9 @@ bool mat_mul(void)
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
+    // -----------------------------------------------------------------------
+    // Forward mode on f
+    // -----------------------------------------------------------------------
     //
     // x
     CPPAD_TESTVECTOR(double) x(nx);
@@ -116,7 +129,7 @@ bool mat_mul(void)
         x[j] = double(3 + nx - j);
     //
     // y
-    // zero order forward mode
+    // zero order forward mode computation of f(x)
     CPPAD_TESTVECTOR(double) y(nx);
     y = f.Forward(0, x);
     //
@@ -182,6 +195,49 @@ bool mat_mul(void)
     };
     for(size_t ij = 0; ij < nx * nx; ij++)
         ok &= H_1[ij] == check_H_1[ij];
+    // -----------------------------------------------------------------------
+    // Record g
+    // -----------------------------------------------------------------------
+    //
+    // af
+    CppAD::ADFun< AD<double>, double> af = f.base2ad();
+    //
+    // az
+    CppAD::Independent(ax);
+    CPPAD_TESTVECTOR( AD<double> ) ax1(nx), ay1(ny), az(nx);
+    af.Forward(0, ax);
+    for(size_t j = 0; j < nx; ++j)
+        ax1[j] = 0.0;
+    for(size_t j = 0; j < nx; ++j)
+    {   ax1[j]    = 1.0;
+        ay1       = af.Forward(1, ax1);
+        ax1[j]    = 0.0;
+        az[j]    = ay1[1];
+    }
+    // g
+    CppAD::ADFun<double> g(ax, az);
+    // -----------------------------------------------------------------------
+    // Forward mode on g
+    // -----------------------------------------------------------------------
+    //
+    // z
+    // zero order forward mode computation of g(x)
+    CPPAD_TESTVECTOR(double) z(nx);
+    z = g.Forward(0, x);
+    //
+    // check z
+    for(size_t j = 0; j < nx; ++j)
+        ok &= z[j] == J[1 * nx + j];
+    //
+    // z1
+    CPPAD_TESTVECTOR(double) z1(nx);
+    for(size_t j = 0; j < nx; ++j)
+    {   x1[j] = 1.0;
+        z1    = g.Forward(1, x1);
+        x1[j] = 0.0;
+        for(size_t i = 0; i < nx; ++i)
+            ok &= z1[i] == check_H_1[i * nx + j];
+    }
     // ----------------------------------------------------------------
     return ok;
 }
