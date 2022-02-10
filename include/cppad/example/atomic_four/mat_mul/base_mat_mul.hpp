@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_FOR_TYPE_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_FOR_TYPE_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_BASE_MAT_MUL_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_BASE_MAT_MUL_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -12,18 +12,13 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_mat_mul_for_type.hpp$$
+$begin atomic_mat_mul_base_mat_mul.hpp$$
 $spell
-    Jacobian
-    jac
 $$
 
-$section Atomic Vector Forward Type Calculation: Example Implementation$$
-
-$head Purpose$$
-The $code for_type$$ routine overrides the virtual functions
-used by the atomic_four base; see
-$cref/for_type/atomic_four_for_type/$$.
+$section
+Atomic Multiply Base Matrices: Example Implementation
+$$
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -36,43 +31,42 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 // for_type override
 template <class Base>
-bool atomic_mat_mul<Base>::for_type(
-    size_t                                     call_id     ,
-    const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
-    CppAD::vector<CppAD::ad_type_enum>&        type_y      )
+void atomic_mat_mul<Base>::base_mat_mul(
+    size_t                         n_left      ,
+    size_t                         n_middle    ,
+    size_t                         n_right     ,
+    const CppAD::vector<Base>&     x           ,
+    CppAD::vector<Base>&           y           )
 {
-    //
-    // n_left, n_middle, n_right
-    size_t n_left, n_middle, n_right;
-    get(call_id, n_left, n_middle, n_right);
 # ifndef NDEBUG
     // n, m
-    size_t n     = type_x.size();
-    size_t m     = type_y.size();
+    size_t n     = x.size();
+    size_t m     = y.size();
     //
     // check sizes
-    assert( n == n_left * n_middle + n_middle * n_right );
+    assert( n == n_middle * (n_left + n_right ) );
     assert( m == n_left * n_right );
 # endif
     //
     // offset
     size_t offset = n_left * n_middle;
     //
-    // type_y
+    // y
     // y[ i * n_right + j] = sum_k
     //      x[i * n_middle + k] * x[ offset + k * n_right + j]
     // type_y
     for(size_t i = 0; i < n_left; ++i)
     {   for(size_t j = 0; j < n_right; ++j)
-        {   CppAD::ad_type_enum type_ij = CppAD::constant_enum;
+        {   Base sum_ij = Base(0);
             for(size_t k = 0; k < n_middle; ++k)
-            {   type_ij = std::max(type_ij, type_x[i * n_middle + k]);
-                type_ij = std::max(type_ij, type_x[offset + k * n_right + j]);
+            {   Base left_ik  = x[i * n_middle + k];
+                Base right_kj = x[offset + k * n_right + j];
+                sum_ij       += left_ik * right_kj;
             }
-            type_y[ i * n_right + j] = type_ij;
+            y[i * n_right + j] = sum_ij;
         }
     }
-    return true;
+    return;
 }
 } // END_CPPAD_NAMESPACE
 // END C++

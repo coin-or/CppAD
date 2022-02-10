@@ -163,7 +163,7 @@ $latex \[
 \] $$
 
 $childtable%
-    include/cppad/example/atomic_four/atomic_mat_mul/implement.omh
+    include/cppad/example/atomic_four/mat_mul/implement.omh
     %example/atomic_four/mat_mul.cpp
 %$$
 

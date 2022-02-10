@@ -131,7 +131,7 @@ $childtable%
     example/atomic_four/get_started.cpp
     %example/atomic_four/norm_sq.cpp
     %include/cppad/example/atomic_four/vector/atomic_vector.omh
-    %include/cppad/example/atomic_four/atomic_mat_mul/atomic_mat_mul.omh
+    %include/cppad/example/atomic_four/mat_mul/atomic_mat_mul.omh
 %$$
 $comment
     %example/atomic_four/tangent.cpp

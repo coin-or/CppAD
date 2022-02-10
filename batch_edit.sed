@@ -17,27 +17,24 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   example/atomic_four/atomic_vector/
-#   include/cppad/example/atomic_four/atomic_vector/
+#   include/cppad/example/atomic_four/atomic_mat_mul/
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|atomic_vector|vector|
+#   s|atomic_mat_mul|mat_mul|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#   include/cppad/example/atomic_four/atomic_vector.hpp
+#   include/cppad/example/atomic_four/atomic_mat_mul.hpp
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#   s|EXAMPLE_ATOMIC_FOUR_VECTOR_|EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_|
+#   s|EXAMPLE_ATOMIC_FOUR_MAT_MUL_|EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|atomic_vector_\([a-z_]*\).cpp|atomic_four_vector_\1.cpp|
-s|example/atomic_four/atomic_vector/|example/atomic_four/vector/|
-s|EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_|EXAMPLE_ATOMIC_FOUR_VECTOR_|
-s|ADD_SUBDIRECTORY(atomic_vector)|ADD_SUBDIRECTORY(vector)|
+s|example/atomic_four/atomic_mat_mul/|example/atomic_four/mat_mul/|
+s|EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_|EXAMPLE_ATOMIC_FOUR_MAT_MUL_|

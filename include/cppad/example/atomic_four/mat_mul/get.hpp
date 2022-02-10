@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_GET_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_MAT_MUL_GET_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_GET_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_GET_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 

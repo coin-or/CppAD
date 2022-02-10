@@ -158,11 +158,11 @@ private:
 } // END_CPPAD_NAMESPACE
 
 # undef CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE
-# include <cppad/example/atomic_four/atomic_mat_mul/set.hpp>
-# include <cppad/example/atomic_four/atomic_mat_mul/get.hpp>
-# include <cppad/example/atomic_four/atomic_mat_mul/base_mat_mul.hpp>
-# include <cppad/example/atomic_four/atomic_mat_mul/for_type.hpp>
-# include <cppad/example/atomic_four/atomic_mat_mul/forward.hpp>
+# include <cppad/example/atomic_four/mat_mul/set.hpp>
+# include <cppad/example/atomic_four/mat_mul/get.hpp>
+# include <cppad/example/atomic_four/mat_mul/base_mat_mul.hpp>
+# include <cppad/example/atomic_four/mat_mul/for_type.hpp>
+# include <cppad/example/atomic_four/mat_mul/forward.hpp>
 // END C++
 
 # endif
