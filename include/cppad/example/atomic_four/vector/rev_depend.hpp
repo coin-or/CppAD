@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_REV_DEPEND_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_REV_DEPEND_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_VECTOR_REV_DEPEND_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_VECTOR_REV_DEPEND_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -26,7 +26,7 @@ used by the atomic_four base class for Jacobian sparsity calculations; see
 $cref/rev_depend/atomic_four_rev_depend/$$.
 
 $head Example$$
-The file $cref atomic_vector_rev_depend.cpp$$
+The file $cref atomic_four_vector_rev_depend.cpp$$
 contains an example and test that uses this member function.
 
 $head Source$$

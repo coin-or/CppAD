@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_neg.cpp$$
+$begin atomic_four_vector_neg.cpp$$
 
 $section Atomic Vector Negation Example$$
 

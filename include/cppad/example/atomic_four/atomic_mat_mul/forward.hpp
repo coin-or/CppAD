@@ -104,10 +104,10 @@ bool atomic_mat_mul<Base>::forward(
     size_t                                     order_up    ,
     const CppAD::vector< CppAD::AD<Base> >&    ataylor_x   ,
     CppAD::vector< CppAD::AD<Base> >&          ataylor_y   )
-{	//
-	// vector, AD
-	using CppAD::vector;
-	using CppAD::AD;
+{   //
+    // vector, AD
+    using CppAD::vector;
+    using CppAD::AD;
     // q
     size_t q     = order_up + 1;
     //
@@ -144,7 +144,7 @@ bool atomic_mat_mul<Base>::forward(
                 ax[offset + i] = ataylor_x[ (offset + i) * q + (k - ell) ];
             //
             // ay = A^ell * B^{k-ell}
-			(*this)(call_id, ax, ay);
+            (*this)(call_id, ax, ay);
             //
             // asum += ay
             for(size_t i = 0; i < n_left * n_right; ++i)

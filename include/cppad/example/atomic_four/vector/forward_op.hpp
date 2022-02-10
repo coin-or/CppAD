@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_REVERSE_OP_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_REVERSE_OP_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_VECTOR_FORWARD_OP_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_VECTOR_FORWARD_OP_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -12,17 +12,17 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_reverse_op.hpp$$
+$begin atomic_vector_forward_op.hpp$$
 
 $section Atomic Vector Forward Mode: Example Implementation$$
 
 $head Purpose$$
-The $code reverse$$ routine overrides the virtual functions
-used by the atomic_four base class for reverse mode calculations; see
-$cref/reverse/atomic_four_reverse/$$.
+The $code forward$$ routine overrides the virtual functions
+used by the atomic_four base class for forward mode calculations; see
+$cref/forward/atomic_four_forward/$$.
 It determines which operator is specified for this call and transfers
 the call to the operator's implementation.
-There are two versions of the $code reverse$$ routine, one for $code double$$
+There are two versions of the $code forward$$ routine, one for $code double$$
 and one for $code AD<double>$$.
 
 $head Source$$
@@ -34,60 +34,60 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
-// reverse override
-// this routine used by ADFun<Base> objects
+// forward override
+// this routine called by ADFun<Base> objects
 template <class Base>
-bool atomic_vector<Base>::reverse(
+bool atomic_vector<Base>::forward(
     size_t                                           call_id,
-    const CppAD::vector<bool>&                       select_x,
+    const CppAD::vector<bool>&                       select_y,
+    size_t                                           order_low,
     size_t                                           order_up,
     const CppAD::vector<Base>&                       tx,
-    const CppAD::vector<Base>&                       ty,
-    CppAD::vector<Base>&                             px,
-    const CppAD::vector<Base>&                       py)
+    CppAD::vector<Base>&                             ty)
 {
-    // q
+    // p, q
+    size_t p = order_low;
     size_t q = order_up + 1;
+    CPPAD_ASSERT_UNKNOWN( tx.size() % q == 0 );
     //
-    // op, n, m
+    // op, m
     op_enum_t op = op_enum_t( call_id );
-    size_t n     = select_x.size();
-    size_t m  = n / 2;
+    size_t n     = tx.size() / q;
+    size_t m = n / 2;
     if( is_unary(op) )
         m = n;
-    assert( tx.size() == q * n );
-    assert( ty.size() == q * m );
+    CPPAD_ASSERT_UNKNOWN( ty.size() == m * q );
     //
     bool ok = false;
     switch(op)
     {
         // addition
         case add_enum:
-        reverse_add(m, q, tx, ty, px, py);
+        forward_add(m, p, q, tx, ty);
         ok = true;
         break;
 
         // subtraction
         case sub_enum:
-        reverse_sub(m, q, tx, ty, px, py);
+        forward_sub(m, p, q, tx, ty);
         ok = true;
         break;
 
         // multiplication
         case mul_enum:
-        reverse_mul(m, q, tx, ty, px, py);
+        forward_mul(m, p, q, tx, ty);
         ok = true;
         break;
 
         // division
         case div_enum:
-        reverse_div(m, q, tx, ty, px, py);
+        forward_div(m, p, q, tx, ty);
         ok = true;
         break;
 
         // unary minus
         case neg_enum:
-        reverse_neg(m, q, tx, ty, px, py);
+        forward_neg(m, p, q, tx, ty);
         ok = true;
         break;
 
@@ -98,59 +98,60 @@ bool atomic_vector<Base>::reverse(
     }
     return ok;
 }
-// reverse override
-// this routine used by ADFun< CppAD::AD<Base> , Base> objects
+// forward override
+// this routine called by ADFun< CppAD::AD<Base> , Base> objects
 template <class Base>
-bool atomic_vector<Base>::reverse(
+bool atomic_vector<Base>::forward(
     size_t                                           call_id,
-    const CppAD::vector<bool>&                       select_x,
+    const CppAD::vector<bool>&                       select_y,
+    size_t                                           order_low,
     size_t                                           order_up,
     const CppAD::vector< CppAD::AD<Base> >&          atx,
-    const CppAD::vector< CppAD::AD<Base> >&          aty,
-    CppAD::vector< CppAD::AD<Base> >&                apx,
-    const CppAD::vector< CppAD::AD<Base> >&          apy)
+    CppAD::vector< CppAD::AD<Base> >&                aty         )
 {
-    // q
+    // p, q
+    size_t p = order_low;
     size_t q = order_up + 1;
+    CPPAD_ASSERT_UNKNOWN( atx.size() % q == 0 );
     //
     // op, m
     op_enum_t op = op_enum_t( call_id );
-    size_t n     = select_x.size();
-    size_t m  = n / 2;
+    size_t n     = atx.size() / q;
+    size_t m     = n / 2;
     if( is_unary(op) )
         m = n;
-    assert( atx.size() == q * n );
-    assert( aty.size() == q * m );
+    CPPAD_ASSERT_UNKNOWN( aty.size() == q * m );
+    //
     bool ok = false;
     switch(op)
     {
         // addition
         case add_enum:
-        reverse_add(m, q, atx, aty, apx, apy);
+        forward_add(m, p, q, atx, aty);
         ok = true;
         break;
 
         // subtraction
         case sub_enum:
-        reverse_sub(m, q, atx, aty, apx, apy);
+        forward_sub(m, p, q, atx, aty);
         ok = true;
         break;
 
         // multiplication
         case mul_enum:
-        reverse_mul(m, q, atx, aty, apx, apy);
+        forward_mul(m, p, q, atx, aty);
         ok = true;
         break;
 
         // division
         case div_enum:
-        reverse_div(m, q, atx, aty, apx, apy);
+        forward_div(m, p, q, atx, aty);
         ok = true;
         break;
 
         // unary minus
         case neg_enum:
-        reverse_neg(m, q, atx, aty, apx, apy);
+        forward_neg(m, p, q, atx, aty);
         ok = true;
         break;
 

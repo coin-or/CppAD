@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_DIV_OP_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_DIV_OP_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_VECTOR_DIV_OP_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_VECTOR_DIV_OP_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -25,7 +25,7 @@ see theory for reverse mode
 $cref/division/ReverseTheory/Binary Operators/Division/$$.
 
 $head Example$$
-The file $cref atomic_vector_div.cpp$$ contains an example
+The file $cref atomic_four_vector_div.cpp$$ contains an example
 and test for this operator.
 
 $head Source$$

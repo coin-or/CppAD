@@ -215,17 +215,17 @@ private:
 
 # undef CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE
 
-# include <cppad/example/atomic_four/atomic_vector/rev_depend.hpp>
-# include <cppad/example/atomic_four/atomic_vector/for_type.hpp>
-# include <cppad/example/atomic_four/atomic_vector/jac_sparsity.hpp>
-# include <cppad/example/atomic_four/atomic_vector/hes_sparsity.hpp>
-# include <cppad/example/atomic_four/atomic_vector/reverse_op.hpp>
-# include <cppad/example/atomic_four/atomic_vector/forward_op.hpp>
-# include <cppad/example/atomic_four/atomic_vector/neg_op.hpp>
-# include <cppad/example/atomic_four/atomic_vector/div_op.hpp>
-# include <cppad/example/atomic_four/atomic_vector/mul_op.hpp>
-# include <cppad/example/atomic_four/atomic_vector/sub_op.hpp>
-# include <cppad/example/atomic_four/atomic_vector/add_op.hpp>
+# include <cppad/example/atomic_four/vector/rev_depend.hpp>
+# include <cppad/example/atomic_four/vector/for_type.hpp>
+# include <cppad/example/atomic_four/vector/jac_sparsity.hpp>
+# include <cppad/example/atomic_four/vector/hes_sparsity.hpp>
+# include <cppad/example/atomic_four/vector/reverse_op.hpp>
+# include <cppad/example/atomic_four/vector/forward_op.hpp>
+# include <cppad/example/atomic_four/vector/neg_op.hpp>
+# include <cppad/example/atomic_four/vector/div_op.hpp>
+# include <cppad/example/atomic_four/vector/mul_op.hpp>
+# include <cppad/example/atomic_four/vector/sub_op.hpp>
+# include <cppad/example/atomic_four/vector/add_op.hpp>
 // END C++
 
 # endif

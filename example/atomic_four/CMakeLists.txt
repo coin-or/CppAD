@@ -13,7 +13,7 @@
 # initialize check_example_atomic_four_depends
 SET(check_example_atomic_four_depends "")
 #
-ADD_SUBDIRECTORY(atomic_vector)
+ADD_SUBDIRECTORY(vector)
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list

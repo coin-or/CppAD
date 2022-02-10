@@ -10,19 +10,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_mul.cpp$$
+$begin atomic_four_vector_sub.cpp$$
 
-$section Atomic Vector Multiplication Example$$
+$section Atomic Vector Subtraction Example$$
 
 $head f(u, v, w)$$
 For this example,
 $latex f : \B{R}^{3m} \rightarrow \B{R}^m$$
-is defined by $latex f(u, v, w) = u * v * w$$.
+is defined by $latex f(u, v, w) = u - (v + w)$$.
 where $icode u$$, $icode v$$, and $icode w$$ are in $latex \B{R}^m$$.
 
 $head g(u, v, w)$$
 For this example $latex g : \B{R}^{3m} \rightarrow \B{R}^m$$
-is defined by $latex g_i (u, v, w) = \partial_{u[i]}  f_i (u, v, w)$$
+is defined by $latex g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)$$
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -32,7 +32,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 # include <cppad/example/atomic_four/atomic_vector.hpp>
-bool mul(void)
+bool sub(void)
 {   bool ok = true;
     using CppAD::NearEqual;
     using CppAD::AD;
@@ -46,11 +46,12 @@ bool mul(void)
     // size of u, v, and w
     size_t m = 5;
     //
-    // mul_op
+    // add_op, sub_op
     typedef CppAD::atomic_vector<double>::op_enum_t op_enum_t;
-    op_enum_t mul_op = CppAD::atomic_vector<double>::mul_enum;
+    op_enum_t add_op = CppAD::atomic_vector<double>::add_enum;
+    op_enum_t sub_op = CppAD::atomic_vector<double>::sub_enum;
     // -----------------------------------------------------------------------
-    // Record f(u, v, w) = u * v * w
+    // Record f(u, v, w) = u - (v + w)
     // -----------------------------------------------------------------------
     // Independent variable vector
     CPPAD_TESTVECTOR( CppAD::AD<double> ) auvw(3 * m);
@@ -66,26 +67,26 @@ bool mul(void)
         aw[i] = auvw[2 * m + i];
     }
     //
-    // ax = (mul_op, au, av)
+    // ax = (av, aw)
     CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(2 * m);
     for(size_t i = 0; i < m; ++i)
-    {   ax[i]     = au[i];
-        ax[m + i] = av[i];
-    }
-    //
-    // ay = u * v
-    CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
-    vec_op(mul_op, ax, ay);
-    //
-    // ax = (ay, aw)
-    for(size_t i = 0; i < m; ++i)
-    {   ax[i]     = ay[i];
+    {   ax[i]     = av[i];
         ax[m + i] = aw[i];
     }
     //
-    // az = ay * aw
+    // ay = v + w
+    CPPAD_TESTVECTOR( CppAD::AD<double> ) ay(m);
+    vec_op(add_op, ax, ay);
+    //
+    // ax = (sub_op, au, ay)
+    for(size_t i = 0; i < m; ++i)
+    {   ax[i]     = au[i];
+        ax[m + i] = ay[i];
+    }
+    //
+    // az = au - ay
     CPPAD_TESTVECTOR( CppAD::AD<double> ) az(m);
-    vec_op(mul_op, ax, az);
+    vec_op(sub_op, ax, az);
     //
     // f
     CppAD::ADFun<double> f(auvw, az);
@@ -97,7 +98,7 @@ bool mul(void)
     CPPAD_TESTVECTOR(double) uvw(3 * m), duvw(3 * m);
     for(size_t j = 0; j < 3 * m; ++j)
     {   uvw[j]  = double(1 + j);
-        duvw[j] = 1.0;
+        duvw[j] = double(j);
     }
     //
     // z, dz
@@ -107,42 +108,10 @@ bool mul(void)
     //
     // ok
     for(size_t i = 0; i < m; ++i)
-    {   double ui  = uvw[0 * m + i];
-        double vi  = uvw[1 * m + i];
-        double wi  = uvw[2 * m + i];
-        //
-        double check_z  = ui * vi * wi;
+    {   double check_z  = uvw[0 * m + i] - ( uvw[1 * m + i] + uvw[2 * m + i] );
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
-        //
-        double check_dz = (vi * wi) + (ui * wi) + (ui * vi);
+        double check_dz = double(0 * m + i) - double(1 * m + i + 2 * m + i);
         ok             &= NearEqual( dz[i] ,  check_dz,  eps99, eps99);
-    }
-    // -----------------------------------------------------------------------
-    // check reverse mode on f
-    // -----------------------------------------------------------------------
-    //
-    // weight
-    CPPAD_TESTVECTOR(double) weight(m);
-    for(size_t i = 0; i < m; ++i)
-        weight[i] = 1.0;
-    //
-    // dweight
-    CPPAD_TESTVECTOR(double) dweight(3 * m);
-    f.Forward(0, uvw);
-    dweight = f.Reverse(1, weight);
-    //
-    // ok
-    for(size_t i = 0; i < m; ++i)
-    {   double ui  = uvw[0 * m + i];
-        double vi  = uvw[1 * m + i];
-        double wi  = uvw[2 * m + i];
-        //
-        double dfi_dui = vi * wi;
-        ok           &= NearEqual(dweight[0 * m + i], dfi_dui, eps99, eps99);
-        double dfi_dvi = ui * wi;
-        ok           &= NearEqual(dweight[1 * m + i], dfi_dvi, eps99, eps99);
-        double dfi_dwi = ui * vi;
-        ok           &= NearEqual(dweight[2 * m + i], dfi_dwi, eps99, eps99);
     }
     // -----------------------------------------------------------------------
     // Record g_i (u, v, w) = \partial d/dv[i] f_i (u , v , w)
@@ -157,13 +126,13 @@ bool mul(void)
     // aduvw
     CPPAD_TESTVECTOR( AD<double> ) aduvw(3 * m);
     for(size_t i = 0; i < m; ++i)
-    {   aduvw[0 * m + i]  = 1.0; // du[i]
-        aduvw[1 * m + i]  = 0.0; // dv[i]
+    {   aduvw[0 * m + i]  = 0.0; // du[i]
+        aduvw[1 * m + i]  = 1.0; // dv[i]
         aduvw[2 * m + i]  = 0.0; // dw[i]
     }
     //
     // az
-    // use the fact that d_u[i] f_k (u, v, w) is zero when i != k
+    // use the fact that d_v[i] f_k (u, v, w) is zero when i != k
     af.Forward(0, auvw);
     az = af.Forward(1, aduvw);
     CppAD::ADFun<double> g(auvw, az);
@@ -193,9 +162,7 @@ bool mul(void)
     //
     // ok
     for(size_t i = 0; i < m; ++i)
-    {   double vi       = uvw[1 * m + i];
-        double wi       = uvw[2 * m + i];
-        double check_z  = vi * wi;
+    {   double check_z  = - 1.0;
         ok             &= NearEqual( z[i] ,  check_z,  eps99, eps99);
     }
     return ok;
@@ -208,18 +175,11 @@ bool mul(void)
     //
     // ok
     for(size_t i = 0; i < m; ++i)
-    {   double ui  = uvw[0 * m + i];
-        double vi  = uvw[1 * m + i];
-        double wi  = uvw[2 * m + i];
-        //
-        double dfi_dui  = vi * wi;
-        ok             &= NearEqual(z[0 * m + i] ,  dfi_dui,  eps99, eps99);
-        //
-        double dfi_dvi  = ui * wi;
-        ok             &= NearEqual(z[1 * m + i] ,  dfi_dvi,  eps99, eps99);
-        //
-        double dfi_dwi  = ui * vi;
-        ok             &= NearEqual(z[2 * m + i] ,  dfi_dwi,  eps99, eps99);
+    {   double check_z  =  1.0;
+        ok             &= NearEqual( z[0 * m + i] ,  check_z,  eps99, eps99);
+        check_z         =  - 1.0;
+        ok             &= NearEqual( z[1 * m + i] ,  check_z,  eps99, eps99);
+        ok             &= NearEqual( z[2 * m + i] ,  check_z,  eps99, eps99);
     }
     return ok;
 }

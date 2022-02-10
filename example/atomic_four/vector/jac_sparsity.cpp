@@ -10,7 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_jac_sparsity.cpp$$
+$begin atomic_four_vector_jac_sparsity.cpp$$
 
 $section Atomic Vector Sparsity Patterns Example$$
 

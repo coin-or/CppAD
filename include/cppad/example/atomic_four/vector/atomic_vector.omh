@@ -64,7 +64,7 @@ For example, notice the difference between $code forward_add$$
 for the $code double$$ and the $code AD<double>$$ cases
 (note that copying an AD variable does not create a new variable):
 $srcfile%
-    include/cppad/example/atomic_four/atomic_vector/add_op.hpp%
+    include/cppad/example/atomic_four/vector/add_op.hpp%
     0%// BEGIN forward_add%// END forward_add%0
 %$$
 
@@ -102,15 +102,15 @@ resulting tape.
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_3$$
 $childtable%
-    include/cppad/example/atomic_four/atomic_vector/implement.omh
-    %example/atomic_four/atomic_vector/add.cpp
-    %example/atomic_four/atomic_vector/div.cpp
-    %example/atomic_four/atomic_vector/hes_sparsity.cpp
-    %example/atomic_four/atomic_vector/jac_sparsity.cpp
-    %example/atomic_four/atomic_vector/mul.cpp
-    %example/atomic_four/atomic_vector/neg.cpp
-    %example/atomic_four/atomic_vector/rev_depend.cpp
-    %example/atomic_four/atomic_vector/sub.cpp
+    include/cppad/example/atomic_four/vector/implement.omh
+    %example/atomic_four/vector/add.cpp
+    %example/atomic_four/vector/div.cpp
+    %example/atomic_four/vector/hes_sparsity.cpp
+    %example/atomic_four/vector/jac_sparsity.cpp
+    %example/atomic_four/vector/mul.cpp
+    %example/atomic_four/vector/neg.cpp
+    %example/atomic_four/vector/rev_depend.cpp
+    %example/atomic_four/vector/sub.cpp
 %$$
 $comment END_SORT_THIS_LINE_MINUS_2$$
 
