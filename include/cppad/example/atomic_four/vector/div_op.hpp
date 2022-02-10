@@ -34,7 +34,7 @@ $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
-# include <cppad/example/atomic_four/atomic_vector.hpp>
+# include <cppad/example/atomic_four/vector/vector.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // ---------------------------------------------------------------------------

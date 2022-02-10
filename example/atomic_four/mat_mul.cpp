@@ -83,7 +83,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <cppad/example/atomic_four/atomic_mat_mul.hpp>
+# include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>
 
 bool mat_mul(void)
 {   // ok, eps

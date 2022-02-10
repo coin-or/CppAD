@@ -47,7 +47,7 @@ $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
-# include <cppad/example/atomic_four/atomic_mat_mul.hpp>
+# include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE

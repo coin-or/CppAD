@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_ATOMIC_VECTOR_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_VECTOR_VECTOR_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_VECTOR_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell

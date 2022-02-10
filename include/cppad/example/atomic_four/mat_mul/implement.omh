@@ -14,7 +14,7 @@ $begin atomic_mat_mul_implement$$
 $section Implementing Atomic Matrix Multiply$$
 
 $childtable%
-    include/cppad/example/atomic_four/atomic_mat_mul.hpp
+    include/cppad/example/atomic_four/mat_mul/mat_mul.hpp
     %include/cppad/example/atomic_four/mat_mul/set.hpp
     %include/cppad/example/atomic_four/mat_mul/get.hpp
     %include/cppad/example/atomic_four/mat_mul/base_mat_mul.hpp

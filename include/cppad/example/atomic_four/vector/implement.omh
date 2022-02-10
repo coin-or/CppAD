@@ -14,7 +14,7 @@ $begin atomic_vector_implement$$
 $section Implementing Atomic Vector Operations$$
 
 $childtable%
-    include/cppad/example/atomic_four/atomic_vector.hpp
+    include/cppad/example/atomic_four/vector/vector.hpp
     %include/cppad/example/atomic_four/vector/forward_op.hpp
     %include/cppad/example/atomic_four/vector/reverse_op.hpp
     %include/cppad/example/atomic_four/vector/jac_sparsity.hpp

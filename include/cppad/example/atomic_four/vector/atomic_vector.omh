@@ -29,7 +29,7 @@ $icode%vec_op%(%op%, %x%, %y%)
 $head op$$
 The value $icode op$$ has the following possible values:
 $srcfile%
-    include/cppad/example/atomic_four/atomic_vector.hpp%
+    include/cppad/example/atomic_four/vector/vector.hpp%
     0%// BEGIN op_enum_t%// END op_enum_t%0
 %$$
 

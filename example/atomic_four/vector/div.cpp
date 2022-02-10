@@ -31,7 +31,7 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <cppad/example/atomic_four/atomic_vector.hpp>
+# include <cppad/example/atomic_four/vector/vector.hpp>
 bool div(void)
 {   bool ok = true;
     using CppAD::NearEqual;

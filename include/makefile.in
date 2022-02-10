@@ -513,12 +513,11 @@ nobase_myinclude_HEADERS = \
 	cppad/core/vec_ad/vec_ad.hpp \
 	cppad/core/zdouble.hpp \
 	cppad/cppad.hpp \
-	cppad/example/atomic_four/atomic_mat_mul.hpp \
-	cppad/example/atomic_four/atomic_vector.hpp \
 	cppad/example/atomic_four/mat_mul/base_mat_mul.hpp \
 	cppad/example/atomic_four/mat_mul/for_type.hpp \
 	cppad/example/atomic_four/mat_mul/forward.hpp \
 	cppad/example/atomic_four/mat_mul/get.hpp \
+	cppad/example/atomic_four/mat_mul/mat_mul.hpp \
 	cppad/example/atomic_four/mat_mul/set.hpp \
 	cppad/example/atomic_four/vector/add_op.hpp \
 	cppad/example/atomic_four/vector/div_op.hpp \
@@ -531,6 +530,7 @@ nobase_myinclude_HEADERS = \
 	cppad/example/atomic_four/vector/rev_depend.hpp \
 	cppad/example/atomic_four/vector/reverse_op.hpp \
 	cppad/example/atomic_four/vector/sub_op.hpp \
+	cppad/example/atomic_four/vector/vector.hpp \
 	cppad/example/atomic_three/mat_mul.hpp \
 	cppad/example/atomic_two/eigen_cholesky.hpp \
 	cppad/example/atomic_two/eigen_mat_inv.hpp \
