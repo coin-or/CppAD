@@ -36,7 +36,16 @@ public:
     atomic_mat_mul(const std::string& name) :
     CppAD::atomic_four<double>(name)
     {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
-            work_[thread] = reinterpret_cast<dim_vector*>( nullptr );
+            work_[thread] = nullptr;
+    }
+    // destructor
+    ~atomic_mat_mul(void)
+    {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
+        {   if( work_[thread] != nullptr  )
+            {   // allocated in set member function
+                delete work_[thread];
+            }
+        }
     }
     // set
     size_t set(
@@ -54,8 +63,18 @@ private:
     };
     // map from call_id to matrix dimensions
     typedef CppAD::vector<call_struct> call_vector;
+    //
     // Use pointers, to avoid false sharing between threads.
-    dim_vector* work_[CPPAD_MAX_NUM_THREADS];
+    call_vector* work_[CPPAD_MAX_NUM_THREADS];
+    //
+    // base_mat_mul
+    static void base_mat_mul(
+        size_t                     n_left     ,
+        size_t                     n_middle   ,
+        size_t                     n_right    ,
+        const CppAD::vector<Base>& x          ,
+        CppAD::vector<Base>&       y
+    );
     //
     // -----------------------------------------------------------------------
     // overrides
@@ -67,6 +86,17 @@ private:
         const CppAD::vector<CppAD::ad_type_enum>&     type_x,
         CppAD::vector<CppAD::ad_type_enum>&           type_y
     ) override;
+    //
+    // Base forward
+    bool forward(
+        size_t                                           call_id,
+        const CppAD::vector<bool>&                       select_y,
+        size_t                                           order_low,
+        size_t                                           order_up,
+        const CppAD::vector<Base>&                       taylor_x,
+        CppAD::vector<Base>&                             taylor_y
+    ) override;
+/*
     //
     // rev_depend
     bool rev_depend(
@@ -92,24 +122,14 @@ private:
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
     ) override;
     //
-    // Base forward
-    bool forward(
-        size_t                                           call_id,
-        const CppAD::vector<bool>&                       select_y,
-        size_t                                           order_low,
-        size_t                                           order_up,
-        const CppAD::vector<Base>&                       tx,
-        CppAD::vector<Base>&                             ty
-    ) override;
-    //
     // AD<Base> forward
     bool forward(
         size_t                                           call_id,
         const CppAD::vector<bool>&                       select_y,
         size_t                                           order_low,
         size_t                                           order_up,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        CppAD::vector< CppAD::AD<Base> >&                aty
+        const CppAD::vector< CppAD::AD<Base> >&          taylor_x,
+        CppAD::vector< CppAD::AD<Base> >&                taylor_y
     ) override;
     //
     // Base reverse
@@ -133,13 +153,16 @@ private:
         CppAD::vector< CppAD::AD<Base> >&                apx,
         const CppAD::vector< CppAD::AD<Base> >&          apy
     ) override;
+*/
 };
 } // END_CPPAD_NAMESPACE
 
 # undef CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE
 # include <cppad/example/atomic_four/atomic_mat_mul/set.hpp>
 # include <cppad/example/atomic_four/atomic_mat_mul/get.hpp>
+# include <cppad/example/atomic_four/atomic_mat_mul/base_mat_mul.hpp>
 # include <cppad/example/atomic_four/atomic_mat_mul/for_type.hpp>
+# include <cppad/example/atomic_four/atomic_mat_mul/forward.hpp>
 // END C++
 
 # endif

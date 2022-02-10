@@ -83,9 +83,9 @@ $head Theory$$
 
 $subhead Forward$$
 For $latex k = 0 , \ldots $$, the $th k$$ order Taylor coefficient
-$latex C_k$$ is given by
+$latex C^{(k)}$$ is given by
 $latex \[
-    C_k = \sum_{\ell = 0}^{k} A_\ell B_{k-\ell}
+    C^{(k)} = \sum_{\ell = 0}^{k} A^{(\ell)} B^{(k-\ell)}
 \] $$
 
 $subhead Matrix Argument Scalar Valued Function$$
@@ -153,17 +153,18 @@ $latex \[
 \] $$
 
 $subhead Reverse$$
-Reverse mode eliminates $latex C_k$$ as follows:
+Reverse mode eliminates $latex C^{(k)}$$ as follows:
 for $latex \ell = 0, \ldots , k-1$$,
 $latex \[
-\bar{A}_\ell     = \bar{A}_\ell     + \bar{C}_k B_{k-\ell}^\R{T}
+\bar{A}^{(\ell)}  = \bar{A}^{(\ell)} + \bar{C}^{(k)} [ B^{(k-\ell)} ] ^\R{T}
 \] $$
 $latex \[
-\bar{B}_{k-\ell} =  \bar{B}_{k-\ell} + A_\ell^\R{T} \bar{C}_k
+\bar{B}^{(k-\ell)} =  \bar{B}^{(k-\ell)} + [ A^{(\ell)} ]^\R{T} \bar{C}^{(k)}
 \] $$
 
 $childtable%
     include/cppad/example/atomic_four/atomic_mat_mul/implement.omh
+    %example/atomic_four/mat_mul.cpp
 %$$
 
 $end

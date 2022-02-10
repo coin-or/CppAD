@@ -65,7 +65,7 @@ size_t atomic_mat_mul<Base>::set(
         work_[thread] = new call_vector;
     //
     // call_id
-    size_t call_id = work_[thread].size();
+    size_t call_id = work_[thread]->size();
     //
     // call
     call_struct call;
@@ -75,7 +75,7 @@ size_t atomic_mat_mul<Base>::set(
     call.thread   = thread;
     //
     // work_[thread]
-    work_[thread].push_back( call );
+    work_[thread]->push_back( call );
     //
     return call_id;
 }

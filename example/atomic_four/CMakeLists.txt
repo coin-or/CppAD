@@ -21,6 +21,7 @@ SET(source_list
     dynamic.cpp
     forward.cpp
     get_started.cpp
+    mat_mul.cpp
     norm_sq.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2

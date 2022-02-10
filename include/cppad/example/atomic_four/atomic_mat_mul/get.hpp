@@ -60,8 +60,10 @@ void atomic_mat_mul<Base>::get(
     // thread
     size_t thread = thread_alloc::thread_num();
     assert( work_[thread] != nullptr );
-    assert( thread == work_[thread][call_id].thread );
+    assert( thread == (*work_[thread])[call_id].thread );
     //
+    // n_left, n_middle, n_right
+    call_struct& call = (*work_[thread])[call_id];
     n_left   = call.n_left;
     n_middle = call.n_middle;
     n_right  = call.n_right;
