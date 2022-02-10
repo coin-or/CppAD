@@ -74,7 +74,7 @@ bool atomic_mat_mul<Base>::forward(
     {   // sum = 0
         for(size_t i = 0; i < n_left * n_right; ++i)
             sum[i] = Base(0);
-        for(size_t ell = order_low; ell < q; ++ell)
+        for(size_t ell = 0; ell <= k; ++ell)
         {   // x = [ A^ell, B^{k-ell} ]
             for(size_t i = 0; i < n_left * n_middle; ++i)
                 x[i] = taylor_x[ i * q + ell ];
