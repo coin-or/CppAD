@@ -41,6 +41,7 @@ x_2 x_6 + x_3 x_7  \\
 x_4 x_6 + x_5 x_7
 \end{array} \right)
 \] $$
+
 $head Jacobian$$
 The corresponding Jacobian is
 $latex \[
@@ -48,6 +49,24 @@ f^{(1)} (x) = \left( \begin{array}{ccc}
 x_6 & x_7 & 0   & 0    & 0    & 0   & x_0  & x_1 \\
 0   & 0   & x_6 & x_7  & 0    & 0   & x_2  & x_3 \\
 0   & 0   & 0   & 0    & x_6  & x_7 & x_4  & x_5
+\end{array} \right)
+\] $$
+
+$head Hessian$$
+The Hessian of $latex f_1(x)$$ is the Jacobian
+of the second row of the Jacobian above; i.e.,
+$latex \[
+f_1^{(2)} (x)
+=
+\left( \begin{array}{cccccccc}
+    0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
+    0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
+    0   & 0   & 0   & 0    & 0    & 0   & 1    & 0   \\
+    0   & 0   & 0   & 0    & 0    & 0   & 0    & 1   \\
+    0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
+    0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
+    0   & 0   & 1   & 0    & 0    & 0   & 0    & 0   \\
+    0   & 0   & 0   & 1    & 0    & 0   & 0    & 0   \\
 \end{array} \right)
 \] $$
 
@@ -111,7 +130,7 @@ bool mat_mul(void)
         ok &= y[i] == check_y[i];
     //
     // J
-    // first order forward mode
+    // first order forward mode computation of f'(x)
     CPPAD_TESTVECTOR(double) x1(nx), y1(ny), J(ny * nx);
     for(size_t j = 0; j < nx; ++j)
         x1[j] = 0.0;
@@ -129,8 +148,40 @@ bool mat_mul(void)
          0.0,  0.0, x[6], x[7],  0.0,  0.0, x[2], x[3],
          0.0,  0.0,  0.0,  0.0, x[6], x[7], x[4], x[5]
     };
-    for(size_t ij = 0; ij < ny * ny; ij++)
+    for(size_t ij = 0; ij < ny * nx; ij++)
         ok &= J[ij] == check_J[ij];
+    //
+    // H_1
+    // Second order forward mode computaiton of f_1^2 (x)
+    // (use the fact that the diagonal of this Hessian is zero).
+    CPPAD_TESTVECTOR(double) x2(nx), y2(nx), H_1(nx * nx);
+    for(size_t j = 0; j < nx; ++j)
+        x2[j] = 0.0;
+    for(size_t i = 0; i < nx; ++i)
+    {   for(size_t j = 0; j < nx; ++j)
+        {   x1[i] = 1.0;
+            x1[j] = 1.0;
+            f.Forward(1, x1);
+            x1[i] = 0.0;
+            x1[j] = 0.0;
+            y2 = f.Forward(2, x2);
+            H_1[i * nx + j] = y2[1];
+        }
+    }
+    //
+    // check_H_1
+    double check_H_1[] = {
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.
+    };
+    for(size_t ij = 0; ij < nx * nx; ij++)
+        ok &= H_1[ij] == check_H_1[ij];
     // ----------------------------------------------------------------
     return ok;
 }
