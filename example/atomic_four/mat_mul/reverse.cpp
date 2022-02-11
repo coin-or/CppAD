@@ -195,7 +195,6 @@ bool reverse(void)
     };
     for(size_t ij = 0; ij < nx * nx; ij++)
         ok &= H_0[ij] == check_H_0[ij];
-/*
     // -----------------------------------------------------------------------
     // Record g
     // -----------------------------------------------------------------------
@@ -205,16 +204,12 @@ bool reverse(void)
     //
     // az
     CppAD::Independent(ax);
-    CPPAD_TESTVECTOR( AD<double> ) ax1(nx), ay1(ny), az(nx);
+    CPPAD_TESTVECTOR( AD<double> ) aw(ny), az(nx);
     af.Forward(0, ax);
-    for(size_t j = 0; j < nx; ++j)
-        ax1[j] = 0.0;
-    for(size_t j = 0; j < nx; ++j)
-    {   ax1[j]    = 1.0;
-        ay1       = af.Forward(1, ax1);
-        ax1[j]    = 0.0;
-        az[j]    = ay1[1];
-    }
+    for(size_t i = 0; i < ny; ++i)
+        aw[i] = 0.0;
+    aw[0] = 1.0;
+    az = af.Reverse(1, aw);
     // g
     CppAD::ADFun<double> g(ax, az);
     // -----------------------------------------------------------------------
@@ -228,18 +223,19 @@ bool reverse(void)
     //
     // check z
     for(size_t j = 0; j < nx; ++j)
-        ok &= z[j] == J[1 * nx + j];
+        ok &= z[j] == J[0 * nx + j];
     //
     // z1
-    CPPAD_TESTVECTOR(double) z1(nx);
-    for(size_t j = 0; j < nx; ++j)
-    {   x1[j] = 1.0;
-        z1    = g.Forward(1, x1);
-        x1[j] = 0.0;
-        for(size_t i = 0; i < nx; ++i)
-            ok &= z1[i] == check_H_0[i * nx + j];
+    CPPAD_TESTVECTOR(double) w(nx), dw(nx);
+    for(size_t i = 0; i < nx; ++i)
+        w[i] = 0.0;
+    for(size_t i = 0; i < nx; ++i)
+    {   w[i] = 1.0;
+        dw   = g.Reverse(1, w);
+        w[i] = 0.0;
+        for(size_t j = 0; j < nx; ++j)
+            ok &= dw[j] == check_H_0[i * nx + j];
     }
-*/
     // ----------------------------------------------------------------
     return ok;
 }

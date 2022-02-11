@@ -117,6 +117,17 @@ private:
         CppAD::vector<Base>&                             partial_x,
         const CppAD::vector<Base>&                       partial_y
     ) override;
+    //
+    // AD<Base> reverse
+    bool reverse(
+        size_t                                           call_id,
+        const CppAD::vector<bool>&                       select_x,
+        size_t                                           order_up,
+        const CppAD::vector< CppAD::AD<Base> >&          ataylor_x,
+        const CppAD::vector< CppAD::AD<Base> >&          ataylor_y,
+        CppAD::vector< CppAD::AD<Base> >&                apartial_x,
+        const CppAD::vector< CppAD::AD<Base> >&          apartial_y
+    ) override;
 /*
     //
     // rev_depend
@@ -141,17 +152,6 @@ private:
         const CppAD::vector<bool>&                     select_x,
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
-    ) override;
-    //
-    // AD<Base> reverse
-    bool reverse(
-        size_t                                           call_id,
-        const CppAD::vector<bool>&                       select_x,
-        size_t                                           order_up,
-        const CppAD::vector< CppAD::AD<Base> >&          atx,
-        const CppAD::vector< CppAD::AD<Base> >&          aty,
-        CppAD::vector< CppAD::AD<Base> >&                apx,
-        const CppAD::vector< CppAD::AD<Base> >&          apy
     ) override;
 */
 };
