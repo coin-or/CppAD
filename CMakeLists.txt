@@ -23,7 +23,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20220201")
+SET(cppad_version "20220211")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 #
@@ -231,6 +231,7 @@ ELSE( CMAKE_BUILD_TYPE )
 ENDIF( CMAKE_BUILD_TYPE )
 print_variable(cppad_debug_which)
 print_variable(CMAKE_BUILD_TYPE)
+MESSAGE(STATUS "make check: avialable")
 #
 # include_eigen
 # include_adolc
@@ -288,12 +289,15 @@ IF( include_cppadcg )
 ELSE( include_cppadcg )
     SET(cppad_has_cppadcg 0)
 ENDIF( include_cppadcg )
+MESSAGE(STATUS "prefix 1 =${prefix}" )
 #
 # colpack_prefix
 optional_package(colpack ${system_include} "colpack install prefix")
+MESSAGE(STATUS "prefix 2 =${prefix}" )
 #
 # sacado_prefix
 optional_package(sacado ${system_include} "sacado install prefix")
+MESSAGE(STATUS "prefix 3 =${prefix}" )
 #
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")
@@ -447,7 +451,6 @@ IF( cppad_has_ipopt )
 ENDIF( cppad_has_ipopt )
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
-MESSAGE(STATUS "make check: avialable")
 # ============================================================================
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])

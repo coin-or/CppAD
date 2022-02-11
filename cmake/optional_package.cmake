@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -40,30 +40,30 @@ MACRO(optional_package package system_include description)
     SET(prefix_variable ${package}_prefix)
     SET(cppad_has_${package} 0)
     SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
-    SET(prefix ${${prefix_variable}} )
-    MESSAGE(STATUS "${prefix_variable} = ${prefix}")
-    IF ( prefix )
+    SET(prefix_value ${${prefix_variable}} )
+    MESSAGE(STATUS "${prefix_variable} = ${prefix_value}")
+    IF ( prefix_value )
         SET(cppad_has_${package} 1)
         #
         # List of preprocessor include file search directories
         FOREACH(dir ${cmake_install_includedirs})
-            IF(IS_DIRECTORY ${prefix}/${dir} )
+            IF(IS_DIRECTORY ${prefix_value}/${dir} )
                 IF( ${system_include} )
-                    INCLUDE_DIRECTORIES( SYSTEM ${prefix}/${dir} )
-                    MESSAGE(STATUS "    Found SYSTEM ${prefix}/${dir}")
+                    INCLUDE_DIRECTORIES( SYSTEM ${prefix_value}/${dir} )
+                    MESSAGE(STATUS "    Found SYSTEM ${prefix_value}/${dir}")
                 ELSE( ${system_include} )
-                    INCLUDE_DIRECTORIES( ${prefix}/${dir} )
-                    MESSAGE(STATUS "    Found ${prefix}/${dir}")
+                    INCLUDE_DIRECTORIES( ${prefix_value}/${dir} )
+                    MESSAGE(STATUS "    Found ${prefix_value}/${dir}")
                 ENDIF( ${system_include} )
-            ENDIF(IS_DIRECTORY ${prefix}/${dir} )
+            ENDIF(IS_DIRECTORY ${prefix_value}/${dir} )
         ENDFOREACH(dir)
         # Paths in which the linker will search for libraries,
         # only applies to targets created after it is called
         FOREACH(dir ${cmake_install_libdirs})
-            IF(IS_DIRECTORY ${prefix}/${dir} )
-                LINK_DIRECTORIES( ${prefix}/${dir} )
-                MESSAGE(STATUS "    Found ${prefix}/${dir}")
-            ENDIF(IS_DIRECTORY ${prefix}/${dir} )
+            IF(IS_DIRECTORY ${prefix_value}/${dir} )
+                LINK_DIRECTORIES( ${prefix_value}/${dir} )
+                MESSAGE(STATUS "    Found ${prefix_value}/${dir}")
+            ENDIF(IS_DIRECTORY ${prefix_value}/${dir} )
         ENDFOREACH(dir)
-    ENDIF ( prefix )
+    ENDIF ( prefix_value )
 ENDMACRO(optional_package)
