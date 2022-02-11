@@ -140,7 +140,7 @@ MACRO(add_to_set variable_name element)
 ENDMACRO(add_to_set variable_name element)
 # -----------------------------------------------------------------------------
 # initialize
-SET(cppad_libdir_list "-L${prefix}/${cppad_libdir}")
+SET(cppad_libdir_list "-L${cppad_prefix}/${cppad_libdir}")
 SET(cppad_lib_list    "-l${cppad_lib}")
 SET(cppad_requires         "")
 SET(cppad_libs_private     "")
