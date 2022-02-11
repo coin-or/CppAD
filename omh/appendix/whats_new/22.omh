@@ -25,11 +25,17 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
-$head 02-08$$
+$head mul_mat Branch$$
+
+$subhead 02-08$$
 The $cref atomic_vector$$ include path has changed to
 $codei%
     # include <cppad/example/atomic_four/vector.hpp>
 %$$
+
+$head 02-11$$
+The value of $code Libs:$$ in the $code cppad.pc$$ $cref pkgconfig$$ file
+was not being set correctly for some cases. This has been fixed.
 
 $head 02-01$$
 Fix a possible integer overflow in the $cref to_string.cpp$$ example
