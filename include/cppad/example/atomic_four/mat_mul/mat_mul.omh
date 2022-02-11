@@ -154,7 +154,7 @@ $latex \[
 
 $subhead Reverse$$
 Reverse mode eliminates $latex C^{(k)}$$ as follows:
-for $latex \ell = 0, \ldots , k-1$$,
+for $latex \ell = 0, \ldots , k$$,
 $latex \[
 \bar{A}^{(\ell)}  = \bar{A}^{(\ell)} + \bar{C}^{(k)} [ B^{(k-\ell)} ] ^\R{T}
 \] $$
@@ -165,6 +165,7 @@ $latex \[
 $childtable%
     include/cppad/example/atomic_four/mat_mul/implement.omh
     %example/atomic_four/mat_mul/forward.cpp
+    %example/atomic_four/mat_mul/reverse.cpp
 %$$
 
 $end

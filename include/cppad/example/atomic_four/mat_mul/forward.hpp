@@ -19,7 +19,7 @@ $spell
 $$
 
 $section
-Atomic Matrix Multiply Forward Type Calculation: Example Implementation
+Atomic Matrix Multiply Forward Mode: Example Implementation
 $$
 
 $head Purpose$$
@@ -67,7 +67,7 @@ bool atomic_mat_mul<Base>::forward(
     //
     // for k = order_low, ..., order_up :
     //    C^k = sum_ell A^ell * B^{k-ell}
-    CppAD::vector<Base> x(n_middle *( n_left + n_right) );
+    CppAD::vector<Base> x( n_middle * ( n_left + n_right) );
     CppAD::vector<Base> y(n_left * n_right);
     CppAD::vector<Base> sum(n_left * n_right);
     for(size_t k = order_low; k < q; ++k)

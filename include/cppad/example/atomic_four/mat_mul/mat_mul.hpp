@@ -106,6 +106,17 @@ private:
         const CppAD::vector< CppAD::AD<Base> >&          ataylor_x,
         CppAD::vector< CppAD::AD<Base> >&                ataylor_y
     ) override;
+    //
+    // Base reverse
+    bool reverse(
+        size_t                                           call_id,
+        const CppAD::vector<bool>&                       select_x,
+        size_t                                           order_up,
+        const CppAD::vector<Base>&                       taylor_x,
+        const CppAD::vector<Base>&                       taylor_y,
+        CppAD::vector<Base>&                             partial_x,
+        const CppAD::vector<Base>&                       partial_y
+    ) override;
 /*
     //
     // rev_depend
@@ -132,17 +143,6 @@ private:
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
     ) override;
     //
-    // Base reverse
-    bool reverse(
-        size_t                                           call_id,
-        const CppAD::vector<bool>&                       select_x,
-        size_t                                           order_up,
-        const CppAD::vector<Base>&                       tx,
-        const CppAD::vector<Base>&                       ty,
-        CppAD::vector<Base>&                             px,
-        const CppAD::vector<Base>&                       py
-    ) override;
-    //
     // AD<Base> reverse
     bool reverse(
         size_t                                           call_id,
@@ -163,6 +163,7 @@ private:
 # include <cppad/example/atomic_four/mat_mul/base_mat_mul.hpp>
 # include <cppad/example/atomic_four/mat_mul/for_type.hpp>
 # include <cppad/example/atomic_four/mat_mul/forward.hpp>
+# include <cppad/example/atomic_four/mat_mul/reverse.hpp>
 // END C++
 
 # endif

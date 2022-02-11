@@ -14,6 +14,7 @@
 SET(source_list
     mat_mul.cpp
     forward.cpp
+    reverse.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

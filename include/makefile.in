@@ -518,6 +518,7 @@ nobase_myinclude_HEADERS = \
 	cppad/example/atomic_four/mat_mul/forward.hpp \
 	cppad/example/atomic_four/mat_mul/get.hpp \
 	cppad/example/atomic_four/mat_mul/mat_mul.hpp \
+	cppad/example/atomic_four/mat_mul/reverse.hpp \
 	cppad/example/atomic_four/mat_mul/set.hpp \
 	cppad/example/atomic_four/vector/add_op.hpp \
 	cppad/example/atomic_four/vector/div_op.hpp \
