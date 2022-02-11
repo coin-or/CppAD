@@ -10,12 +10,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_four_mat_mul.cpp$$
+$begin atomic_four_mat_mul_forward.cpp$$
 $spell
     Jacobian
 $$
 
-$section Atomic Matrix Multiply: Example and Test$$
+$section Atomic Matrix Multiply Forward Mode: Example and Test$$
 
 $head Purpose$$
 This example demonstrates using the $cref atomic_mat_mul$$ class.
@@ -85,7 +85,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>
 
-bool mat_mul(void)
+bool forward(void)
 {   // ok, eps
     bool ok = true;
     //

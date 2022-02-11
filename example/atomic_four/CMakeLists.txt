@@ -13,6 +13,7 @@
 # initialize check_example_atomic_four_depends
 SET(check_example_atomic_four_depends "")
 #
+ADD_SUBDIRECTORY(mat_mul)
 ADD_SUBDIRECTORY(vector)
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
@@ -21,7 +22,6 @@ SET(source_list
     dynamic.cpp
     forward.cpp
     get_started.cpp
-    mat_mul.cpp
     norm_sq.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
