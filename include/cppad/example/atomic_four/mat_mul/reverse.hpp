@@ -71,11 +71,11 @@ bool atomic_mat_mul<Base>::reverse(
     // offset
     size_t x_offset = n_left * n_middle;
     //
-    // ab, c, ab_offset
+    // u, v, u_offset
     // note that resize only re-alocates when capacity is not large enough
-    CppAD::vector<Base> ab;
-    CppAD::vector<Base> c;
-    size_t ab_offset;
+    CppAD::vector<Base> u;
+    CppAD::vector<Base> v;
+    size_t u_offset;
     //
     // partial_x
     for(size_t i = 0; i < partial_x.size(); ++i)
@@ -91,52 +91,52 @@ bool atomic_mat_mul<Base>::reverse(
         //    bar{B}^{k-ell}  += [ A^ell ]^T \bar{C}^k
         for(size_t ell = 0; ell < q; ++ell)
         {   //
-            // ab = [ \bar{C}^k, B^{k-ell}^T ]
-            ab.resize(0);
-            ab.resize( n_left * n_right + n_right * n_middle );
-            ab_offset = n_left * n_right;
+            // u = [ \bar{C}^k, B^{k-ell}^T ]
+            u.resize(0);
+            u.resize( n_left * n_right + n_right * n_middle );
+            u_offset = n_left * n_right;
             for(size_t i = 0; i < n_left * n_right; ++i)
-                ab[i] = partial_y[ i * q + k ];
+                u[i] = partial_y[ i * q + k ];
             for(size_t i = 0; i < n_middle; ++i)
             {   for(size_t j = 0; j < n_right; ++j)
                 {   size_t ij = i * n_right + j;
                     size_t ji = j * n_middle + i;
-                    ab[ab_offset + ji] =
+                    u[u_offset + ji] =
                         taylor_x[(x_offset + ij) * q + (k - ell) ];
                 }
             }
             //
-            // c = \bar{C} * [ B^{k-ell} ]^T
-            c.resize(0);
-            c.resize( n_left * n_middle );
-            base_mat_mul(n_left, n_right, n_middle, ab, c);
+            // v = \bar{C} * [ B^{k-ell} ]^T
+            v.resize(0);
+            v.resize( n_left * n_middle );
+            base_mat_mul(n_left, n_right, n_middle, u, v);
             //
-            // \bar{A}^ell += c
+            // \bar{A}^ell += v
             for(size_t i = 0; i < n_left * n_middle; ++i)
-                partial_x[i * q + ell] += c[i];
+                partial_x[i * q + ell] += v[i];
             //
-            // ab = [ A^ell^T , \bar{C}^k ]
-            ab.resize(0);
-            ab.resize( n_middle * n_left + n_left * n_right );
-            ab_offset = n_middle * n_left;
+            // u = [ A^ell^T , \bar{C}^k ]
+            u.resize(0);
+            u.resize( n_middle * n_left + n_left * n_right );
+            u_offset = n_middle * n_left;
             for(size_t i = 0; i < n_left; ++i)
             {   for(size_t j = 0; j < n_middle; ++j)
                 {   size_t ij = i * n_middle + j;
                     size_t ji = j * n_left + i;
-                    ab[ji] = taylor_x[ij * q + ell];
+                    u[ji] = taylor_x[ij * q + ell];
                 }
             }
             for(size_t i = 0; i < n_left * n_right; ++i)
-                ab[ab_offset + i] = partial_y[ i * q + k ];
+                u[u_offset + i] = partial_y[ i * q + k ];
             //
-            // c = [ A^ell ]^T * \bar{C}^k
-            c.resize(0);
-            c.resize( n_middle * n_right );
-            base_mat_mul(n_middle, n_left, n_right, ab, c);
+            // v = [ A^ell ]^T * \bar{C}^k
+            v.resize(0);
+            v.resize( n_middle * n_right );
+            base_mat_mul(n_middle, n_left, n_right, u, v);
             //
-            // \bar{B}^{k-\ell} += c
+            // \bar{B}^{k-\ell} += v
             for(size_t i = 0; i < n_middle * n_right; ++i)
-                partial_x[ (x_offset + i) * q + (k - ell) ] += c[i];
+                partial_x[ (x_offset + i) * q + (k - ell) ] += v[i];
         }
     }
     return true;
