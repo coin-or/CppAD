@@ -191,6 +191,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/example/atomic_four/mat_mul/for_type.hpp \
 	cppad/example/atomic_four/mat_mul/forward.hpp \
 	cppad/example/atomic_four/mat_mul/get.hpp \
+	cppad/example/atomic_four/mat_mul/jac_sparsity.hpp \
 	cppad/example/atomic_four/mat_mul/mat_mul.hpp \
 	cppad/example/atomic_four/mat_mul/reverse.hpp \
 	cppad/example/atomic_four/mat_mul/set.hpp \

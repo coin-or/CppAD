@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_SPARSE_RC_HPP
 # define CPPAD_UTILITY_SPARSE_RC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -24,6 +24,8 @@ $spell
     nr
     nc
     resize
+    std
+    ostream
 $$
 $section Row and Column Index Sparsity Patterns$$
 
@@ -44,6 +46,8 @@ $icode%resize%(%nr%, %nc%, %nnz%)
 %$$
 $icode%pattern%.set(%k%, %r%, %c%)
 %$$
+$icode%pattern%.push_back(%r%, %c%)
+%$$
 $icode%pattern%.nr()
 %$$
 $icode%pattern%.nc()
@@ -57,6 +61,8 @@ $codei%const %SizeVector%& %col%( %pattern%.col() )
 $icode%row_major% = %pattern%.row_major()
 %$$
 $icode%col_major% = %pattern%.col_major()
+%$$
+$icode%os% << %pattern%
 %$$
 
 $head SizeVector$$
@@ -142,6 +148,14 @@ $codei%
     %col%[%k%] = %c%
 %$$
 
+$head push_back$$
+This function  the value $icode r$$ to the back of $icode row$$,
+the value $icode c$$ to the back of $icode col$$,
+and increases $icode nnz$$ by one.
+This operation requires $icode SizeVector$$ to support the
+$code push_back$$ operation
+(which is not part of the SimpleVector requirements).
+
 $subhead k$$
 This argument has type
 $codei%
@@ -218,6 +232,18 @@ $children%
 $head Example$$
 The file $cref sparse_rc.cpp$$
 contains an example and test of this class.
+
+$head os$$
+If $icode os$$ is an $code std::ostream$$, the operation
+$codei%
+    %os% << %pattern%
+%$$
+outputs $icode pattern$$ to the $icode os$$ stream.
+The output begins with a left brace $code {$$
+and ends with a right brace $code }$$.
+The output is in row major order and has one line for each row.
+The row index is output at the beginning of a line
+and the column indices follow.
 
 $end
 */
@@ -323,6 +349,22 @@ public:
         col_[k] = c;
         //
     }
+    /// push_back
+    void push_back(size_t r, size_t c)
+    {   CPPAD_ASSERT_KNOWN(
+            r < nr_,
+            "The index r is not less than nr in sparse_rc::push_back"
+        );
+        CPPAD_ASSERT_KNOWN(
+            c < nc_,
+            "The index c is to not less than nc in sparse_rc::push_back"
+        );
+        row_.push_back(r);
+        col_.push_back(c);
+        ++nnz_;
+        CPPAD_ASSERT_UNKNOWN( row_.size() == nnz_ );
+        CPPAD_ASSERT_UNKNOWN( col_.size() == nnz_ );
+    }
     /// number of rows in matrix
     size_t nr(void) const
     {   return nr_; }
@@ -386,6 +428,39 @@ public:
     }
 };
 
+template <class SizeVector>
+std::ostream& operator << (
+    std::ostream&                       os      ,
+    const CppAD::sparse_rc<SizeVector>& pattern )
+{   size_t nnz = pattern.nnz();
+    if( nnz == 0 )
+    {   os << "{ }";
+        return os;
+    }
+    const SizeVector& row       = pattern.row();
+    const SizeVector& col       = pattern.col();
+    SizeVector        row_major = pattern.row_major();
+    //
+    // k, r, c
+    size_t k = 0;
+    size_t r = row[ row_major[k] ];
+    size_t c = col[ row_major[k] ];
+    //
+    // os
+    os << "{\nrow = " << r << ", col = " << c;
+    while(++k < nnz )
+    {   bool new_row = r != row[ row_major[k] ];
+        r = row[ row_major[k] ];
+        c = col[ row_major[k] ];
+        if( new_row )
+            os << "\nrow = " << r << ", col = " << c;
+        else
+            os << ", " << c;
+    }
+    os << "\n}";
+    //
+    return os;
+}
 } // END_CPPAD_NAMESPACE
 
 # endif

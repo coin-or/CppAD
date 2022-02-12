@@ -28,6 +28,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool forward(void);
 extern bool reverse(void);
+extern bool sparsity(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -41,6 +42,7 @@ int main(void)
     // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( forward,             "forward"        );
     Run( reverse,             "reverse"        );
+    Run( sparsity,            "sparsity"       );
     // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak

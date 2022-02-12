@@ -166,6 +166,7 @@ $childtable%
     include/cppad/example/atomic_four/mat_mul/implement.omh
     %example/atomic_four/mat_mul/forward.cpp
     %example/atomic_four/mat_mul/reverse.cpp
+    %example/atomic_four/mat_mul/sparsity.cpp
 %$$
 
 $end

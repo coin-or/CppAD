@@ -12,9 +12,10 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    mat_mul.cpp
     forward.cpp
+    mat_mul.cpp
     reverse.cpp
+    sparsity.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
