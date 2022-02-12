@@ -103,18 +103,20 @@ A:active { color : purple }
     <font color="#FF0000">}</font>
 
     <i><font color="#9A1900">// change to sparsity pattern for a 5 by 5 diagonal matrix</font></i>
+    <i><font color="#9A1900">// using push_back instead of set</font></i>
     nr  <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
     nc  <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
-    nnz <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
-    pattern<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nc<font color="#990000">,</font> nnz<font color="#990000">);</font>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
-    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> r <font color="#990000">=</font> nnz <font color="#990000">-</font> k <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// reverse or row-major order</font></i>
-        <font color="#008080">size_t</font> c <font color="#990000">=</font> nnz <font color="#990000">-</font> k <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
-        pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>k<font color="#990000">,</font> r<font color="#990000">,</font> c<font color="#990000">);</font>
+    pattern<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nr<font color="#990000">,</font> nc<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nr<font color="#990000">;</font> k<font color="#990000">++)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> r <font color="#990000">=</font> nr <font color="#990000">-</font> k <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// reverse or row-major order</font></i>
+        <font color="#008080">size_t</font> c <font color="#990000">=</font> nr <font color="#990000">-</font> k <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">;</font>
+        pattern<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>r<font color="#990000">,</font> c<font color="#990000">);</font>
     <font color="#FF0000">}</font>
+    nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
     <font color="#008080">SizeVector</font> row_major <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row_major</font></b><font color="#990000">();</font>
 
-    <i><font color="#9A1900">// check row and column</font></i>
+    <i><font color="#9A1900">// check nnz, row and column</font></i>
+    ok <font color="#990000">&amp;=</font> nnz <font color="#990000">==</font> nr<font color="#990000">;</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
     <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font> row_major<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> k<font color="#990000">;</font>
         ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> k<font color="#990000">;</font>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>02-12</option>
+<option>02-11</option>
+<option>02-01</option>
 <option>01-27</option>
 <option>01-25</option>
 <option>01-23</option>
@@ -86,6 +89,32 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
+<br>
+<b><big><a name="02-12" id="02-12">02-12</a></big></b>
+<br>
+Add the <a href="sparse_rc.htm#push_back" target="_top"><span style='white-space: nowrap'>push_back</span></a>
+ and
+output stream (see <a href="sparse_rc.htm#os" target="_top"><span style='white-space: nowrap'>os</span></a>
+) operations
+to the <code><font color="blue">sparse_rc</font></code> template class.
+
+<br>
+<br>
+<b><big><a name="02-11" id="02-11">02-11</a></big></b>
+<br>
+The value of <code><font color="blue">Libs:</font></code> in the <code><font color="blue">cppad.pc</font></code> <a href="pkgconfig.htm" target="_top"><span style='white-space: nowrap'>pkgconfig</span></a>
+ file
+was not being set correctly for some cases. This has been fixed.
+
+<br>
+<br>
+<b><big><a name="02-01" id="02-01">02-01</a></big></b>
+<br>
+Fix a possible integer overflow in the <a href="to_string.cpp.htm" target="_top"><span style='white-space: nowrap'>to_string.cpp</span></a>
+ example
+(might cause the test to fail).
+
+<br>
 <br>
 <b><big><a name="01-27" id="01-27">01-27</a></big></b>
 <br>

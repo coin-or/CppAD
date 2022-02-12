@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Row and Column Index Sparsity Patterns</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Row and Column Index Sparsity Patterns">
-<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax sizevector empty pattern other assignment constructor move semantics swap nr nc nnz resize set k r c col row_major col_major example ">
+<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax sizevector empty pattern other assignment constructor move semantics swap nr nc nnz resize set push_back k r c col row_major col_major example os ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,6 +76,7 @@ A:active { color : purple }
 <option>nnz</option>
 <option>resize</option>
 <option>set</option>
+<option>push_back</option>
 <option>---..k</option>
 <option>---..r</option>
 <option>---..c</option>
@@ -84,6 +85,7 @@ A:active { color : purple }
 <option>row_major</option>
 <option>col_major</option>
 <option>Example</option>
+<option>os</option>
 </select>
 </td>
 </tr></table><br>
@@ -123,6 +125,9 @@ A:active { color : purple }
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.set(</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nr()<br>
 </span></font></code>
 
@@ -142,6 +147,9 @@ A:active { color : purple }
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.col_major()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="SizeVector" id="SizeVector">SizeVector</a></big></b>
@@ -318,7 +326,30 @@ This function sets the values
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
-<big><a name="set.k" id="set.k">k</a></big>
+<b><big><a name="push_back" id="push_back">push_back</a></big></b>
+<br>
+This function  the value 
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+ to the back of 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+,
+the value 
+<code><i><font color="black"><span style='white-space: nowrap'>c</span></font></i></code>
+ to the back of 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+,
+and increases 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+ by one.
+This operation requires 
+<code><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i></code>
+ to support the
+<code><font color="blue">push_back</font></code> operation
+(which is not part of the SimpleVector requirements).
+
+<br>
+<br>
+<big><a name="push_back.k" id="push_back.k">k</a></big>
 <br>
 This argument has type
 
@@ -331,7 +362,7 @@ and must be less than
 
 <br>
 <br>
-<big><a name="set.r" id="set.r">r</a></big>
+<big><a name="push_back.r" id="push_back.r">r</a></big>
 <br>
 This argument has type
 
@@ -347,7 +378,7 @@ be less than
 
 <br>
 <br>
-<big><a name="set.c" id="set.c">c</a></big>
+<big><a name="push_back.c" id="push_back.c">c</a></big>
 <br>
 This argument has type
 
@@ -450,6 +481,28 @@ row and column values (if <code><font color="blue">NDEBUG</font></code> is not d
 The file <a href="sparse_rc.cpp.htm" target="_top"><span style='white-space: nowrap'>sparse_rc.cpp</span></a>
 
 contains an example and test of this class.
+
+<br>
+<br>
+<b><big><a name="os" id="os">os</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i></code>
+ is an <code><font color="blue">std::ostream</font></code>, the operation
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>os</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+outputs 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+ to the 
+<code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i></code>
+ stream.
+The output begins with a left brace <code><font color="blue">{</font></code>
+and ends with a right brace <code><font color="blue">}</font></code>.
+The output is in row major order and has one line for each row.
+The row index is output at the beginning of a line
+and the column indices follow.
 
 
 <hr>Input File: include/cppad/utility/sparse_rc.hpp

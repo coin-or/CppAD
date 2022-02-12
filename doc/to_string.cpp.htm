@@ -82,11 +82,14 @@ A:active { color : purple }
     <font color="#FF0000">{</font>   <font color="#008080">Integer</font> result <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
         <font color="#008080">size_t</font> index   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'-'</font> <font color="#990000">)</font>
-            <font color="#990000">++</font>index<font color="#990000">;</font>
-        <b><font color="#0000FF">while</font></b><font color="#990000">(</font> index <font color="#990000">&lt;</font> s<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-            result <font color="#990000">=</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font> <font color="#993399">10</font> <font color="#990000">*</font> result <font color="#990000">+</font> <font color="#990000">(</font>s<font color="#990000">[</font>index<font color="#990000">++]</font> <font color="#990000">-</font> <font color="#FF0000">'0'</font><font color="#990000">)</font> <font color="#990000">);</font>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> s<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'-'</font> <font color="#990000">)</font>
-            <b><font color="#0000FF">return</font></b> <font color="#990000">-</font> result<font color="#990000">;</font>
+        <font color="#FF0000">{</font>   <font color="#990000">++</font>index<font color="#990000">;</font>
+            <b><font color="#0000FF">while</font></b><font color="#990000">(</font> index <font color="#990000">&lt;</font> s<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+                result <font color="#990000">=</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><font color="#993399">10</font><font color="#990000">)</font> <font color="#990000">*</font> result <font color="#990000">-</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font>s<font color="#990000">[</font>index<font color="#990000">++]</font> <font color="#990000">-</font> <font color="#FF0000">'0'</font> <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">while</font></b><font color="#990000">(</font> index <font color="#990000">&lt;</font> s<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+                result <font color="#990000">=</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font><font color="#993399">10</font><font color="#990000">)</font> <font color="#990000">*</font> result <font color="#990000">+</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font>s<font color="#990000">[</font>index<font color="#990000">++]</font> <font color="#990000">-</font> <font color="#FF0000">'0'</font> <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
         <b><font color="#0000FF">return</font></b> result<font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Integer</font><font color="#990000">&gt;</font>

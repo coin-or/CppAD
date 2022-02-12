@@ -24,14 +24,16 @@ var list_current0 = [
 'sparse_rc.htm#nnz',
 'sparse_rc.htm#resize',
 'sparse_rc.htm#set',
-'sparse_rc.htm#set.k',
-'sparse_rc.htm#set.r',
-'sparse_rc.htm#set.c',
+'sparse_rc.htm#push_back',
+'sparse_rc.htm#push_back.k',
+'sparse_rc.htm#push_back.r',
+'sparse_rc.htm#push_back.c',
 'sparse_rc.htm#row',
 'sparse_rc.htm#col',
 'sparse_rc.htm#row_major',
 'sparse_rc.htm#col_major',
-'sparse_rc.htm#Example'
+'sparse_rc.htm#Example',
+'sparse_rc.htm#os'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
