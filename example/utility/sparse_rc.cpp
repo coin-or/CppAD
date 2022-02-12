@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -54,18 +54,20 @@ bool sparse_rc(void)
     }
 
     // change to sparsity pattern for a 5 by 5 diagonal matrix
+    // using push_back instead of set
     nr  = 5;
     nc  = 5;
-    nnz = 5;
-    pattern.resize(nr, nc, nnz);
-    for(size_t k = 0; k < nnz; k++)
-    {   size_t r = nnz - k - 1; // reverse or row-major order
-        size_t c = nnz - k - 1;
-        pattern.set(k, r, c);
+    pattern.resize(nr, nc, 0);
+    for(size_t k = 0; k < nr; k++)
+    {   size_t r = nr - k - 1; // reverse or row-major order
+        size_t c = nr - k - 1;
+        pattern.push_back(r, c);
     }
+    nnz = pattern.nnz();
     SizeVector row_major = pattern.row_major();
 
-    // check row and column
+    // check nnz, row and column
+    ok &= nnz == nr;
     for(size_t k = 0; k < nnz; k++)
     {   ok &= row[ row_major[k] ] == k;
         ok &= col[ row_major[k] ] == k;

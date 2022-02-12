@@ -20,9 +20,15 @@ $spell
     iterator
     iterators
     cppad_lib
+    rc
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 02-12$$
+Add the $cref/push_back/sparse_rc/push_back/$$ and
+output stream (see $cref/os/sparse_rc/os/$$) operations
+to the $code sparse_rc$$ template class.
 
 $head 02-11$$
 The value of $code Libs:$$ in the $code cppad.pc$$ $cref pkgconfig$$ file
