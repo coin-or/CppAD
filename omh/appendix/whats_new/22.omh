@@ -21,6 +21,7 @@ $spell
     iterators
     cppad_lib
     hpp
+    rc
 $$
 
 $section Changes and Additions to CppAD During 2022$$
@@ -32,6 +33,11 @@ The $cref atomic_vector$$ include path has changed to
 $codei%
     # include <cppad/example/atomic_four/vector.hpp>
 %$$
+
+$head 02-12$$
+Add the $cref/push_back/sparse_rc/push_back/$$ and
+output stream (see $cref/os/sparse_rc/os/$$) operations
+to the $code sparse_rc$$ template class.
 
 $head 02-11$$
 The value of $code Libs:$$ in the $code cppad.pc$$ $cref pkgconfig$$ file
