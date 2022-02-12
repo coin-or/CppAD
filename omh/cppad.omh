@@ -77,8 +77,8 @@ $comment ------------------------------------------------------------------- $$
 $table
 $href%https://github.com/coin-or/CppAD/releases%
     releases%$$, $cnext
-$href%https://github.com/coin-or/CppAD/archive/20220000.1.tar.gz%
-    20220000.1%$$, $cnext
+$href%https://github.com/coin-or/CppAD/archive/20220000.2.tar.gz%
+    20220000.2%$$, $cnext
 $href%https://github.com/coin-or/CppAD%
     github%$$, $cnext
 $href%https://travis-ci.org/coin-or/CppAD%
