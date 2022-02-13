@@ -145,7 +145,6 @@ private:
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
     ) override;
-/*
     //
     // rev_depend
     bool rev_depend(
@@ -153,7 +152,6 @@ private:
         CppAD::vector<bool>&                           depend_x,
         const CppAD::vector<bool>&                     depend_y
     ) override;
-*/
 };
 } // END_CPPAD_NAMESPACE
 
@@ -166,6 +164,7 @@ private:
 # include <cppad/example/atomic_four/mat_mul/reverse.hpp>
 # include <cppad/example/atomic_four/mat_mul/jac_sparsity.hpp>
 # include <cppad/example/atomic_four/mat_mul/hes_sparsity.hpp>
+# include <cppad/example/atomic_four/mat_mul/rev_depend.hpp>
 // END C++
 
 # endif

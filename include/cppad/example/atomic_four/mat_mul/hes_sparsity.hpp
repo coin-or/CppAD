@@ -16,9 +16,12 @@ $begin atomic_mat_mul_hes_sparsity.hpp$$
 $spell
     Jacobian
     jac
+    hes
 $$
 
-$section Atomic Vector Jacobian Sparsity Pattern: Example Implementation$$
+$section
+Atomic Matrix Multiply Jacobian Sparsity Pattern: Example Implementation
+$$
 
 $head Purpose$$
 The $code hes_sparsity$$ routine overrides the virtual functions
@@ -26,7 +29,7 @@ used by the atomic_four base class for Jacobian sparsity calculations; see
 $cref/hes_sparsity/atomic_four_hes_sparsity/$$.
 
 $head Example$$
-The file $cref atomic_four_mat_mul_hes_sparsity.cpp$$
+The file $cref atomic_four_mat_mul_sparsity.cpp$$
 contains an example and test using this operator.
 
 $head Source$$
@@ -70,7 +73,7 @@ bool atomic_mat_mul<Base>::hes_sparsity(
             {   size_t ik = i * n_middle + k;          // A_{i,k} = x[ik]
                 size_t kj = offset + k * n_right + j;  // B_{k,j} = x[kj]
                 if( select_x[ik] & select_x[kj] )
-                {   // an (ik, kj) pair can only occur once in this loop   
+                {   // an (ik, kj) pair can only occur once in this loop
                     pattern_out.push_back(ik, kj);
                     pattern_out.push_back(kj, ik);
                 }

@@ -16,6 +16,7 @@ $begin atomic_mat_mul_reverse.hpp$$
 $spell
     Jacobian
     jac
+    mul
 $$
 
 $section
@@ -28,7 +29,7 @@ used by the atomic_four base; see
 $cref/reverse/atomic_four_reverse/$$.
 
 $head Theory$$
-See mat_mul $cref/reverse/atomic_mat_mul/Theory/Reverse/$$ thoery.
+See mat_mul $cref/reverse/atomic_mat_mul/Theory/Reverse/$$ theory.
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

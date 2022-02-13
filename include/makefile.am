@@ -20,6 +20,7 @@ myincludedir = $(includedir)/$(postfix_dir)
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 nobase_myinclude_HEADERS =  \
+	cppad/example/atomic_four/mat_mul/rev_depend.hpp \
 	cppad/base_require.hpp \
 	cppad/configure.hpp \
 	cppad/core/abort_recording.hpp \

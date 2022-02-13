@@ -14,6 +14,7 @@
 SET(source_list
     forward.cpp
     mat_mul.cpp
+    rev_depend.cpp
     reverse.cpp
     sparsity.cpp
 )

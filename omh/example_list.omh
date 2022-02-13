@@ -53,6 +53,7 @@ $rref atomic_four_dynamic.cpp$$
 $rref atomic_four_forward.cpp$$
 $rref atomic_four_get_started.cpp$$
 $rref atomic_four_mat_mul_forward.cpp$$
+$rref atomic_four_mat_mul_rev_depend.cpp$$
 $rref atomic_four_mat_mul_reverse.cpp$$
 $rref atomic_four_mat_mul_sparsity.cpp$$
 $rref atomic_four_norm_sq.cpp$$

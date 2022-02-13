@@ -18,7 +18,9 @@ $spell
     jac
 $$
 
-$section Atomic Vector Jacobian Sparsity Pattern: Example Implementation$$
+$section
+Atomic Matrix Multiply Jacobian Sparsity Pattern: Example Implementation
+$$
 
 $head Purpose$$
 The $code jac_sparsity$$ routine overrides the virtual functions
@@ -26,7 +28,7 @@ used by the atomic_four base class for Jacobian sparsity calculations; see
 $cref/jac_sparsity/atomic_four_jac_sparsity/$$.
 
 $head Example$$
-The file $cref atomic_four_mat_mul_jac_sparsity.cpp$$
+The file $cref atomic_four_mat_mul_sparsity.cpp$$
 contains an example and test using this operator.
 
 $head Source$$

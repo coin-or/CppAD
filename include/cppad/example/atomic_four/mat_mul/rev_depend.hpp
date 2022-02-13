@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_FOR_TYPE_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_FOR_TYPE_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_REV_DEPEND_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_REV_DEPEND_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -12,19 +12,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_mat_mul_for_type.hpp$$
+$begin atomic_mat_mul_rev_depend.hpp$$
 $spell
     Jacobian
     jac
 $$
 
 $section
-Atomic Matrix Multiply Forward Type Calculation: Example Implementation$$
+Atomic Matrix Multiply Reverse Dependency Analysis: Example Implementation
+$$
 
 $head Purpose$$
-The $code for_type$$ routine overrides the virtual functions
-used by the atomic_four base; see
-$cref/for_type/atomic_four_for_type/$$.
+The $code rev_depend$$ routine is used by $cref optimize$$
+to reduce the number of variables in the recording of a function.
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -35,12 +35,12 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
-// for_type override
+// rev_depend override
 template <class Base>
-bool atomic_mat_mul<Base>::for_type(
-    size_t                                     call_id     ,
-    const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
-    CppAD::vector<CppAD::ad_type_enum>&        type_y      )
+bool atomic_mat_mul<Base>::rev_depend(
+    size_t                         call_id  ,
+    CppAD::vector<bool>&           depend_x ,
+    const CppAD::vector<bool>&     depend_y )
 {
     //
     // n_left, n_middle, n_right
@@ -48,8 +48,8 @@ bool atomic_mat_mul<Base>::for_type(
     get(call_id, n_left, n_middle, n_right);
 # ifndef NDEBUG
     // n, m
-    size_t n     = type_x.size();
-    size_t m     = type_y.size();
+    size_t n     = depend_x.size();
+    size_t m     = depend_y.size();
     //
     // check sizes
     assert( n == n_left * n_middle + n_middle * n_right );
@@ -65,12 +65,15 @@ bool atomic_mat_mul<Base>::for_type(
     // type_y
     for(size_t i = 0; i < n_left; ++i)
     {   for(size_t j = 0; j < n_right; ++j)
-        {   CppAD::ad_type_enum type_ij = CppAD::constant_enum;
-            for(size_t k = 0; k < n_middle; ++k)
-            {   type_ij = std::max(type_ij, type_x[i * n_middle + k]);
-                type_ij = std::max(type_ij, type_x[offset + k * n_right + j]);
+        {   size_t ij = i * n_right + j;
+            if( depend_y[ij] )
+            {   for(size_t k = 0; k < n_middle; ++k)
+                {   size_t ik = i * n_middle + k;
+                    size_t kj = offset + k * n_right + j;
+                    depend_x[ik] = true;
+                    depend_x[kj] = true;
+                }
             }
-            type_y[ i * n_right + j] = type_ij;
         }
     }
     return true;

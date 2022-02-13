@@ -167,6 +167,7 @@ $childtable%
     %example/atomic_four/mat_mul/forward.cpp
     %example/atomic_four/mat_mul/reverse.cpp
     %example/atomic_four/mat_mul/sparsity.cpp
+    %example/atomic_four/mat_mul/rev_depend.cpp
 %$$
 
 $end
