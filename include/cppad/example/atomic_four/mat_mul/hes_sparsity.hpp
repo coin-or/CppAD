@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_JAC_SPARSITY_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_JAC_SPARSITY_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_HES_SPARSITY_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_HES_SPARSITY_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_mat_mul_jac_sparsity.hpp$$
+$begin atomic_mat_mul_hes_sparsity.hpp$$
 $spell
     Jacobian
     jac
@@ -21,12 +21,12 @@ $$
 $section Atomic Vector Jacobian Sparsity Pattern: Example Implementation$$
 
 $head Purpose$$
-The $code jac_sparsity$$ routine overrides the virtual functions
+The $code hes_sparsity$$ routine overrides the virtual functions
 used by the atomic_four base class for Jacobian sparsity calculations; see
-$cref/jac_sparsity/atomic_four_jac_sparsity/$$.
+$cref/hes_sparsity/atomic_four_hes_sparsity/$$.
 
 $head Example$$
-The file $cref atomic_four_mat_mul_jac_sparsity.cpp$$
+The file $cref atomic_four_mat_mul_hes_sparsity.cpp$$
 contains an example and test using this operator.
 
 $head Source$$
@@ -38,11 +38,10 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
-// jac_sparsity override
+// hes_sparsity override
 template <class Base>
-bool atomic_mat_mul<Base>::jac_sparsity(
+bool atomic_mat_mul<Base>::hes_sparsity(
     size_t                                         call_id      ,
-    bool                                           dependency   ,
     const CppAD::vector<bool>&                     select_x     ,
     const CppAD::vector<bool>&                     select_y     ,
     CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out  )
@@ -63,20 +62,25 @@ bool atomic_mat_mul<Base>::jac_sparsity(
     size_t offset = n_left * n_middle;
     //
     // pattern_out
-    pattern_out.resize(m, n, 0);
+    pattern_out.resize(n, n, 0);
     for(size_t i = 0; i < n_left; ++i)
     {   for(size_t j = 0; j < n_right; ++j)
         {   size_t ij = i * n_right + j;               // C_{i,j} = y[ij]
             if( select_y[ij] ) for(size_t k = 0; k < n_middle; ++k)
             {   size_t ik = i * n_middle + k;          // A_{i,k} = x[ik]
-                if( select_x[ik] )
-                    pattern_out.push_back(ij, ik);
                 size_t kj = offset + k * n_right + j;  // B_{k,j} = x[kj]
-                if( select_x[kj] )
-                    pattern_out.push_back(ij, kj);
+                if( select_x[ik] & select_x[kj] )
+                {   // an (ik, kj) pair can only occur once in this loop   
+                    pattern_out.push_back(ik, kj);
+                    pattern_out.push_back(kj, ik);
+                }
             }
         }
     }
+# ifndef NDEBUG
+    // sorting checks hat there are no duplicate entries
+    pattern_out.row_major();
+# endif
     //
     return true;
 }

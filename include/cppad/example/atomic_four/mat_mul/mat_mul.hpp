@@ -137,14 +137,6 @@ private:
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
     ) override;
-/*
-    //
-    // rev_depend
-    bool rev_depend(
-        size_t                                         call_id,
-        CppAD::vector<bool>&                           depend_x,
-        const CppAD::vector<bool>&                     depend_y
-    ) override;
     //
     // hes_sparsity
     bool hes_sparsity(
@@ -152,6 +144,14 @@ private:
         const CppAD::vector<bool>&                     select_x,
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
+    ) override;
+/*
+    //
+    // rev_depend
+    bool rev_depend(
+        size_t                                         call_id,
+        CppAD::vector<bool>&                           depend_x,
+        const CppAD::vector<bool>&                     depend_y
     ) override;
 */
 };
@@ -165,6 +165,7 @@ private:
 # include <cppad/example/atomic_four/mat_mul/forward.hpp>
 # include <cppad/example/atomic_four/mat_mul/reverse.hpp>
 # include <cppad/example/atomic_four/mat_mul/jac_sparsity.hpp>
+# include <cppad/example/atomic_four/mat_mul/hes_sparsity.hpp>
 // END C++
 
 # endif
