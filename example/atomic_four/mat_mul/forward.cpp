@@ -45,7 +45,7 @@ x_4 x_6 + x_5 x_7
 $head Jacobian of f(x)$$
 The Jacobian of $latex f(x)$$ is
 $latex \[
-f^{(1)} (x) = \left( \begin{array}{ccc}
+f^{(1)} (x) = \left( \begin{array}{cccccccc}
 x_6 & x_7 & 0   & 0    & 0    & 0   & x_0  & x_1 \\
 0   & 0   & x_6 & x_7  & 0    & 0   & x_2  & x_3 \\
 0   & 0   & 0   & 0    & x_6  & x_7 & x_4  & x_5

@@ -25,7 +25,7 @@ $head f(x)$$
 For this example, the function $latex f(x)$$ is
 $latex \[
 f(x) =
-\left( \begin{array}{cc}
+\left( \begin{array}{ccc}
 x_0 & x_1 & x_2  \\
 x_3 & x_4 & x_5
 \end{array} \right)
@@ -44,7 +44,7 @@ x_3 * x_6 + x_4 * x_7 + x_5 * x_8
 $head Jacobian of f(x)$$
 The Jacobian of $latex f(x)$$ is
 $latex \[
-f^{(1)} (x) = \left( \begin{array}{cccccccc}
+f^{(1)} (x) = \left( \begin{array}{cccccccccc}
     x_6 & x_7 & x_8 & 0   & 0   & 0   & x_0 & x_1 & x_2 \\
     0   & 0   & 0   & x_6 & x_7 & x_8 & x_3 & x_4 & x_5
 \end{array} \right)
@@ -64,7 +64,7 @@ f_1^{(2)} (x)
 =
 g^{(1)} (x)
 =
-\left( \begin{array}{cccccccc}
+\left( \begin{array}{ccccccccc}
     % 0   1   2   3   4   5   6   7   8
       0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0   \\ % 0
       0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0   \\ % 1
