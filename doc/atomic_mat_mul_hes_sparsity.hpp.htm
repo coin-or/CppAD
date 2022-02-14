@@ -1,0 +1,163 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Matrix Multiply Jacobian Sparsity Pattern: Example Implementation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Matrix Multiply Jacobian Sparsity Pattern: Example Implementation">
+<meta name="keywords" id="keywords" content=" atomic matrix multiply jacobian sparsity pattern: example implementation purpose source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_mat_mul_hes_sparsity.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_mat_mul_jac_sparsity.hpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_mat_mul_rev_depend.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four_example</option>
+<option>atomic_mat_mul</option>
+<option>atomic_mat_mul_implement</option>
+<option>atomic_mat_mul_hes_sparsity.hpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_mat_mul_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_mat_mul_implement_htm.js'></script>
+</td>
+<td>atomic_mat_mul_hes_sparsity.hpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Example</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Matrix Multiply Jacobian Sparsity Pattern: Example Implementation</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <code><font color="blue">hes_sparsity</font></code> routine overrides the virtual functions
+used by the atomic_four base class for Jacobian sparsity calculations; see
+<a href="atomic_four_hes_sparsity.htm" target="_top"><span style='white-space: nowrap'>hes_sparsity</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="atomic_four_mat_mul_sparsity.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_mat_mul_sparsity.cpp</span></a>
+
+contains an example and test using this operator.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/mat_mul/mat_mul.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_CPPAD_NAMESPACE</font></i>
+<i><font color="#9A1900">//</font></i>
+<i><font color="#9A1900">// hes_sparsity override</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_mat_mul<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">hes_sparsity</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                                         call_id      <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>     pattern_out  <font color="#990000">)</font>
+<font color="#FF0000">{</font>
+    <i><font color="#9A1900">// n_left, n_middle, n_right</font></i>
+    <font color="#008080">size_t</font> n_left<font color="#990000">,</font> n_middle<font color="#990000">,</font> n_right<font color="#990000">;</font>
+    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> n_left<font color="#990000">,</font> n_middle<font color="#990000">,</font> n_right<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// n</font></i>
+    <font color="#008080">size_t</font> n     <font color="#990000">=</font> select_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check sizes</font></i>
+<b><font color="#000080"># ifndef</font></b> NDEBUG
+    <font color="#008080">size_t</font> m     <font color="#990000">=</font> select_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> n <font color="#990000">==</font> n_middle <font color="#990000">*</font> <font color="#990000">(</font> n_left <font color="#990000">+</font>  n_right <font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> n_left <font color="#990000">*</font> n_right <font color="#990000">);</font>
+<b><font color="#000080"># endif</font></b>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// offset</font></i>
+    <font color="#008080">size_t</font> offset <font color="#990000">=</font> n_left <font color="#990000">*</font> n_middle<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_out</font></i>
+    pattern_out<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n<font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_left<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_right<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> ij <font color="#990000">=</font> i <font color="#990000">*</font> n_right <font color="#990000">+</font> j<font color="#990000">;</font>               <i><font color="#9A1900">// C_{i,j} = y[ij]</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>ij<font color="#990000">]</font> <font color="#990000">)</font> <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_middle<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <font color="#008080">size_t</font> ik <font color="#990000">=</font> i <font color="#990000">*</font> n_middle <font color="#990000">+</font> k<font color="#990000">;</font>          <i><font color="#9A1900">// A_{i,k} = x[ik]</font></i>
+                <font color="#008080">size_t</font> kj <font color="#990000">=</font> offset <font color="#990000">+</font> k <font color="#990000">*</font> n_right <font color="#990000">+</font> j<font color="#990000">;</font>  <i><font color="#9A1900">// B_{k,j} = x[kj]</font></i>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>ik<font color="#990000">]</font> <font color="#990000">&amp;</font> select_x<font color="#990000">[</font>kj<font color="#990000">]</font> <font color="#990000">)</font>
+                <font color="#FF0000">{</font>   <i><font color="#9A1900">// an (ik, kj) pair can only occur once in this loop</font></i>
+                    pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>ik<font color="#990000">,</font> kj<font color="#990000">);</font>
+                    pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>kj<font color="#990000">,</font> ik<font color="#990000">);</font>
+                <font color="#FF0000">}</font>
+            <font color="#FF0000">}</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+<b><font color="#000080"># ifndef</font></b> NDEBUG
+    <i><font color="#9A1900">// sorting checks hat there are no duplicate entries</font></i>
+    pattern_out<font color="#990000">.</font><b><font color="#000000">row_major</font></b><font color="#990000">();</font>
+<b><font color="#000080"># endif</font></b>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>
+
+<hr>Input File: include/cppad/example/atomic_four/mat_mul/hes_sparsity.hpp
+
+</body>
+</html>

@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Atomic Vector Subtraction Example</title>
+<title>Atomic Vector Multiplication Example</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Atomic Vector Subtraction Example">
-<meta name="keywords" id="keywords" content=" atomic vector subtraction example f(u v w) g(u source ">
+<meta name="description" id="description" content="Atomic Vector Multiplication Example">
+<meta name="keywords" id="keywords" content=" atomic vector multiplication example f(u v w) g(u source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_atomic_vector_sub.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_vector_mul.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic_vector_rev_depend.cpp.htm" target="_top">Prev</a>
-</td><td><a href="atomic_three.htm" target="_top">Next</a>
+<td><a href="atomic_four_vector_jac_sparsity.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_four_vector_neg.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -52,7 +52,7 @@ A:active { color : purple }
 <option>atomic</option>
 <option>atomic_four_example</option>
 <option>atomic_vector</option>
-<option>atomic_vector_sub.cpp</option>
+<option>atomic_four_vector_mul.cpp</option>
 </select>
 </td>
 <td>
@@ -64,7 +64,7 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_vector_htm.js'></script>
 </td>
-<td>atomic_vector_sub.cpp</td>
+<td>atomic_four_vector_mul.cpp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -80,7 +80,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Vector Subtraction Example</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Vector Multiplication Example</big></big></b></center>
 <br>
 <b><big><a name="f(u, v, w)" id="f(u, v, w)">f(u, v, w)</a></big></b>
 <br>
@@ -89,7 +89,7 @@ For this example,
 f : \B{R}^{3m} \rightarrow \B{R}^m
 @)@</small>
 is defined by <small>@(@
-f(u, v, w) = u - (v + w)
+f(u, v, w) = u * v * w
 @)@</small>.
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
@@ -109,7 +109,7 @@ For this example <small>@(@
 g : \B{R}^{3m} \rightarrow \B{R}^m
 @)@</small>
 is defined by <small>@(@
-g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
+g_i (u, v, w) = \partial_{u[i]}  f_i (u, v, w)
 @)@</small>
 
 <br>
@@ -118,8 +118,8 @@ g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
 
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/atomic_vector.hpp&gt;</font>
-<font color="#009900">bool</font> <b><font color="#000000">sub</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/vector/vector.hpp&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">mul</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
@@ -133,12 +133,11 @@ g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
     <i><font color="#9A1900">// size of u, v, and w</font></i>
     <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">5</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// add_op, sub_op</font></i>
+    <i><font color="#9A1900">// mul_op</font></i>
     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>atomic_vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><font color="#008080">op_enum_t</font> op_enum_t<font color="#990000">;</font>
-    <font color="#008080">op_enum_t</font> add_op <font color="#990000">=</font> CppAD<font color="#990000">::</font>atomic_vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>add_enum<font color="#990000">;</font>
-    <font color="#008080">op_enum_t</font> sub_op <font color="#990000">=</font> CppAD<font color="#990000">::</font>atomic_vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>sub_enum<font color="#990000">;</font>
+    <font color="#008080">op_enum_t</font> mul_op <font color="#990000">=</font> CppAD<font color="#990000">::</font>atomic_vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font>mul_enum<font color="#990000">;</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
-    <i><font color="#9A1900">// Record f(u, v, w) = u - (v + w)</font></i>
+    <i><font color="#9A1900">// Record f(u, v, w) = u * v * w</font></i>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Independent variable vector</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">auvw</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> m<font color="#990000">);</font>
@@ -154,26 +153,26 @@ g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
         aw<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> auvw<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// ax = (av, aw)</font></i>
+    <i><font color="#9A1900">// ax = (mul_op, au, av)</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   ax<font color="#990000">[</font>i<font color="#990000">]</font>     <font color="#990000">=</font> av<font color="#990000">[</font>i<font color="#990000">];</font>
+    <font color="#FF0000">{</font>   ax<font color="#990000">[</font>i<font color="#990000">]</font>     <font color="#990000">=</font> au<font color="#990000">[</font>i<font color="#990000">];</font>
+        ax<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> av<font color="#990000">[</font>i<font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ay = u * v</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#000000">vec_op</font></b><font color="#990000">(</font>mul_op<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ax = (ay, aw)</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   ax<font color="#990000">[</font>i<font color="#990000">]</font>     <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
         ax<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> aw<font color="#990000">[</font>i<font color="#990000">];</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// ay = v + w</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">vec_op</font></b><font color="#990000">(</font>add_op<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">);</font>
-    <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// ax = (sub_op, au, ay)</font></i>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   ax<font color="#990000">[</font>i<font color="#990000">]</font>     <font color="#990000">=</font> au<font color="#990000">[</font>i<font color="#990000">];</font>
-        ax<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ay<font color="#990000">[</font>i<font color="#990000">];</font>
-    <font color="#FF0000">}</font>
-    <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// az = au - ay</font></i>
+    <i><font color="#9A1900">// az = ay * aw</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">az</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">vec_op</font></b><font color="#990000">(</font>sub_op<font color="#990000">,</font> ax<font color="#990000">,</font> az<font color="#990000">);</font>
+    <b><font color="#000000">vec_op</font></b><font color="#990000">(</font>mul_op<font color="#990000">,</font> ax<font color="#990000">,</font> az<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// f</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>auvw<font color="#990000">,</font> az<font color="#990000">);</font>
@@ -185,7 +184,7 @@ g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">uvw</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> m<font color="#990000">),</font> <b><font color="#000000">duvw</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> m<font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> <font color="#993399">3</font> <font color="#990000">*</font> m<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
     <font color="#FF0000">{</font>   uvw<font color="#990000">[</font>j<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">+</font> j<font color="#990000">);</font>
-        duvw<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">);</font>
+        duvw<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// z, dz</font></i>
@@ -195,10 +194,42 @@ g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ok</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   <font color="#009900">double</font> check_z  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">-</font> <font color="#990000">(</font> uvw<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">+</font> uvw<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
+    <font color="#FF0000">{</font>   <font color="#009900">double</font> ui  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <font color="#009900">double</font> vi  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <font color="#009900">double</font> wi  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#009900">double</font> check_z  <font color="#990000">=</font> ui <font color="#990000">*</font> vi <font color="#990000">*</font> wi<font color="#990000">;</font>
         ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> z<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">,</font>  check_z<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-        <font color="#009900">double</font> check_dz <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">-</font> <font color="#009900">double</font><font color="#990000">(</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#009900">double</font> check_dz <font color="#990000">=</font> <font color="#990000">(</font>vi <font color="#990000">*</font> wi<font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>ui <font color="#990000">*</font> wi<font color="#990000">)</font> <font color="#990000">+</font> <font color="#990000">(</font>ui <font color="#990000">*</font> vi<font color="#990000">);</font>
         ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> dz<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">,</font>  check_dz<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// check reverse mode on f</font></i>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// weight</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">weight</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        weight<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// dweight</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">dweight</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> m<font color="#990000">);</font>
+    f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> uvw<font color="#990000">);</font>
+    dweight <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> weight<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">double</font> ui  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <font color="#009900">double</font> vi  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <font color="#009900">double</font> wi  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#009900">double</font> dfi_dui <font color="#990000">=</font> vi <font color="#990000">*</font> wi<font color="#990000">;</font>
+        ok           <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dweight<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">],</font> dfi_dui<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <font color="#009900">double</font> dfi_dvi <font color="#990000">=</font> ui <font color="#990000">*</font> wi<font color="#990000">;</font>
+        ok           <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dweight<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">],</font> dfi_dvi<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <font color="#009900">double</font> dfi_dwi <font color="#990000">=</font> ui <font color="#990000">*</font> vi<font color="#990000">;</font>
+        ok           <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>dweight<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">],</font> dfi_dwi<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// Record g_i (u, v, w) = \partial d/dv[i] f_i (u , v , w)</font></i>
@@ -213,13 +244,13 @@ g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
     <i><font color="#9A1900">// aduvw</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">aduvw</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> m<font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   aduvw<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font> <i><font color="#9A1900">// du[i]</font></i>
-        aduvw<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font> <i><font color="#9A1900">// dv[i]</font></i>
+    <font color="#FF0000">{</font>   aduvw<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font> <i><font color="#9A1900">// du[i]</font></i>
+        aduvw<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font> <i><font color="#9A1900">// dv[i]</font></i>
         aduvw<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font> <i><font color="#9A1900">// dw[i]</font></i>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// az</font></i>
-    <i><font color="#9A1900">// use the fact that d_v[i] f_k (u, v, w) is zero when i != k</font></i>
+    <i><font color="#9A1900">// use the fact that d_u[i] f_k (u, v, w) is zero when i != k</font></i>
     af<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> auvw<font color="#990000">);</font>
     az <font color="#990000">=</font> af<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> aduvw<font color="#990000">);</font>
     CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>auvw<font color="#990000">,</font> az<font color="#990000">);</font>
@@ -249,7 +280,9 @@ g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ok</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   <font color="#009900">double</font> check_z  <font color="#990000">=</font> <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   <font color="#009900">double</font> vi       <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <font color="#009900">double</font> wi       <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <font color="#009900">double</font> check_z  <font color="#990000">=</font> vi <font color="#990000">*</font> wi<font color="#990000">;</font>
         ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> z<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">,</font>  check_z<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
@@ -262,16 +295,23 @@ g_i (u, v, w) = \partial_{v[i]}  f_i (u, v, w)
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ok</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   <font color="#009900">double</font> check_z  <font color="#990000">=</font>  <font color="#993399">1.0</font><font color="#990000">;</font>
-        ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> z<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">,</font>  check_z<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-        check_z         <font color="#990000">=</font>  <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-        ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> z<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">,</font>  check_z<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
-        ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font> z<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">,</font>  check_z<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <font color="#FF0000">{</font>   <font color="#009900">double</font> ui  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <font color="#009900">double</font> vi  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <font color="#009900">double</font> wi  <font color="#990000">=</font> uvw<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#009900">double</font> dfi_dui  <font color="#990000">=</font> vi <font color="#990000">*</font> wi<font color="#990000">;</font>
+        ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">0</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">,</font>  dfi_dui<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#009900">double</font> dfi_dvi  <font color="#990000">=</font> ui <font color="#990000">*</font> wi<font color="#990000">;</font>
+        ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">1</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">,</font>  dfi_dvi<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <font color="#009900">double</font> dfi_dwi  <font color="#990000">=</font> ui <font color="#990000">*</font> vi<font color="#990000">;</font>
+        ok             <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>z<font color="#990000">[</font><font color="#993399">2</font> <font color="#990000">*</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">,</font>  dfi_dwi<font color="#990000">,</font>  eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: example/atomic_four/atomic_vector/sub.cpp
+<hr>Input File: example/atomic_four/vector/mul.cpp
 
 </body>
 </html>

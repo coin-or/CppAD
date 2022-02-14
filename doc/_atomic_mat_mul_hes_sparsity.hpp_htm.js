@@ -11,12 +11,14 @@ var list_up0 = [
 'advalued.htm',
 'atomic.htm',
 'atomic_four_example.htm',
-'atomic_vector.htm',
-'atomic_vector_jac_sparsity.cpp.htm'
+'atomic_mat_mul.htm',
+'atomic_mat_mul_implement.htm',
+'atomic_mat_mul_hes_sparsity.hpp.htm'
 ];
 var list_current0 = [
-'atomic_vector_jac_sparsity.cpp.htm#f(u, v)',
-'atomic_vector_jac_sparsity.cpp.htm#Source'
+'atomic_mat_mul_hes_sparsity.hpp.htm#Purpose',
+'atomic_mat_mul_hes_sparsity.hpp.htm#Example',
+'atomic_mat_mul_hes_sparsity.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

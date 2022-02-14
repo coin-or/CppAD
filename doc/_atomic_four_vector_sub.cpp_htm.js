@@ -12,12 +12,12 @@ var list_up0 = [
 'atomic.htm',
 'atomic_four_example.htm',
 'atomic_vector.htm',
-'atomic_vector_add.cpp.htm'
+'atomic_four_vector_sub.cpp.htm'
 ];
 var list_current0 = [
-'atomic_vector_add.cpp.htm#f(u, v, w)',
-'atomic_vector_add.cpp.htm#g(u, v, w)',
-'atomic_vector_add.cpp.htm#Source'
+'atomic_four_vector_sub.cpp.htm#f(u, v, w)',
+'atomic_four_vector_sub.cpp.htm#g(u, v, w)',
+'atomic_four_vector_sub.cpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

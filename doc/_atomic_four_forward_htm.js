@@ -14,14 +14,14 @@ var list_up0 = [
 'atomic_four_forward.htm'
 ];
 var list_current0 = [
-'atomic_four_forward.htm#Base',
-'atomic_four_forward.htm#vector',
 'atomic_four_forward.htm#Syntax',
 'atomic_four_forward.htm#Syntax.Base',
 'atomic_four_forward.htm#Syntax.AD&lt;Base&gt;',
 'atomic_four_forward.htm#Prototype',
 'atomic_four_forward.htm#Prototype.Base',
 'atomic_four_forward.htm#Prototype.AD&lt;Base&gt;',
+'atomic_four_forward.htm#Base',
+'atomic_four_forward.htm#vector',
 'atomic_four_forward.htm#Usage',
 'atomic_four_forward.htm#Usage.Base',
 'atomic_four_forward.htm#Usage.AD&lt;Base&gt;',

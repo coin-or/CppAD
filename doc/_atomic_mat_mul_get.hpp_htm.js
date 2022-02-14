@@ -11,13 +11,19 @@ var list_up0 = [
 'advalued.htm',
 'atomic.htm',
 'atomic_four_example.htm',
-'atomic_vector.htm',
-'atomic_vector_mul.cpp.htm'
+'atomic_mat_mul.htm',
+'atomic_mat_mul_implement.htm',
+'atomic_mat_mul_get.hpp.htm'
 ];
 var list_current0 = [
-'atomic_vector_mul.cpp.htm#f(u, v, w)',
-'atomic_vector_mul.cpp.htm#g(u, v, w)',
-'atomic_vector_mul.cpp.htm#Source'
+'atomic_mat_mul_get.hpp.htm#Syntax',
+'atomic_mat_mul_get.hpp.htm#Prototype',
+'atomic_mat_mul_get.hpp.htm#Purpose',
+'atomic_mat_mul_get.hpp.htm#call_id',
+'atomic_mat_mul_get.hpp.htm#n_left',
+'atomic_mat_mul_get.hpp.htm#n_middle',
+'atomic_mat_mul_get.hpp.htm#n_right',
+'atomic_mat_mul_get.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

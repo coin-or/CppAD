@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Reverse Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Reverse Mode">
-<meta name="keywords" id="keywords" content=" atomic function reverse mode base vector syntax ad&lt;base&gt; prototype usage implementation call_id select_x order_up q taylor_x parameters ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x azmul apartial_x ok examples ">
+<meta name="keywords" id="keywords" content=" atomic function reverse mode syntax base ad&lt;base&gt; prototype vector usage implementation call_id select_x order_up q taylor_x parameters ataylor_x taylor_y ataylor_y f g h partial_y apartial_y partial_x azmul apartial_x ok examples ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,14 +67,14 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Base</option>
-<option>vector</option>
 <option>Syntax</option>
 <option>---..Base</option>
 <option>---..AD&lt;Base&gt;</option>
 <option>Prototype</option>
 <option>---..Base</option>
 <option>---..AD&lt;Base&gt;</option>
+<option>Base</option>
+<option>vector</option>
 <option>Usage</option>
 <option>---..Base</option>
 <option>---..AD&lt;Base&gt;</option>
@@ -107,20 +107,6 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Function Reverse Mode</big></big></b></center>
-<br>
-<b><big><a name="Base" id="Base">Base</a></big></b>
-<br>
-see <a href="atomic_four_call.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
-.
-
-<br>
-<br>
-<b><big><a name="vector" id="vector">vector</a></big></b>
-<br>
-is the <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD_vector</span></a>
- template class.
-
-<br>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -177,6 +163,21 @@ is the <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       ataylor_y    <font color="#990000">,</font>
     vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>             apartial_x   <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>       apartial_y   <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+see <a href="atomic_four_call.htm#Base" target="_top"><span style='white-space: nowrap'>Base</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="vector" id="vector">vector</a></big></b>
+<br>
+is the <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD_vector</span></a>
+ template class.
+
+
+<br>
 <br>
 <b><big><a name="Usage" id="Usage">Usage</a></big></b>
 

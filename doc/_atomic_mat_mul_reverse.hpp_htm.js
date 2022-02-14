@@ -11,13 +11,14 @@ var list_up0 = [
 'advalued.htm',
 'atomic.htm',
 'atomic_four_example.htm',
-'atomic_vector.htm',
-'atomic_vector_sub.cpp.htm'
+'atomic_mat_mul.htm',
+'atomic_mat_mul_implement.htm',
+'atomic_mat_mul_reverse.hpp.htm'
 ];
 var list_current0 = [
-'atomic_vector_sub.cpp.htm#f(u, v, w)',
-'atomic_vector_sub.cpp.htm#g(u, v, w)',
-'atomic_vector_sub.cpp.htm#Source'
+'atomic_mat_mul_reverse.hpp.htm#Purpose',
+'atomic_mat_mul_reverse.hpp.htm#Theory',
+'atomic_mat_mul_reverse.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

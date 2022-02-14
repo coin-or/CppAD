@@ -1,0 +1,185 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>atomic_mat_mul Get Routine: Example Implementation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="atomic_mat_mul Get Routine: Example Implementation">
+<meta name="keywords" id="keywords" content=" atomic_mat_mul get routine: example implementation syntax prototype purpose call_id n_left n_middle n_right source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_mat_mul_get.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_mat_mul_set.hpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_mat_mul_base_mat_mul.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four_example</option>
+<option>atomic_mat_mul</option>
+<option>atomic_mat_mul_implement</option>
+<option>atomic_mat_mul_get.hpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_mat_mul_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_mat_mul_implement_htm.js'></script>
+</td>
+<td>atomic_mat_mul_get.hpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Purpose</option>
+<option>call_id</option>
+<option>n_left</option>
+<option>n_middle</option>
+<option>n_right</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>atomic_mat_mul Get Routine: Example Implementation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mat_mul</span></font></i><font color="blue"><span style='white-space: nowrap'>.get(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_middle</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_right</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> atomic_mat_mul<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">get</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font> call_id<font color="#990000">,</font> size_t<font color="#990000">&amp;</font> n_left<font color="#990000">,</font> size_t<font color="#990000">&amp;</font> n_middle<font color="#990000">,</font> size_t<font color="#990000">&amp;</font> n_right
+<font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Retrieves the dimension information for a an atomic operation that computes
+the matrix product 
+<code><i><font color="black"><span style='white-space: nowrap'>R</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>A</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="call_id" id="call_id">call_id</a></big></b>
+<br>
+This argument identifies the dimension information for this matrix product.
+
+<br>
+<br>
+<b><big><a name="n_left" id="n_left">n_left</a></big></b>
+<br>
+This result is the row dimension of the matrices 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>R</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="n_middle" id="n_middle">n_middle</a></big></b>
+<br>
+This result is the column dimension of the matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+
+and row dimension of the matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="n_right" id="n_right">n_right</a></big></b>
+<br>
+This result is the column dimension of the matrices 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>R</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/mat_mul/mat_mul.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_CPPAD_NAMESPACE</font></i>
+<i><font color="#9A1900">// BEGIN PROTOTYPE</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> atomic_mat_mul<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">get</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font> call_id<font color="#990000">,</font> size_t<font color="#990000">&amp;</font> n_left<font color="#990000">,</font> size_t<font color="#990000">&amp;</font> n_middle<font color="#990000">,</font> size_t<font color="#990000">&amp;</font> n_right
+<font color="#990000">)</font>
+<i><font color="#9A1900">// END PROTOTYPE</font></i>
+<font color="#FF0000">{</font>
+    <i><font color="#9A1900">// thread</font></i>
+    <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> work_<font color="#990000">[</font>thread<font color="#990000">]</font> <font color="#990000">!=</font> nullptr <font color="#990000">);</font>
+    <b><font color="#000000">assert</font></b><font color="#990000">(</font> thread <font color="#990000">==</font> <font color="#990000">(*</font>work_<font color="#990000">[</font>thread<font color="#990000">])[</font>call_id<font color="#990000">].</font>thread <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// n_left, n_middle, n_right</font></i>
+    call_struct<font color="#990000">&amp;</font> call <font color="#990000">=</font> <font color="#990000">(*</font>work_<font color="#990000">[</font>thread<font color="#990000">])[</font>call_id<font color="#990000">];</font>
+    n_left   <font color="#990000">=</font> call<font color="#990000">.</font>n_left<font color="#990000">;</font>
+    n_middle <font color="#990000">=</font> call<font color="#990000">.</font>n_middle<font color="#990000">;</font>
+    n_right  <font color="#990000">=</font> call<font color="#990000">.</font>n_right<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>
+
+<hr>Input File: include/cppad/example/atomic_four/mat_mul/get.hpp
+
+</body>
+</html>
