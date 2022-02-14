@@ -26,13 +26,16 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
-$head mul_mat Branch$$
 
-$subhead 02-08$$
+$head 02-13$$
+$list number$$
+The $cref atomic_mat_mul$$ example class was added.
+$lnext
 The $cref atomic_vector$$ include path has changed to
 $codei%
     # include <cppad/example/atomic_four/vector.hpp>
 %$$
+$lend
 
 $head 02-12$$
 Add the $cref/push_back/sparse_rc/push_back/$$ and
