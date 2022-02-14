@@ -53,13 +53,15 @@ bool atomic_mat_mul<Base>::hes_sparsity(
     size_t n_left, n_middle, n_right;
     get(call_id, n_left, n_middle, n_right);
     //
-    // n, m
+    // n
     size_t n     = select_x.size();
-    size_t m     = select_y.size();
     //
     // check sizes
+# ifndef NDEBUG
+    size_t m     = select_y.size();
     assert( n == n_middle * ( n_left +  n_right ) );
     assert( m == n_left * n_right );
+# endif
     //
     // offset
     size_t offset = n_left * n_middle;
