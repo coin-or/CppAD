@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CON_DYN_VAR_HPP
 # define CPPAD_CORE_CON_DYN_VAR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -99,7 +99,7 @@ namespace CppAD {
     // Constant
     template <class Base>
     bool Constant(const AD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_== 0 || x.ad_type_ != constant_enum );
+    {   CPPAD_ASSERT_AD_TYPE( x );
         if( x.tape_id_ == 0 )
             return true;
         //
@@ -109,7 +109,7 @@ namespace CppAD {
     //
     template <class Base>
     bool Constant(const VecAD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_== 0 || x.ad_type_ != constant_enum );
+    {   CPPAD_ASSERT_AD_TYPE( x );
         if( x.tape_id_ == 0 )
             return true;
         //
@@ -120,7 +120,7 @@ namespace CppAD {
     // Dynamic
     template <class Base>
     bool Dynamic(const AD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_ == 0 || x.ad_type_ != constant_enum );
+    {   CPPAD_ASSERT_AD_TYPE( x );
         if( (x.tape_id_ == 0) | (x.ad_type_ != dynamic_enum) )
             return false;
         //
@@ -130,7 +130,7 @@ namespace CppAD {
     //
     template <class Base>
     bool Dynamic(const VecAD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_ == 0 || x.ad_type_ != constant_enum );
+    {   CPPAD_ASSERT_AD_TYPE( x );
         if( (x.tape_id_ == 0) | (x.ad_type_ != dynamic_enum) )
             return false;
         //
@@ -141,7 +141,7 @@ namespace CppAD {
     // Parameter
     template <class Base>
     bool Parameter(const AD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_ == 0 || x.ad_type_ != constant_enum );
+    {   CPPAD_ASSERT_AD_TYPE( x );
         if( (x.tape_id_ == 0) | (x.ad_type_ == dynamic_enum) )
             return true;
         //
@@ -151,7 +151,7 @@ namespace CppAD {
     //
     template <class Base>
     bool Parameter(const VecAD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_ == 0 || x.ad_type_ != constant_enum );
+    {   CPPAD_ASSERT_AD_TYPE( x );
         if( (x.tape_id_ == 0) | (x.ad_type_ == dynamic_enum) )
             return true;
         //
@@ -162,7 +162,7 @@ namespace CppAD {
     // Variable
     template <class Base>
     bool Variable(const AD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_ == 0 || x.ad_type_ != constant_enum );
+    {   CPPAD_ASSERT_AD_TYPE( x );
         if( (x.tape_id_ == 0) | (x.ad_type_ != variable_enum) )
             return false;
         //
@@ -172,7 +172,7 @@ namespace CppAD {
     //
     template <class Base>
     bool Variable(const VecAD<Base> &x)
-    {   CPPAD_ASSERT_UNKNOWN( x.tape_id_ == 0 || x.ad_type_ != constant_enum );
+    {   CPPAD_ASSERT_AD_TYPE( x );
         if( (x.tape_id_ == 0) | (x.ad_type_ != variable_enum) )
             return false;
         //

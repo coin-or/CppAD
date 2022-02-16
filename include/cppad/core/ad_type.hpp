@@ -15,18 +15,26 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/is_pod.hpp>
 
 # ifdef NDEBUG
-# define CPPAD_ASSERT_AD_TYPE(ad_type)
+# define CPPAD_ASSERT_AD_TYPE(ad_obj)
 # else
-# define CPPAD_ASSERT_AD_TYPE(ad_type)          \
-    switch(ad_type)                             \
-    {   case constant_enum:                     \
-        case dynamic_enum:                      \
-        case variable_enum:                     \
-        break;                                  \
-                                                \
-        default:                                \
-        CPPAD_ASSERT_UNKNOWN(false);            \
-    }
+# define CPPAD_ASSERT_AD_TYPE(ad_obj)                 \
+    switch(ad_obj.ad_type_)                           \
+    {   case constant_enum:                           \
+        CPPAD_ASSERT_UNKNOWN( ad_obj.tape_id_ == 0 ); \
+        break;                                        \
+                                                      \
+        case dynamic_enum:                            \
+        case variable_enum:                           \
+        break;                                        \
+                                                      \
+        default:                                      \
+        CPPAD_ASSERT_UNKNOWN(false);                  \
+    }                                                 \
+    CPPAD_ASSERT_UNKNOWN(                             \
+        ad_obj.tape_id_ == 0 ||                       \
+        ad_obj.ad_type_ == dynamic_enum ||            \
+        ad_obj.ad_type_ == variable_enum              \
+    );
 # endif
 
 
@@ -57,6 +65,7 @@ $spell
     typedef
     CppAD
     namespace
+    obj
 $$
 
 $section Type of AD an Object$$
@@ -75,10 +84,19 @@ $cref/atomic_three/atomic_three/ad_type/$$ and
 $cref/atomic_four/atomic_four_for_type/ad_type/$$.
 
 $head ASSERT_AD_TYPE$$
-The syntax $codei%CPPAD_ASSERT_AD_TYPE(%ad_type%)%$$
-is used to check that an AD type is one of the following:
+If $icode ad_obj$$ is an $codei%AD<%Base%>%$$ object, the syntax
+$codei%
+    CPPAD_ASSERT_AD_TYPE(%ad_obj%)
+%$$
+check that $icode ad_obj$$ satisfies the following conditions:
+
+$list number$$
+$icode%ad_obj%.ad_type_%$$ is one of the following:
 $code constant_enum$$, $code dynamic_enum$$, $code variable_enum$$.
-The other values are only used for special purposes.
+$lnext
+$icode%ad_obj%.ad_type_%$$ is $code constant_enum$$, then
+$icode%ad_obj%.tape_id_ == 0%$$.
+$lend
 
 $end
 */

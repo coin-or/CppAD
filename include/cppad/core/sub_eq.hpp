@@ -18,8 +18,6 @@ namespace CppAD {
 template <class Base>
 AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 {
-    CPPAD_ASSERT_AD_TYPE(right.ad_type_);
-
     // compute the Base part
     Base left;
     left    = value_;
