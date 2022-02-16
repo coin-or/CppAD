@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Forward Mode</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Forward Mode">
-<meta name="keywords" id="keywords" content=" atomic function forward mode syntax base ad&lt;base&gt; prototype vector usage implementation call_id select_y order_low p order_up q taylor_x parameters ataylor_x taylor_y ataylor_y ok discussion examples ">
+<meta name="keywords" id="keywords" content=" atomic function forward mode syntax base ad&lt;base&gt; prototype vector usage implementation call_id select_y order_low p order_up q taylor_x parameters ataylor_x taylor_y ataylor_y ok discussion example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic_four_for_type.htm" target="_top">Prev</a>
-</td><td><a href="atomic_four_forward.cpp.htm" target="_top">Next</a>
+</td><td><a href="atomic_four_reverse.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -63,9 +63,7 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_htm.js'></script>
 </td>
-<td>
-<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_forward_htm.js'></script>
-</td>
+<td>atomic_four_forward</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
@@ -94,7 +92,7 @@ A:active { color : purple }
 <option>ataylor_y</option>
 <option>ok</option>
 <option>Discussion</option>
-<option>Examples</option>
+<option>Example</option>
 </select>
 </td>
 </tr></table><br>
@@ -104,10 +102,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
-
-
-<center><b><big><big>Atomic Function Forward Mode</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Function Forward Mode</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -547,14 +542,61 @@ k = 0 , 1 , 2
 
 <br>
 <br>
-<b><big><a name="Examples" id="Examples">Examples</a></big></b>
+<b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The files
-<a href="atomic_four_forward.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_forward.cpp</span></a>
- and <a href="atomic_four_dynamic.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_dynamic.cpp</span></a>
+The following is an example <code><font color="blue">forward</font></code> definition taken from
+<a href="atomic_four_norm_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_norm_sq.cpp</span></a>
+:
+<pre><tt>        <font color="#009900">bool</font> <b><font color="#000000">forward</font></b><font color="#990000">(</font>
+            <font color="#008080">size_t</font>                             call_id     <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>         select_y    <font color="#990000">,</font>
+            <font color="#008080">size_t</font>                             order_low   <font color="#990000">,</font>
+            <font color="#008080">size_t</font>                             order_up    <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>       tx          <font color="#990000">,</font>
+            CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>             ty          <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
+        <font color="#FF0000">{</font>
+            <font color="#008080">size_t</font> q <font color="#990000">=</font> order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+            <font color="#008080">size_t</font> n <font color="#990000">=</font> tx<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> q<font color="#990000">;</font>
+<b><font color="#000080">    # ifndef</font></b> NDEBUG
+            <font color="#008080">size_t</font> m <font color="#990000">=</font> ty<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> q<font color="#990000">;</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> call_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> m <font color="#990000">==</font> select_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+<b><font color="#000080">    # endif</font></b>
+            <i><font color="#9A1900">// ok</font></i>
+            <font color="#009900">bool</font> ok <font color="#990000">=</font> order_up <font color="#990000">&lt;=</font> <font color="#993399">1</font> <font color="#990000">&amp;&amp;</font> order_low <font color="#990000">&lt;=</font> order_up<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b> <font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// sum = x_0^0 * x_0^0 + x_1^0 * x_1^0 + ...</font></i>
+            <font color="#009900">double</font> sum <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <font color="#009900">double</font> xj0 <font color="#990000">=</font> tx<font color="#990000">[</font> j <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+                sum       <font color="#990000">+=</font> xj0 <font color="#990000">*</font> xj0<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// ty[0] = sum</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_low <font color="#990000">&lt;=</font> <font color="#993399">0</font> <font color="#990000">)</font>
+                ty<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> sum<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_up <font color="#990000">&lt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 
-contain examples and tests that uses this routine.
+            <i><font color="#9A1900">// sum = x_0^0 * x_0^1 + x_1^0 ^ x_1^1 + ...</font></i>
+            sum   <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <font color="#009900">double</font> xj0 <font color="#990000">=</font> tx<font color="#990000">[</font> j <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+                <font color="#009900">double</font> xj1 <font color="#990000">=</font> tx<font color="#990000">[</font> j <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
+                sum       <font color="#990000">+=</font> xj0 <font color="#990000">*</font> xj1<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">// ty[1] = 2.0 * sum</font></i>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
+            ty<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> sum<font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 
+            <i><font color="#9A1900">// Assume we are not using forward mode with order &gt; 1</font></i>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
+            <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+        <font color="#FF0000">}</font>        </tt></pre>
 
 <hr>Input File: include/cppad/core/atomic/four/forward.hpp
 

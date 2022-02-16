@@ -273,9 +273,23 @@ Otherwise, it is false.
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The following is an example of a atomic function <code><font color="blue">for_type</font></code> definition:
-.
-
+The following is an example <code><font color="blue">for_type</font></code> definition taken from
+<a href="atomic_four_norm_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_norm_sq.cpp</span></a>
+:
+<pre><tt>        <font color="#009900">bool</font> <b><font color="#000000">for_type</font></b><font color="#990000">(</font>
+            <font color="#008080">size_t</font>                                     call_id     <font color="#990000">,</font>
+            <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
+            CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>
+        <font color="#FF0000">{</font>   <b><font color="#000000">assert</font></b><font color="#990000">(</font> call_id <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>       <i><font color="#9A1900">// default value</font></i>
+            <b><font color="#000000">assert</font></b><font color="#990000">(</font>type_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>  <i><font color="#9A1900">// m</font></i>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// type_y</font></i>
+            <font color="#008080">size_t</font> n     <font color="#990000">=</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+            type_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> CppAD<font color="#990000">::</font>constant_enum<font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+                type_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>type_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> type_x<font color="#990000">[</font>j<font color="#990000">]);</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>        </tt></pre>
 
 <hr>Input File: include/cppad/core/atomic/four/for_type.hpp
 

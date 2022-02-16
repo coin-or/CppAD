@@ -39,7 +39,7 @@ var list_current0 = [
 'atomic_four_forward.htm#ataylor_y',
 'atomic_four_forward.htm#ok',
 'atomic_four_forward.htm#Discussion',
-'atomic_four_forward.htm#Examples'
+'atomic_four_forward.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

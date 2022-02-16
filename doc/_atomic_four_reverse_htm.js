@@ -43,6 +43,7 @@ var list_current0 = [
 'atomic_four_reverse.htm#partial_x.azmul',
 'atomic_four_reverse.htm#apartial_x',
 'atomic_four_reverse.htm#ok',
+'atomic_four_reverse.htm#Example',
 'atomic_four_reverse.htm#Examples'
 ];
 function choose_across0(item)

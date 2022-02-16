@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Constructor">
-<meta name="keywords" id="keywords" content=" atomic function constructor syntax prototype atomic_user ctor_arg_list afun implementation atomic_four restrictions base name example define use ">
+<meta name="keywords" id="keywords" content=" atomic function constructor syntax prototype atomic_user ctor_arg_list afun implementation atomic_four restrictions base name example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,8 +78,6 @@ A:active { color : purple }
 <option>---..Base</option>
 <option>---..name</option>
 <option>Example</option>
-<option>---..Define Constructor</option>
-<option>---..Use Constructor</option>
 </select>
 </td>
 </tr></table><br>
@@ -216,22 +214,15 @@ i.e., the name of the corresponding atomic object or class.
 <br>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
-
-
 <br>
-<br>
-<big><a name="Example.Define Constructor" id="Example.Define Constructor">Define Constructor</a></big>
-<br>
-The following is an example of a atomic function constructor definition:
-.
-
-<br>
-<br>
-<big><a name="Example.Use Constructor" id="Example.Use Constructor">Use Constructor</a></big>
-<br>
-The following is an example using a atomic function constructor:
-.
-
+The following is an example constructor definition taken from
+<a href="atomic_four_norm_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_norm_sq.cpp</span></a>
+:
+<pre><tt>    <b><font color="#0000FF">class</font></b> <font color="#008080">atomic_norm_sq</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
+    <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+        <b><font color="#000000">atomic_norm_sq</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> name<font color="#990000">)</font> <font color="#990000">:</font>
+        CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>name<font color="#990000">)</font>
+        <font color="#FF0000">{</font> <font color="#FF0000">}</font>    </tt></pre>
 
 <hr>Input File: include/cppad/core/atomic/four/ctor.hpp
 

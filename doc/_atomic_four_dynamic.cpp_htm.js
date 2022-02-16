@@ -10,8 +10,7 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
-'atomic_four.htm',
-'atomic_four_forward.htm',
+'atomic_four_example.htm',
 'atomic_four_dynamic.cpp.htm'
 ];
 var list_current0 = [

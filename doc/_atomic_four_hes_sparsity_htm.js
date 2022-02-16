@@ -24,7 +24,7 @@ var list_current0 = [
 'atomic_four_hes_sparsity.htm#select_y',
 'atomic_four_hes_sparsity.htm#pattern_out',
 'atomic_four_hes_sparsity.htm#ok',
-'atomic_four_hes_sparsity.htm#Examples'
+'atomic_four_hes_sparsity.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

@@ -24,9 +24,7 @@ var list_current0 = [
 'atomic_four_ctor.htm#atomic_four.Restrictions',
 'atomic_four_ctor.htm#atomic_four.Base',
 'atomic_four_ctor.htm#atomic_four.name',
-'atomic_four_ctor.htm#Example',
-'atomic_four_ctor.htm#Example.Define Constructor',
-'atomic_four_ctor.htm#Example.Use Constructor'
+'atomic_four_ctor.htm#Example'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
