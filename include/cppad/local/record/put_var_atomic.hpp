@@ -138,7 +138,7 @@ void recorder<Base>::put_var_atomic(
         }
         else
         {   addr_t par = ay[i].taddr_;
-            if( type_y[i] == constant_enum )
+            if( type_y[i] <= constant_enum )
                 par = put_con_par( ay[i].value_ );
             PutArg(par);
             PutOp(local::FunrpOp);

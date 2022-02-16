@@ -209,6 +209,5 @@ bool div(void)
         ok             &= NearEqual(z[1 * m + i] ,  dfi_dvi,  eps99, eps99);
     }
     return ok;
-    return ok;
 }
 // END C++

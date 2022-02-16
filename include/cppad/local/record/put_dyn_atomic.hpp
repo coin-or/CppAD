@@ -140,7 +140,8 @@ void recorder<Base>::put_dyn_atomic(
     for(size_t i = 0; i < m; ++i)
     {   addr_t arg;
         switch( type_y[i] )
-        {   case constant_enum:
+        {   case identical_zero_enum:
+            case constant_enum:
             arg = 0; // phantom parameter index
             break;
 

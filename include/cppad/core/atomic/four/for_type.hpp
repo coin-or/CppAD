@@ -57,32 +57,29 @@ or $cref/variable/glossary/Variable/$$.
 It has the following possible values:
 $center
 $table
-$icode ad_type_enum$$  $pre  $$   $cnext Meaning $rnext
-$code constant_enum$$  $pre  $$   $cnext constant parameter $rnext
-$code dynamic_enum$$   $pre  $$   $cnext dynamic parameter  $rnext
-$code variable_enum$$  $pre  $$   $cnext variable
+$icode ad_type_enum$$        $pre  $$   $cnext Meaning $rnext
+$code identical_zero_enum$$  $pre  $$   $cnext identically zero $rnext
+$code constant_enum$$        $pre  $$   $cnext constant parameter $rnext
+$code dynamic_enum$$         $pre  $$   $cnext dynamic parameter  $rnext
+$code variable_enum$$        $pre  $$   $cnext variable
 $tend
 $$
 In addition,
-$code constant_enum < dynamic_enum < variable_enum$$.
+$codei%
+    identical_zero_enum < constant_enum < dynamic_enum < variable_enum
+%$$
+A value that is identically zero is also a constant parameter.
+In CppAD, multiplication of a variable by a value that is identically zero
+is sometimes treated like $tref azmul$$.
+This avoids having to record the operation.
+
 
 $head type_x$$
 This vector has size equal to the number of arguments in the
 atomic function call; i.e., the size of
 $cref/ax/atomic_four_call/ax/$$ which we denote by $icode n$$.
-For $icode%j% =0,%...%,%n%-1%$$,
-if $icode%ax%[%j%]%$$ is a constant parameter,
-$codei%
-    %type_x%[%j%] == CppAD::constant_enum
-%$$
-if $icode%ax%[%j%]%$$ is a dynamic parameter,
-$codei%
-    %type_x%[%j%] == CppAD::dynamic_enum
-%$$
-if $icode%ax%[%j%]%$$ is a variable,
-$codei%
-    %type_x%[%j%] == CppAD::variable_enum
-%$$
+For $icode%j% =0,%...%,%n%-1%$$, $icode%type_x%[%j%]%$$
+is the type of $icode%ax%[%j%]%$$.
 
 $head type_y$$
 This vector has size equal to the number of results in the
@@ -93,6 +90,9 @@ are not specified (must not matter).
 Upon return, for $latex i = 0 , \ldots , m-1$$,
 $icode%type_y%[%i%]%$$ is set to one of the following values:
 $list number$$
+It is $code identical_zero_enum$$ if $icode%ay%[%i%]%$$ is
+$cref/identically zero/base_identical/Identical/$$.
+$lnext
 It is $code constant_enum$$ if $icode%ay%[%i%]%$$ only depends on
 the arguments that are constants.
 $lnext

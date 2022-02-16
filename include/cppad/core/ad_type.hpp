@@ -33,7 +33,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace CppAD {
     // BEGIN TYPEDEF
     typedef enum {
-        identical_zero__enum,     // identically zero
+        identical_zero_enum,      // identically zero
         constant_enum,            // constant parameter
         dynamic_enum,             // dynamic parameter
         variable_enum,            // variable

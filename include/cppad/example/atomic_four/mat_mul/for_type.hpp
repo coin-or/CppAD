@@ -62,13 +62,19 @@ bool atomic_mat_mul<Base>::for_type(
     // type_y
     // y[ i * n_right + j] = sum_k
     //      x[i * n_middle + k] * x[ offset + k * n_right + j]
-    // type_y
+    // treat multpilication by zero like absolute zero
     for(size_t i = 0; i < n_left; ++i)
     {   for(size_t j = 0; j < n_right; ++j)
-        {   CppAD::ad_type_enum type_ij = CppAD::constant_enum;
+        {   CppAD::ad_type_enum type_ij = CppAD::identical_zero_enum;
             for(size_t k = 0; k < n_middle; ++k)
-            {   type_ij = std::max(type_ij, type_x[i * n_middle + k]);
-                type_ij = std::max(type_ij, type_x[offset + k * n_right + j]);
+            {   CppAD::ad_type_enum type_ik = type_x[i * n_middle + k];
+                CppAD::ad_type_enum type_kj = type_x[offset + k * n_right + j];
+                if( type_ik != identical_zero_enum )
+                {   if( type_kj != identical_zero_enum )
+                    {   type_ij = std::max(type_ij, type_ik);
+                        type_ij = std::max(type_ij, type_kj);
+                    }
+                }
             }
             type_y[ i * n_right + j] = type_ij;
         }

@@ -132,7 +132,9 @@ void atomic_four<Base>::operator()(
     local::ADTape<Base>* tape     = nullptr;
     for(size_t j = 0; j < n; j++)
     {   taylor_x[j]  = ax[j].value_;
-        if( Constant( ax[j] ) )
+        if( IdenticalZero( ax[j] ) )
+            type_x[j] = constant_enum;
+        else if( Constant( ax[j] ) )
             type_x[j] = constant_enum;
         else
         {   type_x[j] = ax[j].ad_type_;
@@ -216,6 +218,7 @@ void atomic_four<Base>::operator()(
 # ifndef NDEBUG
     for(size_t i = 0; i < m; ++i) switch( type_y[i] )
     {   //
+        case identical_zero_enum:
         case constant_enum:
         CPPAD_ASSERT_UNKNOWN( Constant( ay[i] ) );
         break;
