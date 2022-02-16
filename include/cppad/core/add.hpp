@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ADD_HPP
 # define CPPAD_CORE_ADD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -18,6 +18,9 @@ namespace CppAD {
 template <class Base>
 AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 {
+    CPPAD_ASSERT_AD_TYPE(left.ad_type_);
+    CPPAD_ASSERT_AD_TYPE(right.ad_type_);
+
     // compute the Base part of this AD object
     AD<Base> result;
     result.value_  = left.value_ + right.value_;
