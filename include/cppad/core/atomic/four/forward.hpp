@@ -217,14 +217,14 @@ $latex \[
     \R{taylor\_y} [ i * q + k ] = y_i^k
 \] $$
 
-$children%
-    example/atomic_four/forward.cpp%
-    example/atomic_four/dynamic.cpp
+
+$head Example$$
+The following is an example $code forward$$ definition taken from
+$cref atomic_four_norm_sq.cpp$$:
+$srcfile%
+    example/atomic_four/norm_sq.cpp%
+    0%// BEGIN FORWARD%// END FORWARD%0
 %$$
-$head Examples$$
-The files
-$cref atomic_four_forward.cpp$$ and $cref atomic_four_dynamic.cpp$$
-contain examples and tests that uses this routine.
 
 $end
 -----------------------------------------------------------------------------

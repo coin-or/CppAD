@@ -95,17 +95,13 @@ The suggested value for $icode name$$ is $icode afun$$ or $icode atomic_user$$,
 i.e., the name of the corresponding atomic object or class.
 
 $head Example$$
+The following is an example constructor definition taken from
+$cref atomic_four_norm_sq.cpp$$:
+$srcfile%
+    example/atomic_four/norm_sq.cpp%
+    0%// BEGIN CONSTRUCTOR%// END CONSTRUCTOR%0
+%$$
 
-$subhead Define Constructor$$
-The following is an example of a atomic function constructor definition:
-$comment%get_started.cpp%atomic_four_get_started.cpp%Constructor%$$.
-
-$subhead Use Constructor$$
-The following is an example using a atomic function constructor:
-$comment%get_started.cpp
-    %atomic_four_get_started.cpp
-    %Use Atomic Function%Constructor
-%$$.
 
 $end
 -------------------------------------------------------------------------------

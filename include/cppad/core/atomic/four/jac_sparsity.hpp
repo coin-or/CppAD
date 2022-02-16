@@ -103,13 +103,14 @@ $head ok$$
 If this calculation succeeded, $icode ok$$ is true.
 Otherwise it is false.
 
-
-$comment%
-    example/atomic_four/jac_sparsity.cpp
+$head Example$$
+The following is an example $code jac_sparsity$$ definition taken from
+$cref atomic_four_norm_sq.cpp$$:
+$srcfile%
+    example/atomic_four/norm_sq.cpp%
+    0%// BEGIN JAC_SPARSITY%// END JAC_SPARSITY%0
 %$$
-$head Examples$$
-The file $comment atomic_four_jac_sparsity.cpp$$ contains an example and test
-that uses this routine.
+
 $end
 -----------------------------------------------------------------------------
 */

@@ -26,6 +26,10 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 02-16$$
+Use the $cref atomic_four_norm_sq.cpp$$ overrides
+as examples for the virtual functions in the $cref atomic_four$$
+base class.
 
 $head 02-13$$
 $list number$$

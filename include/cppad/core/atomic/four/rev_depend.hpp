@@ -76,13 +76,13 @@ $head ok$$
 If this calculation succeeded, $icode ok$$ is true.
 Otherwise, it is false.
 
-$comment%
-    example/atomic_four/rev_depend.cpp
-%$$
 $head Example$$
-The following is an example of a atomic function $code rev_depend$$ definition:
-$comment atomic_four_rev_depend.cpp$$.
-
+The following is an example $code rev_depend$$ definition taken from
+$cref atomic_four_norm_sq.cpp$$:
+$srcfile%
+    example/atomic_four/norm_sq.cpp%
+    0%// BEGIN REV_DEPEND%// END REV_DEPEND%0
+%$$
 
 $end
 -----------------------------------------------------------------------------

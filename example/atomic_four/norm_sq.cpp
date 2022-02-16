@@ -55,14 +55,15 @@ $end
 // BEGIN_DEFINE_ATOMIC_FUNCTION
 // empty namespace
 namespace {
-    // atomic_norm_sq
+    // BEGIN CONSTRUCTOR
     class atomic_norm_sq : public CppAD::atomic_four<double> {
     public:
         atomic_norm_sq(const std::string& name) :
         CppAD::atomic_four<double>(name)
         { }
+    // END CONSTRUCTOR
     private:
-        // for_type
+        // BEGIN FOR_TYPE
         bool for_type(
             size_t                                     call_id     ,
             const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
@@ -77,7 +78,8 @@ namespace {
                 type_y[0] = std::max(type_y[0], type_x[j]);
             return true;
         }
-        // forward
+        // END FOR_TYPE
+        // BEGIN FORWARD
         bool forward(
             size_t                             call_id     ,
             const CppAD::vector<bool>&         select_y    ,
@@ -128,7 +130,8 @@ namespace {
             assert( ! ok );
             return ok;
         }
-        // reverse
+        // END FORWARD
+        // BEGIN REVERSE
         bool reverse(
             size_t                              call_id     ,
             const CppAD::vector<bool>&          select_x    ,
@@ -168,7 +171,8 @@ namespace {
             }
             return ok;
         }
-        // jac_sparsity
+        // END REVERSE
+        // BEGIN JAC_SPARSITY
         bool jac_sparsity(
             size_t                                     call_id     ,
             bool                                       dependency  ,
@@ -201,8 +205,8 @@ namespace {
             assert( k == nnz );
             return true;
         }
-        //
-        // hes_sparsity
+        // END JAC_SPARSITY
+        // BEGIN HES_SPARSITY
         bool hes_sparsity(
             size_t                                     call_id     ,
             const CppAD::vector<bool>&                 select_x    ,
@@ -233,6 +237,24 @@ namespace {
             }
             return true;
         }
+        // END HES_SPARSITY
+        // BEGIN REV_DEPEND
+        bool rev_depend(
+            size_t                                     call_id     ,
+            CppAD::vector<bool>&                       depend_x    ,
+            const CppAD::vector<bool>&                 depend_y    ) override
+        {   size_t n = depend_x.size();
+# ifndef NDEBUG
+            size_t m = depend_y.size();
+            assert( call_id == 0 );
+            assert( m == 1 );
+# endif
+            for(size_t j = 0; j < n; ++j)
+                depend_x[j] = depend_y[0];
+            //
+            return true;
+        }
+        // END REV_DEPEND
     };
 }
 // END_DEFINE_ATOMIC_FUNCTION
@@ -350,6 +372,18 @@ bool norm_sq(void)
         size_t c   = pattern_out.col()[ row_major[j] ];
         ok        &= r == j && c == j;
     }
+    //
+    // optimize
+    // this uses the rev_depend overide above
+    f.optimize();
+    //
+    // ok
+    // check zero order forward mode (on optimized verison of f)
+    y     = f.Forward(0, x);
+    check = 0.0;
+    for(size_t j = 0; j < n; ++j)
+        check += x[j] * x[j];
+    ok &= CppAD::NearEqual(y[0] , check,  eps, eps);
     //
     return ok;
 }

@@ -268,12 +268,17 @@ $head ok$$
 If this calculation succeeded, $icode ok$$ is true.
 Otherwise it is false.
 
-$comment%
-    example/atomic_four/reverse.cpp
+$head Example$$
+The following is an example $code reverse$$ definition taken from
+$cref atomic_four_norm_sq.cpp$$:
+$srcfile%
+    example/atomic_four/norm_sq.cpp%
+    0%// BEGIN REVERSE%// END REVERSE%0
 %$$
+
 $head Examples$$
-The file $comment atomic_four_reverse.cpp$$ contains an example and test
-that uses this routine.
+The file $cref atomic_four_norm_sq.cpp$$
+contains an example that defines this routine.
 
 $end
 -----------------------------------------------------------------------------

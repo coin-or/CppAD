@@ -130,14 +130,10 @@ $section Example Defining Atomic Functions: Fourth Generation$$
 $childtable%
     example/atomic_four/get_started.cpp
     %example/atomic_four/norm_sq.cpp
+    %example/atomic_four/forward.cpp
+    %example/atomic_four/dynamic.cpp
     %include/cppad/example/atomic_four/vector/vector.omh
     %include/cppad/example/atomic_four/mat_mul/mat_mul.omh
-%$$
-$comment
-    %example/atomic_four/tangent.cpp
-    %example/atomic_four/base2ad.cpp
-    %example/atomic_four/reciprocal.cpp
-    %example/atomic_four/mat_mul.cpp
 %$$
 
 $end

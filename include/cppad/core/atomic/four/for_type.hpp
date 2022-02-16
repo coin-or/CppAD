@@ -108,8 +108,12 @@ If this calculation succeeded, $icode ok$$ is true.
 Otherwise, it is false.
 
 $head Example$$
-The following is an example of a atomic function $code for_type$$ definition:
-$comment%get_started.cpp%atomic_four_get_started.cpp%for_type%$$.
+The following is an example $code for_type$$ definition taken from
+$cref atomic_four_norm_sq.cpp$$:
+$srcfile%
+    example/atomic_four/norm_sq.cpp%
+    0%// BEGIN FOR_TYPE%// END FOR_TYPE%0
+%$$
 
 $end
 -----------------------------------------------------------------------------
