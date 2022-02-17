@@ -13,6 +13,7 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
     forward.cpp
+    identical_zero.cpp
     mat_mul.cpp
     rev_depend.cpp
     reverse.cpp

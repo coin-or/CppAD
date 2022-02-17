@@ -22,6 +22,7 @@ $$
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $table
+$rref atomic_four_mat_mul_identical_zero.cpp$$
 $rref AddEq.cpp$$
 $rref Rombergmul.cpp$$
 $rref a11c_bthread.cpp$$
