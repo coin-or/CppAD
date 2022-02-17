@@ -19,7 +19,7 @@ $section Atomic Matrix Multiply Identical Zero: Example and Test$$
 
 $head Purpose$$
 This example demonstrates how the
-$cref atomic_mat_mul_for_type.hpp$$
+$cref atomic_four_mat_mul_for_type.hpp$$
 routine uses the $icode identical_zero_enum$$ type to reduce the number
 of variables.
 

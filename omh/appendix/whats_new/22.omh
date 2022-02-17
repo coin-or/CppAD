@@ -31,7 +31,7 @@ Add $code identical_zero$$ to the possible
 $cref/ad_type/atomic_four_for_type/ad_type/$$ values in
 the atomic four $code for_type$$ function.
 See $cref atomic_vector_for_type.hpp$$,
-$cref atomic_mat_mul_for_type.hpp$$, and
+$cref atomic_four_mat_mul_for_type.hpp$$, and
 $cref atomic_four_mat_mul_identical_zero.cpp$$
 for an examples using this feature.
 

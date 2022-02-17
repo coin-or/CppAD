@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_mat_mul_reverse.hpp$$
+$begin atomic_four_mat_mul_reverse.hpp$$
 $spell
     Jacobian
     jac

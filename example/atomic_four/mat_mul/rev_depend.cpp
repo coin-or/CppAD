@@ -49,14 +49,14 @@ f_{0,0} (u)
 $head Forward Analysis$$
 Forward dependency analysis determines that there
 is a new variable for each of the 8 multiplications by 2.0.
-It also determines, using $cref/for_type/atomic_mat_mul_for_type.hpp/$$
+It also determines, using $cref/for_type/atomic_four_mat_mul_for_type.hpp/$$
 that each of the 4 elements in the matrix product result is a new variable.
 
 $head Reverse Analysis$$
 Reverse analysis detect that only 1 of the 4 elements
 in the matrix product is used.
 In addition it determines,
-using $cref/rev_depend/atomic_mat_mul_rev_depend.hpp/$$,
+using $cref/rev_depend/atomic_four_mat_mul_rev_depend.hpp/$$,
 that only 4 of the 8 multiplications by 2.0 are used.
 
 $head size_var$$
