@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_four$$
+$begin atomic_four_define$$
 $spell
     taylor
     ctor
@@ -92,7 +92,7 @@ copies of the corresponding $codei%AD<%Base%>%$$ operations and variables
 in the recording.
 
 $head Virtual Functions$$
-The $cref/callback functions/atomic_four/Syntax/Callbacks/$$
+The $cref/callback functions/atomic_four_define/Syntax/Callbacks/$$
 are implemented by defining the virtual functions in the
 $icode atomic_user$$ class.
 These functions compute derivatives,
@@ -102,7 +102,7 @@ that returns $icode%ok% == false%$$.
 The $cref/for_type/atomic_four_for_type/$$
 and $cref/forward/atomic_four_forward/$$ function
 (for the case $icode%order_up% == 0%$$) are used by an atomic function
-$cref/call/atomic_four/Syntax/Call/$$.
+$cref/call/atomic_four_define/Syntax/Call/$$.
 Hence, they are required for one to use an atomic function.
 Other functions and orders are only required if they are used
 for your calculations.
@@ -119,21 +119,6 @@ $childtable%include/cppad/core/atomic/four/ctor.hpp
     %include/cppad/core/atomic/four/jac_sparsity.hpp
     %include/cppad/core/atomic/four/hes_sparsity.hpp
     %include/cppad/core/atomic/four/rev_depend.hpp
-%$$
-
-$end
--------------------------------------------------------------------------------
-$begin atomic_four_example$$
-
-$section Example Defining Atomic Functions: Fourth Generation$$
-
-$childtable%
-    example/atomic_four/get_started.cpp
-    %example/atomic_four/norm_sq.cpp
-    %example/atomic_four/forward.cpp
-    %example/atomic_four/dynamic.cpp
-    %include/cppad/example/atomic_four/vector/vector.omh
-    %include/cppad/example/atomic_four/mat_mul/mat_mul.omh
 %$$
 
 $end
