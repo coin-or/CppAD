@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -38,7 +38,7 @@ $srccode%cpp% */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/example/atomic_three/mat_mul.hpp>
+# include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>
 
 // Note that CppAD uses global_option["memory"] at the main program level
 # include <map>
@@ -92,8 +92,8 @@ bool link_mat_mul(
     w[0] = 1.;
 
     // atomic function information
-    CppAD::vector<ADScalar> ax(3 + 2 * n), ay(n);
-    atomic_mat_mul atom_mul;
+    CppAD::vector<ADScalar> ax(2 * n), ay(n);
+    CppAD::atomic_mat_mul<double> atom_mul("atom_mul");
     //
     // do not even record comparison operators
     size_t abort_op_index = 0;
@@ -113,15 +113,13 @@ bool link_mat_mul(
         if( ! global_option["atomic"] )
             mat_sum_sq(size, X, Y, Z);
         else
-        {   ax[0] = ADScalar( size ); // number of rows in left matrix
-            ax[1] = ADScalar( size ); // rows in left and columns in right
-            ax[2] = ADScalar( size ); // number of columns in right matrix
-            for(j = 0; j < n; j++)
-            {   ax[3 + j]     = X[j];
-                ax[3 + n + j] = X[j];
+        {   for(j = 0; j < n; j++)
+            {   ax[j]     = X[j];
+                ax[n + j] = X[j];
             }
             // Y = X * X
-            atom_mul(ax, ay);
+            size_t call_id = atom_mul.set(size, size, size);
+            atom_mul(call_id, ax, ay);
             Z[0] = 0.;
             for(j = 0; j < n; j++)
                 Z[0] += ay[j];
