@@ -17,14 +17,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   include/cppad/example/atomic_four/vector/atomic_vector.omh
-#   include/cppad/example/atomic_four/mat_mul/atomic_mat_mul.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|atomic_vector.omh|vector.omh|
-#   s|atomic_mat_mul.omh|mat_mul.omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -36,5 +32,8 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|example/atomic_four/vector/atomic_vector.omh|example/atomic_four/vector/vector.omh|
-s|example/atomic_four/mat_mul/atomic_mat_mul.omh|example/atomic_four/mat_mul/mat_mul.omh|
+s|cref/Base/atomic_three/Base/|cref/Base/atomic_three_define/Base/|
+s|cref/syntax/atomic_three/Syntax/|cref/syntax/atomic_three_define/Syntax/|
+s|cref/type_x/atomic_three/type_x/|cref/type_x/atomic_three_define/type_x/|
+s|cref/parameter_x/atomic_three/parameter_x/|cref/parameter_x/atomic_three_define/parameter_x/|
+s|cref/virtual functions/atomic_three/Virtual Functions/|cref/virtual functions/atomic_three_define/Virtual Functions/|

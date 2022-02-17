@@ -77,15 +77,15 @@ $cref/forward/Forward/$$ mode calculations
 (order zero must be implemented).
 
 $head parameter_x$$
-See $cref/parameter_x/atomic_three/parameter_x/$$.
+See $cref/parameter_x/atomic_three_define/parameter_x/$$.
 
 $head aparameter_x$$
 The specifications for $icode aparameter_x$$
-is the same as for $cref/parameter_x/atomic_three/parameter_x/$$
+is the same as for $cref/parameter_x/atomic_three_define/parameter_x/$$
 (only the type of $icode ataylor_x$$ is different).
 
 $head type_x$$
-See $cref/type_x/atomic_three/type_x/$$.
+See $cref/type_x/atomic_three_define/type_x/$$.
 
 $head need_y$$
 One can ignore this argument and compute all the $icode taylor_y$$

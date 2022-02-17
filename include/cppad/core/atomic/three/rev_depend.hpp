@@ -44,10 +44,10 @@ $head Base$$
 See $cref/Base/atomic_three_afun/Base/$$.
 
 $head parameter_x$$
-See $cref/parameter_x/atomic_three/parameter_x/$$.
+See $cref/parameter_x/atomic_three_define/parameter_x/$$.
 
 $head type_x$$
-See $cref/type_x/atomic_three/type_x/$$.
+See $cref/type_x/atomic_three_define/type_x/$$.
 
 $head depend_x$$
 This vector has size equal to the number of arguments for this atomic function;
@@ -63,7 +63,7 @@ $subhead Optimize$$
 Parameters and variables,
 that the values of interest do not depend on,
 may get removed by $cref/optimization/optimize/$$.
-The corresponding values in $cref/parameter_x/atomic_three/parameter_x/$$,
+The corresponding values in $cref/parameter_x/atomic_three_define/parameter_x/$$,
 and $cref/taylor_x/atomic_three_forward/taylor_x/$$
 (after optimization has removed them) are not specified.
 

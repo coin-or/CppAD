@@ -9,19 +9,13 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
   in the Eclipse Public License, Version 2.0 are satisfied:
         GNU General Public License, Version 2.0 or later.
 -------------------------------------------------------------------------- */
-$begin atomic$$
+$begin atomic_three$$
 
-$section Atomic AD Functions$$
+$section Atomic AD Functions: Third Generation$$
 
 $childtable%
-    include/cppad/core/atomic/four/atomic.omh%
-    include/cppad/core/atomic/three/atomic.omh%
-    include/cppad/core/chkpoint_two/chkpoint_two.hpp
+    include/cppad/core/atomic/three/atomic.hpp%
+    example/atomic_three/atomic_three.omh
 %$$
-
-$head Deprecated Atomic Function$$
-$cref atomic_one$$,
-$cref atomic_two$$,
-$cref chkpoint_one$$.
 
 $end

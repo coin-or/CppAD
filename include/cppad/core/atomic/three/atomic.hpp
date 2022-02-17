@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_three$$
+$begin atomic_three_define$$
 $spell
     taylor
     ctor
@@ -108,7 +108,8 @@ In addition,
 $code constant_enum < dynamic_enum < variable_enum$$.
 
 $head Virtual Functions$$
-The $cref/callback functions/atomic_three/Syntax/Class Member Callbacks/$$
+The
+$cref/callback functions/atomic_three_define/Syntax/Class Member Callbacks/$$
 are implemented by defining the virtual functions in the
 $icode atomic_user$$ class.
 These functions compute derivatives,
@@ -189,20 +190,6 @@ $childtable%include/cppad/core/atomic/three/ctor.hpp
     %include/cppad/core/atomic/three/jac_sparsity.hpp
     %include/cppad/core/atomic/three/hes_sparsity.hpp
     %include/cppad/core/atomic/three/rev_depend.hpp
-%$$
-
-$end
--------------------------------------------------------------------------------
-$begin atomic_three_example$$
-
-$section Example Defining Atomic Functions: Third Generation$$
-
-$childtable%example/atomic_three/get_started.cpp
-    %example/atomic_three/norm_sq.cpp
-    %example/atomic_three/tangent.cpp
-    %example/atomic_three/base2ad.cpp
-    %example/atomic_three/reciprocal.cpp
-    %example/atomic_three/mat_mul.cpp
 %$$
 
 $end

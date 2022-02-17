@@ -40,10 +40,10 @@ $head Base$$
 See $cref/Base/atomic_three_afun/Base/$$.
 
 $head parameter_x$$
-See $cref/parameter_x/atomic_three/parameter_x/$$.
+See $cref/parameter_x/atomic_three_define/parameter_x/$$.
 
 $head type_x$$
-See $cref/type_x/atomic_three/type_x/$$.
+See $cref/type_x/atomic_three_define/type_x/$$.
 
 $head select_x$$
 This argument has size equal to the number of arguments to this

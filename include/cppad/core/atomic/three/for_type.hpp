@@ -44,13 +44,13 @@ This virtual function must be defined by the
 $cref/atomic_user/atomic_three_ctor/atomic_user/$$ class.
 
 $head Base$$
-See $cref/Base/atomic_three/Base/$$.
+See $cref/Base/atomic_three_define/Base/$$.
 
 $head parameter_x$$
-See $cref/parameter_x/atomic_three/parameter_x/$$.
+See $cref/parameter_x/atomic_three_define/parameter_x/$$.
 
 $head type_x$$
-See $cref/type_x/atomic_three/type_x/$$.
+See $cref/type_x/atomic_three_define/type_x/$$.
 
 $head type_y$$
 This vector has size equal to the number of results for this atomic function;

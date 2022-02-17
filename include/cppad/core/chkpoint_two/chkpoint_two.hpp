@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_CHKPOINT_TWO_CHKPOINT_TWO_HPP
 # define CPPAD_CORE_CHKPOINT_TWO_CHKPOINT_TWO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -74,7 +74,7 @@ $head atomic_three$$
 The $code chkpoint_two$$ class is derived from $code atomic_three$$,
 hence some of its error message will refer to atomic operations.
 The $code chkpoint_two$$ class implements all the
-$cref/virtual functions/atomic_three/Virtual Functions/$$
+$cref/virtual functions/atomic_three_define/Virtual Functions/$$
 and hence its source code,
 $codei%
     include/cppad/core/chkpoint_two/chkpoint_two.hpp

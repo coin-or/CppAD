@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_ATOMIC_THREE_MAT_MUL_HPP
 # define CPPAD_EXAMPLE_ATOMIC_THREE_MAT_MUL_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -38,12 +38,12 @@ that computes the matrix product for $code AD<double$$ operations.
 
 $subhead parameter_x$$
 This example demonstrates the use of the
-$cref/parameter_x/atomic_three/parameter_x/$$
+$cref/parameter_x/atomic_three_define/parameter_x/$$
 argument to the $cref atomic_three$$ virtual functions.
 
 $subhead type_x$$
 This example also demonstrates the use of the
-$cref/type_x/atomic_three/type_x/$$
+$cref/type_x/atomic_three_define/type_x/$$
 argument to the $cref atomic_three$$ virtual functions.
 
 $head Matrix Dimensions$$

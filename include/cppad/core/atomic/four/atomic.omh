@@ -18,9 +18,4 @@ $childtable%
     example/atomic_four/atomic_four.omh
 %$$
 
-$head Deprecated Atomic Function$$
-$cref atomic_one$$,
-$cref atomic_two$$,
-$cref chkpoint_one$$.
-
 $end

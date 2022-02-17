@@ -85,15 +85,15 @@ of $icode order_up$$ that are greater than those used by your
 $cref/reverse/Reverse/$$ mode calculations.
 
 $head parameter_x$$
-See $cref/parameter_x/atomic_three/parameter_x/$$.
+See $cref/parameter_x/atomic_three_define/parameter_x/$$.
 
 $head aparameter_x$$
 The specifications for $icode aparameter_x$$
-is the same as for $cref/parameter_x/atomic_three/parameter_x/$$
+is the same as for $cref/parameter_x/atomic_three_define/parameter_x/$$
 (only the type of $icode ataylor_x$$ is different).
 
 $head type_x$$
-See $cref/type_x/atomic_three/type_x/$$.
+See $cref/type_x/atomic_three_define/type_x/$$.
 
 $head order_up$$
 This argument specifies the highest order Taylor coefficient that
