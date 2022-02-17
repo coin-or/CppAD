@@ -116,7 +116,8 @@ void recorder<Base>::put_dyn_atomic(
     for(size_t j = 0; j < n; ++j)
     {   addr_t arg = 0;
         switch( type_x[j] )
-        {   case constant_enum:
+        {   case identical_zero_enum:
+            case constant_enum:
             arg = put_con_par( ax[j].value_ );
             break;
 

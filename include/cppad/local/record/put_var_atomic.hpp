@@ -49,9 +49,13 @@ atomic function call.
 
 $head type_x$$
 is the $cref ad_type_enum$$ for each of the atomic function arguments.
+This is one of the rare cases where constants can have type
+$code identical_zero_enum$$.
 
 $head type_y$$
 is the $code ad_type_enum$$ for each of the atomic function results.
+This is one of the rare cases where constants can have type
+$code identical_zero_enum$$.
 
 $head ax$$
 is the atomic function argument vector for this call.
@@ -120,7 +124,7 @@ void recorder<Base>::put_var_atomic(
         else
         {   // information for an argument that is parameter
             addr_t par = ax[j].taddr_;
-            if( type_x[j] == constant_enum )
+            if( type_x[j] <= constant_enum )
                 par = put_con_par(ax[j].value_);
             PutArg(par);
             PutOp(local::FunapOp);

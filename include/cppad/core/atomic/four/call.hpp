@@ -133,7 +133,7 @@ void atomic_four<Base>::operator()(
     for(size_t j = 0; j < n; j++)
     {   taylor_x[j]  = ax[j].value_;
         if( IdenticalZero( ax[j] ) )
-            type_x[j] = constant_enum;
+            type_x[j] = identical_zero_enum;
         else if( Constant( ax[j] ) )
             type_x[j] = constant_enum;
         else
