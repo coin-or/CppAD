@@ -171,21 +171,32 @@ It has the following possible values:
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>ad_type_enum</span></font></i></code>
-  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+        <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
  Meaning </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">constant_enum</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+<code><font color="blue">identical_zero_enum</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ identically zero </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">constant_enum</font></code>        <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
  constant parameter </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">dynamic_enum</font></code>   <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+<code><font color="blue">dynamic_enum</font></code>         <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
  dynamic parameter  </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">variable_enum</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+<code><font color="blue">variable_enum</font></code>        <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
  variable
 </td></tr>
 </table>
 </center>In addition,
-<code><font color="blue">constant_enum &lt; dynamic_enum &lt; variable_enum</font></code>.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;identical_zero_enum&nbsp;&lt;&nbsp;constant_enum&nbsp;&lt;&nbsp;dynamic_enum&nbsp;&lt;&nbsp;variable_enum<br>
+</span></font></code>
+A value that is identically zero is also a constant parameter.
+In CppAD, multiplication of a variable by a value that is identically zero
+is sometimes treated like <a href="azmul.htm" target="_top">Absolute Zero Multiplication</a>.
+This avoids having to record the operation.
+
 
 <br>
 <br>
@@ -199,28 +210,14 @@ atomic function call; i.e., the size of
 .
 For 
 <code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=0,</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
-,
-if 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a constant parameter,
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::constant_enum<br>
-</span></font></code>
-if 
+is the type of 
 <code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a dynamic parameter,
+.
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::dynamic_enum<br>
-</span></font></code>
-if 
-<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is a variable,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::variable_enum<br>
-</span></font></code>
+<br>
 <br>
 <b><big><a name="type_y" id="type_y">type_y</a></big></b>
 <br>
@@ -241,6 +238,13 @@ i = 0 , \ldots , m-1
 <code><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  is set to one of the following values:
 <ol type="1"><li>
+It is <code><font color="blue">identical_zero_enum</font></code> if 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is
+<a href="base_identical.htm#Identical" target="_top"><span style='white-space: nowrap'>identically&nbsp;zero</span></a>
+.
+</li><li>
+
 It is <code><font color="blue">constant_enum</font></code> if 
 <code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
  only depends on

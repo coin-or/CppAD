@@ -125,13 +125,19 @@ used by the atomic_four base; see
     <i><font color="#9A1900">// type_y</font></i>
     <i><font color="#9A1900">// y[ i * n_right + j] = sum_k</font></i>
     <i><font color="#9A1900">//      x[i * n_middle + k] * x[ offset + k * n_right + j]</font></i>
-    <i><font color="#9A1900">// type_y</font></i>
+    <i><font color="#9A1900">// treat multpilication by zero like absolute zero</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_left<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_right<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   CppAD<font color="#990000">::</font><font color="#008080">ad_type_enum</font> type_ij <font color="#990000">=</font> CppAD<font color="#990000">::</font>constant_enum<font color="#990000">;</font>
+        <font color="#FF0000">{</font>   CppAD<font color="#990000">::</font><font color="#008080">ad_type_enum</font> type_ij <font color="#990000">=</font> CppAD<font color="#990000">::</font>identical_zero_enum<font color="#990000">;</font>
             <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_middle<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-            <font color="#FF0000">{</font>   type_ij <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>type_ij<font color="#990000">,</font> type_x<font color="#990000">[</font>i <font color="#990000">*</font> n_middle <font color="#990000">+</font> k<font color="#990000">]);</font>
-                type_ij <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>type_ij<font color="#990000">,</font> type_x<font color="#990000">[</font>offset <font color="#990000">+</font> k <font color="#990000">*</font> n_right <font color="#990000">+</font> j<font color="#990000">]);</font>
+            <font color="#FF0000">{</font>   CppAD<font color="#990000">::</font><font color="#008080">ad_type_enum</font> type_ik <font color="#990000">=</font> type_x<font color="#990000">[</font>i <font color="#990000">*</font> n_middle <font color="#990000">+</font> k<font color="#990000">];</font>
+                CppAD<font color="#990000">::</font><font color="#008080">ad_type_enum</font> type_kj <font color="#990000">=</font> type_x<font color="#990000">[</font>offset <font color="#990000">+</font> k <font color="#990000">*</font> n_right <font color="#990000">+</font> j<font color="#990000">];</font>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_ik <font color="#990000">!=</font> identical_zero_enum <font color="#990000">)</font>
+                <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_kj <font color="#990000">!=</font> identical_zero_enum <font color="#990000">)</font>
+                    <font color="#FF0000">{</font>   type_ij <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>type_ij<font color="#990000">,</font> type_ik<font color="#990000">);</font>
+                        type_ij <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font>type_ij<font color="#990000">,</font> type_kj<font color="#990000">);</font>
+                    <font color="#FF0000">}</font>
+                <font color="#FF0000">}</font>
             <font color="#FF0000">}</font>
             type_y<font color="#990000">[</font> i <font color="#990000">*</font> n_right <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> type_ij<font color="#990000">;</font>
         <font color="#FF0000">}</font>

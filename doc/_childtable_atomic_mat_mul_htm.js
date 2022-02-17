@@ -7,6 +7,7 @@ document.write('\
 <option>atomic_four_mat_mul_reverse.cpp</option>\
 <option>atomic_four_mat_mul_sparsity.cpp</option>\
 <option>atomic_four_mat_mul_rev_depend.cpp</option>\
+<option>atomic_four_mat_mul_identical_zero.cpp</option>\
 </select>\
 ');
 function atomic_mat_mul_child(item)
@@ -15,7 +16,8 @@ function atomic_mat_mul_child(item)
 		'atomic_four_mat_mul_forward.cpp.htm',
 		'atomic_four_mat_mul_reverse.cpp.htm',
 		'atomic_four_mat_mul_sparsity.cpp.htm',
-		'atomic_four_mat_mul_rev_depend.cpp.htm'
+		'atomic_four_mat_mul_rev_depend.cpp.htm',
+		'atomic_four_mat_mul_identical_zero.cpp.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

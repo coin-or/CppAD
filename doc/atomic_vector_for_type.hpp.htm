@@ -105,9 +105,10 @@ used by the atomic_four base; see
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>  type_x      <font color="#990000">,</font>
     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>ad_type_enum<font color="#990000">&gt;&amp;</font>        type_y      <font color="#990000">)</font>
 <font color="#FF0000">{</font>
-    <i><font color="#9A1900">// n, m</font></i>
+    <i><font color="#9A1900">// n, m, op</font></i>
     <font color="#008080">size_t</font> n     <font color="#990000">=</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
     <font color="#008080">size_t</font> m     <font color="#990000">=</font> type_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <font color="#008080">op_enum_t</font> op <font color="#990000">=</font> <b><font color="#000000">op_enum_t</font></b><font color="#990000">(</font> call_id <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// type_y</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> n <font color="#990000">==</font> m <font color="#990000">)</font>
@@ -119,6 +120,52 @@ used by the atomic_four base; see
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// binary operator</font></i>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
             type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">,</font> type_x<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">switch</font></b><font color="#990000">(</font>op<font color="#990000">)</font>
+    <font color="#FF0000">{</font>
+        <i><font color="#9A1900">// addition, subtraction</font></i>
+        <i><font color="#9A1900">// not sure result is identically 0 unless both are identically 0</font></i>
+        <b><font color="#0000FF">case</font></b> add_enum<font color="#990000">:</font>
+        <b><font color="#0000FF">case</font></b> sub_enum<font color="#990000">:</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+            type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">,</font> type_x<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
+        <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+
+        <i><font color="#9A1900">// multiplication</font></i>
+        <i><font color="#9A1900">// treat multiplication by zero like absolute zero</font></i>
+        <b><font color="#0000FF">case</font></b> mul_enum<font color="#990000">:</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> identical_zero_enum <font color="#990000">)</font>
+                type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> identical_zero_enum<font color="#990000">;</font>
+            <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">==</font> identical_zero_enum <font color="#990000">)</font>
+                type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> identical_zero_enum<font color="#990000">;</font>
+            <b><font color="#0000FF">else</font></b>
+                type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">,</font> type_x<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+        <i><font color="#9A1900">// division</font></i>
+        <i><font color="#9A1900">// treat divition of zero like absolute zero</font></i>
+        <b><font color="#0000FF">case</font></b> div_enum<font color="#990000">:</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> identical_zero_enum <font color="#990000">)</font>
+                type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> identical_zero_enum<font color="#990000">;</font>
+            <b><font color="#0000FF">else</font></b>
+                type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">max</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">,</font> type_x<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+        <i><font color="#9A1900">// unary minus</font></i>
+        <b><font color="#0000FF">case</font></b> neg_enum<font color="#990000">:</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+            type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> type_x<font color="#990000">[</font>i<font color="#990000">];</font>
+        <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
+
+        <i><font color="#9A1900">// error</font></i>
+        <b><font color="#0000FF">case</font></b> number_op_enum<font color="#990000">:</font>
+        <b><font color="#000000">assert</font></b><font color="#990000">(</font><b><font color="#0000FF">false</font></b><font color="#990000">);</font>
+        <b><font color="#0000FF">break</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>
