@@ -11,6 +11,7 @@ var list_up0 = [
 'advalued.htm',
 'atomic.htm',
 'atomic_four.htm',
+'atomic_four_define.htm',
 'atomic_four_forward.htm'
 ];
 var list_current0 = [

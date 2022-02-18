@@ -10,14 +10,28 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
-'atomic_four_example.htm',
-'atomic_mat_mul.htm',
-'atomic_mat_mul_implement.htm',
-'atomic_mat_mul_rev_depend.hpp.htm'
+'atomic_three.htm',
+'atomic_three_define.htm'
 ];
 var list_current0 = [
-'atomic_mat_mul_rev_depend.hpp.htm#Purpose',
-'atomic_mat_mul_rev_depend.hpp.htm#Source'
+'atomic_three_define.htm#Syntax',
+'atomic_three_define.htm#Syntax.Define Class',
+'atomic_three_define.htm#Syntax.Construct Atomic Function',
+'atomic_three_define.htm#Syntax.Use Atomic Function',
+'atomic_three_define.htm#Syntax.Class Member Callbacks',
+'atomic_three_define.htm#See Also',
+'atomic_three_define.htm#Purpose',
+'atomic_three_define.htm#Purpose.Speed',
+'atomic_three_define.htm#Purpose.Reduce Memory',
+'atomic_three_define.htm#ad_type',
+'atomic_three_define.htm#Virtual Functions',
+'atomic_three_define.htm#Base',
+'atomic_three_define.htm#parameter_x',
+'atomic_three_define.htm#parameter_x.Constant',
+'atomic_three_define.htm#parameter_x.Dynamic',
+'atomic_three_define.htm#parameter_x.Variable',
+'atomic_three_define.htm#type_x',
+'atomic_three_define.htm#Contents'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

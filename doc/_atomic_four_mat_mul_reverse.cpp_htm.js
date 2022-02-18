@@ -10,6 +10,7 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
+'atomic_four.htm',
 'atomic_four_example.htm',
 'atomic_mat_mul.htm',
 'atomic_four_mat_mul_reverse.cpp.htm'

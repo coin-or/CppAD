@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>02-18</option>
 <option>02-17</option>
 <option>02-16</option>
 <option>02-13</option>
@@ -93,6 +94,17 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
 <br>
+<b><big><a name="02-18" id="02-18">02-18</a></big></b>
+<br>
+Fixed the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>after</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ in the
+<a href="cpp_ad_graph.htm#operator_arg.print_graph_op" target="_top"><span style='white-space: nowrap'>print_graph_op</span></a>
+ documentation.
+To be specific, <code><font color="blue">- 2</font></code> was changed to <code><font color="blue">- 1</font></code>.
+
+<br>
+<br>
 <b><big><a name="02-17" id="02-17">02-17</a></big></b>
 <br>
 Add <code><font color="blue">identical_zero</font></code> to the possible
@@ -101,7 +113,7 @@ Add <code><font color="blue">identical_zero</font></code> to the possible
 the atomic four <code><font color="blue">for_type</font></code> function.
 See <a href="atomic_vector_for_type.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_vector_for_type.hpp</span></a>
 ,
-<a href="atomic_mat_mul_for_type.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_mat_mul_for_type.hpp</span></a>
+<a href="atomic_four_mat_mul_for_type.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_mat_mul_for_type.hpp</span></a>
 , and
 <a href="atomic_four_mat_mul_identical_zero.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_mat_mul_identical_zero.cpp</span></a>
 

@@ -10,6 +10,7 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
+'atomic_three.htm',
 'atomic_three_example.htm',
 'atomic_three_reciprocal.cpp.htm'
 ];

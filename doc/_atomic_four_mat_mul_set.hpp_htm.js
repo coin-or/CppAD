@@ -10,15 +10,21 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
+'atomic_four.htm',
 'atomic_four_example.htm',
 'atomic_mat_mul.htm',
 'atomic_mat_mul_implement.htm',
-'atomic_mat_mul_reverse.hpp.htm'
+'atomic_four_mat_mul_set.hpp.htm'
 ];
 var list_current0 = [
-'atomic_mat_mul_reverse.hpp.htm#Purpose',
-'atomic_mat_mul_reverse.hpp.htm#Theory',
-'atomic_mat_mul_reverse.hpp.htm#Source'
+'atomic_four_mat_mul_set.hpp.htm#Syntax',
+'atomic_four_mat_mul_set.hpp.htm#Prototype',
+'atomic_four_mat_mul_set.hpp.htm#Purpose',
+'atomic_four_mat_mul_set.hpp.htm#n_left',
+'atomic_four_mat_mul_set.hpp.htm#n_middle',
+'atomic_four_mat_mul_set.hpp.htm#n_right',
+'atomic_four_mat_mul_set.hpp.htm#call_id',
+'atomic_four_mat_mul_set.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

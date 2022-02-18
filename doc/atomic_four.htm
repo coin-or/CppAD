@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Defining Atomic Functions: Fourth Generation</title>
+<title>Atomic AD Functions: Fourth Generation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Defining Atomic Functions: Fourth Generation">
-<meta name="keywords" id="keywords" content=" defining atomic functions: fourth generation syntax define class constructor call callbacks see also purpose speed reduce memory virtual functions ">
+<meta name="description" id="description" content="Atomic AD Functions: Fourth Generation">
+<meta name="keywords" id="keywords" content=" atomic ad functions: fourth generation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic.htm" target="_top">Prev</a>
-</td><td><a href="atomic_four_ctor.htm" target="_top">Next</a>
+</td><td><a href="atomic_four_define.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -68,16 +68,6 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Syntax</option>
-<option>---..Define Class</option>
-<option>---..Constructor</option>
-<option>---..Call</option>
-<option>---..Callbacks</option>
-<option>See Also</option>
-<option>Purpose</option>
-<option>---..Speed</option>
-<option>---..Reduce Memory</option>
-<option>Virtual Functions</option>
 <option>Contents</option>
 </select>
 </td>
@@ -90,173 +80,13 @@ A:active { color : purple }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@
 
-
-<center><b><big><big>Defining Atomic Functions: Fourth Generation</big></big></b></center>
-<br>
-<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
-
-
-<br>
-<br>
-<big><a name="Syntax.Define Class" id="Syntax.Define Class">Define Class</a></big>
-
-<br>
-
-<code><font color="blue"><span style='white-space: nowrap'>class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;public&nbsp;CppAD::atomic_four&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-};</span></font></code>
-
-
-<br>
-<br>
-<big><a name="Syntax.Constructor" id="Syntax.Constructor">Constructor</a></big>
-
-<br>
-
-<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-
-
-<br>
-<br>
-<big><a name="Syntax.Call" id="Syntax.Call">Call</a></big>
-
-<br>
-
-<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-
-<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-<br>
-<big><a name="Syntax.Callbacks" id="Syntax.Callbacks">Callbacks</a></big>
-
-<br>
-
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.for_type(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-)<br>
-</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_low</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-)<br>
-</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-)<br>
-</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-)<br>
-</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.hes_sparsity(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-)<br>
-</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_depend(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-)</span></font></code>
-
-
-<br>
-<br>
-<b><big><a name="See Also" id="See Also">See Also</a></big></b>
-
-<br>
-<a href="chkpoint_two.htm" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
-, <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
-
-
-<br>
-<br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
-
-
-<br>
-<br>
-<big><a name="Purpose.Speed" id="Purpose.Speed">Speed</a></big>
-<br>
-In some cases, it is possible to compute derivatives of a function
-<small>@[@
-
-    y = g(x) \; {\rm where} \; g : \B{R}^n \rightarrow \B{R}^m
-
-@]@</small>
-more efficiently than by coding it using 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
-
-<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic</span></a>
- operations
-and letting CppAD do the rest.
-The class 
-<code><font color="blue"><span style='white-space: nowrap'>atomic_four</span></font><i><font color="black"><span style='white-space: nowrap'>&lt;</span></font></i><font color="blue"><span style='white-space: nowrap'>Base</span></font><i><font color="black"><span style='white-space: nowrap'>&gt;</span></font></i></code>
- is used to
-create a new atomic operation corresponding to a function <small>@(@
-g(x)
-@)@</small>
-where the user specifies how to compute the derivatives
-and sparsity patterns for <small>@(@
-g(x)
-@)@</small>.
-
-<br>
-<br>
-<big><a name="Purpose.Reduce Memory" id="Purpose.Reduce Memory">Reduce Memory</a></big>
-<br>
-If the function <small>@(@
-g(x)
-@)@</small> is used many times during the recording
-of an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
- object,
-an atomic version of <small>@(@
-g(x)
-@)@</small> removes the need for repeated
-copies of the corresponding 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
- operations and variables
-in the recording.
-
-<br>
-<br>
-<b><big><a name="Virtual Functions" id="Virtual Functions">Virtual Functions</a></big></b>
-<br>
-The <a href="atomic_four.htm#Syntax.Callbacks" target="_top"><span style='white-space: nowrap'>callback&nbsp;functions</span></a>
-
-are implemented by defining the virtual functions in the
-
-<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i></code>
- class.
-These functions compute derivatives,
-sparsity patterns, and dependency relations.
-Each virtual function has a default implementation
-that returns 
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
-.
-The <a href="atomic_four_for_type.htm" target="_top"><span style='white-space: nowrap'>for_type</span></a>
-
-and <a href="atomic_four_forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
- function
-(for the case 
-<code><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
-) are used by an atomic function
-<a href="atomic_four.htm#Syntax.Call" target="_top"><span style='white-space: nowrap'>call</span></a>
-.
-Hence, they are required for one to use an atomic function.
-Other functions and orders are only required if they are used
-for your calculations.
-For example,
-
-<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
- for the case 
-<code><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;2</span></font></code>
- can just return
-
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
- unless you require
-forward mode calculation of second derivatives.
-
-<br>
+<center><b><big><big>Atomic AD Functions: Fourth Generation</big></big></b></center>
 <br>
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="atomic_four_ctor.htm" target="_top">atomic_four_ctor</a></td><td>Atomic&nbsp;Function&nbsp;Constructor</td></tr><tr><td><a href="atomic_four_call.htm" target="_top">atomic_four_call</a></td><td>Calling&nbsp;an&nbsp;Atomic&nbsp;Function</td></tr><tr><td><a href="atomic_four_for_type.htm" target="_top">atomic_four_for_type</a></td><td>Atomic&nbsp;Function&nbsp;Forward&nbsp;Type&nbsp;Calculation</td></tr><tr><td><a href="atomic_four_forward.htm" target="_top">atomic_four_forward</a></td><td>Atomic&nbsp;Function&nbsp;Forward&nbsp;Mode</td></tr><tr><td><a href="atomic_four_reverse.htm" target="_top">atomic_four_reverse</a></td><td>Atomic&nbsp;Function&nbsp;Reverse&nbsp;Mode</td></tr><tr><td><a href="atomic_four_jac_sparsity.htm" target="_top">atomic_four_jac_sparsity</a></td><td>Atomic&nbsp;Function&nbsp;Jacobian&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="atomic_four_hes_sparsity.htm" target="_top">atomic_four_hes_sparsity</a></td><td>Atomic&nbsp;Function&nbsp;Hessian&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="atomic_four_rev_depend.htm" target="_top">atomic_four_rev_depend</a></td><td>Atomic&nbsp;Function&nbsp;Reverse&nbsp;Dependency</td></tr></table>
-<hr>Input File: include/cppad/core/atomic/four/atomic.hpp
+<tr><td><a href="atomic_four_define.htm" target="_top">atomic_four_define</a></td><td>Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Fourth&nbsp;Generation</td></tr><tr><td><a href="atomic_four_example.htm" target="_top">atomic_four_example</a></td><td>Example&nbsp;Defining&nbsp;Atomic&nbsp;Functions:&nbsp;Fourth&nbsp;Generation</td></tr></table>
+<hr>Input File: include/cppad/core/atomic/four/atomic.omh
 
 </body>
 </html>

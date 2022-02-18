@@ -2,26 +2,14 @@
 document.write('\
 <select onchange="atomic_three_child(this)">\
 <option>atomic_three-&gt;</option>\
-<option>atomic_three_ctor</option>\
-<option>atomic_three_afun</option>\
-<option>atomic_three_for_type</option>\
-<option>atomic_three_forward</option>\
-<option>atomic_three_reverse</option>\
-<option>atomic_three_jac_sparsity</option>\
-<option>atomic_three_hes_sparsity</option>\
-<option>atomic_three_rev_depend</option>\
+<option>atomic_three_define</option>\
+<option>atomic_three_example</option>\
 </select>\
 ');
 function atomic_three_child(item)
 {	var child_list = [
-		'atomic_three_ctor.htm',
-		'atomic_three_afun.htm',
-		'atomic_three_for_type.htm',
-		'atomic_three_forward.htm',
-		'atomic_three_reverse.htm',
-		'atomic_three_jac_sparsity.htm',
-		'atomic_three_hes_sparsity.htm',
-		'atomic_three_rev_depend.htm'
+		'atomic_three_define.htm',
+		'atomic_three_example.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

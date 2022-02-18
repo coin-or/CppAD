@@ -10,15 +10,16 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
+'atomic_four.htm',
 'atomic_four_example.htm',
 'atomic_mat_mul.htm',
 'atomic_mat_mul_implement.htm',
-'atomic_mat_mul_jac_sparsity.hpp.htm'
+'atomic_four_mat_mul_hes_sparsity.hpp.htm'
 ];
 var list_current0 = [
-'atomic_mat_mul_jac_sparsity.hpp.htm#Purpose',
-'atomic_mat_mul_jac_sparsity.hpp.htm#Example',
-'atomic_mat_mul_jac_sparsity.hpp.htm#Source'
+'atomic_four_mat_mul_hes_sparsity.hpp.htm#Purpose',
+'atomic_four_mat_mul_hes_sparsity.hpp.htm#Example',
+'atomic_four_mat_mul_hes_sparsity.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

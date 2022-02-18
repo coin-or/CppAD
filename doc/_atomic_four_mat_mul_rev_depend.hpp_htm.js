@@ -11,23 +11,14 @@ var list_up0 = [
 'advalued.htm',
 'atomic.htm',
 'atomic_four.htm',
-'atomic_four_define.htm',
-'atomic_four_for_type.htm'
+'atomic_four_example.htm',
+'atomic_mat_mul.htm',
+'atomic_mat_mul_implement.htm',
+'atomic_four_mat_mul_rev_depend.hpp.htm'
 ];
 var list_current0 = [
-'atomic_four_for_type.htm#Syntax',
-'atomic_four_for_type.htm#Prototype',
-'atomic_four_for_type.htm#Dependency Analysis',
-'atomic_four_for_type.htm#Usage',
-'atomic_four_for_type.htm#Implementation',
-'atomic_four_for_type.htm#vector',
-'atomic_four_for_type.htm#Base',
-'atomic_four_for_type.htm#call_id',
-'atomic_four_for_type.htm#ad_type',
-'atomic_four_for_type.htm#type_x',
-'atomic_four_for_type.htm#type_y',
-'atomic_four_for_type.htm#ok',
-'atomic_four_for_type.htm#Example'
+'atomic_four_mat_mul_rev_depend.hpp.htm#Purpose',
+'atomic_four_mat_mul_rev_depend.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

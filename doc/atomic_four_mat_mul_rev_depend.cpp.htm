@@ -50,13 +50,14 @@ A:active { color : purple }
 <option>AD</option>
 <option>ADValued</option>
 <option>atomic</option>
+<option>atomic_four</option>
 <option>atomic_four_example</option>
 <option>atomic_mat_mul</option>
 <option>atomic_four_mat_mul_rev_depend.cpp</option>
 </select>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
@@ -127,7 +128,7 @@ f_{0,0} (u)
 <br>
 Forward dependency analysis determines that there
 is a new variable for each of the 8 multiplications by 2.0.
-It also determines, using <a href="atomic_mat_mul_for_type.hpp.htm" target="_top"><span style='white-space: nowrap'>for_type</span></a>
+It also determines, using <a href="atomic_four_mat_mul_for_type.hpp.htm" target="_top"><span style='white-space: nowrap'>for_type</span></a>
 
 that each of the 4 elements in the matrix product result is a new variable.
 
@@ -138,7 +139,7 @@ that each of the 4 elements in the matrix product result is a new variable.
 Reverse analysis detect that only 1 of the 4 elements
 in the matrix product is used.
 In addition it determines,
-using <a href="atomic_mat_mul_rev_depend.hpp.htm" target="_top"><span style='white-space: nowrap'>rev_depend</span></a>
+using <a href="atomic_four_mat_mul_rev_depend.hpp.htm" target="_top"><span style='white-space: nowrap'>rev_depend</span></a>
 ,
 that only 4 of the 8 multiplications by 2.0 are used.
 

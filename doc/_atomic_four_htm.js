@@ -13,16 +13,6 @@ var list_up0 = [
 'atomic_four.htm'
 ];
 var list_current0 = [
-'atomic_four.htm#Syntax',
-'atomic_four.htm#Syntax.Define Class',
-'atomic_four.htm#Syntax.Constructor',
-'atomic_four.htm#Syntax.Call',
-'atomic_four.htm#Syntax.Callbacks',
-'atomic_four.htm#See Also',
-'atomic_four.htm#Purpose',
-'atomic_four.htm#Purpose.Speed',
-'atomic_four.htm#Purpose.Reduce Memory',
-'atomic_four.htm#Virtual Functions',
 'atomic_four.htm#Contents'
 ];
 function choose_across0(item)

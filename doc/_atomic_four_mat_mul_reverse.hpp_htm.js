@@ -10,14 +10,16 @@ var list_up0 = [
 'ad.htm',
 'advalued.htm',
 'atomic.htm',
+'atomic_four.htm',
 'atomic_four_example.htm',
 'atomic_mat_mul.htm',
 'atomic_mat_mul_implement.htm',
-'atomic_mat_mul_forward.hpp.htm'
+'atomic_four_mat_mul_reverse.hpp.htm'
 ];
 var list_current0 = [
-'atomic_mat_mul_forward.hpp.htm#Purpose',
-'atomic_mat_mul_forward.hpp.htm#Source'
+'atomic_four_mat_mul_reverse.hpp.htm#Purpose',
+'atomic_four_mat_mul_reverse.hpp.htm#Theory',
+'atomic_four_mat_mul_reverse.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

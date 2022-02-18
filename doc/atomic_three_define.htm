@@ -1,0 +1,425 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Defining Atomic Functions: Third Generation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Defining Atomic Functions: Third Generation">
+<meta name="keywords" id="keywords" content=" defining atomic functions: third generation syntax define class construct function use member callbacks see also purpose speed reduce memory ad_type virtual functions base parameter_x constant dynamic variable type_x ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_three_define_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_three.htm" target="_top">Prev</a>
+</td><td><a href="atomic_three_ctor.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_three</option>
+<option>atomic_three_define</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_advalued_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_three_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_three_define_htm.js'></script>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>---..Define Class</option>
+<option>---..Construct Atomic Function</option>
+<option>---..Use Atomic Function</option>
+<option>---..Class Member Callbacks</option>
+<option>See Also</option>
+<option>Purpose</option>
+<option>---..Speed</option>
+<option>---..Reduce Memory</option>
+<option>ad_type</option>
+<option>Virtual Functions</option>
+<option>Base</option>
+<option>parameter_x</option>
+<option>---..Constant</option>
+<option>---..Dynamic</option>
+<option>---..Variable</option>
+<option>type_x</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Defining Atomic Functions: Third Generation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Syntax.Define Class" id="Syntax.Define Class">Define Class</a></big>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>class&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;:&nbsp;public&nbsp;CppAD::atomic_three&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+};</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.Construct Atomic Function" id="Syntax.Construct Atomic Function">Construct Atomic Function</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ctor_arg_list</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.Use Atomic Function" id="Syntax.Use Atomic Function">Use Atomic Function</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.Class Member Callbacks" id="Syntax.Class Member Callbacks">Class Member Callbacks</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.for_type(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.forward(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>need_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_low</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.reverse(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>taylor_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>partial_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.hes_sparsity(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_depend(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="chkpoint_two.htm" target="_top"><span style='white-space: nowrap'>chkpoint_two</span></a>
+, <a href="atomic_two.htm" target="_top"><span style='white-space: nowrap'>atomic_two</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Purpose.Speed" id="Purpose.Speed">Speed</a></big>
+<br>
+In some cases, it is possible to compute derivatives of a function
+<small>@[@
+
+    y = g(x) \; {\rm where} \; g : \B{R}^n \rightarrow \B{R}^m
+
+@]@</small>
+more efficiently than by coding it using 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+<a href="glossary.htm#Operation.Atomic" target="_top"><span style='white-space: nowrap'>atomic</span></a>
+ operations
+and letting CppAD do the rest.
+The class 
+<code><font color="blue"><span style='white-space: nowrap'>atomic_three</span></font><i><font color="black"><span style='white-space: nowrap'>&lt;</span></font></i><font color="blue"><span style='white-space: nowrap'>Base</span></font><i><font color="black"><span style='white-space: nowrap'>&gt;</span></font></i></code>
+ is used to
+create a new atomic operation corresponding to a function <small>@(@
+g(x)
+@)@</small>
+where the user specifies how to compute the derivatives
+and sparsity patterns for <small>@(@
+g(x)
+@)@</small>.
+
+<br>
+<br>
+<big><a name="Purpose.Reduce Memory" id="Purpose.Reduce Memory">Reduce Memory</a></big>
+<br>
+If the function <small>@(@
+g(x)
+@)@</small> is used many times during the recording
+of an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object,
+using an atomic version of <small>@(@
+g(x)
+@)@</small> removes the need for repeated
+copies of the corresponding 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ operations and variables
+in the recording.
+
+<br>
+<br>
+<b><big><a name="ad_type" id="ad_type">ad_type</a></big></b>
+<br>
+The type <code><font color="blue">CppAD::ad_type_enum</font></code>
+is used to specify if an AD object is a
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameter</span></a>
+
+<a href="glossary.htm#Parameter.Dynamic" target="_top"><span style='white-space: nowrap'>dynamic&nbsp;parameter</span></a>
+
+or <a href="glossary.htm#Variable" target="_top"><span style='white-space: nowrap'>variable</span></a>
+.
+It has the following possible values:
+<center>
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>ad_type_enum</span></font></i></code>
+  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ Meaning </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">constant_enum</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ constant parameter </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">dynamic_enum</font></code>   <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ dynamic parameter  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">variable_enum</font></code>  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code>   </td><td align='left'  valign='top'>
+ variable
+</td></tr>
+</table>
+</center>In addition,
+<code><font color="blue">constant_enum &lt; dynamic_enum &lt; variable_enum</font></code>.
+
+<br>
+<br>
+<b><big><a name="Virtual Functions" id="Virtual Functions">Virtual Functions</a></big></b>
+<br>
+The
+<a href="atomic_three_define.htm#Syntax.Class Member Callbacks" target="_top"><span style='white-space: nowrap'>callback&nbsp;functions</span></a>
+
+are implemented by defining the virtual functions in the
+
+<code><i><font color="black"><span style='white-space: nowrap'>atomic_user</span></font></i></code>
+ class.
+These functions compute derivatives,
+sparsity patterns, and dependency relations.
+Each virtual function has a default implementation
+that returns 
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
+.
+The <a href="atomic_three_for_type.htm" target="_top"><span style='white-space: nowrap'>for_type</span></a>
+
+and <a href="atomic_three_forward.htm" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ function
+(for the case 
+<code><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;0</span></font></code>
+) must be implemented.
+Otherwise, only those functions and orders
+required by the your calculations need to be implemented.
+For example,
+
+<code><i><font color="black"><span style='white-space: nowrap'>forward</span></font></i></code>
+ for the case 
+<code><i><font color="black"><span style='white-space: nowrap'>order_up</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;2</span></font></code>
+ can just return
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;false</span></font></code>
+ unless you require
+forward mode calculation of second derivatives.
+
+<br>
+<br>
+<b><big><a name="Base" id="Base">Base</a></big></b>
+<br>
+This is the base type of the elements of
+<a href="atomic_three_afun.htm#ax" target="_top"><span style='white-space: nowrap'>ax</span></a>
+ and <a href="atomic_three_afun.htm#ay" target="_top"><span style='white-space: nowrap'>ay</span></a>
+
+in the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ call; i.e.,
+the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ have type
+
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="parameter_x" id="parameter_x">parameter_x</a></big></b>
+<br>
+All the virtual functions include this argument which has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+
+in corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ call.
+
+<br>
+<br>
+<big><a name="parameter_x.Constant" id="parameter_x.Constant">Constant</a></big>
+<br>
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=0,</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a <a href="con_dyn_var.htm#Constant" target="_top"><span style='white-space: nowrap'>constant</span></a>
+ parameter,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+<br>
+<big><a name="parameter_x.Dynamic" id="parameter_x.Dynamic">Dynamic</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a <a href="con_dyn_var.htm#Dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ parameter,
+
+<code><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ value of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ corresponding to the
+previous call to <a href="new_dynamic.htm" target="_top"><span style='white-space: nowrap'>new_dynamic</span></a>
+ for the corresponding function object.
+
+<br>
+<br>
+<big><a name="parameter_x.Variable" id="parameter_x.Variable">Variable</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a variable,
+the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is not specified.
+See the
+<a href="atomic_three_mat_mul.hpp.htm#Purpose.parameter_x" target="_top"><span style='white-space: nowrap'>atomic_three_mat_mul.hpp</span></a>
+
+for an example using 
+<code><i><font color="black"><span style='white-space: nowrap'>parameter_x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="type_x" id="type_x">type_x</a></big></b>
+<br>
+All the virtual functions include this argument.
+Its size is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()</span></font></code>
+
+in corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ call.
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=0,</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>n</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a constant parameter,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::constant_enum<br>
+</span></font></code>
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a dynamic parameter,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::dynamic_enum<br>
+</span></font></code>
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is a variable,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;CppAD::variable_enum<br>
+</span></font></code>
+See the
+<a href="atomic_three_mat_mul.hpp.htm#Purpose.type_x" target="_top"><span style='white-space: nowrap'>atomic_three_mat_mul.hpp</span></a>
+
+for an example using 
+<code><i><font color="black"><span style='white-space: nowrap'>type_x</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="atomic_three_ctor.htm" target="_top">atomic_three_ctor</a></td><td>Atomic&nbsp;Function&nbsp;Constructor</td></tr><tr><td><a href="atomic_three_afun.htm" target="_top">atomic_three_afun</a></td><td>Using&nbsp;AD&nbsp;Version&nbsp;of&nbsp;an&nbsp;Atomic&nbsp;Function</td></tr><tr><td><a href="atomic_three_for_type.htm" target="_top">atomic_three_for_type</a></td><td>Atomic&nbsp;Function&nbsp;Forward&nbsp;Type&nbsp;Calculation</td></tr><tr><td><a href="atomic_three_forward.htm" target="_top">atomic_three_forward</a></td><td>Atomic&nbsp;Function&nbsp;Forward&nbsp;Mode</td></tr><tr><td><a href="atomic_three_reverse.htm" target="_top">atomic_three_reverse</a></td><td>Atomic&nbsp;Function&nbsp;Reverse&nbsp;Mode</td></tr><tr><td><a href="atomic_three_jac_sparsity.htm" target="_top">atomic_three_jac_sparsity</a></td><td>Atomic&nbsp;Function&nbsp;Jacobian&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="atomic_three_hes_sparsity.htm" target="_top">atomic_three_hes_sparsity</a></td><td>Atomic&nbsp;Function&nbsp;Hessian&nbsp;Sparsity&nbsp;Patterns</td></tr><tr><td><a href="atomic_three_rev_depend.htm" target="_top">atomic_three_rev_depend</a></td><td>Atomic&nbsp;Function&nbsp;Reverse&nbsp;Dependency&nbsp;Calculation</td></tr></table>
+<hr>Input File: include/cppad/core/atomic/three/atomic.hpp
+
+</body>
+</html>

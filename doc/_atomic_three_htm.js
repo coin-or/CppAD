@@ -13,23 +13,6 @@ var list_up0 = [
 'atomic_three.htm'
 ];
 var list_current0 = [
-'atomic_three.htm#Syntax',
-'atomic_three.htm#Syntax.Define Class',
-'atomic_three.htm#Syntax.Construct Atomic Function',
-'atomic_three.htm#Syntax.Use Atomic Function',
-'atomic_three.htm#Syntax.Class Member Callbacks',
-'atomic_three.htm#See Also',
-'atomic_three.htm#Purpose',
-'atomic_three.htm#Purpose.Speed',
-'atomic_three.htm#Purpose.Reduce Memory',
-'atomic_three.htm#ad_type',
-'atomic_three.htm#Virtual Functions',
-'atomic_three.htm#Base',
-'atomic_three.htm#parameter_x',
-'atomic_three.htm#parameter_x.Constant',
-'atomic_three.htm#parameter_x.Dynamic',
-'atomic_three.htm#parameter_x.Variable',
-'atomic_three.htm#type_x',
 'atomic_three.htm#Contents'
 ];
 function choose_across0(item)

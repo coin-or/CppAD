@@ -91,7 +91,7 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/mat_sum_sq.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_three/mat_mul.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/mat_mul/mat_mul.hpp&gt;</font>
 
 <i><font color="#9A1900">// Note that CppAD uses global_option["memory"] at the main program level</font></i>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>
@@ -145,8 +145,8 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
     w<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">.;</font>
 
     <i><font color="#9A1900">// atomic function information</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">+</font> <font color="#993399">2</font> <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
-    <font color="#008080">atomic_mat_mul</font> atom_mul<font color="#990000">;</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ADScalar&gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font><font color="#993399">2</font> <font color="#990000">*</font> n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    CppAD<font color="#990000">::</font><font color="#008080">atomic_mat_mul&lt;double&gt;</font> <b><font color="#000000">atom_mul</font></b><font color="#990000">(</font><font color="#FF0000">"atom_mul"</font><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// do not even record comparison operators</font></i>
     <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
@@ -166,15 +166,13 @@ See <a href="link_mat_mul.htm" target="_top"><span style='white-space: nowrap'>l
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> global_option<font color="#990000">[</font><font color="#FF0000">"atomic"</font><font color="#990000">]</font> <font color="#990000">)</font>
             <b><font color="#000000">mat_sum_sq</font></b><font color="#990000">(</font>size<font color="#990000">,</font> X<font color="#990000">,</font> Y<font color="#990000">,</font> Z<font color="#990000">);</font>
         <b><font color="#0000FF">else</font></b>
-        <font color="#FF0000">{</font>   ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ADScalar</font></b><font color="#990000">(</font> size <font color="#990000">);</font> <i><font color="#9A1900">// number of rows in left matrix</font></i>
-            ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ADScalar</font></b><font color="#990000">(</font> size <font color="#990000">);</font> <i><font color="#9A1900">// rows in left and columns in right</font></i>
-            ax<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">ADScalar</font></b><font color="#990000">(</font> size <font color="#990000">);</font> <i><font color="#9A1900">// number of columns in right matrix</font></i>
-            <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
-            <font color="#FF0000">{</font>   ax<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">+</font> j<font color="#990000">]</font>     <font color="#990000">=</font> X<font color="#990000">[</font>j<font color="#990000">];</font>
-                ax<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">+</font> n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font>j<font color="#990000">];</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
+            <font color="#FF0000">{</font>   ax<font color="#990000">[</font>j<font color="#990000">]</font>     <font color="#990000">=</font> X<font color="#990000">[</font>j<font color="#990000">];</font>
+                ax<font color="#990000">[</font>n <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> X<font color="#990000">[</font>j<font color="#990000">];</font>
             <font color="#FF0000">}</font>
             <i><font color="#9A1900">// Y = X * X</font></i>
-            <b><font color="#000000">atom_mul</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+            <font color="#008080">size_t</font> call_id <font color="#990000">=</font> atom_mul<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>size<font color="#990000">,</font> size<font color="#990000">,</font> size<font color="#990000">);</font>
+            <b><font color="#000000">atom_mul</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">);</font>
             Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
             <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> j<font color="#990000">++)</font>
                 Z<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+=</font> ay<font color="#990000">[</font>j<font color="#990000">];</font>
