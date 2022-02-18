@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -169,7 +169,7 @@ $codei%
 is the index in $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$
 of the text that is printed before the value and
 $codei%
-    %after%[%i%] = %operator_arg%[ %first_node%[%i%] - 2 ]
+    %after%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
 is the index in $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$
 of the text that is printed after the value.

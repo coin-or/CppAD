@@ -32,8 +32,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|cref/Base/atomic_three/Base/|cref/Base/atomic_three_define/Base/|
-s|cref/syntax/atomic_three/Syntax/|cref/syntax/atomic_three_define/Syntax/|
-s|cref/type_x/atomic_three/type_x/|cref/type_x/atomic_three_define/type_x/|
-s|cref/parameter_x/atomic_three/parameter_x/|cref/parameter_x/atomic_three_define/parameter_x/|
-s|cref/virtual functions/atomic_three/Virtual Functions/|cref/virtual functions/atomic_three_define/Virtual Functions/|
+s|/atomic_three/ad_type/|/atomic_three_define/ad_type/|g

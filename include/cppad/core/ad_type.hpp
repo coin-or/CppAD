@@ -80,7 +80,7 @@ $srcthisfile%0%// BEGIN IS_POD%// END IS_POD%0%$$
 
 $head Atomic Function$$
 Only some of the values are valid for the user atomic function API; see
-$cref/atomic_three/atomic_three/ad_type/$$ and
+$cref/atomic_three/atomic_three_define/ad_type/$$ and
 $cref/atomic_four/atomic_four_for_type/ad_type/$$.
 
 $head ASSERT_AD_TYPE$$

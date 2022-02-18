@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_VEC_AD_VEC_AD_HPP
 # define CPPAD_CORE_VEC_AD_VEC_AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -114,7 +114,7 @@ $codei%
 %$$
 If $icode%ind%.tape_id_%$$ matches a current recording,
 so does $icode%vec%.tape_id_%$$ and
-the $cref/AD type/atomic_three/ad_type/$$ corresponding to $icode vec$$
+the $cref/AD type/atomic_three_define/ad_type/$$ corresponding to $icode vec$$
 includes this indexing operation; i.e., it is greater than or equal
 the AD type corresponding to $icode ind$$.
 
@@ -318,7 +318,7 @@ $subhead tape_id_$$
 is the tape currently associated with this vector.
 
 $subhead ad_type_$$
-is the $cref/ad_type/atomic_three/ad_type/$$ corresponding to this
+is the $cref/ad_type/atomic_three_define/ad_type/$$ corresponding to this
 vector.
 
 $head i$$
