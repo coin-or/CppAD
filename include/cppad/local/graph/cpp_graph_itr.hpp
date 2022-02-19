@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_GRAPH_CPP_GRAPH_ITR_HPP
 # define CPPAD_LOCAL_GRAPH_CPP_GRAPH_ITR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -35,16 +35,16 @@ private:
     size_t                         op_index_;
     size_t                         first_arg_;
     //
-    // set by get_value
-    size_t                         first_node_;
+    // set by set_value
     graph_op_enum                  op_enum_;
-    vector<size_t>                 str_index_;
+    size_t                         first_node_;
     size_t                         n_result_;
+    vector<size_t>                 str_index_;
     vector<size_t>                 arg_node_;
 /* %$$
 $end
 ------------------------------------------------------------------------------
-$begin cpp_graph_itr_get_value$$
+$begin cpp_graph_itr_set_value$$
 $spell
     obj
     op
@@ -56,10 +56,10 @@ $spell
     str
 $$
 
-$section C++ AD Graph Iterator get_value()$$
+$section C++ AD Graph Iterator set_value()$$
 
 $head Syntax$$
-$icode%itr%.get_value()%$$
+$icode%itr%.set_value()%$$
 
 $head op_index_$$
 This input is the operator index for the value we are retrieving.
@@ -115,7 +115,7 @@ The value of the elements are the node indices.
 
 $head Prototype$$
 $srccode%hpp% */
-    void get_value(void)
+    void set_value(void)
 /* %$$
 $end
 */
@@ -326,7 +326,7 @@ $end
         first_arg_ = 0;
         //
         // get the value, and first_node_, for this operator
-        get_value();
+        set_value();
     }
 /* %$$
 ------------------------------------------------------------------------------
@@ -365,7 +365,7 @@ $srccode%hpp% */
     cpp_graph_itr& operator++(void)
     {   ++op_index_;
         first_arg_ = first_node_ + arg_node_.size();
-        get_value();
+        set_value();
         return *this;
     }
     // itr++
@@ -373,7 +373,7 @@ $srccode%hpp% */
     {   cpp_graph_itr ret(*this);
         ++op_index_;
         first_arg_ = first_node_ + arg_node_.size();
-        get_value();
+        set_value();
         return ret;
     }
 /* %$$
