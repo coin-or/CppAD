@@ -39,6 +39,7 @@ private:
     graph_op_enum                  op_enum_;
     size_t                         first_node_;
     size_t                         n_result_;
+    size_t                         call_id_;
     vector<size_t>                 str_index_;
     vector<size_t>                 arg_node_;
 /* %$$
@@ -81,8 +82,8 @@ The input value of this argument does not matter.
 Upon return its size is zero except for the special cases
 listed below:
 
-$subhead atom_graph_op$$
-If $icode op_enum_$$ is $code atom_graph_op$$,
+$subhead atom_graph_op, atom4_graph_op$$
+If $icode op_enum_$$ is $code atom_graph_op$$ or $code atom4_graph_op$$,
 $code str_index_.size() == 1$$ and
 $code str_index_[0]$$ is the index in
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
@@ -107,6 +108,12 @@ $head n_result_$$
 The input value of this argument does not matter.
 This is set to the number of result nodes for this operator.
 
+$head call_id_$$
+If $icode op_enum_$$ is $code atom4_graph_op$$,
+$code call_id_$$ is set to the $cref/call_id/atomic_four_call/call_id/$$
+for this funciton call.
+Othrwise it is set to zero.
+
 $head arg_node_$$
 The input value of this argument does not matter.
 Upon return, its size is the number of arguments,
@@ -124,13 +131,14 @@ $end
     size_t n_arg      = invalid_index;
     first_node_       = invalid_index;
     n_result_         = invalid_index;
+    call_id_          = 0;
     str_index_.resize(0);
     arg_node_.resize(0);
     //
     // op_enum
     op_enum_          = (*operator_vec_)[op_index_];
     //
-    // n_result_, n_arg, str_index_
+    // n_result_, n_arg, call_id_, str_index_
     switch( op_enum_ )
     {
         // unary operators
@@ -181,13 +189,21 @@ $end
         n_arg       = 1;
         break;
 
-
         // atom_graph_op
         case atom_graph_op:
         first_node_ = first_arg_ + 3;
         str_index_.push_back( (*operator_arg_)[first_node_ - 3] );
         n_result_   = (*operator_arg_)[first_node_ - 2];
         n_arg       = (*operator_arg_)[first_node_ - 1];
+        break;
+
+        // atom4_graph_op
+        case atom4_graph_op:
+        first_node_ = first_arg_ + 4;
+        str_index_.push_back( (*operator_arg_)[first_node_ - 4] );
+        n_result_   = (*operator_arg_)[first_node_ - 3];
+        n_arg       = (*operator_arg_)[first_node_ - 2];
+        call_id_    = (*operator_arg_)[first_node_ - 1];
         break;
 
         // print_graph_op
@@ -251,8 +267,9 @@ $srccode%hpp% */
 public:
     typedef struct {
         graph_op_enum          op_enum;
-        const vector<size_t>*  str_index_ptr;
         size_t                 n_result;
+        size_t                 call_id;
+        const vector<size_t>*  str_index_ptr;
         const vector<size_t>*  arg_node_ptr;
     } value_type;
     typedef std::input_iterator_tag    iterator_category;
@@ -356,8 +373,9 @@ $srccode%hpp% */
         );
         value_type ret;
         ret.op_enum       = op_enum_;
-        ret.str_index_ptr = &str_index_;
         ret.n_result      = n_result_;
+        ret.call_id       = call_id_;
+        ret.str_index_ptr = &str_index_;
         ret.arg_node_ptr  = &arg_node_;
         return ret;
     }

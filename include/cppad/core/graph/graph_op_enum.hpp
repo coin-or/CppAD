@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_GRAPH_GRAPH_OP_ENUM_HPP
 # define CPPAD_CORE_GRAPH_GRAPH_OP_ENUM_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -114,8 +114,10 @@ to the discrete function.
 $head Atomic Function$$
 The atomic function operator has a variable number of arguments
 and a variable number of node results.
-The total number of arguments for this operator is three plus the number
-of arguments for the function being called.
+The total number of arguments for this operator is three or four
+plus the number of arguments for the function being called.
+Three extra arguments for $cref atomic_three$$ functions and
+four extra arguments for $cref atomic_four$$ functions.
 $list number$$
 The first argument is the index in
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ for the
@@ -127,6 +129,9 @@ The order of the results is determined by function being called.
 $lnext
 The third argument is the number of arguments
 for this function call.
+$lnext
+If this is an atomic four function call,
+the fourth argument is the $cref/call_id/atomic_four_call/call_id/$$.
 $lnext
 The other arguments are the indices of nodes for each argument to the
 function call.  The order of the arguments is determined by function
@@ -198,7 +203,8 @@ namespace CppAD { namespace graph {
         asinh_graph_op,    // unary: inverse hyperbolic sine
         atan_graph_op,     // unary: inverse tangent
         atanh_graph_op,    // unary: inverse hyperbolic tangent
-        atom_graph_op,     // atomic function
+        atom_graph_op,     // atomic three function call
+        atom4_graph_op,    // atomic four function call
         azmul_graph_op,    // binary: absolute zero multiplication
         cexp_eq_graph_op,  // conditional expression: ==
         cexp_le_graph_op,  // conditional expression: <=

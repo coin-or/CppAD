@@ -329,10 +329,11 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
     vector<addr_t>                  arg;
     vector<size_t>                  arg_node;
     //
-    // arrays only used by atom_graph_op
+    // arrays only used by atom_graph_op, atom4_graph_op
     vector<Base>                    parameter_x, taylor_y;
     vector<ad_type_enum>            type_y;
     vector< AD<Base> >              ax, ay;
+    vector<bool>                    select_y;
     //
     // define here because not using as loop index
     cpp_graph::const_iterator       graph_itr;
@@ -351,6 +352,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         const vector<size_t>& str_index(*itr_value.str_index_ptr );
         graph_op_enum op_enum    = itr_value.op_enum;
         size_t        n_result   = itr_value.n_result;
+        size_t        call_id    = itr_value.call_id;
         size_t        n_arg      = itr_value.arg_node_ptr->size();
         arg.resize(n_arg);
         //
@@ -637,7 +639,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         // -------------------------------------------------------------------
         // atomic operator
         // -------------------------------------------------------------------
-        else if( op_enum == atom_graph_op )
+        else if( op_enum == atom_graph_op || op_enum == atom4_graph_op )
         {   size_t name_index = str_index[0];
             //
             // atomic_index
@@ -660,20 +662,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                 ErrorHandler::Call(known, line, file, exp, msg.c_str());
             }
             //
-            // afun
-            bool         set_null = false;
-            size_t       type;
-            std::string* name = nullptr;
-            void*        v_ptr;
-            CppAD::local::atomic_index<RecBase>(
-                set_null, atomic_index, type, name, v_ptr
-            );
-            CPPAD_ASSERT_KNOWN( type == 3 ,
-                "from_graph: attempt to use an atomic function with type != 3"
-            );
-            atomic_three<RecBase>* afun =
-                reinterpret_cast< atomic_three<RecBase>* >( v_ptr );
-            //
             // parameter_x
             parameter_x.resize(n_arg);
             for(size_t j = 0; j < n_arg; ++j)
@@ -683,24 +671,84 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                     parameter_x[j] = nan;
             }
             //
-            // type_y
-            type_y.resize(n_result);
-            afun->for_type(parameter_x, type_x, type_y);
+            // type, name, v_ptr
+            bool         set_null = false;
+            size_t       type;
+            std::string* name = nullptr;
+            void*        v_ptr;
+            CppAD::local::atomic_index<RecBase>(
+                set_null, atomic_index, type, name, v_ptr
+            );
+            CPPAD_ASSERT_KNOWN( 2 < type,
+                "from_graph: attempt to use an atomic function with < 3"
+            );
             //
-            // taylor_y
-            size_t need_y    = size_t(constant_enum);
+            // type_y, taylor_y
+            type_y.resize(n_result);
             size_t order_low = 0;
             size_t order_up  = 0;
-            taylor_y.resize(n_result);
-            afun->forward(
-                parameter_x ,
-                type_x      ,
-                need_y      ,
-                order_low   ,
-                order_up    ,
-                parameter_x ,
-                taylor_y
-            );
+            if( type == 3 )
+            {   // afun
+                atomic_three<RecBase>* afun =
+                    reinterpret_cast< atomic_three<RecBase>* >( v_ptr );
+                //
+                // type_y
+                afun->for_type(parameter_x, type_x, type_y);
+                //
+                // taylor_y
+                size_t need_y    = size_t(constant_enum);
+                taylor_y.resize(n_result);
+                afun->forward(
+                    parameter_x ,
+                    type_x      ,
+                    need_y      ,
+                    order_low   ,
+                    order_up    ,
+                    parameter_x ,
+                    taylor_y
+                );
+            }
+            else
+            {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+                // afun
+                atomic_four<RecBase>* afun =
+                    reinterpret_cast< atomic_four<RecBase>* >( v_ptr );
+                //
+                // type_x
+                for(size_t j = 0; j < n_arg; ++j)
+                {   if( type_x[j] == constant_enum )
+                        if( parameter[ arg[j] ] == Base(0) )
+                            type_x[j] = identical_zero_enum;
+                }
+                //
+                // type_y
+                afun->for_type(call_id, type_x, type_y);
+                for(size_t i = 0; i < n_result; ++i)
+                {   if( type_y[i] == identical_zero_enum )
+                        type_y[i] = constant_enum;
+                }
+                //
+                // type_x
+                for(size_t j = 0; j < n_arg; ++j)
+                    if( type_x[j] == identical_zero_enum )
+                        type_x[j] = constant_enum;
+                //
+                // select_y
+                select_y.resize(n_result);
+                for(size_t i = 0; i < n_result; ++i)
+                    select_y[i] = type_y[i] == constant_enum;
+                //
+                // taylor_y
+                taylor_y.resize(n_result);
+                afun->forward(
+                    call_id     ,
+                    select_y    ,
+                    order_low   ,
+                    order_up    ,
+                    parameter_x ,
+                    taylor_y
+                );
+            }
             //
             // record_dynamic, record_variable
             bool record_dynamic  = false;
@@ -729,9 +777,6 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                     ay[i].taddr_ = 0;
                 }
             }
-            // 2DO: Need to add call_id as optional argument to atom_graph_op
-            // and the json graph representation.
-            size_t call_id = 0;
             if( record_dynamic ) rec.put_dyn_atomic(
                     tape_id, atomic_index, call_id, type_x, type_y, ax, ay
             );
@@ -1404,8 +1449,10 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
 
             }
         }
-        // case where node_type and node2fun for the results are set above
-        if( op_enum != atom_graph_op && n_result != 0 )
+        // Exclude cases where node_type and node2fun for the results
+        // have already been set
+        if( n_result != 0 )
+        if( op_enum != atom_graph_op && op_enum != atom4_graph_op )
         {   // set node_type and node2fun for result
             //
             CPPAD_ASSERT_UNKNOWN( i_result != 0 );

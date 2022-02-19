@@ -360,24 +360,18 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 // arg[0]: atomic function index
                 size_t atom_index  = size_t( dyn_par_arg[i_arg + 0] );
                 //
-# ifndef NDEBUG
-                // 2DO: put call_id in graph version of atomic funciton call
+                // arg[1]: call_id
                 size_t call_id = size_t( dyn_par_arg[i_arg + 1] );
-                CPPAD_ASSERT_KNOWN( call_id == 0,
-                    "to_graph: atomic functions with non-zero call_id "
-                    "not yet implemented"
-                )
-# endif
                 //
                 // arg[2]: number of arguments to function
                 n_arg              = size_t( dyn_par_arg[i_arg + 2] );
                 // arg[3]: number of results from function
                 size_t n_result    = size_t( dyn_par_arg[i_arg + 3] );
                 //
-                // get the name for this atomic function
+                // get the name and type for this atomic function
                 std::string     name;
+                size_t          type;
                 {   bool        set_null = false;
-                    size_t      type;
                     void*       ptr;
                     CppAD::local::atomic_index<RecBase>(
                         set_null, atom_index, type, &name, ptr
@@ -394,7 +388,14 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 graph_obj.operator_arg_push_back(n_result);
                 graph_obj.operator_arg_push_back(n_arg);
                 //
-                graph_op = atom_graph_op;
+                if( type == 3 )
+                    graph_op = atom_graph_op;
+                else
+                {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+                    graph_op = atom4_graph_op;
+                    graph_obj.operator_arg_push_back(call_id);
+                }
+                //
                 graph_obj.operator_vec_push_back( graph_op );
                 //
                 for(size_t j  = 0; j < n_arg; ++j)
@@ -1085,22 +1086,16 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
             else
             {   // This is the AFunOp at the end of the call
                 size_t atom_index   = size_t( arg[0] );
-# ifndef NDEBUG
-                // 2DO: put call_id in graph version of atomic funciton call
-                size_t call_id = size_t( arg[1] );
-                CPPAD_ASSERT_KNOWN( call_id == 0,
-                    "to_graph: atomic functions with non-zero call_id "
-                    "not yet implemented"
-                )
-# endif
+                //
+                size_t call_id      = size_t( arg[1] );
                 size_t n_arg        = size_t( arg[2] );
                 size_t n_result     = size_t( arg[3] );
                 CPPAD_ASSERT_UNKNOWN( atom_node_arg.size() == n_arg );
                 //
-                // get the name for this atomic function
+                // get the name and type for this atomic function
                 std::string     name;
+                size_t          type;
                 {   bool        set_null = false;
-                    size_t      type;
                     void*       ptr;
                     CppAD::local::atomic_index<RecBase>(
                         set_null, atom_index, type, &name, ptr
@@ -1116,8 +1111,13 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 graph_obj.operator_arg_push_back(name_index);
                 graph_obj.operator_arg_push_back(n_result);
                 graph_obj.operator_arg_push_back(n_arg);
-                //
-                graph_op = atom_graph_op;
+                if( type == 3 )
+                    graph_op = atom_graph_op;
+                else
+                {   CPPAD_ASSERT_UNKNOWN( type == 4 );
+                    graph_op = atom4_graph_op;
+                    graph_obj.operator_arg_push_back(call_id);
+                }
                 graph_obj.operator_vec_push_back( graph_op );
                 for(size_t i = 0; i < n_arg; ++i)
                     graph_obj.operator_arg_push_back( atom_node_arg[i] );

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -55,6 +55,7 @@ void set_operator_info(void)
         { atan_graph_op,     "atan",     1 }, // 1 result
         { atanh_graph_op,    "atanh",    1 }, // 1 result
         { atom_graph_op,     "atom",     0 }, // See Atomic Function
+        { atom4_graph_op,    "atom4",    0 }, // See Atomic Function
         { azmul_graph_op,    "azmul",    2 }, // 1 result
         { cexp_eq_graph_op,  "cexp_eq",  4 }, // 1 result
         { cexp_le_graph_op,  "cexp_le",  4 }, // 1 result
