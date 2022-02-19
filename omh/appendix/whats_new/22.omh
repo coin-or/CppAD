@@ -26,6 +26,11 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 02-19$$
+Extend the C++ graph representation to include atomic four
+$cref/atomic functions/graph_op_enum/Atomic Function/$$.
+For example, see $cref graph_atom4_op.cpp$$
+
 $head 02-18$$
 Fixed the value of $icode%after%[%i%]%$$ in the
 $cref/print_graph_op/cpp_ad_graph/operator_arg/print_graph_op/$$ documentation.

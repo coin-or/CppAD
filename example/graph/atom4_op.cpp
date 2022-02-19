@@ -27,9 +27,9 @@ $end
 # include <cppad/cppad.hpp>
 
 namespace {
-    class atomic_reciprocal : public CppAD::atomic_four<double> {
+    class atomic_int_pow : public CppAD::atomic_four<double> {
     public:
-        atomic_reciprocal() : CppAD::atomic_four<double>("reciprocal")
+        atomic_int_pow(void) : CppAD::atomic_four<double>("int_pow")
         { }
     private:
         // for_type
@@ -54,7 +54,9 @@ namespace {
                 return false;
             //
             // taylor_y
-            taylor_y[0] = 1.0 / taylor_x[0];
+            taylor_y[0] = 1.0;
+            for(size_t i = 0; i < call_id; ++i)
+                taylor_y[0] *= taylor_x[0];
             //
             return true;
         }
@@ -66,15 +68,18 @@ bool atom4_op(void)
     using std::string;
     //
     // reciprocal
-    atomic_reciprocal reciprocal;
+    atomic_int_pow int_pow;
     // -----------------------------------------------------------------------
     //
-    // This function has an atomic function operator with name reciprocal
+    // This function has an atomic function operator with name int_pow
     // node_1 : p[0]
     // node_2 : x[0]
     // node_3 : p[0] + x[0]
-    // node_4 : recirpocal( p[0] + x[0] )
-    // y[0]   = 1.0 / ( p[0] + x[0] )
+    // node_4 : int_pow( p[0] + x[0] )
+    // y[0]   = ( p[0] + x[0] ) ** call_id
+    //
+    // call_id
+    size_t call_id = 2;
     //
     // C++ graph object
     CppAD::cpp_graph graph_obj;
@@ -97,17 +102,17 @@ bool atom4_op(void)
     //
     // name_index, n_result, n_arg come before first_node
     size_t name_index = graph_obj.atomic_name_vec_size();
-    graph_obj.atomic_name_vec_push_back("reciprocal");
+    graph_obj.atomic_name_vec_push_back("int_pow");
     //
     op_enum = CppAD::graph::atom4_graph_op;
     graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(name_index);  // name_index
     graph_obj.operator_arg_push_back(1);           // n_result
     graph_obj.operator_arg_push_back(1);           // n_node_arg
-    graph_obj.operator_arg_push_back(0);           // call_id
+    graph_obj.operator_arg_push_back(call_id);     // call_id
     graph_obj.operator_arg_push_back(3);           // first and last node arg
     //
-    // y[0]  = reciprocal( p[0] + x[0] ) = 1.0 / ( p[0] + x[0] )
+    // y[0]  = int_pow( p[0] + x[0] ) = ( p[0] + x[0] ) ** call_id
     graph_obj.dependent_vec_push_back(4);
     // ------------------------------------------------------------------------
     CppAD::ADFun<double> g;
@@ -129,7 +134,7 @@ bool atom4_op(void)
     //
     // check value
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-    double check = 1.0 / ( p[0] + x[0] );
+    double check = std::pow( p[0] + x[0], double(call_id) );
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     // ------------------------------------------------------------------------
     g.to_graph(graph_obj);
@@ -148,7 +153,7 @@ bool atom4_op(void)
     y    = g.Forward(0, x);
     //
     // check value
-    check = 1.0 / ( p[0] + x[0] );
+    check = std::pow( p[0] + x[0], double(call_id) );
     ok &= CppAD::NearEqual(y[0], check, eps99, eps99);
     // ------------------------------------------------------------------------
     return ok;
