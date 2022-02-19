@@ -220,28 +220,26 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         {   CppAD::local::atomic_index<RecBase>(
                 set_null, index_in, type, &name, ptr
             );
-            if( type == 3 )
-            {   size_t graph_index = graph_obj.atomic_name_vec_find(name);
-                if( graph_index != n_graph_atomic )
-                {   if( atomic_name2index[graph_index] != 0 )
-                    {   std::string msg = "from_graph: error in call to ";
-                        msg += name + ".\n";
-                        msg += "There is more than one atomic_three ";
-                        msg += "function with this name";
-                        //
-                        // use this source code as point of detection
-                        bool known       = true;
-                        int  line        = __LINE__;
-                        const char* file = __FILE__;
-                        const char* exp  = "atomic_index[index] == 0";
-                        //
-                        // CppAD error handler
-                        ErrorHandler::Call(
-                            known, line, file, exp, msg.c_str()
-                        );
-                    }
-                    atomic_name2index[graph_index] = index_in;
+            size_t graph_index = graph_obj.atomic_name_vec_find(name);
+            if( graph_index != n_graph_atomic )
+            {   if( atomic_name2index[graph_index] != 0 )
+                {   std::string msg = "from_graph: error in call to ";
+                    msg += name + ".\n";
+                    msg += "There is more than one atmimc ";
+                    msg += "function with this name";
+                    //
+                    // use this source code as point of detection
+                    bool known       = true;
+                    int  line        = __LINE__;
+                    const char* file = __FILE__;
+                    const char* exp  = "atomic_index[index] == 0";
+                    //
+                    // CppAD error handler
+                    ErrorHandler::Call(
+                        known, line, file, exp, msg.c_str()
+                    );
                 }
+                atomic_name2index[graph_index] = index_in;
             }
         }
     }
@@ -649,7 +647,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             {   std::string msg = "from_graph: error in call to ";
                 msg += graph_obj.atomic_name_vec_get(name_index);
                 msg += ".\n";
-                msg += "No previously defined atomic_three function ";
+                msg += "No previously defined atmimc function ";
                 msg += "has this name";
                 //
                 // use this source code as point of detection
@@ -670,7 +668,9 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             CppAD::local::atomic_index<RecBase>(
                 set_null, atomic_index, type, name, v_ptr
             );
-            CPPAD_ASSERT_UNKNOWN( type == 3 );
+            CPPAD_ASSERT_KNOWN( type == 3 ,
+                "from_graph: attempt to use an atomic function with type != 3"
+            );
             atomic_three<RecBase>* afun =
                 reinterpret_cast< atomic_three<RecBase>* >( v_ptr );
             //
