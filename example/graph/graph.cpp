@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -28,6 +28,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // BEGIN_SORT_THIS_LINE_PLUS_2
 // external compiled tests
 extern bool add_op(void);
+extern bool atom4_op(void);
 extern bool atom_op(void);
 extern bool azmul_op(void);
 extern bool cexp_op(void);
@@ -55,12 +56,13 @@ int main(void)
     // BEGIN_SORT_THIS_LINE_PLUS_2
     // external compiled tests
     Run( add_op,               "add_op"          );
+    Run( atom4_op,             "atom4_op"        );
     Run( atom_op,              "atom_op"         );
     Run( azmul_op,             "azmul_op"        );
     Run( cexp_op,              "cexp_op"         );
     Run( comp_op,              "comp_op"         );
-    Run( div_op,               "div_op"          );
     Run( discrete_op,          "discrete_op"     );
+    Run( div_op,               "div_op"          );
     Run( mul_op,               "mul_op"          );
     Run( pow_op,               "pow_op"          );
     Run( print_graph,          "print_graph"     );

@@ -187,6 +187,7 @@ $childtable%
     example/graph/cexp_op.cpp%
     example/graph/discrete_op.cpp%
     example/graph/atom_op.cpp%
+    example/graph/atom4_op.cpp%
     example/graph/print_op.cpp
 %$$
 

@@ -225,7 +225,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             {   if( atomic_name2index[graph_index] != 0 )
                 {   std::string msg = "from_graph: error in call to ";
                     msg += name + ".\n";
-                    msg += "There is more than one atmimc ";
+                    msg += "There is more than one atomic ";
                     msg += "function with this name";
                     //
                     // use this source code as point of detection
@@ -649,7 +649,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             {   std::string msg = "from_graph: error in call to ";
                 msg += graph_obj.atomic_name_vec_get(name_index);
                 msg += ".\n";
-                msg += "No previously defined atmimc function ";
+                msg += "No previously defined atomic function ";
                 msg += "has this name";
                 //
                 // use this source code as point of detection

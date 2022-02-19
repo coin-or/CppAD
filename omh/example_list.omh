@@ -22,7 +22,6 @@ $$
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $table
-$rref atomic_four_mat_mul_identical_zero.cpp$$
 $rref AddEq.cpp$$
 $rref Rombergmul.cpp$$
 $rref a11c_bthread.cpp$$
@@ -54,6 +53,7 @@ $rref atomic_four_dynamic.cpp$$
 $rref atomic_four_forward.cpp$$
 $rref atomic_four_get_started.cpp$$
 $rref atomic_four_mat_mul_forward.cpp$$
+$rref atomic_four_mat_mul_identical_zero.cpp$$
 $rref atomic_four_mat_mul_rev_depend.cpp$$
 $rref atomic_four_mat_mul_reverse.cpp$$
 $rref atomic_four_mat_mul_sparsity.cpp$$
@@ -169,6 +169,7 @@ $rref function_name.cpp$$
 $rref general.cpp$$
 $rref get_started.cpp$$
 $rref graph_add_op.cpp$$
+$rref graph_atom4_op.cpp$$
 $rref graph_atom_op.cpp$$
 $rref graph_azmul_op.cpp$$
 $rref graph_cexp_op.cpp$$
