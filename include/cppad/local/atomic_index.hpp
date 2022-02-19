@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_ATOMIC_INDEX_HPP
 # define CPPAD_LOCAL_ATOMIC_INDEX_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -15,6 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin atomic_index$$
 $spell
     ptr
+    Cpp
 $$
 
 $section Store and Retrieve Atomic Function Information by Index$$
@@ -33,8 +34,8 @@ $head Base$$
 Is the base type for the tape for the atomic functions
 that we are using an index to identify.
 
-$head Special Case$$
-In the special case,
+$head Get Number Case$$
+The get number case is defined by
 $icode set_null$$ is true and $icode index_in$$ is zero.
 For this case, $icode index_out$$ is set to
 the number of atomic functions stored in $codei%atomic_index<%Base%>%$$
@@ -43,13 +44,19 @@ In this case, the atomic functions correspond to $icode index_in$$ from
 one to $icode index_out$$ inclusive.
 
 $head set_null$$
-If this is not the special case:
-This value should only be true during a call to an atomic function destructor.
-If it is true, the $icode ptr$$ corresponding to $icode index_in$$
-is set to null.
+If $icode set_null$$ is true and $icode index_in$$ is zero,
+this argument is just used to signal the get number case.
+Otherwise, $icode set_null$$
+should only be true during a call to an atomic function destructor.
+In this case, the $icode ptr$$ corresponding to $icode index_in$$
+is set to null
+(so that CppAD knows the corresponding atomic function no longer works).
 
 $head index_in$$
-If this is not the special case:
+If $icode index_in$$ is zero and $icode set_null$$ is true,
+this argument is just used to signal the get number case.
+Otherwise, see below:
+
 
 $subhead zero$$
 The value $icode index_in$$ should only be zero
@@ -64,33 +71,35 @@ If $icode index_in$$ is non-zero,
 the information corresponding to this index is returned.
 
 $head type$$
-If this is not the special case:
-If $icode index_in$$ is zero, $icode type$$ is an input.
-Otherwise it is set to the value corresponding to this index.
-The type corresponding to an index
-is intended to be $code 2$$ for $cref atomic_two$$ functions
-and $code 3$$ for $cref atomic_three$$ functions.
+This argument is not used in the get number case.
+Otherwise if $icode index_in$$ is zero, $icode type$$ is an input.
+Otherwise it is set to the value corresponding to $icode index_in$$.
+The type corresponding to an index is intended to be
+2 for $cref atomic_two$$ functions,
+3 for $cref atomic_three$$ functions, and
+4 for $cref atomic_four$$ functions,
 
 $head name$$
-If this is not the special case:
-If $icode index_in$$ is zero, $code name$$ is an input and must not be null.
+This argument is not used in the get number case.
+Otherwise if $icode index_in$$ is zero,
+$icode name$$ is an input and must not be null.
 Otherwise, if $icode name$$ is not null, $codei%*%name%$$
 is set to the name corresponding to $icode index_in$$.
 Allowing for $icode name$$ to be null avoids
 a string copy when it is not needed.
 
 $head ptr$$
-If this is not the special case:
-If $icode index_in$$ is zero, $icode ptr$$ is an input.
+This argument is not used in the get number case.
+Otherwise if $icode index_in$$ is zero, $icode ptr$$ is an input.
 Otherwise it is set to the value corresponding to $icode index_in$$.
 In the special case where $icode set_null$$ is true,
 $icode ptr$$ is set to the null pointer and this is the $icode ptr$$ value
 corresponding to $icode index_in$$ for future calls to $code atomic_index$$.
 
 $head index_out$$
-If this is not the special case:
-If $icode index_in$$ is zero,
-$icode index_out$$ is non-zero and is the index value
+In the get number case, this is the number of atomic functions.
+Otherwise if $icode index_in$$ is zero,
+$icode index_out$$ is non-zero and is the $icode index_in$$ value
 corresponding to the input values for
 $icode type$$, $codei%*%name%$$, and $icode ptr$$.
 Otherwise, $index_out$$ is zero.

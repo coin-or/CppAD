@@ -200,12 +200,12 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         }
     }
     //
-    // atomic_three_index
+    // atomic_name2index
     // mapping from index in atomic_name_vec to atomic three index
     size_t n_graph_atomic = graph_obj.atomic_name_vec_size();
-    vector<size_t> atomic_three_index( n_graph_atomic );
+    vector<size_t> atomic_name2index( n_graph_atomic );
     for(size_t index = 0; index < n_graph_atomic; ++index)
-        atomic_three_index[index] = 0; // invalid atomic index
+        atomic_name2index[index] = 0; // invalid atomic index
 
     {   bool        set_null = true;
         size_t      index_in = 0;
@@ -223,7 +223,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
             if( type == 3 )
             {   size_t graph_index = graph_obj.atomic_name_vec_find(name);
                 if( graph_index != n_graph_atomic )
-                {   if( atomic_three_index[graph_index] != 0 )
+                {   if( atomic_name2index[graph_index] != 0 )
                     {   std::string msg = "from_graph: error in call to ";
                         msg += name + ".\n";
                         msg += "There is more than one atomic_three ";
@@ -240,7 +240,7 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
                             known, line, file, exp, msg.c_str()
                         );
                     }
-                    atomic_three_index[graph_index] = index_in;
+                    atomic_name2index[graph_index] = index_in;
                 }
             }
         }
@@ -643,8 +643,8 @@ void CppAD::ADFun<Base,RecBase>::from_graph(
         {   size_t name_index = str_index[0];
             //
             // atomic_index
-            CPPAD_ASSERT_UNKNOWN( name_index < atomic_three_index.size() );
-            size_t atomic_index = atomic_three_index[name_index];
+            CPPAD_ASSERT_UNKNOWN( name_index < atomic_name2index.size() );
+            size_t atomic_index = atomic_name2index[name_index];
             if( atomic_index == 0 )
             {   std::string msg = "from_graph: error in call to ";
                 msg += graph_obj.atomic_name_vec_get(name_index);
