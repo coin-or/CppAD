@@ -113,29 +113,28 @@ to the discrete function.
 
 $head Atomic Function$$
 The atomic function operator has a variable number of arguments
-and a variable number of node results.
-The total number of arguments for this operator is three or four
-plus the number of arguments for the function being called.
-Three extra arguments for $cref atomic_three$$ functions and
+and a variable number of result nodes.
+These are three extra arguments for $cref atomic_three$$ functions and
 four extra arguments for $cref atomic_four$$ functions.
+The total number of operator arguments is
+the number of extra arguments
+plus the number of arguments for the function being called.
+The extra arguments come before the function arguments.
 $list number$$
-The first argument is the index in
-$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$ for the
-$cref/name/atomic_three_ctor/atomic_three/name/$$
-of the $code atomic_three$$ function that is called.
+The first argument is function name represented by it's index in the
+$cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$.
 $lnext
-The second argument is the number of result for this function call.
-The order of the results is determined by function being called.
+The second argument is the number of results for this function call.
+The order of the function results is determined by the function being called.
 $lnext
-The third argument is the number of arguments
-for this function call.
+The third argument is the number of arguments for this function call.
 $lnext
 If this is an atomic four function call,
 the fourth argument is the $cref/call_id/atomic_four_call/call_id/$$.
 $lnext
-The other arguments are the indices of nodes for each argument to the
-function call.  The order of the arguments is determined by function
-being called.
+The rest of the operator arguments are the node indices for each of the
+function arguments.
+The order of the function arguments is determined by function being called.
 $lend
 
 $head Print$$

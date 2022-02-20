@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OP_CODE_VAR_HPP
 # define CPPAD_LOCAL_OP_CODE_VAR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -122,8 +122,9 @@ $subhead arg[0]$$
 This is the $cref atomic_index$$ for this function.
 
 $subhead arg[1]$$
-This is the $cref/id/atomic_one/id/$$ information used by an
-old atomic class that has been deprecated
+This is the $cref/call_id/atomic_four_call/call_id/$$ information.
+It is also he $cref/id/atomic_one/id/$$
+for atomic one functions which have been deprecated.
 
 $subhead arg[2]$$
 is the number of arguments to this atomic function.

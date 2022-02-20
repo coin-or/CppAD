@@ -111,8 +111,8 @@ This is set to the number of result nodes for this operator.
 $head call_id_$$
 If $icode op_enum_$$ is $code atom4_graph_op$$,
 $code call_id_$$ is set to the $cref/call_id/atomic_four_call/call_id/$$
-for this funciton call.
-Othrwise it is set to zero.
+for this function call.
+Otherwise it is set to zero.
 
 $head arg_node_$$
 The input value of this argument does not matter.
