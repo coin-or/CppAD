@@ -107,9 +107,9 @@ bool atom4_op(void)
     op_enum = CppAD::graph::atom4_graph_op;
     graph_obj.operator_vec_push_back(op_enum);
     graph_obj.operator_arg_push_back(name_index);  // name_index
+    graph_obj.operator_arg_push_back(call_id);     // call_id
     graph_obj.operator_arg_push_back(1);           // n_result
     graph_obj.operator_arg_push_back(1);           // n_node_arg
-    graph_obj.operator_arg_push_back(call_id);     // call_id
     graph_obj.operator_arg_push_back(3);           // first and last node arg
     //
     // y[0]  = int_pow( p[0] + x[0] ) = ( p[0] + x[0] ) ** call_id

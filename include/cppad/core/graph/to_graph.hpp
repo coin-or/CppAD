@@ -382,9 +382,14 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 if( name_index == graph_obj.atomic_name_vec_size() )
                     graph_obj.atomic_name_vec_push_back(name);
                 //
-                // for atom_graph_op:
-                // name_index, n_result, n_arg come before first_node
+                // atom_graph_op:
+                // name_index, n_result, n_arg (before first_node)
+                //
+                // atom4_graph_op:
+                // name_index, call_id, n_result, n_arg (before first_node)
                 graph_obj.operator_arg_push_back(name_index);
+                if( type == 4 )
+                    graph_obj.operator_arg_push_back(call_id);
                 graph_obj.operator_arg_push_back(n_result);
                 graph_obj.operator_arg_push_back(n_arg);
                 //
@@ -393,7 +398,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 else
                 {   CPPAD_ASSERT_UNKNOWN( type == 4 );
                     graph_op = atom4_graph_op;
-                    graph_obj.operator_arg_push_back(call_id);
                 }
                 //
                 graph_obj.operator_vec_push_back( graph_op );
@@ -1107,8 +1111,13 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                     graph_obj.atomic_name_vec_push_back(name);
                 //
                 // for atom_graph_op:
-                // name_index, n_result, n_arg come before first_node
+                // name_index, n_result, n_arg (before first_node)
+                //
+                // for atom4_graph_op:
+                // name_index, call_id, n_result, n_arg (before first_node)
                 graph_obj.operator_arg_push_back(name_index);
+                if( type == 4 )
+                    graph_obj.operator_arg_push_back(call_id);
                 graph_obj.operator_arg_push_back(n_result);
                 graph_obj.operator_arg_push_back(n_arg);
                 if( type == 3 )
@@ -1116,7 +1125,6 @@ void CppAD::ADFun<Base,RecBase>::to_graph(
                 else
                 {   CPPAD_ASSERT_UNKNOWN( type == 4 );
                     graph_op = atom4_graph_op;
-                    graph_obj.operator_arg_push_back(call_id);
                 }
                 graph_obj.operator_vec_push_back( graph_op );
                 for(size_t i = 0; i < n_arg; ++i)

@@ -120,17 +120,20 @@ The total number of operator arguments is
 the number of extra arguments
 plus the number of arguments for the function being called.
 The extra arguments come before the function arguments.
+
 $list number$$
-The first argument is function name represented by it's index in the
+The first operator argument is function name represented by it's index in the
 $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$.
 $lnext
-The second argument is the number of results for this function call.
+If this is an atomic four function call,
+the second operator argument is the $cref/call_id/atomic_four_call/call_id/$$.
+$lnext
+In the atomic three (atomic four) case, second (third) operator argument
+is the number of results for this function call.
 The order of the function results is determined by the function being called.
 $lnext
-The third argument is the number of arguments for this function call.
-$lnext
-If this is an atomic four function call,
-the fourth argument is the $cref/call_id/atomic_four_call/call_id/$$.
+In the atomic three (atomic four) case, the third (fourth) operator argument
+is the number of arguments for this function call.
 $lnext
 The rest of the operator arguments are the node indices for each of the
 function arguments.

@@ -112,7 +112,8 @@ $head call_id_$$
 If $icode op_enum_$$ is $code atom4_graph_op$$,
 $code call_id_$$ is set to the $cref/call_id/atomic_four_call/call_id/$$
 for this function call.
-Otherwise it is set to zero.
+If $icode op_enum_$$ is $code atom_graph_op$$,
+$code call_id$$ is set to zero.
 
 $head arg_node_$$
 The input value of this argument does not matter.
@@ -131,7 +132,7 @@ $end
     size_t n_arg      = invalid_index;
     first_node_       = invalid_index;
     n_result_         = invalid_index;
-    call_id_          = 0;
+    call_id_          = invalid_index;
     str_index_.resize(0);
     arg_node_.resize(0);
     //
@@ -193,6 +194,7 @@ $end
         case atom_graph_op:
         first_node_ = first_arg_ + 3;
         str_index_.push_back( (*operator_arg_)[first_node_ - 3] );
+        call_id_    = 0;
         n_result_   = (*operator_arg_)[first_node_ - 2];
         n_arg       = (*operator_arg_)[first_node_ - 1];
         break;
@@ -201,9 +203,9 @@ $end
         case atom4_graph_op:
         first_node_ = first_arg_ + 4;
         str_index_.push_back( (*operator_arg_)[first_node_ - 4] );
-        n_result_   = (*operator_arg_)[first_node_ - 3];
-        n_arg       = (*operator_arg_)[first_node_ - 2];
-        call_id_    = (*operator_arg_)[first_node_ - 1];
+        call_id_    = (*operator_arg_)[first_node_ - 3];
+        n_result_   = (*operator_arg_)[first_node_ - 2];
+        n_arg       = (*operator_arg_)[first_node_ - 1];
         break;
 
         // print_graph_op
