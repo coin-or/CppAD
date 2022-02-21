@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Json AD Graph Operator Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Json AD Graph Operator Definitions">
-<meta name="keywords" id="keywords" content=" json ad graph operator definitions notation op_code arguments unary operators example binary add azmul div mul pow sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare n_result n_arg left right comp_eq comp_le comp_lt comp_ne discrete functions name arg atomic first_arg ... last_arg print before after notpos value ">
+<meta name="keywords" id="keywords" content=" json ad graph operator definitions notation op_code arguments unary operators example binary add azmul div mul pow sub sum conditional expressions cexp_eq cexp_le cexp_lt other comparisons compare n_result n_arg left right comp_eq comp_le comp_lt comp_ne discrete functions name arg atomic three four call_id first_arg ... last_arg print before after notpos value ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -105,7 +105,10 @@ A:active { color : purple }
 <option>---..arg</option>
 <option>---..Example</option>
 <option>Atomic Functions</option>
+<option>---..Atomic Three</option>
+<option>---..Atomic Four</option>
 <option>---..name</option>
+<option>---..call_id</option>
 <option>---..n_result</option>
 <option>---..n_arg</option>
 <option>---..first_arg, ..., last_arg</option>
@@ -663,6 +666,17 @@ the example and test <a href="json_discrete_op.cpp.htm" target="_top"><span styl
 <br>
 <b><big><a name="Atomic Functions" id="Atomic Functions">Atomic Functions</a></big></b>
 <br>
+These operators create 
+<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
+ nodes with values determined by
+an evaluation of the an <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ or <a href="atomic_four.htm" target="_top"><span style='white-space: nowrap'>atomic_four</span></a>
+ function.
+
+<br>
+<br>
+<big><a name="Atomic Functions.Atomic Three" id="Atomic Functions.Atomic Three">Atomic Three</a></big>
+<br>
 This operator has the following Json definition:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -680,12 +694,26 @@ A corresponding
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;]<br>
 </span></font></code>
-This operator creates 
-<code><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i></code>
- nodes with values equal to
-an evaluation of the <code><font color="blue">atomic_three</font></code> function.
-
 <br>
+<big><a name="Atomic Functions.Atomic Four" id="Atomic Functions.Atomic Four">Atomic Four</a></big>
+<br>
+This operator has the following Json definition:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;op_code&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&quot;name&quot;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;atom4&quot;<br>
+}<br>
+</span></font></code>
+A corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>op_usage</span></font></i></code>
+ has the form
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>op_code</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_result</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>first_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>last_arg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+</span></font></code>
 <br>
 <big><a name="Atomic Functions.name" id="Atomic Functions.name">name</a></big>
 <br>
@@ -697,6 +725,16 @@ The value
 <a href="atomic_three_ctor.htm#atomic_three.name" target="_top"><span style='white-space: nowrap'>name</span></a>
 
 of the <code><font color="blue">atomic_three</font></code> function that is called.
+
+<br>
+<br>
+<big><a name="Atomic Functions.call_id" id="Atomic Functions.call_id">call_id</a></big>
+<br>
+is a <a href="json_ad_graph.htm#Token.Non-Negative Integer" target="_top"><span style='white-space: nowrap'>non-negative&nbsp;integer</span></a>
+
+specifying the <a href="atomic_four_call.htm#call_id" target="_top"><span style='white-space: nowrap'>call_id</span></a>
+ for an
+atomic four function.
 
 <br>
 <br>
@@ -812,7 +850,7 @@ of this operator.
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_azmul_op.cpp.htm" target="_top">json_azmul_op.cpp</a></td><td>Json&nbsp;azmul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_discrete_op.cpp.htm" target="_top">json_discrete_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_pow_op.cpp.htm" target="_top">json_pow_op.cpp</a></td><td>Json&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_print_op.cpp.htm" target="_top">json_print_op.cpp</a></td><td>Json&nbsp;AD&nbsp;Graph&nbsp;print&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="json_unary_op.cpp.htm" target="_top">json_unary_op.cpp</a></td><td>Json&nbsp;Unary&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_add_op.cpp.htm" target="_top">json_add_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_azmul_op.cpp.htm" target="_top">json_azmul_op.cpp</a></td><td>Json&nbsp;azmul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_div_op.cpp.htm" target="_top">json_div_op.cpp</a></td><td>Json&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_mul_op.cpp.htm" target="_top">json_mul_op.cpp</a></td><td>Json&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_pow_op.cpp.htm" target="_top">json_pow_op.cpp</a></td><td>Json&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sub_op.cpp.htm" target="_top">json_sub_op.cpp</a></td><td>Json&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_sum_op.cpp.htm" target="_top">json_sum_op.cpp</a></td><td>Json&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_cexp_op.cpp.htm" target="_top">json_cexp_op.cpp</a></td><td>Json&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_comp_op.cpp.htm" target="_top">json_comp_op.cpp</a></td><td>Json&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_discrete_op.cpp.htm" target="_top">json_discrete_op.cpp</a></td><td>Json&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom_op.cpp.htm" target="_top">json_atom_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Three&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_atom4_op.cpp.htm" target="_top">json_atom4_op.cpp</a></td><td>Json&nbsp;Atomic&nbsp;Function&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="json_print_op.cpp.htm" target="_top">json_print_op.cpp</a></td><td>Json&nbsp;AD&nbsp;Graph&nbsp;print&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/graph/json_graph_op.omh
 
 </body>

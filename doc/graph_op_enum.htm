@@ -207,29 +207,39 @@ to the discrete function.
 <b><big><a name="Atomic Function" id="Atomic Function">Atomic Function</a></big></b>
 <br>
 The atomic function operator has a variable number of arguments
-and a variable number of node results.
-The total number of arguments for this operator is three plus the number
-of arguments for the function being called.
+and a variable number of result nodes.
+These are three extra arguments for <a href="atomic_three.htm" target="_top"><span style='white-space: nowrap'>atomic_three</span></a>
+ functions and
+four extra arguments for <a href="atomic_four.htm" target="_top"><span style='white-space: nowrap'>atomic_four</span></a>
+ functions.
+The total number of operator arguments is
+the number of extra arguments
+plus the number of arguments for the function being called.
+The extra arguments come before the function arguments.
+
 <ol type="1"><li>
-The first argument is the index in
+The first operator argument is function name represented by it's index in the
 <a href="cpp_ad_graph.htm#atomic_name_vec" target="_top"><span style='white-space: nowrap'>atomic_name_vec</span></a>
- for the
-<a href="atomic_three_ctor.htm#atomic_three.name" target="_top"><span style='white-space: nowrap'>name</span></a>
-
-of the <code><font color="blue">atomic_three</font></code> function that is called.
+.
 </li><li>
 
-The second argument is the number of result for this function call.
-The order of the results is determined by function being called.
+If this is an atomic four function call,
+the second operator argument is the <a href="atomic_four_call.htm#call_id" target="_top"><span style='white-space: nowrap'>call_id</span></a>
+.
 </li><li>
 
-The third argument is the number of arguments
-for this function call.
+In the atomic three (atomic four) case, second (third) operator argument
+is the number of results for this function call.
+The order of the function results is determined by the function being called.
 </li><li>
 
-The other arguments are the indices of nodes for each argument to the
-function call.  The order of the arguments is determined by function
-being called.
+In the atomic three (atomic four) case, the third (fourth) operator argument
+is the number of arguments for this function call.
+</li><li>
+
+The rest of the operator arguments are the node indices for each of the
+function arguments.
+The order of the function arguments is determined by function being called.
 </li></ol>
 
 
@@ -298,7 +308,8 @@ An operator for the <a href="atomic_two.htm" target="_top"><span style='white-sp
         asinh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary: inverse hyperbolic sine</font></i>
         atan_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// unary: inverse tangent</font></i>
         atanh_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// unary: inverse hyperbolic tangent</font></i>
-        atom_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// atomic function</font></i>
+        atom_graph_op<font color="#990000">,</font>     <i><font color="#9A1900">// atomic three function call</font></i>
+        atom4_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// atomic four function call</font></i>
         azmul_graph_op<font color="#990000">,</font>    <i><font color="#9A1900">// binary: absolute zero multiplication</font></i>
         cexp_eq_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression: ==</font></i>
         cexp_le_graph_op<font color="#990000">,</font>  <i><font color="#9A1900">// conditional expression: &lt;=</font></i>
@@ -341,7 +352,7 @@ An operator for the <a href="atomic_two.htm" target="_top"><span style='white-sp
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="graph_azmul_op.cpp.htm" target="_top">graph_azmul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_add_op.cpp.htm" target="_top">graph_add_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_div_op.cpp.htm" target="_top">graph_div_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_mul_op.cpp.htm" target="_top">graph_mul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_pow_op.cpp.htm" target="_top">graph_pow_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sub_op.cpp.htm" target="_top">graph_sub_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_unary_op.cpp.htm" target="_top">graph_unary_op.cpp</a></td><td>Graph&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sum_op.cpp.htm" target="_top">graph_sum_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_comp_op.cpp.htm" target="_top">graph_comp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_cexp_op.cpp.htm" target="_top">graph_cexp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_discrete_op.cpp.htm" target="_top">graph_discrete_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_atom_op.cpp.htm" target="_top">graph_atom_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Atomic&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_print_op.cpp.htm" target="_top">graph_print_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;print&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="graph_azmul_op.cpp.htm" target="_top">graph_azmul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_add_op.cpp.htm" target="_top">graph_add_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_div_op.cpp.htm" target="_top">graph_div_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;div&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_mul_op.cpp.htm" target="_top">graph_mul_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;mul&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_pow_op.cpp.htm" target="_top">graph_pow_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;pow&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sub_op.cpp.htm" target="_top">graph_sub_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sub&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_unary_op.cpp.htm" target="_top">graph_unary_op.cpp</a></td><td>Graph&nbsp;Unary&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_sum_op.cpp.htm" target="_top">graph_sum_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;sum&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_comp_op.cpp.htm" target="_top">graph_comp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Comparison&nbsp;Operators:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_cexp_op.cpp.htm" target="_top">graph_cexp_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Conditional&nbsp;Expressions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_discrete_op.cpp.htm" target="_top">graph_discrete_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;add&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_atom_op.cpp.htm" target="_top">graph_atom_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Atomic&nbsp;Three&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_atom4_op.cpp.htm" target="_top">graph_atom4_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;Atomic&nbsp;Four&nbsp;Functions:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="graph_print_op.cpp.htm" target="_top">graph_print_op.cpp</a></td><td>C++&nbsp;AD&nbsp;Graph&nbsp;print&nbsp;Operator:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/core/graph/graph_op_enum.hpp
 
 </body>
