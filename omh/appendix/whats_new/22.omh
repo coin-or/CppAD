@@ -22,14 +22,20 @@ $spell
     cppad_lib
     hpp
     rc
+    json
 $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 02-21$$
+Extend the json graph representation to include
+$cref/atomic four/json_graph_op/Atomic Functions/Atomic Four/$$ functions.
+For example, see $cref json_atom4_op.cpp$$.
+
 $head 02-19$$
 Extend the C++ graph representation to include atomic four
 $cref/atomic functions/graph_op_enum/Atomic Function/$$.
-For example, see $cref graph_atom4_op.cpp$$
+For example, see $cref graph_atom4_op.cpp$$.
 
 $head 02-18$$
 Fixed the value of $icode%after%[%i%]%$$ in the

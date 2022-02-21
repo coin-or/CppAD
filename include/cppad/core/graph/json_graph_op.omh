@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -332,6 +332,10 @@ the example and test $cref json_discrete_op.cpp$$.
 
 
 $head Atomic Functions$$
+These operators create $icode n_result$$ nodes with values determined by
+an evaluation of the an $cref atomic_three$$ or $cref atomic_four$$ function.
+
+$subhead Atomic Three$$
 This operator has the following Json definition:
 $codei%
 {
@@ -345,14 +349,32 @@ $codei%
         [ %first_arg%, %...%, %last_arg% ]
     ]
 %$$
-This operator creates $icode n_result$$ nodes with values equal to
-an evaluation of the $code atomic_three$$ function.
+
+$subhead Atomic Four$$
+This operator has the following Json definition:
+$codei%
+{
+    "op_code":      %op_code%,
+    "name":          "atom4"
+}
+%$$
+A corresponding $icode op_usage$$ has the form
+$codei%
+    [ %op_code%, %name%, %call_id%, %n_result%, %n_arg%,
+        [ %first_arg%, %...%, %last_arg% ]
+    ]
+%$$
 
 $subhead name$$
 The value $icode name$$ is a
 $cref/string/json_ad_graph/Token/String/$$ specifying the
 $cref/name/atomic_three_ctor/atomic_three/name/$$
 of the $code atomic_three$$ function that is called.
+
+$subhead call_id$$
+is a $cref/non-negative integer/json_ad_graph/Token/Non-Negative Integer/$$
+specifying the $cref/call_id/atomic_four_call/call_id/$$ for an
+atomic four function.
 
 $subhead n_result$$
 is the number of results for this function; i.e.,
@@ -416,16 +438,17 @@ $childtable%
     example/json/unary_op.cpp%
     example/json/add_op.cpp%
     example/json/azmul_op.cpp%
-    example/json/discrete_op.cpp%
     example/json/div_op.cpp%
     example/json/mul_op.cpp%
     example/json/pow_op.cpp%
-    example/json/print_op.cpp%
     example/json/sub_op.cpp%
     example/json/sum_op.cpp%
-    example/json/comp_op.cpp%
     example/json/cexp_op.cpp%
-    example/json/atom_op.cpp
+    example/json/comp_op.cpp%
+    example/json/discrete_op.cpp%
+    example/json/atom_op.cpp%
+    example/json/atom4_op.cpp%
+    example/json/print_op.cpp
 %$$
 
 $end

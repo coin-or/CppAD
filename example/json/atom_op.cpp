@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -16,7 +16,7 @@ $spell
     Json
 $$
 
-$section Json Atomic Function Operator: Example and Test$$
+$section Json Atomic Function Three Operator: Example and Test$$
 
 $head Source Code$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

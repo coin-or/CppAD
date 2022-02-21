@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -176,6 +176,7 @@ void CppAD::local::graph::json_parser(
         graph_op_enum op_enum    = op_code2enum[ json_lexer.token2size_t() ];
         json_lexer.check_next_char(',');
         //
+        size_t call_id  = std::numeric_limits<size_t>::max();
         size_t n_result = 1;
         size_t n_arg    = op_enum2fixed_n_arg[op_enum];
         //
@@ -193,7 +194,7 @@ void CppAD::local::graph::json_parser(
                     graph_obj.discrete_name_vec_push_back( name );
                 str_index.push_back(name_index);
             }
-            else if( op_enum == atom_graph_op )
+            else if( op_enum == atom_graph_op || op_enum == atom4_graph_op )
             {   // name
                 json_lexer.check_next_string(match_any_string);
                 string name = json_lexer.token();
@@ -232,6 +233,11 @@ void CppAD::local::graph::json_parser(
                 op_enum == comp_ne_graph_op ||
                 op_enum == sum_graph_op
             );
+            if( op_enum == atom4_graph_op )
+            {   json_lexer.next_non_neg_int();
+                call_id = json_lexer.token2size_t();
+                json_lexer.check_next_char(',');
+            }
             // n_result,
             json_lexer.next_non_neg_int();
             n_result = json_lexer.token2size_t();
@@ -245,13 +251,18 @@ void CppAD::local::graph::json_parser(
         }
         //
         // atom_graph_op: name_index, n_result, n_arg
-        // come before first argument
-        if( op_enum == atom_graph_op )
+        // come before first function argument
+        //
+        // atom4_graph_op: name_index, call_id, n_result, n_arg
+        // come before first function argument
+        if( op_enum == atom_graph_op || op_enum == atom4_graph_op )
         {   // name_index, n_result, n_arg come before first_node
             size_t name_index = str_index[0];
             CPPAD_ASSERT_UNKNOWN(
                 name_index < graph_obj.atomic_name_vec_size()
             );
+            if( op_enum == atom4_graph_op )
+                graph_obj.operator_arg_push_back( call_id );
             graph_obj.operator_arg_push_back( name_index );
             graph_obj.operator_arg_push_back( n_result );
             graph_obj.operator_arg_push_back( n_arg );

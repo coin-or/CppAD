@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -107,6 +107,7 @@ void CppAD::local::graph::json_writer(
         cpp_graph::const_iterator::value_type itr_value = *graph_itr;
         const vector<size_t>& str_index( *itr_value.str_index_ptr );
         graph_op_enum op_enum    = itr_value.op_enum;
+        size_t        call_id    = itr_value.call_id;
         size_t        n_result   = itr_value.n_result;
         size_t        n_arg      = itr_value.arg_node_ptr->size();
         arg.resize(n_arg);
@@ -132,13 +133,16 @@ void CppAD::local::graph::json_writer(
             break;
 
             // --------------------------------------------------------------
-            // atom
+            // atom, atom4
             case atom_graph_op:
+            case atom4_graph_op:
             {   size_t name_index = str_index[0];
                 string name = graph_obj.atomic_name_vec_get(name_index);
                 json += "[ " + to_string(op_code) + ", ";
                 json += "'" + name + "', ";
             }
+            if( op_enum == atom4_graph_op )
+                json += to_string(call_id) + ", ";
             json += to_string(n_result) + ", ";
             json += to_string(n_arg) + ", [";
             for(size_t j = 0; j < n_arg; ++j)
