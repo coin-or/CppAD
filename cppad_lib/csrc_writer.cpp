@@ -20,14 +20,37 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace {
     void binary_operator(
-        std::string& csrc   ,
-        const char* op      ,
-        size_t result_node  ,
-        size_t left_node    ,
-        size_t right_node   )
-    {   csrc += "\tv[" + CppAD::to_string(result_node) + "] = ";
-        csrc += "v[" + CppAD::to_string(left_node) + "] " + op + " ";
-        csrc += "v[" + CppAD::to_string(right_node) + "];\n";
+        std::string& csrc        ,
+        const char* op           ,
+        size_t result_node       ,
+        size_t first_result_node ,
+        size_t left_node         ,
+        size_t right_node        )
+    {   //
+        // result =
+        CPPAD_ASSERT_UNKNOWN( first_result_node <= result_node );
+        size_t index = result_node - first_result_node;
+        csrc += "\tv[" + CppAD::to_string(index) + "] = ";
+        //
+        // result = left op
+        if( left_node < first_result_node )
+        {   index = left_node - 1;
+            csrc += "x[" + CppAD::to_string(index) + "] " + op + " ";
+        }
+        else
+        {   index = result_node - first_result_node;
+            csrc += "v[" + CppAD::to_string(index) + "] " + op + " ";
+        }
+        //
+        // result = left op right;
+        if( right_node < first_result_node )
+        {   index = right_node - 1;
+            csrc += "x[" + CppAD::to_string(index) + "];\n";
+        }
+        else
+        {   index = result_node - first_result_node;
+            csrc += "v[" + CppAD::to_string(index) + "];\n";
+        }
     }
 }
 
@@ -90,12 +113,13 @@ void CppAD::local::graph::csrc_writer(
     //
     csrc += "{\t// begin function body \n";
     //
-    // v, i
+    // n_v, v, i
+    size_t n_v = n_node - first_result_node;
     csrc +=
         "\t// declare variables\n"
-        "\tdouble v[" + to_string(n_node) + "];\n"
+        "\tsize_t n_v = " + to_string(n_v) + ";\n"
+        "\tdouble v[" + to_string(n_v) + "];\n"
         "\tsize_t i;\n"
-        "\tdouble nan = 0.0 / 0.0;\n"
         "\n";
     //
     // n_x
@@ -108,18 +132,11 @@ void CppAD::local::graph::csrc_writer(
     //
     csrc +=
         "\n"
-        "\t*compare_change = 0;   // initialize\n"
-        "\tv[0]            = nan; // set v[0]\n";
+        "\t*compare_change = 0;   // initialize\n";
     //
     csrc +=
         "\n"
-        "\t// set v[i] for i = 1, ..., nx\n"
-        "\tfor(i = 0; i < n_x; ++i)\n"
-        "\t\tv[1+i] = x[i];\n";
-    //
-    csrc +=
-        "\n"
-        "\t// set v[i] for i = n_x+1, ..., " + to_string(n_node+1) + "\n";
+        "\t// set v[i] for i = 0, ..., n_v-1\n";
     //
     // arg
     // defined here to avoid memory re-allocation for each operator
@@ -147,31 +164,43 @@ void CppAD::local::graph::csrc_writer(
         arg.resize(n_arg);
         arg                      = *(itr_value.arg_node_ptr);
         CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
+# ifndef NDEBUG
+        for(size_t i = 0; i < n_arg; ++i)
+            CPPAD_ASSERT_UNKNOWN( 0 < arg[i] );
+# endif
         //
         switch( op_enum )
         {   //
             // add
             case add_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, "+", result_node, arg[0], arg[1]);
+            binary_operator(
+                csrc, "+", result_node, first_result_node, arg[0], arg[1]
+            );
             break;
             //
             // div
             case div_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, "/", result_node, arg[0], arg[1]);
+            binary_operator(
+                    csrc, "/", result_node, first_result_node, arg[0], arg[1]
+            );
             break;
             //
             // mul
             case mul_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, "*", result_node, arg[0], arg[1]);
+            binary_operator(
+                    csrc, "*", result_node, first_result_node, arg[0], arg[1]
+            );
             break;
             //
             // sub
             case sub_graph_op:
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, "-", result_node, arg[0], arg[1]);
+            binary_operator(
+                    csrc, "-", result_node, first_result_node, arg[0], arg[1]
+            );
             break;
 
             default:
@@ -192,8 +221,12 @@ void CppAD::local::graph::csrc_writer(
         "\t// set y[i] for i = 0, n_y-1\n";
     for(size_t i = 0; i < n_y; ++i)
     {   size_t node = graph_obj.dependent_vec_get(i);
+        CPPAD_ASSERT_UNKNOWN( 0 < node );
         csrc += "\ty[" + to_string(i) + "] = ";
-        csrc += "v[" + to_string( node ) + "];\n";
+        if( node < first_result_node )
+            csrc += "x[" + to_string( node - 1 ) + "];\n";
+        else
+            csrc += "v[" + to_string( node - first_result_node ) + "];\n";
     }
     // ----------------------------------------------------------------------
     // end function body
