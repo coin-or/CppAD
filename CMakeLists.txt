@@ -100,6 +100,12 @@ ENDIF( NOT cplusplus_201100_ok  )
 # =============================================================================
 # Argumentd that are no longer used
 #
+IF( debug_which )
+    MESSAGE(FATAL_ERROR
+        "Using debug_which, use cppad_debug_which instead or CMAKE_BUILD_TYPE"
+    )
+ENDIF( debug_which )
+#
 IF( cppad_sparse_list )
     MESSAGE(FATAL_ERROR
         "cppad_sparse_list has been removed from cmake command"
@@ -200,11 +206,6 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 #
 # cppad_debug_which
 # CMAKE_BUILD_TYPE
-IF( NOT debug_which )
-    SET(debug_which "" CACHE STRING
-        "debug_even, debug_odd, debug_all, debug_none, or empty string"
-    )
-ENDIF( NOT debug_which )
 IF( NOT ${cppad_debug_which} STREQUAL "" )
     assert_value_in_set(
         cppad_debug_which debug_even debug_odd debug_all debug_none
