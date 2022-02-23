@@ -2,7 +2,7 @@
 # define CPPAD_CORE_GRAPH_TO_JSON_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -70,9 +70,7 @@ $end
 template <class Base, class RecBase>
 std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 // END_PROTOTYPE
-{   using local::pod_vector;
-    using local::opcode_t;
-    //
+{   //
     // to_graph return values
     cpp_graph graph_obj;
     //
