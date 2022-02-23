@@ -133,9 +133,10 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 libcppad_lib_a_AR = $(AR) $(ARFLAGS)
 libcppad_lib_a_LIBADD =
-am_libcppad_lib_a_OBJECTS = cppad_colpack.$(OBJEXT) \
-	json_lexer.$(OBJEXT) cpp_graph_op.$(OBJEXT) \
-	json_parser.$(OBJEXT) json_writer.$(OBJEXT)
+am_libcppad_lib_a_OBJECTS = cpp_graph_op.$(OBJEXT) \
+	cppad_colpack.$(OBJEXT) csrc_writer.$(OBJEXT) \
+	json_lexer.$(OBJEXT) json_parser.$(OBJEXT) \
+	json_writer.$(OBJEXT)
 libcppad_lib_a_OBJECTS = $(am_libcppad_lib_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -153,8 +154,9 @@ DEFAULT_INCLUDES =
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/cpp_graph_op.Po \
-	./$(DEPDIR)/cppad_colpack.Po ./$(DEPDIR)/json_lexer.Po \
-	./$(DEPDIR)/json_parser.Po ./$(DEPDIR)/json_writer.Po
+	./$(DEPDIR)/cppad_colpack.Po ./$(DEPDIR)/csrc_writer.Po \
+	./$(DEPDIR)/json_lexer.Po ./$(DEPDIR)/json_parser.Po \
+	./$(DEPDIR)/json_writer.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -225,7 +227,7 @@ CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -377,11 +379,13 @@ AM_CXXFLAGS = \
 	-I$(top_srcdir)/include
 
 #
+# BEGIN_SORT_THIS_LINE_PLUS_3
 lib_LIBRARIES = libcppad_lib.a
 libcppad_lib_a_SOURCES = \
-	cppad_colpack.cpp \
-	json_lexer.cpp \
 	cpp_graph_op.cpp \
+	cppad_colpack.cpp \
+	csrc_writer.cpp \
+	json_lexer.cpp \
 	json_parser.cpp \
 	json_writer.cpp
 
@@ -463,6 +467,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp_graph_op.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_colpack.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/csrc_writer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_lexer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_parser.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_writer.Po@am__quote@ # am--include-marker
@@ -618,6 +623,7 @@ clean-am: clean-generic clean-libLIBRARIES mostlyclean-am
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/cpp_graph_op.Po
 	-rm -f ./$(DEPDIR)/cppad_colpack.Po
+	-rm -f ./$(DEPDIR)/csrc_writer.Po
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f ./$(DEPDIR)/json_writer.Po
@@ -668,6 +674,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/cpp_graph_op.Po
 	-rm -f ./$(DEPDIR)/cppad_colpack.Po
+	-rm -f ./$(DEPDIR)/csrc_writer.Po
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f ./$(DEPDIR)/json_writer.Po
@@ -706,6 +713,7 @@ uninstall-am: uninstall-libLIBRARIES
 
 .PRECIOUS: makefile
 
+# END_SORT_THIS_LINE_MINUS_1
 
 # autotools version of install does not support CppADCodeGen but need source
 # here so that bin/check_makefile.sh knows not using it is OK.

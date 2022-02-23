@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_FUN_HPP
 # define CPPAD_CORE_AD_FUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -318,9 +318,10 @@ public:
         const vector<bool>& var2dyn
     );
 
-    // create a Json or C++ AD graph
-    std::string to_json(void);
+    // convert function to  a C++ graph, Json graph, or C source code
     void to_graph(cpp_graph& graph_obj);
+    std::string to_json(void);
+    std::string to_csrc(void);
 
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)
@@ -878,5 +879,6 @@ public:
 # include <cppad/core/abs_normal_fun.hpp>
 # include <cppad/core/graph/from_json.hpp>
 # include <cppad/core/graph/to_json.hpp>
+# include <cppad/core/graph/to_csrc.hpp>
 
 # endif

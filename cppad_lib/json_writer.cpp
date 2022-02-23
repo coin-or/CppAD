@@ -13,6 +13,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/core/graph/cpp_graph.hpp>
+# include <cppad/utility/to_string.hpp>
+# include <cppad/utility/vector.hpp>
 
 // documentation for this routine is in the file below
 # include <cppad/local/graph/json_writer.hpp>

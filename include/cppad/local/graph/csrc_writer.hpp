@@ -1,5 +1,5 @@
-# ifndef CPPAD_LOCAL_GRAPH_JSON_WRITER_HPP
-# define CPPAD_LOCAL_GRAPH_JSON_WRITER_HPP
+# ifndef CPPAD_LOCAL_GRAPH_CSRC_WRITER_HPP
+# define CPPAD_LOCAL_GRAPH_CSRC_WRITER_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
@@ -17,30 +17,29 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 # include <cppad/local/graph/cpp_graph_op.hpp>
 
 /*
-$begin json_writer$$
+$begin csrc_writer$$
 $spell
-    Json
     CppAD
     obj
 $$
 
-$section Json AD Graph Writer$$
+$section C Source Code Writer$$
 
 $head Syntax$$
-$codei%json_writer( %json%, %graph_obj% )%$$
+$codei%csrc_writer( %csrc%, %graph_obj% )%$$
 
-$head json$$
-The input value of $icode json$$ does not matter,
-upon return it a $cref/json/json_ad_graph/$$ representation of the AD graph.
+$head csrc$$
+The input value of $icode csrc$$ does not matter,
+upon return it a C source code representation of an AD function.
 
 $head graph_obj$$
-This is a $code cpp_graph$$ object.
+This is a $code cpp_graph$$ representation of the function.
 
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
-    CPPAD_LIB_EXPORT void json_writer(
-        std::string&       json        ,
+    CPPAD_LIB_EXPORT void csrc_writer(
+        std::string&       csrc        ,
         const cpp_graph&   graph_obj
     );
 } } }
