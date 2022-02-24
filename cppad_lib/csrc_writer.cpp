@@ -25,6 +25,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 
 namespace {
+    //
+    // binary_operator
     void binary_operator(
         std::string& csrc   ,
         const char* op      ,
@@ -154,30 +156,24 @@ void CppAD::local::graph::csrc_writer(
         arg                      = *(itr_value.arg_node_ptr);
         CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
         //
+        // op_csrc
+        const char* op_csrc = nullptr;
         switch( op_enum )
         {   //
-            // add
             case add_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, "+", result_node, arg[0], arg[1]);
+            op_csrc = "+";
             break;
             //
-            // div
             case div_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, "/", result_node, arg[0], arg[1]);
+            op_csrc = "/";
             break;
             //
-            // mul
             case mul_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, "*", result_node, arg[0], arg[1]);
+            op_csrc = "*";
             break;
             //
-            // sub
             case sub_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, "-", result_node, arg[0], arg[1]);
+            op_csrc = "-";
             break;
 
             default:
@@ -185,6 +181,21 @@ void CppAD::local::graph::csrc_writer(
                 msg = "f.to_csrc: The " + msg + " is not yet implemented.";
                 CPPAD_ASSERT_KNOWN(false, msg.c_str() );
             }
+            break;
+        }
+        switch( op_enum )
+        {   //
+            // add
+            case add_graph_op:
+            case div_graph_op:
+            case mul_graph_op:
+            case sub_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+            binary_operator(csrc, op_csrc, result_node, arg[0], arg[1]);
+            break;
+
+            default:
+            CPPAD_ASSERT_UNKNOWN(false);
             break;
         }
         //
