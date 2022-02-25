@@ -12,7 +12,63 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/cppad.hpp>
 # include <dlfcn.h>
 
-bool to_csrc(void)
+namespace{ // BEGIN_EMPTY_NAMESPACE
+
+void (*call_test_to_csrc)(
+    size_t        call_id,
+    size_t        n_x,
+    const double* x,
+    size_t        n_y,
+    double*       y,
+    size_t*       compare_change
+);
+
+std::string create_dynamic_library( CppAD::ADFun<double>& f )
+{   bool ok = true;
+    //
+    // function_name
+    std::string function_name = f.function_name_get();
+    //
+    // csrc
+    std::string csrc = f.to_csrc();
+    //
+    // c_file_name
+    std::string c_file_name = "/tmp/" + function_name + ".c";
+    //
+    // o_file_name
+    std::string o_file_name = "/tmp/" + function_name + ".o";
+    //
+    // so_file_name
+    std::string so_file_name = "/tmp/" + function_name + ".so";
+    //
+    // function_name.c
+    {   std::ofstream file;
+        file.open(c_file_name, std::ios::out);
+        file << csrc;
+        file.close();
+    }
+    //
+    // function_name.so
+    int flag = std::system(nullptr);
+    ok      &= flag != 0;
+    if( flag != 0 )
+    {   std::string command =
+            "gcc -c -g -fPIC " + c_file_name + " -o " + o_file_name;
+        flag = std::system( command.c_str() );
+        ok  &= flag == 0;
+        if( flag == 0 )
+        {   command =
+                "gcc -shared " + o_file_name + " -o " + so_file_name;
+            flag = std::system( command.c_str() );
+            ok  &= flag == 0;
+        }
+    }
+    if( ok )
+        return so_file_name;
+    return "";
+ }
+// --------------------------------------------------------------------------
+bool simple_cases(void)
 {   // ok
     bool ok = true;
     //
@@ -25,16 +81,6 @@ bool to_csrc(void)
     //
     // funciton_name
     std::string function_name = "test_to_csrc";
-    //
-    // call_binary_op
-    void (*call_binary_op)(
-        size_t        call_id,
-        size_t        n_x,
-        const double* x,
-        size_t        n_y,
-        double*       y,
-        size_t*       compare_change
-    );
     //
     // n_x, ax
     size_t n_x = 2;
@@ -83,40 +129,11 @@ bool to_csrc(void)
     CppAD::ADFun<double> f(ax, ay);
     f.function_name_set(function_name);
     //
-    // csrc
-    std::string csrc = f.to_csrc();
-    //
-    // c_file_name
-    std::string c_file_name = "/tmp/" + function_name + ".c";
-    //
-    // o_file_name
-    std::string o_file_name = "/tmp/" + function_name + ".o";
-    //
     // so_file_name
-    std::string so_file_name = "/tmp/" + function_name + ".so";
+    std::string so_file_name = create_dynamic_library(f);
     //
-    // binary_op.c
-    {   std::ofstream file;
-        file.open(c_file_name, std::ios::out);
-        file << csrc;
-        file.close();
-    }
-    //
-    // binary_op.so
-    int flag = std::system(nullptr);
-    ok      &= flag != 0;
-    if( flag != 0 )
-    {   std::string command =
-            "gcc -c -g -fPIC " + c_file_name + " -o " + o_file_name;
-        flag = std::system( command.c_str() );
-        ok  &= flag == 0;
-        if( flag == 0 )
-        {   command =
-                "gcc -shared " + o_file_name + " -o " + so_file_name;
-            flag = std::system( command.c_str() );
-            ok  &= flag == 0;
-        }
-    }
+    if( so_file_name == "" )
+        ok = false;
     //
     // handle
     void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
@@ -128,8 +145,8 @@ bool to_csrc(void)
         ok = false;
     }
     else
-    {   // call binary_op
-        *(void**)(&call_binary_op) = dlsym(handle, function_name.c_str());
+    {   // call test_to_csrc
+        *(void**)(&call_test_to_csrc) = dlsym(handle, function_name.c_str());
         size_t call_id = 0;
         size_t compare_change;
         CppAD::vector<double> x(n_x), y(n_y);
@@ -137,7 +154,7 @@ bool to_csrc(void)
         x[1] = Value( ax[1] );
         for(size_t i = 0; i < n_y; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
-        call_binary_op(
+        call_test_to_csrc(
             call_id, n_x, x.data(), n_y, y.data(), &compare_change
         );
         //
@@ -147,5 +164,13 @@ bool to_csrc(void)
             ok &= CppAD::NearEqual( y[i], Value(ay[i]), eps99, eps99);
         }
     }
+    return ok;
+}
+// ---------------------------------------------------------------------------
+} // END_EMPTY_NAMESPACE
+// ---------------------------------------------------------------------------
+bool to_csrc(void)
+{   bool ok = true;
+    ok     &= simple_cases();
     return ok;
 }

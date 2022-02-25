@@ -51,6 +51,17 @@ namespace {
         csrc += "v[" + CppAD::to_string(right_node) + "];\n";
     }
     //
+    // compare_operator
+    void compare_operator(
+        std::string&   csrc         ,
+        const char*    op_csrc      ,
+        size_t         left_node    ,
+        size_t         right_node   )
+    {   csrc += "\tif( v[" + CppAD::to_string(left_node) + "] " + op_csrc;
+        csrc += " v[" + CppAD::to_string(right_node) + "] )\n";
+        csrc += "\t\t++(*compare_change);\n";
+    }
+    //
     // unary_function
     void unary_function(
         std::string&   csrc         ,
@@ -236,17 +247,29 @@ void CppAD::local::graph::csrc_writer(
             case add_graph_op:
             op_csrc = "+";
             break;
-            //
             case div_graph_op:
             op_csrc = "/";
             break;
-            //
             case mul_graph_op:
             op_csrc = "*";
             break;
-            //
             case sub_graph_op:
             op_csrc = "-";
+            break;
+            // -------------------------------------------------------------
+            // comparision operators
+            // -------------------------------------------------------------
+            case comp_eq_graph_op:
+            op_csrc = "==";
+            break;
+            case comp_le_graph_op:
+            op_csrc = "<=";
+            break;
+            case comp_lt_graph_op:
+            op_csrc = "<";
+            break;
+            case comp_ne_graph_op:
+            op_csrc = "!=";
             break;
             // -------------------------------------------------------------
             // unary functions
@@ -292,6 +315,8 @@ void CppAD::local::graph::csrc_writer(
             // binary functions
             case azmul_graph_op:
             case pow_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             binary_function(csrc, op_csrc, result_node, arg[0], arg[1]);
             break;
             //
@@ -303,6 +328,16 @@ void CppAD::local::graph::csrc_writer(
             CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             binary_operator(csrc, op_csrc, result_node, arg[0], arg[1]);
+            break;
+            //
+            // comparision operators
+            case comp_eq_graph_op:
+            case comp_le_graph_op:
+            case comp_lt_graph_op:
+            case comp_ne_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 0 );
+            compare_operator(csrc, op_csrc, arg[0], arg[1]);
             break;
             //
             // unary functions
