@@ -60,6 +60,7 @@ void CppAD::local::graph::csrc_writer(
     string function_name  = graph_obj.function_name_get();
     size_t n_dynamic_ind  = graph_obj.n_dynamic_ind_get();
     size_t n_variable_ind = graph_obj.n_variable_ind_get();
+    size_t n_constant     = graph_obj.constant_vec_size();
     size_t n_dependent    = graph_obj.dependent_vec_size();
     size_t n_usage        = graph_obj.operator_vec_size();
     // --------------------------------------------------------------------
@@ -72,7 +73,7 @@ void CppAD::local::graph::csrc_writer(
     cpp_graph::const_iterator graph_itr;
     //
     // first_result_node
-    size_t first_result_node = 1 + n_dynamic_ind + n_variable_ind;
+    size_t first_result_node = 1 + n_dynamic_ind + n_variable_ind + n_constant;
     //
     // n_node
     size_t n_node = first_result_node;
@@ -101,47 +102,74 @@ void CppAD::local::graph::csrc_writer(
         "// prototype\n"
         "void " + function_name + "(\n"
         "\tsize_t         call_id         ,\n"
-        "\tsize_t         n_x             ,\n"
+        "\tsize_t         nx              ,\n"
         "\tconst double*  x               ,\n"
-        "\tsize_t         n_y             ,\n"
+        "\tsize_t         ny              ,\n"
         "\tdouble*        y               ,\n"
         "\tsize_t*        compare_change  )\n";
     //
-    csrc += "{\t// begin function body \n";
+    // begin function body
+    csrc +=
+        "{\t// begin function body \n"
+        "\n";
     //
+    // declare variables
     // v, i, nan
     csrc +=
         "\t// declare variables\n"
         "\tdouble v[" + to_string(n_node) + "];\n"
         "\tsize_t i;\n"
         "\tdouble nan = 0.0 / 0.0;\n"
-        "\n";
+        "\n"
+        "\t// asserts\n";
     //
-    // n_x
-    size_t n_x = n_dynamic_ind + n_variable_ind;
-    csrc += "\tassert( n_x == " + to_string(n_x) + ");\n";
+    // nx
+    size_t nx = n_dynamic_ind + n_variable_ind;
+    csrc += "\tassert( nx == " + to_string(nx) + ");\n";
     //
-    // n_y
-    size_t n_y = n_dependent;
-    csrc += "\tassert( n_y == " + to_string(n_y) + ");\n";
+    // ny
+    size_t ny = n_dependent;
+    csrc += "\tassert( ny == " + to_string(ny) + ");\n";
     //
+    // initialize
     // compare_change, v[0]
     csrc +=
         "\n"
-        "\t*compare_change = 0;   // initialize\n"
-        "\tv[0]            = nan; // set v[0]\n";
+        "\t// initialize\n"
+        "\t*compare_change = 0;\n"
+        "\tv[0]            = nan; // const \n";
     //
-    // set v[i] for i = 1, ..., nx\n"
+    // independent variables
+    // set v[1+i] for i = 0, ..., nx-1"
     csrc +=
         "\n"
-        "\t// set v[i] for i = 1, ..., nx\n"
-        "\tfor(i = 0; i < n_x; ++i)\n"
+        "\t// independent variables\n"
+        "\t// set v[1+i] for i = 0, ..., nx-1\n"
+        "\tfor(i = 0; i < nx; ++i)\n"
         "\t\tv[1+i] = x[i];\n";
     //
-    // set v[i] for i = n_x+1, ..., n_node
+    // cosntants
+    // set v[1+nx+i] for i = 0, ..., nc-1
+    size_t nc = n_constant;
     csrc +=
         "\n"
-        "\t// set v[i] for i = n_x+1, ..., " + to_string(n_node) + "\n";
+        "\t// constants\n";
+        "\t// set v[1+nx+i] for i = 0, ..., nc-1\n"
+        "\t// nc = " + to_string(nc) + "\n";
+    for(size_t i = 0; i < nc; ++i)
+    {   double c_i = graph_obj.constant_vec_get(i);
+        csrc +=
+            "\tv[1+nx+" + to_string(i) + "] = " + to_string(c_i) + ";\n";
+    }
+    //
+    // result nodes
+    // set v[1+nx+nc+i] for i = 0, ..., n_result_node-1
+    size_t n_result_node = n_node - first_result_node;
+    csrc +=
+        "\n"
+        "\t// result nodes\n";
+        "\t// set v[1+nx+nc+i] for i = 0, ..., n_result_node-1\n"
+        "\t//n_result_node = " + to_string(n_result_node) + "\n";
     //
     // arg
     // defined here to avoid memory re-allocation for each operator
@@ -280,8 +308,9 @@ void CppAD::local::graph::csrc_writer(
     // dependent
     csrc +=
         "\n"
-        "\t// set y[i] for i = 0, n_y-1\n";
-    for(size_t i = 0; i < n_y; ++i)
+        "\t// dependent variables\n"
+        "\t// set y[i] for i = 0, ny-1\n";
+    for(size_t i = 0; i < ny; ++i)
     {   size_t node = graph_obj.dependent_vec_get(i);
         csrc += "\ty[" + to_string(i) + "] = ";
         csrc += "v[" + to_string( node ) + "];\n";

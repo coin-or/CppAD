@@ -44,7 +44,7 @@ bool to_csrc(void)
     CppAD::Independent(ax);
     //
     // n_y, ay
-    size_t n_y = 13;
+    size_t n_y = 24;
     CPPAD_TESTVECTOR( AD<double> ) ay(n_y);
     //
     // binary operators
@@ -63,7 +63,6 @@ bool to_csrc(void)
     ay[10] = atanh( ax[0] ); // atanh
     ay[11] = cos( ax[0] );   // cos
     ay[12] = cosh( ax[0] );  // cosh
-# ifdef CPPAD_TO_CSRC_FIX_CONSTANTS
     ay[13] = erf( ax[0] );   // erf
     ay[14] = erfc( ax[0] );  // erfc
     ay[15] = exp( ax[0] );   // exp
@@ -75,7 +74,6 @@ bool to_csrc(void)
     ay[21] = sqrt( ax[0] );  // sqrt
     ay[22] = tan( ax[0] );   // tan
     ay[23] = tanh( ax[0] );  // tanh
-# endif
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
