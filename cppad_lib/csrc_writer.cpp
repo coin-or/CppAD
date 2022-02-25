@@ -28,14 +28,25 @@ namespace {
     //
     // binary_operator
     void binary_operator(
-        std::string& csrc   ,
-        const char* op      ,
-        size_t result_node  ,
-        size_t left_node    ,
-        size_t right_node   )
+        std::string&   csrc         ,
+        const char*    op_csrc      ,
+        size_t         result_node  ,
+        size_t         left_node    ,
+        size_t         right_node   )
     {   csrc += "\tv[" + CppAD::to_string(result_node) + "] = ";
-        csrc += "v[" + CppAD::to_string(left_node) + "] " + op + " ";
+        csrc += "v[" + CppAD::to_string(left_node) + "] " + op_csrc + " ";
         csrc += "v[" + CppAD::to_string(right_node) + "];\n";
+    }
+    //
+    // unary_function
+    void unary_function(
+        std::string&   csrc         ,
+        const char*    op_csrc      ,
+        size_t         result_node  ,
+        size_t         arg_node     )
+    {   csrc += "\tv[" + CppAD::to_string(result_node) + "] = ";
+        csrc += op_csrc;
+        csrc += "( v[" + CppAD::to_string(arg_node) + "] );\n";
     }
 }
 
@@ -77,14 +88,14 @@ void CppAD::local::graph::csrc_writer(
         n_node += itr_value.n_result;
     }
     //
-    // initialize
-    csrc = "";
-    //
-    csrc +=
+    // include
+    csrc =
         "// includes\n"
         "# include <stddef.h>\n"
-        "# include <assert.h>\n";
+        "# include <assert.h>\n"
+        "# include <math.h>\n";
     //
+    // prototype
     csrc +=
         "\n"
         "// prototype\n"
@@ -98,7 +109,7 @@ void CppAD::local::graph::csrc_writer(
     //
     csrc += "{\t// begin function body \n";
     //
-    // v, i
+    // v, i, nan
     csrc +=
         "\t// declare variables\n"
         "\tdouble v[" + to_string(n_node) + "];\n"
@@ -114,20 +125,23 @@ void CppAD::local::graph::csrc_writer(
     size_t n_y = n_dependent;
     csrc += "\tassert( n_y == " + to_string(n_y) + ");\n";
     //
+    // compare_change, v[0]
     csrc +=
         "\n"
         "\t*compare_change = 0;   // initialize\n"
         "\tv[0]            = nan; // set v[0]\n";
     //
+    // set v[i] for i = 1, ..., nx\n"
     csrc +=
         "\n"
         "\t// set v[i] for i = 1, ..., nx\n"
         "\tfor(i = 0; i < n_x; ++i)\n"
         "\t\tv[1+i] = x[i];\n";
     //
+    // set v[i] for i = n_x+1, ..., n_node
     csrc +=
         "\n"
-        "\t// set v[i] for i = n_x+1, ..., " + to_string(n_node+1) + "\n";
+        "\t// set v[i] for i = n_x+1, ..., " + to_string(n_node) + "\n";
     //
     // arg
     // defined here to avoid memory re-allocation for each operator
@@ -159,7 +173,9 @@ void CppAD::local::graph::csrc_writer(
         // op_csrc
         const char* op_csrc = nullptr;
         switch( op_enum )
-        {   //
+        {   // -------------------------------------------------------------
+            // binary operators
+            // -------------------------------------------------------------
             case add_graph_op:
             op_csrc = "+";
             break;
@@ -175,6 +191,35 @@ void CppAD::local::graph::csrc_writer(
             case sub_graph_op:
             op_csrc = "-";
             break;
+            // -------------------------------------------------------------
+            // unary functions
+            // -------------------------------------------------------------
+            case abs_graph_op:
+            op_csrc = "fabs";
+            break;
+            //
+            case acos_graph_op:
+            case acosh_graph_op:
+            case asin_graph_op:
+            case asinh_graph_op:
+            case atan_graph_op:
+            case atanh_graph_op:
+            case cos_graph_op:
+            case cosh_graph_op:
+            case erf_graph_op:
+            case erfc_graph_op:
+            case exp_graph_op:
+            case expm1_graph_op:
+            case log1p_graph_op:
+            case log_graph_op:
+            case sign_graph_op:
+            case sin_graph_op:
+            case sinh_graph_op:
+            case sqrt_graph_op:
+            case tan_graph_op:
+            case tanh_graph_op:
+            op_csrc = op_enum2name[op_enum];
+            break;
 
             default:
             {   string msg = op_enum2name[op_enum];
@@ -183,15 +228,44 @@ void CppAD::local::graph::csrc_writer(
             }
             break;
         }
+        //
+        // csrc
         switch( op_enum )
         {   //
-            // add
+            // binary operators
             case add_graph_op:
             case div_graph_op:
             case mul_graph_op:
             case sub_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             binary_operator(csrc, op_csrc, result_node, arg[0], arg[1]);
+            break;
+            //
+            // unary functions
+            case abs_graph_op:
+            case acos_graph_op:
+            case acosh_graph_op:
+            case asin_graph_op:
+            case asinh_graph_op:
+            case atan_graph_op:
+            case atanh_graph_op:
+            case cos_graph_op:
+            case cosh_graph_op:
+            case erf_graph_op:
+            case erfc_graph_op:
+            case exp_graph_op:
+            case expm1_graph_op:
+            case log1p_graph_op:
+            case log_graph_op:
+            case sin_graph_op:
+            case sinh_graph_op:
+            case sqrt_graph_op:
+            case tan_graph_op:
+            case tanh_graph_op:
+            CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+            unary_function(csrc, op_csrc, result_node, arg[0]);
             break;
 
             default:

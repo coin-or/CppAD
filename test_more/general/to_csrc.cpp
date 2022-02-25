@@ -12,17 +12,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/cppad.hpp>
 # include <dlfcn.h>
 
-namespace { // BEGIN_EMPTY_NAMESPACE
-// ----------------------------------------------------------------------------
-bool binary_op(void)
+bool to_csrc(void)
 {   // ok
     bool ok = true;
     //
-    // AD
+    // AD, NearEqual
     using CppAD::AD;
+    using CppAD::NearEqual;
+    //
+    // eps99
+    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
     //
     // funciton_name
-    std::string function_name = "binary_op";
+    std::string function_name = "test_to_csrc";
     //
     // call_binary_op
     void (*call_binary_op)(
@@ -37,17 +39,43 @@ bool binary_op(void)
     // n_x, ax
     size_t n_x = 2;
     CPPAD_TESTVECTOR( AD<double> ) ax(n_x);
-    for(size_t j = 0; j < n_x; ++j)
-        ax[j] = double(j + 2);
+    ax[0] = 0.5;
+    ax[1] = 2.0;
     CppAD::Independent(ax);
     //
     // n_y, ay
-    size_t n_y = 4;
+    size_t n_y = 13;
     CPPAD_TESTVECTOR( AD<double> ) ay(n_y);
+    //
+    // binary operators
     ay[0] = ax[0] + ax[1]; // add
     ay[1] = ax[0] / ax[1]; // div
     ay[2] = ax[0] * ax[1]; // mul
     ay[3] = ax[0] - ax[1]; // sub
+    //
+    // unary functions
+    ay[4]  = abs( ax[0] );   // abs
+    ay[5]  = acos( ax[0] );  // acos,  arg < 1
+    ay[6]  = acosh( ax[1] ); // acosh, arg > 1
+    ay[7]  = asin( ax[0] );  // asin,  arg < 1
+    ay[8]  = asinh( ax[0] ); // asinh
+    ay[9]  = atan( ax[0] );  // atan
+    ay[10] = atanh( ax[0] ); // atanh
+    ay[11] = cos( ax[0] );   // cos
+    ay[12] = cosh( ax[0] );  // cosh
+# ifdef CPPAD_TO_CSRC_FIX_CONSTANTS
+    ay[13] = erf( ax[0] );   // erf
+    ay[14] = erfc( ax[0] );  // erfc
+    ay[15] = exp( ax[0] );   // exp
+    ay[16] = expm1( ax[0] ); // expm1
+    ay[17] = log1p( ax[0] ); // log1p
+    ay[18] = log( ax[0] );   // log
+    ay[19] = sin( ax[0] );   // sin
+    ay[20] = sinh( ax[0] );  // sinh
+    ay[21] = sqrt( ax[0] );  // sqrt
+    ay[22] = tan( ax[0] );   // tan
+    ay[23] = tanh( ax[0] );  // tanh
+# endif
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -57,13 +85,13 @@ bool binary_op(void)
     std::string csrc = f.to_csrc();
     //
     // c_file_name
-    std::string c_file_name = function_name + ".c";
+    std::string c_file_name = "/tmp/" + function_name + ".c";
     //
     // o_file_name
-    std::string o_file_name = function_name + ".o";
+    std::string o_file_name = "/tmp/" + function_name + ".o";
     //
     // so_file_name
-    std::string so_file_name = "./" + function_name + ".so";
+    std::string so_file_name = "/tmp/" + function_name + ".so";
     //
     // binary_op.c
     {   std::ofstream file;
@@ -101,27 +129,21 @@ bool binary_op(void)
     {   // call binary_op
         *(void**)(&call_binary_op) = dlsym(handle, function_name.c_str());
         size_t call_id = 0;
-        CppAD::vector<double> x(n_x), y(n_y);
-        x[0] = 2.0;
-        x[1] = 3.0;
         size_t compare_change;
+        CppAD::vector<double> x(n_x), y(n_y);
+        x[0] = Value( ax[0] );
+        x[1] = Value( ax[1] );
+        for(size_t i = 0; i < n_y; ++i)
+            y[i] = std::numeric_limits<double>::quiet_NaN();
         call_binary_op(
             call_id, n_x, x.data(), n_y, y.data(), &compare_change
         );
         //
         // check
-        ok &= y[0] == x[0] + x[1];
-        ok &= y[1] == x[0] / x[1];
-        ok &= y[2] == x[0] * x[1];
-        ok &= y[3] == x[0] - x[1];
+        for(size_t i = 0; i < n_y; ++i)
+        {   // std::cout << "y = " << y[i] << ", ay = " << ay[i] << "\n";
+            ok &= CppAD::NearEqual( y[i], Value(ay[i]), eps99, eps99);
+        }
     }
-    return ok;
-}
-// ----------------------------------------------------------------------------
-} // END_EMPTY_NAMESPACE
-
-bool to_csrc(void)
-{   bool ok = true;
-    ok     &= binary_op();
     return ok;
 }
