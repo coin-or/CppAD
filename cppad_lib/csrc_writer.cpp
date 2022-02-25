@@ -26,6 +26,19 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace {
     //
+    // binary_function
+    void binary_function(
+        std::string&   csrc         ,
+        const char*    op_csrc      ,
+        size_t         result_node  ,
+        size_t         left_node    ,
+        size_t         right_node   )
+    {   csrc += "\tv[" + CppAD::to_string(result_node) + "] = ";
+        csrc += op_csrc;
+        csrc += "( v[" + CppAD::to_string(left_node)  + "]";
+        csrc += ", v[" + CppAD::to_string(right_node) + "] );\n";
+    }
+    //
     // binary_operator
     void binary_operator(
         std::string&   csrc         ,
@@ -94,11 +107,19 @@ void CppAD::local::graph::csrc_writer(
         "// includes\n"
         "# include <stddef.h>\n"
         "# include <assert.h>\n"
-        "# include <math.h>\n";
+        "# include <math.h>\n"
+        "\n";
+    //
+    // azmul
+    csrc +=
+        "// azmul\n"
+        "static double azmul(double x, double y)\n"
+        "{\tif( x == 0.0 ) return 0.0;\n"
+        "\treturn x * y;\n"
+        "}\n\n";
     //
     // prototype
     csrc +=
-        "\n"
         "// prototype\n"
         "void " + function_name + "(\n"
         "\tsize_t         call_id         ,\n"
@@ -201,7 +222,15 @@ void CppAD::local::graph::csrc_writer(
         // op_csrc
         const char* op_csrc = nullptr;
         switch( op_enum )
-        {   // -------------------------------------------------------------
+        {
+            // -------------------------------------------------------------
+            // binary functions
+            // -------------------------------------------------------------
+            case azmul_graph_op:
+            case pow_graph_op:
+            op_csrc = op_enum2name[op_enum];
+            break;
+            // -------------------------------------------------------------
             // binary operators
             // -------------------------------------------------------------
             case add_graph_op:
@@ -260,6 +289,12 @@ void CppAD::local::graph::csrc_writer(
         // csrc
         switch( op_enum )
         {   //
+            // binary functions
+            case azmul_graph_op:
+            case pow_graph_op:
+            binary_function(csrc, op_csrc, result_node, arg[0], arg[1]);
+            break;
+            //
             // binary operators
             case add_graph_op:
             case div_graph_op:

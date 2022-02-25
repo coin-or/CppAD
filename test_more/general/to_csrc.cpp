@@ -44,7 +44,7 @@ bool to_csrc(void)
     CppAD::Independent(ax);
     //
     // n_y, ay
-    size_t n_y = 24;
+    size_t n_y = 26;
     CPPAD_TESTVECTOR( AD<double> ) ay(n_y);
     //
     // binary operators
@@ -54,26 +54,30 @@ bool to_csrc(void)
     ay[3] = ax[0] - ax[1]; // sub
     //
     // unary functions
-    ay[4]  = abs( ax[0] );   // abs
-    ay[5]  = acos( ax[0] );  // acos,  arg < 1
-    ay[6]  = acosh( ax[1] ); // acosh, arg > 1
-    ay[7]  = asin( ax[0] );  // asin,  arg < 1
-    ay[8]  = asinh( ax[0] ); // asinh
-    ay[9]  = atan( ax[0] );  // atan
-    ay[10] = atanh( ax[0] ); // atanh
-    ay[11] = cos( ax[0] );   // cos
-    ay[12] = cosh( ax[0] );  // cosh
-    ay[13] = erf( ax[0] );   // erf
-    ay[14] = erfc( ax[0] );  // erfc
-    ay[15] = exp( ax[0] );   // exp
-    ay[16] = expm1( ax[0] ); // expm1
-    ay[17] = log1p( ax[0] ); // log1p
-    ay[18] = log( ax[0] );   // log
-    ay[19] = sin( ax[0] );   // sin
-    ay[20] = sinh( ax[0] );  // sinh
-    ay[21] = sqrt( ax[0] );  // sqrt
-    ay[22] = tan( ax[0] );   // tan
-    ay[23] = tanh( ax[0] );  // tanh
+    ay[4]  = abs(   ax[0] );
+    ay[5]  = acos(  ax[0] ); // ax[0] < 1
+    ay[6]  = acosh( ax[1] ); // ax[1] > 1
+    ay[7]  = asin(  ax[0] ); // ax[0] < 1
+    ay[8]  = asinh( ax[0] );
+    ay[9]  = atan(  ax[0] );
+    ay[10] = atanh( ax[0] );
+    ay[11] = cos(   ax[0] );
+    ay[12] = cosh(  ax[0] );
+    ay[13] = erf(   ax[0] );
+    ay[14] = erfc(  ax[0] );
+    ay[15] = exp(   ax[0] );
+    ay[16] = expm1( ax[0] );
+    ay[17] = log1p( ax[0] );
+    ay[18] = log(   ax[0] );
+    ay[19] = sin(   ax[0] );
+    ay[20] = sinh(  ax[0] );
+    ay[21] = sqrt(  ax[0] );
+    ay[22] = tan(   ax[0] );
+    ay[23] = tanh(  ax[0] );
+    //
+    // binary functions
+    ay[24] = azmul( ax[0], ax[1] );
+    ay[25] = pow(   ax[0], ax[1] ); // ax[0] > 0
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
