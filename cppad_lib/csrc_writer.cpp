@@ -260,16 +260,16 @@ void CppAD::local::graph::csrc_writer(
             // comparision operators
             // -------------------------------------------------------------
             case comp_eq_graph_op:
-            op_csrc = "==";
+            op_csrc = "!="; // not eq
             break;
             case comp_le_graph_op:
-            op_csrc = "<=";
+            op_csrc = ">";  // not le
             break;
             case comp_lt_graph_op:
-            op_csrc = "<";
+            op_csrc = ">="; // not lt
             break;
             case comp_ne_graph_op:
-            op_csrc = "!=";
+            op_csrc = "=="; // not ne
             break;
             // -------------------------------------------------------------
             // unary functions
