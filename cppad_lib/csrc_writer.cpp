@@ -26,6 +26,10 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace {
     //
+    // element
+    std::string element(const std::string& array_name, size_t array_index)
+    {   return array_name + "[" + CppAD::to_string(array_index) + "]"; }
+    //
     // binary_function
     void binary_function(
         std::string&   csrc         ,
@@ -33,10 +37,10 @@ namespace {
         size_t         result_node  ,
         size_t         left_node    ,
         size_t         right_node   )
-    {   csrc += "\tv[" + CppAD::to_string(result_node) + "] = ";
+    {   csrc += "\t" + element("v", result_node) + " = ";
         csrc += op_csrc;
-        csrc += "( v[" + CppAD::to_string(left_node)  + "]";
-        csrc += ", v[" + CppAD::to_string(right_node) + "] );\n";
+        csrc += "( " + element("v", left_node);
+        csrc += ", " + element("v", right_node) + " );\n";
     }
     //
     // binary_operator
@@ -46,9 +50,9 @@ namespace {
         size_t         result_node  ,
         size_t         left_node    ,
         size_t         right_node   )
-    {   csrc += "\tv[" + CppAD::to_string(result_node) + "] = ";
-        csrc += "v[" + CppAD::to_string(left_node) + "] " + op_csrc + " ";
-        csrc += "v[" + CppAD::to_string(right_node) + "];\n";
+    {   csrc += "\t" + element("v", result_node) + " = ";
+        csrc += element("v", left_node) + op_csrc + " ";
+        csrc += element("v", right_node) + ";\n";
     }
     //
     // compare_operator
@@ -57,8 +61,8 @@ namespace {
         const char*    op_csrc      ,
         size_t         left_node    ,
         size_t         right_node   )
-    {   csrc += "\tif( v[" + CppAD::to_string(left_node) + "] " + op_csrc;
-        csrc += " v[" + CppAD::to_string(right_node) + "] )\n";
+    {   csrc += "\tif( " + element("v", left_node) + " " + op_csrc + " ";
+        csrc += element("v", right_node) + " )\n";
         csrc += "\t\t++(*compare_change);\n";
     }
     //
@@ -68,9 +72,9 @@ namespace {
         const char*    op_csrc      ,
         size_t         result_node  ,
         size_t         arg_node     )
-    {   csrc += "\tv[" + CppAD::to_string(result_node) + "] = ";
+    {   csrc += "\t" + element("v", result_node) + " = ";
         csrc += op_csrc;
-        csrc += "( v[" + CppAD::to_string(arg_node) + "] );\n";
+        csrc += "( " + element("v", arg_node) + " );\n";
     }
 }
 
@@ -382,8 +386,7 @@ void CppAD::local::graph::csrc_writer(
         "\t// set y[i] for i = 0, ny-1\n";
     for(size_t i = 0; i < ny; ++i)
     {   size_t node = graph_obj.dependent_vec_get(i);
-        csrc += "\ty[" + to_string(i) + "] = ";
-        csrc += "v[" + to_string( node ) + "];\n";
+        csrc += "\t" + element("y", i) + " = " + element("v", node) + ";\n";
     }
     // ----------------------------------------------------------------------
     // end function body
