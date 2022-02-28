@@ -148,12 +148,12 @@ bool simple_cases(void)
     {   // call test_to_csrc
         *(void**)(&call_test_to_csrc) = dlsym(handle, function_name.c_str());
         size_t call_id = 0;
-        size_t compare_change;
         CppAD::vector<double> x(n_x), y(n_y);
         x[0] = Value( ax[0] );
         x[1] = Value( ax[1] );
         for(size_t i = 0; i < n_y; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
+        size_t compare_change = 0;
         call_test_to_csrc(
             call_id, n_x, x.data(), n_y, y.data(), &compare_change
         );
@@ -239,11 +239,11 @@ bool compare_cases(void)
         // ok
         // no change
         size_t call_id = 0;
-        size_t compare_change = 1;
         CppAD::vector<double> x(n_x), y(n_y);
         x[0] = x0;
         for(size_t i = 0; i < n_y; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
+        size_t compare_change = 0;
         call_test_to_csrc(
             call_id, n_x, x.data(), n_y, y.data(), &compare_change
         );
