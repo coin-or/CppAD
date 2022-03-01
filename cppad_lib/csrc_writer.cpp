@@ -86,20 +86,25 @@ namespace {
         size_t                       n_result            ,
         const CppAD::vector<size_t>& arg_node            )
     {   using CppAD::to_string;
+        std::string complete_name = "cppad_forward_zero_" + atomic_name;
         size_t nu = arg_node.size();
         size_t nw = n_result;
         csrc += "\t{\t// call " + atomic_name + "\n";
+        csrc += "\t\textern cppad_forward_zero " + complete_name + ";\n";
         csrc += "\t\tdouble " + element("u", nu) + ";\n";
         csrc += "\t\tdouble* w = y + " + to_string(result_node) + ";\n";
         for(size_t j = 0; j < nu; ++j)
         {   size_t i = arg_node[j];
             csrc += "\t\t" + element("u",j) + " = " + element("v",i) + ";\n";
         }
-        csrc += "\t\tcppad_forward_zero_" + atomic_name + "(";
+        //
+        csrc += "\t\t" + complete_name + "(";
         csrc += to_string(call_id) + ", ";
         csrc += to_string(nu) + ", u, ";
         csrc += to_string(nw) + ", w, ";
         csrc += "compare_change);\n";
+        //
+        csrc += "\t}\n";
     }
 }
 
@@ -149,6 +154,17 @@ void CppAD::local::graph::csrc_writer(
         "# include <assert.h>\n"
         "# include <math.h>\n"
         "\n";
+    //
+    // atomic_function_t
+    csrc +=
+        "typedef void (*cppad_forward_zero)(\n"
+        "\tsize_t  call_id           ,\n"
+        "\tsize_t  nx                ,\n"
+        "\tdouble* x                 ,\n"
+        "\tsize_t  ny                ,\n"
+        "\tdouble* y                 ,\n"
+        "\tsize_t* compare_change\n"
+        ");\n";
     //
     // azmul
     csrc +=

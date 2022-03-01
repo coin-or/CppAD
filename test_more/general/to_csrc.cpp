@@ -23,32 +23,28 @@ void (*call_test_to_csrc)(
     size_t*       compare_change
 );
 
-std::string create_dynamic_library( CppAD::ADFun<double>& f )
+std::string create_dynamic_library(
+    const std::string& library_name, const std::string& library_csrc
+)
 {   bool ok = true;
     //
-    // function_name
-    std::string function_name = f.function_name_get();
-    //
-    // csrc
-    std::string csrc = f.to_csrc();
-    //
     // c_file_name
-    std::string c_file_name = "/tmp/" + function_name + ".c";
+    std::string c_file_name = "/tmp/" + library_name + ".c";
     //
     // o_file_name
-    std::string o_file_name = "/tmp/" + function_name + ".o";
+    std::string o_file_name = "/tmp/" + library_name + ".o";
     //
     // so_file_name
-    std::string so_file_name = "/tmp/" + function_name + ".so";
+    std::string so_file_name = "/tmp/" + library_name + ".so";
     //
-    // function_name.c
+    // library_name.c
     {   std::ofstream file;
         file.open(c_file_name, std::ios::out);
-        file << csrc;
+        file << library_csrc;
         file.close();
     }
     //
-    // function_name.so
+    // library_name.so
     int flag = std::system(nullptr);
     ok      &= flag != 0;
     if( flag != 0 )
@@ -129,8 +125,11 @@ bool simple_cases(void)
     CppAD::ADFun<double> f(ax, ay);
     f.function_name_set(function_name);
     //
-    // so_file_name
-    std::string so_file_name = create_dynamic_library(f);
+    // csrc
+    std::string csrc = f.to_csrc();
+    //
+    // os_file_name
+    std::string so_file_name = create_dynamic_library(function_name, csrc);
     //
     if( so_file_name == "" )
         ok = false;
@@ -218,8 +217,11 @@ bool compare_cases(void)
     CppAD::ADFun<double> f(ax, ay);
     f.function_name_set(function_name);
     //
+    // csrc
+    std::string csrc = f.to_csrc();
+    //
     // so_file_name
-    std::string so_file_name = create_dynamic_library(f);
+    std::string so_file_name = create_dynamic_library(function_name, csrc);
     //
     if( so_file_name == "" )
         ok = false;
