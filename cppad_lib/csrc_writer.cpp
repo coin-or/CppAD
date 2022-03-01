@@ -207,10 +207,6 @@ void CppAD::local::graph::csrc_writer(
         "\t// set v[1+nx+nc+i] for i = 0, ..., n_result_node-1\n"
         "\t//n_result_node = " + to_string(n_result_node) + "\n";
     //
-    // arg
-    // defined here to avoid memory re-allocation for each operator
-    vector<size_t> arg;
-    //
     // result_node
     size_t result_node = first_result_node;
     //
@@ -223,16 +219,14 @@ void CppAD::local::graph::csrc_writer(
         else
             ++graph_itr;
         //
-        // str_index, op_enum, call_id, n_result, n_arg, arg
+        // str_index, op_enum, call_id, n_result, arg_node
         cpp_graph::const_iterator::value_type itr_value = *graph_itr;
         // const vector<size_t>& str_index( *itr_value.str_index_ptr );
         graph_op_enum op_enum    = itr_value.op_enum;
         // size_t        call_id    = itr_value.call_id;
         size_t        n_result   = itr_value.n_result;
-        size_t        n_arg      = itr_value.arg_node_ptr->size();
-        arg.resize(n_arg);
-        arg                      = *(itr_value.arg_node_ptr);
-        CPPAD_ASSERT_UNKNOWN( n_arg > 0 );
+        const vector<size_t>& arg_node = *(itr_value.arg_node_ptr);
+        CPPAD_ASSERT_UNKNOWN( arg_node.size() > 0 );
         //
         // op_csrc
         const char* op_csrc = nullptr;
@@ -319,9 +313,11 @@ void CppAD::local::graph::csrc_writer(
             // binary functions
             case azmul_graph_op:
             case pow_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            CPPAD_ASSERT_UNKNOWN( arg_node.size() == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_function(csrc, op_csrc, result_node, arg[0], arg[1]);
+            binary_function(
+                csrc, op_csrc, result_node, arg_node[0], arg_node[1]
+            );
             break;
             //
             // binary operators
@@ -329,9 +325,11 @@ void CppAD::local::graph::csrc_writer(
             case div_graph_op:
             case mul_graph_op:
             case sub_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            CPPAD_ASSERT_UNKNOWN( arg_node.size() == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            binary_operator(csrc, op_csrc, result_node, arg[0], arg[1]);
+            binary_operator(
+                csrc, op_csrc, result_node, arg_node[0], arg_node[1]
+            );
             break;
             //
             // comparision operators
@@ -339,9 +337,11 @@ void CppAD::local::graph::csrc_writer(
             case comp_le_graph_op:
             case comp_lt_graph_op:
             case comp_ne_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+            CPPAD_ASSERT_UNKNOWN( arg_node.size() == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 0 );
-            compare_operator(csrc, op_csrc, arg[0], arg[1]);
+            compare_operator(
+                csrc, op_csrc, arg_node[0], arg_node[1])
+            ;
             break;
             //
             // unary functions
@@ -365,9 +365,11 @@ void CppAD::local::graph::csrc_writer(
             case sqrt_graph_op:
             case tan_graph_op:
             case tanh_graph_op:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
+            CPPAD_ASSERT_UNKNOWN( arg_node.size() == 1 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
-            unary_function(csrc, op_csrc, result_node, arg[0]);
+            unary_function(
+                csrc, op_csrc, result_node, arg_node[0]
+            );
             break;
 
             default:
