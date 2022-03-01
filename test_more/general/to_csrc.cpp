@@ -146,7 +146,8 @@ bool simple_cases(void)
     }
     else
     {   // call test_to_csrc
-        *(void**)(&call_test_to_csrc) = dlsym(handle, function_name.c_str());
+        std::string complete_name = "cppad_forward_zero_" + function_name;
+        *(void**)(&call_test_to_csrc) = dlsym(handle, complete_name.c_str());
         size_t call_id = 0;
         CppAD::vector<double> x(n_x), y(n_y);
         x[0] = Value( ax[0] );
@@ -234,7 +235,8 @@ bool compare_cases(void)
     }
     else
     {   // call_test_to_csrc
-        *(void**)(&call_test_to_csrc) = dlsym(handle, function_name.c_str());
+        std::string complete_name = "cppad_forward_zero_" + function_name;
+        *(void**)(&call_test_to_csrc) = dlsym(handle, complete_name.c_str());
         //
         // ok
         // no change

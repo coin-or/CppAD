@@ -136,7 +136,7 @@ void CppAD::local::graph::csrc_writer(
     // prototype
     csrc +=
         "// prototype\n"
-        "void " + function_name + "(\n"
+        "void cppad_forward_zero_" + function_name + "(\n"
         "\tsize_t         call_id         ,\n"
         "\tsize_t         nx              ,\n"
         "\tconst double*  x               ,\n"

@@ -114,7 +114,7 @@ to the discrete function.
 $head Atomic Function$$
 The atomic function operator has a variable number of arguments
 and a variable number of result nodes.
-These are three extra arguments for $cref atomic_three$$ functions and
+There are three extra arguments for $cref atomic_three$$ functions and
 four extra arguments for $cref atomic_four$$ functions.
 The total number of operator arguments is
 the number of extra arguments
