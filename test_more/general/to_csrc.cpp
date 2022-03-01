@@ -13,8 +13,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <dlfcn.h>
 
 namespace{ // BEGIN_EMPTY_NAMESPACE
-
-void (*call_test_to_csrc)(
+//
+// cppad_forward_zero
+void (*cppad_forward_zero)(
     size_t        call_id,
     size_t        nx,
     const double* x,
@@ -22,7 +23,8 @@ void (*call_test_to_csrc)(
     double*       y,
     size_t*       compare_change
 );
-
+//
+// create_dynamic_library
 std::string create_dynamic_library(
     const std::string& library_name, const std::string& library_csrc
 )
@@ -146,7 +148,7 @@ bool simple_cases(void)
     else
     {   // call test_to_csrc
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&call_test_to_csrc) = dlsym(handle, complete_name.c_str());
+        *(void**)(&cppad_forward_zero) = dlsym(handle, complete_name.c_str());
         size_t call_id = 0;
         CppAD::vector<double> x(nx), y(ny);
         x[0] = Value( ax[0] );
@@ -154,7 +156,7 @@ bool simple_cases(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        call_test_to_csrc(
+        cppad_forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         //
@@ -236,9 +238,9 @@ bool compare_cases(void)
         ok = false;
     }
     else
-    {   // call_test_to_csrc
+    {   // cppad_forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&call_test_to_csrc) = dlsym(handle, complete_name.c_str());
+        *(void**)(&cppad_forward_zero) = dlsym(handle, complete_name.c_str());
         //
         // ok
         // no change
@@ -248,7 +250,7 @@ bool compare_cases(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        call_test_to_csrc(
+        cppad_forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= compare_change == 0;
@@ -258,7 +260,7 @@ bool compare_cases(void)
         // ok
         // check all change
         x[0] = 2.0 * x0;
-        call_test_to_csrc(
+        cppad_forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         for(size_t i = 0; i < ny; ++i)
