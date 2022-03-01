@@ -76,6 +76,31 @@ namespace {
         csrc += op_csrc;
         csrc += "( " + element("v", arg_node) + " );\n";
     }
+    //
+    // atomic_function
+    void atomic_function(
+        std::string&                 csrc                ,
+        size_t                       result_node         ,
+        const std::string            atomic_name         ,
+        size_t                       call_id             ,
+        size_t                       n_result            ,
+        const CppAD::vector<size_t>& arg_node            )
+    {   using CppAD::to_string;
+        size_t nu = arg_node.size();
+        size_t nw = n_result;
+        csrc += "\t{\t// call " + atomic_name + "\n";
+        csrc += "\t\tdouble " + element("u", nu) + ";\n";
+        csrc += "\t\tdouble* w = y + " + to_string(result_node) + ";\n";
+        for(size_t j = 0; j < nu; ++j)
+        {   size_t i = arg_node[j];
+            csrc += "\t\t" + element("u",j) + " = " + element("v",i) + ";\n";
+        }
+        csrc += "\t\tcppad_forward_zero_" + atomic_name + "(";
+        csrc += to_string(call_id) + ", ";
+        csrc += to_string(nu) + ", u, ";
+        csrc += to_string(nw) + ", w, ";
+        csrc += "compare_change);\n";
+    }
 }
 
 void CppAD::local::graph::csrc_writer(
@@ -221,11 +246,11 @@ void CppAD::local::graph::csrc_writer(
         //
         // str_index, op_enum, call_id, n_result, arg_node
         cpp_graph::const_iterator::value_type itr_value = *graph_itr;
-        // const vector<size_t>& str_index( *itr_value.str_index_ptr );
+        const vector<size_t>& str_index( *itr_value.str_index_ptr );
+        const vector<size_t>& arg_node(  *itr_value.arg_node_ptr  );
         graph_op_enum op_enum    = itr_value.op_enum;
-        // size_t        call_id    = itr_value.call_id;
+        size_t        call_id    = itr_value.call_id;
         size_t        n_result   = itr_value.n_result;
-        const vector<size_t>& arg_node = *(itr_value.arg_node_ptr);
         CPPAD_ASSERT_UNKNOWN( arg_node.size() > 0 );
         //
         // op_csrc
@@ -299,6 +324,13 @@ void CppAD::local::graph::csrc_writer(
             op_csrc = op_enum2name[op_enum];
             break;
 
+            // ---------------------------------------------------------------
+            // operators that do not use op_csrc
+            // ---------------------------------------------------------------
+            case atom4_graph_op:
+            op_csrc = "";
+            break;
+
             default:
             {   string msg = op_enum2name[op_enum];
                 msg = "f.to_csrc: The " + msg + " is not yet implemented.";
@@ -370,6 +402,16 @@ void CppAD::local::graph::csrc_writer(
             unary_function(
                 csrc, op_csrc, result_node, arg_node[0]
             );
+            break;
+            //
+            // atom4
+            case atom4_graph_op:
+            {   size_t index       = str_index[0];
+                string atomic_name = graph_obj.atomic_name_vec_get(index);
+                atomic_function(csrc,
+                    result_node, atomic_name, call_id, n_result, arg_node
+                );
+            }
             break;
 
             default:

@@ -16,9 +16,9 @@ namespace{ // BEGIN_EMPTY_NAMESPACE
 
 void (*call_test_to_csrc)(
     size_t        call_id,
-    size_t        n_x,
+    size_t        nx,
     const double* x,
-    size_t        n_y,
+    size_t        ny,
     double*       y,
     size_t*       compare_change
 );
@@ -82,16 +82,16 @@ bool simple_cases(void)
     // funciton_name
     std::string function_name = "test_to_csrc";
     //
-    // n_x, ax
-    size_t n_x = 2;
-    CPPAD_TESTVECTOR( AD<double> ) ax(n_x);
+    // nx, ax
+    size_t nx = 2;
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx);
     ax[0] = 0.5;
     ax[1] = 2.0;
     CppAD::Independent(ax);
     //
-    // n_y, ay
-    size_t n_y = 26;
-    CPPAD_TESTVECTOR( AD<double> ) ay(n_y);
+    // ny, ay
+    size_t ny = 26;
+    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
     //
     // binary operators
     ay[0] = ax[0] + ax[1]; // add
@@ -149,18 +149,18 @@ bool simple_cases(void)
         std::string complete_name = "cppad_forward_zero_" + function_name;
         *(void**)(&call_test_to_csrc) = dlsym(handle, complete_name.c_str());
         size_t call_id = 0;
-        CppAD::vector<double> x(n_x), y(n_y);
+        CppAD::vector<double> x(nx), y(ny);
         x[0] = Value( ax[0] );
         x[1] = Value( ax[1] );
-        for(size_t i = 0; i < n_y; ++i)
+        for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
         call_test_to_csrc(
-            call_id, n_x, x.data(), n_y, y.data(), &compare_change
+            call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         //
         // check
-        for(size_t i = 0; i < n_y; ++i)
+        for(size_t i = 0; i < ny; ++i)
         {   // std::cout << "y = " << y[i] << ", ay = " << ay[i] << "\n";
             ok &= CppAD::NearEqual( y[i], Value(ay[i]), eps99, eps99);
         }
@@ -179,16 +179,16 @@ bool compare_cases(void)
     // funciton_name
     std::string function_name = "test_to_csrc";
     //
-    // n_x, ax
-    size_t n_x = 1;
-    CPPAD_TESTVECTOR( AD<double> ) ax(n_x);
+    // nx, ax
+    size_t nx = 1;
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx);
     double x0  = 0.5;
     ax[0] = x0;
     CppAD::Independent(ax);
     //
-    // n_y, ay
-    size_t n_y = 4;
-    CPPAD_TESTVECTOR( AD<double> ) ay(n_y);
+    // ny, ay
+    size_t ny = 4;
+    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
     //
     // comp_eq_graph_op
     if( ax[0] == x0 )
@@ -241,25 +241,25 @@ bool compare_cases(void)
         // ok
         // no change
         size_t call_id = 0;
-        CppAD::vector<double> x(n_x), y(n_y);
+        CppAD::vector<double> x(nx), y(ny);
         x[0] = x0;
-        for(size_t i = 0; i < n_y; ++i)
+        for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
         call_test_to_csrc(
-            call_id, n_x, x.data(), n_y, y.data(), &compare_change
+            call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= compare_change == 0;
-        for(size_t i = 0; i < n_y; ++i)
+        for(size_t i = 0; i < ny; ++i)
             ok &= y[i] == Value( ay[i] );
         //
         // ok
         // check all change
         x[0] = 2.0 * x0;
         call_test_to_csrc(
-            call_id, n_x, x.data(), n_y, y.data(), &compare_change
+            call_id, nx, x.data(), ny, y.data(), &compare_change
         );
-        for(size_t i = 0; i < n_y; ++i)
+        for(size_t i = 0; i < ny; ++i)
             ok &= y[i] == Value( ay[i] );
         ok &= compare_change == 4;
     }
