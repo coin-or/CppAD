@@ -26,40 +26,52 @@ void (*cppad_forward_zero)(
 //
 // create_dynamic_library
 std::string create_dynamic_library(
-    const std::string& library_name, const std::string& library_csrc
+    const std::string&                  library_name,
+    const CppAD::vector< std::string >& library_csrc
 )
-{   bool ok = true;
-    //
-    // c_file_name
-    std::string c_file_name = "/tmp/" + library_name + ".c";
-    //
-    // o_file_name
-    std::string o_file_name = "/tmp/" + library_name + ".o";
+{   // ok
+    bool ok = true;
     //
     // so_file_name
     std::string so_file_name = "/tmp/" + library_name + ".so";
     //
-    // library_name.c
-    {   std::ofstream file;
-        file.open(c_file_name, std::ios::out);
-        file << library_csrc;
-        file.close();
-    }
+    // o_file_list
+    std::string o_file_list = "";
     //
-    // library_name.so
-    int flag = std::system(nullptr);
-    ok      &= flag != 0;
-    if( flag != 0 )
-    {   std::string command =
-            "gcc -c -g -fPIC " + c_file_name + " -o " + o_file_name;
-        flag = std::system( command.c_str() );
-        ok  &= flag == 0;
-        if( flag == 0 )
-        {   command =
-                "gcc -shared " + o_file_name + " -o " + so_file_name;
+    // i_csrc
+    for(size_t i_csrc = 0; i_csrc < library_csrc.size(); ++i_csrc) if( ok )
+    {   //
+        // c_file_name
+        std::string c_file_name =
+        "/tmp/" + library_name + "_" + CppAD::to_string(i_csrc) +  ".c";
+        //
+        // o_file_name
+        std::string o_file_name =
+        "/tmp/" + library_name + "_" + CppAD::to_string(i_csrc) +  ".o";
+        //
+        // c_file_name
+        {   std::ofstream file;
+            file.open(c_file_name, std::ios::out);
+            file << library_csrc[i_csrc];
+            file.close();
+        }
+        // o_file_name
+        int flag = std::system(nullptr);
+        ok      &= flag != 0;
+        if( ok )
+        {   std::string command =
+                "gcc -c -g -fPIC " + c_file_name + " -o " + o_file_name;
             flag = std::system( command.c_str() );
             ok  &= flag == 0;
         }
+        // o_file_list
+        o_file_list += " " + o_file_name;
+    }
+    if( ok )
+    {   std::string command =
+            "gcc -shared " + o_file_list + " -o " + so_file_name;
+        int flag = std::system( command.c_str() );
+        ok  &= flag == 0;
     }
     if( ok )
         return so_file_name;
@@ -79,6 +91,9 @@ bool simple_cases(void)
     //
     // funciton_name
     std::string function_name = "test_to_csrc";
+    //
+    // library_name
+    std::string library_name = function_name;
     //
     // nx, ax
     size_t nx = 2;
@@ -127,11 +142,14 @@ bool simple_cases(void)
     CppAD::ADFun<double> f(ax, ay);
     f.function_name_set(function_name);
     //
-    // csrc
-    std::string csrc = f.to_csrc();
+    // librar_csrc
+    CppAD::vector<std::string> library_csrc(1);
+    library_csrc[0] = f.to_csrc();
     //
     // os_file_name
-    std::string so_file_name = create_dynamic_library(function_name, csrc);
+    std::string so_file_name = create_dynamic_library(
+        library_name, library_csrc
+    );
     //
     if( so_file_name == "" )
         ok = false;
@@ -180,6 +198,9 @@ bool compare_cases(void)
     // funciton_name
     std::string function_name = "test_to_csrc";
     //
+    // library_name
+    std::string library_name = function_name;
+    //
     // nx, ax
     size_t nx = 1;
     CPPAD_TESTVECTOR( AD<double> ) ax(nx);
@@ -219,11 +240,14 @@ bool compare_cases(void)
     CppAD::ADFun<double> f(ax, ay);
     f.function_name_set(function_name);
     //
-    // csrc
-    std::string csrc = f.to_csrc();
+    // library_csrc
+    CppAD::vector<std::string> library_csrc(1);
+    library_csrc[0] = f.to_csrc();
     //
     // so_file_name
-    std::string so_file_name = create_dynamic_library(function_name, csrc);
+    std::string so_file_name = create_dynamic_library(
+        library_name, library_csrc
+    );
     //
     if( so_file_name == "" )
         ok = false;
