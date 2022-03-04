@@ -141,7 +141,7 @@ bool simple_cases(void)
     CppAD::Independent(ax);
     //
     // ny, ay
-    size_t ny = 26;
+    size_t ny = 27;
     CPPAD_TESTVECTOR( AD<double> ) ay(ny);
     //
     // binary operators
@@ -166,15 +166,16 @@ bool simple_cases(void)
     ay[16] = expm1( ax[0] );
     ay[17] = log1p( ax[0] );
     ay[18] = log(   ax[0] );
-    ay[19] = sin(   ax[0] );
-    ay[20] = sinh(  ax[0] );
-    ay[21] = sqrt(  ax[0] );
-    ay[22] = tan(   ax[0] );
-    ay[23] = tanh(  ax[0] );
+    ay[19] = sign(  ax[0] );
+    ay[20] = sin(   ax[0] );
+    ay[21] = sinh(  ax[0] );
+    ay[22] = sqrt(  ax[0] );
+    ay[23] = tan(   ax[0] );
+    ay[24] = tanh(  ax[0] );
     //
     // binary functions
-    ay[24] = azmul( ax[0], ax[1] );
-    ay[25] = pow(   ax[0], ax[1] ); // ax[0] > 0
+    ay[25] = azmul( ax[0], ax[1] );
+    ay[26] = pow(   ax[0], ax[1] ); // ax[0] > 0
     //
     // f
     CppAD::ADFun<double> f(ax, ay);
@@ -446,8 +447,8 @@ bool atomic_case(void)
 // ---------------------------------------------------------------------------
 bool to_csrc(void)
 {   bool ok = true;
-    ok     &= simple_cases();
     ok     &= compare_cases();
     ok     &= atomic_case();
+    ok     &= simple_cases();
     return ok;
 }

@@ -178,6 +178,15 @@ void CppAD::local::graph::csrc_writer(
         "\treturn x * y;\n"
         "}\n\n";
     //
+    // sign
+    csrc +=
+        "// sign\n"
+        "static double sign(double x)\n"
+        "{\tif( x > 0.0 ) return 1.0;\n"
+        "\tif( x == 0.0 ) return 0.0;\n"
+        "\treturn -1.0;\n"
+        "}\n\n";
+    //
     // This atomic function
     csrc +=
         "// This atomic function\n"
@@ -412,6 +421,7 @@ void CppAD::local::graph::csrc_writer(
             case expm1_graph_op:
             case log1p_graph_op:
             case log_graph_op:
+            case sign_graph_op:
             case sin_graph_op:
             case sinh_graph_op:
             case sqrt_graph_op:
