@@ -80,9 +80,12 @@ std::string create_dynamic_library(
 //
 // atomic_fun
 class atomic_fun : public CppAD::atomic_four<double> {
+private:
+    const std::string name_;
 public:
-    atomic_fun(const std::string name) :
-    CppAD::atomic_four<double>(name)
+    atomic_fun(const std::string& name) :
+    CppAD::atomic_four<double>(name),
+    name_(name)
     {}
 private:
     bool for_type(
@@ -107,12 +110,24 @@ private:
     }
 public:
     // forward_zero
-    void forward_zero(
-        size_t                                     call_id ,
-        const CppAD::vector< CppAD::AD<double> >&  ax      ,
-        CppAD::vector< CppAD::AD<double> >&        ay      )
-    {   ay[0] = 1.0 / ax[0];
-        return;
+    std::string forward_zero(void)
+    {   std::string csrc =
+            "# include <stddef.h>\n"
+            "int cppad_forward_zero_" + name_ + "(\n";
+        csrc +=R"_(
+    size_t        call_id,
+    size_t        nx,
+    const double* x,
+    size_t        ny,
+    double*       y,
+    size_t*       compare_change)
+{   if( nx != 1 ) return 1;
+    if( ny != 1 ) return 2;
+    y[0] = 1.0 / x[0];
+    return 0;
+}
+)_";
+        return csrc;
     }
 };
 // --------------------------------------------------------------------------
@@ -351,22 +366,6 @@ bool atomic_case(void)
     // reciprocal
     atomic_fun reciprocal(function_name);
     //
-    // nu, u
-    size_t nu = 1;
-    CppAD::vector< AD<double> > au(nu);
-    au[0] = 2.0;
-    CppAD::Independent(au);
-    //
-    // nw, w
-    size_t nw = 1;
-    CppAD::vector< AD<double> > aw(nw);
-    size_t call_id   = 0;
-    reciprocal.forward_zero(call_id, au, aw);
-    //
-    // g
-    CppAD::ADFun<double> g(au, aw);
-    g.function_name_set(function_name);
-    //
     // nx, ax
     size_t nx = 2;
     CPPAD_TESTVECTOR( AD<double> ) ax(nx);
@@ -378,11 +377,11 @@ bool atomic_case(void)
     // ny, ay
     size_t ny = nx;
     CPPAD_TESTVECTOR( AD<double> ) ay(ny);
-    CPPAD_TESTVECTOR( AD<double> ) u(1), w(1);
+    CPPAD_TESTVECTOR( AD<double> ) au(1), aw(1);
     for(size_t j = 0; j < nx; ++j)
-    {   u[0] = ax[j];
-        reciprocal(u, w);
-        ay[j] = w[0];
+    {   au[0] = ax[j];
+        reciprocal(au, aw);
+        ay[j] = aw[0];
     }
     //
     // function_name
@@ -397,7 +396,7 @@ bool atomic_case(void)
     //
     // library_csrc
     CppAD::vector<std::string> library_csrc(2);
-    library_csrc[0] = g.to_csrc();
+    library_csrc[0] = reciprocal.forward_zero();
     library_csrc[1] = f.to_csrc();
     //
     // so_file_name
@@ -434,7 +433,7 @@ bool atomic_case(void)
         x[1] = x1;
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
-        call_id               = 0;
+        size_t call_id        = 0;
         size_t compare_change = 0;
         size_t flag = cppad_forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
@@ -452,8 +451,8 @@ bool atomic_case(void)
 // ---------------------------------------------------------------------------
 bool to_csrc(void)
 {   bool ok = true;
+    ok     &= simple_cases();
     ok     &= compare_cases();
     ok     &= atomic_case();
-    ok     &= simple_cases();
     return ok;
 }
