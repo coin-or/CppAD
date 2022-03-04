@@ -84,6 +84,7 @@ public:
     atomic_fun(const std::string name) :
     CppAD::atomic_four<double>(name)
     {}
+private:
     bool for_type(
         size_t                                     call_id     ,
         const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
@@ -104,18 +105,14 @@ public:
         taylor_y[0] = 1.0 / taylor_x[0];
         return true;
     }
-    // forward AD<double>
-    bool forward(
-        size_t                                     call_id      ,
-        const CppAD::vector<bool>&                 select_y     ,
-        size_t                                     order_low    ,
-        size_t                                     order_up     ,
-        const CppAD::vector< CppAD::AD<double> >&  taylor_x     ,
-        CppAD::vector< CppAD::AD<double> >&        taylor_y     ) override
-    {   if( order_up != 0 )
-            return false;;
-        taylor_y[0] = 1.0 / taylor_x[0];
-        return true;
+public:
+    // forward_zero
+    void forward_zero(
+        size_t                                     call_id ,
+        const CppAD::vector< CppAD::AD<double> >&  ax      ,
+        CppAD::vector< CppAD::AD<double> >&        ay      )
+    {   ay[0] = 1.0 / ax[0];
+        return;
     }
 };
 // --------------------------------------------------------------------------
@@ -358,12 +355,8 @@ bool atomic_case(void)
     // nw, w
     size_t nw = 1;
     CppAD::vector< AD<double> > aw(nw);
-    CppAD::vector<bool>         select_y(nw);
-    select_y[0]      = true;
     size_t call_id   = 0;
-    size_t order_low = 0;
-    size_t order_up  = 0;
-    reciprocal.forward(call_id, select_y, order_low, order_up, au, aw);
+    reciprocal.forward_zero(call_id, au, aw);
     //
     // g
     CppAD::ADFun<double> g(au, aw);
