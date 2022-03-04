@@ -15,7 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace{ // BEGIN_EMPTY_NAMESPACE
 //
 // cppad_forward_zero
-void (*cppad_forward_zero)(
+int (*cppad_forward_zero)(
     size_t        call_id,
     size_t        nx,
     const double* x,
@@ -213,9 +213,11 @@ bool simple_cases(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        cppad_forward_zero(
+        int flag = cppad_forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
+        ok &= flag == 0;
+        ok &= compare_change == 0;
         //
         // check
         for(size_t i = 0; i < ny; ++i)
@@ -313,9 +315,10 @@ bool compare_cases(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        cppad_forward_zero(
+        int flag = cppad_forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
+        ok &= flag == 0;
         ok &= compare_change == 0;
         for(size_t i = 0; i < ny; ++i)
             ok &= y[i] == Value( ay[i] );
@@ -323,12 +326,13 @@ bool compare_cases(void)
         // ok
         // check all change
         x[0] = 2.0 * x0;
-        cppad_forward_zero(
+        flag = cppad_forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
+        ok &= flag == 0;
+        ok &= compare_change == 4;
         for(size_t i = 0; i < ny; ++i)
             ok &= y[i] == Value( ay[i] );
-        ok &= compare_change == 4;
     }
     dlclose(handle);
     return ok;
@@ -432,9 +436,10 @@ bool atomic_case(void)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         call_id               = 0;
         size_t compare_change = 0;
-        cppad_forward_zero(
+        size_t flag = cppad_forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
+        ok &= flag == 0;
         ok &= compare_change == 0;
         for(size_t i = 0; i < ny; ++i)
             ok &= y[i] == Value( ay[i] );

@@ -90,6 +90,7 @@ namespace {
         size_t nu = arg_node.size();
         size_t nw = n_result;
         csrc += "\t{\t// call " + atomic_name + "\n";
+        csrc += "\t\tint flag;\n";
         csrc += "\t\tdouble " + element("u", nu) + ";\n";
         csrc += "\t\tdouble* w = v + " + to_string(result_node) + ";\n";
         for(size_t j = 0; j < nu; ++j)
@@ -97,11 +98,13 @@ namespace {
             csrc += "\t\t" + element("u",j) + " = " + element("v",i) + ";\n";
         }
         //
-        csrc += "\t\t" + complete_name + "(";
+        csrc += "\t\tflag = " + complete_name + "(";
         csrc += to_string(call_id) + ", ";
         csrc += to_string(nu) + ", u, ";
         csrc += to_string(nw) + ", w, ";
         csrc += "compare_change);\n";
+        csrc += "\t\tif( flag == 1 || flag == 2 ) return 3;\n";
+        csrc += "\t\tif( flag != 0 ) return flag;\n";
         //
         csrc += "\t}\n";
     }
@@ -150,7 +153,6 @@ void CppAD::local::graph::csrc_writer(
     csrc =
         "// includes\n"
         "# include <stddef.h>\n"
-        "# include <assert.h>\n"
         "# include <math.h>\n"
         "\n";
     //
@@ -159,7 +161,7 @@ void CppAD::local::graph::csrc_writer(
     size_t n_atomic = graph_obj.atomic_name_vec_size();
     for(size_t i_atomic = 0; i_atomic < n_atomic; ++i_atomic)
     {   string atomic_name = graph_obj.atomic_name_vec_get(i_atomic);
-        csrc += "extern void cppad_forward_zero_" + atomic_name + "(\n";
+        csrc += "extern int cppad_forward_zero_" + atomic_name + "(\n";
         csrc +=
             "\tsize_t        call_id           ,\n"
             "\tsize_t        nx                ,\n"
@@ -190,7 +192,7 @@ void CppAD::local::graph::csrc_writer(
     // This atomic function
     csrc +=
         "// This atomic function\n"
-        "void cppad_forward_zero_" + function_name + "(\n"
+        "int cppad_forward_zero_" + function_name + "(\n"
         "\tsize_t         call_id         ,\n"
         "\tsize_t         nx              ,\n"
         "\tconst double*  x               ,\n"
@@ -211,15 +213,15 @@ void CppAD::local::graph::csrc_writer(
         "\tsize_t i;\n"
         "\tdouble nan = 0.0 / 0.0;\n"
         "\n"
-        "\t// asserts\n";
+        "\t// check nx, ny\n";
     //
     // nx
     size_t nx = n_dynamic_ind + n_variable_ind;
-    csrc += "\tassert( nx == " + to_string(nx) + ");\n";
+    csrc += "\tif( nx != " + to_string(nx) + ") return 1;\n";
     //
     // ny
     size_t ny = n_dependent;
-    csrc += "\tassert( ny == " + to_string(ny) + ");\n";
+    csrc += "\tif( ny != " + to_string(ny) + ") return 2;\n";
     //
     // initialize
     // compare_change, v[0]
@@ -465,7 +467,7 @@ void CppAD::local::graph::csrc_writer(
     // ----------------------------------------------------------------------
     // end function body
     csrc += "\n";
-    csrc += "\treturn;\n";
+    csrc += "\treturn 0;\n";
     csrc += "}\n";
     //
     return;
