@@ -90,9 +90,8 @@ namespace {
         size_t nu = arg_node.size();
         size_t nw = n_result;
         csrc += "\t{\t// call " + atomic_name + "\n";
-        csrc += "\t\textern cppad_forward_zero " + complete_name + ";\n";
         csrc += "\t\tdouble " + element("u", nu) + ";\n";
-        csrc += "\t\tdouble* w = y + " + to_string(result_node) + ";\n";
+        csrc += "\t\tdouble* w = v + " + to_string(result_node) + ";\n";
         for(size_t j = 0; j < nu; ++j)
         {   size_t i = arg_node[j];
             csrc += "\t\t" + element("u",j) + " = " + element("v",i) + ";\n";
@@ -147,7 +146,7 @@ void CppAD::local::graph::csrc_writer(
         n_node += itr_value.n_result;
     }
     //
-    // include
+    // includes
     csrc =
         "// includes\n"
         "# include <stddef.h>\n"
@@ -155,16 +154,21 @@ void CppAD::local::graph::csrc_writer(
         "# include <math.h>\n"
         "\n";
     //
-    // atomic_function_t
-    csrc +=
-        "typedef void (*cppad_forward_zero)(\n"
-        "\tsize_t  call_id           ,\n"
-        "\tsize_t  nx                ,\n"
-        "\tdouble* x                 ,\n"
-        "\tsize_t  ny                ,\n"
-        "\tdouble* y                 ,\n"
-        "\tsize_t* compare_change\n"
-        ");\n";
+    // externals
+    csrc += "// externals\n";
+    size_t n_atomic = graph_obj.atomic_name_vec_size();
+    for(size_t i_atomic = 0; i_atomic < n_atomic; ++i_atomic)
+    {   string atomic_name = graph_obj.atomic_name_vec_get(i_atomic);
+        csrc += "extern void cppad_forward_zero_" + atomic_name + "(\n";
+        csrc +=
+            "\tsize_t        call_id           ,\n"
+            "\tsize_t        nx                ,\n"
+            "\tconst double* x                 ,\n"
+            "\tsize_t        ny                ,\n"
+            "\tdouble*       y                 ,\n"
+            "\tsize_t*       compare_change\n"
+            ");\n";
+    }
     //
     // azmul
     csrc +=
@@ -174,9 +178,9 @@ void CppAD::local::graph::csrc_writer(
         "\treturn x * y;\n"
         "}\n\n";
     //
-    // prototype
+    // This atomic function
     csrc +=
-        "// prototype\n"
+        "// This atomic function\n"
         "void cppad_forward_zero_" + function_name + "(\n"
         "\tsize_t         call_id         ,\n"
         "\tsize_t         nx              ,\n"

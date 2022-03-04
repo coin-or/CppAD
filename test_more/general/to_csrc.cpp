@@ -76,7 +76,48 @@ std::string create_dynamic_library(
     if( ok )
         return so_file_name;
     return "";
- }
+}
+//
+// atomic_fun
+class atomic_fun : public CppAD::atomic_four<double> {
+public:
+    atomic_fun(const std::string name) :
+    CppAD::atomic_four<double>(name)
+    {}
+    bool for_type(
+        size_t                                     call_id     ,
+        const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
+        CppAD::vector<CppAD::ad_type_enum>&        type_y      ) override
+    {   type_y[0] = type_x[0];
+        return true;
+    }
+    // forward double
+    bool forward(
+        size_t                              call_id      ,
+        const CppAD::vector<bool>&          select_y     ,
+        size_t                              order_low    ,
+        size_t                              order_up     ,
+        const CppAD::vector<double>&        taylor_x     ,
+        CppAD::vector<double>&              taylor_y     ) override
+    {   if( order_up != 0 )
+            return false;;
+        taylor_y[0] = 1.0 / taylor_x[0];
+        return true;
+    }
+    // forward AD<double>
+    bool forward(
+        size_t                                     call_id      ,
+        const CppAD::vector<bool>&                 select_y     ,
+        size_t                                     order_low    ,
+        size_t                                     order_up     ,
+        const CppAD::vector< CppAD::AD<double> >&  taylor_x     ,
+        CppAD::vector< CppAD::AD<double> >&        taylor_y     ) override
+    {   if( order_up != 0 )
+            return false;;
+        taylor_y[0] = 1.0 / taylor_x[0];
+        return true;
+    }
+};
 // --------------------------------------------------------------------------
 bool simple_cases(void)
 {   // ok
@@ -295,11 +336,125 @@ bool compare_cases(void)
     return ok;
 }
 // ---------------------------------------------------------------------------
+bool atomic_case(void)
+{   // ok
+    bool ok = true;
+    //
+    // AD
+    using CppAD::AD;
+    //
+    // function_name
+    std::string function_name = "reciprocal";
+    //
+    // reciprocal
+    atomic_fun reciprocal(function_name);
+    //
+    // nu, u
+    size_t nu = 1;
+    CppAD::vector< AD<double> > au(nu);
+    au[0] = 2.0;
+    CppAD::Independent(au);
+    //
+    // nw, w
+    size_t nw = 1;
+    CppAD::vector< AD<double> > aw(nw);
+    CppAD::vector<bool>         select_y(nw);
+    select_y[0]      = true;
+    size_t call_id   = 0;
+    size_t order_low = 0;
+    size_t order_up  = 0;
+    reciprocal.forward(call_id, select_y, order_low, order_up, au, aw);
+    //
+    // g
+    CppAD::ADFun<double> g(au, aw);
+    g.function_name_set(function_name);
+    //
+    // nx, ax
+    size_t nx = 2;
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx);
+    double x0 = 0.5, x1 = 4.0;
+    ax[0] = x0;
+    ax[1] = x1;
+    CppAD::Independent(ax);
+    //
+    // ny, ay
+    size_t ny = nx;
+    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
+    CPPAD_TESTVECTOR( AD<double> ) u(1), w(1);
+    for(size_t j = 0; j < nx; ++j)
+    {   u[0] = ax[j];
+        reciprocal(u, w);
+        ay[j] = w[0];
+    }
+    //
+    // function_name
+    function_name = "use_reciprocal";
+    //
+    // f
+    CppAD::ADFun<double> f(ax, ay);
+    f.function_name_set(function_name);
+    //
+    // library_name
+    std::string library_name = "test_to_csrc";
+    //
+    // library_csrc
+    CppAD::vector<std::string> library_csrc(2);
+    library_csrc[0] = g.to_csrc();
+    library_csrc[1] = f.to_csrc();
+    //
+    // so_file_name
+# if 1
+    std::string so_file_name = create_dynamic_library(
+        library_name, library_csrc
+    );
+# else
+    std::string so_file_name = "/tmp/test_to_csrc.so";
+# endif
+    if( so_file_name == "" )
+    {   std::cout << "Failed to create " << library_name << "\n";
+        ok = false;
+    }
+    //
+    // handle
+    void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
+    if( handle == nullptr )
+    {   char *errstr;
+        errstr = dlerror();
+        if( errstr != nullptr )
+            std::cout << "Dynamic linking error = " << errstr << "\n";
+        ok = false;
+    }
+    else
+    {   // cppad_forward_zero
+        std::string complete_name = "cppad_forward_zero_" + function_name;
+        *(void**)(&cppad_forward_zero) = dlsym(handle, complete_name.c_str());
+        //
+        // ok
+        // no change
+        CppAD::vector<double> x(nx), y(ny);
+        x[0] = x0;
+        x[1] = x1;
+        for(size_t i = 0; i < ny; ++i)
+            y[i] = std::numeric_limits<double>::quiet_NaN();
+        call_id               = 0;
+        size_t compare_change = 0;
+        cppad_forward_zero(
+            call_id, nx, x.data(), ny, y.data(), &compare_change
+        );
+        ok &= compare_change == 0;
+        for(size_t i = 0; i < ny; ++i)
+            ok &= y[i] == Value( ay[i] );
+    }
+    dlclose(handle);
+    return ok;
+}
+// ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
 bool to_csrc(void)
 {   bool ok = true;
     ok     &= simple_cases();
     ok     &= compare_cases();
+    ok     &= atomic_case();
     return ok;
 }
