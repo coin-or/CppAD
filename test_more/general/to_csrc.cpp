@@ -131,6 +131,23 @@ public:
     }
 };
 // --------------------------------------------------------------------------
+// integer
+double integer(const double& x)
+{   if( x >= 0.0 ) return std::floor(x);
+    return std::ceil(x);
+}
+CPPAD_DISCRETE_FUNCTION(double, integer)
+std::string discrete_integer(void)
+{   std::string csrc = R"_(
+# include <math.h>
+double cppad_discrete_integer(const double x)
+{   if( x >= 0.0 ) return floor(x);
+    return ceil(x);
+}
+)_";
+    return csrc;
+}
+// --------------------------------------------------------------------------
 bool simple_cases(void)
 {   // ok
     bool ok = true;
@@ -447,6 +464,90 @@ bool atomic_case(void)
     return ok;
 }
 // ---------------------------------------------------------------------------
+bool discrete_case(void)
+{   // ok
+    bool ok = true;
+    //
+    // AD
+    using CppAD::AD;
+    //
+    // nx, ax
+    size_t nx = 2;
+    CPPAD_TESTVECTOR( AD<double> ) ax(nx);
+    double x0 = -1.5, x1 = 1.5;
+    ax[0] = x0;
+    ax[1] = x1;
+    CppAD::Independent(ax);
+    //
+    // ny, ay
+    size_t ny = nx;
+    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
+    for(size_t j = 0; j < nx; ++j)
+        ay[j] = integer( ax[j] );
+    //
+    // function_name
+    std::string function_name = "use_integer";
+    //
+    // f
+    CppAD::ADFun<double> f(ax, ay);
+    f.function_name_set(function_name);
+    //
+    // library_name
+    std::string library_name = "test_to_csrc";
+    //
+    // library_csrc
+    CppAD::vector<std::string> library_csrc(2);
+    library_csrc[0] = discrete_integer();
+    library_csrc[1] = f.to_csrc();
+    //
+    // so_file_name
+# if 1
+    std::string so_file_name = create_dynamic_library(
+        library_name, library_csrc
+    );
+# else
+    std::string so_file_name = "/tmp/test_to_csrc.so";
+# endif
+    if( so_file_name == "" )
+    {   std::cout << "Failed to create " << library_name << "\n";
+        ok = false;
+    }
+    //
+    // handle
+    void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
+    if( handle == nullptr )
+    {   char *errstr;
+        errstr = dlerror();
+        if( errstr != nullptr )
+            std::cout << "Dynamic linking error = " << errstr << "\n";
+        ok = false;
+    }
+    else
+    {   // cppad_forward_zero
+        std::string complete_name = "cppad_forward_zero_" + function_name;
+        *(void**)(&cppad_forward_zero) = dlsym(handle, complete_name.c_str());
+        //
+        // ok
+        // no change
+        CppAD::vector<double> x(nx), y(ny);
+        x[0] = x0;
+        x[1] = x1;
+        for(size_t i = 0; i < ny; ++i)
+            y[i] = std::numeric_limits<double>::quiet_NaN();
+        size_t call_id        = 0;
+        size_t compare_change = 0;
+        size_t flag = cppad_forward_zero(
+            call_id, nx, x.data(), ny, y.data(), &compare_change
+        );
+        ok &= flag == 0;
+        ok &= compare_change == 0;
+        for(size_t i = 0; i < ny; ++i)
+            ok &= y[i] == Value( ay[i] );
+    }
+    dlclose(handle);
+    return ok;
+}
+// ---------------------------------------------------------------------------
 } // END_EMPTY_NAMESPACE
 // ---------------------------------------------------------------------------
 bool to_csrc(void)
@@ -454,5 +555,6 @@ bool to_csrc(void)
     ok     &= simple_cases();
     ok     &= compare_cases();
     ok     &= atomic_case();
+    ok     &= discrete_case();
     return ok;
 }

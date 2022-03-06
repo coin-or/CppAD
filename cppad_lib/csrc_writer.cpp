@@ -81,7 +81,7 @@ namespace {
     void atomic_function(
         std::string&                 csrc                ,
         size_t                       result_node         ,
-        const std::string            atomic_name         ,
+        const std::string&           atomic_name         ,
         size_t                       call_id             ,
         size_t                       n_result            ,
         const CppAD::vector<size_t>& arg_node            )
@@ -108,6 +108,21 @@ namespace {
         //
         csrc += "\t}\n";
     }
+    //
+    // discrete_function
+    void discrete_function(
+        std::string&                 csrc                ,
+        size_t                       result_node         ,
+        const std::string&           discrete_name       ,
+        size_t                       arg_node            )
+    {   using CppAD::to_string;
+        std::string complete_name = "cppad_discrete_" + discrete_name;
+        csrc += "\t{\t// call " + discrete_name + "\n";
+        csrc += "\t\t" + element("v", result_node) + " = ";
+        csrc += complete_name + "( " + element("v", arg_node) + " );\n";
+        csrc += "\t}\n";
+    }
+
 }
 
 void CppAD::local::graph::csrc_writer(
@@ -170,6 +185,12 @@ void CppAD::local::graph::csrc_writer(
             "\tdouble*       y                 ,\n"
             "\tsize_t*       compare_change\n"
             ");\n";
+    }
+    size_t n_discrete = graph_obj.discrete_name_vec_size();
+    for(size_t i_discrete = 0; i_discrete < n_discrete; ++i_discrete)
+    {   string discrete_name = graph_obj.discrete_name_vec_get(i_discrete);
+        csrc += "extern double cppad_discrete_" + discrete_name;
+        csrc += "( double x );\n";
     }
     //
     // azmul
@@ -359,6 +380,7 @@ void CppAD::local::graph::csrc_writer(
             // operators that do not use op_csrc
             // ---------------------------------------------------------------
             case atom4_graph_op:
+            case discrete_graph_op:
             op_csrc = "";
             break;
 
@@ -442,6 +464,18 @@ void CppAD::local::graph::csrc_writer(
                 string atomic_name = graph_obj.atomic_name_vec_get(index);
                 atomic_function(csrc,
                     result_node, atomic_name, call_id, n_result, arg_node
+                );
+            }
+            break;
+            //
+            // discrete
+            CPPAD_ASSERT_UNKNOWN( arg_node.size() == 1 );
+            CPPAD_ASSERT_UNKNOWN( n_result == 1 );
+            case discrete_graph_op:
+            {   size_t index         = str_index[0];
+                string discrete_name = graph_obj.discrete_name_vec_get(index);
+                discrete_function(csrc,
+                    result_node, discrete_name, arg_node[0]
                 );
             }
             break;
