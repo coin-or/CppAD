@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-  CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+  CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -35,6 +35,7 @@ $section Other Ways to Create an ADFun Object$$
 
 $childtable%
     include/cppad/core/base2ad.hpp%
+    include/cppad/core/graph/to_csrc.hpp%
     include/cppad/core/graph/json_ad_graph.omh%
     include/cppad/core/graph/cpp_ad_graph.omh%
     include/cppad/core/abs_normal_fun.hpp

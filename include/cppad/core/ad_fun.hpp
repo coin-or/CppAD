@@ -321,7 +321,9 @@ public:
     // convert function to  a C++ graph, Json graph, or C source code
     void to_graph(cpp_graph& graph_obj);
     std::string to_json(void);
-    std::string to_csrc(void);
+    std::string to_csrc(
+        const std::map<std::string, std::string>& options
+    );
 
     // create ADFun< AD<Base> > from this ADFun<Base>
     // (doxygen in cppad/core/base2ad.hpp)

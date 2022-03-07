@@ -18,20 +18,23 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/local/graph/cpp_graph_op.hpp>
 # include <cppad/core/graph/cpp_graph.hpp>
 # include <cppad/local/graph/csrc_writer.hpp>
-
 /*
 ------------------------------------------------------------------------------
 $begin to_csrc$$
 $spell
     Json
     cpp
+    csrc
+    cppad
+    nx
+    bool
 $$
 
 $section C Source Code Corresponding to an ADFun Object$$
 
 $head Syntax$$
 $codei%
-    %csrc% = %fun%.to_csrc()
+    %csrc% = %fun%.to_csrc(%options%)
 %$$
 
 $head Prototype$$
@@ -53,15 +56,59 @@ i.e., its calculations are done using the type $icode Base$$.
 $head RecBase$$
 in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
 
+$head options$$
+This map has the following possible keys:
+
+$subhead type$$
+If the key $code type$$ appears in $icode options$$,
+the possible values are:
+$code float$$, $code double$$, or $code long double$$.
+This is the type used for operations in the generated C code.
+If this key is not present, the type $code double$$ is used.
+
+$head C Function$$
+
+$subhead Syntax$$
+$codei%cppad_forward_zero_%function_name%(
+    %call_id%, %nx%, %x%, %ny%, %y%, %compare_change%
+)%$$
+
+$subhead call_id$$
+is the $cref/call_id/atomic_four_call/call_id/$$ for the function call.
+
+$subhead nx$$
+is the number of independent variables plus number of independent dynamic
+parameters for this function.
+
+$subhead x$$
+is a C vector of size $icode nx$$ and type $icode type$$,
+containing the independent variables
+and independent dynamic parameters.
+The dynamic parameter come first and then the variables.
+
+$subhead ny$$
+is the number of dependent values for this function
+(a dependent value can be a variable, dynamic parameter, or constant parameter).
+
+$subhead y$$
+is a C vector of size $icode ny$$ and type $icode type$$.
+This input values of its elements do not matter.
+Upon return, it contains the function value correspond to $icode x$$.
+
+$subhead compare_change$$
+the number of comparison operators that change their bool result value
+is added to $icode compare_change$$. This way, $icode compare_change$$
+can be used to accumulate the number of changes between multiplier calls.
+
 $head Restrictions$$
 So far,
-the $code to_csrc$$ routine is only implemented for the following operatoions:
+the $code to_csrc$$ routine is only implemented for the following operations:
 
-$children%
+$comment%
     example/csrc/to_csrc.cpp
 %$$
 $head Example$$
-The file $cref to_csrc.cpp$$ is an example and test of this operation.
+2DO: the file $code to_csrc.cpp$$ is an example and test of this operation.
 
 $end
 */
@@ -69,9 +116,25 @@ $end
 
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-std::string CppAD::ADFun<Base,RecBase>::to_csrc(void)
+std::string CppAD::ADFun<Base,RecBase>::to_csrc(
+    const std::map<std::string, std::string>& options
+)
 // END_PROTOTYPE
 {   //
+    std::string type = "double";
+    if( options.find("type") != options.end() )
+    {   type = options.at("type");
+# ifndef NDEBUG
+        bool ok = false;
+        ok |= type == "float";
+        ok |= type == "double";
+        ok |= type == "long double";
+        CPPAD_ASSERT_KNOWN(ok,
+            "f.to_csrc: options[\"type\"] is not one of the following: "
+            "float, double, lont_double"
+        );
+# endif
+    }
     // to_graph return values
     cpp_graph graph_obj;
     //
@@ -80,7 +143,7 @@ std::string CppAD::ADFun<Base,RecBase>::to_csrc(void)
     //
     // convert to csrc
     std::string csrc;
-    local::graph::csrc_writer(csrc, graph_obj);
+    local::graph::csrc_writer(csrc, graph_obj, type);
     //
     return csrc;
 }

@@ -9,6 +9,38 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
+/*
+$begin cpp_csrc_writer$$
+$spell
+    Cpp
+    src
+    obj
+    csrc
+$$
+
+$section Converts Cpp Graph to C Source$$
+
+$head Syntax$$
+$code csrc_writer(%csrc%, %graph_obj%, %type%)
+%$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+
+$head csrc$$
+the input value of this string does not matter.
+Upon return, it contains the C source code corresponding to the function.
+
+$head graph$$
+is the C++ graph representation of the function.
+
+$head type$$
+this specifies the type corresponding to the C source code and must
+be one of the following:
+$code float$$, $code double$$, or $code long double$$.
+
+$end
+*/
 
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/core/cppad_assert.hpp>
@@ -125,9 +157,12 @@ namespace {
 
 }
 
+// BEGIN_PROTOTYPE
 void CppAD::local::graph::csrc_writer(
     std::string&                              csrc                   ,
-    const cpp_graph&                          graph_obj              )
+    const cpp_graph&                          graph_obj              ,
+    const std::string&                        type                   )
+// END_PROTOTYPE
 {   using std::string;
     using CppAD::to_string;
     //
@@ -140,7 +175,7 @@ void CppAD::local::graph::csrc_writer(
     size_t n_usage        = graph_obj.operator_vec_size();
     // --------------------------------------------------------------------
     CPPAD_ASSERT_KNOWN( function_name != "" ,
-        "to_csrc: Cannot convert a fucntion with no name"
+        "to_csrc: Cannot convert a function with no name"
     );
     //
     // graph_itr

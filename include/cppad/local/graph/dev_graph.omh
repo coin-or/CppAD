@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -21,7 +21,8 @@ $childtable%
     include/cppad/local/graph/cpp_graph_op.hpp%
     include/cppad/local/graph/json_lexer.omh%
     include/cppad/local/graph/json_parser.hpp%
-    include/cppad/local/graph/json_writer.hpp
+    include/cppad/local/graph/json_writer.hpp%
+    cppad_lib/csrc_writer.cpp
 %$$
 
 

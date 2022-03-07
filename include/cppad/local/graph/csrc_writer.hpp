@@ -40,7 +40,8 @@ $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
     CPPAD_LIB_EXPORT void csrc_writer(
         std::string&       csrc        ,
-        const cpp_graph&   graph_obj
+        const cpp_graph&   graph_obj   ,
+        const std::string& type
     );
 } } }
 /* %$$
