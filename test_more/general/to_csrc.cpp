@@ -14,8 +14,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace{ // BEGIN_EMPTY_NAMESPACE
 //
-// cppad_forward_zero
-int (*cppad_forward_zero)(
+// cppad_forward_zero_double
+int (*cppad_forward_zero_double)(
     size_t        call_id,
     size_t        nx,
     const double* x,
@@ -24,8 +24,15 @@ int (*cppad_forward_zero)(
     size_t*       compare_change
 );
 //
-// to_csrc_options
-std::map< std::string, std::string> to_csrc_options;
+// cppad_forward_zero_float
+int (*cppad_forward_zero_float)(
+    size_t       call_id,
+    size_t       nx,
+    const float* x,
+    size_t       ny,
+    float*       y,
+    size_t*      compare_change
+);
 //
 // create_dynamic_library
 std::string create_dynamic_library(
@@ -135,15 +142,15 @@ public:
 };
 // --------------------------------------------------------------------------
 // integer
-double integer(const double& x)
+float integer(const float& x)
 {   if( x >= 0.0 ) return std::floor(x);
     return std::ceil(x);
 }
-CPPAD_DISCRETE_FUNCTION(double, integer)
+CPPAD_DISCRETE_FUNCTION(float, integer)
 std::string discrete_integer(void)
 {   std::string csrc = R"_(
 # include <math.h>
-double cppad_discrete_integer(const double x)
+float cppad_discrete_integer(const float x)
 {   if( x >= 0.0 ) return floor(x);
     return ceil(x);
 }
@@ -218,7 +225,8 @@ bool simple_cases(void)
     //
     // librar_csrc
     CppAD::vector<std::string> library_csrc(1);
-    library_csrc[0] = f.to_csrc(to_csrc_options);
+    std::map< std::string, std::string> options;
+    library_csrc[0] = f.to_csrc(options);
     //
     // os_file_name
     std::string so_file_name = create_dynamic_library(
@@ -240,7 +248,8 @@ bool simple_cases(void)
     else
     {   // call test_to_csrc
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&cppad_forward_zero) = dlsym(handle, complete_name.c_str());
+        *(void**)(&cppad_forward_zero_double) =
+            dlsym(handle, complete_name.c_str());
         size_t call_id = 0;
         CppAD::vector<double> x(nx), y(ny);
         x[0] = Value( ax[0] );
@@ -248,7 +257,7 @@ bool simple_cases(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        int flag = cppad_forward_zero(
+        int flag = cppad_forward_zero_double(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -318,7 +327,8 @@ bool compare_cases(void)
     //
     // library_csrc
     CppAD::vector<std::string> library_csrc(1);
-    library_csrc[0] = f.to_csrc(to_csrc_options);
+    std::map< std::string, std::string> options;
+    library_csrc[0] = f.to_csrc(options);
     //
     // so_file_name
     std::string so_file_name = create_dynamic_library(
@@ -338,9 +348,10 @@ bool compare_cases(void)
         ok = false;
     }
     else
-    {   // cppad_forward_zero
+    {   // cppad_forward_zero_double
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&cppad_forward_zero) = dlsym(handle, complete_name.c_str());
+        *(void**)(&cppad_forward_zero_double) =
+            dlsym(handle, complete_name.c_str());
         //
         // ok
         // no change
@@ -350,7 +361,7 @@ bool compare_cases(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        int flag = cppad_forward_zero(
+        int flag = cppad_forward_zero_double(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -361,7 +372,7 @@ bool compare_cases(void)
         // ok
         // check all change
         x[0] = 2.0 * x0;
-        flag = cppad_forward_zero(
+        flag = cppad_forward_zero_double(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -416,8 +427,10 @@ bool atomic_case(void)
     //
     // library_csrc
     CppAD::vector<std::string> library_csrc(2);
+    std::map< std::string, std::string> options;
+    options["type"] = "double";
     library_csrc[0] = reciprocal.forward_zero();
-    library_csrc[1] = f.to_csrc(to_csrc_options);
+    library_csrc[1] = f.to_csrc(options);
     //
     // so_file_name
 # if 1
@@ -442,9 +455,10 @@ bool atomic_case(void)
         ok = false;
     }
     else
-    {   // cppad_forward_zero
+    {   // cppad_forward_zero_double
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&cppad_forward_zero) = dlsym(handle, complete_name.c_str());
+        *(void**)(&cppad_forward_zero_double) =
+            dlsym(handle, complete_name.c_str());
         //
         // ok
         // no change
@@ -455,7 +469,7 @@ bool atomic_case(void)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t call_id        = 0;
         size_t compare_change = 0;
-        size_t flag = cppad_forward_zero(
+        size_t flag = cppad_forward_zero_double(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -476,15 +490,15 @@ bool discrete_case(void)
     //
     // nx, ax
     size_t nx = 2;
-    CPPAD_TESTVECTOR( AD<double> ) ax(nx);
-    double x0 = -1.5, x1 = 1.5;
+    CPPAD_TESTVECTOR( AD<float> ) ax(nx);
+    float x0 = -1.5, x1 = 1.5;
     ax[0] = x0;
     ax[1] = x1;
     CppAD::Independent(ax);
     //
     // ny, ay
     size_t ny = nx;
-    CPPAD_TESTVECTOR( AD<double> ) ay(ny);
+    CPPAD_TESTVECTOR( AD<float> ) ay(ny);
     for(size_t j = 0; j < nx; ++j)
         ay[j] = integer( ax[j] );
     //
@@ -492,7 +506,7 @@ bool discrete_case(void)
     std::string function_name = "use_integer";
     //
     // f
-    CppAD::ADFun<double> f(ax, ay);
+    CppAD::ADFun<float> f(ax, ay);
     f.function_name_set(function_name);
     //
     // library_name
@@ -500,8 +514,10 @@ bool discrete_case(void)
     //
     // library_csrc
     CppAD::vector<std::string> library_csrc(2);
+    std::map< std::string, std::string> options;
+    options["type"] = "float";
     library_csrc[0] = discrete_integer();
-    library_csrc[1] = f.to_csrc(to_csrc_options);
+    library_csrc[1] = f.to_csrc(options);
     //
     // so_file_name
 # if 1
@@ -526,20 +542,21 @@ bool discrete_case(void)
         ok = false;
     }
     else
-    {   // cppad_forward_zero
+    {   // cppad_forward_zero_float
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&cppad_forward_zero) = dlsym(handle, complete_name.c_str());
+        *(void**)(&cppad_forward_zero_float) =
+            dlsym(handle, complete_name.c_str());
         //
         // ok
         // no change
-        CppAD::vector<double> x(nx), y(ny);
+        CppAD::vector<float> x(nx), y(ny);
         x[0] = x0;
         x[1] = x1;
         for(size_t i = 0; i < ny; ++i)
-            y[i] = std::numeric_limits<double>::quiet_NaN();
+            y[i] = std::numeric_limits<float>::quiet_NaN();
         size_t call_id        = 0;
         size_t compare_change = 0;
-        size_t flag = cppad_forward_zero(
+        size_t flag = cppad_forward_zero_float(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;

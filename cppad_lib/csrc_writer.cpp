@@ -123,8 +123,8 @@ namespace {
         size_t nw = n_result;
         csrc += "\t{\t// call " + atomic_name + "\n";
         csrc += "\t\tint flag;\n";
-        csrc += "\t\tdouble " + element("u", nu) + ";\n";
-        csrc += "\t\tdouble* w = v + " + to_string(result_node) + ";\n";
+        csrc += "\t\tfloat_point_t " + element("u", nu) + ";\n";
+        csrc += "\t\tfloat_point_t* w = v + " + to_string(result_node) + ";\n";
         for(size_t j = 0; j < nu; ++j)
         {   size_t i = arg_node[j];
             csrc += "\t\t" + element("u",j) + " = " + element("v",i) + ";\n";
@@ -206,6 +206,12 @@ void CppAD::local::graph::csrc_writer(
         "# include <math.h>\n"
         "\n";
     //
+    // typedefs
+    csrc +=
+        "// typedefs\n"
+        "typedef " + type + " float_point_t;\n"
+        "\n";
+    //
     // externals
     csrc += "// externals\n";
     size_t n_atomic = graph_obj.atomic_name_vec_size();
@@ -213,25 +219,25 @@ void CppAD::local::graph::csrc_writer(
     {   string atomic_name = graph_obj.atomic_name_vec_get(i_atomic);
         csrc += "extern int cppad_forward_zero_" + atomic_name + "(\n";
         csrc +=
-            "\tsize_t        call_id           ,\n"
-            "\tsize_t        nx                ,\n"
-            "\tconst double* x                 ,\n"
-            "\tsize_t        ny                ,\n"
-            "\tdouble*       y                 ,\n"
-            "\tsize_t*       compare_change\n"
+            "\tsize_t               call_id           ,\n"
+            "\tsize_t               nx                ,\n"
+            "\tconst float_point_t* x                 ,\n"
+            "\tsize_t               ny                ,\n"
+            "\tfloat_point_t*       y                 ,\n"
+            "\tsize_t*              compare_change\n"
             ");\n";
     }
     size_t n_discrete = graph_obj.discrete_name_vec_size();
     for(size_t i_discrete = 0; i_discrete < n_discrete; ++i_discrete)
     {   string discrete_name = graph_obj.discrete_name_vec_get(i_discrete);
-        csrc += "extern double cppad_discrete_" + discrete_name;
-        csrc += "( double x );\n";
+        csrc += "extern float_point_t cppad_discrete_" + discrete_name;
+        csrc += "( float_point_t x );\n";
     }
     //
     // azmul
     csrc +=
         "// azmul\n"
-        "static double azmul(double x, double y)\n"
+        "static float_point_t azmul(float_point_t x, float_point_t y)\n"
         "{\tif( x == 0.0 ) return 0.0;\n"
         "\treturn x * y;\n"
         "}\n\n";
@@ -239,7 +245,7 @@ void CppAD::local::graph::csrc_writer(
     // sign
     csrc +=
         "// sign\n"
-        "static double sign(double x)\n"
+        "static float_point_t sign(float_point_t x)\n"
         "{\tif( x > 0.0 ) return 1.0;\n"
         "\tif( x == 0.0 ) return 0.0;\n"
         "\treturn -1.0;\n"
@@ -249,12 +255,12 @@ void CppAD::local::graph::csrc_writer(
     csrc +=
         "// This atomic function\n"
         "int cppad_forward_zero_" + function_name + "(\n"
-        "\tsize_t         call_id         ,\n"
-        "\tsize_t         nx              ,\n"
-        "\tconst double*  x               ,\n"
-        "\tsize_t         ny              ,\n"
-        "\tdouble*        y               ,\n"
-        "\tsize_t*        compare_change  )\n";
+        "\tsize_t               call_id         ,\n"
+        "\tsize_t               nx              ,\n"
+        "\tconst float_point_t* x               ,\n"
+        "\tsize_t               ny              ,\n"
+        "\tfloat_point_t*       y               ,\n"
+        "\tsize_t*              compare_change  )\n";
     //
     // begin function body
     csrc +=
@@ -265,9 +271,9 @@ void CppAD::local::graph::csrc_writer(
     // v, i, nan
     csrc +=
         "\t// declare variables\n"
-        "\tdouble v[" + to_string(n_node) + "];\n"
+        "\tfloat_point_t v[" + to_string(n_node) + "];\n"
         "\tsize_t i;\n"
-        "\tdouble nan = 0.0 / 0.0;\n"
+        "\tfloat_point_t nan = 0.0 / 0.0;\n"
         "\n"
         "\t// check nx, ny\n";
     //
