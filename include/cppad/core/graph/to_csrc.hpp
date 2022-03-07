@@ -121,6 +121,15 @@ std::string CppAD::ADFun<Base,RecBase>::to_csrc(
 )
 // END_PROTOTYPE
 {   //
+    // valid_key
+    std::set<std::string> valid_key = { "type" };
+    for( const auto& pair : options )
+    {   const std::string& key = pair.first;
+        CPPAD_ASSERT_KNOWN( valid_key.find(key) != valid_key.end(),
+            "f.to_csrc(options): options contains an invalid key"
+        );
+    }
+    // type
     std::string type = "double";
     if( options.find("type") != options.end() )
     {   type = options.at("type");
