@@ -28,13 +28,14 @@ $spell
     cppad
     nx
     bool
+    Vec
 $$
 
 $section C Source Code Corresponding to an ADFun Object$$
 
 $head Syntax$$
 $codei%
-    %csrc% = %fun%.to_csrc(%options%)
+    %csrc% = %fun%.to_csrc(%os%, %options%)
 %$$
 
 $head Prototype$$
@@ -45,16 +46,16 @@ $srcthisfile%
 $head fun$$
 is the $cref/ADFun/adfun/$$ object.
 
-$head csrc$$
-The return value of $icode csrc$$ is a
-C source code representation of the corresponding function.
-
 $head Base$$
 is the type corresponding to this $cref/ADFun/adfun/$$ object;
 i.e., its calculations are done using the type $icode Base$$.
 
 $head RecBase$$
 in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
+
+$head os$$
+The C source code representation of the function $icode fun$$
+is written to $icode os$$.
 
 $head options$$
 This map has the following possible keys:
@@ -101,8 +102,8 @@ is added to $icode compare_change$$. This way, $icode compare_change$$
 can be used to accumulate the number of changes between multiplier calls.
 
 $head Restrictions$$
-So far,
-the $code to_csrc$$ routine is only implemented for the following operations:
+The $code to_csrc$$ routine is not implemented for
+$cref/VecAD/vecad/$$ operations.
 
 $comment%
     example/csrc/to_csrc.cpp
@@ -116,9 +117,9 @@ $end
 
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
-std::string CppAD::ADFun<Base,RecBase>::to_csrc(
-    const std::map<std::string, std::string>& options
-)
+void CppAD::ADFun<Base,RecBase>::to_csrc(
+    std::ostream&                             os      ,
+    const std::map<std::string, std::string>& options )
 // END_PROTOTYPE
 {   //
     // valid_key
@@ -150,11 +151,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_csrc(
     // graph corresponding to this function
     to_graph(graph_obj);
     //
-    // convert to csrc
-    std::stringstream ss;
-    local::graph::csrc_writer(ss, graph_obj, type);
+    // os
+    local::graph::csrc_writer(os, graph_obj, type);
     //
-    return ss.str();
+    return;
 }
 
 # endif

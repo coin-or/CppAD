@@ -226,7 +226,9 @@ bool simple_cases(void)
     // librar_csrc
     CppAD::vector<std::string> library_csrc(1);
     std::map< std::string, std::string> options;
-    library_csrc[0] = f.to_csrc(options);
+    std::stringstream ss;
+    f.to_csrc(ss, options);
+    library_csrc[0] = ss.str();
     //
     // os_file_name
     std::string so_file_name = create_dynamic_library(
@@ -328,7 +330,9 @@ bool compare_cases(void)
     // library_csrc
     CppAD::vector<std::string> library_csrc(1);
     std::map< std::string, std::string> options;
-    library_csrc[0] = f.to_csrc(options);
+    std::stringstream ss;
+    f.to_csrc(ss, options);
+    library_csrc[0] = ss.str();
     //
     // so_file_name
     std::string so_file_name = create_dynamic_library(
@@ -430,7 +434,9 @@ bool atomic_case(void)
     std::map< std::string, std::string> options;
     options["type"] = "double";
     library_csrc[0] = reciprocal.forward_zero();
-    library_csrc[1] = f.to_csrc(options);
+    std::stringstream ss;
+    f.to_csrc(ss, options);
+    library_csrc[1] = ss.str();
     //
     // so_file_name
 # if 1
@@ -517,7 +523,9 @@ bool discrete_case(void)
     std::map< std::string, std::string> options;
     options["type"] = "float";
     library_csrc[0] = discrete_integer();
-    library_csrc[1] = f.to_csrc(options);
+    std::stringstream ss;
+    f.to_csrc(ss, options);
+    library_csrc[1] = ss.str();
     //
     // so_file_name
 # if 1
