@@ -151,10 +151,10 @@ std::string CppAD::ADFun<Base,RecBase>::to_csrc(
     to_graph(graph_obj);
     //
     // convert to csrc
-    std::string csrc;
-    local::graph::csrc_writer(csrc, graph_obj, type);
+    std::stringstream ss;
+    local::graph::csrc_writer(ss, graph_obj, type);
     //
-    return csrc;
+    return ss.str();
 }
 
 # endif

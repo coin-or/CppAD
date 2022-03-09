@@ -28,9 +28,9 @@ $section C Source Code Writer$$
 $head Syntax$$
 $codei%csrc_writer( %csrc%, %graph_obj% )%$$
 
-$head csrc$$
-The input value of $icode csrc$$ does not matter,
-upon return it a C source code representation of an AD function.
+$head os$$
+The C source code representation of an AD function
+is written to $icode os$$.
 
 $head graph_obj$$
 This is a $code cpp_graph$$ representation of the function.
@@ -39,9 +39,9 @@ $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
     CPPAD_LIB_EXPORT void csrc_writer(
-        std::string&       csrc        ,
-        const cpp_graph&   graph_obj   ,
-        const std::string& type
+        std::ostream&       os          ,
+        const cpp_graph&    graph_obj   ,
+        const std::string&  type
     );
 } } }
 /* %$$

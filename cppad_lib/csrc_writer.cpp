@@ -21,15 +21,14 @@ $$
 $section Converts Cpp Graph to C Source$$
 
 $head Syntax$$
-$code csrc_writer(%csrc%, %graph_obj%, %type%)
+$code csrc_writer(%os%, %graph_obj%, %type%)
 %$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
-$head csrc$$
-the input value of this string does not matter.
-Upon return, it contains the C source code corresponding to the function.
+$head os$$
+The C source code corresponding to the function is written to $icode os$$.
 
 $head graph$$
 is the C++ graph representation of the function.
@@ -64,54 +63,54 @@ namespace {
     //
     // binary_function
     void binary_function(
-        std::string&   csrc         ,
+        std::ostream&  os           ,
         const char*    op_csrc      ,
         size_t         result_node  ,
         size_t         left_node    ,
         size_t         right_node   )
-    {   csrc += "\t" + element("v", result_node) + " = ";
-        csrc += op_csrc;
-        csrc += "( " + element("v", left_node);
-        csrc += ", " + element("v", right_node) + " );\n";
+    {   os << "\t" + element("v", result_node) + " = ";
+        os << op_csrc;
+        os << "( " + element("v", left_node);
+        os << ", " + element("v", right_node) + " );\n";
     }
     //
     // binary_operator
     void binary_operator(
-        std::string&   csrc         ,
+        std::ostream&  os           ,
         const char*    op_csrc      ,
         size_t         result_node  ,
         size_t         left_node    ,
         size_t         right_node   )
-    {   csrc += "\t" + element("v", result_node) + " = ";
-        csrc += element("v", left_node) + op_csrc + " ";
-        csrc += element("v", right_node) + ";\n";
+    {   os << "\t" + element("v", result_node) + " = ";
+        os << element("v", left_node) + op_csrc + " ";
+        os << element("v", right_node) + ";\n";
     }
     //
     // compare_operator
     void compare_operator(
-        std::string&   csrc         ,
+        std::ostream&  os           ,
         const char*    op_csrc      ,
         size_t         left_node    ,
         size_t         right_node   )
-    {   csrc += "\tif( " + element("v", left_node) + " " + op_csrc + " ";
-        csrc += element("v", right_node) + " )\n";
-        csrc += "\t\t++(*compare_change);\n";
+    {   os << "\tif( " + element("v", left_node) + " " + op_csrc + " ";
+        os << element("v", right_node) + " )\n";
+        os << "\t\t++(*compare_change);\n";
     }
     //
     // unary_function
     void unary_function(
-        std::string&   csrc         ,
+        std::ostream&  os           ,
         const char*    op_csrc      ,
         size_t         result_node  ,
         size_t         arg_node     )
-    {   csrc += "\t" + element("v", result_node) + " = ";
-        csrc += op_csrc;
-        csrc += "( " + element("v", arg_node) + " );\n";
+    {   os << "\t" + element("v", result_node) + " = ";
+        os << op_csrc;
+        os << "( " + element("v", arg_node) + " );\n";
     }
     //
     // atomic_function
     void atomic_function(
-        std::string&                 csrc                ,
+        std::ostream&                os                  ,
         size_t                       result_node         ,
         const std::string&           atomic_name         ,
         size_t                       call_id             ,
@@ -121,45 +120,45 @@ namespace {
         std::string complete_name = "cppad_forward_zero_" + atomic_name;
         size_t nu = arg_node.size();
         size_t nw = n_result;
-        csrc += "\t{\t// call " + atomic_name + "\n";
-        csrc += "\t\tint flag;\n";
-        csrc += "\t\tfloat_point_t " + element("u", nu) + ";\n";
-        csrc += "\t\tfloat_point_t* w = v + " + to_string(result_node) + ";\n";
+        os << "\t{\t// call " + atomic_name + "\n";
+        os << "\t\tint flag;\n";
+        os << "\t\tfloat_point_t " + element("u", nu) + ";\n";
+        os << "\t\tfloat_point_t* w = v + " + to_string(result_node) + ";\n";
         for(size_t j = 0; j < nu; ++j)
         {   size_t i = arg_node[j];
-            csrc += "\t\t" + element("u",j) + " = " + element("v",i) + ";\n";
+            os << "\t\t" + element("u",j) + " = " + element("v",i) + ";\n";
         }
         //
-        csrc += "\t\tflag = " + complete_name + "(";
-        csrc += to_string(call_id) + ", ";
-        csrc += to_string(nu) + ", u, ";
-        csrc += to_string(nw) + ", w, ";
-        csrc += "compare_change);\n";
-        csrc += "\t\tif( flag == 1 || flag == 2 ) return 3;\n";
-        csrc += "\t\tif( flag != 0 ) return flag;\n";
+        os << "\t\tflag = " + complete_name + "(";
+        os << to_string(call_id) + ", ";
+        os << to_string(nu) + ", u, ";
+        os << to_string(nw) + ", w, ";
+        os << "compare_change);\n";
+        os << "\t\tif( flag == 1 || flag == 2 ) return 3;\n";
+        os << "\t\tif( flag != 0 ) return flag;\n";
         //
-        csrc += "\t}\n";
+        os << "\t}\n";
     }
     //
     // discrete_function
     void discrete_function(
-        std::string&                 csrc                ,
+        std::ostream&                os                  ,
         size_t                       result_node         ,
         const std::string&           discrete_name       ,
         size_t                       arg_node            )
     {   using CppAD::to_string;
         std::string complete_name = "cppad_discrete_" + discrete_name;
-        csrc += "\t{\t// call " + discrete_name + "\n";
-        csrc += "\t\t" + element("v", result_node) + " = ";
-        csrc += complete_name + "( " + element("v", arg_node) + " );\n";
-        csrc += "\t}\n";
+        os << "\t{\t// call " + discrete_name + "\n";
+        os << "\t\t" + element("v", result_node) + " = ";
+        os << complete_name + "( " + element("v", arg_node) + " );\n";
+        os << "\t}\n";
     }
 
 }
 
 // BEGIN_PROTOTYPE
 void CppAD::local::graph::csrc_writer(
-    std::string&                              csrc                   ,
+    std::ostream&                             os                     ,
     const cpp_graph&                          graph_obj              ,
     const std::string&                        type                   )
 // END_PROTOTYPE
@@ -200,25 +199,25 @@ void CppAD::local::graph::csrc_writer(
     }
     //
     // includes
-    csrc =
+    os <<
         "// includes\n"
         "# include <stddef.h>\n"
         "# include <math.h>\n"
         "\n";
     //
     // typedefs
-    csrc +=
+    os <<
         "// typedefs\n"
         "typedef " + type + " float_point_t;\n"
         "\n";
     //
     // externals
-    csrc += "// externals\n";
+    os << "// externals\n";
     size_t n_atomic = graph_obj.atomic_name_vec_size();
     for(size_t i_atomic = 0; i_atomic < n_atomic; ++i_atomic)
     {   string atomic_name = graph_obj.atomic_name_vec_get(i_atomic);
-        csrc += "extern int cppad_forward_zero_" + atomic_name + "(\n";
-        csrc +=
+        os << "extern int cppad_forward_zero_" + atomic_name + "(\n";
+        os <<
             "\tsize_t               call_id           ,\n"
             "\tsize_t               nx                ,\n"
             "\tconst float_point_t* x                 ,\n"
@@ -230,12 +229,12 @@ void CppAD::local::graph::csrc_writer(
     size_t n_discrete = graph_obj.discrete_name_vec_size();
     for(size_t i_discrete = 0; i_discrete < n_discrete; ++i_discrete)
     {   string discrete_name = graph_obj.discrete_name_vec_get(i_discrete);
-        csrc += "extern float_point_t cppad_discrete_" + discrete_name;
-        csrc += "( float_point_t x );\n";
+        os << "extern float_point_t cppad_discrete_" + discrete_name;
+        os << "( float_point_t x );\n";
     }
     //
     // azmul
-    csrc +=
+    os <<
         "// azmul\n"
         "static float_point_t azmul(float_point_t x, float_point_t y)\n"
         "{\tif( x == 0.0 ) return 0.0;\n"
@@ -243,7 +242,7 @@ void CppAD::local::graph::csrc_writer(
         "}\n\n";
     //
     // sign
-    csrc +=
+    os <<
         "// sign\n"
         "static float_point_t sign(float_point_t x)\n"
         "{\tif( x > 0.0 ) return 1.0;\n"
@@ -252,7 +251,7 @@ void CppAD::local::graph::csrc_writer(
         "}\n\n";
     //
     // This atomic function
-    csrc +=
+    os <<
         "// This atomic function\n"
         "int cppad_forward_zero_" + function_name + "(\n"
         "\tsize_t               call_id         ,\n"
@@ -263,13 +262,13 @@ void CppAD::local::graph::csrc_writer(
         "\tsize_t*              compare_change  )\n";
     //
     // begin function body
-    csrc +=
+    os <<
         "{\t// begin function body \n"
         "\n";
     //
     // declare variables
     // v, i, nan
-    csrc +=
+    os <<
         "\t// declare variables\n"
         "\tfloat_point_t v[" + to_string(n_node) + "];\n"
         "\tsize_t i;\n"
@@ -279,15 +278,15 @@ void CppAD::local::graph::csrc_writer(
     //
     // nx
     size_t nx = n_dynamic_ind + n_variable_ind;
-    csrc += "\tif( nx != " + to_string(nx) + ") return 1;\n";
+    os << "\tif( nx != " + to_string(nx) + ") return 1;\n";
     //
     // ny
     size_t ny = n_dependent;
-    csrc += "\tif( ny != " + to_string(ny) + ") return 2;\n";
+    os << "\tif( ny != " + to_string(ny) + ") return 2;\n";
     //
     // initialize
     // compare_change, v[0]
-    csrc +=
+    os <<
         "\n"
         "\t// initialize\n"
         "\t*compare_change = 0;\n"
@@ -295,7 +294,7 @@ void CppAD::local::graph::csrc_writer(
     //
     // independent variables
     // set v[1+i] for i = 0, ..., nx-1"
-    csrc +=
+    os <<
         "\n"
         "\t// independent variables\n"
         "\t// set v[1+i] for i = 0, ..., nx-1\n"
@@ -305,21 +304,21 @@ void CppAD::local::graph::csrc_writer(
     // cosntants
     // set v[1+nx+i] for i = 0, ..., nc-1
     size_t nc = n_constant;
-    csrc +=
+    os <<
         "\n"
         "\t// constants\n";
         "\t// set v[1+nx+i] for i = 0, ..., nc-1\n"
         "\t// nc = " + to_string(nc) + "\n";
     for(size_t i = 0; i < nc; ++i)
     {   double c_i = graph_obj.constant_vec_get(i);
-        csrc +=
+        os <<
             "\tv[1+nx+" + to_string(i) + "] = " + to_string(c_i) + ";\n";
     }
     //
     // result nodes
     // set v[1+nx+nc+i] for i = 0, ..., n_result_node-1
     size_t n_result_node = n_node - first_result_node;
-    csrc +=
+    os <<
         "\n"
         "\t// result nodes\n";
         "\t// set v[1+nx+nc+i] for i = 0, ..., n_result_node-1\n"
@@ -442,7 +441,7 @@ void CppAD::local::graph::csrc_writer(
             CPPAD_ASSERT_UNKNOWN( arg_node.size() == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             binary_function(
-                csrc, op_csrc, result_node, arg_node[0], arg_node[1]
+                os, op_csrc, result_node, arg_node[0], arg_node[1]
             );
             break;
             //
@@ -454,7 +453,7 @@ void CppAD::local::graph::csrc_writer(
             CPPAD_ASSERT_UNKNOWN( arg_node.size() == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             binary_operator(
-                csrc, op_csrc, result_node, arg_node[0], arg_node[1]
+                os, op_csrc, result_node, arg_node[0], arg_node[1]
             );
             break;
             //
@@ -466,7 +465,7 @@ void CppAD::local::graph::csrc_writer(
             CPPAD_ASSERT_UNKNOWN( arg_node.size() == 2 );
             CPPAD_ASSERT_UNKNOWN( n_result == 0 );
             compare_operator(
-                csrc, op_csrc, arg_node[0], arg_node[1])
+                os, op_csrc, arg_node[0], arg_node[1])
             ;
             break;
             //
@@ -495,7 +494,7 @@ void CppAD::local::graph::csrc_writer(
             CPPAD_ASSERT_UNKNOWN( arg_node.size() == 1 );
             CPPAD_ASSERT_UNKNOWN( n_result == 1 );
             unary_function(
-                csrc, op_csrc, result_node, arg_node[0]
+                os, op_csrc, result_node, arg_node[0]
             );
             break;
             //
@@ -503,7 +502,7 @@ void CppAD::local::graph::csrc_writer(
             case atom4_graph_op:
             {   size_t index       = str_index[0];
                 string atomic_name = graph_obj.atomic_name_vec_get(index);
-                atomic_function(csrc,
+                atomic_function(os,
                     result_node, atomic_name, call_id, n_result, arg_node
                 );
             }
@@ -515,7 +514,7 @@ void CppAD::local::graph::csrc_writer(
             case discrete_graph_op:
             {   size_t index         = str_index[0];
                 string discrete_name = graph_obj.discrete_name_vec_get(index);
-                discrete_function(csrc,
+                discrete_function(os,
                     result_node, discrete_name, arg_node[0]
                 );
             }
@@ -531,19 +530,19 @@ void CppAD::local::graph::csrc_writer(
     }
     // ----------------------------------------------------------------------
     // dependent
-    csrc +=
+    os <<
         "\n"
         "\t// dependent variables\n"
         "\t// set y[i] for i = 0, ny-1\n";
     for(size_t i = 0; i < ny; ++i)
     {   size_t node = graph_obj.dependent_vec_get(i);
-        csrc += "\t" + element("y", i) + " = " + element("v", node) + ";\n";
+        os << "\t" + element("y", i) + " = " + element("v", node) + ";\n";
     }
     // ----------------------------------------------------------------------
     // end function body
-    csrc += "\n";
-    csrc += "\treturn 0;\n";
-    csrc += "}\n";
+    os << "\n";
+    os << "\treturn 0;\n";
+    os << "}\n";
     //
     return;
 }
