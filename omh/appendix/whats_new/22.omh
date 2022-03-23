@@ -23,9 +23,16 @@ $spell
     hpp
     rc
     json
+	cmake
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 02-23$$
+Improve error detection and message when both
+$cref/cmake_build_type/cmake/cmake_build_type/$$ and
+$cref/cppad_debug_which/cmake/cppad_debug_which/$$ are chosen
+during the install procedure.
 
 $head 02-21$$
 Extend the json graph representation to include
