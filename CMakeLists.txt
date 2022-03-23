@@ -98,11 +98,11 @@ ENDIF( NOT cplusplus_201100_ok  )
 # =============================================================================
 # command line arguments
 # =============================================================================
-# Argumentd that are no longer used
+# Arguments that are no longer used
 #
 IF( debug_which )
     MESSAGE(FATAL_ERROR
-        "Using debug_which, use cppad_debug_which instead or CMAKE_BUILD_TYPE"
+        "Using debug_which, use cppad_debug_which or CMAKE_BUILD_TYPE instead"
     )
 ENDIF( debug_which )
 #
