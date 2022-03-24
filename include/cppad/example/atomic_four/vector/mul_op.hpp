@@ -74,18 +74,18 @@ void atomic_vector<Base>::forward_mul(
     assert( aty.size() == m * q );
     //
     // atu, atv
-    ad_vector::const_iterator atu = atx.begin();
-    ad_vector::const_iterator atv = atu + difference_type(m * q);
+    ad_const_iterator atu = atx.begin();
+    ad_const_iterator atv = atu + ad_difference_type(m * q);
     //
     // ax_mul
     ad_vector ax_mul(n);
-    ad_vector::iterator au_mul = ax_mul.begin();
-    ad_vector::iterator av_mul = ax_mul.begin() + difference_type(m);
+    ad_iterator au_mul = ax_mul.begin();
+    ad_iterator av_mul = ax_mul.begin() + ad_difference_type(m);
     //
     // ax_add
     ad_vector ax_add(n);
-    ad_vector::iterator au_add = ax_add.begin();
-    ad_vector::iterator av_add = ax_add.begin() + difference_type(m);
+    ad_iterator au_add = ax_add.begin();
+    ad_iterator av_add = ax_add.begin() + ad_difference_type(m);
     //
     // ay
     ad_vector ay(m);
@@ -179,21 +179,21 @@ void atomic_vector<Base>::reverse_mul(
     assert( apy.size() == m * q );
     //
     // atu, atv, apu, apv
-    ad_vector::const_iterator atu = atx.begin();
-    ad_vector::const_iterator atv = atu + difference_type(m * q);
-    ad_vector::iterator       apu = apx.begin();
-    ad_vector::iterator       apv = apu + difference_type(m * q);
+    ad_const_iterator atu = atx.begin();
+    ad_const_iterator atv = atu + ad_difference_type(m * q);
+    ad_iterator       apu = apx.begin();
+    ad_iterator       apv = apu + ad_difference_type(m * q);
     //
     // ax_mul
     // need azmul_op but it is not yet available
     ad_vector ax_mul(n);
-    ad_vector::iterator au_mul = ax_mul.begin();
-    ad_vector::iterator av_mul = ax_mul.begin() + difference_type(m);
+    ad_iterator au_mul = ax_mul.begin();
+    ad_iterator av_mul = ax_mul.begin() + ad_difference_type(m);
     //
     // ax_add
     ad_vector ax_add(n);
-    ad_vector::iterator au_add = ax_add.begin();
-    ad_vector::iterator av_add = ax_add.begin() + difference_type(m);
+    ad_iterator au_add = ax_add.begin();
+    ad_iterator av_add = ax_add.begin() + ad_difference_type(m);
     //
     // ay
     ad_vector ay(m);

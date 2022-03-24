@@ -70,13 +70,13 @@ void atomic_vector<Base>::forward_sub(
     assert( aty.size() == m * q );
     //
     // atu, atv
-    ad_vector::const_iterator atu = atx.begin();
-    ad_vector::const_iterator atv = atu + difference_type(m * q);
+    ad_const_iterator atu = atx.begin();
+    ad_const_iterator atv = atu + ad_difference_type(m * q);
     //
     // ax
     ad_vector ax(n);
-    ad_vector::iterator au = ax.begin();
-    ad_vector::iterator av = au + difference_type(m);
+    ad_iterator au = ax.begin();
+    ad_iterator av = au + ad_difference_type(m);
     //
     // ay
     ad_vector ay(m);
@@ -132,12 +132,12 @@ void atomic_vector<Base>::reverse_sub(
 # endif
     //
     // apu, apv
-    ad_vector::iterator apu = apx.begin();
-    ad_vector::iterator apv = apu + difference_type(m * q);
+    ad_iterator apu = apx.begin();
+    ad_iterator apv = apu + ad_difference_type(m * q);
     //
     // ax
     ad_vector ax(m);
-    ad_vector::iterator au = ax.begin();
+    ad_iterator au = ax.begin();
     //
     // ay
     ad_vector ay(m);

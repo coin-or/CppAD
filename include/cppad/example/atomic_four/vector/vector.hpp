@@ -60,7 +60,7 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 template <class Base>
-class atomic_vector : public CppAD::atomic_four<double> {
+class atomic_vector : public CppAD::atomic_four<Base> {
 //
 public:
     // BEGIN_SORT_THIS_LINE_PLUS_4
@@ -79,11 +79,13 @@ public:
     //
     // ctor
     atomic_vector(const std::string& name) :
-    CppAD::atomic_four<double>(name)
+    CppAD::atomic_four<Base>(name)
     { }
 private:
-    typedef CppAD::vector< CppAD::AD<double> >    ad_vector;
-    typedef ad_vector::iterator::difference_type  difference_type;
+    typedef CppAD::vector< CppAD::AD<Base> >      ad_vector;
+    typedef typename ad_vector::iterator          ad_iterator;
+    typedef typename ad_vector::const_iterator    ad_const_iterator;
+    typedef typename ad_iterator::difference_type ad_difference_type;
     //
     static bool is_unary(op_enum_t op)
     {   bool result = true;
@@ -104,26 +106,28 @@ private:
     // copy routines
     // ------------------------------------------------------------------------
     static void copy_vec_to_mat(
-        size_t                    m,
-        size_t                    q,
-        size_t                    k ,
-        ad_vector::const_iterator vec,
-        ad_vector::iterator       mat)
+        size_t            m,
+        size_t            q,
+        size_t            k ,
+        ad_const_iterator vec,
+        ad_iterator       mat)
     {   for(size_t i = 0; i < m; ++i)
         {   size_t index  = i * q + k;
-            *(mat + difference_type(index) ) = *(vec + difference_type(i) );
+            *(mat + ad_difference_type(index) ) =
+                *(vec + ad_difference_type(i) );
         }
     }
     // copy_mat_to_vec
     static void copy_mat_to_vec(
-        size_t                    m,
-        size_t                    q,
-        size_t                    k,
-        ad_vector::const_iterator mat,
-        ad_vector::iterator       vec)
+        size_t            m,
+        size_t            q,
+        size_t            k,
+        ad_const_iterator mat,
+        ad_iterator       vec)
     {   for(size_t i = 0; i < m; ++i)
         {   size_t index  = i * q + k;
-            *(vec + difference_type(i) ) = *(mat + difference_type(index) );
+            *(vec + ad_difference_type(i) ) =
+                *(mat + ad_difference_type(index) );
         }
     }
     // -----------------------------------------------------------------------
