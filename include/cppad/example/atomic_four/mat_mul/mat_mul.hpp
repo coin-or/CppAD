@@ -29,12 +29,12 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 template <class Base>
-class atomic_mat_mul : public CppAD::atomic_four<double> {
+class atomic_mat_mul : public CppAD::atomic_four<Base> {
 //
 public:
     // ctor
     atomic_mat_mul(const std::string& name) :
-    CppAD::atomic_four<double>(name)
+    CppAD::atomic_four<Base>(name)
     {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
             work_[thread] = nullptr;
     }

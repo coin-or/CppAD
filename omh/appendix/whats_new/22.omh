@@ -28,6 +28,11 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 02-25$$
+Fix $cref atomic_mat_mul$$ by changing it's base class
+from $code atomic_four<double>$$ to $codei%atomic_four<%Base%>%$$;
+see $cref atomic_four_mat_mul.hpp$$.
+
 $head 02-24$$
 Fix $cref atomic_vector$$ by changing it's base class
 from $code atomic_four<double>$$ to $codei%atomic_four<%Base%>%$$.
