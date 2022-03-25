@@ -502,7 +502,7 @@ on $href%https://www.cygwin.com/%cygwin%$$ systems,
 about $code WIN32$$ not being defined.
 $lnext
 Add element-wise atomic operations to the wish list.
-This was completed by the $cref atomic_vector$$ example.
+This was completed by the $cref atomic_four_vector$$ example.
 $lend
 
 $head 02-21$$

@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_mul_op.hpp$$
+$begin atomic_four_vector_mul_op.hpp$$
 
 $section Atomic Vector Multiply Operator: Example Implementation$$
 

@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_hes_sparsity.hpp$$
+$begin atomic_four_vector_hes_sparsity.hpp$$
 $spell
     Jacobian
     hes

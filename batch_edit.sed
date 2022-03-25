@@ -32,4 +32,6 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|/atomic_three/ad_type/|/atomic_three_define/ad_type/|g
+s|begin atomic_vector\([_.$]\)|begin atomic_four_vector\1|
+s|ref atomic_vector\([_.$]\)|ref atomic_four_vector\1|
+s|/atomic_vector/|/atomic_four_vector/|

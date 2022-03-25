@@ -49,7 +49,7 @@ $section Changes and Additions to CppAD During 2021$$
 
 $head 12-17$$
 Add forward mode calculations using $code AD<double>$$ to the
-$cref atomic_vector$$ example.
+$cref atomic_four_vector$$ example.
 
 $head 12-16$$
 Change $code virtual$$ to $code override$$ in all the
@@ -58,7 +58,7 @@ $cref  multi_atomic_three_user$$.
 
 $head 12-10$$
 $list number$$
-Added the example $cref atomic_vector$$.
+Added the example $cref atomic_four_vector$$.
 $lnext
 Fix some compiler warnings when building with $code NDEBUG$$ defined.
 $lend
