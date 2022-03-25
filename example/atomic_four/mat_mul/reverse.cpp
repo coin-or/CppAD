@@ -19,7 +19,7 @@ $section Atomic Matrix Multiply Reverse Mode: Example and Test$$
 
 $head Purpose$$
 This example demonstrates using reverse mode
-with the $cref atomic_mat_mul$$ class.
+with the $cref atomic_four_mat_mul$$ class.
 
 $head f(x)$$
 For this example, the function $latex f(x)$$ is

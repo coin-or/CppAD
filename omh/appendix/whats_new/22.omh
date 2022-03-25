@@ -30,11 +30,11 @@ $section Changes and Additions to CppAD During 2022$$
 
 $head 02-25$$
 $list number$$
-Fix $cref atomic_mat_mul$$ by changing it's base class
+Fix $cref atomic_four_mat_mul$$ by changing it's base class
 from $code atomic_four<double>$$ to $codei%atomic_four<%Base%>%$$;
 see $cref atomic_four_mat_mul.hpp$$.
 $lnext
-Remove under construction warning from $cref atomic_mat_mul$$.
+Remove under construction warning from $cref atomic_four_mat_mul$$.
 $lnext
 Change $code atomic_vector$$ to $cref atomic_four_vector$$.
 $lend
@@ -81,7 +81,7 @@ base class.
 
 $head 02-13$$
 $list number$$
-The $cref atomic_mat_mul$$ example class was added.
+The $cref atomic_four_mat_mul$$ example class was added.
 $lnext
 The $cref atomic_four_vector$$ include path has changed to
 $codei%

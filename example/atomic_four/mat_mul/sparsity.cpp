@@ -19,7 +19,7 @@ $section Atomic Matrix Multiply Sparsity Patterns: Example and Test$$
 
 $head Purpose$$
 This example demonstrates using sparsity mode with
-the $cref atomic_mat_mul$$ class.
+the $cref atomic_four_mat_mul$$ class.
 
 $head f(x)$$
 For a matrix $latex A$$ we define the function $latex \R{rvec} ( A )$$

@@ -19,7 +19,7 @@ $section Atomic Matrix Multiply Forward Mode: Example and Test$$
 
 $head Purpose$$
 This example demonstrates using forward mode with
-the $cref atomic_mat_mul$$ class.
+the $cref atomic_four_mat_mul$$ class.
 
 $head f(x)$$
 For this example, the function $latex f(x)$$ is
