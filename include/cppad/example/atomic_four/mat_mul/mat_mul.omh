@@ -19,9 +19,6 @@ $$
 
 $section Atomic Matrix Multiply Class: Example Implementation$$
 
-$head Under Construction$$
-This example is under construction and not yet usable.
-
 $head Syntax$$
 $codei%atomic_mat_mul %mat_mul%(%name%)
 %$$
