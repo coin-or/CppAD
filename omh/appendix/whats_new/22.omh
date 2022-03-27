@@ -24,9 +24,14 @@ $spell
     rc
     json
     cmake
+    nx
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 02-26$$
+Change $code y(nx)$$ to $code y(ny)$$ in
+$cref  atomic_four_mat_mul_forward.cpp$$.
 
 $head 02-25$$
 $list number$$

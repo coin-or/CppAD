@@ -131,7 +131,7 @@ bool forward(void)
     //
     // y
     // zero order forward mode computation of f(x)
-    CPPAD_TESTVECTOR(double) y(nx);
+    CPPAD_TESTVECTOR(double) y(ny);
     y = f.Forward(0, x);
     //
     // check_y
