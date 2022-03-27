@@ -12,8 +12,8 @@ var list_up0 = [
 'atomic.htm',
 'atomic_four.htm',
 'atomic_four_example.htm',
-'atomic_mat_mul.htm',
-'atomic_mat_mul_implement.htm',
+'atomic_four_mat_mul.htm',
+'atomic_four_mat_mul_implement.htm',
 'atomic_four_mat_mul_rev_depend.hpp.htm'
 ];
 var list_current0 = [

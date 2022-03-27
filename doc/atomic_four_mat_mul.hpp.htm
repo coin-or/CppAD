@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic_mat_mul_implement.htm" target="_top">Prev</a>
+<td><a href="atomic_four_mat_mul_implement.htm" target="_top">Prev</a>
 </td><td><a href="atomic_four_mat_mul_set.hpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -52,8 +52,8 @@ A:active { color : purple }
 <option>atomic</option>
 <option>atomic_four</option>
 <option>atomic_four_example</option>
-<option>atomic_mat_mul</option>
-<option>atomic_mat_mul_implement</option>
+<option>atomic_four_mat_mul</option>
+<option>atomic_four_mat_mul_implement</option>
 <option>atomic_four_mat_mul.hpp</option>
 </select>
 </td>
@@ -61,10 +61,10 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_atomic_mat_mul_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_mat_mul_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_atomic_mat_mul_implement_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_mat_mul_implement_htm.js'></script>
 </td>
 <td>atomic_four_mat_mul.hpp</td>
 <td>Headings</td>
@@ -81,12 +81,12 @@ A:active { color : purple }
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_CPPAD_NAMESPACE</font></i>
 <i><font color="#9A1900">//</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
-<b><font color="#0000FF">class</font></b> <font color="#008080">atomic_mat_mul</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#FF0000">{</font>
+<b><font color="#0000FF">class</font></b> <font color="#008080">atomic_mat_mul</font> <font color="#990000">:</font> <b><font color="#0000FF">public</font></b> CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#FF0000">{</font>
 <i><font color="#9A1900">//</font></i>
 <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
     <i><font color="#9A1900">// ctor</font></i>
     <b><font color="#000000">atomic_mat_mul</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font> name<font color="#990000">)</font> <font color="#990000">:</font>
-    CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font>name<font color="#990000">)</font>
+    CppAD<font color="#990000">::</font>atomic_four<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font>name<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> thread <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> thread <font color="#990000">&lt;</font> CPPAD_MAX_NUM_THREADS<font color="#990000">;</font> <font color="#990000">++</font>thread<font color="#990000">)</font>
             work_<font color="#990000">[</font>thread<font color="#990000">]</font> <font color="#990000">=</font> nullptr<font color="#990000">;</font>
     <font color="#FF0000">}</font>

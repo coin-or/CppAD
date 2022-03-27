@@ -52,7 +52,7 @@ A:active { color : purple }
 <option>atomic</option>
 <option>atomic_four</option>
 <option>atomic_four_example</option>
-<option>atomic_mat_mul</option>
+<option>atomic_four_mat_mul</option>
 <option>atomic_four_mat_mul_forward.cpp</option>
 </select>
 </td>
@@ -63,7 +63,7 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_atomic_mat_mul_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_mat_mul_htm.js'></script>
 </td>
 <td>atomic_four_mat_mul_forward.cpp</td>
 <td>
@@ -89,7 +89,7 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 This example demonstrates using forward mode with
-the <a href="atomic_mat_mul.htm" target="_top"><span style='white-space: nowrap'>atomic_mat_mul</span></a>
+the <a href="atomic_four_mat_mul.htm" target="_top"><span style='white-space: nowrap'>atomic_four_mat_mul</span></a>
  class.
 
 <br>
@@ -232,7 +232,7 @@ g^{(1)} (x)
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// y</font></i>
     <i><font color="#9A1900">// zero order forward mode computation of f(x)</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">double</font><font color="#990000">)</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
     y <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> x<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// check_y</font></i>

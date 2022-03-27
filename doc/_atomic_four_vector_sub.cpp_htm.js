@@ -12,7 +12,7 @@ var list_up0 = [
 'atomic.htm',
 'atomic_four.htm',
 'atomic_four_example.htm',
-'atomic_vector.htm',
+'atomic_four_vector.htm',
 'atomic_four_vector_sub.cpp.htm'
 ];
 var list_current0 = [

@@ -1,0 +1,381 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Matrix Multiply Class: Example Implementation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Matrix Multiply Class: Example Implementation">
+<meta name="keywords" id="keywords" content=" atomic matrix multiply class: example implementation syntax purpose n_left n_middle n_right call_id x y theory forward argument scalar valued function reverse ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_mat_mul_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_four_vector_sub.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_four_mat_mul_implement.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four</option>
+<option>atomic_four_example</option>
+<option>atomic_four_mat_mul</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_mat_mul_htm.js'></script>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>n_left</option>
+<option>n_middle</option>
+<option>n_right</option>
+<option>call_id</option>
+<option>x</option>
+<option>y</option>
+<option>Theory</option>
+<option>---..Forward</option>
+<option>---..Matrix Argument Scalar Valued Function</option>
+<option>---..Reverse</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Matrix Multiply Class: Example Implementation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>atomic_mat_mul&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mat_mul</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mat_mul</span></font></i><font color="blue"><span style='white-space: nowrap'>.set(</span></font><i><font color="black"><span style='white-space: nowrap'>n_left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_middle</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_right</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>mat_mul</span></font></i><font color="blue"><span style='white-space: nowrap'>.get(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_left</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_middle</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_right</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>mat_mul</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Construct an atomic operation that computes the matrix product
+
+<code><i><font color="black"><span style='white-space: nowrap'>C</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>A</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="n_left" id="n_left">n_left</a></big></b>
+<br>
+This is the row dimension of the matrices 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>C</span></font></i></code>
+.
+This is an argument (return value) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<b><big><a name="n_middle" id="n_middle">n_middle</a></big></b>
+<br>
+This is the column dimension of the matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+
+and row dimension of the matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+
+This is an argument (return value) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<b><big><a name="n_right" id="n_right">n_right</a></big></b>
+<br>
+This is the column dimension of the matrices 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>C</span></font></i></code>
+.
+This is an argument (return value) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<b><big><a name="call_id" id="call_id">call_id</a></big></b>
+<br>
+This is a return value (argument) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to denote the argument to the atomic function.
+The size of this vector must be
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;=&nbsp;n_left&nbsp;*&nbsp;n_middle&nbsp;+&nbsp;n_middle&nbsp;*&nbsp;n_right<br>
+</span></font></i></code>
+The matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>A</span></font></i></code>
+ is stored in row major order at the beginning of
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+; i.e. its 
+<code><i><font color="black"><span style='white-space: nowrap'>(i,k)</span></font></i></code>
+ element is
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;A(i,k)&nbsp;=&nbsp;x[&nbsp;i&nbsp;*&nbsp;n_middle&nbsp;+&nbsp;k]<br>
+</span></font></i></code>
+The matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>B</span></font></i></code>
+ is stored in row major order at the end of
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+; i.e. its 
+<code><i><font color="black"><span style='white-space: nowrap'>(k,j)</span></font></i></code>
+ element is
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;B(k,j)&nbsp;=&nbsp;x[&nbsp;n_left&nbsp;*&nbsp;n_middle&nbsp;+&nbsp;k&nbsp;*&nbsp;n_right&nbsp;+&nbsp;j&nbsp;]<br>
+</span></font></i></code>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ to denote the result of the atomic function.
+The size of this vector must be
+
+<code><i><font color="black"><span style='white-space: nowrap'>m&nbsp;=&nbsp;n_middle&nbsp;*&nbsp;n_right</span></font></i></code>
+.
+The matrix 
+<code><i><font color="black"><span style='white-space: nowrap'>C</span></font></i></code>
+ is stored in row major order in 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+;
+i.e. its 
+<code><i><font color="black"><span style='white-space: nowrap'>(i,k)</span></font></i></code>
+ element is
+
+<code><i><font color="black"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;C(i,j)&nbsp;=&nbsp;y[&nbsp;i&nbsp;*&nbsp;n_right&nbsp;+&nbsp;j]<br>
+</span></font></i></code>
+<br>
+<b><big><a name="Theory" id="Theory">Theory</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Theory.Forward" id="Theory.Forward">Forward</a></big>
+<br>
+For <small>@(@
+k = 0 , \ldots
+@)@</small>, the <code><i>k</i></code>-th order Taylor coefficient
+<small>@(@
+C^{(k)}
+@)@</small> is given by
+<small>@[@
+
+    C^{(k)} = \sum_{\ell = 0}^{k} A^{(\ell)} B^{(k-\ell)}
+
+@]@</small>
+
+<br>
+<br>
+<big><a name="Theory.Matrix Argument Scalar Valued Function" id="Theory.Matrix Argument Scalar Valued Function">Matrix Argument Scalar Valued Function</a></big>
+<br>
+Suppose <small>@(@
+\bar{F}
+@)@</small> is the derivative of the
+scalar value function <small>@(@
+s(F)
+@)@</small> with respect to the matrix <small>@(@
+F
+@)@</small>; i.e.,
+<small>@[@
+
+    \bar{F}_{i,j} = \frac{ \partial s } { \partial F_{i,j} }
+
+@]@</small>
+Also suppose that <small>@(@
+t
+@)@</small> is a scalar valued argument and
+<small>@[@
+
+    F(t) = D(t) E(t)
+
+@]@</small>
+It follows that
+<small>@[@
+
+    F'(t) = D'(t) E(t) +  D(t) E'(t)
+
+@]@</small>
+
+<small>@[@
+
+    (s \circ F)'(t)
+    =
+    \R{tr} [ \bar{F}^\R{T} F'(t) ]
+
+@]@</small>
+<small>@[@
+
+    =
+    \R{tr} [ \bar{F}^\R{T} D'(t) E(t) ] +
+    \R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]
+
+@]@</small>
+<small>@[@
+
+    =
+    \R{tr} [ E(t) \bar{F}^\R{T} D'(t) ] +
+    \R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]
+
+@]@</small>
+Letting <small>@(@
+E(t) = 0
+@)@</small> and <small>@(@
+D(t) = \Delta^{i,j} (t)
+@)@</small>
+(where <small>@(@
+\Delta^{i,j} (t)
+@)@</small> is the matrix that is zero,
+except for <small>@(@
+i = j
+@)@</small> where it is <small>@(@
+t
+@)@</small>) we have
+<small>@[@
+
+    \bar{D}_{i,j}
+    = \frac{ \partial s } { \partial D_{i,j} }
+    = (s \circ F)'(t)
+    = \R{tr} [ E(t) \bar{F}^\R{T} \Delta^{i,j}(1) ]
+
+@]@</small>
+<small>@[@
+
+    \bar{D}_{i,j}
+    = \sum_k D_{j,k} \bar{F}^\R{T}_{k,i}
+    = \sum_k \bar{F}_{i,k} E^\R{T}_{k,j}
+
+@]@</small>
+<small>@[@
+
+    \bar{D} = \bar{F} E^\R{T}
+
+@]@</small>
+Letting <small>@(@
+D(t) = 0
+@)@</small> and <small>@(@
+E(t) = \Delta^{i,j} (t)
+@)@</small>
+we have
+<small>@[@
+
+    \bar{E}_{i,j}
+    = \frac{ \partial s } { \partial E_{i,j} }
+    = (s \circ F)'(t)
+    = \R{tr} [ \bar{F}^\R{T} D(t) \Delta^{i,j} ]
+
+@]@</small>
+<small>@[@
+
+    \bar{E}_{i,j}
+    = \sum_k \bar{F}^\R{T}_{j,k} C_{k,i}
+    = \sum_k D^\R{T}_{i,k} \bar{F}_{k,j}
+
+@]@</small>
+<small>@[@
+
+    \bar{E} = D^\R{T} \bar{F}
+
+@]@</small>
+
+<br>
+<br>
+<big><a name="Theory.Reverse" id="Theory.Reverse">Reverse</a></big>
+<br>
+Reverse mode eliminates <small>@(@
+C^{(k)}
+@)@</small> as follows:
+for <small>@(@
+\ell = 0, \ldots , k
+@)@</small>,
+<small>@[@
+
+\bar{A}^{(\ell)}  = \bar{A}^{(\ell)} + \bar{C}^{(k)} [ B^{(k-\ell)} ] ^\R{T}
+
+@]@</small>
+<small>@[@
+
+\bar{B}^{(k-\ell)} =  \bar{B}^{(k-\ell)} + [ A^{(\ell)} ]^\R{T} \bar{C}^{(k)}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="atomic_four_mat_mul_implement.htm" target="_top">atomic_four_mat_mul_implement</a></td><td>Implementing&nbsp;Atomic&nbsp;Matrix&nbsp;Multiply</td></tr><tr><td><a href="atomic_four_mat_mul_forward.cpp.htm" target="_top">atomic_four_mat_mul_forward.cpp</a></td><td>Atomic&nbsp;Matrix&nbsp;Multiply&nbsp;Forward&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_mat_mul_reverse.cpp.htm" target="_top">atomic_four_mat_mul_reverse.cpp</a></td><td>Atomic&nbsp;Matrix&nbsp;Multiply&nbsp;Reverse&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_mat_mul_sparsity.cpp.htm" target="_top">atomic_four_mat_mul_sparsity.cpp</a></td><td>Atomic&nbsp;Matrix&nbsp;Multiply&nbsp;Sparsity&nbsp;Patterns:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_mat_mul_rev_depend.cpp.htm" target="_top">atomic_four_mat_mul_rev_depend.cpp</a></td><td>Atomic&nbsp;Matrix&nbsp;Multiply&nbsp;Reverse&nbsp;Dependency:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_mat_mul_identical_zero.cpp.htm" target="_top">atomic_four_mat_mul_identical_zero.cpp</a></td><td>Atomic&nbsp;Matrix&nbsp;Multiply&nbsp;Identical&nbsp;Zero:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<hr>Input File: include/cppad/example/atomic_four/mat_mul/mat_mul.omh
+
+</body>
+</html>

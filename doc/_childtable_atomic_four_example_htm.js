@@ -6,8 +6,8 @@ document.write('\
 <option>atomic_four_norm_sq.cpp</option>\
 <option>atomic_four_forward.cpp</option>\
 <option>atomic_four_dynamic.cpp</option>\
-<option>atomic_vector</option>\
-<option>atomic_mat_mul</option>\
+<option>atomic_four_vector</option>\
+<option>atomic_four_mat_mul</option>\
 </select>\
 ');
 function atomic_four_example_child(item)
@@ -16,8 +16,8 @@ function atomic_four_example_child(item)
 		'atomic_four_norm_sq.cpp.htm',
 		'atomic_four_forward.cpp.htm',
 		'atomic_four_dynamic.cpp.htm',
-		'atomic_vector.htm',
-		'atomic_mat_mul.htm'
+		'atomic_four_vector.htm',
+		'atomic_four_mat_mul.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
