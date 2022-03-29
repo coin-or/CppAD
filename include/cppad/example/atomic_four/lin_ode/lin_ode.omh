@@ -18,7 +18,7 @@ $spell
     lin
 $$
 
-$section 
+$section
     Atomic First Order Linear ODE: Example Implementation
 $$
 
@@ -36,12 +36,12 @@ $icode%lin_ode%(%call_id%, %x%, %y%)
 %$$
 
 $head Purpose$$
-Construct an atomic operation that computes the solution of 
+Construct an atomic operation that computes the solution of
 the first order linear ODE
 $latex \[
     \partial_s z(s, x) = A(x) z(s, x) \; , \;  z(0, x) = b(x)
 \] $$
-where 
+where
 $latex z : \B{R} \times \B{R}^n \rightarrow \B{R}^m$$,
 $latex A : \B{R}^n \rightarrow \B{R}^{m \times m}$$, and
 $latex b : \B{R}^n \rightarrow  \B{R}^m$$.
@@ -52,7 +52,7 @@ $latex z(s, x)$$.
 This is a argument (return value) for the $code set$$, ($code get$$) routine.
 
 $head n_step$$
-This is the number of equal size steps, 
+This is the number of equal size steps,
 between $latex s = 0$$ and $latex s = R$$,
 used by the numerical method that approximates
 the solution of the differential equation.
@@ -65,7 +65,7 @@ $head x$$
 We use $icode x$$ to denote the argument to the atomic function.
 
 $subhead n$$
-The size of the vector $icode x$$ is 
+The size of the vector $icode x$$ is
 $icode%
     n = m * m + m
 %$$
@@ -96,24 +96,41 @@ The theory below includes function values and
 first order derivatives.
 
 $head Forward$$
-Suppose we are given Taylor coefficients 
-$latex x^0$$, $latex x^1$$, $latex x^2$$ for $latex x$$.
+Suppose we are given Taylor coefficients
+$latex x^0$$, $latex x^1$$, for $latex x$$.
 $latex \[
-    y^0 = b^0 + \int_0^r A^0 z(s, x) ds
+    y^0 = b^0 + \int_0^r A^0 z^0(s, x) ds
 \] $$
 $latex \[
-    y^1 = b^1 + \int_0^r [ A^0 z^1 (s, x) + A^1 z^0 (s, x) ] ds 
+    y^1 = b^1 + \int_0^r [ A^0 z^1 (s, x) + A^1 z^0 (s, x) ] ds
 \] $$
 The Taylor coefficients
-$latex y^0$$, $latex y^1$$, $latex y^2$$ can be solved for using
+$latex y^0$$, $latex y^1$$ can be solved for using
 the following extended initial value problem:
 $latex \[
-    z^0_s (s, x) = A^0 z^0 (s, x) 
-    \; , \;  z^0 (0, x) = b^0
-\] $$
-$latex \[
-    z^1_s (s, x) = A^0 z^1 (s, x) + A^1 z^0 (s, x) 
-    \; , \;  z^1 (0, x) = b^1
+\left[ \begin{array}{c}
+z^0_s (s, x) \\
+z^1_s (s, x)
+\end{array} \right]
+=
+\left[ \begin{array}{cc}
+A^0 & 0   \\
+A^1 & A^0
+\end{array} \right]
+\left[ \begin{array}{c}
+z^0 (s, x) \\
+z^1 (s, x)
+\end{array} \right]
+\; , \;
+\left[ \begin{array}{c}
+z^0 (0, x) \\
+z^1 (0, x)
+\end{array} \right]
+=
+\left[ \begin{array}{c}
+b^0 \\
+b^1
+\end{array} \right]
 \] $$
 
 $head Reverse$$
@@ -126,15 +143,15 @@ $latex \[
 $latex \[
     H_{x0} (x^0) = G_{x0} ( y^0, x^0 ) + G_{y0} (y^0, x^0) Y^0_{x0} (x^0)
 \] $$
-Here and below we the subscript $latex x0$$ to denote the 
+Here and below we the subscript $latex x0$$ to denote the
 row vector corresponding to the partial w.r.t. $latex x^0$$.
 The partial $latex Y^0_{x0}$$ can be broken into two parts,
 $latex Y^0_{A0}$$ and $latex Y^0_{b0}$$.
 The partial $latex Y^0_{b0}$$ is one so
 $latex \[
-    H_{b0} (x^0) 
-    = 
-    G_{b0} ( y^0, x^0 ) +  G_{y0} ( y^0, x^0 ) 
+    H_{b0} (x^0)
+    =
+    G_{b0} ( y^0, x^0 ) +  G_{y0} ( y^0, x^0 )
 \] $$
 The partial of $latex Y^0$$ w.r.t. the $latex A^0_{i,j}$$ is
 $latex \[
@@ -144,18 +161,18 @@ Note that it is the same for all $latex i$$.
 Hence we can compute the reverse mode derivatives by solving the
 following extended initial value problem
 $latex \[
-    z^0_s (s, x) = A^0 z^0 (s, x) 
+    z^0_s (s, x) = A^0 z^0 (s, x)
     \; , \;  z^0 (0, x) = b^0
 \] $$
 $latex \[
     v_s (s, x) = z^0 (s, x)  ; v(0) = 0
 \] $$
 $latex \[
-    H_{A0i} (x^0) 
-    = 
+    H_{A0i} (x^0)
+    =
     G_{A0i} ( y^0, x^0 ) + [ G_{y0} (y^0, x^0) v(r, x^0) ] ^\R{T}
 \] $$
-Here the subscript $latex A0i$$ denotes the 
+Here the subscript $latex A0i$$ denotes the
 row vector corresponding to the partial
 w.r.t. the $th i$$ row of $latex A^0$$.
 

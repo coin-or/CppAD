@@ -46,15 +46,19 @@ bool atomic_lin_ode<Base>::forward(
     const CppAD::vector<Base>&                 taylor_x    ,
     CppAD::vector<Base>&                       taylor_y    )
 {
-    // only order zero implemented so far
-    if( order_up > 0 )
+    // order_up
+    if( order_up > 1 )
         return false;
-# ifndef NDEBUG
-    // n, m
-    size_t n     = taylor_x.size();
-    size_t m     = taylor_y.size();
-    assert( n == m * m + m);
-# endif
+    //
+    // q
+    size_t q = order_up + 1;
+    //
+    // m
+    assert( taylor_y.size() % q == 0 );
+    size_t m = taylor_y.size() / q;
+    //
+    // taylor_x
+    assert( taylor_x.size() == (m * m + m) * q );
     //
     // r, n_step
     Base r;
@@ -62,7 +66,44 @@ bool atomic_lin_ode<Base>::forward(
     get(call_id, r, n_step);
     //
     // taylor_y
-    base_lin_ode(r, n_step, taylor_x, taylor_y);
+    if( order_up == 0 )
+        base_lin_ode(r, n_step, taylor_x, taylor_y);
+    else
+    {   // M
+        size_t M = 2 * m;
+        //
+        // X
+        CppAD::vector<Base> X(M * M + M);
+        for(size_t i = 0; i < m; i++)
+        {   for(size_t j = 0; j < m; ++j)
+            {   // 0
+                X[i * M + m + j]       = Base(0);
+                // A^0_ij
+                Base A0ij              = taylor_x[ (i * m + j) * q + 0];
+                X[i * M + j]           = A0ij;
+                X[(i + m) * M + m + j] = A0ij;
+                // A^1_ij
+                Base A1ij              = taylor_x[ (i * m + j) * q + 1];
+                X[(i + m) * M + j]     = A1ij;
+            }
+            // b^0_i
+            X[M * M + i]     = taylor_x[ (m * m + i) * q + 0 ];
+            // b^1_i
+            X[M * M + m + i] = taylor_x[ (m * m + i) * q + 1 ];
+        }
+        //
+        // Y
+        CppAD::vector<Base> Y(M);
+        base_lin_ode(r, n_step, X, Y);
+        //
+        // taylor_y
+        if( order_low == 0 )
+        {   for(size_t i = 0; i < m; ++i)
+                taylor_y[i * q + 0] = Y[i];
+        }
+        for(size_t i = 0; i < m; ++i)
+            taylor_y[i * q + 1] = Y[m + i];
+    }
     //
     return true;
 }
