@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_MAT_MUL_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_MAT_MUL_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_LIN_ODE_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_LIN_ODE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
@@ -13,7 +13,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_four_mat_mul.hpp$$
+$begin atomic_four_lin_ode.hpp$$
 $spell
 $$
 
@@ -29,17 +29,17 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 template <class Base>
-class atomic_mat_mul : public CppAD::atomic_four<Base> {
+class atomic_lin_ode : public CppAD::atomic_four<Base> {
 //
 public:
     // ctor
-    atomic_mat_mul(const std::string& name) :
+    atomic_lin_ode(const std::string& name) :
     CppAD::atomic_four<Base>(name)
     {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
             work_[thread] = nullptr;
     }
     // destructor
-    ~atomic_mat_mul(void)
+    ~atomic_lin_ode(void)
     {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
         {   if( work_[thread] != nullptr  )
             {   // allocated in set member function
@@ -48,30 +48,24 @@ public:
         }
     }
     // set
-    size_t set(
-        size_t n_left, size_t n_right, size_t n_middle
-    );
+    size_t set(const Base& r, size_t n_step);
     // get
-    void get(
-        size_t call_id, size_t& n_left, size_t& n_right, size_t& n_middle
-    );
+    void get(size_t call_id, Base& r, size_t& n_step);
 private:
     //
     // matrix dimensions corresponding to a call_id
-    struct call_struct {
-        size_t n_left; size_t n_middle; size_t n_right; size_t thread;
-    };
+    struct call_struct { Base r; size_t n_step; size_t thread; };
+    //
     // map from call_id to matrix dimensions
     typedef CppAD::vector<call_struct> call_vector;
     //
     // Use pointers, to avoid false sharing between threads.
     call_vector* work_[CPPAD_MAX_NUM_THREADS];
     //
-    // base_mat_mul
-    static void base_mat_mul(
-        size_t                     n_left     ,
-        size_t                     n_middle   ,
-        size_t                     n_right    ,
+    // base_lin_ode
+    static void base_lin_ode(
+        const Base&                r          ,
+        size_t                     n_step     ,
         const CppAD::vector<Base>& x          ,
         CppAD::vector<Base>&       y
     );
@@ -79,6 +73,7 @@ private:
     // -----------------------------------------------------------------------
     // overrides
     // -----------------------------------------------------------------------
+# if 1
     //
     // for_type
     bool for_type(
@@ -96,6 +91,8 @@ private:
         const CppAD::vector<Base>&                       taylor_x,
         CppAD::vector<Base>&                             taylor_y
     ) override;
+# else
+    // Cases not yet implemented
     //
     // AD<Base> forward
     bool forward(
@@ -152,18 +149,14 @@ private:
         CppAD::vector<bool>&                           depend_x,
         const CppAD::vector<bool>&                     depend_y
     ) override;
+# endif
 };
 } // END_CPPAD_NAMESPACE
 
-# include <cppad/example/atomic_four/mat_mul/set.hpp>
-# include <cppad/example/atomic_four/mat_mul/get.hpp>
-# include <cppad/example/atomic_four/mat_mul/base_mat_mul.hpp>
-# include <cppad/example/atomic_four/mat_mul/for_type.hpp>
-# include <cppad/example/atomic_four/mat_mul/forward.hpp>
-# include <cppad/example/atomic_four/mat_mul/reverse.hpp>
-# include <cppad/example/atomic_four/mat_mul/jac_sparsity.hpp>
-# include <cppad/example/atomic_four/mat_mul/hes_sparsity.hpp>
-# include <cppad/example/atomic_four/mat_mul/rev_depend.hpp>
+# include <cppad/example/atomic_four/lin_ode/set.hpp>
+# include <cppad/example/atomic_four/lin_ode/get.hpp>
+# include <cppad/example/atomic_four/lin_ode/base_lin_ode.hpp>
+# include <cppad/example/atomic_four/lin_ode/for_type.hpp>
+# include <cppad/example/atomic_four/lin_ode/forward.hpp>
 // END C++
-
 # endif

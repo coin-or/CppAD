@@ -1,0 +1,167 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
+
+CppAD is distributed under the terms of the
+             Eclipse Public License Version 2.0.
+
+This Source Code may also be made available under the following
+Secondary License when the conditions for such availability set forth
+in the Eclipse Public License, Version 2.0 are satisfied:
+      GNU General Public License, Version 2.0 or later.
+---------------------------------------------------------------------------- */
+$begin atomic_four_lin_ode$$
+$spell
+    Taylor
+    nr
+    nc
+    mul
+    lin
+$$
+
+$section 
+    Atomic First Order Linear ODE: Example Implementation
+$$
+
+$head Under construction$$
+This example is under construction and not yet ready for use.
+
+$head Syntax$$
+$codei%atomic_lin_ode %ode%(%name%)
+%$$
+$icode%call_id% = %lin_ode%.set(%r%, %n_step%)
+%$$
+$icode%lin_ode%.get(%call_id%, %r%, %n_step%)
+%$$
+$icode%lin_ode%(%call_id%, %x%, %y%)
+%$$
+
+$head Purpose$$
+Construct an atomic operation that computes the solution of 
+the first order linear ODE
+$latex \[
+    \partial_s z(s, x) = A(x) z(s, x) \; , \;  z(0, x) = b(x)
+\] $$
+where 
+$latex z : \B{R} \times \B{R}^n \rightarrow \B{R}^m$$,
+$latex A : \B{R}^n \rightarrow \B{R}^{m \times m}$$, and
+$latex b : \B{R}^n \rightarrow  \B{R}^m$$.
+
+$head r$$
+This is the value of $icode s$$ at which we are computing the solution
+$latex z(s, x)$$.
+This is a argument (return value) for the $code set$$, ($code get$$) routine.
+
+$head n_step$$
+This is the number of equal size steps, 
+between $latex s = 0$$ and $latex s = R$$,
+used by the numerical method that approximates
+the solution of the differential equation.
+This is a argument (return value) for the $code set$$, ($code get$$) routine.
+
+$head call_id$$
+This is a return value (argument) for the $code set$$, ($code get$$) routine.
+
+$head x$$
+We use $icode x$$ to denote the argument to the atomic function.
+
+$subhead n$$
+The size of the vector $icode x$$ is 
+$icode%
+    n = m * m + m
+%$$
+
+$subhead A(x)$$
+The matrix $icode A(x)$$ is stored in row major order at the beginning of
+$icode x$$; i.e. its $icode (i,j)$$ element is
+$icode%
+    A[i,j] = x[ i * m + j]
+%$$
+
+$subhead b(x)$$
+The vector $icode b(x)$$ is stored at the end of
+$icode x$$; i.e. its $icode j$$ element is
+$icode%
+    b[j] = x[ m * m + j ]
+%$$
+
+$head y(x)$$
+We use $icode y(x)$$ to denote the result of the atomic function.
+The size of this vector must be $icode m$$ and it is defined by
+$icode%
+    y[i] = z_i (r, x)
+%$$
+
+$head Theory$$
+The theory below includes function values and
+first order derivatives.
+
+$head Forward$$
+Suppose we are given Taylor coefficients 
+$latex x^0$$, $latex x^1$$, $latex x^2$$ for $latex x$$.
+$latex \[
+    y^0 = b^0 + \int_0^r A^0 z(s, x) ds
+\] $$
+$latex \[
+    y^1 = b^1 + \int_0^r [ A^0 z^1 (s, x) + A^1 z^0 (s, x) ] ds 
+\] $$
+The Taylor coefficients
+$latex y^0$$, $latex y^1$$, $latex y^2$$ can be solved for using
+the following extended initial value problem:
+$latex \[
+    z^0_s (s, x) = A^0 z^0 (s, x) 
+    \; , \;  z^0 (0, x) = b^0
+\] $$
+$latex \[
+    z^1_s (s, x) = A^0 z^1 (s, x) + A^1 z^0 (s, x) 
+    \; , \;  z^1 (0, x) = b^1
+\] $$
+
+$head Reverse$$
+Suppose that we have a scalar valued function $latex G(y^0, x^0)$$
+together with its partial derivatives with respect to its arguments.
+We need to compute the partial derivatives of
+$latex \[
+    H( x^0 ) = G [ Y^0(x^0), x^0 ]
+\] $$
+$latex \[
+    H_{x0} (x^0) = G_{x0} ( y^0, x^0 ) + G_{y0} (y^0, x^0) Y^0_{x0} (x^0)
+\] $$
+Here and below we the subscript $latex x0$$ to denote the 
+row vector corresponding to the partial w.r.t. $latex x^0$$.
+The partial $latex Y^0_{x0}$$ can be broken into two parts,
+$latex Y^0_{A0}$$ and $latex Y^0_{b0}$$.
+The partial $latex Y^0_{b0}$$ is one so
+$latex \[
+    H_{b0} (x^0) 
+    = 
+    G_{b0} ( y^0, x^0 ) +  G_{y0} ( y^0, x^0 ) 
+\] $$
+The partial of $latex Y^0$$ w.r.t. the $latex A^0_{i,j}$$ is
+$latex \[
+    \int_0^r z^0_j (s, x) ds
+\] $$
+Note that it is the same for all $latex i$$.
+Hence we can compute the reverse mode derivatives by solving the
+following extended initial value problem
+$latex \[
+    z^0_s (s, x) = A^0 z^0 (s, x) 
+    \; , \;  z^0 (0, x) = b^0
+\] $$
+$latex \[
+    v_s (s, x) = z^0 (s, x)  ; v(0) = 0
+\] $$
+$latex \[
+    H_{A0i} (x^0) 
+    = 
+    G_{A0i} ( y^0, x^0 ) + [ G_{y0} (y^0, x^0) v(r, x^0) ] ^\R{T}
+\] $$
+Here the subscript $latex A0i$$ denotes the 
+row vector corresponding to the partial
+w.r.t. the $th i$$ row of $latex A^0$$.
+
+$childtable%
+    include/cppad/example/atomic_four/lin_ode/implement.omh
+    %example/atomic_four/lin_ode/forward.cpp
+%$$
+
+$end

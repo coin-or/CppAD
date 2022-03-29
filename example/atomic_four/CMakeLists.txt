@@ -13,6 +13,7 @@
 # initialize check_example_atomic_four_depends
 SET(check_example_atomic_four_depends "")
 #
+ADD_SUBDIRECTORY(lin_ode)
 ADD_SUBDIRECTORY(mat_mul)
 ADD_SUBDIRECTORY(vector)
 #

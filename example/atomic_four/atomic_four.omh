@@ -20,6 +20,7 @@ $childtable%
     %example/atomic_four/dynamic.cpp
     %include/cppad/example/atomic_four/vector/vector.omh
     %include/cppad/example/atomic_four/mat_mul/mat_mul.omh
+    %include/cppad/example/atomic_four/lin_ode/lin_ode.omh
 %$$
 
 $end

@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_GET_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_MAT_MUL_GET_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_GET_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_GET_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -12,49 +12,46 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 --------------------------------------------------------------------------- */
 /*
-$begin atomic_four_mat_mul_get.hpp$$
+$begin atomic_four_lin_ode_get.hpp$$
 $spell
     mul
+    lin
 $$
 
-$section atomic_mat_mul Get Routine: Example Implementation$$
+$section atomic_lin_ode Get Routine: Example Implementation$$
 
 $head Syntax$$
-$icode%%mat_mul%.get(%call_id%, %n_left%, %n_middle%, %n_right%)%$$
+$icode%lin_ode%.get(%call_id%, %r%, %n_step%)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
 
 $head Purpose$$
-Retrieves the dimension information for a an atomic operation that computes
-the matrix product $icode%R% = %A% * %B%$$.
+Retrieves the auxillary information for a an atomic operation that computes
+the solution of a linear ODE.
 
 $head call_id$$
-This argument identifies the dimension information for this matrix product.
+This input argument identifies the auxillary information for this ODE.
 
-$head n_left$$
-This result is the row dimension of the matrices $icode A$$ and $icode R$$.
+$head r$$
+This output argument is the final value for the variable that the ODE is with
+respect to.
 
-$head n_middle$$
-This result is the column dimension of the matrix $icode A$$
-and row dimension of the matrix $icode B$$.
-
-$head n_right$$
-This result is the column dimension of the matrices $icode B$$ and $icode R$$.
+$head n_step$$
+This output argument is the number of steps to use when approximating
+to solution of the ODE.
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
 */
 // BEGIN C++
-# include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>
+# include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
-void atomic_mat_mul<Base>::get(
-    size_t call_id, size_t& n_left, size_t& n_middle, size_t& n_right
-)
+void atomic_lin_ode<Base>::get(size_t call_id, Base& r, size_t& n_step)
 // END PROTOTYPE
 {
     // thread
@@ -62,11 +59,10 @@ void atomic_mat_mul<Base>::get(
     assert( work_[thread] != nullptr );
     assert( thread == (*work_[thread])[call_id].thread );
     //
-    // n_left, n_middle, n_right
+    // r, n_step
     call_struct& call = (*work_[thread])[call_id];
-    n_left   = call.n_left;
-    n_middle = call.n_middle;
-    n_right  = call.n_right;
+    r      = call.r;
+    n_step = call.n_step;
     //
     return;
 }
