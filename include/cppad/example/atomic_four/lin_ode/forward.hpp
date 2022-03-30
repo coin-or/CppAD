@@ -36,7 +36,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
-// forward override for Base matrix multiply
+// forward override for Base atomic linear ODE
 template <class Base>
 bool atomic_lin_ode<Base>::forward(
     size_t                                     call_id     ,
@@ -103,6 +103,81 @@ bool atomic_lin_ode<Base>::forward(
         }
         for(size_t i = 0; i < m; ++i)
             taylor_y[i * q + 1] = Y[m + i];
+    }
+    //
+    return true;
+}
+//
+// forward override for AD<Base> atomic linear ODE
+template <class Base>
+bool atomic_lin_ode<Base>::forward(
+    size_t                                     call_id     ,
+    const CppAD::vector<bool>&                 select_y    ,
+    size_t                                     order_low   ,
+    size_t                                     order_up    ,
+    const CppAD::vector< CppAD::AD<Base> >&    ataylor_x   ,
+    CppAD::vector< CppAD::AD<Base> >&          ataylor_y   )
+{   //
+    // aBase
+    typedef CppAD::AD<Base> aBase;
+    //
+    // order_up
+    if( order_up > 1 )
+        return false;
+    //
+    // q
+    size_t q = order_up + 1;
+    //
+    // m
+    assert( ataylor_y.size() % q == 0 );
+    size_t m = ataylor_y.size() / q;
+    //
+    // ataylor_x
+    assert( ataylor_x.size() == (m * m + m) * q );
+    //
+    // r, n_step
+    Base r;
+    size_t n_step;
+    get(call_id, r, n_step);
+    //
+    // ataylor_y
+    if( order_up == 0 )
+        (*this)(call_id, ataylor_x, ataylor_y);
+    else
+    {   // M
+        size_t M = 2 * m;
+        //
+        // aX
+        CppAD::vector<aBase> aX(M * M + M);
+        for(size_t i = 0; i < m; i++)
+        {   for(size_t j = 0; j < m; ++j)
+            {   // 0
+                aX[i * M + m + j]       = aBase(0);
+                // A^0_ij
+                aBase A0ij              = ataylor_x[ (i * m + j) * q + 0];
+                aX[i * M + j]           = A0ij;
+                aX[(i + m) * M + m + j] = A0ij;
+                // A^1_ij
+                aBase A1ij              = ataylor_x[ (i * m + j) * q + 1];
+                aX[(i + m) * M + j]     = A1ij;
+            }
+            // b^0_i
+            aX[M * M + i]     = ataylor_x[ (m * m + i) * q + 0 ];
+            // b^1_i
+            aX[M * M + m + i] = ataylor_x[ (m * m + i) * q + 1 ];
+        }
+        //
+        // aY
+        CppAD::vector<aBase> aY(M);
+        (*this)(call_id, aX, aY);
+        //
+        // ataylor_y
+        if( order_low == 0 )
+        {   for(size_t i = 0; i < m; ++i)
+                ataylor_y[i * q + 0] = aY[i];
+        }
+        for(size_t i = 0; i < m; ++i)
+            ataylor_y[i * q + 1] = aY[m + i];
     }
     //
     return true;

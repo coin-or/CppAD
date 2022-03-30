@@ -79,6 +79,19 @@ Vector Z(Scalar s, const Vector& u)
     return z;
 }
 
+template <class Scalar, class Vector>
+Vector G(Scalar s, const Vector& u)
+{   size_t ng = 4;
+    Vector g(ng);
+    //
+    g[0]  = Scalar(1.0);
+    g[1]  = u[4]*s;
+    g[2]  = u[5]*u[4]*s*s/2.0;
+    g[3]  = u[6]*u[5]*u[4]*s*s*s/6.0;
+    //
+    return g;
+}
+
 } // END_EMPTY_NAMESPACE
 
 bool forward(void)
@@ -129,11 +142,11 @@ bool forward(void)
     // f
     CppAD::ADFun<double> f(au, ay);
     // -----------------------------------------------------------------------
-    // check
+    // ar, check_f
     CppAD::Independent(au);
     AD<double> ar = r;
     ay = Z(ar, au);
-    CppAD::ADFun<double> check(au, ay);
+    CppAD::ADFun<double> check_f(au, ay);
     // -----------------------------------------------------------------------
     // forward mode on f
     // -----------------------------------------------------------------------
@@ -149,7 +162,7 @@ bool forward(void)
     y = f.Forward(0, u);
     //
     // ok
-    CPPAD_TESTVECTOR(double) z = check.Forward(0, u);
+    CPPAD_TESTVECTOR(double) z = check_f.Forward(0, u);
     for(size_t i = 0; i < ny; ++i)
         ok &= NearEqual(y[i], z[i], eps99, eps99);
     //
@@ -160,12 +173,46 @@ bool forward(void)
     for(size_t j = 0; j < nu; ++j)
     {   du[j] = 1.0;
         dy    = f.Forward(1, du);
-        dz    = check.Forward(1, du);
+        dz    = check_f.Forward(1, du);
         for(size_t i = 0; i < ny; ++i)
             ok &= NearEqual(dy[i], dz[i], eps99, eps99);
         du[j] = 0.0;
     }
-    // ----------------------------------------------------------------
+    // -----------------------------------------------------------------------
+    // Record g
+    // -----------------------------------------------------------------------
+    //
+    // af
+    CppAD::ADFun< AD<double>, double> af = f.base2ad();
+    //
+    // az
+    CppAD::Independent(au);
+    CPPAD_TESTVECTOR( AD<double> ) dau(nu), day(ny);
+    af.Forward(0, au);
+    for(size_t j = 0; j < nu; ++j)
+        dau[j] = 0.0;
+    dau[0] = 1.0;
+    day    = af.Forward(1, dau);
+    // g
+    CppAD::ADFun<double> g(au, day);
+    // -----------------------------------------------------------------------
+    // check_g
+    CppAD::Independent(au);
+    ay = G(ar, au);
+    CppAD::ADFun<double> check_g(au, ay);
+    // -----------------------------------------------------------------------
+    // forward mode on g
+    // -----------------------------------------------------------------------
+    //
+    // y
+    // zero order forward mode computation of g(u)
+    dy = g.Forward(0, u);
+    //
+    // ok
+    CPPAD_TESTVECTOR(double) v = check_g.Forward(0, u);
+    for(size_t i = 0; i < ny; ++i)
+        ok &= NearEqual(dy[i], v[i], eps99, eps99);
+    // -----------------------------------------------------------------------
     return ok;
 }
 // END C++

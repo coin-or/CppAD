@@ -91,7 +91,6 @@ private:
         const CppAD::vector<Base>&                       taylor_x,
         CppAD::vector<Base>&                             taylor_y
     ) override;
-# else
     // Cases not yet implemented
     //
     // AD<Base> forward
@@ -103,6 +102,7 @@ private:
         const CppAD::vector< CppAD::AD<Base> >&          ataylor_x,
         CppAD::vector< CppAD::AD<Base> >&                ataylor_y
     ) override;
+# else
     //
     // Base reverse
     bool reverse(
