@@ -212,7 +212,19 @@ bool forward(void)
     CPPAD_TESTVECTOR(double) v = check_g.Forward(0, u);
     for(size_t i = 0; i < ny; ++i)
         ok &= NearEqual(dy[i], v[i], eps99, eps99);
-    // -----------------------------------------------------------------------
+    //
+    // du, ok
+    CPPAD_TESTVECTOR(double) ddy(ny), ddz(ny);
+    for(size_t j = 0; j < nu; ++j)
+        du[j] = 0.0;
+    for(size_t j = 0; j < nu; ++j)
+    {   du[j] = 1.0;
+        ddy    = g.Forward(1, du);
+        ddz    = check_g.Forward(1, du);
+        for(size_t i = 0; i < ny; ++i)
+            ok &= NearEqual(ddy[i], ddz[i], eps99, eps99);
+        du[j] = 0.0;
+    }
     return ok;
 }
 // END C++
