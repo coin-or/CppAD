@@ -14,6 +14,7 @@
 SET(source_list
     forward.cpp
     lin_ode.cpp
+    reverse.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

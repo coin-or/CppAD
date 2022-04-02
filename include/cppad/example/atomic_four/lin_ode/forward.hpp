@@ -14,8 +14,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_four_lin_ode_forward.hpp$$
 $spell
-    Jacobian
-    jac
+    lin
 $$
 
 $section
@@ -26,6 +25,9 @@ $head Purpose$$
 The $code forward$$ routine overrides the virtual functions
 used by the atomic_four base; see
 $cref/forward/atomic_four_forward/$$.
+
+$head Theory$$
+See lin_ode $cref/forward/atomic_four_lin_ode/Theory/Forward/$$ theory.
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -76,14 +78,20 @@ bool atomic_lin_ode<Base>::forward(
         CppAD::vector<Base> X(M * M + M);
         for(size_t i = 0; i < m; i++)
         {   for(size_t j = 0; j < m; ++j)
-            {   // 0
+            {   // upper right block is zero
                 X[i * M + m + j]       = Base(0);
+                //
                 // A^0_ij
                 Base A0ij              = taylor_x[ (i * m + j) * q + 0];
+                //
+                // diagonal blocks are A^0
                 X[i * M + j]           = A0ij;
                 X[(i + m) * M + m + j] = A0ij;
+                //
                 // A^1_ij
                 Base A1ij              = taylor_x[ (i * m + j) * q + 1];
+                //
+                // lower left block is A^1
                 X[(i + m) * M + j]     = A1ij;
             }
             // b^0_i

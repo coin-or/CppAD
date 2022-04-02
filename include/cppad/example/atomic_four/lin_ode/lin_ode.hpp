@@ -102,7 +102,6 @@ private:
         const CppAD::vector< CppAD::AD<Base> >&          ataylor_x,
         CppAD::vector< CppAD::AD<Base> >&                ataylor_y
     ) override;
-# else
     //
     // Base reverse
     bool reverse(
@@ -114,6 +113,7 @@ private:
         CppAD::vector<Base>&                             partial_x,
         const CppAD::vector<Base>&                       partial_y
     ) override;
+# else
     //
     // AD<Base> reverse
     bool reverse(
@@ -158,5 +158,6 @@ private:
 # include <cppad/example/atomic_four/lin_ode/base_lin_ode.hpp>
 # include <cppad/example/atomic_four/lin_ode/for_type.hpp>
 # include <cppad/example/atomic_four/lin_ode/forward.hpp>
+# include <cppad/example/atomic_four/lin_ode/reverse.hpp>
 // END C++
 # endif

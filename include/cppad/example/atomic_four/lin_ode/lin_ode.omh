@@ -95,7 +95,7 @@ $head Theory$$
 The theory below includes function values and
 first order derivatives.
 
-$head Forward$$
+$subhead Forward$$
 Suppose we are given Taylor coefficients
 $latex x^0$$, $latex x^1$$, for $latex x$$.
 $latex \[
@@ -133,53 +133,81 @@ b^1
 \end{array} \right]
 \] $$
 
-$head Reverse$$
-This analysis is incorrect.
-Suppose that we have a scalar valued function $latex G(y^0, x^0)$$
-together with its partial derivatives with respect to its arguments.
-We need to compute the partial derivatives of
+$subhead Reverse$$
+We are given a vector $latex w \in \B{R}^m$$
+and need to compute
 $latex \[
-    H( x^0 ) = G [ Y^0(x^0), x^0 ]
+    \partial_x w^\R{T} z(r, x)
 \] $$
+Consider the auxillary function
 $latex \[
-    H_{x0} (x^0) = G_{x0} ( y^0, x^0 ) + G_{y0} (y^0, x^0) Y^0_{x0} (x^0)
-\] $$
-Here and below we the subscript $latex x0$$ to denote the
-row vector corresponding to the partial w.r.t. $latex x^0$$.
-The partial $latex Y^0_{x0}$$ can be broken into two parts,
-$latex Y^0_{A0}$$ and $latex Y^0_{b0}$$.
-The partial $latex Y^0_{b0}$$ is one so
-$latex \[
-    H_{b0} (x^0)
+    L( \lambda, x )
     =
-    G_{b0} ( y^0, x^0 ) +  G_{y0} ( y^0, x^0 )
+    w^\R{T} z(r, x)
+    + \int_0^r \lambda^\R{T} (s) [ A(x) z(s, x) - z_s (s,x) ] \R{d} s
 \] $$
-The partial of $latex Y^0$$ w.r.t. the $latex A^0_{i,j}$$ is
+where $latex \lambda : [0, r] \rightarrow \B{R}^m$$.
+Since the function $latex z(s, x)$$ satisfies the ODE constraint
+corresponding to $latex x$$,
 $latex \[
-    \int_0^r z^0_j (s, x) ds
+    \partial_x L( \lambda, x ) = \partial_x w^\R{T} z(r, x)
 \] $$
-Note that it is the same for all $latex i$$.
-Hence we can compute the reverse mode derivatives by solving the
-following extended initial value problem
+which is the value we need to compute.
+Integrating by parts we have
 $latex \[
-    z^0_s (s, x) = A^0 z^0 (s, x)
-    \; , \;  z^0 (0, x) = b^0
+\left. \lambda^\R{T} (s) z(s, x) \right|_0^r
+=
+\int_0^r [ \lambda^\R{T} (s) z_s (s, x) + \lambda_s^\R{T} (s) z(s, x) ] \R{d} s
 \] $$
 $latex \[
-    v_s (s, x) = z^0 (s, x)  ; v(0) = 0
-\] $$
-$latex \[
-    H_{A0i} (x^0)
+    L( \lambda, x)
     =
-    G_{A0i} ( y^0, x^0 ) + [ G_{y0} (y^0, x^0) v(r, x^0) ] ^\R{T}
+    w^\R{T} z(r, x)
+    + \left. \lambda^\R{T} (s) z(s, x) \right|_0^r
+    + \int_0^r [ \lambda^\R{T} (s) A(x) + \lambda_s^\R{T} (s) ]
+        z (s, x) \R{d} s
 \] $$
-Here the subscript $latex A0i$$ denotes the
-row vector corresponding to the partial
-w.r.t. the $th i$$ row of $latex A^0$$.
+We add the condition $latex \lambda(r) = - w$$ and
+use the condition $latex z(0, x) = b(x)$$ to obtain
+$latex \[
+    L( \lambda, x)
+    =
+    - \lambda^\R{T} (0) b(x)
+    + \int_0^r [ \lambda^\R{T} (s) A(x) + \lambda_s^\R{T} (s) ]
+        z (s, x) \R{d} s
+\] $$
+Using the subscript $latex x(k)$$ to denote the partial with respect to
+$latex x_k$$
+$latex \[
+    L_{x(k)} ( \lambda, x)
+    =
+    - \lambda^\R{T} (0) b_{x(k)} (x)
+    + \int_0^r  \lambda^\R{T} (s) A_{x(k)} (x) z (s, x) \R{d} s
+    + \int_0^r [ \lambda^\R{T} (s) A(x) + \lambda_s^\R{T} (s) ]
+        z_{x(k)} (s, x) \R{d} s
+\] $$
+Adding the condition $latex \lambda_s (s) = - A(x)^\R{T} \lambda (s)$$,
+we obtain
+$latex \[
+    L_{x(k)} ( \lambda, x)
+    =
+    - \lambda^\R{T} (0) b_{x(k)} (x)
+    + \int_0^r  \lambda^\R{T} (s) A_{x(k)} (x) z (s, x) \R{d} s
+\] $$
+
+
+
+
+
+
+
+
+
 
 $childtable%
     include/cppad/example/atomic_four/lin_ode/implement.omh
     %example/atomic_four/lin_ode/forward.cpp
+    %example/atomic_four/lin_ode/reverse.cpp
 %$$
 
 $end

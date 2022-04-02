@@ -10,19 +10,22 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_four_lin_ode_forward.cpp$$
+$begin atomic_four_lin_ode_reverse.cpp$$
 $spell
 $$
 
-$section Atomic Linear ODE Forward Mode: Example and Test$$
+$section Atomic Linear ODE Reverse Mode: Example and Test$$
+
+$head Under Construction$$
+This test does not yet pass.
 
 $head Purpose$$
-This example demonstrates using forward mode with
+This example demonstrates using reverse mode with
 the $cref atomic_four_lin_ode$$ class.
 
 $head f(u)$$
-For this example, the function $latex f(u) = z(r, u) $$ where
-$latex z(s, u)$$ solves the following ODE
+For this example, the function $latex f(u) = z(r, u)$$ where
+$latex z(s,u)$$ solves the following ODE
 $latex \[
 z_s (s, u) =
 \left( \begin{array}{cccc}
@@ -42,7 +45,7 @@ u_3 \\
 \end{array} \right)
 \] $$
 
-$head z(s, u)$$
+$head Solution$$
 The actual solution to this ODE is
 $latex \[
 z (s, u) =
@@ -51,19 +54,6 @@ u_0  \\
 u_1 + u_4 u_0 s \\
 u_2 + u_5 u_1 s + u_5 u_4 u_0 s^2 / 2  \\
 u_3 + u_6 u_2 s + u_6 u_5 u_1 s^2 / 2 + u_6 u_5 u_4 u_0 s^3 / 6
-\end{array} \right)
-\] $$
-
-$head g(u)$$
-We define $latex g(u) = \partial_{u0} f(u)$$.
-It follows that
-$latex \[
-g (u) =
-\left( \begin{array}{l}
-1  \\
-u_4 r \\
-u_5 u_4 r^2 / 2  \\
-u_6 u_5 u_4 r^3 / 6
 \end{array} \right)
 \] $$
 
@@ -91,22 +81,9 @@ Vector Z(Scalar s, const Vector& u)
     return z;
 }
 
-template <class Scalar, class Vector>
-Vector G(Scalar s, const Vector& u)
-{   size_t ng = 4;
-    Vector g(ng);
-    //
-    g[0]  = Scalar(1.0);
-    g[1]  = u[4]*s;
-    g[2]  = u[5]*u[4]*s*s/2.0;
-    g[3]  = u[6]*u[5]*u[4]*s*s*s/6.0;
-    //
-    return g;
-}
-
 } // END_EMPTY_NAMESPACE
 
-bool forward(void)
+bool reverse(void)
 {   // ok, eps
     bool ok = true;
     //
@@ -160,7 +137,7 @@ bool forward(void)
     ay = Z(ar, au);
     CppAD::ADFun<double> check_f(au, ay);
     // -----------------------------------------------------------------------
-    // forward mode on f
+    // reverse mode on f
     // -----------------------------------------------------------------------
     //
     // u
@@ -178,64 +155,22 @@ bool forward(void)
     for(size_t i = 0; i < ny; ++i)
         ok &= NearEqual(y[i], z[i], eps99, eps99);
     //
-    // du, ok
-    CPPAD_TESTVECTOR(double) du(nu), dy(ny), dz(ny);
-    for(size_t j = 0; j < nu; ++j)
-        du[j] = 0.0;
-    for(size_t j = 0; j < nu; ++j)
-    {   du[j] = 1.0;
-        dy    = f.Forward(1, du);
-        dz    = check_f.Forward(1, du);
-        for(size_t i = 0; i < ny; ++i)
-            ok &= NearEqual(dy[i], dz[i], eps99, eps99);
-        du[j] = 0.0;
-    }
-    // -----------------------------------------------------------------------
-    // Record g
-    // -----------------------------------------------------------------------
-    //
-    // af
-    CppAD::ADFun< AD<double>, double> af = f.base2ad();
-    //
-    // az
-    CppAD::Independent(au);
-    CPPAD_TESTVECTOR( AD<double> ) dau(nu), day(ny);
-    af.Forward(0, au);
-    for(size_t j = 0; j < nu; ++j)
-        dau[j] = 0.0;
-    dau[0] = 1.0;
-    day    = af.Forward(1, dau);
-    // g
-    CppAD::ADFun<double> g(au, day);
-    // -----------------------------------------------------------------------
-    // check_g
-    CppAD::Independent(au);
-    ay = G(ar, au);
-    CppAD::ADFun<double> check_g(au, ay);
-    // -----------------------------------------------------------------------
-    // forward mode on g
-    // -----------------------------------------------------------------------
-    //
-    // y
-    // zero order forward mode computation of g(u)
-    dy = g.Forward(0, u);
-    //
-    // ok
-    CPPAD_TESTVECTOR(double) v = check_g.Forward(0, u);
+    // w, ok
+    CPPAD_TESTVECTOR(double) w(ny), dw(nu), dz(nu);
     for(size_t i = 0; i < ny; ++i)
-        ok &= NearEqual(dy[i], v[i], eps99, eps99);
-    //
-    // du, ok
-    CPPAD_TESTVECTOR(double) ddy(ny), ddz(ny);
-    for(size_t j = 0; j < nu; ++j)
-        du[j] = 0.0;
-    for(size_t j = 0; j < nu; ++j)
-    {   du[j] = 1.0;
-        ddy    = g.Forward(1, du);
-        ddz    = check_g.Forward(1, du);
-        for(size_t i = 0; i < ny; ++i)
-            ok &= NearEqual(ddy[i], ddz[i], eps99, eps99);
-        du[j] = 0.0;
+        w[i] = 0.0;
+    for(size_t i = 0; i < ny; ++i)
+    {   w[i] = 1.0;
+        dw    = f.Reverse(1, w);
+        dz    = check_f.Reverse(1, w);
+        for(size_t j = 0; j < nu; ++j)
+            ok &= NearEqual(dw[j], dz[j], eps99, eps99);
+        w[i] = 0.0;
+        /*
+        std::cout << "i = " << i << "\n";
+        std::cout << "dw = " << dw << "\n";
+        std::cout << "dz = " << dz << "\n";
+        */
     }
     return ok;
 }

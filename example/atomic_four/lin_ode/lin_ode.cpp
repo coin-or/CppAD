@@ -27,6 +27,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool forward(void);
+extern bool reverse(void);
 // END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
@@ -40,6 +41,9 @@ int main(void)
     // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( forward,             "forward"        );
     // END_SORT_THIS_LINE_MINUS_1
+
+    // Test does not yet pass
+    // Run( reverse,             "reverse"        );
 
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();
