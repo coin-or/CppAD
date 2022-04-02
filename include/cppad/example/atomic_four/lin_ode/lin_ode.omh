@@ -134,6 +134,7 @@ b^1
 \] $$
 
 $head Reverse$$
+This analysis is incorrect.
 Suppose that we have a scalar valued function $latex G(y^0, x^0)$$
 together with its partial derivatives with respect to its arguments.
 We need to compute the partial derivatives of
