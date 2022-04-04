@@ -139,70 +139,65 @@ and need to compute
 $latex \[
     \partial_x w^\R{T} z(r, x)
 \] $$
-Consider the auxillary function
+We use forward mode derivatives for this computation.
+This is not efficient, but it can be computed using an atomic operation.
+Let $latex A^{1,k}$$, $latex b^{1,k}$$ be the
+first order Taylor coefficient corresponding to the direction $latex x_k$$
+Note that $latex b^{1,k}$$ is zero for $latex k < m^2$$ and
+$latex A^{1,k}$$ is zero for $latex m^2 \leq k$$.
+The extended initial value problem for this calculation is
 $latex \[
-    L( \lambda, x )
-    =
-    w^\R{T} z(r, x)
-    + \int_0^r \lambda^\R{T} (s) [ A(x) z(s, x) - z_s (s,x) ] \R{d} s
-\] $$
-where $latex \lambda : [0, r] \rightarrow \B{R}^m$$.
-Since the function $latex z(s, x)$$ satisfies the ODE constraint
-corresponding to $latex x$$,
-$latex \[
-    \partial_x L( \lambda, x ) = \partial_x w^\R{T} z(r, x)
-\] $$
-which is the value we need to compute.
-Integrating by parts we have
-$latex \[
-\left. \lambda^\R{T} (s) z(s, x) \right|_0^r
+\left[ \begin{array}{c}
+z^0_s (s, x)      \\
+z^{1,0}_s (s, x)  \\
+\vdots            \\
+z^{1,K}_s (s, x)
+\end{array} \right]
 =
-\int_0^r [ \lambda^\R{T} (s) z_s (s, x) + \lambda_s^\R{T} (s) z(s, x) ] \R{d} s
+\left[ \begin{array}{ccccc}
+A^0     & 0     & \cdots &  0      \\
+A^{1,0} &  A^0  & 0      & \vdots  \\
+\vdots  & 0     & \ddots & \vdots  \\
+A^{1,K} & 0     & \cdots &  A^0 \\
+\end{array} \right]
+\left[ \begin{array}{c}
+z^0     (s, x)  \\
+z^{1,0} (s, x)  \\
+\vdots          \\
+z^{1,K} (s, x)
+\end{array} \right]
+\; , \;
+\left[ \begin{array}{c}
+z^0 (0, x)      \\
+z^{1,0} (0, x)  \\
+\vdots          \\
+z^{1,K} (0, x)
+\end{array} \right]
+=
+\left[ \begin{array}{c}
+b^0      \\
+b^{1,0}  \\
+\vdots   \\
+b^{1,K}
+\end{array} \right]
 \] $$
+where $latex K = m \cdot m + m - 1$$ and
+for $latex i = 0 , \ldots, m-1$$, $latex j = 0, \ldots, m-1$$
 $latex \[
-    L( \lambda, x)
-    =
-    w^\R{T} z(r, x)
-    + \left. \lambda^\R{T} (s) z(s, x) \right|_0^r
-    + \int_0^r [ \lambda^\R{T} (s) A(x) + \lambda_s^\R{T} (s) ]
-        z (s, x) \R{d} s
+A^{1,k}_{i,j} = \left\{ \begin{array}{ll}
+    1   & \R{if} \; k < m \cdot m  \; \R{and} \; k = i \cdot m + j \\
+    0   & \R{otherwise}
+\end{array} \right.
+\W{,}
+b^{1,k}_{i} = \left\{ \begin{array}{ll}
+    1   & \R{if} \; m \cdot m  \leq k \; \R{and} \; k = m \cdot m + i \\
+    0   & \R{otherwise}
+\end{array} \right.
 \] $$
-We add the condition $latex \lambda(r) = - w$$ and
-use the condition $latex z(0, x) = b(x)$$ to obtain
+The necessary derivative can then be computed using
 $latex \[
-    L( \lambda, x)
-    =
-    - \lambda^\R{T} (0) b(x)
-    + \int_0^r [ \lambda^\R{T} (s) A(x) + \lambda_s^\R{T} (s) ]
-        z (s, x) \R{d} s
+    \partial_{x(k)} w^\R{T} z(r, x) = w^\R{T} z^{1,k} (r, s)
 \] $$
-Using the subscript $latex x(k)$$ to denote the partial with respect to
-$latex x_k$$
-$latex \[
-    L_{x(k)} ( \lambda, x)
-    =
-    - \lambda^\R{T} (0) b_{x(k)} (x)
-    + \int_0^r  \lambda^\R{T} (s) A_{x(k)} (x) z (s, x) \R{d} s
-    + \int_0^r [ \lambda^\R{T} (s) A(x) + \lambda_s^\R{T} (s) ]
-        z_{x(k)} (s, x) \R{d} s
-\] $$
-Adding the condition $latex \lambda_s (s) = - A(x)^\R{T} \lambda (s)$$,
-we obtain
-$latex \[
-    L_{x(k)} ( \lambda, x)
-    =
-    - \lambda^\R{T} (0) b_{x(k)} (x)
-    + \int_0^r  \lambda^\R{T} (s) A_{x(k)} (x) z (s, x) \R{d} s
-\] $$
-
-
-
-
-
-
-
-
-
 
 $childtable%
     include/cppad/example/atomic_four/lin_ode/implement.omh
