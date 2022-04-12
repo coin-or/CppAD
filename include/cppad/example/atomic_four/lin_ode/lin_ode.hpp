@@ -48,13 +48,13 @@ public:
         }
     }
     // set
-    size_t set(const Base& r, size_t n_step);
+    size_t set(const Base& r);
     // get
-    void get(size_t call_id, Base& r, size_t& n_step);
+    void get(size_t call_id, Base& r);
 private:
     //
     // matrix dimensions corresponding to a call_id
-    struct call_struct { Base r; size_t n_step; size_t thread; };
+    struct call_struct { Base r; size_t thread; };
     //
     // map from call_id to matrix dimensions
     typedef CppAD::vector<call_struct> call_vector;
@@ -65,7 +65,6 @@ private:
     // base_lin_ode
     static void base_lin_ode(
         const Base&                r          ,
-        size_t                     n_step     ,
         const CppAD::vector<Base>& x          ,
         CppAD::vector<Base>&       y
     );

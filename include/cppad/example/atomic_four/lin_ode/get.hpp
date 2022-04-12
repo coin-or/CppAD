@@ -21,7 +21,7 @@ $$
 $section atomic_lin_ode Get Routine: Example Implementation$$
 
 $head Syntax$$
-$icode%lin_ode%.get(%call_id%, %r%, %n_step%)%$$
+$icode%lin_ode%.get(%call_id%, %r%)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
@@ -37,10 +37,6 @@ $head r$$
 This output argument is the final value for the variable that the ODE is with
 respect to.
 
-$head n_step$$
-This output argument is the number of steps to use when approximating
-to solution of the ODE.
-
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
@@ -51,7 +47,7 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
-void atomic_lin_ode<Base>::get(size_t call_id, Base& r, size_t& n_step)
+void atomic_lin_ode<Base>::get(size_t call_id, Base& r)
 // END PROTOTYPE
 {
     // thread
@@ -59,10 +55,9 @@ void atomic_lin_ode<Base>::get(size_t call_id, Base& r, size_t& n_step)
     assert( work_[thread] != nullptr );
     assert( thread == (*work_[thread])[call_id].thread );
     //
-    // r, n_step
+    // r
     call_struct& call = (*work_[thread])[call_id];
     r      = call.r;
-    n_step = call.n_step;
     //
     return;
 }

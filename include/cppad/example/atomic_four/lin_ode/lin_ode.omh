@@ -28,9 +28,9 @@ This example is under construction and not yet ready for use.
 $head Syntax$$
 $codei%atomic_lin_ode %ode%(%name%)
 %$$
-$icode%call_id% = %lin_ode%.set(%r%, %n_step%)
+$icode%call_id% = %lin_ode%.set(%r%)
 %$$
-$icode%lin_ode%.get(%call_id%, %r%, %n_step%)
+$icode%lin_ode%.get(%call_id%, %r%)
 %$$
 $icode%lin_ode%(%call_id%, %x%, %y%)
 %$$
@@ -60,13 +60,6 @@ This is a return value (argument) for the $code set$$ ($code get$$) routine.
 
 $head r$$
 This is the value of $icode t$$ at which we are approximating $latex z(t, x)$$.
-This is a argument (return value) for the $code set$$ ($code get$$) routine.
-
-$head n_step$$
-This is the number of steps,
-between $latex t = 0$$ and $latex t = r$$,
-used by the numerical method that approximates
-the solution of the differential equation.
 This is a argument (return value) for the $code set$$ ($code get$$) routine.
 
 $head x$$

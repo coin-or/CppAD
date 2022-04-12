@@ -21,7 +21,7 @@ $$
 $section atomic_lin_ode Set Routine: Example Implementation$$
 
 $head Syntax$$
-$icode%call_id% = %lin_ode%.set(%r%, %n_step%)%$$
+$icode%call_id% = %lin_ode%.set(%r%)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
@@ -34,10 +34,6 @@ $head r$$
 This argument is the final value for the variable that the ODE is with
 respect to.
 
-$head n_step$$
-This argument is the number of steps to use when approximating
-to solution of the ODE.
-
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
@@ -48,7 +44,7 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
-size_t atomic_lin_ode<Base>::set(const Base& r, size_t n_step)
+size_t atomic_lin_ode<Base>::set(const Base& r)
 // END PROTOTYPE
 {
     // thread
@@ -64,7 +60,6 @@ size_t atomic_lin_ode<Base>::set(const Base& r, size_t n_step)
     // call
     call_struct call;
     call.r      = r;
-    call.n_step = n_step;
     call.thread = thread;
     //
     // work_[thread]

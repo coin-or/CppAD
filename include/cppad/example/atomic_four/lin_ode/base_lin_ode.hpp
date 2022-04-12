@@ -33,7 +33,6 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Base>
 void atomic_lin_ode<Base>::base_lin_ode(
     const Base&                    r      ,
-    size_t                         n_step ,
     const CppAD::vector<Base>&     x      ,
     CppAD::vector<Base>&           y      )
 {
@@ -66,8 +65,9 @@ void atomic_lin_ode<Base>::base_lin_ode(
     Fun fun(x);
     //
     // y
-    Base si = Base(0.0);
-    Base sf = r;
+    Base si       = Base(0.0);
+    Base sf       = r;
+	size_t n_step = 1;
     CppAD::vector<Base> zi(m), e(m);
     for(size_t j = 0; j < m; ++j)
         zi[j] = x[ m * m + j];

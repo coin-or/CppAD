@@ -121,10 +121,9 @@ bool forward(void)
     // afun
     CppAD::atomic_lin_ode<double> afun("atomic_lin_ode");
     //
-    // m, r, n_step
+    // m, r
     size_t m      = 4;
     double r      = 2.0;
-    size_t n_step = 4;
     //
     // ny, ay
     size_t ny = m;
@@ -148,7 +147,7 @@ bool forward(void)
     }
     //
     // ay
-    size_t call_id = afun.set(r, n_step);
+    size_t call_id = afun.set(r);
     afun(call_id, ax, ay);
     //
     // f

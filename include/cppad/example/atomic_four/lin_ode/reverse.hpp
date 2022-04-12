@@ -65,10 +65,9 @@ bool atomic_lin_ode<Base>::reverse(
     assert( taylor_x.size()  == m * m + m );
     assert( partial_x.size() == m * m + m );
     //
-    // r, n_step
+    // r
     Base r;
-    size_t n_step;
-    get(call_id, r, n_step);
+    get(call_id, r);
     //
     // M
     size_t M = 2 * m;
@@ -103,7 +102,7 @@ bool atomic_lin_ode<Base>::reverse(
     //
     // Y
     CppAD::vector<Base> Y(M);
-    base_lin_ode(r, n_step, X, Y);
+    base_lin_ode(r, X, Y);
     //
     for(size_t i = 0; i < m; ++i)
     {   // reverse b^0_i

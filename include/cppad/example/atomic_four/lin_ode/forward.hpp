@@ -62,14 +62,13 @@ bool atomic_lin_ode<Base>::forward(
     // taylor_x
     assert( taylor_x.size() == (m * m + m) * q );
     //
-    // r, n_step
+    // r
     Base r;
-    size_t n_step;
-    get(call_id, r, n_step);
+    get(call_id, r);
     //
     // taylor_y
     if( order_up == 0 )
-        base_lin_ode(r, n_step, taylor_x, taylor_y);
+        base_lin_ode(r, taylor_x, taylor_y);
     else
     {   // M
         size_t M = 2 * m;
@@ -102,7 +101,7 @@ bool atomic_lin_ode<Base>::forward(
         //
         // Y
         CppAD::vector<Base> Y(M);
-        base_lin_ode(r, n_step, X, Y);
+        base_lin_ode(r, X, Y);
         //
         // taylor_y
         if( order_low == 0 )
@@ -142,11 +141,6 @@ bool atomic_lin_ode<Base>::forward(
     //
     // ataylor_x
     assert( ataylor_x.size() == (m * m + m) * q );
-    //
-    // r, n_step
-    Base r;
-    size_t n_step;
-    get(call_id, r, n_step);
     //
     // ataylor_y
     if( order_up == 0 )
