@@ -19,7 +19,7 @@ $spell
 $$
 
 $section
-    Atomic First Order Linear ODE: Example Implementation
+    Atomic First Order Linear ODE Method: Example Implementation
 $$
 
 $head Under construction$$
@@ -36,60 +36,56 @@ $icode%lin_ode%(%call_id%, %x%, %y%)
 %$$
 
 $head Purpose$$
-Construct an atomic operation that computes the solution of
-the first order linear ODE
+Construct an atomic operation that computes an
+approximate solution of the first order linear initial value ODE
 $latex \[
-    \partial_s z(s, x) = A(x) z(s, x) \; , \;  z(0, x) = b(x)
+    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
 \] $$
 where
 $latex z : \B{R} \times \B{R}^n \rightarrow \B{R}^m$$,
-$latex A : \B{R}^n \rightarrow \B{R}^{m \times m}$$, and
-$latex b : \B{R}^n \rightarrow  \B{R}^m$$.
+$latex A : \B{R}^n \rightarrow \B{R}^{m \times m}$$,
+$latex b : \B{R}^n \rightarrow  \B{R}^m$$,
+and the subscript $latex t$$ denotes partial differentiation w.r.t $latex t$$.
 
-$head r$$
-This is the value of $icode s$$ at which we are computing the solution
-$latex z(s, x)$$.
-This is a argument (return value) for the $code set$$, ($code get$$) routine.
+$head y$$
+This input value of the elements of $icode y$$ does not matter.
+Upon return it is the final value of the ODE solution, $latex y = z(r, x)$$.
 
-$head n_step$$
-This is the number of equal size steps,
-between $latex s = 0$$ and $latex s = R$$,
-used by the numerical method that approximates
-the solution of the differential equation.
-This is a argument (return value) for the $code set$$, ($code get$$) routine.
+$subhead m$$
+We use $icode m$$ to denote the size of the vector $icode y$$.
+This is the number of equations in the ODE.
 
 $head call_id$$
-This is a return value (argument) for the $code set$$, ($code get$$) routine.
+This is a return value (argument) for the $code set$$ ($code get$$) routine.
+
+$head r$$
+This is the value of $icode t$$ at which we are approximating $latex z(t, x)$$.
+This is a argument (return value) for the $code set$$ ($code get$$) routine.
+
+$head n_step$$
+This is the number of steps,
+between $latex t = 0$$ and $latex t = r$$,
+used by the numerical method that approximates
+the solution of the differential equation.
+This is a argument (return value) for the $code set$$ ($code get$$) routine.
 
 $head x$$
 We use $icode x$$ to denote the argument to the atomic function.
 
 $subhead n$$
 The size of the vector $icode x$$ is
-$icode%
-    n = m * m + m
-%$$
+$latex n = m * m + m$$.
 
 $subhead A(x)$$
-The matrix $icode A(x)$$ is stored in row major order at the beginning of
-$icode x$$; i.e. its $icode (i,j)$$ element is
-$icode%
-    A[i,j] = x[ i * m + j]
-%$$
+This matrix stored in row major order at the beginning of
+$icode x$$; i.e. its $latex (i,j)$$ element is
+$latex A_{i,j} (x) = x[ i * m + j ]$$.
 
 $subhead b(x)$$
-The vector $icode b(x)$$ is stored at the end of
-$icode x$$; i.e. its $icode j$$ element is
-$icode%
-    b[j] = x[ m * m + j ]
-%$$
+This vector s stored at the end of
+$icode x$$; i.e. its $th j$$ element is
+$latex b_j (x) = x[ m * m + 2 * m + j ]$$
 
-$head y(x)$$
-We use $icode y(x)$$ to denote the result of the atomic function.
-The size of this vector must be $icode m$$ and it is defined by
-$icode%
-    y[i] = z_i (r, x)
-%$$
 
 $head Theory$$
 The theory below includes function values and
@@ -98,19 +94,28 @@ first order derivatives.
 $subhead Forward$$
 Suppose we are given Taylor coefficients
 $latex x^0$$, $latex x^1$$, for $latex x$$.
+The zero order Taylor coefficient for $latex z(t, x)$$ solves
+the following initial value ODE:
 $latex \[
-    y^0 = b^0 + \int_0^r A^0 z^0(s, x) ds
+    z_t^0 (t) = A^0 z(t) \W{,} z^0 (0) = b^0
 \] $$
+Note that $latex A^0$$ and $latex b^0$$
+are just certain components of $latex x^0$$.
+The first order Taylor coefficient for $latex z(t, x)$$ solves
+the following initial value ODE:
 $latex \[
-    y^1 = b^1 + \int_0^r [ A^0 z^1 (s, x) + A^1 z^0 (s, x) ] ds
+    z_t^1 (t)
+	=
+	A^0 z^1 (t) + A^1 z^0 (t) \W{,} z^1 (0) = b^1
 \] $$
-The Taylor coefficients
-$latex y^0$$, $latex y^1$$ can be solved for using
-the following extended initial value problem:
+Note that $latex A^1$$ and $latex c^1$$
+are just certain components of $latex x^1$$.
+We can solve for $latex z^1 (t)$$ using the following extended
+initial value ODE:
 $latex \[
 \left[ \begin{array}{c}
-z^0_s (s, x) \\
-z^1_s (s, x)
+z^0_t (t, x) \\
+z^1_t (t, x)
 \end{array} \right]
 =
 \left[ \begin{array}{cc}
@@ -118,8 +123,8 @@ A^0 & 0   \\
 A^1 & A^0
 \end{array} \right]
 \left[ \begin{array}{c}
-z^0 (s, x) \\
-z^1 (s, x)
+z^0 (t, x) \\
+z^1 (t, x)
 \end{array} \right]
 \; , \;
 \left[ \begin{array}{c}
@@ -133,71 +138,111 @@ b^1
 \end{array} \right]
 \] $$
 
+
 $subhead Reverse$$
-We are given a vector $latex w \in \B{R}^m$$
-and need to compute
+We are given a vector $latex w \in \B{R}^m$$ and need to compute
 $latex \[
     \partial_x w^\R{T} z(r, x)
 \] $$
-We use forward mode derivatives for this computation.
-This is not efficient, but it can be computed using an atomic operation.
-Let $latex A^{1,k}$$, $latex b^{1,k}$$ be the
-first order Taylor coefficient corresponding to the direction $latex x_k$$
-Note that $latex b^{1,k}$$ is zero for $latex k < m^2$$ and
-$latex A^{1,k}$$ is zero for $latex m^2 \leq k$$.
-The extended initial value problem for this calculation is
+Consider the Lagrangian corresponding to
+$latex w^\R{T} z(r, x)$$ as the objective and the ODE as the constraint:
 $latex \[
-\left[ \begin{array}{c}
-z^0_s (s, x)      \\
-z^{1,0}_s (s, x)  \\
-\vdots            \\
-z^{1,K}_s (s, x)
-\end{array} \right]
-=
-\left[ \begin{array}{ccccc}
-A^0     & 0     & \cdots &  0      \\
-A^{1,0} &  A^0  & 0      & \vdots  \\
-\vdots  & 0     & \ddots & \vdots  \\
-A^{1,K} & 0     & \cdots &  A^0 \\
-\end{array} \right]
-\left[ \begin{array}{c}
-z^0     (s, x)  \\
-z^{1,0} (s, x)  \\
-\vdots          \\
-z^{1,K} (s, x)
-\end{array} \right]
-\; , \;
-\left[ \begin{array}{c}
-z^0 (0, x)      \\
-z^{1,0} (0, x)  \\
-\vdots          \\
-z^{1,K} (0, x)
-\end{array} \right]
-=
-\left[ \begin{array}{c}
-b^0      \\
-b^{1,0}  \\
-\vdots   \\
-b^{1,K}
-\end{array} \right]
+    L(x, \lambda)
+	=
+	w^\R{T} z(r, x) +
+		\int_0^s \lambda(t, x)^\R{T}
+			[ A(x) z(t, x) - z_t (t, x) ] \R{d} t
 \] $$
-where $latex K = m \cdot m + m - 1$$ and
-for $latex i = 0 , \ldots, m-1$$, $latex j = 0, \ldots, m-1$$
+where $latex \lambda : \R{R} \times \B{R}^n \rightarrow \B{R}^m$$
+is a smooth function.
+If $latex z(t, x)$$ satisfies its ODE, then
 $latex \[
-A^{1,k}_{i,j} = \left\{ \begin{array}{ll}
-    1   & \R{if} \; k < m \cdot m  \; \R{and} \; k = i \cdot m + j \\
-    0   & \R{otherwise}
-\end{array} \right.
-\W{,}
-b^{1,k}_{i} = \left\{ \begin{array}{ll}
-    1   & \R{if} \; m \cdot m  \leq k \; \R{and} \; k = m \cdot m + i \\
-    0   & \R{otherwise}
-\end{array} \right.
+	\partial_x w^\R{T} z(r, x)
+	=
+	\partial_x L(x, \lambda)
 \] $$
-The necessary derivative can then be computed using
+We use the following integration by parts to replace the $latex z_t (t, x)$$
+term in the integral defining $latex L(x, \lambda)$$:
 $latex \[
-    \partial_{x(k)} w^\R{T} z(r, x) = w^\R{T} z^{1,k} (r, s)
+	- \int_0^s \lambda(t, x)^\R{T} z_t (t, x) \R{d} t
+	=
+	- \left. \lambda(t, x)^\R{T} z(t, x) \right|_0^s
+	+
+	\int_0^s \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
 \] $$
+Adding the condition $latex \lambda(r, x) = w$$,
+and noting that $latex z(0, x) = b(x)$$, we have
+$latex \[
+    L(x, \lambda)
+	=
+	\lambda(0, x)^\R{T} z(0, x)
+	+
+	\int_0^s \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
+	+
+	\int_0^s \lambda(t, x)^\R{T} A(x) z(t, x) \R{d} t
+\] $$
+$latex \[
+    L(x, \lambda)
+	=
+	\lambda(0, x)^\R{T} b (x)
+	+
+	\int_0^s [ \lambda_t (t, x)^\R{T} + \lambda(t, x)^\R{T} A(x) ]
+		z(t, x) \R{d} t
+\] $$
+We now compute the partial derivative
+of $latex L(x, \lambda)$$ with respect to $latex b_j$$.
+The dependence of $latex \lambda(t, x)$$ on $latex x$$
+is not included when taking this partial:
+$latex \[
+	\partial_{b(j)} L(x, \lambda)
+	=
+	\lambda_j (0, x)
+\]$$
+We also compute the partial derivative
+of $latex L(x, \lambda)$$ with respect to $latex A_{i,j}$$.
+The dependence of $latex \lambda(t, x)$$ on $latex x$$
+is not included when taking this partial.
+$latex \[
+    \partial_{A(i,j)} L(x, \lambda)
+	=
+	\int_0^s [ \lambda_t (t, x)^\R{T} + \lambda(t, x)^\R{T} A(x) ]
+		\partial_{A(i,j)} z(t, x) \R{d} t
+	+
+	\int_0^s \lambda_i (t, x)
+\] $$
+If $latex \lambda(t, x)$$ satisfies the ODE
+$latex \[
+	0 = \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x)
+\] $$
+The partial derivative with respect to $latex A_{i,j}$$ is
+$latex \[
+    \partial_{A(i,j)} L(x, \lambda)
+	=
+	\int_0^s \lambda_i (t, x) \R{d} t
+\] $$
+In summary, we can compute
+an approximate solution for the following final value ODE:
+$latex \[
+	0 = \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x)
+	\W{,}
+	\lambda(r, x) = w
+\] $$
+Then we can compute an approximation for
+$latex \[
+	\partial_{x(k)} w^\R{T} z(r, x)
+	=
+	\left\{ \begin{array}{lll}
+	\int_0^s \lambda_i (t, x) \R{d} t
+	& \R{where} \; i = \R{floor} (k / m)
+	& \R{if} \; k < m \cdot m
+	\\
+	\lambda_j(0, x)
+	& \R{where} \; j = k - m \cdot m
+	& \R{otherwise}
+	%
+	\end{array} \right.
+\] $$
+
 
 $childtable%
     include/cppad/example/atomic_four/lin_ode/implement.omh
