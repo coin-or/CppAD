@@ -68,51 +68,46 @@ bool atomic_lin_ode<Base>::reverse(
     // r
     Base r;
     get(call_id, r);
-    //
-    // M
-    size_t M = 2 * m;
-    //
-    // X
-    CppAD::vector<Base> X(M * M + M);
+	//
+	// minus_r2
+	Base minus_r2 = -r / Base(2.0);
+	//
+	// lambda_r = partial_y = w = lambda(r, x)
+	const CppAD::vector<Base>& lambda_r(partial_y);
+	//
+	// x_lambda = [ A^T, w ]
+	// where w = lambda(0, x) = partial_y
+    CppAD::vector<Base> x_lambda(m * m + m);
     for(size_t i = 0; i < m; ++i)
     {   for(size_t j = 0; j < m; ++j)
-        {   // upper right block is zero
-            X[i * M + j]       = Base(0);
-            //
-            // lower right block is zero
-            X[i * M + m + j]   = Base(0);
-            //
-            // A^0_ij
-            Base A0ij          = taylor_x[ (i * m + j) + 0];
-            //
-            // upper left block is A^0
-            X[i * M + j]           = A0ij;
-            //
-            // lower left blok is identity matrix
-            if( i == j )
-                X[(i + m) * M + j]     = Base(1);
-            else
-                X[(i + m) * M + j]     = Base(0);
-        }
-        // b^0_i
-        X[M * M + i]     = taylor_x[ (m * m + i) + 0 ];
-        // v_i (0, x)
-        X[M * M + m + i] = Base(0);
-    }
-    //
-    // Y
-    CppAD::vector<Base> Y(M);
-    base_lin_ode(r, X, Y);
-    //
-    for(size_t i = 0; i < m; ++i)
-    {   // reverse b^0_i
-        partial_x[m * m + i] = partial_y[i];
-        //
-        for(size_t j = 0; j < m; ++j)
-        {   // reverse A^0_ij
-            partial_x[i * m + j] = partial_y[i] * Y[m + j];
-        }
-    }
+			x_lambda[i * m + j] = taylor_x[j * m + i];
+		x_lambda[m * m + i] = lambda_r[i];
+	}
+	// lambda_r2 = lambda(r/2, x)
+    CppAD::vector<Base> lambda_r2(m);
+    base_lin_ode(minus_r2, x_lambda, lambda_r2);
+	//
+	// x_lambda = [ A^T, lambda_r2]
+	for(size_t i = 0; i < m; ++i)
+		x_lambda[m * m + i] = lambda_r2[i];
+	//
+	// lambda_0 = lambda(0, x)
+    CppAD::vector<Base> lambda_0(m);
+    base_lin_ode(minus_r2, x_lambda, lambda_0);
+	//
+	// partial_x L(x, lambda)
+	for(size_t i = 0; i < m; ++i)
+	{	// partial_{b(i)}
+		partial_x[m * m + i] = lambda_0[i];
+		//
+		// integral
+		// Simpson's rule for int_0^r lambda_i(t, x) dt
+		Base integral = (r / Base(6.0)) *
+			(lambda_0[i] + Base(4.0) * lambda_r2[i] + lambda_r[i]);
+		//
+		for(size_t j = 0; j < m; ++j)
+			partial_x[i * m + j] = integral;
+	}
     //
     return true;
 }
