@@ -16,6 +16,8 @@ $spell
     nc
     mul
     lin
+    Runge
+    Simpon
 $$
 
 $section
@@ -78,7 +80,6 @@ $subhead b(x)$$
 This vector s stored at the end of
 $icode x$$; i.e. its $th j$$ element is
 $latex b_j (x) = x[ m * m + 2 * m + j ]$$
-
 
 $head Theory$$
 The theory below includes function values and
@@ -248,6 +249,15 @@ $latex \[
     \end{array} \right.
 \] $$
 
+$head Method$$
+The $cref/runge45/atomic_four_lin_ode_base_lin_ode.hpp/Runge45/$$ routine
+is used to approximate the solution of the ODE.
+Any initial value ODE solver can be used for this purpose.
+Simpon's rule is used to approximate the integral
+$latex \[
+    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
+\] $$
+Any other approximation for this integral can be used.
 
 $childtable%
     include/cppad/example/atomic_four/lin_ode/implement.omh

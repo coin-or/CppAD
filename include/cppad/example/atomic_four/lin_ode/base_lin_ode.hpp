@@ -14,11 +14,17 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_four_lin_ode_base_lin_ode.hpp$$
 $spell
+    Runge
 $$
 
 $section
 Atomic Multiply Base Matrices: Example Implementation
 $$
+
+$head Runge45$$
+This example uses one step of
+$cref runge45$$ to solve the ODE.
+Any initial value ODE solver, with any number of steps, could be used.
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

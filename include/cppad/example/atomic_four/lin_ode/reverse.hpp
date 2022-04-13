@@ -15,6 +15,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin atomic_four_lin_ode_reverse.hpp$$
 $spell
     lin
+    Simpon
 $$
 
 $section
@@ -32,6 +33,14 @@ $cref/reverse/atomic_four_reverse/$$.
 
 $head Theory$$
 See lin_ode $cref/reverse/atomic_four_lin_ode/Theory/Reverse/$$ theory.
+
+$head Simpon's Rule$$
+This example uses Simpon's rule to approximate the integral
+$latex \[
+    \int_0^r \lambda_i (t, x) z_j (t, x) \R{d} t
+\] $$
+Any other approximation for this integral can be used.
+
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
