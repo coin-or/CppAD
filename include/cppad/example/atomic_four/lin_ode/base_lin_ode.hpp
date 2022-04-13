@@ -67,7 +67,7 @@ void atomic_lin_ode<Base>::base_lin_ode(
     // y
     Base si       = Base(0.0);
     Base sf       = r;
-	size_t n_step = 1;
+    size_t n_step = 1;
     CppAD::vector<Base> zi(m), e(m);
     for(size_t j = 0; j < m; ++j)
         zi[j] = x[ m * m + j];

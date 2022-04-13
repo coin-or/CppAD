@@ -61,53 +61,83 @@ bool atomic_lin_ode<Base>::reverse(
     size_t m = taylor_y.size();
     assert( partial_y.size() == m );
     //
+    // n
+    size_t n = m * m + m;
+    //
     // partial_x, taylor_x
-    assert( taylor_x.size()  == m * m + m );
-    assert( partial_x.size() == m * m + m );
+    assert( taylor_x.size()  == n );
+    assert( partial_x.size() == n );
     //
     // r
     Base r;
     get(call_id, r);
-	//
-	// minus_r2
-	Base minus_r2 = -r / Base(2.0);
-	//
-	// lambda_r = partial_y = w = lambda(r, x)
-	const CppAD::vector<Base>& lambda_r(partial_y);
-	//
-	// x_lambda = [ A^T, w ]
-	// where w = lambda(0, x) = partial_y
-    CppAD::vector<Base> x_lambda(m * m + m);
+    //
+    // r2
+    Base r2       = r / Base(2.0);
+    //
+    // x = [A, b]
+    CppAD::vector<Base> x(n);
+    for(size_t i = 0; i < n; ++i)
+        x[i] = taylor_x[i];
+    //
+    // z_r2
+    CppAD::vector<Base> z_r2(m);
+    base_lin_ode(r2, x, z_r2);
+    //
+    // x = [A, z_r2]
+    for(size_t i = 0; i < m; ++i)
+        x[m * m + i] = z_r2[i];
+    //
+    // z_r
+    CppAD::vector<Base> z_r(m);
+    base_lin_ode(r2, x, z_r);
+    //
+    // lambda_r = partial_y = w = lambda(r, x)
+    const CppAD::vector<Base>& lambda_r(partial_y);
+    //
+    // x_lambda = [ A^T, w ]
+    // where w = lambda(0, x) = partial_y
+    CppAD::vector<Base> x_lambda(n);
     for(size_t i = 0; i < m; ++i)
     {   for(size_t j = 0; j < m; ++j)
-			x_lambda[i * m + j] = taylor_x[j * m + i];
-		x_lambda[m * m + i] = lambda_r[i];
-	}
-	// lambda_r2 = lambda(r/2, x)
+            x_lambda[i * m + j] = - taylor_x[j * m + i];
+        x_lambda[m * m + i] = lambda_r[i];
+    }
+    // lambda_r2 = lambda(r/2, x)
     CppAD::vector<Base> lambda_r2(m);
-    base_lin_ode(minus_r2, x_lambda, lambda_r2);
-	//
-	// x_lambda = [ A^T, lambda_r2]
-	for(size_t i = 0; i < m; ++i)
-		x_lambda[m * m + i] = lambda_r2[i];
-	//
-	// lambda_0 = lambda(0, x)
+    base_lin_ode(-r2, x_lambda, lambda_r2);
+    //
+    // x_lambda = [ A^T, lambda_r2]
+    for(size_t i = 0; i < m; ++i)
+        x_lambda[m * m + i] = lambda_r2[i];
+    //
+    // lambda_0 = lambda(0, x)
     CppAD::vector<Base> lambda_0(m);
-    base_lin_ode(minus_r2, x_lambda, lambda_0);
-	//
-	// partial_x L(x, lambda)
-	for(size_t i = 0; i < m; ++i)
-	{	// partial_{b(i)}
-		partial_x[m * m + i] = lambda_0[i];
-		//
-		// integral
-		// Simpson's rule for int_0^r lambda_i(t, x) dt
-		Base integral = (r / Base(6.0)) *
-			(lambda_0[i] + Base(4.0) * lambda_r2[i] + lambda_r[i]);
-		//
-		for(size_t j = 0; j < m; ++j)
-			partial_x[i * m + j] = integral;
-	}
+    base_lin_ode(-r2, x_lambda, lambda_0);
+    //
+    // partial_x L(x, lambda)
+    for(size_t i = 0; i < m; ++i)
+    {   // partial_{b(i)}
+        partial_x[m * m + i] = lambda_0[i];
+        //
+        for(size_t j = 0; j < m; ++j)
+        {
+            // sum  = lambda_i (0, x) * z_j (0, x)
+            Base sum = lambda_0 [i] * taylor_x[m * m + j];
+            //
+            // sum += 4 * lambad_i(r/2, x) * z_j(r/2, x)
+            sum += Base(4.0) * lambda_r2[i] * z_r2[j];
+            //
+            // sum += lambad_i(r, x) * z_j(r, x)
+            sum += lambda_r[i] * z_r[j];
+            //
+            // Simpon's rule for int_0^r lambda_i (t, x) z_j (t, x) dt
+            Base integral = r * sum / Base(6.0);
+            //
+            // partial_{A(i,j)}
+            partial_x[i * m + j] = integral;
+        }
+    }
     //
     return true;
 }

@@ -25,16 +25,16 @@ the $cref atomic_four_lin_ode$$ class.
 
 $head f(u)$$
 For this example, the function $latex f(u) = z(r, u)$$ where
-$latex z(s,u)$$ solves the following ODE
+$latex z(t, u)$$ solves the following ODE
 $latex \[
-z_s (s, u) =
+z_t (t, u) =
 \left( \begin{array}{cccc}
 0   & 0  & 0    & 0   \\
 u_4 & 0  & 0    & 0   \\
 0   & u_5 & 0   & 0   \\
 0   & 0   & u_6 & 0   \\
 \end{array} \right)
-z(s, u)
+z(t, u)
 \W{,}
 z(0, u) =
 \left( \begin{array}{c}
@@ -48,12 +48,12 @@ u_3 \\
 $head Solution$$
 The actual solution to this ODE is
 $latex \[
-z (s, u) =
+z(t, u) =
 \left( \begin{array}{l}
 u_0  \\
-u_1 + u_4 u_0 s \\
-u_2 + u_5 u_1 s + u_5 u_4 u_0 s^2 / 2  \\
-u_3 + u_6 u_2 s + u_6 u_5 u_1 s^2 / 2 + u_6 u_5 u_4 u_0 s^3 / 6
+u_1 + u_4 u_0 t \\
+u_2 + u_5 u_1 t + u_5 u_4 u_0 t^2 / 2  \\
+u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
 \end{array} \right)
 \] $$
 
@@ -68,15 +68,15 @@ $end
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 template <class Scalar, class Vector>
-Vector Z(Scalar s, const Vector& u)
+Vector Z(Scalar t, const Vector& u)
 {   size_t nz = 4;
     Vector z(nz);
     //
     z[0]  = u[0];
-    z[1]  = u[1] + u[4]*u[0]*s;
-    z[2]  = u[2] + u[5]*u[1]*s + u[5]*u[4]*u[0]*s*s/2.0;
-    z[3]  = u[3] + u[6]*u[2]*s + u[6]*u[5]*u[1]*s*s/2.0
-          + u[6]*u[5]*u[4]*u[0]*s*s*s/6.0;
+    z[1]  = u[1] + u[4]*u[0]*t;
+    z[2]  = u[2] + u[5]*u[1]*t + u[5]*u[4]*u[0]*t*t/2.0;
+    z[3]  = u[3] + u[6]*u[2]*t + u[6]*u[5]*u[1]*t*t/2.0
+          + u[6]*u[5]*u[4]*u[0]*t*t*t/6.0;
     //
     return z;
 }
@@ -98,10 +98,9 @@ bool reverse(void)
     // afun
     CppAD::atomic_lin_ode<double> afun("atomic_lin_ode");
     //
-    // m, r, n_step
+    // m, r
     size_t m      = 4;
     double r      = 2.0;
-    size_t n_step = 4;
     //
     // ny, ay
     size_t ny = m;
@@ -125,7 +124,7 @@ bool reverse(void)
     }
     //
     // ay
-    size_t call_id = afun.set(r, n_step);
+    size_t call_id = afun.set(r);
     afun(call_id, ax, ay);
     //
     // f
@@ -166,11 +165,6 @@ bool reverse(void)
         for(size_t j = 0; j < nu; ++j)
             ok &= NearEqual(dw[j], dz[j], eps99, eps99);
         w[i] = 0.0;
-        /*
-        std::cout << "i = " << i << "\n";
-        std::cout << "dw = " << dw << "\n";
-        std::cout << "dz = " << dz << "\n";
-        */
     }
     return ok;
 }
