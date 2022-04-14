@@ -89,7 +89,7 @@ bool atomic_lin_ode<Base>::reverse(
     for(size_t i = 0; i < n; ++i)
         x[i] = taylor_x[i];
     //
-    // z_r2
+    // z_r2 = z(r/2, x)
     CppAD::vector<Base> z_r2(m);
     base_lin_ode(r2, x, z_r2);
     //
@@ -97,36 +97,35 @@ bool atomic_lin_ode<Base>::reverse(
     for(size_t i = 0; i < m; ++i)
         x[m * m + i] = z_r2[i];
     //
-    // z_r
+    // z_r = z(r, x)
     CppAD::vector<Base> z_r(m);
     base_lin_ode(r2, x, z_r);
     //
-    // lambda_r = partial_y = w = lambda(r, x)
+    // lambda_r = lambda(r, x) = w
     const CppAD::vector<Base>& lambda_r(partial_y);
     //
-    // x_lambda = [ A^T, w ]
-    // where w = lambda(0, x) = partial_y
-    CppAD::vector<Base> x_lambda(n);
+    // x = [ - A^T, w ]
     for(size_t i = 0; i < m; ++i)
     {   for(size_t j = 0; j < m; ++j)
-            x_lambda[i * m + j] = - taylor_x[j * m + i];
-        x_lambda[m * m + i] = lambda_r[i];
+            x[i * m + j] = - taylor_x[j * m + i];
+        x[m * m + i] = lambda_r[i];
     }
     // lambda_r2 = lambda(r/2, x)
     CppAD::vector<Base> lambda_r2(m);
-    base_lin_ode(-r2, x_lambda, lambda_r2);
+    base_lin_ode(-r2, x, lambda_r2);
     //
-    // x_lambda = [ A^T, lambda_r2]
+    // x = [ - A^T, lambda_r2]
     for(size_t i = 0; i < m; ++i)
-        x_lambda[m * m + i] = lambda_r2[i];
+        x[m * m + i] = lambda_r2[i];
     //
     // lambda_0 = lambda(0, x)
     CppAD::vector<Base> lambda_0(m);
-    base_lin_ode(-r2, x_lambda, lambda_0);
+    base_lin_ode(-r2, x, lambda_0);
     //
     // partial_x L(x, lambda)
     for(size_t i = 0; i < m; ++i)
-    {   // partial_{b(i)}
+    {   //
+        // partial_{b(i)}
         partial_x[m * m + i] = lambda_0[i];
         //
         for(size_t j = 0; j < m; ++j)
