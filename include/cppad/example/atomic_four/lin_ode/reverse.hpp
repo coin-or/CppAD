@@ -104,23 +104,25 @@ bool atomic_lin_ode<Base>::reverse(
     // lambda_r = lambda(r, x) = w
     const CppAD::vector<Base>& lambda_r(partial_y);
     //
-    // x = [ - A^T, w ]
+    // x = [ A^T, w ]
     for(size_t i = 0; i < m; ++i)
     {   for(size_t j = 0; j < m; ++j)
-            x[i * m + j] = - taylor_x[j * m + i];
+            x[i * m + j] = taylor_x[j * m + i];
         x[m * m + i] = lambda_r[i];
     }
     // lambda_r2 = lambda(r/2, x)
+    // We convert the final value ODE to an initial value ODE by changing
+    // the sign of A^T and changing t limits from [r, r2] -> [0, r2].
     CppAD::vector<Base> lambda_r2(m);
-    base_lin_ode(-r2, x, lambda_r2);
+    base_lin_ode(r2, x, lambda_r2);
     //
-    // x = [ - A^T, lambda_r2]
+    // x = [ A^T, lambda_r2]
     for(size_t i = 0; i < m; ++i)
         x[m * m + i] = lambda_r2[i];
     //
     // lambda_0 = lambda(0, x)
     CppAD::vector<Base> lambda_0(m);
-    base_lin_ode(-r2, x, lambda_0);
+    base_lin_ode(r2, x, lambda_0);
     //
     // partial_x L(x, lambda)
     for(size_t i = 0; i < m; ++i)
@@ -144,6 +146,110 @@ bool atomic_lin_ode<Base>::reverse(
             //
             // partial_{A(i,j)}
             partial_x[i * m + j] = integral;
+        }
+    }
+    //
+    return true;
+}
+//
+// reverse override for AD<Base>
+template <class Base>
+bool atomic_lin_ode<Base>::reverse(
+    size_t                                           call_id    ,
+    const CppAD::vector<bool>&                       select_x   ,
+    size_t                                           order_up   ,
+    const CppAD::vector< CppAD::AD<Base> >&          ataylor_x  ,
+    const CppAD::vector< CppAD::AD<Base> >&          ataylor_y  ,
+    CppAD::vector< CppAD::AD<Base> >&                apartial_x ,
+    const CppAD::vector< CppAD::AD<Base> >&          apartial_y )
+{
+    // order_up
+    if( order_up > 0 )
+        return false;
+    //
+    // m
+    size_t m = ataylor_y.size();
+    assert( apartial_y.size() == m );
+    //
+    // n
+    size_t n = m * m + m;
+    //
+    // partial_x, taylor_x
+    assert( ataylor_x.size()  == n );
+    assert( apartial_x.size() == n );
+    //
+    // r
+    Base r;
+    get(call_id, r);
+    //
+    // r2
+    Base r2       = r / Base(2.0);
+    //
+    // call_id_2
+    size_t call_id_2 = (*this).set(r2);
+    //
+    // ax = [A, b]
+    CppAD::vector< CppAD::AD<Base> > ax(n);
+    for(size_t i = 0; i < n; ++i)
+        ax[i] = ataylor_x[i];
+    //
+    // az_r2 = z(r/2, x)
+    CppAD::vector< CppAD::AD<Base> > az_r2(m);
+    (*this)(call_id_2, ax, az_r2);
+    //
+    // ax = [A, z_r2]
+    for(size_t i = 0; i < m; ++i)
+        ax[m * m + i] = az_r2[i];
+    //
+    // az_r = z(r, x)
+    CppAD::vector< CppAD::AD<Base> > az_r(m);
+    (*this)(call_id_2, ax, az_r);
+    //
+    // lambda_r = lambda(r, x) = w
+    const CppAD::vector< CppAD::AD<Base> >& alambda_r(apartial_y);
+    //
+    // ax = [ A^T, w ]
+    for(size_t i = 0; i < m; ++i)
+    {   for(size_t j = 0; j < m; ++j)
+            ax[i * m + j] = ataylor_x[j * m + i];
+        ax[m * m + i] = alambda_r[i];
+    }
+    // lambda_r2 = lambda(r/2, x)
+    // We convert the final value ODE to an initial value ODE by changing
+    // the sign of A^T and changing t limits from [r, r2] -> [0, r2].
+    CppAD::vector< CppAD::AD<Base> > alambda_r2(m);
+    (*this)(call_id_2, ax, alambda_r2);
+    //
+    // ax = [ A^T, lambda_r2]
+    for(size_t i = 0; i < m; ++i)
+        ax[m * m + i] = alambda_r2[i];
+    //
+    // lambda_0 = lambda(0, x)
+    CppAD::vector< CppAD::AD<Base> > alambda_0(m);
+    (*this)(call_id_2, ax, alambda_0);
+    //
+    // partial_x L(x, lambda)
+    for(size_t i = 0; i < m; ++i)
+    {   //
+        // partial_{b(i)}
+        apartial_x[m * m + i] = alambda_0[i];
+        //
+        for(size_t j = 0; j < m; ++j)
+        {
+            // sum  = lambda_i (0, x) * z_j (0, x)
+            CppAD::AD<Base> asum = alambda_0 [i] * ataylor_x[m * m + j];
+            //
+            // sum += 4 * lambad_i(r/2, x) * z_j(r/2, x)
+            asum += Base(4.0) * alambda_r2[i] * az_r2[j];
+            //
+            // sum += lambad_i(r, x) * z_j(r, x)
+            asum += alambda_r[i] * az_r[j];
+            //
+            // Simpon's rule for int_0^r lambda_i (t, x) z_j (t, x) dt
+            CppAD::AD<Base> aintegral = r * asum / CppAD::AD<Base>(6.0);
+            //
+            // partial_{A(i,j)}
+            apartial_x[i * m + j] = aintegral;
         }
     }
     //

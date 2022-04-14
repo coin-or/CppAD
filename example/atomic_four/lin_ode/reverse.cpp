@@ -57,6 +57,26 @@ u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
 \end{array} \right)
 \] $$
 
+$head g(u)$$
+$latex \[
+    z_2 (t, u) = u_2 + u_5 u_1 t + u_5 u_4 u_0 t^2 / 2
+\] $$
+Fix $latex r$$ and define $latex g(u) = [ \partial_u z(r, u) ]^\R{T}$$.
+It follows that
+$latex \[
+g(u)
+=
+\left( \begin{array}{c}
+u_5 u_4 r^2 / 2 \\
+u_5 r \\
+1 \\
+0 \\
+u_5 u_0 r^2 / 2 \\
+u_t r + u_4 u_0 r^2 / 2 \\
+0
+\end{array} \right)
+\] $$
+
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
@@ -79,6 +99,22 @@ Vector Z(Scalar t, const Vector& u)
           + u[6]*u[5]*u[4]*u[0]*t*t*t/6.0;
     //
     return z;
+}
+
+template <class Scalar, class Vector>
+Vector G(Scalar t, const Vector& u)
+{   size_t nu = 7;
+    Vector g(nu);
+    //
+    g[0]  = u[5]*u[4]*t*t/2.0;
+    g[1]  = u[5]*t;
+    g[2]  = Scalar(1.0);
+    g[3]  = Scalar(0.0);
+    g[4]  = u[5]*u[0]*t*t/2.0;
+    g[5]  = u[1]*t + u[4]*u[0]*t*t/2.0;
+    g[6]  = Scalar(0.0);
+    //
+    return g;
 }
 
 } // END_EMPTY_NAMESPACE
@@ -150,22 +186,69 @@ bool reverse(void)
     y = f.Forward(0, u);
     //
     // ok
-    CPPAD_TESTVECTOR(double) z = check_f.Forward(0, u);
+    CPPAD_TESTVECTOR(double) check_y = check_f.Forward(0, u);
     for(size_t i = 0; i < ny; ++i)
-        ok &= NearEqual(y[i], z[i], eps99, eps99);
+        ok &= NearEqual(y[i], check_y[i], eps99, eps99);
     //
     // w, ok
-    CPPAD_TESTVECTOR(double) w(ny), dw(nu), dz(nu);
+    CPPAD_TESTVECTOR(double) w(ny), dw(nu), check_dw(nu);
     for(size_t i = 0; i < ny; ++i)
         w[i] = 0.0;
     for(size_t i = 0; i < ny; ++i)
     {   w[i] = 1.0;
-        dw    = f.Reverse(1, w);
-        dz    = check_f.Reverse(1, w);
+        dw        = f.Reverse(1, w);
+        check_dw  = check_f.Reverse(1, w);
         for(size_t j = 0; j < nu; ++j)
-            ok &= NearEqual(dw[j], dz[j], eps99, eps99);
+            ok &= NearEqual(dw[j], check_dw[j], eps99, eps99);
         w[i] = 0.0;
     }
+    // -----------------------------------------------------------------------
+    // Record g
+    // -----------------------------------------------------------------------
+    //
+    // af
+    CppAD::ADFun< AD<double>, double> af = f.base2ad();
+    //
+    // au
+    CppAD::Independent(au);
+    CPPAD_TESTVECTOR( AD<double> ) aw(ny), adw(nu);
+    af.Forward(0, au);
+    for(size_t i = 0; i < ny; ++i)
+        aw[i] = 0.0;
+    aw[2] = 1.0;
+    adw = af.Reverse(1, aw);
+    // g
+    CppAD::ADFun<double> g(au, adw);
+    // -----------------------------------------------------------------------
+    // check_g
+    CppAD::Independent(au);
+    ay = G(ar, au);
+    CppAD::ADFun<double> check_g(au, ay);
+    // -----------------------------------------------------------------------
+    //
+    // v
+    // zero order forward mode computation of g(u)
+    CPPAD_TESTVECTOR(double) v(nu);
+    v = g.Forward(0, u);
+    //
+    // ok
+    CPPAD_TESTVECTOR(double) check_v = check_g.Forward(0, u);
+    for(size_t i = 0; i < nu; ++i)
+        ok &= NearEqual(v[i], check_v[i], eps99, eps99);
+    //
+    // w, ok
+    w.resize(nu);
+    for(size_t i = 0; i < nu; ++i)
+        w[i] = 0.0;
+    for(size_t i = 0; i < nu; ++i)
+    {   w[i] = 1.0;
+        dw        = g.Reverse(1, w);
+        check_dw  = check_g.Reverse(1, w);
+        for(size_t j = 0; j < nu; ++j)
+            ok &= NearEqual(dw[j], check_dw[j], eps99, eps99);
+        w[i] = 0.0;
+    }
+    // -----------------------------------------------------------------------
     return ok;
 }
 // END C++

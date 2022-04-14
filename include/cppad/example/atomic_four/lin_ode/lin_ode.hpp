@@ -112,7 +112,6 @@ private:
         CppAD::vector<Base>&                             partial_x,
         const CppAD::vector<Base>&                       partial_y
     ) override;
-# else
     //
     // AD<Base> reverse
     bool reverse(
@@ -124,6 +123,7 @@ private:
         CppAD::vector< CppAD::AD<Base> >&                apartial_x,
         const CppAD::vector< CppAD::AD<Base> >&          apartial_y
     ) override;
+# else
     //
     // jac_sparsity
     bool jac_sparsity(
