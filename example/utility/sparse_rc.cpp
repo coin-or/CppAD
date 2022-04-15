@@ -91,13 +91,16 @@ bool sparse_rc(void)
 
     // now use the assignment statement
     pattern = other;
-    ok    &= other.nr()  == pattern.nr();
-    ok    &= other.nc()  == pattern.nc();
-    ok    &= other.nnz() == pattern.nnz();
-    for(size_t k = 0; k < nnz; k++)
-    {   ok &= pattern.row()[k] == other.row()[k];
-        ok &= pattern.col()[k] == other.col()[k];
-    }
+    //
+    // check equality
+    ok &= pattern == other;
+    //
+    // Change pattern so it no longer corresponds to a diagonal matrix
+    pattern.set(nnz-1, 0, 1);
+    //
+    // check equality
+    ok &= ! (pattern == other);
+    //
     return ok;
 }
 

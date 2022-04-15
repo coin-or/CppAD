@@ -29,6 +29,10 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 04-15$$
+Add the $cref/equality/sparse_rc/other/Equality/$$ operator
+to the sparsity pattern template class.
+
 $head 02-26$$
 Change $code y(nx)$$ to $code y(ny)$$ in
 $cref  atomic_four_mat_mul_forward.cpp$$.
