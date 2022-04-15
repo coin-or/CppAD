@@ -42,37 +42,47 @@ bool atomic_lin_ode<Base>::for_type(
     const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
     CppAD::vector<CppAD::ad_type_enum>&        type_y      )
 {
+    // nnz
+    Base      r;
+    sparse_rc pattern;
+    bool      transpose;
+    get(call_id, r, pattern, transpose);
+    size_t nnz = pattern.nnz();
     //
     // m
     size_t m     = type_y.size();
+    assert( pattern.nr() == m );
+    assert( pattern.nc() == m );
     //
     // type_x
-    assert( type_x.size() == m * m + m );
+    assert( type_x.size() == nnz + m );
     //
     // type_y[i] = type_b[i]
     for(size_t i = 0; i < m; ++i)
-        type_y[i] = type_x[m * m + i];
+        type_y[i] = type_x[nnz + i];
     //
     // change
     bool change = true;
     while(change)
     {   change = false;
         //
-        for(size_t i = 0; i < m; ++i)
-        {   //   
-            // type_y[i], change   
-            for(size_t j = 0; j < m; ++j)
-            {   if( type_x[i * m + j] != identical_zero_enum )
-                {   if( type_y[j] > type_y[i] )
-                    {   change = true;
-                        type_y[i] = type_y[j];
-                    }
-                }
-                if( type_y[j] != identical_zero_enum )
-                {   if( type_x[i * m + j] > type_y[i] )
-                    {   change = true;
-                        type_y[i] = type_x[i * m + j];
-                    }
+        for(size_t k = 0; k < nnz; ++k)
+        {   size_t i = pattern.row()[k];
+            size_t j = pattern.col()[k];
+            if( transpose )
+                std::swap(i, j);
+            //
+            // type_y[i], change
+            if( type_x[k] != identical_zero_enum )
+            {   if( type_y[j] > type_y[i] )
+                {   change = true;
+                    type_y[i] = type_y[j];
+                 }
+            }
+            if( type_y[j] != identical_zero_enum )
+            {   if( type_x[k] > type_y[i] )
+                {   change = true;
+                    type_y[i] = type_x[k];
                 }
             }
         }

@@ -138,29 +138,38 @@ bool reverse(void)
     size_t m      = 4;
     double r      = 2.0;
     //
+    // pattern, transpose
+    size_t nr  = m;
+    size_t nc  = m;
+    size_t nnz = 3;
+    CppAD::sparse_rc< CppAD::vector<size_t> > pattern(nr, nc, nnz);
+    for(size_t k = 0; k < nnz; ++k)
+    {   size_t i = k + 1;
+        size_t j = k;
+        pattern.set(k, i, j);
+    }
+    bool transpose = false;
+    //
     // ny, ay
     size_t ny = m;
     CPPAD_TESTVECTOR( AD<double> ) ay(ny);
     //
     // nu, au
-    size_t nu = m + m - 1;
+    size_t nu = nnz + m;
     CPPAD_TESTVECTOR( AD<double> ) au(nu);
     for(size_t j = 0; j < nu; ++j)
         au[j] = AD<double>(j + 1);
     CppAD::Independent(au);
     //
     // ax
-    CPPAD_TESTVECTOR( AD<double> ) ax( m * m + m);
-    for(size_t i = 0; i < m * m; ++i)
-        ax[i] = AD<double>( 0.0 );
+    CPPAD_TESTVECTOR( AD<double> ) ax(nnz + m);
+    for(size_t k = 0; k < nnz; ++k)
+        ax[k] = au[m + k];
     for(size_t i = 0; i < m; ++i)
-    {   ax[m * m + i ] = au[i];
-        if( i > 0 )
-            ax[i * m + (i-1)] = au[m + i - 1];
-    }
+        ax[nnz + i] = au[i];
     //
     // ay
-    size_t call_id = afun.set(r);
+    size_t call_id = afun.set(r, pattern, transpose);
     afun(call_id, ax, ay);
     //
     // f

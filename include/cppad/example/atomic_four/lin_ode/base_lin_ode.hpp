@@ -38,37 +38,55 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // base_lin_ode
 template <class Base>
 void atomic_lin_ode<Base>::base_lin_ode(
-    const Base&                    r      ,
-    const CppAD::vector<Base>&     x      ,
-    CppAD::vector<Base>&           y      )
+    const Base&                    r         ,
+    const sparse_rc&               pattern   ,
+    const bool&                    transpose ,
+    const CppAD::vector<Base>&     x         ,
+    CppAD::vector<Base>&           y         )
 {
     class Fun {
     private:
+        const sparse_rc&           pattern_;
+        const bool&                transpose_;
         const CppAD::vector<Base>& x_;
     public:
-        Fun(const CppAD::vector<Base>& x) : x_(x)
+        Fun(
+            const sparse_rc&           pattern   ,
+            const bool&                transpose ,
+            const CppAD::vector<Base>& x         )
+        : pattern_(pattern), transpose_(transpose), x_(x)
         { }
         void Ode(
             const Base&                s ,
             const CppAD::vector<Base>& z ,
             CppAD::vector<Base>&       f )
-        {   size_t m = z.size();
+        {   size_t m   = z.size();
+            size_t nnz = pattern_.nnz();
             assert( f.size() == m );
-            assert( x_.size() == m * m + m );
+            assert( x_.size() == nnz + m );
+            assert( pattern_.nr() == m );
+            assert( pattern_.nc() == m );
             //
             for(size_t i = 0; i < m; ++i)
-            {   f[i] = Base(0);
-                for(size_t j = 0; j < m; ++j)
-                    f[i] += x_[ i * m + j] * z[j];
+                f[i] = Base(0);
+            for(size_t k = 0; k < nnz; ++k)
+            {   size_t i = pattern_.row()[k];
+                size_t j = pattern_.col()[k];
+                if( transpose_ )
+                    std::swap(i, j);
+                f[i] += x_[k] * z[j];
             }
         }
     };
+    //
+    // nnz
+    size_t nnz = pattern.nnz();
     // m
     size_t m     = y.size();
-    assert( x.size() == m * m + m );
+    assert( x.size() == nnz + m );
     //
     // fun
-    Fun fun(x);
+    Fun fun(pattern, transpose, x);
     //
     // y
     Base si       = Base(0.0);
@@ -76,7 +94,7 @@ void atomic_lin_ode<Base>::base_lin_ode(
     size_t n_step = 1;
     CppAD::vector<Base> zi(m), e(m);
     for(size_t j = 0; j < m; ++j)
-        zi[j] = x[ m * m + j];
+        zi[j] = x[nnz + j];
     y = CppAD::Runge45(fun, n_step, si, sf, zi, e);
     return;
 }

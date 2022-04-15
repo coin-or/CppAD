@@ -52,56 +52,73 @@ bool atomic_lin_ode<Base>::forward(
     if( order_up > 1 )
         return false;
     //
+    // r, pattern, transpose, nnz
+    Base      r;
+    sparse_rc pattern;
+    bool      transpose;
+    get(call_id, r, pattern, transpose);
+    size_t nnz = pattern.nnz();
+    //
     // q
     size_t q = order_up + 1;
     //
     // m
     assert( taylor_y.size() % q == 0 );
     size_t m = taylor_y.size() / q;
+    assert( pattern.nr() == m );
+    assert( pattern.nc() == m );
     //
     // taylor_x
-    assert( taylor_x.size() == (m * m + m) * q );
-    //
-    // r
-    Base r;
-    get(call_id, r);
+    assert( taylor_x.size() == (nnz + m) * q );
     //
     // taylor_y
     if( order_up == 0 )
-        base_lin_ode(r, taylor_x, taylor_y);
+        base_lin_ode(r, pattern, transpose, taylor_x, taylor_y);
     else
     {   // M
         size_t M = 2 * m;
         //
-        // X
-        CppAD::vector<Base> X(M * M + M);
-        for(size_t i = 0; i < m; i++)
-        {   for(size_t j = 0; j < m; ++j)
-            {   // upper right block is zero
-                X[i * M + m + j]       = Base(0);
-                //
-                // A^0_ij
-                Base A0ij              = taylor_x[ (i * m + j) * q + 0];
-                //
-                // diagonal blocks are A^0
-                X[i * M + j]           = A0ij;
-                X[(i + m) * M + m + j] = A0ij;
-                //
-                // A^1_ij
-                Base A1ij              = taylor_x[ (i * m + j) * q + 1];
-                //
-                // lower left block is A^1
-                X[(i + m) * M + j]     = A1ij;
-            }
-            // b^0_i
-            X[M * M + i]     = taylor_x[ (m * m + i) * q + 0 ];
+        // Pattern, X
+        size_t Nr  = M;
+        size_t Nc  = M;
+        size_t Nnz = 3 * nnz;
+        sparse_rc  Pattern(Nr, Nc, Nnz);
+        CppAD::vector<Base> X(Nnz + M);
+        for(size_t k = 0; k < nnz; ++k)
+        {   size_t i = pattern.row()[k];
+            size_t j = pattern.col()[k];
+            if( transpose )
+                std::swap(i, j);
+            //
+            // A^0_ij
+            Base A0ij = taylor_x[k * q + 0];
+            //
+            // A^1_ij
+            Base A1ij = taylor_x[k * q + 1];
+            //
+            // upper diagonal
+            Pattern.set(3 * k + 0, i, j);
+            X[3 * k + 0] = A0ij;
+            //
+            // lower left
+            Pattern.set(3 * k + 1, m + i, j);
+            X[3 * k + 1] = A1ij;
+            //
+            // lower diagonal
+            Pattern.set(3 * k + 2, m + i, m + j);
+            X[3 * k + 2] = A0ij;
+        }
+        for(size_t i = 0; i < m; ++i)
+        {   // b^0_i
+            X[Nnz + i]     = taylor_x[ (nnz + i) * q + 0 ];
             // b^1_i
-            X[M * M + m + i] = taylor_x[ (m * m + i) * q + 1 ];
+            X[Nnz + m + i] = taylor_x[ (nnz + i) * q + 1 ];
         }
         //
         // Y
         CppAD::vector<Base> Y(M);
-        base_lin_ode(r, X, Y);
+        bool Transpose = false;
+        base_lin_ode(r, Pattern, Transpose, X, Y);
         //
         // taylor_y
         if( order_low == 0 )
@@ -132,6 +149,13 @@ bool atomic_lin_ode<Base>::forward(
     if( order_up > 1 )
         return false;
     //
+    // r, nnz
+    Base            r;
+    sparse_rc       pattern;
+    bool            transpose;
+    get(call_id, r, pattern, transpose);
+    size_t nnz = pattern.nnz();
+    //
     // q
     size_t q = order_up + 1;
     //
@@ -140,7 +164,7 @@ bool atomic_lin_ode<Base>::forward(
     size_t m = ataylor_y.size() / q;
     //
     // ataylor_x
-    assert( ataylor_x.size() == (m * m + m) * q );
+    assert( ataylor_x.size() == (nnz + m) * q );
     //
     // ataylor_y
     if( order_up == 0 )
@@ -149,29 +173,52 @@ bool atomic_lin_ode<Base>::forward(
     {   // M
         size_t M = 2 * m;
         //
-        // aX
-        CppAD::vector<aBase> aX(M * M + M);
-        for(size_t i = 0; i < m; i++)
-        {   for(size_t j = 0; j < m; ++j)
-            {   // 0
-                aX[i * M + m + j]       = aBase(0);
-                // A^0_ij
-                aBase A0ij              = ataylor_x[ (i * m + j) * q + 0];
-                aX[i * M + j]           = A0ij;
-                aX[(i + m) * M + m + j] = A0ij;
-                // A^1_ij
-                aBase A1ij              = ataylor_x[ (i * m + j) * q + 1];
-                aX[(i + m) * M + j]     = A1ij;
-            }
-            // b^0_i
-            aX[M * M + i]     = ataylor_x[ (m * m + i) * q + 0 ];
-            // b^1_i
-            aX[M * M + m + i] = ataylor_x[ (m * m + i) * q + 1 ];
+        //
+        // Pattern, aX
+        size_t Nr  = M;
+        size_t Nc  = M;
+        size_t Nnz = 3 * nnz;
+        sparse_rc  Pattern(Nr, Nc, Nnz);
+        CppAD::vector< CppAD::AD<Base> > aX(Nnz + M);
+        for(size_t k = 0; k < nnz; ++k)
+        {   size_t i = pattern.row()[k];
+            size_t j = pattern.col()[k];
+            if( transpose )
+                std::swap(i, j);
+            //
+            // A^0_ij
+            CppAD::AD<Base> aA0ij = ataylor_x[k * q + 0];
+            //
+            // A^1_ij
+            CppAD::AD<Base> aA1ij = ataylor_x[k * q + 1];
+            //
+            // upper diagonal
+            Pattern.set(3 * k + 0, i, j);
+            aX[3 * k + 0] = aA0ij;
+            //
+            // lower left
+            Pattern.set(3 * k + 1, m + i, j);
+            aX[3 * k + 1] = aA1ij;
+            //
+            // lower diagonal
+            Pattern.set(3 * k + 2, m + i, m + j);
+            aX[3 * k + 2] = aA0ij;
+            //
         }
+        for(size_t i = 0; i < m; ++i)
+        {   // b^0_i
+            aX[Nnz + i]     = ataylor_x[ (nnz + i) * q + 0 ];
+            // b^1_i
+            aX[Nnz + m + i] = ataylor_x[ (nnz + i) * q + 1 ];
+        }
+        //
+        // call_id_2
+        bool Transpose = false;
+        size_t call_id_2 = set(r, Pattern, Transpose);
         //
         // aY
         CppAD::vector<aBase> aY(M);
-        (*this)(call_id, aX, aY);
+        (*this)(call_id_2, aX, aY);
         //
         // ataylor_y
         if( order_low == 0 )

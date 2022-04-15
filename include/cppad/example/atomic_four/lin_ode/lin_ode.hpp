@@ -17,7 +17,7 @@ $begin atomic_four_lin_ode.hpp$$
 $spell
 $$
 
-$section Atomic Matrix Multiply Class: Example Implementation$$
+$section Atomic Linear ODE Class: Example Implementation$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
@@ -32,6 +32,10 @@ template <class Base>
 class atomic_lin_ode : public CppAD::atomic_four<Base> {
 //
 public:
+    // BEGIN sparse_rc_typedef
+    typedef CppAD::sparse_rc< CppAD::vector<size_t> > sparse_rc;
+    // END sparse_rc_typedef
+    //
     // ctor
     atomic_lin_ode(const std::string& name) :
     CppAD::atomic_four<Base>(name)
@@ -48,15 +52,18 @@ public:
         }
     }
     // set
-    size_t set(const Base& r);
+    size_t set(const Base& r, const sparse_rc& pattern, const bool& transpose);
+    //
     // get
-    void get(size_t call_id, Base& r);
+    void get(size_t call_id, Base& r, sparse_rc& pattern, bool& transpose);
 private:
     //
-    // matrix dimensions corresponding to a call_id
-    struct call_struct { Base r; size_t thread; };
+    // information connected to one call of this atomic function
+    struct call_struct {
+        size_t thread; Base r; sparse_rc pattern; bool transpose;
+    };
     //
-    // map from call_id to matrix dimensions
+    // map from call_id to call information
     typedef CppAD::vector<call_struct> call_vector;
     //
     // Use pointers, to avoid false sharing between threads.
@@ -65,6 +72,8 @@ private:
     // base_lin_ode
     static void base_lin_ode(
         const Base&                r          ,
+        const sparse_rc&           pattern    ,
+        const bool&                transpose  ,
         const CppAD::vector<Base>& x          ,
         CppAD::vector<Base>&       y
     );

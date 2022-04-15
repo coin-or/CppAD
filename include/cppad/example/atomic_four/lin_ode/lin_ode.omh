@@ -18,6 +18,7 @@ $spell
     lin
     Runge
     Simpon
+    nnz
 $$
 
 $section
@@ -30,9 +31,9 @@ This example is under construction and not yet ready for use.
 $head Syntax$$
 $codei%atomic_lin_ode %ode%(%name%)
 %$$
-$icode%call_id% = %lin_ode%.set(%r%)
+$icode%call_id% = %lin_ode%.set(%r%, %pattern%, %transpose%)
 %$$
-$icode%lin_ode%.get(%call_id%, %r%)
+$icode%lin_ode%.get(%call_id%, %r%, %pattern%, %transpose%)
 %$$
 $icode%lin_ode%(%call_id%, %x%, %y%)
 %$$
@@ -64,22 +65,44 @@ $head r$$
 This is the value of $icode t$$ at which we are approximating $latex z(t, x)$$.
 This is a argument (return value) for the $code set$$ ($code get$$) routine.
 
+$head pattern$$
+This is a sparsity pattern.
+This is a argument (return value) for the $code set$$ ($code get$$) routine.
+
+$subhead nnz$$
+We use $icode nnz$$ to denote $icode%pattern%.nnz()%$$.
+
+$subhead row$$
+We use $icode row$$ to denote $icode%pattern%.row()%$$.
+
+$subhead col$$
+We use $icode col$$ to denote $icode%pattern%.col()%$$.
+
+$head transpose$$
+If $icode transpose$$ is true (false) the sparsity pattern is for
+$latex A(x)^\R{T}$$ ($latex A(x)$$).
+This is a argument (return value) for the $code set$$ ($code get$$) routine.
+
 $head x$$
 We use $icode x$$ to denote the argument to the atomic function.
 
 $subhead n$$
 The size of the vector $icode x$$ is
-$latex n = m * m + m$$.
+$latex n = nnz + m$$.
 
 $subhead A(x)$$
-This matrix stored in row major order at the beginning of
-$icode x$$; i.e. its $latex (i,j)$$ element is
-$latex A_{i,j} (x) = x[ i * m + j ]$$.
+This matrix stored in the same order as $icode pattern$$
+at the beginning of the vector $icode x$$.
+To be specific,
+if $icode transpose$$ is true (false),
+for $icode%k% = 0, %...%, %nnz%-1%$$,
+$latex A_{j,i}$$ ( $latex A_{j,i}$$ ) is equal to
+$latex x[k]$$ where $icode%i% = %row%[%k%]%$$ and  $icode%j% = %col%[%k%]%$$.
 
 $subhead b(x)$$
 This vector s stored at the end of
 $icode x$$; i.e. its $th j$$ element is
-$latex b_j (x) = x[ m * m + 2 * m + j ]$$
+$latex b_j (x) = x[ nnz + j ]$$
 
 $head Theory$$
 The theory below includes function values and

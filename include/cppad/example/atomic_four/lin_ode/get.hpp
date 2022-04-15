@@ -21,9 +21,12 @@ $$
 $section atomic_lin_ode Get Routine: Example Implementation$$
 
 $head Syntax$$
-$icode%lin_ode%.get(%call_id%, %r%)%$$
+$icode%lin_ode%.get(%call_id%, %r%, %pattern%, %transpose%)%$$
 
 $head Prototype$$
+$srcfile%include/cppad/example/atomic_four/lin_ode/lin_ode.hpp%
+    0%// BEGIN sparse_rc_type%// END sparse_rc_type%0
+%$$
 $srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
 
 $head Purpose$$
@@ -37,6 +40,13 @@ $head r$$
 This output argument is the final value for the variable that the ODE is with
 respect to.
 
+$head pattern$$
+This output argument is a sparsity pattern.
+
+$head transpose$$
+If this output argument is true (false) the sparsity pattern is for
+$latex A(x)^\R{T}$$ ($latex A(x)$$).
+
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
@@ -47,7 +57,9 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
-void atomic_lin_ode<Base>::get(size_t call_id, Base& r)
+void atomic_lin_ode<Base>::get(
+    size_t call_id, Base& r, sparse_rc& pattern, bool& transpose
+)
 // END PROTOTYPE
 {
     // thread
@@ -57,7 +69,9 @@ void atomic_lin_ode<Base>::get(size_t call_id, Base& r)
     //
     // r
     call_struct& call = (*work_[thread])[call_id];
-    r      = call.r;
+    r         = call.r;
+    pattern   = call.pattern;
+    transpose = call.transpose;
     //
     return;
 }
