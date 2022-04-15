@@ -27,6 +27,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool forward(void);
+extern bool sparsity(void);
 extern bool reverse(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -40,6 +41,7 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( forward,             "forward"        );
+    Run( sparsity,            "sparsity"       );
     Run( reverse,             "reverse"        );
     // END_SORT_THIS_LINE_MINUS_1
 

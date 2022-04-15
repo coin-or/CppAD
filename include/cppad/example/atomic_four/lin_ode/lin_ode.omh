@@ -286,6 +286,7 @@ $childtable%
     include/cppad/example/atomic_four/lin_ode/implement.omh
     %example/atomic_four/lin_ode/forward.cpp
     %example/atomic_four/lin_ode/reverse.cpp
+    %example/atomic_four/lin_ode/sparsity.cpp
 %$$
 
 $end

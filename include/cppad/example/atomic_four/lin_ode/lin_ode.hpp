@@ -132,7 +132,6 @@ private:
         CppAD::vector< CppAD::AD<Base> >&                apartial_x,
         const CppAD::vector< CppAD::AD<Base> >&          apartial_y
     ) override;
-# else
     //
     // jac_sparsity
     bool jac_sparsity(
@@ -142,6 +141,7 @@ private:
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
     ) override;
+# else
     //
     // hes_sparsity
     bool hes_sparsity(
@@ -167,5 +167,6 @@ private:
 # include <cppad/example/atomic_four/lin_ode/for_type.hpp>
 # include <cppad/example/atomic_four/lin_ode/forward.hpp>
 # include <cppad/example/atomic_four/lin_ode/reverse.hpp>
+# include <cppad/example/atomic_four/lin_ode/jac_sparsity.hpp>
 // END C++
 # endif
