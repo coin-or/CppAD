@@ -30,8 +30,15 @@ $$
 $section Changes and Additions to CppAD During 2022$$
 
 $head 04-15$$
+$list number$$
+Add $cref atomic_four_lin_ode$$ an example of making the solution
+of an ODE an atomic operation.
+As with the other atomic four examples, the $codei%AD<%Base%>%$$
+version of the derivative calculations a done using atomic operations.
+$lnext
 Add the $cref/equality/sparse_rc/other/Equality/$$ operator
 to the sparsity pattern template class.
+$lend
 
 $head 03-29$$
 Add the $cref atomic_four_lin_ode$$ example
