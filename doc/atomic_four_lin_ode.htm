@@ -1,0 +1,599 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic First Order Linear ODE Method: Example Implementation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic First Order Linear ODE Method: Example Implementation">
+<meta name="keywords" id="keywords" content=" atomic first order linear ode method: example implementation under construction syntax purpose y m call_id r pattern nnz row col transpose x n a(x) b(x) theory forward reverse method ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_lin_ode_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_four_mat_mul_identical_zero.cpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_four_lin_ode_implement.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four</option>
+<option>atomic_four_example</option>
+<option>atomic_four_lin_ode</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_htm.js'></script>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Under construction</option>
+<option>Syntax</option>
+<option>Purpose</option>
+<option>y</option>
+<option>---..m</option>
+<option>call_id</option>
+<option>r</option>
+<option>pattern</option>
+<option>---..nnz</option>
+<option>---..row</option>
+<option>---..col</option>
+<option>transpose</option>
+<option>x</option>
+<option>---..n</option>
+<option>---..A(x)</option>
+<option>---..b(x)</option>
+<option>Theory</option>
+<option>---..Forward</option>
+<option>---..Reverse</option>
+<option>Method</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic First Order Linear ODE Method: Example Implementation</big></big></b></center>
+<br>
+<b><big><a name="Under construction" id="Under construction">Under construction</a></big></b>
+<br>
+This example is under construction and not yet ready for use.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>atomic_lin_ode&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.set(</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.get(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Construct an atomic operation that computes an
+approximate solution of the first order linear initial value ODE
+<small>@[@
+
+    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
+
+@]@</small>
+where
+<small>@(@
+z : \B{R} \times \B{R}^n \rightarrow \B{R}^m
+@)@</small>,
+<small>@(@
+A : \B{R}^n \rightarrow \B{R}^{m \times m}
+@)@</small>,
+<small>@(@
+b : \B{R}^n \rightarrow  \B{R}^m
+@)@</small>,
+and the subscript <small>@(@
+t
+@)@</small> denotes partial differentiation w.r.t <small>@(@
+t
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+<br>
+This input value of the elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ does not matter.
+Upon return it is the final value of the ODE solution, <small>@(@
+y = z(r, x)
+@)@</small>.
+
+<br>
+<br>
+<big><a name="y.m" id="y.m">m</a></big>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ to denote the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+This is the number of equations in the ODE.
+
+<br>
+<br>
+<b><big><a name="call_id" id="call_id">call_id</a></big></b>
+<br>
+This is a return value (argument) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<b><big><a name="r" id="r">r</a></big></b>
+<br>
+This is the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+ at which we are approximating <small>@(@
+z(t, x)
+@)@</small>.
+This is a argument (return value) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<b><big><a name="pattern" id="pattern">pattern</a></big></b>
+<br>
+This is a sparsity pattern.
+This is a argument (return value) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<big><a name="pattern.nnz" id="pattern.nnz">nnz</a></big>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i></code>
+ to denote 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()</span></font></code>
+.
+
+<br>
+<br>
+<big><a name="pattern.row" id="pattern.row">row</a></big>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ to denote 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.row()</span></font></code>
+.
+
+<br>
+<br>
+<big><a name="pattern.col" id="pattern.col">col</a></big>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>col</span></font></i></code>
+ to denote 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.col()</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="transpose" id="transpose">transpose</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
+ is true (false) the sparsity pattern is for
+<small>@(@
+A(x)^\R{T}
+@)@</small> (<small>@(@
+A(x)
+@)@</small>).
+This is a argument (return value) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<b><big><a name="x" id="x">x</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ to denote the argument to the atomic function.
+
+<br>
+<br>
+<big><a name="x.n" id="x.n">n</a></big>
+<br>
+The size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ is
+<small>@(@
+n = nnz + m
+@)@</small>.
+
+<br>
+<br>
+<big><a name="x.A(x)" id="x.A(x)">A(x)</a></big>
+<br>
+This matrix stored in the same order as 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+
+at the beginning of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+To be specific,
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i></code>
+ is true (false),
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+<small>@(@
+A_{j,i}
+@)@</small> ( <small>@(@
+A_{j,i}
+@)@</small> ) is equal to
+<small>@(@
+x[k]
+@)@</small> where 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ and  
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+.
+
+<br>
+<br>
+<big><a name="x.b(x)" id="x.b(x)">b(x)</a></big>
+<br>
+This vector s stored at the end of
+
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+; i.e. its <code><i>j</i></code>-th element is
+<small>@(@
+b_j (x) = x[ nnz + j ]
+@)@</small>
+
+<br>
+<br>
+<b><big><a name="Theory" id="Theory">Theory</a></big></b>
+<br>
+The theory below includes function values and
+first order derivatives.
+
+<br>
+<br>
+<big><a name="Theory.Forward" id="Theory.Forward">Forward</a></big>
+<br>
+Suppose we are given Taylor coefficients
+<small>@(@
+x^0
+@)@</small>, <small>@(@
+x^1
+@)@</small>, for <small>@(@
+x
+@)@</small>.
+The zero order Taylor coefficient for <small>@(@
+z(t, x)
+@)@</small> solves
+the following initial value ODE:
+<small>@[@
+
+    z_t^0 (t) = A^0 z(t) \W{,} z^0 (0) = b^0
+
+@]@</small>
+Note that <small>@(@
+A^0
+@)@</small> and <small>@(@
+b^0
+@)@</small>
+are just certain components of <small>@(@
+x^0
+@)@</small>.
+The first order Taylor coefficient for <small>@(@
+z(t, x)
+@)@</small> solves
+the following initial value ODE:
+<small>@[@
+
+    z_t^1 (t)
+    =
+    A^0 z^1 (t) + A^1 z^0 (t) \W{,} z^1 (0) = b^1
+
+@]@</small>
+Note that <small>@(@
+A^1
+@)@</small> and <small>@(@
+c^1
+@)@</small>
+are just certain components of <small>@(@
+x^1
+@)@</small>.
+We can solve for <small>@(@
+z^1 (t)
+@)@</small> using the following extended
+initial value ODE:
+<small>@[@
+
+\left[ \begin{array}{c}
+z^0_t (t, x) \\
+z^1_t (t, x)
+\end{array} \right]
+=
+\left[ \begin{array}{cc}
+A^0 & 0   \\
+A^1 & A^0
+\end{array} \right]
+\left[ \begin{array}{c}
+z^0 (t, x) \\
+z^1 (t, x)
+\end{array} \right]
+\; , \;
+\left[ \begin{array}{c}
+z^0 (0, x) \\
+z^1 (0, x)
+\end{array} \right]
+=
+\left[ \begin{array}{c}
+b^0 \\
+b^1
+\end{array} \right]
+
+@]@</small>
+
+
+<br>
+<br>
+<big><a name="Theory.Reverse" id="Theory.Reverse">Reverse</a></big>
+<br>
+We are given a vector <small>@(@
+w \in \B{R}^m
+@)@</small> and need to compute
+<small>@[@
+
+    \partial_x w^\R{T} z(r, x)
+
+@]@</small>
+Consider the Lagrangian corresponding to
+<small>@(@
+w^\R{T} z(r, x)
+@)@</small> as the objective and the ODE as the constraint:
+<small>@[@
+
+    L(x, \lambda)
+    =
+    w^\R{T} z(r, x) +
+        \int_0^r \lambda(t, x)^\R{T}
+            [ A(x) z(t, x) - z_t (t, x) ] \R{d} t
+
+@]@</small>
+where <small>@(@
+\lambda : \R{R} \times \B{R}^n \rightarrow \B{R}^m
+@)@</small>
+is a smooth function.
+If <small>@(@
+z(t, x)
+@)@</small> satisfies its ODE, then
+<small>@[@
+
+    \partial_x w^\R{T} z(r, x)
+    =
+    \partial_x L(x, \lambda)
+
+@]@</small>
+We use the following integration by parts to replace the <small>@(@
+z_t (t, x)
+@)@</small>
+term in the integral defining <small>@(@
+L(x, \lambda)
+@)@</small>:
+<small>@[@
+
+    - \int_0^r \lambda(t, x)^\R{T} z_t (t, x) \R{d} t
+    =
+    - \left. \lambda(t, x)^\R{T} z(t, x) \right|_0^r
+    +
+    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
+
+@]@</small>
+Adding the condition <small>@(@
+\lambda(r, x) = w
+@)@</small>,
+and noting that <small>@(@
+z(0, x) = b(x)
+@)@</small>, we have
+<small>@[@
+
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} z(0, x)
+    +
+    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
+    +
+    \int_0^r \lambda(t, x)^\R{T} A(x) z(t, x) \R{d} t
+
+@]@</small>
+<small>@[@
+
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} b (x)
+    +
+    \int_0^r [ \lambda_t (t, x)^\R{T} + \lambda(t, x)^\R{T} A(x) ]
+        z(t, x) \R{d} t
+
+@]@</small>
+<small>@[@
+
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} b (x)
+    +
+    \int_0^r z(t, x)^\R{T}
+        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
+
+@]@</small>
+The partial derivative
+of <small>@(@
+L(x, \lambda)
+@)@</small> with respect to <small>@(@
+b_j
+@)@</small>,
+(not including the dependence of <small>@(@
+\lambda(t, x)
+@)@</small> on <small>@(@
+x
+@)@</small>)
+is :
+<small>@[@
+
+    \partial_{b(j)} L(x, \lambda)
+    =
+    \lambda_j (0, x)
+
+@]@</small>
+The partial derivative
+of <small>@(@
+L(x, \lambda)
+@)@</small> with respect to <small>@(@
+A_{i,j}
+@)@</small>
+(not including The dependence of <small>@(@
+\lambda(t, x)
+@)@</small> on <small>@(@
+x
+@)@</small>)
+is :
+<small>@[@
+
+    \partial_{A(i,j)} L(x, \lambda)
+    =
+    \int_0^r \partial_{A(i,j)} z(t, x)^\R{T}
+        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
+    +
+    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
+
+@]@</small>
+If <small>@(@
+\lambda(t, x)
+@)@</small> satisfies the ODE
+<small>@[@
+
+    0 = \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x)
+
+@]@</small>
+The partial derivative with respect to <small>@(@
+A_{i,j}
+@)@</small> is
+<small>@[@
+
+    \partial_{A(i,j)} L(x, \lambda)
+    =
+    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
+
+@]@</small>
+In summary, we can compute
+an approximate solution for the initial value ODE:
+<small>@[@
+
+    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
+
+@]@</small>
+and approximate solution for the final value ODE:
+<small>@[@
+
+    \lambda_t (t, x) = - A(x)^\R{T} \lambda(t, x)
+    \W{,}
+    \lambda(r, x) = w
+
+@]@</small>
+and then an approximation for
+<small>@[@
+
+    \partial_{x(k)} w^\R{T} z(r, x)
+    =
+    \left\{ \begin{array}{lll}
+    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
+    & \R{where} \; i = \R{floor} (k / m) \W{,} j = \R{mod}(k,m)
+    & \R{if} \; k < m \cdot m
+    \\
+    \lambda_i (0, x)
+    & \R{where} \; i = k - m \cdot m
+    & \R{otherwise}
+    %
+    \end{array} \right.
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Method" id="Method">Method</a></big></b>
+<br>
+The <a href="atomic_four_lin_ode_base_lin_ode.hpp.htm#Runge45" target="_top"><span style='white-space: nowrap'>runge45</span></a>
+ routine
+is used to approximate the solution of the ODE.
+Any initial value ODE solver can be used for this purpose.
+Simpon's rule is used to approximate the integral
+<small>@[@
+
+    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
+
+@]@</small>
+Any other approximation for this integral can be used.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="atomic_four_lin_ode_implement.htm" target="_top">atomic_four_lin_ode_implement</a></td><td>Implementing&nbsp;Atomic&nbsp;Linear&nbsp;ODE</td></tr><tr><td><a href="atomic_four_lin_ode_forward.cpp.htm" target="_top">atomic_four_lin_ode_forward.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Forward&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_lin_ode_reverse.cpp.htm" target="_top">atomic_four_lin_ode_reverse.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Reverse&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_lin_ode_sparsity.cpp.htm" target="_top">atomic_four_lin_ode_sparsity.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Sparsity&nbsp;Calculations:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<hr>Input File: include/cppad/example/atomic_four/lin_ode/lin_ode.omh
+
+</body>
+</html>

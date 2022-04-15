@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 02-26 02-25 02-24 02-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,10 +65,12 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>02-26</option>
-<option>02-25</option>
-<option>02-24</option>
-<option>02-23</option>
+<option>04-15</option>
+<option>03-29</option>
+<option>03-26</option>
+<option>03-25</option>
+<option>03-24</option>
+<option>03-23</option>
 <option>02-21</option>
 <option>02-19</option>
 <option>02-18</option>
@@ -100,7 +102,35 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
 <br>
-<b><big><a name="02-26" id="02-26">02-26</a></big></b>
+<b><big><a name="04-15" id="04-15">04-15</a></big></b>
+
+<ol type="1"><li>
+Add <a href="atomic_four_lin_ode.htm" target="_top"><span style='white-space: nowrap'>atomic_four_lin_ode</span></a>
+ an example of making the solution
+of an ODE an atomic operation.
+As with the other atomic four examples, the 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+
+version of the derivative calculations a done using atomic operations.
+</li><li>
+
+Add the <a href="sparse_rc.htm#other.Equality" target="_top"><span style='white-space: nowrap'>equality</span></a>
+ operator
+to the sparsity pattern template class.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="03-29" id="03-29">03-29</a></big></b>
+<br>
+Add the <a href="atomic_four_lin_ode.htm" target="_top"><span style='white-space: nowrap'>atomic_four_lin_ode</span></a>
+ example
+which is not yet complete.
+
+<br>
+<br>
+<b><big><a name="03-26" id="03-26">03-26</a></big></b>
 <br>
 Change <code><font color="blue">y(nx)</font></code> to <code><font color="blue">y(ny)</font></code> in
 <a href="atomic_four_mat_mul_forward.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_mat_mul_forward.cpp</span></a>
@@ -108,7 +138,7 @@ Change <code><font color="blue">y(nx)</font></code> to <code><font color="blue">
 
 <br>
 <br>
-<b><big><a name="02-25" id="02-25">02-25</a></big></b>
+<b><big><a name="03-25" id="03-25">03-25</a></big></b>
 
 <ol type="1"><li>
 Fix <a href="atomic_four_mat_mul.htm" target="_top"><span style='white-space: nowrap'>atomic_four_mat_mul</span></a>
@@ -131,7 +161,7 @@ Change <code><font color="blue">atomic_vector</font></code> to <a href="atomic_f
 
 <br>
 <br>
-<b><big><a name="02-24" id="02-24">02-24</a></big></b>
+<b><big><a name="03-24" id="03-24">03-24</a></big></b>
 <br>
 Fix <a href="atomic_four_vector.htm" target="_top"><span style='white-space: nowrap'>atomic_four_vector</span></a>
  by changing it's base class
@@ -143,7 +173,7 @@ Make some other similar corrections in <a href="atomic_four_vector.hpp.htm" targ
 
 <br>
 <br>
-<b><big><a name="02-23" id="02-23">02-23</a></big></b>
+<b><big><a name="03-23" id="03-23">03-23</a></big></b>
 <br>
 Improve error detection and message when both
 <a href="cmake.htm#cmake_build_type" target="_top"><span style='white-space: nowrap'>cmake_build_type</span></a>

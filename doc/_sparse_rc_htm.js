@@ -12,6 +12,13 @@ var list_up0 = [
 ];
 var list_current0 = [
 'sparse_rc.htm#Syntax',
+'sparse_rc.htm#Syntax.include',
+'sparse_rc.htm#Syntax.Constructor',
+'sparse_rc.htm#Syntax.Assignment',
+'sparse_rc.htm#Syntax.Equality',
+'sparse_rc.htm#Syntax.Setting',
+'sparse_rc.htm#Syntax.Properties',
+'sparse_rc.htm#Syntax.Output',
 'sparse_rc.htm#SizeVector',
 'sparse_rc.htm#empty',
 'sparse_rc.htm#pattern',
@@ -19,6 +26,7 @@ var list_current0 = [
 'sparse_rc.htm#other.Assignment and Constructor',
 'sparse_rc.htm#other.Move Semantics Assignment and Constructor',
 'sparse_rc.htm#other.swap',
+'sparse_rc.htm#other.Equality',
 'sparse_rc.htm#nr',
 'sparse_rc.htm#nc',
 'sparse_rc.htm#nnz',

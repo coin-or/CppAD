@@ -7,34 +7,35 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'whats_new.htm',
-'whats_new_22.htm'
+'ad.htm',
+'advalued.htm',
+'atomic.htm',
+'atomic_four.htm',
+'atomic_four_example.htm',
+'atomic_four_lin_ode.htm'
 ];
 var list_current0 = [
-'whats_new_22.htm#04-15',
-'whats_new_22.htm#03-29',
-'whats_new_22.htm#03-26',
-'whats_new_22.htm#03-25',
-'whats_new_22.htm#03-24',
-'whats_new_22.htm#03-23',
-'whats_new_22.htm#02-21',
-'whats_new_22.htm#02-19',
-'whats_new_22.htm#02-18',
-'whats_new_22.htm#02-17',
-'whats_new_22.htm#02-16',
-'whats_new_22.htm#02-13',
-'whats_new_22.htm#02-12',
-'whats_new_22.htm#02-11',
-'whats_new_22.htm#02-01',
-'whats_new_22.htm#01-27',
-'whats_new_22.htm#01-25',
-'whats_new_22.htm#01-23',
-'whats_new_22.htm#01-19',
-'whats_new_22.htm#01-15',
-'whats_new_22.htm#01-06',
-'whats_new_22.htm#01-04',
-'whats_new_22.htm#01-01'
+'atomic_four_lin_ode.htm#Under construction',
+'atomic_four_lin_ode.htm#Syntax',
+'atomic_four_lin_ode.htm#Purpose',
+'atomic_four_lin_ode.htm#y',
+'atomic_four_lin_ode.htm#y.m',
+'atomic_four_lin_ode.htm#call_id',
+'atomic_four_lin_ode.htm#r',
+'atomic_four_lin_ode.htm#pattern',
+'atomic_four_lin_ode.htm#pattern.nnz',
+'atomic_four_lin_ode.htm#pattern.row',
+'atomic_four_lin_ode.htm#pattern.col',
+'atomic_four_lin_ode.htm#transpose',
+'atomic_four_lin_ode.htm#x',
+'atomic_four_lin_ode.htm#x.n',
+'atomic_four_lin_ode.htm#x.A(x)',
+'atomic_four_lin_ode.htm#x.b(x)',
+'atomic_four_lin_ode.htm#Theory',
+'atomic_four_lin_ode.htm#Theory.Forward',
+'atomic_four_lin_ode.htm#Theory.Reverse',
+'atomic_four_lin_ode.htm#Method',
+'atomic_four_lin_ode.htm#Contents'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

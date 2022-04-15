@@ -140,13 +140,16 @@ A:active { color : purple }
 
     <i><font color="#9A1900">// now use the assignment statement</font></i>
     pattern <font color="#990000">=</font> other<font color="#990000">;</font>
-    ok    <font color="#990000">&amp;=</font> other<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font>  <font color="#990000">==</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">();</font>
-    ok    <font color="#990000">&amp;=</font> other<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font>  <font color="#990000">==</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">();</font>
-    ok    <font color="#990000">&amp;=</font> other<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">()</font> <font color="#990000">==</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
-    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">]</font> <font color="#990000">==</font> other<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-        ok <font color="#990000">&amp;=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">]</font> <font color="#990000">==</font> other<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check equality</font></i>
+    ok <font color="#990000">&amp;=</font> pattern <font color="#990000">==</font> other<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// Change pattern so it no longer corresponds to a diagonal matrix</font></i>
+    pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>nnz<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">1</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check equality</font></i>
+    ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> <font color="#990000">(</font>pattern <font color="#990000">==</font> other<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>

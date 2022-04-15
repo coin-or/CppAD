@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Row and Column Index Sparsity Patterns</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Row and Column Index Sparsity Patterns">
-<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax sizevector empty pattern other assignment constructor move semantics swap nr nc nnz resize set push_back k r c col row_major col_major example os ">
+<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax include constructor assignment equality setting properties output sizevector empty pattern other move semantics swap nr nc nnz resize set push_back k r c col row_major col_major example os ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,6 +64,13 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>---..include</option>
+<option>---..Constructor</option>
+<option>---..Assignment</option>
+<option>---..Equality</option>
+<option>---..Setting</option>
+<option>---..Properties</option>
+<option>---..Output</option>
 <option>SizeVector</option>
 <option>empty</option>
 <option>pattern</option>
@@ -71,6 +78,7 @@ A:active { color : purple }
 <option>---..Assignment and Constructor</option>
 <option>---..Move Semantics Assignment and Constructor</option>
 <option>---..swap</option>
+<option>---..Equality</option>
 <option>nr</option>
 <option>nc</option>
 <option>nnz</option>
@@ -99,10 +107,19 @@ A:active { color : purple }
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
+
+<br>
+<br>
+<big><a name="Syntax.include" id="Syntax.include">include</a></big>
+
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/sparse_rc.hpp&gt;<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Constructor" id="Syntax.Constructor">Constructor</a></big>
+
+<br>
 
 <code><font color="blue"><span style='white-space: nowrap'>sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>empty</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
@@ -112,12 +129,30 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Assignment" id="Syntax.Assignment">Assignment</a></big>
+
+<br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.swap(</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Equality" id="Syntax.Equality">Equality</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>equal</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+.
+
+<br>
+<br>
+<big><a name="Syntax.Setting" id="Syntax.Setting">Setting</a></big>
+
+<br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>resize</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>nr</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nc</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
@@ -127,6 +162,10 @@ A:active { color : purple }
 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Properties" id="Syntax.Properties">Properties</a></big>
+
+<br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nr()<br>
 </span></font></code>
@@ -148,6 +187,10 @@ A:active { color : purple }
 
 <code><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.col_major()<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Output" id="Syntax.Output">Output</a></big>
+
+<br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>os</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
@@ -259,6 +302,53 @@ to
  (
 <code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
 ) before the operation.
+
+<br>
+<br>
+<big><a name="other.Equality" id="other.Equality">Equality</a></big>
+<br>
+In the equality operation, 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;sparse_rc&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The two sparsity patterns are equal if the following conditions hold:
+<ol type="1"><li>
+The number of rows
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nr()</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>.nr()</span></font></code>
+ are equal.
+</li><li>
+
+The number of columns
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nc()</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>.nc()</span></font></code>
+ are equal.
+</li><li>
+
+The number of non-zero values
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()</span></font></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()</span></font></code>
+ are equal.
+</li><li>
+
+The set of (row, column) pairs corresponding to
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>other</span></font></i></code>
+, are equal.
+</li></ol>
+
+Determining equality requires sorting both patterns
 
 <br>
 <br>
