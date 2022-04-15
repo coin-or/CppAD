@@ -30,24 +30,38 @@ $$
 $section Row and Column Index Sparsity Patterns$$
 
 $head Syntax$$
+
+$subhead include$$
 $codei%# include <cppad/utility/sparse_rc.hpp>
 %$$
+
+$subhead Constructor$$
 $codei%sparse_rc<%SizeVector%>  %empty%
 %$$
 $codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
 %$$
 $codei%sparse_rc<%SizeVector%>  %pattern%(%other%)
 %$$
+
+$subhead Assignment$$
 $icode%pattern% = %other%
 %$$
 $icode%pattern%.swap(%other%)
 %$$
+
+$subhead Equality$$
+$icode%equal% = %pattern% == %other%
+%$$.
+
+$subhead Setting$$
 $icode%resize%(%nr%, %nc%, %nnz%)
 %$$
 $icode%pattern%.set(%k%, %r%, %c%)
 %$$
 $icode%pattern%.push_back(%r%, %c%)
 %$$
+
+$subhead Properties$$
 $icode%pattern%.nr()
 %$$
 $icode%pattern%.nc()
@@ -62,6 +76,8 @@ $icode%row_major% = %pattern%.row_major()
 %$$
 $icode%col_major% = %pattern%.col_major()
 %$$
+
+$subhead Output$$
 $icode%os% << %pattern%
 %$$
 
@@ -110,6 +126,27 @@ $codei%
 %$$
 After the swap operation $icode other$$ ($icode pattern$$) is equivalent
 to $icode pattern$$ ($icode other$$) before the operation.
+
+$subhead Equality$$
+In the equality operation, $icode other$$ has prototype
+$codei%
+    const sparse_rc<%SizeVector%>&  %other%
+%$$
+The two sparsity patterns are equal if the following conditions hold:
+$list number$$
+The number of rows
+$icode%pattern%.nr()%$$ and $icode%other%.nr()%$$ are equal.
+$lnext
+The number of columns
+$icode%pattern%.nc()%$$ and $icode%other%.nc()%$$ are equal.
+$lnext
+The number of non-zero values
+$icode%pattern%.nnz()%$$ and $icode%other%.nnz()%$$ are equal.
+$lnext
+The set of (row, column) pairs corresponding to
+$icode pattern$$ and $icode other$$, are equal.
+$lend
+Determining equality requires sorting both patterns
 
 $head nr$$
 This argument has prototype
@@ -323,6 +360,24 @@ public:
     }
     void operator=(sparse_rc&& other)
     {   swap(other); }
+    bool operator==(const sparse_rc& other) const
+    {   bool result = true;
+        result &= nr_  == other.nr_;
+        result &= nc_  == other.nc_;
+        result &= nnz_ == other.nnz_;
+        if( ! result )
+            return result;
+        //
+        SizeVector this_order  = row_major();
+        SizeVector other_order = other.row_major();
+        for(size_t k = 0; k < nnz_; ++k)
+        {   size_t this_k  = this_order[k];
+            size_t other_k = other_order[k];
+            result &= row_[this_k] == other.row_[other_k];
+            result &= col_[this_k] == other.col_[other_k];
+        }
+        return result;
+    }
     /// resize
     void resize(size_t nr, size_t nc, size_t nnz)
     {   nr_ = nr;

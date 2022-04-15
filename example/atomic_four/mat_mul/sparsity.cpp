@@ -18,7 +18,7 @@ $$
 $section Atomic Matrix Multiply Sparsity Patterns: Example and Test$$
 
 $head Purpose$$
-This example demonstrates using sparsity mode with
+This example demonstrates computing sparsity patterns with
 the $cref atomic_four_mat_mul$$ class.
 
 $head f(x)$$

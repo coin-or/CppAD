@@ -29,6 +29,10 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 04-15$$
+Add the $cref/equality/sparse_rc/other/Equality/$$ operator
+to the sparsity pattern template class.
+
 $head 03-29$$
 Add the $cref atomic_four_lin_ode$$ example
 which is not yet complete.
