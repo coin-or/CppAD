@@ -35,6 +35,8 @@ var list_current0 = [
 'atomic_four_lin_ode.htm#Theory.Forward',
 'atomic_four_lin_ode.htm#Theory.Reverse',
 'atomic_four_lin_ode.htm#Method',
+'atomic_four_lin_ode.htm#Method.Rosen34',
+'atomic_four_lin_ode.htm#Method.Simpon\'s Rule',
 'atomic_four_lin_ode.htm#Contents'
 ];
 function choose_across0(item)

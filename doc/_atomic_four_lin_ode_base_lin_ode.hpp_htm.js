@@ -17,7 +17,7 @@ var list_up0 = [
 'atomic_four_lin_ode_base_lin_ode.hpp.htm'
 ];
 var list_current0 = [
-'atomic_four_lin_ode_base_lin_ode.hpp.htm#Runge45',
+'atomic_four_lin_ode_base_lin_ode.hpp.htm#Rosen34',
 'atomic_four_lin_ode_base_lin_ode.hpp.htm#Source'
 ];
 function choose_across0(item)
