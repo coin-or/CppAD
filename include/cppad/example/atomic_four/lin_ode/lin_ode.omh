@@ -16,7 +16,7 @@ $spell
     nc
     mul
     lin
-    Runge
+    Rosen
     Simpon
     nnz
 $$
@@ -96,11 +96,11 @@ at the beginning of the vector $icode x$$.
 To be specific,
 if $icode transpose$$ is true (false),
 for $icode%k% = 0, %...%, %nnz%-1%$$,
-$latex A_{j,i}$$ ( $latex A_{j,i}$$ ) is equal to
+$latex A_{j,i}$$ ( $latex A_{i,j}$$ ) is equal to
 $latex x[k]$$ where $icode%i% = %row%[%k%]%$$ and  $icode%j% = %col%[%k%]%$$.
 
 $subhead b(x)$$
-This vector s stored at the end of
+This vector is stored at the end of
 $icode x$$; i.e. its $th j$$ element is
 $latex b_j (x) = x[ nnz + j ]$$
 
@@ -273,10 +273,15 @@ $latex \[
 \] $$
 
 $head Method$$
-The $cref/runge45/atomic_four_lin_ode_base_lin_ode.hpp/Runge45/$$ routine
+
+$subhead Rosen34$$
+The $cref/Rosen34/atomic_four_lin_ode_base_lin_ode.hpp/Rosen34/$$ routine
 is used to approximate the solution of the ODE.
 Any initial value ODE solver can be used for this purpose.
-Simpon's rule is used to approximate the integral
+
+$subhead Simpon's Rule$$
+$cref/Simpon's rule/atomic_four_lin_ode_reverse.hpp/Simpon's Rule/$$
+is used to approximate the integral
 $latex \[
     \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
 \] $$

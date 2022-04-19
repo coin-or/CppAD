@@ -14,16 +14,16 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 $begin atomic_four_lin_ode_base_lin_ode.hpp$$
 $spell
-    Runge
+    Rosen
 $$
 
 $section
 Atomic Multiply Base Matrices: Example Implementation
 $$
 
-$head Runge45$$
+$head Rosen34$$
 This example uses one step of
-$cref runge45$$ to solve the ODE.
+$cref rosen34$$ ODE solver.
 Any initial value ODE solver, with any number of steps, could be used.
 
 $head Source$$
@@ -57,7 +57,7 @@ void atomic_lin_ode<Base>::base_lin_ode(
         : pattern_(pattern), transpose_(transpose), x_(x)
         { }
         void Ode(
-            const Base&                s ,
+            const Base&                t ,
             const CppAD::vector<Base>& z ,
             CppAD::vector<Base>&       f )
         {   size_t m   = z.size();
@@ -77,6 +77,43 @@ void atomic_lin_ode<Base>::base_lin_ode(
                 f[i] += x_[k] * z[j];
             }
         }
+        void Ode_ind(
+            const Base&                t   ,
+            const CppAD::vector<Base>& z   ,
+            CppAD::vector<Base>&       f_t )
+        {   size_t m   = z.size();
+# ifndef NDEBUG
+            size_t nnz = pattern_.nnz();
+            assert( f_t.size() == m );
+            assert( x_.size() == nnz + m );
+            assert( pattern_.nr() == m );
+            assert( pattern_.nc() == m );
+# endif
+            //
+            for(size_t i = 0; i < m; ++i)
+                f_t[i] = Base(0);
+        }
+        void Ode_dep(
+            const Base&                t   ,
+            const CppAD::vector<Base>& z   ,
+            CppAD::vector<Base>&       f_x )
+        {   size_t m   = z.size();
+            size_t nnz = pattern_.nnz();
+            assert( f_x.size() == m * m );
+            assert( x_.size() == nnz + m );
+            assert( pattern_.nr() == m );
+            assert( pattern_.nc() == m );
+            //
+            for(size_t i = 0; i < m * m; ++i)
+                f_x[i] = Base(0);
+            for(size_t k = 0; k < nnz; ++k)
+            {   size_t i = pattern_.row()[k];
+                size_t j = pattern_.col()[k];
+                if( transpose_ )
+                    std::swap(i, j);
+                f_x[i * m + j] = x_[k];
+            }
+        }
     };
     //
     // nnz
@@ -89,13 +126,13 @@ void atomic_lin_ode<Base>::base_lin_ode(
     Fun fun(pattern, transpose, x);
     //
     // y
-    Base si       = Base(0.0);
-    Base sf       = r;
+    Base ti       = Base(0.0);
+    Base tf       = r;
     size_t n_step = 1;
     CppAD::vector<Base> zi(m), e(m);
     for(size_t j = 0; j < m; ++j)
         zi[j] = x[nnz + j];
-    y = CppAD::Runge45(fun, n_step, si, sf, zi, e);
+    y = CppAD::Rosen34(fun, n_step, ti, tf, zi, e);
     return;
 }
 } // END_CPPAD_NAMESPACE
