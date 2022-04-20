@@ -308,6 +308,18 @@ private:
     //
     // col_[k] is the column index for the k-th possibly non-zero entry
     SizeVector col_;
+    //
+    // simple_vector_assign
+    static void simple_vector_assign(
+        SizeVector& destination, const SizeVector& source
+    )
+    {   // resize to zero first so do not copy any values
+        destination.resize(0);
+        // size agreement required for simple vector
+        destination.resize( source.size() );
+        // assignment
+        destination = source;
+    }
 public:
     // default constructor
     // Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
@@ -347,11 +359,9 @@ public:
     {   nr_  = other.nr_;
         nc_  = other.nc_;
         nnz_ = other.nnz_;
-        // simple vector assignment requires vectors to have same size
-        row_.resize(nnz_);
-        col_.resize(nnz_);
-        row_ = other.row_;
-        col_ = other.col_;
+        //
+        simple_vector_assign(row_, other.row_);
+        simple_vector_assign(col_, other.col_);
     }
     //
     // swap
