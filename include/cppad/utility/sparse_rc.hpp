@@ -284,52 +284,55 @@ and the column indices follow.
 
 $end
 */
-/*!
-\file sparse_rc.hpp
-A Matrix sparsity pattern class.
-*/
 # include <cstddef> // for size_t
 # include <cppad/core/cppad_assert.hpp>  // for CPPAD_ASSERT
 # include <cppad/utility/index_sort.hpp> // for row and column major ordering
 
 namespace CppAD { // BEGIN CPPAD_NAMESPACE
 
-/// sparsity pattern for a matrix with indices of type size_t
+// sparsity pattern for a matrix with indices of type size_t
 template <class SizeVector>
 class sparse_rc {
 private:
-    /// number of rows in the sparsity pattern
+    // number of rows in the sparsity pattern
     size_t nr_;
-    /// number of columns in the sparsity pattern
+    //
+    // number of columns in the sparsity pattern
     size_t nc_;
-    /// number of possibly non-zero index pairs
+    //
+    // number of possibly non-zero index pairs
     size_t nnz_;
-    /// row_[k] is the row index for the k-th possibly non-zero entry
+    //
+    // row_[k] is the row index for the k-th possibly non-zero entry
     SizeVector row_;
-    /// col_[k] is the column index for the k-th possibly non-zero entry
+    //
+    // col_[k] is the column index for the k-th possibly non-zero entry
     SizeVector col_;
 public:
-    /// default constructor
-    /// Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
+    // default constructor
+    // Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
     sparse_rc(void)
     : nr_(0), nc_(0), nnz_(0)
     { }
-    /// move semantics constructor
-    /// (none of the default constructor values are used by destructor)
+    //
+    // move semantics constructor
+    // (none of the default constructor values are used by destructor)
     sparse_rc(sparse_rc&& other)
     {   swap(other); }
-    /// destructor
+    //
+    // destructor
     ~sparse_rc(void)
     { }
-    /// move semantics assignment
-    /// sizing constructor
-    /// Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
+    //
+    // sizing constructor
+    // Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
     sparse_rc(size_t nr, size_t nc, size_t nnz)
     : nr_(nr), nc_(nc), nnz_(nnz)
     {   row_.resize(nnz);
         col_.resize(nnz);
     }
-    /// copy constructor
+    //
+    // copy constructor
     sparse_rc(const sparse_rc& other)
     :
     nr_(other.nr_)   ,
@@ -338,7 +341,8 @@ public:
     row_(other.row_) ,
     col_(other.col_)
     { }
-    /// assignment
+    //
+    // assignment
     void operator=(const sparse_rc& other)
     {   nr_  = other.nr_;
         nc_  = other.nc_;
@@ -349,7 +353,8 @@ public:
         row_ = other.row_;
         col_ = other.col_;
     }
-    /// swap
+    //
+    // swap
     void swap(sparse_rc& other)
     {   std::swap( nr_ , other.nr_ );
         std::swap( nc_ , other.nc_ );
@@ -358,8 +363,12 @@ public:
         row_.swap( other.row_ );
         col_.swap( other.col_ );
     }
+    //
+    // move semantics assignment
     void operator=(sparse_rc&& other)
     {   swap(other); }
+    //
+    // equality
     bool operator==(const sparse_rc& other) const
     {   bool result = true;
         result &= nr_  == other.nr_;
@@ -378,7 +387,8 @@ public:
         }
         return result;
     }
-    /// resize
+    //
+    // resize
     void resize(size_t nr, size_t nc, size_t nnz)
     {   nr_ = nr;
         nc_ = nc;
@@ -386,7 +396,8 @@ public:
         row_.resize(nnz);
         col_.resize(nnz);
     }
-    /// set row and column for a possibly non-zero element
+    //
+    // set row and column for a possibly non-zero element
     void set(size_t k, size_t r, size_t c)
     {   CPPAD_ASSERT_KNOWN(
             k < nnz_,
@@ -404,7 +415,8 @@ public:
         col_[k] = c;
         //
     }
-    /// push_back
+    //
+    // push_back
     void push_back(size_t r, size_t c)
     {   CPPAD_ASSERT_KNOWN(
             r < nr_,
@@ -420,22 +432,28 @@ public:
         CPPAD_ASSERT_UNKNOWN( row_.size() == nnz_ );
         CPPAD_ASSERT_UNKNOWN( col_.size() == nnz_ );
     }
-    /// number of rows in matrix
+    //
+    // number of rows in matrix
     size_t nr(void) const
     {   return nr_; }
-    /// number of columns in matrix
+    //
+    // number of columns in matrix
     size_t nc(void) const
     {   return nc_; }
-    /// number of possibly non-zero elements in matrix
+    //
+    // number of possibly non-zero elements in matrix
     size_t nnz(void) const
     {   return nnz_; }
-    /// row indices
+    //
+    // row indices
     const SizeVector& row(void) const
     {   return row_; }
-    /// column indices
+    //
+    // column indices
     const SizeVector& col(void) const
     {   return col_; }
-    /// row-major order
+    //
+    // row-major order
     SizeVector row_major(void) const
     {   SizeVector keys(nnz_), row_major(nnz_);
         for(size_t k = 0; k < nnz_; k++)
@@ -458,7 +476,8 @@ public:
 # endif
         return row_major;
     }
-    /// column-major indices
+    //
+    // column-major indices
     SizeVector col_major(void) const
     {   SizeVector keys(nnz_), col_major(nnz_);
         for(size_t k = 0; k < nnz_; k++)
@@ -482,7 +501,8 @@ public:
         return col_major;
     }
 };
-
+//
+// output
 template <class SizeVector>
 std::ostream& operator << (
     std::ostream&                       os      ,
