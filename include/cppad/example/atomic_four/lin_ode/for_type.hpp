@@ -51,11 +51,11 @@ bool atomic_lin_ode<Base>::for_type(
     //
     // m
     size_t m     = type_y.size();
-    assert( pattern.nr() == m );
-    assert( pattern.nc() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nr() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
     //
     // type_x
-    assert( type_x.size() == nnz + m );
+    CPPAD_ASSERT_UNKNOWN( type_x.size() == nnz + m );
     //
     // type_y[i] = type_b[i]
     for(size_t i = 0; i < m; ++i)

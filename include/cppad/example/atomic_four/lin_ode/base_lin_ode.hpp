@@ -62,10 +62,10 @@ void atomic_lin_ode<Base>::base_lin_ode(
             CppAD::vector<Base>&       f )
         {   size_t m   = z.size();
             size_t nnz = pattern_.nnz();
-            assert( f.size() == m );
-            assert( x_.size() == nnz + m );
-            assert( pattern_.nr() == m );
-            assert( pattern_.nc() == m );
+            CPPAD_ASSERT_UNKNOWN( f.size() == m );
+            CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
+            CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
+            CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
             //
             for(size_t i = 0; i < m; ++i)
                 f[i] = Base(0);
@@ -84,10 +84,10 @@ void atomic_lin_ode<Base>::base_lin_ode(
         {   size_t m   = z.size();
 # ifndef NDEBUG
             size_t nnz = pattern_.nnz();
-            assert( f_t.size() == m );
-            assert( x_.size() == nnz + m );
-            assert( pattern_.nr() == m );
-            assert( pattern_.nc() == m );
+            CPPAD_ASSERT_UNKNOWN( f_t.size() == m );
+            CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
+            CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
+            CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
 # endif
             //
             for(size_t i = 0; i < m; ++i)
@@ -99,10 +99,10 @@ void atomic_lin_ode<Base>::base_lin_ode(
             CppAD::vector<Base>&       f_x )
         {   size_t m   = z.size();
             size_t nnz = pattern_.nnz();
-            assert( f_x.size() == m * m );
-            assert( x_.size() == nnz + m );
-            assert( pattern_.nr() == m );
-            assert( pattern_.nc() == m );
+            CPPAD_ASSERT_UNKNOWN( f_x.size() == m * m );
+            CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
+            CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
+            CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
             //
             for(size_t i = 0; i < m * m; ++i)
                 f_x[i] = Base(0);
@@ -120,7 +120,7 @@ void atomic_lin_ode<Base>::base_lin_ode(
     size_t nnz = pattern.nnz();
     // m
     size_t m     = y.size();
-    assert( x.size() == nnz + m );
+    CPPAD_ASSERT_UNKNOWN( x.size() == nnz + m );
     //
     // fun
     Fun fun(pattern, transpose, x);

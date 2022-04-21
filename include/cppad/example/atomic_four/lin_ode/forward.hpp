@@ -63,13 +63,13 @@ bool atomic_lin_ode<Base>::forward(
     size_t q = order_up + 1;
     //
     // m
-    assert( taylor_y.size() % q == 0 );
+    CPPAD_ASSERT_UNKNOWN( taylor_y.size() % q == 0 );
     size_t m = taylor_y.size() / q;
-    assert( pattern.nr() == m );
-    assert( pattern.nc() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nr() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
     //
     // taylor_x
-    assert( taylor_x.size() == (nnz + m) * q );
+    CPPAD_ASSERT_UNKNOWN( taylor_x.size() == (nnz + m) * q );
     //
     // taylor_y
     if( order_up == 0 )
@@ -160,11 +160,11 @@ bool atomic_lin_ode<Base>::forward(
     size_t q = order_up + 1;
     //
     // m
-    assert( ataylor_y.size() % q == 0 );
+    CPPAD_ASSERT_UNKNOWN( ataylor_y.size() % q == 0 );
     size_t m = ataylor_y.size() / q;
     //
     // ataylor_x
-    assert( ataylor_x.size() == (nnz + m) * q );
+    CPPAD_ASSERT_UNKNOWN( ataylor_x.size() == (nnz + m) * q );
     //
     // ataylor_y
     if( order_up == 0 )

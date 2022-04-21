@@ -61,9 +61,9 @@ bool atomic_lin_ode<Base>::jac_sparsity(
     size_t m = select_y.size();
     size_t n = select_x.size();
     //
-    assert( n == nnz + m );
-    assert( pattern.nr() == m );
-    assert( pattern.nc() == m );
+    CPPAD_ASSERT_UNKNOWN( n == nnz + m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nr() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
     //
     // list_setvec
     typedef CppAD::local::sparse::list_setvec list_setvec;

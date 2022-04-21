@@ -64,7 +64,7 @@ void atomic_lin_ode<Base>::get(
 {
     // thread
     size_t thread = thread_alloc::thread_num();
-    assert( work_[thread] != nullptr );
+    CPPAD_ASSERT_UNKNOWN( work_[thread] != nullptr );
     //
     // pattern_vec
     CppAD::vector<sparse_rc>& pattern_vec( work_[thread]->pattern_vec );
@@ -72,7 +72,7 @@ void atomic_lin_ode<Base>::get(
     // call_vec
     CppAD::vector<call_struct>& call_vec( work_[thread]->call_vec );
     //
-    assert( thread == call_vec[call_id].thread );
+    CPPAD_ASSERT_UNKNOWN( thread == call_vec[call_id].thread );
     //
     // r
     call_struct& call = call_vec[call_id];

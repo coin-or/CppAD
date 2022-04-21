@@ -78,16 +78,16 @@ bool atomic_lin_ode<Base>::reverse(
     //
     // m
     size_t m = taylor_y.size();
-    assert( partial_y.size() == m );
-    assert( pattern.nr() == m );
-    assert( pattern.nc() == m );
+    CPPAD_ASSERT_UNKNOWN( partial_y.size() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nr() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
     //
     // n
     size_t n = nnz + m;
     //
     // partial_x, taylor_x
-    assert( taylor_x.size()  == n );
-    assert( partial_x.size() == n );
+    CPPAD_ASSERT_UNKNOWN( taylor_x.size()  == n );
+    CPPAD_ASSERT_UNKNOWN( partial_x.size() == n );
     //
     // x = [A, b]
     CppAD::vector<Base> x(n);
@@ -184,16 +184,16 @@ bool atomic_lin_ode<Base>::reverse(
     //
     // m
     size_t m = ataylor_y.size();
-    assert( apartial_y.size() == m );
-    assert( pattern.nr() == m );
-    assert( pattern.nc() == m );
+    CPPAD_ASSERT_UNKNOWN( apartial_y.size() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nr() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
     //
     // n
     size_t n = nnz + m;
     //
     // partial_x, taylor_x
-    assert( ataylor_x.size()  == n );
-    assert( apartial_x.size() == n );
+    CPPAD_ASSERT_UNKNOWN( ataylor_x.size()  == n );
+    CPPAD_ASSERT_UNKNOWN( apartial_x.size() == n );
     //
     // call_id_2
     size_t call_id_2 = (*this).set(r2, pattern, transpose);

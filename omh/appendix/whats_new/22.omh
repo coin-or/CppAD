@@ -30,12 +30,17 @@ $$
 $section Changes and Additions to CppAD During 2022$$
 
 $head 04-21$$
+$list number$$
 Modify $cref atomic_four_lin_ode_set.hpp$$ and
 $cref atomic_four_lin_ode_get.hpp$$ to re-use sparsity patterns
 instead of creating a new one for every call.
 This makes use of
 $cref/set_row_major/sparse_rc/set_row_major/$$ to speed up checking
 for equality of sparsity patterns.
+$lnext
+In the $cref atomic_four_lin_ode_implement$$ files, change $code assert$$ to
+$cref/CPPAD_ASSERT_UNKNOWN/cppad_assert/Unknown/$$.
+$lend
 
 
 $head 04-20$$

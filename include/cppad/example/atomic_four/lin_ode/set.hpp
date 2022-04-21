@@ -86,7 +86,7 @@ size_t atomic_lin_ode<Base>::set(
             pattern_index = i;
     if( pattern_index == n_pattern )
     {   pattern_vec.push_back( pattern );
-        assert( pattern_vec[pattern_index] == pattern );
+        CPPAD_ASSERT_UNKNOWN( pattern_vec[pattern_index] == pattern );
     }
     //
     // call_vec
