@@ -62,6 +62,8 @@ $icode%pattern%.push_back(%r%, %c%)
 %$$
 $icode%pattern%.set_row_major()
 %$$
+$icode%pattern%.set_col_major()
+%$$
 
 $subhead Scalars$$
 $icode%pattern%.nr()
@@ -76,9 +78,11 @@ $codei%const %SizeVector%& %row%( %pattern%.row() )
 %$$
 $codei%const %SizeVector%& %col%( %pattern%.col() )
 %$$
-$icode%row_major% = %pattern%.row_major()
+$codei%const %SizeVector%& %row_major%( %pattern%.get_row_major() )
 %$$
-$codei%const %SizeVector%& %get_row_major%( %pattern%.col() )
+$codei%const %SizeVector%& %col_major%( %pattern%.get_col_major() )
+%$$
+$icode%row_major% = %pattern%.row_major()
 %$$
 $icode%col_major% = %pattern%.col_major()
 %$$
@@ -281,6 +285,17 @@ $codei%
 This routine generates an assert if there are two entries with the same
 row and column values (if $code NDEBUG$$ is not defined).
 
+$head set_col_major$$
+Store the current row major order in $icode pattern$$.
+This can be used by the col_major function and the equality function
+to avoid re-sorting the pattern each time.
+
+$head get_col_major$$
+Retrieve the row major order stored in $icode pattern$$
+by the previous $code set_col_major$$.
+If this order is no longer valid, the return value
+$icode col_major$$ has size zero.
+
 $children%
     example/utility/sparse_rc.cpp
 %$$
@@ -331,6 +346,10 @@ private:
     // entry in row major order.
     SizeVector row_major_;
     //
+    // if col_major_.size() != 0, col_major_[k] is index of k-th non-zero
+    // entry in column major order.
+    SizeVector col_major_;
+    //
     // simple_vector_assign
     static void simple_vector_assign(
         SizeVector& destination, const SizeVector& source
@@ -374,7 +393,8 @@ public:
     nnz_(other.nnz_) ,
     row_(other.row_) ,
     col_(other.col_) ,
-    row_major_(other.row_major_)
+    row_major_(other.row_major_) ,
+    col_major_(other.col_major_)
     { }
     //
     // assignment
@@ -386,6 +406,7 @@ public:
         simple_vector_assign(row_, other.row_);
         simple_vector_assign(col_, other.col_);
         simple_vector_assign(row_major_, other.row_major_);
+        simple_vector_assign(col_major_, other.col_major_);
     }
     //
     // swap
@@ -397,6 +418,7 @@ public:
         row_.swap( other.row_ );
         col_.swap( other.col_ );
         row_major_.swap( other.row_major_ );
+        col_major_.swap( other.col_major_ );
     }
     //
     // move semantics assignment
@@ -413,22 +435,44 @@ public:
         if( ! result )
             return result;
         //
-        // this_order, this_order_ptr
+        // this_order, other_order, this_order_ptr, other_order_ptr
         SizeVector        this_order;
-        const SizeVector* this_order_ptr = &this_order;
-        if( row_major_.size() == 0 )
-            this_order = row_major();
-        else
-            this_order_ptr = &row_major_;
-        //
-        // other_order, other_order_ptr
         SizeVector        other_order;
+        const SizeVector* this_order_ptr = &this_order;
         const SizeVector* other_order_ptr = &other_order;
-        if( other.row_major_.size() == 0 )
-            other_order = other.row_major();
+        bool this_row_ok  = row_major_.size() > 0;
+        bool this_col_ok  = col_major_.size() > 0;
+        bool other_row_ok = other.row_major_.size() > 0;
+        bool other_col_ok = other.col_major_.size() > 0;
+        if( this_row_ok && this_row_ok )
+        {   this_order_ptr  = &row_major_;
+            other_order_ptr = &(other.row_major_);
+        }
+        else if( this_col_ok && this_col_ok )
+        {   this_order_ptr  = &col_major_;
+            other_order_ptr = &(other.col_major_);
+        }
+        else if( this_row_ok )
+        {   this_order_ptr = &row_major_;
+            other_order    = other.row_major();
+        }
+        else if( this_col_ok )
+        {   this_order_ptr = &col_major_;
+            other_order    = other.col_major();
+        }
+        else if( other_row_ok )
+        {   other_order_ptr = &(other.row_major_);
+            this_order      = row_major();
+        }
+        else if( other_col_ok )
+        {   other_order_ptr = &(other.col_major_);
+            this_order      = col_major();
+        }
         else
-            other_order_ptr = &other.row_major_;
-
+        {   this_order  = row_major();
+            other_order = other.row_major();
+        }
+        //
         // result
         for(size_t k = 0; k < nnz_; ++k)
         {   size_t this_k  = (*this_order_ptr)[k];
@@ -447,6 +491,7 @@ public:
         row_.resize(nnz);
         col_.resize(nnz);
         row_major_.resize(0);
+        col_major_.resize(0);
     }
     //
     // set row and column for a possibly non-zero element
@@ -467,6 +512,7 @@ public:
         col_[k] = c;
         //
         row_major_.resize(0);
+        col_major_.resize(0);
     }
     //
     // push_back
@@ -486,6 +532,7 @@ public:
         CPPAD_ASSERT_UNKNOWN( col_.size() == nnz_ );
         //
         row_major_.resize(0);
+        col_major_.resize(0);
     }
     //
     // number of rows in matrix
@@ -537,7 +584,9 @@ public:
     //
     // column-major indices
     SizeVector col_major(void) const
-    {   SizeVector keys(nnz_), col_major(nnz_);
+    {   if( col_major_.size() > 0 )
+            return col_major_;
+        SizeVector keys(nnz_), col_major(nnz_);
         for(size_t k = 0; k < nnz_; k++)
         {   CPPAD_ASSERT_UNKNOWN( col_[k] < nc_ );
             keys[k] = col_[k] * nr_ + row_[k];
@@ -564,6 +613,13 @@ public:
     }
     const SizeVector& get_row_major(void) const
     {   return row_major_;
+    }
+    //
+    void set_col_major(void)
+    {   col_major_ = col_major();
+    }
+    const SizeVector& get_col_major(void) const
+    {   return col_major_;
     }
 };
 //

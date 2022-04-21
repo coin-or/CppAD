@@ -99,6 +99,12 @@ bool sparse_rc(void)
 
     // now use the assignment statement
     pattern = other;
+
+    // set_col_major
+    const SizeVector& col_major_reference( pattern.get_col_major() );
+    ok &= col_major_reference.size() == 0;
+    pattern.set_col_major();
+    ok &= col_major_reference.size() == nnz;
     //
     // check equality
     ok &= pattern == other;
