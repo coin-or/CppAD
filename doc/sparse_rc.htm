@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Row and Column Index Sparsity Patterns</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Row and Column Index Sparsity Patterns">
-<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax include constructor assignment equality setting properties output sizevector empty pattern other move semantics swap nr nc nnz resize set push_back k r c col row_major col_major example os ">
+<meta name="keywords" id="keywords" content=" row column index sparsity patterns syntax include constructor assignment equality setting scalars vectors output sizevector empty pattern other move semantics swap nr nc nnz resize set push_back k r c col row_major set_row_major get_row_major col_major set_col_major get_col_major example os ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,7 +69,8 @@ A:active { color : purple }
 <option>---..Assignment</option>
 <option>---..Equality</option>
 <option>---..Setting</option>
-<option>---..Properties</option>
+<option>---..Scalars</option>
+<option>---..Vectors</option>
 <option>---..Output</option>
 <option>SizeVector</option>
 <option>empty</option>
@@ -91,7 +92,11 @@ A:active { color : purple }
 <option>row</option>
 <option>col</option>
 <option>row_major</option>
+<option>set_row_major</option>
+<option>get_row_major</option>
 <option>col_major</option>
+<option>set_col_major</option>
+<option>get_col_major</option>
 <option>Example</option>
 <option>os</option>
 </select>
@@ -162,8 +167,14 @@ A:active { color : purple }
 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.push_back(</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.set_row_major()<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.set_col_major()<br>
+</span></font></code>
 <br>
-<big><a name="Syntax.Properties" id="Syntax.Properties">Properties</a></big>
+<big><a name="Syntax.Scalars" id="Syntax.Scalars">Scalars</a></big>
 
 <br>
 
@@ -175,11 +186,21 @@ A:active { color : purple }
 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.nnz()<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Vectors" id="Syntax.Vectors">Vectors</a></big>
+
+<br>
 
 <code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.row()&nbsp;)<br>
 </span></font></code>
 
 <code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.col()&nbsp;)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.get_row_major()&nbsp;)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>SizeVector</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.get_col_major()&nbsp;)<br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>.row_major()<br>
@@ -537,6 +558,30 @@ row and column values (if <code><font color="blue">NDEBUG</font></code> is not d
 
 <br>
 <br>
+<b><big><a name="set_row_major" id="set_row_major">set_row_major</a></big></b>
+<br>
+Store the current row major order in 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+.
+This can be used by the row_major function and the equality function
+to avoid re-sorting the pattern each time.
+
+<br>
+<br>
+<b><big><a name="get_row_major" id="get_row_major">get_row_major</a></big></b>
+<br>
+Retrieve the row major order stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+
+by the previous <code><font color="blue">set_row_major</font></code>.
+If this order is no longer valid, the return value
+
+<code><i><font color="black"><span style='white-space: nowrap'>row_major</span></font></i></code>
+ has size zero.
+
+
+<br>
+<br>
 <b><big><a name="col_major" id="col_major">col_major</a></big></b>
 <br>
 This vector has prototype
@@ -562,6 +607,29 @@ and if
 </span></font></code>
 This routine generates an assert if there are two entries with the same
 row and column values (if <code><font color="blue">NDEBUG</font></code> is not defined).
+
+<br>
+<br>
+<b><big><a name="set_col_major" id="set_col_major">set_col_major</a></big></b>
+<br>
+Store the current row major order in 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+.
+This can be used by the col_major function and the equality function
+to avoid re-sorting the pattern each time.
+
+<br>
+<br>
+<b><big><a name="get_col_major" id="get_col_major">get_col_major</a></big></b>
+<br>
+Retrieve the row major order stored in 
+<code><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i></code>
+
+by the previous <code><font color="blue">set_col_major</font></code>.
+If this order is no longer valid, the return value
+
+<code><i><font color="black"><span style='white-space: nowrap'>col_major</span></font></i></code>
+ has size zero.
 
 
 <br>

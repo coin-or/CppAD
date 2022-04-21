@@ -160,13 +160,20 @@ A(x)
 <font color="#FF0000">{</font>
     <i><font color="#9A1900">// thread</font></i>
     <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> work_<font color="#990000">[</font>thread<font color="#990000">]</font> <font color="#990000">!=</font> nullptr <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> thread <font color="#990000">==</font> <font color="#990000">(*</font>work_<font color="#990000">[</font>thread<font color="#990000">])[</font>call_id<font color="#990000">].</font>thread <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> work_<font color="#990000">[</font>thread<font color="#990000">]</font> <font color="#990000">!=</font> nullptr <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_vec</font></i>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>sparse_rc<font color="#990000">&gt;&amp;</font> <b><font color="#000000">pattern_vec</font></b><font color="#990000">(</font> work_<font color="#990000">[</font>thread<font color="#990000">]-&gt;</font>pattern_vec <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// call_vec</font></i>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>call_struct<font color="#990000">&gt;&amp;</font> <b><font color="#000000">call_vec</font></b><font color="#990000">(</font> work_<font color="#990000">[</font>thread<font color="#990000">]-&gt;</font>call_vec <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> thread <font color="#990000">==</font> call_vec<font color="#990000">[</font>call_id<font color="#990000">].</font>thread <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// r</font></i>
-    call_struct<font color="#990000">&amp;</font> call <font color="#990000">=</font> <font color="#990000">(*</font>work_<font color="#990000">[</font>thread<font color="#990000">])[</font>call_id<font color="#990000">];</font>
+    call_struct<font color="#990000">&amp;</font> call <font color="#990000">=</font> call_vec<font color="#990000">[</font>call_id<font color="#990000">];</font>
     r         <font color="#990000">=</font> call<font color="#990000">.</font>r<font color="#990000">;</font>
-    pattern   <font color="#990000">=</font> call<font color="#990000">.</font>pattern<font color="#990000">;</font>
+    pattern   <font color="#990000">=</font> pattern_vec<font color="#990000">[</font>call<font color="#990000">.</font>pattern_index<font color="#990000">];</font>
     transpose <font color="#990000">=</font> call<font color="#990000">.</font>transpose<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b><font color="#990000">;</font>

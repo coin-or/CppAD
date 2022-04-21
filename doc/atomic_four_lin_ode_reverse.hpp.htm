@@ -156,16 +156,16 @@ Any other approximation for this integral can be used.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// m</font></i>
     <font color="#008080">size_t</font> m <font color="#990000">=</font> taylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> partial_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> partial_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// n</font></i>
     <font color="#008080">size_t</font> n <font color="#990000">=</font> nnz <font color="#990000">+</font> m<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// partial_x, taylor_x</font></i>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> taylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>  <font color="#990000">==</font> n <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> partial_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> taylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>  <font color="#990000">==</font> n <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> partial_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// x = [A, b]</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
@@ -262,16 +262,16 @@ Any other approximation for this integral can be used.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// m</font></i>
     <font color="#008080">size_t</font> m <font color="#990000">=</font> ataylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> apartial_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> apartial_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// n</font></i>
     <font color="#008080">size_t</font> n <font color="#990000">=</font> nnz <font color="#990000">+</font> m<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// partial_x, taylor_x</font></i>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> ataylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>  <font color="#990000">==</font> n <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> apartial_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> ataylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>  <font color="#990000">==</font> n <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> apartial_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// call_id_2</font></i>
     <font color="#008080">size_t</font> call_id_2 <font color="#990000">=</font> <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>

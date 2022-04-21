@@ -132,13 +132,13 @@ See lin_ode <a href="atomic_four_lin_ode.htm#Theory.Forward" target="_top"><span
     <font color="#008080">size_t</font> q <font color="#990000">=</font> order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// m</font></i>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> taylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">%</font> q <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> taylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">%</font> q <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
     <font color="#008080">size_t</font> m <font color="#990000">=</font> taylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> q<font color="#990000">;</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// taylor_x</font></i>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> taylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> taylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// taylor_y</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
@@ -229,11 +229,11 @@ See lin_ode <a href="atomic_four_lin_ode.htm#Theory.Forward" target="_top"><span
     <font color="#008080">size_t</font> q <font color="#990000">=</font> order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// m</font></i>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> ataylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">%</font> q <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> ataylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">%</font> q <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">);</font>
     <font color="#008080">size_t</font> m <font color="#990000">=</font> ataylor_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">/</font> q<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ataylor_x</font></i>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> ataylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> ataylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ataylor_y</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>

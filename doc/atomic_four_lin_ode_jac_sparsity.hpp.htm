@@ -129,9 +129,9 @@ contains an example and test using this operator.
     <font color="#008080">size_t</font> m <font color="#990000">=</font> select_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
     <font color="#008080">size_t</font> n <font color="#990000">=</font> select_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> n <font color="#990000">==</font> nnz <font color="#990000">+</font> m <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
-    <b><font color="#000000">assert</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> n <font color="#990000">==</font> nnz <font color="#990000">+</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// list_setvec</font></i>
     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>local<font color="#990000">::</font>sparse<font color="#990000">::</font><font color="#008080">list_setvec</font> list_setvec<font color="#990000">;</font>

@@ -105,7 +105,7 @@ def
     </tt></pre>
 <pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#008080">size_t</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">set</font></b><font color="#990000">(</font>
-    <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
+    <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
 <font color="#990000">)</font></tt></pre>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -124,6 +124,13 @@ respect to.
 <b><big><a name="pattern" id="pattern">pattern</a></big></b>
 <br>
 This argument is a sparsity pattern.
+It would be <code><font color="blue">const</font></code> except for the fact that
+
+<code><i><font color="black"><span style='white-space: nowrap'>pattern.set_row_major()</span></font></i></code>
+ is called so that checking for
+equality is faster; see
+<a href="sparse_rc.htm#set_row_major" target="_top"><span style='white-space: nowrap'>set_row_major</span></a>
+.
 
 <br>
 <br>
@@ -147,29 +154,50 @@ A(x)
 <i><font color="#9A1900">// BEGIN PROTOTYPE</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#008080">size_t</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">set</font></b><font color="#990000">(</font>
-    <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
+    <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
 <font color="#990000">)</font>
 <i><font color="#9A1900">// END PROTOTYPE</font></i>
 <font color="#FF0000">{</font>
+    <i><font color="#9A1900">// pattern</font></i>
+    <i><font color="#9A1900">// set_row_major so that checking for pattern equality is faster</font></i>
+    pattern<font color="#990000">.</font><b><font color="#000000">set_row_major</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// thread</font></i>
     <font color="#008080">size_t</font> thread <font color="#990000">=</font> thread_alloc<font color="#990000">::</font><b><font color="#000000">thread_num</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// work_[thread]</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> work_<font color="#990000">[</font>thread<font color="#990000">]</font> <font color="#990000">==</font> nullptr <font color="#990000">)</font>
-        work_<font color="#990000">[</font>thread<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> call_vector<font color="#990000">;</font>
+        work_<font color="#990000">[</font>thread<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> thread_struct<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_vec</font></i>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>sparse_rc<font color="#990000">&gt;&amp;</font> <b><font color="#000000">pattern_vec</font></b><font color="#990000">(</font> work_<font color="#990000">[</font>thread<font color="#990000">]-&gt;</font>pattern_vec <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_index</font></i>
+    <font color="#008080">size_t</font>     n_pattern     <font color="#990000">=</font> pattern_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font>     pattern_index <font color="#990000">=</font> n_pattern<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_pattern<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> pattern <font color="#990000">==</font> pattern_vec<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+            pattern_index <font color="#990000">=</font> i<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> pattern_index <font color="#990000">==</font> n_pattern <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   pattern_vec<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> pattern <font color="#990000">);</font>
+        <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern_vec<font color="#990000">[</font>pattern_index<font color="#990000">]</font> <font color="#990000">==</font> pattern <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// call_vec</font></i>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>call_struct<font color="#990000">&gt;&amp;</font> <b><font color="#000000">call_vec</font></b><font color="#990000">(</font> work_<font color="#990000">[</font>thread<font color="#990000">]-&gt;</font>call_vec <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// call_id</font></i>
-    <font color="#008080">size_t</font> call_id <font color="#990000">=</font> work_<font color="#990000">[</font>thread<font color="#990000">]-&gt;</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font> call_id <font color="#990000">=</font> call_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// call</font></i>
     <font color="#008080">call_struct</font> call<font color="#990000">;</font>
-    call<font color="#990000">.</font>thread    <font color="#990000">=</font> thread<font color="#990000">;</font>
-    call<font color="#990000">.</font>r         <font color="#990000">=</font> r<font color="#990000">;</font>
-    call<font color="#990000">.</font>pattern   <font color="#990000">=</font> pattern<font color="#990000">;</font>
-    call<font color="#990000">.</font>transpose <font color="#990000">=</font> transpose<font color="#990000">;</font>
+    call<font color="#990000">.</font>thread        <font color="#990000">=</font> thread<font color="#990000">;</font>
+    call<font color="#990000">.</font>r             <font color="#990000">=</font> r<font color="#990000">;</font>
+    call<font color="#990000">.</font>pattern_index <font color="#990000">=</font> pattern_index<font color="#990000">;</font>
+    call<font color="#990000">.</font>transpose     <font color="#990000">=</font> transpose<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// work_[thread]</font></i>
-    work_<font color="#990000">[</font>thread<font color="#990000">]-&gt;</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> call <font color="#990000">);</font>
+    call_vec<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font> call <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> call_id<font color="#990000">;</font>
 <font color="#FF0000">}</font>

@@ -113,14 +113,22 @@ A:active { color : purple }
         pattern<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>r<font color="#990000">,</font> c<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
-    <font color="#008080">SizeVector</font> row_major <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row_major</font></b><font color="#990000">();</font>
 
-    <i><font color="#9A1900">// check nnz, row and column</font></i>
+    <i><font color="#9A1900">// check nnz, row major by value row major by reference, row and column</font></i>
     ok <font color="#990000">&amp;=</font> nnz <font color="#990000">==</font> nr<font color="#990000">;</font>
+    <font color="#008080">SizeVector</font>        row_major_value     <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row_major</font></b><font color="#990000">();</font>
+    <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> row_major_reference <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">get_row_major</font></b><font color="#990000">();</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> k<font color="#990000">++)</font>
-    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font> row_major<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> k<font color="#990000">;</font>
-        ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> k<font color="#990000">;</font>
+    <font color="#FF0000">{</font>   ok <font color="#990000">&amp;=</font> row<font color="#990000">[</font> row_major_value<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> k<font color="#990000">;</font>
+        ok <font color="#990000">&amp;=</font> col<font color="#990000">[</font> row_major_value<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">==</font> k<font color="#990000">;</font>
     <font color="#FF0000">}</font>
+    ok <font color="#990000">&amp;=</font> row_major_reference<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+    <i><font color="#9A1900">// set_row_major</font></i>
+    pattern<font color="#990000">.</font><b><font color="#000000">set_row_major</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> row_major_reference<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> nnz<font color="#990000">;</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+        ok <font color="#990000">&amp;=</font> row_major_reference<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">==</font> row_major_value<font color="#990000">[</font>k<font color="#990000">];</font>
 
     <i><font color="#9A1900">// create an empty pattern</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">sparse_rc&lt;SizeVector&gt;</font> other<font color="#990000">;</font>
@@ -140,6 +148,12 @@ A:active { color : purple }
 
     <i><font color="#9A1900">// now use the assignment statement</font></i>
     pattern <font color="#990000">=</font> other<font color="#990000">;</font>
+
+    <i><font color="#9A1900">// set_col_major</font></i>
+    <b><font color="#0000FF">const</font></b> SizeVector<font color="#990000">&amp;</font> <b><font color="#000000">col_major_reference</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">get_col_major</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+    ok <font color="#990000">&amp;=</font> col_major_reference<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    pattern<font color="#990000">.</font><b><font color="#000000">set_col_major</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> col_major_reference<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> nnz<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// check equality</font></i>
     ok <font color="#990000">&amp;=</font> pattern <font color="#990000">==</font> other<font color="#990000">;</font>

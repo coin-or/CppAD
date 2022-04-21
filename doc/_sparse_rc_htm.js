@@ -17,7 +17,8 @@ var list_current0 = [
 'sparse_rc.htm#Syntax.Assignment',
 'sparse_rc.htm#Syntax.Equality',
 'sparse_rc.htm#Syntax.Setting',
-'sparse_rc.htm#Syntax.Properties',
+'sparse_rc.htm#Syntax.Scalars',
+'sparse_rc.htm#Syntax.Vectors',
 'sparse_rc.htm#Syntax.Output',
 'sparse_rc.htm#SizeVector',
 'sparse_rc.htm#empty',
@@ -39,7 +40,11 @@ var list_current0 = [
 'sparse_rc.htm#row',
 'sparse_rc.htm#col',
 'sparse_rc.htm#row_major',
+'sparse_rc.htm#set_row_major',
+'sparse_rc.htm#get_row_major',
 'sparse_rc.htm#col_major',
+'sparse_rc.htm#set_col_major',
+'sparse_rc.htm#get_col_major',
 'sparse_rc.htm#Example',
 'sparse_rc.htm#os'
 ];

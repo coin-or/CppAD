@@ -104,22 +104,27 @@ A:active { color : purple }
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// set</font></i>
-    <font color="#008080">size_t</font> <b><font color="#000000">set</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose<font color="#990000">);</font>
+    <font color="#008080">size_t</font> <b><font color="#000000">set</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// get</font></i>
     <font color="#009900">void</font> <b><font color="#000000">get</font></b><font color="#990000">(</font><font color="#008080">size_t</font> call_id<font color="#990000">,</font> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose<font color="#990000">);</font>
 <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// information connected to one call of this atomic function</font></i>
+    <i><font color="#9A1900">// pattern points to pattern_vec for this thread</font></i>
     <b><font color="#0000FF">struct</font></b> <font color="#008080">call_struct</font> <font color="#FF0000">{</font>
-        <font color="#008080">size_t</font> thread<font color="#990000">;</font> <font color="#008080">Base</font> r<font color="#990000">;</font> <font color="#008080">sparse_rc</font> pattern<font color="#990000">;</font> <font color="#009900">bool</font> transpose<font color="#990000">;</font>
+        <font color="#008080">size_t</font> thread<font color="#990000">;</font> <font color="#008080">Base</font> r<font color="#990000">;</font> <font color="#008080">size_t</font> pattern_index<font color="#990000">;</font> <font color="#009900">bool</font> transpose<font color="#990000">;</font>
     <font color="#FF0000">}</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// map from call_id to call information</font></i>
-    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;call_struct&gt;</font> call_vector<font color="#990000">;</font>
+    <i><font color="#9A1900">// information connected to each thread</font></i>
+    <i><font color="#9A1900">// patterns are in a separate vector so do not need one for every call</font></i>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">thread_struct</font> <font color="#FF0000">{</font>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;sparse_rc&gt;</font>   pattern_vec<font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;call_struct&gt;</font> call_vec<font color="#990000">;</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// Use pointers, to avoid false sharing between threads.</font></i>
-    call_vector<font color="#990000">*</font> work_<font color="#990000">[</font>CPPAD_MAX_NUM_THREADS<font color="#990000">];</font>
+    thread_struct<font color="#990000">*</font> work_<font color="#990000">[</font>CPPAD_MAX_NUM_THREADS<font color="#990000">];</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// base_lin_ode</font></i>
     <b><font color="#0000FF">static</font></b> <font color="#009900">void</font> <b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>
