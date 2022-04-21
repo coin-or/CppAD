@@ -52,22 +52,27 @@ public:
         }
     }
     // set
-    size_t set(const Base& r, const sparse_rc& pattern, const bool& transpose);
+    size_t set(const Base& r, sparse_rc& pattern, const bool& transpose);
     //
     // get
     void get(size_t call_id, Base& r, sparse_rc& pattern, bool& transpose);
 private:
     //
     // information connected to one call of this atomic function
+    // pattern points to pattern_vec for this thread
     struct call_struct {
-        size_t thread; Base r; sparse_rc pattern; bool transpose;
+        size_t thread; Base r; size_t pattern_index; bool transpose;
     };
     //
-    // map from call_id to call information
-    typedef CppAD::vector<call_struct> call_vector;
+    // information connected to each thread
+    // patterns are in a separate vector so do not need one for every call
+    struct thread_struct {
+        CppAD::vector<sparse_rc>   pattern_vec;
+        CppAD::vector<call_struct> call_vec;
+    };
     //
     // Use pointers, to avoid false sharing between threads.
-    call_vector* work_[CPPAD_MAX_NUM_THREADS];
+    thread_struct* work_[CPPAD_MAX_NUM_THREADS];
     //
     // base_lin_ode
     static void base_lin_ode(
