@@ -29,6 +29,11 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 04-20$$
+Add the $cref/set_row_major/sparse_rc/set_row_major/$$ and
+$cref/get_row_major/sparse_rc/get_row_major/$$ functions to the
+$code sparse_rc$$ template class.
+
 $head 04-19$$
 Change the ODE solver in $cref atomic_four_lin_ode$$ from
 $cref runge45$$ to $cref rosen34$$.

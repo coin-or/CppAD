@@ -64,14 +64,22 @@ bool sparse_rc(void)
         pattern.push_back(r, c);
     }
     nnz = pattern.nnz();
-    SizeVector row_major = pattern.row_major();
 
-    // check nnz, row and column
+    // check nnz, row major by value row major by reference, row and column
     ok &= nnz == nr;
+    SizeVector        row_major_value     = pattern.row_major();
+    const SizeVector& row_major_reference = pattern.get_row_major();
     for(size_t k = 0; k < nnz; k++)
-    {   ok &= row[ row_major[k] ] == k;
-        ok &= col[ row_major[k] ] == k;
+    {   ok &= row[ row_major_value[k] ] == k;
+        ok &= col[ row_major_value[k] ] == k;
     }
+    ok &= row_major_reference.size() == 0;
+
+    // set_row_major
+    pattern.set_row_major();
+    ok &= row_major_reference.size() == nnz;
+    for(size_t k = 0; k < nnz; ++k)
+        ok &= row_major_reference[k] == row_major_value[k];
 
     // create an empty pattern
     CppAD::sparse_rc<SizeVector> other;
