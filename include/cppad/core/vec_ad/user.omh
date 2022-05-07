@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -27,6 +27,7 @@ $spell
     const
     Cpp
     ind
+    Vec
 $$
 
 
@@ -262,6 +263,11 @@ $children%
 The file
 $cref vec_ad.cpp$$
 contains an example and test using $code VecAD$$ vectors.
+
+$head base2ad$$
+Forward mode on a $code base2ad$$ function does not preserve
+$cref VecAD$$ operations (which might be expected); see the
+$cref base2vec_ad.cpp$$ example.
 
 
 $head Speed and Memory$$

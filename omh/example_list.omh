@@ -102,6 +102,7 @@ $rref atomic_two_eigen_mat_mul.cpp$$
 $rref atomic_two_eigen_mat_mul.hpp$$
 $rref azmul.cpp$$
 $rref base2ad.cpp$$
+$rref base2vec_ad.cpp$$
 $rref base_adolc.hpp$$
 $rref base_alloc.hpp$$
 $rref base_complex.hpp$$

@@ -30,6 +30,12 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-07$$
+Add the $cref base2vec_ad.cpp$$ example demonstraing that $cref base2ad$$
+does not convert $cref VecAD$$ operations as might be expected.
+In addition add a link to this example in both the base2ad and VecAD
+documentatiopn.
+
 $head 05-06$$
 There was a bug in combining the $cref discrete$$ functions with the
 $cref base2ad$$ operation.

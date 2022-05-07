@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -109,6 +109,7 @@ extern bool atan2(void);
 extern bool atanh(void);
 extern bool azmul(void);
 extern bool base2ad(void);
+extern bool base2vec_ad(void);
 extern bool base_require(void);
 extern bool capacity_order(void);
 extern bool change_param(void);
@@ -226,6 +227,7 @@ int main(void)
     Run( atanh,             "atanh"            );
     Run( azmul,             "azmul"            );
     Run( base2ad,           "base2ad"          );
+    Run( base2vec_ad,       "base2vec_ad"      );
     Run( base_require,      "base_require"     );
     Run( capacity_order,    "capacity_order"   );
     Run( change_param,      "change_param"     );
