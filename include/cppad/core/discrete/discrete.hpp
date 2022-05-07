@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_DISCRETE_DISCRETE_HPP
 # define CPPAD_CORE_DISCRETE_DISCRETE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -324,6 +324,37 @@ $srccode%hpp% */
     static Base eval(size_t index, const Base& x)
     {   CPPAD_ASSERT_UNKNOWN(index < List().size() );
         return List()[index]->f_(x);
+    }
+/* %$$
+$end
+------------------------------------------------------------------------------
+$begin discrete_ad_eval$$
+$spell
+    eval
+$$
+$section Link From Forward Mode Sweep to AD Version of Discrete Function$$
+
+$head Syntax$$
+$icode%ay% = discrete<%Base%>::eval(%index%, %ax%)%$$
+
+$head Base$$
+Is the $cref/Base/discrete_create/Base/$$
+type for this list of discrete functions.
+
+$head index$$
+index for this function in $cref discrete_list$$.
+
+$head ax$$
+argument at which to evaluate $codei%AD<%Base%>%$$ version of this function.
+
+$head ay$$
+result for the $codei%AD<%Base%>%$$ version of this function.
+
+$head Source Code$$
+$srccode%hpp% */
+    static AD<Base> ad_eval(size_t index, const AD<Base>& ax)
+    {   CPPAD_ASSERT_UNKNOWN(index < List().size() );
+        return List()[index]->ad(ax);
     }
 /* %$$
 $end

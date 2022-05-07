@@ -25,9 +25,25 @@ $spell
     json
     cmake
     nx
+    af
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 05-06$$
+There was a bug in combining the $cref discrete$$ functions with the
+$cref base2ad$$ operation.
+To be specific, if a discrete function was used during the recording of
+$icode f$$ and $icode%af% = %f%.base2ad()%$$, the following assert
+would happen during forward mode calculations using the $icode af$$ function:
+$codei%
+    error from unknown source
+    Error detected by false result for
+        index < List().size()
+    at line 325 in the file
+    %...% discrete.hpp
+%$$
+This bug has been fixed.
 
 $head 04-21$$
 $list number$$

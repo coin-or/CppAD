@@ -200,6 +200,7 @@ if [[ "$prefix" =~ ^[^/] ]]
 then
     prefix="$(pwd)/$prefix"
 fi
+export LD_LIBRARY_PATH="$prefix/lib:$prefix/lib64"
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=$(

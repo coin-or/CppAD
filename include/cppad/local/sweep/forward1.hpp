@@ -419,7 +419,7 @@ void forward1(
             // -------------------------------------------------
 
             case DisOp:
-            forward_dis_op(p, q, r, i_var, arg, J, taylor);
+            forward_dis_op<RecBase>(p, q, r, i_var, arg, J, taylor);
             break;
             // -------------------------------------------------
 
