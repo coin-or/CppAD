@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create an AD&lt;Base&gt; Function From a Base Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create an AD&lt;Base&gt; Function From a Base Function">
-<meta name="keywords" id="keywords" content=" create ad&lt;base&gt; function from base syntax see also f af example ">
+<meta name="keywords" id="keywords" content=" create ad&lt;base&gt; function from base syntax see also f af example vecad ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -73,6 +73,7 @@ A:active { color : purple }
 <option>f</option>
 <option>af</option>
 <option>Example</option>
+<option>VecAD</option>
 </select>
 </td>
 </tr></table><br>
@@ -160,6 +161,16 @@ Initially, there are no Taylor coefficients stored in
 The file <a href="base2ad.cpp.htm" target="_top"><span style='white-space: nowrap'>base2ad.cpp</span></a>
 
 contains an example and test of this operation.
+
+<br>
+<br>
+<b><big><a name="VecAD" id="VecAD">VecAD</a></big></b>
+<br>
+Forward mode on a <code><font color="blue">base2ad</font></code> function does not preserve
+<a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ operations (which might be expected); see the
+<a href="base2vec_ad.cpp.htm" target="_top"><span style='white-space: nowrap'>base2vec_ad.cpp</span></a>
+ example.
 
 
 <hr>Input File: include/cppad/core/base2ad.hpp

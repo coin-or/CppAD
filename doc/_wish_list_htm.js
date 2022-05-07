@@ -13,6 +13,7 @@ var list_up0 = [
 var list_current0 = [
 'wish_list.htm#See Also',
 'wish_list.htm#Purpose',
+'wish_list.htm#base2ad',
 'wish_list.htm#Dynamic Parameters',
 'wish_list.htm#Dynamic Parameters.Comparison Operators',
 'wish_list.htm#Dynamic Parameters.VecAD Vectors',

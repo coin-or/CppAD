@@ -30,6 +30,7 @@ var list_current0 = [
 'vecad.htm#AD Indexing.right',
 'vecad.htm#AD Indexing.left',
 'vecad.htm#Example',
+'vecad.htm#base2ad',
 'vecad.htm#Speed and Memory'
 ];
 function choose_across0(item)

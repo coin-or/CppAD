@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Vectors that Record Index Operations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Vectors that Record Index Operations">
-<meta name="keywords" id="keywords" content=" ad vectors that record index operations syntax purpose alternatives efficiency vecad&lt;base&gt;::reference exceptions constructor vec n size base indexing i ind result right left example speed memory ">
+<meta name="keywords" id="keywords" content=" ad vectors that record index operations syntax purpose alternatives efficiency vecad&lt;base&gt;::reference exceptions constructor vec n size base indexing i ind result right left example base2ad speed memory ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -82,6 +82,7 @@ A:active { color : purple }
 <option>---..right</option>
 <option>---..left</option>
 <option>Example</option>
+<option>base2ad</option>
 <option>Speed and Memory</option>
 </select>
 </td>
@@ -522,6 +523,16 @@ The file
 <a href="vec_ad.cpp.htm" target="_top"><span style='white-space: nowrap'>vec_ad.cpp</span></a>
 
 contains an example and test using <code><font color="blue">VecAD</font></code> vectors.
+
+<br>
+<br>
+<b><big><a name="base2ad" id="base2ad">base2ad</a></big></b>
+<br>
+Forward mode on a <code><font color="blue">base2ad</font></code> function does not preserve
+<a href="vecad.htm" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+ operations (which might be expected); see the
+<a href="base2vec_ad.cpp.htm" target="_top"><span style='white-space: nowrap'>base2vec_ad.cpp</span></a>
+ example.
 
 
 <br>

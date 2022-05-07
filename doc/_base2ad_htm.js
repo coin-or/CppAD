@@ -17,7 +17,8 @@ var list_current0 = [
 'base2ad.htm#Base',
 'base2ad.htm#f',
 'base2ad.htm#af',
-'base2ad.htm#Example'
+'base2ad.htm#Example',
+'base2ad.htm#VecAD'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
