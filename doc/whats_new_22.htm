@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>05-06</option>
 <option>04-21</option>
 <option>04-20</option>
 <option>04-19</option>
@@ -104,6 +105,33 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
+<br>
+<b><big><a name="05-06" id="05-06">05-06</a></big></b>
+<br>
+There was a bug in combining the <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>discrete</span></a>
+ functions with the
+<a href="base2ad.htm" target="_top"><span style='white-space: nowrap'>base2ad</span></a>
+ operation.
+To be specific, if a discrete function was used during the recording of
+
+<code><i><font color="black"><span style='white-space: nowrap'>f</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>f</span></font></i><font color="blue"><span style='white-space: nowrap'>.base2ad()</span></font></code>
+, the following assert
+would happen during forward mode calculations using the 
+<code><i><font color="black"><span style='white-space: nowrap'>af</span></font></i></code>
+ function:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;error&nbsp;from&nbsp;unknown&nbsp;source<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Error&nbsp;detected&nbsp;by&nbsp;false&nbsp;result&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;&lt;&nbsp;List().size()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;line&nbsp;325&nbsp;in&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;discrete.hpp<br>
+</span></font></code>
+This bug has been fixed.
+
+<br>
 <br>
 <b><big><a name="04-21" id="04-21">04-21</a></big></b>
 
