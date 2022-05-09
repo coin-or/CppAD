@@ -176,7 +176,7 @@ public:
     // =====================================================================
     //
     // ---------------------------------------------------------------------
-    // ctor: doxygen in atomic/four_ctor.hpp
+    // constructors
     atomic_four(void);
     atomic_four(const std::string& name);
 
@@ -191,14 +191,14 @@ public:
               ADVector&  ay
     );
     // ------------------------------------------------------------------------
-    // type: doxygen in atomic/four_for_type.hpp
+    // for_type
     virtual bool for_type(
         size_t                       call_id     ,
         const vector<ad_type_enum>&  type_x      ,
         vector<ad_type_enum>&        type_y
     );
     // ------------------------------------------------------------------------
-    // type: doxygen in atomic/four_rev_depend.hpp
+    // rev_depend
     virtual bool rev_depend(
         size_t                       call_id     ,
         vector<bool>&                depend_x    ,

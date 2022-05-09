@@ -45,6 +45,11 @@ Back out an incorrect change on 04-15 to the meaning of
 $cref/select_x/atomic_four_jac_sparsity/select_x/$$ and
 $cref/select_y/atomic_four_jac_sparsity/select_y/$$ in the
 atomic four Jacobian sparsity documentation.
+$lnext
+Add the specification that the atomic four
+$cref/for_type/atomic_four_call/for_type/$$ callback
+will be called once for each atomic function call and before any other
+of the callbacks for the atomic function call.
 $lend
 
 $head 05-07$$
