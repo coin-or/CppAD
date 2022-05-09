@@ -11,7 +11,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 $begin atomic_four_lin_ode$$
 $spell
-    Taylor
     nr
     nc
     mul
@@ -38,7 +37,7 @@ $icode%lin_ode%.get(%call_id%, %r%, %pattern%, %transpose%)
 $icode%lin_ode%(%call_id%, %x%, %y%)
 %$$
 
-$head Purpose$$
+$head z(t, x)$$
 Construct an atomic operation that computes an
 approximate solution of the first order linear initial value ODE
 $latex \[
@@ -50,9 +49,10 @@ $latex A : \B{R}^n \rightarrow \B{R}^{m \times m}$$,
 $latex b : \B{R}^n \rightarrow  \B{R}^m$$,
 and the subscript $latex t$$ denotes partial differentiation w.r.t $latex t$$.
 
-$head y$$
+$head y(x)$$
 This input value of the elements of $icode y$$ does not matter.
-Upon return it is the final value of the ODE solution, $latex y = z(r, x)$$.
+Upon return it is the final value of the ODE solution,
+$latex y(x) = z(r, x)$$.
 
 $subhead m$$
 We use $icode m$$ to denote the size of the vector $icode y$$.
@@ -96,7 +96,7 @@ at the beginning of the vector $icode x$$.
 To be specific,
 if $icode transpose$$ is true (false),
 for $icode%k% = 0, %...%, %nnz%-1%$$,
-$latex A_{j,i}$$ ( $latex A_{i,j}$$ ) is equal to
+$latex A_{j,i} (x)$$ ( $latex A_{i,j} (x)$$ ) is equal to
 $latex x[k]$$ where $icode%i% = %row%[%k%]%$$ and  $icode%j% = %col%[%k%]%$$.
 
 $subhead b(x)$$
@@ -104,175 +104,8 @@ This vector is stored at the end of
 $icode x$$; i.e. its $th j$$ element is
 $latex b_j (x) = x[ nnz + j ]$$
 
-$head Theory$$
-The theory below includes function values and
-first order derivatives.
 
-$subhead Forward$$
-Suppose we are given Taylor coefficients
-$latex x^0$$, $latex x^1$$, for $latex x$$.
-The zero order Taylor coefficient for $latex z(t, x)$$ solves
-the following initial value ODE:
-$latex \[
-    z_t^0 (t) = A^0 z(t) \W{,} z^0 (0) = b^0
-\] $$
-Note that $latex A^0$$ and $latex b^0$$
-are just certain components of $latex x^0$$.
-The first order Taylor coefficient for $latex z(t, x)$$ solves
-the following initial value ODE:
-$latex \[
-    z_t^1 (t)
-    =
-    A^0 z^1 (t) + A^1 z^0 (t) \W{,} z^1 (0) = b^1
-\] $$
-Note that $latex A^1$$ and $latex c^1$$
-are just certain components of $latex x^1$$.
-We can solve for $latex z^1 (t)$$ using the following extended
-initial value ODE:
-$latex \[
-\left[ \begin{array}{c}
-z^0_t (t, x) \\
-z^1_t (t, x)
-\end{array} \right]
-=
-\left[ \begin{array}{cc}
-A^0 & 0   \\
-A^1 & A^0
-\end{array} \right]
-\left[ \begin{array}{c}
-z^0 (t, x) \\
-z^1 (t, x)
-\end{array} \right]
-\; , \;
-\left[ \begin{array}{c}
-z^0 (0, x) \\
-z^1 (0, x)
-\end{array} \right]
-=
-\left[ \begin{array}{c}
-b^0 \\
-b^1
-\end{array} \right]
-\] $$
-
-
-$subhead Reverse$$
-We are given a vector $latex w \in \B{R}^m$$ and need to compute
-$latex \[
-    \partial_x w^\R{T} z(r, x)
-\] $$
-Consider the Lagrangian corresponding to
-$latex w^\R{T} z(r, x)$$ as the objective and the ODE as the constraint:
-$latex \[
-    L(x, \lambda)
-    =
-    w^\R{T} z(r, x) +
-        \int_0^r \lambda(t, x)^\R{T}
-            [ A(x) z(t, x) - z_t (t, x) ] \R{d} t
-\] $$
-where $latex \lambda : \R{R} \times \B{R}^n \rightarrow \B{R}^m$$
-is a smooth function.
-If $latex z(t, x)$$ satisfies its ODE, then
-$latex \[
-    \partial_x w^\R{T} z(r, x)
-    =
-    \partial_x L(x, \lambda)
-\] $$
-We use the following integration by parts to replace the $latex z_t (t, x)$$
-term in the integral defining $latex L(x, \lambda)$$:
-$latex \[
-    - \int_0^r \lambda(t, x)^\R{T} z_t (t, x) \R{d} t
-    =
-    - \left. \lambda(t, x)^\R{T} z(t, x) \right|_0^r
-    +
-    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
-\] $$
-Adding the condition $latex \lambda(r, x) = w$$,
-and noting that $latex z(0, x) = b(x)$$, we have
-$latex \[
-    L(x, \lambda)
-    =
-    \lambda(0, x)^\R{T} z(0, x)
-    +
-    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
-    +
-    \int_0^r \lambda(t, x)^\R{T} A(x) z(t, x) \R{d} t
-\] $$
-$latex \[
-    L(x, \lambda)
-    =
-    \lambda(0, x)^\R{T} b (x)
-    +
-    \int_0^r [ \lambda_t (t, x)^\R{T} + \lambda(t, x)^\R{T} A(x) ]
-        z(t, x) \R{d} t
-\] $$
-$latex \[
-    L(x, \lambda)
-    =
-    \lambda(0, x)^\R{T} b (x)
-    +
-    \int_0^r z(t, x)^\R{T}
-        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
-\] $$
-The partial derivative
-of $latex L(x, \lambda)$$ with respect to $latex b_j$$,
-(not including the dependence of $latex \lambda(t, x)$$ on $latex x$$)
-is :
-$latex \[
-    \partial_{b(j)} L(x, \lambda)
-    =
-    \lambda_j (0, x)
-\]$$
-The partial derivative
-of $latex L(x, \lambda)$$ with respect to $latex A_{i,j}$$
-(not including The dependence of $latex \lambda(t, x)$$ on $latex x$$)
-is :
-$latex \[
-    \partial_{A(i,j)} L(x, \lambda)
-    =
-    \int_0^r \partial_{A(i,j)} z(t, x)^\R{T}
-        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
-    +
-    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
-\] $$
-If $latex \lambda(t, x)$$ satisfies the ODE
-$latex \[
-    0 = \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x)
-\] $$
-The partial derivative with respect to $latex A_{i,j}$$ is
-$latex \[
-    \partial_{A(i,j)} L(x, \lambda)
-    =
-    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
-\] $$
-In summary, we can compute
-an approximate solution for the initial value ODE:
-$latex \[
-    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
-\] $$
-and approximate solution for the final value ODE:
-$latex \[
-    \lambda_t (t, x) = - A(x)^\R{T} \lambda(t, x)
-    \W{,}
-    \lambda(r, x) = w
-\] $$
-and then an approximation for
-$latex \[
-    \partial_{x(k)} w^\R{T} z(r, x)
-    =
-    \left\{ \begin{array}{lll}
-    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
-    & \R{where} \; i = \R{floor} (k / m) \W{,} j = \R{mod}(k,m)
-    & \R{if} \; k < m \cdot m
-    \\
-    \lambda_i (0, x)
-    & \R{where} \; i = k - m \cdot m
-    & \R{otherwise}
-    %
-    \end{array} \right.
-\] $$
-
-$head Method$$
+$head Approximations$$
 
 $subhead Rosen34$$
 The $cref/Rosen34/atomic_four_lin_ode_base_lin_ode.hpp/Rosen34/$$ routine

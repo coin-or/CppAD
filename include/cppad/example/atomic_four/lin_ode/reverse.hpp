@@ -16,6 +16,7 @@ $begin atomic_four_lin_ode_reverse.hpp$$
 $spell
     lin
     Simpon
+    nnz
 $$
 
 $section
@@ -32,7 +33,125 @@ used by the atomic_four base; see
 $cref/reverse/atomic_four_reverse/$$.
 
 $head Theory$$
-See lin_ode $cref/reverse/atomic_four_lin_ode/Theory/Reverse/$$ theory.
+We are given a vector $latex w \in \B{R}^m$$ and need to compute
+$latex \[
+    \partial_x w^\R{T} z(r, x)
+\] $$
+see the definition of $cref/z(t, x)/atomic_four_lin_ode/z(t, x)/$$.
+Consider the Lagrangian corresponding to
+$latex w^\R{T} z(r, x)$$ as the objective and the ODE as the constraint:
+$latex \[
+    L(x, \lambda)
+    =
+    w^\R{T} z(r, x) +
+        \int_0^r \lambda(t, x)^\R{T}
+            [ A(x) z(t, x) - z_t (t, x) ] \R{d} t
+\] $$
+where $latex \lambda : \R{R} \times \B{R}^n \rightarrow \B{R}^m$$
+is a smooth function.
+If $latex z(t, x)$$ satisfies its ODE, then
+$latex \[
+    \partial_x w^\R{T} z(r, x)
+    =
+    \partial_x L(x, \lambda)
+\] $$
+We use the following integration by parts to replace the $latex z_t (t, x)$$
+term in the integral defining $latex L(x, \lambda)$$:
+$latex \[
+    - \int_0^r \lambda(t, x)^\R{T} z_t (t, x) \R{d} t
+    =
+    - \left. \lambda(t, x)^\R{T} z(t, x) \right|_0^r
+    +
+    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
+\] $$
+Adding the condition $latex \lambda(r, x) = w$$,
+and noting that $latex z(0, x) = b(x)$$, we have
+$latex \[
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} z(0, x)
+    +
+    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
+    +
+    \int_0^r \lambda(t, x)^\R{T} A(x) z(t, x) \R{d} t
+\] $$
+$latex \[
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} b (x)
+    +
+    \int_0^r [ \lambda_t (t, x)^\R{T} + \lambda(t, x)^\R{T} A(x) ]
+        z(t, x) \R{d} t
+\] $$
+$latex \[
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} b (x)
+    +
+    \int_0^r z(t, x)^\R{T}
+        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
+\] $$
+The partial derivative
+of $latex L(x, \lambda)$$ with respect to $latex b_j$$,
+(not including the dependence of $latex \lambda(t, x)$$ on $latex x$$)
+is :
+$latex \[
+    \partial_{b(j)} L(x, \lambda)
+    =
+    \lambda_j (0, x)
+\]$$
+The partial derivative
+of $latex L(x, \lambda)$$ with respect to $latex A_{i,j}$$
+(not including The dependence of $latex \lambda(t, x)$$ on $latex x$$)
+is :
+$latex \[
+    \partial_{A(i,j)} L(x, \lambda)
+    =
+    \int_0^r \partial_{A(i,j)} z(t, x)^\R{T}
+        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
+    +
+    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
+\] $$
+If $latex \lambda(t, x)$$ satisfies the ODE
+$latex \[
+    0 = \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x)
+\] $$
+The partial derivative with respect to $latex A_{i,j}$$ is
+$latex \[
+    \partial_{A(i,j)} L(x, \lambda)
+    =
+    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
+\] $$
+In summary, we can compute
+an approximate solution for the initial value ODE:
+$latex \[
+    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
+\] $$
+and approximate solution for the final value ODE:
+$latex \[
+    \lambda_t (t, x) = - A(x)^\R{T} \lambda(t, x)
+    \W{,}
+    \lambda(r, x) = w
+\] $$
+Using the notation
+$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
+$cref/row/atomic_four_lin_ode/pattern/row/$$, and
+$cref/col/atomic_four_lin_ode/pattern/col/$$,
+We can compute an approximation for
+$latex \[
+    \partial_{x(k)} w^\R{T} z(r, x)
+    =
+    \left\{ \begin{array}{lll}
+    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
+    & \R{where} \; i = \R{row} [k] \W{,} j = \R{col}[k]
+    & \R{if} \; k < nnz
+    \\
+    \lambda_i (0, x)
+    & \R{where} \; i = k - nnz
+    & \R{otherwise}
+    %
+    \end{array} \right.
+\] $$
 
 $head Simpon's Rule$$
 This example uses Simpon's rule to approximate the integral

@@ -31,12 +31,19 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-09$$
+Add a theory section to the linear ODE
+$cref/for_type/atomic_four_lin_ode_for_type.hpp/Theory/$$ section.
+In addition more the linear ODE theory for forward and reverse mode to the
+corresponding
+$cref/forward/atomic_four_lin_ode_forward.hpp/Theory/$$ and
+$cref/reverse/atomic_four_lin_ode_reverse.hpp/Theory/$$ sections.
+
 $head 05-07$$
 Add the $cref base2vec_ad.cpp$$ example demonstrating that $cref base2ad$$
 does not convert $cref VecAD$$ operations as might be expected.
 Add a link to this example in both the base2ad and VecAD documentation
 and a $cref/base2ad wish_list/wish_list/base2ad/$$ item about this.
-
 
 $head 05-06$$
 There was a bug in combining the $cref discrete$$ functions with the
