@@ -27,17 +27,25 @@ $spell
     nx
     af
     Vec
+    Jacobian
 $$
 
 $section Changes and Additions to CppAD During 2022$$
 
 $head 05-09$$
+$list number$$
 Add a theory section to the linear ODE
 $cref/for_type/atomic_four_lin_ode_for_type.hpp/Theory/$$ section.
 In addition more the linear ODE theory for forward and reverse mode to the
 corresponding
 $cref/forward/atomic_four_lin_ode_forward.hpp/Theory/$$ and
 $cref/reverse/atomic_four_lin_ode_reverse.hpp/Theory/$$ sections.
+$lnext
+Back out an incorrect change on 04-15 to the meaning of
+$cref/select_x/atomic_four_jac_sparsity/select_x/$$ and
+$cref/select_y/atomic_four_jac_sparsity/select_y/$$ in the
+atomic four Jacobian sparsity documentation.
+$lend
 
 $head 05-07$$
 Add the $cref base2vec_ad.cpp$$ example demonstrating that $cref base2ad$$

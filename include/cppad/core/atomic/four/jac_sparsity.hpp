@@ -61,11 +61,10 @@ derivative of the atomic function.
 $head select_x$$
 This argument has size equal to the number of arguments to this
 atomic function; i.e. the size of $icode ax$$.
-It specifies which domain components are variables and hence
-should be included in
+It specifies which domain components are included in
 the calculation of $icode pattern_out$$.
-If $icode%select_x%[%j%]%$$ is false, the corresponding argument
-is a parameter and there will be no indices $icode k$$ such that
+If $icode%select_x%[%j%]%$$ is false, then there will be no indices
+$icode k$$ such that
 $codei%
     %pattern_out%.col()[%k%] == %j%
 %$$.
@@ -73,11 +72,10 @@ $codei%
 $head select_y$$
 This argument has size equal to the number of results to this
 atomic function; i.e. the size of $icode ay$$.
-It specifies which range components are variables and hence
-should be included in
+It specifies which range components are included in
 the calculation of $icode pattern_out$$.
-If $icode%select_y%[%i%]%$$ is false, the corresponding result
-is a parameter and there will be no indices $icode k$$ such that
+If $icode%select_y%[%i%]%$$ is false, then there will be no indices
+$icode k$$ such that
 $codei%
     %pattern_out%.row()[%k%] == %i%
 %$$.
