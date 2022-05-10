@@ -32,6 +32,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|begin atomic_mat_mul\([_.$]\)|begin atomic_four_mat_mul\1|
-s|ref atomic_mat_mul\([_.$]\)|ref atomic_four_mat_mul\1|
-s|/atomic_mat_mul/|/atomic_four_mat_mul/|
+s|for a atomic|for an atomic|g

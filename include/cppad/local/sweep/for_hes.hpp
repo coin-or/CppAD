@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_SWEEP_FOR_HES_HPP
 # define CPPAD_LOCAL_SWEEP_FOR_HES_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -478,7 +478,7 @@ void for_hes(
             break;
 
             case FunapOp:
-            // parameter argument for a atomic function
+            // parameter argument for an atomic function
             CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
@@ -499,7 +499,7 @@ void for_hes(
             break;
 
             case FunavOp:
-            // variable argument for a atomic function
+            // variable argument for an atomic function
             CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
@@ -516,7 +516,7 @@ void for_hes(
             break;
 
             case FunrpOp:
-            // parameter result for a atomic function
+            // parameter result for an atomic function
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
@@ -534,7 +534,7 @@ void for_hes(
             break;
 
             case FunrvOp:
-            // variable result for a atomic function
+            // variable result for an atomic function
             CPPAD_ASSERT_NARG_NRES(op, 0, 1);
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
