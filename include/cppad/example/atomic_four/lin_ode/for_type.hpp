@@ -80,7 +80,7 @@ $latex \[
 If $latex A_{i,j} (x)$$ is not in the sparsity
 $cref/pattern/atomic_four_lin_ode/pattern/$$, it is identically zero.
 Furthermore we are allowing for the case where
-$latex A_{i,j} (x)$$ is in the sparsity and it is identically zero; i.e.,
+$latex A_{i,j} (x)$$ is in the pattern and it is identically zero; i.e.,
 the sparsity pattern is not efficient as it could be.
 The type $latex \R{T} [ A_{i,j} (x) ]$$ for components in the sparsity pattern
 is easy to calculate given the type of the components of $icode x$$;
@@ -145,7 +145,7 @@ bool atomic_lin_ode<Base>::for_type(
         type_y[i] = type_x[nnz + i];
     //
     // change
-    // Did type_y change the during the previous iteration of the while loop
+    // Did type_y change during the previous iteration of the while loop
     bool change = true;
     while(change)
     {   change = false;
