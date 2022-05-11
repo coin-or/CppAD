@@ -150,7 +150,7 @@ bool atomic_lin_ode<Base>::for_type(
     while(change)
     {   change = false;
         // we use k = 1, 2, ... to denote the pass through this loop
-        // type_y[i] = max q < k T[ v_i^k (x) ]
+        // type_y[i] = max q < k T[ v_i^q (x) ]
         //
         for(size_t p = 0; p < nnz; ++p)
         {   size_t i = pattern.row()[p];

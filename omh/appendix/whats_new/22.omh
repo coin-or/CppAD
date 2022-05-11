@@ -33,6 +33,13 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-11$$
+A mathematical $cref/theory/atomic_four_lin_ode_jac_sparsity.hpp/Theory/$$
+was added to the linear ODE Jacobian sparsity pattern example.
+In addition, the corresponding code was changed to match the theory.
+This may, or may not, have fixed some bugs in the previous version
+of this routine.
+
 $head 05-10$$
 The $cref/ident_zero_x/atomic_four_jac_sparsity/ident_zero_x/$$ argument
 was added to the atomic four Jacobian sparsity callback.
