@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Calling an Atomic Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Calling an Atomic Function">
-<meta name="keywords" id="keywords" content=" calling atomic function syntax prototype purpose base advector afun ax ay call_id restriction ">
+<meta name="keywords" id="keywords" content=" calling atomic function syntax prototype purpose base advector afun ax ay call_id for_type restriction ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,7 @@ A:active { color : purple }
 <option>ax</option>
 <option>ay</option>
 <option>call_id</option>
+<option>for_type</option>
 <option>---..Restriction</option>
 </select>
 </td>
@@ -221,7 +222,23 @@ in the
 
 <br>
 <br>
-<big><a name="call_id.Restriction" id="call_id.Restriction">Restriction</a></big>
+<b><big><a name="for_type" id="for_type">for_type</a></big></b>
+<br>
+The <a href="atomic_four_for_type.htm" target="_top"><span style='white-space: nowrap'>for_type</span></a>
+ routine will be called once,
+for each call to an atomic function,
+before any other callbacks corresponding to the atomic function call.
+This enables you to store, during the <code><font color="blue">for_type</font></code> routine,
+the values in
+<a href="atomic_four_for_type.htm#type_x" target="_top"><span style='white-space: nowrap'>type_x</span></a>
+ and or
+<a href="atomic_four_for_type.htm#type_y" target="_top"><span style='white-space: nowrap'>type_y</span></a>
+ corresponding
+to this atomic function call.
+
+<br>
+<br>
+<big><a name="for_type.Restriction" id="for_type.Restriction">Restriction</a></big>
 <br>
 The value of 
 <code><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i></code>

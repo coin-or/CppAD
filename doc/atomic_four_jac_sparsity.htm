@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Jacobian Sparsity Patterns</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Jacobian Sparsity Patterns">
-<meta name="keywords" id="keywords" content=" atomic function jacobian sparsity patterns syntax prototype implementation base vector call_id dependency select_x select_y pattern_out ok example ">
+<meta name="keywords" id="keywords" content=" atomic function jacobian sparsity patterns syntax preferred deprecated 2022-05-10 prototype implementation base vector call_id dependency ident_zero_x select_x select_y pattern_out ok example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,12 +69,15 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>---..Preferred</option>
+<option>---..Deprecated 2022-05-10</option>
 <option>Prototype</option>
 <option>Implementation</option>
 <option>Base</option>
 <option>vector</option>
 <option>call_id</option>
 <option>dependency</option>
+<option>ident_zero_x</option>
 <option>select_x</option>
 <option>select_y</option>
 <option>pattern_out</option>
@@ -95,11 +98,29 @@ A:active { color : purple }
 <center><b><big><big>Atomic Function Jacobian Sparsity Patterns</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+<br>
+You can define one or the other of the following callbacks,
+but you should not define both.
+
+<br>
+<br>
+<big><a name="Syntax.Preferred" id="Syntax.Preferred">Preferred</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ident_zero_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.Deprecated 2022-05-10" id="Syntax.Deprecated 2022-05-10">Deprecated 2022-05-10</a></big>
 
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.jac_sparsity(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dependency</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -112,6 +133,7 @@ A:active { color : purple }
 <font color="#009900">bool</font> atomic_four<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
     <font color="#008080">size_t</font>                                  call_id      <font color="#990000">,</font>
     <font color="#009900">bool</font>                                    dependency   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     ident_zero_x <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
     sparse_rc<font color="#990000">&lt;</font> vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>            pattern_out  <font color="#990000">)</font></tt></pre>
@@ -172,21 +194,39 @@ derivative of the atomic function.
 
 <br>
 <br>
+<b><big><a name="ident_zero_x" id="ident_zero_x">ident_zero_x</a></big></b>
+<br>
+This can sometimes be used to create more efficient sparsity patterns.
+If you do not see a way to do this, you can just ignore it.
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ident_zero_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true, the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+is a constant parameter that is identically zero.
+For example, an identically zero value times any other value can be treated
+as being identically zero.
+
+<br>
+<br>
 <b><big><a name="select_x" id="select_x">select_x</a></big></b>
 <br>
 This argument has size equal to the number of arguments to this
 atomic function; i.e. the size of 
 <code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
 .
-It specifies which domain components are variables and hence
-should be included in
+It specifies which domain components are included in
 the calculation of 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
 .
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is false, the corresponding argument
-is a parameter and there will be no indices 
+ is false, then there will be no indices
+
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
  such that
 
@@ -194,6 +234,14 @@ is a parameter and there will be no indices
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i><font color="blue"><span style='white-space: nowrap'>.col()[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 .
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>select_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true, the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+is a variable and 
+<code><i><font color="black"><span style='white-space: nowrap'>ident_zero_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ will be false.
 
 <br>
 <br>
@@ -203,15 +251,14 @@ This argument has size equal to the number of results to this
 atomic function; i.e. the size of 
 <code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
 .
-It specifies which range components are variables and hence
-should be included in
+It specifies which range components are included in
 the calculation of 
 <code><i><font color="black"><span style='white-space: nowrap'>pattern_out</span></font></i></code>
 .
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>select_y</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- is false, the corresponding result
-is a parameter and there will be no indices 
+ is false, then there will be no indices
+
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
  such that
 
@@ -282,7 +329,9 @@ Otherwise it is false.
 The following is an example <code><font color="blue">jac_sparsity</font></code> definition taken from
 <a href="atomic_four_norm_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_norm_sq.cpp</span></a>
 :
-<pre><tt>        <font color="#009900">bool</font> <b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
+<pre><tt>        <i><font color="#9A1900">// using deprecated version of this callback which is missing</font></i>
+        <i><font color="#9A1900">// the ident_zero_x argument.</font></i>
+        <font color="#009900">bool</font> <b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
             <font color="#008080">size_t</font>                                     call_id     <font color="#990000">,</font>
             <font color="#009900">bool</font>                                       dependency  <font color="#990000">,</font>
             <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_x    <font color="#990000">,</font>

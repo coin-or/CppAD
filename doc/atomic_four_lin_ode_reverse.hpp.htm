@@ -104,8 +104,193 @@ used by the atomic_four base; see
 <br>
 <b><big><a name="Theory" id="Theory">Theory</a></big></b>
 <br>
-See lin_ode <a href="atomic_four_lin_ode.htm#Theory.Reverse" target="_top"><span style='white-space: nowrap'>reverse</span></a>
- theory.
+We are given a vector <small>@(@
+w \in \B{R}^m
+@)@</small> and need to compute
+<small>@[@
+
+    \partial_x w^\R{T} z(r, x)
+
+@]@</small>
+see the definition of <a href="atomic_four_lin_ode.htm#z(t, x)" target="_top"><span style='white-space: nowrap'>z(t,&nbsp;x)</span></a>
+.
+Consider the Lagrangian corresponding to
+<small>@(@
+w^\R{T} z(r, x)
+@)@</small> as the objective and the ODE as the constraint:
+<small>@[@
+
+    L(x, \lambda)
+    =
+    w^\R{T} z(r, x) +
+        \int_0^r \lambda(t, x)^\R{T}
+            [ A(x) z(t, x) - z_t (t, x) ] \R{d} t
+
+@]@</small>
+where <small>@(@
+\lambda : \R{R} \times \B{R}^n \rightarrow \B{R}^m
+@)@</small>
+is a smooth function.
+If <small>@(@
+z(t, x)
+@)@</small> satisfies its ODE, then
+<small>@[@
+
+    \partial_x w^\R{T} z(r, x)
+    =
+    \partial_x L(x, \lambda)
+
+@]@</small>
+We use the following integration by parts to replace the <small>@(@
+z_t (t, x)
+@)@</small>
+term in the integral defining <small>@(@
+L(x, \lambda)
+@)@</small>:
+<small>@[@
+
+    - \int_0^r \lambda(t, x)^\R{T} z_t (t, x) \R{d} t
+    =
+    - \left. \lambda(t, x)^\R{T} z(t, x) \right|_0^r
+    +
+    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
+
+@]@</small>
+Adding the condition <small>@(@
+\lambda(r, x) = w
+@)@</small>,
+and noting that <small>@(@
+z(0, x) = b(x)
+@)@</small>, we have
+<small>@[@
+
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} z(0, x)
+    +
+    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
+    +
+    \int_0^r \lambda(t, x)^\R{T} A(x) z(t, x) \R{d} t
+
+@]@</small>
+<small>@[@
+
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} b (x)
+    +
+    \int_0^r [ \lambda_t (t, x)^\R{T} + \lambda(t, x)^\R{T} A(x) ]
+        z(t, x) \R{d} t
+
+@]@</small>
+<small>@[@
+
+    L(x, \lambda)
+    =
+    \lambda(0, x)^\R{T} b (x)
+    +
+    \int_0^r z(t, x)^\R{T}
+        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
+
+@]@</small>
+The partial derivative
+of <small>@(@
+L(x, \lambda)
+@)@</small> with respect to <small>@(@
+b_j
+@)@</small>,
+(not including the dependence of <small>@(@
+\lambda(t, x)
+@)@</small> on <small>@(@
+x
+@)@</small>)
+is :
+<small>@[@
+
+    \partial_{b(j)} L(x, \lambda)
+    =
+    \lambda_j (0, x)
+
+@]@</small>
+The partial derivative
+of <small>@(@
+L(x, \lambda)
+@)@</small> with respect to <small>@(@
+A_{i,j}
+@)@</small>
+(not including The dependence of <small>@(@
+\lambda(t, x)
+@)@</small> on <small>@(@
+x
+@)@</small>)
+is :
+<small>@[@
+
+    \partial_{A(i,j)} L(x, \lambda)
+    =
+    \int_0^r \partial_{A(i,j)} z(t, x)^\R{T}
+        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
+    +
+    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
+
+@]@</small>
+If <small>@(@
+\lambda(t, x)
+@)@</small> satisfies the ODE
+<small>@[@
+
+    0 = \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x)
+
+@]@</small>
+The partial derivative with respect to <small>@(@
+A_{i,j}
+@)@</small> is
+<small>@[@
+
+    \partial_{A(i,j)} L(x, \lambda)
+    =
+    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
+
+@]@</small>
+In summary, we can compute
+an approximate solution for the initial value ODE:
+<small>@[@
+
+    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
+
+@]@</small>
+and approximate solution for the final value ODE:
+<small>@[@
+
+    \lambda_t (t, x) = - A(x)^\R{T} \lambda(t, x)
+    \W{,}
+    \lambda(r, x) = w
+
+@]@</small>
+Using the notation
+<a href="atomic_four_lin_ode.htm#pattern.nnz" target="_top"><span style='white-space: nowrap'>nnz</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.row" target="_top"><span style='white-space: nowrap'>row</span></a>
+, and
+<a href="atomic_four_lin_ode.htm#pattern.col" target="_top"><span style='white-space: nowrap'>col</span></a>
+,
+We can compute an approximation for
+<small>@[@
+
+    \partial_{x(k)} w^\R{T} z(r, x)
+    =
+    \left\{ \begin{array}{lll}
+    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
+    & \R{where} \; i = \R{row} [k] \W{,} j = \R{col}[k]
+    & \R{if} \; k < nnz
+    \\
+    \lambda_i (0, x)
+    & \R{where} \; i = k - nnz
+    & \R{otherwise}
+    %
+    \end{array} \right.
+
+@]@</small>
 
 <br>
 <br>

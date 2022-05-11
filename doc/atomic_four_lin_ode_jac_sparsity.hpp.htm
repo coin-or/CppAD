@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Linear ODE Jacobian Sparsity Pattern: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Linear ODE Jacobian Sparsity Pattern: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic linear ode jacobian sparsity pattern: example implementation purpose source ">
+<meta name="keywords" id="keywords" content=" atomic linear ode jacobian sparsity pattern: example implementation purpose representation notation s[ g(x) ] n [ j_i a(x) p_i theory source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,6 +71,13 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Purpose</option>
+<option>Representation</option>
+<option>Notation</option>
+<option>---..S[ g(x) ]</option>
+<option>---..N [ g(x) ]</option>
+<option>---..J_i [ A(x) ]</option>
+<option>---..P_i [ g(x) ]</option>
+<option>Theory</option>
 <option>Example</option>
 <option>Source</option>
 </select>
@@ -90,6 +97,236 @@ The <code><font color="blue">jac_sparsity</font></code> routine overrides the vi
 used by the atomic_four base class for Jacobian sparsity calculations; see
 <a href="atomic_four_jac_sparsity.htm" target="_top"><span style='white-space: nowrap'>jac_sparsity</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="Representation" id="Representation">Representation</a></big></b>
+<br>
+We use the following representation for
+<a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
+:
+<small>@[@
+
+y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
+
+@]@</small>
+Define <small>@(@
+v^0 (x) = b(x)
+@)@</small> and for <small>@(@
+k = 1, 2, \ldots
+@)@</small>,
+<small>@(@
+v^k (x) = (r / k) A(x) v^{k-1} (x)
+@)@</small>.
+Using this notation,
+<small>@[@
+
+y(x) = \sum_{k=0}^\infty v^k (x)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+<br>
+We use the sparsity notation
+<a href="atomic_four_lin_ode.htm#pattern.nnz" target="_top"><span style='white-space: nowrap'>nnz</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.row" target="_top"><span style='white-space: nowrap'>row</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.col" target="_top"><span style='white-space: nowrap'>col</span></a>
+.
+In addition we define the following notation:
+
+<br>
+<br>
+<big><a name="Notation.S[ g(x) ]" id="Notation.S[ g(x) ]">S[ g(x) ]</a></big>
+<br>
+We use <small>@(@
+S [ g(x) ]
+@)@</small> to denote the sparsity pattern
+for a function <small>@(@
+g : \B{R}^n \rightarrow \B{R}^m
+@)@</small> as a vector of sets.
+To be specific, for <small>@(@
+i = 0, \ldots , m-1
+@)@</small>,
+<small>@(@
+S_i [ g(x) ]
+@)@</small> is the set of indices between
+zero and <small>@(@
+n - 1
+@)@</small> such that
+<small>@(@
+\partial g_i (x) / \partial x_j
+@)@</small> is possibly non-zero.
+
+<br>
+<br>
+<big><a name="Notation.N [ g(x) ]" id="Notation.N [ g(x) ]">N [ g(x) ]</a></big>
+<br>
+We use <small>@(@
+N[ g(x) ]
+@)@</small> to denote the set of <small>@(@
+i
+@)@</small>
+such that <small>@(@
+g_i (x)
+@)@</small> is not identically zero.
+
+<br>
+<br>
+<big><a name="Notation.J_i [ A(x) ]" id="Notation.J_i [ A(x) ]">J_i [ A(x) ]</a></big>
+<br>
+We use <small>@(@
+J_i [ A(x) ]
+@)@</small> to denote the set of <small>@(@
+j
+@)@</small>
+between zero and <small>@(@
+m-1
+@)@</small> such that
+<small>@(@
+A_{i,j}
+@)@</small> is not known to be identically zero.
+
+<br>
+<br>
+<big><a name="Notation.P_i [ g(x) ]" id="Notation.P_i [ g(x) ]">P_i [ g(x) ]</a></big>
+<br>
+We use <small>@(@
+P_i [ g(x) ]
+@)@</small> to denote the set if sparsity pattern indices
+<small>@[@
+
+    P_i [ g(x) ] = \left\{ p  \W{:}
+        0 \leq p < \R{nnz} \W{,}
+        i = \R{row} [p] \W{,}
+        \R{col}[p] \in N [ g(x) ]
+    \right\}
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Theory" id="Theory">Theory</a></big></b>
+<br>
+This routine must calculate the following value for
+<small>@(@
+i = 0, \ldots, m-1
+@)@</small>; see <a href="atomic_four_lin_ode.htm#y(x).m" target="_top"><span style='white-space: nowrap'>m</span></a>
+:
+<small>@[@
+
+    S_i [ y (x) ] = \bigcup_k S_i [  v^k (x) ]
+
+@]@</small>
+The set <small>@(@
+S_i [ v^0 (x) ]
+@)@</small> has just one element
+corresponding to <small>@(@
+b_i (x)
+@)@</small>; i.e,
+<small>@[@
+
+    S_i [ v^0 (x) ] = \{ i \}
+
+@]@</small>
+see <a href="atomic_four_lin_ode.htm#x.b(x)" target="_top"><span style='white-space: nowrap'>b(x)</span></a>
+.
+Furthermore, for <small>@(@
+k > 0
+@)@</small>,
+<small>@[@
+
+    v^k (x) = \frac{r}{k} A(x) v^{k-1} (x)
+
+@]@</small>
+<small>@[@
+
+    S_i [ v^k (x) ] = S_i [ A(x) v^{k-1} (x) ]
+
+@]@</small>
+<small>@[@
+
+    S_i [ v^k (x) ] =  P_i [ v^{k-1} (x) ]
+    \cup \left\{ S_j [ v^{k-1} (x) ] \W{:}  j \in J_i [ A(x) ] \right\}
+
+@]@</small>
+Suppose that <small>@(@
+\ell
+@)@</small> is such that for all <small>@(@
+i
+@)@</small>
+the following two conditions hold
+<small>@[@
+
+    N [ v^\ell (x) ]  \subset \bigcup_{k < \ell} N [ v^k (x) ]
+
+@]@</small>
+<small>@[@
+
+    S_i [ v^\ell (x) ] \subset \bigcup_{k < \ell} S_i [ v^k (x) ]
+
+@]@</small>
+From the first condition above it follows that
+<small>@[@
+
+    P_i [ v^\ell (x) ] \subset \bigcup_{k < \ell} P_i [ v^k (x) ]
+
+@]@</small>
+Using the second condition we have
+<small>@[@
+
+    S_i [ v^{\ell+1} (x) ] =  P_i [ v^\ell (x) ]
+    \cup \left\{ S_j [ v^\ell (x) ] \W{:} j \in J_i [ A(x) ] \right\}
+
+@]@</small>
+<small>@[@
+
+    S_i [ v^{\ell+1} (x) ] \subset
+    \left\{ S_j [ v^\ell (x) ] \W{:} j \in J_i [ A(x) ] \right\}
+        \bigcup_{k \leq \ell } S_i [ v^k (x) ]
+
+@]@</small>
+<small>@[@
+
+    S_i [ v^{\ell+1} (x) ]
+    \subset
+    \bigcup_{k \leq \ell} S_i [ v^k (x) ] \cup
+         \left\{ S_j [ v^k (x) ] \W{:} j \in J_i [ A(x) ] \right\}
+
+@]@</small>
+<small>@[@
+
+    S_i [ v^{\ell+1} (x) ]
+    \subset
+    \bigcup_{k < \ell} S_i [ v^k (x) ] \cup
+         \left\{ S_j [ v^k (x) ] \W{:} j \in J_i [ A(x) ] \right\}
+
+@]@</small>
+<small>@[@
+
+    S_i [ v^{\ell+1} (x) ]
+    \subset
+    \bigcup_{k \leq \ell} S_i [ v^k (x) ]
+
+@]@</small>
+<small>@[@
+
+    S_i [ v^{\ell+1} (x) ]
+    \subset
+    \bigcup_{k < \ell} S_i [ v^k (x) ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+    S_i [ y(x) ] = \bigcup_{k < \ell} S_i [ v^k (x) ]
+
+@]@</small>
+
 
 <br>
 <br>
@@ -113,6 +350,7 @@ contains an example and test using this operator.
 <font color="#009900">bool</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
     <font color="#008080">size_t</font>                                         call_id      <font color="#990000">,</font>
     <font color="#009900">bool</font>                                           dependency   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     ident_zero_x <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
     CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>     pattern_out  <font color="#990000">)</font>
@@ -133,66 +371,86 @@ contains an example and test using this operator.
     <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
     <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_out</font></i>
+    <i><font color="#9A1900">// Accumulates elements of the sparsity pattern for y(x) that satisfy</font></i>
+    <i><font color="#9A1900">// select_x and select_y</font></i>
+    pattern_out<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// list_setvec</font></i>
+    <i><font color="#9A1900">// This vector of sets interface is not in the CppAD user API</font></i>
     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>local<font color="#990000">::</font>sparse<font color="#990000">::</font><font color="#008080">list_setvec</font> list_setvec<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// setvec</font></i>
+    <i><font color="#9A1900">// Accumulates the elements of the sparsity pattern for y(x).</font></i>
+    <i><font color="#9A1900">// There are m sets and the set elements are between zero and n-1.</font></i>
     <font color="#008080">list_setvec</font> setvec<font color="#990000">;</font>
     <font color="#008080">size_t</font> n_set <font color="#990000">=</font> m<font color="#990000">;</font>
     <font color="#008080">size_t</font> end   <font color="#990000">=</font> n<font color="#990000">;</font>
     setvec<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>n_set<font color="#990000">,</font> end<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// initial condition</font></i>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+    <i><font color="#9A1900">// setvec, pattern_out</font></i>
+    <i><font color="#9A1900">// iniialize as equal to S[ v^0 (x) ]</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <font color="#008080">size_t</font> element <font color="#990000">=</font> nnz <font color="#990000">+</font> i<font color="#990000">;</font>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>element<font color="#990000">]</font> <font color="#990000">)</font>
-            setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
+        setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>element<font color="#990000">]</font> <font color="#990000">&amp;</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+            pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// non_zero</font></i>
+    <i><font color="#9A1900">// Accumulates union_k for k &lt; ell, N[ v^k (x) ]</font></i>
+    <i><font color="#9A1900">// initialize as N[ v^0 (x) ]</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;bool&gt;</font> <b><font color="#000000">non_zero</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        non_zero<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">!</font> ident_zero_x<font color="#990000">[</font>nnz <font color="#990000">+</font> i<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// change</font></i>
+    <i><font color="#9A1900">// Did setvec or non_zero change in previous iteration of while loop</font></i>
     <font color="#009900">bool</font> change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>change<font color="#990000">)</font>
     <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// we use k = 1, 2, ... to denote the pass through this loop</font></i>
+        <i><font color="#9A1900">// setvec[i] contains union q &lt; k S_i [ v^q (x) ]</font></i>
+        <i><font color="#9A1900">// non_zero  contains union q &lt; k N [ v^q (x) ]</font></i>
         <i><font color="#9A1900">//</font></i>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        <i><font color="#9A1900">// for each element of the sparsity pattern for A</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>p<font color="#990000">)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ident_zero_x<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
+            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
             <b><font color="#0000FF">if</font></b><font color="#990000">(</font> transpose <font color="#990000">)</font>
                 std<font color="#990000">::</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">);</font>
-            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&amp;</font> select_y<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
-            <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> setvec<font color="#990000">.</font><b><font color="#000000">is_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> k<font color="#990000">)</font> <font color="#990000">)</font>
+            <i><font color="#9A1900">//</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> non_zero<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// p, corresponding to A_{i,j}, is in P_i [ v^k (x) ]</font></i>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> setvec<font color="#990000">.</font><b><font color="#000000">is_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> p<font color="#990000">)</font> <font color="#990000">)</font>
                 <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-                    setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> k<font color="#990000">);</font>
+                    setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> p<font color="#990000">);</font>
+                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&amp;&amp;</font> select_x<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">)</font>
+                        pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>i<font color="#990000">,</font> p<font color="#990000">);</font>
                 <font color="#FF0000">}</font>
-                list_setvec<font color="#990000">::</font><font color="#008080">const_iterator</font> <b><font color="#000000">itr</font></b><font color="#990000">(</font>setvec<font color="#990000">,</font> j<font color="#990000">);</font>
-                <font color="#008080">size_t</font> element <font color="#990000">=</font> <font color="#990000">*</font>itr<font color="#990000">;</font>
-                <b><font color="#0000FF">while</font></b><font color="#990000">(</font>element <font color="#990000">!=</font> end <font color="#990000">)</font>
-                <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>element<font color="#990000">]</font> <font color="#990000">)</font>
-                    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> setvec<font color="#990000">.</font><b><font color="#000000">is_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">)</font> <font color="#990000">)</font>
-                        <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-                            setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
-                        <font color="#FF0000">}</font>
-                    <font color="#FF0000">}</font>
-                    <font color="#990000">++</font>itr<font color="#990000">;</font>
-                    element <font color="#990000">=</font> <font color="#990000">*</font>itr<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">// j is in J_i [ A(x) ]</font></i>
+            list_setvec<font color="#990000">::</font><font color="#008080">const_iterator</font> <b><font color="#000000">itr</font></b><font color="#990000">(</font>setvec<font color="#990000">,</font> j<font color="#990000">);</font>
+            <font color="#008080">size_t</font> element <font color="#990000">=</font> <font color="#990000">*</font>itr<font color="#990000">;</font>
+            <b><font color="#0000FF">while</font></b><font color="#990000">(</font>element <font color="#990000">!=</font> end <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> setvec<font color="#990000">.</font><b><font color="#000000">is_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">)</font> <font color="#990000">)</font>
+                <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+                    setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
+                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&amp;&amp;</font> select_x<font color="#990000">[</font>element<font color="#990000">]</font> <font color="#990000">)</font>
+                        pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
+                 <font color="#FF0000">}</font>
+                 <font color="#990000">++</font>itr<font color="#990000">;</font>
+                 element <font color="#990000">=</font> <font color="#990000">*</font>itr<font color="#990000">;</font>
+            <font color="#FF0000">}</font>
+            <i><font color="#9A1900">// A_{i,j} update to non_zero</font></i>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> non_zero<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#0000FF">false</font></b> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> non_zero<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">==</font> <b><font color="#0000FF">true</font></b> <font color="#990000">)</font>
+                <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+                    non_zero<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
                 <font color="#FF0000">}</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
-    <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// pattern_out</font></i>
-    pattern_out<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>m<font color="#990000">,</font> n<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
-    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   list_setvec<font color="#990000">::</font><font color="#008080">const_iterator</font> <b><font color="#000000">itr</font></b><font color="#990000">(</font>setvec<font color="#990000">,</font> i<font color="#990000">);</font>
-        <font color="#008080">size_t</font> element <font color="#990000">=</font> <font color="#990000">*</font>itr<font color="#990000">;</font>
-        <b><font color="#0000FF">while</font></b><font color="#990000">(</font>element <font color="#990000">!=</font> end <font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> j <font color="#990000">=</font> element<font color="#990000">;</font>
-            pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">);</font>
-            <font color="#990000">++</font>itr<font color="#990000">;</font>
-            element <font color="#990000">=</font> <font color="#990000">*</font>itr<font color="#990000">;</font>
-        <font color="#FF0000">}</font>
-    <font color="#FF0000">}</font>
-    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>

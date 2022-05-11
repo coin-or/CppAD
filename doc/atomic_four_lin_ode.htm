@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic First Order Linear ODE Method: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic First Order Linear ODE Method: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic first order linear ode method: example implementation under construction syntax purpose y m call_id r pattern nnz row col transpose x n a(x) b(x) theory forward reverse method rosen34 simpon's rule ">
+<meta name="keywords" id="keywords" content=" atomic first order linear ode method: example implementation under construction syntax z(t x) y(x) m call_id r pattern nnz row col transpose x n a(x) b(x) approximations rosen34 simpon's rule ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,8 +72,8 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>Under construction</option>
 <option>Syntax</option>
-<option>Purpose</option>
-<option>y</option>
+<option>z(t, x)</option>
+<option>y(x)</option>
 <option>---..m</option>
 <option>call_id</option>
 <option>r</option>
@@ -86,10 +86,7 @@ A:active { color : purple }
 <option>---..n</option>
 <option>---..A(x)</option>
 <option>---..b(x)</option>
-<option>Theory</option>
-<option>---..Forward</option>
-<option>---..Reverse</option>
-<option>Method</option>
+<option>Approximations</option>
 <option>---..Rosen34</option>
 <option>---..Simpon's Rule</option>
 <option>Contents</option>
@@ -126,7 +123,7 @@ This example is under construction and not yet ready for use.
 <code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<b><big><a name="z(t, x)" id="z(t, x)">z(t, x)</a></big></b>
 <br>
 Construct an atomic operation that computes an
 approximate solution of the first order linear initial value ODE
@@ -153,18 +150,19 @@ t
 
 <br>
 <br>
-<b><big><a name="y" id="y">y</a></big></b>
+<b><big><a name="y(x)" id="y(x)">y(x)</a></big></b>
 <br>
 This input value of the elements of 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
  does not matter.
-Upon return it is the final value of the ODE solution, <small>@(@
-y = z(r, x)
+Upon return it is the final value of the ODE solution,
+<small>@(@
+y(x) = z(r, x)
 @)@</small>.
 
 <br>
 <br>
-<big><a name="y.m" id="y.m">m</a></big>
+<big><a name="y(x).m" id="y(x).m">m</a></big>
 <br>
 We use 
 <code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
@@ -278,9 +276,9 @@ for
 <code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nnz</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
 ,
 <small>@(@
-A_{j,i}
+A_{j,i} (x)
 @)@</small> ( <small>@(@
-A_{i,j}
+A_{i,j} (x)
 @)@</small> ) is equal to
 <small>@(@
 x[k]
@@ -302,285 +300,15 @@ This vector is stored at the end of
 b_j (x) = x[ nnz + j ]
 @)@</small>
 
-<br>
-<br>
-<b><big><a name="Theory" id="Theory">Theory</a></big></b>
-<br>
-The theory below includes function values and
-first order derivatives.
 
 <br>
 <br>
-<big><a name="Theory.Forward" id="Theory.Forward">Forward</a></big>
-<br>
-Suppose we are given Taylor coefficients
-<small>@(@
-x^0
-@)@</small>, <small>@(@
-x^1
-@)@</small>, for <small>@(@
-x
-@)@</small>.
-The zero order Taylor coefficient for <small>@(@
-z(t, x)
-@)@</small> solves
-the following initial value ODE:
-<small>@[@
-
-    z_t^0 (t) = A^0 z(t) \W{,} z^0 (0) = b^0
-
-@]@</small>
-Note that <small>@(@
-A^0
-@)@</small> and <small>@(@
-b^0
-@)@</small>
-are just certain components of <small>@(@
-x^0
-@)@</small>.
-The first order Taylor coefficient for <small>@(@
-z(t, x)
-@)@</small> solves
-the following initial value ODE:
-<small>@[@
-
-    z_t^1 (t)
-    =
-    A^0 z^1 (t) + A^1 z^0 (t) \W{,} z^1 (0) = b^1
-
-@]@</small>
-Note that <small>@(@
-A^1
-@)@</small> and <small>@(@
-c^1
-@)@</small>
-are just certain components of <small>@(@
-x^1
-@)@</small>.
-We can solve for <small>@(@
-z^1 (t)
-@)@</small> using the following extended
-initial value ODE:
-<small>@[@
-
-\left[ \begin{array}{c}
-z^0_t (t, x) \\
-z^1_t (t, x)
-\end{array} \right]
-=
-\left[ \begin{array}{cc}
-A^0 & 0   \\
-A^1 & A^0
-\end{array} \right]
-\left[ \begin{array}{c}
-z^0 (t, x) \\
-z^1 (t, x)
-\end{array} \right]
-\; , \;
-\left[ \begin{array}{c}
-z^0 (0, x) \\
-z^1 (0, x)
-\end{array} \right]
-=
-\left[ \begin{array}{c}
-b^0 \\
-b^1
-\end{array} \right]
-
-@]@</small>
+<b><big><a name="Approximations" id="Approximations">Approximations</a></big></b>
 
 
 <br>
 <br>
-<big><a name="Theory.Reverse" id="Theory.Reverse">Reverse</a></big>
-<br>
-We are given a vector <small>@(@
-w \in \B{R}^m
-@)@</small> and need to compute
-<small>@[@
-
-    \partial_x w^\R{T} z(r, x)
-
-@]@</small>
-Consider the Lagrangian corresponding to
-<small>@(@
-w^\R{T} z(r, x)
-@)@</small> as the objective and the ODE as the constraint:
-<small>@[@
-
-    L(x, \lambda)
-    =
-    w^\R{T} z(r, x) +
-        \int_0^r \lambda(t, x)^\R{T}
-            [ A(x) z(t, x) - z_t (t, x) ] \R{d} t
-
-@]@</small>
-where <small>@(@
-\lambda : \R{R} \times \B{R}^n \rightarrow \B{R}^m
-@)@</small>
-is a smooth function.
-If <small>@(@
-z(t, x)
-@)@</small> satisfies its ODE, then
-<small>@[@
-
-    \partial_x w^\R{T} z(r, x)
-    =
-    \partial_x L(x, \lambda)
-
-@]@</small>
-We use the following integration by parts to replace the <small>@(@
-z_t (t, x)
-@)@</small>
-term in the integral defining <small>@(@
-L(x, \lambda)
-@)@</small>:
-<small>@[@
-
-    - \int_0^r \lambda(t, x)^\R{T} z_t (t, x) \R{d} t
-    =
-    - \left. \lambda(t, x)^\R{T} z(t, x) \right|_0^r
-    +
-    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
-
-@]@</small>
-Adding the condition <small>@(@
-\lambda(r, x) = w
-@)@</small>,
-and noting that <small>@(@
-z(0, x) = b(x)
-@)@</small>, we have
-<small>@[@
-
-    L(x, \lambda)
-    =
-    \lambda(0, x)^\R{T} z(0, x)
-    +
-    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
-    +
-    \int_0^r \lambda(t, x)^\R{T} A(x) z(t, x) \R{d} t
-
-@]@</small>
-<small>@[@
-
-    L(x, \lambda)
-    =
-    \lambda(0, x)^\R{T} b (x)
-    +
-    \int_0^r [ \lambda_t (t, x)^\R{T} + \lambda(t, x)^\R{T} A(x) ]
-        z(t, x) \R{d} t
-
-@]@</small>
-<small>@[@
-
-    L(x, \lambda)
-    =
-    \lambda(0, x)^\R{T} b (x)
-    +
-    \int_0^r z(t, x)^\R{T}
-        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
-
-@]@</small>
-The partial derivative
-of <small>@(@
-L(x, \lambda)
-@)@</small> with respect to <small>@(@
-b_j
-@)@</small>,
-(not including the dependence of <small>@(@
-\lambda(t, x)
-@)@</small> on <small>@(@
-x
-@)@</small>)
-is :
-<small>@[@
-
-    \partial_{b(j)} L(x, \lambda)
-    =
-    \lambda_j (0, x)
-
-@]@</small>
-The partial derivative
-of <small>@(@
-L(x, \lambda)
-@)@</small> with respect to <small>@(@
-A_{i,j}
-@)@</small>
-(not including The dependence of <small>@(@
-\lambda(t, x)
-@)@</small> on <small>@(@
-x
-@)@</small>)
-is :
-<small>@[@
-
-    \partial_{A(i,j)} L(x, \lambda)
-    =
-    \int_0^r \partial_{A(i,j)} z(t, x)^\R{T}
-        [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
-    +
-    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
-
-@]@</small>
-If <small>@(@
-\lambda(t, x)
-@)@</small> satisfies the ODE
-<small>@[@
-
-    0 = \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x)
-
-@]@</small>
-The partial derivative with respect to <small>@(@
-A_{i,j}
-@)@</small> is
-<small>@[@
-
-    \partial_{A(i,j)} L(x, \lambda)
-    =
-    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
-
-@]@</small>
-In summary, we can compute
-an approximate solution for the initial value ODE:
-<small>@[@
-
-    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
-
-@]@</small>
-and approximate solution for the final value ODE:
-<small>@[@
-
-    \lambda_t (t, x) = - A(x)^\R{T} \lambda(t, x)
-    \W{,}
-    \lambda(r, x) = w
-
-@]@</small>
-and then an approximation for
-<small>@[@
-
-    \partial_{x(k)} w^\R{T} z(r, x)
-    =
-    \left\{ \begin{array}{lll}
-    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
-    & \R{where} \; i = \R{floor} (k / m) \W{,} j = \R{mod}(k,m)
-    & \R{if} \; k < m \cdot m
-    \\
-    \lambda_i (0, x)
-    & \R{where} \; i = k - m \cdot m
-    & \R{otherwise}
-    %
-    \end{array} \right.
-
-@]@</small>
-
-<br>
-<br>
-<b><big><a name="Method" id="Method">Method</a></big></b>
-
-
-<br>
-<br>
-<big><a name="Method.Rosen34" id="Method.Rosen34">Rosen34</a></big>
+<big><a name="Approximations.Rosen34" id="Approximations.Rosen34">Rosen34</a></big>
 <br>
 The <a href="atomic_four_lin_ode_base_lin_ode.hpp.htm#Rosen34" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
  routine
@@ -589,7 +317,7 @@ Any initial value ODE solver can be used for this purpose.
 
 <br>
 <br>
-<big><a name="Method.Simpon's Rule" id="Method.Simpon's Rule">Simpon's Rule</a></big>
+<big><a name="Approximations.Simpon's Rule" id="Approximations.Simpon's Rule">Simpon's Rule</a></big>
 
 <br>
 <a href="atomic_four_lin_ode_reverse.hpp.htm#Simpon's Rule" target="_top"><span style='white-space: nowrap'>Simpon's&nbsp;rule</span></a>

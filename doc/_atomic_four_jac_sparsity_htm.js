@@ -16,12 +16,15 @@ var list_up0 = [
 ];
 var list_current0 = [
 'atomic_four_jac_sparsity.htm#Syntax',
+'atomic_four_jac_sparsity.htm#Syntax.Preferred',
+'atomic_four_jac_sparsity.htm#Syntax.Deprecated 2022-05-10',
 'atomic_four_jac_sparsity.htm#Prototype',
 'atomic_four_jac_sparsity.htm#Implementation',
 'atomic_four_jac_sparsity.htm#Base',
 'atomic_four_jac_sparsity.htm#vector',
 'atomic_four_jac_sparsity.htm#call_id',
 'atomic_four_jac_sparsity.htm#dependency',
+'atomic_four_jac_sparsity.htm#ident_zero_x',
 'atomic_four_jac_sparsity.htm#select_x',
 'atomic_four_jac_sparsity.htm#select_y',
 'atomic_four_jac_sparsity.htm#pattern_out',

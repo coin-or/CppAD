@@ -24,7 +24,8 @@ var list_current0 = [
 'atomic_four_call.htm#ax',
 'atomic_four_call.htm#ay',
 'atomic_four_call.htm#call_id',
-'atomic_four_call.htm#call_id.Restriction'
+'atomic_four_call.htm#for_type',
+'atomic_four_call.htm#for_type.Restriction'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

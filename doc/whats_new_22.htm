@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>05-11</option>
+<option>05-10</option>
+<option>05-09</option>
 <option>05-07</option>
 <option>05-06</option>
 <option>04-21</option>
@@ -107,6 +110,58 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
 <br>
+<b><big><a name="05-11" id="05-11">05-11</a></big></b>
+<br>
+A mathematical <a href="atomic_four_lin_ode_jac_sparsity.hpp.htm#Theory" target="_top"><span style='white-space: nowrap'>theory</span></a>
+
+was added to the linear ODE Jacobian sparsity pattern example.
+In addition, the corresponding code was changed to match the theory.
+This may, or may not, have fixed some bugs in the previous version
+of this routine.
+
+<br>
+<br>
+<b><big><a name="05-10" id="05-10">05-10</a></big></b>
+<br>
+The <a href="atomic_four_jac_sparsity.htm#ident_zero_x" target="_top"><span style='white-space: nowrap'>ident_zero_x</span></a>
+ argument
+was added to the atomic four Jacobian sparsity callback.
+The previous version of this callback still works but is deprecated.
+
+<br>
+<br>
+<b><big><a name="05-09" id="05-09">05-09</a></big></b>
+
+<ol type="1"><li>
+Add a theory section to the linear ODE
+<a href="atomic_four_lin_ode_for_type.hpp.htm#Theory" target="_top"><span style='white-space: nowrap'>for_type</span></a>
+ section.
+In addition more the linear ODE theory for forward and reverse mode to the
+corresponding
+<a href="atomic_four_lin_ode_forward.hpp.htm#Theory" target="_top"><span style='white-space: nowrap'>forward</span></a>
+ and
+<a href="atomic_four_lin_ode_reverse.hpp.htm#Theory" target="_top"><span style='white-space: nowrap'>reverse</span></a>
+ sections.
+</li><li>
+
+Back out an incorrect change on 04-15 to the meaning of
+<a href="atomic_four_jac_sparsity.htm#select_x" target="_top"><span style='white-space: nowrap'>select_x</span></a>
+ and
+<a href="atomic_four_jac_sparsity.htm#select_y" target="_top"><span style='white-space: nowrap'>select_y</span></a>
+ in the
+atomic four Jacobian sparsity documentation.
+</li><li>
+
+Add the specification that the atomic four
+<a href="atomic_four_call.htm#for_type" target="_top"><span style='white-space: nowrap'>for_type</span></a>
+ callback
+will be called once for each atomic function call and before any other
+of the callbacks for the atomic function call.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="05-07" id="05-07">05-07</a></big></b>
 <br>
 Add the <a href="base2vec_ad.cpp.htm" target="_top"><span style='white-space: nowrap'>base2vec_ad.cpp</span></a>
@@ -117,7 +172,6 @@ does not convert <a href="vecad.htm" target="_top"><span style='white-space: now
 Add a link to this example in both the base2ad and VecAD documentation
 and a <a href="wish_list.htm#base2ad" target="_top"><span style='white-space: nowrap'>base2ad&nbsp;wish_list</span></a>
  item about this.
-
 
 <br>
 <br>

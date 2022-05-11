@@ -95,8 +95,85 @@ used by the atomic_four base; see
 <br>
 <b><big><a name="Theory" id="Theory">Theory</a></big></b>
 <br>
-See lin_ode <a href="atomic_four_lin_ode.htm#Theory.Forward" target="_top"><span style='white-space: nowrap'>forward</span></a>
- theory.
+Suppose we are given Taylor coefficients
+<small>@(@
+x^0
+@)@</small>, <small>@(@
+x^1
+@)@</small>, for
+<a href="atomic_four_lin_ode.htm#x" target="_top"><span style='white-space: nowrap'>x</span></a>
+.
+The zero order Taylor coefficient for
+<a href="atomic_four_lin_ode.htm#z(t, x)" target="_top"><span style='white-space: nowrap'>z(t,&nbsp;x)</span></a>
+ solves
+the following initial value ODE:
+<small>@[@
+
+    z_t^0 (t) = A^0 z(t) \W{,} z^0 (0) = b^0
+
+@]@</small>
+Note that <small>@(@
+A^0
+@)@</small> and <small>@(@
+b^0
+@)@</small>
+are just certain components of <small>@(@
+x^0
+@)@</small>; see
+<a href="atomic_four_lin_ode.htm#x.A(x)" target="_top"><span style='white-space: nowrap'>A(x)</span></a>
+ and
+<a href="atomic_four_lin_ode.htm#x.b(x)" target="_top"><span style='white-space: nowrap'>b(x)</span></a>
+.
+The first order Taylor coefficient for <small>@(@
+z(t, x)
+@)@</small> solves
+the following initial value ODE:
+<small>@[@
+
+    z_t^1 (t)
+    =
+    A^0 z^1 (t) + A^1 z^0 (t) \W{,} z^1 (0) = b^1
+
+@]@</small>
+Note that <small>@(@
+A^1
+@)@</small> and <small>@(@
+c^1
+@)@</small>
+are just certain components of <small>@(@
+x^1
+@)@</small>.
+We can solve for <small>@(@
+z^1 (t)
+@)@</small> using the following extended
+initial value ODE:
+<small>@[@
+
+\left[ \begin{array}{c}
+z^0_t (t, x) \\
+z^1_t (t, x)
+\end{array} \right]
+=
+\left[ \begin{array}{cc}
+A^0 & 0   \\
+A^1 & A^0
+\end{array} \right]
+\left[ \begin{array}{c}
+z^0 (t, x) \\
+z^1 (t, x)
+\end{array} \right]
+\; , \;
+\left[ \begin{array}{c}
+z^0 (0, x) \\
+z^1 (0, x)
+\end{array} \right]
+=
+\left[ \begin{array}{c}
+b^0 \\
+b^1
+\end{array} \right]
+
+@]@</small>
 
 <br>
 <br>

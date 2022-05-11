@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Linear ODE Forward Type Calculation: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Linear ODE Forward Type Calculation: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic linear ode forward type calculation: example implementation purpose source ">
+<meta name="keywords" id="keywords" content=" atomic linear ode forward type calculation: example implementation purpose representation notation theory source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,6 +71,9 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Purpose</option>
+<option>Representation</option>
+<option>Notation</option>
+<option>Theory</option>
 <option>Source</option>
 </select>
 </td>
@@ -89,6 +92,154 @@ The <code><font color="blue">for_type</font></code> routine overrides the virtua
 used by the atomic_four base; see
 <a href="atomic_four_for_type.htm" target="_top"><span style='white-space: nowrap'>for_type</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="Representation" id="Representation">Representation</a></big></b>
+<br>
+We use the following representation for
+<a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
+:
+<small>@[@
+
+y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
+
+@]@</small>
+Define <small>@(@
+v^0 (x) = b(x)
+@)@</small> and for <small>@(@
+k = 1, 2, \ldots
+@)@</small>,
+<small>@(@
+v^k (x) = (r / k) A(x) v^{k-1} (x)
+@)@</small>.
+Using this notation,
+<small>@[@
+
+y(x) = \sum_{k=0}^\infty v^k (x)
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+<br>
+We use <small>@(@
+\R{T} ( s )
+@)@</small> to denote the ad_type of a scalar value <small>@(@
+s
+@)@</small>.
+There are four possible
+<a href="atomic_four_for_type.htm#ad_type" target="_top"><span style='white-space: nowrap'>ad_types</span></a>
+:
+identical_zero, constant, dynamic, and variable in that order.
+
+<br>
+<br>
+<b><big><a name="Theory" id="Theory">Theory</a></big></b>
+<br>
+This routine must calculate the following value for
+<small>@(@
+i = 0, \ldots, m-1
+@)@</small>; see <a href="atomic_four_lin_ode.htm#y(x).m" target="_top"><span style='white-space: nowrap'>m</span></a>
+:
+<small>@[@
+
+    \R{T} [ y_i (x) ] = \max_k \R{T} [  v_i^k (x) ]
+
+@]@</small>
+The type <small>@(@
+\R{T} [ v_i^0 (x) ] = \R{T}[ b_i (x) ]
+@)@</small>.
+This is easy to calculate given the type of the components of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+;
+see <a href="atomic_four_lin_ode.htm#x.b(x)" target="_top"><span style='white-space: nowrap'>b(x)</span></a>
+.
+Furthermore, for <small>@(@
+k > 0
+@)@</small>
+<small>@[@
+
+v_i^k (x)
+=
+\frac{r}{k} \sum_{j=0}^{m-1} A_{i,j} (x) v_j^{k-1} (x)
+
+@]@</small>
+<small>@[@
+
+\R{T} [ v_i^k (x) ]
+=
+\max_j \R{T} [ A_{i,j} (x) v_j^{k-1} (x) ]
+
+@]@</small>
+<small>@[@
+
+\R{T} [ A_{i,j} (x) v_j^k (x) ]
+=
+\left\{ \begin{array}{ll}
+    \R{identical\_zero} &
+    \R{if} A_{i,j} (x) \W{\R{or}} v_j^{k-1} (x) \W{\R{is}} \R{identical\_zero}
+    \\
+    \max\{ \R{T} [ A_{i,j} (x) ] \W{,} \R{T} [ v_j^{k-1} (x) ] \} &
+    \R{otherwise}
+\end{array} \right.
+
+@]@</small>
+If <small>@(@
+A_{i,j} (x)
+@)@</small> is not in the sparsity
+<a href="atomic_four_lin_ode.htm#pattern" target="_top"><span style='white-space: nowrap'>pattern</span></a>
+, it is identically zero.
+Furthermore we are allowing for the case where
+<small>@(@
+A_{i,j} (x)
+@)@</small> is in the pattern and it is identically zero; i.e.,
+the sparsity pattern is not efficient as it could be.
+The type <small>@(@
+\R{T} [ A_{i,j} (x) ]
+@)@</small> for components in the sparsity pattern
+is easy to calculate given the type of the components of 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+;
+see <a href="atomic_four_lin_ode.htm#x.A(x)" target="_top"><span style='white-space: nowrap'>A(x)</span></a>
+.
+Suppose <small>@(@
+\ell
+@)@</small> is such that for all <small>@(@
+i
+@)@</small>
+<small>@[@
+
+    \R{T} [ v_i^\ell (x) ] \leq \max_{k < \ell} \R{T} [ v_i^k (x) ]
+
+@]@</small>
+It follows that
+<small>@[@
+
+    \R{T} [ v_j^{\ell+1} (x) ]  = \max_j \R{T} [ A_{i,j} (x) v_j^\ell (x) ]
+
+@]@</small>
+<small>@[@
+
+    \R{T} [ v_j^{\ell+1} (x) ]
+    \leq
+    \max_{k < \ell} \max_j \R{T} [ A_{i,j} (x) v_j^k (x) ]
+
+@]@</small>
+<small>@[@
+
+    \R{T} [ v_j^{\ell+1} (x) ]
+    \leq
+    \max_{k < \ell} \R{T} [ v_i^k (x) ]
+
+@]@</small>
+From this it is clear that
+<small>@[@
+
+    \R{T} [ y_i (x) ] = \max_{k < \ell} \R{T} [  v_i^k (x) ]
+
+@]@</small>
 
 <br>
 <br>
@@ -122,31 +273,39 @@ used by the atomic_four base; see
     <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> type_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> nnz <font color="#990000">+</font> m <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// type_y[i] = type_b[i]</font></i>
+    <i><font color="#9A1900">// type_y[i] = max T[ v_i^k (x) ] for k = 0</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> type_x<font color="#990000">[</font>nnz <font color="#990000">+</font> i<font color="#990000">];</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// change</font></i>
+    <i><font color="#9A1900">// Did type_y change during the previous iteration of the while loop</font></i>
     <font color="#009900">bool</font> change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>change<font color="#990000">)</font>
     <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">// we use k = 1, 2, ... to denote the pass through this loop</font></i>
+        <i><font color="#9A1900">// type_y[i] = max q &lt; k T[ v_i^q (x) ]</font></i>
         <i><font color="#9A1900">//</font></i>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>p<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
+            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
             <b><font color="#0000FF">if</font></b><font color="#990000">(</font> transpose <font color="#990000">)</font>
                 std<font color="#990000">::</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">);</font>
             <i><font color="#9A1900">//</font></i>
             <i><font color="#9A1900">// type_y[i], change</font></i>
-            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">!=</font> identical_zero_enum <font color="#990000">)</font>
-            <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_y<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&gt;</font> type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">!=</font> identical_zero_enum <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// A_ij (x) is not identically zero</font></i>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_y<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">&gt;</font> type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
                 <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
                     type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> type_y<font color="#990000">[</font>j<font color="#990000">];</font>
                  <font color="#FF0000">}</font>
             <font color="#FF0000">}</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// type_y[i], change</font></i>
             <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_y<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">!=</font> identical_zero_enum <font color="#990000">)</font>
-            <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">&gt;</font> type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+            <font color="#FF0000">{</font>   <i><font color="#9A1900">// There is a q &lt; k such that v_j^q (x) not identically zero</font></i>
+                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> type_x<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">&gt;</font> type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
                 <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-                    type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> type_x<font color="#990000">[</font>k<font color="#990000">];</font>
+                    type_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> type_x<font color="#990000">[</font>p<font color="#990000">];</font>
                 <font color="#FF0000">}</font>
             <font color="#FF0000">}</font>
         <font color="#FF0000">}</font>

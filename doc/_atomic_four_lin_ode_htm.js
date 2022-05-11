@@ -17,9 +17,9 @@ var list_up0 = [
 var list_current0 = [
 'atomic_four_lin_ode.htm#Under construction',
 'atomic_four_lin_ode.htm#Syntax',
-'atomic_four_lin_ode.htm#Purpose',
-'atomic_four_lin_ode.htm#y',
-'atomic_four_lin_ode.htm#y.m',
+'atomic_four_lin_ode.htm#z(t, x)',
+'atomic_four_lin_ode.htm#y(x)',
+'atomic_four_lin_ode.htm#y(x).m',
 'atomic_four_lin_ode.htm#call_id',
 'atomic_four_lin_ode.htm#r',
 'atomic_four_lin_ode.htm#pattern',
@@ -31,12 +31,9 @@ var list_current0 = [
 'atomic_four_lin_ode.htm#x.n',
 'atomic_four_lin_ode.htm#x.A(x)',
 'atomic_four_lin_ode.htm#x.b(x)',
-'atomic_four_lin_ode.htm#Theory',
-'atomic_four_lin_ode.htm#Theory.Forward',
-'atomic_four_lin_ode.htm#Theory.Reverse',
-'atomic_four_lin_ode.htm#Method',
-'atomic_four_lin_ode.htm#Method.Rosen34',
-'atomic_four_lin_ode.htm#Method.Simpon\'s Rule',
+'atomic_four_lin_ode.htm#Approximations',
+'atomic_four_lin_ode.htm#Approximations.Rosen34',
+'atomic_four_lin_ode.htm#Approximations.Simpon\'s Rule',
 'atomic_four_lin_ode.htm#Contents'
 ];
 function choose_across0(item)
