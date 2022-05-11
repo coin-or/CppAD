@@ -28,9 +28,15 @@ $spell
     af
     Vec
     Jacobian
+    ident
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 05-10$$
+The $cref/ident_zero_x/atomic_four_jac_sparsity/ident_zero_x/$$ argument
+was added to the atomic four Jacobian sparsity callback.
+The previous version of this callback still works but is deprecated.
 
 $head 05-09$$
 $list number$$

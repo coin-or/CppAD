@@ -173,6 +173,8 @@ namespace {
         }
         // END REVERSE
         // BEGIN JAC_SPARSITY
+        // using deprecated version of this callback which is missing
+        // the ident_zero_x argument.
         bool jac_sparsity(
             size_t                                     call_id     ,
             bool                                       dependency  ,

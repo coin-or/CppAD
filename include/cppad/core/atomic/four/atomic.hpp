@@ -25,6 +25,7 @@ $spell
     mul
     hpp
     const
+    ident
 $$
 
 $section Defining Atomic Functions: Fourth Generation$$
@@ -46,24 +47,23 @@ $icode%afun%(%call_id%, %ax%, %ay%)
 %$$
 
 $subhead Callbacks$$
-$icode%ok% = %afun%.for_type(
-    %call_id%, %type_x%, %type_y%
+$icode%ok% = %afun%.for_type( %call_id%,
+    %type_x%, %type_y%
 )
-%ok% = %afun%.forward(
-    %call_id%, %select_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
+%ok% = %afun%.forward( %call_id%,
+    %select_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
 )
-%ok% = %afun%.reverse(
-    %call_id%, %select_x%,
-    %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
+%ok% = %afun%.reverse( %call_id%,
+    %select_x%, %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
-%ok% = %afun%.jac_sparsity(
-    %call_id%, %dependency%, %select_x% %select_y%, %pattern_out%
+%ok% = %afun%.jac_sparsity( %call_id%,
+    %dependency%, %ident_zero_x%, %select_x% %select_y%, %pattern_out%
 )
-%ok% = %afun%.hes_sparsity(
-    %call_id%, %select_x% %select_y%, %pattern_out%
+%ok% = %afun%.hes_sparsity( %call_id%,
+    %select_x% %select_y%, %pattern_out%
 )
-%ok% = %afun%.rev_depend(
-    %call_id%, %depend_x%, %depend_y%
+%ok% = %afun%.rev_depend( %call_id%,
+    %depend_x%, %depend_y%
 )%$$
 
 $head See Also$$
@@ -245,27 +245,38 @@ public:
     // ------------------------------------------------------------
     // jac_sparsity
     virtual bool jac_sparsity(
-        size_t                       call_id     ,
-        bool                         dependency  ,
-        const vector<bool>&          select_x    ,
-        const vector<bool>&          select_y    ,
+        size_t                       call_id      ,
+        bool                         dependency   ,
+        const vector<bool>&          ident_zero_x ,
+        const vector<bool>&          select_x     ,
+        const vector<bool>&          select_y     ,
         sparse_rc< vector<size_t> >& pattern_out
     );
     template <class InternalSparsity>
     bool for_jac_sparsity(
-        bool                             dependency   ,
         size_t                           call_id      ,
+        bool                             dependency   ,
+        const vector<bool>&              ident_zero_x ,
         const local::pod_vector<size_t>& x_index      ,
         const local::pod_vector<size_t>& y_index      ,
         InternalSparsity&                var_sparsity
     );
     template <class InternalSparsity>
     bool rev_jac_sparsity(
-        bool                             dependency   ,
         size_t                           call_id      ,
+        bool                             dependency   ,
+        const vector<bool>&              ident_zero_x ,
         const local::pod_vector<size_t>& x_index      ,
         const local::pod_vector<size_t>& y_index      ,
         InternalSparsity&                var_sparsity
+    );
+    // deprecated version of this callback
+    virtual bool jac_sparsity(
+        size_t                       call_id      ,
+        bool                         dependency   ,
+        const vector<bool>&          select_x     ,
+        const vector<bool>&          select_y     ,
+        sparse_rc< vector<size_t> >& pattern_out
     );
     // ------------------------------------------------------------
     // hes_sparsity

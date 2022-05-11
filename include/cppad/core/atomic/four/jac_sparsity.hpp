@@ -19,13 +19,23 @@ $spell
     Jacobian
     afun
     jac
+    ident
 $$
 
 $section Atomic Function Jacobian Sparsity Patterns$$
 
 $head Syntax$$
+You can define one or the other of the following callbacks,
+but you should not define both.
+
+$subhead Preferred$$
+$icode%ok% = %afun%.jac_sparsity( %call_id%,
+    %dependency%, %ident_zero_x%, %select_x%, %select_y%, %pattern_out%
+)%$$
+
+$subhead Deprecated 2022-05-10$$
 $icode%ok% = %afun%.jac_sparsity(
-    %call_id%, %dependency%, %select_x%, %select_y%, %pattern_out%
+    %dependency%, %call_id%, %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $head Prototype$$
@@ -58,6 +68,16 @@ Otherwise it is a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for the
 derivative of the atomic function.
 
+$head ident_zero_x$$
+This can sometimes be used to create more efficient sparsity patterns.
+If you do not see a way to do this, you can just ignore it.
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of $icode ax$$.
+If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+is a constant parameter that is identically zero.
+For example, an identically zero value times any other value can be treated
+as being identically zero.
+
 $head select_x$$
 This argument has size equal to the number of arguments to this
 atomic function; i.e. the size of $icode ax$$.
@@ -68,6 +88,8 @@ $icode k$$ such that
 $codei%
     %pattern_out%.col()[%k%] == %j%
 %$$.
+If $icode%select_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+is a variable and $icode%ident_zero_x%[%j%]%$$ will be false.
 
 $head select_y$$
 This argument has size equal to the number of results to this
@@ -116,7 +138,20 @@ $end
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+//
 // BEGIN_PROTOTYPE
+template <class Base>
+bool atomic_four<Base>::jac_sparsity(
+    size_t                                  call_id      ,
+    bool                                    dependency   ,
+    const vector<bool>&                     ident_zero_x ,
+    const vector<bool>&                     select_x     ,
+    const vector<bool>&                     select_y     ,
+    sparse_rc< vector<size_t> >&            pattern_out  )
+// END_PROTOTYPE
+{   return false; }
+//
+// deprecated version of jac_sparsity callback
 template <class Base>
 bool atomic_four<Base>::jac_sparsity(
     size_t                                  call_id      ,
@@ -124,7 +159,6 @@ bool atomic_four<Base>::jac_sparsity(
     const vector<bool>&                     select_x     ,
     const vector<bool>&                     select_y     ,
     sparse_rc< vector<size_t> >&            pattern_out  )
-// END_PROTOTYPE
 {   return false; }
 } // END_CPPAD_NAMESPACE
 

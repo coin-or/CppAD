@@ -381,10 +381,23 @@ void call_atomic_for_jac_sparsity(
 // END_FOR_JAC_SPARSITY
 {   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
     bool         set_null = false;
-    size_t       type     = 0;          // set to avoid warning
+    size_t       type     = 0;       // set to avoid warning
     std::string* name_ptr = nullptr;
     void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+    //
+    // ident_zero_x
+    vector<bool> ident_zero_x;
+    if( type == 4 )
+    {   size_t n = x_index.size();
+        ident_zero_x.resize(n);
+        for(size_t j = 0; j < n; ++j)
+        {   if( type_x[j] >= constant_enum )
+                ident_zero_x[j] = false;
+            else
+                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+        }
+    }
 # ifndef NDEBUG
     bool ok = v_ptr != nullptr;
     if ( ok )
@@ -408,8 +421,8 @@ void call_atomic_for_jac_sparsity(
         {   CPPAD_ASSERT_UNKNOWN( type == 4 );
             atomic_four<RecBase>* afun =
                 reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->for_jac_sparsity(
-                dependency, call_id, x_index, y_index, var_sparsity
+            ok = afun->for_jac_sparsity( call_id,
+                dependency, ident_zero_x, x_index, y_index, var_sparsity
             );
         }
     }
@@ -445,8 +458,8 @@ void call_atomic_for_jac_sparsity(
     else
     {   atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->for_jac_sparsity(
-            dependency, call_id, x_index, y_index, var_sparsity
+        afun->for_jac_sparsity( call_id,
+            dependency, ident_zero_x, x_index, y_index, var_sparsity
         );
     }
 # endif
@@ -524,6 +537,19 @@ void call_atomic_rev_jac_sparsity(
     std::string* name_ptr = nullptr;
     void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+    //
+    // ident_zero_x
+    vector<bool> ident_zero_x;
+    if( type == 4 )
+    {   size_t n = x_index.size();
+        ident_zero_x.resize(n);
+        for(size_t j = 0; j < n; ++j)
+        {   if( type_x[j] >= constant_enum )
+                ident_zero_x[j] = false;
+            else
+                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+        }
+    }
 # ifndef NDEBUG
     bool ok = v_ptr != nullptr;
     if( ok )
@@ -547,8 +573,8 @@ void call_atomic_rev_jac_sparsity(
         {   CPPAD_ASSERT_UNKNOWN( type == 4 );
             atomic_four<RecBase>* afun =
                 reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->rev_jac_sparsity(
-            dependency, call_id, x_index, y_index, var_sparsity
+            ok = afun->rev_jac_sparsity(call_id,
+                dependency, ident_zero_x, x_index, y_index, var_sparsity
             );
         }
     }
@@ -584,8 +610,8 @@ void call_atomic_rev_jac_sparsity(
     else
     {   atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->rev_jac_sparsity(
-            dependency, call_id, x_index, y_index, var_sparsity
+        afun->rev_jac_sparsity(call_id,
+            dependency, ident_zero_x, x_index, y_index, var_sparsity
         );
     }
 # endif

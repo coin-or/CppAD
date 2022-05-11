@@ -100,6 +100,13 @@ bool atomic_four<Base>::for_hes_sparsity(
     size_t n      = x_index.size();
     size_t m      = y_index.size();
     //
+    // ident_zero_x
+    // 2DO: pass this as an argument to for_hes_sparsity, for this will
+    // create less efficient sparsity patterns
+    vector<bool> ident_zero_x(n);
+    for(size_t j = 0; j < n; ++j)
+        ident_zero_x[j] = false;
+    //
     // select_x
     vector<bool> select_x(n);
     for(size_t j = 0; j < n; j++)
@@ -117,7 +124,10 @@ bool atomic_four<Base>::for_hes_sparsity(
     // call user's version of atomic function for Jacobian
     sparse_rc< vector<size_t> > pattern_out;
     bool dependency = false;
-    bool ok = jac_sparsity(
+    bool ok = jac_sparsity( call_id,
+        dependency, ident_zero_x, select_x, select_y, pattern_out
+    );
+    if(! ok) ok = jac_sparsity(
         call_id, dependency, select_x, select_y, pattern_out
     );
     if( ! ok )
@@ -244,6 +254,13 @@ bool atomic_four<Base>::rev_hes_sparsity(
     size_t n      = x_index.size();
     size_t m      = y_index.size();
     //
+    // ident_zero_x
+    // 2DO: pass this as an argument to for_hes_sparsity, for this will
+    // create less efficient sparsity patterns
+    vector<bool> ident_zero_x(n);
+    for(size_t j = 0; j < n; ++j)
+        ident_zero_x[j] = false;
+    //
     // select_x
     vector<bool> select_x(n);
     for(size_t j = 0; j < n; j++)
@@ -257,7 +274,10 @@ bool atomic_four<Base>::rev_hes_sparsity(
     // call atomic function for Jacobain sparsity
     bool dependency = false;
     sparse_rc< vector<size_t> > pattern_jac;
-    bool ok = jac_sparsity(
+    bool ok = jac_sparsity( call_id,
+        dependency, ident_zero_x, select_x, select_y, pattern_jac
+    );
+    if(! ok) ok = jac_sparsity(
         call_id, dependency, select_x, select_y, pattern_jac
     );
     const vector<size_t>& row_jac( pattern_jac.row() );

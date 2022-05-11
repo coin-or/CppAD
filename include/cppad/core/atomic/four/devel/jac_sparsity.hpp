@@ -31,12 +31,18 @@ $head InternalSparsity$$
 is the type used for internal sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
+$head call_id$$
+see $cref/call_id/atomic_four_call/call_id/$$.
+
 $head dependency$$
 if true, calculate dependency pattern,
 otherwise calculate sparsity pattern.
 
-$head call_id$$
-see $cref/call_id/atomic_four_call/call_id/$$.
+$head ident_zero_x$$
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of $icode ax$$.
+If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+is a constant parameter that is identically zero.
 
 $head x_index$$
 is the variable index, on the tape, for the arguments to this atomic function.
@@ -63,8 +69,9 @@ $end
 template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::for_jac_sparsity(
-    bool                             dependency   ,
     size_t                           call_id      ,
+    bool                             dependency   ,
+    const vector<bool>&              ident_zero_x ,
     const local::pod_vector<size_t>& x_index      ,
     const local::pod_vector<size_t>& y_index      ,
     InternalSparsity&                var_sparsity )
@@ -93,7 +100,10 @@ bool atomic_four<Base>::for_jac_sparsity(
         }
     }
     sparse_rc< vector<size_t> > pattern_out;
-    bool ok = jac_sparsity(
+    bool ok = jac_sparsity( call_id,
+        dependency, ident_zero_x, select_x, select_y, pattern_out
+    );
+    if( ! ok ) ok = jac_sparsity(
         call_id, dependency, select_x, select_y, pattern_out
     );
     if( ! ok )
@@ -141,12 +151,18 @@ $head InternalSparsity$$
 Is the type used for internal sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
+$head call_id$$
+see $cref/call_id/atomic_four_call/call_id/$$
+
 $head dependency$$
 if true, calculate dependency pattern,
 otherwise calculate sparsity pattern.
 
-$head call_id$$
-see $cref/call_id/atomic_four_call/call_id/$$
+$head ident_zero_x$$
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of $icode ax$$.
+If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+is a constant parameter that is identically zero.
 
 $head x_index$$
 is the variable index, on the tape, for the arguments to this atomic function.
@@ -186,8 +202,9 @@ $end
 template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::rev_jac_sparsity(
-    bool                             dependency   ,
     size_t                           call_id      ,
+    bool                             dependency   ,
+    const vector<bool>&              ident_zero_x ,
     const local::pod_vector<size_t>& x_index      ,
     const local::pod_vector<size_t>& y_index      ,
     InternalSparsity&                var_sparsity )
@@ -217,7 +234,10 @@ bool atomic_four<Base>::rev_jac_sparsity(
         }
     }
     sparse_rc< vector<size_t> > pattern_out;
-    bool ok = jac_sparsity(
+    bool ok = jac_sparsity( call_id,
+        dependency, ident_zero_x, select_x, select_y, pattern_out
+    );
+    if( ! ok ) ok = jac_sparsity(
         call_id, dependency, select_x, select_y, pattern_out
     );
     if( ! ok )
