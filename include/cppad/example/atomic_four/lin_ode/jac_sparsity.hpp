@@ -85,7 +85,7 @@ $latex \[
 The set $latex S_i [ v^0 (x) ]$$ has just one element
 corresponding to $latex b_i (x)$$; i.e,
 $latex \[
-    S_i [ v^0 (x) ] = \{ i \}
+    S_i [ v^0 (x) ] = \{ \R{nnz} + i \}
 \] $$
 see $cref/b(x)/atomic_four_lin_ode/x/b(x)/$$.
 Furthermore, for $latex k > 0$$,
