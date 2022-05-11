@@ -20,6 +20,7 @@ $begin atomic_four_for_jac_sparsity$$
 $spell
     Jacobian
     var
+    ident
 $$
 
 $section Link from Forward Jacobian Sparsity Sweep to atomic_four Callback$$
@@ -140,6 +141,7 @@ $begin atomic_four_rev_jac_sparsity$$
 $spell
     Jacobian
     var
+    ident
 $$
 
 $section Link from Reverse Jacobian Sparsity Sweep to atomic_four Callback$$
