@@ -354,7 +354,14 @@ FOREACH(dir_types includedirs libdirs datadir docdir)
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
 # OPENMP_FOUND, OpenMP_CXX_FLAGS
-FIND_PACKAGE(OpenMP)
+IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
+    SET(OPENMP_FOUND FALSE)
+    MESSAGE(STATUS
+        "Skipping OpenMP on Darwin (Mac) systems. 2DO: fix this"
+    )
+ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
+    FIND_PACKAGE(OpenMP)
+ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
 # -----------------------------------------------------------------------------
 # boost_prefix
 # Only need components for object libraries, not include libraries.
