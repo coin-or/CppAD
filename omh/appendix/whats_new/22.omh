@@ -33,6 +33,16 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-12$$
+The $cref cmake$$ script $code cmake/complie_source_test.cmake$$ was not
+working properly on macos systems which resulted in the following warning:
+$codei%
+    warning: 'tmpnam' is deprecated:  %...%
+        file_name = tmpnam( nullptr );
+%$$
+This has been fixed.
+
+
 $head 05-11$$
 A mathematical $cref/theory/atomic_four_lin_ode_jac_sparsity.hpp/Theory/$$
 was added to the linear ODE Jacobian sparsity pattern example.
