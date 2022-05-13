@@ -1,7 +1,7 @@
 # ifndef CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 # define CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -78,9 +78,12 @@ namespace CppAD {
     template <class Float>  class numeric_limits;
 }
 
-namespace std {
-    template <class Base> bool isinf(const CppAD::AD<Base> &x);
-    template <class Base> bool isnan(const CppAD::AD<Base> &x);
+namespace CppAD {
+    template <class Base> bool isinf(const CppAD::AD<Base> &x)
+    {   CppAD::AD<Base> inf =
+            CppAD::numeric_limits< AD<Base> >::infinity();
+        return (x == inf) | (x == -inf);
+    }
 }
 
 // cppad.hpp gets included at the end
