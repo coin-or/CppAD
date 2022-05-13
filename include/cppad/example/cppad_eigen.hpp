@@ -11,9 +11,6 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-// cppad.hpp gets included at the end
-# define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
-# include <Eigen/Core>
 
 /*
 $begin cppad_eigen.hpp$$
@@ -80,6 +77,16 @@ namespace CppAD {
     // numeric_limits<Float>
     template <class Float>  class numeric_limits;
 }
+
+namespace std {
+    template <class Base> bool isinf(const CppAD::AD<Base> &x);
+    template <class Base> bool isnan(const CppAD::AD<Base> &x);
+}
+
+// cppad.hpp gets included at the end
+# define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
+# include <Eigen/Core>
+
 /* %$$
 $head Eigen NumTraits$$
 Eigen needs the following definitions to work properly
@@ -134,6 +141,14 @@ namespace Eigen {
         // number of decimal digits that can be represented without change.
         static int digits10(void)
         {   return CppAD::numeric_limits< CppAD::AD<Base> >::digits10; }
+
+        // not a number
+        static CppAD::AD<Base> quiet_NaN(void)
+        {   return CppAD::numeric_limits< CppAD::AD<Base> >::quiet_NaN(); }
+
+        // positive infinite value
+        static CppAD::AD<Base> infinity(void)
+        {   return CppAD::numeric_limits< CppAD::AD<Base> >::infinity(); }
     };
 }
 /* %$$
@@ -189,6 +204,15 @@ namespace CppAD {
 }
 //
 # include <cppad/cppad.hpp>
+
+namespace std {
+    template <class Base> bool isinf(const CppAD::AD<Base> &x)
+    {   return isinf(CppAD::Value(x)); }
+
+    template <class Base> bool isnan(const CppAD::AD<Base> &x)
+    {   return isnan(CppAD::Value(x)); }
+}
+
 /* %$$
 $end
 */
