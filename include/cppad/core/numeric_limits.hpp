@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_NUMERIC_LIMITS_HPP
 # define CPPAD_CORE_NUMERIC_LIMITS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -21,6 +21,8 @@ $spell
     CppAD
     namespace
     const
+    inf
+    isnan
 $$
 
 $section Numeric Limits For an AD and Base Types$$

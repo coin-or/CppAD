@@ -29,13 +29,15 @@ $spell
     Vec
     Jacobian
     ident
+    tmpnam
+    nullptr
 $$
 
 $section Changes and Additions to CppAD During 2022$$
 
 $head 05-12$$
-The $cref cmake$$ script $code cmake/complie_source_test.cmake$$ was not
-working properly on macos systems which resulted in the following warning:
+The $cref cmake$$ script $code cmake/compile_source_test.cmake$$ was not
+working properly on Darwin systems which resulted in the following warning:
 $codei%
     warning: 'tmpnam' is deprecated:  %...%
         file_name = tmpnam( nullptr );
