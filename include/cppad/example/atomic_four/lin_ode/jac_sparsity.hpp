@@ -42,11 +42,16 @@ y(x) = \sum_{k=0}^\infty v^k (x)
 \] $$
 
 $head Notation$$
-We use the sparsity notation
+We use the notation:
+$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
+$cref/m/atomic_four_lin_ode/y(x)/m/$$,
+$cref/n/atomic_four_lin_ode/x/n/$$,
+$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
+$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
 $cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
 $cref/row/atomic_four_lin_ode/pattern/row/$$,
-$cref/col/atomic_four_lin_ode/pattern/col/$$.
-In addition we define the following notation:
+$cref/col/atomic_four_lin_ode/pattern/col/$$
+and the following additional notation:
 
 $subhead S[ g(x) ]$$
 We use $latex S [ g(x) ] $$ to denote the sparsity pattern
@@ -173,20 +178,20 @@ bool atomic_lin_ode<Base>::jac_sparsity(
     CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out  )
 {
     //
-    // r, pattern, transpose, nnz
+    // r, pattern_A, transpose, nnz
     Base      r;
-    sparse_rc pattern;
+    sparse_rc pattern_A;
     bool      transpose;
-    get(call_id, r, pattern, transpose);
-    size_t nnz = pattern.nnz();
+    get(call_id, r, pattern_A, transpose);
+    size_t nnz = pattern_A.nnz();
     //
     // m, n
     size_t m = select_y.size();
     size_t n = select_x.size();
     //
     CPPAD_ASSERT_UNKNOWN( n == nnz + m );
-    CPPAD_ASSERT_UNKNOWN( pattern.nr() == m );
-    CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern_A.nr() == m );
+    CPPAD_ASSERT_UNKNOWN( pattern_A.nc() == m );
     //
     // pattern_out
     // Accumulates elements of the sparsity pattern for y(x) that satisfy
@@ -198,7 +203,7 @@ bool atomic_lin_ode<Base>::jac_sparsity(
     typedef CppAD::local::sparse::list_setvec list_setvec;
     //
     // setvec
-    // Accumulates the elements of the sparsity pattern for y(x).
+    // Accumulates the sparsity pattern for y(x) that satisfy select_x.
     // There are m sets and the set elements are between zero and n-1.
     list_setvec setvec;
     size_t n_set = m;
@@ -209,9 +214,11 @@ bool atomic_lin_ode<Base>::jac_sparsity(
     // iniialize as equal to S[ v^0 (x) ]
     for(size_t i = 0; i < m; ++i)
     {   size_t element = nnz + i;
-        setvec.add_element(i, element);
-        if( select_x[element] & select_y[i] )
-            pattern_out.push_back(i, element);
+        if( select_x[element] )
+        {   setvec.add_element(i, element);
+            if( select_y[i] )
+                pattern_out.push_back(i, element);
+        }
     }
     //
     // non_zero
@@ -230,10 +237,11 @@ bool atomic_lin_ode<Base>::jac_sparsity(
         // setvec[i] contains union q < k S_i [ v^q (x) ]
         // non_zero  contains union q < k N [ v^q (x) ]
         //
-        // for each element of the sparsity pattern for A
-        for(size_t p = 0; p < nnz; ++p) if( ! ident_zero_x[p] )
-        {   size_t i = pattern.row()[p];
-            size_t j = pattern.col()[p];
+        // For each element of the sparsity pattern for A subject to select_x
+        for(size_t p = 0; p < nnz; ++p) if( select_x[p] )
+        {   CPPAD_ASSERT_UNKNOWN( ! ident_zero_x[p] );
+            size_t i = pattern_A.row()[p];
+            size_t j = pattern_A.col()[p];
             if( transpose )
                 std::swap(i, j);
             //
@@ -242,7 +250,7 @@ bool atomic_lin_ode<Base>::jac_sparsity(
                 if( ! setvec.is_element(i, p) )
                 {   change = true;
                     setvec.add_element(i, p);
-                    if( select_y[i] && select_x[p] )
+                    if( select_y[i] )
                         pattern_out.push_back(i, p);
                 }
             }
@@ -253,7 +261,7 @@ bool atomic_lin_ode<Base>::jac_sparsity(
             {   if( ! setvec.is_element(i, element) )
                 {   change = true;
                     setvec.add_element(i, element);
-                    if( select_y[i] && select_x[element] )
+                    if( select_y[i] )
                         pattern_out.push_back(i, element);
                  }
                  ++itr;
