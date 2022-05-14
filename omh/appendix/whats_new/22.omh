@@ -29,13 +29,23 @@ $spell
     Vec
     Jacobian
     ident
+    tmpnam
+    nullptr
+    cppadcg
 $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-13$$
+The $cref/code_gen_fun examples/code_gen_fun/Examples/$$ were
+not being built even when
+$cref/include_cppadcg/cmake/include_cppadcg/$$
+was specified on the cmake command line.
+This has been fixed.
+
 $head 05-12$$
-The $cref cmake$$ script $code cmake/complie_source_test.cmake$$ was not
-working properly on macos systems which resulted in the following warning:
+The $cref cmake$$ script $code cmake/compile_source_test.cmake$$ was not
+working properly on Darwin systems which resulted in the following warning:
 $codei%
     warning: 'tmpnam' is deprecated:  %...%
         file_name = tmpnam( nullptr );

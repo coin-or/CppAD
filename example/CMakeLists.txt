@@ -27,9 +27,9 @@ ADD_SUBDIRECTORY(atomic_four)
 ADD_SUBDIRECTORY(chkpoint_two)
 
 # code_gen_fun examples
-IF( cpapd_has_cpapdcg )
+IF( cppad_has_cppadcg )
     ADD_SUBDIRECTORY(code_gen_fun)
-ENDIF( cpapd_has_cpapdcg )
+ENDIF( cppad_has_cppadcg )
 
 # graph examples
 ADD_SUBDIRECTORY(graph)
