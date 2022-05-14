@@ -48,7 +48,7 @@
 # $head Version$$
 # This will install the following version of Ipopt
 # $srccode%sh%
-version='3.13.2'
+version='3.13.3'
 # %$$
 #
 # $head Configuration$$
