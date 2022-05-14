@@ -78,12 +78,9 @@ namespace CppAD {
     template <class Float>  class numeric_limits;
 }
 
-namespace CppAD {
-    template <class Base> bool isinf(const CppAD::AD<Base> &x)
-    {   CppAD::AD<Base> inf =
-            CppAD::numeric_limits< AD<Base> >::infinity();
-        return (x == inf) | (x == -inf);
-    }
+namespace std {
+    template <class Base> bool isinf(const CppAD::AD<Base> &x);
+    template <class Base> bool isnan(const CppAD::AD<Base> &x);
 }
 
 // cppad.hpp gets included at the end
