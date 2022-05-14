@@ -39,6 +39,7 @@ $spell
     sqrt
     exp
     cos
+    plugin
 $$
 $section Enable Use of Eigen Linear Algebra Package with CppAD$$
 
@@ -64,10 +65,6 @@ The files $cref eigen_array.cpp$$ and $cref eigen_det.cpp$$
 contain an example and test of this include file.
 They return true if they succeed and false otherwise.
 
-$head Include Files$$
-The file $code <Eigen/Core>$$ is included before
-these definitions and $code <cppad/cppad.hpp>$$ is included after.
-
 $head CppAD Declarations$$
 First declare some items that are defined by cppad.hpp:
 $srccode%cpp% */
@@ -77,20 +74,28 @@ namespace CppAD {
     // numeric_limits<Float>
     template <class Float>  class numeric_limits;
 }
+/* %$$
 
+$head std Declarations$$
+Next declare some template specializations in std namespace:
+$srccode%cpp% */
 namespace std {
     template <class Base> bool isinf(const CppAD::AD<Base> &x);
     template <class Base> bool isnan(const CppAD::AD<Base> &x);
 }
+/* %$$
 
-// cppad.hpp gets included at the end
+$head Include Eigen/Core$$
+Next define the eigen plugin and then include Eigen/Core:
+$srccode%cpp% */
+
 # define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
 # include <Eigen/Core>
-
 /* %$$
+
 $head Eigen NumTraits$$
-Eigen needs the following definitions to work properly
-with $codei%AD<%Base%>%$$ scalars:
+Eigen needs the following definitions, in the Eigen namespace,
+to work properly with $codei%AD<%Base%>%$$ scalars:
 $srccode%cpp% */
 namespace Eigen {
     template <class Base> struct NumTraits< CppAD::AD<Base> >
@@ -152,9 +157,10 @@ namespace Eigen {
     };
 }
 /* %$$
+
 $head CppAD Namespace$$
-Eigen also needs the following definitions to work properly
-with $codei%AD<%Base%>%$$ scalars:
+Eigen needs the following definitions, in the CppAD namespace,
+to work properly with $codei%AD<%Base%>%$$ scalars:
 $srccode%cpp% */
 namespace CppAD {
         // functions that return references
@@ -169,8 +175,8 @@ namespace CppAD {
         template <class Base> AD<Base> abs2(const AD<Base>& x)
         {   return x * x; }
 }
-
 /* %$$
+
 $head eigen_vector$$
 The class $code CppAD::eigen_vector$$ is a wrapper for Eigen column vectors
 so that they are $cref/simple vectors/SimpleVector/$$.
@@ -202,9 +208,16 @@ namespace CppAD {
         {   base_class::resize( Eigen::Index(n) ); }
     };
 }
-//
-# include <cppad/cppad.hpp>
+/* %$$
 
+$head Include cppad.hpp$$
+$srccode%cpp% */
+# include <cppad/cppad.hpp>
+/* %$$
+
+$head std Definitions$$
+These definitions use cppad.hpp:
+$srccode%cpp% */
 namespace std {
     template <class Base> bool isinf(const CppAD::AD<Base> &x)
     {   return isinf(CppAD::Value(x)); }
@@ -212,7 +225,6 @@ namespace std {
     template <class Base> bool isnan(const CppAD::AD<Base> &x)
     {   return isnan(CppAD::Value(x)); }
 }
-
 /* %$$
 $end
 */
