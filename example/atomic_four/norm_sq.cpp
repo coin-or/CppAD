@@ -173,11 +173,12 @@ namespace {
         }
         // END REVERSE
         // BEGIN JAC_SPARSITY
-        // using deprecated version of this callback which is missing
-        // the ident_zero_x argument.
+        // Use deprecated version of this callback to test that is still works
+        // (missing the ident_zero_x argument).
         bool jac_sparsity(
             size_t                                     call_id     ,
             bool                                       dependency  ,
+            // const CppAD::vector<bool>&              ident_zero_x,
             const CppAD::vector<bool>&                 select_x    ,
             const CppAD::vector<bool>&                 select_y    ,
             CppAD::sparse_rc< CppAD::vector<size_t> >& pattern_out ) override
@@ -209,8 +210,11 @@ namespace {
         }
         // END JAC_SPARSITY
         // BEGIN HES_SPARSITY
+        // Use deprecated version of this callback to test that is still works
+        // (missing the ident_zero_x argument).
         bool hes_sparsity(
             size_t                                     call_id     ,
+            // const CppAD::vector<bool>&              ident_zero_x,
             const CppAD::vector<bool>&                 select_x    ,
             const CppAD::vector<bool>&                 select_y    ,
             CppAD::sparse_rc< CppAD::vector<size_t> >& pattern_out ) override

@@ -142,6 +142,7 @@ private:
     // hes_sparsity
     bool hes_sparsity(
         size_t                                         call_id,
+        const CppAD::vector<bool>&                     ident_zero_x,
         const CppAD::vector<bool>&                     select_x,
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out

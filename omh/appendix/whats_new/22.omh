@@ -51,6 +51,12 @@ $lnext
 Add $cref Var2Par$$ set in the $code cppad_eigen.hpp$$
 $cref/std Definitions/cppad_eigen.hpp/std Definitions/$$ of the AD versions of
 $code isinf$$ and $code isnan$$.
+$lnext
+Change the atomic four example Hessian sparsity callbacks to use the
+$cref/ident_zero_x/atomic_four_hes_sparsity/ident_zero_x/$$.
+In the special case of $cref atomic_four_norm_sq.cpp$$,
+do not include $icode ident_zero_x$$ and mention that this version
+of the callback is deprecated.
 $lend
 
 $head 05-15$$
