@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic_four_lin_ode_reverse.hpp.htm" target="_top">Prev</a>
-</td><td><a href="atomic_four_lin_ode_forward.cpp.htm" target="_top">Next</a>
+</td><td><a href="atomic_four_lin_ode_hes_sparsity.hpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -129,14 +129,24 @@ y(x) = \sum_{k=0}^\infty v^k (x)
 <br>
 <b><big><a name="Notation" id="Notation">Notation</a></big></b>
 <br>
-We use the sparsity notation
+We use the notation:
+<a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#y(x).m" target="_top"><span style='white-space: nowrap'>m</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.n" target="_top"><span style='white-space: nowrap'>n</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.A(x)" target="_top"><span style='white-space: nowrap'>A(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.b(x)" target="_top"><span style='white-space: nowrap'>b(x)</span></a>
+,
 <a href="atomic_four_lin_ode.htm#pattern.nnz" target="_top"><span style='white-space: nowrap'>nnz</span></a>
 ,
 <a href="atomic_four_lin_ode.htm#pattern.row" target="_top"><span style='white-space: nowrap'>row</span></a>
 ,
 <a href="atomic_four_lin_ode.htm#pattern.col" target="_top"><span style='white-space: nowrap'>col</span></a>
-.
-In addition we define the following notation:
+
+and the following additional notation:
 
 <br>
 <br>
@@ -356,20 +366,20 @@ contains an example and test using this operator.
     CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>     pattern_out  <font color="#990000">)</font>
 <font color="#FF0000">{</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// r, pattern, transpose, nnz</font></i>
+    <i><font color="#9A1900">// r, pattern_A, transpose, nnz</font></i>
     <font color="#008080">Base</font>      r<font color="#990000">;</font>
-    <font color="#008080">sparse_rc</font> pattern<font color="#990000">;</font>
+    <font color="#008080">sparse_rc</font> pattern_A<font color="#990000">;</font>
     <font color="#009900">bool</font>      transpose<font color="#990000">;</font>
-    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
-    <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> pattern_A<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern_A<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// m, n</font></i>
     <font color="#008080">size_t</font> m <font color="#990000">=</font> select_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
     <font color="#008080">size_t</font> n <font color="#990000">=</font> select_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> n <font color="#990000">==</font> nnz <font color="#990000">+</font> m <font color="#990000">);</font>
-    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
-    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern_A<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern_A<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// pattern_out</font></i>
     <i><font color="#9A1900">// Accumulates elements of the sparsity pattern for y(x) that satisfy</font></i>
@@ -381,7 +391,7 @@ contains an example and test using this operator.
     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font>local<font color="#990000">::</font>sparse<font color="#990000">::</font><font color="#008080">list_setvec</font> list_setvec<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// setvec</font></i>
-    <i><font color="#9A1900">// Accumulates the elements of the sparsity pattern for y(x).</font></i>
+    <i><font color="#9A1900">// Accumulates the sparsity pattern for y(x) that satisfy select_x.</font></i>
     <i><font color="#9A1900">// There are m sets and the set elements are between zero and n-1.</font></i>
     <font color="#008080">list_setvec</font> setvec<font color="#990000">;</font>
     <font color="#008080">size_t</font> n_set <font color="#990000">=</font> m<font color="#990000">;</font>
@@ -392,9 +402,11 @@ contains an example and test using this operator.
     <i><font color="#9A1900">// iniialize as equal to S[ v^0 (x) ]</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <font color="#008080">size_t</font> element <font color="#990000">=</font> nnz <font color="#990000">+</font> i<font color="#990000">;</font>
-        setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
-        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>element<font color="#990000">]</font> <font color="#990000">&amp;</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
-            pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>element<font color="#990000">]</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+                pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
+        <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// non_zero</font></i>
@@ -413,10 +425,11 @@ contains an example and test using this operator.
         <i><font color="#9A1900">// setvec[i] contains union q &lt; k S_i [ v^q (x) ]</font></i>
         <i><font color="#9A1900">// non_zero  contains union q &lt; k N [ v^q (x) ]</font></i>
         <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// for each element of the sparsity pattern for A</font></i>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>p<font color="#990000">)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ident_zero_x<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
-            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
+        <i><font color="#9A1900">// For each element of the sparsity pattern for A subject to select_x</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>p<font color="#990000">)</font> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_x<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> <font color="#990000">!</font> ident_zero_x<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">);</font>
+            <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern_A<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
+            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern_A<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
             <b><font color="#0000FF">if</font></b><font color="#990000">(</font> transpose <font color="#990000">)</font>
                 std<font color="#990000">::</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">);</font>
             <i><font color="#9A1900">//</font></i>
@@ -425,7 +438,7 @@ contains an example and test using this operator.
                 <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> setvec<font color="#990000">.</font><b><font color="#000000">is_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> p<font color="#990000">)</font> <font color="#990000">)</font>
                 <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
                     setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> p<font color="#990000">);</font>
-                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&amp;&amp;</font> select_x<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">)</font>
+                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
                         pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>i<font color="#990000">,</font> p<font color="#990000">);</font>
                 <font color="#FF0000">}</font>
             <font color="#FF0000">}</font>
@@ -436,7 +449,7 @@ contains an example and test using this operator.
             <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> setvec<font color="#990000">.</font><b><font color="#000000">is_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">)</font> <font color="#990000">)</font>
                 <font color="#FF0000">{</font>   change <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
                     setvec<font color="#990000">.</font><b><font color="#000000">add_element</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
-                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">&amp;&amp;</font> select_x<font color="#990000">[</font>element<font color="#990000">]</font> <font color="#990000">)</font>
+                    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> select_y<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
                         pattern_out<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>i<font color="#990000">,</font> element<font color="#990000">);</font>
                  <font color="#FF0000">}</font>
                  <font color="#990000">++</font>itr<font color="#990000">;</font>

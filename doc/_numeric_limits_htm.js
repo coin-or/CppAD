@@ -20,6 +20,7 @@ var list_current0 = [
 'numeric_limits.htm#min',
 'numeric_limits.htm#max',
 'numeric_limits.htm#quiet_NaN',
+'numeric_limits.htm#infinity',
 'numeric_limits.htm#digits10',
 'numeric_limits.htm#Example'
 ];

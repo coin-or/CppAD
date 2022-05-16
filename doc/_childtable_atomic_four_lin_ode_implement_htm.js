@@ -10,6 +10,7 @@ document.write('\
 <option>atomic_four_lin_ode_forward.hpp</option>\
 <option>atomic_four_lin_ode_reverse.hpp</option>\
 <option>atomic_four_lin_ode_jac_sparsity.hpp</option>\
+<option>atomic_four_lin_ode_hes_sparsity.hpp</option>\
 </select>\
 ');
 function atomic_four_lin_ode_implement_child(item)
@@ -21,7 +22,8 @@ function atomic_four_lin_ode_implement_child(item)
 		'atomic_four_lin_ode_for_type.hpp.htm',
 		'atomic_four_lin_ode_forward.hpp.htm',
 		'atomic_four_lin_ode_reverse.hpp.htm',
-		'atomic_four_lin_ode_jac_sparsity.hpp.htm'
+		'atomic_four_lin_ode_jac_sparsity.hpp.htm',
+		'atomic_four_lin_ode_hes_sparsity.hpp.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

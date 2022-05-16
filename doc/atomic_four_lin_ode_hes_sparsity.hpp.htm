@@ -1,0 +1,255 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Linear ODE Hessian Sparsity Pattern: Example Implementation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Linear ODE Hessian Sparsity Pattern: Example Implementation">
+<meta name="keywords" id="keywords" content=" atomic linear ode hessian sparsity pattern: example implementation purpose representation source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_lin_ode_hes_sparsity.hpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_four_lin_ode_jac_sparsity.hpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_four_lin_ode_forward.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four</option>
+<option>atomic_four_example</option>
+<option>atomic_four_lin_ode</option>
+<option>atomic_four_lin_ode_implement</option>
+<option>atomic_four_lin_ode_hes_sparsity.hpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_example_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_implement_htm.js'></script>
+</td>
+<td>atomic_four_lin_ode_hes_sparsity.hpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Representation</option>
+<option>Example</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Linear ODE Hessian Sparsity Pattern: Example Implementation</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <code><font color="blue">hes_sparsity</font></code> routine overrides the virtual functions
+used by the atomic_four base class for Hessian sparsity calculations; see
+<a href="atomic_four_hes_sparsity.htm" target="_top"><span style='white-space: nowrap'>hes_sparsity</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Representation" id="Representation">Representation</a></big></b>
+<br>
+We use the following representation for
+<a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
+:
+<small>@[@
+
+y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
+
+@]@</small>
+Define <small>@(@
+v^0 (x) = b(x)
+@)@</small> and for <small>@(@
+k = 1, 2, \ldots
+@)@</small>,
+<small>@(@
+v^k (x) = (r / k) A(x) v^{k-1} (x)
+@)@</small>.
+Using this notation,
+<small>@[@
+
+y(x) = \sum_{k=0}^\infty v^k (x)
+
+@]@</small>
+Now, since we are using the <a href="rosen34.htm" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+ solver, our actual sequence
+of operations is only fourth order accurate.
+So it suffices to compute the sparsity pattern for
+<small>@[@
+
+\tilde{y} (x) = \sum_{k=0}^4 v^k (x)
+
+@]@</small>
+Note that the factor <small>@(@
+r / k
+@)@</small> is constant (with respect to the variables),
+so it suffices to compute the sparsity patter for
+<small>@[@
+
+h (x) = \sum_{k=0}^4 w^k (x)
+
+@]@</small>
+Define <small>@(@
+w^0 (x) = b(x)
+@)@</small> and for <small>@(@
+k = 1, 2, \ldots
+@)@</small>,
+<small>@(@
+w^k (x) = A(x) w^{k-1} (x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="atomic_four_lin_ode_sparsity.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_lin_ode_sparsity.cpp</span></a>
+
+contains an example and test using this operator.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+
+<pre><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/lin_ode.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_CPPAD_NAMESPACE</font></i>
+<i><font color="#9A1900">//</font></i>
+<i><font color="#9A1900">// hes_sparsity override</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">bool</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">hes_sparsity</font></b><font color="#990000">(</font>
+    <font color="#008080">size_t</font>                                         call_id      <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     ident_zero_x <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_x     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                     select_y     <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>     pattern_out  <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// adouble</font></i>
+    <b><font color="#0000FF">typedef</font></b> <font color="#008080">AD&lt;double&gt;</font> adouble<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// r, pattern_A, transpose, nnz</font></i>
+    <font color="#008080">Base</font>      r<font color="#990000">;</font>
+    <font color="#008080">sparse_rc</font> pattern_A<font color="#990000">;</font>
+    <font color="#009900">bool</font>      transpose<font color="#990000">;</font>
+    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> pattern_A<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern_A<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// m, n</font></i>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> select_y<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> select_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// au</font></i>
+    <font color="#008080">vector&lt;adouble&gt;</font> <b><font color="#000000">au</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        au<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font> au <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ax</font></i>
+    <font color="#008080">vector&lt;adouble&gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> ident_zero_x<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">)</font>
+            ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">else</font></b>
+            ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> au<font color="#990000">[</font>j<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// aw</font></i>
+    <i><font color="#9A1900">// aw = w^0 (x)</font></i>
+    <font color="#008080">vector&lt;adouble&gt;</font> <b><font color="#000000">aw</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        aw<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font>nnz <font color="#990000">+</font> i<font color="#990000">];</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ah = w^0 (x)</font></i>
+    <font color="#008080">vector&lt;adouble&gt;</font> ah <font color="#990000">=</font> aw<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ah = sum_k=0^4 w^k (x)</font></i>
+    <font color="#008080">vector&lt;adouble&gt;</font> <b><font color="#000000">awk</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">5</font><font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// aw = w^{k-1} (x)</font></i>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// awk = w^k (x)</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+            awk<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> p <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> p <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>p<font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// i, j</font></i>
+            <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern_A<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
+            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern_A<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>p<font color="#990000">];</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> transpose <font color="#990000">)</font>
+                std<font color="#990000">::</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            <i><font color="#9A1900">// awk</font></i>
+            awk<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> ax<font color="#990000">[</font>p<font color="#990000">]</font> <font color="#990000">*</font> aw<font color="#990000">[</font>j<font color="#990000">];</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// ah = ah + w^k(x)</font></i>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+            ah<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+=</font> awk<font color="#990000">[</font>i<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// aw = w^k (x)</font></i>
+        aw <font color="#990000">=</font> awk<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// h</font></i>
+    <font color="#008080">ADFun&lt;double&gt;</font> h<font color="#990000">;</font>
+    h<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>au<font color="#990000">,</font> ah<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_out</font></i>
+    <i><font color="#9A1900">// can use h.for_hes_sparsity or h.rev_hes_sparsity</font></i>
+    <font color="#009900">bool</font> internal_bool <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    h<font color="#990000">.</font><b><font color="#000000">for_hes_sparsity</font></b><font color="#990000">(</font>select_x<font color="#990000">,</font> select_y<font color="#990000">,</font> internal_bool<font color="#990000">,</font> pattern_out<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>
+
+<hr>Input File: include/cppad/example/atomic_four/lin_ode/hes_sparsity.hpp
+
+</body>
+</html>

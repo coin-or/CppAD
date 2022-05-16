@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Numeric Limits For an AD and Base Types</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Numeric Limits For an AD and Base Types">
-<meta name="keywords" id="keywords" content=" numeric limits ad base types syntax cppad::numeric_limits std::numeric_limits float epsilon min max quiet_nan digits10 example ">
+<meta name="keywords" id="keywords" content=" numeric limits ad base types syntax cppad::numeric_limits std::numeric_limits float epsilon min max quiet_nan infinity digits10 example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,7 @@ A:active { color : purple }
 <option>min</option>
 <option>max</option>
 <option>quiet_NaN</option>
+<option>infinity</option>
 <option>digits10</option>
 <option>Example</option>
 </select>
@@ -104,6 +105,9 @@ A:active { color : purple }
 <code><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::quiet_NaN()<br>
 </span></font></code>
 
+<code><i><font color="black"><span style='white-space: nowrap'>inf</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::infinity()<br>
+</span></font></code>
+
 <code><font color="blue"><span style='white-space: nowrap'>numeric_limits&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;::digits10</span></font></code>
 
 
@@ -119,7 +123,8 @@ These functions and have the prototype
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
  is
-<code><font color="blue">epsilon</font></code>, <code><font color="blue">min</font></code>, <code><font color="blue">max</font></code>, and <code><font color="blue">quiet_NaN</font></code>.
+<code><font color="blue">epsilon</font></code>, <code><font color="blue">min</font></code>, <code><font color="blue">max</font></code>, <code><font color="blue">quiet_NaN</font></code>,
+and <code><font color="blue">infinity</font></code>.
 (Note that <code><font color="blue">digits10</font></code> is member variable and not a function.)
 
 <br>
@@ -251,6 +256,27 @@ tests the value
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;!=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nan</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="infinity" id="infinity">infinity</a></big></b>
+<br>
+The result 
+<code><i><font color="black"><span style='white-space: nowrap'>inf</span></font></i></code>
+ is equal to the
+positive infinite value and has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>inf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The file <a href="num_limits.cpp.htm" target="_top"><span style='white-space: nowrap'>num_limits.cpp</span></a>
+
+tests the value 
+<code><i><font color="black"><span style='white-space: nowrap'>inf</span></font></i></code>
+ by checking that the following are true
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>inf</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;100&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>inf</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;isnan(</span></font><i><font color="black"><span style='white-space: nowrap'>inf</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>inf</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="digits10" id="digits10">digits10</a></big></b>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Enable Use of Eigen Linear Algebra Package with CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Enable Use of Eigen Linear Algebra Package with CppAD">
-<meta name="keywords" id="keywords" content=" enable use eigen linear algebra package with cppad syntax purpose example include files declarations numtraits namespace eigen_vector ">
+<meta name="keywords" id="keywords" content=" enable use eigen linear algebra package with cppad syntax purpose example declarations std include eigen/core numtraits namespace eigen_vector cppad.hpp definitions ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,11 +70,14 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Purpose</option>
 <option>Example</option>
-<option>Include Files</option>
 <option>CppAD Declarations</option>
+<option>std Declarations</option>
+<option>Include Eigen/Core</option>
 <option>Eigen NumTraits</option>
 <option>CppAD Namespace</option>
 <option>eigen_vector</option>
+<option>Include cppad.hpp</option>
+<option>std Definitions</option>
 </select>
 </td>
 </tr></table><br>
@@ -115,13 +118,6 @@ They return true if they succeed and false otherwise.
 
 <br>
 <br>
-<b><big><a name="Include Files" id="Include Files">Include Files</a></big></b>
-<br>
-The file <code><font color="blue">&lt;Eigen/Core&gt;</font></code> is included before
-these definitions and <code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code> is included after.
-
-<br>
-<br>
 <b><big><a name="CppAD Declarations" id="CppAD Declarations">CppAD Declarations</a></big></b>
 <br>
 First declare some items that are defined by cppad.hpp:
@@ -132,10 +128,27 @@ First declare some items that are defined by cppad.hpp:
     <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>  <b><font color="#0000FF">class</font></b> <font color="#008080">numeric_limits</font><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
+<b><big><a name="std Declarations" id="std Declarations">std Declarations</a></big></b>
+<br>
+Next declare some template specializations in std namespace:
+<pre><tt><b><font color="#0000FF">namespace</font></b> std <font color="#FF0000">{</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#009900">bool</font> <b><font color="#000000">isinf</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">);</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#009900">bool</font> <b><font color="#000000">isnan</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">);</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Include Eigen/Core" id="Include Eigen/Core">Include Eigen/Core</a></big></b>
+<br>
+Next define the eigen plugin and then include Eigen/Core:
+<pre style='display:inline'><tt>
+
+<b><font color="#000080"># define</font></b> EIGEN_MATRIXBASE_PLUGIN <font color="#990000">&lt;</font>cppad<font color="#990000">/</font>example<font color="#990000">/</font>eigen_plugin<font color="#990000">.</font>hpp<font color="#990000">&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;Eigen/Core&gt;</font>
+</tt></pre>
+<br>
 <b><big><a name="Eigen NumTraits" id="Eigen NumTraits">Eigen NumTraits</a></big></b>
 <br>
-Eigen needs the following definitions to work properly
-with 
+Eigen needs the following definitions, in the Eigen namespace,
+to work properly with 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  scalars:
 <pre><tt><b><font color="#0000FF">namespace</font></b> Eigen <font color="#FF0000">{</font>
@@ -187,13 +200,21 @@ with
         <i><font color="#9A1900">// number of decimal digits that can be represented without change.</font></i>
         <b><font color="#0000FF">static</font></b> <font color="#009900">int</font> <b><font color="#000000">digits10</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
         <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font>digits10<font color="#990000">;</font> <font color="#FF0000">}</font>
+
+        <i><font color="#9A1900">// not a number</font></i>
+        <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">quiet_NaN</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">quiet_NaN</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
+
+        <i><font color="#9A1900">// positive infinite value</font></i>
+        <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">infinity</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
     <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>
 <b><big><a name="CppAD Namespace" id="CppAD Namespace">CppAD Namespace</a></big></b>
 <br>
-Eigen also needs the following definitions to work properly
-with 
+Eigen needs the following definitions, in the CppAD namespace,
+to work properly with 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  scalars:
 <pre><tt><b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font>
@@ -208,8 +229,8 @@ with
         <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;(</font><font color="#993399">0</font><font color="#990000">.);</font> <font color="#FF0000">}</font>
         <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">abs2</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x<font color="#990000">)</font>
         <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> x <font color="#990000">*</font> x<font color="#990000">;</font> <font color="#FF0000">}</font>
-<font color="#FF0000">}</font>
-</tt></pre>
+<font color="#FF0000">}</font></tt></pre>
+<br>
 <b><big><a name="eigen_vector" id="eigen_vector">eigen_vector</a></big></b>
 <br>
 The class <code><font color="blue">CppAD::eigen_vector</font></code> is a wrapper for Eigen column vectors
@@ -241,9 +262,28 @@ return values to <code><font color="blue">size_t</font></code>.
         <font color="#009900">void</font> <b><font color="#000000">resize</font></b><font color="#990000">(</font><font color="#008080">size_t</font> n<font color="#990000">)</font>
         <font color="#FF0000">{</font>   base_class<font color="#990000">::</font><b><font color="#000000">resize</font></b><font color="#990000">(</font> Eigen<font color="#990000">::</font><b><font color="#000000">Index</font></b><font color="#990000">(</font>n<font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
     <font color="#FF0000">}</font><font color="#990000">;</font>
-<font color="#FF0000">}</font>
-<i><font color="#9A1900">//</font></i>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font></tt></pre>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Include cppad.hpp" id="Include cppad.hpp">Include cppad.hpp</a></big></b>
+
+<pre style='display:inline'><tt>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+</tt></pre>
+<br>
+<b><big><a name="std Definitions" id="std Definitions">std Definitions</a></big></b>
+<br>
+The definitions below use cppad.hpp.
+Note that <a href="value.htm" target="_top"><span style='white-space: nowrap'>Value</span></a>
+ function can only be used with a
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameter</span></a>
+ argument.
+<pre><tt><b><font color="#0000FF">namespace</font></b> std <font color="#FF0000">{</font>
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#009900">bool</font> <b><font color="#000000">isinf</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">isinf</font></b><font color="#990000">(</font>CppAD<font color="#990000">::</font><b><font color="#000000">Value</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font><b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+
+    <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font> <font color="#009900">bool</font> <b><font color="#000000">isnan</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <font color="#990000">&amp;</font>x<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#000000">isnan</font></b><font color="#990000">(</font>CppAD<font color="#990000">::</font><b><font color="#000000">Value</font></b><font color="#990000">(</font> CppAD<font color="#990000">::</font><b><font color="#000000">Var2Par</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">);</font> <font color="#FF0000">}</font>
+<font color="#FF0000">}</font></tt></pre>
 
 <hr>Input File: include/cppad/example/cppad_eigen.hpp
 

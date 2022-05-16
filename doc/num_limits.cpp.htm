@@ -145,6 +145,18 @@ A:active { color : purple }
         ok <font color="#990000">&amp;=</font> ceil_neg_log_eps <font color="#990000">==</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Float<font color="#990000">&gt;::</font>digits10<font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
     <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------</font></i>
+    <font color="#009900">bool</font> <b><font color="#000000">check_infinity</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok    <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+        <font color="#008080">Float</font> inf  <font color="#990000">=</font> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font>Float<font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
+        <font color="#008080">Float</font> hun  <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">);</font>
+        <font color="#008080">Float</font> tmp  <font color="#990000">=</font> <b><font color="#000000">Float</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+        tmp        <font color="#990000">=</font> inf <font color="#990000">+</font> hun<font color="#990000">;</font>
+        ok        <font color="#990000">&amp;=</font> inf <font color="#990000">==</font> tmp<font color="#990000">;</font>
+        tmp        <font color="#990000">=</font> inf <font color="#990000">-</font> inf<font color="#990000">;</font>
+        ok        <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">isnan</font></b><font color="#990000">(</font> tmp <font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
 
 <font color="#009900">bool</font> <b><font color="#000000">num_limits</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
@@ -155,6 +167,7 @@ A:active { color : purple }
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">check_max</font></b><font color="#990000">();</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">check_nan</font></b><font color="#990000">();</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">check_digits10</font></b><font color="#990000">();</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">check_infinity</font></b><font color="#990000">();</font>
 
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>

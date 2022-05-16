@@ -242,10 +242,12 @@ u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> nu<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
         eye_sparsity<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>i<font color="#990000">,</font> i<font color="#990000">,</font> i<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// internal_bool</font></i>
+    <font color="#009900">bool</font> internal_bool <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// jac_sparsity</font></i>
     transpose          <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#009900">bool</font> dependency    <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-    <font color="#009900">bool</font> internal_bool <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#008080">sparse_rc</font> jac_sparsity<font color="#990000">;</font>
     f<font color="#990000">.</font><b><font color="#000000">for_jac_sparsity</font></b><font color="#990000">(</font>
         eye_sparsity<font color="#990000">,</font> transpose<font color="#990000">,</font> dependency<font color="#990000">,</font> internal_bool<font color="#990000">,</font> jac_sparsity
@@ -259,6 +261,35 @@ u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ok</font></i>
     ok <font color="#990000">&amp;=</font> jac_sparsity <font color="#990000">==</font> check_jac_sparsity<font color="#990000">;</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// Hessian Sparsity</font></i>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// select_domain</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <b><font color="#000000">select_domain</font></b><font color="#990000">(</font>nu<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nu<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        select_domain<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// select_range</font></i>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font><font color="#009900">bool</font><font color="#990000">)</font> <b><font color="#000000">select_range</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> ny<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+        select_range<font color="#990000">[</font>i<font color="#990000">]</font>  <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    select_range<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// hes_sparsity</font></i>
+    <font color="#008080">sparse_rc</font> hes_sparsity<font color="#990000">;</font>
+    f<font color="#990000">.</font><b><font color="#000000">for_hes_sparsity</font></b><font color="#990000">(</font>
+        select_domain<font color="#990000">,</font> select_range<font color="#990000">,</font> internal_bool<font color="#990000">,</font> hes_sparsity
+    <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// check_hes_sparsity</font></i>
+    <font color="#008080">sparse_rc</font> check_hes_sparsity<font color="#990000">;</font>
+    check_f<font color="#990000">.</font><b><font color="#000000">for_hes_sparsity</font></b><font color="#990000">(</font>
+        select_domain<font color="#990000">,</font> select_range<font color="#990000">,</font> internal_bool<font color="#990000">,</font> check_hes_sparsity
+    <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    ok <font color="#990000">&amp;=</font> hes_sparsity <font color="#990000">==</font> check_hes_sparsity<font color="#990000">;</font>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>

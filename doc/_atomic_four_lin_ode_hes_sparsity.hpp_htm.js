@@ -7,22 +7,20 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'example.htm',
-'general.htm',
-'cppad_eigen.hpp.htm'
+'ad.htm',
+'advalued.htm',
+'atomic.htm',
+'atomic_four.htm',
+'atomic_four_example.htm',
+'atomic_four_lin_ode.htm',
+'atomic_four_lin_ode_implement.htm',
+'atomic_four_lin_ode_hes_sparsity.hpp.htm'
 ];
 var list_current0 = [
-'cppad_eigen.hpp.htm#Syntax',
-'cppad_eigen.hpp.htm#Purpose',
-'cppad_eigen.hpp.htm#Example',
-'cppad_eigen.hpp.htm#CppAD Declarations',
-'cppad_eigen.hpp.htm#std Declarations',
-'cppad_eigen.hpp.htm#Include Eigen/Core',
-'cppad_eigen.hpp.htm#Eigen NumTraits',
-'cppad_eigen.hpp.htm#CppAD Namespace',
-'cppad_eigen.hpp.htm#eigen_vector',
-'cppad_eigen.hpp.htm#Include cppad.hpp',
-'cppad_eigen.hpp.htm#std Definitions'
+'atomic_four_lin_ode_hes_sparsity.hpp.htm#Purpose',
+'atomic_four_lin_ode_hes_sparsity.hpp.htm#Representation',
+'atomic_four_lin_ode_hes_sparsity.hpp.htm#Example',
+'atomic_four_lin_ode_hes_sparsity.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

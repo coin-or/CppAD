@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 05-16 05-15 05-13 05-12 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>05-16</option>
+<option>05-15</option>
+<option>05-13</option>
+<option>05-12</option>
 <option>05-11</option>
 <option>05-10</option>
 <option>05-09</option>
@@ -109,6 +113,85 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
+<br>
+<b><big><a name="05-16" id="05-16">05-16</a></big></b>
+
+<ol type="1"><li>
+The <a href="atomic_four_hes_sparsity.htm#ident_zero_x" target="_top"><span style='white-space: nowrap'>ident_zero_x</span></a>
+ argument
+was added to the atomic four Hessian sparsity callback.
+The previous version of this callback still works but is deprecated.
+</li><li>
+
+Add <a href="var2par.htm" target="_top"><span style='white-space: nowrap'>Var2Par</span></a>
+ set in the <code><font color="blue">cppad_eigen.hpp</font></code>
+<a href="cppad_eigen.hpp.htm#std Definitions" target="_top"><span style='white-space: nowrap'>std&nbsp;Definitions</span></a>
+ of the AD versions of
+<code><font color="blue">isinf</font></code> and <code><font color="blue">isnan</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-15" id="05-15">05-15</a></big></b>
+
+
+<ol type="1"><li>
+Merge in the pull_140 branch.
+This extended CppAD <a href="base_limits.htm" target="_top"><span style='white-space: nowrap'>base_limits</span></a>
+ and <a href="numeric_limits.htm" target="_top"><span style='white-space: nowrap'>numeric_limits</span></a>
+
+to include <code><font color="blue">infinity()</font></code>.
+In addition,  <code><font color="blue">cppad_eigen.hpp</font></code> added <code><font color="blue">isinf</font></code>
+and <code><font color="blue">isnan</font></code> for AD types to the std namespace; see
+<a href="cppad_eigen.hpp.htm#std Definitions" target="_top"><span style='white-space: nowrap'>std&nbsp;Definitions</span></a>
+.
+
+</li><li>
+
+Fix a long standing bug in the <a href="for_hes_sparsity.htm" target="_top"><span style='white-space: nowrap'>for_hes_sparsity</span></a>
+ routine.
+For example,
+the function called <code><font color="blue">case_seven</font></code> in
+<code><font color="blue">test_more/general/hes_sparsity.cpp/</font></code> tests a case
+where this bug occurred.
+
+</li><li>
+
+Add the <a href="atomic_four_lin_ode_hes_sparsity.hpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_lin_ode_hes_sparsity.hpp</span></a>
+ example.
+
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-13" id="05-13">05-13</a></big></b>
+<br>
+The <a href="code_gen_fun.htm#Examples" target="_top"><span style='white-space: nowrap'>code_gen_fun&nbsp;examples</span></a>
+ were
+not being built even when
+<a href="cmake.htm#include_cppadcg" target="_top"><span style='white-space: nowrap'>include_cppadcg</span></a>
+
+was specified on the cmake command line.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="05-12" id="05-12">05-12</a></big></b>
+<br>
+The <a href="cmake.htm" target="_top"><span style='white-space: nowrap'>cmake</span></a>
+ script <code><font color="blue">cmake/compile_source_test.cmake</font></code> was not
+working properly on Darwin systems which resulted in the following warning:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;warning:&nbsp;'tmpnam'&nbsp;is&nbsp;deprecated:&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_name&nbsp;=&nbsp;tmpnam(&nbsp;nullptr&nbsp;);<br>
+</span></font></code>
+This has been fixed.
+
+
+<br>
 <br>
 <b><big><a name="05-11" id="05-11">05-11</a></big></b>
 <br>
