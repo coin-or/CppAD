@@ -42,6 +42,11 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-16$$
+The $cref/ident_zero_x/atomic_four_hes_sparsity/ident_zero_x/$$ argument
+was added to the atomic four Hessian sparsity callback.
+The previous version of this callback still works but is deprecated.
+
 $head 05-15$$
 
 $list number$$
@@ -58,6 +63,9 @@ For example,
 the function called $code case_seven$$ in
 $code test_more/general/hes_sparsity.cpp/$$ tests a case
 where this bug occurred.
+
+$lnext
+Add the $cref atomic_four_lin_ode_hes_sparsity.hpp$$ example.
 
 $lend
 

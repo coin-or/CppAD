@@ -154,10 +154,12 @@ bool sparsity(void)
     for(size_t i = 0; i < nu; ++i)
         eye_sparsity.set(i, i, i);
     //
+    // internal_bool
+    bool internal_bool = false;
+    //
     // jac_sparsity
     transpose          = false;
     bool dependency    = false;
-    bool internal_bool = false;
     sparse_rc jac_sparsity;
     f.for_jac_sparsity(
         eye_sparsity, transpose, dependency, internal_bool, jac_sparsity
@@ -171,6 +173,35 @@ bool sparsity(void)
     //
     // ok
     ok &= jac_sparsity == check_jac_sparsity;
+    // -----------------------------------------------------------------------
+    // Hessian Sparsity
+    // -----------------------------------------------------------------------
+    //
+    // select_domain
+    CPPAD_TESTVECTOR(bool) select_domain(nu);
+    for(size_t j = 0; j < nu; ++j)
+        select_domain[j] = true;
+    //
+    // select_range
+    CPPAD_TESTVECTOR(bool) select_range(ny);
+    for(size_t i = 0; i < ny; ++i)
+        select_range[i]  = false;
+    select_range[1] = true;
+    //
+    // hes_sparsity
+    sparse_rc hes_sparsity;
+    f.for_hes_sparsity(
+        select_domain, select_range, internal_bool, hes_sparsity
+    );
+    //
+    // check_hes_sparsity
+    sparse_rc check_hes_sparsity;
+    check_f.for_hes_sparsity(
+        select_domain, select_range, internal_bool, check_hes_sparsity
+    );
+    //
+    // ok
+    ok &= hes_sparsity == check_hes_sparsity;
     // -----------------------------------------------------------------------
     return ok;
 }

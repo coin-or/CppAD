@@ -60,7 +60,7 @@ $icode%ok% = %afun%.for_type( %call_id%,
     %dependency%, %ident_zero_x%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.hes_sparsity( %call_id%,
-    %select_x% %select_y%, %pattern_out%
+    %ident_zero_x%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.rev_depend( %call_id%,
     %depend_x%, %depend_y%
@@ -282,6 +282,7 @@ public:
     // hes_sparsity
     virtual bool hes_sparsity(
         size_t                                  call_id      ,
+        const vector<bool>&                     ident_zero_x ,
         const vector<bool>&                     select_x     ,
         const vector<bool>&                     select_y     ,
         sparse_rc< vector<size_t> >&            pattern_out
@@ -289,6 +290,7 @@ public:
     template <class InternalSparsity>
     bool for_hes_sparsity(
         size_t                           call_id          ,
+        const vector<bool>&              ident_zero_x     ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
         size_t                           np1              ,
@@ -299,13 +301,20 @@ public:
     template <class InternalSparsity>
     bool rev_hes_sparsity(
         size_t                           call_id          ,
+        const vector<bool>&              ident_zero_x     ,
         const local::pod_vector<size_t>& x_index          ,
         const local::pod_vector<size_t>& y_index          ,
         const InternalSparsity&          for_jac_pattern  ,
         bool*                            rev_jac_flag     ,
         InternalSparsity&                hes_sparsity
     );
-
+    // deprecated version of this callback
+    virtual bool hes_sparsity(
+        size_t                                  call_id      ,
+        const vector<bool>&                     select_x     ,
+        const vector<bool>&                     select_y     ,
+        sparse_rc< vector<size_t> >&            pattern_out
+    );
     // =====================================================================
     // Not in User API
     // =====================================================================

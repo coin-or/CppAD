@@ -618,7 +618,7 @@ void call_atomic_rev_jac_sparsity(
 }
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_for_hes_sparsiy_callback$$
+$begin atomic_for_hes_sparsity_callback$$
 $spell
     hes
     np
@@ -732,6 +732,19 @@ void call_atomic_for_hes_sparsity(
     std::string* name_ptr = nullptr;
     void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+    //
+    // ident_zero_x
+    vector<bool> ident_zero_x;
+    if( type == 4 )
+    {   size_t n = x_index.size();
+        ident_zero_x.resize(n);
+        for(size_t j = 0; j < n; ++j)
+        {   if( type_x[j] >= constant_enum )
+                ident_zero_x[j] = false;
+            else
+                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+        }
+    }
 # ifndef NDEBUG
     bool ok = v_ptr != nullptr;
     if( ok )
@@ -770,6 +783,7 @@ void call_atomic_for_hes_sparsity(
                 reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
             ok = afun->for_hes_sparsity(
                 call_id,
+                ident_zero_x,
                 x_index,
                 y_index,
                 np1,
@@ -787,7 +801,7 @@ void call_atomic_for_hes_sparsity(
         );
         std::string msg = name;
         if( v_ptr == nullptr )
-            msg += ": this atomic_three function has been deleted";
+            msg += ": this atomic function has been deleted";
         else
             msg += ": atomic hes_sparsity returned false";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -826,6 +840,7 @@ void call_atomic_for_hes_sparsity(
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->for_hes_sparsity(
             call_id,
+            ident_zero_x,
             x_index,
             y_index,
             np1,
@@ -919,6 +934,19 @@ void call_atomic_rev_hes_sparsity(
     std::string* name_ptr = nullptr;
     void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+    //
+    // ident_zero_x
+    vector<bool> ident_zero_x;
+    if( type == 4 )
+    {   size_t n = x_index.size();
+        ident_zero_x.resize(n);
+        for(size_t j = 0; j < n; ++j)
+        {   if( type_x[j] >= constant_enum )
+                ident_zero_x[j] = false;
+            else
+                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+        }
+    }
 # ifndef NDEBUG
     bool ok = v_ptr != nullptr;
     if( ok )
@@ -955,6 +983,7 @@ void call_atomic_rev_hes_sparsity(
                 reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
             ok = afun->rev_hes_sparsity(
                 call_id,
+                ident_zero_x,
                 x_index,
                 y_index,
                 for_jac_sparsity,
@@ -971,7 +1000,7 @@ void call_atomic_rev_hes_sparsity(
         );
         std::string msg = name;
         if( v_ptr == nullptr )
-            msg += ": this atomic_three function has been deleted";
+            msg += ": this atomic function has been deleted";
         else
             msg += ": atomic hes_sparsity returned false";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -1008,6 +1037,7 @@ void call_atomic_rev_hes_sparsity(
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
         afun->rev_hes_sparsity(
             call_id,
+            ident_zero_x,
             x_index,
             y_index,
             for_jac_sparsity,
@@ -1093,7 +1123,7 @@ void call_atomic_rev_depend(
         local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
         std::string msg = name;
         if( v_ptr == nullptr )
-            msg += ": this atomic_three function has been deleted";
+            msg += ": this atomic function has been deleted";
         else
             msg += ": atomic rev_depend returned false";
         CPPAD_ASSERT_KNOWN(false, msg.c_str() );

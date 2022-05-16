@@ -509,7 +509,7 @@ void for_hes(
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
             CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
             CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-            CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < numvar );
+            CPPAD_ASSERT_UNKNOWN( arg[0] < numvar );
             //
             // arguemnt variables not avaialbe during sparisty calculations
             atom_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();

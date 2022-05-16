@@ -29,6 +29,12 @@ sparse_pack or sparse_list.
 $head call_id [in]$$
 see $cref/call_id/atomic_four_call/call_id/$$.
 
+$head ident_zero_x$$
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of $icode ax$$.
+If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+is a constant parameter that is identically zero.
+
 $head x_index$$
 is the variable index, on the tape, for the arguments to this function.
 This size of x_index is n, the number of arguments to this function.
@@ -83,6 +89,7 @@ template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::for_hes_sparsity(
     size_t                           call_id          ,
+    const vector<bool>&              ident_zero_x     ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
     size_t                           np1              ,
@@ -99,13 +106,6 @@ bool atomic_four<Base>::for_hes_sparsity(
     //
     size_t n      = x_index.size();
     size_t m      = y_index.size();
-    //
-    // ident_zero_x
-    // 2DO: pass this as an argument to for_hes_sparsity, for this will
-    // create less efficient sparsity patterns
-    vector<bool> ident_zero_x(n);
-    for(size_t j = 0; j < n; ++j)
-        ident_zero_x[j] = false;
     //
     // select_x
     vector<bool> select_x(n);
@@ -157,6 +157,9 @@ bool atomic_four<Base>::for_hes_sparsity(
     // ------------------------------------------------------------------------
     // call user's version of atomic function for Hessian
     ok = hes_sparsity(
+        call_id, ident_zero_x, select_x, select_y, pattern_out
+    );
+    if(! ok ) ok = hes_sparsity(
         call_id, select_x, select_y, pattern_out
     );
     if( ! ok )
@@ -205,9 +208,14 @@ $head InternalSparsity$$
 Is the used internaly for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
-
 $head call_id [in]$$
 see $cref/call_id/atomic_four_call/call_id/$$.
+
+$head ident_zero_x$$
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of $icode ax$$.
+If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+is a constant parameter that is identically zero.
 
 $head x_index$$
 is the variable index, on the tape, for the arguments to this function.
@@ -243,6 +251,7 @@ template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::rev_hes_sparsity(
     size_t                           call_id          ,
+    const vector<bool>&              ident_zero_x     ,
     const local::pod_vector<size_t>& x_index          ,
     const local::pod_vector<size_t>& y_index          ,
     const InternalSparsity&          for_jac_pattern  ,
@@ -253,13 +262,6 @@ bool atomic_four<Base>::rev_hes_sparsity(
     //
     size_t n      = x_index.size();
     size_t m      = y_index.size();
-    //
-    // ident_zero_x
-    // 2DO: pass this as an argument to for_hes_sparsity, for this will
-    // create less efficient sparsity patterns
-    vector<bool> ident_zero_x(n);
-    for(size_t j = 0; j < n; ++j)
-        ident_zero_x[j] = false;
     //
     // select_x
     vector<bool> select_x(n);
@@ -288,12 +290,19 @@ bool atomic_four<Base>::rev_hes_sparsity(
     //
     // call atomic function for Hessian sparsity
     sparse_rc< vector<size_t> > pattern_hes;
-    ok = hes_sparsity(call_id, select_x, select_y, pattern_hes);
+    ok = hes_sparsity(
+        call_id, ident_zero_x, select_x, select_y, pattern_hes
+    );
+    if( ! ok ) ok = hes_sparsity(
+        call_id, select_x, select_y, pattern_hes
+    );
+    if( ! ok )
+        return ok;
+    //
+    // row_hes, col_hes, nnz_hes
     const vector<size_t>& row_hes( pattern_hes.row() );
     const vector<size_t>& col_hes( pattern_hes.col() );
     size_t nnz_hes = pattern_hes.nnz();
-    if( ! ok )
-        return ok;
     //
     // propagate Hessian sparsity through the Jacobian
     for(size_t k = 0; k < nnz_jac; ++k)
