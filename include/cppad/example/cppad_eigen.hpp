@@ -216,14 +216,16 @@ $srccode%cpp% */
 /* %$$
 
 $head std Definitions$$
-These definitions use cppad.hpp:
+The definitions below use cppad.hpp.
+Note that $cref Value$$ function can only be used with a
+$cref/constant parameter/glossary/Parameter/Constant/$$ argument.
 $srccode%cpp% */
 namespace std {
     template <class Base> bool isinf(const CppAD::AD<Base> &x)
-    {   return isinf(CppAD::Value(x)); }
+    {   return isinf(CppAD::Value( CppAD::Var2Par(x) ) ); }
 
     template <class Base> bool isnan(const CppAD::AD<Base> &x)
-    {   return isnan(CppAD::Value(x)); }
+    {   return isnan(CppAD::Value( CppAD::Var2Par(x) ) ); }
 }
 /* %$$
 $end
