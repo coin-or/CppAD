@@ -36,6 +36,10 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head pull_140 Branch$$
+The CppAD $cref base_limits$$ and $cref numeric_limits$$
+were extended to include $code infinity()$$.
+
 $head 05-13$$
 The $cref/code_gen_fun examples/code_gen_fun/Examples/$$ were
 not being built even when

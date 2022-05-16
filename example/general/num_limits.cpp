@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -92,6 +92,18 @@ namespace {
         ok &= ceil_neg_log_eps == CppAD::numeric_limits<Float>::digits10;
         return ok;
     }
+    // -----------------------------------------------------------------
+    bool check_infinity(void)
+    {   bool ok    = true;
+        Float inf  = CppAD::numeric_limits<Float>::infinity();
+        Float hun  = Float(100);
+        Float tmp  = Float(0);
+        tmp        = inf + hun;
+        ok        &= inf == tmp;
+        tmp        = inf - inf;
+        ok        &= CppAD::isnan( tmp );
+        return ok;
+    }
 }
 
 bool num_limits(void)
@@ -102,6 +114,7 @@ bool num_limits(void)
     ok &= check_max();
     ok &= check_nan();
     ok &= check_digits10();
+    ok &= check_infinity();
 
     return ok;
 }

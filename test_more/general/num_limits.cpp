@@ -138,6 +138,23 @@ namespace {
         //
         return ok;
     }
+    // -----------------------------------------------------------------
+    template <class Type>
+    bool check_infinity(void)
+    {   bool ok    = true;
+        typedef extern_value<Type> value;
+        value inf( CppAD::numeric_limits<Type>::infinity() );
+        value hun( Type(100) );
+
+        value tmp( Type(0) );
+
+        tmp.set( inf.get() + hun.get() );
+        ok &= inf.get() == tmp.get();
+
+        tmp.set( inf.get() - inf.get() );
+        ok &= CppAD::isnan( tmp.get() );
+        return ok;
+    }
 }
 
 bool num_limits(void)
@@ -194,6 +211,19 @@ bool num_limits(void)
     ok &= check_quiet_NaN< AD<double> >();
     ok &= check_quiet_NaN< AD< std::complex<float> > >();
     ok &= check_quiet_NaN< AD< std::complex<double> > >();
+
+    // -------------------------------------------------------------------
+    // infinity for Base types defined by CppAD
+    ok &= check_infinity<float>();
+    ok &= check_infinity<double>();
+    ok &= check_infinity< std::complex<float> >();
+    ok &= check_infinity< std::complex<double> >();
+
+    // infinity for some AD types.
+    ok &= check_infinity< AD<float> >();
+    ok &= check_infinity< AD<double> >();
+    ok &= check_infinity< AD< std::complex<float> > >();
+    ok &= check_infinity< AD< std::complex<double> > >();
 
     return ok;
 }
