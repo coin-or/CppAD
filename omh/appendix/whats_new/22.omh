@@ -37,17 +37,29 @@ $spell
     isnan
     std
     namespace
+    hes
 $$
 
 $section Changes and Additions to CppAD During 2022$$
 
 $head 05-15$$
+
+$list number$$
 Merge in the pull_140 branch.
 This extended CppAD $cref base_limits$$ and $cref numeric_limits$$
 to include $code infinity()$$.
 In addition,  $code cppad_eigen.hpp$$ added $code isinf$$
 and $code isnan$$ for AD types to the std namespace; see
 $cref/std Definitions/cppad_eigen.hpp/std Definitions/$$.
+
+$lnext
+Fix a long standing bug in the $cref for_hes_sparsity$$ routine.
+For example,
+the function called $code case_seven$$ in
+$code test_more/general/hes_sparsity.cpp/$$ tests a case
+where this bug occurred.
+
+$lend
 
 $head 05-13$$
 The $cref/code_gen_fun examples/code_gen_fun/Examples/$$ were

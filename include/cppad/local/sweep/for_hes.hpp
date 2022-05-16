@@ -255,7 +255,11 @@ void for_hes(
         include |= op == FunrpOp;
         include |= op == FunrvOp;
         //
-        if( include ) switch( op )
+        if( ! include )
+        {   if( op == InvOp )
+                ++count_independent;
+        }
+        else switch( op )
         {   // operators that should not occurr
             // case BeginOp
 
@@ -504,6 +508,8 @@ void for_hes(
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
             CPPAD_ASSERT_UNKNOWN( atom_j < atom_n );
+            CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+            CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < numvar );
             //
             // arguemnt variables not avaialbe during sparisty calculations
             atom_x[atom_j] = CppAD::numeric_limits<Base>::quiet_NaN();
