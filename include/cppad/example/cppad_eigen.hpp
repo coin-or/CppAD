@@ -226,7 +226,7 @@ namespace std {
     {   return isinf(CppAD::Value( CppAD::Var2Par(x) ) ); }
 
     template <class Base> bool isfinite(const CppAD::AD<Base> &x)
-    {   return !isinf(x); }
+    {   return isfinite(CppAD::Value( CppAD::Var2Par(x) ) ); }
 
     template <class Base> bool isnan(const CppAD::AD<Base> &x)
     {   return isnan(CppAD::Value( CppAD::Var2Par(x) ) ); }
