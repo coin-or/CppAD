@@ -32,13 +32,22 @@ $spell
     tmpnam
     nullptr
     cppadcg
+    eigen
+    isinf
+    isnan
+    std
+    namespace
 $$
 
 $section Changes and Additions to CppAD During 2022$$
 
-$head pull_140 Branch$$
-The CppAD $cref base_limits$$ and $cref numeric_limits$$
-were extended to include $code infinity()$$.
+$head 05-15$$
+Merge in the pull_140 branch.
+This extended CppAD $cref base_limits$$ and $cref numeric_limits$$
+to include $code infinity()$$.
+In addition,  $code cppad_eigen.hpp$$ added $code isinf$$
+and $code isnan$$ for AD types to the std namespace; see
+$cref/std Definitions/cppad_eigen.hpp/std Definitions/$$.
 
 $head 05-13$$
 The $cref/code_gen_fun examples/code_gen_fun/Examples/$$ were
