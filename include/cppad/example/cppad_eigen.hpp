@@ -81,6 +81,7 @@ Next declare some template specializations in std namespace:
 $srccode%cpp% */
 namespace std {
     template <class Base> bool isinf(const CppAD::AD<Base> &x);
+    template <class Base> bool isfinite(const CppAD::AD<Base> &x);
     template <class Base> bool isnan(const CppAD::AD<Base> &x);
 }
 /* %$$
@@ -223,6 +224,9 @@ $srccode%cpp% */
 namespace std {
     template <class Base> bool isinf(const CppAD::AD<Base> &x)
     {   return isinf(CppAD::Value( CppAD::Var2Par(x) ) ); }
+
+    template <class Base> bool isfinite(const CppAD::AD<Base> &x)
+    {   return isfinite(CppAD::Value( CppAD::Var2Par(x) ) ); }
 
     template <class Base> bool isnan(const CppAD::AD<Base> &x)
     {   return isnan(CppAD::Value( CppAD::Var2Par(x) ) ); }
