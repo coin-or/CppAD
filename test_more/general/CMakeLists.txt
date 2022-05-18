@@ -147,8 +147,6 @@ SET(source_list
     vec_unary.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
-set_compile_flags( test_more_general "${cppad_debug_which}" "${source_list}" )
-#
 ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
 #
 # must first build cppad_lib
