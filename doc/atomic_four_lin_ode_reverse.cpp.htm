@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Linear ODE Reverse Mode: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Linear ODE Reverse Mode: Example and Test">
-<meta name="keywords" id="keywords" content=" atomic linear ode reverse mode: example test under construction purpose f(u) solution g(u) source ">
+<meta name="keywords" id="keywords" content=" atomic linear ode reverse mode: example test purpose f(u) solution g(u) source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,7 +69,6 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Under Construction</option>
 <option>Purpose</option>
 <option>f(u)</option>
 <option>Solution</option>
@@ -85,12 +84,6 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Linear ODE Reverse Mode: Example and Test</big></big></b></center>
-<br>
-<b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
-<br>
-This test does not yet pass.
-
-<br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -220,7 +213,7 @@ u_t r + u_4 u_0 r^2 / 2 \\
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END_EMPTY_NAMESPACE</font></i>
 
 <font color="#009900">bool</font> <b><font color="#000000">reverse</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
-<font color="#FF0000">{</font>   <i><font color="#9A1900">// ok, eps</font></i>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">// ok</font></i>
     <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// AD, NearEqual, eps99</font></i>

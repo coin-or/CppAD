@@ -208,7 +208,7 @@ If
 <code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
 
 is a constant parameter that is identically zero.
-For example, an identically zero value times any other value can be treated
+An identically zero value times any other value can be treated
 as being identically zero.
 
 <br>
@@ -329,11 +329,12 @@ Otherwise it is false.
 The following is an example <code><font color="blue">jac_sparsity</font></code> definition taken from
 <a href="atomic_four_norm_sq.cpp.htm" target="_top"><span style='white-space: nowrap'>atomic_four_norm_sq.cpp</span></a>
 :
-<pre><tt>        <i><font color="#9A1900">// using deprecated version of this callback which is missing</font></i>
-        <i><font color="#9A1900">// the ident_zero_x argument.</font></i>
+<pre><tt>        <i><font color="#9A1900">// Use deprecated version of this callback to test that is still works</font></i>
+        <i><font color="#9A1900">// (missing the ident_zero_x argument).</font></i>
         <font color="#009900">bool</font> <b><font color="#000000">jac_sparsity</font></b><font color="#990000">(</font>
             <font color="#008080">size_t</font>                                     call_id     <font color="#990000">,</font>
             <font color="#009900">bool</font>                                       dependency  <font color="#990000">,</font>
+            <i><font color="#9A1900">// const CppAD::vector&lt;bool&gt;&amp;              ident_zero_x,</font></i>
             <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_x    <font color="#990000">,</font>
             <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>                 select_y    <font color="#990000">,</font>
             CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font> pattern_out <font color="#990000">)</font> <b><font color="#0000FF">override</font></b>

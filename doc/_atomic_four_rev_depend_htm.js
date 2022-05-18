@@ -16,12 +16,15 @@ var list_up0 = [
 ];
 var list_current0 = [
 'atomic_four_rev_depend.htm#Syntax',
+'atomic_four_rev_depend.htm#Syntax.Preferred',
+'atomic_four_rev_depend.htm#Syntax.Deprecated 2022-05-10',
 'atomic_four_rev_depend.htm#Syntax.Prototype',
 'atomic_four_rev_depend.htm#Dependency Analysis',
 'atomic_four_rev_depend.htm#Implementation',
 'atomic_four_rev_depend.htm#Base',
 'atomic_four_rev_depend.htm#vector',
 'atomic_four_rev_depend.htm#call_id',
+'atomic_four_rev_depend.htm#ident_zero_x',
 'atomic_four_rev_depend.htm#depend_x',
 'atomic_four_rev_depend.htm#depend_x.Optimize',
 'atomic_four_rev_depend.htm#depend_y',

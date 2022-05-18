@@ -17,7 +17,6 @@ var list_up0 = [
 'atomic_four_lin_ode_reverse.hpp.htm'
 ];
 var list_current0 = [
-'atomic_four_lin_ode_reverse.hpp.htm#Under Construction',
 'atomic_four_lin_ode_reverse.hpp.htm#Purpose',
 'atomic_four_lin_ode_reverse.hpp.htm#Theory',
 'atomic_four_lin_ode_reverse.hpp.htm#Simpon\'s Rule',

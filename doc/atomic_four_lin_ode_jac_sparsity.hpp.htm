@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Linear ODE Jacobian Sparsity Pattern: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Linear ODE Jacobian Sparsity Pattern: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic linear ode jacobian sparsity pattern: example implementation purpose representation notation s[ g(x) ] n [ j_i a(x) p_i theory source ">
+<meta name="keywords" id="keywords" content=" atomic linear ode jacobian sparsity pattern: example implementation purpose notation s[ g(x) ] n [ j_i a(x) p_i theory source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,7 +71,6 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Purpose</option>
-<option>Representation</option>
 <option>Notation</option>
 <option>---..S[ g(x) ]</option>
 <option>---..N [ g(x) ]</option>
@@ -100,33 +99,6 @@ used by the atomic_four base class for Jacobian sparsity calculations; see
 
 <br>
 <br>
-<b><big><a name="Representation" id="Representation">Representation</a></big></b>
-<br>
-We use the following representation for
-<a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
-:
-<small>@[@
-
-y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
-
-@]@</small>
-Define <small>@(@
-v^0 (x) = b(x)
-@)@</small> and for <small>@(@
-k = 1, 2, \ldots
-@)@</small>,
-<small>@(@
-v^k (x) = (r / k) A(x) v^{k-1} (x)
-@)@</small>.
-Using this notation,
-<small>@[@
-
-y(x) = \sum_{k=0}^\infty v^k (x)
-
-@]@</small>
-
-<br>
-<br>
 <b><big><a name="Notation" id="Notation">Notation</a></big></b>
 <br>
 We use the notation:
@@ -139,6 +111,8 @@ We use the notation:
 <a href="atomic_four_lin_ode.htm#x.A(x)" target="_top"><span style='white-space: nowrap'>A(x)</span></a>
 ,
 <a href="atomic_four_lin_ode.htm#x.b(x)" target="_top"><span style='white-space: nowrap'>b(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#vk(x)" target="_top"><span style='white-space: nowrap'>vk(x)</span></a>
 ,
 <a href="atomic_four_lin_ode.htm#pattern.nnz" target="_top"><span style='white-space: nowrap'>nnz</span></a>
 ,

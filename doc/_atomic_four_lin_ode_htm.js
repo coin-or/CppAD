@@ -15,7 +15,6 @@ var list_up0 = [
 'atomic_four_lin_ode.htm'
 ];
 var list_current0 = [
-'atomic_four_lin_ode.htm#Under construction',
 'atomic_four_lin_ode.htm#Syntax',
 'atomic_four_lin_ode.htm#z(t, x)',
 'atomic_four_lin_ode.htm#y(x)',
@@ -31,6 +30,7 @@ var list_current0 = [
 'atomic_four_lin_ode.htm#x.n',
 'atomic_four_lin_ode.htm#x.A(x)',
 'atomic_four_lin_ode.htm#x.b(x)',
+'atomic_four_lin_ode.htm#vk(x)',
 'atomic_four_lin_ode.htm#Approximations',
 'atomic_four_lin_ode.htm#Approximations.Rosen34',
 'atomic_four_lin_ode.htm#Approximations.Simpon\'s Rule',

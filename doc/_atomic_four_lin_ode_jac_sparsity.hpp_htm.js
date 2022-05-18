@@ -18,7 +18,6 @@ var list_up0 = [
 ];
 var list_current0 = [
 'atomic_four_lin_ode_jac_sparsity.hpp.htm#Purpose',
-'atomic_four_lin_ode_jac_sparsity.hpp.htm#Representation',
 'atomic_four_lin_ode_jac_sparsity.hpp.htm#Notation',
 'atomic_four_lin_ode_jac_sparsity.hpp.htm#Notation.S[ g(x) ]',
 'atomic_four_lin_ode_jac_sparsity.hpp.htm#Notation.N [ g(x) ]',

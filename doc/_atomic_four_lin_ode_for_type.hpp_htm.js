@@ -18,8 +18,8 @@ var list_up0 = [
 ];
 var list_current0 = [
 'atomic_four_lin_ode_for_type.hpp.htm#Purpose',
-'atomic_four_lin_ode_for_type.hpp.htm#Representation',
 'atomic_four_lin_ode_for_type.hpp.htm#Notation',
+'atomic_four_lin_ode_for_type.hpp.htm#Notation.T(s)',
 'atomic_four_lin_ode_for_type.hpp.htm#Theory',
 'atomic_four_lin_ode_for_type.hpp.htm#Source'
 ];

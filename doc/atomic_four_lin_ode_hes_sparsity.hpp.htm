@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Linear ODE Hessian Sparsity Pattern: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Linear ODE Hessian Sparsity Pattern: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic linear ode hessian sparsity pattern: example implementation purpose representation source ">
+<meta name="keywords" id="keywords" content=" atomic linear ode hessian sparsity pattern: example implementation purpose notation wk(x) source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic_four_lin_ode_jac_sparsity.hpp.htm" target="_top">Prev</a>
-</td><td><a href="atomic_four_lin_ode_forward.cpp.htm" target="_top">Next</a>
+</td><td><a href="atomic_four_lin_ode_rev_depend.hpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -71,7 +71,8 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Purpose</option>
-<option>Representation</option>
+<option>Notation</option>
+<option>---..wk(x)</option>
 <option>Example</option>
 <option>Source</option>
 </select>
@@ -94,31 +95,34 @@ used by the atomic_four base class for Hessian sparsity calculations; see
 
 <br>
 <br>
-<b><big><a name="Representation" id="Representation">Representation</a></big></b>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
 <br>
-We use the following representation for
+We use the notation:
 <a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
-:
-<small>@[@
+,
+<a href="atomic_four_lin_ode.htm#y(x).m" target="_top"><span style='white-space: nowrap'>m</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.n" target="_top"><span style='white-space: nowrap'>n</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.A(x)" target="_top"><span style='white-space: nowrap'>A(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.b(x)" target="_top"><span style='white-space: nowrap'>b(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#vk(x)" target="_top"><span style='white-space: nowrap'>vk(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.nnz" target="_top"><span style='white-space: nowrap'>nnz</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.row" target="_top"><span style='white-space: nowrap'>row</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.col" target="_top"><span style='white-space: nowrap'>col</span></a>
 
-y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
+and the following additional notation:
 
-@]@</small>
-Define <small>@(@
-v^0 (x) = b(x)
-@)@</small> and for <small>@(@
-k = 1, 2, \ldots
-@)@</small>,
-<small>@(@
-v^k (x) = (r / k) A(x) v^{k-1} (x)
-@)@</small>.
-Using this notation,
-<small>@[@
-
-y(x) = \sum_{k=0}^\infty v^k (x)
-
-@]@</small>
-Now, since we are using the <a href="rosen34.htm" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+<br>
+<br>
+<big><a name="Notation.wk(x)" id="Notation.wk(x)">wk(x)</a></big>
+<br>
+Because we are using the <a href="rosen34.htm" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
  solver, our actual sequence
 of operations is only fourth order accurate.
 So it suffices to compute the sparsity pattern for
@@ -129,14 +133,18 @@ So it suffices to compute the sparsity pattern for
 @]@</small>
 Note that the factor <small>@(@
 r / k
-@)@</small> is constant (with respect to the variables),
-so it suffices to compute the sparsity patter for
+@)@</small>,
+in the definition of <small>@(@
+v^k (x)
+@)@</small>,
+is constant (with respect to the variables).
+Hence it suffices to compute the sparsity pattern for
 <small>@[@
 
 h (x) = \sum_{k=0}^4 w^k (x)
 
 @]@</small>
-Define <small>@(@
+where <small>@(@
 w^0 (x) = b(x)
 @)@</small> and for <small>@(@
 k = 1, 2, \ldots

@@ -16,7 +16,6 @@ var list_up0 = [
 'atomic_four_lin_ode_reverse.cpp.htm'
 ];
 var list_current0 = [
-'atomic_four_lin_ode_reverse.cpp.htm#Under Construction',
 'atomic_four_lin_ode_reverse.cpp.htm#Purpose',
 'atomic_four_lin_ode_reverse.cpp.htm#f(u)',
 'atomic_four_lin_ode_reverse.cpp.htm#Solution',

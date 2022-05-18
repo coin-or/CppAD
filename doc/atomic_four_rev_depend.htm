@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Function Reverse Dependency</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Function Reverse Dependency">
-<meta name="keywords" id="keywords" content=" atomic function reverse dependency syntax prototype analysis implementation base vector call_id depend_x optimize depend_y ok example ">
+<meta name="keywords" id="keywords" content=" atomic function reverse dependency syntax preferred deprecated 2022-05-10 prototype analysis implementation base vector call_id ident_zero_x depend_x optimize depend_y ok example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,12 +69,15 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Syntax</option>
+<option>---..Preferred</option>
+<option>---..Deprecated 2022-05-10</option>
 <option>---..Prototype</option>
 <option>Dependency Analysis</option>
 <option>Implementation</option>
 <option>Base</option>
 <option>vector</option>
 <option>call_id</option>
+<option>ident_zero_x</option>
 <option>depend_x</option>
 <option>---..Optimize</option>
 <option>depend_y</option>
@@ -92,10 +95,30 @@ A:active { color : purple }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Function Reverse Dependency</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+<br>
+You can define one or the other of the following callbacks,
+but you should not define both.
+
+<br>
+<br>
+<big><a name="Syntax.Preferred" id="Syntax.Preferred">Preferred</a></big>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_depend(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_y</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_depend(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ident_zero_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.Deprecated 2022-05-10" id="Syntax.Deprecated 2022-05-10">Deprecated 2022-05-10</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>afun</span></font></i><font color="blue"><span style='white-space: nowrap'>.rev_depend(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>depend_y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
 
 
 <br>
@@ -105,9 +128,10 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_four<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">rev_depend</font></b><font color="#990000">(</font>
-    <font color="#008080">size_t</font>                      call_id     <font color="#990000">,</font>
-    vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>               depend_x    <font color="#990000">,</font>
-    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>         depend_y    <font color="#990000">)</font></tt></pre>
+    <font color="#008080">size_t</font>                      call_id      <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>               ident_zero_x <font color="#990000">,</font>
+    vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>               depend_x     <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>         depend_y     <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="Dependency Analysis" id="Dependency Analysis">Dependency Analysis</a></big></b>
 <br>
@@ -147,6 +171,28 @@ is the <a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap
 <br>
 See <a href="atomic_four_call.htm#call_id" target="_top"><span style='white-space: nowrap'>call_id</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="ident_zero_x" id="ident_zero_x">ident_zero_x</a></big></b>
+<br>
+This can sometimes be used to create more efficient dependency
+(fewer true values in 
+<code><i><font color="black"><span style='white-space: nowrap'>depend_y</span></font></i></code>
+).
+If you do not see a way to do this, you can just ignore it.
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>ident_zero_x</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is true, the argument 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+is a constant parameter that is identically zero.
+An identically zero value times any other value can be treated
+as being identically zero.
 
 <br>
 <br>

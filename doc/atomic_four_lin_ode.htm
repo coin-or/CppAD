@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic First Order Linear ODE Method: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic First Order Linear ODE Method: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic first order linear ode method: example implementation under construction syntax z(t x) y(x) m call_id r pattern nnz row col transpose x n a(x) b(x) approximations rosen34 simpon's rule ">
+<meta name="keywords" id="keywords" content=" atomic first order linear ode method: example implementation syntax z(t x) y(x) m call_id r pattern nnz row col transpose x n a(x) b(x) vk(x) approximations rosen34 simpon's rule ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,7 +70,6 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>Under construction</option>
 <option>Syntax</option>
 <option>z(t, x)</option>
 <option>y(x)</option>
@@ -86,6 +85,7 @@ A:active { color : purple }
 <option>---..n</option>
 <option>---..A(x)</option>
 <option>---..b(x)</option>
+<option>vk(x)</option>
 <option>Approximations</option>
 <option>---..Rosen34</option>
 <option>---..Simpon's Rule</option>
@@ -100,12 +100,6 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic First Order Linear ODE Method: Example Implementation</big></big></b></center>
-<br>
-<b><big><a name="Under construction" id="Under construction">Under construction</a></big></b>
-<br>
-This example is under construction and not yet ready for use.
-
-<br>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -300,6 +294,33 @@ This vector is stored at the end of
 b_j (x) = x[ nnz + j ]
 @)@</small>
 
+<br>
+<br>
+<b><big><a name="vk(x)" id="vk(x)">vk(x)</a></big></b>
+<br>
+We sometimes use the following representation for <small>@(@
+y(x)
+@)@</small>:
+<small>@[@
+
+y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
+
+@]@</small>
+Define <small>@(@
+v^0 (x) = b(x)
+@)@</small> and for <small>@(@
+k = 1, 2, \ldots
+@)@</small>,
+<small>@(@
+v^k (x) = (r / k) A(x) v^{k-1} (x)
+@)@</small>.
+Using this notation,
+<small>@[@
+
+y(x) = \sum_{k=0}^\infty v^k (x)
+
+@]@</small>
+
 
 <br>
 <br>
@@ -335,7 +356,7 @@ Any other approximation for this integral can be used.
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="atomic_four_lin_ode_implement.htm" target="_top">atomic_four_lin_ode_implement</a></td><td>Implementing&nbsp;Atomic&nbsp;Linear&nbsp;ODE</td></tr><tr><td><a href="atomic_four_lin_ode_forward.cpp.htm" target="_top">atomic_four_lin_ode_forward.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Forward&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_lin_ode_reverse.cpp.htm" target="_top">atomic_four_lin_ode_reverse.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Reverse&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_lin_ode_sparsity.cpp.htm" target="_top">atomic_four_lin_ode_sparsity.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Sparsity&nbsp;Calculations:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
+<tr><td><a href="atomic_four_lin_ode_implement.htm" target="_top">atomic_four_lin_ode_implement</a></td><td>Implementing&nbsp;Atomic&nbsp;Linear&nbsp;ODE</td></tr><tr><td><a href="atomic_four_lin_ode_forward.cpp.htm" target="_top">atomic_four_lin_ode_forward.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Forward&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_lin_ode_reverse.cpp.htm" target="_top">atomic_four_lin_ode_reverse.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Reverse&nbsp;Mode:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_lin_ode_sparsity.cpp.htm" target="_top">atomic_four_lin_ode_sparsity.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Sparsity&nbsp;Calculations:&nbsp;Example&nbsp;and&nbsp;Test</td></tr><tr><td><a href="atomic_four_lin_ode_rev_depend.cpp.htm" target="_top">atomic_four_lin_ode_rev_depend.cpp</a></td><td>Atomic&nbsp;Linear&nbsp;ODE&nbsp;Reverse&nbsp;Dependency&nbsp;Analysis:&nbsp;Example&nbsp;and&nbsp;Test</td></tr></table>
 <hr>Input File: include/cppad/example/atomic_four/lin_ode/lin_ode.omh
 
 </body>
