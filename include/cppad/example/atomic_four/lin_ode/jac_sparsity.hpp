@@ -17,6 +17,7 @@ $spell
     Jacobian
     jac
     nnz
+    vk
 $$
 
 $section
@@ -28,19 +29,6 @@ The $code jac_sparsity$$ routine overrides the virtual functions
 used by the atomic_four base class for Jacobian sparsity calculations; see
 $cref/jac_sparsity/atomic_four_jac_sparsity/$$.
 
-$head Representation$$
-We use the following representation for
-$cref/y(x)/atomic_four_lin_ode/y(x)/$$:
-$latex \[
-y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
-\] $$
-Define $latex v^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
-$latex v^k (x) = (r / k) A(x) v^{k-1} (x)$$.
-Using this notation,
-$latex \[
-y(x) = \sum_{k=0}^\infty v^k (x)
-\] $$
-
 $head Notation$$
 We use the notation:
 $cref/y(x)/atomic_four_lin_ode/y(x)/$$,
@@ -48,6 +36,7 @@ $cref/m/atomic_four_lin_ode/y(x)/m/$$,
 $cref/n/atomic_four_lin_ode/x/n/$$,
 $cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
 $cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
+$cref/vk(x)/atomic_four_lin_ode/vk(x)/$$,
 $cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
 $cref/row/atomic_four_lin_ode/pattern/row/$$,
 $cref/col/atomic_four_lin_ode/pattern/col/$$

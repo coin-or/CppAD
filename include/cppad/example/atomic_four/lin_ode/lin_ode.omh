@@ -18,6 +18,7 @@ $spell
     Rosen
     Simpon
     nnz
+    vk
 $$
 
 $section
@@ -100,6 +101,18 @@ $subhead b(x)$$
 This vector is stored at the end of
 $icode x$$; i.e. its $th j$$ element is
 $latex b_j (x) = x[ nnz + j ]$$
+
+$head vk(x)$$
+We sometimes use the following representation for $latex y(x)$$:
+$latex \[
+y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
+\] $$
+Define $latex v^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
+$latex v^k (x) = (r / k) A(x) v^{k-1} (x)$$.
+Using this notation,
+$latex \[
+y(x) = \sum_{k=0}^\infty v^k (x)
+\] $$
 
 
 $head Approximations$$

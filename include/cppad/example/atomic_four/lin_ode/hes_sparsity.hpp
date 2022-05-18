@@ -16,6 +16,8 @@ $begin atomic_four_lin_ode_hes_sparsity.hpp$$
 $spell
     jac
     hes
+    nnz
+    vk
 $$
 
 $section
@@ -27,26 +29,30 @@ The $code hes_sparsity$$ routine overrides the virtual functions
 used by the atomic_four base class for Hessian sparsity calculations; see
 $cref/hes_sparsity/atomic_four_hes_sparsity/$$.
 
-$head Representation$$
-We use the following representation for
-$cref/y(x)/atomic_four_lin_ode/y(x)/$$:
-$latex \[
-y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
-\] $$
-Define $latex v^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
-$latex v^k (x) = (r / k) A(x) v^{k-1} (x)$$.
-Using this notation,
-$latex \[
-y(x) = \sum_{k=0}^\infty v^k (x)
-\] $$
-Now, since we are using the $cref Rosen34$$ solver, our actual sequence
+$head Notation$$
+We use the notation:
+$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
+$cref/m/atomic_four_lin_ode/y(x)/m/$$,
+$cref/n/atomic_four_lin_ode/x/n/$$,
+$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
+$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
+$cref/vk(x)/atomic_four_lin_ode/vk(x)/$$,
+$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
+$cref/row/atomic_four_lin_ode/pattern/row/$$,
+$cref/col/atomic_four_lin_ode/pattern/col/$$
+and the following additional notation:
+
+$subhead wk(x)$$
+Because we are using the $cref Rosen34$$ solver, our actual sequence
 of operations is only fourth order accurate.
 So it suffices to compute the sparsity pattern for
 $latex \[
 \tilde{y} (x) = \sum_{k=0}^4 v^k (x)
 \] $$
-Note that the factor $latex r / k$$ is constant (with respect to the variables),
-so it suffices to compute the sparsity pattern for
+Note that the factor $latex r / k$$,
+in the definition of $latex v^k (x)$$,
+is constant (with respect to the variables).
+Hence it suffices to compute the sparsity pattern for
 $latex \[
 h (x) = \sum_{k=0}^4 w^k (x)
 \] $$

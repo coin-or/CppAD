@@ -16,6 +16,8 @@ $begin atomic_four_lin_ode_rev_depend.hpp$$
 $spell
     Jacobian
     jac
+    vk
+    nnz
 $$
 
 $section
@@ -26,25 +28,30 @@ The $code rev_depend$$ routine overrides the virtual functions
 used by the atomic_four base; see
 $cref/rev_depend/atomic_four_rev_depend/$$.
 
-$head Representation$$
-We use the following representation for
-$cref/y(x)/atomic_four_lin_ode/y(x)/$$:
+$head Notation$$
+We use the notation:
+$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
+$cref/m/atomic_four_lin_ode/y(x)/m/$$,
+$cref/n/atomic_four_lin_ode/x/n/$$,
+$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
+$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
+$cref/vk(x)/atomic_four_lin_ode/vk(x)/$$,
+$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
+$cref/row/atomic_four_lin_ode/pattern/row/$$,
+$cref/col/atomic_four_lin_ode/pattern/col/$$
+and the following additional notation:
+
+$subhead wk(x)$$
+Note that the factor $latex r / k$$,
+in the definition of $latex v^k (x)$$,
+is constant (with respect to the variables).
+Hence it suffices to compute the dependency for
 $latex \[
-y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
-\] $$
-Define $latex v^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
-$latex v^k (x) = (r / k) A(x) v^{k-1} (x)$$.
-Using this notation,
-$latex \[
-y(x) = \sum_{k=0}^\infty v^k (x)
-\] $$
-Note that the factor $latex r / k$$ is constant (with respect to the variables),
-so it suffices to compute the dependency for
-$latex \[
-h (x) = \sum_{k=0}^\infty w^k (x)
+h (x) = \sum_{k=0}^4 w^k (x)
 \] $$
 where $latex w^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
 $latex w^k (x) = A(x) w^{k-1} (x)$$.
+
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

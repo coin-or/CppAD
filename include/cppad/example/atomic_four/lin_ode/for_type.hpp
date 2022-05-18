@@ -16,6 +16,8 @@ $begin atomic_four_lin_ode_for_type.hpp$$
 $spell
     Jacobian
     jac
+    vk
+    nnz
 $$
 
 $section
@@ -26,20 +28,21 @@ The $code for_type$$ routine overrides the virtual functions
 used by the atomic_four base; see
 $cref/for_type/atomic_four_for_type/$$.
 
-$head Representation$$
-We use the following representation for
-$cref/y(x)/atomic_four_lin_ode/y(x)/$$:
-$latex \[
-y(x) = \exp [ r A(x) ] b(x) = \sum_{k=0}^\infty \frac{r^k}{k!} A(x)^k b(x)
-\] $$
-Define $latex v^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
-$latex v^k (x) = (r / k) A(x) v^{k-1} (x)$$.
-Using this notation,
-$latex \[
-y(x) = \sum_{k=0}^\infty v^k (x)
-\] $$
 
 $head Notation$$
+We use the notation:
+$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
+$cref/m/atomic_four_lin_ode/y(x)/m/$$,
+$cref/n/atomic_four_lin_ode/x/n/$$,
+$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
+$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
+$cref/vk(x)/atomic_four_lin_ode/vk(x)/$$,
+$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
+$cref/row/atomic_four_lin_ode/pattern/row/$$,
+$cref/col/atomic_four_lin_ode/pattern/col/$$
+and the following additional notation:
+
+$subhead T(s)$$
 We use $latex \R{T} ( s )$$ to denote the ad_type of a scalar value $latex s$$.
 There are four possible
 $cref/ad_types/atomic_four_for_type/ad_type/$$:
