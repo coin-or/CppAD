@@ -42,6 +42,11 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-17$$
+The $cref atomic_four_lin_ode_rev_depend.hpp$$ example was added.
+In addition, remove the Under Construction headings from the
+$cref atomic_four_lin_ode$$ sections (it is ready for use).
+
 $head 05-16$$
 $list number$$
 The $cref/ident_zero_x/atomic_four_hes_sparsity/ident_zero_x/$$ argument

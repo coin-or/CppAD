@@ -56,6 +56,17 @@ public:
     //
     // get
     void get(size_t call_id, Base& r, sparse_rc& pattern, bool& transpose);
+    //
+    // test_rev_depend
+    // public version of this function that is used for example / testing
+    bool test_rev_depend(
+        size_t                                         call_id,
+        CppAD::vector<bool>&                           ident_zero_x,
+        CppAD::vector<bool>&                           depend_x,
+        const CppAD::vector<bool>&                     depend_y)
+    {   bool ok = rev_depend(call_id, ident_zero_x, depend_x, depend_y);
+        return ok;
+    }
 private:
     //
     // information connected to one call of this atomic function
@@ -86,8 +97,6 @@ private:
     // -----------------------------------------------------------------------
     // overrides
     // -----------------------------------------------------------------------
-# if 1
-    //
     // for_type
     bool for_type(
         size_t                                        call_id,
@@ -156,15 +165,14 @@ private:
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
     ) override;
-# else
     //
     // rev_depend
     bool rev_depend(
         size_t                                         call_id,
+        CppAD::vector<bool>&                           ident_zero_x,
         CppAD::vector<bool>&                           depend_x,
         const CppAD::vector<bool>&                     depend_y
     ) override;
-# endif
 };
 } // END_CPPAD_NAMESPACE
 
@@ -176,5 +184,6 @@ private:
 # include <cppad/example/atomic_four/lin_ode/reverse.hpp>
 # include <cppad/example/atomic_four/lin_ode/jac_sparsity.hpp>
 # include <cppad/example/atomic_four/lin_ode/hes_sparsity.hpp>
+# include <cppad/example/atomic_four/lin_ode/rev_depend.hpp>
 // END C++
 # endif

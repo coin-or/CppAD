@@ -107,7 +107,7 @@ Vector G(Scalar t, const Vector& u)
 } // END_EMPTY_NAMESPACE
 
 bool forward(void)
-{   // ok, eps
+{   // ok
     bool ok = true;
     //
     // AD, NearEqual, eps99

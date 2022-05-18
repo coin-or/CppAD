@@ -23,10 +23,6 @@ $section
 Atomic Linear ODE Reverse Mode: Example Implementation
 $$
 
-$head Under Construction$$
-This version of reverse does not work and is just a template
-for a future version that will work.
-
 $head Purpose$$
 The $code reverse$$ routine overrides the virtual functions
 used by the atomic_four base; see

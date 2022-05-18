@@ -23,6 +23,7 @@ $childtable%
     %include/cppad/example/atomic_four/lin_ode/reverse.hpp
     %include/cppad/example/atomic_four/lin_ode/jac_sparsity.hpp
     %include/cppad/example/atomic_four/lin_ode/hes_sparsity.hpp
+    %include/cppad/example/atomic_four/lin_ode/rev_depend.hpp
 %$$
 
 $end

@@ -14,8 +14,9 @@
 SET(source_list
     forward.cpp
     lin_ode.cpp
-    sparsity.cpp
+    rev_depend.cpp
     reverse.cpp
+    sparsity.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

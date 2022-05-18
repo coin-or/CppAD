@@ -75,7 +75,7 @@ This argument has size equal to the number of arguments to this
 atomic function; i.e. the size of $icode ax$$.
 If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
 is a constant parameter that is identically zero.
-For example, an identically zero value times any other value can be treated
+An identically zero value times any other value can be treated
 as being identically zero.
 
 $head select_x$$

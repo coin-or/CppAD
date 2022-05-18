@@ -16,9 +16,6 @@ $$
 
 $section Atomic Linear ODE Sparsity Calculations: Example and Test$$
 
-$head Under Construction$$
-This test does not yet pass.
-
 $head Purpose$$
 This example demonstrates calculating sparsity patterns with
 the $cref atomic_four_lin_ode$$ class.
@@ -84,13 +81,12 @@ Vector Z(Scalar t, const Vector& u)
 } // END_EMPTY_NAMESPACE
 
 bool sparsity(void)
-{   // ok, eps
+{   // ok
     bool ok = true;
     //
-    // sparse_rc, AD, NearEqual
+    // sparse_rc, AD
     typedef CppAD::sparse_rc< CppAD::vector<size_t> > sparse_rc;
     using CppAD::AD;
-    using CppAD::NearEqual;
     // -----------------------------------------------------------------------
     // Record f
     // -----------------------------------------------------------------------

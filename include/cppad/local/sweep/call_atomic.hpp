@@ -1094,6 +1094,19 @@ void call_atomic_rev_depend(
     std::string* name_ptr = nullptr;
     void*        v_ptr    = nullptr; // set to avoid warning
     local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+    //
+    // ident_zero_x
+    vector<bool> ident_zero_x;
+    if( type == 4 )
+    {   size_t n = parameter_x.size();
+        ident_zero_x.resize(n);
+        for(size_t j = 0; j < n; ++j)
+        {   if( type_x[j] >= constant_enum )
+                ident_zero_x[j] = false;
+            else
+                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+        }
+    }
 # ifndef NDEBUG
     bool ok = v_ptr != nullptr;
     if( ok )
@@ -1114,7 +1127,10 @@ void call_atomic_rev_depend(
         {   CPPAD_ASSERT_UNKNOWN( type == 4 );
             atomic_four<RecBase>* afun =
                 reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->rev_depend(call_id, depend_x, depend_y);
+            // rev_depend does not have a wrapper that drops back to
+            // deprecated version of this function.
+            ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
+            if( ! ok ) ok = afun->rev_depend(call_id, depend_x, depend_y);
         }
     }
     if( ! ok )
@@ -1144,7 +1160,10 @@ void call_atomic_rev_depend(
     else
     {   atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->rev_depend(call_id, depend_x, depend_y);
+        // rev_depend does not have a wrapper that drops back to
+        // deprecated version of this function.
+        bool ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
+        if( ! ok ) afun->rev_depend(call_id, depend_x, depend_y);
     }
 # endif
 }

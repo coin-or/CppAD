@@ -16,9 +16,6 @@ $$
 
 $section Atomic Linear ODE Reverse Mode: Example and Test$$
 
-$head Under Construction$$
-This test does not yet pass.
-
 $head Purpose$$
 This example demonstrates using reverse mode with
 the $cref atomic_four_lin_ode$$ class.
@@ -120,7 +117,7 @@ Vector G(Scalar t, const Vector& u)
 } // END_EMPTY_NAMESPACE
 
 bool reverse(void)
-{   // ok, eps
+{   // ok
     bool ok = true;
     //
     // AD, NearEqual, eps99

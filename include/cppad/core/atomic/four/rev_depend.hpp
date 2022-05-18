@@ -17,13 +17,25 @@ $spell
     afun
     enum
     cpp
-    taylor.hpp
+    taylor
+    ident
 $$
 
 $section Atomic Function Reverse Dependency$$
 
 $head Syntax$$
-$icode%ok% = %afun%.rev_depend(%call_id%, %depend_x%, %depend_y%)%$$
+You can define one or the other of the following callbacks,
+but you should not define both.
+
+$subhead Preferred$$
+$icode%ok% = %afun%.rev_depend(%call_id%,
+    %ident_zero_x%, %depend_x%, %depend_y%
+)%$$
+
+$subhead Deprecated 2022-05-10$$
+$icode%ok% = %afun%.rev_depend(%call_id%,
+    %depend_x%, %depend_y%
+)%$$
 
 $subhead Prototype$$
 $srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
@@ -46,6 +58,17 @@ is the $cref CppAD_vector$$ template class.
 
 $head call_id$$
 See $cref/call_id/atomic_four_call/call_id/$$.
+
+$head ident_zero_x$$
+This can sometimes be used to create more efficient dependency
+(fewer true values in $icode depend_y$$).
+If you do not see a way to do this, you can just ignore it.
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of $icode ax$$.
+If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+is a constant parameter that is identically zero.
+An identically zero value times any other value can be treated
+as being identically zero.
 
 $head depend_x$$
 This vector has size equal to the number of arguments for this atomic function;
@@ -90,6 +113,16 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN_PROTOTYPE
+template <class Base>
+bool atomic_four<Base>::rev_depend(
+    size_t                      call_id      ,
+    vector<bool>&               ident_zero_x ,
+    vector<bool>&               depend_x     ,
+    const vector<bool>&         depend_y     )
+// END_PROTOTYPE
+{   return false; }
+
+// deprecated version
 template <class Base>
 bool atomic_four<Base>::rev_depend(
     size_t                      call_id     ,

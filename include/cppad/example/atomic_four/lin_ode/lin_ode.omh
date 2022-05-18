@@ -24,9 +24,6 @@ $section
     Atomic First Order Linear ODE Method: Example Implementation
 $$
 
-$head Under construction$$
-This example is under construction and not yet ready for use.
-
 $head Syntax$$
 $codei%atomic_lin_ode %ode%(%name%)
 %$$
@@ -125,6 +122,7 @@ $childtable%
     %example/atomic_four/lin_ode/forward.cpp
     %example/atomic_four/lin_ode/reverse.cpp
     %example/atomic_four/lin_ode/sparsity.cpp
+    %example/atomic_four/lin_ode/rev_depend.cpp
 %$$
 
 $end

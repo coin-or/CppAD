@@ -63,7 +63,7 @@ $icode%ok% = %afun%.for_type( %call_id%,
     %ident_zero_x%, %select_x% %select_y%, %pattern_out%
 )
 %ok% = %afun%.rev_depend( %call_id%,
-    %depend_x%, %depend_y%
+    %ident_zero_x%, %depend_x%, %depend_y%
 )%$$
 
 $head See Also$$
@@ -198,13 +198,6 @@ public:
         vector<ad_type_enum>&        type_y
     );
     // ------------------------------------------------------------------------
-    // rev_depend
-    virtual bool rev_depend(
-        size_t                       call_id     ,
-        vector<bool>&                depend_x    ,
-        const vector<bool>&          depend_y
-    );
-    // ------------------------------------------------------------------------
     // forward
     virtual bool forward(
         size_t                       call_id     ,
@@ -314,6 +307,20 @@ public:
         const vector<bool>&                     select_x     ,
         const vector<bool>&                     select_y     ,
         sparse_rc< vector<size_t> >&            pattern_out
+    );
+    // ------------------------------------------------------------------------
+    // rev_depend
+    virtual bool rev_depend(
+        size_t                       call_id      ,
+        vector<bool>&                ident_zero_x ,
+        vector<bool>&                depend_x     ,
+        const vector<bool>&          depend_y
+    );
+    // deprecated version of this callback
+    virtual bool rev_depend(
+        size_t                       call_id     ,
+        vector<bool>&                depend_x    ,
+        const vector<bool>&          depend_y
     );
     // =====================================================================
     // Not in User API

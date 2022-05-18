@@ -46,11 +46,11 @@ $latex \[
 \tilde{y} (x) = \sum_{k=0}^4 v^k (x)
 \] $$
 Note that the factor $latex r / k$$ is constant (with respect to the variables),
-so it suffices to compute the sparsity patter for
+so it suffices to compute the sparsity pattern for
 $latex \[
 h (x) = \sum_{k=0}^4 w^k (x)
 \] $$
-Define $latex w^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
+where $latex w^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
 $latex w^k (x) = A(x) w^{k-1} (x)$$.
 
 $head Example$$

@@ -194,6 +194,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/example/atomic_four/lin_ode/hes_sparsity.hpp \
 	cppad/example/atomic_four/lin_ode/jac_sparsity.hpp \
 	cppad/example/atomic_four/lin_ode/lin_ode.hpp \
+	cppad/example/atomic_four/lin_ode/rev_depend.hpp \
 	cppad/example/atomic_four/lin_ode/reverse.hpp \
 	cppad/example/atomic_four/lin_ode/set.hpp \
 	cppad/example/atomic_four/mat_mul/base_mat_mul.hpp \
