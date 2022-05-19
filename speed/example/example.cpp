@@ -121,8 +121,12 @@ int main(void)
         cout << int(Run_error_count) << " tests failed.";
     cout << endl;
 
-
-    return static_cast<int>( ! ok );
+    std::cout << "static_cast<int>( ! ok ): " << static_cast<int>( ! ok ) << std::endl;
+    //return static_cast<int>( ! ok );
+    if(ok)
+      return EXIT_SUCCESS;
+    else
+      return EXIT_FAILURE;
 }
 
 // END C++

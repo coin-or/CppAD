@@ -126,7 +126,16 @@ bool test_one()
     // check result
     for(i = 0; i < n; i++)
         for(j = 0; j < n; j++)
+        {
+            if(h[i * n + j] != check[i * n + j])
+            {
+                std::cout << "i: " << i << std::endl;
+                std::cout << "j: " << j << std::endl;
+                std::cout << "h[i * n + j]: " << h[i * n + j] << std::endl;
+                std::cout << "check[i * n + j]: " << check[i * n + j] << std::endl;
+            }
             ok &= h[i * n + j] == check[i * n + j];
+        }
     // ------------------------------------------------------------------
 
     return ok;
