@@ -2,11 +2,11 @@ name: CppAD CI for Windows - (v142)
 on:
   pull_request:
   push:
-      
+
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -34,7 +34,7 @@ jobs:
     - name: Install cmake and update conda
       run: |
         conda install cmake -c main
-    
+
     - name: Build CppAD
       shell: cmd /C CALL {0}
       env:
@@ -47,7 +47,7 @@ jobs:
         set PATH=%PATH:C:\hostedtoolcache\windows\Boost\1.72.0;=%
 
         call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
-    
+
         :: Create build directory
         mkdir build
         pushd build
@@ -60,4 +60,4 @@ jobs:
           ..
 
         :: Build, check and Install
-        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check install
+        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check install --parallel 1
