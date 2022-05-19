@@ -85,8 +85,8 @@ private:
     // Use pointers, to avoid false sharing between threads.
     thread_struct* work_[CPPAD_MAX_NUM_THREADS];
     //
-    // base_lin_ode
-    static void base_lin_ode(
+    // base_solver
+    static void base_solver(
         const Base&                r          ,
         const sparse_rc&           pattern    ,
         const bool&                transpose  ,
@@ -178,7 +178,7 @@ private:
 
 # include <cppad/example/atomic_four/lin_ode/set.hpp>
 # include <cppad/example/atomic_four/lin_ode/get.hpp>
-# include <cppad/example/atomic_four/lin_ode/base_lin_ode.hpp>
+# include <cppad/example/atomic_four/lin_ode/base_solver.hpp>
 # include <cppad/example/atomic_four/lin_ode/for_type.hpp>
 # include <cppad/example/atomic_four/lin_ode/forward.hpp>
 # include <cppad/example/atomic_four/lin_ode/reverse.hpp>

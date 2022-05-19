@@ -122,7 +122,7 @@ bool atomic_lin_ode<Base>::forward(
     //
     // taylor_y
     if( order_up == 0 )
-        base_lin_ode(r, pattern, transpose, taylor_x, taylor_y);
+        base_solver(r, pattern, transpose, taylor_x, taylor_y);
     else
     {   // M
         size_t M = 2 * m;
@@ -167,7 +167,7 @@ bool atomic_lin_ode<Base>::forward(
         // Y
         CppAD::vector<Base> Y(M);
         bool Transpose = false;
-        base_lin_ode(r, Pattern, Transpose, X, Y);
+        base_solver(r, Pattern, Transpose, X, Y);
         //
         // taylor_y
         if( order_low == 0 )

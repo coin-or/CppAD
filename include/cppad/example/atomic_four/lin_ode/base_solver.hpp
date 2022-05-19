@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_four_lin_ode_base_lin_ode.hpp$$
+$begin atomic_four_lin_ode_base_solver.hpp$$
 $spell
     Rosen
 $$
@@ -35,9 +35,9 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
-// base_lin_ode
+// base_solver
 template <class Base>
-void atomic_lin_ode<Base>::base_lin_ode(
+void atomic_lin_ode<Base>::base_solver(
     const Base&                    r         ,
     const sparse_rc&               pattern   ,
     const bool&                    transpose ,
