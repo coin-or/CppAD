@@ -99,6 +99,7 @@ bool rev_depend(void)
     // m, r
     size_t m      = 4;
     double r      = 2.0;
+    double step   = 1.0;
     //
     // pattern, transpose
     size_t nr  = m;
@@ -120,7 +121,7 @@ bool rev_depend(void)
     //
     // ay
     CPPAD_TESTVECTOR( AD<double> ) ay(m);
-    size_t call_id = afun.set(r, pattern, transpose);
+    size_t call_id = afun.set(r, step, pattern, transpose);
     afun(call_id, ax, ay);
     //
     // z_index

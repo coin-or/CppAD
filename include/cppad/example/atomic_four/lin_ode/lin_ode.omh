@@ -29,11 +29,11 @@ $$
 $head Syntax$$
 $codei%atomic_lin_ode %ode%(%name%)
 %$$
-$icode%call_id% = %lin_ode%.set(%r%, %pattern%, %transpose%)
+$icode%call_id% = %lin_ode%.set(%r%, %step%, %pattern%, %transpose%)
 %$$
-$icode%lin_ode%.get(%call_id%, %r%, %pattern%, %transpose%)
+$icode%lin_ode%.get(%call_id%, %r%, %step%, %pattern%, %transpose%)
 %$$
-$icode%lin_ode%.base_solver(%r%, %pattern%, %transpose%, %x%, %y%)
+$icode%lin_ode%.base_solver(%r%, %step%, %pattern%, %transpose%, %x%, %y%)
 %$$
 $icode%lin_ode%(%call_id%, %ax%, %ay%)
 %$$
@@ -56,6 +56,9 @@ This is a return value (argument) for the $code set$$ ($code get$$) routine.
 $head r$$
 This is the value of $icode t$$ at which we are approximating $latex z(t, x)$$.
 This is a argument (return value) for the $code set$$ ($code get$$) routine.
+
+$head step$$
+This is a positive maximum step size to use when solving the ODE.
 
 $head pattern$$
 This is a sparsity pattern.

@@ -38,9 +38,16 @@ $spell
     std
     namespace
     hes
+    lin
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 05-19$$
+The atomic four $code base_lin_ode$$ function was changed to
+$cref/base_solver/atomic_four_lin_ode_base_solver.hpp/$$.
+In addition, a maximum $cref/step/atomic_four_lin_ode/step/$$
+size was added to this atomic linear ODE solver.
 
 $head 05-17$$
 The $cref atomic_four_lin_ode_rev_depend.hpp$$ example was added.

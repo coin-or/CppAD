@@ -97,6 +97,7 @@ bool sparsity(void)
     // m, r
     size_t m      = 4;
     double r      = 2.0;
+    double step   = 0.5;
     //
     // pattern, transpose
     size_t nr  = m;
@@ -129,7 +130,7 @@ bool sparsity(void)
         ax[nnz + i] = au[i];
     //
     // ay
-    size_t call_id = afun.set(r, pattern, transpose);
+    size_t call_id = afun.set(r, step, pattern, transpose);
     afun(call_id, ax, ay);
     //
     // f

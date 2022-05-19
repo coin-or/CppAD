@@ -31,15 +31,20 @@ $cref/hes_sparsity/atomic_four_hes_sparsity/$$.
 
 $head Notation$$
 We use the notation:
-$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
-$cref/m/atomic_four_lin_ode/y(x)/m/$$,
+$cref/call_id/atomic_four_lin_ode/call_id/$$
+$cref/r/atomic_four_lin_ode/r/$$
+$cref/pattern/atomic_four_lin_ode/pattern/$$
+$cref/transpose/atomic_four_lin_ode/transpose/$$
+$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
+$cref/row/atomic_four_lin_ode/pattern/row/$$,
+$cref/col/atomic_four_lin_ode/pattern/col/$$,
+$cref/x/atomic_four_lin_ode/x/$$,
 $cref/n/atomic_four_lin_ode/x/n/$$,
 $cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
 $cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
+$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
+$cref/m/atomic_four_lin_ode/y(x)/m/$$,
 $cref/vk(x)/atomic_four_lin_ode/vk(x)/$$,
-$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
-$cref/row/atomic_four_lin_ode/pattern/row/$$,
-$cref/col/atomic_four_lin_ode/pattern/col/$$
 and the following additional notation:
 
 $subhead wk(x)$$
@@ -86,9 +91,10 @@ bool atomic_lin_ode<Base>::hes_sparsity(
     //
     // r, pattern_A, transpose, nnz
     Base      r;
+    Base      step;
     sparse_rc pattern_A;
     bool      transpose;
-    get(call_id, r, pattern_A, transpose);
+    get(call_id, r, step, pattern_A, transpose);
     size_t nnz = pattern_A.nnz();
     //
     // m, n

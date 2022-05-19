@@ -52,14 +52,26 @@ public:
         }
     }
     // set
-    size_t set(const Base& r, sparse_rc& pattern, const bool& transpose);
+    size_t set(
+        const Base& r,
+        const Base& step,
+        sparse_rc&  pattern,
+        const bool& transpose
+    );
     //
     // get
-    void get(size_t call_id, Base& r, sparse_rc& pattern, bool& transpose);
+    void get(
+        size_t     call_id,
+        Base&      r,
+        Base&      step,
+        sparse_rc& pattern,
+        bool&      transpose
+    );
     //
     // base_solver
     static void base_solver(
         const Base&                r          ,
+        const Base&                step       ,
         const sparse_rc&           pattern    ,
         const bool&                transpose  ,
         const CppAD::vector<Base>& x          ,
@@ -81,7 +93,7 @@ private:
     // information connected to one call of this atomic function
     // pattern points to pattern_vec for this thread
     struct call_struct {
-        size_t thread; Base r; size_t pattern_index; bool transpose;
+        size_t thread; Base r; Base step; size_t pattern_index; bool transpose;
     };
     //
     // information connected to each thread

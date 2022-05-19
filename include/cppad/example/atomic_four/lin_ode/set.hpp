@@ -22,7 +22,7 @@ $$
 $section atomic_lin_ode Set Routine: Example Implementation$$
 
 $head Syntax$$
-$icode%call_id% = %lin_ode%.set(%r%, %pattern%, %transpose%)%$$
+$icode%call_id% = %lin_ode%.set(%r%, %step%, %pattern%, %transpose%)%$$
 
 $head Prototype$$
 $srcfile%include/cppad/example/atomic_four/lin_ode/lin_ode.hpp%
@@ -37,6 +37,9 @@ the solution of a linear ODE.
 $head r$$
 This argument is the final value for the variable that the ODE is with
 respect to.
+
+$head step$$
+This is a positive maximum step size to use when solving the ODE.
 
 $head pattern$$
 This argument is a sparsity pattern.
@@ -60,7 +63,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
 size_t atomic_lin_ode<Base>::set(
-    const Base& r, sparse_rc& pattern, const bool& transpose
+    const Base& r, const Base& step, sparse_rc& pattern, const bool& transpose
 )
 // END PROTOTYPE
 {
@@ -99,6 +102,7 @@ size_t atomic_lin_ode<Base>::set(
     call_struct call;
     call.thread        = thread;
     call.r             = r;
+    call.step          = step;
     call.pattern_index = pattern_index;
     call.transpose     = transpose;
     //

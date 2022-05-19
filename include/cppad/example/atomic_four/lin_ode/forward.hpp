@@ -103,9 +103,10 @@ bool atomic_lin_ode<Base>::forward(
     //
     // r, pattern, transpose, nnz
     Base      r;
+    Base      step;
     sparse_rc pattern;
     bool      transpose;
-    get(call_id, r, pattern, transpose);
+    get(call_id, r, step, pattern, transpose);
     size_t nnz = pattern.nnz();
     //
     // q
@@ -122,7 +123,7 @@ bool atomic_lin_ode<Base>::forward(
     //
     // taylor_y
     if( order_up == 0 )
-        base_solver(r, pattern, transpose, taylor_x, taylor_y);
+        base_solver(r, step, pattern, transpose, taylor_x, taylor_y);
     else
     {   // M
         size_t M = 2 * m;
@@ -167,7 +168,7 @@ bool atomic_lin_ode<Base>::forward(
         // Y
         CppAD::vector<Base> Y(M);
         bool Transpose = false;
-        base_solver(r, Pattern, Transpose, X, Y);
+        base_solver(r, step, Pattern, Transpose, X, Y);
         //
         // taylor_y
         if( order_low == 0 )
@@ -200,9 +201,10 @@ bool atomic_lin_ode<Base>::forward(
     //
     // r, nnz
     Base            r;
+    Base            step;
     sparse_rc       pattern;
     bool            transpose;
-    get(call_id, r, pattern, transpose);
+    get(call_id, r, step, pattern, transpose);
     size_t nnz = pattern.nnz();
     //
     // q
@@ -263,7 +265,7 @@ bool atomic_lin_ode<Base>::forward(
         //
         // call_id_2
         bool Transpose = false;
-        size_t call_id_2 = set(r, Pattern, Transpose);
+        size_t call_id_2 = set(r, step, Pattern, Transpose);
         //
         // aY
         CppAD::vector<aBase> aY(M);

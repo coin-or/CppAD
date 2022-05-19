@@ -183,9 +183,10 @@ bool atomic_lin_ode<Base>::reverse(
     //
     // r, pattern
     Base      r;
+    Base      step;
     sparse_rc pattern;
     bool      transpose;
-    get(call_id, r, pattern, transpose);
+    get(call_id, r, step, pattern, transpose);
     //
     // r2, nnz
     Base   r2     = r / Base(2.0);
@@ -211,7 +212,7 @@ bool atomic_lin_ode<Base>::reverse(
     //
     // z_r2 = z(r/2, x)
     CppAD::vector<Base> z_r2(m);
-    base_solver(r2, pattern, transpose, x, z_r2);
+    base_solver(r2, step, pattern, transpose, x, z_r2);
     //
     // x = [A, z_r2]
     for(size_t i = 0; i < m; ++i)
@@ -219,7 +220,7 @@ bool atomic_lin_ode<Base>::reverse(
     //
     // z_r = z(r, x)
     CppAD::vector<Base> z_r(m);
-    base_solver(r2, pattern, transpose, x, z_r);
+    base_solver(r2, step, pattern, transpose, x, z_r);
     //
     // lambda_r = lambda(r, x) = w
     const CppAD::vector<Base>& lambda_r(partial_y);
@@ -232,7 +233,7 @@ bool atomic_lin_ode<Base>::reverse(
     // We convert the final value ODE to an initial value ODE by changing
     // the sign of A^T and changing t limits from [r, r2] -> [0, r2].
     CppAD::vector<Base> lambda_r2(m);
-    base_solver(r2, pattern, ! transpose, x, lambda_r2);
+    base_solver(r2, step, pattern, ! transpose, x, lambda_r2);
     //
     // x = [ A, lambda_r2]
     for(size_t i = 0; i < m; ++i)
@@ -240,7 +241,7 @@ bool atomic_lin_ode<Base>::reverse(
     //
     // lambda_0 = lambda(0, x)
     CppAD::vector<Base> lambda_0(m);
-    base_solver(r2, pattern, ! transpose, x, lambda_0);
+    base_solver(r2, step, pattern, ! transpose, x, lambda_0);
     //
     // partial_x L(x, lambda)
     for(size_t i = 0; i < m; ++i)
@@ -289,9 +290,10 @@ bool atomic_lin_ode<Base>::reverse(
     //
     // r, pattern
     Base       r;
+    Base       step;
     sparse_rc pattern;
     bool      transpose;
-    get(call_id, r, pattern, transpose);
+    get(call_id, step, r, pattern, transpose);
     //
     // r2, nnz
     Base  r2   = r / Base(2.0);
@@ -311,7 +313,7 @@ bool atomic_lin_ode<Base>::reverse(
     CPPAD_ASSERT_UNKNOWN( apartial_x.size() == n );
     //
     // call_id_2
-    size_t call_id_2 = (*this).set(r2, pattern, transpose);
+    size_t call_id_2 = (*this).set(r2, step, pattern, transpose);
     //
     // ax = [A, b]
     CppAD::vector< CppAD::AD<Base> > ax(n);
@@ -331,7 +333,7 @@ bool atomic_lin_ode<Base>::reverse(
     (*this)(call_id_2, ax, az_r);
     //
     // call_id_3
-    size_t call_id_3 = (*this).set(r2, pattern, ! transpose);
+    size_t call_id_3 = (*this).set(r2, step, pattern, ! transpose);
     //
     // lambda_r = lambda(r, x) = w
     const CppAD::vector< CppAD::AD<Base> >& alambda_r(apartial_y);
