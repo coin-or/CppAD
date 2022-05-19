@@ -15,11 +15,20 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 $begin atomic_four_lin_ode_base_solver.hpp$$
 $spell
     Rosen
+    lin
 $$
 
 $section
 Atomic Multiply Base Matrices: Example Implementation
 $$
+
+$head Syntax$$
+$icode%lin_ode%.base_solver(
+    %r%, %step%, %pattern%, %transpose%, %x%, %y%
+)%$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
 $head Rosen34$$
 This example uses one step of
@@ -36,6 +45,7 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 // base_solver
+// BEGIN_PROTOTYPE
 template <class Base>
 void atomic_lin_ode<Base>::base_solver(
     const Base&                    r         ,
@@ -43,6 +53,7 @@ void atomic_lin_ode<Base>::base_solver(
     const bool&                    transpose ,
     const CppAD::vector<Base>&     x         ,
     CppAD::vector<Base>&           y         )
+// END_PROTOTYPE
 {
     class Fun {
     private:

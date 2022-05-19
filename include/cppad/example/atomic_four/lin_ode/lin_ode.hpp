@@ -57,6 +57,15 @@ public:
     // get
     void get(size_t call_id, Base& r, sparse_rc& pattern, bool& transpose);
     //
+    // base_solver
+    static void base_solver(
+        const Base&                r          ,
+        const sparse_rc&           pattern    ,
+        const bool&                transpose  ,
+        const CppAD::vector<Base>& x          ,
+        CppAD::vector<Base>&       y
+    );
+    //
     // test_rev_depend
     // public version of this function that is used for example / testing
     bool test_rev_depend(
@@ -84,15 +93,6 @@ private:
     //
     // Use pointers, to avoid false sharing between threads.
     thread_struct* work_[CPPAD_MAX_NUM_THREADS];
-    //
-    // base_solver
-    static void base_solver(
-        const Base&                r          ,
-        const sparse_rc&           pattern    ,
-        const bool&                transpose  ,
-        const CppAD::vector<Base>& x          ,
-        CppAD::vector<Base>&       y
-    );
     //
     // -----------------------------------------------------------------------
     // overrides
