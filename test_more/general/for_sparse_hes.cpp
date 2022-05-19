@@ -16,7 +16,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 namespace { // Begin empty namespace
 
 bool test_one()
-{   bool ok = true;
+{   volatile bool ok = true;
     using namespace CppAD;
 
     // dimension of the domain space
