@@ -14,11 +14,14 @@ var list_up0 = [
 'atomic_four_example.htm',
 'atomic_four_lin_ode.htm',
 'atomic_four_lin_ode_implement.htm',
-'atomic_four_lin_ode_base_lin_ode.hpp.htm'
+'atomic_four_lin_ode_base_solver.hpp.htm'
 ];
 var list_current0 = [
-'atomic_four_lin_ode_base_lin_ode.hpp.htm#Rosen34',
-'atomic_four_lin_ode_base_lin_ode.hpp.htm#Source'
+'atomic_four_lin_ode_base_solver.hpp.htm#Syntax',
+'atomic_four_lin_ode_base_solver.hpp.htm#Prototype',
+'atomic_four_lin_ode_base_solver.hpp.htm#Notation',
+'atomic_four_lin_ode_base_solver.hpp.htm#Rosen34',
+'atomic_four_lin_ode_base_solver.hpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

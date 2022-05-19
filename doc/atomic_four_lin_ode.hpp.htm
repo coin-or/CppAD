@@ -104,10 +104,31 @@ A:active { color : purple }
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// set</font></i>
-    <font color="#008080">size_t</font> <b><font color="#000000">set</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose<font color="#990000">);</font>
+    <font color="#008080">size_t</font> <b><font color="#000000">set</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font> step<font color="#990000">,</font>
+        sparse_rc<font color="#990000">&amp;</font>  pattern<font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
+    <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// get</font></i>
-    <font color="#009900">void</font> <b><font color="#000000">get</font></b><font color="#990000">(</font><font color="#008080">size_t</font> call_id<font color="#990000">,</font> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose<font color="#990000">);</font>
+    <font color="#009900">void</font> <b><font color="#000000">get</font></b><font color="#990000">(</font>
+        <font color="#008080">size_t</font>     call_id<font color="#990000">,</font>
+        Base<font color="#990000">&amp;</font>      r<font color="#990000">,</font>
+        Base<font color="#990000">&amp;</font>      step<font color="#990000">,</font>
+        sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font>
+        <font color="#009900">bool</font><font color="#990000">&amp;</font>      transpose
+    <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// base_solver</font></i>
+    <b><font color="#0000FF">static</font></b> <font color="#009900">void</font> <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>
+        <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font>                r          <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font>                step       <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> sparse_rc<font color="#990000">&amp;</font>           pattern    <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font>                transpose  <font color="#990000">,</font>
+        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x          <font color="#990000">,</font>
+        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>       y
+    <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// test_rev_depend</font></i>
     <i><font color="#9A1900">// public version of this function that is used for example / testing</font></i>
@@ -124,7 +145,7 @@ A:active { color : purple }
     <i><font color="#9A1900">// information connected to one call of this atomic function</font></i>
     <i><font color="#9A1900">// pattern points to pattern_vec for this thread</font></i>
     <b><font color="#0000FF">struct</font></b> <font color="#008080">call_struct</font> <font color="#FF0000">{</font>
-        <font color="#008080">size_t</font> thread<font color="#990000">;</font> <font color="#008080">Base</font> r<font color="#990000">;</font> <font color="#008080">size_t</font> pattern_index<font color="#990000">;</font> <font color="#009900">bool</font> transpose<font color="#990000">;</font>
+        <font color="#008080">size_t</font> thread<font color="#990000">;</font> <font color="#008080">Base</font> r<font color="#990000">;</font> <font color="#008080">Base</font> step<font color="#990000">;</font> <font color="#008080">size_t</font> pattern_index<font color="#990000">;</font> <font color="#009900">bool</font> transpose<font color="#990000">;</font>
     <font color="#FF0000">}</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// information connected to each thread</font></i>
@@ -136,15 +157,6 @@ A:active { color : purple }
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// Use pointers, to avoid false sharing between threads.</font></i>
     thread_struct<font color="#990000">*</font> work_<font color="#990000">[</font>CPPAD_MAX_NUM_THREADS<font color="#990000">];</font>
-    <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// base_lin_ode</font></i>
-    <b><font color="#0000FF">static</font></b> <font color="#009900">void</font> <b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>
-        <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font>                r          <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> sparse_rc<font color="#990000">&amp;</font>           pattern    <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font>                transpose  <font color="#990000">,</font>
-        <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> x          <font color="#990000">,</font>
-        CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>       y
-    <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
     <i><font color="#9A1900">// overrides</font></i>
@@ -230,7 +242,7 @@ A:active { color : purple }
 
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/set.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/get.hpp&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/base_lin_ode.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/base_solver.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/for_type.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/forward.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/reverse.hpp&gt;</font>

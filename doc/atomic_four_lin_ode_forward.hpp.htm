@@ -200,9 +200,10 @@ b^1
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// r, pattern, transpose, nnz</font></i>
     <font color="#008080">Base</font>      r<font color="#990000">;</font>
+    <font color="#008080">Base</font>      step<font color="#990000">;</font>
     <font color="#008080">sparse_rc</font> pattern<font color="#990000">;</font>
     <font color="#009900">bool</font>      transpose<font color="#990000">;</font>
-    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// q</font></i>
@@ -219,7 +220,7 @@ b^1
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// taylor_y</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
-        <b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> taylor_x<font color="#990000">,</font> taylor_y<font color="#990000">);</font>
+        <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> taylor_x<font color="#990000">,</font> taylor_y<font color="#990000">);</font>
     <b><font color="#0000FF">else</font></b>
     <font color="#FF0000">{</font>   <i><font color="#9A1900">// M</font></i>
         <font color="#008080">size_t</font> M <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">;</font>
@@ -264,7 +265,7 @@ b^1
         <i><font color="#9A1900">// Y</font></i>
         CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>M<font color="#990000">);</font>
         <font color="#009900">bool</font> Transpose <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-        <b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>r<font color="#990000">,</font> Pattern<font color="#990000">,</font> Transpose<font color="#990000">,</font> X<font color="#990000">,</font> Y<font color="#990000">);</font>
+        <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> Pattern<font color="#990000">,</font> Transpose<font color="#990000">,</font> X<font color="#990000">,</font> Y<font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
         <i><font color="#9A1900">// taylor_y</font></i>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_low <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
@@ -297,9 +298,10 @@ b^1
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// r, nnz</font></i>
     <font color="#008080">Base</font>            r<font color="#990000">;</font>
+    <font color="#008080">Base</font>            step<font color="#990000">;</font>
     <font color="#008080">sparse_rc</font>       pattern<font color="#990000">;</font>
     <font color="#009900">bool</font>            transpose<font color="#990000">;</font>
-    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// q</font></i>
@@ -360,7 +362,7 @@ b^1
         <i><font color="#9A1900">//</font></i>
         <i><font color="#9A1900">// call_id_2</font></i>
         <font color="#009900">bool</font> Transpose <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-        <font color="#008080">size_t</font> call_id_2 <font color="#990000">=</font> <b><font color="#000000">set</font></b><font color="#990000">(</font>r<font color="#990000">,</font> Pattern<font color="#990000">,</font> Transpose<font color="#990000">);</font>
+        <font color="#008080">size_t</font> call_id_2 <font color="#990000">=</font> <b><font color="#000000">set</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> Pattern<font color="#990000">,</font> Transpose<font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
         <i><font color="#9A1900">// aY</font></i>
         CppAD<font color="#990000">::</font><font color="#008080">vector&lt;aBase&gt;</font> <b><font color="#000000">aY</font></b><font color="#990000">(</font>M<font color="#990000">);</font>

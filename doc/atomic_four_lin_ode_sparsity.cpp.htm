@@ -181,6 +181,7 @@ u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
     <i><font color="#9A1900">// m, r</font></i>
     <font color="#008080">size_t</font> m      <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
     <font color="#009900">double</font> r      <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    <font color="#009900">double</font> step   <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// pattern, transpose</font></i>
     <font color="#008080">size_t</font> nr  <font color="#990000">=</font> m<font color="#990000">;</font>
@@ -213,7 +214,7 @@ u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
         ax<font color="#990000">[</font>nnz <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> au<font color="#990000">[</font>i<font color="#990000">];</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ay</font></i>
-    <font color="#008080">size_t</font> call_id <font color="#990000">=</font> afun<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <font color="#008080">size_t</font> call_id <font color="#990000">=</font> afun<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
     <b><font color="#000000">afun</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// f</font></i>

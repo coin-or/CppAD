@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>atomic_lin_ode Get Routine: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="atomic_lin_ode Get Routine: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic_lin_ode get routine: example implementation syntax prototype purpose call_id r pattern transpose source ">
+<meta name="keywords" id="keywords" content=" atomic_lin_ode get routine: example implementation syntax prototype purpose call_id r step pattern transpose source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic_four_lin_ode_set.hpp.htm" target="_top">Prev</a>
-</td><td><a href="atomic_four_lin_ode_base_lin_ode.hpp.htm" target="_top">Next</a>
+</td><td><a href="atomic_four_lin_ode_base_solver.hpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -75,6 +75,7 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>call_id</option>
 <option>r</option>
+<option>step</option>
 <option>pattern</option>
 <option>transpose</option>
 <option>Source</option>
@@ -93,7 +94,7 @@ A:active { color : purple }
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.get(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.get(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>step</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
@@ -106,7 +107,7 @@ def
     </tt></pre>
 <pre><tt><b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">void</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">get</font></b><font color="#990000">(</font>
-    <font color="#008080">size_t</font> call_id<font color="#990000">,</font> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
+    <font color="#008080">size_t</font> call_id<font color="#990000">,</font> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> Base<font color="#990000">&amp;</font> step<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
 <font color="#990000">)</font></tt></pre>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -125,6 +126,12 @@ This input argument identifies the auxillary information for this ODE.
 <br>
 This output argument is the final value for the variable that the ODE is with
 respect to.
+
+<br>
+<br>
+<b><big><a name="step" id="step">step</a></big></b>
+<br>
+This is a positive maximum step size to use when solving the ODE.
 
 <br>
 <br>
@@ -154,7 +161,7 @@ A(x)
 <i><font color="#9A1900">// BEGIN PROTOTYPE</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">void</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">get</font></b><font color="#990000">(</font>
-    <font color="#008080">size_t</font> call_id<font color="#990000">,</font> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
+    <font color="#008080">size_t</font> call_id<font color="#990000">,</font> Base<font color="#990000">&amp;</font> r<font color="#990000">,</font> Base<font color="#990000">&amp;</font> step<font color="#990000">,</font> sparse_rc<font color="#990000">&amp;</font> pattern<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&amp;</font> transpose
 <font color="#990000">)</font>
 <i><font color="#9A1900">// END PROTOTYPE</font></i>
 <font color="#FF0000">{</font>
@@ -173,6 +180,7 @@ A(x)
     <i><font color="#9A1900">// r</font></i>
     call_struct<font color="#990000">&amp;</font> call <font color="#990000">=</font> call_vec<font color="#990000">[</font>call_id<font color="#990000">];</font>
     r         <font color="#990000">=</font> call<font color="#990000">.</font>r<font color="#990000">;</font>
+    step      <font color="#990000">=</font> call<font color="#990000">.</font>step<font color="#990000">;</font>
     pattern   <font color="#990000">=</font> pattern_vec<font color="#990000">[</font>call<font color="#990000">.</font>pattern_index<font color="#990000">];</font>
     transpose <font color="#990000">=</font> call<font color="#990000">.</font>transpose<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>

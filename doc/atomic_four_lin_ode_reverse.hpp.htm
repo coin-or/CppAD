@@ -323,9 +323,10 @@ Any other approximation for this integral can be used.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// r, pattern</font></i>
     <font color="#008080">Base</font>      r<font color="#990000">;</font>
+    <font color="#008080">Base</font>      step<font color="#990000">;</font>
     <font color="#008080">sparse_rc</font> pattern<font color="#990000">;</font>
     <font color="#009900">bool</font>      transpose<font color="#990000">;</font>
-    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// r2, nnz</font></i>
     <font color="#008080">Base</font>   r2     <font color="#990000">=</font> r <font color="#990000">/</font> <b><font color="#000000">Base</font></b><font color="#990000">(</font><font color="#993399">2.0</font><font color="#990000">);</font>
@@ -351,7 +352,7 @@ Any other approximation for this integral can be used.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// z_r2 = z(r/2, x)</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">z_r2</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> x<font color="#990000">,</font> z_r2<font color="#990000">);</font>
+    <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> x<font color="#990000">,</font> z_r2<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// x = [A, z_r2]</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
@@ -359,7 +360,7 @@ Any other approximation for this integral can be used.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// z_r = z(r, x)</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">z_r</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> x<font color="#990000">,</font> z_r<font color="#990000">);</font>
+    <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> x<font color="#990000">,</font> z_r<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// lambda_r = lambda(r, x) = w</font></i>
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font> <b><font color="#000000">lambda_r</font></b><font color="#990000">(</font>partial_y<font color="#990000">);</font>
@@ -372,7 +373,7 @@ Any other approximation for this integral can be used.
     <i><font color="#9A1900">// We convert the final value ODE to an initial value ODE by changing</font></i>
     <i><font color="#9A1900">// the sign of A^T and changing t limits from [r, r2] -&gt; [0, r2].</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">lambda_r2</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> pattern<font color="#990000">,</font> <font color="#990000">!</font> transpose<font color="#990000">,</font> x<font color="#990000">,</font> lambda_r2<font color="#990000">);</font>
+    <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> <font color="#990000">!</font> transpose<font color="#990000">,</font> x<font color="#990000">,</font> lambda_r2<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// x = [ A, lambda_r2]</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
@@ -380,7 +381,7 @@ Any other approximation for this integral can be used.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// lambda_0 = lambda(0, x)</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">lambda_0</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> pattern<font color="#990000">,</font> <font color="#990000">!</font> transpose<font color="#990000">,</font> x<font color="#990000">,</font> lambda_0<font color="#990000">);</font>
+    <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> <font color="#990000">!</font> transpose<font color="#990000">,</font> x<font color="#990000">,</font> lambda_0<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// partial_x L(x, lambda)</font></i>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
@@ -429,9 +430,10 @@ Any other approximation for this integral can be used.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// r, pattern</font></i>
     <font color="#008080">Base</font>       r<font color="#990000">;</font>
+    <font color="#008080">Base</font>       step<font color="#990000">;</font>
     <font color="#008080">sparse_rc</font> pattern<font color="#990000">;</font>
     <font color="#009900">bool</font>      transpose<font color="#990000">;</font>
-    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> step<font color="#990000">,</font> r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// r2, nnz</font></i>
     <font color="#008080">Base</font>  r2   <font color="#990000">=</font> r <font color="#990000">/</font> <b><font color="#000000">Base</font></b><font color="#990000">(</font><font color="#993399">2.0</font><font color="#990000">);</font>
@@ -451,7 +453,7 @@ Any other approximation for this integral can be used.
     <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> apartial_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// call_id_2</font></i>
-    <font color="#008080">size_t</font> call_id_2 <font color="#990000">=</font> <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <font color="#008080">size_t</font> call_id_2 <font color="#990000">=</font> <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ax = [A, b]</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;Base&gt; &gt;</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
@@ -471,7 +473,7 @@ Any other approximation for this integral can be used.
     <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>call_id_2<font color="#990000">,</font> ax<font color="#990000">,</font> az_r<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// call_id_3</font></i>
-    <font color="#008080">size_t</font> call_id_3 <font color="#990000">=</font> <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> pattern<font color="#990000">,</font> <font color="#990000">!</font> transpose<font color="#990000">);</font>
+    <font color="#008080">size_t</font> call_id_3 <font color="#990000">=</font> <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">).</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r2<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> <font color="#990000">!</font> transpose<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// lambda_r = lambda(r, x) = w</font></i>
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font> <b><font color="#000000">alambda_r</font></b><font color="#990000">(</font>apartial_y<font color="#990000">);</font>

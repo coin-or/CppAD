@@ -22,6 +22,7 @@ var list_current0 = [
 'atomic_four_lin_ode_get.hpp.htm#Purpose',
 'atomic_four_lin_ode_get.hpp.htm#call_id',
 'atomic_four_lin_ode_get.hpp.htm#r',
+'atomic_four_lin_ode_get.hpp.htm#step',
 'atomic_four_lin_ode_get.hpp.htm#pattern',
 'atomic_four_lin_ode_get.hpp.htm#transpose',
 'atomic_four_lin_ode_get.hpp.htm#Source'

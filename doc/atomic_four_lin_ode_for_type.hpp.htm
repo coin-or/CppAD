@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="atomic_four_lin_ode_base_lin_ode.hpp.htm" target="_top">Prev</a>
+<td><a href="atomic_four_lin_ode_base_solver.hpp.htm" target="_top">Prev</a>
 </td><td><a href="atomic_four_lin_ode_forward.hpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -99,9 +99,21 @@ used by the atomic_four base; see
 <b><big><a name="Notation" id="Notation">Notation</a></big></b>
 <br>
 We use the notation:
-<a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
+<a href="atomic_four_lin_ode.htm#call_id" target="_top"><span style='white-space: nowrap'>call_id</span></a>
+
+<a href="atomic_four_lin_ode.htm#r" target="_top"><span style='white-space: nowrap'>r</span></a>
+
+<a href="atomic_four_lin_ode.htm#pattern" target="_top"><span style='white-space: nowrap'>pattern</span></a>
+
+<a href="atomic_four_lin_ode.htm#transpose" target="_top"><span style='white-space: nowrap'>transpose</span></a>
+
+<a href="atomic_four_lin_ode.htm#pattern.nnz" target="_top"><span style='white-space: nowrap'>nnz</span></a>
 ,
-<a href="atomic_four_lin_ode.htm#y(x).m" target="_top"><span style='white-space: nowrap'>m</span></a>
+<a href="atomic_four_lin_ode.htm#pattern.row" target="_top"><span style='white-space: nowrap'>row</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.col" target="_top"><span style='white-space: nowrap'>col</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x" target="_top"><span style='white-space: nowrap'>x</span></a>
 ,
 <a href="atomic_four_lin_ode.htm#x.n" target="_top"><span style='white-space: nowrap'>n</span></a>
 ,
@@ -109,14 +121,12 @@ We use the notation:
 ,
 <a href="atomic_four_lin_ode.htm#x.b(x)" target="_top"><span style='white-space: nowrap'>b(x)</span></a>
 ,
+<a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#y(x).m" target="_top"><span style='white-space: nowrap'>m</span></a>
+,
 <a href="atomic_four_lin_ode.htm#vk(x)" target="_top"><span style='white-space: nowrap'>vk(x)</span></a>
 ,
-<a href="atomic_four_lin_ode.htm#pattern.nnz" target="_top"><span style='white-space: nowrap'>nnz</span></a>
-,
-<a href="atomic_four_lin_ode.htm#pattern.row" target="_top"><span style='white-space: nowrap'>row</span></a>
-,
-<a href="atomic_four_lin_ode.htm#pattern.col" target="_top"><span style='white-space: nowrap'>col</span></a>
-
 and the following additional notation:
 
 <br>
@@ -258,9 +268,10 @@ From this it is clear that
 <font color="#FF0000">{</font>
     <i><font color="#9A1900">// nnz</font></i>
     <font color="#008080">Base</font>      r<font color="#990000">;</font>
+    <font color="#008080">Base</font>      step<font color="#990000">;</font>
     <font color="#008080">sparse_rc</font> pattern<font color="#990000">;</font>
     <font color="#009900">bool</font>      transpose<font color="#990000">;</font>
-    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> step<font color="#990000">,</font> r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// m</font></i>

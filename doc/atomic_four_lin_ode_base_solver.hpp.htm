@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Multiply Base Matrices: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Multiply Base Matrices: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic multiply base matrices: example implementation rosen34 source ">
+<meta name="keywords" id="keywords" content=" atomic multiply base matrices: example implementation syntax prototype notation rosen34 source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_atomic_four_lin_ode_base_lin_ode.hpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_lin_ode_base_solver.hpp_htm.js'>
 </script>
 </head>
 <body>
@@ -54,7 +54,7 @@ A:active { color : purple }
 <option>atomic_four_example</option>
 <option>atomic_four_lin_ode</option>
 <option>atomic_four_lin_ode_implement</option>
-<option>atomic_four_lin_ode_base_lin_ode.hpp</option>
+<option>atomic_four_lin_ode_base_solver.hpp</option>
 </select>
 </td>
 <td>
@@ -66,10 +66,13 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_implement_htm.js'></script>
 </td>
-<td>atomic_four_lin_ode_base_lin_ode.hpp</td>
+<td>atomic_four_lin_ode_base_solver.hpp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>Notation</option>
 <option>Rosen34</option>
 <option>Source</option>
 </select>
@@ -82,6 +85,63 @@ A:active { color : purple }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
 \newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Multiply Base Matrices: Example Implementation</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.base_solver(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>step</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">base_solver</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font>                    r         <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font>                    step      <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> sparse_rc<font color="#990000">&amp;</font>               pattern   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font>                    transpose <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>     x         <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>           y         <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+<br>
+We use the notation:
+<a href="atomic_four_lin_ode.htm#call_id" target="_top"><span style='white-space: nowrap'>call_id</span></a>
+
+<a href="atomic_four_lin_ode.htm#r" target="_top"><span style='white-space: nowrap'>r</span></a>
+
+<a href="atomic_four_lin_ode.htm#pattern" target="_top"><span style='white-space: nowrap'>pattern</span></a>
+
+<a href="atomic_four_lin_ode.htm#transpose" target="_top"><span style='white-space: nowrap'>transpose</span></a>
+
+<a href="atomic_four_lin_ode.htm#pattern.nnz" target="_top"><span style='white-space: nowrap'>nnz</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.row" target="_top"><span style='white-space: nowrap'>row</span></a>
+,
+<a href="atomic_four_lin_ode.htm#pattern.col" target="_top"><span style='white-space: nowrap'>col</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x" target="_top"><span style='white-space: nowrap'>x</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.n" target="_top"><span style='white-space: nowrap'>n</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.A(x)" target="_top"><span style='white-space: nowrap'>A(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#x.b(x)" target="_top"><span style='white-space: nowrap'>b(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#y(x)" target="_top"><span style='white-space: nowrap'>y(x)</span></a>
+,
+<a href="atomic_four_lin_ode.htm#y(x).m" target="_top"><span style='white-space: nowrap'>m</span></a>
+,
+<a href="atomic_four_lin_ode.htm#vk(x)" target="_top"><span style='white-space: nowrap'>vk(x)</span></a>
+
+
+<br>
 <br>
 <b><big><a name="Rosen34" id="Rosen34">Rosen34</a></big></b>
 <br>
@@ -99,14 +159,17 @@ Any initial value ODE solver, with any number of steps, could be used.
 
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_CPPAD_NAMESPACE</font></i>
 <i><font color="#9A1900">//</font></i>
-<i><font color="#9A1900">// base_lin_ode</font></i>
+<i><font color="#9A1900">// base_solver</font></i>
+<i><font color="#9A1900">// BEGIN_PROTOTYPE</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
-<font color="#009900">void</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">base_lin_ode</font></b><font color="#990000">(</font>
+<font color="#009900">void</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">base_solver</font></b><font color="#990000">(</font>
     <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font>                    r         <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> Base<font color="#990000">&amp;</font>                    step      <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> sparse_rc<font color="#990000">&amp;</font>               pattern   <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font>                    transpose <font color="#990000">,</font>
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>     x         <font color="#990000">,</font>
     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Base<font color="#990000">&gt;&amp;</font>           y         <font color="#990000">)</font>
+<i><font color="#9A1900">// END_PROTOTYPE</font></i>
 <font color="#FF0000">{</font>
     <b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
     <b><font color="#0000FF">private</font></b><font color="#990000">:</font>
@@ -193,6 +256,8 @@ Any initial value ODE solver, with any number of steps, could be used.
     <font color="#008080">Base</font> ti       <font color="#990000">=</font> <b><font color="#000000">Base</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">);</font>
     <font color="#008080">Base</font> tf       <font color="#990000">=</font> r<font color="#990000">;</font>
     <font color="#008080">size_t</font> n_step <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> step <font color="#990000">&lt;</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>r<font color="#990000">)</font> <font color="#990000">)</font>
+        n_step <font color="#990000">=</font> <b><font color="#000000">Integer</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>r<font color="#990000">)</font> <font color="#990000">/</font> step <font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">zi</font></b><font color="#990000">(</font>m<font color="#990000">),</font> <b><font color="#000000">e</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
         zi<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> x<font color="#990000">[</font>nnz <font color="#990000">+</font> j<font color="#990000">];</font>
@@ -201,7 +266,7 @@ Any initial value ODE solver, with any number of steps, could be used.
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>
 
-<hr>Input File: include/cppad/example/atomic_four/lin_ode/base_lin_ode.hpp
+<hr>Input File: include/cppad/example/atomic_four/lin_ode/base_solver.hpp
 
 </body>
 </html>

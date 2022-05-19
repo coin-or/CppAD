@@ -184,6 +184,7 @@ x_6 + x_2 x_5 t + x_2 x_1 x_4 t^2 / 2 + x_2 x_1 x_0 x_3 t^3 / 6
     <i><font color="#9A1900">// m, r</font></i>
     <font color="#008080">size_t</font> m      <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
     <font color="#009900">double</font> r      <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    <font color="#009900">double</font> step   <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// pattern, transpose</font></i>
     <font color="#008080">size_t</font> nr  <font color="#990000">=</font> m<font color="#990000">;</font>
@@ -205,7 +206,7 @@ x_6 + x_2 x_5 t + x_2 x_1 x_4 t^2 / 2 + x_2 x_1 x_0 x_3 t^3 / 6
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ay</font></i>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
-    <font color="#008080">size_t</font> call_id <font color="#990000">=</font> afun<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+    <font color="#008080">size_t</font> call_id <font color="#990000">=</font> afun<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
     <b><font color="#000000">afun</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> ax<font color="#990000">,</font> ay<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// z_index</font></i>

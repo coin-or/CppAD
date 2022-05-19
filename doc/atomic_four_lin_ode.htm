@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic First Order Linear ODE Method: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic First Order Linear ODE Method: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic first order linear ode method: example implementation syntax z(t x) y(x) m call_id r pattern nnz row col transpose x n a(x) b(x) vk(x) approximations rosen34 simpon's rule ">
+<meta name="keywords" id="keywords" content=" atomic first order linear ode method: example implementation syntax z(t x) call_id r step pattern nnz row col transpose x n a(x) b(x) y(x) m y ax ay vk(x) approximations rosen34 simpon's rule ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,10 +72,9 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>Syntax</option>
 <option>z(t, x)</option>
-<option>y(x)</option>
-<option>---..m</option>
 <option>call_id</option>
 <option>r</option>
+<option>step</option>
 <option>pattern</option>
 <option>---..nnz</option>
 <option>---..row</option>
@@ -85,6 +84,11 @@ A:active { color : purple }
 <option>---..n</option>
 <option>---..A(x)</option>
 <option>---..b(x)</option>
+<option>y(x)</option>
+<option>---..m</option>
+<option>---..y</option>
+<option>ax</option>
+<option>ay</option>
 <option>vk(x)</option>
 <option>Approximations</option>
 <option>---..Rosen34</option>
@@ -108,13 +112,16 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'>atomic_lin_ode&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.set(</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.set(</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>step</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.get(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.get(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>step</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>.base_solver(</span></font><i><font color="black"><span style='white-space: nowrap'>r</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>step</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pattern</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>transpose</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="z(t, x)" id="z(t, x)">z(t, x)</a></big></b>
@@ -144,29 +151,6 @@ t
 
 <br>
 <br>
-<b><big><a name="y(x)" id="y(x)">y(x)</a></big></b>
-<br>
-This input value of the elements of 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
- does not matter.
-Upon return it is the final value of the ODE solution,
-<small>@(@
-y(x) = z(r, x)
-@)@</small>.
-
-<br>
-<br>
-<big><a name="y(x).m" id="y(x).m">m</a></big>
-<br>
-We use 
-<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
- to denote the size of the vector 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
-.
-This is the number of equations in the ODE.
-
-<br>
-<br>
 <b><big><a name="call_id" id="call_id">call_id</a></big></b>
 <br>
 This is a return value (argument) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
@@ -181,6 +165,12 @@ This is the value of
 z(t, x)
 @)@</small>.
 This is a argument (return value) for the <code><font color="blue">set</font></code> (<code><font color="blue">get</font></code>) routine.
+
+<br>
+<br>
+<b><big><a name="step" id="step">step</a></big></b>
+<br>
+This is a positive maximum step size to use when solving the ODE.
 
 <br>
 <br>
@@ -240,6 +230,10 @@ This is a argument (return value) for the <code><font color="blue">set</font></c
 We use 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
  to denote the argument to the atomic function.
+In the call to <code><font color="blue">base_solver</font></code> it is a CppAD vector with elements
+of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
 
 <br>
 <br>
@@ -296,6 +290,78 @@ b_j (x) = x[ nnz + j ]
 
 <br>
 <br>
+<b><big><a name="y(x)" id="y(x)">y(x)</a></big></b>
+<br>
+We use <small>@(@
+y(x)
+@)@</small> to denote the final value of the ODE; i.e.,
+<small>@(@
+y(x) = z(r, x)
+@)@</small>.
+
+<br>
+<br>
+<big><a name="y(x).m" id="y(x).m">m</a></big>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>m</span></font></i></code>
+ to denote the size of the vector 
+<code><i><font color="black"><span style='white-space: nowrap'>y(x)</span></font></i></code>
+.
+This is the number of equations in the ODE.
+
+<br>
+<br>
+<big><a name="y(x).y" id="y(x).y">y</a></big>
+<br>
+In the call to <code><font color="blue">base_solver</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is a CppAD vector with elements of type 
+<code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i></code>
+.
+The input value of its elements does not matter.
+Upon return it contains the value <small>@(@
+y(x)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="ax" id="ax">ax</a></big></b>
+<br>
+In the call to 
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+
+is a simple vector with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+The elements of 
+<code><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i></code>
+ have the same meaning as 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="ay" id="ay">ay</a></big></b>
+<br>
+In the call to 
+<code><i><font color="black"><span style='white-space: nowrap'>lin_ode</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+
+is a simple vector with elements of type 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+The input value of its elements does not matter.
+Upon return it represents the solution 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>ax</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+
+<br>
+<br>
 <b><big><a name="vk(x)" id="vk(x)">vk(x)</a></big></b>
 <br>
 We sometimes use the following representation for <small>@(@
@@ -331,7 +397,7 @@ y(x) = \sum_{k=0}^\infty v^k (x)
 <br>
 <big><a name="Approximations.Rosen34" id="Approximations.Rosen34">Rosen34</a></big>
 <br>
-The <a href="atomic_four_lin_ode_base_lin_ode.hpp.htm#Rosen34" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+The <a href="atomic_four_lin_ode_base_solver.hpp.htm#Rosen34" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
  routine
 is used to approximate the solution of the ODE.
 Any initial value ODE solver can be used for this purpose.
