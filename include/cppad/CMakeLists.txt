@@ -124,7 +124,12 @@ ENDFOREACH( cmake_var )
 #
 SET(source "
 # include <stdlib.h>
+# if _MSC_VER
+# include <io.h>  
+# else
 # include <unistd.h>
+# endif
+
 int main(void)
 {
     char pattern[] = \"/tmp/fileXXXXXX\";

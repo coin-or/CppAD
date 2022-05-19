@@ -136,7 +136,12 @@ $end
 
 # if CPPAD_HAS_MKSTEMP
 # include <stdlib.h>
+
+# if _MSC_VER
+# include <io.h>
+# else
 # include <unistd.h>
+# endif
 # else
 # if CPPAD_HAS_TMPNAM_S
 # include <stdio.h>
