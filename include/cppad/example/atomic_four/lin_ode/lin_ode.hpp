@@ -52,10 +52,31 @@ public:
         }
     }
     // set
-    size_t set(const Base& r, sparse_rc& pattern, const bool& transpose);
+    size_t set(
+        const Base& r,
+        const Base& step,
+        sparse_rc&  pattern,
+        const bool& transpose
+    );
     //
     // get
-    void get(size_t call_id, Base& r, sparse_rc& pattern, bool& transpose);
+    void get(
+        size_t     call_id,
+        Base&      r,
+        Base&      step,
+        sparse_rc& pattern,
+        bool&      transpose
+    );
+    //
+    // base_solver
+    static void base_solver(
+        const Base&                r          ,
+        const Base&                step       ,
+        const sparse_rc&           pattern    ,
+        const bool&                transpose  ,
+        const CppAD::vector<Base>& x          ,
+        CppAD::vector<Base>&       y
+    );
     //
     // test_rev_depend
     // public version of this function that is used for example / testing
@@ -72,7 +93,7 @@ private:
     // information connected to one call of this atomic function
     // pattern points to pattern_vec for this thread
     struct call_struct {
-        size_t thread; Base r; size_t pattern_index; bool transpose;
+        size_t thread; Base r; Base step; size_t pattern_index; bool transpose;
     };
     //
     // information connected to each thread
@@ -84,15 +105,6 @@ private:
     //
     // Use pointers, to avoid false sharing between threads.
     thread_struct* work_[CPPAD_MAX_NUM_THREADS];
-    //
-    // base_lin_ode
-    static void base_lin_ode(
-        const Base&                r          ,
-        const sparse_rc&           pattern    ,
-        const bool&                transpose  ,
-        const CppAD::vector<Base>& x          ,
-        CppAD::vector<Base>&       y
-    );
     //
     // -----------------------------------------------------------------------
     // overrides
@@ -178,7 +190,7 @@ private:
 
 # include <cppad/example/atomic_four/lin_ode/set.hpp>
 # include <cppad/example/atomic_four/lin_ode/get.hpp>
-# include <cppad/example/atomic_four/lin_ode/base_lin_ode.hpp>
+# include <cppad/example/atomic_four/lin_ode/base_solver.hpp>
 # include <cppad/example/atomic_four/lin_ode/for_type.hpp>
 # include <cppad/example/atomic_four/lin_ode/forward.hpp>
 # include <cppad/example/atomic_four/lin_ode/reverse.hpp>

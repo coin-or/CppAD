@@ -21,7 +21,7 @@ $$
 $section atomic_lin_ode Get Routine: Example Implementation$$
 
 $head Syntax$$
-$icode%lin_ode%.get(%call_id%, %r%, %pattern%, %transpose%)%$$
+$icode%lin_ode%.get(%call_id%, %r%, %step%, %pattern%, %transpose%)%$$
 
 $head Prototype$$
 $srcfile%include/cppad/example/atomic_four/lin_ode/lin_ode.hpp%
@@ -39,6 +39,9 @@ This input argument identifies the auxillary information for this ODE.
 $head r$$
 This output argument is the final value for the variable that the ODE is with
 respect to.
+
+$head step$$
+This is a positive maximum step size to use when solving the ODE.
 
 $head pattern$$
 This output argument is a sparsity pattern.
@@ -58,7 +61,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
 void atomic_lin_ode<Base>::get(
-    size_t call_id, Base& r, sparse_rc& pattern, bool& transpose
+    size_t call_id, Base& r, Base& step, sparse_rc& pattern, bool& transpose
 )
 // END PROTOTYPE
 {
@@ -77,6 +80,7 @@ void atomic_lin_ode<Base>::get(
     // r
     call_struct& call = call_vec[call_id];
     r         = call.r;
+    step      = call.step;
     pattern   = pattern_vec[call.pattern_index];
     transpose = call.transpose;
     //

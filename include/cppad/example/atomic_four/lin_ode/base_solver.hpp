@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_BASE_LIN_ODE_HPP
-# define CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_BASE_LIN_ODE_HPP
+# ifndef CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_BASE_SOLVER_HPP
+# define CPPAD_EXAMPLE_ATOMIC_FOUR_LIN_ODE_BASE_SOLVER_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -12,14 +12,42 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_four_lin_ode_base_lin_ode.hpp$$
+$begin atomic_four_lin_ode_base_solver.hpp$$
 $spell
     Rosen
+    lin
+    nnz
+    vk
 $$
 
 $section
 Atomic Multiply Base Matrices: Example Implementation
 $$
+
+$head Syntax$$
+$icode%lin_ode%.base_solver(
+    %r%, %step%, %pattern%, %transpose%, %x%, %y%
+)%$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+
+$head Notation$$
+We use the notation:
+$cref/call_id/atomic_four_lin_ode/call_id/$$
+$cref/r/atomic_four_lin_ode/r/$$
+$cref/pattern/atomic_four_lin_ode/pattern/$$
+$cref/transpose/atomic_four_lin_ode/transpose/$$
+$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
+$cref/row/atomic_four_lin_ode/pattern/row/$$,
+$cref/col/atomic_four_lin_ode/pattern/col/$$,
+$cref/x/atomic_four_lin_ode/x/$$,
+$cref/n/atomic_four_lin_ode/x/n/$$,
+$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
+$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
+$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
+$cref/m/atomic_four_lin_ode/y(x)/m/$$,
+$cref/vk(x)/atomic_four_lin_ode/vk(x)/$$
 
 $head Rosen34$$
 This example uses one step of
@@ -35,14 +63,17 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
-// base_lin_ode
+// base_solver
+// BEGIN_PROTOTYPE
 template <class Base>
-void atomic_lin_ode<Base>::base_lin_ode(
+void atomic_lin_ode<Base>::base_solver(
     const Base&                    r         ,
+    const Base&                    step      ,
     const sparse_rc&               pattern   ,
     const bool&                    transpose ,
     const CppAD::vector<Base>&     x         ,
     CppAD::vector<Base>&           y         )
+// END_PROTOTYPE
 {
     class Fun {
     private:
@@ -129,6 +160,8 @@ void atomic_lin_ode<Base>::base_lin_ode(
     Base ti       = Base(0.0);
     Base tf       = r;
     size_t n_step = 1;
+    if( step < abs(r) )
+        n_step = Integer( abs(r) / step ) + 1;
     CppAD::vector<Base> zi(m), e(m);
     for(size_t j = 0; j < m; ++j)
         zi[j] = x[nnz + j];

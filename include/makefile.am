@@ -187,7 +187,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/vec_ad/vec_ad.hpp \
 	cppad/core/zdouble.hpp \
 	cppad/cppad.hpp \
-	cppad/example/atomic_four/lin_ode/base_lin_ode.hpp \
+	cppad/example/atomic_four/lin_ode/base_solver.hpp \
 	cppad/example/atomic_four/lin_ode/for_type.hpp \
 	cppad/example/atomic_four/lin_ode/forward.hpp \
 	cppad/example/atomic_four/lin_ode/get.hpp \

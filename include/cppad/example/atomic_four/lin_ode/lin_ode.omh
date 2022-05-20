@@ -19,6 +19,7 @@ $spell
     Simpon
     nnz
     vk
+    CppAD
 $$
 
 $section
@@ -28,11 +29,13 @@ $$
 $head Syntax$$
 $codei%atomic_lin_ode %ode%(%name%)
 %$$
-$icode%call_id% = %lin_ode%.set(%r%, %pattern%, %transpose%)
+$icode%call_id% = %lin_ode%.set(%r%, %step%, %pattern%, %transpose%)
 %$$
-$icode%lin_ode%.get(%call_id%, %r%, %pattern%, %transpose%)
+$icode%lin_ode%.get(%call_id%, %r%, %step%, %pattern%, %transpose%)
 %$$
-$icode%lin_ode%(%call_id%, %x%, %y%)
+$icode%lin_ode%.base_solver(%r%, %step%, %pattern%, %transpose%, %x%, %y%)
+%$$
+$icode%lin_ode%(%call_id%, %ax%, %ay%)
 %$$
 
 $head z(t, x)$$
@@ -47,21 +50,15 @@ $latex A : \B{R}^n \rightarrow \B{R}^{m \times m}$$,
 $latex b : \B{R}^n \rightarrow  \B{R}^m$$,
 and the subscript $latex t$$ denotes partial differentiation w.r.t $latex t$$.
 
-$head y(x)$$
-This input value of the elements of $icode y$$ does not matter.
-Upon return it is the final value of the ODE solution,
-$latex y(x) = z(r, x)$$.
-
-$subhead m$$
-We use $icode m$$ to denote the size of the vector $icode y$$.
-This is the number of equations in the ODE.
-
 $head call_id$$
 This is a return value (argument) for the $code set$$ ($code get$$) routine.
 
 $head r$$
 This is the value of $icode t$$ at which we are approximating $latex z(t, x)$$.
 This is a argument (return value) for the $code set$$ ($code get$$) routine.
+
+$head step$$
+This is a positive maximum step size to use when solving the ODE.
 
 $head pattern$$
 This is a sparsity pattern.
@@ -83,6 +80,8 @@ This is a argument (return value) for the $code set$$ ($code get$$) routine.
 
 $head x$$
 We use $icode x$$ to denote the argument to the atomic function.
+In the call to $code base_solver$$ it is a CppAD vector with elements
+of type $icode Base$$.
 
 $subhead n$$
 The size of the vector $icode x$$ is
@@ -102,6 +101,31 @@ This vector is stored at the end of
 $icode x$$; i.e. its $th j$$ element is
 $latex b_j (x) = x[ nnz + j ]$$
 
+$head y(x)$$
+We use $latex y(x)$$ to denote the final value of the ODE; i.e.,
+$latex y(x) = z(r, x)$$.
+
+$subhead m$$
+We use $icode m$$ to denote the size of the vector $icode y(x)$$.
+This is the number of equations in the ODE.
+
+$subhead y$$
+In the call to $code base_solver$$,
+$icode y$$ is a CppAD vector with elements of type $icode Base$$.
+The input value of its elements does not matter.
+Upon return it contains the value $latex y(x)$$.
+
+$head ax$$
+In the call to $icode lin_ode$$, $icode ax$$
+is a simple vector with elements of type $codei%AD<%Base%>%$$.
+The elements of $icode ax$$ have the same meaning as $icode x$$.
+
+$head ay$$
+In the call to $icode lin_ode$$, $icode ay$$
+is a simple vector with elements of type $codei%AD<%Base%>%$$.
+The input value of its elements does not matter.
+Upon return it represents the solution $icode%y%(%ax%)%$$.
+
 $head vk(x)$$
 We sometimes use the following representation for $latex y(x)$$:
 $latex \[
@@ -118,7 +142,7 @@ y(x) = \sum_{k=0}^\infty v^k (x)
 $head Approximations$$
 
 $subhead Rosen34$$
-The $cref/Rosen34/atomic_four_lin_ode_base_lin_ode.hpp/Rosen34/$$ routine
+The $cref/Rosen34/atomic_four_lin_ode_base_solver.hpp/Rosen34/$$ routine
 is used to approximate the solution of the ODE.
 Any initial value ODE solver can be used for this purpose.
 
