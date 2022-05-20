@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -27,6 +27,7 @@ SET(source_list example.cpp
     speed_test.cpp
     time_test.cpp
 )
+set_compile_flags( speed_example "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( speed_example EXCLUDE_FROM_ALL ${source_list} )
 

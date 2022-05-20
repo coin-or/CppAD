@@ -206,6 +206,7 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 #
 # cppad_debug_which
 # CMAKE_BUILD_TYPE
+SET(debug_even_or_odd FALSE)
 IF( NOT ${cppad_debug_which} STREQUAL "" )
     assert_value_in_set(
         cppad_debug_which debug_even debug_odd debug_all debug_none
@@ -235,10 +236,20 @@ ELSE( CMAKE_BUILD_TYPE )
         SET(CMAKE_BUILD_TYPE Release)
     ELSEIF( "${cppad_debug_which}" STREQUAL debug_odd)
         SET(CMAKE_BUILD_TYPE Debug)
+        SET(debug_even_or_odd TRUE)
     ELSEIF( "${cppad_debug_which}" STREQUAL debug_even)
         SET(CMAKE_BUILD_TYPE Release)
+        SET(debug_even_or_odd TRUE)
     ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
 ENDIF( CMAKE_BUILD_TYPE )
+IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+    IF( debug_even_or_odd )
+        MESSAGE(FATAL_ERROR
+        "Cannot have cppad_debug_which equal ${cppad_debug_which} on Windows."
+        )
+    ENDIF( debug_even_or_odd )
+ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+print_variable(CMAKE_SYSTEM_NAME)
 print_variable(cppad_debug_which)
 print_variable(CMAKE_BUILD_TYPE)
 MESSAGE(STATUS "make check: avialable")
