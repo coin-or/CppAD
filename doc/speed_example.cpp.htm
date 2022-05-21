@@ -176,8 +176,10 @@ To build this program and run its correctness tests see <a href="cmake_check.htm
         cout <font color="#990000">&lt;&lt;</font> <font color="#009900">int</font><font color="#990000">(</font>Run_error_count<font color="#990000">)</font> <font color="#990000">&lt;&lt;</font> <font color="#FF0000">" tests failed."</font><font color="#990000">;</font>
     cout <font color="#990000">&lt;&lt;</font> endl<font color="#990000">;</font>
 
-
-    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">static_cast</font></b><font color="#990000">&lt;</font><font color="#009900">int</font><font color="#990000">&gt;(</font> <font color="#990000">!</font> ok <font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font>ok<font color="#990000">)</font>
+      <b><font color="#0000FF">return</font></b> EXIT_SUCCESS<font color="#990000">;</font>
+    <b><font color="#0000FF">else</font></b>
+      <b><font color="#0000FF">return</font></b> EXIT_FAILURE<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 
