@@ -45,6 +45,11 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-20$$
+Merge in the pull_144 branch.
+This fixed some problems with the windows visual studio build; see
+the corresponding pull request.
+
 $head 05-19$$
 $list number$$
 The atomic four $code base_lin_ode$$ function was changed to

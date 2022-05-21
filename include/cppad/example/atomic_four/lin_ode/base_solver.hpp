@@ -161,7 +161,7 @@ void atomic_lin_ode<Base>::base_solver(
     Base tf       = r;
     size_t n_step = 1;
     if( step < abs(r) )
-        n_step = Integer( abs(r) / step ) + 1;
+        n_step = size_t( Integer( abs(r) / step ) ) + 1;
     CppAD::vector<Base> zi(m), e(m);
     for(size_t j = 0; j < m; ++j)
         zi[j] = x[nnz + j];
