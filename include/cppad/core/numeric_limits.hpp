@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_NUMERIC_LIMITS_HPP
 # define CPPAD_CORE_NUMERIC_LIMITS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -21,6 +21,8 @@ $spell
     CppAD
     namespace
     const
+    inf
+    isnan
 $$
 
 $section Numeric Limits For an AD and Base Types$$
@@ -34,6 +36,8 @@ $icode%max% = numeric_limits<%Float%>::max()
 %$$
 $icode%nan% = numeric_limits<%Float%>::quiet_NaN()
 %$$
+$icode%inf% = numeric_limits<%Float%>::infinity()
+%$$
 $codei%numeric_limits<%Float%>::digits10%$$
 
 $head CppAD::numeric_limits$$
@@ -42,7 +46,8 @@ $codei%
     static %Float% CppAD::numeric_limits<%Float%>::%fun%(%void%)
 %$$
 where $icode fun$$ is
-$code epsilon$$, $code min$$, $code max$$, and $code quiet_NaN$$.
+$code epsilon$$, $code min$$, $code max$$, $code quiet_NaN$$,
+and $code infinity$$.
 (Note that $code digits10$$ is member variable and not a function.)
 
 $head std::numeric_limits$$
@@ -116,6 +121,19 @@ $codei%
     %nan% != %nan%
 %$$
 
+$head infinity$$
+The result $icode inf$$ is equal to the
+positive infinite value and has prototype
+$codei%
+    %Float% %inf%
+%$$
+The file $cref num_limits.cpp$$
+tests the value $icode inf$$ by checking that the following are true
+$codei%
+    %inf% + 100 == %inf%
+    isnan(%inf% - %inf%)
+%$$
+
 $head digits10$$
 The member variable $code digits10$$ has prototype
 $codei%
@@ -187,6 +205,14 @@ public:
         );
         return Float(0);
     }
+    /// positive infinite value
+    static Float infinity(void)
+    {   CPPAD_ASSERT_KNOWN(
+        false,
+        "numeric_limits<Float>::infinity() is not specialized for this Float"
+        );
+        return Float(0);
+    }
     /// number of decimal digits
     static const int digits10 = -1;
 };
@@ -207,6 +233,9 @@ public:
     /// not a number
     static AD<Base> quiet_NaN(void)
     {   return AD<Base>( numeric_limits<Base>::quiet_NaN() ); }
+    /// positive infinite value
+    static AD<Base> infinity(void)
+    {   return AD<Base>( numeric_limits<Base>::infinity() ); }
     /// number of decimal digits
     static const int digits10 = numeric_limits<Base>::digits10;
 };
