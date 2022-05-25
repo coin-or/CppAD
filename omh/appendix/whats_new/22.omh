@@ -41,9 +41,17 @@ $spell
     lin
     rel
     txt
+    Simpson
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 05-26$$
+The atomic linear ODE maximum $cref/step/atomic_four_lin_ode/step/$$ size
+was not being enforced during the reverse mode
+$cref/Simpson's rule/atomic_four_lin_ode_reverse.hpp/Simpson's Rule/$$
+integral approximation.
+This has been fixed.
 
 $head 05-20$$
 Merge in the pull_144 branch.

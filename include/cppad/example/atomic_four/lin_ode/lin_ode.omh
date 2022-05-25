@@ -16,7 +16,7 @@ $spell
     mul
     lin
     Rosen
-    Simpon
+    Simpson
     nnz
     vk
     CppAD
@@ -146,8 +146,8 @@ The $cref/Rosen34/atomic_four_lin_ode_base_solver.hpp/Rosen34/$$ routine
 is used to approximate the solution of the ODE.
 Any initial value ODE solver can be used for this purpose.
 
-$subhead Simpon's Rule$$
-$cref/Simpon's rule/atomic_four_lin_ode_reverse.hpp/Simpon's Rule/$$
+$subhead Simpson's Rule$$
+$cref/Simpson's rule/atomic_four_lin_ode_reverse.hpp/Simpson's Rule/$$
 is used to approximate the integral
 $latex \[
     \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
