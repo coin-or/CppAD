@@ -251,7 +251,7 @@ void atomic_lin_ode<Base>::extend_ode(
     //
     // q
     size_t q = 2;
-    CPPAD_ASSERT_UNKNOWN( taylor_x == q * n );
+    CPPAD_ASSERT_UNKNOWN( taylor_x == q * (nnz + m) );
     //
     // m_extend
     size_t m_extend   = 2 * m;
