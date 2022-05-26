@@ -181,7 +181,7 @@ bool atomic_lin_ode<Base>::reverse(
     if( order_up > 0 )
         return false;
     //
-    // r, pattern
+    // r, step, pattern, transpose
     Base      r;
     Base      step;
     sparse_rc pattern;
@@ -239,7 +239,9 @@ void atomic_lin_ode<Base>::reverse_one(
     CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
     //
     // n
+# ifndef NDEBUG
     size_t n = nnz + m;
+# endif
     //
     // x, partial_x
     CPPAD_ASSERT_UNKNOWN( x.size()  == n );
@@ -248,7 +250,7 @@ void atomic_lin_ode<Base>::reverse_one(
     // n_step
     size_t n_step = 2;
     if( step < abs(r) / Base(n_step) )
-        n_step = Integer( abs(r) / step );
+        n_step = size_t( abs(r) / step );
     while( step < abs(r) / Base(n_step) )
         ++n_step;
     if( n_step % 2 == 1 )
@@ -384,7 +386,9 @@ void atomic_lin_ode<Base>::reverse_one(
     CPPAD_ASSERT_UNKNOWN( pattern.nc() == m );
     //
     // n
+# ifndef NDEBUG
     size_t n = nnz + m;
+# endif
     //
     // ax, apartial_x
     CPPAD_ASSERT_UNKNOWN( ax.size()  == n );
@@ -393,7 +397,7 @@ void atomic_lin_ode<Base>::reverse_one(
     // n_step
     size_t n_step = 2;
     if( step < abs(r) / Base(n_step) )
-        n_step = Integer( abs(r) / step );
+        n_step = size_t( abs(r) / step );
     while( step < abs(r) / Base(n_step) )
         ++n_step;
     if( n_step % 2 == 1 )

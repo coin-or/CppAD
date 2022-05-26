@@ -199,7 +199,7 @@ bool atomic_lin_ode<Base>::forward(
     if( order_up > 1 )
         return false;
     //
-    // r, nnz
+    // r, pattern, transpose, nnz
     Base            r;
     Base            step;
     sparse_rc       pattern;

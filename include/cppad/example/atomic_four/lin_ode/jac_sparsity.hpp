@@ -172,7 +172,7 @@ bool atomic_lin_ode<Base>::jac_sparsity(
     CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out  )
 {
     //
-    // r, pattern_A, transpose, nnz
+    // pattern_A, transpose, nnz
     Base      r;
     Base      step;
     sparse_rc pattern_A;
