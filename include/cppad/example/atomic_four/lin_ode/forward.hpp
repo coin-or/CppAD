@@ -78,6 +78,10 @@ b^1
 \end{array} \right]
 \] $$
 
+$head extend_ode$$
+The extended system above is created form the original system by the
+$code extend_ode$$ function defined below:
+
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 $end
