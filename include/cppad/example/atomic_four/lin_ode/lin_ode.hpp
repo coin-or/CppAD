@@ -106,6 +106,34 @@ private:
     // Use pointers, to avoid false sharing between threads.
     thread_struct* work_[CPPAD_MAX_NUM_THREADS];
     //
+    // extend_ode
+    template <class Float>
+    static void extend_ode(
+        const sparse_rc&            pattern         ,
+        const bool&                 transpose       ,
+        const CppAD::vector<Float>& taylor_x        ,
+        sparse_rc&                  pattern_extend  ,
+        CppAD::vector<Float>&       x_extend
+    );
+    //
+    // reverse_one
+    static void reverse_one(
+        const Base&                r           ,
+        const Base&                step        ,
+        const sparse_rc&           pattern     ,
+        const bool&                transpose   ,
+        const CppAD::vector<bool>& select_x    ,
+        const CppAD::vector<Base>& x           ,
+        const CppAD::vector<Base>& w           ,
+        CppAD::vector<Base>&       partial_x
+    );
+    void reverse_one(
+        const size_t&                           call_id     ,
+        const CppAD::vector<bool>&              select_x    ,
+        const CppAD::vector< CppAD::AD<Base> >& x           ,
+        const CppAD::vector< CppAD::AD<Base> >& w           ,
+        CppAD::vector< CppAD::AD<Base> >&       partial_x
+    );
     // -----------------------------------------------------------------------
     // overrides
     // -----------------------------------------------------------------------

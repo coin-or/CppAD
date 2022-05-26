@@ -132,7 +132,7 @@ bool atomic_lin_ode<Base>::for_type(
     const CppAD::vector<CppAD::ad_type_enum>&  type_x      ,
     CppAD::vector<CppAD::ad_type_enum>&        type_y      )
 {
-    // nnz
+    // pattern, transpose, nnz
     Base      r;
     Base      step;
     sparse_rc pattern;

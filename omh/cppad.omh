@@ -65,7 +65,7 @@ $$
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section
-cppad-20220520: A C++ Algorithmic Differentiation Package$$
+cppad-20220526: A C++ Algorithmic Differentiation Package$$
 
 $comment =================================================================== $$
 $align middle$$
@@ -77,8 +77,8 @@ $comment ------------------------------------------------------------------- $$
 $table
 $href%https://github.com/coin-or/CppAD/tags%
     release%$$, $cnext
-$href%https://github.com/coin-or/CppAD/archive/20220000.3.tar.gz%
-    20220000.3%$$, $cnext
+$href%https://github.com/coin-or/CppAD/archive/20220000.4.tar.gz%
+    20220000.4%$$, $cnext
 $href%https://github.com/coin-or/CppAD%
     github%$$, $cnext
 $href%https://travis-ci.org/coin-or/CppAD%

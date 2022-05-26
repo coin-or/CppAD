@@ -89,7 +89,7 @@ bool atomic_lin_ode<Base>::hes_sparsity(
     // adouble
     typedef AD<double> adouble;
     //
-    // r, pattern_A, transpose, nnz
+    // pattern_A, transpose, nnz
     Base      r;
     Base      step;
     sparse_rc pattern_A;
