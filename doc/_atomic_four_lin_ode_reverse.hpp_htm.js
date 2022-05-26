@@ -19,7 +19,7 @@ var list_up0 = [
 var list_current0 = [
 'atomic_four_lin_ode_reverse.hpp.htm#Purpose',
 'atomic_four_lin_ode_reverse.hpp.htm#Theory',
-'atomic_four_lin_ode_reverse.hpp.htm#Simpon\'s Rule',
+'atomic_four_lin_ode_reverse.hpp.htm#Simpson\'s Rule',
 'atomic_four_lin_ode_reverse.hpp.htm#Source'
 ];
 function choose_across0(item)

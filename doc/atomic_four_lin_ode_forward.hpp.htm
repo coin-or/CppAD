@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Linear ODE Forward Mode: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Linear ODE Forward Mode: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic linear ode forward mode: example implementation purpose theory source ">
+<meta name="keywords" id="keywords" content=" atomic linear ode forward mode: example implementation purpose theory extend_ode source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,6 +72,7 @@ A:active { color : purple }
 <option>Headings-&gt;</option>
 <option>Purpose</option>
 <option>Theory</option>
+<option>extend_ode</option>
 <option>Source</option>
 </select>
 </td>
@@ -177,13 +178,20 @@ b^1
 
 <br>
 <br>
+<b><big><a name="extend_ode" id="extend_ode">extend_ode</a></big></b>
+<br>
+The extended system above is created form the original system by the
+<code><font color="blue">extend_ode</font></code> function defined below:
+
+<br>
+<br>
 <b><big><a name="Source" id="Source">Source</a></big></b>
 
 <pre><tt>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/atomic_four/lin_ode/lin_ode.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> CppAD <font color="#FF0000">{</font> <i><font color="#9A1900">// BEGIN_CPPAD_NAMESPACE</font></i>
-<i><font color="#9A1900">//</font></i>
+<i><font color="#9A1900">// ----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900">// forward override for Base atomic linear ODE</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">forward</font></b><font color="#990000">(</font>
@@ -204,7 +212,9 @@ b^1
     <font color="#008080">sparse_rc</font> pattern<font color="#990000">;</font>
     <font color="#009900">bool</font>      transpose<font color="#990000">;</font>
     <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+<b><font color="#000080"># ifndef</font></b> NDEBUG
     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+<b><font color="#000080"># endif</font></b>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// q</font></i>
     <font color="#008080">size_t</font> q <font color="#990000">=</font> order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
@@ -222,63 +232,33 @@ b^1
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
         <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> taylor_x<font color="#990000">,</font> taylor_y<font color="#990000">);</font>
     <b><font color="#0000FF">else</font></b>
-    <font color="#FF0000">{</font>   <i><font color="#9A1900">// M</font></i>
-        <font color="#008080">size_t</font> M <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">;</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// Pattern, X</font></i>
-        <font color="#008080">size_t</font> Nr  <font color="#990000">=</font> M<font color="#990000">;</font>
-        <font color="#008080">size_t</font> Nc  <font color="#990000">=</font> M<font color="#990000">;</font>
-        <font color="#008080">size_t</font> Nnz <font color="#990000">=</font> <font color="#993399">3</font> <font color="#990000">*</font> nnz<font color="#990000">;</font>
-        <font color="#008080">sparse_rc</font>  <b><font color="#000000">Pattern</font></b><font color="#990000">(</font>Nr<font color="#990000">,</font> Nc<font color="#990000">,</font> Nnz<font color="#990000">);</font>
-        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">X</font></b><font color="#990000">(</font>Nnz <font color="#990000">+</font> M<font color="#990000">);</font>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> transpose <font color="#990000">)</font>
-                std<font color="#990000">::</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">);</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// A^0_ij</font></i>
-            <font color="#008080">Base</font> A0ij <font color="#990000">=</font> taylor_x<font color="#990000">[</font>k <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// A^1_ij</font></i>
-            <font color="#008080">Base</font> A1ij <font color="#990000">=</font> taylor_x<font color="#990000">[</font>k <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// upper diagonal</font></i>
-            Pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">,</font> i<font color="#990000">,</font> j<font color="#990000">);</font>
-            X<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> A0ij<font color="#990000">;</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// lower left</font></i>
-            Pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">,</font> m <font color="#990000">+</font> i<font color="#990000">,</font> j<font color="#990000">);</font>
-            X<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> A1ij<font color="#990000">;</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// lower diagonal</font></i>
-            Pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">,</font> m <font color="#990000">+</font> i<font color="#990000">,</font> m <font color="#990000">+</font> j<font color="#990000">);</font>
-            X<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> A0ij<font color="#990000">;</font>
-        <font color="#FF0000">}</font>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <i><font color="#9A1900">// b^0_i</font></i>
-            X<font color="#990000">[</font>Nnz <font color="#990000">+</font> i<font color="#990000">]</font>     <font color="#990000">=</font> taylor_x<font color="#990000">[</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">];</font>
-            <i><font color="#9A1900">// b^1_i</font></i>
-            X<font color="#990000">[</font>Nnz <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> taylor_x<font color="#990000">[</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">];</font>
-        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// pattern_extend, x_extend</font></i>
+        <font color="#008080">sparse_rc</font>           pattern_extend<font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> x_extend<font color="#990000">;</font>
+        <b><font color="#000000">extend_ode</font></b><font color="#990000">(</font>pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> taylor_x<font color="#990000">,</font> pattern_extend<font color="#990000">,</font> x_extend<font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// Y</font></i>
-        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">Y</font></b><font color="#990000">(</font>M<font color="#990000">);</font>
-        <font color="#009900">bool</font> Transpose <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-        <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> Pattern<font color="#990000">,</font> Transpose<font color="#990000">,</font> X<font color="#990000">,</font> Y<font color="#990000">);</font>
+        <i><font color="#9A1900">// y_extend</font></i>
+        <font color="#008080">size_t</font> m_extend <font color="#990000">=</font> pattern_extend<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">();</font>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Base&gt;</font> <b><font color="#000000">y_extend</font></b><font color="#990000">(</font>m_extend<font color="#990000">);</font>
+        <font color="#009900">bool</font> transpose_extend <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <b><font color="#000000">base_solver</font></b><font color="#990000">(</font>
+            r<font color="#990000">,</font> step<font color="#990000">,</font> pattern_extend<font color="#990000">,</font> transpose_extend<font color="#990000">,</font> x_extend<font color="#990000">,</font> y_extend
+        <font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
         <i><font color="#9A1900">// taylor_y</font></i>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_low <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
         <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-                taylor_y<font color="#990000">[</font>i <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> Y<font color="#990000">[</font>i<font color="#990000">];</font>
+                taylor_y<font color="#990000">[</font>i <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> y_extend<font color="#990000">[</font>i<font color="#990000">];</font>
         <font color="#FF0000">}</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-            taylor_y<font color="#990000">[</font>i <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> Y<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">];</font>
+            taylor_y<font color="#990000">[</font>i <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> y_extend<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">];</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>
-<i><font color="#9A1900">//</font></i>
+<i><font color="#9A1900">// ----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900">// forward override for AD&lt;Base&gt; atomic linear ODE</font></i>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
 <font color="#009900">bool</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">forward</font></b><font color="#990000">(</font>
@@ -289,20 +269,22 @@ b^1
     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>    ataylor_x   <font color="#990000">,</font>
     CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          ataylor_y   <font color="#990000">)</font>
 <font color="#FF0000">{</font>   <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// aBase</font></i>
-    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> aBase<font color="#990000">;</font>
+    <i><font color="#9A1900">// ad_base</font></i>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> ad_base<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// order_up</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_up <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">)</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// r, nnz</font></i>
+    <i><font color="#9A1900">// r, pattern, transpose, nnz</font></i>
     <font color="#008080">Base</font>            r<font color="#990000">;</font>
     <font color="#008080">Base</font>            step<font color="#990000">;</font>
     <font color="#008080">sparse_rc</font>       pattern<font color="#990000">;</font>
     <font color="#009900">bool</font>            transpose<font color="#990000">;</font>
     <b><font color="#000000">get</font></b><font color="#990000">(</font>call_id<font color="#990000">,</font> r<font color="#990000">,</font> step<font color="#990000">,</font> pattern<font color="#990000">,</font> transpose<font color="#990000">);</font>
+<b><font color="#000080"># ifndef</font></b> NDEBUG
     <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+<b><font color="#000080"># endif</font></b>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// q</font></i>
     <font color="#008080">size_t</font> q <font color="#990000">=</font> order_up <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
@@ -318,66 +300,98 @@ b^1
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
         <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>call_id<font color="#990000">,</font> ataylor_x<font color="#990000">,</font> ataylor_y<font color="#990000">);</font>
     <b><font color="#0000FF">else</font></b>
-    <font color="#FF0000">{</font>   <i><font color="#9A1900">// M</font></i>
-        <font color="#008080">size_t</font> M <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">;</font>
+    <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> order_up <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// Pattern, aX</font></i>
-        <font color="#008080">size_t</font> Nr  <font color="#990000">=</font> M<font color="#990000">;</font>
-        <font color="#008080">size_t</font> Nc  <font color="#990000">=</font> M<font color="#990000">;</font>
-        <font color="#008080">size_t</font> Nnz <font color="#990000">=</font> <font color="#993399">3</font> <font color="#990000">*</font> nnz<font color="#990000">;</font>
-        <font color="#008080">sparse_rc</font>  <b><font color="#000000">Pattern</font></b><font color="#990000">(</font>Nr<font color="#990000">,</font> Nc<font color="#990000">,</font> Nnz<font color="#990000">);</font>
-        CppAD<font color="#990000">::</font><font color="#008080">vector&lt; CppAD::AD&lt;Base&gt; &gt;</font> <b><font color="#000000">aX</font></b><font color="#990000">(</font>Nnz <font color="#990000">+</font> M<font color="#990000">);</font>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-            <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
-            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> transpose <font color="#990000">)</font>
-                std<font color="#990000">::</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">);</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// A^0_ij</font></i>
-            CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> aA0ij <font color="#990000">=</font> ataylor_x<font color="#990000">[</font>k <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// A^1_ij</font></i>
-            CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> aA1ij <font color="#990000">=</font> ataylor_x<font color="#990000">[</font>k <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// upper diagonal</font></i>
-            Pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">,</font> i<font color="#990000">,</font> j<font color="#990000">);</font>
-            aX<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> aA0ij<font color="#990000">;</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// lower left</font></i>
-            Pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">,</font> m <font color="#990000">+</font> i<font color="#990000">,</font> j<font color="#990000">);</font>
-            aX<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> aA1ij<font color="#990000">;</font>
-            <i><font color="#9A1900">//</font></i>
-            <i><font color="#9A1900">// lower diagonal</font></i>
-            Pattern<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">,</font> m <font color="#990000">+</font> i<font color="#990000">,</font> m <font color="#990000">+</font> j<font color="#990000">);</font>
-            aX<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> aA0ij<font color="#990000">;</font>
-            <i><font color="#9A1900">//</font></i>
-        <font color="#FF0000">}</font>
-        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-        <font color="#FF0000">{</font>   <i><font color="#9A1900">// b^0_i</font></i>
-            aX<font color="#990000">[</font>Nnz <font color="#990000">+</font> i<font color="#990000">]</font>     <font color="#990000">=</font> ataylor_x<font color="#990000">[</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">];</font>
-            <i><font color="#9A1900">// b^1_i</font></i>
-            aX<font color="#990000">[</font>Nnz <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> ataylor_x<font color="#990000">[</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">];</font>
-        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">// pattern_extend, x_extend</font></i>
+        <font color="#008080">sparse_rc</font>              pattern_extend<font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ad_base&gt;</font> ax_extend<font color="#990000">;</font>
+        <b><font color="#000000">extend_ode</font></b><font color="#990000">(</font>pattern<font color="#990000">,</font> transpose<font color="#990000">,</font> ataylor_x<font color="#990000">,</font> pattern_extend<font color="#990000">,</font> ax_extend<font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
         <i><font color="#9A1900">// call_id_2</font></i>
-        <font color="#009900">bool</font> Transpose <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
-        <font color="#008080">size_t</font> call_id_2 <font color="#990000">=</font> <b><font color="#000000">set</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> Pattern<font color="#990000">,</font> Transpose<font color="#990000">);</font>
+        <font color="#009900">bool</font> transpose_extend <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#008080">size_t</font> call_id_2 <font color="#990000">=</font> <b><font color="#000000">set</font></b><font color="#990000">(</font>r<font color="#990000">,</font> step<font color="#990000">,</font> pattern_extend<font color="#990000">,</font> transpose_extend<font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
-        <i><font color="#9A1900">// aY</font></i>
-        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;aBase&gt;</font> <b><font color="#000000">aY</font></b><font color="#990000">(</font>M<font color="#990000">);</font>
-        <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>call_id_2<font color="#990000">,</font> aX<font color="#990000">,</font> aY<font color="#990000">);</font>
+        <i><font color="#9A1900">// ay_extend</font></i>
+        <font color="#008080">size_t</font> m_extend <font color="#990000">=</font> pattern_extend<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">();</font>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;ad_base&gt;</font> <b><font color="#000000">ay_extend</font></b><font color="#990000">(</font>m_extend<font color="#990000">);</font>
+        <font color="#990000">(*</font><b><font color="#0000FF">this</font></b><font color="#990000">)(</font>call_id_2<font color="#990000">,</font> ax_extend<font color="#990000">,</font> ay_extend<font color="#990000">);</font>
         <i><font color="#9A1900">//</font></i>
         <i><font color="#9A1900">// ataylor_y</font></i>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> order_low <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
         <font color="#FF0000">{</font>   <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-                ataylor_y<font color="#990000">[</font>i <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> aY<font color="#990000">[</font>i<font color="#990000">];</font>
+                ataylor_y<font color="#990000">[</font>i <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ay_extend<font color="#990000">[</font>i<font color="#990000">];</font>
         <font color="#FF0000">}</font>
         <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-            ataylor_y<font color="#990000">[</font>i <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> aY<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">];</font>
+            ataylor_y<font color="#990000">[</font>i <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> ay_extend<font color="#990000">[</font>m <font color="#990000">+</font> i<font color="#990000">];</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<i><font color="#9A1900">// ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">// extend_ode</font></i>
+<i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">[   z_t^0 (t, x^0 )    ] = [ A^0   0    ] * [   z^0 (t, x^0 )    ]</font></i>
+<i><font color="#9A1900">[ z_t^1 (t, x^0, x^1 ) ]   [ A^1   A^0  ]   [ z^1 (t, x^0, x^1 ) ]</font></i>
+
+<i><font color="#9A1900">[   z^0 (0, x^0 )    ] = [ b^0 ]</font></i>
+<i><font color="#9A1900">[ z^1 (0, x^0, x^1 ) ]   [ b^1 ]</font></i>
+<i><font color="#9A1900">*/</font></i>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Base</font><font color="#990000">&gt;</font>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+<font color="#009900">void</font> atomic_lin_ode<font color="#990000">&lt;</font>Base<font color="#990000">&gt;::</font><b><font color="#000000">extend_ode</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>    pattern         <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> <font color="#009900">bool</font><font color="#990000">&amp;</font>                                         transpose       <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>                         taylor_x        <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>sparse_rc<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>size_t<font color="#990000">&gt;</font> <font color="#990000">&gt;&amp;</font>          pattern_extend  <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>                               x_extend        <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// m</font></i>
+    <font color="#008080">size_t</font> m   <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nr</font></b><font color="#990000">();</font>
+    <font color="#008080">size_t</font> nnz <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">nnz</font></b><font color="#990000">();</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> pattern<font color="#990000">.</font><b><font color="#000000">nc</font></b><font color="#990000">()</font> <font color="#990000">==</font> m <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// q</font></i>
+    <font color="#008080">size_t</font> q <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> taylor_x <font color="#990000">==</font> q <font color="#990000">*</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// m_extend</font></i>
+    <font color="#008080">size_t</font> m_extend   <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">;</font>
+    <font color="#008080">size_t</font> nnz_extend <font color="#990000">=</font> <font color="#993399">3</font> <font color="#990000">*</font> nnz<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pattern_extend, x_extend</font></i>
+    pattern_extend<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>m_extend<font color="#990000">,</font> m_extend<font color="#990000">,</font> nnz_extend<font color="#990000">);</font>
+    x_extend<font color="#990000">.</font><b><font color="#000000">resize</font></b><font color="#990000">(</font>nnz_extend <font color="#990000">+</font> m_extend<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> nnz<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <font color="#008080">size_t</font> i <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">row</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        <font color="#008080">size_t</font> j <font color="#990000">=</font> pattern<font color="#990000">.</font><b><font color="#000000">col</font></b><font color="#990000">()[</font>k<font color="#990000">];</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> transpose <font color="#990000">)</font>
+            std<font color="#990000">::</font><b><font color="#000000">swap</font></b><font color="#990000">(</font>i<font color="#990000">,</font> j<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// A^0_ij</font></i>
+        <font color="#008080">Float</font> A0ij <font color="#990000">=</font> taylor_x<font color="#990000">[</font>k <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// A^1_ij</font></i>
+        <font color="#008080">Float</font> A1ij <font color="#990000">=</font> taylor_x<font color="#990000">[</font>k <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// upper diagonal</font></i>
+        pattern_extend<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">,</font> i<font color="#990000">,</font> j<font color="#990000">);</font>
+        x_extend<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> A0ij<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// lower left</font></i>
+        pattern_extend<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">,</font> m <font color="#990000">+</font> i<font color="#990000">,</font> j<font color="#990000">);</font>
+        x_extend<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> A1ij<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// lower diagonal</font></i>
+        pattern_extend<font color="#990000">.</font><b><font color="#000000">set</font></b><font color="#990000">(</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">,</font> m <font color="#990000">+</font> i<font color="#990000">,</font> m <font color="#990000">+</font> j<font color="#990000">);</font>
+        x_extend<font color="#990000">[</font><font color="#993399">3</font> <font color="#990000">*</font> k <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> A0ij<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> m<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// b^0_i</font></i>
+        x_extend<font color="#990000">[</font>nnz_extend <font color="#990000">+</font> i<font color="#990000">]</font>     <font color="#990000">=</font> taylor_x<font color="#990000">[</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">0</font> <font color="#990000">];</font>
+        <i><font color="#9A1900">// b^1_i</font></i>
+        x_extend<font color="#990000">[</font>nnz_extend <font color="#990000">+</font> m <font color="#990000">+</font> i<font color="#990000">]</font> <font color="#990000">=</font> taylor_x<font color="#990000">[</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> i<font color="#990000">)</font> <font color="#990000">*</font> q <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">];</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#FF0000">}</font> <i><font color="#9A1900">// END_CPPAD_NAMESPACE</font></i></tt></pre>
 

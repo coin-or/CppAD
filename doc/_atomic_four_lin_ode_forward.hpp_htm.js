@@ -19,6 +19,7 @@ var list_up0 = [
 var list_current0 = [
 'atomic_four_lin_ode_forward.hpp.htm#Purpose',
 'atomic_four_lin_ode_forward.hpp.htm#Theory',
+'atomic_four_lin_ode_forward.hpp.htm#extend_ode',
 'atomic_four_lin_ode_forward.hpp.htm#Source'
 ];
 function choose_across0(item)

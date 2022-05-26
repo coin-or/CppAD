@@ -37,7 +37,7 @@ var list_current0 = [
 'atomic_four_lin_ode.htm#vk(x)',
 'atomic_four_lin_ode.htm#Approximations',
 'atomic_four_lin_ode.htm#Approximations.Rosen34',
-'atomic_four_lin_ode.htm#Approximations.Simpon\'s Rule',
+'atomic_four_lin_ode.htm#Approximations.Simpson\'s Rule',
 'atomic_four_lin_ode.htm#Contents'
 ];
 function choose_across0(item)
