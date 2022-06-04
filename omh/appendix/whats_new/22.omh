@@ -46,6 +46,11 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 05-27$$
+Add the theory, but not implementation, for the atomic linear ODE
+second order reverse mode; see
+$cref atomic_four_lin_ode_reverse_2$$.
+
 $head 05-26$$
 $list number$$
 The atomic linear ODE maximum $cref/step/atomic_four_lin_ode/step/$$ size
@@ -154,7 +159,7 @@ $cref/for_type/atomic_four_lin_ode_for_type.hpp/Theory/$$ section.
 In addition more the linear ODE theory for forward and reverse mode to the
 corresponding
 $cref/forward/atomic_four_lin_ode_forward.hpp/Theory/$$ and
-$cref/reverse/atomic_four_lin_ode_reverse.hpp/Theory/$$ sections.
+$cref/reverse/atomic_four_lin_ode_reverse.hpp/First Order Theory/$$ sections.
 $lnext
 Back out an incorrect change on 04-15 to the meaning of
 $cref/select_x/atomic_four_jac_sparsity/select_x/$$ and

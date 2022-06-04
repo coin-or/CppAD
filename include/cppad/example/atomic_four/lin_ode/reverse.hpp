@@ -28,7 +28,7 @@ The $code reverse$$ routine overrides the virtual functions
 used by the atomic_four base; see
 $cref/reverse/atomic_four_reverse/$$.
 
-$head Theory$$
+$head First Order Theory$$
 We are given a vector $latex w \in \B{R}^m$$ and need to compute
 $latex \[
     \partial_x w^\R{T} z(r, x)
@@ -148,6 +148,12 @@ $latex \[
     %
     \end{array} \right.
 \] $$
+
+$children%
+    include/cppad/example/atomic_four/lin_ode/reverse_2.omh
+%$$
+$head Second Order Theory$$
+$cref atomic_four_lin_ode_reverse_2$$.
 
 $head Simpson's Rule$$
 This example uses Simpson's rule to approximate the integral
