@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Atomic Linear ODE Reverse Mode: Example Implementation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Atomic Linear ODE Reverse Mode: Example Implementation">
-<meta name="keywords" id="keywords" content=" atomic linear ode reverse mode: example implementation purpose theory simpson's rule source ">
+<meta name="keywords" id="keywords" content=" atomic linear ode reverse mode: example implementation purpose first order theory second simpson's rule source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="atomic_four_lin_ode_forward.hpp.htm" target="_top">Prev</a>
-</td><td><a href="atomic_four_lin_ode_jac_sparsity.hpp.htm" target="_top">Next</a>
+</td><td><a href="atomic_four_lin_ode_reverse_2.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -66,12 +66,15 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_implement_htm.js'></script>
 </td>
-<td>atomic_four_lin_ode_reverse.hpp</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_reverse.hpp_htm.js'></script>
+</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Purpose</option>
-<option>Theory</option>
+<option>First Order Theory</option>
+<option>Second Order Theory</option>
 <option>Simpson's Rule</option>
 <option>Source</option>
 </select>
@@ -94,7 +97,7 @@ used by the atomic_four base; see
 
 <br>
 <br>
-<b><big><a name="Theory" id="Theory">Theory</a></big></b>
+<b><big><a name="First Order Theory" id="First Order Theory">First Order Theory</a></big></b>
 <br>
 We are given a vector <small>@(@
 w \in \B{R}^m
@@ -283,6 +286,15 @@ We can compute an approximation for
     \end{array} \right.
 
 @]@</small>
+
+
+<br>
+<br>
+<b><big><a name="Second Order Theory" id="Second Order Theory">Second Order Theory</a></big></b>
+
+<br>
+<a href="atomic_four_lin_ode_reverse_2.htm" target="_top"><span style='white-space: nowrap'>atomic_four_lin_ode_reverse_2</span></a>
+.
 
 <br>
 <br>

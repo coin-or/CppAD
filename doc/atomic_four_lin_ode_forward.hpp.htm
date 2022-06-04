@@ -352,7 +352,7 @@ The extended system above is created form the original system by the
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// q</font></i>
     <font color="#008080">size_t</font> q <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
-    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> taylor_x <font color="#990000">==</font> q <font color="#990000">*</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> taylor_x<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> q <font color="#990000">*</font> <font color="#990000">(</font>nnz <font color="#990000">+</font> m<font color="#990000">)</font> <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// m_extend</font></i>
     <font color="#008080">size_t</font> m_extend   <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> m<font color="#990000">;</font>

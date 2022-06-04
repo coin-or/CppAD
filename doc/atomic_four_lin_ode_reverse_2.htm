@@ -1,0 +1,256 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Atomic Linear ODE Second Order Reverse</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Atomic Linear ODE Second Order Reverse">
+<meta name="keywords" id="keywords" content=" atomic linear ode second order reverse x^1 partial x^0 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_atomic_four_lin_ode_reverse_2_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="atomic_four_lin_ode_reverse.hpp.htm" target="_top">Prev</a>
+</td><td><a href="atomic_four_lin_ode_jac_sparsity.hpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>AD</option>
+<option>ADValued</option>
+<option>atomic</option>
+<option>atomic_four</option>
+<option>atomic_four_example</option>
+<option>atomic_four_lin_ode</option>
+<option>atomic_four_lin_ode_implement</option>
+<option>atomic_four_lin_ode_reverse.hpp</option>
+<option>atomic_four_lin_ode_reverse_2</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_implement_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_atomic_four_lin_ode_reverse.hpp_htm.js'></script>
+</td>
+<td>atomic_four_lin_ode_reverse_2</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>x^1 Partial</option>
+<option>x^0 Partial</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Atomic Linear ODE Second Order Reverse</big></big></b></center>
+<br>
+<b><big><a name="x^1 Partial" id="x^1 Partial">x^1 Partial</a></big></b>
+<br>
+We need to compute
+<small>@[@
+
+    \R{partial\_x} [ j  * q + 1 ]
+    =
+    \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
+        ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1 )
+
+@]@</small>
+where <small>@(@
+q = 2
+@)@</small> and <small>@(@
+j = 0 , \ldots , n-1
+@)@</small>.
+Using the <a href="reverse_identity.htm" target="_top"><span style='white-space: nowrap'>reverse_identity</span></a>
+ we have
+<small>@[@
+
+    \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1
+    =
+    \partial y_i^0 ( x^0 ) / \partial x_j^0
+
+@]@</small>
+<small>@[@
+
+    \R{partial\_x} [ j  * q + 1 ]
+    =
+    \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
+        ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
+
+@]@</small>
+which is the same as the first order
+<a href="atomic_four_lin_ode_reverse.hpp.htm#First Order Theory" target="_top"><span style='white-space: nowrap'>theory</span></a>
+ with
+<small>@[@
+
+    w_i = \R{partial\_y} [ i * q + 1]
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="x^0 Partial" id="x^0 Partial">x^0 Partial</a></big></b>
+<br>
+We also need to compute
+<small>@[@
+
+    \R{partial\_x} [ j  * q + 0 ]
+    =
+    \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 0]
+        ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
+    +
+    \R{partial\_y} [ i * q + 1]
+        ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^0 )
+
+@]@</small>
+Note that we can solve for
+<small>@[@
+
+    y^1 ( x^0 , x^1 ) = z^1 ( r , x^0 , x^1 )
+
+@]@</small>
+using the following extended ODE; see
+<a href="atomic_four_lin_ode_forward.hpp.htm#Theory" target="_top"><span style='white-space: nowrap'>forward&nbsp;theory</span></a>
+.
+<small>@[@
+
+\left[ \begin{array}{c}
+z^0_t (t, x^0 ) \\
+z^1_t (t, x^0 , x^1 )
+\end{array} \right]
+=
+\left[ \begin{array}{cc}
+A^0 & 0   \\
+A^1 & A^0
+\end{array} \right]
+\left[ \begin{array}{c}
+z^0 (t, x^0 ) \\
+z^1 (t, x^0 , x^1 )
+\end{array} \right]
+\; , \;
+\left[ \begin{array}{c}
+z^0 (0, x^0 ) \\
+z^1 (0, x^0 , x^1 )
+\end{array} \right]
+=
+\left[ \begin{array}{c}
+b^0 \\
+b^1
+\end{array} \right]
+
+@]@</small>
+Note that
+<small>@(@
+A^0
+@)@</small>, <small>@(@
+b^0
+@)@</small> are components of <small>@(@
+x^0
+@)@</small>
+and
+<small>@(@
+A^1
+@)@</small>, <small>@(@
+b^1
+@)@</small> are components of <small>@(@
+x^1
+@)@</small>.
+We use the following notation
+<small>@[@
+
+\bar{x} = \left[ \begin{array}{c}
+    x^0 \\ x^1
+\end{array} \right]
+\W{,}
+\bar{z}(t , \bar{x} ) = \left[ \begin{array}{c}
+    z^0 (t, x^0) \\ z^1 ( t, x^0 , x^1 )
+\end{array} \right]
+\W{,}
+\bar{A} =
+\left[ \begin{array}{cc}
+A^0 & 0   \\
+A^1 & A^0
+\end{array} \right]
+\W{,}
+\bar{b} = \left[ \begin{array}{c}
+    b^0 \\ b^1
+\end{array} \right]
+
+@]@</small>
+Using this notation we have
+<small>@[@
+
+\bar{z}_t ( t , \bar{x} ) = \bar{A} \bar{z} (t, \bar{x} )
+\W{,}
+\bar{z} (0, \bar{x} ) = \bar{b}
+
+@]@</small>
+Define <small>@(@
+\bar{w} \in \B{R}^{m + m}
+@)@</small> by
+<small>@[@
+
+    \bar{w}_i = \R{partial\_y}[ i * q + 0 ]
+    \W{,}
+    \bar{w}_{m + i} = \R{partial\_y}[ i * q + 1 ]
+
+@]@</small>
+For this case, we can compute
+<small>@[@
+
+    \partial_\bar{x} \bar{w}^\R{T} \bar{z}(r, \bar{x} )
+
+@]@</small>
+which is same as the first order case but with the extended variables
+and extended ODE.
+We will only use the components of
+<small>@(@
+\partial_\bar{x}
+@)@</small> that correspond to partials w.r.t. <small>@(@
+x^0
+@)@</small>.
+
+
+<hr>Input File: include/cppad/example/atomic_four/lin_ode/reverse_2.omh
+
+</body>
+</html>
