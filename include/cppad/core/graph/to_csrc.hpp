@@ -35,7 +35,7 @@ $section C Source Code Corresponding to an ADFun Object$$
 
 $head Syntax$$
 $codei%
-    %csrc% = %fun%.to_csrc(%os%, %options%)
+    %fun%.to_csrc(%os%, %options%)
 %$$
 
 $head Prototype$$
