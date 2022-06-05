@@ -29,12 +29,12 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
 template <class Base>
-class atomic_mat_mul : public CppAD::atomic_four<double> {
+class atomic_mat_mul : public CppAD::atomic_four<Base> {
 //
 public:
     // ctor
     atomic_mat_mul(const std::string& name) :
-    CppAD::atomic_four<double>(name)
+    CppAD::atomic_four<Base>(name)
     {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
             work_[thread] = nullptr;
     }
@@ -133,6 +133,7 @@ private:
     bool jac_sparsity(
         size_t                                         call_id,
         bool                                           dependency,
+        const CppAD::vector<bool>&                     ident_zero_x,
         const CppAD::vector<bool>&                     select_x,
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
@@ -141,6 +142,7 @@ private:
     // hes_sparsity
     bool hes_sparsity(
         size_t                                         call_id,
+        const CppAD::vector<bool>&                     ident_zero_x,
         const CppAD::vector<bool>&                     select_x,
         const CppAD::vector<bool>&                     select_y,
         CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out
@@ -155,7 +157,6 @@ private:
 };
 } // END_CPPAD_NAMESPACE
 
-# undef CPPAD_ATOMIC_FOUR_FORWARD_AND_REVERSE
 # include <cppad/example/atomic_four/mat_mul/set.hpp>
 # include <cppad/example/atomic_four/mat_mul/get.hpp>
 # include <cppad/example/atomic_four/mat_mul/base_mat_mul.hpp>

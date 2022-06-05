@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -25,7 +25,7 @@ ELSE( cppad_has_eigen )
     SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
 #
-# BEGIN_SORT_THIS_LINE_PLUS_2
+# BEGIN_SORT_THIS_LINE_PLUS_3
 SET(source_list
     ${adolc_sources}
     ${eigen_sources}
@@ -47,6 +47,7 @@ SET(source_list
     atanh.cpp
     azmul.cpp
     base2ad.cpp
+    base2vec_ad.cpp
     base_alloc.hpp
     base_require.cpp
     bender_quad.cpp

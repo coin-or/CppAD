@@ -76,6 +76,7 @@ extern bool atan2(void);
 extern bool atanh(void);
 extern bool atomic_three(void);
 extern bool azmul(void);
+extern bool base2ad(void);
 extern bool base_adolc(void);
 extern bool base_alloc_test(void);
 extern bool bool_sparsity(void);
@@ -199,6 +200,7 @@ int main(void)
     Run( atanh,           "atanh"          );
     Run( atomic_three,    "atomic_three"   );
     Run( azmul,           "azmul"          );
+    Run( base2ad,         "base2ad"        );
     Run( bool_sparsity,   "bool_sparsity"  );
     Run( check_simple_vector, "check_simple_vector" );
     Run( chkpoint_one,    "chkpoint_one"   );

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -405,6 +405,61 @@ bool case_six()
     return ok;
 }
 
+// bug in cppad/local/sweep/for_hes.hpp fixed on 2022-05-15
+bool case_seven()
+{   bool ok = true;
+    using namespace CppAD;
+    typedef CPPAD_TESTVECTOR(size_t) size_vector;
+
+    // dimension of the domain space
+    size_t n = 3;
+
+    // dimension of the range space
+    size_t m = 2;
+
+    // independent variable vector
+    CPPAD_TESTVECTOR(AD<double>) ax(n);
+    ax[0] = 0.;
+    ax[1] = 1.;
+    ax[2] = 2.;
+    Independent(ax);
+
+    // dependent variable vector
+    CPPAD_TESTVECTOR(AD<double>) ay(m);
+    ay[0] = ax[0] * ax[1];
+    ay[1] = ax[1] * ax[2];
+
+    // create function object f : x -> y
+    ADFun<double> f(ax, ay);
+
+    // sparsity pattern for Hessian of y[1]
+    CppAD::sparse_rc<size_vector> pattern_out;
+    bool internal_bool = false;
+    CPPAD_TESTVECTOR(bool) select_domain(n), select_range(m);
+    select_domain[0] = false;
+    select_domain[1] = true;
+    select_domain[2] = true;
+    select_range[0]  = false;
+    select_range[1]  = true;
+    f.for_hes_sparsity(
+        select_domain, select_range, internal_bool, pattern_out
+    );
+    //
+    ok &= pattern_out.nnz() == 2;
+    for(size_t k = 0; k < pattern_out.nnz(); ++k)
+    {   size_t i = pattern_out.row()[k];
+        size_t j = pattern_out.col()[k];
+        if( i == 1 )
+            ok &= j == 2;
+        else if( i == 2 )
+            ok &= j == 1;
+        else
+            ok = false;
+    }
+    //
+    return ok;
+}
+
 } // End of empty namespace
 
 bool hes_sparsity(void)
@@ -416,6 +471,7 @@ bool hes_sparsity(void)
     ok &= case_four();
     ok &= case_five();
     ok &= case_six();
+    ok &= case_seven();
 
     return ok;
 }

@@ -122,6 +122,7 @@ void CppAD::ADFun<Base,RecBase>::to_csrc(
     const std::map<std::string, std::string>& options )
 // END_PROTOTYPE
 {   //
+# ifndef NDEBUG
     // valid_key
     std::set<std::string> valid_key = { "type" };
     for( const auto& pair : options )
@@ -130,6 +131,7 @@ void CppAD::ADFun<Base,RecBase>::to_csrc(
             "f.to_csrc(options): options contains an invalid key"
         );
     }
+# endif
     // type
     std::string type = "double";
     if( options.find("type") != options.end() )

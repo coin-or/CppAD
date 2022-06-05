@@ -53,6 +53,7 @@ SET(source_list
     atanh.cpp
     atomic_three.cpp
     azmul.cpp
+    base2ad.cpp
     base_alloc.cpp
     bool_sparsity.cpp
     check_simple_vector.cpp

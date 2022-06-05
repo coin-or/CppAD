@@ -29,7 +29,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 //
-// for_type override
+// base_mat_mul
 template <class Base>
 void atomic_mat_mul<Base>::base_mat_mul(
     size_t                         n_left      ,

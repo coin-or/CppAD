@@ -45,6 +45,7 @@ template <class Base>
 bool atomic_mat_mul<Base>::jac_sparsity(
     size_t                                         call_id      ,
     bool                                           dependency   ,
+    const CppAD::vector<bool>&                     ident_zero_x ,
     const CppAD::vector<bool>&                     select_x     ,
     const CppAD::vector<bool>&                     select_y     ,
     CppAD::sparse_rc< CppAD::vector<size_t> >&     pattern_out  )
@@ -71,10 +72,10 @@ bool atomic_mat_mul<Base>::jac_sparsity(
         {   size_t ij = i * n_right + j;               // C_{i,j} = y[ij]
             if( select_y[ij] ) for(size_t k = 0; k < n_middle; ++k)
             {   size_t ik = i * n_middle + k;          // A_{i,k} = x[ik]
-                if( select_x[ik] )
-                    pattern_out.push_back(ij, ik);
                 size_t kj = offset + k * n_right + j;  // B_{k,j} = x[kj]
-                if( select_x[kj] )
+                if( select_x[ik] && ! ident_zero_x[kj] )
+                    pattern_out.push_back(ij, ik);
+                if( select_x[kj] && ! ident_zero_x[ij] )
                     pattern_out.push_back(ij, kj);
             }
         }

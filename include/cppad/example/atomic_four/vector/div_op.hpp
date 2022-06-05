@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_div_op.hpp$$
+$begin atomic_four_vector_div_op.hpp$$
 
 $section Atomic Vector Divide Operator: Example Implementation$$
 
@@ -78,23 +78,23 @@ void atomic_vector<Base>::forward_div(
     assert( aty.size() == m * q );
     //
     // atu, atv
-    ad_vector::const_iterator atu = atx.begin();
-    ad_vector::const_iterator atv = atu + difference_type(m * q);
+    ad_const_iterator atu = atx.begin();
+    ad_const_iterator atv = atu + ad_difference_type(m * q);
     //
     // ax_div
     ad_vector ax_div(n);
-    ad_vector::iterator au_div = ax_div.begin();
-    ad_vector::iterator av_div = ax_div.begin() + difference_type(m);
+    ad_iterator au_div = ax_div.begin();
+    ad_iterator av_div = ax_div.begin() + ad_difference_type(m);
     //
     // ax_mul
     ad_vector ax_mul(n);
-    ad_vector::iterator au_mul = ax_mul.begin();
-    ad_vector::iterator av_mul = ax_mul.begin() + difference_type(m);
+    ad_iterator au_mul = ax_mul.begin();
+    ad_iterator av_mul = ax_mul.begin() + ad_difference_type(m);
     //
     // ax_sub
     ad_vector ax_sub(n);
-    ad_vector::iterator au_sub = ax_sub.begin();
-    ad_vector::iterator av_sub = ax_sub.begin() + difference_type(m);
+    ad_iterator au_sub = ax_sub.begin();
+    ad_iterator av_sub = ax_sub.begin() + ad_difference_type(m);
     //
     // ay
     ad_vector ay(m);
@@ -120,7 +120,7 @@ void atomic_vector<Base>::forward_div(
         }
         // u_div = u_sub
         for(size_t i = 0; i < m; ++i)
-            au_div[i] = *(au_sub + difference_type(i));
+            au_div[i] = *(au_sub + ad_difference_type(i));
         // v_div = v^0
         copy_mat_to_vec(m, q, 0, atv, av_div);
         // ay = u_div / v_div
@@ -149,7 +149,7 @@ void atomic_vector<Base>::reverse_div(
 # endif
     //
     // py_copy
-    CppAD::vector<double> py_copy( py );
+    CppAD::vector<Base> py_copy( py );
     //
     // pv
     for(size_t i = 0; i < m; ++i)
@@ -201,25 +201,25 @@ void atomic_vector<Base>::reverse_div(
     assert( apy.size() == m * q );
     //
     // atu, atv, apu, apv
-    ad_vector::const_iterator atu = atx.begin();
-    ad_vector::const_iterator atv = atu + difference_type(m * q);
-    ad_vector::iterator       apu = apx.begin();
-    ad_vector::iterator       apv = apu + difference_type(m * q);
+    ad_const_iterator atu = atx.begin();
+    ad_const_iterator atv = atu + ad_difference_type(m * q);
+    ad_iterator       apu = apx.begin();
+    ad_iterator       apv = apu + ad_difference_type(m * q);
     //
     // ax_sub
     ad_vector ax_sub(n);
-    ad_vector::iterator au_sub = ax_sub.begin();
-    ad_vector::iterator av_sub = ax_sub.begin() + difference_type(m);
+    ad_iterator au_sub = ax_sub.begin();
+    ad_iterator av_sub = ax_sub.begin() + ad_difference_type(m);
     //
     // ax_mul
     ad_vector ax_mul(n);
-    ad_vector::iterator au_mul = ax_mul.begin();
-    ad_vector::iterator av_mul = ax_mul.begin() + difference_type(m);
+    ad_iterator au_mul = ax_mul.begin();
+    ad_iterator av_mul = ax_mul.begin() + ad_difference_type(m);
     //
     // ax_div
     ad_vector ax_div(n);
-    ad_vector::iterator au_div = ax_div.begin();
-    ad_vector::iterator av_div = ax_div.begin() + difference_type(m);
+    ad_iterator au_div = ax_div.begin();
+    ad_iterator av_div = ax_div.begin() + ad_difference_type(m);
     //
     // ay, apy_scaled
     ad_vector ay(m), apy_scaled(m);

@@ -18,13 +18,21 @@ $spell
     Hessian
     afun
     hes
+    ident
 $$
 
 $section Atomic Function Hessian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.hes_sparsity(
-    %call_id%, %select_x%, %select_y%, %pattern_out%
+
+$subhead Preferred$$
+$icode%ok% = %afun%.hes_sparsity( %call_id%,
+    %ident_zero_x%, %select_x%, %select_y%, %pattern_out%
+)%$$
+
+$subhead Deprecated 2022-05-16$$
+$icode%ok% = %afun%.hes_sparsity( %call_id%,
+    %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $head Prototype$$
@@ -45,6 +53,16 @@ is the $cref CppAD_vector$$ template class.
 
 $head call_id$$
 See $cref/call_id/atomic_four_call/call_id/$$.
+
+$head ident_zero_x$$
+This can sometimes be used to create more efficient sparsity patterns.
+If you do not see a way to do this, you can just ignore it.
+This argument has size equal to the number of arguments to this
+atomic function; i.e. the size of $icode ax$$.
+If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+is a constant parameter that is identically zero.
+An identically zero value times any other value can be treated
+as being identically zero.
 
 $head select_x$$
 This argument has size equal to the number of arguments to this
@@ -107,10 +125,20 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Base>
 bool atomic_four<Base>::hes_sparsity(
     size_t                                  call_id      ,
+    const vector<bool>&                     ident_zero_x ,
     const vector<bool>&                     select_x     ,
     const vector<bool>&                     select_y     ,
     sparse_rc< vector<size_t> >&            pattern_out  )
 // END_PROTOTYPE
+{   return false; }
+//
+// deprecated version
+template <class Base>
+bool atomic_four<Base>::hes_sparsity(
+    size_t                                  call_id      ,
+    const vector<bool>&                     select_x     ,
+    const vector<bool>&                     select_y     ,
+    sparse_rc< vector<size_t> >&            pattern_out  )
 {   return false; }
 
 } // END_CPPAD_NAMESPACE

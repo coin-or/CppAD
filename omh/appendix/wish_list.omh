@@ -45,6 +45,10 @@ $head Purpose$$
 The items on this list are improvements and extensions to CppAD
 that are currently being considered.
 
+$head base2ad$$
+It would be nice if $cref base2ad$$ functioned as expected with
+$cref VecAD$$ operations; see $cref base2vec_ad.cpp$$.
+
 $head Dynamic Parameters$$
 
 $subhead Comparison Operators$$

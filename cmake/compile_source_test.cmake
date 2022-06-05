@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -33,19 +33,15 @@ MACRO(compile_source_test source variable)
         )
     ENDIF( DEFINED ${variable} )
     #
-    IF( DEFINED compiles_source_test_result)
-        UNSET(compiles_source_test_result)
-    ENDIF( DEFINED compiles_source_test_result )
-    #
-    # check that source codee compiles
-    CHECK_CXX_SOURCE_COMPILES("${source}" compiles_source_test_result )
+    # check that source code compiles
+    CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
     #
     # change result varialbe to 0 (1) for fail (succeed).
-    IF( compiles_source_test_result )
+    IF( ${variable} )
         SET(${variable} 1)
-    ELSE( compiles_source_test_result )
+    ELSE( ${variable} )
         SET(${variable} 0)
-    ENDIF( compiles_source_test_result )
+    ENDIF( ${variable} )
     #
     # check that varialbe is defined
     IF( NOT DEFINED ${variable} )

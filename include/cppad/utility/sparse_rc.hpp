@@ -30,38 +30,64 @@ $$
 $section Row and Column Index Sparsity Patterns$$
 
 $head Syntax$$
+
+$subhead include$$
 $codei%# include <cppad/utility/sparse_rc.hpp>
 %$$
+
+$subhead Constructor$$
 $codei%sparse_rc<%SizeVector%>  %empty%
 %$$
 $codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
 %$$
 $codei%sparse_rc<%SizeVector%>  %pattern%(%other%)
 %$$
+
+$subhead Assignment$$
 $icode%pattern% = %other%
 %$$
 $icode%pattern%.swap(%other%)
 %$$
+
+$subhead Equality$$
+$icode%equal% = %pattern% == %other%
+%$$.
+
+$subhead Setting$$
 $icode%resize%(%nr%, %nc%, %nnz%)
 %$$
 $icode%pattern%.set(%k%, %r%, %c%)
 %$$
 $icode%pattern%.push_back(%r%, %c%)
 %$$
+$icode%pattern%.set_row_major()
+%$$
+$icode%pattern%.set_col_major()
+%$$
+
+$subhead Scalars$$
 $icode%pattern%.nr()
 %$$
 $icode%pattern%.nc()
 %$$
 $icode%pattern%.nnz()
 %$$
+
+$subhead Vectors$$
 $codei%const %SizeVector%& %row%( %pattern%.row() )
 %$$
 $codei%const %SizeVector%& %col%( %pattern%.col() )
+%$$
+$codei%const %SizeVector%& %row_major%( %pattern%.get_row_major() )
+%$$
+$codei%const %SizeVector%& %col_major%( %pattern%.get_col_major() )
 %$$
 $icode%row_major% = %pattern%.row_major()
 %$$
 $icode%col_major% = %pattern%.col_major()
 %$$
+
+$subhead Output$$
 $icode%os% << %pattern%
 %$$
 
@@ -110,6 +136,27 @@ $codei%
 %$$
 After the swap operation $icode other$$ ($icode pattern$$) is equivalent
 to $icode pattern$$ ($icode other$$) before the operation.
+
+$subhead Equality$$
+In the equality operation, $icode other$$ has prototype
+$codei%
+    const sparse_rc<%SizeVector%>&  %other%
+%$$
+The two sparsity patterns are equal if the following conditions hold:
+$list number$$
+The number of rows
+$icode%pattern%.nr()%$$ and $icode%other%.nr()%$$ are equal.
+$lnext
+The number of columns
+$icode%pattern%.nc()%$$ and $icode%other%.nc()%$$ are equal.
+$lnext
+The number of non-zero values
+$icode%pattern%.nnz()%$$ and $icode%other%.nnz()%$$ are equal.
+$lnext
+The set of (row, column) pairs corresponding to
+$icode pattern$$ and $icode other$$, are equal.
+$lend
+Determining equality requires sorting both patterns
 
 $head nr$$
 This argument has prototype
@@ -208,6 +255,18 @@ $codei%
 This routine generates an assert if there are two entries with the same
 row and column values (if $code NDEBUG$$ is not defined).
 
+$head set_row_major$$
+Store the current row major order in $icode pattern$$.
+This can be used by the row_major function and the equality function
+to avoid re-sorting the pattern each time.
+
+$head get_row_major$$
+Retrieve the row major order stored in $icode pattern$$
+by the previous $code set_row_major$$.
+If this order is no longer valid, the return value
+$icode row_major$$ has size zero.
+
+
 $head col_major$$
 This vector has prototype
 $codei%
@@ -225,6 +284,17 @@ $codei%
 %$$
 This routine generates an assert if there are two entries with the same
 row and column values (if $code NDEBUG$$ is not defined).
+
+$head set_col_major$$
+Store the current row major order in $icode pattern$$.
+This can be used by the col_major function and the equality function
+to avoid re-sorting the pattern each time.
+
+$head get_col_major$$
+Retrieve the row major order stored in $icode pattern$$
+by the previous $code set_col_major$$.
+If this order is no longer valid, the return value
+$icode col_major$$ has size zero.
 
 $children%
     example/utility/sparse_rc.cpp
@@ -247,72 +317,99 @@ and the column indices follow.
 
 $end
 */
-/*!
-\file sparse_rc.hpp
-A Matrix sparsity pattern class.
-*/
 # include <cstddef> // for size_t
 # include <cppad/core/cppad_assert.hpp>  // for CPPAD_ASSERT
 # include <cppad/utility/index_sort.hpp> // for row and column major ordering
 
 namespace CppAD { // BEGIN CPPAD_NAMESPACE
 
-/// sparsity pattern for a matrix with indices of type size_t
+// sparsity pattern for a matrix with indices of type size_t
 template <class SizeVector>
 class sparse_rc {
 private:
-    /// number of rows in the sparsity pattern
+    // number of rows in the sparsity pattern
     size_t nr_;
-    /// number of columns in the sparsity pattern
+    //
+    // number of columns in the sparsity pattern
     size_t nc_;
-    /// number of possibly non-zero index pairs
+    //
+    // number of possibly non-zero index pairs
     size_t nnz_;
-    /// row_[k] is the row index for the k-th possibly non-zero entry
+    //
+    // row_[k] is the row index for the k-th possibly non-zero entry
     SizeVector row_;
-    /// col_[k] is the column index for the k-th possibly non-zero entry
+    //
+    // col_[k] is the column index for the k-th possibly non-zero entry
     SizeVector col_;
+    //
+    // if row_major_.size() != 0, row_major_[k] is index of k-th non-zero
+    // entry in row major order.
+    SizeVector row_major_;
+    //
+    // if col_major_.size() != 0, col_major_[k] is index of k-th non-zero
+    // entry in column major order.
+    SizeVector col_major_;
+    //
+    // simple_vector_assign
+    static void simple_vector_assign(
+        SizeVector& destination, const SizeVector& source
+    )
+    {   // resize to zero first so do not copy any values
+        destination.resize(0);
+        // size agreement required for simple vector
+        destination.resize( source.size() );
+        // assignment
+        destination = source;
+    }
 public:
-    /// default constructor
-    /// Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
+    // default constructor
+    // Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
     sparse_rc(void)
     : nr_(0), nc_(0), nnz_(0)
     { }
-    /// move semantics constructor
-    /// (none of the default constructor values are used by destructor)
+    //
+    // move semantics constructor
+    // (none of the default constructor values are used by destructor)
     sparse_rc(sparse_rc&& other)
     {   swap(other); }
-    /// destructor
+    //
+    // destructor
     ~sparse_rc(void)
     { }
-    /// move semantics assignment
-    /// sizing constructor
-    /// Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
+    //
+    // sizing constructor
+    // Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
     sparse_rc(size_t nr, size_t nc, size_t nnz)
     : nr_(nr), nc_(nc), nnz_(nnz)
     {   row_.resize(nnz);
         col_.resize(nnz);
     }
-    /// copy constructor
+    //
+    // copy constructor
     sparse_rc(const sparse_rc& other)
     :
     nr_(other.nr_)   ,
     nc_(other.nc_)   ,
     nnz_(other.nnz_) ,
     row_(other.row_) ,
-    col_(other.col_)
+    col_(other.col_) ,
+    row_major_(other.row_major_) ,
+    col_major_(other.col_major_)
     { }
-    /// assignment
+    //
+    // assignment
     void operator=(const sparse_rc& other)
     {   nr_  = other.nr_;
         nc_  = other.nc_;
         nnz_ = other.nnz_;
-        // simple vector assignment requires vectors to have same size
-        row_.resize(nnz_);
-        col_.resize(nnz_);
-        row_ = other.row_;
-        col_ = other.col_;
+        //
+        simple_vector_assign(row_, other.row_);
+        simple_vector_assign(col_, other.col_);
+        simple_vector_assign(row_major_, other.row_major_);
+        simple_vector_assign(col_major_, other.col_major_);
     }
-    /// swap
+    //
+    // swap
     void swap(sparse_rc& other)
     {   std::swap( nr_ , other.nr_ );
         std::swap( nc_ , other.nc_ );
@@ -320,18 +417,84 @@ public:
         //
         row_.swap( other.row_ );
         col_.swap( other.col_ );
+        row_major_.swap( other.row_major_ );
+        col_major_.swap( other.col_major_ );
     }
+    //
+    // move semantics assignment
     void operator=(sparse_rc&& other)
     {   swap(other); }
-    /// resize
+    //
+    // equality
+    bool operator==(const sparse_rc& other) const
+    {   // result
+        bool result = true;
+        result &= nr_  == other.nr_;
+        result &= nc_  == other.nc_;
+        result &= nnz_ == other.nnz_;
+        if( ! result )
+            return result;
+        //
+        // this_order, other_order, this_order_ptr, other_order_ptr
+        SizeVector        this_order;
+        SizeVector        other_order;
+        const SizeVector* this_order_ptr = &this_order;
+        const SizeVector* other_order_ptr = &other_order;
+        bool this_row_ok  = row_major_.size() > 0;
+        bool this_col_ok  = col_major_.size() > 0;
+        bool other_row_ok = other.row_major_.size() > 0;
+        bool other_col_ok = other.col_major_.size() > 0;
+        if( this_row_ok && this_row_ok )
+        {   this_order_ptr  = &row_major_;
+            other_order_ptr = &(other.row_major_);
+        }
+        else if( this_col_ok && this_col_ok )
+        {   this_order_ptr  = &col_major_;
+            other_order_ptr = &(other.col_major_);
+        }
+        else if( this_row_ok )
+        {   this_order_ptr = &row_major_;
+            other_order    = other.row_major();
+        }
+        else if( this_col_ok )
+        {   this_order_ptr = &col_major_;
+            other_order    = other.col_major();
+        }
+        else if( other_row_ok )
+        {   other_order_ptr = &(other.row_major_);
+            this_order      = row_major();
+        }
+        else if( other_col_ok )
+        {   other_order_ptr = &(other.col_major_);
+            this_order      = col_major();
+        }
+        else
+        {   this_order  = row_major();
+            other_order = other.row_major();
+        }
+        //
+        // result
+        for(size_t k = 0; k < nnz_; ++k)
+        {   size_t this_k  = (*this_order_ptr)[k];
+            size_t other_k = (*other_order_ptr)[k];
+            result &= row_[this_k] == other.row_[other_k];
+            result &= col_[this_k] == other.col_[other_k];
+        }
+        return result;
+    }
+    //
+    // resize
     void resize(size_t nr, size_t nc, size_t nnz)
     {   nr_ = nr;
         nc_ = nc;
         nnz_ = nnz;
         row_.resize(nnz);
         col_.resize(nnz);
+        row_major_.resize(0);
+        col_major_.resize(0);
     }
-    /// set row and column for a possibly non-zero element
+    //
+    // set row and column for a possibly non-zero element
     void set(size_t k, size_t r, size_t c)
     {   CPPAD_ASSERT_KNOWN(
             k < nnz_,
@@ -348,8 +511,11 @@ public:
         row_[k] = r;
         col_[k] = c;
         //
+        row_major_.resize(0);
+        col_major_.resize(0);
     }
-    /// push_back
+    //
+    // push_back
     void push_back(size_t r, size_t c)
     {   CPPAD_ASSERT_KNOWN(
             r < nr_,
@@ -364,25 +530,37 @@ public:
         ++nnz_;
         CPPAD_ASSERT_UNKNOWN( row_.size() == nnz_ );
         CPPAD_ASSERT_UNKNOWN( col_.size() == nnz_ );
+        //
+        row_major_.resize(0);
+        col_major_.resize(0);
     }
-    /// number of rows in matrix
+    //
+    // number of rows in matrix
     size_t nr(void) const
     {   return nr_; }
-    /// number of columns in matrix
+    //
+    // number of columns in matrix
     size_t nc(void) const
     {   return nc_; }
-    /// number of possibly non-zero elements in matrix
+    //
+    // number of possibly non-zero elements in matrix
     size_t nnz(void) const
     {   return nnz_; }
-    /// row indices
+    //
+    // row indices
     const SizeVector& row(void) const
     {   return row_; }
-    /// column indices
+    //
+    // column indices
     const SizeVector& col(void) const
     {   return col_; }
-    /// row-major order
+    //
+    // row-major order
     SizeVector row_major(void) const
-    {   SizeVector keys(nnz_), row_major(nnz_);
+    {   if( row_major_.size() > 0 )
+            return row_major_;
+        //
+        SizeVector keys(nnz_), row_major(nnz_);
         for(size_t k = 0; k < nnz_; k++)
         {   CPPAD_ASSERT_UNKNOWN( row_[k] < nr_ );
             keys[k] = row_[k] * nc_ + col_[k];
@@ -403,9 +581,12 @@ public:
 # endif
         return row_major;
     }
-    /// column-major indices
+    //
+    // column-major indices
     SizeVector col_major(void) const
-    {   SizeVector keys(nnz_), col_major(nnz_);
+    {   if( col_major_.size() > 0 )
+            return col_major_;
+        SizeVector keys(nnz_), col_major(nnz_);
         for(size_t k = 0; k < nnz_; k++)
         {   CPPAD_ASSERT_UNKNOWN( col_[k] < nc_ );
             keys[k] = col_[k] * nr_ + row_[k];
@@ -426,8 +607,23 @@ public:
 # endif
         return col_major;
     }
+    //
+    void set_row_major(void)
+    {   row_major_ = row_major();
+    }
+    const SizeVector& get_row_major(void) const
+    {   return row_major_;
+    }
+    //
+    void set_col_major(void)
+    {   col_major_ = col_major();
+    }
+    const SizeVector& get_col_major(void) const
+    {   return col_major_;
+    }
 };
-
+//
+// output
 template <class SizeVector>
 std::ostream& operator << (
     std::ostream&                       os      ,

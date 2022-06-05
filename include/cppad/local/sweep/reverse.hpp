@@ -748,7 +748,7 @@ void reverse(
             break;
 
             case FunrpOp:
-            // parameter result for a atomic function
+            // parameter result for an atomic function
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i <= atom_m );
@@ -767,7 +767,7 @@ void reverse(
             break;
 
             case FunrvOp:
-            // variable result for a atomic function
+            // variable result for an atomic function
             CPPAD_ASSERT_NARG_NRES(op, 0, 1);
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i <= atom_m );

@@ -17,20 +17,20 @@ then
 fi
 if [ "$1" != 'mixed' ] && [ "$1" != 'debug' ] && [ "$1" != 'release' ]
 then
-    echo 'bin/check_all.sh: (mixed|debug|release) [get_optional]'
+    echo 'bin/check_all.sh: (mixed|debug|release) [verbose]'
     exit 1
 fi
-if [ "$2" != '' ] && [ "$2" != 'get_optional' ]
+if [ "$2" != '' ] && [ "$2" != 'verbose' ]
 then
-    echo 'bin/check_all.sh: (mixed|debug|release) [get_optional]'
+    echo 'bin/check_all.sh: (mixed|debug|release) [verbose]'
     exit 1
 fi
 build_type="$1"
-if [ "$2" == 'get_optional' ]
+if [ "$2" == 'verbose' ]
 then
-    get_optional='yes'
+    verbose='--verbose'
 else
-    get_optional='no'
+    verbose=''
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -188,24 +188,24 @@ then
     standard='' # default for run_cmake.sh
 fi
 # ---------------------------------------------------------------------------
-# re-install optional packages that can be used with CppAD
-if [ "$get_optional" == 'yes' ]
-then
-    bin/get_optional.sh
-fi
-# ---------------------------------------------------------------------------
 # absoute prefix where optional packages are installed
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
     prefix="$(pwd)/$prefix"
 fi
+if [ ! -d $prefix/include/cppad/cg ]
+then
+    echo "Cannot find $prefix/include/cppad/cg"
+    echo 'Probably need to run bin/get_optional.sh'
+    exit 1
+fi
+export LD_LIBRARY_PATH="$prefix/lib:$prefix/lib64"
 # ---------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
 list=$(
     ls bin/check_* | sed \
     -e '/check_all.sh/d' \
-    -e '/check_jenkins.sh/d' \
     -e '/check_doxygen.sh/d' \
     -e '/check_install.sh/d'
 )
@@ -229,7 +229,7 @@ echo_log_eval cp -r ../prefix build/prefix
 # run_cmake.sh
 # prefix is extracted from bin/get_optional
 echo_log_eval bin/run_cmake.sh \
-    --verbose \
+    $verbose \
     --profile_speed \
     $compiler \
     $standard \

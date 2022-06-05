@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -71,6 +71,7 @@ general_SOURCES   = \
 	atanh.cpp \
 	azmul.cpp \
 	base2ad.cpp \
+	base2vec_ad.cpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \

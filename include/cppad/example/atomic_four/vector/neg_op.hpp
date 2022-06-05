@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_neg_op.hpp$$
+$begin atomic_four_vector_neg_op.hpp$$
 
 $section Atomic Vector Negative Operator: Example Implementation$$
 
@@ -59,11 +59,11 @@ void atomic_vector<Base>::forward_neg(
     assert( aty.size() == m * q );
     //
     // atu
-    ad_vector::const_iterator atu = atx.begin();
+    ad_const_iterator atu = atx.begin();
     //
     // ax
     ad_vector ax(n);
-    ad_vector::iterator au = ax.begin();
+    ad_iterator au = ax.begin();
     //
     // ay
     ad_vector ay(m);
@@ -110,11 +110,11 @@ void atomic_vector<Base>::reverse_neg(
     assert( aty.size() == m * q );
     //
     // apu
-    ad_vector::iterator apu = apx.begin();
+    ad_iterator apu = apx.begin();
     //
     // ax
     ad_vector ax(n);
-    ad_vector::iterator au = ax.begin();
+    ad_iterator au = ax.begin();
     //
     // ay
     ad_vector ay(m);

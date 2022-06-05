@@ -37,6 +37,7 @@ SET(source_list ../thread_test.cpp
 set_compile_flags( example_multi_thread_openmp "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( example_multi_thread_openmp EXCLUDE_FROM_ALL ${source_list} )
+TARGET_LINK_LIBRARIES(example_multi_thread_openmp PRIVATE ${OpenMP_CXX_LIBRARIES})
 
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )

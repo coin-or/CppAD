@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_BASE2AD_HPP
 # define CPPAD_CORE_BASE2AD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -16,6 +16,7 @@ $begin base2ad$$
 $spell
     af
     Taylor
+    Vec
 $$
 
 $spell
@@ -55,11 +56,17 @@ Initially, there are no Taylor coefficients stored in $icode af$$ and
 $cref%af.size_order()%size_order%$$ is zero.
 
 $children%
-    example/general/base2ad.cpp
+    example/general/base2ad.cpp%
+    example/general/base2vec_ad.cpp
 %$$
 $head Example$$
 The file $cref base2ad.cpp$$
 contains an example and test of this operation.
+
+$head VecAD$$
+Forward mode on a $code base2ad$$ function does not preserve
+$cref VecAD$$ operations (which might be expected); see the
+$cref base2vec_ad.cpp$$ example.
 
 $end
 ----------------------------------------------------------------------------

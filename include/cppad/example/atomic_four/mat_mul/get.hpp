@@ -20,7 +20,7 @@ $$
 $section atomic_mat_mul Get Routine: Example Implementation$$
 
 $head Syntax$$
-$icode%call_id% = %mat_mul%.get(%call_id%, %n_left%, %n_middle%, %n_right%)%$$
+$icode%%mat_mul%.get(%call_id%, %n_left%, %n_middle%, %n_right%)%$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$

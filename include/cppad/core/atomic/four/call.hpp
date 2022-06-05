@@ -81,6 +81,16 @@ It can be used to specify additional information about this call to
 $icode afun$$. For example, it could specify the index in vector of structures
 in the $icode afun$$ object where the actual information is placed.
 
+$head for_type$$
+The $cref/for_type/atomic_four_for_type/$$ routine will be called once,
+for each call to an atomic function,
+before any other callbacks corresponding to the atomic function call.
+This enables you to store, during the $code for_type$$ routine,
+the values in
+$cref/type_x/atomic_four_for_type/type_x/$$ and or
+$cref/type_y/atomic_four_for_type/type_y/$$ corresponding
+to this atomic function call.
+
 $subhead Restriction$$
 The value of $icode call_id$$ must be less than or equal
 $codei%
@@ -165,15 +175,19 @@ void atomic_four<Base>::operator()(
     size_t order_low   = 0;
     size_t order_up    = 0;
 # ifdef NDEBUG
+    for_type(
+        call_id, type_x, type_y
+    );
     forward(
         call_id, select_y, order_low, order_up, taylor_x, taylor_y
     );
-    for_type(call_id, type_x, type_y);
 # else
+    ok &= for_type(
+        call_id, type_x, type_y
+    );
     ok &= forward(
         call_id, select_y, order_low, order_up, taylor_x, taylor_y
     );
-    ok &= for_type(call_id, type_x, type_y);
     if( ! ok )
     {   msg += atomic_name() + ": ok is false for "
             "type or zero order forward mode calculation.";

@@ -102,12 +102,13 @@ am__general_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	acosh.cpp ad_assign.cpp ad_ctor.cpp ad_fun.cpp ad_in_c.cpp \
 	ad_input.cpp ad_output.cpp add.cpp add_eq.cpp asin.cpp \
 	asinh.cpp atan.cpp atan2.cpp atanh.cpp azmul.cpp base2ad.cpp \
-	base_alloc.hpp base_require.cpp bender_quad.cpp bool_fun.cpp \
-	capacity_order.cpp change_param.cpp check_for_nan.cpp \
-	compare.cpp compare_change.cpp complex_poly.cpp \
-	con_dyn_var.cpp cond_exp.cpp cos.cpp cosh.cpp div.cpp \
-	div_eq.cpp equal_op_seq.cpp erf.cpp erfc.cpp exp.cpp expm1.cpp \
-	fabs.cpp for_one.cpp for_two.cpp forward.cpp forward_dir.cpp \
+	base2vec_ad.cpp base_alloc.hpp base_require.cpp \
+	bender_quad.cpp bool_fun.cpp capacity_order.cpp \
+	change_param.cpp check_for_nan.cpp compare.cpp \
+	compare_change.cpp complex_poly.cpp con_dyn_var.cpp \
+	cond_exp.cpp cos.cpp cosh.cpp div.cpp div_eq.cpp \
+	equal_op_seq.cpp erf.cpp erfc.cpp exp.cpp expm1.cpp fabs.cpp \
+	for_one.cpp for_two.cpp forward.cpp forward_dir.cpp \
 	forward_order.cpp fun_assign.cpp fun_check.cpp \
 	fun_property.cpp function_name.cpp general.cpp \
 	hes_lagrangian.cpp hes_lu_det.cpp hes_minor_det.cpp \
@@ -134,28 +135,28 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	ad_in_c.$(OBJEXT) ad_input.$(OBJEXT) ad_output.$(OBJEXT) \
 	add.$(OBJEXT) add_eq.$(OBJEXT) asin.$(OBJEXT) asinh.$(OBJEXT) \
 	atan.$(OBJEXT) atan2.$(OBJEXT) atanh.$(OBJEXT) azmul.$(OBJEXT) \
-	base2ad.$(OBJEXT) base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
-	bool_fun.$(OBJEXT) capacity_order.$(OBJEXT) \
-	change_param.$(OBJEXT) check_for_nan.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) \
-	complex_poly.$(OBJEXT) con_dyn_var.$(OBJEXT) \
-	cond_exp.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) div.$(OBJEXT) \
-	div_eq.$(OBJEXT) equal_op_seq.$(OBJEXT) erf.$(OBJEXT) \
-	erfc.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) fabs.$(OBJEXT) \
-	for_one.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
-	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
-	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
-	fun_property.$(OBJEXT) function_name.$(OBJEXT) \
-	general.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
-	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) \
-	hes_times_dir.$(OBJEXT) hessian.$(OBJEXT) \
-	independent.$(OBJEXT) integer.$(OBJEXT) interface2c.$(OBJEXT) \
-	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
-	jac_lu_det.$(OBJEXT) jac_minor_det.$(OBJEXT) \
-	jacobian.$(OBJEXT) log.$(OBJEXT) log10.$(OBJEXT) \
-	log1p.$(OBJEXT) lu_ratio.$(OBJEXT) lu_vec_ad.$(OBJEXT) \
-	lu_vec_ad_ok.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
-	mul_level.$(OBJEXT) mul_level_ode.$(OBJEXT) \
+	base2ad.$(OBJEXT) base2vec_ad.$(OBJEXT) base_require.$(OBJEXT) \
+	bender_quad.$(OBJEXT) bool_fun.$(OBJEXT) \
+	capacity_order.$(OBJEXT) change_param.$(OBJEXT) \
+	check_for_nan.$(OBJEXT) compare.$(OBJEXT) \
+	compare_change.$(OBJEXT) complex_poly.$(OBJEXT) \
+	con_dyn_var.$(OBJEXT) cond_exp.$(OBJEXT) cos.$(OBJEXT) \
+	cosh.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
+	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) erfc.$(OBJEXT) \
+	exp.$(OBJEXT) expm1.$(OBJEXT) fabs.$(OBJEXT) for_one.$(OBJEXT) \
+	for_two.$(OBJEXT) forward.$(OBJEXT) forward_dir.$(OBJEXT) \
+	forward_order.$(OBJEXT) fun_assign.$(OBJEXT) \
+	fun_check.$(OBJEXT) fun_property.$(OBJEXT) \
+	function_name.$(OBJEXT) general.$(OBJEXT) \
+	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
+	hes_minor_det.$(OBJEXT) hes_times_dir.$(OBJEXT) \
+	hessian.$(OBJEXT) independent.$(OBJEXT) integer.$(OBJEXT) \
+	interface2c.$(OBJEXT) interp_onetape.$(OBJEXT) \
+	interp_retape.$(OBJEXT) jac_lu_det.$(OBJEXT) \
+	jac_minor_det.$(OBJEXT) jacobian.$(OBJEXT) log.$(OBJEXT) \
+	log10.$(OBJEXT) log1p.$(OBJEXT) lu_ratio.$(OBJEXT) \
+	lu_vec_ad.$(OBJEXT) lu_vec_ad_ok.$(OBJEXT) mul.$(OBJEXT) \
+	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_level_ode.$(OBJEXT) \
 	near_equal_ext.$(OBJEXT) new_dynamic.$(OBJEXT) \
 	num_limits.$(OBJEXT) number_skip.$(OBJEXT) \
 	numeric_type.$(OBJEXT) ode_stiff.$(OBJEXT) \
@@ -196,30 +197,30 @@ am__depfiles_remade = ./$(DEPDIR)/abort_recording.Po \
 	./$(DEPDIR)/add.Po ./$(DEPDIR)/add_eq.Po ./$(DEPDIR)/asin.Po \
 	./$(DEPDIR)/asinh.Po ./$(DEPDIR)/atan.Po ./$(DEPDIR)/atan2.Po \
 	./$(DEPDIR)/atanh.Po ./$(DEPDIR)/azmul.Po \
-	./$(DEPDIR)/base2ad.Po ./$(DEPDIR)/base_require.Po \
-	./$(DEPDIR)/bender_quad.Po ./$(DEPDIR)/bool_fun.Po \
-	./$(DEPDIR)/capacity_order.Po ./$(DEPDIR)/change_param.Po \
-	./$(DEPDIR)/check_for_nan.Po ./$(DEPDIR)/compare.Po \
-	./$(DEPDIR)/compare_change.Po ./$(DEPDIR)/complex_poly.Po \
-	./$(DEPDIR)/con_dyn_var.Po ./$(DEPDIR)/cond_exp.Po \
-	./$(DEPDIR)/cos.Po ./$(DEPDIR)/cosh.Po ./$(DEPDIR)/div.Po \
-	./$(DEPDIR)/div_eq.Po ./$(DEPDIR)/eigen_array.Po \
-	./$(DEPDIR)/eigen_det.Po ./$(DEPDIR)/equal_op_seq.Po \
-	./$(DEPDIR)/erf.Po ./$(DEPDIR)/erfc.Po ./$(DEPDIR)/exp.Po \
-	./$(DEPDIR)/expm1.Po ./$(DEPDIR)/fabs.Po \
-	./$(DEPDIR)/for_one.Po ./$(DEPDIR)/for_two.Po \
-	./$(DEPDIR)/forward.Po ./$(DEPDIR)/forward_dir.Po \
-	./$(DEPDIR)/forward_order.Po ./$(DEPDIR)/fun_assign.Po \
-	./$(DEPDIR)/fun_check.Po ./$(DEPDIR)/fun_property.Po \
-	./$(DEPDIR)/function_name.Po ./$(DEPDIR)/general.Po \
-	./$(DEPDIR)/hes_lagrangian.Po ./$(DEPDIR)/hes_lu_det.Po \
-	./$(DEPDIR)/hes_minor_det.Po ./$(DEPDIR)/hes_times_dir.Po \
-	./$(DEPDIR)/hessian.Po ./$(DEPDIR)/independent.Po \
-	./$(DEPDIR)/integer.Po ./$(DEPDIR)/interface2c.Po \
-	./$(DEPDIR)/interp_onetape.Po ./$(DEPDIR)/interp_retape.Po \
-	./$(DEPDIR)/jac_lu_det.Po ./$(DEPDIR)/jac_minor_det.Po \
-	./$(DEPDIR)/jacobian.Po ./$(DEPDIR)/log.Po \
-	./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po \
+	./$(DEPDIR)/base2ad.Po ./$(DEPDIR)/base2vec_ad.Po \
+	./$(DEPDIR)/base_require.Po ./$(DEPDIR)/bender_quad.Po \
+	./$(DEPDIR)/bool_fun.Po ./$(DEPDIR)/capacity_order.Po \
+	./$(DEPDIR)/change_param.Po ./$(DEPDIR)/check_for_nan.Po \
+	./$(DEPDIR)/compare.Po ./$(DEPDIR)/compare_change.Po \
+	./$(DEPDIR)/complex_poly.Po ./$(DEPDIR)/con_dyn_var.Po \
+	./$(DEPDIR)/cond_exp.Po ./$(DEPDIR)/cos.Po ./$(DEPDIR)/cosh.Po \
+	./$(DEPDIR)/div.Po ./$(DEPDIR)/div_eq.Po \
+	./$(DEPDIR)/eigen_array.Po ./$(DEPDIR)/eigen_det.Po \
+	./$(DEPDIR)/equal_op_seq.Po ./$(DEPDIR)/erf.Po \
+	./$(DEPDIR)/erfc.Po ./$(DEPDIR)/exp.Po ./$(DEPDIR)/expm1.Po \
+	./$(DEPDIR)/fabs.Po ./$(DEPDIR)/for_one.Po \
+	./$(DEPDIR)/for_two.Po ./$(DEPDIR)/forward.Po \
+	./$(DEPDIR)/forward_dir.Po ./$(DEPDIR)/forward_order.Po \
+	./$(DEPDIR)/fun_assign.Po ./$(DEPDIR)/fun_check.Po \
+	./$(DEPDIR)/fun_property.Po ./$(DEPDIR)/function_name.Po \
+	./$(DEPDIR)/general.Po ./$(DEPDIR)/hes_lagrangian.Po \
+	./$(DEPDIR)/hes_lu_det.Po ./$(DEPDIR)/hes_minor_det.Po \
+	./$(DEPDIR)/hes_times_dir.Po ./$(DEPDIR)/hessian.Po \
+	./$(DEPDIR)/independent.Po ./$(DEPDIR)/integer.Po \
+	./$(DEPDIR)/interface2c.Po ./$(DEPDIR)/interp_onetape.Po \
+	./$(DEPDIR)/interp_retape.Po ./$(DEPDIR)/jac_lu_det.Po \
+	./$(DEPDIR)/jac_minor_det.Po ./$(DEPDIR)/jacobian.Po \
+	./$(DEPDIR)/log.Po ./$(DEPDIR)/log10.Po ./$(DEPDIR)/log1p.Po \
 	./$(DEPDIR)/lu_ratio.Po ./$(DEPDIR)/lu_vec_ad.Po \
 	./$(DEPDIR)/lu_vec_ad_ok.Po ./$(DEPDIR)/mul.Po \
 	./$(DEPDIR)/mul_eq.Po ./$(DEPDIR)/mul_level.Po \
@@ -323,7 +324,7 @@ CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -518,6 +519,7 @@ general_SOURCES = \
 	atanh.cpp \
 	azmul.cpp \
 	base2ad.cpp \
+	base2vec_ad.cpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \
@@ -672,6 +674,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atanh.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/azmul.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base2ad.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base2vec_ad.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_require.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bender_quad.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bool_fun.Po@am__quote@ # am--include-marker
@@ -928,6 +931,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/atanh.Po
 	-rm -f ./$(DEPDIR)/azmul.Po
 	-rm -f ./$(DEPDIR)/base2ad.Po
+	-rm -f ./$(DEPDIR)/base2vec_ad.Po
 	-rm -f ./$(DEPDIR)/base_require.Po
 	-rm -f ./$(DEPDIR)/bender_quad.Po
 	-rm -f ./$(DEPDIR)/bool_fun.Po
@@ -1081,6 +1085,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/atanh.Po
 	-rm -f ./$(DEPDIR)/azmul.Po
 	-rm -f ./$(DEPDIR)/base2ad.Po
+	-rm -f ./$(DEPDIR)/base2vec_ad.Po
 	-rm -f ./$(DEPDIR)/base_require.Po
 	-rm -f ./$(DEPDIR)/bender_quad.Po
 	-rm -f ./$(DEPDIR)/bool_fun.Po

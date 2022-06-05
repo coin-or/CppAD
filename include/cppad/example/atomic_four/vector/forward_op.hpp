@@ -12,7 +12,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 /*
-$begin atomic_vector_forward_op.hpp$$
+$begin atomic_four_vector_forward_op.hpp$$
 
 $section Atomic Vector Forward Mode: Example Implementation$$
 
@@ -22,8 +22,8 @@ used by the atomic_four base class for forward mode calculations; see
 $cref/forward/atomic_four_forward/$$.
 It determines which operator is specified for this call and transfers
 the call to the operator's implementation.
-There are two versions of the $code forward$$ routine, one for $code double$$
-and one for $code AD<double>$$.
+There are two versions of the $code forward$$ routine, one for $icode Base$$
+and one for $code AD<Base>$$.
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

@@ -1,0 +1,29 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
+
+CppAD is distributed under the terms of the
+             Eclipse Public License Version 2.0.
+
+This Source Code may also be made available under the following
+Secondary License when the conditions for such availability set forth
+in the Eclipse Public License, Version 2.0 are satisfied:
+      GNU General Public License, Version 2.0 or later.
+---------------------------------------------------------------------------- */
+$begin atomic_four_lin_ode_implement$$
+
+$section Implementing Atomic Linear ODE$$
+
+$childtable%
+    include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
+    %include/cppad/example/atomic_four/lin_ode/set.hpp
+    %include/cppad/example/atomic_four/lin_ode/get.hpp
+    %include/cppad/example/atomic_four/lin_ode/base_solver.hpp
+    %include/cppad/example/atomic_four/lin_ode/for_type.hpp
+    %include/cppad/example/atomic_four/lin_ode/forward.hpp
+    %include/cppad/example/atomic_four/lin_ode/reverse.hpp
+    %include/cppad/example/atomic_four/lin_ode/jac_sparsity.hpp
+    %include/cppad/example/atomic_four/lin_ode/hes_sparsity.hpp
+    %include/cppad/example/atomic_four/lin_ode/rev_depend.hpp
+%$$
+
+$end

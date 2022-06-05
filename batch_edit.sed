@@ -17,10 +17,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#   include/cppad/example/atomic_four/lin_ode/base_lin_ode.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#   s|base_lin_ode|base_solver|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -32,4 +34,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|/atomic_three/ad_type/|/atomic_three_define/ad_type/|g
+s|base_lin_ode|base_solver|g

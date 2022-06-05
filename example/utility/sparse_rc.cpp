@@ -64,14 +64,22 @@ bool sparse_rc(void)
         pattern.push_back(r, c);
     }
     nnz = pattern.nnz();
-    SizeVector row_major = pattern.row_major();
 
-    // check nnz, row and column
+    // check nnz, row major by value row major by reference, row and column
     ok &= nnz == nr;
+    SizeVector        row_major_value     = pattern.row_major();
+    const SizeVector& row_major_reference = pattern.get_row_major();
     for(size_t k = 0; k < nnz; k++)
-    {   ok &= row[ row_major[k] ] == k;
-        ok &= col[ row_major[k] ] == k;
+    {   ok &= row[ row_major_value[k] ] == k;
+        ok &= col[ row_major_value[k] ] == k;
     }
+    ok &= row_major_reference.size() == 0;
+
+    // set_row_major
+    pattern.set_row_major();
+    ok &= row_major_reference.size() == nnz;
+    for(size_t k = 0; k < nnz; ++k)
+        ok &= row_major_reference[k] == row_major_value[k];
 
     // create an empty pattern
     CppAD::sparse_rc<SizeVector> other;
@@ -91,13 +99,22 @@ bool sparse_rc(void)
 
     // now use the assignment statement
     pattern = other;
-    ok    &= other.nr()  == pattern.nr();
-    ok    &= other.nc()  == pattern.nc();
-    ok    &= other.nnz() == pattern.nnz();
-    for(size_t k = 0; k < nnz; k++)
-    {   ok &= pattern.row()[k] == other.row()[k];
-        ok &= pattern.col()[k] == other.col()[k];
-    }
+
+    // set_col_major
+    const SizeVector& col_major_reference( pattern.get_col_major() );
+    ok &= col_major_reference.size() == 0;
+    pattern.set_col_major();
+    ok &= col_major_reference.size() == nnz;
+    //
+    // check equality
+    ok &= pattern == other;
+    //
+    // Change pattern so it no longer corresponds to a diagonal matrix
+    pattern.set(nnz-1, 0, 1);
+    //
+    // check equality
+    ok &= ! (pattern == other);
+    //
     return ok;
 }
 

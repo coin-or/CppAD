@@ -23,7 +23,7 @@ IF( POLICY CMP0054 )
 ENDIF( POLICY CMP0054 )
 #
 # cppad_version is used by version.sh to get the version number.
-SET(cppad_version "20220323")
+SET(cppad_version "20220604")
 SET(cppad_url          "https://coin-or.github.io/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 #
@@ -206,6 +206,7 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 #
 # cppad_debug_which
 # CMAKE_BUILD_TYPE
+SET(debug_even_or_odd FALSE)
 IF( NOT ${cppad_debug_which} STREQUAL "" )
     assert_value_in_set(
         cppad_debug_which debug_even debug_odd debug_all debug_none
@@ -219,6 +220,15 @@ IF( CMAKE_BUILD_TYPE )
             "Both CMAKE_BUILD_TYPE and cppad_debug_which specified"
         )
     ENDIF( NOT ${cppad_debug_which} STREQUAL "" )
+    IF(CMAKE_BUILD_TYPE MATCHES Debug)
+        SET(cppad_debug_which "debug_all")
+    ELSEIF(CMAKE_BUILD_TYPE MATCHES Release)
+        SET(cppad_debug_which "debug_none")
+    ELSEIF(CMAKE_BUILD_TYPE MATCHES RelWithDebInfo)
+        SET(cppad_debug_which "debug_none")
+    ELSEIF(CMAKE_BUILD_TYPE MATCHES MinSizeRel)
+        SET(cppad_debug_which "debug_none")
+    ENDIF()
 ELSE( CMAKE_BUILD_TYPE )
     IF( "${cppad_debug_which}" STREQUAL debug_all)
         SET(CMAKE_BUILD_TYPE Debug)
@@ -226,10 +236,20 @@ ELSE( CMAKE_BUILD_TYPE )
         SET(CMAKE_BUILD_TYPE Release)
     ELSEIF( "${cppad_debug_which}" STREQUAL debug_odd)
         SET(CMAKE_BUILD_TYPE Debug)
+        SET(debug_even_or_odd TRUE)
     ELSEIF( "${cppad_debug_which}" STREQUAL debug_even)
         SET(CMAKE_BUILD_TYPE Release)
+        SET(debug_even_or_odd TRUE)
     ENDIF( "${cppad_debug_which}" STREQUAL debug_all)
 ENDIF( CMAKE_BUILD_TYPE )
+IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+    IF( debug_even_or_odd )
+        MESSAGE(FATAL_ERROR
+        "Cannot have cppad_debug_which equal ${cppad_debug_which} on Windows."
+        )
+    ENDIF( debug_even_or_odd )
+ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Windows" )
+print_variable(CMAKE_SYSTEM_NAME)
 print_variable(cppad_debug_which)
 print_variable(CMAKE_BUILD_TYPE)
 MESSAGE(STATUS "make check: avialable")
@@ -354,7 +374,14 @@ FOREACH(dir_types includedirs libdirs datadir docdir)
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
 # OPENMP_FOUND, OpenMP_CXX_FLAGS
-FIND_PACKAGE(OpenMP)
+IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
+    SET(OPENMP_FOUND FALSE)
+    MESSAGE(STATUS
+        "Skipping OpenMP on Darwin (Mac) systems. 2DO: fix this"
+    )
+ELSE( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
+    FIND_PACKAGE(OpenMP)
+ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
 # -----------------------------------------------------------------------------
 # boost_prefix
 # Only need components for object libraries, not include libraries.

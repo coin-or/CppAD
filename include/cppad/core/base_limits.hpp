@@ -58,6 +58,8 @@ template <> class numeric_limits<Base>\
     {   return static_cast<Base>( std::numeric_limits<Other>::epsilon() ); }\
     static Base quiet_NaN(void) \
     {   return static_cast<Base>( std::numeric_limits<Other>::quiet_NaN() ); }\
+    static Base infinity(void) \
+    {   return static_cast<Base>( std::numeric_limits<Other>::infinity() ); }\
     static const int digits10 = std::numeric_limits<Other>::digits10;\
 };
 /* %$$

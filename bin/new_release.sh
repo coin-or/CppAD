@@ -11,7 +11,7 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 stable_version='20220000' # date at which this stable branch started
-release='2'               # first release for each stable version is 0
+release='4'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {

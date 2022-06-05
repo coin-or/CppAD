@@ -475,7 +475,7 @@ bool atomic_case(void)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t call_id        = 0;
         size_t compare_change = 0;
-        size_t flag = cppad_forward_zero_double(
+        int flag = cppad_forward_zero_double(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -564,7 +564,7 @@ bool discrete_case(void)
             y[i] = std::numeric_limits<float>::quiet_NaN();
         size_t call_id        = 0;
         size_t compare_change = 0;
-        size_t flag = cppad_forward_zero_float(
+        int flag = cppad_forward_zero_float(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;

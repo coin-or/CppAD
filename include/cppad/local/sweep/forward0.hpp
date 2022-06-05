@@ -395,7 +395,7 @@ void forward0(
             // -------------------------------------------------
 
             case DisOp:
-            forward_dis_op(p, q, r, i_var, arg, J, taylor);
+            forward_dis_op<RecBase>(p, q, r, i_var, arg, J, taylor);
             break;
             // -------------------------------------------------
 
@@ -870,7 +870,7 @@ void forward0(
             break;
 
             case FunavOp:
-            // variable argument for a atomic function
+            // variable argument for an atomic function
             CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
             CPPAD_ASSERT_UNKNOWN( atom_state == arg_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i == 0 );
@@ -885,7 +885,7 @@ void forward0(
             break;
 
             case FunrpOp:
-            // parameter result for a atomic function
+            // parameter result for an atomic function
             CPPAD_ASSERT_NARG_NRES(op, 1, 0);
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );
@@ -897,7 +897,7 @@ void forward0(
             break;
 
             case FunrvOp:
-            // variable result for a atomic function
+            // variable result for an atomic function
             CPPAD_ASSERT_NARG_NRES(op, 0, 1);
             CPPAD_ASSERT_UNKNOWN( atom_state == ret_atom );
             CPPAD_ASSERT_UNKNOWN( atom_i < atom_m );

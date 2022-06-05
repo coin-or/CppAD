@@ -40,12 +40,23 @@ bool cppad_eigen(void)
         std::numeric_limits<double>::max();
     ok &= traits::lowest() ==
         std::numeric_limits<double>::min();
+    ok &= std::isnan(traits::quiet_NaN());
+    ok &= std::isinf(traits::infinity());
 
     AD<double> x = 2.0;
     ok  &= conj(x)  == x;
     ok  &= real(x)  == x;
     ok  &= imag(x)  == 0.0;
     ok  &= abs2(x)  == 4.0;
+
+    ok  &= (!std::isinf(x));
+    ok  &= (!std::isnan(x));
+
+    x = traits::quiet_NaN();
+    ok  &= std::isnan(x);
+
+    x = traits::infinity();
+    ok  &= std::isinf(x);
 
     // Outputing a matrix used to fail before partial specialization of
     // struct significant_decimals_default_impl in cppad_eigen.hpp.

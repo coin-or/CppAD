@@ -78,6 +78,18 @@ lower than the index value for the parameter.
 \param not_used_rec_base
 Specifies RecBase for this call.
 */
+
+template <class RecBase>
+RecBase discrete_eval(size_t index, const RecBase& x, const RecBase& not_used)
+{   return discrete<RecBase>::eval(index, x); }
+template <class RecBase>
+AD<RecBase> discrete_eval(
+    size_t index, const AD<RecBase>& ax, const RecBase& not_used
+)
+{   return discrete<RecBase>::ad_eval(index, ax); }
+
+
+
 template <class Base, class BaseVector, class RecBase>
 void dynamic(
     pod_vector_maybe<Base>&       all_par_vec        ,
@@ -348,10 +360,10 @@ void dynamic(
             // ---------------------------------------------------------------
             // discrete(index, argument)
             case dis_dyn:
-            CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-            all_par_vec[i_par] = discrete<Base>::eval(
-                size_t(      dyn_par_arg[i_arg + 0] ) , // index
-                all_par_vec[ dyn_par_arg[i_arg + 1] ]   // argument
+            all_par_vec[i_par] = discrete_eval(
+                    size_t(      dyn_par_arg[i_arg + 0] ) , // index
+                    all_par_vec[ dyn_par_arg[i_arg + 1] ] , // argument
+                    RecBase(0)                              // not_used
             );
 # if CPPAD_DYNAMIC_TRACE
             std::cout
