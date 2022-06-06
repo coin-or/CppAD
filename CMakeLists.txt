@@ -457,6 +457,21 @@ ENDIF( cppad_has_ipopt )
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #
+#
+# cppad_lib_is_dynamic
+STRING( REGEX MATCH "^MSYS" is_msys        "${CMAKE_SYSTEM_NAME}" )
+STRING( REGEX MATCH "^CYGWIN" is_cygwin    "${CMAKE_SYSTEM_NAME}" )
+STRING( REGEX MATCH "^Windows" is_windows  "${CMAKE_SYSTEM_NAME}" )
+IF( is_msys OR is_cygwin OR is_windows )
+    MESSAGE( STATUS "Windows system so building static cppad_lib")
+    SET(is_cppad_lib_dynamic 0)
+ELSE( )
+    MESSAGE( STATUS "Not Windows system so building shared cppad_lib")
+    SET(is_cppad_lib_dynamic 1)
+ENDIF( )
+print_variable(is_cppad_lib_dynamic)
+
+#
 # Initialize list of tests as empty
 SET(check_depends "")
 #
