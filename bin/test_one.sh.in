@@ -153,7 +153,12 @@ include_flags=$(echo $include_flags | \
     sed -e 's| -I| -isystem|g' -e 's|^-I|-isystem|'
 )
 include_flags="-I $original_dir/include $include_flags"
-cppad_lib_path="@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
+if [ @is_cppad_lib_dynamic@ ==  '1' ]
+then
+    cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so'
+else
+    cppad_lib_path='@PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.a'
+fi
 library_flags="$library_flags $cppad_lib_path -lpthread"
 #
 cd build
