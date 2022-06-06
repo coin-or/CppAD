@@ -1,7 +1,13 @@
 name: CppAD CI for Windows - (v142)
 on:
   pull_request:
+    branches:
+      - master
+      - 'stable/*'
   push:
+    branches:
+      - master
+      - 'stable/*'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)

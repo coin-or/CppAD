@@ -1,12 +1,18 @@
 name: CppAD CI for Windows - Clang
 on:
   pull_request:
+    branches:
+      - master
+      - 'stable/*'
   push:
-      
+    branches:
+      - master
+      - 'stable/*'
+
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -47,7 +53,7 @@ jobs:
         set PATH=%PATH:C:\hostedtoolcache\windows\Boost\1.72.0;=%
 
         call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
-    
+
         :: Create build directory
         mkdir build
         pushd build
