@@ -9,18 +9,22 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
+# include <filesystem>
 # include <cppad/cppad.hpp>
 
+//  CALL_COVENTION, RTD_LAZY, DIR_SEP
 # ifndef _WIN32
-// dlopen, dlsym
+// dlopen, dlsym, dlerror, RTD_LAZY
 # include <dlfcn.h>
 # define CALL_CONVENTION
-# define DLL_IMPORT
+# define DIR_SEP         '/'
+# define DLL_EXT         ".so"
 # else
 # include <windows.h>
 # define CALL_CONVENTION __cdecl
-# define DLL_IMPORT      __declspec(dllimport)
 # define RTLD_LAZY       0
+# define DIR_SEP         '\\'
+# define DLL_EXT         ".dll"
 # endif
 
 namespace { // BEGIN_EMPTY_NAMESPACE
@@ -47,7 +51,7 @@ extern "C" {
     );
 }
 //
-// dlopen, dlsym
+// dlopen, dlsym, dlerror
 # ifdef _WIN32
 void* dlopen(const char *filename, int flag)
 {   HINSTANCE hinstance = LoadLibrary(filename);
@@ -84,53 +88,75 @@ std::string create_dynamic_library(
     const std::string&                  library_name,
     const CppAD::vector< std::string >& library_csrc
 )
-{   // ok
+{   using std::filesystem::path;
+    // ok
     bool ok = true;
     //
-    // so_file_name
-    std::string so_file_name = "/tmp/" + library_name + ".so";
+    // original_path
+    path original_path = std::filesystem::current_path();
     //
-    // o_file_list
-    std::string o_file_list = "";
+    // tmp_dir_path
+    path tmp_dir_path = std::filesystem::temp_directory_path();
+    //
+    // change into temporary directory
+    std::filesystem::current_path( tmp_dir_path );
+    //
+    // dll_file_str
+    std::string dll_file_str = library_name + DLL_EXT;
+    //
+    // o_file_list_str
+    std::string o_file_list_str = "";
     //
     // i_csrc
     for(size_t i_csrc = 0; i_csrc < library_csrc.size(); ++i_csrc) if( ok )
     {   //
-        // c_file_name
-        std::string c_file_name =
-        "/tmp/" + library_name + "_" + CppAD::to_string(i_csrc) +  ".c";
+        // c_file_str
+        std::string c_file_str =
+            library_name + "_" + CppAD::to_string(i_csrc) +  ".c";
         //
-        // o_file_name
-        std::string o_file_name =
-        "/tmp/" + library_name + "_" + CppAD::to_string(i_csrc) +  ".o";
+        // o_file_str
+        std::string o_file_str =
+            library_name + "_" + CppAD::to_string(i_csrc) +  ".o";
         //
-        // c_file_name
+        // c_file_str
         {   std::ofstream file;
-            file.open(c_file_name, std::ios::out);
+            file.open(c_file_str, std::ios::out);
             file << library_csrc[i_csrc];
             file.close();
         }
-        // o_file_name
+        // create this object file
         int flag = std::system(nullptr);
         ok      &= flag != 0;
         if( ok )
         {   std::string command =
-                "gcc -c -g -fPIC " + c_file_name + " -o " + o_file_name;
+                "gcc -c -g -fPIC " + c_file_str + " -o " + o_file_str;
             flag = std::system( command.c_str() );
             ok  &= flag == 0;
         }
-        // o_file_list
-        o_file_list += " " + o_file_name;
+        // o_file_list_str
+        o_file_list_str += " " + o_file_str;
     }
     if( ok )
     {   std::string command =
-            "gcc -shared " + o_file_list + " -o " + so_file_name;
+            "gcc -shared " + o_file_list_str + " -o " + dll_file_str;
         int flag = std::system( command.c_str() );
         ok  &= flag == 0;
+        //
+        // tmp_dir_str
+        std::string tmp_dir_str = tmp_dir_path.string();
+        if( tmp_dir_str.back() != DIR_SEP )
+            tmp_dir_str += DIR_SEP;
+        //
+        // dll_file
+        dll_file_str = tmp_dir_str + dll_file_str;
     }
-    if( ok )
-        return so_file_name;
-    return "";
+    if( ! ok )
+        dll_file_str = "";
+    //
+    // change back to original directory
+    std::filesystem::current_path( original_path );
+    //
+    return dll_file_str;
 }
 //
 // atomic_fun
@@ -276,15 +302,15 @@ bool simple_cases(void)
     library_csrc[0] = ss.str();
     //
     // os_file_name
-    std::string so_file_name = create_dynamic_library(
+    std::string dll_file_str = create_dynamic_library(
         library_name, library_csrc
     );
     //
-    if( so_file_name == "" )
+    if( dll_file_str == "" )
         ok = false;
     //
     // handle
-    void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
+    void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
     if( handle == nullptr )
     {   const char *errstr = dlerror();
         if( errstr != nullptr )
@@ -383,16 +409,16 @@ bool compare_cases(void)
     f.to_csrc(ss, options);
     library_csrc[0] = ss.str();
     //
-    // so_file_name
-    std::string so_file_name = create_dynamic_library(
+    // dll_file_str
+    std::string dll_file_str = create_dynamic_library(
         library_name, library_csrc
     );
     //
-    if( so_file_name == "" )
+    if( dll_file_str == "" )
         ok = false;
     //
     // handle
-    void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
+    void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
     if( handle == nullptr )
     {   const char *errstr = dlerror();
         if( errstr != nullptr )
@@ -488,21 +514,17 @@ bool atomic_case(void)
     f.to_csrc(ss, options);
     library_csrc[1] = ss.str();
     //
-    // so_file_name
-# if 1
-    std::string so_file_name = create_dynamic_library(
+    // dll_file_str
+    std::string dll_file_str = create_dynamic_library(
         library_name, library_csrc
     );
-# else
-    std::string so_file_name = "/tmp/test_to_csrc.so";
-# endif
-    if( so_file_name == "" )
+    if( dll_file_str == "" )
     {   std::cout << "Failed to create " << library_name << "\n";
         ok = false;
     }
     //
     // handle
-    void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
+    void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
     if( handle == nullptr )
     {   const char *errstr = dlerror();
         if( errstr != nullptr )
@@ -578,21 +600,17 @@ bool discrete_case(void)
     f.to_csrc(ss, options);
     library_csrc[1] = ss.str();
     //
-    // so_file_name
-# if 1
-    std::string so_file_name = create_dynamic_library(
+    // dll_file_str
+    std::string dll_file_str = create_dynamic_library(
         library_name, library_csrc
     );
-# else
-    std::string so_file_name = "/tmp/test_to_csrc.so";
-# endif
-    if( so_file_name == "" )
+    if( dll_file_str == "" )
     {   std::cout << "Failed to create " << library_name << "\n";
         ok = false;
     }
     //
     // handle
-    void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
+    void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
     if( handle == nullptr )
     {   const char *errstr = dlerror();
         if( errstr != nullptr )
