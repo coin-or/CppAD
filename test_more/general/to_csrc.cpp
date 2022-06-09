@@ -10,29 +10,74 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
-# include <dlfcn.h>
 
-namespace{ // BEGIN_EMPTY_NAMESPACE
+# ifndef _WIN32
+// dlopen, dlsym
+# include <dlfcn.h>
+# define CALL_CONVENTION
+# define DLL_IMPORT
+# else
+# include <windows.h>
+# define CALL_CONVENTION __cdecl
+# define DLL_IMPORT      __declspec(dllimport)
+# define RTLD_LAZY       0
+# endif
+
+namespace { // BEGIN_EMPTY_NAMESPACE
 //
 // cppad_forward_zero_double
-int (*cppad_forward_zero_double)(
-    size_t        call_id,
-    size_t        nx,
-    const double* x,
-    size_t        ny,
-    double*       y,
-    size_t*       compare_change
-);
+extern "C" {
+    typedef int (CALL_CONVENTION *cppad_forward_zero_double)(
+        size_t        call_id,
+        size_t        nx,
+        const double* x,
+        size_t        ny,
+        double*       y,
+        size_t*       compare_change
+    );
+    //
+    // cppad_forward_zero_float
+    typedef int (CALL_CONVENTION *cppad_forward_zero_float)(
+        size_t       call_id,
+        size_t       nx,
+        const float* x,
+        size_t       ny,
+        float*       y,
+        size_t*      compare_change
+    );
+}
 //
-// cppad_forward_zero_float
-int (*cppad_forward_zero_float)(
-    size_t       call_id,
-    size_t       nx,
-    const float* x,
-    size_t       ny,
-    float*       y,
-    size_t*      compare_change
-);
+// dlopen, dlsym
+# ifdef _WIN32
+void* dlopen(const char *filename, int flag)
+{   HINSTANCE hinstance = LoadLibrary(filename);
+    return reinterpret_cast<void*>( hinstance );
+}
+void* dlsym(void* handle, const char* symbol)
+{   HINSTANCE hinstance = reinterpret_cast<HINSTANCE>( handle );
+    FARPROC   farproc   = GetProcAddress(hinstance, symbol);
+    return reinterpret_cast<void*>( farproc );
+}
+int dlclose(void* handle)
+{   HINSTANCE hinstance = reinterpret_cast<HINSTANCE>( handle );
+    int result          = FreeLibrary(hinstance);
+    return result;
+}
+const char* dlerror(void)
+{   // should have a different result for each thread
+    static char result[100];
+    //
+    DWORD dw        = GetLastError();
+    std::string str = CppAD::to_string(dw);
+    str             = "Microsoft GetLastError() = " + str;
+    size_t  i = 0;
+    while(i < 99 && i < str.size())
+        result[i] = str[i];
+    result[i] = '\0';
+    //
+    return result;
+}
+# endif
 //
 // create_dynamic_library
 std::string create_dynamic_library(
@@ -241,17 +286,21 @@ bool simple_cases(void)
     // handle
     void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
     if( handle == nullptr )
-    {   char *errstr;
-        errstr = dlerror();
+    {   const char *errstr = dlerror();
         if( errstr != nullptr )
             std::cout << "Dynamic linking error = " << errstr << "\n";
         ok = false;
     }
     else
-    {   // call test_to_csrc
+    {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&cppad_forward_zero_double) =
-            dlsym(handle, complete_name.c_str());
+        cppad_forward_zero_double forward_zero =
+            reinterpret_cast<cppad_forward_zero_double>(
+                dlsym(handle, complete_name.c_str() )
+        );
+        //
+        // ok
+        // no change
         size_t call_id = 0;
         CppAD::vector<double> x(nx), y(ny);
         x[0] = Value( ax[0] );
@@ -259,7 +308,7 @@ bool simple_cases(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        int flag = cppad_forward_zero_double(
+        int flag = forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -345,17 +394,18 @@ bool compare_cases(void)
     // handle
     void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
     if( handle == nullptr )
-    {   char *errstr;
-        errstr = dlerror();
+    {   const char *errstr = dlerror();
         if( errstr != nullptr )
             std::cout << "Dynamic linking error = " << errstr << "\n";
         ok = false;
     }
     else
-    {   // cppad_forward_zero_double
+    {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&cppad_forward_zero_double) =
-            dlsym(handle, complete_name.c_str());
+        cppad_forward_zero_double forward_zero =
+            reinterpret_cast<cppad_forward_zero_double>(
+                dlsym( handle, complete_name.c_str() )
+        );
         //
         // ok
         // no change
@@ -365,7 +415,7 @@ bool compare_cases(void)
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        int flag = cppad_forward_zero_double(
+        int flag = forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -376,7 +426,7 @@ bool compare_cases(void)
         // ok
         // check all change
         x[0] = 2.0 * x0;
-        flag = cppad_forward_zero_double(
+        flag = forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -454,17 +504,18 @@ bool atomic_case(void)
     // handle
     void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
     if( handle == nullptr )
-    {   char *errstr;
-        errstr = dlerror();
+    {   const char *errstr = dlerror();
         if( errstr != nullptr )
             std::cout << "Dynamic linking error = " << errstr << "\n";
         ok = false;
     }
     else
-    {   // cppad_forward_zero_double
+    {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&cppad_forward_zero_double) =
-            dlsym(handle, complete_name.c_str());
+        cppad_forward_zero_double forward_zero =
+            reinterpret_cast<cppad_forward_zero_double>(
+                dlsym( handle, complete_name.c_str() )
+        );
         //
         // ok
         // no change
@@ -475,7 +526,7 @@ bool atomic_case(void)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t call_id        = 0;
         size_t compare_change = 0;
-        int flag = cppad_forward_zero_double(
+        int flag = forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
@@ -543,17 +594,18 @@ bool discrete_case(void)
     // handle
     void* handle = dlopen(so_file_name.c_str(), RTLD_LAZY);
     if( handle == nullptr )
-    {   char *errstr;
-        errstr = dlerror();
+    {   const char *errstr = dlerror();
         if( errstr != nullptr )
             std::cout << "Dynamic linking error = " << errstr << "\n";
         ok = false;
     }
     else
-    {   // cppad_forward_zero_float
+    {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        *(void**)(&cppad_forward_zero_float) =
-            dlsym(handle, complete_name.c_str());
+        cppad_forward_zero_float forward_zero =
+            reinterpret_cast<cppad_forward_zero_float>(
+                dlsym( handle, complete_name.c_str() )
+        );
         //
         // ok
         // no change
@@ -564,7 +616,7 @@ bool discrete_case(void)
             y[i] = std::numeric_limits<float>::quiet_NaN();
         size_t call_id        = 0;
         size_t compare_change = 0;
-        int flag = cppad_forward_zero_float(
+        int flag = forward_zero(
             call_id, nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
