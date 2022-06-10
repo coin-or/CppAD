@@ -78,23 +78,6 @@ INCLUDE(cmake/set_compile_flags.cmake)
 #
 # pkgconfig_info(name, system)
 INCLUDE(cmake/pkgconfig_info.cmake)
-# ============================================================================
-# Ensure c++11 support
-SET(CMAKE_REQUIRED_DEFINITIONS "")
-SET(CMAKE_REQUIRED_FLAGS       "")
-SET(CMAKE_REQUIRED_INCLUDES    "")
-SET(CMAKE_REQUIRED_LIBRARIES   "")
-SET(source "
-int main(void)
-{   static_assert( __cplusplus >= 201103 , \"c++11 or higher required\" );
-    return 0;
-}"
-)
-compile_source_test("${source}" cplusplus_201100_ok )
-IF( NOT cplusplus_201100_ok  )
-    SET(CMAKE_CXX_STANDARD 11)
-    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-ENDIF( NOT cplusplus_201100_ok  )
 # =============================================================================
 # command line arguments
 # =============================================================================
@@ -203,6 +186,35 @@ command_line_arg(cppad_tape_id_type "unsigned int" STRING
 command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
+# ----------------------------------------------------------------------------
+#
+# Ensure c++11 support
+SET(CMAKE_REQUIRED_DEFINITIONS "")
+SET(CMAKE_REQUIRED_FLAGS       "${cppad_cxx_flags}")
+SET(CMAKE_REQUIRED_INCLUDES    "")
+SET(CMAKE_REQUIRED_LIBRARIES   "")
+SET(source "
+int main(void)
+{   static_assert( __cplusplus >= 201103 , \"c++11 or higher required\" );
+    return 0;
+}"
+)
+compile_source_test("${source}" use_cplusplus_2011_ok )
+IF( NOT use_cplusplus_2011_ok  )
+    MESSAGE(STATUS "setting C++ standard to 2011")
+    SET(CMAKE_CXX_STANDARD 11)
+    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+ENDIF( NOT use_cplusplus_2011_ok  )
+#
+# use_cplusplus_2017_ok
+SET(source "
+int main(void)
+{   static_assert( __cplusplus >= 201703 , \"c++17 is supported\" );
+    return 0;
+}"
+)
+compile_source_test("${source}" use_cplusplus_2017_ok )
+# ----------------------------------------------------------------------------
 #
 # cppad_debug_which
 # CMAKE_BUILD_TYPE
