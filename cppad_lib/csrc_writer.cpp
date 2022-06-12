@@ -253,7 +253,12 @@ void CppAD::local::graph::csrc_writer(
     // This atomic function
     os <<
         "// This atomic function\n"
-        "int cppad_forward_zero_" + function_name + "(\n"
+# ifdef _MSC_VER
+        "__declspec(dllexport) int __cdecl "
+# else
+        "int "
+# endif
+        "cppad_forward_zero_" + function_name + "(\n"
         "\tsize_t               call_id         ,\n"
         "\tsize_t               nx              ,\n"
         "\tconst float_point_t* x               ,\n"
@@ -272,7 +277,6 @@ void CppAD::local::graph::csrc_writer(
         "\t// declare variables\n"
         "\tfloat_point_t v[" + to_string(n_node) + "];\n"
         "\tsize_t i;\n"
-        "\tfloat_point_t nan = 0.0 / 0.0;\n"
         "\n"
         "\t// check nx, ny\n";
     //
@@ -290,7 +294,7 @@ void CppAD::local::graph::csrc_writer(
         "\n"
         "\t// initialize\n"
         "\t*compare_change = 0;\n"
-        "\tv[0]            = nan; // const \n";
+        "\tv[0]            = NAN; // const \n";
     //
     // independent variables
     // set v[1+i] for i = 0, ..., nx-1"

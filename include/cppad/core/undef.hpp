@@ -40,6 +40,7 @@ by the CppAD examples and tests.
 # undef CPPAD_TESTVECTOR          in user api
 # undef CPPAD_TO_STRING           in user api
 # undef CPPAD_USE_CPLUSPLUS_2011  in user api
+# undef CPPAD_USE_CPLUSPLUS_2017  in user api
 
 # undef CPPAD_TRACK_COUNT    in deprecated api
 # undef CPPAD_TRACK_DEL_VEC  in deprecated api

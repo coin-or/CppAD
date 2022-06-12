@@ -12,26 +12,35 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <filesystem>
 # include <cppad/cppad.hpp>
 
-//  CALL_COVENTION, RTD_LAZY, DIR_SEP
+// CALL_CONVENTION, CALL_IMPORT
+# ifdef _MSC_VER
+# define CALL_CONVENTION __cdecl
+# define CALL_IMPORT     __declspec(dllimport)
+# else
+# define CALL_CONVENTION
+# define CALL_IMPORT
+# endif
+
+//  RTD_LAZY, DIR_SEP, DLL_EXT, OBJ_EXT
 # ifndef _WIN32
 // dlopen, dlsym, dlerror, RTD_LAZY
 # include <dlfcn.h>
-# define CALL_CONVENTION
 # define DIR_SEP         '/'
 # define DLL_EXT         ".so"
+# define OBJ_EXT         ".o"
 # else
 # include <windows.h>
-# define CALL_CONVENTION __cdecl
 # define RTLD_LAZY       0
 # define DIR_SEP         '\\'
 # define DLL_EXT         ".dll"
+# define OBJ_EXT         ".obj"
 # endif
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 //
 // cppad_forward_zero_double
 extern "C" {
-    typedef int (CALL_CONVENTION *cppad_forward_zero_double)(
+    CALL_IMPORT typedef int (CALL_CONVENTION *cppad_forward_zero_double)(
         size_t        call_id,
         size_t        nx,
         const double* x,
@@ -41,7 +50,7 @@ extern "C" {
     );
     //
     // cppad_forward_zero_float
-    typedef int (CALL_CONVENTION *cppad_forward_zero_float)(
+    CALL_IMPORT typedef int (CALL_CONVENTION *cppad_forward_zero_float)(
         size_t       call_id,
         size_t       nx,
         const float* x,
@@ -85,18 +94,30 @@ const char* dlerror(void)
 //
 // create_dynamic_library
 std::string create_dynamic_library(
-    const std::string&                  library_name,
-    const CppAD::vector< std::string >& library_csrc
+    const std::string&            library_name,
+    CppAD::vector< std::string >& library_csrc
 )
-{   using std::filesystem::path;
+{   // path
+    using std::filesystem::path;
+    //
     // ok
     bool ok = true;
+    //
+    // check the the std::system function exists
+    int flag = std::system(nullptr);
+    if( flag == 0 )
+        return "";
     //
     // original_path
     path original_path = std::filesystem::current_path();
     //
     // tmp_dir_path
     path tmp_dir_path = std::filesystem::temp_directory_path();
+    //
+    // tmp_dir_str
+    std::string tmp_dir_str = tmp_dir_path.string();
+    if( tmp_dir_str.back() != DIR_SEP )
+        tmp_dir_str += DIR_SEP;
     //
     // change into temporary directory
     std::filesystem::current_path( tmp_dir_path );
@@ -116,36 +137,41 @@ std::string create_dynamic_library(
         //
         // o_file_str
         std::string o_file_str =
-            library_name + "_" + CppAD::to_string(i_csrc) +  ".o";
+            library_name + "_" + CppAD::to_string(i_csrc) +  OBJ_EXT;
         //
-        // c_file_str
-        {   std::ofstream file;
-            file.open(c_file_str, std::ios::out);
-            file << library_csrc[i_csrc];
-            file.close();
-        }
+        // create c_file_str
+        std::ofstream file;
+        file.open(c_file_str, std::ios::out);
+        file << library_csrc[i_csrc];
+        file.close();
+        //
+        // ok
         // create this object file
-        int flag = std::system(nullptr);
-        ok      &= flag != 0;
-        if( ok )
-        {   std::string command =
-                "gcc -c -g -fPIC " + c_file_str + " -o " + o_file_str;
-            flag = std::system( command.c_str() );
-            ok  &= flag == 0;
-        }
+        std::string command;
+# ifdef _MSC_VER
+        command = "cl /EHs /EHc /c /LD " + c_file_str + " 1> nul 2> nul";
+# else
+        command = "gcc -c -g -fPIC "  + c_file_str + " -o "  + o_file_str;
+# endif
+        // std::cout << "system( " << command << " )\n";
+        flag = std::system( command.c_str() );
+        ok  &= flag == 0;
+        //
         // o_file_list_str
         o_file_list_str += " " + o_file_str;
     }
     if( ok )
-    {   std::string command =
+    {   std::string command;
+# ifdef _MSC_VER
+        command  = "link /DLL " + o_file_list_str + " /OUT:" + dll_file_str;
+        command += " 1> nul 2> nul";
+# else
+        command =
             "gcc -shared " + o_file_list_str + " -o " + dll_file_str;
-        int flag = std::system( command.c_str() );
+# endif
+        // std::cout << "system( " << command << " )\n";
+        flag = std::system( command.c_str() );
         ok  &= flag == 0;
-        //
-        // tmp_dir_str
-        std::string tmp_dir_str = tmp_dir_path.string();
-        if( tmp_dir_str.back() != DIR_SEP )
-            tmp_dir_str += DIR_SEP;
         //
         // dll_file
         dll_file_str = tmp_dir_str + dll_file_str;
@@ -305,9 +331,11 @@ bool simple_cases(void)
     std::string dll_file_str = create_dynamic_library(
         library_name, library_csrc
     );
-    //
     if( dll_file_str == "" )
+    {   std::cout << "Failed to create " << library_name << "\n";
         ok = false;
+        return ok;
+    }
     //
     // handle
     void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
@@ -413,9 +441,11 @@ bool compare_cases(void)
     std::string dll_file_str = create_dynamic_library(
         library_name, library_csrc
     );
-    //
     if( dll_file_str == "" )
+    {   std::cout << "Failed to create " << library_name << "\n";
         ok = false;
+        return ok;
+    }
     //
     // handle
     void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
@@ -521,6 +551,7 @@ bool atomic_case(void)
     if( dll_file_str == "" )
     {   std::cout << "Failed to create " << library_name << "\n";
         ok = false;
+        return ok;
     }
     //
     // handle
@@ -607,6 +638,7 @@ bool discrete_case(void)
     if( dll_file_str == "" )
     {   std::cout << "Failed to create " << library_name << "\n";
         ok = false;
+        return ok;
     }
     //
     // handle
