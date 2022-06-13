@@ -15,8 +15,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 /*
 ----------------------------------------------------------------------------
 Preprecessor definitions that presist after cppad/cppad.hpp is included.
-These are part of the user API with some exceptions that are used
-by the CppAD examples and tests.
+These are part of the user API (see omh/preprocessor.omh) with some exceptions
+that are used by the CppAD examples and tests.
 
 # undef CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL used by CPPAD_USER_ATOMIC
 # undef CPPAD_ASSERT_KNOWN                   used by cppad_ipopt
@@ -39,16 +39,16 @@ by the CppAD examples and tests.
 # undef CPPAD_TAPE_ID_TYPE        in user api
 # undef CPPAD_TESTVECTOR          in user api
 # undef CPPAD_TO_STRING           in user api
-# undef CPPAD_USE_CPLUSPLUS_2011  in user api
 # undef CPPAD_USE_CPLUSPLUS_2017  in user api
 
+# undef CPPAD_USE_CPLUSPLUS_2011  in deprecated api
 # undef CPPAD_TRACK_COUNT    in deprecated api
 # undef CPPAD_TRACK_DEL_VEC  in deprecated api
 # undef CPPAD_TRACK_EXTEND   in deprecated api
 # undef CPPAD_TRACK_NEW_VEC  in deprecated api
 # undef CPPAD_USER_ATOMIC    in deprecated api
 
-# undef CPPAD_TEST_VECTOR     deprecated verssion of CPPAD_TESTVECTOR
+# undef CPPAD_TEST_VECTOR     deprecated version of CPPAD_TESTVECTOR
 # undef CppADCreateBinaryBool deprecated version of CPPAD_BOOL_BINARY
 # undef CppADCreateDiscrete   deprecated version of CPPAD_DISCRETE_FUNCTION
 # undef CppADCreateUnaryBool  deprecated version of CPPAD_BOOL_UNARY

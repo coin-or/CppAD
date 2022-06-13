@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -60,7 +60,10 @@ Is a $code const char*$$ representation of this version of CppAD.
 
 $head CPPAD_USE_CPLUSPLUS_2011$$
 Deprecated 2020-12-03:
-Should CppAD use C++11 features. This is always 1 (for true).
+Is it OK for CppAD to use C++11 features. This is always 1 (for true).
+
+$head CPPAD_USE_CPLUSPLUS_2017$$
+Is it OK for CppAD to use C++17 features.
 
 $head Documented Elsewhere$$
 $table

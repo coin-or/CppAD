@@ -195,16 +195,16 @@ SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 SET(source "
 int main(void)
-{   static_assert( __cplusplus >= 201103 , \"c++11 or higher required\" );
+{   static_assert( __cplusplus >= 201103 , \"c++11 is supported\" );
     return 0;
 }"
 )
-compile_source_test("${source}" use_cplusplus_2011_ok )
-IF( NOT use_cplusplus_2011_ok  )
+compile_source_test("${source}" minimal_cplusplus )
+IF( NOT minimal_cplusplus  )
     MESSAGE(STATUS "setting C++ standard to 2011")
     SET(CMAKE_CXX_STANDARD 11)
     SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-ENDIF( NOT use_cplusplus_2011_ok  )
+ENDIF( NOT minimal_cplusplus  )
 #
 # use_cplusplus_2017_ok
 SET(source "
