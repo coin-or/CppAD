@@ -16,9 +16,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # ifdef _MSC_VER
 # define CALL_CONVENTION __cdecl
 # define CALL_IMPORT     __declspec(dllimport)
+# define OBJ_EXT         ".obj"
 # else
 # define CALL_CONVENTION
 # define CALL_IMPORT
+# define OBJ_EXT         ".o"
 # endif
 
 //  RTD_LAZY, DIR_SEP, DLL_EXT, OBJ_EXT
@@ -27,13 +29,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <dlfcn.h>
 # define DIR_SEP         '/'
 # define DLL_EXT         ".so"
-# define OBJ_EXT         ".o"
 # else
 # include <windows.h>
 # define RTLD_LAZY       0
 # define DIR_SEP         '\\'
 # define DLL_EXT         ".dll"
-# define OBJ_EXT         ".obj"
 # endif
 
 namespace { // BEGIN_EMPTY_NAMESPACE
@@ -151,7 +151,7 @@ std::string create_dynamic_library(
 # ifdef _MSC_VER
         command = "cl /EHs /EHc /c /LD " + c_file_str + " 1> nul 2> nul";
 # else
-        command = "gcc -c -g -fPIC "  + c_file_str + " -o "  + o_file_str;
+        command = "gcc -c -g -fPIC "  + c_file_str;
 # endif
         // std::cout << "system( " << command << " )\n";
         flag = std::system( command.c_str() );
