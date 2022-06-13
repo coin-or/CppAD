@@ -280,7 +280,7 @@ bool simple_cases(void)
     CppAD::Independent(ax);
     //
     // ny, ay
-    size_t ny = 27;
+    size_t ny = 28;
     CPPAD_TESTVECTOR( AD<double> ) ay(ny);
     //
     // binary operators
@@ -315,6 +315,9 @@ bool simple_cases(void)
     // binary functions
     ay[25] = azmul( ax[0], ax[1] );
     ay[26] = pow(   ax[0], ax[1] ); // ax[0] > 0
+    //
+    // constant function
+    ay[27] = 3.0;
     //
     // f
     CppAD::ADFun<double> f(ax, ay);

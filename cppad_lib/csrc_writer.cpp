@@ -203,13 +203,15 @@ void CppAD::local::graph::csrc_writer(
         "// includes\n"
         "# include <stddef.h>\n"
         "# include <math.h>\n"
-        "\n";
+        "\n"
+    ;
     //
     // typedefs
     os <<
         "// typedefs\n"
         "typedef " + type + " float_point_t;\n"
-        "\n";
+        "\n"
+    ;
     //
     // externals
     os << "// externals\n";
@@ -224,7 +226,8 @@ void CppAD::local::graph::csrc_writer(
             "\tsize_t               ny                ,\n"
             "\tfloat_point_t*       y                 ,\n"
             "\tsize_t*              compare_change\n"
-            ");\n";
+            ");\n"
+        ;
     }
     size_t n_discrete = graph_obj.discrete_name_vec_size();
     for(size_t i_discrete = 0; i_discrete < n_discrete; ++i_discrete)
@@ -239,7 +242,8 @@ void CppAD::local::graph::csrc_writer(
         "static float_point_t azmul(float_point_t x, float_point_t y)\n"
         "{\tif( x == 0.0 ) return 0.0;\n"
         "\treturn x * y;\n"
-        "}\n\n";
+        "}\n\n"
+    ;
     //
     // sign
     os <<
@@ -248,7 +252,8 @@ void CppAD::local::graph::csrc_writer(
         "{\tif( x > 0.0 ) return 1.0;\n"
         "\tif( x == 0.0 ) return 0.0;\n"
         "\treturn -1.0;\n"
-        "}\n\n";
+        "}\n\n"
+    ;
     //
     // This atomic function
     os <<
@@ -264,12 +269,14 @@ void CppAD::local::graph::csrc_writer(
         "\tconst float_point_t* x               ,\n"
         "\tsize_t               ny              ,\n"
         "\tfloat_point_t*       y               ,\n"
-        "\tsize_t*              compare_change  )\n";
+        "\tsize_t*              compare_change  )\n"
+    ;
     //
     // begin function body
     os <<
         "{\t// begin function body \n"
-        "\n";
+        "\n"
+    ;
     //
     // declare variables
     // v, i, nan
@@ -278,7 +285,8 @@ void CppAD::local::graph::csrc_writer(
         "\tfloat_point_t v[" + to_string(n_node) + "];\n"
         "\tsize_t i;\n"
         "\n"
-        "\t// check nx, ny\n";
+        "\t// check nx, ny\n"
+    ;
     //
     // nx
     size_t nx = n_dynamic_ind + n_variable_ind;
@@ -294,7 +302,8 @@ void CppAD::local::graph::csrc_writer(
         "\n"
         "\t// initialize\n"
         "\t*compare_change = 0;\n"
-        "\tv[0]            = NAN; // const \n";
+        "\tv[0]            = NAN; // const \n"
+    ;
     //
     // independent variables
     // set v[1+i] for i = 0, ..., nx-1"
@@ -303,20 +312,23 @@ void CppAD::local::graph::csrc_writer(
         "\t// independent variables\n"
         "\t// set v[1+i] for i = 0, ..., nx-1\n"
         "\tfor(i = 0; i < nx; ++i)\n"
-        "\t\tv[1+i] = x[i];\n";
+        "\t\tv[1+i] = x[i];\n"
+    ;
     //
     // cosntants
     // set v[1+nx+i] for i = 0, ..., nc-1
     size_t nc = n_constant;
     os <<
         "\n"
-        "\t// constants\n";
+        "\t// constants\n"
         "\t// set v[1+nx+i] for i = 0, ..., nc-1\n"
-        "\t// nc = " + to_string(nc) + "\n";
+        "\t// nc = " + to_string(nc) + "\n"
+    ;
     for(size_t i = 0; i < nc; ++i)
     {   double c_i = graph_obj.constant_vec_get(i);
         os <<
-            "\tv[1+nx+" + to_string(i) + "] = " + to_string(c_i) + ";\n";
+            "\tv[1+nx+" + to_string(i) + "] = " + to_string(c_i) + ";\n"
+        ;
     }
     //
     // result nodes
@@ -324,9 +336,10 @@ void CppAD::local::graph::csrc_writer(
     size_t n_result_node = n_node - first_result_node;
     os <<
         "\n"
-        "\t// result nodes\n";
+        "\t// result nodes\n"
         "\t// set v[1+nx+nc+i] for i = 0, ..., n_result_node-1\n"
-        "\t//n_result_node = " + to_string(n_result_node) + "\n";
+        "\t//n_result_node = " + to_string(n_result_node) + "\n"
+    ;
     //
     // result_node
     size_t result_node = first_result_node;
@@ -537,7 +550,8 @@ void CppAD::local::graph::csrc_writer(
     os <<
         "\n"
         "\t// dependent variables\n"
-        "\t// set y[i] for i = 0, ny-1\n";
+        "\t// set y[i] for i = 0, ny-1\n"
+    ;
     for(size_t i = 0; i < ny; ++i)
     {   size_t node = graph_obj.dependent_vec_get(i);
         os << "\t" + element("y", i) + " = " + element("v", node) + ";\n";
