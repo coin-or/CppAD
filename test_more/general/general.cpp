@@ -137,6 +137,7 @@ extern bool to_string(void);
 extern bool is_pod(void);
 extern bool json_lexer(void);
 extern bool json_parser(void);
+extern bool temp_file(void);
 extern bool vector_set(void);
 
 // main program that runs all the tests
@@ -272,6 +273,7 @@ int main(void)
     Run( is_pod,         "is_pod"          );
     Run( json_lexer,     "json_lexer"      );
     Run( json_parser,    "json_parser"     );
+    Run( temp_file,       "temp_file"      );
     Run( vector_set,      "vector_set"     );
     //
     // check for memory leak

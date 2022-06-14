@@ -40,6 +40,7 @@ SET(source_list
     json_lexer.cpp
     json_parser.cpp
     json_writer.cpp
+    temp_file.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 IF( cppad_has_cppadcg )

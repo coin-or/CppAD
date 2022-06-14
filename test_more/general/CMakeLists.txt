@@ -101,6 +101,7 @@ SET(source_list
     local/is_pod.cpp
     local/json_lexer.cpp
     local/json_parser.cpp
+    local/temp_file.cpp
     local/vector_set.cpp
     log.cpp
     log10.cpp
