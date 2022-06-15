@@ -114,75 +114,49 @@ std::string create_dynamic_library(
     // tmp_dir_path
     path tmp_dir_path = std::filesystem::temp_directory_path();
     //
-    // tmp_dir_str
-    std::string tmp_dir_str = tmp_dir_path.string();
-    if( tmp_dir_str.back() != DIR_SEP )
-        tmp_dir_str += DIR_SEP;
+    // tmp_dir
+    std::string tmp_dir = tmp_dir_path.string();
+    if( tmp_dir.back() != DIR_SEP )
+        tmp_dir += DIR_SEP;
     //
     // change into temporary directory
     std::filesystem::current_path( tmp_dir_path );
     //
-    // dll_file_str
-    std::string dll_file_str = library_name + DLL_EXT;
+    // dll_file
+    std::string dll_file = library_name + DLL_EXT;
     //
-    // o_file_list_str
-    std::string o_file_list_str = "";
+    // csrc_files
+    CppAD::vector< std::string > csrc_files( library_csrc.size() );
     //
     // i_csrc
     for(size_t i_csrc = 0; i_csrc < library_csrc.size(); ++i_csrc) if( ok )
     {   //
-        // c_file_str
-        std::string c_file_str =
+        // c_file
+        std::string c_file =
             library_name + "_" + CppAD::to_string(i_csrc) +  ".c";
         //
-        // o_file_str
-        std::string o_file_str =
-            library_name + "_" + CppAD::to_string(i_csrc) +  OBJ_EXT;
-        //
-        // create c_file_str
+        // write c_file
         std::ofstream file;
-        file.open(c_file_str, std::ios::out);
+        file.open(c_file, std::ios::out);
         file << library_csrc[i_csrc];
         file.close();
         //
-        // ok
-        // create this object file
-        std::string command;
-# ifdef _MSC_VER
-        command = "cl /EHs /EHc /c /LD " + c_file_str + " 1> nul 2> nul";
-# else
-        command = "gcc -c -g -fPIC "  + c_file_str;
-# endif
-        // std::cout << "system( " << command << " )\n";
-        flag = std::system( command.c_str() );
-        ok  &= flag == 0;
-        //
-        // o_file_list_str
-        o_file_list_str += " " + o_file_str;
+        // csrc_files
+        csrc_files[i_csrc] = c_file;
     }
-    if( ok )
-    {   std::string command;
-# ifdef _MSC_VER
-        command  = "link /DLL " + o_file_list_str + " /OUT:" + dll_file_str;
-        command += " 1> nul 2> nul";
-# else
-        command =
-            "gcc -shared " + o_file_list_str + " -o " + dll_file_str;
-# endif
-        // std::cout << "system( " << command << " )\n";
-        flag = std::system( command.c_str() );
-        ok  &= flag == 0;
-        //
-        // dll_file
-        dll_file_str = tmp_dir_str + dll_file_str;
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    if( err_msg != "" )
+    {   std::cerr << err_msg << "\n";
+        return "";
     }
-    if( ! ok )
-        dll_file_str = "";
+    //
+    // dll_file
+    dll_file = tmp_dir + dll_file;
     //
     // change back to original directory
     std::filesystem::current_path( original_path );
     //
-    return dll_file_str;
+    return dll_file;
 }
 //
 // atomic_fun
