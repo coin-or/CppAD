@@ -92,71 +92,48 @@ const char* dlerror(void)
 }
 # endif
 //
-// create_dynamic_library
-std::string create_dynamic_library(
-    const std::string&            library_name,
-    CppAD::vector< std::string >& library_csrc
-)
-{   // path
-    using std::filesystem::path;
-    //
-    // ok
-    bool ok = true;
-    //
-    // check the the std::system function exists
-    int flag = std::system(nullptr);
-    if( flag == 0 )
-        return "";
-    //
-    // original_path
-    path original_path = std::filesystem::current_path();
-    //
-    // tmp_dir_path
-    path tmp_dir_path = std::filesystem::temp_directory_path();
-    //
+// dll_file_name
+std::string dll_file_name(void)
+{   //
     // tmp_dir
-    std::string tmp_dir = tmp_dir_path.string();
+    std::string  tmp_dir = std::filesystem::temp_directory_path().string();
     if( tmp_dir.back() != DIR_SEP )
         tmp_dir += DIR_SEP;
     //
-    // change into temporary directory
-    std::filesystem::current_path( tmp_dir_path );
+    // base_name
+# ifdef _WIN32
+    std::string base_name = "test_to_csrc.dll";
+# else
+    std::string base_name = "test_to_csrc.so";
+# endif
     //
-    // dll_file
-    std::string dll_file = library_name + DLL_EXT;
+    // file_name
+    std::string file_name = tmp_dir + base_name;
     //
-    // csrc_files
-    CppAD::vector< std::string > csrc_files( library_csrc.size() );
+    return file_name;
+}
+//
+// create_csrc_file
+std::string create_csrc_file(size_t index, const std::string& csrc)
+{   //
+    // tmp_dir
+    std::string  tmp_dir = std::filesystem::temp_directory_path().string();
+    if( tmp_dir.back() != DIR_SEP )
+        tmp_dir += DIR_SEP;
     //
-    // i_csrc
-    for(size_t i_csrc = 0; i_csrc < library_csrc.size(); ++i_csrc) if( ok )
-    {   //
-        // c_file
-        std::string c_file =
-            library_name + "_" + CppAD::to_string(i_csrc) +  ".c";
-        //
-        // write c_file
-        std::ofstream file;
-        file.open(c_file, std::ios::out);
-        file << library_csrc[i_csrc];
-        file.close();
-        //
-        // csrc_files
-        csrc_files[i_csrc] = c_file;
-    }
-    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
-    if( err_msg != "" )
-    {   std::cerr << err_msg << "\n";
-        return "";
-    }
+    // base_name
+    std::string base_name = "test_to_csrc_" + CppAD::to_string(index) + ".c";
     //
-    // dll_file
-    dll_file = tmp_dir + dll_file;
+    // file_name
+    std::string file_name = tmp_dir + base_name;
     //
-    // change back to original directory
-    std::filesystem::current_path( original_path );
+    // write file_name
+    std::ofstream os;
+    os.open(file_name, std::ios::out);
+    os << csrc;
+    os.close();
     //
-    return dll_file;
+    return file_name;
 }
 //
 // atomic_fun
@@ -297,25 +274,26 @@ bool simple_cases(void)
     CppAD::ADFun<double> f(ax, ay);
     f.function_name_set(function_name);
     //
-    // librar_csrc
-    CppAD::vector<std::string> library_csrc(1);
+    // dll_file
+    std::string dll_file = dll_file_name();
+    //
+    // csrc_files
+    CppAD::vector<std::string> csrc_files(1);
     std::map< std::string, std::string> options;
     std::stringstream ss;
     f.to_csrc(ss, options);
-    library_csrc[0] = ss.str();
+    csrc_files[0] = create_csrc_file(0, ss.str() );
     //
-    // os_file_name
-    std::string dll_file_str = create_dynamic_library(
-        library_name, library_csrc
-    );
-    if( dll_file_str == "" )
-    {   std::cout << "Failed to create " << library_name << "\n";
+    // create dll_lib
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    if( err_msg != "" )
+    {   std::cout << err_msg << "\n";
         ok = false;
         return ok;
     }
     //
     // handle
-    void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
+    void* handle = dlopen(dll_file.c_str(), RTLD_LAZY);
     if( handle == nullptr )
     {   const char *errstr = dlerror();
         if( errstr != nullptr )
@@ -407,25 +385,26 @@ bool compare_cases(void)
     CppAD::ADFun<double> f(ax, ay);
     f.function_name_set(function_name);
     //
-    // library_csrc
-    CppAD::vector<std::string> library_csrc(1);
+    // dll_file
+    std::string dll_file = dll_file_name();
+    //
+    // csrc_files
+    CppAD::vector<std::string> csrc_files(1);
     std::map< std::string, std::string> options;
     std::stringstream ss;
     f.to_csrc(ss, options);
-    library_csrc[0] = ss.str();
+    csrc_files[0] = create_csrc_file(0, ss.str());
     //
-    // dll_file_str
-    std::string dll_file_str = create_dynamic_library(
-        library_name, library_csrc
-    );
-    if( dll_file_str == "" )
-    {   std::cout << "Failed to create " << library_name << "\n";
+    // create_dll_lib
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    if( err_msg != "" )
+    {   std::cout << err_msg << "\n";
         ok = false;
         return ok;
     }
     //
     // handle
-    void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
+    void* handle = dlopen(dll_file.c_str(), RTLD_LAZY);
     if( handle == nullptr )
     {   const char *errstr = dlerror();
         if( errstr != nullptr )
@@ -512,27 +491,28 @@ bool atomic_case(void)
     // library_name
     std::string library_name = "test_to_csrc";
     //
-    // library_csrc
-    CppAD::vector<std::string> library_csrc(2);
+    // dll_file
+    std::string dll_file = dll_file_name();
+    //
+    // csrc_files
+    CppAD::vector<std::string> csrc_files(2);
+    csrc_files[0] = create_csrc_file(0, reciprocal.forward_zero() );
     std::map< std::string, std::string> options;
     options["type"] = "double";
-    library_csrc[0] = reciprocal.forward_zero();
     std::stringstream ss;
     f.to_csrc(ss, options);
-    library_csrc[1] = ss.str();
+    csrc_files[1] = create_csrc_file(1, ss.str() );
     //
-    // dll_file_str
-    std::string dll_file_str = create_dynamic_library(
-        library_name, library_csrc
-    );
-    if( dll_file_str == "" )
-    {   std::cout << "Failed to create " << library_name << "\n";
+    // create_dll_lib
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    if( err_msg != "" )
+    {   std::cout << err_msg << "\n";
         ok = false;
         return ok;
     }
     //
     // handle
-    void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
+    void* handle = dlopen(dll_file.c_str(), RTLD_LAZY);
     if( handle == nullptr )
     {   const char *errstr = dlerror();
         if( errstr != nullptr )
@@ -599,27 +579,28 @@ bool discrete_case(void)
     // library_name
     std::string library_name = "test_to_csrc";
     //
-    // library_csrc
-    CppAD::vector<std::string> library_csrc(2);
+    // dll_file
+    std::string dll_file = dll_file_name();
+    //
+    // csrc_files
+    CppAD::vector<std::string> csrc_files(2);
+    csrc_files[0] = create_csrc_file(0, discrete_integer() );
     std::map< std::string, std::string> options;
     options["type"] = "float";
-    library_csrc[0] = discrete_integer();
     std::stringstream ss;
     f.to_csrc(ss, options);
-    library_csrc[1] = ss.str();
+    csrc_files[1] = create_csrc_file(1, ss.str());
     //
     // dll_file_str
-    std::string dll_file_str = create_dynamic_library(
-        library_name, library_csrc
-    );
-    if( dll_file_str == "" )
-    {   std::cout << "Failed to create " << library_name << "\n";
+    std::string err_msg = create_dll_lib(dll_file, csrc_files);
+    if( err_msg != "" )
+    {   std::cout << err_msg << "\n";
         ok = false;
         return ok;
     }
     //
     // handle
-    void* handle = dlopen(dll_file_str.c_str(), RTLD_LAZY);
+    void* handle = dlopen(dll_file.c_str(), RTLD_LAZY);
     if( handle == nullptr )
     {   const char *errstr = dlerror();
         if( errstr != nullptr )
