@@ -10,8 +10,8 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <filesystem>
-# include <cppad/utility/link_dll_lib.hpp>
 # include <cppad/cppad.hpp>
+# include <cppad/utility/link_dll_lib.hpp>
 
 // CALL_CONVENTION, CALL_IMPORT
 # ifdef _MSC_VER

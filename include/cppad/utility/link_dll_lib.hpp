@@ -1,5 +1,5 @@
-# ifndef CPPAD_LINK_DLL_LIB_HPP
-# define CPPAD_LINK_DLL_LIB_HPP
+# ifndef CPPAD_UTILITY_LINK_DLL_LIB_HPP
+# define CPPAD_UTILITY_LINK_DLL_LIB_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
@@ -31,7 +31,8 @@ $end
 //  dlopen, dlsym, dlerror, dlclose, RTLD_LAZY
 # include <dlfcn.h>
 # else
-//  RTLD_LAZY
+//  LoadLibrary, GetProcAddress, FreeLibrary, GetLastError, RTLD_LAZY
+# include <windows.h>
 # define RTLD_LAZY 0
 # endif
 
@@ -42,8 +43,9 @@ private:
     // pointer to the dll object
     void* handle_;
     //
-    // error during constructor
+    // error message during constructor
     std::string ctor_err_msg_;
+    //
 # ifdef _WIN32
     //  dlopen
     static void* dlopen(const char *filename, int flag)

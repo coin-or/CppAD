@@ -1,5 +1,5 @@
-# ifndef CPPAD_CREATE_DLL_LIB_HPP
-# define CPPAD_CREATE_DLL_LIB_HPP
+# ifndef CPPAD_UTILITY_CREATE_DLL_LIB_HPP
+# define CPPAD_UTILITY_CREATE_DLL_LIB_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
