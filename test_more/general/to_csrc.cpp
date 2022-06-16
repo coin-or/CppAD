@@ -10,6 +10,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
 # include <filesystem>
+# include <cppad/utility/link_dll_lib.hpp>
 # include <cppad/cppad.hpp>
 
 // CALL_CONVENTION, CALL_IMPORT
@@ -59,38 +60,6 @@ extern "C" {
         size_t*      compare_change
     );
 }
-//
-// dlopen, dlsym, dlerror
-# ifdef _WIN32
-void* dlopen(const char *filename, int flag)
-{   HINSTANCE hinstance = LoadLibrary(filename);
-    return reinterpret_cast<void*>( hinstance );
-}
-void* dlsym(void* handle, const char* symbol)
-{   HINSTANCE hinstance = reinterpret_cast<HINSTANCE>( handle );
-    FARPROC   farproc   = GetProcAddress(hinstance, symbol);
-    return reinterpret_cast<void*>( farproc );
-}
-int dlclose(void* handle)
-{   HINSTANCE hinstance = reinterpret_cast<HINSTANCE>( handle );
-    int result          = FreeLibrary(hinstance);
-    return result;
-}
-const char* dlerror(void)
-{   // should have a different result for each thread
-    static char result[100];
-    //
-    DWORD dw        = GetLastError();
-    std::string str = CppAD::to_string(dw);
-    str             = "Microsoft GetLastError() = " + str;
-    size_t  i = 0;
-    while(i < 99 && i < str.size())
-        result[i] = str[i];
-    result[i] = '\0';
-    //
-    return result;
-}
-# endif
 //
 // dll_file_name
 std::string dll_file_name(void)
@@ -292,22 +261,28 @@ bool simple_cases(void)
         return ok;
     }
     //
-    // handle
-    void* handle = dlopen(dll_file.c_str(), RTLD_LAZY);
-    if( handle == nullptr )
-    {   const char *errstr = dlerror();
-        if( errstr != nullptr )
-            std::cout << "Dynamic linking error = " << errstr << "\n";
+    // dll_linker
+    CppAD::link_dll_lib dll_linker(dll_file, err_msg);
+    //
+    // forward_zero
+    cppad_forward_zero_double forward_zero = nullptr;
+    if( err_msg != "" )
+    {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
     {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        cppad_forward_zero_double forward_zero =
-            reinterpret_cast<cppad_forward_zero_double>(
-                dlsym(handle, complete_name.c_str() )
+        forward_zero = reinterpret_cast<cppad_forward_zero_double>(
+                dll_linker(complete_name, err_msg)
         );
-        //
+        if( err_msg != "" )
+        {   std::cout << "dll_linker fun_ptr error: " << err_msg << "\n";
+            ok = false;
+        }
+    }
+    if( ok )
+    {   //
         // ok
         // no change
         size_t call_id = 0;
@@ -329,7 +304,6 @@ bool simple_cases(void)
             ok &= CppAD::NearEqual( y[i], Value(ay[i]), eps99, eps99);
         }
     }
-    dlclose(handle);
     return ok;
 }
 // --------------------------------------------------------------------------
@@ -403,22 +377,28 @@ bool compare_cases(void)
         return ok;
     }
     //
-    // handle
-    void* handle = dlopen(dll_file.c_str(), RTLD_LAZY);
-    if( handle == nullptr )
-    {   const char *errstr = dlerror();
-        if( errstr != nullptr )
-            std::cout << "Dynamic linking error = " << errstr << "\n";
+    // dll_linker
+    CppAD::link_dll_lib dll_linker(dll_file, err_msg);
+    //
+    // forward_zero
+    cppad_forward_zero_double forward_zero = nullptr;
+    if( err_msg != "" )
+    {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
     {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        cppad_forward_zero_double forward_zero =
-            reinterpret_cast<cppad_forward_zero_double>(
-                dlsym( handle, complete_name.c_str() )
+        forward_zero = reinterpret_cast<cppad_forward_zero_double>(
+                dll_linker(complete_name, err_msg)
         );
-        //
+        if( err_msg != "" )
+        {   std::cout << "dll_linker fun_ptr error: " << err_msg << "\n";
+            ok = false;
+        }
+    }
+    if( ok )
+    {   //
         // ok
         // no change
         size_t call_id = 0;
@@ -446,7 +426,6 @@ bool compare_cases(void)
         for(size_t i = 0; i < ny; ++i)
             ok &= y[i] == Value( ay[i] );
     }
-    dlclose(handle);
     return ok;
 }
 // ---------------------------------------------------------------------------
@@ -511,22 +490,28 @@ bool atomic_case(void)
         return ok;
     }
     //
-    // handle
-    void* handle = dlopen(dll_file.c_str(), RTLD_LAZY);
-    if( handle == nullptr )
-    {   const char *errstr = dlerror();
-        if( errstr != nullptr )
-            std::cout << "Dynamic linking error = " << errstr << "\n";
+    // dll_linker
+    CppAD::link_dll_lib dll_linker(dll_file, err_msg);
+    //
+    // forward_zero
+    cppad_forward_zero_double forward_zero = nullptr;
+    if( err_msg != "" )
+    {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
     {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        cppad_forward_zero_double forward_zero =
-            reinterpret_cast<cppad_forward_zero_double>(
-                dlsym( handle, complete_name.c_str() )
+        forward_zero = reinterpret_cast<cppad_forward_zero_double>(
+                dll_linker(complete_name, err_msg)
         );
-        //
+        if( err_msg != "" )
+        {   std::cout << "dll_linker fun_ptr error: " << err_msg << "\n";
+            ok = false;
+        }
+    }
+    if( ok )
+    {   //
         // ok
         // no change
         CppAD::vector<double> x(nx), y(ny);
@@ -544,7 +529,6 @@ bool atomic_case(void)
         for(size_t i = 0; i < ny; ++i)
             ok &= y[i] == Value( ay[i] );
     }
-    dlclose(handle);
     return ok;
 }
 // ---------------------------------------------------------------------------
@@ -599,22 +583,28 @@ bool discrete_case(void)
         return ok;
     }
     //
-    // handle
-    void* handle = dlopen(dll_file.c_str(), RTLD_LAZY);
-    if( handle == nullptr )
-    {   const char *errstr = dlerror();
-        if( errstr != nullptr )
-            std::cout << "Dynamic linking error = " << errstr << "\n";
+    // dll_linker
+    CppAD::link_dll_lib dll_linker(dll_file, err_msg);
+    //
+    // forward_zero
+    cppad_forward_zero_float forward_zero = nullptr;
+    if( err_msg != "" )
+    {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
     {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        cppad_forward_zero_float forward_zero =
-            reinterpret_cast<cppad_forward_zero_float>(
-                dlsym( handle, complete_name.c_str() )
+        forward_zero = reinterpret_cast<cppad_forward_zero_float>(
+                dll_linker(complete_name, err_msg)
         );
-        //
+        if( err_msg != "" )
+        {   std::cout << "dll_linker fun_ptr error: " << err_msg << "\n";
+            ok = false;
+        }
+    }
+    if( ok )
+    {   //
         // ok
         // no change
         CppAD::vector<float> x(nx), y(ny);
@@ -632,7 +622,6 @@ bool discrete_case(void)
         for(size_t i = 0; i < ny; ++i)
             ok &= y[i] == Value( ay[i] );
     }
-    dlclose(handle);
     return ok;
 }
 // ---------------------------------------------------------------------------
