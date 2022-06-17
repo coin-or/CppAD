@@ -13,27 +13,56 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 /*
 $begin link_dll_lib$$
+$spell
+    dll
+    cppad
+    hpp
+    ptr
+$$
 
 $section Link a Dynamic Link Library$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/link_dll_lib.hpp>
 %$$
-$icode%link_dll_lib %dll_linker%(%dll_file%, %err_msg%)
+$codei%link_dll_lib %dll_linker%(%dll_file%, %err_msg%)
 %$$
 $icode%fun_ptr% = %dll_linker%(%function_name%, %err_msg%)
 %$$
 
+$head Prototype$$
+$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+
+$head dll_linker$$
+Is the dynamic link object that holds an in memory version of the library,
+It must not be deleted for as long as any $icode fun_ptr$$ return
+values is used.
+
+$head err_msg$$
+If $icode err_msg$$ is non-empty, it contains an error message
+for the corresponding operation.
+
+$head dll_file$$
+Is the file containing the dynamic link library.
+
+$head function_name$$
+Is the name of an external entry point in the dll.
+
+$head fun_ptr$$
+Is a $code void*$$ version of a pointer the function corresponding to
+$icode function_name$$.
+
+$children%
+    example/utility/dll_lib.cpp
+%$$
+$head Example$$
+The file $cref dll_lib.cpp$$ contains an example and test of
+$code link_dll_lib$$.
+
 $end
 */
 
-# ifndef _WIN32
-//  dlopen, dlsym, dlerror, dlclose, RTLD_LAZY
-# include <dlfcn.h>
-# else
-//  LoadLibrary, GetProcAddress, FreeLibrary, GetLastError, RTLD_LAZY
-# include <windows.h>
-# endif
+# include <string>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -46,80 +75,19 @@ private:
     std::string ctor_err_msg_;
     //
 # ifdef _WIN32
-    //  dlopen
-    static void* dlopen(const char *filename, int flag)
-    {   HINSTANCE hinstance = LoadLibrary(filename);
-        return reinterpret_cast<void*>( hinstance );
-    }
-    // dlsym
-    static void* dlsym(void* handle, const char* symbol)
-    {   HINSTANCE hinstance = reinterpret_cast<HINSTANCE>( handle );
-        FARPROC   farproc   = GetProcAddress(hinstance, symbol);
-        return reinterpret_cast<void*>( farproc );
-    }
-    // dlclose
-    static int dlclose(void* handle)
-    {   HINSTANCE hinstance = reinterpret_cast<HINSTANCE>( handle );
-        int result          = FreeLibrary(hinstance);
-        return result;
-    }
-    // dlerror
-    static const char* dlerror(void)
-    {   // should have a different result for each thread
-        static char result[100];
-        //
-        DWORD dw        = GetLastError();
-        std::string str = CppAD::to_string(dw);
-        str             = "Microsoft GetLastError() = " + str;
-        size_t  i = 0;
-        while(i < 99 && i < str.size())
-            result[i] = str[i];
-        result[i] = '\0';
-        //
-        return result;
-    }
+    static void*       dlopen(const char *filename, int flag);
+    static void*       dlsym(void* handle, const char* symbol);
+    static int         dlclose(void* handle);
+    static const char* dlerror(void);
 # endif
     //
 public:
-    // ctor
-    link_dll_lib(const std::string& dll_file, std::string& err_msg)
-    {
-# ifdef _WIN32
-        handle_ = dlopen(dll_file.c_str(), 0);
-# else
-        handle_ = dlopen(dll_file.c_str(), RTLD_LAZY);
-# endif
-        if( handle_ != nullptr )
-            err_msg = "";
-        else
-        {   const char *err_str = dlerror();
-            err_msg = "Error opening dll_file =" + dll_file;
-            if( err_str != nullptr )
-            {   err_msg += "\n";
-                err_msg += err_str;
-            }
-        }
-        ctor_err_msg_ = err_msg;
-    }
-    // destructor
-    ~link_dll_lib(void)
-    {   if( handle_ != nullptr )
-            dlclose(handle_);
-    }
-    // operator()
+    // BEGIN_PROTOTYPE
+    link_dll_lib(const std::string& dll_file, std::string& err_msg);
+    ~link_dll_lib(void);
     void* operator()
-    (const std::string& function_name, std::string& err_msg) const
-    {   if( handle_ == nullptr )
-        {   err_msg = ctor_err_msg_;
-            return nullptr;
-        }
-        void* fun_ptr = dlsym(handle_, function_name.c_str());
-        if( fun_ptr == nullptr )
-            err_msg = "Error finding function_name = " + function_name;
-        else
-            err_msg = "";
-        return fun_ptr;
-    }
+    (const std::string& function_name, std::string& err_msg) const;
+    // END_PROTOTYPE
 };
 
 } // END_CPPAD_NAMESPACE

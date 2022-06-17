@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -38,6 +38,7 @@ extern bool OdeGearControl(void);
 extern bool RombergMul(void);
 extern bool RombergOne(void);
 extern bool SimpleVector(void);
+extern bool dll_lib(void);
 extern bool index_sort(void);
 extern bool nan(void);
 extern bool poly(void);
@@ -91,6 +92,10 @@ int main(void)
     Run( to_string,              "to_string" );
     Run( vectorBool,             "vectorBool" );
 // END_SORT_THIS_LINE_MINUS_1
+//
+# if CPPAD_USE_CPLUSPLUS_2017
+    Run( dll_lib,                "dll_lib" );
+# endif
     //
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();

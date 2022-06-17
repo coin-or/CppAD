@@ -10,8 +10,15 @@
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
 #
-# BEGIN_SORT_THIS_LINE_PLUS_2
+IF( use_cplusplus_2017_ok )
+    SET(dll_lib "dll_lib.cpp")
+ELSE( use_cplusplus_2017_ok )
+    SET(dll_lib "")
+ENDIF( use_cplusplus_2017_ok )
+#
+# BEGIN_SORT_THIS_LINE_PLUS_3
 SET(source_list
+    ${dll_lib}
     check_numeric_type.cpp
     check_simple_vector.cpp
     cppad_vector.cpp

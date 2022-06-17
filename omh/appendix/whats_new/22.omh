@@ -46,6 +46,13 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head to_c Branch$$
+$table
+$rref to_csrc$$
+$rref create_dll_lib$$
+$rref link_dll_lib$$
+$tend
+
 $head 05-27$$
 Add the theory, but not implementation, for the atomic linear ODE
 second order reverse mode; see

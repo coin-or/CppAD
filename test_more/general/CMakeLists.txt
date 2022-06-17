@@ -32,19 +32,11 @@ ELSE( cppad_has_ipopt )
     SET(ipopt_sources "")
 ENDIF( cppad_has_ipopt )
 #
-# to_csrc_sources
-IF( use_cplusplus_2017_ok )
-    SET(to_csrc_sources to_csrc.cpp )
-ELSE( use_cplusplus_2017_ok )
-    SET(to_csrc_sources "" )
-ENDIF( use_cplusplus_2017_ok )
-#
-# BEGIN_SORT_THIS_LINE_PLUS_6
+# BEGIN_SORT_THIS_LINE_PLUS_5
 SET(source_list
     ${adolc_sources}
     ${eigen_sources}
     ${ipopt_sources}
-    ${to_csrc_sources}
     abs_normal.cpp
     acos.cpp
     acosh.cpp
@@ -149,6 +141,7 @@ SET(source_list
     subgraph_hes2jac.cpp
     tan.cpp
     test_vector.cpp
+    to_csrc.cpp
     to_string.cpp
     value.cpp
     vec_ad.cpp

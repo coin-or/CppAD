@@ -99,17 +99,16 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_utility_OBJECTS = check_numeric_type.$(OBJEXT) \
 	check_simple_vector.$(OBJEXT) cppad_vector.$(OBJEXT) \
-	error_handler.$(OBJEXT) index_sort.$(OBJEXT) \
+	dll_lib.$(OBJEXT) error_handler.$(OBJEXT) index_sort.$(OBJEXT) \
 	lu_factor.$(OBJEXT) lu_invert.$(OBJEXT) lu_solve.$(OBJEXT) \
 	nan.$(OBJEXT) near_equal.$(OBJEXT) ode_err_control.$(OBJEXT) \
-	ode_err_maxabs.$(OBJEXT) ode_gear_control.$(OBJEXT) \
-	ode_gear.$(OBJEXT) poly.$(OBJEXT) pow_int.$(OBJEXT) \
-	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
-	runge45_1.$(OBJEXT) runge_45.$(OBJEXT) rosen_34.$(OBJEXT) \
-	set_union.$(OBJEXT) simple_vector.$(OBJEXT) \
-	sparse_rc.$(OBJEXT) sparse_rcv.$(OBJEXT) \
-	thread_alloc.$(OBJEXT) to_string.$(OBJEXT) utility.$(OBJEXT) \
-	vector_bool.$(OBJEXT)
+	ode_err_maxabs.$(OBJEXT) ode_gear.$(OBJEXT) \
+	ode_gear_control.$(OBJEXT) poly.$(OBJEXT) pow_int.$(OBJEXT) \
+	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
+	runge45_1.$(OBJEXT) runge_45.$(OBJEXT) set_union.$(OBJEXT) \
+	simple_vector.$(OBJEXT) sparse_rc.$(OBJEXT) \
+	sparse_rcv.$(OBJEXT) thread_alloc.$(OBJEXT) \
+	to_string.$(OBJEXT) utility.$(OBJEXT) vector_bool.$(OBJEXT)
 utility_OBJECTS = $(am_utility_OBJECTS)
 utility_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -129,19 +128,20 @@ depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/check_numeric_type.Po \
 	./$(DEPDIR)/check_simple_vector.Po ./$(DEPDIR)/cppad_vector.Po \
-	./$(DEPDIR)/error_handler.Po ./$(DEPDIR)/index_sort.Po \
-	./$(DEPDIR)/lu_factor.Po ./$(DEPDIR)/lu_invert.Po \
-	./$(DEPDIR)/lu_solve.Po ./$(DEPDIR)/nan.Po \
-	./$(DEPDIR)/near_equal.Po ./$(DEPDIR)/ode_err_control.Po \
-	./$(DEPDIR)/ode_err_maxabs.Po ./$(DEPDIR)/ode_gear.Po \
-	./$(DEPDIR)/ode_gear_control.Po ./$(DEPDIR)/poly.Po \
-	./$(DEPDIR)/pow_int.Po ./$(DEPDIR)/romberg_mul.Po \
-	./$(DEPDIR)/romberg_one.Po ./$(DEPDIR)/rosen_34.Po \
-	./$(DEPDIR)/runge45_1.Po ./$(DEPDIR)/runge_45.Po \
-	./$(DEPDIR)/set_union.Po ./$(DEPDIR)/simple_vector.Po \
-	./$(DEPDIR)/sparse_rc.Po ./$(DEPDIR)/sparse_rcv.Po \
-	./$(DEPDIR)/thread_alloc.Po ./$(DEPDIR)/to_string.Po \
-	./$(DEPDIR)/utility.Po ./$(DEPDIR)/vector_bool.Po
+	./$(DEPDIR)/dll_lib.Po ./$(DEPDIR)/error_handler.Po \
+	./$(DEPDIR)/index_sort.Po ./$(DEPDIR)/lu_factor.Po \
+	./$(DEPDIR)/lu_invert.Po ./$(DEPDIR)/lu_solve.Po \
+	./$(DEPDIR)/nan.Po ./$(DEPDIR)/near_equal.Po \
+	./$(DEPDIR)/ode_err_control.Po ./$(DEPDIR)/ode_err_maxabs.Po \
+	./$(DEPDIR)/ode_gear.Po ./$(DEPDIR)/ode_gear_control.Po \
+	./$(DEPDIR)/poly.Po ./$(DEPDIR)/pow_int.Po \
+	./$(DEPDIR)/romberg_mul.Po ./$(DEPDIR)/romberg_one.Po \
+	./$(DEPDIR)/rosen_34.Po ./$(DEPDIR)/runge45_1.Po \
+	./$(DEPDIR)/runge_45.Po ./$(DEPDIR)/set_union.Po \
+	./$(DEPDIR)/simple_vector.Po ./$(DEPDIR)/sparse_rc.Po \
+	./$(DEPDIR)/sparse_rcv.Po ./$(DEPDIR)/thread_alloc.Po \
+	./$(DEPDIR)/to_string.Po ./$(DEPDIR)/utility.Po \
+	./$(DEPDIR)/vector_bool.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -366,11 +366,12 @@ AM_CXXFLAGS = \
 	$(EIGEN_INCLUDE)
 
 #
-#
+# BEGIN_SORT_THIS_LINE_PLUS_2
 utility_SOURCES = \
 	check_numeric_type.cpp \
 	check_simple_vector.cpp \
 	cppad_vector.cpp \
+	dll_lib.cpp \
 	error_handler.cpp \
 	index_sort.cpp \
 	lu_factor.cpp \
@@ -380,15 +381,15 @@ utility_SOURCES = \
 	near_equal.cpp \
 	ode_err_control.cpp \
 	ode_err_maxabs.cpp \
-	ode_gear_control.cpp \
 	ode_gear.cpp \
+	ode_gear_control.cpp \
 	poly.cpp \
 	pow_int.cpp \
 	romberg_mul.cpp \
 	romberg_one.cpp \
+	rosen_34.cpp \
 	runge45_1.cpp \
 	runge_45.cpp \
-	rosen_34.cpp \
 	set_union.cpp \
 	simple_vector.cpp \
 	sparse_rc.cpp \
@@ -448,6 +449,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_numeric_type.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_vector.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dll_lib.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error_handler.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index_sort.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_factor.Po@am__quote@ # am--include-marker
@@ -625,6 +627,7 @@ distclean: distclean-am
 		-rm -f ./$(DEPDIR)/check_numeric_type.Po
 	-rm -f ./$(DEPDIR)/check_simple_vector.Po
 	-rm -f ./$(DEPDIR)/cppad_vector.Po
+	-rm -f ./$(DEPDIR)/dll_lib.Po
 	-rm -f ./$(DEPDIR)/error_handler.Po
 	-rm -f ./$(DEPDIR)/index_sort.Po
 	-rm -f ./$(DEPDIR)/lu_factor.Po
@@ -699,6 +702,7 @@ maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/check_numeric_type.Po
 	-rm -f ./$(DEPDIR)/check_simple_vector.Po
 	-rm -f ./$(DEPDIR)/cppad_vector.Po
+	-rm -f ./$(DEPDIR)/dll_lib.Po
 	-rm -f ./$(DEPDIR)/error_handler.Po
 	-rm -f ./$(DEPDIR)/index_sort.Po
 	-rm -f ./$(DEPDIR)/lu_factor.Po
@@ -759,6 +763,7 @@ uninstall-am:
 
 .PRECIOUS: makefile
 
+# END_SORT_THIS_LINE_MINUS_1
 #
 test: check
 	./utility

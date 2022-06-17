@@ -9,22 +9,23 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
-# include <filesystem>
 # include <cppad/cppad.hpp>
 # include <cppad/utility/link_dll_lib.hpp>
+
+# if CPPAD_USE_CPLUSPLUS_2017
+# include <filesystem>
+# endif
 
 // CALL_CONVENTION, CALL_IMPORT
 # ifdef _MSC_VER
 # define CALL_CONVENTION __cdecl
 # define CALL_IMPORT     __declspec(dllimport)
-# define OBJ_EXT         ".obj"
 # else
 # define CALL_CONVENTION
 # define CALL_IMPORT
-# define OBJ_EXT         ".o"
 # endif
 
-//  RTD_LAZY, DIR_SEP, DLL_EXT, OBJ_EXT
+//  DIR_SEP, DLL_EXT
 # ifndef _WIN32
 // dlopen, dlsym, dlerror, RTD_LAZY
 # include <dlfcn.h>
@@ -32,7 +33,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # define DLL_EXT         ".so"
 # else
 # include <windows.h>
-# define RTLD_LAZY       0
 # define DIR_SEP         '\\'
 # define DLL_EXT         ".dll"
 # endif
@@ -64,10 +64,14 @@ extern "C" {
 // dll_file_name
 std::string dll_file_name(void)
 {   //
+# if ! CPPAD_USE_CPLUSPLUS_2017
+    std::string tmp_dir = "./";
+# else
     // tmp_dir
     std::string  tmp_dir = std::filesystem::temp_directory_path().string();
     if( tmp_dir.back() != DIR_SEP )
         tmp_dir += DIR_SEP;
+# endif
     //
     // base_name
 # ifdef _WIN32
@@ -85,10 +89,14 @@ std::string dll_file_name(void)
 // create_csrc_file
 std::string create_csrc_file(size_t index, const std::string& csrc)
 {   //
+# if ! CPPAD_USE_CPLUSPLUS_2017
+    std::string tmp_dir = "./";
+# else
     // tmp_dir
     std::string  tmp_dir = std::filesystem::temp_directory_path().string();
     if( tmp_dir.back() != DIR_SEP )
         tmp_dir += DIR_SEP;
+# endif
     //
     // base_name
     std::string base_name = "test_to_csrc_" + CppAD::to_string(index) + ".c";

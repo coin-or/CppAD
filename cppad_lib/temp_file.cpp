@@ -39,16 +39,16 @@ $end
 # include <cppad/configure.hpp>
 # include <cppad/local/temp_file.hpp>
 
-# if _MSC_VER
-# include <io.h>
-# else
-# include <unistd.h>
-# endif
-
 # if CPPAD_HAS_MKSTEMP && CPPAD_USE_CPLUSPLUS_2017
 # include <filesystem>
 # else
 # include <stdio.h>
+# endif
+
+# if _MSC_VER
+# include <io.h>
+# else
+# include <unistd.h>
 # endif
 
 # ifdef _WIN32

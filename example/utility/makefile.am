@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -22,11 +22,12 @@ AM_CXXFLAGS =  \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 #
-#
+# BEGIN_SORT_THIS_LINE_PLUS_2
 utility_SOURCES   = \
 	check_numeric_type.cpp \
 	check_simple_vector.cpp \
 	cppad_vector.cpp \
+	dll_lib.cpp \
 	error_handler.cpp \
 	index_sort.cpp \
 	lu_factor.cpp \
@@ -36,15 +37,15 @@ utility_SOURCES   = \
 	near_equal.cpp \
 	ode_err_control.cpp \
 	ode_err_maxabs.cpp \
-	ode_gear_control.cpp \
 	ode_gear.cpp \
+	ode_gear_control.cpp \
 	poly.cpp \
 	pow_int.cpp \
 	romberg_mul.cpp \
 	romberg_one.cpp \
+	rosen_34.cpp \
 	runge45_1.cpp \
 	runge_45.cpp \
-	rosen_34.cpp \
 	set_union.cpp \
 	simple_vector.cpp \
 	sparse_rc.cpp \
@@ -53,6 +54,7 @@ utility_SOURCES   = \
 	to_string.cpp \
 	utility.cpp \
 	vector_bool.cpp
+# END_SORT_THIS_LINE_MINUS_1
 #
 test: check
 	./utility

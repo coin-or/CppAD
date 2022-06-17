@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -20,7 +20,7 @@ $$
 
 
 $section Some General Purpose Utilities$$
-These routines can be include individually; for example,
+These routines can be included individually; for example,
 $codep
     # include <cppad/utility/vector.hpp>
 $$
@@ -34,40 +34,40 @@ $codep
     # include <cppad/cppad.hpp>
 $$
 
+$comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $children%
-    include/cppad/utility/error_handler.hpp%
-
-    include/cppad/utility/near_equal.hpp%
-    include/cppad/utility/speed_test.hpp%
-    include/cppad/utility/time_test.hpp%
-    include/cppad/utility/test_boolofvoid.hpp%
-
-    omh/numeric_type.omh%
     include/cppad/utility/check_numeric_type.hpp%
-    omh/simple_vector.omh%
     include/cppad/utility/check_simple_vector.hpp%
-
+    include/cppad/utility/create_dll_lib.hpp%
+    include/cppad/utility/error_handler.hpp%
+    include/cppad/utility/index_sort.hpp%
+    include/cppad/utility/link_dll_lib.hpp%
     include/cppad/utility/nan.hpp%
-    include/cppad/utility/pow_int.hpp%
-    include/cppad/utility/poly.hpp%
-    omh/lu_det_and_solve.omh%
-    include/cppad/utility/romberg_one.hpp%
-    include/cppad/utility/romberg_mul.hpp%
-    include/cppad/utility/runge_45.hpp%
-    include/cppad/utility/rosen_34.hpp%
+    include/cppad/utility/near_equal.hpp%
     include/cppad/utility/ode_err_control.hpp%
     include/cppad/utility/ode_gear.hpp%
     include/cppad/utility/ode_gear_control.hpp%
-
     include/cppad/utility/omh/cppad_vector.omh%
-    omh/thread_alloc.omh%
-    include/cppad/utility/index_sort.hpp%
-    include/cppad/utility/to_string.hpp%
+    include/cppad/utility/poly.hpp%
+    include/cppad/utility/pow_int.hpp%
+    include/cppad/utility/romberg_mul.hpp%
+    include/cppad/utility/romberg_one.hpp%
+    include/cppad/utility/rosen_34.hpp%
+    include/cppad/utility/runge_45.hpp%
     include/cppad/utility/set_union.hpp%
+    include/cppad/utility/sparse2eigen.hpp%
     include/cppad/utility/sparse_rc.hpp%
     include/cppad/utility/sparse_rcv.hpp%
-    include/cppad/utility/sparse2eigen.hpp
+    include/cppad/utility/speed_test.hpp%
+    include/cppad/utility/test_boolofvoid.hpp%
+    include/cppad/utility/time_test.hpp%
+    include/cppad/utility/to_string.hpp%
+    omh/lu_det_and_solve.omh%
+    omh/numeric_type.omh%
+    omh/simple_vector.omh%
+    omh/thread_alloc.omh
 %$$
+$comment END_SORT_THIS_LINE_MINUS_2$$
 
 $head Testing$$
 The routines listed below support numerical correctness and speed testing:
@@ -151,6 +151,12 @@ $table
 $rref sparse_rc$$
 $rref sparse_rcv$$
 $rref sparse2eigen$$
+$tend
+
+$subhead Dynamic Libraries$$
+$table
+$rref create_dll_lib$$
+$rref link_dll_lib$$
 $tend
 
 $end

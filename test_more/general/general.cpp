@@ -248,11 +248,9 @@ int main(void)
     Run( subgraph_2,      "subgraph_2"     );
     Run( subgraph_hes2jac, "subgraph_hes2jac" );
     Run( tan,             "tan"            );
+    Run( to_csrc,         "to_csrc"        );
     Run( to_string,       "to_string"      );
     // END_SORT_THIS_LINE_MINUS_1
-# if CPPAD_USE_CPLUSPLUS_2017
-    Run( to_csrc,         "to_csrc"        );
-# endif
 #if CPPAD_HAS_ADOLC
     Run( base_adolc,      "base_adolc"     );
 # endif

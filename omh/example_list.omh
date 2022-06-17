@@ -146,6 +146,7 @@ $rref det_by_minor.cpp$$
 $rref det_of_minor.cpp$$
 $rref div.cpp$$
 $rref div_eq.cpp$$
+$rref dll_lib.cpp$$
 $rref eigen_array.cpp$$
 $rref eigen_det.cpp$$
 $rref elapsed_seconds.cpp$$

@@ -15,9 +15,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <cppad/utility/check_numeric_type.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/create_dll_lib.hpp>
+# include <cppad/utility/create_dll_lib.hpp>
 # include <cppad/utility/elapsed_seconds.hpp>
 # include <cppad/utility/error_handler.hpp>
 # include <cppad/utility/index_sort.hpp>
+# include <cppad/utility/link_dll_lib.hpp>
 # include <cppad/utility/lu_factor.hpp>
 # include <cppad/utility/lu_invert.hpp>
 # include <cppad/utility/lu_solve.hpp>

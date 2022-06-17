@@ -13,17 +13,25 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 /*
 $begin create_dll_lib$$
+$spell
+    CppAD
+    std
+    cppad
+    dll
+    hpp
+    csrc
+$$
 
 $section Create a Dynamic Link Library$$
 
 $head Syntax$$
 $codei%# include <cppad/utility/create_dll_lib.hpp>
 %$$
-$icode%err_msg% = create_dyn_lib(%dll_file%, %csrc_files%)
+$icode%err_msg% = create_dll_lib(%dll_file%, %csrc_files%)
 %$$
 
 $head Prototype$$
-$srcthisfile%0// BEGIN_CREATE_DLL_LIB%//END_CREATE_DLL_LIB%1%$$
+$srcthisfile%0%// BEGIN_CREATE_DLL_LIB%// END_CREATE_DLL_LIB%1%$$
 
 $head include$$
 As with all the CppAD utilities, $code create_dll_lib.hpp$$ is included
@@ -39,14 +47,18 @@ The type $icode StringVector$$ is a simple vector with elements
 of type $code std::string$$.
 
 $head csrc_files$$
-The vector $icode csrc_files$$ contians the names of the C soruce
+The vector $icode csrc_files$$ contains the names of the C source
 files that are compiled and linked to the library.
 These files do not have to have a specific extension.
 
 $head err_msg$$
 If this string is empty, no error occurred.
-Otherwise the processing aboted and $icode err_msg$$ is the corresponding
+Otherwise the processing aborted and $icode err_msg$$ is the corresponding
 error message.
+
+$head Example$$
+The file $cref dll_lib.cpp$$ contains an example and test of
+$code create_dll_lib$$.
 
 $end
 */
