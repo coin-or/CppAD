@@ -26,7 +26,8 @@ libcppad_lib_a_SOURCES = \
 	csrc_writer.cpp \
 	json_lexer.cpp \
 	json_parser.cpp \
-	json_writer.cpp
+	json_writer.cpp \
+	temp_file.cpp
 # END_SORT_THIS_LINE_MINUS_1
 
 # autotools version of install does not support CppADCodeGen but need source

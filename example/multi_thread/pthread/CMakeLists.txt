@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -39,7 +39,11 @@ ADD_EXECUTABLE( example_multi_thread_pthread EXCLUDE_FROM_ALL ${source_list} )
 LINK_DIRECTORIES( ${pthread_lib_path} )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(example_multi_thread_pthread ${pthread_lib})
+TARGET_LINK_LIBRARIES(example_multi_thread_pthread
+    ${cppad_lib}
+    ${colpack_libs}
+    ${pthread_lib}
+)
 
 # Add the check_example_multi_thread_pthread target
 ADD_CUSTOM_TARGET(check_example_multi_thread_pthread

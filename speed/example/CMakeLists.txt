@@ -30,7 +30,12 @@ SET(source_list example.cpp
 set_compile_flags( speed_example "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( speed_example EXCLUDE_FROM_ALL ${source_list} )
-
+#
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(speed_example
+    ${cppad_lib}
+    ${colpack_libs}
+)
 # Add the check_speed_example target
 ADD_CUSTOM_TARGET(check_speed_example
     speed_example
@@ -40,7 +45,12 @@ MESSAGE(STATUS "make check_speed_example: available")
 #
 #
 ADD_EXECUTABLE( speed_program EXCLUDE_FROM_ALL speed_program.cpp )
-
+#
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(speed_program
+    ${cppad_lib}
+    ${colpack_libs}
+)
 # Add the check_speed_program target
 ADD_CUSTOM_TARGET(check_speed_program speed_program DEPENDS speed_program )
 MESSAGE(STATUS "make check_speed_program: available")

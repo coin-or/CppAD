@@ -147,6 +147,7 @@ ADD_EXECUTABLE(example_general EXCLUDE_FROM_ALL ${source_list})
 TARGET_LINK_LIBRARIES(example_general
     ${adolc_LIBRARIES}
     ${cppad_lib}
+    ${colpack_libs}
 )
 #
 # Add the check_example_general target

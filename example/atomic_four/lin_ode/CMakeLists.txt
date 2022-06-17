@@ -26,6 +26,12 @@ set_compile_flags(example_atomic_four_lin_ode
 #
 ADD_EXECUTABLE(example_atomic_four_lin_ode EXCLUDE_FROM_ALL ${source_list})
 #
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(example_atomic_four_lin_ode
+    ${cppad_lib}
+    ${colpack_libs}
+)
+#
 # Add the check_example_atomic_four_lin_ode target
 ADD_CUSTOM_TARGET(check_example_atomic_four_lin_ode
     example_atomic_four_lin_ode

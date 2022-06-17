@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -21,6 +21,12 @@ ADD_EXECUTABLE(example_get_started EXCLUDE_FROM_ALL ${source_list})
 ADD_CUSTOM_TARGET(check_example_get_started
     example_get_started
     DEPENDS example_get_started
+)
+#
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(example_get_started
+    ${cppad_lib}
+    ${colpack_libs}
 )
 MESSAGE(STATUS "make check_example_get_started: available")
 #

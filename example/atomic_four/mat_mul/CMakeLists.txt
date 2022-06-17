@@ -27,6 +27,12 @@ set_compile_flags(example_atomic_four_mat_mul
 #
 ADD_EXECUTABLE(example_atomic_four_mat_mul EXCLUDE_FROM_ALL ${source_list})
 #
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(example_atomic_four_mat_mul
+    ${cppad_lib}
+    ${colpack_libs}
+)
+#
 # Add the check_example_atomic_four_mat_mul target
 ADD_CUSTOM_TARGET(check_example_atomic_four_mat_mul
     example_atomic_four_mat_mul

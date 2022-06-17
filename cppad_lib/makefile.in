@@ -136,7 +136,7 @@ libcppad_lib_a_LIBADD =
 am_libcppad_lib_a_OBJECTS = cpp_graph_op.$(OBJEXT) \
 	cppad_colpack.$(OBJEXT) csrc_writer.$(OBJEXT) \
 	json_lexer.$(OBJEXT) json_parser.$(OBJEXT) \
-	json_writer.$(OBJEXT)
+	json_writer.$(OBJEXT) temp_file.$(OBJEXT)
 libcppad_lib_a_OBJECTS = $(am_libcppad_lib_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -156,7 +156,7 @@ am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/cpp_graph_op.Po \
 	./$(DEPDIR)/cppad_colpack.Po ./$(DEPDIR)/csrc_writer.Po \
 	./$(DEPDIR)/json_lexer.Po ./$(DEPDIR)/json_parser.Po \
-	./$(DEPDIR)/json_writer.Po
+	./$(DEPDIR)/json_writer.Po ./$(DEPDIR)/temp_file.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -387,7 +387,8 @@ libcppad_lib_a_SOURCES = \
 	csrc_writer.cpp \
 	json_lexer.cpp \
 	json_parser.cpp \
-	json_writer.cpp
+	json_writer.cpp \
+	temp_file.cpp 
 
 all: all-am
 
@@ -471,6 +472,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_lexer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_parser.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/json_writer.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/temp_file.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -627,6 +629,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f ./$(DEPDIR)/json_writer.Po
+	-rm -f ./$(DEPDIR)/temp_file.Po
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -678,6 +681,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/json_lexer.Po
 	-rm -f ./$(DEPDIR)/json_parser.Po
 	-rm -f ./$(DEPDIR)/json_writer.Po
+	-rm -f ./$(DEPDIR)/temp_file.Po
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

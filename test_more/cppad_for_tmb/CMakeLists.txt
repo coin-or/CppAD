@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -35,7 +35,11 @@ set_compile_flags(
 #
 # now that we have the properties, add the executable
 ADD_EXECUTABLE( test_more_${name} EXCLUDE_FROM_ALL ${source_list} )
-TARGET_LINK_LIBRARIES(test_more_${name} PRIVATE ${OpenMP_CXX_LIBRARIES})
+TARGET_LINK_LIBRARIES(test_more_${name} PRIVATE
+    ${cppad_lib}
+    ${colpack_libs}
+    ${OpenMP_CXX_LIBRARIES}
+)
 #
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -16,7 +16,12 @@ SET(source_list print_for.cpp)
 set_compile_flags( example_print_for "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_print_for EXCLUDE_FROM_ALL ${source_list})
-
+#
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(example_print_for
+    ${cppad_lib}
+    ${colpack_libs}
+)
 # check_example_print_for target
 ADD_CUSTOM_TARGET(check_example_print_for
     example_print_for

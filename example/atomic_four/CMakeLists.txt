@@ -31,11 +31,18 @@ set_compile_flags(example_atomic_four "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_atomic_four EXCLUDE_FROM_ALL ${source_list})
 #
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(example_atomic_four
+    ${cppad_lib}
+    ${colpack_libs}
+)
+#
 # Add the check_example_atomic_four target
 ADD_CUSTOM_TARGET(check_example_atomic_four
     example_atomic_four
     DEPENDS example_atomic_four ${check_example_atomic_four_depends}
 )
+#
 MESSAGE(STATUS "make check_example_atomic_four: available")
 #
 # add to check check_example_depends in parent environment

@@ -28,6 +28,12 @@ set_compile_flags(example_atomic_four_vector "${cppad_debug_which}" "${source_li
 #
 ADD_EXECUTABLE(example_atomic_four_vector EXCLUDE_FROM_ALL ${source_list})
 #
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(example_atomic_four_vector
+    ${cppad_lib}
+    ${colpack_libs}
+)
+#
 # Add the check_example_atomic_four_vector target
 ADD_CUSTOM_TARGET(check_example_atomic_four_vector
     example_atomic_four_vector

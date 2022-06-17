@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -38,7 +38,12 @@ SET(source_list ../main.cpp
 set_compile_flags( speed_profile "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( speed_profile EXCLUDE_FROM_ALL ${source_list} )
-
+#
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(speed_profile
+    ${cppad_lib}
+    ${colpack_libs}
+)
 # profile builds it own copy of src/speed library (see ADD_EXECUTABLE above)
 # TARGET_LINK_LIBRARIES(speed_profile speed_src )
 TARGET_LINK_LIBRARIES(speed_profile

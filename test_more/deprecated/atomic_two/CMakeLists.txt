@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -42,6 +42,12 @@ set_compile_flags(test_more_deprecated_atomic_two
 #
 ADD_EXECUTABLE(test_more_deprecated_atomic_two
     EXCLUDE_FROM_ALL ${source_list}
+)
+#
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(test_more_deprecated_atomic_two
+    ${cppad_lib}
+    ${colpack_libs}
 )
 #
 # Add the check_test_more_deprecated_atomic_two target

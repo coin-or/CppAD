@@ -33,7 +33,6 @@ $end
 # else
 //  LoadLibrary, GetProcAddress, FreeLibrary, GetLastError, RTLD_LAZY
 # include <windows.h>
-# define RTLD_LAZY 0
 # endif
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -84,7 +83,12 @@ private:
 public:
     // ctor
     link_dll_lib(const std::string& dll_file, std::string& err_msg)
-    {   handle_ = dlopen(dll_file.c_str(), RTLD_LAZY);
+    {
+# ifdef _WIN32
+        handle_ = dlopen(dll_file.c_str(), 0);
+# else
+        handle_ = dlopen(dll_file.c_str(), RTLD_LAZY);
+# endif
         if( handle_ != nullptr )
             err_msg = "";
         else
