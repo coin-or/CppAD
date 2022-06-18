@@ -397,7 +397,9 @@ ENDIF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
 # -----------------------------------------------------------------------------
 # boost_prefix
 # Only need components for object libraries, not include libraries.
+SET(CMAKE_REQUIRED_FLAGS "")  # 2DO: why is this necessary with clang ?
 FIND_PACKAGE(Boost COMPONENTS thread)
+SET(CMAKE_REQUIRED_FLAGS "${cppad_cxx_flags}")
 SET(cppad_has_boost 0)
 IF ( Boost_FOUND )
     SET(cppad_has_boost 1)

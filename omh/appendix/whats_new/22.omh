@@ -47,6 +47,7 @@ $$
 $section Changes and Additions to CppAD During 2022$$
 
 $head to_c Branch$$
+The following new features were added:
 $table
 $rref to_csrc$$
 $rref create_dll_lib$$
