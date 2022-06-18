@@ -9,6 +9,7 @@ Secondary License when the conditions for such availability set forth
 in the Eclipse Public License, Version 2.0 are satisfied:
       GNU General Public License, Version 2.0 or later.
 ---------------------------------------------------------------------------- */
+# include <cppad/utility/to_string.hpp>
 # include <cppad/utility/link_dll_lib.hpp>
 
 # ifndef _WIN32

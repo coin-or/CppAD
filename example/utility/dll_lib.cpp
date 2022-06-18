@@ -46,6 +46,12 @@ $end
 # define CALL_IMPORT
 # endif
 
+namespace {
+    extern "C"
+        typedef CALL_IMPORT int (CALL_CONVENTION *function_ptr)(int x, int y);
+}
+
+
 
 bool dll_lib(void)
 {   bool ok = true;
@@ -59,7 +65,11 @@ bool dll_lib(void)
     // dll_entry_source
     std::string dll_entry_source =
         "extern int add(int x, int y);"
+# ifdef _MSC_VER
+        "__declspec(dllexport) int _cdecl dll_entry(int x, int y)\n"
+# else
         "int dll_entry(int x, int y)\n"
+# endif
         "{   return add(x, y);}"
     ;
     //
@@ -94,13 +104,16 @@ bool dll_lib(void)
     std::string err_msg;
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     if( err_msg != "" )
+    {   std::cerr << "dll_lib error: " << err_msg << "\n";
         return false;
+    }
     //
     // dll_entry
     void* vptr = dll_linker("dll_entry", err_msg);
     if( err_msg != "" )
+    {   std::cerr << "dll_lib error: " << err_msg << "\n";
         return false;
-    typedef CALL_IMPORT int (CALL_CONVENTION *function_ptr)(int x, int y);
+    }
     function_ptr dll_entry = reinterpret_cast<function_ptr>(vptr);
     //
     // z = dll_entry(x, y)
