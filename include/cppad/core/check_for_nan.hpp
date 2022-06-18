@@ -170,7 +170,7 @@ template <class Base>
 void put_check_for_nan(const CppAD::vector<Base>& vec, std::string& file_name)
 {
     // char_size
-    size_t char_size = sizeof(Base) * vec.size();
+    std::streamsize char_size = std::streamsize( sizeof(Base) * vec.size() );
     //
     // char_ptr
     const char* char_ptr   = reinterpret_cast<const char*>( vec.data() );

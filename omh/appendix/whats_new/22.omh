@@ -53,6 +53,10 @@ $rref to_csrc$$
 $rref create_dll_lib$$
 $rref link_dll_lib$$
 $tend
+The following improvements were made to existing features:
+$list number$$
+Fix a clang++ compiler warning in the file check_for_nan.hpp.
+$lend
 
 $head 05-27$$
 Add the theory, but not implementation, for the atomic linear ODE
