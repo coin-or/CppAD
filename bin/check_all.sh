@@ -43,6 +43,7 @@ check_all_warn() {
 cat << EOF > check_all.$$
 # Lines that describe where error is
 /^In file included from/d
+/: in function /d
 /: note:/d
 #
 # Ipopt has sign conversion warnings
@@ -60,6 +61,12 @@ cat << EOF > check_all.$$
 EOF
     sed $top_srcdir/check_all.err -f check_all.$$ > $top_srcdir/check_all.warn
     rm check_all.$$
+    #
+    # Expect warning in temp_file.cpp when using c++11.
+    if [ "$standard" == '--c++11' ]
+    then
+        sed -i $top_srcdir/check_all.warn -e '/.tmpnam. is dangerous/d'
+    fi
 }
 # -----------------------------------------------------------------------------
 echo_log_eval() {
