@@ -52,6 +52,7 @@ $table
 $rref to_csrc$$
 $rref create_dll_lib$$
 $rref link_dll_lib$$
+$rref example_jit$$
 $tend
 The following improvements were made to existing features:
 $list number$$

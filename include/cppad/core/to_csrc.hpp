@@ -29,6 +29,9 @@ $spell
     nx
     bool
     Vec
+    typedef
+    const
+    namespace
 $$
 
 $section C Source Code Corresponding to an ADFun Object$$
@@ -70,20 +73,37 @@ If this key is not present, the type $code double$$ is used.
 $head C Function$$
 
 $subhead Syntax$$
-$codei%cppad_forward_zero_%function_name%(
+$icode%flag% = cppad_forward_zero_%function_name%(
     %call_id%, %nx%, %x%, %ny%, %y%, %compare_change%
 )%$$
 
+$subhead Function Type$$
+The syntax above corresponds to the following function type,
+which is defined in the CppAD namespace:
+$codei%
+typedef int (*%type%_forward_zero)(
+    size_t, size_t, const %type%*, size_t, %type%*, size_t*
+)%$$
+In the case of the Visual C++ compiler ($code _MSC_VER$$ is defined),
+$code __cdecl$$ and $code __declspec(dllimport)$$ are added this
+type definition.
+
+$subhead type$$
+In the function type above $icode type$$ is the same as
+$icode type$$ in the $icode options$$ argument except in the
+long double case where it is $code long_double$$.
+
 $subhead call_id$$
-is the $cref/call_id/atomic_four_call/call_id/$$ for the function call.
+This argument is only used during atomic four function callbacks,
+in which case it is the corresponding
+$cref/call_id/atomic_four_call/call_id/$$.
 
 $subhead nx$$
 is the number of independent variables plus number of independent dynamic
 parameters for this function.
 
 $subhead x$$
-is a C vector of size $icode nx$$ and type $icode type$$,
-containing the independent variables
+is a C vector of size $icode nx$$ containing the independent variables
 and independent dynamic parameters.
 The dynamic parameter come first and then the variables.
 
@@ -92,14 +112,19 @@ is the number of dependent values for this function
 (a dependent value can be a variable, dynamic parameter, or constant parameter).
 
 $subhead y$$
-is a C vector of size $icode ny$$ and type $icode type$$.
+is a C vector of size $icode ny$$.
 This input values of its elements do not matter.
 Upon return, it contains the function value correspond to $icode x$$.
 
 $subhead compare_change$$
-the number of comparison operators that change their bool result value
+This argument is both an input and an output.
+The number of comparison operators that change their bool result value
 is added to $icode compare_change$$. This way, $icode compare_change$$
 can be used to accumulate the number of changes between multiplier calls.
+
+$subhead flag$$
+If this is zero, no error was detected.
+If it is one (two), $icode nx$$ ($icode ny$$) does not have its expected value.
 
 $head Restrictions$$
 The $code to_csrc$$ routine is not implemented for
@@ -116,6 +141,32 @@ that use $code to_csrc$$.
 $end
 */
 # include <cppad/local/graph/csrc_writer.hpp>
+
+# ifdef _MSC_VER
+# define CPPAD_FUN_TYPE __cdecl
+# define CPPAD_IMPORT   __declspec(dllimport)
+# else
+# define CPPAD_FUN_TYPE
+# define CPPAD_IMPORT
+# endif
+
+
+namespace CppAD {
+    extern "C" {
+        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *float_forward_zero)(
+            size_t, size_t, const float*, size_t, float*, size_t*
+        );
+        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *double_forward_zero)(
+            size_t, size_t, const double*, size_t, double*, size_t*
+        );
+        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *long_double_forward_zero)(
+            size_t, size_t, const long double*, size_t, long double*, size_t*
+        );
+    }
+}
+
+# undef CPPAD_FUN_TYPE
+# undef CPPAD_IMPORT
 
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>

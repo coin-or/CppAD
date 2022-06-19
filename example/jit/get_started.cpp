@@ -48,18 +48,6 @@ $end
 # define CALL_IMPORT
 # endif
 
-namespace {
-    // cppad_forward_zero_double
-    extern "C"
-    CALL_IMPORT typedef int (CALL_CONVENTION *cppad_forward_zero_double)(
-        size_t        call_id,
-        size_t        nx,
-        const double* x,
-        size_t        ny,
-        double*       y,
-        size_t*       compare_change
-    );
-}
 # include <cppad/cppad.hpp>
 bool get_started(void)
 {   bool ok = true;
@@ -145,8 +133,13 @@ bool get_started(void)
     {   std::cerr << "jit_get_started: err_msg = " << err_msg << "\n";
         return false;
     }
-    cppad_forward_zero_double g_ptr =
-        reinterpret_cast<cppad_forward_zero_double>(void_ptr);
+    //
+    // double_forward_zero
+    using CppAD::double_forward_zero;
+    //
+    // g_ptr
+    double_forward_zero g_ptr =
+        reinterpret_cast<double_forward_zero>(void_ptr);
     //
     // x, z, compare_change
     // z = g(x)

@@ -39,28 +39,6 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 //
-// cppad_forward_zero_double
-extern "C" {
-    CALL_IMPORT typedef int (CALL_CONVENTION *cppad_forward_zero_double)(
-        size_t        call_id,
-        size_t        nx,
-        const double* x,
-        size_t        ny,
-        double*       y,
-        size_t*       compare_change
-    );
-    //
-    // cppad_forward_zero_float
-    CALL_IMPORT typedef int (CALL_CONVENTION *cppad_forward_zero_float)(
-        size_t       call_id,
-        size_t       nx,
-        const float* x,
-        size_t       ny,
-        float*       y,
-        size_t*      compare_change
-    );
-}
-//
 // dll_file_name
 std::string dll_file_name(void)
 {   //
@@ -272,8 +250,11 @@ bool simple_cases(void)
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     //
+    // double_forward_zero
+    using CppAD::double_forward_zero;
+    //
     // forward_zero
-    cppad_forward_zero_double forward_zero = nullptr;
+    double_forward_zero forward_zero = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
@@ -281,7 +262,7 @@ bool simple_cases(void)
     else
     {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        forward_zero = reinterpret_cast<cppad_forward_zero_double>(
+        forward_zero = reinterpret_cast<double_forward_zero>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -388,8 +369,11 @@ bool compare_cases(void)
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     //
+    // double_forward_zero
+    using CppAD::double_forward_zero;
+    //
     // forward_zero
-    cppad_forward_zero_double forward_zero = nullptr;
+    double_forward_zero forward_zero = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
@@ -397,7 +381,7 @@ bool compare_cases(void)
     else
     {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        forward_zero = reinterpret_cast<cppad_forward_zero_double>(
+        forward_zero = reinterpret_cast<double_forward_zero>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -501,8 +485,11 @@ bool atomic_case(void)
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     //
+    // double_forward_zero
+    using CppAD::double_forward_zero;
+    //
     // forward_zero
-    cppad_forward_zero_double forward_zero = nullptr;
+    double_forward_zero forward_zero = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
@@ -510,7 +497,7 @@ bool atomic_case(void)
     else
     {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        forward_zero = reinterpret_cast<cppad_forward_zero_double>(
+        forward_zero = reinterpret_cast<double_forward_zero>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -594,8 +581,11 @@ bool discrete_case(void)
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     //
+    // float_forward_zero
+    using CppAD::float_forward_zero;
+    //
     // forward_zero
-    cppad_forward_zero_float forward_zero = nullptr;
+    float_forward_zero forward_zero = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
@@ -603,7 +593,7 @@ bool discrete_case(void)
     else
     {   // forward_zero
         std::string complete_name = "cppad_forward_zero_" + function_name;
-        forward_zero = reinterpret_cast<cppad_forward_zero_float>(
+        forward_zero = reinterpret_cast<float_forward_zero>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
