@@ -14,54 +14,35 @@
 
 # initialize check_example_depends
 SET(check_example_depends "")
-
-# abs_normal examples
+#
+# BEGIN_SORT_THIS_LINE_PLUS_1
 ADD_SUBDIRECTORY(abs_normal)
-
-# atomic examples
-ADD_SUBDIRECTORY(atomic_two)
-ADD_SUBDIRECTORY(atomic_three)
 ADD_SUBDIRECTORY(atomic_four)
-
-# checkpoint exmaples
+ADD_SUBDIRECTORY(atomic_three)
+ADD_SUBDIRECTORY(atomic_two)
 ADD_SUBDIRECTORY(chkpoint_two)
-
+ADD_SUBDIRECTORY(general)
+ADD_SUBDIRECTORY(get_started)
+ADD_SUBDIRECTORY(graph)
+ADD_SUBDIRECTORY(jit)
+ADD_SUBDIRECTORY(json)
+ADD_SUBDIRECTORY(multi_thread)
+ADD_SUBDIRECTORY(optimize)
+ADD_SUBDIRECTORY(print_for)
+ADD_SUBDIRECTORY(sparse)
+ADD_SUBDIRECTORY(utility)
+# END_SORT_THIS_LINE_MINUS_1
+#
 # code_gen_fun examples
 IF( cppad_has_cppadcg )
     ADD_SUBDIRECTORY(code_gen_fun)
 ENDIF( cppad_has_cppadcg )
-
-# graph examples
-ADD_SUBDIRECTORY(graph)
-
-# general examples
-ADD_SUBDIRECTORY(general)
-
-# get_started
-ADD_SUBDIRECTORY(get_started)
-
+#
 # ipopt_solve examples
 IF( cppad_has_ipopt)
     ADD_SUBDIRECTORY(ipopt_solve)
 ENDIF( cppad_has_ipopt)
 
-# Json AD graph examples
-ADD_SUBDIRECTORY(json)
-
-# multi_thread examples
-ADD_SUBDIRECTORY(multi_thread)
-
-# optimize examples
-ADD_SUBDIRECTORY(optimize)
-
-# print_for example
-ADD_SUBDIRECTORY(print_for)
-
-# sparse examples
-ADD_SUBDIRECTORY(sparse)
-
-# utility examples
-ADD_SUBDIRECTORY(utility)
 
 # Add the check_example target
 ADD_CUSTOM_TARGET(check_example "" DEPENDS ${check_example_depends})

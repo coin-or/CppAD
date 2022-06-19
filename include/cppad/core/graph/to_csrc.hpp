@@ -105,11 +105,13 @@ $head Restrictions$$
 The $code to_csrc$$ routine is not implemented for
 $cref/VecAD/vecad/$$ operations.
 
-$comment%
-    example/csrc/to_csrc.cpp
+$children%
+    example/jit/jit.omh
 %$$
 $head Example$$
-2DO: the file $code to_csrc.cpp$$ is an example and test of this operation.
+The section $cref example_jit$$ contains examples and tests
+that use $code to_csrc$$.
+
 
 $end
 */

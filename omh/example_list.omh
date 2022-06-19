@@ -206,6 +206,8 @@ $rref ipopt_solve_retape.cpp$$
 $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
+$rref jit_get_started.cpp$$
+$rref jit_to_csrc.cpp$$
 $rref json_add_op.cpp$$
 $rref json_atom4_op.cpp$$
 $rref json_atom_op.cpp$$
