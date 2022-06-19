@@ -43,7 +43,7 @@ $childtable%
     include/cppad/core/optimize.hpp%
     include/cppad/core/fun_check.hpp%
     include/cppad/core/check_for_nan.hpp%
-    include/cppad/core/graph/to_csrc.hpp
+    include/cppad/core/to_csrc.hpp
 %$$
 
 $end
@@ -883,6 +883,6 @@ public:
 # include <cppad/core/abs_normal_fun.hpp>
 # include <cppad/core/graph/from_json.hpp>
 # include <cppad/core/graph/to_json.hpp>
-# include <cppad/core/graph/to_csrc.hpp>
+# include <cppad/core/to_csrc.hpp>
 
 # endif

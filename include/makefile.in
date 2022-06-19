@@ -459,7 +459,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/graph/from_graph.hpp \
 	cppad/core/graph/from_json.hpp \
 	cppad/core/graph/graph_op_enum.hpp \
-	cppad/core/graph/to_csrc.hpp
+	cppad/core/to_csrc.hpp
 
 all: all-am
 
