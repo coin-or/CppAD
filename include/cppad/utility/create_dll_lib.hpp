@@ -162,7 +162,7 @@ std::string create_dll_lib(
         // cmd
         string cmd = compile + " " + c_file;
 # ifdef _MSC_VER
-        cmd += "/Fo\"" + o_file + "\"' 1> nul 2> nul";
+        cmd += " /Fo\"" + o_file + "\" 1> nul 2> nul";
 # else
         cmd += " -o " + o_file;
 # endif
