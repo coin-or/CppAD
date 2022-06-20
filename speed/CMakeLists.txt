@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -18,6 +18,7 @@ SET(check_speed_depends "")
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(cppad)
+ADD_SUBDIRECTORY(cppad_jit)
 ADD_SUBDIRECTORY(double)
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(xpackage)

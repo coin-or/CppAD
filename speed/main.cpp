@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -45,6 +45,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # endif
 # ifdef CPPAD_CPPADCG_SPEED
 # define AD_PACKAGE "cppadcg"
+# endif
+# ifdef CPPAD_CPPAD_JIT_SPEED
+# define AD_PACKAGE "cppad_jit"
 # endif
 # ifdef CPPAD_XPACKAGE_SPEED
 # define AD_PACKAGE "xpackage"

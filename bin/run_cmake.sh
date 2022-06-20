@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -45,6 +45,7 @@ yes_colpack='yes'
 yes_eigen='yes'
 yes_ipopt='yes'
 yes_fadbad='yes'
+yes_cppad_jit='yes'
 yes_cppadcg='yes'
 yes_sacado='yes'
 yes_documentation='yes'
@@ -68,6 +69,7 @@ usage: bin/run_cmake.sh: \\
     [--no_eigen] \\
     [--no_ipopt] \\
     [--no_fadbad] \\
+    [--no_cppad_jit] \\
     [--no_cppadcg] \\
     [--no_sacado] \\
     [--no_optional] \\
@@ -125,6 +127,10 @@ EOF
 
         --no_cppadcg)
         yes_cppadcg='no'
+        ;;
+
+        --no_cppad_jit)
+        yes_cppad_jit='no'
         ;;
 
         --no_fadbad)
