@@ -31,7 +31,10 @@ extern bool to_csrc(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/to_csrc";
+{   bool ok = true;
+    //
+# if CPPAD_GNU_OR_MSVC_C_COMPILER
+    std::string group = "example/to_csrc";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
@@ -44,7 +47,8 @@ int main(void)
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();
     // print summary at end
-    bool ok = Run.summary(memory_ok);
+    ok = Run.summary(memory_ok);
+# endif
     //
     return static_cast<int>( ! ok );
 }

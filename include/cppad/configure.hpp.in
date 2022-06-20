@@ -38,6 +38,7 @@ $spell
     std
     hpp
     addr
+    gcc
 $$
 
 $section Preprocessor Symbols Set By CMake Command$$
@@ -202,13 +203,13 @@ $srccode%hpp% */
 /* %$$
 
 $head CPPAD_HAS_MKSTEMP$$
-It true, mkstemp works in C++ on this system.
+if true, mkstemp works in C++ on this system.
 $srccode%hpp% */
 # define CPPAD_HAS_MKSTEMP @cppad_has_mkstemp@
 /* %$$
 
 $head CPPAD_HAS_TMPNAM_S$$
-It true, tmpnam_s works in C++ on this system.
+If true, tmpnam_s works in C++ on this system.
 $srccode%hpp% */
 # define CPPAD_HAS_TMPNAM_S @cppad_has_tmpnam_s@
 /* %$$
@@ -228,6 +229,11 @@ This preprocessor symbol is
 $code noexcept$$ when C++11 is available and $code NDEBUG$$ is defined.
 Otherwise it is empty.
 
+$head CPPAD_GNU_OR_MSVC_C_COMPILER$$
+If true, the C complier is $code gcc$$ or $code cl$$.
+$srccode%hpp% */
+# define CPPAD_GNU_OR_MSVC_C_COMPILER @gnu_or_msvc_c_compiler@
+/* %$$
 
 $end
 */

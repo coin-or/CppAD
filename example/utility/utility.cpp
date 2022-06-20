@@ -93,7 +93,7 @@ int main(void)
     Run( vectorBool,             "vectorBool" );
 // END_SORT_THIS_LINE_MINUS_1
 //
-# if CPPAD_USE_CPLUSPLUS_2017
+# if CPPAD_USE_CPLUSPLUS_2017 && CPPAD_GNU_OR_MSVC_C_COMPILER
     Run( dll_lib,                "dll_lib" );
 # endif
     //

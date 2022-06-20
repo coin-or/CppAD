@@ -98,5 +98,6 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_USER_MACRO_TWO
 # undef CPPAD_VEC_AD_COMP_ASSIGN
 # undef CPPAD_VEC_ENUM_TYPE
+# undef CPPAD_GNU_OR_MSVC_C_COMPILER
 
 # endif

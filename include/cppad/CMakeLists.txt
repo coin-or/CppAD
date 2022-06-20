@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -27,6 +27,15 @@ SET(CMAKE_REQUIRED_DEFINITIONS "")
 SET(CMAKE_REQUIRED_FLAGS       "")
 SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
+# -----------------------------------------------------------------------------
+# gnu_or_msvc_c_compiler
+IF( "${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" )
+    SET(gnu_or_msvc_c_compiler 1)
+ELSEIF( "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC" )
+    SET(gnu_or_msvc_c_compiler 1)
+ELSE()
+    SET(gnu_or_msvc_c_compiler 0)
+ENDIF()
 # -----------------------------------------------------------------------------
 # compiler_has_conversion_warn
 SET( clang_or_gnu 0 )
@@ -125,7 +134,7 @@ ENDFOREACH( cmake_var )
 SET(source "
 # include <stdlib.h>
 # if _MSC_VER
-# include <io.h>  
+# include <io.h>
 # else
 # include <unistd.h>
 # endif
