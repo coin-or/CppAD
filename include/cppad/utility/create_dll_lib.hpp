@@ -20,6 +20,10 @@ $spell
     dll
     hpp
     csrc
+    Hs
+    Hc
+    Tc
+    gcc
 $$
 
 $section Create a Dynamic Link Library$$
@@ -27,7 +31,7 @@ $section Create a Dynamic Link Library$$
 $head Syntax$$
 $codei%# include <cppad/utility/create_dll_lib.hpp>
 %$$
-$icode%err_msg% = create_dll_lib(%dll_file%, %csrc_files%)
+$icode%err_msg% = create_dll_lib(%dll_file%, %csrc_files%, %options%)
 %$$
 
 $head Prototype$$
@@ -51,6 +55,28 @@ The vector $icode csrc_files$$ contains the names of the C source
 files that are compiled and linked to the library.
 These files do not have to have a specific extension.
 
+$head options$$
+The possible keys in this map are documented below.
+The default value for each key is used when the key
+does not appear in $icode options$$.
+
+$subhead compile$$
+This is an abbreviated version of the compile command.
+It does not include the output file flag or output file name.
+If $code _MSC_VER$$ is defined, the default value for this option is
+$code cl /EHs /EHc /c /LD /Tc$$
+If $code _MSC_VER$$ is not defined, the default value for this option is
+$code gcc -c -fPIC$$.
+
+$subhead link$$
+This is an abbreviated version of the link command.
+It does not include the output file flag or output file name.
+If $code _MSC_VER$$ is defined, the default value for this option is
+$code link /DLL$$
+If $code _MSC_VER$$ is not defined, the default value for this option is
+$code gcc -shared$$.
+
+
 $head err_msg$$
 If this string is empty, no error occurred.
 Otherwise the processing aborted and $icode err_msg$$ is the corresponding
@@ -62,6 +88,7 @@ $code create_dll_lib$$.
 
 $end
 */
+# include <map>
 # include <cppad/local/temp_file.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -70,15 +97,36 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_CREATE_DLL_LIB
 template <class StringVector>
 std::string create_dll_lib(
-    const std::string&  dll_file   ,
-    const StringVector& csrc_files )
+    const std::string&                        dll_file   ,
+    const StringVector&                       csrc_files ,
+    const std::map<std::string, std::string>& options    )
 // END_CREATE_DLL_LIB
 {   using std::string;
     //
     // err_msg
     string err_msg = "";
     //
-    // check the the std::system function exists
+    // compile, link
+# ifdef _MSC_VER
+    string compile = "cl /EHs /EHc /c /LD /Tc";
+    string link    = "link /DLL";
+# else
+    string compile = "gcc -c -fPIC";
+    string link    = "gcc -shared";
+# endif
+    for( const auto& pair : options )
+    {   const string& key = pair.first;
+        if( key == "compile" )
+            compile = pair.second;
+        else if( key == "link" )
+            link = pair.second;
+        else
+        {   err_msg = "options contains following invalid key: " + key;
+            return err_msg;
+        }
+    }
+    //
+    // check the std::system function exists
     int flag = std::system(nullptr);
     if( flag == 0 )
     {   err_msg = "C++ std::system function not availablee\n";
@@ -94,8 +142,7 @@ std::string create_dll_lib(
     size_t last_match = dll_file.rfind(dll_ext);
     size_t expected   = dll_file.size() - dll_ext.size();
     if( last_match != expected )
-    {   err_msg  = "create_dll_lib: ";
-        err_msg += dll_file + " does not end with " + dll_ext;
+    {   err_msg += "dll_file = " + dll_file + "\ndoes not end with " + dll_ext;
         return err_msg;
     }
     //
@@ -113,12 +160,11 @@ std::string create_dll_lib(
         string o_file = local::temp_file();
         //
         // cmd
+        string cmd = compile + " " + c_file;
 # ifdef _MSC_VER
-        string cmd = "cl /EHs /EHc /c /LD /Tc " + c_file;
-        cmd       += " /Fo\"" + o_file + "\" 1> nul 2> nul";
+        cmd += "/Fo\"" + o_file + "\"' 1> nul 2> nul";
 # else
-        string cmd = "gcc -c -g -fPIC "  + c_file;
-        cmd       += " -o " + o_file;
+        cmd += " -o " + o_file;
 # endif
         //
         // o_file
@@ -136,12 +182,11 @@ std::string create_dll_lib(
         // o_file_vec
         o_file_vec[i_csrc] = o_file;
     }
+    string cmd = link + " " + o_file_list;
 # ifdef _MSC_VER
-    string cmd = "link /DLL "   + o_file_list;
-    cmd       += " /OUT:\"" + dll_file + "\" 1> nul 2> nul";
+    cmd += " /OUT:" + dll_file + " 1> nul 2> nul";
 # else
-    string cmd = "gcc -shared " + o_file_list;
-    cmd       += " -o "   + dll_file;
+    cmd += " -o "   + dll_file;;
 # endif
     flag = std::system( cmd.c_str() );
     if(  flag != 0 )

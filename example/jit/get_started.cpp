@@ -33,6 +33,7 @@ $end
 # include <cstddef>
 # include <iostream>
 # include <fstream>
+# include <map>
 
 # include <cppad/configure.hpp>
 # if CPPAD_USE_CPLUSPLUS_2017
@@ -44,15 +45,6 @@ $end
 # define DLL_EXT ".dll"
 # else
 # define DLL_EXT ".so"
-# endif
-
-// CALL_CONVENTION, CALL_IMPORT
-# ifdef _MSC_VER
-# define CALL_CONVENTION __cdecl
-# define CALL_IMPORT     __declspec(dllimport)
-# else
-# define CALL_CONVENTION
-# define CALL_IMPORT
 # endif
 
 # include <cppad/cppad.hpp>
@@ -93,7 +85,6 @@ bool get_started(void)
     //
     // csrc_file
     // created in std::filesystem::current_path()
-    std::map<std::string, std::string> options;
     std::string type=  "double";
     std::string csrc_file = "jit_get_started.c";
     std::ofstream ofs;
@@ -113,7 +104,8 @@ bool get_started(void)
     std::string dll_file = "jit_getstarted" DLL_EXT;
     CPPAD_TESTVECTOR( std::string) csrc_files(1);
     csrc_files[0] = csrc_file;
-    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    std::map< std::string, std::string > options;
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
     if( err_msg != "" )
     {   std::cerr << "jit_get_started: err_msg = " << err_msg << "\n";
         return false;

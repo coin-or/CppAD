@@ -34,6 +34,7 @@ $end
 # include <cstddef>
 # include <iostream>
 # include <fstream>
+# include <map>
 
 // DLL_EXT
 # ifdef _WIN32
@@ -79,7 +80,8 @@ bool to_csrc(void)
     std::string dll_file = "jit_getstarted" DLL_EXT;
     CPPAD_TESTVECTOR( std::string) csrc_files(1);
     csrc_files[0] = csrc_file;
-    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    std::map< std::string, std::string > options;
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
     if( err_msg != "" )
     {   std::cerr << "to_csrc: err_msg = " << err_msg << "\n";
         return false;

@@ -18,6 +18,13 @@ $$
 
 $section dll_lib: Example and Test$$
 
+$head options$$
+The following subsection of this example sets
+$cref/options/create_dll_lib/options/$$ that are different
+from the default options:
+$srcthisfile%0%// BEGIN_OPTIONS%// END_OPTIONS%1%$$
+
+$head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
@@ -26,6 +33,7 @@ $end
 # include <filesystem>
 # include <fstream>
 # include <vector>
+# include <map>
 # include <cppad/utility/create_dll_lib.hpp>
 # include <cppad/utility/link_dll_lib.hpp>
 
@@ -93,12 +101,22 @@ bool dll_lib(void)
     ofs << dll_entry_source;
     ofs.close();
     //
+// BEGIN_OPTIONS
+    // Example using options that are different from the default options
+    std::map< std::string, std::string > options;
+# ifdef _MSC_VER
+    options["compile"] = "cl /EHs /EHc /c /LD /Tc /O2";
+# else
+    options["compile"] = "gcc -c -fPIC -O2";
+# endif
+// END_OPTIONS
+    //
     // dll_file
     std::vector< std::string > csrc_files(2);
     csrc_files[0] = add_file;
     csrc_files[1] = dll_entry_file;
     std::string dll_file = temp_dir + "dll_entry" + DLL_EXT;
-    CppAD::create_dll_lib(dll_file, csrc_files);
+    CppAD::create_dll_lib(dll_file, csrc_files, options);
     //
     // dll_linker
     std::string err_msg;

@@ -240,7 +240,8 @@ bool simple_cases(void)
     csrc_files[0] = create_csrc_file(0, ss.str() );
     //
     // create dll_lib
-    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    std::map< std::string, std::string > options;
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
     if( err_msg != "" )
     {   std::cout << err_msg << "\n";
         ok = false;
@@ -359,7 +360,8 @@ bool compare_cases(void)
     csrc_files[0] = create_csrc_file(0, ss.str());
     //
     // create_dll_lib
-    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    std::map< std::string, std::string > options;
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
     if( err_msg != "" )
     {   std::cout << err_msg << "\n";
         ok = false;
@@ -474,7 +476,8 @@ bool atomic_case(void)
     csrc_files[1] = create_csrc_file(1, ss.str() );
     //
     // create_dll_lib
-    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
+    std::map< std::string, std::string > options;
+    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
     if( err_msg != "" )
     {   std::cout << err_msg << "\n";
         ok = false;
@@ -569,7 +572,8 @@ bool discrete_case(void)
     csrc_files[1] = create_csrc_file(1, ss.str());
     //
     // dll_file_str
-    std::string err_msg = create_dll_lib(dll_file, csrc_files);
+    std::map< std::string, std::string > options;
+    std::string err_msg = create_dll_lib(dll_file, csrc_files, options);
     if( err_msg != "" )
     {   std::cout << err_msg << "\n";
         ok = false;
