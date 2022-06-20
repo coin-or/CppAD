@@ -12,7 +12,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 $begin speed$$
 $spell
-    Cppad_jit
+    cppad_jit
     Cppadcg
     xpackage
     cppad

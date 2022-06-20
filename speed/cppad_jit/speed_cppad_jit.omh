@@ -13,19 +13,19 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 $begin speed_cppad_jit$$
 $spell
     cmake
-    Cppad_jitDir
+    cppad_jit
     CppAD
     Cygwin
 $$
 
 
-$section Speed Test Derivatives Using Cppad_jit$$
+$section Speed Test Derivatives Using cppad_jit$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to compare
-Cppad_jit with other AD packages.
-This section links to the source code the Cppad_jit speed tests
-(any suggestions to make the Cppad_jit results faster are welcome).
+cppad_jit with other AD packages.
+This section links to the source code the cppad_jit speed tests
+(any suggestions to make the cppad_jit results faster are welcome).
 
 
 

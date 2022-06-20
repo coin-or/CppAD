@@ -18,7 +18,7 @@ $spell
     cppad_jit
 $$
 
-$section Cppad_jit Speed: Sparse Hessian$$
+$section cppad_jit Speed: Sparse Hessian$$
 
 $head Specifications$$
 $cref link_sparse_hessian$$

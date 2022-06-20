@@ -15,7 +15,7 @@ $spell
     cppad_jit
 $$
 
-$section Cppad_jit Speed: Second Derivative of a Polynomial$$
+$section cppad_jit Speed: Second Derivative of a Polynomial$$
 
 
 $head Specifications$$

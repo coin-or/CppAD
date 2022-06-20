@@ -16,7 +16,7 @@ $spell
     Lu
 $$
 
-$section Cppad_jit Speed: Gradient of Determinant Using Lu Factorization$$
+$section cppad_jit Speed: Gradient of Determinant Using Lu Factorization$$
 
 
 $head Specifications$$

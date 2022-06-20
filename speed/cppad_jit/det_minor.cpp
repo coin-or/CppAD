@@ -15,7 +15,7 @@ $spell
     cppad_jit
 $$
 
-$section Cppad_jit Speed: Gradient of Determinant by Minor Expansion$$
+$section cppad_jit Speed: Gradient of Determinant by Minor Expansion$$
 
 
 $head Specifications$$

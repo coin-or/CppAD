@@ -15,7 +15,7 @@ $spell
     cppad_jit
 $$
 
-$section Cppad_jit Speed: Ode$$
+$section cppad_jit Speed: Ode$$
 
 $head Specifications$$
 $cref link_ode$$

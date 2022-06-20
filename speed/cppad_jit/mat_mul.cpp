@@ -15,7 +15,7 @@ $spell
     cppad_jit
 $$
 
-$section Cppad_jit Speed: Matrix Multiplication$$
+$section cppad_jit Speed: Matrix Multiplication$$
 
 
 $head Specifications$$
