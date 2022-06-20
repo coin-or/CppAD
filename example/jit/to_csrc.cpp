@@ -35,6 +35,13 @@ $end
 # include <iostream>
 # include <fstream>
 
+// DLL_EXT
+# ifdef _WIN32
+# define DLL_EXT ".dll"
+# else
+# define DLL_EXT ".so"
+# endif
+
 # include <cppad/cppad.hpp>
 bool to_csrc(void)
 {   bool ok = true;
@@ -69,7 +76,7 @@ bool to_csrc(void)
     //
     // dll_file
     // created in std::filesystem::current_path
-    std::string dll_file = "jit_getstarted.so";
+    std::string dll_file = "jit_getstarted" DLL_EXT;
     CPPAD_TESTVECTOR( std::string) csrc_files(1);
     csrc_files[0] = csrc_file;
     std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files);
