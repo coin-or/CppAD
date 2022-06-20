@@ -114,10 +114,11 @@ std::string create_dll_lib(
         //
         // cmd
 # ifdef _MSC_VER
-        string cmd = "cl /Fo\"" + o_file + "\" /EHs /EHc /c /LD /Tc ";
-        cmd       += c_file + " 1> nul 2> nul";
+        string cmd = "cl /EHs /EHc /c /LD /Tc " + c_file;
+        cmd       += " /Fo\"" + o_file + "\" 1> nul 2> nul";
 # else
-        string cmd = "gcc -o " + o_file + " -c -g -fPIC "  + c_file;
+        string cmd = "gcc -c -g -fPIC "  + c_file;
+        cmd       += " -o " + o_file;
 # endif
         //
         // o_file
@@ -136,10 +137,11 @@ std::string create_dll_lib(
         o_file_vec[i_csrc] = o_file;
     }
 # ifdef _MSC_VER
-    string cmd = "link /DLL "   + o_file_list + " /OUT:" + dll_file;
-    cmd       += " 1> nul 2> nul";
+    string cmd = "link /DLL "   + o_file_list;
+    cmd       += " /OUT:\"" + dll_file + "\" 1> nul 2> nul";
 # else
-    string cmd = "gcc -shared " + o_file_list + " -o "   + dll_file;;
+    string cmd = "gcc -shared " + o_file_list;
+    cmd       += " -o "   + dll_file;
 # endif
     flag = std::system( cmd.c_str() );
     if(  flag != 0 )
