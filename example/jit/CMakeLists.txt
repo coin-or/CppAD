@@ -35,5 +35,5 @@ TARGET_LINK_LIBRARIES(example_jit
 MESSAGE(STATUS "make check_example_jit: available")
 #
 # Change check depends in parent environment
-add_to_list(check_example_depends check_example_git)
+add_to_list(check_example_depends check_example_jit)
 SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

@@ -234,9 +234,9 @@ bool simple_cases(void)
     //
     // csrc_files
     CppAD::vector<std::string> csrc_files(1);
-    std::map< std::string, std::string> options;
+    std::string type = "double";
     std::stringstream ss;
-    f.to_csrc(ss, options);
+    f.to_csrc(ss, type);
     csrc_files[0] = create_csrc_file(0, ss.str() );
     //
     // create dll_lib
@@ -353,9 +353,9 @@ bool compare_cases(void)
     //
     // csrc_files
     CppAD::vector<std::string> csrc_files(1);
-    std::map< std::string, std::string> options;
+    std::string type = "double";
     std::stringstream ss;
-    f.to_csrc(ss, options);
+    f.to_csrc(ss, type);
     csrc_files[0] = create_csrc_file(0, ss.str());
     //
     // create_dll_lib
@@ -468,10 +468,9 @@ bool atomic_case(void)
     // csrc_files
     CppAD::vector<std::string> csrc_files(2);
     csrc_files[0] = create_csrc_file(0, reciprocal.forward_zero() );
-    std::map< std::string, std::string> options;
-    options["type"] = "double";
+    std::string type = "double";
     std::stringstream ss;
-    f.to_csrc(ss, options);
+    f.to_csrc(ss, type);
     csrc_files[1] = create_csrc_file(1, ss.str() );
     //
     // create_dll_lib
@@ -564,10 +563,9 @@ bool discrete_case(void)
     // csrc_files
     CppAD::vector<std::string> csrc_files(2);
     csrc_files[0] = create_csrc_file(0, discrete_integer() );
-    std::map< std::string, std::string> options;
-    options["type"] = "float";
+    std::string type = "float";
     std::stringstream ss;
-    f.to_csrc(ss, options);
+    f.to_csrc(ss, type);
     csrc_files[1] = create_csrc_file(1, ss.str());
     //
     // dll_file_str

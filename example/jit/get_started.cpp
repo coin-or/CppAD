@@ -87,11 +87,11 @@ bool get_started(void)
     // csrc_file
     // created in std::filesystem::current_path()
     std::map<std::string, std::string> options;
-    options["type"] = "double";
+    std::string type=  "double";
     std::string csrc_file = "jit_get_started.c";
     std::ofstream ofs;
     ofs.open(csrc_file , std::ofstream::out);
-    g.to_csrc(ofs, options);
+    g.to_csrc(ofs, type);
     ofs.close();
     //
     // p, ok
@@ -143,11 +143,11 @@ bool get_started(void)
     //
     // x, z, compare_change
     // z = g(x)
-    size_t nx = n, nz = m * n, call_id = 0, compare_change = 0;
+    size_t nx = n, nz = m * n, compare_change = 0, not_used = 0;
     std::vector<double> x(nx), z(nz);
     x[0] = 0.3;
     x[1] = 0.5;
-    g_ptr(call_id, nx, x.data(), nz, z.data(), &compare_change);
+    g_ptr(not_used, nx, x.data(), nz, z.data(), &compare_change);
     //
     // ok
     ok &= compare_change == 0;

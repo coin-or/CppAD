@@ -35,15 +35,6 @@ $end
 # include <iostream>
 # include <fstream>
 
-// CALL_CONVENTION, CALL_IMPORT
-# ifdef _MSC_VER
-# define CALL_CONVENTION __cdecl
-# define CALL_IMPORT     __declspec(dllimport)
-# else
-# define CALL_CONVENTION
-# define CALL_IMPORT
-# endif
-
 # include <cppad/cppad.hpp>
 bool to_csrc(void)
 {   bool ok = true;
@@ -67,13 +58,12 @@ bool to_csrc(void)
     //
     // csrc_file
     // created in std::filesystem::current_path
-    std::map<std::string, std::string> options;
-    options["type"] = "double";
+    std::string type = "double";
     std::string csrc_file = "to_csrc.c";
     std::ofstream ofs;
     ofs.open(csrc_file , std::ofstream::out);
 // BEGIN_TO_CSRC
-    f.to_csrc(ofs, options);
+    f.to_csrc(ofs, type);
 // END_TO_CSRC
     ofs.close();
     //
@@ -111,11 +101,11 @@ bool to_csrc(void)
     //
     // x, y, compare_change
     // y = f(x)
-    size_t call_id = 0, compare_change = 0;
+    size_t compare_change = 0, not_used = 0;
     std::vector<double> x(nx), y(ny);
     x[0] = 0.3;
     x[1] = 0.5;
-    f_ptr(call_id, nx, x.data(), ny, y.data(), &compare_change);
+    f_ptr(not_used, nx, x.data(), ny, y.data(), &compare_change);
     //
     // ok
     ok &= compare_change == 0;

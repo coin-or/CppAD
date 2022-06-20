@@ -207,9 +207,12 @@ void CppAD::local::graph::csrc_writer(
     ;
     //
     // typedefs
+    string tmp_type = type;
+    if( type == "long_double" )
+        tmp_type = "long double";
     os <<
         "// typedefs\n"
-        "typedef " + type + " float_point_t;\n"
+        "typedef " + tmp_type + " float_point_t;\n"
         "\n"
     ;
     //
