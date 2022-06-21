@@ -12,6 +12,7 @@ document.write('\
 <option>optimize</option>\
 <option>FunCheck</option>\
 <option>check_for_nan</option>\
+<option>to_csrc</option>\
 </select>\
 ');
 function adfun_child(item)
@@ -25,7 +26,8 @@ function adfun_child(item)
 		'sparse_derivative.htm',
 		'optimize.htm',
 		'funcheck.htm',
-		'check_for_nan.htm'
+		'check_for_nan.htm',
+		'to_csrc.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

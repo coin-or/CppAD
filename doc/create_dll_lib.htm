@@ -1,0 +1,194 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Create a Dynamic Link Library</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Create a Dynamic Link Library">
+<meta name="keywords" id="keywords" content=" create dynamic link library syntax prototype include dll_file stringvector csrc_files options compile err_msg example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_create_dll_lib_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="check_simple_vector.cpp.htm" target="_top">Prev</a>
+</td><td><a href="errorhandler.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>utility</option>
+<option>create_dll_lib</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_utility_htm.js'></script>
+</td>
+<td>create_dll_lib</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>include</option>
+<option>dll_file</option>
+<option>StringVector</option>
+<option>csrc_files</option>
+<option>options</option>
+<option>---..compile</option>
+<option>---..link</option>
+<option>err_msg</option>
+<option>Example</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Create a Dynamic Link Library</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;cppad/utility/create_dll_lib.hpp&gt;<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>err_msg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;create_dll_lib(</span></font><i><font color="black"><span style='white-space: nowrap'>dll_file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>csrc_files</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>options</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">StringVector</font><font color="#990000">&gt;</font>
+std<font color="#990000">::</font><font color="#008080">string</font> <b><font color="#000000">create_dll_lib</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>                        dll_file   <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> StringVector<font color="#990000">&amp;</font>                       csrc_files <font color="#990000">,</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>map<font color="#990000">&lt;</font>std<font color="#990000">::</font>string<font color="#990000">,</font> std<font color="#990000">::</font>string<font color="#990000">&gt;&amp;</font> options    <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="include" id="include">include</a></big></b>
+<br>
+As with all the CppAD utilities, <code><font color="blue">create_dll_lib.hpp</font></code> is included
+by <code><font color="blue">&lt;cppad/cppad.hpp&gt;</font></code>, and can also be included separately.
+
+<br>
+<br>
+<b><big><a name="dll_file" id="dll_file">dll_file</a></big></b>
+<br>
+This is the file where the dynamic link library file named 
+<code><i><font color="black"><span style='white-space: nowrap'>dll_file</span></font></i></code>
+.
+This file name must have the proper extension for a dynamic link library
+(<code><font color="blue">.so</font></code> on unix and <code><font color="blue">.dll</font></code> on windows).
+
+<br>
+<br>
+<b><big><a name="StringVector" id="StringVector">StringVector</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>StringVector</span></font></i></code>
+ is a simple vector with elements
+of type <code><font color="blue">std::string</font></code>.
+
+<br>
+<br>
+<b><big><a name="csrc_files" id="csrc_files">csrc_files</a></big></b>
+<br>
+The vector 
+<code><i><font color="black"><span style='white-space: nowrap'>csrc_files</span></font></i></code>
+ contains the names of the C source
+files that are compiled and linked to the library.
+These files do not have to have a specific extension.
+
+<br>
+<br>
+<b><big><a name="options" id="options">options</a></big></b>
+<br>
+The possible keys in this map are documented below.
+The default value for each key is used when the key
+does not appear in 
+<code><i><font color="black"><span style='white-space: nowrap'>options</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="options.compile" id="options.compile">compile</a></big>
+<br>
+This is an abbreviated version of the compile command.
+It does not include the output file flag or output file name.
+If <code><font color="blue">_MSC_VER</font></code> is defined, the default value for this option is
+<code><font color="blue">cl /EHs /EHc /c /LD /Tc</font></code>
+If <code><font color="blue">_MSC_VER</font></code> is not defined, the default value for this option is
+<code><font color="blue">gcc -c -fPIC</font></code>.
+
+<br>
+<br>
+<big><a name="options.link" id="options.link">link</a></big>
+<br>
+This is an abbreviated version of the link command.
+It does not include the output file flag or output file name.
+If <code><font color="blue">_MSC_VER</font></code> is defined, the default value for this option is
+<code><font color="blue">link /DLL</font></code>
+If <code><font color="blue">_MSC_VER</font></code> is not defined, the default value for this option is
+<code><font color="blue">gcc -shared</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="err_msg" id="err_msg">err_msg</a></big></b>
+<br>
+If this string is empty, no error occurred.
+Otherwise the processing aborted and 
+<code><i><font color="black"><span style='white-space: nowrap'>err_msg</span></font></i></code>
+ is the corresponding
+error message.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="dll_lib.cpp.htm" target="_top"><span style='white-space: nowrap'>dll_lib.cpp</span></a>
+ contains an example and test of
+<code><font color="blue">create_dll_lib</font></code>.
+
+
+<hr>Input File: include/cppad/utility/create_dll_lib.hpp
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>JIT Computation of Derivatives: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="JIT Computation of Derivatives: Example and Test">
+<meta name="keywords" id="keywords" content=" jit computation derivatives: example test purpose source ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_jit_get_started.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="example_jit.htm" target="_top">Prev</a>
+</td><td><a href="jit_to_csrc.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>ADFun</option>
+<option>to_csrc</option>
+<option>example_jit</option>
+<option>jit_get_started.cpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_adfun_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_to_csrc_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_example_jit_htm.js'></script>
+</td>
+<td>jit_get_started.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Source</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>JIT Computation of Derivatives: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This is a simple example using CppAD for Just In Time (JIT)
+compilation, linking, and running of C source code that computes derivatives.
+
+<br>
+<br>
+<b><big><a name="Source" id="Source">Source</a></big></b>
+
+<pre><tt>
+
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cstddef&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;iostream&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;fstream&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>
+
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/configure.hpp&gt;</font>
+<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2017
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;filesystem&gt;</font>
+<b><font color="#000080"># endif</font></b>
+
+<i><font color="#9A1900">// DLL_EXT</font></i>
+<b><font color="#000080"># ifdef</font></b> _WIN32
+<b><font color="#000080"># define</font></b> DLL_EXT <font color="#FF0000">".dll"</font>
+<b><font color="#000080"># else</font></b>
+<b><font color="#000080"># define</font></b> DLL_EXT <font color="#FF0000">".so"</font>
+<b><font color="#000080"># endif</font></b>
+
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<font color="#009900">bool</font> <b><font color="#000000">get_started</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// p</font></i>
+<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2017
+    std<font color="#990000">::</font>filesystem<font color="#990000">::</font><font color="#008080">path</font> p<font color="#990000">;</font>
+<b><font color="#000080"># endif</font></b>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ADFun<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Independent<font color="#990000">;</font>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// f</font></i>
+    <i><font color="#9A1900">// f(r, a) =  (x_0 * cos(x_1) , x_0 * sin(x_1))^T</font></i>
+    <font color="#008080">size_t</font> n <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> m <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>m<font color="#990000">);</font>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+        ax<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;(</font> j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">cos</font></b><font color="#990000">(</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    ay<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">sin</font></b><font color="#990000">(</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">);</font>
+    <font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
+    <font color="#008080">ADFun&lt; AD&lt;double&gt; , double &gt;</font> af <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// g(x) = f'(x)</font></i>
+    <i><font color="#9A1900">// g(x) = [ cos(x_1) , - x_0 * sin(x_1) ]</font></i>
+    <i><font color="#9A1900">//        [ sin(x_1) ,   x_0 * cos(x_1) ]</font></i>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">az</font></b><font color="#990000">(</font>m <font color="#990000">*</font> n<font color="#990000">);</font>
+    az <font color="#990000">=</font> af<font color="#990000">.</font><b><font color="#000000">Jacobian</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
+    <font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">g</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> az<font color="#990000">);</font>
+    g<font color="#990000">.</font><b><font color="#000000">function_name_set</font></b><font color="#990000">(</font><font color="#FF0000">"g"</font><font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// csrc_file</font></i>
+    <i><font color="#9A1900">// created in std::filesystem::current_path()</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> type<font color="#990000">=</font>  <font color="#FF0000">"double"</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> csrc_file <font color="#990000">=</font> <font color="#FF0000">"jit_get_started.c"</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">ofstream</font> ofs<font color="#990000">;</font>
+    ofs<font color="#990000">.</font><b><font color="#000000">open</font></b><font color="#990000">(</font>csrc_file <font color="#990000">,</font> std<font color="#990000">::</font>ofstream<font color="#990000">::</font>out<font color="#990000">);</font>
+    g<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ofs<font color="#990000">,</font> type<font color="#990000">);</font>
+    ofs<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// p, ok</font></i>
+<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2017
+    p   <font color="#990000">=</font> std<font color="#990000">::</font>filesystem<font color="#990000">::</font><b><font color="#000000">current_path</font></b><font color="#990000">();</font>
+    p  <font color="#990000">/=</font> csrc_file<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font>filesystem<font color="#990000">::</font><b><font color="#000000">exists</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+<b><font color="#000080"># endif</font></b>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// dll_file</font></i>
+    <i><font color="#9A1900">// created in std::filesystem::current_path()</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> dll_file <font color="#990000">=</font> <font color="#FF0000">"jit_getstarted"</font> DLL_EXT<font color="#990000">;</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> std<font color="#990000">::</font>string<font color="#990000">)</font> <b><font color="#000000">csrc_files</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    csrc_files<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> csrc_file<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">map&lt; std::string, std::string &gt;</font> options<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> err_msg <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">create_dll_lib</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> csrc_files<font color="#990000">,</font> options<font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_get_started: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// p, ok</font></i>
+<b><font color="#000080"># if</font></b> CPPAD_USE_CPLUSPLUS_2017
+    p   <font color="#990000">=</font> std<font color="#990000">::</font>filesystem<font color="#990000">::</font><b><font color="#000000">current_path</font></b><font color="#990000">();</font>
+    p  <font color="#990000">/=</font> dll_file<font color="#990000">;</font>
+    ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font>filesystem<font color="#990000">::</font><b><font color="#000000">exists</font></b><font color="#990000">(</font>p<font color="#990000">);</font>
+<b><font color="#000080"># endif</font></b>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// dll_linker</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">link_dll_lib</font> <b><font color="#000000">dll_linker</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> err_msg<font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_get_started: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// g_ptr</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> function_name <font color="#990000">=</font> <font color="#FF0000">"cppad_forward_zero_g"</font><font color="#990000">;</font>
+    <font color="#009900">void</font><font color="#990000">*</font> void_ptr <font color="#990000">=</font> <b><font color="#000000">dll_linker</font></b><font color="#990000">(</font>function_name<font color="#990000">,</font> err_msg<font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_get_started: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// double_forward_zero</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>double_forward_zero<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// g_ptr</font></i>
+    <font color="#008080">double_forward_zero</font> g_ptr <font color="#990000">=</font>
+        <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>double_forward_zero<font color="#990000">&gt;(</font>void_ptr<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// x, z, compare_change</font></i>
+    <i><font color="#9A1900">// z = g(x)</font></i>
+    <font color="#008080">size_t</font> nx <font color="#990000">=</font> n<font color="#990000">,</font> nz <font color="#990000">=</font> m <font color="#990000">*</font> n<font color="#990000">,</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font> not_used <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font>nz<font color="#990000">);</font>
+    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>
+    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
+    <b><font color="#000000">g_ptr</font></b><font color="#990000">(</font>not_used<font color="#990000">,</font> nx<font color="#990000">,</font> x<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nz<font color="#990000">,</font> z<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    ok <font color="#990000">&amp;=</font> compare_change <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// eps99</font></i>
+    <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// df_0 / dx_0 is stored in z[0 * n + 0]</font></i>
+    <font color="#009900">double</font> value <font color="#990000">=</font> z<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+    <font color="#009900">double</font> check <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>value<font color="#990000">,</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// df_0 / dx_1 is stored in z[0 * n + 1]</font></i>
+    value <font color="#990000">=</font> z<font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
+    check <font color="#990000">=</font> <font color="#990000">-</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>value<font color="#990000">,</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// df_1 / dx_0 is stored in z[1 * n + 0]</font></i>
+    value <font color="#990000">=</font> z<font color="#990000">[</font> <font color="#993399">1</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">0</font><font color="#990000">];</font>
+    check <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>value<font color="#990000">,</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// df_1 / dx_1 is stored in z[1 * n + 1]</font></i>
+    value <font color="#990000">=</font> z<font color="#990000">[</font> <font color="#993399">1</font> <font color="#990000">*</font> n <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">];</font>
+    check <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>value<font color="#990000">,</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/jit/get_started.cpp
+
+</body>
+</html>

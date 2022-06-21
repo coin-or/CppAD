@@ -20,7 +20,8 @@ var list_current0 = [
 'utility.htm#Miscellaneous.Sorting Indices',
 'utility.htm#Miscellaneous.to_string',
 'utility.htm#Miscellaneous.set_union',
-'utility.htm#Miscellaneous.Sparse Matrices'
+'utility.htm#Miscellaneous.Sparse Matrices',
+'utility.htm#Miscellaneous.Dynamic Libraries'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

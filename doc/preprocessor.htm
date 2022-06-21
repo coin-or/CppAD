@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>CppAD API Preprocessor Symbols</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="CppAD API Preprocessor Symbols">
-<meta name="keywords" id="keywords" content=" cppad api preprocessor symbols rule nominmax documented here cppad_debug_and_release cppad_null cppad_package_string cppad_use_cplusplus_2011 elsewhere deprecated ">
+<meta name="keywords" id="keywords" content=" cppad api preprocessor symbols rule nominmax documented here cppad_debug_and_release cppad_null cppad_package_string cppad_use_cplusplus_2011 cppad_use_cplusplus_2017 elsewhere deprecated ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="check_for_nan.cpp.htm" target="_top">Prev</a>
+<td><a href="jit_to_csrc.cpp.htm" target="_top">Prev</a>
 </td><td><a href="multi_thread.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -64,6 +64,7 @@ A:active { color : purple }
 <option>CPPAD_NULL</option>
 <option>---..CPPAD_PACKAGE_STRING</option>
 <option>CPPAD_USE_CPLUSPLUS_2011</option>
+<option>CPPAD_USE_CPLUSPLUS_2017</option>
 <option>Documented Elsewhere</option>
 <option>Deprecated</option>
 </select>
@@ -135,7 +136,13 @@ Is a <code><font color="blue">const char*</font></code> representation of this v
 <b><big><a name="CPPAD_USE_CPLUSPLUS_2011" id="CPPAD_USE_CPLUSPLUS_2011">CPPAD_USE_CPLUSPLUS_2011</a></big></b>
 <br>
 Deprecated 2020-12-03:
-Should CppAD use C++11 features. This is always 1 (for true).
+Is it OK for CppAD to use C++11 features. This is always 1 (for true).
+
+<br>
+<br>
+<b><big><a name="CPPAD_USE_CPLUSPLUS_2017" id="CPPAD_USE_CPLUSPLUS_2017">CPPAD_USE_CPLUSPLUS_2017</a></big></b>
+<br>
+Is it OK for CppAD to use C++17 features.
 
 <br>
 <br>

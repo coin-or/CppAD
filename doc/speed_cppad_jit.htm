@@ -1,0 +1,130 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Speed Test Derivatives Using cppad_jit</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Speed Test Derivatives Using cppad_jit">
+<meta name="keywords" id="keywords" content=" speed test derivatives using cppad_jit purpose running tests ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_speed_cppad_jit_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="fadbad_sparse_jacobian.cpp.htm" target="_top">Prev</a>
+</td><td><a href="cppad_jit_det_minor.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_cppad_jit</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_cppad_jit_htm.js'></script>
+</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Purpose</option>
+<option>Running Tests</option>
+<option>Contents</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>Speed Test Derivatives Using cppad_jit</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+CppAD has a set of speed tests that are used to compare
+cppad_jit with other AD packages.
+This section links to the source code the cppad_jit speed tests
+(any suggestions to make the cppad_jit results faster are welcome).
+
+
+
+
+<br>
+<br>
+<b><big><a name="Running Tests" id="Running Tests">Running Tests</a></big></b>
+<br>
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+<a href="cmake.htm#Build Directory" target="_top"><span style='white-space: nowrap'>build&nbsp;directory</span></a>
+:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;speed/cppad_jit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check_speed_cppad_jit&nbsp;VERBOSE=1<br>
+</span></font></code>
+You can then run the corresponding speed tests
+with the following command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;./speed_cppad_jit&nbsp;speed&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>seed</span></font></i></code>
+ is a positive integer.
+See <a href="speed_main.htm" target="_top"><span style='white-space: nowrap'>speed_main</span></a>
+ for more options.
+
+<br>
+<br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<div><a href="cppad_jit_det_minor.cpp.htm" target="_top">cppad_jit&nbsp;Speed:&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;by&nbsp;Minor&nbsp;Expansion</a><br>
+<a href="cppad_jit_det_lu.cpp.htm" target="_top">cppad_jit&nbsp;Speed:&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;Using&nbsp;Lu&nbsp;Factorization</a><br>
+<a href="cppad_jit_mat_mul.cpp.htm" target="_top">cppad_jit&nbsp;Speed:&nbsp;Matrix&nbsp;Multiplication</a><br>
+<a href="cppad_jit_ode.cpp.htm" target="_top">cppad_jit&nbsp;Speed:&nbsp;Ode</a><br>
+<a href="cppad_jit_poly.cpp.htm" target="_top">cppad_jit&nbsp;Speed:&nbsp;Second&nbsp;Derivative&nbsp;of&nbsp;a&nbsp;Polynomial</a><br>
+<a href="cppad_jit_sparse_hessian.cpp.htm" target="_top">cppad_jit&nbsp;Speed:&nbsp;Sparse&nbsp;Hessian</a><br>
+<a href="cppad_jit_sparse_jacobian.cpp.htm" target="_top">cppad_jit&nbsp;Speed:&nbsp;sparse_jacobian</a><br>
+</div>
+<hr>Input File: speed/cppad_jit/speed_cppad_jit.omh
+
+</body>
+</html>

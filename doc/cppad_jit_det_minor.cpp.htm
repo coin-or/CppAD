@@ -1,0 +1,346 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>cppad_jit Speed: Gradient of Determinant by Minor Expansion</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="cppad_jit Speed: Gradient of Determinant by Minor Expansion">
+<meta name="keywords" id="keywords" content=" cppad_jit speed: gradient determinant minor expansion specifications implementation ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cppad_jit_det_minor.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td><a href="speed_cppad_jit.htm" target="_top">Prev</a>
+</td><td><a href="cppad_jit_det_lu.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>CppAD</option>
+<option>speed</option>
+<option>speed_cppad_jit</option>
+<option>cppad_jit_det_minor.cpp</option>
+</select>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_cppad_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_speed_cppad_jit_htm.js'></script>
+</td>
+<td>cppad_jit_det_minor.cpp</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Headings-&gt;</option>
+<option>Specifications</option>
+<option>Implementation</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>cppad_jit Speed: Gradient of Determinant by Minor Expansion</big></big></b></center>
+<br>
+<b><big><a name="Specifications" id="Specifications">Specifications</a></big></b>
+<br>
+See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'>link_det_minor</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Implementation" id="Implementation">Implementation</a></big></b>
+
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;map&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/det_by_minor.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/speed/uniform_01.hpp&gt;</font>
+<b><font color="#0000FF">extern</font></b> std<font color="#990000">::</font><font color="#008080">map&lt;std::string, bool&gt;</font> global_option<font color="#990000">;</font>
+
+<b><font color="#000080"># ifdef</font></b> _MSC_VER
+<b><font color="#000080"># define</font></b> DLL_EXT <font color="#FF0000">".dll"</font>
+<b><font color="#000080"># else</font></b>
+<b><font color="#000080"># define</font></b> DLL_EXT <font color="#FF0000">".so"</font>
+<b><font color="#000080"># endif</font></b>
+
+<b><font color="#000080"># if</font></b> <font color="#990000">!</font> CPPAD_GNU_OR_MSVC_C_COMPILER
+<font color="#009900">bool</font> <b><font color="#000000">link_det_minor</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>         job      <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>matrix   <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>gradient <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> <font color="#FF0000">}</font>
+<b><font color="#000080"># else</font></b>
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// using</font></i>
+    <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>string<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// typedefs</font></i>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>        a_double<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>    d_vector<font color="#990000">;</font>
+    <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;a_double&gt;</font>  ad_vector<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// get_function_ptr</font></i>
+    CppAD<font color="#990000">::</font><font color="#008080">double_forward_zero</font> <b><font color="#000000">get_function_ptr</font></b><font color="#990000">(</font>
+        CppAD<font color="#990000">::</font>link_dll_lib<font color="#990000">*</font> dll_linker <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">string</font> function_name <font color="#990000">=</font> <font color="#FF0000">"cppad_forward_zero_gradient_det"</font><font color="#990000">;</font>
+        <font color="#008080">string</font> err_msg<font color="#990000">;</font>
+        <font color="#009900">void</font><font color="#990000">*</font> void_ptr <font color="#990000">=</font> <font color="#990000">(*</font>dll_linker<font color="#990000">)(</font>function_name<font color="#990000">,</font> err_msg<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"link_det_minor: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> nullptr<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        CppAD<font color="#990000">::</font><font color="#008080">double_forward_zero</font> function_ptr <font color="#990000">=</font>
+                <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>double_forward_zero<font color="#990000">&gt;(</font>void_ptr<font color="#990000">);</font>
+        <b><font color="#0000FF">return</font></b> function_ptr<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// setup</font></i>
+    CppAD<font color="#990000">::</font>link_dll_lib<font color="#990000">*</font> <b><font color="#000000">setup</font></b><font color="#990000">(</font><font color="#008080">size_t</font> size<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// optimization options</font></i>
+        <font color="#008080">string</font> optimize_options <font color="#990000">=</font>
+            <font color="#FF0000">"no_conditional_skip no_compare_op no_print_for_op"</font><font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// adet</font></i>
+        <i><font color="#9A1900">// object for computing determinant</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">det_by_minor&lt;a_double&gt;</font>   <b><font color="#000000">adet</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// nx</font></i>
+        <i><font color="#9A1900">// number of independent variables</font></i>
+        <font color="#008080">size_t</font> nx <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// matrix</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">matrix</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>nx<font color="#990000">,</font> matrix<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// aA</font></i>
+        <font color="#008080">ad_vector</font>   <b><font color="#000000">aA</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+        <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
+            aA<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> matrix<font color="#990000">[</font>j<font color="#990000">];</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// Independent</font></i>
+        <i><font color="#9A1900">// declare independent variables for function computation</font></i>
+        <font color="#009900">bool</font> record_compare   <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#008080">size_t</font> abort_op_index <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>aA<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// adet_A</font></i>
+        <i><font color="#9A1900">// AD computation of the determinant</font></i>
+        <font color="#008080">ad_vector</font> <b><font color="#000000">adet_A</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        adet_A<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">adet</font></b><font color="#990000">(</font>aA<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// f</font></i>
+        <i><font color="#9A1900">// f( matrix ) = det(matrix)</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font>  f<font color="#990000">;</font>
+        f<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>aA<font color="#990000">,</font> adet_A<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+            f<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// af</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;a_double, double&gt;</font> af<font color="#990000">;</font>
+        af <font color="#990000">=</font> f<font color="#990000">.</font><b><font color="#000000">base2ad</font></b><font color="#990000">();</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// Independent</font></i>
+        <i><font color="#9A1900">// declare independent variables for gradient computation</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">Independent</font></b><font color="#990000">(</font>aA<font color="#990000">,</font> abort_op_index<font color="#990000">,</font> record_compare<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// aw</font></i>
+        <i><font color="#9A1900">// vectors of reverse mode weights</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt;a_double&gt;</font> <b><font color="#000000">aw</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        aw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">a_double</font></b><font color="#990000">(</font><font color="#993399">1.0</font><font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// agradient</font></i>
+        <font color="#008080">ad_vector</font> <b><font color="#000000">agradient</font></b><font color="#990000">(</font>nx<font color="#990000">);</font>
+        af<font color="#990000">.</font><b><font color="#000000">Forward</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> aA<font color="#990000">);</font>
+        agradient <font color="#990000">=</font> af<font color="#990000">.</font><b><font color="#000000">Reverse</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> aw<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// g</font></i>
+        <i><font color="#9A1900">// function objects for g : A -&gt; det'( detA  )</font></i>
+        CppAD<font color="#990000">::</font><font color="#008080">ADFun&lt;double&gt;</font> g<font color="#990000">;</font>
+        g<font color="#990000">.</font><b><font color="#000000">Dependent</font></b><font color="#990000">(</font>aA<font color="#990000">,</font> agradient<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> global_option<font color="#990000">[</font><font color="#FF0000">"optimize"</font><font color="#990000">]</font> <font color="#990000">)</font>
+            g<font color="#990000">.</font><b><font color="#000000">optimize</font></b><font color="#990000">(</font>optimize_options<font color="#990000">);</font>
+        g<font color="#990000">.</font><b><font color="#000000">function_name_set</font></b><font color="#990000">(</font><font color="#FF0000">"gradient_det"</font><font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// csrc_file</font></i>
+        <font color="#008080">string</font> type      <font color="#990000">=</font> <font color="#FF0000">"double"</font><font color="#990000">;</font>
+        <font color="#008080">string</font> csrc_file <font color="#990000">=</font> <font color="#FF0000">"gradient_det.c"</font><font color="#990000">;</font>
+        std<font color="#990000">::</font><font color="#008080">ofstream</font> ofs<font color="#990000">;</font>
+        ofs<font color="#990000">.</font><b><font color="#000000">open</font></b><font color="#990000">(</font>csrc_file<font color="#990000">,</font> std<font color="#990000">::</font>ofstream<font color="#990000">::</font>out<font color="#990000">);</font>
+        g<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ofs<font color="#990000">,</font> type<font color="#990000">);</font>
+        ofs<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">();</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// dll_file</font></i>
+        <font color="#008080">string</font> dll_file <font color="#990000">=</font> <font color="#FF0000">"gradient_det"</font> DLL_EXT<font color="#990000">;</font>
+        CppAD<font color="#990000">::</font><font color="#008080">vector&lt; string &gt;</font> <b><font color="#000000">csrc_files</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+        csrc_files<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> csrc_file<font color="#990000">;</font>
+        std<font color="#990000">::</font><font color="#008080">map&lt; string, string &gt;</font> dll_options<font color="#990000">;</font>
+<b><font color="#000080"># ifdef</font></b> _MSC_VER
+        dll_options<font color="#990000">[</font><font color="#FF0000">"compile"</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"cl /EHs /EHc /c /LD /Tc /O2"</font><font color="#990000">;</font>
+<b><font color="#000080"># else</font></b>
+        dll_options<font color="#990000">[</font><font color="#FF0000">"compile"</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"gcc -c -fPIC -O2"</font><font color="#990000">;</font>
+<b><font color="#000080"># endif</font></b>
+        <font color="#008080">string</font> err_msg <font color="#990000">=</font>
+            CppAD<font color="#990000">::</font><b><font color="#000000">create_dll_lib</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> csrc_files<font color="#990000">,</font> dll_options<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"link_det_minor: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> nullptr<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// dll_linker_ptr</font></i>
+        CppAD<font color="#990000">::</font>link_dll_lib<font color="#990000">*</font> dll_linker_ptr <font color="#990000">=</font>
+            <b><font color="#0000FF">new</font></b> CppAD<font color="#990000">::</font><b><font color="#000000">link_dll_lib</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> err_msg<font color="#990000">);</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"link_det_minor: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+            <b><font color="#0000FF">delete</font></b> dll_linker_ptr<font color="#990000">;</font>
+            <b><font color="#0000FF">return</font></b> nullptr<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> dll_linker_ptr<font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">link_det_minor</font></b><font color="#990000">(</font>
+    <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>         job      <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
+    <font color="#008080">size_t</font>                     repeat   <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>matrix   <font color="#990000">,</font>
+    CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font>     <font color="#990000">&amp;</font>gradient <font color="#990000">)</font>
+<font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> matrix<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> size <font color="#990000">*</font> size <font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> gradient<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> size <font color="#990000">*</font> size <font color="#990000">);</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// check global options</font></i>
+    <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> valid<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font> <font color="#FF0000">"onetape"</font><font color="#990000">,</font> <font color="#FF0000">"optimize"</font><font color="#FF0000">}</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> n_valid <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>valid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
+    <b><font color="#0000FF">typedef</font></b> std<font color="#990000">::</font>map<font color="#990000">&lt;</font>string<font color="#990000">,</font> <font color="#009900">bool</font><font color="#990000">&gt;::</font><font color="#008080">iterator</font> iterator<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">iterator</font> itr<font color="#990000">=</font>global_option<font color="#990000">.</font><b><font color="#000000">begin</font></b><font color="#990000">();</font> itr<font color="#990000">!=</font>global_option<font color="#990000">.</font><b><font color="#000000">end</font></b><font color="#990000">();</font> <font color="#990000">++</font>itr<font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> itr<font color="#990000">-&gt;</font>second <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+            <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_valid<font color="#990000">;</font> i<font color="#990000">++)</font>
+                ok <font color="#990000">|=</font> itr<font color="#990000">-&gt;</font>first <font color="#990000">==</font> valid<font color="#990000">[</font>i<font color="#990000">];</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <font color="#990000">!</font> ok <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+    <i><font color="#9A1900">// pointer to dll linker</font></i>
+    <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font>link_dll_lib<font color="#990000">*</font> static_dll_linker <font color="#990000">=</font> nullptr<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// pointer to gradient_det function</font></i>
+    <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">double_forward_zero</font> static_gradient_det<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// size corresponding static_fun</font></i>
+    <b><font color="#0000FF">static</font></b> <font color="#008080">size_t</font> static_size <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// number of independent variables</font></i>
+    <font color="#008080">size_t</font> nx <font color="#990000">=</font> size <font color="#990000">*</font> size<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// onetape</font></i>
+    <font color="#009900">bool</font> onetape <font color="#990000">=</font> global_option<font color="#990000">[</font><font color="#FF0000">"onetape"</font><font color="#990000">];</font>
+    <i><font color="#9A1900">// ----------------------------------------------------------------------</font></i>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> job <font color="#990000">==</font> <font color="#FF0000">"setup"</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> onetape <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> static_dll_linker <font color="#990000">!=</font> nullptr <font color="#990000">)</font>
+                <b><font color="#0000FF">delete</font></b> static_dll_linker<font color="#990000">;</font>
+            static_dll_linker <font color="#990000">=</font> <b><font color="#000000">setup</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+            <i><font color="#9A1900">//</font></i>
+            static_gradient_det <font color="#990000">=</font> <b><font color="#000000">get_function_ptr</font></b><font color="#990000">(</font>static_dll_linker<font color="#990000">);</font>
+            static_size         <font color="#990000">=</font> size<font color="#990000">;</font>
+            <b><font color="#0000FF">if</font></b><font color="#990000">(</font> static_gradient_det <font color="#990000">==</font> nullptr <font color="#990000">)</font>
+                <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">else</font></b>
+        <font color="#FF0000">{</font>   static_gradient_det <font color="#990000">=</font> nullptr<font color="#990000">;</font>
+            static_size         <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> job <font color="#990000">==</font>  <font color="#FF0000">"teardown"</font> <font color="#990000">)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> static_dll_linker <font color="#990000">!=</font> nullptr <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#0000FF">delete</font></b> static_dll_linker<font color="#990000">;</font>
+            static_dll_linker <font color="#990000">=</font> nullptr<font color="#990000">;</font>
+        <font color="#FF0000">}</font>
+        <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+    <font color="#FF0000">}</font>
+    <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+    <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> job <font color="#990000">==</font> <font color="#FF0000">"run"</font> <font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> onetape <font color="#990000">)</font> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   <i><font color="#9A1900">// use if before assert to avoid warning that static_size is not used</font></i>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> size <font color="#990000">!=</font> static_size <font color="#990000">)</font>
+        <font color="#FF0000">{</font>   <b><font color="#000000">CPPAD_ASSERT_UNKNOWN</font></b><font color="#990000">(</font> size <font color="#990000">==</font> static_size <font color="#990000">);</font>
+        <font color="#FF0000">}</font>
+
+        <i><font color="#9A1900">// get next matrix</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>nx<font color="#990000">,</font> matrix<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// evaluate the gradient</font></i>
+        <font color="#008080">size_t</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font> not_used <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#000000">static_gradient_det</font></b><font color="#990000">(</font>
+            not_used<font color="#990000">,</font> nx<font color="#990000">,</font> matrix<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nx<font color="#990000">,</font> gradient<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change
+        <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
+    <font color="#FF0000">{</font>   <b><font color="#0000FF">if</font></b><font color="#990000">(</font> static_dll_linker <font color="#990000">!=</font> nullptr <font color="#990000">)</font>
+            <b><font color="#0000FF">delete</font></b> static_dll_linker<font color="#990000">;</font>
+        static_dll_linker <font color="#990000">=</font> <b><font color="#000000">setup</font></b><font color="#990000">(</font>size<font color="#990000">);</font>
+        <i><font color="#9A1900">//</font></i>
+        static_gradient_det <font color="#990000">=</font> <b><font color="#000000">get_function_ptr</font></b><font color="#990000">(</font>static_dll_linker<font color="#990000">);</font>
+        static_size         <font color="#990000">=</font> size<font color="#990000">;</font>
+        <b><font color="#0000FF">if</font></b><font color="#990000">(</font> static_gradient_det <font color="#990000">==</font> nullptr <font color="#990000">)</font>
+            <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+        <i><font color="#9A1900">//</font></i>
+        <i><font color="#9A1900">// get next matrix</font></i>
+        CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>nx<font color="#990000">,</font> matrix<font color="#990000">);</font>
+
+        <i><font color="#9A1900">// evaluate the gradient</font></i>
+        <font color="#008080">size_t</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font> not_used <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <b><font color="#000000">static_gradient_det</font></b><font color="#990000">(</font>
+            not_used<font color="#990000">,</font> nx<font color="#990000">,</font> matrix<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nx<font color="#990000">,</font> gradient<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change
+        <font color="#990000">);</font>
+    <font color="#FF0000">}</font>
+    <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+<b><font color="#000080"># endif</font></b> <i><font color="#9A1900">// CPPAD_GNU_OR_MSVC_C_COMPILER</font></i></tt></pre>
+
+<hr>Input File: speed/cppad_jit/det_minor.cpp
+
+</body>
+</html>
