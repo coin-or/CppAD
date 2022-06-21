@@ -22,7 +22,6 @@ $spell
     csrc
     Hs
     Hc
-    Tc
     gcc
 $$
 
@@ -64,7 +63,7 @@ $subhead compile$$
 This is an abbreviated version of the compile command.
 It does not include the output file flag or output file name.
 If $code _MSC_VER$$ is defined, the default value for this option is
-$code cl /EHs /EHc /c /LD /Tc$$
+$code cl /EHs /EHc /c /LD /TC$$
 If $code _MSC_VER$$ is not defined, the default value for this option is
 $code gcc -c -fPIC$$.
 
@@ -108,7 +107,7 @@ std::string create_dll_lib(
     //
     // compile, link
 # ifdef _MSC_VER
-    string compile = "cl /EHs /EHc /c /LD /Tc";
+    string compile = "cl /EHs /EHc /c /LD /TC";
     string link    = "link /DLL";
 # else
     string compile = "gcc -c -fPIC";

@@ -151,7 +151,7 @@ namespace {
         csrc_files[0] = csrc_file;
         std::map< string, string > dll_options;
 # ifdef _MSC_VER
-        dll_options["compile"] = "cl /EHs /EHc /c /LD /Tc /O2";
+        dll_options["compile"] = "cl /EHs /EHc /c /LD /TC /O2";
 # else
         dll_options["compile"] = "gcc -c -fPIC -O2";
 # endif

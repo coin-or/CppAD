@@ -42,9 +42,15 @@ $spell
     rel
     txt
     Simpson
+    Tc
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 06-21$$
+Change the visual C++ JIT compile flag $code /Tc$$ to the flag $code /TC$$,
+so that the C source file need not follow directly after in the compile
+command. This fixed a test failure when using that compiler.
 
 $head 06-20$$
 JIT C source code generation, compilation, and linking were added using
