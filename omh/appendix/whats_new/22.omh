@@ -46,8 +46,9 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
-$head to_c Branch$$
-The following new features, examples, and speed tests were added:
+$head 06-20$$
+JIT C source code generation, compilation, and linking were added using
+the following new features, examples, and speed tests:
 $table
 $rref to_csrc$$
 $rref create_dll_lib$$
