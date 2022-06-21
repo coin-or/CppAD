@@ -214,7 +214,7 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
         csrc_files<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> csrc_file<font color="#990000">;</font>
         std<font color="#990000">::</font><font color="#008080">map&lt; string, string &gt;</font> dll_options<font color="#990000">;</font>
 <b><font color="#000080"># ifdef</font></b> _MSC_VER
-        dll_options<font color="#990000">[</font><font color="#FF0000">"compile"</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"cl /EHs /EHc /c /LD /Tc /O2"</font><font color="#990000">;</font>
+        dll_options<font color="#990000">[</font><font color="#FF0000">"compile"</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"cl /EHs /EHc /c /LD /TC /O2"</font><font color="#990000">;</font>
 <b><font color="#000080"># else</font></b>
         dll_options<font color="#990000">[</font><font color="#FF0000">"compile"</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">"gcc -c -fPIC -O2"</font><font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>

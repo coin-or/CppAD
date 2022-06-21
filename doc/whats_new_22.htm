@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 06-20 05-27 05-26 05-20 05-19 05-17 05-16 05-15 05-13 05-12 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 06-21 06-20 05-27 05-26 05-20 05-19 05-17 05-16 05-15 05-13 05-12 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>06-21</option>
 <option>06-20</option>
 <option>05-27</option>
 <option>05-26</option>
@@ -119,6 +120,14 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
+<br>
+<b><big><a name="06-21" id="06-21">06-21</a></big></b>
+<br>
+Change the visual C++ JIT compile flag <code><font color="blue">/Tc</font></code> to the flag <code><font color="blue">/TC</font></code>,
+so that the C source file need not follow directly after in the compile
+command. This fixed a test failure when using that compiler.
+
+<br>
 <br>
 <b><big><a name="06-20" id="06-20">06-20</a></big></b>
 <br>
