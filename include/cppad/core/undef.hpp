@@ -24,6 +24,7 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_HASH_TABLE_SIZE                used by test_more/optimize.cpp
 # undef EIGEN_MATRIXBASE_PLUGIN              example use of Eigen with CppAD
 # undef CPPAD_HAS_COLPACK                    used by speed/cppad/sparse_*.cpp
+# undef CPPAD_GNU_OR_MSVC_C_COMPILER         used to select dll examples.
 
 # undef CPPAD_BOOL_BINARY         in user api
 # undef CPPAD_BOOL_UNARY          in user api
@@ -98,6 +99,5 @@ that are used by the CppAD examples and tests.
 # undef CPPAD_USER_MACRO_TWO
 # undef CPPAD_VEC_AD_COMP_ASSIGN
 # undef CPPAD_VEC_ENUM_TYPE
-# undef CPPAD_GNU_OR_MSVC_C_COMPILER
 
 # endif

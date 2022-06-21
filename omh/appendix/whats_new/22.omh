@@ -47,12 +47,13 @@ $$
 $section Changes and Additions to CppAD During 2022$$
 
 $head to_c Branch$$
-The following new features were added:
+The following new features, examples, and speed tests were added:
 $table
 $rref to_csrc$$
 $rref create_dll_lib$$
 $rref link_dll_lib$$
 $rref example_jit$$
+$rref cppad_jit_det_minor.cpp$$
 $tend
 The following improvements were made to existing features:
 $list number$$
