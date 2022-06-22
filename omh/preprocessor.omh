@@ -16,6 +16,8 @@ $spell
     nullptr
     CppADvector
     Vec
+    ifndef
+    endif
 $$
 
 $section CppAD API Preprocessor Symbols$$
@@ -28,13 +30,15 @@ begin with $code CppAD$$.
 In this section we list all of the CppAD preprocessor symbols that
 are part of the CppAD Application Interface (API).
 
-$head NOMINMAX$$
+$head NOMINMAX, windows.h$$
 There is one exception to the rule above,
 when using the Microsoft Visual Studio compiler
 and including $code windows.h$$,
 it is done as follows:
 $codep
+    # ifndef NOMINMAX
     # define NOMINMAX
+    # endif
     # include <windows.h>
 $$
 

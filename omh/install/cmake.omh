@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -167,20 +167,9 @@ cmake %%                                                                     \
 $subhead msys2$$
 The $href%https://www.msys2.org/%msys2%$$ system,
 with $code mingw-64$$ and $code g++$$,
-has some requires some special procedures.
-The following seems to work:
+the following seems to work:
 Use $code pacman$$ to install
 $code make$$, $code gcc$$, and $code mingw-w64-x86_64-cmake$$.
-Then use the following replacement for the simple cmake
-and test command:
-$codei%
-    cmake \
-        -G 'Unix Makefiles' \
-        -D CMAKE_C_COMPILER=gcc \
-        -D CMAKE_CXX_COMPILER=g++ \
-        ..
-    make check
-%$$
 
 $subhead Visual Studio$$
 $list number$$
@@ -200,13 +189,7 @@ Make sure you select the box that adds $code cmake$$ to your execution path.
 $lnext
 In the command window, change into the directory where the cppad git
 repository is located and run the following commands.
-$codep
-    rmdir /S /Q build
-    mkdir build
-    cd build
-    cmake -G "NMake Makefiles" -D cppad_debug_which="debug_all" ..
-    nmake check
-$$
+$srcfile%bin/build.bat%$$
 $lend
 Note that when using windows DLL's, CppAD builds a static version
 of $code cppad_lib$$. There are problems using a DLL for $code cppad_lib$$

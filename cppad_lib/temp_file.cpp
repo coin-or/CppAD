@@ -32,8 +32,6 @@ to CppAD.
 
 $end
 */
-
-
 # include <vector>
 # include <stdio.h>
 # include <cppad/configure.hpp>
@@ -94,8 +92,25 @@ std::string temp_file(void)
 }
 # else
 std::string temp_file(void)
-{   std::string file_name = tmpnam(nullptr);
-    FILE* fp = fopen(file_name.c_str(), "w");
+{
+# if CPPAD_HAS_TMPNAM_S
+    char c_str[L_tmpnam_s];
+    tmpnam_s(c_str, L_tmpnam_s );
+# else
+    char c_str[L_tmpnam];
+    tmpnam(c_str);
+# endif
+# ifdef __MINGW32__
+    // https://stackoverflow.com/questions/38868858/
+    // fopen-of-file-name-created-by-tmpnam-fails-on-mingw
+    std::string file_name = c_str + 1;
+# else
+    std::string file_name = c_str;
+# endif
+    FILE* fp = fopen(file_name.c_str(), "r");
+    if( fp != NULL )
+        return "";
+    fp = fopen(file_name.c_str(), "w");
     if( fp == NULL )
         return "";
     fclose(fp);

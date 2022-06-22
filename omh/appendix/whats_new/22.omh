@@ -43,9 +43,16 @@ $spell
     txt
     Simpson
     Tc
+    msys
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 06-22$$
+Modify the $cref/msys2/cmake/CMake Command/msys2/$$
+and $cref/visual studio/cmake/CMake Command/Visual Studio/$$
+install suggestions.
+
 
 $head 06-21$$
 Change the visual C++ JIT compile flag $code /Tc$$ to the flag $code /TC$$,

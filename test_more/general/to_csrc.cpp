@@ -32,6 +32,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # define DIR_SEP         '/'
 # define DLL_EXT         ".so"
 # else
+# ifndef NOMINMAX
+# define NOMINMAX
+# endif
 # include <windows.h>
 # define DIR_SEP         '\\'
 # define DLL_EXT         ".dll"

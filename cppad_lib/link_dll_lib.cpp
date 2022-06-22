@@ -17,6 +17,9 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <dlfcn.h>
 # else
 //  LoadLibrary, GetProcAddress, FreeLibrary, GetLastError, RTLD_LAZY
+# ifndef NOMMNMAX
+# define NOMINMAX
+# endif
 # include <windows.h>
 # define RTLD_LAZY 0
 # endif

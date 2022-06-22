@@ -22,32 +22,34 @@ version_files='
 # should also be in this list. Names that end with / are directories to ignore.
 # Names that begin with a / are relative to top source directroy.
 # All other names are relavie paths somewhere below the top source directory.
+# BEGIN_SORT_THIS_LINE_PLUS_2
 ignore_files='
     /.circleci/
+    /.coin-or/projDesc.xml
     /.github/workflows/
     /.gitignore
-    /.coin-or/projDesc.xml
-
+    /COPYING
     /ar-lib
     /authors
     /batch_edit.sed
+    /bin/build.bat
     /bin/devel.sh
     /bin/get_highlight.sh
     /bin/get_omhelp.sh
     /bin/run_omhelp.sh
     /cmake/cppad_uninstall.cmake
     /coin.png
-    /COPYING
     /compile
-    /configure
     /config.guess
     /config.sub
+    /configure
     /configure
     /depcomp
     /install-sh
     /missing
     makefile.in
 '
+# END_SORT_THIS_LINE_MINUS_2
 # ----------------------------------------------------------------------------
 echo "copyright_owner=$copyright_owner"
 echo "image_link=$version_files"
