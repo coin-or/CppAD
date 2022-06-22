@@ -129,7 +129,7 @@ public:
     std::string forward_zero(void)
     {   std::string csrc =
             "# include <stddef.h>\n"
-            "int cppad_forward_zero_" + name_ + "(\n";
+            "int cppad_jit_" + name_ + "(\n";
         csrc +=R"_(
     size_t        call_id,
     size_t        nx,
@@ -254,19 +254,19 @@ bool simple_cases(void)
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     //
-    // double_forward_zero
-    using CppAD::double_forward_zero;
+    // jit_double
+    using CppAD::jit_double;
     //
     // forward_zero
-    double_forward_zero forward_zero = nullptr;
+    jit_double forward_zero = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
     {   // forward_zero
-        std::string complete_name = "cppad_forward_zero_" + function_name;
-        forward_zero = reinterpret_cast<double_forward_zero>(
+        std::string complete_name = "cppad_jit_" + function_name;
+        forward_zero = reinterpret_cast<jit_double>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -374,19 +374,19 @@ bool compare_cases(void)
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     //
-    // double_forward_zero
-    using CppAD::double_forward_zero;
+    // jit_double
+    using CppAD::jit_double;
     //
     // forward_zero
-    double_forward_zero forward_zero = nullptr;
+    jit_double forward_zero = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
     {   // forward_zero
-        std::string complete_name = "cppad_forward_zero_" + function_name;
-        forward_zero = reinterpret_cast<double_forward_zero>(
+        std::string complete_name = "cppad_jit_" + function_name;
+        forward_zero = reinterpret_cast<jit_double>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -490,19 +490,19 @@ bool atomic_case(void)
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     //
-    // double_forward_zero
-    using CppAD::double_forward_zero;
+    // jit_double
+    using CppAD::jit_double;
     //
     // forward_zero
-    double_forward_zero forward_zero = nullptr;
+    jit_double forward_zero = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
     {   // forward_zero
-        std::string complete_name = "cppad_forward_zero_" + function_name;
-        forward_zero = reinterpret_cast<double_forward_zero>(
+        std::string complete_name = "cppad_jit_" + function_name;
+        forward_zero = reinterpret_cast<jit_double>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -586,19 +586,19 @@ bool discrete_case(void)
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     //
-    // float_forward_zero
-    using CppAD::float_forward_zero;
+    // jit_float
+    using CppAD::jit_float;
     //
     // forward_zero
-    float_forward_zero forward_zero = nullptr;
+    jit_float forward_zero = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
     {   // forward_zero
-        std::string complete_name = "cppad_forward_zero_" + function_name;
-        forward_zero = reinterpret_cast<float_forward_zero>(
+        std::string complete_name = "cppad_jit_" + function_name;
+        forward_zero = reinterpret_cast<jit_float>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )

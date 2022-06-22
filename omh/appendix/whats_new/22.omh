@@ -49,9 +49,16 @@ $$
 $section Changes and Additions to CppAD During 2022$$
 
 $head 06-22$$
+$list number$$
 Modify the $cref/msys2/cmake/CMake Command/msys2/$$
 and $cref/visual studio/cmake/CMake Command/Visual Studio/$$
 install suggestions.
+$lnext
+In JIT
+$cref/function type/to_csrc/Function/$$ change
+$icode%type%_forward_zero%$$ to $codei%jit_%type%$$.
+For eample change $code double_forward_zero$$ to $code jit_double$$.
+$lend
 
 
 $head 06-21$$

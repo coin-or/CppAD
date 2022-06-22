@@ -117,7 +117,7 @@ namespace {
         size_t                       n_result            ,
         const CppAD::vector<size_t>& arg_node            )
     {   using CppAD::to_string;
-        std::string complete_name = "cppad_forward_zero_" + atomic_name;
+        std::string complete_name = "cppad_jit_" + atomic_name;
         size_t nu = arg_node.size();
         size_t nw = n_result;
         os << "\t{\t// call " + atomic_name + "\n";
@@ -221,7 +221,7 @@ void CppAD::local::graph::csrc_writer(
     size_t n_atomic = graph_obj.atomic_name_vec_size();
     for(size_t i_atomic = 0; i_atomic < n_atomic; ++i_atomic)
     {   string atomic_name = graph_obj.atomic_name_vec_get(i_atomic);
-        os << "extern int cppad_forward_zero_" + atomic_name + "(\n";
+        os << "extern int cppad_jit_" + atomic_name + "(\n";
         os <<
             "\tsize_t               call_id           ,\n"
             "\tsize_t               nx                ,\n"
@@ -266,7 +266,7 @@ void CppAD::local::graph::csrc_writer(
 # else
         "int "
 # endif
-        "cppad_forward_zero_" + function_name + "(\n"
+        "cppad_jit_" + function_name + "(\n"
         "\tsize_t               call_id         ,\n"
         "\tsize_t               nx              ,\n"
         "\tconst float_point_t* x               ,\n"

@@ -94,19 +94,19 @@ bool to_csrc(void)
     }
     //
     // f_ptr
-    std::string function_name = "cppad_forward_zero_f";
+    std::string function_name = "cppad_jit_f";
     void* void_ptr = dll_linker(function_name, err_msg);
     if( err_msg != "" )
     {   std::cerr << "to_csrc: err_msg = " << err_msg << "\n";
         return false;
     }
     //
-    // double_forward_zero
-    using CppAD::double_forward_zero;
+    // jit_double
+    using CppAD::jit_double;
     //
     // f_ptr
-    double_forward_zero f_ptr =
-        reinterpret_cast<double_forward_zero>(void_ptr);
+    jit_double f_ptr =
+        reinterpret_cast<jit_double>(void_ptr);
     //
     // x, y, compare_change
     // y = f(x)

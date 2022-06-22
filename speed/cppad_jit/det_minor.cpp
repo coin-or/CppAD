@@ -56,17 +56,17 @@ namespace {
     typedef CppAD::vector<a_double>  ad_vector;
     //
     // get_function_ptr
-    CppAD::double_forward_zero get_function_ptr(
+    CppAD::jit_double get_function_ptr(
         CppAD::link_dll_lib* dll_linker )
-    {   std::string function_name = "cppad_forward_zero_gradient_det";
+    {   std::string function_name = "cppad_jit_gradient_det";
         string err_msg;
         void* void_ptr = (*dll_linker)(function_name, err_msg);
         if( err_msg != "" )
         {   std::cerr << "link_det_minor: err_msg = " << err_msg << "\n";
             return nullptr;
         }
-        CppAD::double_forward_zero function_ptr =
-                reinterpret_cast<CppAD::double_forward_zero>(void_ptr);
+        CppAD::jit_double function_ptr =
+                reinterpret_cast<CppAD::jit_double>(void_ptr);
         return function_ptr;
     }
     //
@@ -202,7 +202,7 @@ bool link_det_minor(
     static CppAD::link_dll_lib* static_dll_linker = nullptr;
     //
     // pointer to gradient_det function
-    static CppAD::double_forward_zero static_gradient_det;
+    static CppAD::jit_double static_gradient_det;
     //
     // size corresponding static_fun
     static size_t static_size = 0;
