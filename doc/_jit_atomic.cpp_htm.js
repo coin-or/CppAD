@@ -7,19 +7,13 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'preprocessor.htm'
+'adfun.htm',
+'to_csrc.htm',
+'example_jit.htm',
+'jit_atomic.cpp.htm'
 ];
 var list_current0 = [
-'preprocessor.htm#Rule',
-'preprocessor.htm#NOMINMAX, windows.h',
-'preprocessor.htm#Documented Here',
-'preprocessor.htm#Documented Here.CPPAD_DEBUG_AND_RELEASE',
-'preprocessor.htm#CPPAD_NULL',
-'preprocessor.htm#CPPAD_NULL.CPPAD_PACKAGE_STRING',
-'preprocessor.htm#CPPAD_USE_CPLUSPLUS_2011',
-'preprocessor.htm#CPPAD_USE_CPLUSPLUS_2017',
-'preprocessor.htm#Documented Elsewhere',
-'preprocessor.htm#Deprecated'
+'jit_atomic.cpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
@@ -32,6 +26,18 @@ function choose_up0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_up0[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
+}
+function choose_down2(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down2[index-1];
 }
 function choose_down1(item)
 {	var index          = item.selectedIndex;

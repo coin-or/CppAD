@@ -109,7 +109,9 @@ number of seconds since the first call to <code><font color="blue">elapsed_secon
 <pre><tt><b><font color="#000080"># if</font></b> _MSC_VER
 <i><font color="#9A1900">// ---------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900">// Microsoft version of timer</font></i>
+<b><font color="#000080"># ifndef</font></b> NOMINMAX
 <b><font color="#000080"># define</font></b> NOMINMAX  <i><font color="#9A1900">// so windows.h does not define min and max as macros</font></i>
+<b><font color="#000080"># endif</font></b>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;windows.h&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cassert&gt;</font>
 <font color="#009900">double</font> <b><font color="#000000">elapsed_seconds</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>

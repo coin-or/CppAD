@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>CppAD API Preprocessor Symbols</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="CppAD API Preprocessor Symbols">
-<meta name="keywords" id="keywords" content=" cppad api preprocessor symbols rule nominmax documented here cppad_debug_and_release cppad_null cppad_package_string cppad_use_cplusplus_2011 cppad_use_cplusplus_2017 elsewhere deprecated ">
+<meta name="keywords" id="keywords" content=" cppad api preprocessor symbols rule nominmax windows.h documented here cppad_debug_and_release cppad_null cppad_package_string cppad_use_cplusplus_2011 cppad_use_cplusplus_2017 elsewhere deprecated ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,7 +31,7 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="jit_to_csrc.cpp.htm" target="_top">Prev</a>
+<td><a href="jit_atomic.cpp.htm" target="_top">Prev</a>
 </td><td><a href="multi_thread.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
@@ -58,7 +58,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Rule</option>
-<option>NOMINMAX</option>
+<option>NOMINMAX, windows.h</option>
 <option>Documented Here</option>
 <option>---..CPPAD_DEBUG_AND_RELEASE</option>
 <option>CPPAD_NULL</option>
@@ -89,14 +89,16 @@ are part of the CppAD Application Interface (API).
 
 <br>
 <br>
-<b><big><a name="NOMINMAX" id="NOMINMAX">NOMINMAX</a></big></b>
+<b><big><a name="NOMINMAX, windows.h" id="NOMINMAX, windows.h">NOMINMAX, windows.h</a></big></b>
 <br>
 There is one exception to the rule above,
 when using the Microsoft Visual Studio compiler
 and including <code><font color="blue">windows.h</font></code>,
 it is done as follows:
 <code><font color='blue'><pre style='display:inline'> 
+    # ifndef NOMINMAX
     # define NOMINMAX
+    # endif
     # include &lt;windows.h&gt;
 </pre></font></code>
 <br>

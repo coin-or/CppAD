@@ -221,21 +221,11 @@ cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><s
 The <a href="https://www.msys2.org/" target="_top"><span style='white-space: nowrap'>msys2</span></a>
  system,
 with <code><font color="blue">mingw-64</font></code> and <code><font color="blue">g++</font></code>,
-has some requires some special procedures.
-The following seems to work:
+the following seems to work:
 Use <code><font color="blue">pacman</font></code> to install
 <code><font color="blue">make</font></code>, <code><font color="blue">gcc</font></code>, and <code><font color="blue">mingw-w64-x86_64-cmake</font></code>.
-Then use the following replacement for the simple cmake
-and test command:
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;cmake&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-G&nbsp;'Unix&nbsp;Makefiles'&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_C_COMPILER=gcc&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;CMAKE_CXX_COMPILER=g++&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..<br>
-&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;check<br>
-</span></font></code>
+<br>
 <br>
 <big><a name="CMake Command.Visual Studio" id="CMake Command.Visual Studio">Visual Studio</a></big>
 
@@ -258,13 +248,14 @@ Make sure you select the box that adds <code><font color="blue">cmake</font></co
 
 In the command window, change into the directory where the cppad git
 repository is located and run the following commands.
-<code><font color='blue'><pre style='display:inline'> 
-    rmdir /S /Q build
-    mkdir build
-    cd build
-    cmake -G &quot;NMake Makefiles&quot; -D cppad_debug_which=&quot;debug_all&quot; ..
-    nmake check
-</pre></font></code>
+<pre><tt><b><font color="#000000">rmdir</font></b> <font color="#990000">/</font>S build
+<b><font color="#000000">mkdir</font></b> build
+<b><font color="#000000">cd</font></b> build
+cmake <font color="#990000">^</font>
+    <font color="#990000">-</font>G <font color="#FF0000">"NMake Makefiles"</font><font color="#990000">^</font>
+    <font color="#990000">-</font>D cppad_cxx_flags<font color="#990000">=</font><font color="#FF0000">"/MP /EHs /EHc /std:c++17 /Zc:__cplusplus"</font><font color="#990000">^</font>
+    <font color="#990000">..</font>
+nmake check</tt></pre>
 </li></ol>
 Note that when using windows DLL's, CppAD builds a static version
 of <code><font color="blue">cppad_lib</font></code>. There are problems using a DLL for <code><font color="blue">cppad_lib</font></code>

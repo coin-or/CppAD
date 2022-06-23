@@ -186,27 +186,27 @@ compilation, linking, and running of C source code that computes derivatives.
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// g_ptr</font></i>
-    std<font color="#990000">::</font><font color="#008080">string</font> function_name <font color="#990000">=</font> <font color="#FF0000">"cppad_forward_zero_g"</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> function_name <font color="#990000">=</font> <font color="#FF0000">"cppad_jit_g"</font><font color="#990000">;</font>
     <font color="#009900">void</font><font color="#990000">*</font> void_ptr <font color="#990000">=</font> <b><font color="#000000">dll_linker</font></b><font color="#990000">(</font>function_name<font color="#990000">,</font> err_msg<font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
     <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_get_started: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// double_forward_zero</font></i>
-    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>double_forward_zero<font color="#990000">;</font>
+    <i><font color="#9A1900">// jit_double</font></i>
+    <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>jit_double<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// g_ptr</font></i>
-    <font color="#008080">double_forward_zero</font> g_ptr <font color="#990000">=</font>
-        <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>double_forward_zero<font color="#990000">&gt;(</font>void_ptr<font color="#990000">);</font>
+    <font color="#008080">jit_double</font> g_ptr <font color="#990000">=</font>
+        <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>jit_double<font color="#990000">&gt;(</font>void_ptr<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// x, z, compare_change</font></i>
     <i><font color="#9A1900">// z = g(x)</font></i>
-    <font color="#008080">size_t</font> nx <font color="#990000">=</font> n<font color="#990000">,</font> nz <font color="#990000">=</font> m <font color="#990000">*</font> n<font color="#990000">,</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font> not_used <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> nx <font color="#990000">=</font> n<font color="#990000">,</font> nz <font color="#990000">=</font> m <font color="#990000">*</font> n<font color="#990000">,</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">z</font></b><font color="#990000">(</font>nz<font color="#990000">);</font>
     x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>
     x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
-    <b><font color="#000000">g_ptr</font></b><font color="#990000">(</font>not_used<font color="#990000">,</font> nx<font color="#990000">,</font> x<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nz<font color="#990000">,</font> z<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change<font color="#990000">);</font>
+    <b><font color="#000000">g_ptr</font></b><font color="#990000">(</font>nx<font color="#990000">,</font> x<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nz<font color="#990000">,</font> z<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ok</font></i>
     ok <font color="#990000">&amp;=</font> compare_change <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>

@@ -119,17 +119,17 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">vector&lt;a_double&gt;</font>  ad_vector<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// get_function_ptr</font></i>
-    CppAD<font color="#990000">::</font><font color="#008080">double_forward_zero</font> <b><font color="#000000">get_function_ptr</font></b><font color="#990000">(</font>
+    CppAD<font color="#990000">::</font><font color="#008080">jit_double</font> <b><font color="#000000">get_function_ptr</font></b><font color="#990000">(</font>
         CppAD<font color="#990000">::</font>link_dll_lib<font color="#990000">*</font> dll_linker <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">string</font> function_name <font color="#990000">=</font> <font color="#FF0000">"cppad_forward_zero_gradient_det"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font><font color="#008080">string</font> function_name <font color="#990000">=</font> <font color="#FF0000">"cppad_jit_gradient_det"</font><font color="#990000">;</font>
         <font color="#008080">string</font> err_msg<font color="#990000">;</font>
         <font color="#009900">void</font><font color="#990000">*</font> void_ptr <font color="#990000">=</font> <font color="#990000">(*</font>dll_linker<font color="#990000">)(</font>function_name<font color="#990000">,</font> err_msg<font color="#990000">);</font>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
         <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"link_det_minor: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
             <b><font color="#0000FF">return</font></b> nullptr<font color="#990000">;</font>
         <font color="#FF0000">}</font>
-        CppAD<font color="#990000">::</font><font color="#008080">double_forward_zero</font> function_ptr <font color="#990000">=</font>
-                <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>double_forward_zero<font color="#990000">&gt;(</font>void_ptr<font color="#990000">);</font>
+        CppAD<font color="#990000">::</font><font color="#008080">jit_double</font> function_ptr <font color="#990000">=</font>
+                <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>jit_double<font color="#990000">&gt;(</font>void_ptr<font color="#990000">);</font>
         <b><font color="#0000FF">return</font></b> function_ptr<font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
@@ -265,7 +265,7 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
     <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font>link_dll_lib<font color="#990000">*</font> static_dll_linker <font color="#990000">=</font> nullptr<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// pointer to gradient_det function</font></i>
-    <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">double_forward_zero</font> static_gradient_det<font color="#990000">;</font>
+    <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">jit_double</font> static_gradient_det<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// size corresponding static_fun</font></i>
     <b><font color="#0000FF">static</font></b> <font color="#008080">size_t</font> static_size <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
@@ -312,9 +312,9 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
         CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>nx<font color="#990000">,</font> matrix<font color="#990000">);</font>
 
         <i><font color="#9A1900">// evaluate the gradient</font></i>
-        <font color="#008080">size_t</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font> not_used <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#008080">size_t</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
         <b><font color="#000000">static_gradient_det</font></b><font color="#990000">(</font>
-            not_used<font color="#990000">,</font> nx<font color="#990000">,</font> matrix<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nx<font color="#990000">,</font> gradient<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change
+            nx<font color="#990000">,</font> matrix<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nx<font color="#990000">,</font> gradient<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change
         <font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">while</font></b><font color="#990000">(</font>repeat<font color="#990000">--)</font>
@@ -331,9 +331,9 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
         CppAD<font color="#990000">::</font><b><font color="#000000">uniform_01</font></b><font color="#990000">(</font>nx<font color="#990000">,</font> matrix<font color="#990000">);</font>
 
         <i><font color="#9A1900">// evaluate the gradient</font></i>
-        <font color="#008080">size_t</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">,</font> not_used <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+        <font color="#008080">size_t</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
         <b><font color="#000000">static_gradient_det</font></b><font color="#990000">(</font>
-            not_used<font color="#990000">,</font> nx<font color="#990000">,</font> matrix<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nx<font color="#990000">,</font> gradient<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change
+            nx<font color="#990000">,</font> matrix<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> nx<font color="#990000">,</font> gradient<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change
         <font color="#990000">);</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
