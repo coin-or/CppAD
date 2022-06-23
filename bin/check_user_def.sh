@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -48,17 +48,13 @@ do
         exit 1
     fi
 done
-undef_file='include/cppad/core/undef.hpp'
+undef_file='omh/preprocessor.omh'
 for symbol_file in $symbol_list
 do
     symbol=`echo $symbol_file | sed -e 's|:.*||'`
     file=`echo $symbol_file | sed -e 's|.*:||'`
     ok='false'
-    if grep "$symbol *in user api" $undef_file > /dev/null
-    then
-        ok='true'
-    fi
-    if grep "$symbol *in deprecated api" $undef_file > /dev/null
+    if grep "^# *undef *$symbol" $undef_file > /dev/null
     then
         ok='true'
     fi

@@ -30,7 +30,6 @@ $childtable%
     omh/appendix/deprecated/omp_alloc.omh%
     include/cppad/utility/memory_leak.hpp%
     include/cppad/core/epsilon.hpp%
-    include/cppad/core/test_vector.hpp%
     cppad_ipopt/src/cppad_ipopt_nlp.hpp%
     include/cppad/core/atomic/one/atomic.hpp%
     include/cppad/core/atomic/two/atomic.hpp%

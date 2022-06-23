@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -500,7 +500,7 @@ Added cross references in
 the $cref/examples/ListAllExamples/$$ to occurrence of the following tokens:
 $cref AD$$,
 $cref/ADFun/FunConstruct/$$,
-$cref/CPPAD_TEST_VECTOR/test_vector/$$,
+$code CPPAD_TEST_VECTOR$$,
 $cref Forward$$,
 $cref Independent$$,
 $cref Jacobian$$

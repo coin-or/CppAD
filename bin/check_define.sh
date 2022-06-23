@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -24,6 +24,10 @@ add_on_list='CG PY TMB MIXED'
 #
 # preprocessor symbol that may or may not be defined by user
 echo 'CPPAD_DEBUG_AND_RELEASE' > check_define.1
+#
+# preprocessor symbols in user API
+sed -n -e "/^# *undef /p" omh/preprocessor.omh | sed \
+    -e "s/^# *undef  *\([A-Za-z0-9_]*\).*/\1/" > check_define.2
 #
 for file in $file_list
 do

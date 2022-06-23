@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -197,7 +197,7 @@ the same for all other names that ended in $code _team$$; e.g.,
 $cref team_openmp.cpp$$.
 
 $head 11-07$$
-The users choice for $cref test_vector$$ was not actually changing
+The users choice for $code test_vector$$ was not actually changing
 the tests that the user ran. This have been fixed.
 
 $head 11-06$$

@@ -766,7 +766,6 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	cppad/core/subgraph_reverse.hpp \
 	cppad/core/subgraph_sparsity.hpp \
 	cppad/core/tape_link.hpp \
-	cppad/core/test_vector.hpp \
 	cppad/core/testvector.hpp \
 	cppad/core/unary_minus.hpp \
 	cppad/core/unary_plus.hpp \

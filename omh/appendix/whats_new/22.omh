@@ -61,6 +61,14 @@ $codei%jit_%type%$$ for $cref/JIT functions/to_csrc/JIT Functions/$$, and
 $codei%atomic_%type%$$ for $cref/atomic callbacks/to_csrc/Atomic Callbacks/$$.
 $lnext
 Add the $cref jit_atomic.cpp$$ example.
+$lnext
+The $code CPPAD_TEST_VECTOR$$ macro was been removed
+(it was deprecated on 2012-07-03).
+$lnext
+Remove the following symbols from the $cref testvector$$ documentation
+because they are not part of the user API:
+$codei%CPPAD_%package%VECTOR%$$ for $icode package$$ equal to
+$code CPPAD$$, $code STD$$, $code BOOST$$, $code EIGEN$$.
 $lend
 
 

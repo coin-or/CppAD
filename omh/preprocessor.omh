@@ -14,10 +14,11 @@ $spell
     Microsoft
     const
     nullptr
-    CppADvector
     Vec
     ifndef
     endif
+    Bool
+    Cpp
 $$
 
 $section CppAD API Preprocessor Symbols$$
@@ -53,21 +54,36 @@ debug and release versions of CppAD can be mixed in the same program.
 Of particular note is that $cref thread_alloc$$ does less error checking.
 For programs that do a lot of memory allocation,
 this can be a significant time savings when $code NDEBUG$$ is defined.
+$comment
+# undef CPPAD_DEBUG_AND_RELEASE
+$$
 
 $head CPPAD_NULL$$
 Deprecated 2020-12-03:
 This preprocessor symbol was used for a null pointer before c++11.
 Replace it by $code nullptr$$.
+$comment
+# undef CPPAD_NULL
+$$
 
 $subhead CPPAD_PACKAGE_STRING$$
 Is a $code const char*$$ representation of this version of CppAD.
+$comment
+# undef CPPAD_PACKAGE_STRING
+$$
 
 $head CPPAD_USE_CPLUSPLUS_2011$$
 Deprecated 2020-12-03:
 Is it OK for CppAD to use C++11 features. This is always 1 (for true).
+$comment
+# undef CPPAD_USE_CPLUSPLUS_2011
+$$
 
 $head CPPAD_USE_CPLUSPLUS_2017$$
 Is it OK for CppAD to use C++17 features.
+$comment
+# undef CPPAD_USE_CPLUSPLUS_2017
+$$
 
 $head Documented Elsewhere$$
 $table
@@ -91,14 +107,22 @@ $cref/CPPAD_TESTVECTOR/testvector/$$
 $rnext
 $cref/CPPAD_TO_STRING/base_to_string/CPPAD_TO_STRING/$$
 $tend
+$comment
+# undef CPPAD_BOOL_BINARY
+# undef CPPAD_BOOL_UNARY
+# undef CPPAD_DISCRETE_FUNCTION
+# undef CPPAD_MAX_NUM_THREADS
+# undef CPPAD_NUMERIC_LIMITS
+# undef CPPAD_STANDARD_MATH_UNARY
+# undef CPPAD_TAPE_ADDR_TYPE
+# undef CPPAD_TAPE_ID_TYPE
+# undef CPPAD_TESTVECTOR
+# undef CPPAD_TO_STRING
+$$
 
-$head Deprecated$$
+$subhead Deprecated$$
 $table
 $cref/CppADCreateDiscrete/Discrete/CppADCreateDiscrete Deprecated 2007-07-28/$$
-$rnext
-$cref/CppADvector/test_vector/Deprecated 2012-07-03/$$
-$rnext
-$cref/CPPAD_TEST_VECTOR/test_vector/$$
 $rnext
 $cref/CPPAD_TRACK_NEW_VEC/TrackNewDel/TrackNewVec/Macro/$$
 $rnext
@@ -117,7 +141,27 @@ $rnext
 $cref/CppADTrackExtend/TrackNewDel/TrackExtend/Previously Deprecated/$$
 $rnext
 $cref/CppADTrackCount/TrackNewDel/TrackCount/Previously Deprecated/$$
+$rnext
+$cref/CppADCreateBinaryBool/BoolFun/Deprecated 2007-07-31/$$
+$rnext
+$cref/CppADCreateUnaryBool/BoolFun/Deprecated 2007-07-31/$$
+$rnext
+$cref/CPPAD_USER_ATOMIC/atomic_one/Deprecated 2013-05-27/$$
 $tend
-
+$comment
+# undef CppADCreateDiscrete
+# undef CPPAD_TRACK_NEW_VEC
+# undef CPPAD_TRACK_DEL_VEC
+# undef CPPAD_TRACK_EXTEND
+# undef CPPAD_TRACK_COUNT
+# undef CPPAD_USER_ATOMIC
+# undef CppADTrackNewVec
+# undef CppADTrackDelVec
+# undef CppADTrackExtend
+# undef CppADTrackCount
+# undef CppADCreateBinaryBool
+# undef CppADCreateUnaryBool
+# undef CPPAD_USER_ATOMIC
+$$
 
 $end
