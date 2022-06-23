@@ -140,7 +140,6 @@ SET(source_list
     subgraph_2.cpp
     subgraph_hes2jac.cpp
     tan.cpp
-    test_vector.cpp
     to_csrc.cpp
     to_string.cpp
     value.cpp

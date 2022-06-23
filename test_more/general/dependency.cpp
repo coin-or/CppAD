@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -100,7 +100,7 @@ bool dependency(void)
     // ForSparseJac and bool dependency
     bool transpose  = false;
     bool dependency;
-    // could replace CppAD::vectorBooll by CPPAD_TEST_VECTOR<bool>
+    // could replace CppAD::vectorBooll by CPPAD_TESTVECTOR<bool>
     CppAD::vectorBool eye_bool(n * n), depend_bool(m * n);
     for(size_t i = 0; i < n; i++)
     {   for(size_t j = 0; j < n; j++)

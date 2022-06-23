@@ -128,7 +128,6 @@ extern bool subgraph_1(void);
 extern bool subgraph_2(void);
 extern bool subgraph_hes2jac(void);
 extern bool tan(void);
-extern bool test_vector(void);
 extern bool to_csrc(void);
 extern bool to_string(void);
 // END_SORT_THIS_LINE_MINUS_1
@@ -265,9 +264,6 @@ int main(void)
 # if CPPAD_HAS_EIGEN
     Run( cppad_eigen,     "cppad_eigen"    );
     Run( eigen_mat_inv,   "eigen_mat_inv"  );
-# endif
-# if ! CPPAD_EIGENVECTOR
-    Run( test_vector,     "test_vector"    );
 # endif
     // local sub-directory
     Run( is_pod,         "is_pod"          );
