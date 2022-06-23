@@ -210,7 +210,7 @@ then
 fi
 # ---------------------------------------------------------------------------
 # clean all variables in cmake cache
-cmake_args='-U .+'
+cmake_args='-U .+ -D cmake_defined_ok=FALSE'
 #
 if [ "$verbose" == 'yes' ]
 then

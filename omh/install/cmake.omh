@@ -144,6 +144,8 @@ cmake %%                                                                     \
     -D cmake_install_datadir=%cmake_install_datadir%                         \
     -D cmake_install_docdir=%cmake_install_docdir%                           \
     \
+    -D cmake_defined_ok=%cmake_defined_ok%                                   \
+    \
     -D include_adolc=%true_or_false%                                         \
     -D include_eigen=%true_or_false%                                         \
     -D include_ipopt=%true_or_false%                                         \
@@ -367,6 +369,14 @@ $codei%
 %$$
 There is no default value for $icode cmake_install_docdir$$.
 If it is not specified, the documentation files are not installed.
+
+$head cmake_defined_ok$$
+This must be true when running cmake with a non-empty
+$code CMakeCache.txt$$ file.
+If it is false, some checks will be made to make sure
+certain variables are not defined twice.
+The default value for $icode cmake_defined_ok$$ is true.
+
 
 $head include_adolc$$
 The $cref adolc$$ examples

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -55,7 +55,7 @@ int main(void)
     return 0;
 }"
     )
-    compile_source_test("${source}" boost_multi_thread_ok )
+    compile_source_test(${cmake_defined_ok} "${source}" boost_multi_thread_ok )
     #
     IF( boost_multi_thread_ok )
         ADD_SUBDIRECTORY(bthread)

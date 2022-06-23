@@ -63,6 +63,10 @@ $lnext
 Deprecate use of the following symbols:
 $codei%CPPAD_%package%VECTOR%$$ for $icode package$$ equal to
 $code CPPAD$$, $code STD$$, $code BOOST$$, $code EIGEN$$.
+$lnext
+Add the $cref/cmake_defined_ok/cmake/cmake_defined_ok/$$ symbol
+to the cmake command line.
+This enables one to run cmake with a $code CMakeCache.txt$$ file.
 $lend
 
 $head 06-22$$

@@ -141,6 +141,12 @@ command_line_arg(cmake_install_libdirs lib STRING
     "directories, below prefix, where cmake installs library files"
 )
 #
+# cmake_defined_ok
+command_line_arg(cmake_defined_ok TRUE BOOL
+    "If false, check that some symboles only get defined once"
+    "If true, you can use CMakeCache.txt to store previous settings"
+)
+#
 # cppad_prefix
 command_line_arg(cppad_prefix "${CMAKE_INSTALL_PREFIX}" PATH
     "cppad install prefix"
@@ -199,7 +205,7 @@ int main(void)
     return 0;
 }"
 )
-compile_source_test("${source}" minimal_cplusplus )
+compile_source_test(${cmake_defined_ok} "${source}" minimal_cplusplus )
 IF( NOT minimal_cplusplus  )
     MESSAGE(STATUS "setting C++ standard to 2011")
     SET(CMAKE_CXX_STANDARD 11)
@@ -213,7 +219,7 @@ int main(void)
     return 0;
 }"
 )
-compile_source_test("${source}" use_cplusplus_2017_ok )
+compile_source_test(${cmake_defined_ok} "${source}" use_cplusplus_2017_ok )
 # ----------------------------------------------------------------------------
 #
 # cppad_debug_which

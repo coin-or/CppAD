@@ -51,7 +51,9 @@ IF( clang_or_gnu )
     )
     #
     SET(source "int main(void) { return 0; }")
-    compile_source_test("${source}" compiler_has_conversion_warn )
+    compile_source_test(
+        ${cmake_defined_ok} "${source}" compiler_has_conversion_warn
+    )
     #
     SET(CMAKE_REQUIRED_FLAGS "")
 ELSE( clang_or_gnu )
@@ -104,7 +106,7 @@ int main(void)
     return 0;
 }"
 )
-compile_source_test("${source}" cppad_has_gettimeofday)
+compile_source_test(${cmake_defined_ok} "${source}" cppad_has_gettimeofday)
 # -----------------------------------------------------------------------------
 # Warn user of the following types are signed:
 #   cppad_tape_addr_type, cppad_tape_id_type
@@ -121,7 +123,9 @@ int main(void)
 }
 "
     )
-    compile_source_test("${source}" ${cmake_var}_is_unsigned)
+    compile_source_test(
+        ${cmake_defined_ok} "${source}" ${cmake_var}_is_unsigned
+    )
     IF( NOT ${${cmake_var}_is_unsigned} )
         MESSAGE(STATUS
 "Warning: using a signed type for ${cmake_var} is for CppAD developers only !"
@@ -146,7 +150,7 @@ int main(void)
     return 0;
 }
 " )
-compile_source_test("${source}" cppad_has_mkstemp )
+compile_source_test(${cmake_defined_ok} "${source}" cppad_has_mkstemp )
 # -----------------------------------------------------------------------------
 # cppad_has_tmpname_s
 #
@@ -159,7 +163,7 @@ int main(void)
     return 0;
 }
 " )
-compile_source_test("${source}" cppad_has_tmpnam_s )
+compile_source_test(${cmake_defined_ok} "${source}" cppad_has_tmpnam_s )
 # -----------------------------------------------------------------------------
 # configure.hpp
 CONFIGURE_FILE(

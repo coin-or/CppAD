@@ -9,13 +9,17 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-# compile_source_test(source variable)
+# compile_source_test(defined_ok source variable)
+#
+# defined_ok (in)
+# If this is true, it is OK for variable to be defined on input
+# (it will be replaced). Otherwise it is a fatal error if variable
+# is defined on input.
 #
 # source: (in)
 # contains the source for the program that will be compiled and linked.
 #
 # variable: (out)
-# This variable must not be defined when this macro is called.
 # Upon return, the value of this variable is 1 (0) if the program compiles
 # and links (does not compile and link).
 #
@@ -24,14 +28,17 @@
 # CMAKE_REQUIRED_name is an input to routine; see CHECK_CXX_SOURCE_COMPILES
 # documentation.
 #
-MACRO(compile_source_test source variable)
+MACRO(compile_source_test defined_ok source variable)
+    #
     #
     # check that variable is not yet defined
-    IF( DEFINED ${variable} )
-        MESSAGE(FATAL_ERROR
-            "compile_source_test: ${variable} is defined before expected"
-        )
-    ENDIF( DEFINED ${variable} )
+    IF( NOT ${defined_ok} )
+        IF( DEFINED ${variable} )
+            MESSAGE(FATAL_ERROR
+                "compile_source_test: ${variable} is defined before expected"
+            )
+        ENDIF( DEFINED ${variable} )
+    ENDIF( NOT ${defined_ok} )
     #
     # check that source code compiles
     CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
