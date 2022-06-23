@@ -11,12 +11,15 @@
 # -----------------------------------------------------------------------------
 # Build the example/git directory tests
 #
+# BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    jit.cpp
-    get_started.cpp
-    to_csrc.cpp
     atomic.cpp
+    dynamic.cpp
+    get_started.cpp
+    jit.cpp
+    to_csrc.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
 #
 set_compile_flags( example_jit "${cppad_debug_which}" "${source_list}" )
 #

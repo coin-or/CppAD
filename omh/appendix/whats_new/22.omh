@@ -45,9 +45,19 @@ $spell
     Tc
     msys
     jit
+    csrc
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 06-23$$
+$list number$$
+Change $icode x$$ to $cref/u/to_csrc/u/$$ in the $code to_csrc$$ operation
+and add specifications as the position of the independent dynamic
+parameters and variables in $icode u$$.
+$lnext
+Add the $cref jit_dynamic.cpp$$ example.
+$lend
 
 $head 06-22$$
 $list number$$

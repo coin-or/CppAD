@@ -25,10 +25,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 // test runner
 # include <cppad/utility/test_boolofvoid.hpp>
 
-// external complied tests
+// BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool atomic(void);
+extern bool dynamic(void);
 extern bool get_started(void);
 extern bool to_csrc(void);
+// END_SORT_THIS_LINE_MINUS_1
 
 // main program that runs all the tests
 int main(void)
@@ -41,10 +43,12 @@ int main(void)
 
     // This line is used by test_one.sh
 
-    // external compiled tests
+    // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( atomic,              "atomic"                );
+    Run( dynamic,             "dynamic"               );
     Run( get_started,         "get_started"           );
     Run( to_csrc,             "to_csrc"               );
+    // END_SORT_THIS_LINE_MINUS_1
 
     // check for memory leak
     bool memory_ok = CppAD::thread_alloc::free_all();

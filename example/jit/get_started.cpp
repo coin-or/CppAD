@@ -85,11 +85,11 @@ bool get_started(void)
     //
     // csrc_file
     // created in std::filesystem::current_path()
-    std::string type=  "double";
+    std::string c_type    =  "double";
     std::string csrc_file = "jit_get_started.c";
     std::ofstream ofs;
     ofs.open(csrc_file , std::ofstream::out);
-    g.to_csrc(ofs, type);
+    g.to_csrc(ofs, c_type);
     ofs.close();
     //
     // p, ok
@@ -101,7 +101,7 @@ bool get_started(void)
     //
     // dll_file
     // created in std::filesystem::current_path()
-    std::string dll_file = "jit_getstarted" DLL_EXT;
+    std::string dll_file = "jit_get_started" DLL_EXT;
     CPPAD_TESTVECTOR( std::string) csrc_files(1);
     csrc_files[0] = csrc_file;
     std::map< std::string, std::string > options;

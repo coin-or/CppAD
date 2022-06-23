@@ -11,17 +11,12 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 ---------------------------------------------------------------------------- */
 
 /*
-$begin jit_to_csrc.cpp$$
+$begin jit_dynamic.cpp$$
 $spell
     csrc
 $$
 
-$section C Source Code Corresponding to a Function: Example and Test$$
-
-$head to_csrc$$
-The actual call to $code to_csrc$$ is in the following section of the
-example below:
-$srcthisfile%0%// BEGIN_TO_CSRC%// END_TO_CSRC%1%$$
+$section JIT With Dynamic Parameters: Example and Test$$
 
 $head Source$$
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
@@ -44,7 +39,7 @@ $end
 # endif
 
 # include <cppad/cppad.hpp>
-bool to_csrc(void)
+bool dynamic(void)
 {   bool ok = true;
     //
     using CppAD::AD;
@@ -53,43 +48,43 @@ bool to_csrc(void)
     using CppAD::NearEqual;
     //
     // nx, ny
-    size_t nx = 2, ny = 1;
+    size_t np = 2, nx = 2, ny = 1;
     //
     // f(x) = x_0 + x_1
-    CPPAD_TESTVECTOR( AD<double> ) ax(nx), ay(ny);
-    ax[0] = 0.0;
-    ax[1] = 1.0;
-    Independent(ax);
-    ay[0] = ax[0] + ax[1];
+    CPPAD_TESTVECTOR( AD<double> ) ap(np), ax(nx), ay(ny);
+    ap[0] = 0.0;
+    ap[1] = 1.0;
+    ax[0] = 2.0;
+    ax[1] = 4.0;
+    Independent(ax, ap);
+    ay[0] = ap[0] * cos(ax[0])  + ap[1] * sin(ax[1]);
     ADFun<double> f(ax, ay);
     f.function_name_set("f");
     //
     // csrc_file
     // created in std::filesystem::current_path
     std::string c_type    = "double";
-    std::string csrc_file = "to_csrc.c";
+    std::string csrc_file = "jit_dynamic.c";
     std::ofstream ofs;
     ofs.open(csrc_file , std::ofstream::out);
-// BEGIN_TO_CSRC
     f.to_csrc(ofs, c_type);
-// END_TO_CSRC
     ofs.close();
     //
     // dll_file
     // created in std::filesystem::current_path
-    std::string dll_file = "jit_to_csrc" DLL_EXT;
+    std::string dll_file = "jit_dynamic" DLL_EXT;
     CPPAD_TESTVECTOR( std::string) csrc_files(1);
     csrc_files[0] = csrc_file;
     std::map< std::string, std::string > options;
     std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
     if( err_msg != "" )
-    {   std::cerr << "jit_to_csrc: err_msg = " << err_msg << "\n";
+    {   std::cerr << "jit_dynamic: err_msg = " << err_msg << "\n";
         return false;
     }
     // dll_linker
     CppAD::link_dll_lib dll_linker(dll_file, err_msg);
     if( err_msg != "" )
-    {   std::cerr << "jit_to_csrc: err_msg = " << err_msg << "\n";
+    {   std::cerr << "jit_dynamic: err_msg = " << err_msg << "\n";
         return false;
     }
     //
@@ -97,7 +92,7 @@ bool to_csrc(void)
     std::string function_name = "cppad_jit_f";
     void* void_ptr = dll_linker(function_name, err_msg);
     if( err_msg != "" )
-    {   std::cerr << "jit_to_csrc: err_msg = " << err_msg << "\n";
+    {   std::cerr << "dynamic: err_msg = " << err_msg << "\n";
         return false;
     }
     //
@@ -108,20 +103,24 @@ bool to_csrc(void)
     jit_double f_ptr =
         reinterpret_cast<jit_double>(void_ptr);
     //
-    // x, y, compare_change
-    // y = f(x)
+    // u, y, compare_change
+    // y = f(u)
+    size_t nu             = np + nx;
     size_t compare_change = 0;
-    std::vector<double> x(nx), y(ny);
-    x[0] = 0.3;
-    x[1] = 0.5;
-    f_ptr(nx, x.data(), ny, y.data(), &compare_change);
+    std::vector<double> u(nu), y(ny);
+    u[0] = 0.3;  // p[0]
+    u[1] = 0.5;  // p[0]
+    u[2] = 0.7;  // x[0]
+    u[3] = 0.9;  // x[1]
+    f_ptr(nu, u.data(), ny, y.data(), &compare_change);
     //
     // ok
     ok &= compare_change == 0;
     //
     // ok
+    // f(u) = p[0] * cos(x[0]) + p[1] * sin(x[1])
     double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-    double check = x[0] + x[1];
+    double check = u[0] * std::cos(u[2]) + u[1] * std::sin(u[3]);
     ok &= NearEqual(y[0], check, eps99, eps99);
     //
     return ok;

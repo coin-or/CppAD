@@ -26,7 +26,7 @@ $spell
     cpp
     csrc
     cppad
-    nx
+    nu
     bool
     Vec
     typedef
@@ -71,7 +71,7 @@ $code float$$, $code double$$, or $code long_double$$.
 
 $head JIT Functions$$
 $icode%flag% = cppad_jit_%function_name%(
-    %nx%, %x%, %ny%, %y%, %compare_change%
+    %nu%, %u%, %ny%, %y%, %compare_change%
 )%$$
 $codei%
 typedef int (*jit_%c_type%)(
@@ -87,7 +87,7 @@ the function type definition.
 
 $head Atomic Callbacks$$
 $icode%flag% = cppad_atomic_%function_name%(
-    %call_id%, %nx%, %x%, %ny%, %y%, %compare_change%
+    %call_id%, %nu%, %u%, %ny%, %y%, %compare_change%
 )%$$
 $codei%
 typedef int (*jit_%c_type%)(
@@ -103,14 +103,18 @@ This argument is only used during atomic four function callbacks,
 in which case it is the corresponding
 $cref/call_id/atomic_four_call/call_id/$$.
 
-$head nx$$
-is the number of independent variables plus number of independent dynamic
-parameters for this function.
+$head nu$$
+is the number of independent dynamic parameters
+plus number of independent variables for the function $icode fun$$.
 
-$head x$$
-is a C vector of size $icode nx$$ containing the independent variables
-and independent dynamic parameters.
-The dynamic parameter come first and then the variables.
+$head u$$
+is a C vector of size $icode nu$$ containing the independent dynamic parameters
+and independent variables
+The independent dynamic parameter come first as in the same order as
+$cref/dynamic/Independent/dynamic/$$ in the call to $code Independent$$
+for this function.
+The independent variables are in the same order as
+$cref/x/Independent/x/$$ in the call to $code Independent$$ for this function.
 
 $head ny$$
 is the number of dependent values for this function
@@ -119,7 +123,7 @@ is the number of dependent values for this function
 $head y$$
 is a C vector of size $icode ny$$.
 This input values of its elements do not matter.
-Upon return, it contains the function value correspond to $icode x$$.
+Upon return, it contains the function value correspond to $icode u$$.
 
 $head compare_change$$
 This argument is both an input and an output.
@@ -129,7 +133,7 @@ can be used to accumulate the number of changes between multiplier calls.
 
 $head flag$$
 If this is zero, no error was detected.
-If it is one (two), $icode nx$$ ($icode ny$$) does not have its expected value.
+If it is one (two), $icode nu$$ ($icode ny$$) does not have its expected value.
 
 $head Restrictions$$
 The $code to_csrc$$ routine is not implemented for

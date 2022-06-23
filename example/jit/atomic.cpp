@@ -134,11 +134,11 @@ bool atomic(void)
     // ny, ay
     size_t ny = nx;
     CPPAD_TESTVECTOR( AD<double> ) ay(ny);
-    CPPAD_TESTVECTOR( AD<double> ) au(1), aw(1);
+    CPPAD_TESTVECTOR( AD<double> ) atom_x(1), atom_y(1);
     for(size_t j = 0; j < nx; ++j)
-    {   au[0] = ax[j];
-        reciprocal(au, aw);
-        ay[j] = aw[0];
+    {   atom_x[0] = ax[j];
+        reciprocal(atom_x, atom_y);
+        ay[j] = atom_y[0];
     }
     //
     // function_name
@@ -156,17 +156,17 @@ bool atomic(void)
     //
     // csrc_files
     CppAD::vector<std::string> csrc_files(2);
-    csrc_files[0] = write_c_file(0, reciprocal.forward_zero() );
-    std::string type = "double";
+    csrc_files[0]      = write_c_file(0, reciprocal.forward_zero() );
+    std::string c_type = "double";
     std::stringstream ss;
-    f.to_csrc(ss, type);
+    f.to_csrc(ss, c_type);
     csrc_files[1] = write_c_file(1, ss.str() );
     //
     // create_dll_lib
     std::map< std::string, std::string > options;
     std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
     if( err_msg != "" )
-    {   std::cout << err_msg << "\n";
+    {   std::cout << "jit_atomic: " << err_msg << "\n";
         ok = false;
         return ok;
     }
@@ -180,7 +180,7 @@ bool atomic(void)
     // jit_function
     jit_double jit_function = nullptr;
     if( err_msg != "" )
-    {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
+    {   std::cout << "jit_atomic: " << err_msg << "\n";
         ok = false;
     }
     else
@@ -190,7 +190,7 @@ bool atomic(void)
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
-        {   std::cout << "dll_linker fun_ptr error: " << err_msg << "\n";
+        {   std::cout << "jit_atomic: " << err_msg << "\n";
             ok = false;
         }
     }
