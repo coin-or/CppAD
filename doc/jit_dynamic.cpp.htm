@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>C Source Code Corresponding to a Function: Example and Test</title>
+<title>JIT With Dynamic Parameters: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="C Source Code Corresponding to a Function: Example and Test">
-<meta name="keywords" id="keywords" content=" c source code corresponding to function: example test to_csrc ">
+<meta name="description" id="description" content="JIT With Dynamic Parameters: Example and Test">
+<meta name="keywords" id="keywords" content=" jit with dynamic parameters: example test source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_jit_to_csrc.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_jit_dynamic.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="jit_get_started.cpp.htm" target="_top">Prev</a>
-</td><td><a href="jit_atomic.cpp.htm" target="_top">Next</a>
+<td><a href="jit_atomic.cpp.htm" target="_top">Prev</a>
+</td><td><a href="preprocessor.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>ADFun</option>
 <option>to_csrc</option>
 <option>example_jit</option>
-<option>jit_to_csrc.cpp</option>
+<option>jit_dynamic.cpp</option>
 </select>
 </td>
 <td>
@@ -62,11 +62,10 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_example_jit_htm.js'></script>
 </td>
-<td>jit_to_csrc.cpp</td>
+<td>jit_dynamic.cpp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>to_csrc</option>
 <option>Source</option>
 </select>
 </td>
@@ -77,15 +76,7 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>C Source Code Corresponding to a Function: Example and Test</big></big></b></center>
-<br>
-<b><big><a name="to_csrc" id="to_csrc">to_csrc</a></big></b>
-<br>
-The actual call to <code><font color="blue">to_csrc</font></code> is in the following section of the
-example below:
-<pre style='display:inline'><tt>
-    f<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ofs<font color="#990000">,</font> c_type<font color="#990000">);</font>
-</tt></pre>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>JIT With Dynamic Parameters: Example and Test</big></big></b></center>
 <br>
 <b><big><a name="Source" id="Source">Source</a></big></b>
 
@@ -104,7 +95,7 @@ example below:
 <b><font color="#000080"># endif</font></b>
 
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
-<font color="#009900">bool</font> <b><font color="#000000">to_csrc</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">dynamic</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
@@ -113,43 +104,43 @@ example below:
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// nx, ny</font></i>
-    <font color="#008080">size_t</font> nx <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">,</font> ny <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+    <font color="#008080">size_t</font> np <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">,</font> nx <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">,</font> ny <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// f(x) = x_0 + x_1</font></i>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
-    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
-    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
-    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">);</font>
-    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ap</font></b><font color="#990000">(</font>np<font color="#990000">),</font> <b><font color="#000000">ax</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+    ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+    ap<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+    ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+    ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+    <b><font color="#000000">Independent</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ap<font color="#990000">);</font>
+    ay<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ap<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">cos</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])</font>  <font color="#990000">+</font> ap<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> <b><font color="#000000">sin</font></b><font color="#990000">(</font>ax<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]);</font>
     <font color="#008080">ADFun&lt;double&gt;</font> <b><font color="#000000">f</font></b><font color="#990000">(</font>ax<font color="#990000">,</font> ay<font color="#990000">);</font>
     f<font color="#990000">.</font><b><font color="#000000">function_name_set</font></b><font color="#990000">(</font><font color="#FF0000">"f"</font><font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// csrc_file</font></i>
     <i><font color="#9A1900">// created in std::filesystem::current_path</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font> c_type    <font color="#990000">=</font> <font color="#FF0000">"double"</font><font color="#990000">;</font>
-    std<font color="#990000">::</font><font color="#008080">string</font> csrc_file <font color="#990000">=</font> <font color="#FF0000">"to_csrc.c"</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> csrc_file <font color="#990000">=</font> <font color="#FF0000">"jit_dynamic.c"</font><font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">ofstream</font> ofs<font color="#990000">;</font>
     ofs<font color="#990000">.</font><b><font color="#000000">open</font></b><font color="#990000">(</font>csrc_file <font color="#990000">,</font> std<font color="#990000">::</font>ofstream<font color="#990000">::</font>out<font color="#990000">);</font>
-<i><font color="#9A1900">// BEGIN_TO_CSRC</font></i>
     f<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ofs<font color="#990000">,</font> c_type<font color="#990000">);</font>
-<i><font color="#9A1900">// END_TO_CSRC</font></i>
     ofs<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// dll_file</font></i>
     <i><font color="#9A1900">// created in std::filesystem::current_path</font></i>
-    std<font color="#990000">::</font><font color="#008080">string</font> dll_file <font color="#990000">=</font> <font color="#FF0000">"jit_to_csrc"</font> DLL_EXT<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> dll_file <font color="#990000">=</font> <font color="#FF0000">"jit_dynamic"</font> DLL_EXT<font color="#990000">;</font>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> std<font color="#990000">::</font>string<font color="#990000">)</font> <b><font color="#000000">csrc_files</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     csrc_files<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> csrc_file<font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">map&lt; std::string, std::string &gt;</font> options<font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">string</font> err_msg <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">create_dll_lib</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> csrc_files<font color="#990000">,</font> options<font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_to_csrc: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_dynamic: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// dll_linker</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">link_dll_lib</font> <b><font color="#000000">dll_linker</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> err_msg<font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_to_csrc: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_dynamic: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
@@ -157,7 +148,7 @@ example below:
     std<font color="#990000">::</font><font color="#008080">string</font> function_name <font color="#990000">=</font> <font color="#FF0000">"cppad_jit_f"</font><font color="#990000">;</font>
     <font color="#009900">void</font><font color="#990000">*</font> void_ptr <font color="#990000">=</font> <b><font color="#000000">dll_linker</font></b><font color="#990000">(</font>function_name<font color="#990000">,</font> err_msg<font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_to_csrc: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"dynamic: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
@@ -168,26 +159,30 @@ example below:
     <font color="#008080">jit_double</font> f_ptr <font color="#990000">=</font>
         <b><font color="#0000FF">reinterpret_cast</font></b><font color="#990000">&lt;</font>jit_double<font color="#990000">&gt;(</font>void_ptr<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
-    <i><font color="#9A1900">// x, y, compare_change</font></i>
-    <i><font color="#9A1900">// y = f(x)</font></i>
+    <i><font color="#9A1900">// u, y, compare_change</font></i>
+    <i><font color="#9A1900">// y = f(u)</font></i>
+    <font color="#008080">size_t</font> nu             <font color="#990000">=</font> np <font color="#990000">+</font> nx<font color="#990000">;</font>
     <font color="#008080">size_t</font> compare_change <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-    std<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font>nx<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
-    x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>
-    x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
-    <b><font color="#000000">f_ptr</font></b><font color="#990000">(</font>nx<font color="#990000">,</font> x<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> ny<font color="#990000">,</font> y<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change<font color="#990000">);</font>
+    std<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">u</font></b><font color="#990000">(</font>nu<font color="#990000">),</font> <b><font color="#000000">y</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
+    u<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.3</font><font color="#990000">;</font>  <i><font color="#9A1900">// p[0]</font></i>
+    u<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>  <i><font color="#9A1900">// p[0]</font></i>
+    u<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.7</font><font color="#990000">;</font>  <i><font color="#9A1900">// x[0]</font></i>
+    u<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.9</font><font color="#990000">;</font>  <i><font color="#9A1900">// x[1]</font></i>
+    <b><font color="#000000">f_ptr</font></b><font color="#990000">(</font>nu<font color="#990000">,</font> u<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> ny<font color="#990000">,</font> y<font color="#990000">.</font><b><font color="#000000">data</font></b><font color="#990000">(),</font> <font color="#990000">&amp;</font>compare_change<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ok</font></i>
     ok <font color="#990000">&amp;=</font> compare_change <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// ok</font></i>
+    <i><font color="#9A1900">// f(u) = p[0] * cos(x[0]) + p[1] * sin(x[1])</font></i>
     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
-    <font color="#009900">double</font> check <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+    <font color="#009900">double</font> check <font color="#990000">=</font> u<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">cos</font></b><font color="#990000">(</font>u<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">])</font> <font color="#990000">+</font> u<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">*</font> std<font color="#990000">::</font><b><font color="#000000">sin</font></b><font color="#990000">(</font>u<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]);</font>
     ok <font color="#990000">&amp;=</font> <b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font> check<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: example/jit/to_csrc.cpp
+<hr>Input File: example/jit/dynamic.cpp
 
 </body>
 </html>

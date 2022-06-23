@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using The CppAD Test Vector Template Class</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using The CppAD Test Vector Template Class">
-<meta name="keywords" id="keywords" content=" using the cppad test vector template class syntax choice cppad::vector std::vector boost::numeric::ublas::vector cppad::eigen_vector ">
+<meta name="keywords" id="keywords" content=" using the cppad test vector template class syntax choice cppad::vector cppad_cppadvector deprecated 2022-06-22 std::vector cppad_stdvector boost::numeric::ublas::vector cppad_boostvector cppad::eigen_vector cppad_eigenvector ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,9 +64,13 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Choice</option>
 <option>CppAD::vector</option>
+<option>---..CPPAD_CPPADVECTOR, Deprecated 2022-06-22</option>
 <option>std::vector</option>
+<option>---..CPPAD_STDVECTOR, Deprecated 2022-06-22</option>
 <option>boost::numeric::ublas::vector</option>
+<option>---..CPPAD_BOOSTVECTOR, Deprecated 2022-06-22</option>
 <option>CppAD::eigen_vector</option>
+<option>---..CPPAD_EIGENVECTOR, Deprecated 2022-06-22</option>
 </select>
 </td>
 </tr></table><br>
@@ -109,16 +113,15 @@ If in the <a href="cmake.htm#CMake Command" target="_top"><span style='white-spa
 
 you specify <a href="cppad_testvector.htm" target="_top"><span style='white-space: nowrap'>cppad_testvector</span></a>
  to be <code><font color="blue">cppad</font></code>,
-<code><font color="blue">CPPAD_CPPADVECTOR</font></code> will be true.
-In this case,
-<code><font color="blue">CPPAD_TESTVECTOR</font></code> is defined by the following source code:
-<pre style='display:inline'><tt>
-<b><font color="#000080"># if</font></b> CPPAD_CPPADVECTOR
-<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font> Scalar <font color="#990000">&gt;</font>
-<b><font color="#000080"># endif</font></b>
-</tt></pre>
-In this case CppAD will use its own vector for
-many of its examples and tests.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+#&nbsp;define&nbsp;CPPAD_TESTVECTOR(</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;CppAD::vector&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;<br>
+</span></font></code>
+<br>
+<big><a name="CppAD::vector.CPPAD_CPPADVECTOR, Deprecated 2022-06-22" id="CppAD::vector.CPPAD_CPPADVECTOR, Deprecated 2022-06-22">CPPAD_CPPADVECTOR, Deprecated 2022-06-22</a></big>
+<br>
+This symbol is 1 (0) if the definition above
+is used (is not used) for <code><font color="blue">CPPAD_TESTVECTOR</font></code>.
 
 <br>
 <br>
@@ -128,15 +131,15 @@ If in the cmake command
 you specify 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
  to be <code><font color="blue">std</font></code>,
-<code><font color="blue">CPPAD_STDVECTOR</font></code> will be true.
-In this case,
-<code><font color="blue">CPPAD_TESTVECTOR</font></code> is defined by the following source code:
-<pre><tt><b><font color="#000080"># if</font></b> CPPAD_STDVECTOR
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;vector&gt;</font>
-<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> std<font color="#990000">::</font>vector<font color="#990000">&lt;</font> Scalar <font color="#990000">&gt;</font>
-<b><font color="#000080"># endif</font></b></tt></pre>
-In this case CppAD will use standard vector for
-many of its examples and tests.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+#&nbsp;define&nbsp;CPPAD_TESTVECTOR(</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;std::vector&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;<br>
+</span></font></code>
+<br>
+<big><a name="std::vector.CPPAD_STDVECTOR, Deprecated 2022-06-22" id="std::vector.CPPAD_STDVECTOR, Deprecated 2022-06-22">CPPAD_STDVECTOR, Deprecated 2022-06-22</a></big>
+<br>
+This symbol is 1 (0) if the definition above
+is used (is not used) for <code><font color="blue">CPPAD_TESTVECTOR</font></code>.
 
 <br>
 <br>
@@ -146,15 +149,15 @@ If in the cmake command
 you specify 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
  to be <code><font color="blue">boost</font></code>,
-<code><font color="blue">CPPAD_BOOSTVECTOR</font></code> will be true.
-In this case,
-<code><font color="blue">CPPAD_TESTVECTOR</font></code> is defined by the following source code:
-<pre><tt><b><font color="#000080"># if</font></b> CPPAD_BOOSTVECTOR
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;boost/numeric/ublas/vector.hpp&gt;</font>
-<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> boost<font color="#990000">::</font>numeric<font color="#990000">::</font>ublas<font color="#990000">::</font>vector<font color="#990000">&lt;</font> Scalar <font color="#990000">&gt;</font>
-<b><font color="#000080"># endif</font></b></tt></pre>
-In this case CppAD will use this boost vector for
-many of its examples and tests.
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+#&nbsp;define&nbsp;CPPAD_TESTVECTOR(</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;boost::numeric::ublas::vector&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;<br>
+</span></font></code>
+<br>
+<big><a name="boost::numeric::ublas::vector.CPPAD_BOOSTVECTOR, Deprecated 2022-06-22" id="boost::numeric::ublas::vector.CPPAD_BOOSTVECTOR, Deprecated 2022-06-22">CPPAD_BOOSTVECTOR, Deprecated 2022-06-22</a></big>
+<br>
+This symbol is 1 (0) if the definition above
+is used (is not used) for <code><font color="blue">CPPAD_TESTVECTOR</font></code>.
 
 <br>
 <br>
@@ -164,17 +167,21 @@ If in the cmake command
 you specify 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_testvector</span></font></i></code>
  to be <code><font color="blue">eigen</font></code>,
-<code><font color="blue">CPPAD_EIGENVECTOR</font></code> will be true.
-In this case,
-<code><font color="blue">CPPAD_TESTVECTOR</font></code> is defined by the following source code:
-<pre><tt><b><font color="#000080"># if</font></b> CPPAD_EIGENVECTOR
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/example/cppad_eigen.hpp&gt;</font>
-<b><font color="#000080"># define</font></b> <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font>Scalar<font color="#990000">)</font> CppAD<font color="#990000">::</font>eigen_vector<font color="#990000">&lt;</font> Scalar <font color="#990000">&gt;</font>
-<b><font color="#000080"># endif</font></b></tt></pre>
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+#&nbsp;define&nbsp;CPPAD_TESTVECTOR(</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;CppAD::eigen_vector&lt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Scalar</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;<br>
+</span></font></code>
 see <a href="cppad_eigen.hpp.htm#eigen_vector" target="_top"><span style='white-space: nowrap'>eigen_vector</span></a>
 .
 In this case CppAD will use the Eigen vector
 for many of its examples and tests.
+
+<br>
+<br>
+<big><a name="CppAD::eigen_vector.CPPAD_EIGENVECTOR, Deprecated 2022-06-22" id="CppAD::eigen_vector.CPPAD_EIGENVECTOR, Deprecated 2022-06-22">CPPAD_EIGENVECTOR, Deprecated 2022-06-22</a></big>
+<br>
+This symbol is 1 (0) if the definition above
+is used (is not used) for <code><font color="blue">CPPAD_TESTVECTOR</font></code>.
 
 
 <hr>Input File: include/cppad/core/testvector.hpp

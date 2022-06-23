@@ -145,11 +145,11 @@ compilation, linking, and running of C source code that computes derivatives.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// csrc_file</font></i>
     <i><font color="#9A1900">// created in std::filesystem::current_path()</font></i>
-    std<font color="#990000">::</font><font color="#008080">string</font> type<font color="#990000">=</font>  <font color="#FF0000">"double"</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> c_type    <font color="#990000">=</font>  <font color="#FF0000">"double"</font><font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">string</font> csrc_file <font color="#990000">=</font> <font color="#FF0000">"jit_get_started.c"</font><font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">ofstream</font> ofs<font color="#990000">;</font>
     ofs<font color="#990000">.</font><b><font color="#000000">open</font></b><font color="#990000">(</font>csrc_file <font color="#990000">,</font> std<font color="#990000">::</font>ofstream<font color="#990000">::</font>out<font color="#990000">);</font>
-    g<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ofs<font color="#990000">,</font> type<font color="#990000">);</font>
+    g<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ofs<font color="#990000">,</font> c_type<font color="#990000">);</font>
     ofs<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// p, ok</font></i>
@@ -161,7 +161,7 @@ compilation, linking, and running of C source code that computes derivatives.
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// dll_file</font></i>
     <i><font color="#9A1900">// created in std::filesystem::current_path()</font></i>
-    std<font color="#990000">::</font><font color="#008080">string</font> dll_file <font color="#990000">=</font> <font color="#FF0000">"jit_getstarted"</font> DLL_EXT<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> dll_file <font color="#990000">=</font> <font color="#FF0000">"jit_get_started"</font> DLL_EXT<font color="#990000">;</font>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> std<font color="#990000">::</font>string<font color="#990000">)</font> <b><font color="#000000">csrc_files</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     csrc_files<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> csrc_file<font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">map&lt; std::string, std::string &gt;</font> options<font color="#990000">;</font>

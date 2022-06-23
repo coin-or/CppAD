@@ -19,7 +19,7 @@ var list_current0 = [
 'preprocessor.htm#CPPAD_USE_CPLUSPLUS_2011',
 'preprocessor.htm#CPPAD_USE_CPLUSPLUS_2017',
 'preprocessor.htm#Documented Elsewhere',
-'preprocessor.htm#Deprecated'
+'preprocessor.htm#Documented Elsewhere.Deprecated'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

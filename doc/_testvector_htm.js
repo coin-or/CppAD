@@ -14,9 +14,13 @@ var list_current0 = [
 'testvector.htm#Syntax',
 'testvector.htm#Choice',
 'testvector.htm#CppAD::vector',
+'testvector.htm#CppAD::vector.CPPAD_CPPADVECTOR, Deprecated 2022-06-22',
 'testvector.htm#std::vector',
+'testvector.htm#std::vector.CPPAD_STDVECTOR, Deprecated 2022-06-22',
 'testvector.htm#boost::numeric::ublas::vector',
-'testvector.htm#CppAD::eigen_vector'
+'testvector.htm#boost::numeric::ublas::vector.CPPAD_BOOSTVECTOR, Deprecated 2022-06-22',
+'testvector.htm#CppAD::eigen_vector',
+'testvector.htm#CppAD::eigen_vector.CPPAD_EIGENVECTOR, Deprecated 2022-06-22'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

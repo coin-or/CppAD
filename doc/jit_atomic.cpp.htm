@@ -32,7 +32,7 @@ A:active { color : purple }
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td><a href="jit_to_csrc.cpp.htm" target="_top">Prev</a>
-</td><td><a href="preprocessor.htm" target="_top">Next</a>
+</td><td><a href="jit_dynamic.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -191,11 +191,11 @@ std<font color="#990000">::</font><font color="#008080">string</font> <b><font c
     <i><font color="#9A1900">// ny, ay</font></i>
     <font color="#008080">size_t</font> ny <font color="#990000">=</font> nx<font color="#990000">;</font>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">ay</font></b><font color="#990000">(</font>ny<font color="#990000">);</font>
-    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">au</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">aw</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+    <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> AD<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;</font> <font color="#990000">)</font> <b><font color="#000000">atom_x</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">),</font> <b><font color="#000000">atom_y</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> nx<font color="#990000">;</font> <font color="#990000">++</font>j<font color="#990000">)</font>
-    <font color="#FF0000">{</font>   au<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font>j<font color="#990000">];</font>
-        <b><font color="#000000">reciprocal</font></b><font color="#990000">(</font>au<font color="#990000">,</font> aw<font color="#990000">);</font>
-        ay<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> aw<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+    <font color="#FF0000">{</font>   atom_x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> ax<font color="#990000">[</font>j<font color="#990000">];</font>
+        <b><font color="#000000">reciprocal</font></b><font color="#990000">(</font>atom_x<font color="#990000">,</font> atom_y<font color="#990000">);</font>
+        ay<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> atom_y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// function_name</font></i>
@@ -213,17 +213,17 @@ std<font color="#990000">::</font><font color="#008080">string</font> <b><font c
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// csrc_files</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;std::string&gt;</font> <b><font color="#000000">csrc_files</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
-    csrc_files<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">write_c_file</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> reciprocal<font color="#990000">.</font><b><font color="#000000">forward_zero</font></b><font color="#990000">()</font> <font color="#990000">);</font>
-    std<font color="#990000">::</font><font color="#008080">string</font> type <font color="#990000">=</font> <font color="#FF0000">"double"</font><font color="#990000">;</font>
+    csrc_files<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>      <font color="#990000">=</font> <b><font color="#000000">write_c_file</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> reciprocal<font color="#990000">.</font><b><font color="#000000">forward_zero</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> c_type <font color="#990000">=</font> <font color="#FF0000">"double"</font><font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">stringstream</font> ss<font color="#990000">;</font>
-    f<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ss<font color="#990000">,</font> type<font color="#990000">);</font>
+    f<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ss<font color="#990000">,</font> c_type<font color="#990000">);</font>
     csrc_files<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">write_c_file</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> ss<font color="#990000">.</font><b><font color="#000000">str</font></b><font color="#990000">()</font> <font color="#990000">);</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// create_dll_lib</font></i>
     std<font color="#990000">::</font><font color="#008080">map&lt; std::string, std::string &gt;</font> options<font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">string</font> err_msg <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">create_dll_lib</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> csrc_files<font color="#990000">,</font> options<font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_atomic: "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
     <font color="#FF0000">}</font>
@@ -237,7 +237,7 @@ std<font color="#990000">::</font><font color="#008080">string</font> <b><font c
     <i><font color="#9A1900">// jit_function</font></i>
     <font color="#008080">jit_double</font> jit_function <font color="#990000">=</font> nullptr<font color="#990000">;</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"dll_linker ctor error: "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_atomic: "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">else</font></b>
@@ -247,7 +247,7 @@ std<font color="#990000">::</font><font color="#008080">string</font> <b><font c
                 <b><font color="#000000">dll_linker</font></b><font color="#990000">(</font>complete_name<font color="#990000">,</font> err_msg<font color="#990000">)</font>
         <font color="#990000">);</font>
         <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"dll_linker fun_ptr error: "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+        <font color="#FF0000">{</font>   std<font color="#990000">::</font>cout <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_atomic: "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
             ok <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>

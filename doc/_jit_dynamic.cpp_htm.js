@@ -7,19 +7,13 @@ var list_across0 = [
 ];
 var list_up0 = [
 'cppad.htm',
-'appendix.htm',
-'deprecated.htm',
-'test_vector.htm'
+'adfun.htm',
+'to_csrc.htm',
+'example_jit.htm',
+'jit_dynamic.cpp.htm'
 ];
 var list_current0 = [
-'test_vector.htm#Deprecated 2012-07-03',
-'test_vector.htm#Syntax',
-'test_vector.htm#Introduction',
-'test_vector.htm#MS Windows',
-'test_vector.htm#CppAD::vector',
-'test_vector.htm#std::vector',
-'test_vector.htm#boost::numeric::ublas::vector',
-'test_vector.htm#CppADvector Deprecated 2007-07-28'
+'jit_dynamic.cpp.htm#Source'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

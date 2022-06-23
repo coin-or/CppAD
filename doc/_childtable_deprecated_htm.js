@@ -10,7 +10,6 @@ document.write('\
 <option>omp_alloc</option>\
 <option>memory_leak</option>\
 <option>epsilon</option>\
-<option>test_vector</option>\
 <option>cppad_ipopt_nlp</option>\
 <option>atomic_one</option>\
 <option>atomic_two</option>\
@@ -32,7 +31,6 @@ function deprecated_child(item)
 		'omp_alloc.htm',
 		'memory_leak.htm',
 		'epsilon.htm',
-		'test_vector.htm',
 		'cppad_ipopt_nlp.htm',
 		'atomic_one.htm',
 		'atomic_two.htm',

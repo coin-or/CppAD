@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C Source Code Corresponding to an ADFun Object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C Source Code Corresponding to an ADFun Object">
-<meta name="keywords" id="keywords" content=" c source code corresponding to adfun object syntax prototype fun base recbase os c_type jit functions atomic callbacks call_id nx x ny y compare_change flag restrictions example ">
+<meta name="keywords" id="keywords" content=" c source code corresponding to adfun object syntax prototype fun base recbase os c_type jit functions atomic callbacks call_id nu u ny y compare_change flag restrictions example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -73,8 +73,8 @@ A:active { color : purple }
 <option>JIT Functions</option>
 <option>Atomic Callbacks</option>
 <option>call_id</option>
-<option>nx</option>
-<option>x</option>
+<option>nu</option>
+<option>u</option>
 <option>ny</option>
 <option>y</option>
 <option>compare_change</option>
@@ -158,7 +158,7 @@ The possible values for this argument are:
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cppad_jit_</span></font><i><font color="black"><span style='white-space: nowrap'>function_name</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ny</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>compare_change</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ny</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>compare_change</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -187,7 +187,7 @@ the function type definition.
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>flag</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;cppad_atomic_</span></font><i><font color="black"><span style='white-space: nowrap'>function_name</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ny</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>compare_change</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>call_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ny</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>compare_change</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -215,20 +215,28 @@ in which case it is the corresponding
 
 <br>
 <br>
-<b><big><a name="nx" id="nx">nx</a></big></b>
+<b><big><a name="nu" id="nu">nu</a></big></b>
 <br>
-is the number of independent variables plus number of independent dynamic
-parameters for this function.
+is the number of independent dynamic parameters
+plus number of independent variables for the function 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+.
 
 <br>
 <br>
-<b><big><a name="x" id="x">x</a></big></b>
+<b><big><a name="u" id="u">u</a></big></b>
 <br>
 is a C vector of size 
-<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
- containing the independent variables
-and independent dynamic parameters.
-The dynamic parameter come first and then the variables.
+<code><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i></code>
+ containing the independent dynamic parameters
+and independent variables
+The independent dynamic parameter come first as in the same order as
+<a href="independent.htm#dynamic" target="_top"><span style='white-space: nowrap'>dynamic</span></a>
+ in the call to <code><font color="blue">Independent</font></code>
+for this function.
+The independent variables are in the same order as
+<a href="independent.htm#x" target="_top"><span style='white-space: nowrap'>x</span></a>
+ in the call to <code><font color="blue">Independent</font></code> for this function.
 
 <br>
 <br>
@@ -246,7 +254,7 @@ is a C vector of size
 .
 This input values of its elements do not matter.
 Upon return, it contains the function value correspond to 
-<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>u</span></font></i></code>
 .
 
 <br>
@@ -268,7 +276,7 @@ can be used to accumulate the number of changes between multiplier calls.
 <br>
 If this is zero, no error was detected.
 If it is one (two), 
-<code><i><font color="black"><span style='white-space: nowrap'>nx</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i></code>
  (
 <code><i><font color="black"><span style='white-space: nowrap'>ny</span></font></i></code>
 ) does not have its expected value.
