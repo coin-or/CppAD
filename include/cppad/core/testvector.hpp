@@ -56,6 +56,10 @@ $codei%
 # define CPPAD_TESTVECTOR(%Scalar%) CppAD::vector< %Scalar% >
 %$$
 
+$subhead CPPAD_CPPADVECTOR, Deprecated 2022-06-22$$
+This symbol is 1 (0) if the definition above
+is used (is not used) for $code CPPAD_TESTVECTOR$$.
+
 $head std::vector$$
 If in the cmake command
 you specify $icode cppad_testvector$$ to be $code std$$,
@@ -63,12 +67,20 @@ $codei%
 # define CPPAD_TESTVECTOR(%Scalar%) std::vector< %Scalar% >
 %$$
 
+$subhead CPPAD_STDVECTOR, Deprecated 2022-06-22$$
+This symbol is 1 (0) if the definition above
+is used (is not used) for $code CPPAD_TESTVECTOR$$.
+
 $head boost::numeric::ublas::vector$$
 If in the cmake command
 you specify $icode cppad_testvector$$ to be $code boost$$,
 $codei%
 # define CPPAD_TESTVECTOR(%Scalar%) boost::numeric::ublas::vector< %Scalar% >
 %$$
+
+$subhead CPPAD_BOOSTVECTOR, Deprecated 2022-06-22$$
+This symbol is 1 (0) if the definition above
+is used (is not used) for $code CPPAD_TESTVECTOR$$.
 
 $head CppAD::eigen_vector$$
 If in the cmake command
@@ -79,6 +91,10 @@ $codei%
 see $cref/eigen_vector/cppad_eigen.hpp/eigen_vector/$$.
 In this case CppAD will use the Eigen vector
 for many of its examples and tests.
+
+$subhead CPPAD_EIGENVECTOR, Deprecated 2022-06-22$$
+This symbol is 1 (0) if the definition above
+is used (is not used) for $code CPPAD_TESTVECTOR$$.
 
 $end
 ------------------------------------------------------------------------

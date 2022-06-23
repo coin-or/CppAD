@@ -147,6 +147,34 @@ $rnext
 $cref/CppADCreateUnaryBool/BoolFun/Deprecated 2007-07-31/$$
 $rnext
 $cref/CPPAD_USER_ATOMIC/atomic_one/Deprecated 2013-05-27/$$
+$rnext
+$cref/
+    CPPAD_CPPADVECTOR/
+    testvector/
+    CppAD::vector/
+    CPPAD_CPPADVECTOR, Deprecated 2022-06-22
+/$$
+$rnext
+$cref/
+    CPPAD_STDVECTOR/
+    testvector/
+    std::vector/
+    CPPAD_STDVECTOR, Deprecated 2022-06-22
+/$$
+$rnext
+$cref/
+    CPPAD_EIGENVECTOR/
+    testvector/
+    CppAD::eigen_vector/
+    CPPAD_EIGENVECTOR, Deprecated 2022-06-22
+/$$
+$rnext
+$cref/
+    CPPAD_BOOSTVECTOR/
+    testvector/
+    boost::numeric::ublas::vector/
+    CPPAD_BOOSTVECTOR, Deprecated 2022-06-22
+/$$
 $tend
 $comment
 # undef CppADCreateDiscrete
@@ -162,6 +190,10 @@ $comment
 # undef CppADCreateBinaryBool
 # undef CppADCreateUnaryBool
 # undef CPPAD_USER_ATOMIC
+# undef CPPAD_CPPADVECTOR
+# undef CPPAD_STDVECTOR
+# undef CPPAD_EIGENVECTOR
+# undef CPPAD_BOOSTVECTOR
 $$
 
 $end
