@@ -129,7 +129,7 @@ public:
     std::string forward_zero(void)
     {   std::string csrc =
             "# include <stddef.h>\n"
-            "int cppad_jit_" + name_ + "(\n";
+            "int cppad_atomic_" + name_ + "(\n";
         csrc +=R"_(
     size_t        call_id,
     size_t        nx,
@@ -257,16 +257,16 @@ bool simple_cases(void)
     // jit_double
     using CppAD::jit_double;
     //
-    // forward_zero
-    jit_double forward_zero = nullptr;
+    // jit_function
+    jit_double jit_function = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
-    {   // forward_zero
+    {   // jit_function
         std::string complete_name = "cppad_jit_" + function_name;
-        forward_zero = reinterpret_cast<jit_double>(
+        jit_function = reinterpret_cast<jit_double>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -278,15 +278,14 @@ bool simple_cases(void)
     {   //
         // ok
         // no change
-        size_t call_id = 0;
         CppAD::vector<double> x(nx), y(ny);
         x[0] = Value( ax[0] );
         x[1] = Value( ax[1] );
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        int flag = forward_zero(
-            call_id, nx, x.data(), ny, y.data(), &compare_change
+        int flag = jit_function(
+            nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
         ok &= compare_change == 0;
@@ -377,16 +376,16 @@ bool compare_cases(void)
     // jit_double
     using CppAD::jit_double;
     //
-    // forward_zero
-    jit_double forward_zero = nullptr;
+    // jit_function
+    jit_double jit_function = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
-    {   // forward_zero
+    {   // jit_function
         std::string complete_name = "cppad_jit_" + function_name;
-        forward_zero = reinterpret_cast<jit_double>(
+        jit_function = reinterpret_cast<jit_double>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -398,14 +397,13 @@ bool compare_cases(void)
     {   //
         // ok
         // no change
-        size_t call_id = 0;
         CppAD::vector<double> x(nx), y(ny);
         x[0] = x0;
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
         size_t compare_change = 0;
-        int flag = forward_zero(
-            call_id, nx, x.data(), ny, y.data(), &compare_change
+        int flag = jit_function(
+            nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
         ok &= compare_change == 0;
@@ -415,8 +413,8 @@ bool compare_cases(void)
         // ok
         // check all change
         x[0] = 2.0 * x0;
-        flag = forward_zero(
-            call_id, nx, x.data(), ny, y.data(), &compare_change
+        flag = jit_function(
+            nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
         ok &= compare_change == 4;
@@ -493,16 +491,16 @@ bool atomic_case(void)
     // jit_double
     using CppAD::jit_double;
     //
-    // forward_zero
-    jit_double forward_zero = nullptr;
+    // jit_function
+    jit_double jit_function = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
-    {   // forward_zero
+    {   // jit_function
         std::string complete_name = "cppad_jit_" + function_name;
-        forward_zero = reinterpret_cast<jit_double>(
+        jit_function = reinterpret_cast<jit_double>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -519,10 +517,9 @@ bool atomic_case(void)
         x[1] = x1;
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<double>::quiet_NaN();
-        size_t call_id        = 0;
         size_t compare_change = 0;
-        int flag = forward_zero(
-            call_id, nx, x.data(), ny, y.data(), &compare_change
+        int flag = jit_function(
+            nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
         ok &= compare_change == 0;
@@ -589,16 +586,16 @@ bool discrete_case(void)
     // jit_float
     using CppAD::jit_float;
     //
-    // forward_zero
-    jit_float forward_zero = nullptr;
+    // jit_function
+    jit_float jit_function = nullptr;
     if( err_msg != "" )
     {   std::cout << "dll_linker ctor error: " << err_msg << "\n";
         ok = false;
     }
     else
-    {   // forward_zero
+    {   // jit_function
         std::string complete_name = "cppad_jit_" + function_name;
-        forward_zero = reinterpret_cast<jit_float>(
+        jit_function = reinterpret_cast<jit_float>(
                 dll_linker(complete_name, err_msg)
         );
         if( err_msg != "" )
@@ -615,10 +612,9 @@ bool discrete_case(void)
         x[1] = x1;
         for(size_t i = 0; i < ny; ++i)
             y[i] = std::numeric_limits<float>::quiet_NaN();
-        size_t call_id        = 0;
         size_t compare_change = 0;
-        int flag = forward_zero(
-            call_id, nx, x.data(), ny, y.data(), &compare_change
+        int flag = jit_function(
+            nx, x.data(), ny, y.data(), &compare_change
         );
         ok &= flag == 0;
         ok &= compare_change == 0;

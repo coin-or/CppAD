@@ -110,11 +110,11 @@ bool to_csrc(void)
     //
     // x, y, compare_change
     // y = f(x)
-    size_t compare_change = 0, not_used = 0;
+    size_t compare_change = 0;
     std::vector<double> x(nx), y(ny);
     x[0] = 0.3;
     x[1] = 0.5;
-    f_ptr(not_used, nx, x.data(), ny, y.data(), &compare_change);
+    f_ptr(nx, x.data(), ny, y.data(), &compare_change);
     //
     // ok
     ok &= compare_change == 0;

@@ -142,11 +142,11 @@ bool get_started(void)
     //
     // x, z, compare_change
     // z = g(x)
-    size_t nx = n, nz = m * n, compare_change = 0, not_used = 0;
+    size_t nx = n, nz = m * n, compare_change = 0;
     std::vector<double> x(nx), z(nz);
     x[0] = 0.3;
     x[1] = 0.5;
-    g_ptr(not_used, nx, x.data(), nz, z.data(), &compare_change);
+    g_ptr(nx, x.data(), nz, z.data(), &compare_change);
     //
     // ok
     ok &= compare_change == 0;

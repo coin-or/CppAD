@@ -21,7 +21,7 @@ $$
 $section Converts Cpp Graph to C Source$$
 
 $head Syntax$$
-$code csrc_writer(%os%, %graph_obj%, %type%)
+$code csrc_writer(%os%, %graph_obj%, %c_type%)
 %$$
 
 $head Prototype$$
@@ -33,10 +33,10 @@ The C source code corresponding to the function is written to $icode os$$.
 $head graph$$
 is the C++ graph representation of the function.
 
-$head type$$
+$head c_type$$
 this specifies the type corresponding to the C source code and must
 be one of the following:
-$code float$$, $code double$$, or $code long double$$.
+$code float$$, $code double$$, or $code long_double$$.
 
 $end
 */
@@ -117,7 +117,7 @@ namespace {
         size_t                       n_result            ,
         const CppAD::vector<size_t>& arg_node            )
     {   using CppAD::to_string;
-        std::string complete_name = "cppad_jit_" + atomic_name;
+        std::string complete_name = "cppad_atomic_" + atomic_name;
         size_t nu = arg_node.size();
         size_t nw = n_result;
         os << "\t{\t// call " + atomic_name + "\n";
@@ -160,7 +160,7 @@ namespace {
 void CppAD::local::graph::csrc_writer(
     std::ostream&                             os                     ,
     const cpp_graph&                          graph_obj              ,
-    const std::string&                        type                   )
+    const std::string&                        c_type                 )
 // END_PROTOTYPE
 {   using std::string;
     using CppAD::to_string;
@@ -207,8 +207,8 @@ void CppAD::local::graph::csrc_writer(
     ;
     //
     // typedefs
-    string tmp_type = type;
-    if( type == "long_double" )
+    string tmp_type = c_type;
+    if( c_type == "long_double" )
         tmp_type = "long double";
     os <<
         "// typedefs\n"
@@ -221,7 +221,7 @@ void CppAD::local::graph::csrc_writer(
     size_t n_atomic = graph_obj.atomic_name_vec_size();
     for(size_t i_atomic = 0; i_atomic < n_atomic; ++i_atomic)
     {   string atomic_name = graph_obj.atomic_name_vec_get(i_atomic);
-        os << "extern int cppad_jit_" + atomic_name + "(\n";
+        os << "extern int cppad_atomic_" + atomic_name + "(\n";
         os <<
             "\tsize_t               call_id           ,\n"
             "\tsize_t               nx                ,\n"
@@ -258,16 +258,15 @@ void CppAD::local::graph::csrc_writer(
         "}\n\n"
     ;
     //
-    // This atomic function
+    // This JIT function
     os <<
-        "// This atomic function\n"
+        "// This JIT function\n"
 # ifdef _MSC_VER
         "__declspec(dllexport) int __cdecl "
 # else
         "int "
 # endif
         "cppad_jit_" + function_name + "(\n"
-        "\tsize_t               call_id         ,\n"
         "\tsize_t               nx              ,\n"
         "\tconst float_point_t* x               ,\n"
         "\tsize_t               ny              ,\n"

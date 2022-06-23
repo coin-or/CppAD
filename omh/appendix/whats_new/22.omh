@@ -44,6 +44,7 @@ $spell
     Simpson
     Tc
     msys
+    jit
 $$
 
 $section Changes and Additions to CppAD During 2022$$
@@ -54,10 +55,10 @@ Modify the $cref/msys2/cmake/CMake Command/msys2/$$
 and $cref/visual studio/cmake/CMake Command/Visual Studio/$$
 install suggestions.
 $lnext
-In JIT
-$cref/function type/to_csrc/Function/$$ change
-$icode%type%_forward_zero%$$ to $codei%jit_%type%$$.
-For eample change $code double_forward_zero$$ to $code jit_double$$.
+Split the JIT function type
+$icode%type%_forward_zero%$$ into
+$codei%jit_%type%$$ for $cref/JIT functions/to_csrc/JIT Functions/$$, and
+$codei%atomic_%type%$$ for $cref/atomic callbacks/to_csrc/Atomic Callbacks/$$.
 $lend
 
 

@@ -34,7 +34,7 @@ int main(void)
 {   bool ok = true;
     //
 # if CPPAD_GNU_OR_MSVC_C_COMPILER
-    std::string group = "example/to_csrc";
+    std::string group = "example/jit";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);
 
