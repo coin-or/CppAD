@@ -56,7 +56,7 @@ Change $icode x$$ to $cref/u/to_csrc/u/$$ in the $code to_csrc$$ operation
 and add specifications as the position of the independent dynamic
 parameters and variables in $icode u$$.
 $lnext
-Add the $cref jit_dynamic.cpp$$ example.
+Add the $cref jit_dynamic.cpp$$ and $cref jit_compile.cpp$$ examples.
 $lnext
 Remove some remaining uses of $code CPPAD_TEST_VECTOR$$.
 $lnext

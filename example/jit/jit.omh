@@ -16,6 +16,7 @@ $section JIT Creation, Compilation, and Linking of C Source Code$$
 $childtable%
     example/jit/get_started.cpp%
     example/jit/to_csrc.cpp%
+    example/jit/compile.cpp%
     example/jit/atomic.cpp%
     example/jit/dynamic.cpp
 %$$

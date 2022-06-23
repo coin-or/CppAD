@@ -27,6 +27,7 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 
 // BEGIN_SORT_THIS_LINE_PLUS_1
 extern bool atomic(void);
+extern bool compile(void);
 extern bool dynamic(void);
 extern bool get_started(void);
 extern bool to_csrc(void);
@@ -45,6 +46,7 @@ int main(void)
 
     // BEGIN_SORT_THIS_LINE_PLUS_1
     Run( atomic,              "atomic"                );
+    Run( compile,             "compile"               );
     Run( dynamic,             "dynamic"               );
     Run( get_started,         "get_started"           );
     Run( to_csrc,             "to_csrc"               );
