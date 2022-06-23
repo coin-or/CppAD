@@ -15,6 +15,7 @@ SET(source_list
     jit.cpp
     get_started.cpp
     to_csrc.cpp
+    atomic.cpp
 )
 #
 set_compile_flags( example_jit "${cppad_debug_which}" "${source_list}" )

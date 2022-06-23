@@ -16,26 +16,11 @@ in the Eclipse Public License, Version 2.0 are satisfied:
 # include <filesystem>
 # endif
 
-// CALL_CONVENTION, CALL_IMPORT
-# ifdef _MSC_VER
-# define CALL_CONVENTION __cdecl
-# define CALL_IMPORT     __declspec(dllimport)
-# else
-# define CALL_CONVENTION
-# define CALL_IMPORT
-# endif
-
 //  DIR_SEP, DLL_EXT
 # ifndef _WIN32
-// dlopen, dlsym, dlerror, RTD_LAZY
-# include <dlfcn.h>
 # define DIR_SEP         '/'
 # define DLL_EXT         ".so"
 # else
-# ifndef NOMINMAX
-# define NOMINMAX
-# endif
-# include <windows.h>
 # define DIR_SEP         '\\'
 # define DLL_EXT         ".dll"
 # endif

@@ -249,9 +249,9 @@ bool link_det_minor(
         CppAD::uniform_01(nx, matrix);
 
         // evaluate the gradient
-        size_t compare_change = 0, not_used = 0;
+        size_t compare_change = 0;
         static_gradient_det(
-            not_used, nx, matrix.data(), nx, gradient.data(), &compare_change
+            nx, matrix.data(), nx, gradient.data(), &compare_change
         );
     }
     else while(repeat--)
@@ -268,9 +268,9 @@ bool link_det_minor(
         CppAD::uniform_01(nx, matrix);
 
         // evaluate the gradient
-        size_t compare_change = 0, not_used = 0;
+        size_t compare_change = 0;
         static_gradient_det(
-            not_used, nx, matrix.data(), nx, gradient.data(), &compare_change
+            nx, matrix.data(), nx, gradient.data(), &compare_change
         );
     }
     return true;

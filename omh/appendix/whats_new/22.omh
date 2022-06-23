@@ -59,6 +59,8 @@ Split the JIT function type
 $icode%type%_forward_zero%$$ into
 $codei%jit_%type%$$ for $cref/JIT functions/to_csrc/JIT Functions/$$, and
 $codei%atomic_%type%$$ for $cref/atomic callbacks/to_csrc/Atomic Callbacks/$$.
+$lnext
+Add the $cref jit_atomic.cpp$$ example.
 $lend
 
 
