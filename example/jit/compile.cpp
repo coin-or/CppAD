@@ -59,12 +59,17 @@ bool compile(void)
     if( flag == 0 )
         compile = "cl /EHs /EHc /c /LD /TC /O2";
 # else
-    flag = std::system("gcc --version >& /dev/null");
+    flag = std::system("gcc --version > temp");
     if( flag == 0 )
         compile = "gcc -c -fPIC -O2";
-    flag = std::system("clang --version >& /dev/null");
+# ifndef __MINGW32__
+    // clang: error: unsupported option '-fPIC' for target
+    // 'x86_64-pc-windows-msys'
+    flag = std::system("clang --version > /dev/null");
     if( flag == 0 )
         compile = "clang -c -fPIC -O2";
+# endif
+    //
 # endif
     if( compile == "" )
         return ok;
