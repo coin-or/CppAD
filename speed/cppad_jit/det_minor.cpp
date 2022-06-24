@@ -36,7 +36,7 @@ extern std::map<std::string, bool> global_option;
 # define DLL_EXT ".so"
 # endif
 
-# if ! CPPAD_GNU_OR_MSVC_C_COMPILER
+# if ! (CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC)
 bool link_det_minor(
     const std::string&         job      ,
     size_t                     size     ,
@@ -275,7 +275,7 @@ bool link_det_minor(
     }
     return true;
 }
-# endif // CPPAD_GNU_OR_MSVC_C_COMPILER
+# endif // CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC
 /* %$$
 $end
 */

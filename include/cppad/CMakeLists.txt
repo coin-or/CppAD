@@ -28,13 +28,25 @@ SET(CMAKE_REQUIRED_FLAGS       "")
 SET(CMAKE_REQUIRED_INCLUDES    "")
 SET(CMAKE_REQUIRED_LIBRARIES   "")
 # -----------------------------------------------------------------------------
-# gnu_or_msvc_c_compiler
+# cppad_c_compiler_gnu
 IF( "${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" )
-    SET(gnu_or_msvc_c_compiler 1)
-ELSEIF( "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC" )
-    SET(gnu_or_msvc_c_compiler 1)
+    SET(cppad_c_compiler_gnu 1)
 ELSE()
-    SET(gnu_or_msvc_c_compiler 0)
+    SET(cppad_c_compiler_gnu 0)
+ENDIF()
+#
+# cppad_c_compiler_msvc
+IF( "${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC" )
+    SET(cppad_c_compiler_msvc 1)
+ELSE()
+    SET(cppad_c_compiler_msvc 0)
+ENDIF()
+#
+# cppad_c_compiler_clang
+IF( "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang" )
+    SET(cppad_c_compiler_clang 1)
+ELSE()
+    SET(cppad_c_compiler_clang 0)
 ENDIF()
 # -----------------------------------------------------------------------------
 # compiler_has_conversion_warn

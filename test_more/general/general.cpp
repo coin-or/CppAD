@@ -249,7 +249,7 @@ int main(void)
     Run( tan,             "tan"            );
     Run( to_string,       "to_string"      );
     // END_SORT_THIS_LINE_MINUS_1
-# if CPPAD_GNU_OR_MSVC_C_COMPILER
+# if CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC
     Run( to_csrc,         "to_csrc"        );
 # endif
 #if CPPAD_HAS_ADOLC

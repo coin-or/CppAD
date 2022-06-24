@@ -37,7 +37,7 @@ extern bool to_csrc(void);
 int main(void)
 {   bool ok = true;
     //
-# if CPPAD_GNU_OR_MSVC_C_COMPILER
+# if CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC
     std::string group = "example/jit";
     size_t      width = 20;
     CppAD::test_boolofvoid Run(group, width);

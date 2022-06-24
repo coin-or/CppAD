@@ -54,14 +54,17 @@ bool compile(void)
     // compile
     std::string compile = "";
     int flag;
-# ifdef _MSC_VER
+# if CPPAD_C_COMPILER_MSVC
     flag = std::system("cl 1> nul 2> nul");
     if( flag == 0 )
         compile = "cl /EHs /EHc /c /LD /TC /O2";
-# else
+# endif
+# if CPPAD_C_COMPILER_GNU
     flag = std::system("gcc --version > temp");
     if( flag == 0 )
         compile = "gcc -c -fPIC -O2";
+# endif
+# if CPPAD_C_COMPILER_CLANG
 # ifndef __MINGW32__
     // clang: error: unsupported option '-fPIC' for target
     // 'x86_64-pc-windows-msys'
@@ -69,8 +72,8 @@ bool compile(void)
     if( flag == 0 )
         compile = "clang -c -fPIC -O2";
 # endif
-    //
 # endif
+    //
     if( compile == "" )
         return ok;
     // std::cout << "compile = " << compile << "\n";

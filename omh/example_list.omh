@@ -207,6 +207,7 @@ $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
 $rref jit_atomic.cpp$$
+$rref jit_compile.cpp$$
 $rref jit_dynamic.cpp$$
 $rref jit_get_started.cpp$$
 $rref jit_to_csrc.cpp$$

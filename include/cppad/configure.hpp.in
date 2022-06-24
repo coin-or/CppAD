@@ -229,10 +229,22 @@ This preprocessor symbol is
 $code noexcept$$ when C++11 is available and $code NDEBUG$$ is defined.
 Otherwise it is empty.
 
-$head CPPAD_GNU_OR_MSVC_C_COMPILER$$
-If true, the C complier is $code gcc$$ or $code cl$$.
+$head CPPAD_C_COMPILER_GNU$$
+If true, the C complier is $code gcc$$
 $srccode%hpp% */
-# define CPPAD_GNU_OR_MSVC_C_COMPILER @gnu_or_msvc_c_compiler@
+# define CPPAD_C_COMPILER_GNU @cppad_c_compiler_gnu@
+/* %$$
+
+$head CPPAD_C_COMPILER_MSVC$$
+If true, the C complier is $code cl$$
+$srccode%hpp% */
+# define CPPAD_C_COMPILER_MSVC @cppad_c_compiler_msvc@
+/* %$$
+
+$head CPPAD_C_COMPILER_CLANG$$
+If true, the C complier is $code cl$$
+$srccode%hpp% */
+# define CPPAD_C_COMPILER_CLANG @cppad_c_compiler_clang@
 /* %$$
 
 $end
