@@ -115,14 +115,17 @@ This example demonstrates setting the JIT
     <i><font color="#9A1900">// compile</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font> compile <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
     <font color="#009900">int</font> flag<font color="#990000">;</font>
-<b><font color="#000080"># ifdef</font></b> _MSC_VER
+<b><font color="#000080"># if</font></b> CPPAD_C_COMPILER_MSVC
     flag <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">system</font></b><font color="#990000">(</font><font color="#FF0000">"cl 1&gt; nul 2&gt; nul"</font><font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
         compile <font color="#990000">=</font> <font color="#FF0000">"cl /EHs /EHc /c /LD /TC /O2"</font><font color="#990000">;</font>
-<b><font color="#000080"># else</font></b>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CPPAD_C_COMPILER_GNU
     flag <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">system</font></b><font color="#990000">(</font><font color="#FF0000">"gcc --version &gt; temp"</font><font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
         compile <font color="#990000">=</font> <font color="#FF0000">"gcc -c -fPIC -O2"</font><font color="#990000">;</font>
+<b><font color="#000080"># endif</font></b>
+<b><font color="#000080"># if</font></b> CPPAD_C_COMPILER_CLANG
 <b><font color="#000080"># ifndef</font></b> __MINGW32__
     <i><font color="#9A1900">// clang: error: unsupported option '-fPIC' for target</font></i>
     <i><font color="#9A1900">// 'x86_64-pc-windows-msys'</font></i>
@@ -130,8 +133,8 @@ This example demonstrates setting the JIT
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
         compile <font color="#990000">=</font> <font color="#FF0000">"clang -c -fPIC -O2"</font><font color="#990000">;</font>
 <b><font color="#000080"># endif</font></b>
-    <i><font color="#9A1900">//</font></i>
 <b><font color="#000080"># endif</font></b>
+    <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> compile <font color="#990000">==</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
         <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
     <i><font color="#9A1900">// std::cout &lt;&lt; "compile = " &lt;&lt; compile &lt;&lt; "\n";</font></i>

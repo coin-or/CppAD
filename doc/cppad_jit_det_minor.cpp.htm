@@ -99,7 +99,7 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
 <b><font color="#000080"># define</font></b> DLL_EXT <font color="#FF0000">".so"</font>
 <b><font color="#000080"># endif</font></b>
 
-<b><font color="#000080"># if</font></b> <font color="#990000">!</font> CPPAD_GNU_OR_MSVC_C_COMPILER
+<b><font color="#000080"># if</font></b> <font color="#990000">!</font> <font color="#990000">(</font>CPPAD_C_COMPILER_GNU <font color="#990000">||</font> CPPAD_C_COMPILER_MSVC<font color="#990000">)</font>
 <font color="#009900">bool</font> <b><font color="#000000">link_det_minor</font></b><font color="#990000">(</font>
     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>         job      <font color="#990000">,</font>
     <font color="#008080">size_t</font>                     size     <font color="#990000">,</font>
@@ -338,7 +338,7 @@ See <a href="link_det_minor.htm" target="_top"><span style='white-space: nowrap'
     <font color="#FF0000">}</font>
     <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
 <font color="#FF0000">}</font>
-<b><font color="#000080"># endif</font></b> <i><font color="#9A1900">// CPPAD_GNU_OR_MSVC_C_COMPILER</font></i></tt></pre>
+<b><font color="#000080"># endif</font></b> <i><font color="#9A1900">// CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC</font></i></tt></pre>
 
 <hr>Input File: speed/cppad_jit/det_minor.cpp
 
