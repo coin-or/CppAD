@@ -31,6 +31,7 @@ var list_current0 = [
 'cmake.htm#cmake_install_libdirs.cppad_lib',
 'cmake.htm#cmake_install_datadir',
 'cmake.htm#cmake_install_docdir',
+'cmake.htm#cmake_defined_ok',
 'cmake.htm#include_adolc',
 'cmake.htm#include_eigen',
 'cmake.htm#include_ipopt',

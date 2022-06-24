@@ -3,10 +3,10 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-{ tag: 'CppAD', title:'cppad-20220623: A C++ Algorithmic Differentiation Package', other:' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example' },
+{ tag: 'CppAD', title:'cppad-20220624: A C++ Algorithmic Differentiation Package', other:' features operator overloading base type recording operations multi-threading optimizing sequences dynamic parameters derivative calculations sparsity atomic functions logical comparisons vectors software engineering testing correctness speed utilities release notes example' },
 { tag: 'Install', title:'CppAD Download, Test, and Install Instructions', other:' step 1: 2: cmake 3: check 4: installation deprecated' },
 { tag: 'download', title:'Download The CppAD Source Code', other:' purpose distribution directory version release git compressed archives documentation building' },
-{ tag: 'cmake', title:'Using CMake to Configure CppAD', other:' the program build directory command simple warning options msys2 visual studio autotools check cmake_verbose_makefile cmake_build_type generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which' },
+{ tag: 'cmake', title:'Using CMake to Configure CppAD', other:' the program build directory command simple warning options msys2 visual studio autotools check cmake_verbose_makefile cmake_build_type generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir cmake_defined_ok include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which' },
 { tag: 'get_optional.sh', title:'Download and Install The CppAD Optional Packages', other:' syntax purpose distribution directory prefix absolute path relative configuration get_optional.log get_optional.err' },
 { tag: 'get_adolc.sh', title:'Download and Install Adolc in Build Directory', other:' syntax purpose requirements distribution source prefix version configuration' },
 { tag: 'get_cppadcg.sh', title:'Download and Install CppADCodeGen in Build Directory', other:' syntax purpose requirements distribution source prefix git hash configuration documentation' },
@@ -511,6 +511,7 @@ Keyword =
 { tag: 'example_jit', title:'JIT Creation, Compilation, and Linking of C Source Code', other:'' },
 { tag: 'jit_get_started.cpp', title:'JIT Computation of Derivatives: Example and Test', other:' purpose source' },
 { tag: 'jit_to_csrc.cpp', title:'C Source Code Corresponding to a Function: Example and Test', other:'' },
+{ tag: 'jit_compile.cpp', title:'JIT Compiler Options: Example and Test', other:' source' },
 { tag: 'jit_atomic.cpp', title:'Atomic Callbacks in JIT Function: Example and Test', other:' source' },
 { tag: 'jit_dynamic.cpp', title:'JIT With Dynamic Parameters: Example and Test', other:' source' },
 { tag: 'preprocessor', title:'CppAD API Preprocessor Symbols', other:' rule nominmax windows.h documented here cppad_debug_and_release cppad_null cppad_package_string cppad_use_cplusplus_2011 cppad_use_cplusplus_2017 elsewhere deprecated' },

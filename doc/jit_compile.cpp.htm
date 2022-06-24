@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>C Source Code Corresponding to a Function: Example and Test</title>
+<title>JIT Compiler Options: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="C Source Code Corresponding to a Function: Example and Test">
-<meta name="keywords" id="keywords" content=" c source code corresponding to function: example test to_csrc ">
+<meta name="description" id="description" content="JIT Compiler Options: Example and Test">
+<meta name="keywords" id="keywords" content=" jit compiler options: example test compile source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_jit_to_csrc.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_jit_compile.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -31,8 +31,8 @@ A:active { color : purple }
 <td>
 <a href="https://coin-or.github.io/CppAD" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="jit_get_started.cpp.htm" target="_top">Prev</a>
-</td><td><a href="jit_compile.cpp.htm" target="_top">Next</a>
+<td><a href="jit_to_csrc.cpp.htm" target="_top">Prev</a>
+</td><td><a href="jit_atomic.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_across0(this)'>
 <option>Index-&gt;</option>
@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>ADFun</option>
 <option>to_csrc</option>
 <option>example_jit</option>
-<option>jit_to_csrc.cpp</option>
+<option>jit_compile.cpp</option>
 </select>
 </td>
 <td>
@@ -62,11 +62,11 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_example_jit_htm.js'></script>
 </td>
-<td>jit_to_csrc.cpp</td>
+<td>jit_compile.cpp</td>
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
-<option>to_csrc</option>
+<option>compile</option>
 <option>Source</option>
 </select>
 </td>
@@ -77,15 +77,15 @@ A:active { color : purple }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>C Source Code Corresponding to a Function: Example and Test</big></big></b></center>
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }@)@<center><b><big><big>JIT Compiler Options: Example and Test</big></big></b></center>
 <br>
-<b><big><a name="to_csrc" id="to_csrc">to_csrc</a></big></b>
+<b><big><a name="compile" id="compile">compile</a></big></b>
 <br>
-The actual call to <code><font color="blue">to_csrc</font></code> is in the following section of the
-example below:
-<pre style='display:inline'><tt>
-    f<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ofs<font color="#990000">,</font> c_type<font color="#990000">);</font>
-</tt></pre>
+This example demonstrates setting the JIT
+<a href="create_dll_lib.htm#options.compile" target="_top"><span style='white-space: nowrap'>compile</span></a>
+ option.
+
+<br>
 <br>
 <b><big><a name="Source" id="Source">Source</a></big></b>
 
@@ -104,13 +104,37 @@ example below:
 <b><font color="#000080"># endif</font></b>
 
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/cppad.hpp&gt;</font>
-<font color="#009900">bool</font> <b><font color="#000000">to_csrc</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">compile</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>   <font color="#009900">bool</font> ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
     <i><font color="#9A1900">//</font></i>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>AD<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>ADFun<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>Independent<font color="#990000">;</font>
     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>NearEqual<font color="#990000">;</font>
+    <i><font color="#9A1900">//</font></i>
+    <i><font color="#9A1900">// compile</font></i>
+    std<font color="#990000">::</font><font color="#008080">string</font> compile <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
+    <font color="#009900">int</font> flag<font color="#990000">;</font>
+<b><font color="#000080"># ifdef</font></b> _MSC_VER
+    flag <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">system</font></b><font color="#990000">(</font><font color="#FF0000">"cl 1&gt; nul 2&gt; nul"</font><font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        compile <font color="#990000">=</font> <font color="#FF0000">"cl /EHs /EHc /c /LD /TC /O2"</font><font color="#990000">;</font>
+<b><font color="#000080"># else</font></b>
+    flag <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">system</font></b><font color="#990000">(</font><font color="#FF0000">"gcc --version &gt; temp"</font><font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        compile <font color="#990000">=</font> <font color="#FF0000">"gcc -c -fPIC -O2"</font><font color="#990000">;</font>
+<b><font color="#000080"># ifndef</font></b> __MINGW32__
+    <i><font color="#9A1900">// clang: error: unsupported option '-fPIC' for target</font></i>
+    <i><font color="#9A1900">// 'x86_64-pc-windows-msys'</font></i>
+    flag <font color="#990000">=</font> std<font color="#990000">::</font><b><font color="#000000">system</font></b><font color="#990000">(</font><font color="#FF0000">"clang --version &gt; /dev/null"</font><font color="#990000">);</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> flag <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">)</font>
+        compile <font color="#990000">=</font> <font color="#FF0000">"clang -c -fPIC -O2"</font><font color="#990000">;</font>
+<b><font color="#000080"># endif</font></b>
+    <i><font color="#9A1900">//</font></i>
+<b><font color="#000080"># endif</font></b>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> compile <font color="#990000">==</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+        <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+    <i><font color="#9A1900">// std::cout &lt;&lt; "compile = " &lt;&lt; compile &lt;&lt; "\n";</font></i>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// nx, ny</font></i>
     <font color="#008080">size_t</font> nx <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">,</font> ny <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
@@ -127,29 +151,29 @@ example below:
     <i><font color="#9A1900">// csrc_file</font></i>
     <i><font color="#9A1900">// created in std::filesystem::current_path</font></i>
     std<font color="#990000">::</font><font color="#008080">string</font> c_type    <font color="#990000">=</font> <font color="#FF0000">"double"</font><font color="#990000">;</font>
-    std<font color="#990000">::</font><font color="#008080">string</font> csrc_file <font color="#990000">=</font> <font color="#FF0000">"to_csrc.c"</font><font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> csrc_file <font color="#990000">=</font> <font color="#FF0000">"compile.c"</font><font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">ofstream</font> ofs<font color="#990000">;</font>
     ofs<font color="#990000">.</font><b><font color="#000000">open</font></b><font color="#990000">(</font>csrc_file <font color="#990000">,</font> std<font color="#990000">::</font>ofstream<font color="#990000">::</font>out<font color="#990000">);</font>
-<i><font color="#9A1900">// BEGIN_TO_CSRC</font></i>
     f<font color="#990000">.</font><b><font color="#000000">to_csrc</font></b><font color="#990000">(</font>ofs<font color="#990000">,</font> c_type<font color="#990000">);</font>
-<i><font color="#9A1900">// END_TO_CSRC</font></i>
     ofs<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">();</font>
     <i><font color="#9A1900">//</font></i>
     <i><font color="#9A1900">// dll_file</font></i>
     <i><font color="#9A1900">// created in std::filesystem::current_path</font></i>
-    std<font color="#990000">::</font><font color="#008080">string</font> dll_file <font color="#990000">=</font> <font color="#FF0000">"jit_to_csrc"</font> DLL_EXT<font color="#990000">;</font>
+    std<font color="#990000">::</font><font color="#008080">string</font> dll_file <font color="#990000">=</font> <font color="#FF0000">"jit_compile"</font> DLL_EXT<font color="#990000">;</font>
     <b><font color="#000000">CPPAD_TESTVECTOR</font></b><font color="#990000">(</font> std<font color="#990000">::</font>string<font color="#990000">)</font> <b><font color="#000000">csrc_files</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
     csrc_files<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> csrc_file<font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">map&lt; std::string, std::string &gt;</font> options<font color="#990000">;</font>
+    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> compile <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
+        options<font color="#990000">[</font><font color="#FF0000">"compile"</font><font color="#990000">]</font> <font color="#990000">=</font> compile<font color="#990000">;</font>
     std<font color="#990000">::</font><font color="#008080">string</font> err_msg <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">create_dll_lib</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> csrc_files<font color="#990000">,</font> options<font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_to_csrc: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_compile: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// dll_linker</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">link_dll_lib</font> <b><font color="#000000">dll_linker</font></b><font color="#990000">(</font>dll_file<font color="#990000">,</font> err_msg<font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_to_csrc: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_compile: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
@@ -157,7 +181,7 @@ example below:
     std<font color="#990000">::</font><font color="#008080">string</font> function_name <font color="#990000">=</font> <font color="#FF0000">"cppad_jit_f"</font><font color="#990000">;</font>
     <font color="#009900">void</font><font color="#990000">*</font> void_ptr <font color="#990000">=</font> <b><font color="#000000">dll_linker</font></b><font color="#990000">(</font>function_name<font color="#990000">,</font> err_msg<font color="#990000">);</font>
     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> err_msg <font color="#990000">!=</font> <font color="#FF0000">""</font> <font color="#990000">)</font>
-    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_to_csrc: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
+    <font color="#FF0000">{</font>   std<font color="#990000">::</font>cerr <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"jit_compile: err_msg = "</font> <font color="#990000">&lt;&lt;</font> err_msg <font color="#990000">&lt;&lt;</font> <font color="#FF0000">"</font><font color="#CC33CC">\n</font><font color="#FF0000">"</font><font color="#990000">;</font>
         <b><font color="#0000FF">return</font></b> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">//</font></i>
@@ -187,7 +211,7 @@ example below:
     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: example/jit/to_csrc.cpp
+<hr>Input File: example/jit/compile.cpp
 
 </body>
 </html>
