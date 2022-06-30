@@ -292,31 +292,31 @@ SET(system_include TRUE)
 SET(remove_coin_or FALSE)
 #
 # eigen
-IF( include_eigen )
-    pkgconfig_info(eigen3 ${system_include} ${remove_coin_or})
-    SET(eigen_LIBRARIES "${eigen3_LIBRARIES}")
+IF( include_eigen AND NOT USE_CMAKE_INTERFACE) 
+    pkgconfig_info(Eigen3 ${system_include} ${remove_coin_or})
+    SET(eigen_LIBRARIES "${Eigen3_LIBRARIES}")
     SET(cppad_has_eigen 1)
-ELSE( include_eigen )
+ELSE()
     SET(cppad_has_eigen 0)
-ENDIF( include_eigen )
+ENDIF()
 #
 # adolc
-IF( include_adolc )
+IF( include_adolc AND NOT USE_CMAKE_INTERFACE)
     pkgconfig_info(adolc ${system_include} ${remove_coin_or})
     SET(cppad_has_adolc 1)
-ELSE( include_adolc )
+ELSE()
     SET(cppad_has_adolc 0)
-ENDIF( include_adolc )
+ENDIF()
 #
 # ipopt
-IF( include_ipopt )
+IF( include_ipopt AND NOT USE_CMAKE_INTERFACE)
     SET(remove_coin_or TRUE)
     pkgconfig_info(ipopt ${system_include} ${remove_coin_or})
     SET(cppad_has_ipopt 1)
     SET(remove_coin_or FALSE)
-ELSE( include_ipopt )
+ELSE()
     SET(cppad_has_ipopt 0)
-ENDIF( include_ipopt )
+ENDIF()
 #
 # cppadcg
 IF( include_cppadcg )
@@ -540,7 +540,7 @@ CONFIGURE_FILE(
 # ${cppad_abs_includedir}/cppad
 INSTALL(
     DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/cppad/"
-    DESTINATION ${cppad_abs_includedir}/cppad
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_PROJECT_NAME}
     FILES_MATCHING PATTERN "*.hpp" PATTERN "omh" EXCLUDE
 )
 #
@@ -553,3 +553,54 @@ ENDIF ( cmake_install_docdir )
 # uninstall procedure
 # =============================================================================
 ADD_CUSTOM_TARGET(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppad_uninstall.cmake)
+
+
+#=============================================================================
+# Support depending projects by providing CMake targets and config file
+# TODO: more adaptive implementation of the following as one might have to "generate" twice
+#=============================================================================
+include(GNUInstallDirs)
+
+set(CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD 1)
+
+set(SOURCES
+    ./cppad_lib/temp_file.cpp
+)
+add_library(${PROJECT_NAME} STATIC ${SOURCES} )
+
+IF( include_eigen AND USE_CMAKE_INTERFACE)
+    find_package(Eigen3 3.4.0 REQUIRED)
+    target_link_libraries( ${PROJECT_NAME} INTERFACE
+        Eigen3::Eigen
+    )
+    SET(cppad_has_eigen 1)
+ELSE()
+    SET(cppad_has_eigen 0)
+ENDIF()
+
+target_include_directories(${PROJECT_NAME} INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+# install targets of current project and register for export
+install(
+    TARGETS ${PROJECT_NAME} 
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+)
+set(TARGETS_SCRIPT_FILE ${PROJECT_NAME}Targets.cmake)
+set(CONFIG_SCRIPT_FILE_SRC ${CMAKE_CURRENT_LIST_DIR}/cmake/${PROJECT_NAME}Config.cmake.in)
+set(CONFIG_SCRIPT_FILE_DST ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Config.cmake)
+
+configure_file("${CONFIG_SCRIPT_FILE_SRC}" "${CONFIG_SCRIPT_FILE_DST}" @ONLY)
+install(FILES "${CONFIG_SCRIPT_FILE_DST}" DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+
+install(
+  EXPORT ${PROJECT_NAME}Targets
+  FILE "${TARGETS_SCRIPT_FILE}"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+)
