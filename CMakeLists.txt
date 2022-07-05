@@ -565,12 +565,13 @@ set(CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD 1)
 
 set(SOURCES
     ./cppad_lib/temp_file.cpp
+    ./test_more/general/cppad_eigen.cpp
 )
 add_library(${PROJECT_NAME} STATIC ${SOURCES} )
 
 IF( include_eigen AND USE_CMAKE_INTERFACE)
     find_package(Eigen3 3.4.0 REQUIRED)
-    target_link_libraries( ${PROJECT_NAME} INTERFACE
+    target_link_libraries( ${PROJECT_NAME} PUBLIC
         Eigen3::Eigen
     )
     SET(cppad_has_eigen 1)
@@ -578,7 +579,7 @@ ELSE()
     SET(cppad_has_eigen 0)
 ENDIF()
 
-target_include_directories(${PROJECT_NAME} INTERFACE
+target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
