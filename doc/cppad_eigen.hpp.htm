@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Enable Use of Eigen Linear Algebra Package with CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Enable Use of Eigen Linear Algebra Package with CppAD">
-<meta name="keywords" id="keywords" content=" enable use eigen linear algebra package with cppad syntax purpose example declarations std include eigen/core numtraits namespace eigen_vector cppad.hpp definitions ">
+<meta name="keywords" id="keywords" content=" enable use eigen linear algebra package with cppad syntax purpose example declarations std include eigen/core numtraits scalarbinaryoptraits namespace eigen_vector cppad.hpp definitions ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,6 +74,7 @@ A:active { color : purple }
 <option>std Declarations</option>
 <option>Include Eigen/Core</option>
 <option>Eigen NumTraits</option>
+<option>Eigen ScalarBinaryOpTraits</option>
 <option>CppAD Namespace</option>
 <option>eigen_vector</option>
 <option>Include cppad.hpp</option>
@@ -209,6 +210,22 @@ to work properly with
         <i><font color="#9A1900">// positive infinite value</font></i>
         <b><font color="#0000FF">static</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> <b><font color="#000000">infinity</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
         <font color="#FF0000">{</font>   <b><font color="#0000FF">return</font></b> CppAD<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;</font> <font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font> <font color="#FF0000">}</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+<br>
+<b><big><a name="Eigen ScalarBinaryOpTraits" id="Eigen ScalarBinaryOpTraits">Eigen ScalarBinaryOpTraits</a></big></b>
+
+<pre><tt><b><font color="#0000FF">namespace</font></b> Eigen <font color="#FF0000">{</font>
+    <i><font color="#9A1900">// Inform Eigen that a binary operations between Base and AD&lt;Base&gt;</font></i>
+    <i><font color="#9A1900">// are allowed and thate the return type is AD&lt;Base&gt;</font></i>
+    <b><font color="#0000FF">template</font></b><font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">Base</font><font color="#990000">,</font> <b><font color="#0000FF">typename</font></b> <font color="#008080">BinOp</font><font color="#990000">&gt;</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">ScalarBinaryOpTraits</font><font color="#990000">&lt;</font>CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;,</font> Base<font color="#990000">,</font> BinOp<font color="#990000">&gt;</font><font color="#FF0000">{</font>
+        <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> ReturnType<font color="#990000">;</font>
+    <font color="#FF0000">}</font><font color="#990000">;</font>
+    <b><font color="#0000FF">template</font></b><font color="#990000">&lt;</font><b><font color="#0000FF">typename</font></b> <font color="#008080">Base</font><font color="#990000">,</font> <b><font color="#0000FF">typename</font></b> <font color="#008080">BinOp</font><font color="#990000">&gt;</font>
+    <b><font color="#0000FF">struct</font></b> <font color="#008080">ScalarBinaryOpTraits</font><font color="#990000">&lt;</font>Base<font color="#990000">,</font> CppAD<font color="#990000">::</font>AD<font color="#990000">&lt;</font>Base<font color="#990000">&gt;,</font> BinOp<font color="#990000">&gt;</font>
+    <font color="#FF0000">{</font>
+        <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;Base&gt;</font> ReturnType<font color="#990000">;</font>
     <font color="#FF0000">}</font><font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 <br>

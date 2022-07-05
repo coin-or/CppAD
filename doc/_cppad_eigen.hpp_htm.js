@@ -19,6 +19,7 @@ var list_current0 = [
 'cppad_eigen.hpp.htm#std Declarations',
 'cppad_eigen.hpp.htm#Include Eigen/Core',
 'cppad_eigen.hpp.htm#Eigen NumTraits',
+'cppad_eigen.hpp.htm#Eigen ScalarBinaryOpTraits',
 'cppad_eigen.hpp.htm#CppAD Namespace',
 'cppad_eigen.hpp.htm#eigen_vector',
 'cppad_eigen.hpp.htm#Include cppad.hpp',
