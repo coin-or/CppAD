@@ -76,5 +76,14 @@ bool cppad_eigen(void)
     D      = A * B * C;
     ok    &= D(0,0) == 6.0 ;
 
+    // Multiplying Eigen objects (such as matrices) of mixed base types used to fail without appropriate "ScalarBinaryOpTraits" implementation
+    const int nn = 3;
+	Eigen::Matrix<double, nn, nn> AA = Eigen::Matrix<double, nn, nn>::Zero();	
+	Eigen::Matrix<AScalar, nn, nn> BB = Eigen::Matrix<AScalar, nn, nn>::Zero();
+	auto CC = BB*AA; 
+	auto cc = AA(0,0)*BB(0,0);
+	ok &= CC(0,0) == 0;
+	ok &= cc == 0;
+
     return ok;
 }
