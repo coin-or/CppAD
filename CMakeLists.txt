@@ -293,7 +293,7 @@ SET(remove_coin_or FALSE)
 #
 # eigen
 IF( include_eigen AND NOT USE_CMAKE_INTERFACE) 
-    pkgconfig_info(Eigen3 ${system_include} ${remove_coin_or})
+    pkgconfig_info(eigen3 ${system_include} ${remove_coin_or})
     SET(eigen_LIBRARIES "${Eigen3_LIBRARIES}")
     SET(cppad_has_eigen 1)
 ELSE()
