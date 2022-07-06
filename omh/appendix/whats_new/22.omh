@@ -46,9 +46,18 @@ $spell
     msys
     jit
     csrc
+    Num
+    Op
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 07-05$$
+Merge in pull_155 branch.
+This enabled the use of binary operators with Eigen matrices of
+type $codei%AD<%Base%>%$$ and type $icode Base$$;
+see $cref/ScalarBinaryOpTraits/cppad_eigen.hpp/Eigen ScalarBinaryOpTraits/$$
+in $code cppad_eigen.hpp$$.
 
 $head 06-23$$
 $list number$$

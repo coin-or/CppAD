@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -76,14 +76,21 @@ bool cppad_eigen(void)
     D      = A * B * C;
     ok    &= D(0,0) == 6.0 ;
 
-    // Multiplying Eigen objects (such as matrices) of mixed base types used to fail without appropriate "ScalarBinaryOpTraits" implementation
+    // Multiplying Eigen objects (such as matrices) of element types used to
+    // fail before appropriate "ScalarBinaryOpTraits" was added.
     const int nn = 3;
-	Eigen::Matrix<double, nn, nn> AA = Eigen::Matrix<double, nn, nn>::Zero();	
-	Eigen::Matrix<AScalar, nn, nn> BB = Eigen::Matrix<AScalar, nn, nn>::Zero();
-	auto CC = BB*AA; 
-	auto cc = AA(0,0)*BB(0,0);
-	ok &= CC(0,0) == 0;
-	ok &= cc == 0;
+    Matrix<double,  nn, nn> d_matrix = Matrix<double,  nn, nn>::Zero();
+    Matrix<AScalar, nn, nn> a_matrix = Matrix<AScalar, nn, nn>::Zero();
+    a_matrix  = a_matrix * d_matrix;
+    a_matrix  = d_matrix * a_matrix;
+    ok       &= a_matrix(0, 0) == AScalar(0);
+
+    // Test multiply matrix elements of mixed types
+    // (This worked before corresponding ScalarBianryOpTraits was added.)
+    AScalar a_scalar = a_matrix(0,0) * d_matrix(0,0);
+    ok              &= a_scalar == AScalar(0);
+    a_scalar         = d_matrix(0, 0) * a_matrix(0, 0);
+    ok              &= a_scalar == AScalar(0);
 
     return ok;
 }

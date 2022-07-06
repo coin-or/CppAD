@@ -40,6 +40,7 @@ $spell
     exp
     cos
     plugin
+    Op
 $$
 $section Enable Use of Eigen Linear Algebra Package with CppAD$$
 
@@ -156,19 +157,22 @@ namespace Eigen {
         static CppAD::AD<Base> infinity(void)
         {   return CppAD::numeric_limits< CppAD::AD<Base> >::infinity(); }
     };
+}
+/* %$$
 
-    /**
-     * Determines that the given binary operation of two numeric types involving
-     * an AD<Base> is allowed and what the scalar return type is
-     */
-    template<typename S, typename BinOp>
-    struct ScalarBinaryOpTraits<CppAD::AD<S>,S,BinOp>{ 
-        typedef CppAD::AD<S> ReturnType; 
+$head Eigen ScalarBinaryOpTraits$$
+$srccode%cpp% */
+namespace Eigen {
+    // Inform Eigen that a binary operations between Base and AD<Base>
+    // are allowed and thate the return type is AD<Base>
+    template<typename Base, typename BinOp>
+    struct ScalarBinaryOpTraits<CppAD::AD<Base>, Base, BinOp>{
+        typedef CppAD::AD<Base> ReturnType;
     };
-    template<typename S, typename BinOp>
-    struct ScalarBinaryOpTraits<S,CppAD::AD<S>,BinOp>
-    { 
-        typedef CppAD::AD<S> ReturnType; 
+    template<typename Base, typename BinOp>
+    struct ScalarBinaryOpTraits<Base, CppAD::AD<Base>, BinOp>
+    {
+        typedef CppAD::AD<Base> ReturnType;
     };
 }
 /* %$$
