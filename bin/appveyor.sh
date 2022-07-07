@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -35,16 +35,24 @@ then
     echo_eval rm -r build
 fi
 echo_eval mkdir build
+# -----------------------------------------------------------------------------
+# install eigen in build/prefix
+bin/get_eigen.sh
+# -----------------------------------------------------------------------------
 echo_eval cd build
 echo_eval cmake \
     -G '"Unix Makefiles"' \
     -D cppad_prefix=$(pwd)/prefix \
     -D CMAKE_C_COMPILER=gcc \
     -D CMAKE_CXX_COMPILER=g++ \
+    -D include_eigen=true \
     ..
 # -----------------------------------------------------------------------------
 # Microsoft DLLs must be in current directory or execution path
 PATH="$PATH:$(pwd)/cppad_lib"
+#
+# PKG_CONFIG_PATH so CppAD can find eigen information
+PKG_CONFIG_PATH="$(pwd)/build/prefix/share/pkgconfig"
 # -----------------------------------------------------------------------------
 # build target1, target2, ...
 if [ "$cmd" == 'make' ]

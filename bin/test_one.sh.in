@@ -150,7 +150,7 @@ fi
 #
 # cppad
 include_flags=$(echo $include_flags | \
-    sed -e 's| -I| -isystem|g' -e 's|^-I|-isystem|'
+    sed -e 's|  *-I *| -isystem |g' -e 's|^-I *|-isystem |'
 )
 include_flags="-I $original_dir/include $include_flags"
 if [ @is_cppad_lib_dynamic@ ==  '1' ]
