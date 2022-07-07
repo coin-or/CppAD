@@ -38,6 +38,9 @@ echo_eval mkdir build
 # -----------------------------------------------------------------------------
 # install eigen in build/prefix
 bin/get_eigen.sh
+#
+# set PKG_CONFIG_PATH so CppAD can find eigen3.pc
+PKG_CONFIG_PATH="$(pwd)/build/prefix/share/pkgconfig"
 # -----------------------------------------------------------------------------
 echo_eval cd build
 echo_eval cmake \
@@ -50,9 +53,6 @@ echo_eval cmake \
 # -----------------------------------------------------------------------------
 # Microsoft DLLs must be in current directory or execution path
 PATH="$PATH:$(pwd)/cppad_lib"
-#
-# PKG_CONFIG_PATH so CppAD can find eigen information
-PKG_CONFIG_PATH="$(pwd)/build/prefix/share/pkgconfig"
 # -----------------------------------------------------------------------------
 # build target1, target2, ...
 if [ "$cmd" == 'make' ]
