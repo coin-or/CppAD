@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -24,11 +24,12 @@ environment:
   matrix:
     - HOST_ARCH_ARG: --host=x86_64-w64-mingw32
       ADD_PATH: /mingw64/bin
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: msys2
 
 # scripts that run after cloning repository
 install:
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-cmake"
+  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S gcc"
 
 #
 # run custom scripts instead of automatic MSBuild
