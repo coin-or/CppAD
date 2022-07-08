@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -121,7 +121,7 @@ then
     echo_eval mkdir build
 fi
 echo_eval cd build
-echo_eval cmake .. -DCMAKE_INSTALL_PREFIX=$prefix
+echo_eval cmake -D CMAKE_INSTALL_PREFIX=$prefix ..
 echo_eval make -j $n_job install
 if [ -e $prefix/include/Eigen ]
 then

@@ -36,11 +36,22 @@ then
 fi
 echo_eval mkdir build
 # -----------------------------------------------------------------------------
+#
+# bin/temp.sh
+# version of get_eigen.sh that specifies GNU compiler
+cat << EOF > temp.sed
+s|^echo_eval cmake|& -D CMAKE_C_COMPILER=gcc|
+s|^echo_eval cmake|& -D CMAKE_CXX_COMPILER=g++|
+s|bin/get_\$package.sh|bin/temp.sh|
+EOF
+sed -f temp.sed bin/get_eigen.sh > bin/temp.sh
+chmod +x bin/temp.sh
+#
 # install eigen in build/prefix
-bin/get_eigen.sh
+bin/temp.sh
 #
 # set PKG_CONFIG_PATH so CppAD can find eigen3.pc
-PKG_CONFIG_PATH="$(pwd)/build/prefix/share/pkgconfig"
+export PKG_CONFIG_PATH="$(pwd)/build/prefix/share/pkgconfig"
 # -----------------------------------------------------------------------------
 echo_eval cd build
 echo_eval cmake \
@@ -52,7 +63,7 @@ echo_eval cmake \
     ..
 # -----------------------------------------------------------------------------
 # Microsoft DLLs must be in current directory or execution path
-PATH="$PATH:$(pwd)/cppad_lib"
+export PATH="$PATH:$(pwd)/cppad_lib"
 # -----------------------------------------------------------------------------
 # build target1, target2, ...
 if [ "$cmd" == 'make' ]
