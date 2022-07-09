@@ -52,6 +52,19 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 07-08$$
+$list number$$
+Fix $cref make_check$$ on systems that require $code ./$$ in front
+of the executable in the current directory.
+$lnext
+Change $href%https://github.com/coin-or/CppAD/actions%github actions%$$
+to run on pushes to the master and stable branches and
+to run on all pull requests.
+$lnext
+Add a github action called $code ci-windows-msys2.yml$$
+for testing on an msys2 system.
+$lend
+
 $head 07-05$$
 Merge in pull_155 branch.
 This enabled the use of binary operators with Eigen matrices of
