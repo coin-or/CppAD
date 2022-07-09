@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -51,7 +51,7 @@ TARGET_LINK_LIBRARIES(
 
 # Add the check_cppad_ipopt_speed target
 ADD_CUSTOM_TARGET(check_cppad_ipopt_speed
-    cppad_ipopt_speed
+    ./cppad_ipopt_speed
     DEPENDS cppad_ipopt_speed cppad_ipopt
 )
 MESSAGE(STATUS "make check_cppad_ipopt_speed: available")

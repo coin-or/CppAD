@@ -44,7 +44,7 @@ TARGET_LINK_LIBRARIES(example_graph
 #
 # Add the check_example_graph target
 ADD_CUSTOM_TARGET(check_example_graph
-    example_graph
+    ./example_graph
     DEPENDS example_graph
 )
 MESSAGE(STATUS "make check_example_graph: available")

@@ -49,7 +49,7 @@ TARGET_LINK_LIBRARIES(speed_fadbad speed_src )
 
 # Add the check_speed_fadbad target
 ADD_CUSTOM_TARGET(check_speed_fadbad
-    speed_fadbad correct 54321
+    ./speed_fadbad correct 54321
     DEPENDS speed_fadbad speed_src
 )
 MESSAGE(STATUS "make check_speed_fadbad: available")

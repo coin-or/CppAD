@@ -24,7 +24,7 @@ TARGET_LINK_LIBRARIES(example_print_for
 )
 # check_example_print_for target
 ADD_CUSTOM_TARGET(check_example_print_for
-    example_print_for
+    ./example_print_for
     DEPENDS
     example_print_for
 )

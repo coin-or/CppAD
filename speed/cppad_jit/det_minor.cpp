@@ -30,7 +30,7 @@ $srccode%cpp% */
 # include <cppad/speed/uniform_01.hpp>
 extern std::map<std::string, bool> global_option;
 
-# ifdef _MSC_VER
+# ifdef _WIN32
 # define DLL_EXT ".dll"
 # else
 # define DLL_EXT ".so"

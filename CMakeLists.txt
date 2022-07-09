@@ -391,9 +391,9 @@ FOREACH(dir_types includedirs libdirs datadir docdir)
     ENDIF( cppad_postfix )
 ENDFOREACH(dir_types includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
-# OPENMP_FOUND, OpenMP_CXX_FLAGS
+# OpenMP_CXX_FOUND, OpenMP_CXX_FLAGS
 IF( ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" )
-    SET(OPENMP_FOUND FALSE)
+    SET(OpenMP_CXX_FOUND FALSE)
     MESSAGE(STATUS
         "Skipping OpenMP on Darwin (Mac) systems. 2DO: fix this"
     )

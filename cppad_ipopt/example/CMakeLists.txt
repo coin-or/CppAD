@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -49,7 +49,7 @@ TARGET_LINK_LIBRARIES(cppad_ipopt_example
 
 # Add the check_cppad_ipopt_example target
 ADD_CUSTOM_TARGET(check_cppad_ipopt_example
-    cppad_ipopt_example
+    ./cppad_ipopt_example
     DEPENDS cppad_ipopt_example cppad_ipopt
 )
 MESSAGE(STATUS "make check_cppad_ipopt_example: available")

@@ -71,7 +71,7 @@ ENDIF( dl_found )
 #
 # Add the check_speed_sacado target
 ADD_CUSTOM_TARGET(check_speed_sacado
-    speed_sacado correct 54321
+    ./speed_sacado correct 54321
     DEPENDS speed_sacado speed_src
 )
 MESSAGE(STATUS "make check_speed_sacado: available")

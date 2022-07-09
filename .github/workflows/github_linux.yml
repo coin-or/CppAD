@@ -3,8 +3,8 @@ on:
   pull_request:
   push:
     branches:
-      # comment out becasue not working
-      # - master
+      - master
+      - 'stable/*'
 jobs:
   run_tests:
     runs-on: ${{ matrix.os }}

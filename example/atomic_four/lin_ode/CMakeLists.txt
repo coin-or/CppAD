@@ -34,7 +34,7 @@ TARGET_LINK_LIBRARIES(example_atomic_four_lin_ode
 #
 # Add the check_example_atomic_four_lin_ode target
 ADD_CUSTOM_TARGET(check_example_atomic_four_lin_ode
-    example_atomic_four_lin_ode
+    ./example_atomic_four_lin_ode
     DEPENDS example_atomic_four_lin_ode
 )
 MESSAGE(STATUS "make check_example_atomic_four_lin_ode: available")

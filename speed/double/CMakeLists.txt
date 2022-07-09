@@ -47,7 +47,7 @@ TARGET_LINK_LIBRARIES(speed_double speed_src )
 
 # Add the check_speed_double target
 ADD_CUSTOM_TARGET(check_speed_double
-    speed_double correct 54321
+    ./speed_double correct 54321
     DEPENDS speed_double speed_src
 )
 MESSAGE(STATUS "make check_speed_double: available")

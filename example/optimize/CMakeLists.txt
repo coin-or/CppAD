@@ -38,7 +38,7 @@ TARGET_LINK_LIBRARIES(example_optimize
 #
 # Add the check_example_optimize target
 ADD_CUSTOM_TARGET(check_example_optimize
-    example_optimize
+    ./example_optimize
     DEPENDS example_optimize
 )
 MESSAGE(STATUS "make check_example_optimize: available")

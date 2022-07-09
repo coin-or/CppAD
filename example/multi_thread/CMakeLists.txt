@@ -22,10 +22,10 @@ SET(check_example_multi_thread_depends "")
 INCLUDE(CheckLibraryExists)
 
 # If openmp found, set process its subdirectory
-IF ( OPENMP_FOUND )
+IF ( OpenMP_CXX_FOUND )
     # OpenMP_CXX_FLAGS - flags to add to the CXX compiler for OpenMP support
     ADD_SUBDIRECTORY(openmp)
-ENDIF ( OPENMP_FOUND )
+ENDIF ( OpenMP_CXX_FOUND )
 
 # If pthreads found, set pthread_lib and pthread_lib_path and process subdir
 #

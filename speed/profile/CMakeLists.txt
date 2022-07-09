@@ -54,7 +54,7 @@ TARGET_LINK_LIBRARIES(speed_profile
 
 # Add the check_speed_profile target
 ADD_CUSTOM_TARGET(check_speed_profile
-    speed_profile correct 54321
+    ./speed_profile correct 54321
     DEPENDS speed_profile
 )
 MESSAGE(STATUS "make check_speed_profile: available")

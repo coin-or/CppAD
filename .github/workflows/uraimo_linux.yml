@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - master
+      - 'stable/*'
 jobs:
   run_tests:
     runs-on: ubuntu-10.04

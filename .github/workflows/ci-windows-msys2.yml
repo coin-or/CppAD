@@ -1,0 +1,50 @@
+name: CppAD CI for Windows - (msys2)
+
+on:
+  pull_request:
+  push:
+    branches:
+      - workflow
+      - master
+      - 'stable/*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: git mingw-w64-x86_64-cc cmake make
+
+      - name: CppAD check
+        run: |
+          #
+          # OpenMP_CXX_FOUND=FALSE
+          # Without this get cannot find ... /libgomp.dll.a: Invalid argument.
+          # 2DO: Need to fix this.
+          sed -i CMakeLists.txt \
+            -e 's|IF(.*Darwin.*)|IF( TRUE )|' \
+            -e 's|ELSE(.*Darwin.*)|ELSE( TRUE )|' \
+            -e 's|ENDIF(.*Darwin.*)|ENDIF( TRUE )|' \
+            -e 's|on Darwin (Mac) systems|on this system|'
+          echo "git diff CMakeLists.txt"
+          git diff CMakeLists.txt
+          #
+          # Create build directory
+          mkdir build
+          pushd build
+          #
+          # configure
+          cmake \
+            -D CMAKE_SYSTEM_NAME=MSYS \
+            -D CMAKE_VERBOSE_MAKEFILE=NO \
+            ..
+          #
+          # check
+          cmake --build . --target check --parallel 4

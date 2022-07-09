@@ -32,8 +32,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|float_forward_zero|jit_float|
-s|double_forward_zero|jit_double|
-s|lont_double_forward_zero|jit_long_double|
-s|%type%_forward_zero|jit_%type%|
-s|cppad_forward_zero_|cppad_jit_|g
+s|OPENMP_FOUND|OpenMP_CXX_FOUND|g

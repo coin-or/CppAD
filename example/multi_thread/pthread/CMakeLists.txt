@@ -47,7 +47,7 @@ TARGET_LINK_LIBRARIES(example_multi_thread_pthread
 
 # Add the check_example_multi_thread_pthread target
 ADD_CUSTOM_TARGET(check_example_multi_thread_pthread
-    example_multi_thread_pthread simple_ad
+    ./example_multi_thread_pthread simple_ad
     DEPENDS example_multi_thread_pthread
 )
 MESSAGE(STATUS "make check_example_multi_thread_pthread: available")

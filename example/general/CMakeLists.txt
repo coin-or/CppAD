@@ -152,7 +152,7 @@ TARGET_LINK_LIBRARIES(example_general
 #
 # Add the check_example_general target
 ADD_CUSTOM_TARGET(check_example_general
-    example_general
+    ./example_general
     DEPENDS example_general
 )
 MESSAGE(STATUS "make check_example_general: available")

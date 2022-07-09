@@ -40,7 +40,7 @@ TARGET_LINK_LIBRARIES(example_atomic_three
 #
 # Add the check_example_atomic_three target
 ADD_CUSTOM_TARGET(check_example_atomic_three
-    example_atomic_three
+    ./example_atomic_three
     DEPENDS example_atomic_three
 )
 MESSAGE(STATUS "make check_example_atomic_three: available")

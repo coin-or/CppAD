@@ -40,7 +40,7 @@ TARGET_LINK_LIBRARIES(example_abs_normal
 #
 # check_example_abs_normal target
 ADD_CUSTOM_TARGET(check_example_abs_normal
-    example_abs_normal
+    ./example_abs_normal
     DEPENDS
     example_abs_normal
 )

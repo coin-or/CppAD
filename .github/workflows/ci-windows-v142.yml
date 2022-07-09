@@ -1,9 +1,6 @@
 name: CppAD CI for Windows - (v142)
 on:
   pull_request:
-    branches:
-      - master
-      - 'stable/*'
   push:
     branches:
       - master

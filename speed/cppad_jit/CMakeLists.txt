@@ -52,7 +52,7 @@ TARGET_LINK_LIBRARIES(speed_cppad_jit speed_src )
 
 # Add the check_speed_cppad_jit target
 ADD_CUSTOM_TARGET(check_speed_cppad_jit
-    speed_cppad_jit correct 54321
+    ./speed_cppad_jit correct 54321
     DEPENDS speed_cppad_jit speed_src
 )
 MESSAGE(STATUS "make check_speed_cppad_jit: available")

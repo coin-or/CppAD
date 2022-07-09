@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -27,9 +27,9 @@ IF( NOT "${CMAKE_GENERATOR}" STREQUAL "NMake Makefiles" )
 ENDIF( NOT "${CMAKE_GENERATOR}" STREQUAL "NMake Makefiles" )
 #
 # cppad_for_tmb tests
-IF( OPENMP_FOUND )
+IF( OpenMP_CXX_FOUND )
     ADD_SUBDIRECTORY(cppad_for_tmb)
-ENDIF( OPENMP_FOUND )
+ENDIF( OpenMP_CXX_FOUND )
 
 # general tests
 ADD_SUBDIRECTORY(general)

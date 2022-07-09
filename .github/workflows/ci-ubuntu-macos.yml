@@ -3,6 +3,9 @@ name: CppAD CI for MacOS/Linux
 on:
   pull_request:
   push:
+    branches:
+      - master
+      - 'stable/*'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -46,7 +49,7 @@ jobs:
       run: |
         conda activate cppad
         echo $CONDA_PREFIX
-        
+
         mkdir build
         cd build
 

@@ -41,7 +41,7 @@ TARGET_LINK_LIBRARIES(test_more_deprecated
 #
 # Add the check_test_more_deprecated target
 ADD_CUSTOM_TARGET(check_test_more_deprecated
-    test_more_deprecated
+    ./test_more_deprecated
     DEPENDS
     ${check_test_more_deprecated_depends}
 )

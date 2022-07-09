@@ -36,7 +36,7 @@ TARGET_LINK_LIBRARIES(test_more_deprecated_chkpoint_one
 #
 # Add the check_test_more_deprecated_chkpoint_one target
 ADD_CUSTOM_TARGET(check_test_more_deprecated_chkpoint_one
-    test_more_deprecated_chkpoint_one
+    ./test_more_deprecated_chkpoint_one
     DEPENDS test_more_deprecated_chkpoint_one
 )
 MESSAGE(STATUS "make check_test_more_deprecated_chkpoint_one: available")

@@ -1,9 +1,6 @@
 name: CppAD CI for Windows - Clang
 on:
   pull_request:
-    branches:
-      - master
-      - 'stable/*'
   push:
     branches:
       - master

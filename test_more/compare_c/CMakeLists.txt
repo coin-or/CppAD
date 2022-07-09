@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -70,7 +70,7 @@ FOREACH( com c cpp )
     #
     # Add target the executes this program
     ADD_CUSTOM_TARGET(check_det_by_minor_${com}
-        det_by_minor_${com}
+        ./det_by_minor_${com}
         DEPENDS det_by_minor_${com}
     )
     MESSAGE(STATUS "make check_det_by_minor_${com}: available")
