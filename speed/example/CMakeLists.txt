@@ -38,7 +38,7 @@ TARGET_LINK_LIBRARIES(speed_example
 )
 # Add the check_speed_example target
 ADD_CUSTOM_TARGET(check_speed_example
-    ./speed_example
+    speed_example
     DEPENDS speed_example speed_src
 )
 MESSAGE(STATUS "make check_speed_example: available")
@@ -52,7 +52,7 @@ TARGET_LINK_LIBRARIES(speed_program
     ${colpack_libs}
 )
 # Add the check_speed_program target
-ADD_CUSTOM_TARGET(check_speed_program ./speed_program DEPENDS speed_program )
+ADD_CUSTOM_TARGET(check_speed_program speed_program DEPENDS speed_program )
 MESSAGE(STATUS "make check_speed_program: available")
 #
 

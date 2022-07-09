@@ -35,7 +35,7 @@ TARGET_LINK_LIBRARIES(example_atomic_four_mat_mul
 #
 # Add the check_example_atomic_four_mat_mul target
 ADD_CUSTOM_TARGET(check_example_atomic_four_mat_mul
-    ./example_atomic_four_mat_mul
+    example_atomic_four_mat_mul
     DEPENDS example_atomic_four_mat_mul
 )
 MESSAGE(STATUS "make check_example_atomic_four_mat_mul: available")

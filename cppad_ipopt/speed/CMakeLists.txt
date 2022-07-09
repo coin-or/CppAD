@@ -51,7 +51,7 @@ TARGET_LINK_LIBRARIES(
 
 # Add the check_cppad_ipopt_speed target
 ADD_CUSTOM_TARGET(check_cppad_ipopt_speed
-    ./cppad_ipopt_speed
+    cppad_ipopt_speed
     DEPENDS cppad_ipopt_speed cppad_ipopt
 )
 MESSAGE(STATUS "make check_cppad_ipopt_speed: available")

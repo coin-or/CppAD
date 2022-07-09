@@ -28,7 +28,7 @@ ADD_EXECUTABLE(example_jit EXCLUDE_FROM_ALL ${source_list})
 #
 # Add the check for this target
 ADD_CUSTOM_TARGET(check_example_jit
-    ./example_jit
+    example_jit
     DEPENDS example_jit
 )
 #

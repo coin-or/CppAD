@@ -36,7 +36,7 @@ TARGET_LINK_LIBRARIES(example_atomic_four_vector
 #
 # Add the check_example_atomic_four_vector target
 ADD_CUSTOM_TARGET(check_example_atomic_four_vector
-    ./example_atomic_four_vector
+    example_atomic_four_vector
     DEPENDS example_atomic_four_vector
 )
 MESSAGE(STATUS "make check_example_atomic_four_vector: available")

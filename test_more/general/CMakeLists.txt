@@ -168,7 +168,7 @@ TARGET_LINK_LIBRARIES(test_more_general
 #
 # Add the check_test_more_general target
 ADD_CUSTOM_TARGET(check_test_more_general
-    ./test_more_general
+    test_more_general
     DEPENDS
     test_more_general
 )

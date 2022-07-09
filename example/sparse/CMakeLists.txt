@@ -58,7 +58,7 @@ TARGET_LINK_LIBRARIES(example_sparse
 
 # Add the check_example_sparse target
 ADD_CUSTOM_TARGET(check_example_sparse
-    ./example_sparse
+    example_sparse
     DEPENDS example_sparse
 )
 MESSAGE(STATUS "make check_example_sparse: available")

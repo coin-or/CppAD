@@ -44,7 +44,7 @@ TARGET_LINK_LIBRARIES(introduction
 )
 # Add this check target
 ADD_CUSTOM_TARGET(check_introduction
-    ./introduction
+    introduction
     DEPENDS introduction
 )
 MESSAGE(STATUS "make check_introduction: available")

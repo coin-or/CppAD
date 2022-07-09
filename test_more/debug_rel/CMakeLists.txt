@@ -42,7 +42,7 @@ ADD_EXECUTABLE(test_more_debug_rel EXCLUDE_FROM_ALL
 
 # Add the check_test_more_debug_rel target
 ADD_CUSTOM_TARGET(check_test_more_debug_rel
-    ./test_more_debug_rel
+    test_more_debug_rel
     DEPENDS
     test_more_debug_rel
 )

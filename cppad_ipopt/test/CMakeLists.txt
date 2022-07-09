@@ -41,7 +41,7 @@ TARGET_LINK_LIBRARIES(cppad_ipopt_test
 
 # Add the check_cppad_ipopt_test target
 ADD_CUSTOM_TARGET(check_cppad_ipopt_test
-    ./cppad_ipopt_test
+    cppad_ipopt_test
     DEPENDS cppad_ipopt_test cppad_ipopt
 )
 MESSAGE(STATUS "make check_cppad_ipopt_test: available")

@@ -49,7 +49,7 @@ TARGET_LINK_LIBRARIES(cppad_ipopt_example
 
 # Add the check_cppad_ipopt_example target
 ADD_CUSTOM_TARGET(check_cppad_ipopt_example
-    ./cppad_ipopt_example
+    cppad_ipopt_example
     DEPENDS cppad_ipopt_example cppad_ipopt
 )
 MESSAGE(STATUS "make check_cppad_ipopt_example: available")

@@ -49,7 +49,7 @@ SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 
 # Add the check_example_multi_thread_openmp target
 ADD_CUSTOM_TARGET(check_example_multi_thread_openmp
-    ./example_multi_thread_openmp simple_ad
+    example_multi_thread_openmp simple_ad
     DEPENDS example_multi_thread_openmp
 )
 MESSAGE(STATUS "make check_example_multi_thread_openmp: available")

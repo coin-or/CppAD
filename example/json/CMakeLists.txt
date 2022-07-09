@@ -46,7 +46,7 @@ TARGET_LINK_LIBRARIES(example_json
 #
 # Add the check_example_json target
 ADD_CUSTOM_TARGET(check_example_json
-    ./example_json
+    example_json
     DEPENDS example_json
 )
 MESSAGE(STATUS "make check_example_json: available")

@@ -53,7 +53,7 @@ TARGET_LINK_LIBRARIES(speed_cppad
 
 # Add the check_speed_cppad target
 ADD_CUSTOM_TARGET(check_speed_cppad
-    ./speed_cppad correct 54321
+    speed_cppad correct 54321
     DEPENDS speed_cppad speed_src
 )
 MESSAGE(STATUS "make check_speed_cppad: available")

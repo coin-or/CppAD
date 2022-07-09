@@ -63,7 +63,7 @@ TARGET_LINK_LIBRARIES(example_utility
 #
 # Add the check_example_utility target
 ADD_CUSTOM_TARGET(check_example_utility
-    ./example_utility
+    example_utility
     DEPENDS example_utility
 )
 MESSAGE(STATUS "make check_example_utility: available")

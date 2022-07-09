@@ -1,12 +1,16 @@
 name: CppAD CI for Windows - (msys2)
+# Not yet working, needs ./ in front of every custom target
+# but this would break the ci-windows-v142 test.
 
 on:
   pull_request:
+    branches:
+      - workflow
   push:
     branches:
       - workflow
-      - master
-      - 'stable/*'
+      # - master
+      # - 'stable/*'
 
 jobs:
   build:

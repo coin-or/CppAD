@@ -52,7 +52,7 @@ TARGET_LINK_LIBRARIES(test_more_deprecated_atomic_two
 #
 # Add the check_test_more_deprecated_atomic_two target
 ADD_CUSTOM_TARGET(check_test_more_deprecated_atomic_two
-    ./test_more_deprecated_atomic_two
+    test_more_deprecated_atomic_two
     DEPENDS test_more_deprecated_atomic_two
 )
 MESSAGE(STATUS "make check_test_more_deprecated_atomic_two: available")

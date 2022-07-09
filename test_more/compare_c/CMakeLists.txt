@@ -70,7 +70,7 @@ FOREACH( com c cpp )
     #
     # Add target the executes this program
     ADD_CUSTOM_TARGET(check_det_by_minor_${com}
-        ./det_by_minor_${com}
+        det_by_minor_${com}
         DEPENDS det_by_minor_${com}
     )
     MESSAGE(STATUS "make check_det_by_minor_${com}: available")

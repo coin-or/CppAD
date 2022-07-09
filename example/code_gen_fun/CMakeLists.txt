@@ -34,7 +34,7 @@ TARGET_LINK_LIBRARIES(example_code_gen_fun
 #
 # Add the check_example_code_gen_fun target
 ADD_CUSTOM_TARGET(check_example_code_gen_fun
-    ./example_code_gen_fun
+    example_code_gen_fun
     DEPENDS example_code_gen_fun
 )
 MESSAGE(STATUS "make check_example_code_gen_fun: available")

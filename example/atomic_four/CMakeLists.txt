@@ -39,7 +39,7 @@ TARGET_LINK_LIBRARIES(example_atomic_four
 #
 # Add the check_example_atomic_four target
 ADD_CUSTOM_TARGET(check_example_atomic_four
-    ./example_atomic_four
+    example_atomic_four
     DEPENDS example_atomic_four ${check_example_atomic_four_depends}
 )
 #

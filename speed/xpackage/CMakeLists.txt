@@ -52,7 +52,7 @@ TARGET_LINK_LIBRARIES(speed_xpackage speed_src )
 
 # Add the check_speed_xpackage target
 ADD_CUSTOM_TARGET(check_speed_xpackage
-    ./speed_xpackage correct 54321
+    speed_xpackage correct 54321
     DEPENDS speed_xpackage speed_src
 )
 MESSAGE(STATUS "make check_speed_xpackage: available")

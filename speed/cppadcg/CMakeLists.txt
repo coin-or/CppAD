@@ -51,7 +51,7 @@ TARGET_LINK_LIBRARIES(speed_cppadcg
 # Add the check_speed_cppadcg target
 SET(random_seed 54321)
 ADD_CUSTOM_TARGET(check_speed_cppadcg
-    ./speed_cppadcg correct ${random_seed} onetape
+    speed_cppadcg correct ${random_seed} onetape
     DEPENDS speed_cppadcg speed_src
 )
 MESSAGE(STATUS "make check_speed_cppadcg: available")
