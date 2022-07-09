@@ -1,0 +1,8 @@
+include(CMakeFindDependencyMacro)
+
+set(TARGETS_SCRIPT_FILE @TARGETS_SCRIPT_FILE@)
+
+include("${CMAKE_CURRENT_LIST_DIR}/${TARGETS_SCRIPT_FILE}")
+
+# provide transitive dependencies here
+find_dependency(Eigen3) 
