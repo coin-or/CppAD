@@ -124,6 +124,11 @@ ENDFOREACH(pkg adolc eigen ipopt)
 # -----------------------------------------------------------------------------
 # Current Arguments
 #
+# cmake_needs_dot_slash
+command_line_arg(cmake_needs_dot_slash "false" BOOL
+"does cmake need a ./ in the front of an executable name in a custom command"
+)
+#
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
     "directory, below prefix, where cmake installs cppad data files"
@@ -195,6 +200,16 @@ command_line_arg(cppad_tape_id_type "unsigned int" STRING
 command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
+#
+# include_eigen
+# include_adolc
+# include_ipopt
+# include_cppadcg
+FOREACH(package eigen adolc ipopt cppadcg)
+    command_line_arg(include_${package} "false" BOOL
+            "include the ${package} examples and tests"
+    )
+ENDFOREACH(package eigen adolc ipopt cppadcg)
 # ----------------------------------------------------------------------------
 #
 # Ensure c++11 support
@@ -274,16 +289,6 @@ print_variable(CMAKE_SYSTEM_NAME)
 print_variable(cppad_debug_which)
 print_variable(CMAKE_BUILD_TYPE)
 MESSAGE(STATUS "make check: avialable")
-#
-# include_eigen
-# include_adolc
-# include_ipopt
-# include_cppadcg
-FOREACH(package eigen adolc ipopt cppadcg)
-    command_line_arg(include_${package} "false" BOOL
-            "include the ${package} examples and tests"
-    )
-ENDFOREACH(package eigen adolc ipopt cppadcg)
 # -----------------------------------------------------------------------------
 # CMAKE_INSTALL_PREFIX
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"

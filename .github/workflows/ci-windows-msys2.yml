@@ -48,6 +48,7 @@ jobs:
           cmake \
             -D CMAKE_SYSTEM_NAME=MSYS \
             -D CMAKE_VERBOSE_MAKEFILE=NO \
+            -D cmake_needs_dot_slash=YES \
             ..
           #
           # check
