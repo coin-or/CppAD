@@ -37,10 +37,7 @@ set_compile_flags( introduction "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE( introduction EXCLUDE_FROM_ALL ${source_list} )
 #
-# List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(introduction
-    ${cppad_lib}
-    ${colpack_libs}
-)
+TARGET_LINK_LIBRARIES(introduction ${cppad_lib} ${colpack_libs})
+#
 # check_introduction
 add_check_executable(check introduction)

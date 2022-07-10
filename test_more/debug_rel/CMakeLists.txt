@@ -39,6 +39,7 @@ ADD_EXECUTABLE(test_more_debug_rel EXCLUDE_FROM_ALL
     debug.cpp
     release.cpp
 )
+# debug_rel does not use cppad_lib
 
 # check_test_more_debug_rel
 add_check_executable(check_test_more debug_rel)
