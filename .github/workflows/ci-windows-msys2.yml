@@ -52,4 +52,4 @@ jobs:
             ..
           #
           # check
-          cmake --build . --target check --parallel 4
+          cmake --build . --target check --parallel 1

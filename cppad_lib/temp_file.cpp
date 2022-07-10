@@ -57,8 +57,8 @@ $end
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
-# if CPPAD_HAS_MKSTEMP && CPPAD_USE_CPLUSPLUS_2017
 std::string temp_file(void)
+# if CPPAD_HAS_MKSTEMP && CPPAD_USE_CPLUSPLUS_2017
 {   // path
     using std::filesystem::path;
     //
@@ -90,8 +90,7 @@ std::string temp_file(void)
     std::string file_name = pattern_vec.data();
     return file_name;
 }
-# else
-std::string temp_file(void)
+# else // CPPAD_HAS_MKSTEMP && CPPAD_USE_CPLUSPLUS_2017
 {
 # if CPPAD_HAS_TMPNAM_S
     char c_str[L_tmpnam_s];
@@ -116,6 +115,6 @@ std::string temp_file(void)
     fclose(fp);
     return file_name;
 }
-# endif
+# endif // CPPAD_HAS_MKSTEMP && CPPAD_USE_CPLUSPLUS_2017
 
 } } // END_CPPAD_LOCAL_NAMESPACE
