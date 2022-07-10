@@ -1,4 +1,4 @@
-name: CppAD CI for Windows - Clang
+name: conda - windows - clang
 on:
   pull_request:
   push:

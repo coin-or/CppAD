@@ -1,4 +1,4 @@
-name: CppAD CI for MacOS/Linux
+name: conda - ubuntu and macos
 
 on:
   pull_request:

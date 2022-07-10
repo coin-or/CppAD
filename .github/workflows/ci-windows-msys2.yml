@@ -1,6 +1,4 @@
-name: CppAD CI for Windows - (msys2)
-# Not yet working, needs ./ in front of every custom target
-# but this would break the ci-windows-v142 test.
+name: windows - msys2
 
 on:
   pull_request:

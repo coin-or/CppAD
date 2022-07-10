@@ -1,4 +1,4 @@
-name: github_linux
+name: ubuntu and macos
 on:
   pull_request:
   push:
