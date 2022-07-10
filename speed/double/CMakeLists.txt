@@ -45,13 +45,5 @@ TARGET_LINK_LIBRARIES(speed_double
 TARGET_LINK_LIBRARIES(speed_double speed_src )
 
 
-# Add the check_speed_double target
-ADD_CUSTOM_TARGET(check_speed_double
-    speed_double correct 54321
-    DEPENDS speed_double speed_src
-)
-MESSAGE(STATUS "make check_speed_double: available")
-
-# Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_double)
-SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)
+# check_speed_double
+add_check_executable(check_speed double "correct 54321")

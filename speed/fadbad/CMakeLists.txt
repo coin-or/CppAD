@@ -47,13 +47,5 @@ TARGET_LINK_LIBRARIES(speed_fadbad
 # fadbad is an include file only library
 TARGET_LINK_LIBRARIES(speed_fadbad speed_src )
 
-# Add the check_speed_fadbad target
-ADD_CUSTOM_TARGET(check_speed_fadbad
-    speed_fadbad correct 54321
-    DEPENDS speed_fadbad speed_src
-)
-MESSAGE(STATUS "make check_speed_fadbad: available")
-
-# Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_fadbad)
-SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)
+# check_speed_fadbad
+add_check_executable(check_speed fadbad "correct 54321")

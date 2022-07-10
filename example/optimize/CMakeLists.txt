@@ -36,13 +36,5 @@ TARGET_LINK_LIBRARIES(example_optimize
     ${colpack_libs}
 )
 #
-# Add the check_example_optimize target
-ADD_CUSTOM_TARGET(check_example_optimize
-    example_optimize
-    DEPENDS example_optimize
-)
-MESSAGE(STATUS "make check_example_optimize: available")
-
-# add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_optimize)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_optimize
+add_check_executable(check_example optimize)

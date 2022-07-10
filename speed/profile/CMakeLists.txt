@@ -52,12 +52,8 @@ TARGET_LINK_LIBRARIES(speed_profile
     ${colpack_libs}
 )
 
-# Add the check_speed_profile target
-ADD_CUSTOM_TARGET(check_speed_profile
-    speed_profile correct 54321
-    DEPENDS speed_profile
-)
-MESSAGE(STATUS "make check_speed_profile: available")
+# check_speed_profile
+add_check_executable(check_speed profile "correct 54321")
 
 # Sed script to make gprof output more readable, use:
 #   ./speed_profile speed 54321
@@ -69,7 +65,3 @@ CONFIGURE_FILE(
     ${CMAKE_CURRENT_BINARY_DIR}/gprof.sed
     COPYONLY
 )
-
-# Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_profile)
-SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)

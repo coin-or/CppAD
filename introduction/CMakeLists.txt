@@ -42,13 +42,5 @@ TARGET_LINK_LIBRARIES(introduction
     ${cppad_lib}
     ${colpack_libs}
 )
-# Add this check target
-ADD_CUSTOM_TARGET(check_introduction
-    introduction
-    DEPENDS introduction
-)
-MESSAGE(STATUS "make check_introduction: available")
-
-# Change check depends in parent environment
-add_to_list(check_depends check_introduction)
-SET(check_depends "${check_depends}" PARENT_SCOPE)
+# check_introduction
+add_check_executable(check introduction)

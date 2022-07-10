@@ -17,19 +17,5 @@ set_compile_flags( example_get_started "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_get_started EXCLUDE_FROM_ALL ${source_list})
 #
-# Add the check for this target
-ADD_CUSTOM_TARGET(check_example_get_started
-    example_get_started
-    DEPENDS example_get_started
-)
-#
-# List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(example_get_started
-    ${cppad_lib}
-    ${colpack_libs}
-)
-MESSAGE(STATUS "make check_example_get_started: available")
-#
-# Change check depends in parent environment
-add_to_list(check_example_depends check_example_get_started)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_get_started
+add_check_executable(check_example get_started)

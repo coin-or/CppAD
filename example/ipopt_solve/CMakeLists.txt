@@ -35,13 +35,5 @@ TARGET_LINK_LIBRARIES(example_ipopt_solve
     ${colpack_libs}
 )
 
-# Add the check_example_ipopt_solve target
-ADD_CUSTOM_TARGET(check_example_ipopt_solve
-    example_ipopt_solve
-    DEPENDS example_ipopt_solve
-)
-MESSAGE(STATUS "make check_example_ipopt_solve: available")
-
-# Change check_example_depends in parent environment
-add_to_list(check_example_depends check_example_ipopt_solve)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_ipopt_solve
+add_check_executable(check_example ipopt_solve)

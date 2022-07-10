@@ -50,13 +50,5 @@ TARGET_LINK_LIBRARIES(speed_xpackage
 # xpackage is an include file only library
 TARGET_LINK_LIBRARIES(speed_xpackage speed_src )
 
-# Add the check_speed_xpackage target
-ADD_CUSTOM_TARGET(check_speed_xpackage
-    speed_xpackage correct 54321
-    DEPENDS speed_xpackage speed_src
-)
-MESSAGE(STATUS "make check_speed_xpackage: available")
-
-# Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_xpackage)
-SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)
+# check_speed_xpackage
+add_check_executable(check_speed xpackage "correct 54321")

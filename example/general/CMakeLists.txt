@@ -150,13 +150,5 @@ TARGET_LINK_LIBRARIES(example_general
     ${colpack_libs}
 )
 #
-# Add the check_example_general target
-ADD_CUSTOM_TARGET(check_example_general
-    example_general
-    DEPENDS example_general
-)
-MESSAGE(STATUS "make check_example_general: available")
-#
-# add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_general)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_general
+add_check_executable(check_example general)

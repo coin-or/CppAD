@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -48,15 +48,5 @@ TARGET_LINK_LIBRARIES(speed_adolc
     ${colpack_libs}
 )
 
-# Add the check_speed_adolc target
-ADD_CUSTOM_TARGET(
-    check_speed_adolc
-    speed_adolc correct 54321 colpack
-    DEPENDS
-    speed_adolc speed_src
-)
-MESSAGE(STATUS "make check_speed_adolc: available")
-
-# Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_adolc)
-SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)
+# check_speed_adolc
+add_check_executable(check_speed adolc "correct 54321 colpack")

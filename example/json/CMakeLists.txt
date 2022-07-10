@@ -44,13 +44,5 @@ TARGET_LINK_LIBRARIES(example_json
     ${colpack_libs}
 )
 #
-# Add the check_example_json target
-ADD_CUSTOM_TARGET(check_example_json
-    example_json
-    DEPENDS example_json
-)
-MESSAGE(STATUS "make check_example_json: available")
-#
-# add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_json)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_json
+add_check_executable(check_example json)

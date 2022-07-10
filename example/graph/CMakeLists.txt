@@ -42,13 +42,5 @@ TARGET_LINK_LIBRARIES(example_graph
     ${colpack_libs}
 )
 #
-# Add the check_example_graph target
-ADD_CUSTOM_TARGET(check_example_graph
-    example_graph
-    DEPENDS example_graph
-)
-MESSAGE(STATUS "make check_example_graph: available")
-#
-# add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_graph)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_graph
+add_check_executable(check_example graph)

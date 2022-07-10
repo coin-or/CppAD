@@ -48,14 +48,6 @@ TARGET_LINK_LIBRARIES(speed_cppadcg
 )
 
 
-# Add the check_speed_cppadcg target
+# check_speed_cppadcg
 SET(random_seed 54321)
-ADD_CUSTOM_TARGET(check_speed_cppadcg
-    speed_cppadcg correct ${random_seed} onetape
-    DEPENDS speed_cppadcg speed_src
-)
-MESSAGE(STATUS "make check_speed_cppadcg: available")
-
-# Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_cppadcg)
-SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)
+add_check_executable(check_speed cppadcg "correct ${random_seed} onetape")

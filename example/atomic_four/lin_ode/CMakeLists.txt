@@ -32,18 +32,5 @@ TARGET_LINK_LIBRARIES(example_atomic_four_lin_ode
     ${colpack_libs}
 )
 #
-# Add the check_example_atomic_four_lin_ode target
-ADD_CUSTOM_TARGET(check_example_atomic_four_lin_ode
-    example_atomic_four_lin_ode
-    DEPENDS example_atomic_four_lin_ode
-)
-MESSAGE(STATUS "make check_example_atomic_four_lin_ode: available")
-#
-# add to check check_example_atomic_four_depends in parent environment
-add_to_list(
-    check_example_atomic_four_depends
-    check_example_atomic_four_lin_ode
-)
-SET(check_example_atomic_four_depends
-    "${check_example_atomic_four_depends}" PARENT_SCOPE
-)
+# check_example_atomic_four_lin_ode
+add_check_executable(check_example_atomic_four lin_ode)

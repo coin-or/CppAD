@@ -61,13 +61,5 @@ TARGET_LINK_LIBRARIES(example_utility
     ${colpack_libs}
 )
 #
-# Add the check_example_utility target
-ADD_CUSTOM_TARGET(check_example_utility
-    example_utility
-    DEPENDS example_utility
-)
-MESSAGE(STATUS "make check_example_utility: available")
-
-# add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_utility)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_utility
+add_check_executable(check_example utility)

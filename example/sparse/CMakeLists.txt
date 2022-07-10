@@ -56,13 +56,5 @@ TARGET_LINK_LIBRARIES(example_sparse
     ${colpack_libs}
 )
 
-# Add the check_example_sparse target
-ADD_CUSTOM_TARGET(check_example_sparse
-    example_sparse
-    DEPENDS example_sparse
-)
-MESSAGE(STATUS "make check_example_sparse: available")
-
-# add to check_example_depends in parent environment
-add_to_list(check_example_depends check_example_sparse)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_sparse
+add_check_executable(check_example sparse)

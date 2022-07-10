@@ -43,17 +43,5 @@ TARGET_LINK_LIBRARIES(example_multi_thread_bthread
     ${Boost_LIBRARIES}
 )
 
-# Add the check_example_multi_thread_bthread target
-ADD_CUSTOM_TARGET(check_example_multi_thread_bthread
-    example_multi_thread_bthread simple_ad
-    DEPENDS example_multi_thread_bthread
-)
-MESSAGE(STATUS "make check_example_multi_thread_bthread: available")
-
-# Change check depends in parent environment
-add_to_list(
-    check_example_multi_thread_depends check_example_multi_thread_bthread
-)
-SET(check_example_multi_thread_depends
-    "${check_example_multi_thread_depends}" PARENT_SCOPE
-)
+# check_example_multi_thread_bthread
+add_check_executable(check_example_multi_thread bthread simple_ad)

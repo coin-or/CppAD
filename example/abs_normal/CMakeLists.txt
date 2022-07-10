@@ -38,14 +38,5 @@ TARGET_LINK_LIBRARIES(example_abs_normal
     ${colpack_libs}
 )
 #
-# check_example_abs_normal target
-ADD_CUSTOM_TARGET(check_example_abs_normal
-    example_abs_normal
-    DEPENDS
-    example_abs_normal
-)
-MESSAGE(STATUS "make check_example_abs_normal: available")
-
-# Change check_example_depends in parent environment
-add_to_list(check_example_depends check_example_abs_normal)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_abs_normal
+add_check_executable(check_example abs_normal)

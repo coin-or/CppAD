@@ -36,13 +36,8 @@ TARGET_LINK_LIBRARIES(speed_example
     ${cppad_lib}
     ${colpack_libs}
 )
-# Add the check_speed_example target
-ADD_CUSTOM_TARGET(check_speed_example
-    speed_example
-    DEPENDS speed_example speed_src
-)
-MESSAGE(STATUS "make check_speed_example: available")
-#
+# check_speed_example
+add_check_executable(check_speed example)
 #
 ADD_EXECUTABLE( speed_program EXCLUDE_FROM_ALL speed_program.cpp )
 #
@@ -51,11 +46,5 @@ TARGET_LINK_LIBRARIES(speed_program
     ${cppad_lib}
     ${colpack_libs}
 )
-# Add the check_speed_program target
-ADD_CUSTOM_TARGET(check_speed_program speed_program DEPENDS speed_program )
-MESSAGE(STATUS "make check_speed_program: available")
-#
-
-# Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_example)
-SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)
+# check_speed_program
+add_check_executable(check_speed program)

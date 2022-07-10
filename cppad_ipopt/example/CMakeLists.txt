@@ -47,13 +47,6 @@ TARGET_LINK_LIBRARIES(cppad_ipopt_example
     ${colpack_libs}
 )
 
-# Add the check_cppad_ipopt_example target
-ADD_CUSTOM_TARGET(check_cppad_ipopt_example
-    cppad_ipopt_example
-    DEPENDS cppad_ipopt_example cppad_ipopt
-)
-MESSAGE(STATUS "make check_cppad_ipopt_example: available")
-
-# Change check depends in parent environment
-add_to_list(check_cppad_ipopt_depends check_cppad_ipopt_example)
-SET(check_cppad_ipopt_depends "${check_cppad_ipopt_depends}" PARENT_SCOPE)
+#
+# check_cppad_ipopt_example
+add_check_executable(check_cppad_ipopt example)

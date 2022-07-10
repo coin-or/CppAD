@@ -31,13 +31,5 @@ TARGET_LINK_LIBRARIES(example_chkpoint_two
     ${colpack_libs}
 )
 #
-# Add the check_example_chkpoint_two target
-ADD_CUSTOM_TARGET(check_example_chkpoint_two
-    example_chkpoint_two
-    DEPENDS example_chkpoint_two
-)
-MESSAGE(STATUS "make check_example_chkpoint_two: available")
-#
-# add to check check_example_depends in parent environment
-add_to_list(check_example_depends check_example_chkpoint_two)
-SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
+# check_example_chkpoint_two
+add_check_executable(check_example chkpoint_two)

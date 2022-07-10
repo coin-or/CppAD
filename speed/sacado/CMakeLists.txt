@@ -69,13 +69,5 @@ ELSE( dl_found )
     TARGET_LINK_LIBRARIES(speed_sacado speed_src ${sacado_lib_list})
 ENDIF( dl_found )
 #
-# Add the check_speed_sacado target
-ADD_CUSTOM_TARGET(check_speed_sacado
-    speed_sacado correct 54321
-    DEPENDS speed_sacado speed_src
-)
-MESSAGE(STATUS "make check_speed_sacado: available")
-
-# Change check depends in parent environment
-add_to_list(check_speed_depends check_speed_sacado)
-SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)
+# the check_speed_sacado
+add_check_executable(check_speed sacado "correct 54321")

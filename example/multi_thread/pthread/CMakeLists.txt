@@ -45,13 +45,5 @@ TARGET_LINK_LIBRARIES(example_multi_thread_pthread
     ${pthread_lib}
 )
 
-# Add the check_example_multi_thread_pthread target
-ADD_CUSTOM_TARGET(check_example_multi_thread_pthread
-    example_multi_thread_pthread simple_ad
-    DEPENDS example_multi_thread_pthread
-)
-MESSAGE(STATUS "make check_example_multi_thread_pthread: available")
-
-# Change check depends in parent environment
-add_to_list(check_example_multi_thread_depends check_example_multi_thread_pthread)
-SET(check_example_multi_thread_depends "${check_example_multi_thread_depends}" PARENT_SCOPE)
+# check_example_multi_thread_pthread
+add_check_executable(check_example_multi_thread pthread simple_ad)

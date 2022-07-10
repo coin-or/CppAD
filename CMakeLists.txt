@@ -78,6 +78,9 @@ INCLUDE(cmake/set_compile_flags.cmake)
 #
 # pkgconfig_info(name, system)
 INCLUDE(cmake/pkgconfig_info.cmake)
+#
+# add_check_executable(parent_target short_name)
+INCLUDE(cmake/add_check_executable.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
