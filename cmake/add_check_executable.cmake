@@ -41,7 +41,7 @@ MACRO(add_check_executable parent_target short_name)
             "parent_target does not begin with 'check'"
         )
     ENDIF( )
-    IF( ${short_name} STREQUAL "" )
+    IF( "${short_name}" STREQUAL "" )
         MESSAGE(FATAL_ERROR "add_check_target: short_name is empty")
     ENDIF( )
     #

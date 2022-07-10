@@ -49,37 +49,15 @@ ELSE( "${cppad_debug_which}" STREQUAL debug_odd )
     SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_RELEASE}")
 ENDIF( "${cppad_debug_which}" STREQUAL debug_all )
 #
-# Loop though the C and C++ compilers
-FOREACH( com c cpp )
-    # Copy a file to another location and modify its contents.
-    # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
-    SET( source det_by_minor_${com}.${com} )
-    CONFIGURE_FILE(
-        ${CMAKE_CURRENT_SOURCE_DIR}/det_by_minor.c
-        ${CMAKE_CURRENT_BINARY_DIR}/${source}
-        COPYONLY
-    )
-    ADD_EXECUTABLE( det_by_minor_${com} EXCLUDE_FROM_ALL ${source})
-    #
-    IF( ${com} STREQUAL cpp )
-        # cppad_cxx_flags are C++ compiler flags and may not be valid for C
-        SET_TARGET_PROPERTIES(
-            det_by_minor_${com} PROPERTIES COMPILE_FLAGS "${all_cxx_flags}"
-        )
-    ENDIF( ${com} STREQUAL cpp )
-    #
-    # Add target the executes this program
-    ADD_CUSTOM_TARGET(check_det_by_minor_${com}
-        det_by_minor_${com}
-        DEPENDS det_by_minor_${com}
-    )
-    MESSAGE(STATUS "make check_det_by_minor_${com}: available")
-
-ENDFOREACH(com)
-
+# initialize check_test_more_compare_c
+SET(check_test_more_compare_c_depends "")
+#
+ADD_SUBDIRECTORY(c)
+ADD_SUBDIRECTORY(cpp)
+#
 # check_test_more_compare_c target
 ADD_CUSTOM_TARGET( check_test_more_compare_c
-    DEPENDS check_det_by_minor_c check_det_by_minor_cpp
+    DEPENDS ${check_test_more_compare_c_depends}
 )
 MESSAGE(STATUS "make check_test_more_compare_c: available")
 
