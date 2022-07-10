@@ -2,13 +2,10 @@ name: windows - msys2
 
 on:
   pull_request:
-    branches:
-      - workflow
   push:
     branches:
-      - workflow
-      # - master
-      # - 'stable/*'
+      - master
+      - 'stable/*'
 
 jobs:
   build:
