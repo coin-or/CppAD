@@ -13,6 +13,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 $begin cmake$$
 $escape $$
 $spell
+    github
     Rel
     cppadcg
     msys
@@ -145,6 +146,7 @@ cmake %%                                                                     \
     -D cmake_install_docdir=%cmake_install_docdir%                           \
     \
     -D cmake_defined_ok=%cmake_defined_ok%                                   \
+    -D cmake_needs_dot_slash=%cmake_needs_dot_slash%                         \
     \
     -D include_adolc=%true_or_false%                                         \
     -D include_eigen=%true_or_false%                                         \
@@ -230,9 +232,9 @@ $codep
 $$
 
 $head cmake_verbose_makefile$$
-This value should be either $code YES$$ or $code NO$$.
+This value should be either $code true$$ or $code false$$.
 The default value, when it is not present, is $code NO$$.
-If it is $code YES$$, then the output of the $code make$$ commands
+If it is $code true$$, then the output of the $code make$$ commands
 will include all of the files and flags used to run the compiler
 and linker. This can be useful for seeing how to compile and link
 your own applications.
@@ -246,6 +248,16 @@ $code MinSizeRel$$.
 If this value is specified,
 $cref/cppad_debug_which/cmake/cppad_debug_which/$$
 must not be the empty string.
+
+$head cmake_needs_dot_slash$$
+This value should be either $code true$$ or $code false$$.
+The default value, when it is not present, is $code false$$.
+If you get an error saying that an executable program could not be found,
+try setting this to true.
+CMake gets confused on some systems and needs $code ./$$ in front
+of the name of the executable corresponding to a cmake
+$code ADD_CUSTOM_COMMAND$$. For example, in the github actions version of
+$href%https://www.msys2.org/docs/ci/%using msys2 in ci%$$.
 
 $head generator$$
 The CMake program is capable of generating different kinds of files.
@@ -284,7 +296,7 @@ all of the CppAD files are installed.
 For example,
 if $icode cppad_prefix$$ is $code /usr$$,
 $icode cmake_install_includedirs$$ is $code include$$, and
-$icode cppad_postfix$$ is $code coin$$,
+$icode cppad_postfix$$ is $code coin-or$$,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
     /usr/include/coin-or/cppad/cppad.hpp
