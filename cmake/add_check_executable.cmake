@@ -87,7 +87,7 @@ MACRO(add_check_executable parent_target short_name)
     #
     # create this target
     ADD_CUSTOM_TARGET(
-        ${add_check_executable_dot_slash}${add_check_executable_full_name}
+        ${add_check_executable_full_name}
         ${add_check_executable_dot_slash}${add_check_executable_no_check}
         ${add_check_executable_arguments}
         DEPENDS ${add_check_executable_depends}
