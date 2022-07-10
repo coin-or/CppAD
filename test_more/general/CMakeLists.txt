@@ -152,12 +152,6 @@ set_compile_flags( test_more_general "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
 #
-# must first build cppad_lib
-STRING(COMPARE EQUAL "${cppad_lib}" "" empty_cppad_lib )
-IF( NOT  empty_cppad_lib )
-    ADD_DEPENDENCIES(test_more_general ${cppad_lib} )
-ENDIF( NOT  empty_cppad_lib )
-#
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more_general
     ${cppad_lib}
@@ -166,14 +160,5 @@ TARGET_LINK_LIBRARIES(test_more_general
     ${colpack_libs}
 )
 #
-# Add the check_test_more_general target
-ADD_CUSTOM_TARGET(check_test_more_general
-    test_more_general
-    DEPENDS
-    test_more_general
-)
-MESSAGE(STATUS "make check_test_more_general: available")
-#
-# Change check depends in parent environment
-add_to_list(check_test_more_depends check_test_more_general)
-SET(check_test_more_depends "${check_test_more_depends}" PARENT_SCOPE)
+# check_test_more_general
+add_check_executable(check_test_more general)

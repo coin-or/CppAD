@@ -34,17 +34,5 @@ TARGET_LINK_LIBRARIES(test_more_deprecated_chkpoint_one
     ${colpack_libs}
 )
 #
-# Add the check_test_more_deprecated_chkpoint_one target
-ADD_CUSTOM_TARGET(check_test_more_deprecated_chkpoint_one
-    test_more_deprecated_chkpoint_one
-    DEPENDS test_more_deprecated_chkpoint_one
-)
-MESSAGE(STATUS "make check_test_more_deprecated_chkpoint_one: available")
-#
-# add to check check_test_more_deprecated_depends in parent environment
-add_to_list(check_test_more_deprecated_depends
-    check_test_more_deprecated_chkpoint_one
-)
-SET(check_test_more_deprecated_depends
-    "${check_test_more_deprecated_depends}" PARENT_SCOPE
-)
+# check_test_more_deprecated_chkpoint_one
+add_check_executable(check_test_more_deprecated chkpoint_one)

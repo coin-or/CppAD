@@ -50,17 +50,5 @@ TARGET_LINK_LIBRARIES(test_more_deprecated_atomic_two
     ${colpack_libs}
 )
 #
-# Add the check_test_more_deprecated_atomic_two target
-ADD_CUSTOM_TARGET(check_test_more_deprecated_atomic_two
-    test_more_deprecated_atomic_two
-    DEPENDS test_more_deprecated_atomic_two
-)
-MESSAGE(STATUS "make check_test_more_deprecated_atomic_two: available")
-#
-# add to check check_test_more_deprecated_depends in parent environment
-add_to_list(check_test_more_deprecated_depends
-    check_test_more_deprecated_atomic_two
-)
-SET(check_test_more_deprecated_depends
-    "${check_test_more_deprecated_depends}" PARENT_SCOPE
-)
+# check_test_more_deprecated_atomic_two
+add_check_executable(check_test_more_deprecated atomic_two)

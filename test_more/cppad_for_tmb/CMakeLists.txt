@@ -44,12 +44,5 @@ TARGET_LINK_LIBRARIES(test_more_${name} PRIVATE
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 #
-# check_test_more_${name} target
-ADD_CUSTOM_TARGET(
-    check_test_more_${name} test_more_${name} DEPENDS test_more_${name}
-)
-MESSAGE(STATUS "make check_test_more_${name}: available")
-
-# Add check_test_more_${name} to check depends in parent environment
-add_to_list(check_test_more_depends check_test_more_${name})
-SET(check_test_more_depends "${check_test_more_depends}" PARENT_SCOPE)
+# check_test_more_${name}
+add_check_executable(check_test_more ${name})

@@ -40,14 +40,5 @@ ADD_EXECUTABLE(test_more_debug_rel EXCLUDE_FROM_ALL
     release.cpp
 )
 
-# Add the check_test_more_debug_rel target
-ADD_CUSTOM_TARGET(check_test_more_debug_rel
-    test_more_debug_rel
-    DEPENDS
-    test_more_debug_rel
-)
-MESSAGE(STATUS "make check_test_more_debug_rel: available")
-
-# Change check depends in parent environment
-add_to_list(check_test_more_depends check_test_more_debug_rel)
-SET(check_test_more_depends "${check_test_more_depends}" PARENT_SCOPE)
+# check_test_more_debug_rel
+add_check_executable(check_test_more debug_rel)

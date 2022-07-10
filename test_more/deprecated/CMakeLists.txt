@@ -11,7 +11,10 @@
 # -----------------------------------------------------------------------------
 # Build the test_more/deprecated tests
 #
-SET(check_test_more_deprecated_depends "test_more_deprecated")
+# initialize check_test_more_deprecated
+# This directory has both an executable and sub-directories
+SET(check_test_more_deprecated_depends "")
+#
 ADD_SUBDIRECTORY(atomic_two)
 ADD_SUBDIRECTORY(chkpoint_one)
 #
@@ -28,8 +31,9 @@ SET(source_list
     zdouble.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
-
-set_compile_flags( test_more_deprecated "${cppad_debug_which}" "${source_list}" )
+#
+set_compile_flags(
+    test_more_deprecated "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(test_more_deprecated EXCLUDE_FROM_ALL ${source_list})
 #
@@ -39,14 +43,5 @@ TARGET_LINK_LIBRARIES(test_more_deprecated
     ${colpack_libs}
 )
 #
-# Add the check_test_more_deprecated target
-ADD_CUSTOM_TARGET(check_test_more_deprecated
-    test_more_deprecated
-    DEPENDS
-    ${check_test_more_deprecated_depends}
-)
-MESSAGE(STATUS "make check_test_more_deprecated: available")
-#
-# Change check depends in parent environment
-add_to_list(check_test_more_depends check_test_more_deprecated)
-SET(check_test_more_depends "${check_test_more_depends}" PARENT_SCOPE)
+# check_test_more_deprecated
+add_check_executable(check_test_more deprecated)

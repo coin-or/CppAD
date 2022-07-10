@@ -19,16 +19,20 @@
 # short_name: (in)
 # Is the non-empty short name of the target we are adding.
 # The full name of this target is ${parent_target}_${short_name}.
-# This target executes, and depends on, a target with the full name
-# except that the "check_" at the beginning of the name is removed.
-# This target is added to the list ${parent_target}_depends
-# in the parent scope.
 #
 # arguments: (in)
 # This argument is optional. If it is present, it is
 # a string containing the arguments to the executable.
 #
-# This macros uses temporary varibles the name of which begin with
+# 1. This macro creates the target ${parent_target}_${short_name}.
+# 2. This target depends on an executable with the same name except that
+#    the "check_" at the beginning is removed.
+# 3. If the variable ${parent_target}_${short_name}_depends is defined,
+#    it is a list that is included in the dependencies for this target.
+# 4. This target is add to the list ${parent_target}_depends in both
+#    the current scope and its parent scope.
+#
+# This macros uses temporary variables the name of which begin with
 # add_check_executable.
 #
 MACRO(add_check_executable parent_target short_name)
@@ -62,11 +66,23 @@ MACRO(add_check_executable parent_target short_name)
         )
     ENDIF( )
     #
+    # add_check_executable_depends
+    IF( DEFINED ${add_check_executable_full_name}_depends )
+        SET(add_check_executable_depends
+            ${${add_check_executable_full_name}_depends}
+        )
+        add_to_list(add_check_executable_depends
+            ${add_check_executable_no_check}
+        )
+    ELSE ( )
+        SET(add_check_executable_depends ${add_check_executable_no_check} )
+    ENDIF( )
+    #
     # create this target
     ADD_CUSTOM_TARGET(
         ${add_check_executable_full_name}
         ${add_check_executable_no_check} ${add_check_executable_arguments}
-        DEPENDS ${add_check_executable_no_check}
+        DEPENDS ${add_check_executable_depends}
     )
     MESSAGE(STATUS "make ${add_check_executable_full_name}: available")
     #
