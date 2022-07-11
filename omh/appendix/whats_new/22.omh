@@ -48,6 +48,7 @@ $spell
     csrc
     Num
     Op
+    Microsoft
 $$
 
 $section Changes and Additions to CppAD During 2022$$
@@ -58,10 +59,13 @@ Add the $cref/cmake_needs_dot_slash/cmake/cmake_needs_dot_slash/$$ symbol
 to the cmake command line.
 $lnext
 Change the test case in $code speed/example/speed_program.cpp$$ because
-some compilers have gotten smarter and do not calculate values that are not used.
+some compilers have gotten smarter and do not calculate values
+that are not used.
 This lead to an the repeat count overflowing and then an infinite loop.
-The $cref speed_test$$ and $cref speedtest$$ routines now check for an overflow of the
-repeat counter and abort.
+The $cref speed_test$$ and $cref speedtest$$ routines now check for
+an overflow of the repeat counter and abort.
+$lnext
+Suppress the Microsoft compiler divide by zero warning, C4723.
 $lend
 
 $head 07-08$$

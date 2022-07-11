@@ -59,11 +59,15 @@ unreferenced formal parameter.
 $subhead C4127$$
 conditional expression is constant.
 
+$subhead C4723$$
+The second operand in a divide operation evaluated to zero at compile time.
+
 $srccode%hpp% */
 # define CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS 1
 # if _MSC_VER
 # pragma warning( disable : 4100 )
 # pragma warning( disable : 4127 )
+# pragma warning( disable : 4723 )
 # endif
 # undef CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS
 /* %$$
