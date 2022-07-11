@@ -23,6 +23,7 @@ var list_current0 = [
 'cmake.htm#make check',
 'cmake.htm#cmake_verbose_makefile',
 'cmake.htm#cmake_build_type',
+'cmake.htm#cmake_needs_dot_slash',
 'cmake.htm#generator',
 'cmake.htm#cppad_prefix',
 'cmake.htm#cppad_postfix',

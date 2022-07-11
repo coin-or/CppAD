@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile cmake_build_type generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir cmake_defined_ok include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile cmake_build_type cmake_needs_dot_slash generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir cmake_defined_ok include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,7 @@ A:active { color : purple }
 <option>make check</option>
 <option>cmake_verbose_makefile</option>
 <option>cmake_build_type</option>
+<option>cmake_needs_dot_slash</option>
 <option>generator</option>
 <option>cppad_prefix</option>
 <option>cppad_postfix</option>
@@ -198,6 +199,7 @@ cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><s
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_install_docdir=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_install_docdir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_defined_ok=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_defined_ok</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;cmake_needs_dot_slash=</span></font><i><font color="black"><span style='white-space: nowrap'>cmake_needs_dot_slash</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;include_adolc=</span></font><i><font color="black"><span style='white-space: nowrap'>true_or_false</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;include_eigen=</span></font><i><font color="black"><span style='white-space: nowrap'>true_or_false</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
@@ -304,9 +306,9 @@ all the test options with the command:
 <br>
 <b><big><a name="cmake_verbose_makefile" id="cmake_verbose_makefile">cmake_verbose_makefile</a></big></b>
 <br>
-This value should be either <code><font color="blue">YES</font></code> or <code><font color="blue">NO</font></code>.
+This value should be either <code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
 The default value, when it is not present, is <code><font color="blue">NO</font></code>.
-If it is <code><font color="blue">YES</font></code>, then the output of the <code><font color="blue">make</font></code> commands
+If it is <code><font color="blue">true</font></code>, then the output of the <code><font color="blue">make</font></code> commands
 will include all of the files and flags used to run the compiler
 and linker. This can be useful for seeing how to compile and link
 your own applications.
@@ -324,6 +326,20 @@ If this value is specified,
 <a href="cmake.htm#cppad_debug_which" target="_top"><span style='white-space: nowrap'>cppad_debug_which</span></a>
 
 must not be the empty string.
+
+<br>
+<br>
+<b><big><a name="cmake_needs_dot_slash" id="cmake_needs_dot_slash">cmake_needs_dot_slash</a></big></b>
+<br>
+This value should be either <code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
+The default value, when it is not present, is <code><font color="blue">false</font></code>.
+If you get an error saying that an executable program could not be found,
+try setting this to true.
+CMake gets confused on some systems and needs <code><font color="blue">./</font></code> in front
+of the name of the executable corresponding to a cmake
+<code><font color="blue">ADD_CUSTOM_COMMAND</font></code>. For example, in the github actions version of
+<a href="https://www.msys2.org/docs/ci/" target="_top"><span style='white-space: nowrap'>using&nbsp;msys2&nbsp;in&nbsp;ci</span></a>
+.
 
 <br>
 <br>
@@ -399,7 +415,7 @@ if
  is <code><font color="blue">include</font></code>, and
 
 <code><i><font color="black"><span style='white-space: nowrap'>cppad_postfix</span></font></i></code>
- is <code><font color="blue">coin</font></code>,
+ is <code><font color="blue">coin-or</font></code>,
 the file <code><font color="blue">cppad.hpp</font></code> is installed in the location
 
 <code><font color="blue"><span style='white-space: nowrap'><br>

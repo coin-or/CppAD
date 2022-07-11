@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 07-05 06-23 06-22 06-21 06-20 05-27 05-26 05-20 05-19 05-17 05-16 05-15 05-13 05-12 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 07-10 07-08 07-05 06-23 06-22 06-21 06-20 05-27 05-26 05-20 05-19 05-17 05-16 05-15 05-13 05-12 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>07-10</option>
+<option>07-08</option>
 <option>07-05</option>
 <option>06-23</option>
 <option>06-22</option>
@@ -123,6 +125,39 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
+<br>
+<b><big><a name="07-10" id="07-10">07-10</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="cmake.htm#cmake_needs_dot_slash" target="_top"><span style='white-space: nowrap'>cmake_needs_dot_slash</span></a>
+ symbol
+to the cmake command line.
+</li><li>
+
+Change the test case in <code><font color="blue">speed/example/speed_program.cpp</font></code> because
+some compilers have gotten smarter and do not calculate values
+that are not used.
+This lead to an the repeat count overflowing and then an infinite loop.
+The <a href="speed_test.htm" target="_top"><span style='white-space: nowrap'>speed_test</span></a>
+ and <a href="speedtest.htm" target="_top"><span style='white-space: nowrap'>speedtest</span></a>
+ routines now check for
+an overflow of the repeat counter and abort.
+</li><li>
+
+Suppress the Microsoft compiler divide by zero warning, C4723.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-08" id="07-08">07-08</a></big></b>
+<br>
+Change <a href="https://github.com/coin-or/CppAD/actions" target="_top"><span style='white-space: nowrap'>github&nbsp;actions</span></a>
+:
+run on pushes to the master and stable branches, and
+run on all pull requests.
+
+<br>
 <br>
 <b><big><a name="07-05" id="07-05">07-05</a></big></b>
 <br>

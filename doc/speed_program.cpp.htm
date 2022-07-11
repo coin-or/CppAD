@@ -82,11 +82,14 @@ A:active { color : purple }
 
 <pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;cppad/utility/speed_test.hpp&gt;</font>
 
+<i><font color="#9A1900">// Some compilers have gotten smarter and do not calucate somthing that is not used</font></i>
+<i><font color="#9A1900">// so make the result a global.</font></i>
+<font color="#009900">double</font> global_result <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+
 std<font color="#990000">::</font><font color="#008080">string</font> <b><font color="#000000">Test</font></b><font color="#990000">(</font><font color="#008080">size_t</font> size<font color="#990000">,</font> <font color="#008080">size_t</font> repeat<font color="#990000">)</font>
 <font color="#FF0000">{</font>   <i><font color="#9A1900">// setup</font></i>
     <font color="#009900">double</font> <font color="#990000">*</font>a <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
     <font color="#009900">double</font> <font color="#990000">*</font>b <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
-    <font color="#009900">double</font> <font color="#990000">*</font>c <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <font color="#009900">double</font><font color="#990000">[</font>size<font color="#990000">];</font>
     <font color="#008080">size_t</font> i  <font color="#990000">=</font> size<font color="#990000">;;</font>
     <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
     <font color="#FF0000">{</font>   <font color="#990000">--</font>i<font color="#990000">;</font>
@@ -98,16 +101,15 @@ std<font color="#990000">::</font><font color="#008080">string</font> <b><font c
     <font color="#FF0000">{</font>   i <font color="#990000">=</font> size<font color="#990000">;;</font>
         <b><font color="#0000FF">while</font></b><font color="#990000">(</font>i<font color="#990000">)</font>
         <font color="#FF0000">{</font>   <font color="#990000">--</font>i<font color="#990000">;</font>
-            c<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> b<font color="#990000">[</font>i<font color="#990000">];</font>
+            global_result <font color="#990000">+=</font> a<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">*</font> b<font color="#990000">[</font>i<font color="#990000">];</font>
         <font color="#FF0000">}</font>
     <font color="#FF0000">}</font>
     <i><font color="#9A1900">// teardown</font></i>
     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> a<font color="#990000">;</font>
     <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> b<font color="#990000">;</font>
-    <b><font color="#0000FF">delete</font></b> <font color="#990000">[]</font> c<font color="#990000">;</font>
 
     <i><font color="#9A1900">// return a test name that is valid for all sizes and repeats</font></i>
-    <b><font color="#0000FF">return</font></b> <font color="#FF0000">"double: c[*] = a[*] + b[*]"</font><font color="#990000">;</font>
+    <b><font color="#0000FF">return</font></b> <font color="#FF0000">"double: result = sum_i a[i] * b[i]"</font><font color="#990000">;</font>
 <font color="#FF0000">}</font>
 <font color="#009900">int</font> <b><font color="#000000">main</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>
