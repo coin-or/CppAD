@@ -11,10 +11,8 @@
 # -----------------------------------------------------------------------------
 # Build the speed/cppad directory tests
 # Inherit build type from ../CMakeList.txt
-
-# add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
-#                 source1 source2 ... sourceN
-# )
+#
+# source_list
 SET(source_list example.cpp
     det_by_lu.cpp
     det_by_minor.cpp
@@ -29,9 +27,8 @@ SET(source_list example.cpp
 )
 set_compile_flags( speed_example "${cppad_debug_which}" "${source_list}" )
 #
+# speed_example
 ADD_EXECUTABLE( speed_example EXCLUDE_FROM_ALL ${source_list} )
-#
-# List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_example
     ${cppad_lib}
     ${colpack_libs}
@@ -39,9 +36,9 @@ TARGET_LINK_LIBRARIES(speed_example
 # check_speed_example
 add_check_executable(check_speed example)
 #
+# seed_program
+set_compile_flags( speed_program "${cppad_debug_which}" speed_program.cpp )
 ADD_EXECUTABLE( speed_program EXCLUDE_FROM_ALL speed_program.cpp )
-#
-# List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_program
     ${cppad_lib}
     ${colpack_libs}

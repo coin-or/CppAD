@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -12,8 +12,8 @@
 # set_compile_flags( program_name debug_which source_list)
 #
 # program_name: (in)
-# Is the name of the program that we are building. This is only used to
-# report which files have debug and which have release properties.
+# Is the name of the program that we are building. This is only used
+# for debugging which files have debug and which have release properties.
 #
 # debug_which: (in)
 # Is one of the following cases:
@@ -70,11 +70,14 @@ FUNCTION(set_compile_flags program_name debug_which source_list)
         ENDFOREACH(source ${source_list})
         SET_SOURCE_FILES_PROPERTIES(
             ${debug_list} PROPERTIES COMPILE_FLAGS
-            "${debug_flags} -DCPPAD_DEBUG_AND_RELEASE"
+            "${debug_flags} -D CPPAD_DEBUG_AND_RELEASE"
         )
         SET_SOURCE_FILES_PROPERTIES(
             ${release_list} PROPERTIES COMPILE_FLAGS
-            "${release_flags} -DCPPAD_DEBUG_AND_RELEASE"
+            "${release_flags} -D CPPAD_DEBUG_AND_RELEASE"
         )
+        # IF( ${program_name} STREQUAL "..." )
+        #   print_variable( ... )
+        # ENDIF( )
     ENDIF( alternate )
 ENDFUNCTION(set_compile_flags program_name debug_which source_list)

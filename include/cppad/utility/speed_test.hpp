@@ -1,7 +1,7 @@
 # ifndef CPPAD_UTILITY_SPEED_TEST_HPP
 # define CPPAD_UTILITY_SPEED_TEST_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -175,7 +175,13 @@ Vector speed_test(
         double s0     = elapsed_seconds();
         double s1     = elapsed_seconds();
         while( s1 - s0 < time_min )
-        {   repeat = 2 * repeat;
+        {   if( 2 * repeat < repeat )
+            {   // Can't use an assert here because this happens
+                // in release mode first.
+                std::cerr << "speed_test: test function is too fast to time\n";
+                std::exit(1);
+            }
+            repeat = 2 * repeat;
             s0     = elapsed_seconds();
             test(size, repeat);
             s1     = elapsed_seconds();
@@ -419,7 +425,13 @@ inline void SpeedTest(
         s0     = elapsed_seconds();
         s1     = elapsed_seconds();
         while( s1 - s0 < 1. )
-        {   repeat = 2 * repeat;
+        {   if( 2 * repeat < repeat )
+            {   // Can't use an assert here because this happens
+                // in release mode first.
+                std::cerr << "SpeedTest: test function is too fast to time\n";
+                std::exit(1);
+            }
+            repeat = 2 * repeat;
             s0     = elapsed_seconds();
             name   = Test(size, repeat);
             s1     = elapsed_seconds();

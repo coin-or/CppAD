@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -25,11 +25,14 @@ $head Program$$
 $srccode%cpp% */
 # include <cppad/utility/speed_test.hpp>
 
+// Some compilers have gotten smarter and do not calucate somthing that is not used
+// so make the result a global.
+double global_result = 0.0;
+
 std::string Test(size_t size, size_t repeat)
 {   // setup
     double *a = new double[size];
     double *b = new double[size];
-    double *c = new double[size];
     size_t i  = size;;
     while(i)
     {   --i;
@@ -41,16 +44,15 @@ std::string Test(size_t size, size_t repeat)
     {   i = size;;
         while(i)
         {   --i;
-            c[i] = a[i] + b[i];
+            global_result += a[i] * b[i];
         }
     }
     // teardown
     delete [] a;
     delete [] b;
-    delete [] c;
 
     // return a test name that is valid for all sizes and repeats
-    return "double: c[*] = a[*] + b[*]";
+    return "double: result = sum_i a[i] * b[i]";
 }
 int main(void)
 {
