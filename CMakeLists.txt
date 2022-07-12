@@ -61,8 +61,8 @@ INCLUDE(cmake/add_to_list.cmake)
 # command_line_arg(variable default type description)
 INCLUDE(cmake/command_line_arg.cmake)
 #
-# optional_package(package description)
-INCLUDE(cmake/optional_package.cmake)
+# prefix_info(package description)
+INCLUDE(cmake/prefix_info.cmake)
 #
 # compile_source_test(source variable)
 INCLUDE(cmake/compile_source_test.cmake)
@@ -339,15 +339,15 @@ ENDIF( include_cppadcg )
 MESSAGE(STATUS "prefix 1 =${prefix}" )
 #
 # colpack_prefix
-optional_package(colpack ${system_include} "colpack install prefix")
+prefix_info(colpack ${system_include} "colpack install prefix")
 MESSAGE(STATUS "prefix 2 =${prefix}" )
 #
 # sacado_prefix
-optional_package(sacado ${system_include} "sacado install prefix")
+prefix_info(sacado ${system_include} "sacado install prefix")
 MESSAGE(STATUS "prefix 3 =${prefix}" )
 #
 # fadbad_prefix
-optional_package(fadbad ${system_include} "fadbad install prefix")
+prefix_info(fadbad ${system_include} "fadbad install prefix")
 #
 # =============================================================================
 # cppad_lib

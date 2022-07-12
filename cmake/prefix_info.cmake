@@ -9,7 +9,7 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-# optional_package(package system_include description)
+# prefix_info(package system_include description)
 #
 # ${package}_prefix: (out)
 # is a PATH variable that holds the install prefix for this optional package.
@@ -36,7 +36,7 @@
 #
 # description: (in)
 #
-MACRO(optional_package package system_include description)
+MACRO(prefix_info package system_include description)
     SET(prefix_variable ${package}_prefix)
     SET(cppad_has_${package} 0)
     SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
@@ -66,4 +66,4 @@ MACRO(optional_package package system_include description)
             ENDIF(IS_DIRECTORY ${prefix_value}/${dir} )
         ENDFOREACH(dir)
     ENDIF ( prefix_value )
-ENDMACRO(optional_package)
+ENDMACRO(prefix_info)

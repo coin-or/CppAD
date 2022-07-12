@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -103,11 +103,11 @@ echo_eval sed -i $file -f speed_package.$$
 # --------------------------------------------------------
 # CMakeLists.txt
 cat << EOF > speed_package.$$
-/optional_package(fadbad/! b end
+/prefix_info(fadbad/! b end
 s|\$|\\
 #\\
 # ${package}_prefix\\
-optional_package($package \${system_include} "$package install prefix")|
+prefix_info($package \${system_include} "$package install prefix")|
 : end
 EOF
 file='CMakeLists.txt'
