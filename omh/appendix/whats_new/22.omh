@@ -49,9 +49,17 @@ $spell
     Num
     Op
     Microsoft
+    posix
+    gcc
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 07-12$$
+The $cref/cmake command/cmake/CMake Command/$$ was not properly determining
+when posix threads could be used (when using a C compiler other than gcc).
+This suppressed the running of the corresponding examples; e.g.,
+$cref a11c_pthread.cpp$$.
 
 $head 07-10$$
 $list number$$

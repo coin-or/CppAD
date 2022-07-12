@@ -34,6 +34,10 @@ SET(pthread_lib "pthread")
 FIND_LIBRARY(pthread_lib_path pthread)
 MESSAGE(STATUS "pthread library path = ${pthread_lib_path}")
 IF ( pthread_lib_path )
+    SET(CMAKE_REQUIRED_DEFINITIONS "")
+    SET(CMAKE_REQUIRED_FLAGS       "")
+    SET(CMAKE_REQUIRED_INCLUDES    "")
+    SET(CMAKE_REQUIRED_LIBRARIES   "")
     CHECK_LIBRARY_EXISTS(
         pthread pthread_barrier_wait ${pthread_lib_path} pthread_ok
     )
