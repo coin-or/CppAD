@@ -336,18 +336,15 @@ IF( include_cppadcg )
 ELSE( include_cppadcg )
     SET(cppad_has_cppadcg 0)
 ENDIF( include_cppadcg )
-MESSAGE(STATUS "prefix 1 =${prefix}" )
 #
 # colpack_prefix
-prefix_info(colpack ${system_include} "colpack install prefix")
-MESSAGE(STATUS "prefix 2 =${prefix}" )
+prefix_info(colpack ${system_include} )
 #
 # sacado_prefix
-prefix_info(sacado ${system_include} "sacado install prefix")
-MESSAGE(STATUS "prefix 3 =${prefix}" )
+prefix_info(sacado ${system_include} )
 #
 # fadbad_prefix
-prefix_info(fadbad ${system_include} "fadbad install prefix")
+prefix_info(fadbad ${system_include} )
 #
 # =============================================================================
 # cppad_lib

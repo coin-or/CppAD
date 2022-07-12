@@ -32,8 +32,8 @@
 # 4. This target is add to the list ${parent_target}_depends in both
 #    the current scope and its parent scope.
 #
-# This macros uses temporary variables the name of which begin with
-# add_check_executable.
+# This macros uses temporary variables with names that begin with
+# add_check_executable_.
 #
 MACRO(add_check_executable parent_target short_name)
     IF( NOT ${parent_target} MATCHES "^check" )

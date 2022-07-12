@@ -9,61 +9,71 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-# prefix_info(package system_include description)
+# prefix_info(package system_include)
 #
-# ${package}_prefix: (out)
-# is a PATH variable that holds the install prefix for this optional package.
-#
-# cppad_has_${package}: (out)
-# is 1 if ${package}_prefix is set by the cmake command line (or gui),
-# and 0 otherwise.
+# package: (in)
+# is the name of an optional package.
 #
 # system_include: (in)
-# If this is true, the include files for this package should be treated as
-# system files (no warnings).
+# If this is true (false), the include directories for this package will
+# (will not) be treated as system directories (no warnings).
 #
-# description: (in)
-# is a description for the install prefix for this optional package.
+# ${package}_prefix: (in)
+# is set by this macro to a cache PATH variable initialized as NOTFOUND.
+# It can be changed by the cmake command line or gui.
+# If it is changed, it holds the install prefix for this package.
 #
-# If ${package}_prefix is not set by the cmake command line (or gui),
-# it is set to the default value NOTFOUND.
+# cppad_has_${package}: (out)
+# is 1 if ${package}_prefix is changed by the cmake command line or gui,
+# and 0 otherwise.
 #
-# If ${package}_prefix is set by the cmake command line, the following is done:
+# If ${package}_prefix is changed, the following are done:
 # 1. All the valid include subdirectories are added using INCLUDE_DIRECTORIES.
+#    Valid include subdirectories are determined by cmake_install_includedirs.
 # 2. All the valid library subdirectories are added using LINK_DIRECTORIES.
-# The set of valid include and library directories are determined by
-# cmake_install_includedirs and cmakd_install_libdirs respectively.
+#    Valid library subdirectories are determined by cmake_install_libdirs.
 #
-# description: (in)
+# This macros uses temporary variables with names that begin with
+# prefix_info_.
 #
-MACRO(prefix_info package system_include description)
-    SET(prefix_variable ${package}_prefix)
-    SET(cppad_has_${package} 0)
-    SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
-    SET(prefix_value ${${prefix_variable}} )
-    MESSAGE(STATUS "${prefix_variable} = ${prefix_value}")
-    IF ( prefix_value )
+MACRO(prefix_info package system_include)
+    #
+    # ${package}_prefix
+    SET(${package}_prefix NOTFOUND CACHE PATH "${package} install prefix")
+    print_variable( ${package}_prefix )
+    #
+    # prefix_info_value
+    SET( prefix_info_value "${${package}_prefix}" )
+    #
+    IF( NOT prefix_info_value )
+        SET(cppad_has_${package} 0)
+    ELSE( )
         SET(cppad_has_${package} 1)
         #
-        # List of preprocessor include file search directories
-        FOREACH(dir ${cmake_install_includedirs})
-            IF(IS_DIRECTORY ${prefix_value}/${dir} )
+        # prefix_info_subdir
+        FOREACH(prefix_info_subdir ${cmake_install_includedirs})
+            #
+            # prefix_info_dir
+            SET( prefix_info_dir "${prefix_info_value}/${prfix_info_subdir}" )
+            IF(IS_DIRECTORY "${prefix_info_dir}" )
+                MESSAGE(STATUS "    Found ${prefix_info_dir}")
                 IF( ${system_include} )
-                    INCLUDE_DIRECTORIES( SYSTEM ${prefix_value}/${dir} )
-                    MESSAGE(STATUS "    Found SYSTEM ${prefix_value}/${dir}")
-                ELSE( ${system_include} )
-                    INCLUDE_DIRECTORIES( ${prefix_value}/${dir} )
-                    MESSAGE(STATUS "    Found ${prefix_value}/${dir}")
-                ENDIF( ${system_include} )
-            ENDIF(IS_DIRECTORY ${prefix_value}/${dir} )
-        ENDFOREACH(dir)
-        # Paths in which the linker will search for libraries,
-        # only applies to targets created after it is called
-        FOREACH(dir ${cmake_install_libdirs})
-            IF(IS_DIRECTORY ${prefix_value}/${dir} )
-                LINK_DIRECTORIES( ${prefix_value}/${dir} )
-                MESSAGE(STATUS "    Found ${prefix_value}/${dir}")
-            ENDIF(IS_DIRECTORY ${prefix_value}/${dir} )
-        ENDFOREACH(dir)
-    ENDIF ( prefix_value )
-ENDMACRO(prefix_info)
+                    INCLUDE_DIRECTORIES( SYSTEM "${prefix_info_dir}" )
+                ELSE( )
+                    INCLUDE_DIRECTORIES( "${prefix_info_dir}" )
+                ENDIF( )
+            ENDIF( )
+        ENDFOREACH( )
+        #
+        # prefix_info_subdir
+        FOREACH(prefix_info_subdir ${cmake_install_libdirs})
+            #
+            # prefix_info_dir
+            SET( prefix_info_dir "${prefix_info_value}/${prfix_info_subdir}" )
+            IF(IS_DIRECTORY "${prefix_info_dir}" )
+                MESSAGE(STATUS "    Found ${prefix_info_dir}")
+                LINK_DIRECTORIES( "${prefix_info_dir}" )
+            ENDIF( )
+        ENDFOREACH()
+    ENDIF (  )
+ENDMACRO( )
