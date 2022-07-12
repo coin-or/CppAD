@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 #
 # CppAD is distributed under the terms of the
 #              Eclipse Public License Version 2.0.
@@ -9,53 +9,85 @@
 # in the Eclipse Public License, Version 2.0 are satisfied:
 #       GNU General Public License, Version 2.0 or later.
 # -----------------------------------------------------------------------------
-# pkgconfig_info(name system coin_or)
+# pkgconfig_info(package system_include)
 #
-# Inputs:
-# name:    is the name of the package config file without the .pc extension
-# system:  if true (false) include directories will (will not) be
-#          treated like a system directory; i.e., no warnings.
-# coin_or: if true (false) the string '/coin-or' at the end of an include
-#          include directory is (is not) removed because CppAD explicitly
-#           includes it in include commands.
+# package: (in)
+# is the name of an optional package. In the case of eigen, the pkg-config
+# file is eigen3.pc (not eigen.pc).
 #
-# Outputs:
-# ${name}_LIBRARIES:     list of libraries necessary to use this package.
+# system_include: (in)
+# If this is true (false), the include directories for this package will
+# (will not) be treated as system directories (no warnings).
 #
-# Side Effects:
-# Include directors required to use package are passed to INCLUDE_DIRECTORIES.
-# Link directories requried to link ${name}_LIBRARIES are passed to
-# LINK_DIRECTORIES, and the SYSTEM flag is inclued if system is TRUE.
+# include_${package}: (in)
+# is set by this macro to a cache BOOL variable initialized as false.
+# It can be changed by the cmake command line or gui.
+# If it is true, there must be a pkg-config file for this package and
+# the corresponding include directories added using INCLUDE_DIRECTORIES.
 #
-# Assumptions:
-# FIND_PACKAGE(PkgConfig) was successful
-# It is a fatal error if ${name}.pc is not in PKG_CONFIG_PATH
-MACRO(pkgconfig_info name system coin_or)
-    IF( NOT PKG_CONFIG_FOUND )
-        FIND_PACKAGE(PkgConfig REQUIRED)
-    ENDIF( NOT PKG_CONFIG_FOUND )
-    pkg_check_modules( ${name} QUIET ${name} )
-    IF( ${name}_FOUND )
-        MESSAGE(STATUS "Found ${name}.pc file")
-    ELSE( ${name}_FOUND )
-        MESSAGE(FATAL_ERROR
-            "Cannot find ${name}.pc or one of the packages it requires."
-            " PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}"
+# cppad_has_${package}: (out)
+# is 1 (0) if include_${package} is true (false).
+#
+# ${package}_LIBRARIES: (out)
+# is a list of libraries necessary to use this package.
+#
+# This macros uses temporary variables with names that begin with
+# pkgconfig_info_.
+#
+MACRO(pkgconfig_info package system_include)
+    #
+    # include_${package}
+    SET(
+        include_${package}
+        FALSE CACHE BOOL "include ${package} using its pkgconfig file"
+    )
+    print_variable( include_${package} )
+    IF( NOT include_${package} )
+        SET(cppad_has_${package} 0)
+    ELSE( )
+        SET(cppad_has_${package} 1)
+        #
+        # check for pkg-config
+        IF( NOT PKG_CONFIG_FOUND )
+            FIND_PACKAGE(PkgConfig REQUIRED)
+        ENDIF( )
+        #
+        # pkgconfig_info_package
+        IF( ${package} STREQUAL eigen )
+            SET(pkgconfig_info_package  eigen3)
+        ELSE( )
+            SET(pkgconfig_info_package ${package})
+        ENDIF( )
+        #
+        # ${package} info
+        pkg_check_modules(
+            ${pkgconfig_info_package} QUIET ${pkgconfig_info_package} )
+        #
+        IF( ${pkgconfig_info_package}_FOUND )
+            MESSAGE(STATUS "Found ${package} pkg-config file")
+        ELSE( )
+            MESSAGE(FATAL_ERROR
+            "Can't find ${package} pkg-config file or one of its requirements."
+            "\nPKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}"
         )
-    ENDIF( ${name}_FOUND )
+        ENDIF( )
+        #
+        IF( ${package} STREQUAL eigen )
+            SET( eigen_LIBRARIES "${eigen3_LIBRARIES}" )
+        ENDIF()
+        #
+        # pkgconfig_info_dirs
+        STRING(
+            REGEX REPLACE "/coin-or$" ""
+            pkgconfig_info_dirs "${${pkgconfig_info_package}_INCLUDE_DIRS}"
+        )
+        #
+        # INLCUDE_DIRECTORIES
+        IF( ${system_include} )
+            INCLUDE_DIRECTORIES( SYSTEM ${pkgconfig_info_dirs} )
+        ELSE( )
+            INCLUDE_DIRECTORIES( ${pkgconfig_info_dirs} )
+        ENDIF( )
+    ENDIF( )
     #
-    IF( ${coin_or} )
-        STRING(REPLACE "/coin-or" "" include_dirs "${${name}_INCLUDE_DIRS}" )
-        SET(${name}_INCLUDE_DIRS "${include_dirs}")
-    ENDIF( ${coin_or} )
-    #
-    # INLCUDE_DIRECTORIES
-    IF( ${system} )
-        INCLUDE_DIRECTORIES( SYSTEM ${include_dirs} )
-    ELSE( ${system}  )
-        INCLUDE_DIRECTORIES( ${include_dirs} )
-    ENDIF( ${system} )
-    #
-    # LINK_DIRECTORIES
-    LINK_DIRECTORIES( ${${name}_LIBRARY_DIRS} )
 ENDMACRO(pkgconfig_info)

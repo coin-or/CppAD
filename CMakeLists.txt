@@ -200,16 +200,6 @@ command_line_arg(cppad_tape_id_type "unsigned int" STRING
 command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
-#
-# include_eigen
-# include_adolc
-# include_ipopt
-# include_cppadcg
-FOREACH(package eigen adolc ipopt cppadcg)
-    command_line_arg(include_${package} "false" BOOL
-            "include the ${package} examples and tests"
-    )
-ENDFOREACH(package eigen adolc ipopt cppadcg)
 # ----------------------------------------------------------------------------
 #
 # Ensure c++11 support
@@ -295,47 +285,17 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
     CACHE PATH "value copied from cppad_prefix" FORCE
 )
 # -----------------------------------------------------------------------------
-# External package information
+# Optional package information
 SET(system_include TRUE)
-SET(remove_coin_or FALSE)
 #
 # eigen
-IF( include_eigen )
-    pkgconfig_info(eigen3 ${system_include} ${remove_coin_or})
-    SET(eigen_LIBRARIES "${eigen3_LIBRARIES}")
-    SET(cppad_has_eigen 1)
-ELSE( include_eigen )
-    SET(cppad_has_eigen 0)
-ENDIF( include_eigen )
+pkgconfig_info(eigen ${system_include})
 #
 # adolc
-IF( include_adolc )
-    pkgconfig_info(adolc ${system_include} ${remove_coin_or})
-    SET(cppad_has_adolc 1)
-ELSE( include_adolc )
-    SET(cppad_has_adolc 0)
-ENDIF( include_adolc )
+pkgconfig_info(adolc ${system_include})
 #
 # ipopt
-IF( include_ipopt )
-    SET(remove_coin_or TRUE)
-    pkgconfig_info(ipopt ${system_include} ${remove_coin_or})
-    SET(cppad_has_ipopt 1)
-    SET(remove_coin_or FALSE)
-ELSE( include_ipopt )
-    SET(cppad_has_ipopt 0)
-ENDIF( include_ipopt )
-#
-# cppadcg
-IF( include_cppadcg )
-    # Assume bin/get_cppadcg.sh puts include files in this directory
-    SET(cppadcg_include_dir "${CMAKE_BINARY_DIR}/prefix/include" )
-    print_variable(cppadcg_include_dir)
-    INCLUDE_DIRECTORIES( SYSTEM ${cppadcg_include_dir})
-    SET(cppad_has_cppadcg 1)
-ELSE( include_cppadcg )
-    SET(cppad_has_cppadcg 0)
-ENDIF( include_cppadcg )
+pkgconfig_info(ipopt ${system_include})
 #
 # colpack_prefix
 prefix_info(colpack ${system_include} )
@@ -346,6 +306,21 @@ prefix_info(sacado ${system_include} )
 # fadbad_prefix
 prefix_info(fadbad ${system_include} )
 #
+# include_cpapdcg
+SET( include_cppadcg FALSE CACHE BOOL "include cppadcg" )
+IF( include_cppadcg )
+    #
+    # cppad_has_cppadcg
+    SET(cppad_has_cppadcg 1)
+    #
+    # Assume bin/get_cppadcg.sh puts include files in this directory
+    SET(cppadcg_include_dir "${CMAKE_BINARY_DIR}/prefix/include" )
+    print_variable(cppadcg_include_dir)
+    INCLUDE_DIRECTORIES( SYSTEM ${cppadcg_include_dir})
+ELSE( )
+    # cppad_has_cppadcg
+    SET(cppad_has_cppadcg 0)
+ENDIF( include_cppadcg )
 # =============================================================================
 # cppad_lib
 # Perhaps in the future cppad_lib will depend on cmake header only flag ?

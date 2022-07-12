@@ -54,7 +54,7 @@ MACRO(prefix_info package system_include)
         FOREACH(prefix_info_subdir ${cmake_install_includedirs})
             #
             # prefix_info_dir
-            SET( prefix_info_dir "${prefix_info_value}/${prfix_info_subdir}" )
+            SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
             IF(IS_DIRECTORY "${prefix_info_dir}" )
                 MESSAGE(STATUS "    Found ${prefix_info_dir}")
                 IF( ${system_include} )
@@ -69,7 +69,7 @@ MACRO(prefix_info package system_include)
         FOREACH(prefix_info_subdir ${cmake_install_libdirs})
             #
             # prefix_info_dir
-            SET( prefix_info_dir "${prefix_info_value}/${prfix_info_subdir}" )
+            SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
             IF(IS_DIRECTORY "${prefix_info_dir}" )
                 MESSAGE(STATUS "    Found ${prefix_info_dir}")
                 LINK_DIRECTORIES( "${prefix_info_dir}" )
