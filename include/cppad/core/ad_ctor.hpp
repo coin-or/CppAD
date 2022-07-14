@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_AD_CTOR_HPP
 # define CPPAD_CORE_AD_CTOR_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -28,37 +28,44 @@ $$
 $section AD Constructors $$
 
 $head Syntax$$
-$codei%AD<%Base%> %y%()
+$codei%AD<%Base%> %ay%()
 %$$
-$codei%AD<%Base%> %y%(%x%)
+$codei%AD<%Base%> %ay%(%x%)
 %$$
 
 $head Purpose$$
-creates a new $codei%AD<%Base%>%$$ object $icode y$$
-and initializes its value as equal to $icode x$$.
+creates a new $codei%AD<%Base%>%$$ object $icode ay$$
+and initializes it as a
+equal to $icode x$$.
 
 $head x$$
 
 $subhead implicit$$
-There is an implicit constructor where $icode x$$ has one of the following
-prototypes:
+There is an implicit constructor where $icode x$$ has prototype
 $codei%
-    const %Base%&        %x%
     const VecAD<%Base%>& %x%
 %$$
+There also is an implicit constructor where $icode x$$ has prototype
+$codei%
+    const %Base%& %x%
+%$$
+In this case, $icode ay$$ is a
+$cref/constant parameter/glossary/Parameter/Constant/$$
 
 $subhead explicit$$
 There is an explicit constructor where $icode x$$ has prototype
 $codei%
-    const %Type%&        %x%
+    const %Type%& %x%
 %$$
 for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
+In this case, $icode ay$$ is a
+$cref/constant parameter/glossary/Parameter/Constant/$$
 
-$head y$$
-The target $icode y$$ has prototype
+$head ay$$
+The target $icode ay$$ has prototype
 $codei%
-    AD<%Base%> %y%
+    AD<%Base%> %ay%
 %$$
 
 $head Example$$
@@ -189,7 +196,7 @@ is the object that is being converted from T to AD<Base>.
 template <class Base>
 template <class T>
 AD<Base>::AD(const T &t)
-: value_( Base( double(t) ) )
+: value_( Base(t) )
 , tape_id_(0)
 , taddr_(0)
 , ad_type_(constant_enum)

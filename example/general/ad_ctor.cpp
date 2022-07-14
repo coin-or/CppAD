@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -34,18 +34,21 @@ bool ad_ctor(void)
     AD<double> a;
     a = 0.;
     ok &= a == 0.;
+    ok &= Constant(a);
 
     // constructor from base type
     AD<double> b(1.);
     ok &= b == 1.;
+    ok &= Constant(b);
 
     // constructor from another type that converts to the base type
     AD<double> c(2);
     ok &= c == 2.;
+    ok &= Constant(c);
 
     // constructor from AD<Base>
     AD<double> d(c);
-    ok &= d == 2.;
+    ok &= d == c;
 
     // constructor from a VecAD<Base> element
     CppAD::VecAD<double> v(1);

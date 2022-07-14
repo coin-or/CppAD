@@ -55,6 +55,14 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
+$head 07-14$$
+There was a mistake in the implementation of the
+$cref/explicit/ad_ctor/x/explicit/$$ $codei%AD<%Base%>%$$ constructor.
+To be specific, the value was converted to $code double$$ before being
+converted to $codei%AD<%Base%>%$$.
+This has been fixed and the $cref ad_ctor$$ documentation has been
+improved to note which result are always constant parameters.
+
 $head 07-12$$
 The $cref/cmake command/cmake/CMake Command/$$ was not properly determining
 when posix threads could be used (when using a C compiler other than gcc).
