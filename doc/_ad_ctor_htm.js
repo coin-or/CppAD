@@ -16,7 +16,7 @@ var list_current0 = [
 'ad_ctor.htm#x',
 'ad_ctor.htm#x.implicit',
 'ad_ctor.htm#x.explicit',
-'ad_ctor.htm#y',
+'ad_ctor.htm#ay',
 'ad_ctor.htm#Example'
 ];
 function choose_across0(item)

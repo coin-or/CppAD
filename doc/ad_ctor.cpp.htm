@@ -85,18 +85,21 @@ A:active { color : purple }
     <font color="#008080">AD&lt;double&gt;</font> a<font color="#990000">;</font>
     a <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">.;</font>
     ok <font color="#990000">&amp;=</font> a <font color="#990000">==</font> <font color="#993399">0</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>a<font color="#990000">);</font>
 
     <i><font color="#9A1900">// constructor from base type</font></i>
     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">b</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">.);</font>
     ok <font color="#990000">&amp;=</font> b <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>b<font color="#990000">);</font>
 
     <i><font color="#9A1900">// constructor from another type that converts to the base type</font></i>
     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">c</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
     ok <font color="#990000">&amp;=</font> c <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> <b><font color="#000000">Constant</font></b><font color="#990000">(</font>c<font color="#990000">);</font>
 
     <i><font color="#9A1900">// constructor from AD&lt;Base&gt;</font></i>
     <font color="#008080">AD&lt;double&gt;</font> <b><font color="#000000">d</font></b><font color="#990000">(</font>c<font color="#990000">);</font>
-    ok <font color="#990000">&amp;=</font> d <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">.;</font>
+    ok <font color="#990000">&amp;=</font> d <font color="#990000">==</font> c<font color="#990000">;</font>
 
     <i><font color="#9A1900">// constructor from a VecAD&lt;Base&gt; element</font></i>
     CppAD<font color="#990000">::</font><font color="#008080">VecAD&lt;double&gt;</font> <b><font color="#000000">v</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to CppAD During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to CppAD During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 07-10 07-08 07-05 06-23 06-22 06-21 06-20 05-27 05-26 05-20 05-19 05-17 05-16 05-15 05-13 05-12 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
+<meta name="keywords" id="keywords" content=" changes additions to cppad during 2022 07-14 07-12 07-10 07-08 07-05 06-23 06-22 06-21 06-20 05-27 05-26 05-20 05-19 05-17 05-16 05-15 05-13 05-12 05-11 05-10 05-09 05-07 05-06 04-21 04-20 04-19 04-15 03-29 03-26 03-25 03-24 03-23 02-21 02-19 02-18 02-17 02-16 02-13 02-12 02-11 02-01 01-27 01-25 01-23 01-19 01-15 01-06 01-04 01-01 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,6 +65,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>07-14</option>
+<option>07-12</option>
 <option>07-10</option>
 <option>07-08</option>
 <option>07-05</option>
@@ -125,6 +127,48 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to CppAD During 2022</big></big></b></center>
+<br>
+<b><big><a name="07-14" id="07-14">07-14</a></big></b>
+
+<ol type="1"><li>
+There was a mistake in the implementation of the
+<a href="ad_ctor.htm#x.explicit" target="_top"><span style='white-space: nowrap'>explicit</span></a>
+ 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+ constructor.
+To be specific, the value was converted to <code><font color="blue">double</font></code> before being
+converted to 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
+.
+This has been fixed and the <a href="ad_ctor.htm" target="_top"><span style='white-space: nowrap'>ad_ctor</span></a>
+ documentation has been
+improved to note which result are always constant parameters.
+</li><li>
+
+<b>API Change</b>:
+It was necessary (due to the fix above) to add the
+<a href="base_member.htm#Constructors.int" target="_top"><span style='white-space: nowrap'>int&nbsp;constructor</span></a>
+ and
+<a href="base_member.htm#Constructors.double" target="_top"><span style='white-space: nowrap'>double&nbsp;constructor</span></a>
+ to the
+<a href="base_require.htm" target="_top"><span style='white-space: nowrap'>base_require</span></a>
+.
+(Defining a base class is an advanced topic and only for experts).
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="07-12" id="07-12">07-12</a></big></b>
+<br>
+The <a href="cmake.htm#CMake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
+ was not properly determining
+when posix threads could be used (when using a C compiler other than gcc).
+This suppressed the running of the corresponding examples; e.g.,
+<a href="a11c_pthread.cpp.htm" target="_top"><span style='white-space: nowrap'>a11c_pthread.cpp</span></a>
+.
+
+<br>
 <br>
 <b><big><a name="07-10" id="07-10">07-10</a></big></b>
 

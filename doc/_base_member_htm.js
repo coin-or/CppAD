@@ -13,9 +13,12 @@ var list_up0 = [
 ];
 var list_current0 = [
 'base_member.htm#Notation',
-'base_member.htm#Default Constructor',
-'base_member.htm#Double Constructor',
-'base_member.htm#Copy Constructor',
+'base_member.htm#Constructors',
+'base_member.htm#Constructors.Default',
+'base_member.htm#Constructors.int',
+'base_member.htm#Constructors.size_t',
+'base_member.htm#Constructors.double',
+'base_member.htm#Constructors.Copy',
 'base_member.htm#Unary Operators',
 'base_member.htm#Assignment Operators',
 'base_member.htm#Binary Operators',

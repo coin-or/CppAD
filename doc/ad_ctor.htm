@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>AD Constructors</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="AD Constructors">
-<meta name="keywords" id="keywords" content=" ad constructors syntax purpose x implicit explicit y example ">
+<meta name="keywords" id="keywords" content=" ad constructors syntax purpose x implicit explicit ay example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,7 +68,7 @@ A:active { color : purple }
 <option>x</option>
 <option>---..implicit</option>
 <option>---..explicit</option>
-<option>y</option>
+<option>ay</option>
 <option>Example</option>
 </select>
 </td>
@@ -85,10 +85,10 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>()<br>
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>()<br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -96,9 +96,10 @@ A:active { color : purple }
 creates a new 
 <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>
  object 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
 
-and initializes its value as equal to 
+and initializes it as a
+equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
 .
 
@@ -113,13 +114,25 @@ and initializes its value as equal to
 <br>
 There is an implicit constructor where 
 <code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
- has one of the following
-prototypes:
+ has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;VecAD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+There also is an implicit constructor where 
+<code><i><font color="black"><span style='white-space: nowrap'>x</span></font></i></code>
+ has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In this case, 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ is a
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameter</span></a>
+
+
+<br>
 <br>
 <big><a name="x.explicit" id="x.explicit">explicit</a></big>
 <br>
@@ -128,23 +141,28 @@ There is an explicit constructor where
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Type</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 for any type that has an explicit constructor of the form
 
 <code><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 .
+In this case, 
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
+ is a
+<a href="glossary.htm#Parameter.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;parameter</span></a>
+
 
 <br>
 <br>
-<b><big><a name="y" id="y">y</a></big></b>
+<b><big><a name="ay" id="ay">ay</a></big></b>
 <br>
 The target 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i></code>
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;</span></font><i><font color="black"><span style='white-space: nowrap'>Base</span></font></i><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ay</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
