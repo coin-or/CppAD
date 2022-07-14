@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
   CppAD is distributed under the terms of the
                Eclipse Public License Version 2.0.
@@ -29,6 +29,10 @@ $icode Base$$  $cnext
 $rnext
 $icode b$$     $cnext
     An object of type $code bool$$
+$icode i$$     $cnext
+    An object of type $code int$$
+$icode s$$     $cnext
+    An object of type $code size_t$$
 $rnext
 $icode d$$     $cnext
     An object of type $code double$$
@@ -44,13 +48,21 @@ $icode z$$     $cnext
 $rnext
 $tend
 
-$head Default Constructor$$
+$head Constructors$$
+
+$subhead Default$$
 $icode%Base z%$$
 
-$head Double Constructor$$
+$subhead int$$
+$icode%Base z%(%i%)%$$
+
+$subhead size_t$$
+$icode%Base z%(%s%)%$$
+
+$subhead double$$
 $icode%Base z%(%d%)%$$
 
-$head Copy Constructor$$
+$subhead Copy$$
 $icode%Base z%(%x%)%$$
 
 $head Unary Operators$$

@@ -56,12 +56,21 @@ $$
 $section Changes and Additions to CppAD During 2022$$
 
 $head 07-14$$
+$list number$$
 There was a mistake in the implementation of the
 $cref/explicit/ad_ctor/x/explicit/$$ $codei%AD<%Base%>%$$ constructor.
 To be specific, the value was converted to $code double$$ before being
 converted to $codei%AD<%Base%>%$$.
 This has been fixed and the $cref ad_ctor$$ documentation has been
 improved to note which result are always constant parameters.
+$lnext
+$bold API Change$$:
+It was necessary (due to the fix above) to add the
+$cref/int constructor/base_member/Constructors/int/$$ and
+$cref/double constructor/base_member/Constructors/double/$$ to the
+$cref base_require$$.
+(Defining a base class is an advanced topic and only for experts).
+$lend
 
 $head 07-12$$
 The $cref/cmake command/cmake/CMake Command/$$ was not properly determining

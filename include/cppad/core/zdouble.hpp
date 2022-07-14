@@ -1,7 +1,7 @@
 # ifndef CPPAD_CORE_ZDOUBLE_HPP
 # define CPPAD_CORE_ZDOUBLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -39,9 +39,12 @@ $codei%    zdouble z
 %$$
 $codei%    zdouble z(x)
 %$$
+$codei%    zdouble z(i)
+%$$
 $icode%    z1% %op% %x%
 %$$
-where $icode x$$ is a $code double$$ or $code zdouble$$ object
+were $icode i$$ is a $code size_t$$,
+$icode x$$ is a $code double$$ or $code zdouble$$,
 and $icode op$$ is $code =$$, $code +=$$, $code -=$$, $code *=$$
 or $code /=-$$.
 
@@ -272,6 +275,14 @@ public:
     /// Constructor from double
     zdouble(const double& dbl)
     : dbl_(dbl)
+    { }
+    /// Constructor from size_t
+    zdouble(const size_t& i)
+    : dbl_( double(i) )
+    { }
+    /// Constructor from int
+    zdouble(const int& i)
+    : dbl_( double(i) )
     { }
     //
     /// Destructor
