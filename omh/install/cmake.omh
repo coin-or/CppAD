@@ -153,6 +153,7 @@ cmake %%                                                                     \
     -D include_ipopt=%true_or_false%                                         \
     -D include_cppadcg=%true_or_false%                                       \
     \
+    -D eigen_prefix=%eigen_prefix%
     -D colpack_prefix=%colpack_prefix%                                       \
     -D fadbad_prefix=%fadbad_prefix%                                         \
     -D sacado_prefix=%sacado_prefix%                                         \
@@ -419,10 +420,15 @@ makes cppad depend on cppadcg.
 This option, and the script $cref get_cppadcg.sh$$ are only intended
 for testing purposes.
 
+$head eigen_prefix$$
+This specifies the $cref/eigen_prefix/eigen/eigen_prefix/$$.
+It must not be set when $icode include_eigen$$ is true
+(because $code pkg-config$$ will be used to determine this information).
+
 $head package_prefix$$
-Each of these packages do not have $code pkg-config$$ files and
-correspond to optional CppAD examples.
-If a prefixes listed below is on the command line,
+Each of these packages do not have $code pkg-config$$ files
+corresponding to optional CppAD examples.
+If a prefix listed below is on the command line,
 the corresponding examples will be compiled and run:
 $table
 $rref colpack_prefix$$
