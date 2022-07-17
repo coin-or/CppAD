@@ -45,7 +45,7 @@ MACRO(prefix_info package system_include)
     # prefix_info_value
     SET( prefix_info_value "${${package}_prefix}" )
     #
-    IF( NOT prefix_info_value )
+    IF( "${prefix_info_value}" STREQUAL "NOTFOUND" )
         SET(cppad_has_${package} 0)
     ELSE( )
         SET(cppad_has_${package} 1)

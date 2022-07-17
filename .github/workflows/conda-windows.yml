@@ -1,6 +1,5 @@
 name: conda - windows - test
 on:
-  pull_request:
   push:
     branches:
       - master
@@ -8,54 +7,45 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        cmake_eigen: [ include_eigen=true, eigen_prefix=%eigen3_dir% ]
-
     runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v2
-    - name: Checkout submodules
-      run: |
-        git submodule update --init
-    - uses: goanpeca/setup-miniconda@v1
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    - uses: conda-incubator/setup-miniconda@v2
       with:
-        activate-environment: cppad
-        environment-file: .github/workflows/conda/conda-env.yml
-    - name: Install cmake and eigen
+        activate-environment: conda_env
+
+    - name: Use conda to install eigen
       shell: cmd /C CALL {0}
       run: |
-        conda install --yes cmake eigen
-    - name: Check location of eigen3.pc file and Eigen directory
+        echo conda install --yes eigen
+             conda install --yes eigen
+
+    - name: Check location of Eigen directory
       shell: cmd /C CALL {0}
       run: |
-        echo dir %CONDA_PREFIX%\Library\share\pkgconfig\eigen3.pc
-             dir %CONDA_PREFIX%\Library\share\pkgconfig\eigen3.pc
-        echo dir %CONDA_PREFIX%\Library\include\eigen3\Eigen
-             dir %CONDA_PREFIX%\Library\include\eigen3\Eigen
-    - name: Build and test with $${matrix.cmake_eigen}}
+        echo dir %CONDA_PREFIX%\Library\include\Eigen
+             dir %CONDA_PREFIX%\Library\include\Eigen
+
+    - name: Build and test CppAD with Eigen
       shell: cmd /C CALL {0}
       run: |
+        echo Use vcvarsall.bat to get proper verison of cmake
+        call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" amd64
+        echo where camke
+             where cmake
         echo mkdir build
              mkdir build
         echo cd build
              cd build
-        echo set PKG_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
-             set PKG_CONFIG_PATH=%CONDA_PREFIX%\Library\share\pkgconfig
-        echo set eigen3_dir=%CONDA_PREFIX%\Library\include
-             set eigen3_dir=%CONDA_PREFIX%\Library\include
-        echo cmake ^
-          -G "Visual Studio 16 2019"  ^
-          -D ${{matrix.cmake_eigen}} ^
-          -D cmake_install_includedirs=include;eigen3 ^
-          ..
+        echo set eigen_prefix=%CONDA_PREFIX%\Library
+             set eigen_prefix=%CONDA_PREFIX%\Library
+        echo Configure using eigen_prefix
         cmake ^
-          -G "Visual Studio 16 2019"  ^
-          -D ${{matrix.cmake_eigen}} ^
-          -D cmake_install_includedirs=include;eigen3 ^
+          -D CMAKE_BUILD_TYPE=release ^
+          -G "NMake Makefiles" ^
+          -D eigen_prefix=%eigen_prefix% ^
           ..
-        echo cmake --build . --target check --parallel 1
-             cmake --build . --target check --parallel 1
+        REM Build and run tests.
+        echo cmake --build . --target check
+             cmake --build . --target check
