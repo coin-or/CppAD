@@ -1,4 +1,4 @@
-name: conda - windows - v142
+name: conda-windows-v142
 on:
   pull_request:
   push:

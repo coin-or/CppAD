@@ -1,4 +1,4 @@
-name: windows - msys2
+name: windows-msys2
 
 on:
   pull_request:

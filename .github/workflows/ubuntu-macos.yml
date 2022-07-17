@@ -1,4 +1,4 @@
-name: ubuntu and macos
+name: ubuntu-macos
 on:
   pull_request:
   push:

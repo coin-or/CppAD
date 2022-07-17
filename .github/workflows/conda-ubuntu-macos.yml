@@ -1,4 +1,4 @@
-name: conda - ubuntu and macos
+name: conda-ubuntu-macos
 
 on:
   pull_request:

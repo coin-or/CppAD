@@ -1,4 +1,4 @@
-name: conda - windows - clang
+name: conda-windows-clang
 on:
   pull_request:
   push:
