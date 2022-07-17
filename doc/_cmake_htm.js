@@ -37,6 +37,7 @@ var list_current0 = [
 'cmake.htm#include_eigen',
 'cmake.htm#include_ipopt',
 'cmake.htm#include_cppadcg',
+'cmake.htm#eigen_prefix',
 'cmake.htm#package_prefix',
 'cmake.htm#cppad_cxx_flags',
 'cmake.htm#cppad_cxx_flags.C++17',

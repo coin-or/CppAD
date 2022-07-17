@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Using CMake to Configure CppAD</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Using CMake to Configure CppAD">
-<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile cmake_build_type cmake_needs_dot_slash generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir cmake_defined_ok include_adolc include_eigen include_ipopt include_cppadcg package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
+<meta name="keywords" id="keywords" content=" using cmake to configure cppad the program build directory command simple warning options msys2 visual studio autotools make check cmake_verbose_makefile cmake_build_type cmake_needs_dot_slash generator cppad_prefix cppad_postfix cmake_install_includedirs cmake_install_libdirs cppad_lib cmake_install_datadir cmake_install_docdir cmake_defined_ok include_adolc include_eigen include_ipopt include_cppadcg eigen_prefix package_prefix cppad_cxx_flags c++17 debug release cppad_profile_flag cppad_testvector cppad_max_num_threads cppad_tape_id_type cstdint cppad_tape_addr_type cppad_debug_which ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -89,6 +89,7 @@ A:active { color : purple }
 <option>include_eigen</option>
 <option>include_ipopt</option>
 <option>include_cppadcg</option>
+<option>eigen_prefix</option>
 <option>package_prefix</option>
 <option>cppad_cxx_flags</option>
 <option>---..C++17</option>
@@ -206,6 +207,7 @@ cmake&nbsp;</span></font><i><font color="black"></font></i><font color="blue"><s
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;include_ipopt=</span></font><i><font color="black"><span style='white-space: nowrap'>true_or_false</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;include_cppadcg=</span></font><i><font color="black"><span style='white-space: nowrap'>true_or_false</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;eigen_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;colpack_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>colpack_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;fadbad_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>fadbad_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-D&nbsp;sacado_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>sacado_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
@@ -630,11 +632,22 @@ for testing purposes.
 
 <br>
 <br>
+<b><big><a name="eigen_prefix" id="eigen_prefix">eigen_prefix</a></big></b>
+<br>
+This specifies the <a href="eigen.htm#eigen_prefix" target="_top"><span style='white-space: nowrap'>eigen_prefix</span></a>
+.
+It must not be set when 
+<code><i><font color="black"><span style='white-space: nowrap'>include_eigen</span></font></i></code>
+ is true
+(because <code><font color="blue">pkg-config</font></code> will be used to determine this information).
+
+<br>
+<br>
 <b><big><a name="package_prefix" id="package_prefix">package_prefix</a></big></b>
 <br>
-Each of these packages do not have <code><font color="blue">pkg-config</font></code> files and
-correspond to optional CppAD examples.
-If a prefixes listed below is on the command line,
+Each of these packages do not have <code><font color="blue">pkg-config</font></code> files
+corresponding to optional CppAD examples.
+If a prefix listed below is on the command line,
 the corresponding examples will be compiled and run:
 <table><tr><td align='left'  valign='top'>
 

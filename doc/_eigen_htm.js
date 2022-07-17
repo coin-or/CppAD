@@ -16,6 +16,7 @@ var list_current0 = [
 'eigen.htm#Examples and Tests',
 'eigen.htm#sparse2eigen',
 'eigen.htm#include_eigen',
+'eigen.htm#eigen_prefix',
 'eigen.htm#Examples',
 'eigen.htm#Test Vector',
 'eigen.htm#get_eigen'

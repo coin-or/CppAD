@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Including Eigen Examples, Tests, and sparse2eigen</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Including Eigen Examples, Tests, and sparse2eigen">
-<meta name="keywords" id="keywords" content=" including eigen examples tests sparse2eigen home page include_eigen test vector get_eigen ">
+<meta name="keywords" id="keywords" content=" including eigen examples tests sparse2eigen home page include_eigen eigen_prefix test vector get_eigen ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,6 +69,7 @@ A:active { color : purple }
 <option>Examples and Tests</option>
 <option>sparse2eigen</option>
 <option>include_eigen</option>
+<option>eigen_prefix</option>
 <option>Examples</option>
 <option>Test Vector</option>
 <option>get_eigen</option>
@@ -157,6 +158,26 @@ The value of
 &nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;eigen3&nbsp;--path&nbsp;--print-errors<br>
 </span></font></code>
 finds the location of the file <code><font color="blue">eigen3.pc</font></code>.
+
+<br>
+<br>
+<b><big><a name="eigen_prefix" id="eigen_prefix">eigen_prefix</a></big></b>
+<br>
+With Eigen it is possible to use 
+<code><font color="blue"><span style='white-space: nowrap'>-D&nbsp;eigen_prefix=</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
+
+on the cmake command line.
+In this case, the sub-directory <code><font color="blue">Eigen</font></code> must exist in a directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>includedir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>include_dir</span></font></i></code>
+ is one of the directories in the
+<a href="cmake.htm#cmake_install_includedirs" target="_top"><span style='white-space: nowrap'>cmake_install_includedirs</span></a>
+ list
+of directories.
 
 <br>
 <br>
