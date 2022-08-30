@@ -939,6 +939,22 @@ bool optimize_run(
             break;
             // ---------------------------------------------------
             // Comparison operations: two arguments and no results
+            //
+            case LeppOp:
+            case LtppOp:
+            case EqppOp:
+            case NeppOp:
+            CPPAD_ASSERT_UNKNOWN( compare_op );
+            CPPAD_ASSERT_NARG_NRES(op, 2, 0);
+            if( previous == 0 )
+            {   new_arg[0] = new_par[ arg[0] ];
+                new_arg[1] = new_par[ arg[1] ];
+                rec->PutArg(new_arg[0], new_arg[1]);
+                new_op[i_op] = addr_t( rec->num_op_rec() );
+                rec->PutOp(op);
+            }
+            break;
+            //
             case LepvOp:
             case LtpvOp:
             case EqpvOp:

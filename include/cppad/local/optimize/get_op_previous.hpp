@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_PREVIOUS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -176,6 +176,7 @@ bool get_op_previous(
 
             // ----------------------------------------------------------------
             // check for a previous match
+            // BEGIN_SORT_THIS_LINE_PLUS_1
             case AbsOp:
             case AcosOp:
             case AcoshOp:
@@ -191,23 +192,27 @@ bool get_op_previous(
             case DivpvOp:
             case DivvpOp:
             case DivvvOp:
+            case EqppOp:
             case EqpvOp:
             case EqvvOp:
             case ErfOp:
             case ErfcOp:
             case ExpOp:
             case Expm1Op:
+            case LeppOp:
             case LepvOp:
             case LevpOp:
             case LevvOp:
-            case LogOp:
             case Log1pOp:
+            case LogOp:
+            case LtppOp:
             case LtpvOp:
             case LtvpOp:
             case LtvvOp:
             case MulpvOp:
             case MulvvOp:
             case NegOp:
+            case NeppOp:
             case NepvOp:
             case NevvOp:
             case PowpvOp:
@@ -225,6 +230,7 @@ bool get_op_previous(
             case ZmulpvOp:
             case ZmulvpOp:
             case ZmulvvOp:
+            // END_SORT_THIS_LINE_MINUS_1
             exceed_collision_limit |= match_op(
                 collision_limit,
                 random_itr,

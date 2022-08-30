@@ -51,16 +51,22 @@ $spell
     Microsoft
     posix
     gcc
+    handeling
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 08-30$$
+The $cref optimize$$ operations was not handeling
+comparison operators that only had parameters,
+with at least one dynamic parameter.
+This has been fixed.
 
 $head 07-16$$
 Add the option to configure eigen using
 $cref/eigen_prefix/cmake/eigen_prefix/$$,
 as well as with
 $cref/include_eigen/cmake/include_eigen/$$.
-
 
 $head 07-14$$
 $list number$$

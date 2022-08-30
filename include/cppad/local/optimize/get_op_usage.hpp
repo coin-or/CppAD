@@ -1,7 +1,7 @@
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_USAGE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 
 CppAD is distributed under the terms of the
              Eclipse Public License Version 2.0.
@@ -575,6 +575,15 @@ void get_op_usage(
             // =============================================================
             // Comparison operators
             // =============================================================
+
+            // Compare operator were none of the operatros are variables
+            case EqppOp:
+            case LeppOp:
+            case LtppOp:
+            case NeppOp:
+            if( compare_op )
+                op_usage[i_op] = usage_t(yes_usage);
+            break; // ----------------------------------------------
 
             // Compare operators where arg[1] is only variable
             case LepvOp:
