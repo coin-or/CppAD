@@ -184,12 +184,13 @@ s|IF *( *DEFINED *CPPAD_HOME *)|IF (DEFINED CPPAD_GIT_REPO)\\
 \\
 ELSEIF (DEFINED CPPAD_HOME)|
 EOF
+echo_eval git reset --hard
+echo_eval git checkout --quiet $git_hash
 echo_eval git checkout  cmake/FindCppAD.cmake
 echo_eval sed -i cmake/FindCppAD.cmake -f get_cppadcg.sed
 echo_eval rm get_cppadcg.sed
 # -----------------------------------------------------------------------------
 #  make install
-echo_eval git checkout --quiet $git_hash
 if [ ! -e build ]
 then
     echo_eval mkdir build
