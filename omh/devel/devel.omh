@@ -27,7 +27,8 @@ $childtable%
    include/cppad/local/op/unary_op.omh%
    include/cppad/local/op/binary_op.omh%
    include/cppad/local/op/discrete_op.hpp%
-   include/cppad/core/atomic/four/devel/devel.omh
+   include/cppad/core/atomic/four/devel/devel.omh%
+   cppad_ipopt/example/ode1.omh
 %$$
 
 

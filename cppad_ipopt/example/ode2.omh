@@ -3,6 +3,10 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 $begin ipopt_nlp_ode_problem$$
+$spell
+   ipopt_nlp
+   hpp
+$$
 
 $section An ODE Inverse Problem Example$$
 
@@ -25,10 +29,10 @@ $rnext
 $latex Nz$$   $cnext number of measurements      $cnext 4
 $rnext
 $latex N(i)$$ $cnext
-number of grid points between $th i-1$$ and $th i$$ measurement
+# of grid points between $th i-1$$ and $th i$$ measurement $cnext
 $rnext
 $latex S(i)$$ $cnext
-number of grid points up to an including the $th i$$ measurement
+# of grid points up to an including $th i$$ measurement $cnext
 $tend
 
 $head Forward Problem$$
@@ -250,6 +254,7 @@ $end
 $begin ipopt_nlp_ode_simple$$
 $spell
    cppad_ipopt_nlp
+   hpp
 $$
 
 $section ODE Fitting Using Simple Representation$$
@@ -317,10 +322,10 @@ $end
 $begin ipopt_nlp_ode_fast$$
 $spell
    cppad_ipopt_nlp
+   hpp
 $$
 
 $section ODE Fitting Using Fast Representation$$
-
 
 $head Purpose$$
 In this section we represent a more complex representation of the
