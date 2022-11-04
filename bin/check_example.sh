@@ -16,7 +16,7 @@ file_list=`git ls-files | sed -n \
    -e '/^example\//p'`
 #
 sed < omh/example_list.omh > check_example.$$ \
-   -n -e '/\$begin ListAllExamples\$\$/,/\$end/p'
+   -n -e '/[$]begin ListAllExamples\$\$/,/\$end/p'
 #
 # Make sure all example names are of the form *.cpp or *.hpp
 check=`sed -n -e '/$rref [0-9a-zA-Z_]*\.[hc]pp/d' \
@@ -30,10 +30,10 @@ fi
 ok="yes"
 for file in $file_list
 do
-   # only files in example directory with $begin *.cpp or *.hpp
-   # e.g., example/multi_thread/harmonic.omh has $begin harmonic.cpp$$ in it
-   name=`grep '$begin *[0-9a-zA-Z_]*\.[hc]pp' $file |
-      sed -e 's/.*$begin *//' -e 's/ *$$.*//'`
+   # only files in example directory with [$]begin *.cpp or *.hpp
+   # e.g., example/multi_thread/harmonic.omh has [$]begin harmonic.cpp$$ in it
+   name=`grep '[$]begin *[0-9a-zA-Z_]*\.[hc]pp' $file |
+      sed -e 's/.*[$]begin *//' -e 's/ *$$.*//'`
    if [ "$name" != "" ]
    then
       if ! grep "$name" check_example.$$ > /dev/null
