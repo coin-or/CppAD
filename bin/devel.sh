@@ -45,8 +45,10 @@ ignore_files='
     /configure
     /configure
     /depcomp
+    /epl-2.0.txt
     /install-sh
     /missing
+    /uw_copy_040507.html
     makefile.in
 '
 # END_SORT_THIS_LINE_MINUS_2
