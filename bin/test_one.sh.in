@@ -247,12 +247,12 @@ cat << EOF > test_one.sed
 # Lines summarizing results
 /^[0-9]* warnings generated/d
 EOF
-sed -f test_one.sed < test_one.err > test_one.warn
+sed -f test_one.sed < test_one.err > test_one.tmp
 rm test_one.sed
-if [ -s test_one.warn ]
+if [ -s test_one.tmp ]
 then
-    cat test_one.warn
-    echo 'test_one.sh: unexpected warnings: see  test_one.warn, test_one.err'
+    cat test_one.tmp
+    echo 'test_one.sh: unexpected warnings: see  test_one.tmp, test_one.err'
     echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
     exit 1
 fi

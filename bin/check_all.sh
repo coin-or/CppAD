@@ -39,54 +39,22 @@ echo_eval() {
     eval $*
 }
 # -----------------------------------------------------------------------------
-check_all_warn() {
-cat << EOF > check_all.$$
-# Lines that describe where error is
-/^In file included from/d
-/: in function /d
-/: note:/d
-#
-# Ipopt has sign conversion warnings
-/\/coin\/.*-Wsign-conversion/d
-#
-# Adolc has multiple types of conversion warnings
-/\/adolc\/.*-W[a-z-]*conversion/d
-/\/adolc\/.*-Wshorten-64-to-32/d
-#
-# Lines describing the error begin with space
-/^ /d
-#
-# Lines summarizing results
-/^[0-9]* warnings generated/d
-EOF
-    sed $top_srcdir/check_all.err -f check_all.$$ > $top_srcdir/check_all.warn
-    rm check_all.$$
-    #
-    # Expect warning in temp_file.cpp when using c++11.
-    if [ "$standard" == '--c++11' ]
-    then
-        sed -i $top_srcdir/check_all.warn -e '/.tmpnam. is dangerous/d'
-    fi
-}
-# -----------------------------------------------------------------------------
 echo_log_eval() {
-    echo $*
-    echo $* >> $top_srcdir/check_all.log
-    if ! $* >> $top_srcdir/check_all.log 2> $top_srcdir/check_all.err
+    echo "$* >& check_all.tmp"
+    echo "$*" >& $top_srcdir/check_all.tmp
+    if ! $* >& $top_srcdir/check_all.tmp
     then
-        tail $top_srcdir/check_all.err
-        echo 'Error: see check_all.err, check_all.log'
+        tail $top_srcdir/check_all.tmp
+        echo 'Error: see check_all.tmp'
         exit 1
     fi
-    check_all_warn
-    count=`wc -l $top_srcdir/check_all.warn | sed -e 's|^\([0-9]*\) .*|\1|'`
-    if [ "$count" != '0' ]
+    if grep ': *warning *:"' $top_srcdir/check_all.tmp
     then
-        head "$top_srcdir/check_all.warn"
-        echo 'Warning: see check_all.warn, check_all.log'
+        echo 'Warning: see check_all.tmp'
         exit 1
     fi
-    rm $top_srcdir/check_all.warn $top_srcdir/check_all.err
+    echo 'cat check_all.tmp >> check_all.log'
+    cat $top_srcdir/check_all.tmp >> $top_srcdir/check_all.log
 }
 echo_log() {
     echo $*

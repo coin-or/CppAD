@@ -13,6 +13,8 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
 $begin cmake$$
 $escape $$
 $spell
+    bitwise
+    Wno
     github
     Rel
     cppadcg
@@ -464,6 +466,13 @@ $cref/CPPAD_DEBUG_AND_RELEASE
     /CPPAD_DEBUG_AND_RELEASE
 /$$
 compiler flag (which should not be included in $icode cppad_cxx_flags$$).
+
+$subhead clang$$
+Clang is giving warnings for bitwise operations with logical operands.
+These operations are used by CppAD for speed because they do not require
+branching which can slow down some processors. You can suppress these
+warnings by including $code -Wno-bitwise-instead-of-logical$$
+in $icode cppad_cxx_flags$$.
 
 $head cppad_profile_flag$$
 This specifies an addition compiler and link flag that is used

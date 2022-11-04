@@ -339,6 +339,16 @@ then
     fi
     cppad_cxx_flags="$cppad_cxx_flags -g"
 fi
+#
+# cppad_cxx_flags
+# clang++ 14.05 is warnings on bitwise operations with logical operands.
+# These are used for speed, but maybe they do not help much ?
+if [ "$clang" == 'yes' ]
+then
+    cppad_cxx_flags="$cppad_cxx_flags -Wno-bitwise-instead-of-logical"
+fi
+#
+# cmake_args
 cmake_args="$cmake_args -D cppad_cxx_flags='$cppad_cxx_flags'"
 #
 # clang

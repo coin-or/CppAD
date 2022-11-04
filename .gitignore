@@ -23,7 +23,7 @@
 # specific extensions in top direcotry
 /*.err
 /*.log
-/*.warn
+/*.tmp
 # ----------------------------------------------------------------------------
 # vim swap files in any directory
 *.swp
