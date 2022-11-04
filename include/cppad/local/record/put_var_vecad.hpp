@@ -11,11 +11,11 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 ------------------------------------------------------------------------------
 $begin put_var_vecad_ind$$
 $spell
-    Vec
-    var
-    vecad
-    ind
-    taddr
+   Vec
+   var
+   vecad
+   ind
+   taddr
 $$
 
 $section Add One Index to End of Combined Variable VecAD Vector$$
@@ -25,7 +25,7 @@ $icode%offset% = %rec%.put_var_vecad_ind(%vec_ind%)%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_PUT_VAR_VECAD_IND%// END_PUT_VAR_VECAD_IND%1
+   0%// BEGIN_PUT_VAR_VECAD_IND%// END_PUT_VAR_VECAD_IND%1
 %$$
 
 $head Purpose$$
@@ -49,22 +49,22 @@ $end
 template <class Base>
 addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
 // END_PUT_VAR_VECAD_IND
-{   size_t offset = all_var_vecad_ind_.size();
-    all_var_vecad_ind_.push_back( vec_ind );
-    CPPAD_ASSERT_KNOWN(
-        size_t( addr_t( offset ) ) == offset,
-        "cppad_tape_addr_type cannot support needed index range"
-    );
-    return static_cast<addr_t>( offset );
+{  size_t offset = all_var_vecad_ind_.size();
+   all_var_vecad_ind_.push_back( vec_ind );
+   CPPAD_ASSERT_KNOWN(
+      size_t( addr_t( offset ) ) == offset,
+      "cppad_tape_addr_type cannot support needed index range"
+   );
+   return static_cast<addr_t>( offset );
 }
 /*
 ------------------------------------------------------------------------------
 $begin recorder_put_var_vecad$$
 $spell
-    Vec
-    var
-    vecad
-    taddr
+   Vec
+   var
+   vecad
+   taddr
 $$
 $section Tape Initialization for a Variable VecAD Object$$
 
@@ -73,7 +73,7 @@ $icode%offset% = %rec%.put_var_vecad(%length%, %taddr%)%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_PUT_VAR_VECAD_VEC%// END_PUT_VAR_VECAD_VEC%1
+   0%// BEGIN_PUT_VAR_VECAD_VEC%// END_PUT_VAR_VECAD_VEC%1
 %$$
 
 $head Usage$$
@@ -98,25 +98,25 @@ $end
 // BEGIN_PUT_VAR_VECAD_VEC
 template <class Base>
 addr_t recorder<Base>::put_var_vecad(
-    size_t                        length   ,
-    const pod_vector<addr_t>&     taddr    )
+   size_t                        length   ,
+   const pod_vector<addr_t>&     taddr    )
 // END_PUT_VAR_VECAD_VEC
-{   CPPAD_ASSERT_UNKNOWN( length > 0 );
-    CPPAD_ASSERT_UNKNOWN( length == taddr.size() );
-    CPPAD_ASSERT_KNOWN(
-        size_t( std::numeric_limits<addr_t>::max() ) >= length,
-        "A VecAD vector length is too large fur cppad_tape_addr_type"
-    );
+{  CPPAD_ASSERT_UNKNOWN( length > 0 );
+   CPPAD_ASSERT_UNKNOWN( length == taddr.size() );
+   CPPAD_ASSERT_KNOWN(
+      size_t( std::numeric_limits<addr_t>::max() ) >= length,
+      "A VecAD vector length is too large fur cppad_tape_addr_type"
+   );
 
-    // store the length in VecInd
-    addr_t start = put_var_vecad_ind( addr_t(length) );
+   // store the length in VecInd
+   addr_t start = put_var_vecad_ind( addr_t(length) );
 
-    // store indices of the values in VecInd
-    for(size_t i = 0; i < length; i++)
-        put_var_vecad_ind( taddr[i] );
+   // store indices of the values in VecInd
+   for(size_t i = 0; i < length; i++)
+      put_var_vecad_ind( taddr[i] );
 
-    // return the taddr of the length (where the vector starts)
-    return start;
+   // return the taddr of the length (where the vector starts)
+   return start;
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

@@ -8,7 +8,7 @@
 # include <iostream>
 
 namespace CppAD { namespace local {
-    std::string temp_file(void);
+   std::string temp_file(void);
 } }
 
 # endif

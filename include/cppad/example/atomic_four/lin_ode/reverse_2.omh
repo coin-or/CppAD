@@ -9,44 +9,44 @@ $section Atomic Linear ODE Second Order Reverse$$
 $head x^1 Partial$$
 We need to compute
 $latex \[
-    \R{partial\_x} [ j  * q + 1 ]
-    =
-    \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
-        ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1 )
+   \R{partial\_x} [ j  * q + 1 ]
+   =
+   \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
+      ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1 )
 \]$$
 where $latex q = 2$$ and $latex j = 0 , \ldots , n-1$$.
 Using the $cref reverse_identity$$ we have
 $latex \[
-    \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1
-    =
-    \partial y_i^0 ( x^0 ) / \partial x_j^0
+   \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1
+   =
+   \partial y_i^0 ( x^0 ) / \partial x_j^0
 \] $$
 $latex \[
-    \R{partial\_x} [ j  * q + 1 ]
-    =
-    \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
-        ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
+   \R{partial\_x} [ j  * q + 1 ]
+   =
+   \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
+      ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
 \]$$
 which is the same as the first order
 $cref/theory/atomic_four_lin_ode_reverse.hpp/First Order Theory/$$ with
 $latex \[
-    w_i = \R{partial\_y} [ i * q + 1]
+   w_i = \R{partial\_y} [ i * q + 1]
 \] $$
 
 $head x^0 Partial$$
 We also need to compute
 $latex \[
-    \R{partial\_x} [ j  * q + 0 ]
-    =
-    \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 0]
-        ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
-    +
-    \R{partial\_y} [ i * q + 1]
-        ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^0 )
+   \R{partial\_x} [ j  * q + 0 ]
+   =
+   \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 0]
+      ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
+   +
+   \R{partial\_y} [ i * q + 1]
+      ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^0 )
 \] $$
 Note that we can solve for
 $latex \[
-    y^1 ( x^0 , x^1 ) = z^1 ( r , x^0 , x^1 )
+   y^1 ( x^0 , x^1 ) = z^1 ( r , x^0 , x^1 )
 \] $$
 using the following extended ODE; see
 $cref/forward theory/atomic_four_lin_ode_forward.hpp/Theory/$$.
@@ -82,11 +82,11 @@ $latex A^1$$, $latex b^1$$ are components of $latex x^1$$.
 We use the following notation
 $latex \[
 \bar{x} = \left[ \begin{array}{c}
-    x^0 \\ x^1
+   x^0 \\ x^1
 \end{array} \right]
 \W{,}
 \bar{z}(t , \bar{x} ) = \left[ \begin{array}{c}
-    z^0 (t, x^0) \\ z^1 ( t, x^0 , x^1 )
+   z^0 (t, x^0) \\ z^1 ( t, x^0 , x^1 )
 \end{array} \right]
 \W{,}
 \bar{A} =
@@ -96,7 +96,7 @@ A^1 & A^0
 \end{array} \right]
 \W{,}
 \bar{b} = \left[ \begin{array}{c}
-    b^0 \\ b^1
+   b^0 \\ b^1
 \end{array} \right]
 \] $$
 Using this notation we have
@@ -107,13 +107,13 @@ $latex \[
 \] $$
 Define $latex \bar{w} \in \B{R}^{m + m}$$ by
 $latex \[
-    \bar{w}_i = \R{partial\_y}[ i * q + 0 ]
-    \W{,}
-    \bar{w}_{m + i} = \R{partial\_y}[ i * q + 1 ]
+   \bar{w}_i = \R{partial\_y}[ i * q + 0 ]
+   \W{,}
+   \bar{w}_{m + i} = \R{partial\_y}[ i * q + 1 ]
 \] $$
 For this case, we can compute
 $latex \[
-    \partial_\bar{x} \bar{w}^\R{T} \bar{z}(r, \bar{x} )
+   \partial_\bar{x} \bar{w}^\R{T} \bar{z}(r, \bar{x} )
 \] $$
 which is same as the first order case but with the extended variables
 and extended ODE.

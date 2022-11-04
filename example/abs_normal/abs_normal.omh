@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 $begin example_abs_normal$$
 $spell
-    Andreas Griewank
-    Jens-Uwe Bernt
-    Manuel Radons
-    Tom Streubel
+   Andreas Griewank
+   Jens-Uwe Bernt
+   Manuel Radons
+   Tom Streubel
 $$
 
 $section
@@ -21,16 +21,16 @@ Linear Algebra and its Applications,
 vol. 471 (2015), pages 500-530.
 
 $childtable%example/abs_normal/get_started.cpp
-    %example/abs_normal/abs_print_mat.hpp
-    %example/abs_normal/abs_eval.hpp
-    %example/abs_normal/simplex_method.hpp
-    %example/abs_normal/lp_box.hpp
-    %example/abs_normal/abs_min_linear.hpp
-    %example/abs_normal/min_nso_linear.hpp
-    %example/abs_normal/qp_interior.hpp
-    %example/abs_normal/qp_box.hpp
-    %example/abs_normal/abs_min_quad.hpp
-    %example/abs_normal/min_nso_quad.hpp
+   %example/abs_normal/abs_print_mat.hpp
+   %example/abs_normal/abs_eval.hpp
+   %example/abs_normal/simplex_method.hpp
+   %example/abs_normal/lp_box.hpp
+   %example/abs_normal/abs_min_linear.hpp
+   %example/abs_normal/min_nso_linear.hpp
+   %example/abs_normal/qp_interior.hpp
+   %example/abs_normal/qp_box.hpp
+   %example/abs_normal/abs_min_quad.hpp
+   %example/abs_normal/min_nso_quad.hpp
 %$$
 
 $end

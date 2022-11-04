@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 $begin cppad_testvector$$
 $spell
-    CppAD
-    cppad
-    eigen
-    std
-    testvector
-    namespace
-    cmake
-    vec
+   CppAD
+   cppad
+   eigen
+   std
+   testvector
+   namespace
+   cmake
+   vec
 $$
 
 $section Choosing the CppAD Test Vector Template Class$$
@@ -42,15 +42,15 @@ $code CPPAD_TESTVECTOR$$.
 $head boost$$
 If $icode%cppad_testvector%$$ is $icode boost$$,
 $href%
-    http://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm%
-    boost ublas vector
+   http://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm%
+   boost ublas vector
 %$$
 template class is used to define
 $code CPPAD_TESTVECTOR$$.
 In this case, the
 $href%
-    http://www.cmake.org/cmake/help/cmake2.6docs.html#module:FindBoost%
-    cmake FindBoost
+   http://www.cmake.org/cmake/help/cmake2.6docs.html#module:FindBoost%
+   cmake FindBoost
 %$$
 module must be able to automatically figure out where Boost is installed.
 

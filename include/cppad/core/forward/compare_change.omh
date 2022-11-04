@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin compare_change$$
 $spell
-    op
-    const
+   op
+   const
 $$
 
 $section Comparison Changes Between Taping and Zero Order Forward$$
@@ -28,7 +28,7 @@ We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$; i.e,
 given $latex x \in \B{R}^n$$, $latex F(x)$$ is defined by
 $codei%
-    %F%(%x%) = %f%.Forward(0, %x%)
+   %F%(%x%) = %f%.Forward(0, %x%)
 %$$
 see $cref forward_zero$$.
 If $latex x$$ is such that
@@ -45,24 +45,24 @@ $head f$$
 In the $code compare_change_number$$ and $code compare_change_op_index$$
 syntax, the object $icode f$$ has prototype
 $codei%
-    const ADFun<%Base%> %f%
+   const ADFun<%Base%> %f%
 %$$
 In the $code compare_change_count$$
 syntax, the object $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 
 $head count$$
 The argument $icode count$$ has prototype
 $icode%
-    size_t %count%
+   size_t %count%
 %$$
 It specifies which comparison change should correspond to the
 information stored in $icode f$$ during subsequent calls to
 $cref forward_zero$$; i.e.,
 $codei%
-    %f%.Forward(0, %x%)
+   %f%.Forward(0, %x%)
 %$$
 For example, if $icode%count% == 1%$$,
 the operator index corresponding to the first comparison change
@@ -73,20 +73,20 @@ $subhead Speed$$
 The special case where $icode count == 0$$, should be faster because
 the comparisons are not checked during
 $codei%
-    %f%.Forward(0, %x%)
+   %f%.Forward(0, %x%)
 %$$
 
 $head number$$
 The return value $icode number$$ has prototype
 $codei%
-    size_t %number%
+   size_t %number%
 %$$
 If $icode count$$ is non-zero,
 $icode number$$ is the number of
 $codei%AD<%Base%>%$$ $cref/comparison/Compare/$$ operations,
 corresponding to the previous call to
 $codei%
-    %f%.Forward(0, %x%)
+   %f%.Forward(0, %x%)
 %$$
 that have a different result for this value of $icode x$$
 than the value used when $icode f$$ was created by taping an algorithm.
@@ -110,13 +110,13 @@ it may not be worth re-taping a new AD operation sequence.
 $head op_index$$
 The return value $icode op_index$$ has prototype
 $codei%
-    size_t %op_index%
+   size_t %op_index%
 %$$
 If $icode count$$ is non-zero,
 $icode op_index$$ is the operator index corresponding the
 $icode count$$-th comparison change during the previous call to
 $codei%
-    %f%.Forward(0, %x%)
+   %f%.Forward(0, %x%)
 %$$
 If $icode count$$ is greater than the corresponding
 $icode number$$, there is no such comparison change and $icode op_index$$
@@ -136,11 +136,11 @@ For example, using an $cref/conditional expression/CondExp/$$
 may be appropriate in some cases.
 See $cref/abort_op_index/Independent/abort_op_index/$$ in the syntax
 $codei%
-    Independent(%x%, %abort_op_index%)
+   Independent(%x%, %abort_op_index%)
 %$$
 
 $children%
-    example/general/compare_change.cpp
+   example/general/compare_change.cpp
 %$$
 $head Example$$
 $cref compare_change.cpp$$

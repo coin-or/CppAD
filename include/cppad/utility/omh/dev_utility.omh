@@ -11,8 +11,8 @@ $$
 $section General Purpose Utilities Developer Documentation$$
 
 $childtable%
-    include/cppad/utility/omh/dev_cppad_vector.omh%
-    include/cppad/utility/omh/dev_vector_bool.omh
+   include/cppad/utility/omh/dev_cppad_vector.omh%
+   include/cppad/utility/omh/dev_vector_bool.omh
 %$$
 
 $end

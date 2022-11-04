@@ -12,8 +12,8 @@
 /*
 $begin csrc_writer$$
 $spell
-    CppAD
-    obj
+   CppAD
+   obj
 $$
 
 $section C Source Code Writer$$
@@ -31,11 +31,11 @@ This is a $code cpp_graph$$ representation of the function.
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
-    CPPAD_LIB_EXPORT void csrc_writer(
-        std::ostream&       os          ,
-        const cpp_graph&    graph_obj   ,
-        const std::string&  type
-    );
+   CPPAD_LIB_EXPORT void csrc_writer(
+      std::ostream&       os          ,
+      const cpp_graph&    graph_obj   ,
+      const std::string&  type
+   );
 } } }
 /* %$$
 $end

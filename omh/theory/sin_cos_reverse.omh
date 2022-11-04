@@ -5,8 +5,8 @@
 
 $begin sin_cos_reverse$$
 $spell
-    Taylor
-    cos
+   Taylor
+   cos
 $$
 
 $section Trigonometric and Hyperbolic Sine and Cosine Reverse Theory$$
@@ -14,8 +14,8 @@ $section Trigonometric and Hyperbolic Sine and Cosine Reverse Theory$$
 
 We use the reverse theory
 $cref%standard math function
-    %ReverseTheory
-    %Standard Math Functions
+   %ReverseTheory
+   %Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 In addition,
@@ -24,23 +24,23 @@ and the integer $latex \ell$$
 
 $table
 Coefficients
-    $cnext $cnext $latex s$$
-    $cnext $cnext $latex c$$
-    $cnext $cnext $latex \ell$$
+   $cnext $cnext $latex s$$
+   $cnext $cnext $latex c$$
+   $cnext $cnext $latex \ell$$
 $rnext
 Trigonometric Case
-    $cnext $cnext $latex \sin [ X(t) ]$$
-    $cnext $cnext $latex \cos [ X(t) ]$$
-    $cnext $cnext 1
+   $cnext $cnext $latex \sin [ X(t) ]$$
+   $cnext $cnext $latex \cos [ X(t) ]$$
+   $cnext $cnext 1
 $rnext
 Hyperbolic Case
-    $cnext $cnext $latex \sinh [ X(t) ]$$
-    $cnext $cnext $latex \cosh [ X(t) ]$$
-    $cnext $cnext -1
+   $cnext $cnext $latex \sinh [ X(t) ]$$
+   $cnext $cnext $latex \cosh [ X(t) ]$$
+   $cnext $cnext -1
 $tend
 We use the value
 $latex \[
-    z^{(j)} = ( s^{(j)} , c^{(j)} )
+   z^{(j)} = ( s^{(j)} , c^{(j)} )
 \] $$
 in the definition for $latex G$$ and $latex H$$.
 The forward mode formulas for the
@@ -60,9 +60,9 @@ for the case $latex j = 0$$, and for $latex j > 0$$,
 $latex \[
 \begin{array}{rcl}
 s^{(j)} & = & \frac{1}{j}
-    \sum_{k=1}^{j} k x^{(k)} c^{(j-k)}  \\
+   \sum_{k=1}^{j} k x^{(k)} c^{(j-k)}  \\
 c^{(j)} & = & \ell \frac{1}{j}
-    \sum_{k=1}^{j} k x^{(k)} s^{(j-k)}
+   \sum_{k=1}^{j} k x^{(k)} s^{(j-k)}
 \end{array}
 \] $$
 

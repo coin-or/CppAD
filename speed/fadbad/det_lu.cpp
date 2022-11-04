@@ -5,19 +5,19 @@
 /*
 $begin fadbad_det_lu.cpp$$
 $spell
-    onetape
-    cppad
-    std
-    Lu
-    Fadbad
-    det
-    badiff.hpp
-    const
-    CppAD
-    typedef
-    diff
-    bool
-    srand
+   onetape
+   cppad
+   std
+   Lu
+   Fadbad
+   det
+   badiff.hpp
+   const
+   CppAD
+   typedef
+   diff
+   bool
+   srand
 $$
 
 $section Fadbad Speed: Gradient of Determinant Using Lu Factorization$$
@@ -41,51 +41,51 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_det_lu(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &matrix   ,
-    CppAD::vector<double>     &gradient )
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &matrix   ,
+   CppAD::vector<double>     &gradient )
 {
-    // speed test global option values
-    if( global_option["onetape"] || global_option["atomic"] )
-        return false;
-    if( global_option["memory"] || global_option["optimize"] )
-        return false;
-    // -----------------------------------------------------
-    // setup
-    //
-    // object for computing determinant
-    typedef fadbad::B<double>       ADScalar;
-    typedef CppAD::vector<ADScalar> ADVector;
-    CppAD::det_by_lu<ADScalar>      Det(size);
+   // speed test global option values
+   if( global_option["onetape"] || global_option["atomic"] )
+      return false;
+   if( global_option["memory"] || global_option["optimize"] )
+      return false;
+   // -----------------------------------------------------
+   // setup
+   //
+   // object for computing determinant
+   typedef fadbad::B<double>       ADScalar;
+   typedef CppAD::vector<ADScalar> ADVector;
+   CppAD::det_by_lu<ADScalar>      Det(size);
 
-    size_t i;                // temporary index
-    size_t m = 1;            // number of dependent variables
-    size_t n = size * size;  // number of independent variables
-    ADScalar   detA;         // AD value of the determinant
-    ADVector   A(n);         // AD version of matrix
+   size_t i;                // temporary index
+   size_t m = 1;            // number of dependent variables
+   size_t n = size * size;  // number of independent variables
+   ADScalar   detA;         // AD value of the determinant
+   ADVector   A(n);         // AD version of matrix
 
-    // ------------------------------------------------------
-    while(repeat--)
-    {   // get the next matrix
-        CppAD::uniform_01(n, matrix);
+   // ------------------------------------------------------
+   while(repeat--)
+   {  // get the next matrix
+      CppAD::uniform_01(n, matrix);
 
-        // set independent variable values
-        for(i = 0; i < n; i++)
-            A[i] = matrix[i];
+      // set independent variable values
+      for(i = 0; i < n; i++)
+         A[i] = matrix[i];
 
-        // compute the determinant
-        detA = Det(A);
+      // compute the determinant
+      detA = Det(A);
 
-        // create function object f : A -> detA
-        detA.diff(0, (unsigned int) m);  // index 0 of m dependent variables
+      // create function object f : A -> detA
+      detA.diff(0, (unsigned int) m);  // index 0 of m dependent variables
 
-        // evaluate and return gradient using reverse mode
-        for(i =0; i < n; i++)
-            gradient[i] = A[i].d(0); // partial detA w.r.t A[i]
-    }
-    // ---------------------------------------------------------
-    return true;
+      // evaluate and return gradient using reverse mode
+      for(i =0; i < n; i++)
+         gradient[i] = A[i].d(0); // partial detA w.r.t A[i]
+   }
+   // ---------------------------------------------------------
+   return true;
 }
 /* %$$
 $end

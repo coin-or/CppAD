@@ -10,9 +10,9 @@ $begin LuDetAndSolve$$
 $section Compute Determinants and Solve Equations by LU Factorization$$
 
 $childtable%
-    include/cppad/utility/lu_solve.hpp%
-    include/cppad/utility/lu_factor.hpp%
-    include/cppad/utility/lu_invert.hpp
+   include/cppad/utility/lu_solve.hpp%
+   include/cppad/utility/lu_factor.hpp%
+   include/cppad/utility/lu_invert.hpp
 %$$
 
 $end

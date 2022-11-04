@@ -8,12 +8,12 @@
 # include <cppad/utility/vector.hpp>
 // BEGIN PROTOTYPE
 extern bool link_sparse_jacobian(
-    const std::string&                job       ,
-    size_t                            size      ,
-    size_t                            repeat    ,
-    size_t                            m         ,
-    const CppAD::vector<size_t>&      row       ,
-    const CppAD::vector<size_t>&      col       ,
+   const std::string&                job       ,
+   size_t                            size      ,
+   size_t                            repeat    ,
+   size_t                            m         ,
+   const CppAD::vector<size_t>&      row       ,
+   const CppAD::vector<size_t>&      col       ,
           CppAD::vector<double>&      x         ,
           CppAD::vector<double>&      jacobian  ,
           size_t&                     n_color
@@ -23,13 +23,13 @@ extern bool link_sparse_jacobian(
 ------------------------------------------------------------------------------
 $begin link_sparse_jacobian$$
 $spell
-    colpack
-    cppad
-    const
-    bool
-    CppAD
-    Jacobian
-    Jacobians
+   colpack
+   cppad
+   const
+   bool
+   CppAD
+   Jacobian
+   Jacobians
 $$
 
 
@@ -37,7 +37,7 @@ $section Speed Testing Sparse Jacobians$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
+   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 
 $head Method$$
@@ -47,7 +47,7 @@ a corresponding function $latex f : \B{R}^n \rightarrow \B{R}^m $$
 is defined by $cref sparse_jac_fun$$.
 The non-zero entries in the Jacobian of this function have the form
 $latex \[
-    \D{f[row[k]]}{x[col[k]]]}
+   \D{f[row[k]]}{x[col[k]]]}
 \] $$
 for some $latex k$$ between zero and $icode%K% = %row%.size()-1%$$.
 All the other terms of the Jacobian are zero.
@@ -89,11 +89,11 @@ $head Row Major$$
 The indices $icode row$$ and $icode col$$ are in row major order; i.e.,
 for each $icode%k% < %row%.size()-2%$$
 $codei%
-    %row%[%k%] <= %row%[%k%+1]
+   %row%[%k%] <= %row%[%k%+1]
 %$$
 and if $icode%row%[%k%] == %row%[%k%+1]%$$ then
 $codei%
-    %col%[%k%] < %col%[%k%+1]
+   %col%[%k%] < %col%[%k%+1]
 %$$
 
 $head x$$
@@ -119,7 +119,7 @@ The output value of its elements is the Jacobian of the function $latex f(x)$$.
 To be more specific, for
 $latex k = 0 , \ldots , K - 1$$,
 $latex \[
-    \D{f[ \R{row}[k] ]}{x[ \R{col}[k] ]} (x) = \R{jacobian} [k]
+   \D{f[ \R{row}[k] ]}{x[ \R{col}[k] ]} (x) = \R{jacobian} [k]
 \] $$
 
 $head n_color$$

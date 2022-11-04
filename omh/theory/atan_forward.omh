@@ -5,9 +5,9 @@
 
 $begin atan_forward$$
 $spell
-    atan
-    atanh
-    Taylor
+   atan
+   atanh
+   Taylor
 $$
 
 $section Inverse Tangent and Hyperbolic Tangent Forward Mode Theory$$
@@ -23,13 +23,13 @@ $latex \[
 If $latex F(x)$$ is $latex \R{atan} (x)$$ or $latex \R{atanh} (x)$$,
 the corresponding derivative satisfies the equation
 $latex \[
-    (1 \pm x * x ) * F^{(1)} (x) - 0 * F (x)  = 1
+   (1 \pm x * x ) * F^{(1)} (x) - 0 * F (x)  = 1
 \] $$
 and in the
 $cref/standard math function differential equation
-    /ForwardTheory
-    /Standard Math Functions
-    /Differential Equation
+   /ForwardTheory
+   /Standard Math Functions
+   /Differential Equation
 /$$,
 $latex A(x) = 0$$,
 $latex B(x) = 1 \pm x * x $$,
@@ -49,28 +49,28 @@ z^{(0)} & = & F( x^{(0)} )
 \\
 b^{(j)}
 & = &  \left\{ \begin{array}{ll}
-    1 \pm x^{(0)} * x^{(0)}            & {\rm if} \; j = 0 \\
-    \pm \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
+   1 \pm x^{(0)} * x^{(0)}            & {\rm if} \; j = 0 \\
+   \pm \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
 \end{array} \right.
 \\
 e^{(j)}
 & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
 \\
 & = & \left\{ \begin{array}{ll}
-    1 & {\rm if} \; j = 0 \\
-    0 & {\rm otherwise}
+   1 & {\rm if} \; j = 0 \\
+   0 & {\rm otherwise}
 \end{array} \right.
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
-    - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+   \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+   - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
 \right)
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    (j+1) x^{(j+1)}
-    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   (j+1) x^{(j+1)}
+   - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \end{array}
 \] $$

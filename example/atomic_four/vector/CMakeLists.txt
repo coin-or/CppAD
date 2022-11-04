@@ -5,15 +5,15 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    add.cpp
-    vector.cpp
-    div.cpp
-    hes_sparsity.cpp
-    jac_sparsity.cpp
-    mul.cpp
-    neg.cpp
-    rev_depend.cpp
-    sub.cpp
+   add.cpp
+   vector.cpp
+   div.cpp
+   hes_sparsity.cpp
+   jac_sparsity.cpp
+   mul.cpp
+   neg.cpp
+   rev_depend.cpp
+   sub.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
@@ -23,8 +23,8 @@ ADD_EXECUTABLE(example_atomic_four_vector EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_atomic_four_vector
-    ${cppad_lib}
-    ${colpack_libs}
+   ${cppad_lib}
+   ${colpack_libs}
 )
 #
 # check_example_atomic_four vector

@@ -29,66 +29,66 @@
 # add_check_executable_.
 #
 MACRO(add_check_executable parent_target short_name)
-    IF( NOT ${parent_target} MATCHES "^check" )
-        MESSAGE(FATAL_ERROR "add_check_executable: "
-            "parent_target does not begin with 'check'"
-        )
-    ENDIF( )
-    IF( "${short_name}" STREQUAL "" )
-        MESSAGE(FATAL_ERROR "add_check_target: short_name is empty")
-    ENDIF( )
-    #
-    # add_check_executable_full_name
-    SET(add_check_executable_full_name "${parent_target}_${short_name}" )
-    #
-    # add_check_executable_no_check
-    STRING(REGEX REPLACE "^check_" "" add_check_executable_no_check
-        "${add_check_executable_full_name}"
-    )
-    #
-    # add_check_executable_arguments
-    IF( ${ARGC} EQUAL 2 )
-        SET(add_check_executable_arguments "")
-    ELSEIF( ${ARGC} EQUAL 3 )
-        STRING(
-            REGEX REPLACE "[ ]" ";" add_check_executable_arguments "${ARGV2}"
-        )
-    ELSE( )
-        MESSAGE(FATAL_ERROR "add_check_executable: "
-            "number of arguments = ${ARGC}"
-        )
-    ENDIF( )
-    #
-    # add_check_executable_depends
-    IF( DEFINED ${add_check_executable_full_name}_depends )
-        SET(add_check_executable_depends
-            ${${add_check_executable_full_name}_depends}
-        )
-        add_to_list(add_check_executable_depends
-            ${add_check_executable_no_check}
-        )
-    ELSE ( )
-        SET(add_check_executable_depends ${add_check_executable_no_check} )
-    ENDIF( )
-    #
-    # add_check_executable_dot_slash
-    IF( ${cmake_needs_dot_slash} )
-        SET(add_check_executable_dot_slash "./")
-    ELSE ( )
-        SET(add_check_executable_dot_slash "")
-    ENDIF( )
-    #
-    # create this target
-    ADD_CUSTOM_TARGET(
-        ${add_check_executable_full_name}
-        ${add_check_executable_dot_slash}${add_check_executable_no_check}
-        ${add_check_executable_arguments}
-        DEPENDS ${add_check_executable_depends}
-    )
-    MESSAGE(STATUS "make ${add_check_executable_full_name}: available")
-    #
-    # add parent dependency
-    add_to_list( ${parent_target}_depends ${add_check_executable_full_name} )
-    SET( ${parent_target}_depends ${${parent_target}_depends} PARENT_SCOPE )
-    #
+   IF( NOT ${parent_target} MATCHES "^check" )
+      MESSAGE(FATAL_ERROR "add_check_executable: "
+         "parent_target does not begin with 'check'"
+      )
+   ENDIF( )
+   IF( "${short_name}" STREQUAL "" )
+      MESSAGE(FATAL_ERROR "add_check_target: short_name is empty")
+   ENDIF( )
+   #
+   # add_check_executable_full_name
+   SET(add_check_executable_full_name "${parent_target}_${short_name}" )
+   #
+   # add_check_executable_no_check
+   STRING(REGEX REPLACE "^check_" "" add_check_executable_no_check
+      "${add_check_executable_full_name}"
+   )
+   #
+   # add_check_executable_arguments
+   IF( ${ARGC} EQUAL 2 )
+      SET(add_check_executable_arguments "")
+   ELSEIF( ${ARGC} EQUAL 3 )
+      STRING(
+         REGEX REPLACE "[ ]" ";" add_check_executable_arguments "${ARGV2}"
+      )
+   ELSE( )
+      MESSAGE(FATAL_ERROR "add_check_executable: "
+         "number of arguments = ${ARGC}"
+      )
+   ENDIF( )
+   #
+   # add_check_executable_depends
+   IF( DEFINED ${add_check_executable_full_name}_depends )
+      SET(add_check_executable_depends
+         ${${add_check_executable_full_name}_depends}
+      )
+      add_to_list(add_check_executable_depends
+         ${add_check_executable_no_check}
+      )
+   ELSE ( )
+      SET(add_check_executable_depends ${add_check_executable_no_check} )
+   ENDIF( )
+   #
+   # add_check_executable_dot_slash
+   IF( ${cmake_needs_dot_slash} )
+      SET(add_check_executable_dot_slash "./")
+   ELSE ( )
+      SET(add_check_executable_dot_slash "")
+   ENDIF( )
+   #
+   # create this target
+   ADD_CUSTOM_TARGET(
+      ${add_check_executable_full_name}
+      ${add_check_executable_dot_slash}${add_check_executable_no_check}
+      ${add_check_executable_arguments}
+      DEPENDS ${add_check_executable_depends}
+   )
+   MESSAGE(STATUS "make ${add_check_executable_full_name}: available")
+   #
+   # add parent dependency
+   add_to_list( ${parent_target}_depends ${add_check_executable_full_name} )
+   SET( ${parent_target}_depends ${${parent_target}_depends} PARENT_SCOPE )
+   #
 ENDMACRO()

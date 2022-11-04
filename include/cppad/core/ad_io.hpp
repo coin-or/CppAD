@@ -8,10 +8,10 @@
 /*
 $begin ad_input$$
 $spell
-    VecAD
-    std
-    istream
-    const
+   VecAD
+   std
+   istream
+   const
 $$
 
 
@@ -24,7 +24,7 @@ $head Purpose$$
 Sets $icode x$$ to a $cref/parameter/glossary/Parameter/$$
 with value $icode b$$ corresponding to
 $codei%
-    %is% >> %b%
+   %is% >> %b%
 %$$
 where $icode b$$ is a $icode Base$$ object.
 It is assumed that this $icode Base$$ input operation returns
@@ -33,24 +33,24 @@ a reference to $icode is$$.
 $head is$$
 The operand $icode is$$ has prototype
 $codei%
-    std::istream& %is%
+   std::istream& %is%
 %$$
 
 $head x$$
 The operand $icode x$$ has one of the following prototypes
 $codei%
-    AD<%Base%>&               %x%
+   AD<%Base%>&               %x%
 %$$
 
 $head Result$$
 The result of this operation can be used as a reference to $icode is$$.
 For example, if the operand $icode y$$ has prototype
 $codei%
-    AD<%Base%> %y%
+   AD<%Base%> %y%
 %$$
 then the syntax
 $codei%
-    %is% >> %x% >> %y%
+   %is% >> %x% >> %y%
 %$$
 will first read the $icode Base$$ value of $icode x$$ from $icode is$$,
 and then read the $icode Base$$ value to $icode y$$.
@@ -64,7 +64,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-    example/general/ad_input.cpp
+   example/general/ad_input.cpp
 %$$
 The file
 $cref ad_input.cpp$$
@@ -74,10 +74,10 @@ $end
 ------------------------------------------------------------------------------
 $begin ad_output$$
 $spell
-    VecAD
-    std
-    ostream
-    const
+   VecAD
+   std
+   ostream
+   const
 $$
 
 
@@ -96,32 +96,32 @@ to the output stream $icode os$$.
 $head Assumption$$
 If $icode b$$ is a $icode Base$$ object,
 $codei%
-    %os% << %b%
+   %os% << %b%
 %$$
 returns a reference to $icode os$$.
 
 $head os$$
 The operand $icode os$$ has prototype
 $codei%
-    std::ostream& %os%
+   std::ostream& %os%
 %$$
 
 $head x$$
 The operand $icode x$$ has one of the following prototypes
 $codei%
-    const AD<%Base%>&               %x%
-    const VecAD<%Base%>::reference& %x%
+   const AD<%Base%>&               %x%
+   const VecAD<%Base%>::reference& %x%
 %$$
 
 $head Result$$
 The result of this operation can be used as a reference to $icode os$$.
 For example, if the operand $icode y$$ has prototype
 $codei%
-    AD<%Base%> %y%
+   AD<%Base%> %y%
 %$$
 then the syntax
 $codei%
-    %os% << %x% << %y%
+   %os% << %x% << %y%
 %$$
 will output the value corresponding to $icode x$$
 followed by the value corresponding to $icode y$$.
@@ -135,7 +135,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-    example/general/ad_output.cpp
+   example/general/ad_output.cpp
 %$$
 The file
 $cref ad_output.cpp$$
@@ -167,10 +167,10 @@ and x.tape_is_ is zero; i.e., x is a parameter.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::istream& operator >> (std::istream& is, AD<Base>& x)
-{   // like assignment to a base type value
-    x.tape_id_ = 0;
-    CPPAD_ASSERT_UNKNOWN( Parameter(x) );
-    return (is >> x.value_);
+{  // like assignment to a base type value
+   x.tape_id_ = 0;
+   CPPAD_ASSERT_UNKNOWN( Parameter(x) );
+   return (is >> x.value_);
 }
 // ---------------------------------------------------------------------------
 /*!
@@ -189,7 +189,7 @@ This is equivalent to writing x.value_ to the output stream.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::ostream& operator << (std::ostream &os, const AD<Base> &x)
-{   return (os << x.value_); }
+{  return (os << x.value_); }
 // ---------------------------------------------------------------------------
 /*!
 Write a VecAD_reference<Base> object to an output stream.
@@ -207,7 +207,7 @@ This is equivalent to writing the corresponing Base value to the stream.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::ostream& operator << (std::ostream &os, const VecAD_reference<Base> &x)
-{   return (os << x.ADBase()); }
+{  return (os << x.ADBase()); }
 
 } // END_CPPAD_NAMESPACE
 # endif

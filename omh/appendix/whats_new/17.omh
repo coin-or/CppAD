@@ -5,47 +5,47 @@
 
 $begin whats_new_17$$
 $spell
-    const
-    Perl
-    CppAD
-    doxygen
-    cppad
-    hpp
-    bool
-    Jacobian
-    Jacobians
-    jac
-    hes
-    eigen
-    mul
-    rc
-    rcv
-    omhelp
-    valgrind
-    uninitialised
-    deallocations
-    sacado
-    typedef
-    plugin
-    gcc
-    readme
-    autotools
-    ipopt
-    colpack
-    Wconversion
-    xq
-    boolofvoid
-    namespace
-    cxx
-    uninitialized
-    cmake
-    op
-    sizeof
-    addr
-    subsparsity
-    subgraph
-    optimizer
-    subgraphs
+   const
+   Perl
+   CppAD
+   doxygen
+   cppad
+   hpp
+   bool
+   Jacobian
+   Jacobians
+   jac
+   hes
+   eigen
+   mul
+   rc
+   rcv
+   omhelp
+   valgrind
+   uninitialised
+   deallocations
+   sacado
+   typedef
+   plugin
+   gcc
+   readme
+   autotools
+   ipopt
+   colpack
+   Wconversion
+   xq
+   boolofvoid
+   namespace
+   cxx
+   uninitialized
+   cmake
+   op
+   sizeof
+   addr
+   subsparsity
+   subgraph
+   optimizer
+   subgraphs
 $$
 
 $section Changes and Additions to CppAD During 2017$$
@@ -75,8 +75,8 @@ vectors of integers was improved;
 see $cref/internal_bool/for_jac_sparsity/internal_bool/$$
 in $code for_jac_sparsity$$ and other
 $cref/preferred sparsity pattern calculations
-    /sparsity_pattern
-    /Preferred Sparsity Pattern Calculations
+   /sparsity_pattern
+   /Preferred Sparsity Pattern Calculations
 /$$.
 
 $head 12-04$$
@@ -150,7 +150,7 @@ $head 11-06$$
 More information has been added to the operation sequence.
 To be specific, the extra amount of
 $codei%
-    %f%.size_op() * sizeof(%tape_addr_type)
+   %f%.size_op() * sizeof(%tape_addr_type)
 %$$
 was added to the value returned by
 $cref/size_op_seq/fun_property/size_op_seq/$$.
@@ -160,7 +160,7 @@ The method for iterating through the tape has been changed.
 It now includes an extra data structure that makes it faster,
 but also requires slightly more memory. To be specific, the term
 $codei%
-    %f%.size_op() * sizeof(%tape_addr_type) * 2
+   %f%.size_op() * sizeof(%tape_addr_type) * 2
 %$$
 was added to the value returned by
 $cref/size_op_seq/fun_property/size_op_seq/$$.
@@ -187,7 +187,7 @@ $list number$$
 If $cref colpack_prefix$$ was not specified, one would get the following
 waring during the $cref cmake$$ command:
 $codei%
-    Policy CMP0046 is not set: Error on non-existent dependency in
+   Policy CMP0046 is not set: Error on non-existent dependency in
 %$$
 This has been fixed by not adding the dependency when it is not needed.
 $lnext
@@ -222,15 +222,15 @@ To be specific:
 The font, in the $cref sparse_rc$$ and $cref sparse_rcv$$ syntax,
 for the text
 $codei%
-    %target% = %pattern%
+   %target% = %pattern%
 %$$
 The font, in $cref capacity_order$$, for the text
 $codei%
-    %xq%.size() == %f%.Domain()
+   %xq%.size() == %f%.Domain()
 %$$
 Remove a percent sign $code %$$, in $cref CppAD_vector$$, in the text
 $codei%
-    # include <cppad/utility/vector.hpp>
+   # include <cppad/utility/vector.hpp>
 %$$
 $lend
 
@@ -320,9 +320,9 @@ been deprecated; see
 $cref/sparse_hes/sparse_hes/coloring/colpack.star Deprecated 2017-06-01/$$
 and
 $cref/sparse_hessian
-    /sparse_hessian
-    /work
-    /colpack.star Deprecated 2017-06-01
+   /sparse_hessian
+   /work
+   /colpack.star Deprecated 2017-06-01
 /$$.
 Use the $code colpack.symmetric$$ method instead; see
 $cref/sparse_hes/sparse_hes/coloring/colpack.symmetric/$$ and
@@ -334,9 +334,9 @@ $list number$$
 Add the capability to compile so that CppAD debug and release mode
 can be mixed; see
 $cref/CPPAD_DEBUG_AND_RELEASE
-    /preprocessor
-    /Documented Here
-    /CPPAD_DEBUG_AND_RELEASE
+   /preprocessor
+   /Documented Here
+   /CPPAD_DEBUG_AND_RELEASE
 /$$.
 $lnext
 Add the $cref/cppad_debug_which/cmake/cppad_debug_which/$$ flags
@@ -397,7 +397,7 @@ $cref base_limits$$.
 $lnext
 In addition, it is no longer necessary to add the typedef
 $codei%
-    typedef Scalar value_type;
+   typedef Scalar value_type;
 %$$
 so the file $code cppad/example/eigen_plugin.hpp$$ has been removed.
 (This type definition was previously necessary for eigen vectors
@@ -422,7 +422,7 @@ $head 03-29$$
 The following valgrind error might occur when the optimize skipped
 setting values that did not affect the dependent variables:
 $codei%
-    Conditional jump or move depends on uninitialised value(s)
+   Conditional jump or move depends on uninitialised value(s)
 %$$
 This was not a bug, the code has been changed to avoid this error
 in order to make it easier to use valgrind with CppAD.
@@ -447,7 +447,7 @@ following assert to mistakenly occur:
 $codep
 sparse_jac_rev: work is non-empty and conditions have changed
 Error detected by false result for
-    color.size() == 0 || color.size() == n
+   color.size() == 0 || color.size() == n
 $$
 A test that using a previously stores work vector
 has been added to $cref sparse_jac_rev.cpp$$
@@ -461,14 +461,14 @@ $cref/transpose/rev_hes_sparsity/transpose/$$ was reversed.
 $head 03-11$$
 Add sparse assignment statements; see $icode other$$ for
 $cref/sparse_rc/
-    sparse_rc/
-    other/
-    Assignment and Constructor
+   sparse_rc/
+   other/
+   Assignment and Constructor
 /$$ and
 $cref/sparse_rcv/
-    sparse_rcv/
-    other/
-    Assignment and Constructor
+   sparse_rcv/
+   other/
+   Assignment and Constructor
 /$$.
 $head 03-10$$
 Add the a sizing constructor to the

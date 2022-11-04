@@ -21,13 +21,13 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../main.cpp alloc_mat.cpp
-    det_lu.cpp
-    det_minor.cpp
-    mat_mul.cpp
-    ode.cpp
-    poly.cpp
-    sparse_hessian.cpp
-    sparse_jacobian.cpp
+   det_lu.cpp
+   det_minor.cpp
+   mat_mul.cpp
+   ode.cpp
+   poly.cpp
+   sparse_hessian.cpp
+   sparse_jacobian.cpp
 )
 set_compile_flags( speed_adolc "${cppad_debug_which}" "${source_list}" )
 #
@@ -35,10 +35,10 @@ ADD_EXECUTABLE( speed_adolc EXCLUDE_FROM_ALL ${source_list} )
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_adolc
-    speed_src
-    ${cppad_lib}
-    adolc
-    ${colpack_libs}
+   speed_src
+   ${cppad_lib}
+   adolc
+   ${colpack_libs}
 )
 
 # check_speed_adolc

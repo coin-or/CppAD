@@ -15,13 +15,13 @@ ADD_SUBDIRECTORY(compare_c)
 
 # debug_rel tests
 IF( NOT "${CMAKE_GENERATOR}" STREQUAL "NMake Makefiles" )
-    # Visual studio rejects mixing debug and release flags
-    ADD_SUBDIRECTORY(debug_rel)
+   # Visual studio rejects mixing debug and release flags
+   ADD_SUBDIRECTORY(debug_rel)
 ENDIF( NOT "${CMAKE_GENERATOR}" STREQUAL "NMake Makefiles" )
 #
 # cppad_for_tmb tests
 IF( OpenMP_CXX_FOUND )
-    ADD_SUBDIRECTORY(cppad_for_tmb)
+   ADD_SUBDIRECTORY(cppad_for_tmb)
 ENDIF( OpenMP_CXX_FOUND )
 
 # general tests

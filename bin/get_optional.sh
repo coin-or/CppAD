@@ -6,8 +6,8 @@
 # $OMhelpKeyCharacter=@
 # @begin get_optional.sh@@ @newlinech #@@
 # @spell
-#   ls
-#   CppAD
+#  ls
+#  CppAD
 # @@
 #
 # @section Download and Install The CppAD Optional Packages@@
@@ -49,7 +49,7 @@ prefix="build/prefix"
 # If you do an install and then change the @icode prefix@@,
 # you should delete all the files listed by the following command:
 # @codei%
-#   ls external/*.configured
+#  ls external/*.configured
 # %@@
 #
 # @head get_optional.log@@
@@ -61,49 +61,49 @@ prefix="build/prefix"
 # in the order that they are executed.
 #
 # @childtable%
-#   bin/get_adolc.sh%
-#   bin/get_cppadcg.sh%
-#   bin/get_colpack.sh%
-#   bin/get_eigen.sh%
-#   bin/get_fadbad.sh%
-#   bin/get_ipopt.sh%
-#   bin/get_sacado.sh
+#  bin/get_adolc.sh%
+#  bin/get_cppadcg.sh%
+#  bin/get_colpack.sh%
+#  bin/get_eigen.sh%
+#  bin/get_fadbad.sh%
+#  bin/get_ipopt.sh%
+#  bin/get_sacado.sh
 # %@@
 #
 # @end
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/get_optional.sh" ]
 then
-    echo "bin/get_optional.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/get_optional.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 if [ -e 'get_optional.log' ]
 then
-    echo_eval rm get_optional.log
+   echo_eval rm get_optional.log
 fi
 if [ -e 'get_optional.err' ]
 then
-    echo_eval rm get_optional.err
+   echo_eval rm get_optional.err
 fi
 # -----------------------------------------------------------------------------
 list='colpack adolc eigen fadbad ipopt sacado cppadcg'
 for package in $list
 do
-    echo "bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err"
-    if bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err
-    then
-        echo "bin/get_${package}.sh: OK"
-    else
-        echo "bin/get_${package}.sh: Error; try following:"
-        echo '  tail ./get_optional.err'
-        exit 1
-    fi
+   echo "bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err"
+   if bin/get_${package}.sh 1>> get_optional.log 2>> get_optional.err
+   then
+      echo "bin/get_${package}.sh: OK"
+   else
+      echo "bin/get_${package}.sh: Error; try following:"
+      echo '  tail ./get_optional.err'
+      exit 1
+   fi
 done
 # -----------------------------------------------------------------------------
 echo "get_optional: OK"

@@ -12,8 +12,8 @@ ADD_EXECUTABLE(example_print_for EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_print_for
-    ${cppad_lib}
-    ${colpack_libs}
+   ${cppad_lib}
+   ${colpack_libs}
 )
 # check_example_print_for
 add_check_executable(check_example print_for)

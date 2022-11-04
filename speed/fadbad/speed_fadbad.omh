@@ -5,10 +5,10 @@
 
 $begin speed_fadbad$$
 $spell
-    cmake
-    FadbadDir
-    CppAD
-    Cygwin
+   cmake
+   FadbadDir
+   CppAD
+   Cygwin
 $$
 
 
@@ -31,25 +31,25 @@ To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
 $cref/build directory/cmake/Build Directory/$$:
 $codei%
-    cd speed/fadbad
-    make check_speed_fadbad VERBOSE=1
+   cd speed/fadbad
+   make check_speed_fadbad VERBOSE=1
 %$$
 You can then run the corresponding speed tests
 with the following command
 $codei%
-    ./speed_fadbad speed %seed%
+   ./speed_fadbad speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
 
 $contents%
-    speed/fadbad/det_minor.cpp%
-    speed/fadbad/det_lu.cpp%
-    speed/fadbad/mat_mul.cpp%
-    speed/fadbad/ode.cpp%
-    speed/fadbad/poly.cpp%
-    speed/fadbad/sparse_hessian.cpp%
-    speed/fadbad/sparse_jacobian.cpp
+   speed/fadbad/det_minor.cpp%
+   speed/fadbad/det_lu.cpp%
+   speed/fadbad/mat_mul.cpp%
+   speed/fadbad/ode.cpp%
+   speed/fadbad/poly.cpp%
+   speed/fadbad/sparse_hessian.cpp%
+   speed/fadbad/sparse_jacobian.cpp
 %$$
 
 $end

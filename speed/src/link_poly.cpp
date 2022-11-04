@@ -8,21 +8,21 @@
 # include <cppad/utility/time_test.hpp>
 // BEGIN PROTOTYPE
 extern bool link_poly(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>&     a        ,
-    CppAD::vector<double>&     z        ,
-    CppAD::vector<double>&     ddp
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>&     a        ,
+   CppAD::vector<double>&     z        ,
+   CppAD::vector<double>&     ddp
 );
 // END PROTOTYPE
 /*
 -------------------------------------------------------------------------------
 $begin link_poly$$
 $spell
-    poly
-    bool
-    CppAD
-    ddp
+   poly
+   bool
+   CppAD
+   ddp
 $$
 
 
@@ -30,7 +30,7 @@ $section Speed Testing Second Derivative of a Polynomial$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
+   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 
 $head Purpose$$
@@ -89,46 +89,46 @@ $end
 // ---------------------------------------------------------------------------
 namespace {
 void time_poly_callback(size_t size, size_t repeat)
-    {   // free statically allocated memory
-        if( size == 0 && repeat == 0 )
-            return;
-        //
-        CppAD::vector<double>  a(size), z(1), ddp(1);
+   {  // free statically allocated memory
+      if( size == 0 && repeat == 0 )
+         return;
+      //
+      CppAD::vector<double>  a(size), z(1), ddp(1);
 
-        link_poly(size, repeat, a, z, ddp);
-        return;
-    }
+      link_poly(size, repeat, a, z, ddp);
+      return;
+   }
 }
 // ---------------------------------------------------------------------------
 bool available_poly(void)
-{   size_t size   = 10;
-    size_t repeat = 1;
-    CppAD::vector<double>  a(size), z(1), ddp(1);
+{  size_t size   = 10;
+   size_t repeat = 1;
+   CppAD::vector<double>  a(size), z(1), ddp(1);
 
-    return link_poly(size, repeat, a, z, ddp);
+   return link_poly(size, repeat, a, z, ddp);
 }
 // ---------------------------------------------------------------------------
 bool correct_poly(bool is_package_double)
-{   size_t size   = 10;
-    size_t repeat = 1;
-    CppAD::vector<double>  a(size), z(1), ddp(1);
-    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+{  size_t size   = 10;
+   size_t repeat = 1;
+   CppAD::vector<double>  a(size), z(1), ddp(1);
+   double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
-    link_poly(size, repeat, a, z, ddp);
+   link_poly(size, repeat, a, z, ddp);
 
-    size_t k;
-    double check;
-    if( is_package_double )
-        k = 0;
-    else
-        k = 2;
-    check = CppAD::Poly(k, a, z[0]);
+   size_t k;
+   double check;
+   if( is_package_double )
+      k = 0;
+   else
+      k = 2;
+   check = CppAD::Poly(k, a, z[0]);
 
-    bool ok = CppAD::NearEqual(check, ddp[0], eps99, eps99);
-    return ok;
+   bool ok = CppAD::NearEqual(check, ddp[0], eps99, eps99);
+   return ok;
 }
 // ---------------------------------------------------------------------------
 double time_poly(double time_min, size_t size)
-{   return CppAD::time_test(time_poly_callback, time_min, size);
+{  return CppAD::time_test(time_poly_callback, time_min, size);
 }
 // ---------------------------------------------------------------------------

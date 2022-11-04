@@ -9,7 +9,7 @@ $$
 $section Developer Documentation for Discrete Function$$
 
 $childtable%
-    include/cppad/core/discrete/discrete.hpp
+   include/cppad/core/discrete/discrete.hpp
 %$$
 
 $end

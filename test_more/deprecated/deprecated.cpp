@@ -26,27 +26,27 @@ extern bool zdouble(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "test_more/deprecated";
-    size_t      width = 20;
-    CppAD::test_boolofvoid Run(group, width);
+{  std::string group = "test_more/deprecated";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
 
-    // This line is used by test_one.sh
+   // This line is used by test_one.sh
 
-    Run( old_mat_mul,     "old_mat_mul"    );
-    Run( old_reciprocal,  "old_reciprocal" );
-    Run( old_tan,         "old_tan"        );
-    Run( old_usead_1,     "old_usead_1"    );
-    Run( old_usead_2,     "old_usead_2"    );
-    Run( omp_alloc,       "omp_alloc"      );
-    Run( track_new_del,   "track_new_del"  );
-    Run( zdouble,         "zdouble"        );
-    //
-    // check for memory leak
-    bool memory_ok = CppAD::thread_alloc::free_all();
-    //
-    // print summary at end
-    bool ok = Run.summary(memory_ok);
-    //
-    return static_cast<int>( ! ok );
+   Run( old_mat_mul,     "old_mat_mul"    );
+   Run( old_reciprocal,  "old_reciprocal" );
+   Run( old_tan,         "old_tan"        );
+   Run( old_usead_1,     "old_usead_1"    );
+   Run( old_usead_2,     "old_usead_2"    );
+   Run( omp_alloc,       "omp_alloc"      );
+   Run( track_new_del,   "track_new_del"  );
+   Run( zdouble,         "zdouble"        );
+   //
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   //
+   // print summary at end
+   bool ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
 }
 // END PROGRAM

@@ -5,16 +5,16 @@
 
 $begin speed_cppad$$
 $spell
-    cmake
-    cppad
-    CppAD
-    Cygwin
-    Microsoft
-    chdir
-    Workspace
-    dsw
-    exe
-    sln
+   cmake
+   cppad
+   CppAD
+   Cygwin
+   Microsoft
+   chdir
+   Workspace
+   dsw
+   exe
+   sln
 $$
 
 
@@ -33,25 +33,25 @@ To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
 $cref/build directory/cmake/Build Directory/$$:
 $codei%
-    cd speed/cppad
-    make check_speed_cppad VERBOSE=1
+   cd speed/cppad
+   make check_speed_cppad VERBOSE=1
 %$$
 You can then run the corresponding speed tests
 with the following command
 $codei%
-    ./speed_cppad speed %seed%
+   ./speed_cppad speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
 
 $contents%
-    speed/cppad/det_minor.cpp%
-    speed/cppad/det_lu.cpp%
-    speed/cppad/mat_mul.cpp%
-    speed/cppad/ode.cpp%
-    speed/cppad/poly.cpp%
-    speed/cppad/sparse_hessian.cpp%
-    speed/cppad/sparse_jacobian.cpp
+   speed/cppad/det_minor.cpp%
+   speed/cppad/det_lu.cpp%
+   speed/cppad/mat_mul.cpp%
+   speed/cppad/ode.cpp%
+   speed/cppad/poly.cpp%
+   speed/cppad/sparse_hessian.cpp%
+   speed/cppad/sparse_jacobian.cpp
 %$$
 
 $end

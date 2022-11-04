@@ -5,33 +5,33 @@
 
 $begin whats_new_10$$
 $spell
-    autotools
-    Wshadow
-    pkg-config
-    Dir
-    libipopt
-    const
-    Linpack
-    Blas
-    makefile
-    op
-    arg
-    checkpointing
-    sizeof
-    libcppad_ipopt.a
-    Microsoft
-    Lagragian
-    iostream
-    obj_value
-    std::cout
-    endl
-    gcc
-    retape
-    hpp
-    ifdef
-    nlp
-    ipopt_cppad/src
-    CppAD
+   autotools
+   Wshadow
+   pkg-config
+   Dir
+   libipopt
+   const
+   Linpack
+   Blas
+   makefile
+   op
+   arg
+   checkpointing
+   sizeof
+   libcppad_ipopt.a
+   Microsoft
+   Lagragian
+   iostream
+   obj_value
+   std::cout
+   endl
+   gcc
+   retape
+   hpp
+   ifdef
+   nlp
+   ipopt_cppad/src
+   CppAD
 $$
 
 $section Changes and Additions to CppAD During 2010$$
@@ -108,7 +108,7 @@ In the case where the preprocessor symbol $code NDEBUG$$ was defined
 (see $cref/speed/Faq/Speed/$$),
 the function
 $codei%
-    CheckSimpleVector(const %Scalar%& %x%, const %Scalar%& %y%)
+   CheckSimpleVector(const %Scalar%& %x%, const %Scalar%& %y%)
 %$$
 was not defined; see
 $href%http://list.coin-or.org/pipermail/cppad/2010q2/000166.html%bug report%$$.
@@ -135,9 +135,9 @@ There was a bug in the error checking done by $code cppad/local/sub_op.hpp$$
 that caused the following improper abort:
 $codei%
 Error detected by false result for
-    arg[1] < i_z
+   arg[1] < i_z
 at line 337 in the file
-    %...%/include/cppad/local/sub_op.hpp
+   %...%/include/cppad/local/sub_op.hpp
 %$$
 This was fixed in the trunk.
 It was also fixed in the release with version number $code 20100101.3$$
@@ -243,7 +243,7 @@ in the calculations (though a test case that demonstrated this could not be
 produced). This is because the argument value to $latex r_k (u)$$ depends
 on the value of $latex \ell$$ in the expression
 $latex \[
-    r_k \circ [ J_{k, \ell} \otimes n ] (x)
+   r_k \circ [ J_{k, \ell} \otimes n ] (x)
 \] $$
 (even when the value of $latex x$$ does not change).
 $pre

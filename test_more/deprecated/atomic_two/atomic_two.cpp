@@ -36,33 +36,33 @@ extern bool tangent(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "test_more/deprecated/atomic_two";
-    size_t      width = 20;
-    CppAD::test_boolofvoid Run(group, width);
+{  std::string group = "test_more/deprecated/atomic_two";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
 
-    // This line is used by test_one.sh
+   // This line is used by test_one.sh
 
-    // external compiled tests
-    Run( atomic_sparsity,     "atomic_sparsity");
-    Run( mat_mul,             "mat_mul"        );
-    Run( base2ad,             "base2ad"        );
-    Run( for_sparse_hes,      "for_sparse_hes" );
-    Run( for_sparse_jac,      "for_sparse_jac" );
-    Run( forward,             "forward"        );
-    Run( get_started,         "get_started"    );
-    Run( norm_sq,             "norm_sq"        );
-    Run( reciprocal,          "reciprocal"     );
-    Run( rev_sparse_hes,      "rev_sparse_hes" );
-    Run( rev_sparse_jac,      "rev_sparse_jac" );
-    Run( reverse,             "reverse"        );
-    Run( set_sparsity,        "set_sparsity"   );
-    Run( tangent,             "tangent"        );
+   // external compiled tests
+   Run( atomic_sparsity,     "atomic_sparsity");
+   Run( mat_mul,             "mat_mul"        );
+   Run( base2ad,             "base2ad"        );
+   Run( for_sparse_hes,      "for_sparse_hes" );
+   Run( for_sparse_jac,      "for_sparse_jac" );
+   Run( forward,             "forward"        );
+   Run( get_started,         "get_started"    );
+   Run( norm_sq,             "norm_sq"        );
+   Run( reciprocal,          "reciprocal"     );
+   Run( rev_sparse_hes,      "rev_sparse_hes" );
+   Run( rev_sparse_jac,      "rev_sparse_jac" );
+   Run( reverse,             "reverse"        );
+   Run( set_sparsity,        "set_sparsity"   );
+   Run( tangent,             "tangent"        );
 # if CPPAD_HAS_EIGEN
 # endif
-    // check for memory leak
-    bool memory_ok = CppAD::thread_alloc::free_all();
-    // print summary at end
-    bool ok = Run.summary(memory_ok);
-    //
-    return static_cast<int>( ! ok );
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   // print summary at end
+   bool ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
 }

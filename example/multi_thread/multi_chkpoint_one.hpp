@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 bool multi_chkpoint_one_time(
-    double& time_out, double test_time, size_t num_threads, size_t num_solve
+   double& time_out, double test_time, size_t num_threads, size_t num_solve
 );
 
 # endif

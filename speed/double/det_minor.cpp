@@ -5,13 +5,13 @@
 /*
 $begin double_det_minor.cpp$$
 $spell
-    onetape
-    retape
-    bool
-    cppad
-    det
-    CppAD
-    hpp
+   onetape
+   retape
+   bool
+   cppad
+   det
+   CppAD
+   hpp
 $$
 
 $section Double Speed: Determinant by Minor Expansion$$
@@ -32,32 +32,32 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_det_minor(
-    const std::string&         job      ,
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &matrix   ,
-    CppAD::vector<double>     &det      )
-{   // --------------------------------------------------------------------------
-    // ignore global_option
-    // --------------------------------------------------------------------------
-    if( job == "setup" || job == "teardown" )
-        return true;
-    CPPAD_ASSERT_UNKNOWN( job == "run" );
-    //
-    // setup
-    CppAD::det_by_minor<double>   Det(size);
-    //
-    // number of independent variables
-    size_t n = size * size;
-    // -------------------------------------------------------------------------
-    while(repeat--)
-    {   // get the next matrix
-        CppAD::uniform_01(n, matrix);
+   const std::string&         job      ,
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &matrix   ,
+   CppAD::vector<double>     &det      )
+{  // --------------------------------------------------------------------------
+   // ignore global_option
+   // --------------------------------------------------------------------------
+   if( job == "setup" || job == "teardown" )
+      return true;
+   CPPAD_ASSERT_UNKNOWN( job == "run" );
+   //
+   // setup
+   CppAD::det_by_minor<double>   Det(size);
+   //
+   // number of independent variables
+   size_t n = size * size;
+   // -------------------------------------------------------------------------
+   while(repeat--)
+   {  // get the next matrix
+      CppAD::uniform_01(n, matrix);
 
-        // computation of the determinant
-        det[0] = Det(matrix);
-    }
-    return true;
+      // computation of the determinant
+      det[0] = Det(matrix);
+   }
+   return true;
 }
 /* %$$
 $end

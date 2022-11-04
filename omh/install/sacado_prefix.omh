@@ -5,12 +5,12 @@
 $begin sacado_prefix$$
 $dollar @$$
 $spell
-    dir
-    Sacado
-    includedirs
-    cmake
-    CppAD
-    hpp
+   dir
+   Sacado
+   includedirs
+   cmake
+   CppAD
+   hpp
 $$
 
 $section Including Sacado Speed Tests$$
@@ -30,7 +30,7 @@ The value of $icode sacado_prefix$$ must be such that,
 for one of the directories $icode dir$$ in
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-    %sacado_prefix%/%dir%/Sacado.hpp
+   %sacado_prefix%/%dir%/Sacado.hpp
 %$$
 is a valid way to reference to the include file $code Sacado.hpp$$;
 
@@ -40,8 +40,8 @@ you will be able to run the Sacado speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-    cd build/speed/sacado
-    make check_speed_sacado
+   cd build/speed/sacado
+   make check_speed_sacado
 %$$
 After executing $code make check_speed_sacado$$,
 you can run a specific Sacado speed test

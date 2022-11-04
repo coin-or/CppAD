@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin multi_chkpoint_one.cpp$$
 $spell
-    chkpoint
-    cpp
+   chkpoint
+   cpp
 $$
 
 $section Multi-Threading chkpoint_one Example / Test$$
@@ -16,7 +16,7 @@ The example has been deprecated, use $cref multi_chkpoint_two.cpp$$ instead.
 $head Source File$$
 All of the routines below are located in the file
 $codep
-    example/multi_thread/multi_chkpoint_one.cpp
+   example/multi_thread/multi_chkpoint_one.cpp
 $$
 
 $childtable%example/multi_thread/multi_chkpoint_one.cpp%$$

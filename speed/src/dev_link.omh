@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 $begin speed_available$$
 $spell
-    det
-    lu
-    mul
-    jacobian
-    namespace
-    CppAD
-    bool
-    src
+   det
+   lu
+   mul
+   jacobian
+   namespace
+   CppAD
+   bool
+   src
 $$
 
 $section Is A Speed Test Available$$
@@ -44,14 +44,14 @@ $end
 ------------------------------------------------------------------------------
 $begin speed_correct$$
 $spell
-    det
-    lu
-    mul
-    jacobian
-    namespace
-    CppAD
-    bool
-    src
+   det
+   lu
+   mul
+   jacobian
+   namespace
+   CppAD
+   bool
+   src
 $$
 
 $section Does a A Speed Test Return Correct Results$$
@@ -88,14 +88,14 @@ $end
 ------------------------------------------------------------------------------
 $begin speed_time$$
 $spell
-    det
-    lu
-    mul
-    jacobian
-    namespace
-    CppAD
-    bool
-    src
+   det
+   lu
+   mul
+   jacobian
+   namespace
+   CppAD
+   bool
+   src
 $$
 
 $section Measure Time It Takes for a A Speed Test to Run$$
@@ -138,14 +138,14 @@ $end
 ------------------------------------------------------------------------------
 $begin speed_time_callback$$
 $spell
-    det
-    lu
-    mul
-    jacobian
-    namespace
-    CppAD
-    bool
-    src
+   det
+   lu
+   mul
+   jacobian
+   namespace
+   CppAD
+   bool
+   src
 $$
 
 $section Timing Callback Functions$$

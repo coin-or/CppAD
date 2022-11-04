@@ -5,7 +5,7 @@
 /*
 $begin xpackage_det_minor.cpp$$
 $spell
-    xpackage
+   xpackage
 $$
 
 $section Xpackage Speed: Gradient of Determinant by Minor Expansion$$
@@ -24,12 +24,12 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_det_minor(
-    const std::string&         job      ,
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &matrix   ,
-    CppAD::vector<double>     &gradient )
-{   return false; }
+   const std::string&         job      ,
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &matrix   ,
+   CppAD::vector<double>     &gradient )
+{  return false; }
 /* %$$
 $end
 */

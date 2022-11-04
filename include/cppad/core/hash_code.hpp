@@ -35,7 +35,7 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 */
 template <class Value>
 unsigned short hash_code(const Value& value)
-{   return local::local_hash_code(value); }
+{  return local::local_hash_code(value); }
 
 /*!
 hash code for an AD<Base> object.
@@ -51,10 +51,10 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 */
 template <class Base>
 unsigned short hash_code(const AD<Base>& u)
-{   size_t code = hash_code(u.value_);
-    code       += size_t(u.taddr_);
-    code       += size_t(u.ad_type_ == dynamic_enum);
-    return (unsigned short)(code % CPPAD_HASH_TABLE_SIZE);
+{  size_t code = hash_code(u.value_);
+   code       += size_t(u.taddr_);
+   code       += size_t(u.ad_type_ == dynamic_enum);
+   return (unsigned short)(code % CPPAD_HASH_TABLE_SIZE);
 }
 
 } // END_CPPAD_NAMESPACE

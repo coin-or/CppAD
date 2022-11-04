@@ -8,15 +8,15 @@
 /*
 $begin LuInvert$$
 $spell
-    cppad.hpp
-    Lu
-    Cpp
-    jp
-    ip
-    const
-    namespace
-    typename
-    etmp
+   cppad.hpp
+   Lu
+   Cpp
+   jp
+   ip
+   const
+   namespace
+   typename
+   etmp
 $$
 
 
@@ -49,13 +49,13 @@ the size of $latex Y$$ must be equal to $latex  p * q $$ and for
 $latex i = 0 , \ldots , p-1$$,
 $latex j = 0 , \ldots , q-1$$,
 $latex \[
-    Y_{i,j} = Y[ i * q + j ]
+   Y_{i,j} = Y[ i * q + j ]
 \] $$
 
 $head ip$$
 The argument $icode ip$$ has prototype
 $codei%
-    const %SizeVector% &%ip%
+   const %SizeVector% &%ip%
 %$$
 (see description for $icode SizeVector$$ in
 $cref/LuFactor/LuFactor/SizeVector/$$ specifications).
@@ -67,7 +67,7 @@ the order of the rows in the permuted matrix.
 $head jp$$
 The argument $icode jp$$ has prototype
 $codei%
-    const %SizeVector% &%jp%
+   const %SizeVector% &%jp%
 %$$
 (see description for $icode SizeVector$$ in
 $cref/LuFactor/LuFactor/SizeVector/$$ specifications).
@@ -78,7 +78,7 @@ the order of the columns in the permuted matrix.
 $head LU$$
 The argument $icode LU$$ has the prototype
 $codei%
-    const %FloatVector% &%LU%
+   const %FloatVector% &%LU%
 %$$
 and the size of $icode LU$$ must equal $latex n * n$$
 (see description for $icode FloatVector$$ in
@@ -89,7 +89,7 @@ We define the lower triangular matrix $icode L$$ in terms of $icode LU$$.
 The matrix $icode L$$ is zero above the diagonal
 and the rest of the elements are defined by
 $codei%
-    %L%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
+   %L%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
 %$$
 for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , i$$.
 
@@ -99,7 +99,7 @@ The matrix $icode U$$ is zero below the diagonal,
 one on the diagonal,
 and the rest of the elements are defined by
 $codei%
-    %U%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
+   %U%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
 %$$
 for $latex i = 0 , \ldots , n-2$$ and $latex j = i+1 , \ldots , n-1$$.
 
@@ -112,7 +112,7 @@ $subhead A$$
 The matrix $icode A$$,
 which defines the linear equations that we are solving, is given by
 $codei%
-    %P%(%i%, %j%) = %A%[ %ip%[%i%] * %n% + %jp%[%j%] ]
+   %P%(%i%, %j%) = %A%[ %ip%[%i%] * %n% + %jp%[%j%] ]
 %$$
 (Hence
 $icode LU$$ contains a permuted factorization of the matrix $icode A$$.)
@@ -121,7 +121,7 @@ $icode LU$$ contains a permuted factorization of the matrix $icode A$$.)
 $head X$$
 The argument $icode X$$ has prototype
 $codei%
-    %FloatVector% &%X%
+   %FloatVector% &%X%
 %$$
 (see description for $icode FloatVector$$ in
 $cref/LuFactor/LuFactor/FloatVector/$$ specifications).
@@ -132,8 +132,8 @@ output value solves the matrix equation $icode%A% * %X% = %B%$$.
 
 
 $children%
-    example/utility/lu_invert.cpp%
-    omh/lu_invert_hpp.omh
+   example/utility/lu_invert.cpp%
+   omh/lu_invert_hpp.omh
 %$$
 $head Example$$
 The file $cref lu_solve.hpp$$ is a good example usage of
@@ -159,72 +159,72 @@ namespace CppAD { // BEGIN CppAD namespace
 // LuInvert
 template <class SizeVector, class FloatVector>
 void LuInvert(
-    const SizeVector  &ip,
-    const SizeVector  &jp,
-    const FloatVector &LU,
-    FloatVector       &B )
-{   size_t k; // column index in X
-    size_t p; // index along diagonal in LU
-    size_t i; // row index in LU and X
+   const SizeVector  &ip,
+   const SizeVector  &jp,
+   const FloatVector &LU,
+   FloatVector       &B )
+{  size_t k; // column index in X
+   size_t p; // index along diagonal in LU
+   size_t i; // row index in LU and X
 
-    typedef typename FloatVector::value_type Float;
+   typedef typename FloatVector::value_type Float;
 
-    // check numeric type specifications
-    CheckNumericType<Float>();
+   // check numeric type specifications
+   CheckNumericType<Float>();
 
-    // check simple vector class specifications
-    CheckSimpleVector<Float, FloatVector>();
-    CheckSimpleVector<size_t, SizeVector>();
+   // check simple vector class specifications
+   CheckSimpleVector<Float, FloatVector>();
+   CheckSimpleVector<size_t, SizeVector>();
 
-    Float etmp;
+   Float etmp;
 
-    size_t n = ip.size();
-    CPPAD_ASSERT_KNOWN(
-        size_t(jp.size()) == n,
-        "Error in LuInvert: jp must have size equal to n * n"
-    );
-    CPPAD_ASSERT_KNOWN(
-        size_t(LU.size()) == n * n,
-        "Error in LuInvert: Lu must have size equal to n * m"
-    );
-    size_t m = size_t(B.size()) / n;
-    CPPAD_ASSERT_KNOWN(
-        size_t(B.size()) == n * m,
-        "Error in LuSolve: B must have size equal to a multiple of n"
-    );
+   size_t n = ip.size();
+   CPPAD_ASSERT_KNOWN(
+      size_t(jp.size()) == n,
+      "Error in LuInvert: jp must have size equal to n * n"
+   );
+   CPPAD_ASSERT_KNOWN(
+      size_t(LU.size()) == n * n,
+      "Error in LuInvert: Lu must have size equal to n * m"
+   );
+   size_t m = size_t(B.size()) / n;
+   CPPAD_ASSERT_KNOWN(
+      size_t(B.size()) == n * m,
+      "Error in LuSolve: B must have size equal to a multiple of n"
+   );
 
-    // temporary storage for reordered solution
-    FloatVector x(n);
+   // temporary storage for reordered solution
+   FloatVector x(n);
 
-    // loop over equations
-    for(k = 0; k < m; k++)
-    {   // invert the equation c = L * b
-        for(p = 0; p < n; p++)
-        {   // solve for c[p]
-            etmp = B[ ip[p] * m + k ] / LU[ ip[p] * n + jp[p] ];
-            B[ ip[p] * m + k ] = etmp;
-            // subtract off effect on other variables
-            for(i = p+1; i < n; i++)
-                B[ ip[i] * m + k ] -=
-                    etmp * LU[ ip[i] * n + jp[p] ];
-        }
+   // loop over equations
+   for(k = 0; k < m; k++)
+   {  // invert the equation c = L * b
+      for(p = 0; p < n; p++)
+      {  // solve for c[p]
+         etmp = B[ ip[p] * m + k ] / LU[ ip[p] * n + jp[p] ];
+         B[ ip[p] * m + k ] = etmp;
+         // subtract off effect on other variables
+         for(i = p+1; i < n; i++)
+            B[ ip[i] * m + k ] -=
+               etmp * LU[ ip[i] * n + jp[p] ];
+      }
 
-        // invert the equation x = U * c
-        p = n;
-        while( p > 0 )
-        {   --p;
-            etmp       = B[ ip[p] * m + k ];
-            x[ jp[p] ] = etmp;
-            for(i = 0; i < p; i++ )
-                B[ ip[i] * m + k ] -=
-                    etmp * LU[ ip[i] * n + jp[p] ];
-        }
+      // invert the equation x = U * c
+      p = n;
+      while( p > 0 )
+      {  --p;
+         etmp       = B[ ip[p] * m + k ];
+         x[ jp[p] ] = etmp;
+         for(i = 0; i < p; i++ )
+            B[ ip[i] * m + k ] -=
+               etmp * LU[ ip[i] * n + jp[p] ];
+      }
 
-        // copy reordered solution into B
-        for(i = 0; i < n; i++)
-            B[i * m + k] = x[i];
-    }
-    return;
+      // copy reordered solution into B
+      for(i = 0; i < n; i++)
+         B[i * m + k] = x[i];
+   }
+   return;
 }
 } // END CppAD namespace
 // END C++

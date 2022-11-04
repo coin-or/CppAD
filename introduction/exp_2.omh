@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 $begin exp_2.hpp$$
 $spell
-    exp
+   exp
 $$
 
 $section exp_2: Implementation$$
@@ -15,7 +15,7 @@ $end
 -----------------------------------------------------------------------------
 $begin exp_2.cpp$$
 $spell
-    exp
+   exp
 $$
 
 $section exp_2: Test$$
@@ -26,9 +26,9 @@ $end
 -----------------------------------------------------------------------------
 $begin exp_2_for0$$
 $spell
-    cpp
-    exp_2_seq
-    bool
+   cpp
+   exp_2_seq
+   bool
 $$
 
 $section exp_2: Operation Sequence and Zero Order Forward Mode$$
@@ -41,7 +41,7 @@ The operation sequence (see below) corresponding to
 the algorithm $cref exp_2.hpp$$ is the same for all values of $icode x$$.
 The mathematical form for the corresponding function is
 $latex \[
-    f(x) = 1 + x + x^2 / 2
+   f(x) = 1 + x + x^2 / 2
 \] $$
 An algorithmic differentiation package
 does not operate on the mathematical function $latex f(x)$$
@@ -53,7 +53,7 @@ In general, a zero order forward sweep is given a vector
 $latex x^{(0)} \in \B{R}^n$$ and it returns the corresponding vector
 $latex y^{(0)} \in \B{R}^m$$ given by
 $latex \[
-    y^{(0)} = f( x^{(0)} )
+   y^{(0)} = f( x^{(0)} )
 \]$$
 The superscript $latex (0)$$ denotes zero order derivative;
 i.e., it is equal to the value
@@ -105,47 +105,47 @@ $subhead Sweep$$
 $center
 $table
 $bold Index$$
-    $cnext $pre  $$ $cnext $bold Code$$
-    $cnext $pre  $$ $cnext $bold Operation$$
-    $cnext $pre  $$ $cnext $bold Zero Order$$
+   $cnext $pre  $$ $cnext $bold Code$$
+   $cnext $pre  $$ $cnext $bold Operation$$
+   $cnext $pre  $$ $cnext $bold Zero Order$$
 $rnext
 1
-    $cnext $pre  $$ $cnext $code Type v1  = x;$$
-    $cnext $cnext $latex v_1 = x $$
-    $cnext $cnext $latex v_1^{(0)} = 0.5$$
+   $cnext $pre  $$ $cnext $code Type v1  = x;$$
+   $cnext $cnext $latex v_1 = x $$
+   $cnext $cnext $latex v_1^{(0)} = 0.5$$
 $rnext
 2
-    $cnext $pre  $$ $cnext $code Type v2  = Type(1) + v1;$$
-    $cnext $cnext $latex v_2 = 1 + v_1 $$
-    $cnext $cnext $latex v_2^{(0)} = 1.5$$
+   $cnext $pre  $$ $cnext $code Type v2  = Type(1) + v1;$$
+   $cnext $cnext $latex v_2 = 1 + v_1 $$
+   $cnext $cnext $latex v_2^{(0)} = 1.5$$
 $rnext
 3
-    $cnext $pre  $$ $cnext $code Type v3  = v1 * v1;$$
-    $cnext $cnext $latex v_3 = v_1 * v_1 $$
-    $cnext $cnext $latex v_3^{(0)} = 0.25$$
+   $cnext $pre  $$ $cnext $code Type v3  = v1 * v1;$$
+   $cnext $cnext $latex v_3 = v_1 * v_1 $$
+   $cnext $cnext $latex v_3^{(0)} = 0.25$$
 $rnext
 4
-    $cnext $pre  $$ $cnext $code Type v4  = v3 / Type(2);$$
-    $cnext $cnext $latex v_4 = v_3 / 2$$
-    $cnext $cnext $latex v_4^{(0)} = 0.125$$
+   $cnext $pre  $$ $cnext $code Type v4  = v3 / Type(2);$$
+   $cnext $cnext $latex v_4 = v_3 / 2$$
+   $cnext $cnext $latex v_4^{(0)} = 0.125$$
 $rnext
 5
-    $cnext $pre  $$ $cnext $code  Type v5  = v2 + v4;$$
-    $cnext $cnext $latex v_5 = v_2 + v_4 $$
-    $cnext $cnext $latex v_5^{(0)} = 1.625$$
+   $cnext $pre  $$ $cnext $code  Type v5  = v2 + v4;$$
+   $cnext $cnext $latex v_5 = v_2 + v_4 $$
+   $cnext $cnext $latex v_5^{(0)} = 1.625$$
 $tend
 $$
 
 $head Return Value$$
 The return value for this case is
 $latex \[
-    1.625 =
-    v_5^{(0)} =
-    f( x^{(0)} )
+   1.625 =
+   v_5^{(0)} =
+   f( x^{(0)} )
 \] $$
 
 $children%
-    introduction/exp_2_for0.cpp
+   introduction/exp_2_for0.cpp
 %$$
 
 $head Verification$$
@@ -159,7 +159,7 @@ what is the result of a zero order forward sweep for
 the operation sequence above;
 i.e., what are the corresponding values for
 $latex \[
-    v_1^{(0)} , v_2^{(0)} , \cdots , v_5^{(0)}
+   v_1^{(0)} , v_2^{(0)} , \cdots , v_5^{(0)}
 \]$$
 $lnext
 Create a modified version of
@@ -176,7 +176,7 @@ $end
 ------------------------------------------------------------------------------
 $begin exp_2_for1$$
 $spell
-    exp_2_for
+   exp_2_for
 $$
 
 $section exp_2: First Order Forward Mode$$
@@ -186,7 +186,7 @@ $section exp_2: First Order Forward Mode$$
 $head First Order Expansion$$
 We define $latex x(t)$$ near $latex t = 0$$ by the first order expansion
 $latex \[
-    x(t) = x^{(0)} + x^{(1)} * t
+   x(t) = x^{(0)} + x^{(1)} * t
 \]$$
 it follows that $latex x^{(0)}$$ is the zero,
 and $latex x^{(1)}$$ the first,
@@ -205,11 +205,11 @@ for all the other variables in the operation sequence.
 $head Mathematical Form$$
 Suppose that we use the algorithm $cref exp_2.hpp$$ to compute
 $latex \[
-    f(x) = 1 + x + x^2 / 2
+   f(x) = 1 + x + x^2 / 2
 \] $$
 The corresponding derivative function is
 $latex \[
-    \partial_x f (x) =   1 + x
+   \partial_x f (x) =   1 + x
 \] $$
 An algorithmic differentiation package
 does not operate on the mathematical form of the function,
@@ -251,7 +251,7 @@ $subhead First Order$$
 The First Order column contains the first order derivatives
 for the corresponding variable in the operation sequence; i.e.,
 $latex \[
-    v_j (t) = v_j^{(0)} + v_j^{(1)} t
+   v_j (t) = v_j^{(0)} + v_j^{(1)} t
 \] $$
 We use $latex x^{(1)} = 1$$ so that differentiation
 with respect to $latex t$$,
@@ -265,44 +265,44 @@ $subhead Sweep$$
 $center
 $table
 $bold Index$$
-    $cnext $pre  $$ $cnext $bold Operation$$
-    $cnext $pre  $$ $cnext $bold Zero Order$$
-    $cnext $pre  $$ $cnext $bold Derivative$$
-    $cnext $pre  $$ $cnext $bold First Order$$
+   $cnext $pre  $$ $cnext $bold Operation$$
+   $cnext $pre  $$ $cnext $bold Zero Order$$
+   $cnext $pre  $$ $cnext $bold Derivative$$
+   $cnext $pre  $$ $cnext $bold First Order$$
 $rnext
 1
-    $cnext $pre  $$ $cnext $latex v_1 = x $$
-    $cnext $cnext 0.5
-    $cnext $cnext
-    $latex v_1^{(1)} = x^{(1)}  $$
-    $cnext $cnext $latex v_1^{(1)} = 1$$
+   $cnext $pre  $$ $cnext $latex v_1 = x $$
+   $cnext $cnext 0.5
+   $cnext $cnext
+   $latex v_1^{(1)} = x^{(1)}  $$
+   $cnext $cnext $latex v_1^{(1)} = 1$$
 $rnext
 2
-    $cnext $pre  $$ $cnext $latex v_2 = 1 + v_1$$
-    $cnext $cnext 1.5
-    $cnext $cnext
-    $latex v_2^{(1)} = v_1^{(1)}$$
-    $cnext $cnext $latex v_2^{(1)} = 1$$
+   $cnext $pre  $$ $cnext $latex v_2 = 1 + v_1$$
+   $cnext $cnext 1.5
+   $cnext $cnext
+   $latex v_2^{(1)} = v_1^{(1)}$$
+   $cnext $cnext $latex v_2^{(1)} = 1$$
 $rnext
 3
-    $cnext $pre  $$ $cnext $latex v_3 = v_1 * v_1$$
-    $cnext $cnext 0.25
-    $cnext $cnext
-    $latex v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}$$
-    $cnext $cnext $latex v_3^{(1)} = 1$$
+   $cnext $pre  $$ $cnext $latex v_3 = v_1 * v_1$$
+   $cnext $cnext 0.25
+   $cnext $cnext
+   $latex v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}$$
+   $cnext $cnext $latex v_3^{(1)} = 1$$
 $rnext
 4
-    $cnext $pre  $$ $cnext $latex v_4 = v_3 / 2$$
-    $cnext $cnext 0.125
-    $cnext $cnext
-    $latex v_4^{(1)} = v_3^{(1)} / 2$$
-    $cnext $cnext $latex v_4^{(1)} = 0.5$$
+   $cnext $pre  $$ $cnext $latex v_4 = v_3 / 2$$
+   $cnext $cnext 0.125
+   $cnext $cnext
+   $latex v_4^{(1)} = v_3^{(1)} / 2$$
+   $cnext $cnext $latex v_4^{(1)} = 0.5$$
 $rnext
 5   $cnext $pre $$  $cnext $latex v_5 = v_2 + v_4$$
-    $cnext $cnext 1.625
-    $cnext $cnext
-    $latex v_5^{(1)} = v_2^{(1)} + v_4^{(1)}$$
-    $cnext $cnext $latex v_5^{(1)} = 1.5$$
+   $cnext $cnext 1.625
+   $cnext $cnext
+   $latex v_5^{(1)} = v_2^{(1)} + v_4^{(1)}$$
+   $cnext $cnext $latex v_5^{(1)} = 1.5$$
 $tend
 $$
 
@@ -310,21 +310,21 @@ $head Return Value$$
 The derivative of the return value for this case is
 $latex \[
 \begin{array}{rcl}
-    1.5
-    & = &
-    v_5^{(1)} =
-    \left[ \D{v_5}{t} \right]_{t=0} =
-    \left[ \D{}{t} f ( x^{(0)} + x^{(1)} t ) \right]_{t=0}
-    \\
-    & = &
-    f^{(1)} ( x^{(0)} ) * x^{(1)} =
-    f^{(1)} ( x^{(0)} )
+   1.5
+   & = &
+   v_5^{(1)} =
+   \left[ \D{v_5}{t} \right]_{t=0} =
+   \left[ \D{}{t} f ( x^{(0)} + x^{(1)} t ) \right]_{t=0}
+   \\
+   & = &
+   f^{(1)} ( x^{(0)} ) * x^{(1)} =
+   f^{(1)} ( x^{(0)} )
 \end{array}
 \] $$
 (We have used the fact that $latex x^{(1)} = 1$$.)
 
 $children%
-    introduction/exp_2_for1.cpp
+   introduction/exp_2_for1.cpp
 %$$
 $head Verification$$
 The file $cref exp_2_for1.cpp$$ contains a routine
@@ -354,7 +354,7 @@ $end
 ------------------------------------------------------------------------------
 $begin exp_2_rev1$$
 $spell
-    exp_2_rev
+   exp_2_rev
 $$
 
 $section exp_2: First Order Reverse Mode$$
@@ -374,11 +374,11 @@ of the order of the computations in the original algorithm.
 $head Mathematical Form$$
 Suppose that we use the algorithm $cref exp_2.hpp$$ to compute
 $latex \[
-    f(x) = 1 + x + x^2 / 2
+   f(x) = 1 + x + x^2 / 2
 \] $$
 The corresponding derivative function is
 $latex \[
-    \partial_x f (x) =   1 + x
+   \partial_x f (x) =   1 + x
 \] $$
 
 $head f_5$$
@@ -401,7 +401,7 @@ $head Index 5: f_4$$
 Reverse mode starts with the last operation in the sequence.
 For the case in question, this is the operation with index 5,
 $latex \[
-    v_5 = v_2 + v_4
+   v_5 = v_2 + v_4
 \] $$
 We define the function
 $latex f_4 ( v_1 , v_2 , v_3 , v_4 ) $$
@@ -417,12 +417,12 @@ $latex \[
 \begin{array}{rcll}
 \D{f_4}{v_2}
 & = & \D{f_5}{v_2} +
-    \D{f_5}{v_5} * \D{v_5}{v_2}
+   \D{f_5}{v_5} * \D{v_5}{v_2}
 & = 1
 \\
 \D{f_4}{v_4}
 & = & \D{f_5}{v_4} +
-    \D{f_5}{v_5} * \D{v_5}{v_4}
+   \D{f_5}{v_5} * \D{v_5}{v_4}
 & = 1
 \end{array}
 \] $$
@@ -431,7 +431,7 @@ All the other partial derivatives of $latex f_4$$ are zero.
 $head Index 4: f_3$$
 The next operation has index 4,
 $latex \[
-    v_4 = v_3 / 2
+   v_4 = v_3 / 2
 \] $$
 We define the function
 $latex f_3 (  v_1 , v_2 , v_3 ) $$
@@ -454,7 +454,7 @@ $latex \[
 \\
 \D{f_3}{v_3}
 & = & \D{f_4}{v_3} +
-    \D{f_4}{v_4} * \D{v_4}{v_3}
+   \D{f_4}{v_4} * \D{v_4}{v_3}
 & = 0.5
 \end{array}
 \] $$
@@ -462,7 +462,7 @@ $latex \[
 $head Index 3: f_2$$
 The next operation has index 3,
 $latex \[
-    v_3 = v_1 * v_1
+   v_3 = v_1 * v_1
 \] $$
 We define the function
 $latex f_2 ( v_1 , v_2 ) $$
@@ -479,7 +479,7 @@ $latex \[
 \begin{array}{rcll}
 \D{f_2}{v_1}
 & = & \D{f_3}{v_1} +
-    \D{f_3}{v_3} * \D{v_3}{v_1}
+   \D{f_3}{v_3} * \D{v_3}{v_1}
 & = 0.5
 \\
 \D{f_2}{v_2}
@@ -491,7 +491,7 @@ $latex \[
 $head Index 2: f_1$$
 The next operation has index 2,
 $latex \[
-    v_2 = 1 + v_1
+   v_2 = 1 + v_1
 \] $$
 We define the function
 $latex f_1 ( v_1 ) $$
@@ -506,7 +506,7 @@ $latex \[
 \begin{array}{rcll}
 \D{f_1}{v_1}
 & = & \D{f_2}{v_1} +
-    \D{f_2}{v_2} * \D{v_2}{v_1}
+   \D{f_2}{v_2} * \D{v_2}{v_1}
 & = 1.5
 \end{array}
 \] $$
@@ -515,7 +515,7 @@ so the derivative of this is the derivative of
 the function defined by $cref exp_2.hpp$$ at $latex x = .5$$.
 
 $children%
-    introduction/exp_2_rev1.cpp
+   introduction/exp_2_rev1.cpp
 %$$
 $head Verification$$
 The file $cref exp_2_rev1.cpp$$ contains a routine
@@ -552,7 +552,7 @@ $end
 ------------------------------------------------------------------------------
 $begin exp_2_for2$$
 $spell
-    exp_2_for
+   exp_2_for
 $$
 
 $section exp_2: Second Order Forward Mode$$
@@ -562,11 +562,11 @@ $section exp_2: Second Order Forward Mode$$
 $head Second Order Expansion$$
 We define $latex x(t)$$ near $latex t = 0$$ by the second order expansion
 $latex \[
-    x(t) = x^{(0)} + x^{(1)} * t + x^{(2)} * t^2 / 2
+   x(t) = x^{(0)} + x^{(1)} * t + x^{(2)} * t^2 / 2
 \]$$
 It follows that for $latex k = 0 , 1 , 2$$,
 $latex \[
-    x^{(k)} = \dpow{k}{t} x (0)
+   x^{(k)} = \dpow{k}{t} x (0)
 \] $$
 
 $head Purpose$$
@@ -581,11 +581,11 @@ for all the variables in the operation sequence.
 $head Mathematical Form$$
 Suppose that we use the algorithm $cref exp_2.hpp$$ to compute
 $latex \[
-    f(x) = 1 + x + x^2 / 2
+   f(x) = 1 + x + x^2 / 2
 \] $$
 The corresponding second derivative function is
 $latex \[
-    \Dpow{2}{x} f (x) =   1
+   \Dpow{2}{x} f (x) =   1
 \] $$
 
 $head Operation Sequence$$
@@ -627,7 +627,7 @@ The Second column contains the second order derivatives
 for the corresponding variable in the operation sequence; i.e.,
 the second order expansion for the $th i$$ variable is given by
 $latex \[
-    v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+   v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
 \] $$
 We use $latex x^{(0)} = 1$$, and $latex x^{(2)} = 0$$
 so that second order differentiation
@@ -641,51 +641,51 @@ $subhead Sweep$$
 $center
 $table
 $bold Index$$
-    $cnext $pre  $$ $cnext $bold Zero$$
-    $cnext $pre  $$ $cnext $bold Operation$$
-    $cnext $pre  $$ $cnext $bold First$$
-    $cnext $pre  $$ $cnext $bold Derivative$$
-    $cnext $pre  $$ $cnext $bold Second$$
+   $cnext $pre  $$ $cnext $bold Zero$$
+   $cnext $pre  $$ $cnext $bold Operation$$
+   $cnext $pre  $$ $cnext $bold First$$
+   $cnext $pre  $$ $cnext $bold Derivative$$
+   $cnext $pre  $$ $cnext $bold Second$$
 $rnext
 1
-    $cnext $cnext 0.5
-    $cnext $pre  $$ $cnext $latex v_1^{(1)} = x^{(1)} $$
-    $cnext $cnext 1
-    $cnext $cnext
-    $latex v_1^{(2)} = x^{(2)}$$
-    $cnext $cnext $latex v_1^{(2)} = 0$$
+   $cnext $cnext 0.5
+   $cnext $pre  $$ $cnext $latex v_1^{(1)} = x^{(1)} $$
+   $cnext $cnext 1
+   $cnext $cnext
+   $latex v_1^{(2)} = x^{(2)}$$
+   $cnext $cnext $latex v_1^{(2)} = 0$$
 $rnext
 2
-    $cnext $cnext 1.5
-    $cnext $pre  $$ $cnext $latex v_2^{(1)} = v_1^{(1)}$$
-    $cnext $cnext 1
-    $cnext $cnext
-    $latex v_2^{(2)} = v_1^{(2)}$$
-    $cnext $cnext $latex v_2^{(2)} = 0$$
+   $cnext $cnext 1.5
+   $cnext $pre  $$ $cnext $latex v_2^{(1)} = v_1^{(1)}$$
+   $cnext $cnext 1
+   $cnext $cnext
+   $latex v_2^{(2)} = v_1^{(2)}$$
+   $cnext $cnext $latex v_2^{(2)} = 0$$
 $rnext
 3
-    $cnext $cnext 0.25
-    $cnext $pre  $$ $cnext $latex v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}$$
-    $cnext $cnext 1
-    $cnext $cnext
+   $cnext $cnext 0.25
+   $cnext $pre  $$ $cnext $latex v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}$$
+   $cnext $cnext 1
+   $cnext $cnext
 $latex v_3^{(2)} = 2 * (v_1^{(1)} * v_1^{(1)} + v_1^{(0)} * v_1^{(2)} )$$
-    $cnext $cnext $latex v_3^{(2)} = 2$$
+   $cnext $cnext $latex v_3^{(2)} = 2$$
 $rnext
 4
-    $cnext $cnext 0.125
-    $cnext $pre  $$ $cnext $latex v_4^{(1)} = v_3^{(1)} / 2$$
-    $cnext $cnext .5
-    $cnext $cnext
-    $latex v_4^{(2)} = v_3^{(2)} / 2$$
-    $cnext $cnext $latex v_4^{(2)} = 1$$
+   $cnext $cnext 0.125
+   $cnext $pre  $$ $cnext $latex v_4^{(1)} = v_3^{(1)} / 2$$
+   $cnext $cnext .5
+   $cnext $cnext
+   $latex v_4^{(2)} = v_3^{(2)} / 2$$
+   $cnext $cnext $latex v_4^{(2)} = 1$$
 $rnext
 5
-    $cnext $cnext 1.625
-    $cnext $pre $$  $cnext $latex v_5^{(1)} = v_2^{(1)} + v_4^{(1)}$$
-    $cnext $cnext 1.5
-    $cnext $cnext
-    $latex v_5^{(2)} = v_2^{(2)} + v_4^{(2)}$$
-    $cnext $cnext $latex v_5^{(2)} = 1$$
+   $cnext $cnext 1.625
+   $cnext $pre $$  $cnext $latex v_5^{(1)} = v_2^{(1)} + v_4^{(1)}$$
+   $cnext $cnext 1.5
+   $cnext $cnext
+   $latex v_5^{(2)} = v_2^{(2)} + v_4^{(2)}$$
+   $cnext $cnext $latex v_5^{(2)} = 1$$
 $tend
 $$
 
@@ -693,22 +693,22 @@ $head Return Value$$
 The second derivative of the return value for this case is
 $latex \[
 \begin{array}{rcl}
-    1
-    & = &
-    v_5^{(2)} =
-    \left[ \Dpow{2}{t} v_5 \right]_{t=0} =
-    \left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t ) \right]_{t=0}
-    \\
-    & = &
-    x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ) * x^{(1)} =
-    \Dpow{2}{x} f ( x^{(0)} )
+   1
+   & = &
+   v_5^{(2)} =
+   \left[ \Dpow{2}{t} v_5 \right]_{t=0} =
+   \left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t ) \right]_{t=0}
+   \\
+   & = &
+   x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ) * x^{(1)} =
+   \Dpow{2}{x} f ( x^{(0)} )
 \end{array}
 \] $$
 (We have used the fact that
 $latex x^{(1)} = 1$$ and $latex x^{(2)} = 0$$.)
 
 $children%
-    introduction/exp_2_for2.cpp
+   introduction/exp_2_for2.cpp
 %$$
 $head Verification$$
 The file $cref exp_2_for2.cpp$$ contains a routine
@@ -737,7 +737,7 @@ $end
 ------------------------------------------------------------------------------
 $begin exp_2_rev2$$
 $spell
-    exp_2_rev
+   exp_2_rev
 $$
 
 $section exp_2: Second Order Reverse Mode$$
@@ -757,11 +757,11 @@ with respect to all of the independent variables.
 $head Mathematical Form$$
 Suppose that we use the algorithm $cref exp_2.hpp$$ to compute
 $latex \[
-    f(x) = 1 + x + x^2 / 2
+   f(x) = 1 + x + x^2 / 2
 \] $$
 The corresponding second derivative is
 $latex \[
-    \Dpow{2}{x} f (x) =   1
+   \Dpow{2}{x} f (x) =   1
 \] $$
 
 $head f_5$$
@@ -778,7 +778,7 @@ is both an argument and the value of the function; i.e.,
 $latex \[
 \begin{array}{rcl}
 f_5 \left(
-    v_1^{(0)}, v_1^{(1)} , \ldots  , v_5^{(0)} , v_5^{(1)}
+   v_1^{(0)}, v_1^{(1)} , \ldots  , v_5^{(0)} , v_5^{(1)}
 \right)
 & = & v_5^{(1)}
 \\
@@ -793,9 +793,9 @@ For the case in question, this is the operation with index 5.
 The zero and first order sweep representations of this operation are
 $latex \[
 \begin{array}{rcl}
-    v_5^{(0)} & = & v_2^{(0)} + v_4^{(0)}
-    \\
-    v_5^{(1)} & = & v_2^{(1)} + v_4^{(1)}
+   v_5^{(0)} & = & v_2^{(0)} + v_4^{(0)}
+   \\
+   v_5^{(1)} & = & v_2^{(1)} + v_4^{(1)}
 \end{array}
 \] $$
 We define the function
@@ -806,8 +806,8 @@ this operation; i.e.
 $latex \[
 f_4  =
 f_5 \left[   v_1^{(0)} , \ldots , v_4^{(1)} ,
-    v_5^{(0)} \left( v_2^{(0)} , v_4^{(0)} \right) ,
-    v_5^{(1)} \left( v_2^{(1)} , v_4^{(1)} \right)
+   v_5^{(0)} \left( v_2^{(0)} , v_4^{(0)} \right) ,
+   v_5^{(1)} \left( v_2^{(1)} , v_4^{(1)} \right)
 \right]
 \] $$
 It follows that
@@ -815,12 +815,12 @@ $latex \[
 \begin{array}{rcll}
 \D{f_4}{v_2^{(1)}}
 & = & \D{f_5}{v_2^{(1)}} +
-    \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_2^{(1)}}
+   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_2^{(1)}}
 & = 1
 \\
 \D{f_4}{v_4^{(1)}}
 & = & \D{f_5}{v_4^{(1)}} +
-    \D{f_5}{v_5^{(1)}} * \D{v_5}{v_4^{(1)}}
+   \D{f_5}{v_5^{(1)}} * \D{v_5}{v_4^{(1)}}
 & = 1
 \end{array}
 \] $$
@@ -830,9 +830,9 @@ $head Index 4: f_3$$
 The next operation has index 4,
 $latex \[
 \begin{array}{rcl}
-    v_4^{(0)} & = & v_3^{(0)} / 2
-    \\
-    v_4^{(1)} & = & v_3^{(1)} / 2
+   v_4^{(0)} & = & v_3^{(0)} / 2
+   \\
+   v_4^{(1)} & = & v_3^{(1)} / 2
 \end{array}
 \] $$
 We define the function
@@ -843,8 +843,8 @@ are eliminated using this operation; i.e.,
 $latex \[
 f_3 =
 f_4 \left[ v_1^{(0)} , \ldots , v_3^{(1)} ,
-    v_4^{(0)} \left( v_3^{(0)} \right) ,
-    v_4^{(1)} \left( v_3^{(1)} \right)
+   v_4^{(0)} \left( v_3^{(0)} \right) ,
+   v_4^{(1)} \left( v_3^{(1)} \right)
 \right]
 \] $$
 It follows that
@@ -856,7 +856,7 @@ $latex \[
 \\
 \D{f_3}{v_3^{(1)}}
 & = & \D{f_4}{v_3^{(1)}} +
-    \D{f_4}{v_4^{(1)}} * \D{v_4^{(1)}}{v_3^{(1)}}
+   \D{f_4}{v_4^{(1)}} * \D{v_4^{(1)}}{v_3^{(1)}}
 & = 0.5
 \end{array}
 \] $$
@@ -866,9 +866,9 @@ $head Index 3: f_2$$
 The next operation has index 3,
 $latex \[
 \begin{array}{rcl}
-    v_3^{(0)} & = & v_1^{(0)} * v_1^{(0)}
-    \\
-    v_3^{(1)} & = & 2 * v_1^{(0)} * v_1^{(1)}
+   v_3^{(0)} & = & v_1^{(0)} * v_1^{(0)}
+   \\
+   v_3^{(1)} & = & 2 * v_1^{(0)} * v_1^{(1)}
 \end{array}
 \] $$
 We define the function
@@ -879,8 +879,8 @@ eliminated using this operation; i.e.,
 $latex \[
 f_2 =
 f_3 \left[ v_1^{(0)} , \ldots , v_2^{(1)} ,
-    v_3^{(0)} ( v_1^{(0)} ) ,
-    v_3^{(1)} ( v_1^{(0)} , v_1^{(1)} )
+   v_3^{(0)} ( v_1^{(0)} ) ,
+   v_3^{(1)} ( v_1^{(0)} , v_1^{(1)} )
 \right]
 \] $$
 Note that, from the
@@ -893,14 +893,14 @@ $latex \[
 \D{f_2}{v_1^{(0)}}
 & = &
 \D{f_3}{v_1^{(0)}} +
-    \D{f_3}{v_3^{(0)}} * \D{v_3^{(0)}}{v_1^{(0)}}  +
-    \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(0)}}
+   \D{f_3}{v_3^{(0)}} * \D{v_3^{(0)}}{v_1^{(0)}}  +
+   \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(0)}}
 & = 1
 \\
 \D{f_2}{v_1^{(1)}}
 & = &
 \D{f_3}{v_1^{(1)}} +
-    \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(1)}}
+   \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(1)}}
 & = 0.5
 \\
 \D{f_2}{v_2^{(0)}}
@@ -917,9 +917,9 @@ $head Index 2: f_1$$
 The next operation has index 2,
 $latex \[
 \begin{array}{rcl}
-    v_2^{(0)} & = & 1 + v_1^{(0)}
-    \\
-    v_2^{(1)} & = & v_1^{(1)}
+   v_2^{(0)} & = & 1 + v_1^{(0)}
+   \\
+   v_2^{(1)} & = & v_1^{(1)}
 \end{array}
 \] $$
 We define the function
@@ -930,8 +930,8 @@ are eliminated using this operation; i.e.,
 $latex \[
 f_1 =
 f_2 \left[ v_1^{(0)} , v_1^{(1)} ,
-    v_2^{(0)} ( v_1^{(0)} )  ,
-    v_2^{(1)} ( v_1^{(1)} )
+   v_2^{(0)} ( v_1^{(0)} )  ,
+   v_2^{(1)} ( v_1^{(1)} )
 \right]
 \] $$
 It follows that
@@ -939,12 +939,12 @@ $latex \[
 \begin{array}{rcll}
 \D{f_1}{v_1^{(0)}}
 & = & \D{f_2}{v_1^{(0)}} +
-    \D{f_2}{v_2^{(0)}} * \D{v_2^{(0)}}{v_1^{(0)}}
+   \D{f_2}{v_2^{(0)}} * \D{v_2^{(0)}}{v_1^{(0)}}
 & = 1
 \\
 \D{f_1}{v_1^{(1)}}
 & = & \D{f_2}{v_1^{(1)}} +
-    \D{f_2}{v_2^{(1)}} * \D{v_2^{(1)}}{v_1^{(1)}}
+   \D{f_2}{v_2^{(1)}} * \D{v_2^{(1)}}{v_1^{(1)}}
 & = 1.5
 \end{array}
 \] $$
@@ -968,7 +968,7 @@ the function defined by $cref exp_2.hpp$$ at $latex x = .5$$.
 
 
 $children%
-    introduction/exp_2_rev2.cpp
+   introduction/exp_2_rev2.cpp
 %$$
 $head Verification$$
 The file $cref exp_2_rev2.cpp$$ contains a routine

@@ -8,10 +8,10 @@
 /*
 $begin ForTwo$$
 $spell
-    ddy
-    typename
-    Taylor
-    const
+   ddy
+   typename
+   Taylor
+   const
 $$
 
 
@@ -29,9 +29,9 @@ We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The syntax above sets
 $latex \[
-    ddy [ i * p + \ell ]
-    =
-    \DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x)
+   ddy [ i * p + \ell ]
+   =
+   \DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x)
 \] $$
 for $latex i = 0 , \ldots , m-1$$
 and $latex \ell = 0 , \ldots , p$$,
@@ -40,7 +40,7 @@ where $latex p$$ is the size of the vectors $icode j$$ and $icode k$$.
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 (see $cref/ForTwo Uses Forward/ForTwo/ForTwo Uses Forward/$$ below).
@@ -48,7 +48,7 @@ Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const %BaseVector% &%x%
+   const %BaseVector% &%x%
 %$$
 (see $cref/BaseVector/ForTwo/BaseVector/$$ below)
 and its size
@@ -60,7 +60,7 @@ that point at which to evaluate the partial derivatives listed above.
 $head j$$
 The argument $icode j$$ has prototype
 $codei%
-    const %SizeVector_t% &%j%
+   const %SizeVector_t% &%j%
 %$$
 (see $cref/SizeVector_t/ForTwo/SizeVector_t/$$ below)
 We use $icode p$$ to denote the size of the vector $icode j$$.
@@ -71,7 +71,7 @@ for $latex \ell = 0 , \ldots , p-1$$, $latex j[ \ell ]  < n$$.
 $head k$$
 The argument $icode k$$ has prototype
 $codei%
-    const %SizeVector_t% &%k%
+   const %SizeVector_t% &%k%
 %$$
 (see $cref/SizeVector_t/ForTwo/SizeVector_t/$$ below)
 and its size must be equal to $icode p$$,
@@ -83,7 +83,7 @@ for $latex \ell = 0 , \ldots , p-1$$, $latex k[ \ell ]  < n$$.
 $head ddy$$
 The result $icode ddy$$ has prototype
 $codei%
-    %BaseVector% %ddy%
+   %BaseVector% %ddy%
 %$$
 (see $cref/BaseVector/ForTwo/BaseVector/$$ below)
 and its size is $latex m * p$$.
@@ -91,9 +91,9 @@ It contains the requested partial derivatives; to be specific,
 for $latex i = 0 , \ldots , m - 1 $$
 and $latex \ell = 0 , \ldots , p - 1$$
 $latex \[
-    ddy [ i * p + \ell ]
-    =
-    \DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x)
+   ddy [ i * p + \ell ]
+   =
+   \DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x)
 \] $$
 
 $head BaseVector$$
@@ -119,7 +119,7 @@ and the other coefficients are unspecified.
 
 $head Examples$$
 $children%
-    example/general/for_two.cpp
+   example/general/for_two.cpp
 %$$
 The routine
 $cref/ForTwo/for_two.cpp/$$ is both an example and test.
@@ -135,111 +135,111 @@ namespace CppAD {
 template <class Base, class RecBase>
 template <class BaseVector, class SizeVector_t>
 BaseVector ADFun<Base,RecBase>::ForTwo(
-    const BaseVector   &x,
-    const SizeVector_t &j,
-    const SizeVector_t &k)
-{   size_t i;
-    size_t j1;
-    size_t k1;
-    size_t l;
+   const BaseVector   &x,
+   const SizeVector_t &j,
+   const SizeVector_t &k)
+{  size_t i;
+   size_t j1;
+   size_t k1;
+   size_t l;
 
-    size_t n = Domain();
-    size_t m = Range();
-    size_t p = j.size();
+   size_t n = Domain();
+   size_t m = Range();
+   size_t p = j.size();
 
-    // check BaseVector is Simple Vector class with Base type elements
-    CheckSimpleVector<Base, BaseVector>();
+   // check BaseVector is Simple Vector class with Base type elements
+   CheckSimpleVector<Base, BaseVector>();
 
-    // check SizeVector_t is Simple Vector class with size_t elements
-    CheckSimpleVector<size_t, SizeVector_t>();
+   // check SizeVector_t is Simple Vector class with size_t elements
+   CheckSimpleVector<size_t, SizeVector_t>();
 
-    CPPAD_ASSERT_KNOWN(
-        x.size() == n,
-        "ForTwo: Length of x not equal domain dimension for f."
-    );
-    CPPAD_ASSERT_KNOWN(
-        j.size() == k.size(),
-        "ForTwo: Lenght of the j and k vectors are not equal."
-    );
-    // point at which we are evaluating the second partials
-    Forward(0, x);
+   CPPAD_ASSERT_KNOWN(
+      x.size() == n,
+      "ForTwo: Length of x not equal domain dimension for f."
+   );
+   CPPAD_ASSERT_KNOWN(
+      j.size() == k.size(),
+      "ForTwo: Lenght of the j and k vectors are not equal."
+   );
+   // point at which we are evaluating the second partials
+   Forward(0, x);
 
 
-    // dimension the return value
-    BaseVector ddy(m * p);
+   // dimension the return value
+   BaseVector ddy(m * p);
 
-    // allocate memory to hold all possible diagonal Taylor coefficients
-    // (for large sparse cases, this is not efficient)
-    BaseVector D(m * n);
+   // allocate memory to hold all possible diagonal Taylor coefficients
+   // (for large sparse cases, this is not efficient)
+   BaseVector D(m * n);
 
-    // boolean flag for which diagonal coefficients are computed
-    CppAD::vector<bool> c(n);
-    for(j1 = 0; j1 < n; j1++)
-        c[j1] = false;
+   // boolean flag for which diagonal coefficients are computed
+   CppAD::vector<bool> c(n);
+   for(j1 = 0; j1 < n; j1++)
+      c[j1] = false;
 
-    // direction vector in argument space
-    BaseVector dx(n);
-    for(j1 = 0; j1 < n; j1++)
-        dx[j1] = Base(0.0);
+   // direction vector in argument space
+   BaseVector dx(n);
+   for(j1 = 0; j1 < n; j1++)
+      dx[j1] = Base(0.0);
 
-    // result vector in range space
-    BaseVector dy(m);
+   // result vector in range space
+   BaseVector dy(m);
 
-    // compute the diagonal coefficients that are needed
-    for(l = 0; l < p; l++)
-    {   j1 = j[l];
-        k1 = k[l];
-        CPPAD_ASSERT_KNOWN(
-        j1 < n,
-        "ForTwo: an element of j not less than domain dimension for f."
-        );
-        CPPAD_ASSERT_KNOWN(
-        k1 < n,
-        "ForTwo: an element of k not less than domain dimension for f."
-        );
-        size_t count = 2;
-        while(count)
-        {   count--;
-            if( ! c[j1] )
-            {   // diagonal term in j1 direction
-                c[j1]  = true;
-                dx[j1] = Base(1.0);
-                Forward(1, dx);
-
-                dx[j1] = Base(0.0);
-                dy     = Forward(2, dx);
-                for(i = 0; i < m; i++)
-                    D[i * n + j1 ] = dy[i];
-            }
-            j1 = k1;
-        }
-    }
-    // compute all the requested cross partials
-    for(l = 0; l < p; l++)
-    {   j1 = j[l];
-        k1 = k[l];
-        if( j1 == k1 )
-        {   for(i = 0; i < m; i++)
-                ddy[i * p + l] = Base(2.0) * D[i * n + j1];
-        }
-        else
-        {
-            // cross term in j1 and k1 directions
+   // compute the diagonal coefficients that are needed
+   for(l = 0; l < p; l++)
+   {  j1 = j[l];
+      k1 = k[l];
+      CPPAD_ASSERT_KNOWN(
+      j1 < n,
+      "ForTwo: an element of j not less than domain dimension for f."
+      );
+      CPPAD_ASSERT_KNOWN(
+      k1 < n,
+      "ForTwo: an element of k not less than domain dimension for f."
+      );
+      size_t count = 2;
+      while(count)
+      {  count--;
+         if( ! c[j1] )
+         {  // diagonal term in j1 direction
+            c[j1]  = true;
             dx[j1] = Base(1.0);
-            dx[k1] = Base(1.0);
             Forward(1, dx);
 
             dx[j1] = Base(0.0);
-            dx[k1] = Base(0.0);
-            dy = Forward(2, dx);
-
-            // place result in return value
+            dy     = Forward(2, dx);
             for(i = 0; i < m; i++)
-                ddy[i * p + l] = dy[i] - D[i*n+j1] - D[i*n+k1];
+               D[i * n + j1 ] = dy[i];
+         }
+         j1 = k1;
+      }
+   }
+   // compute all the requested cross partials
+   for(l = 0; l < p; l++)
+   {  j1 = j[l];
+      k1 = k[l];
+      if( j1 == k1 )
+      {  for(i = 0; i < m; i++)
+            ddy[i * p + l] = Base(2.0) * D[i * n + j1];
+      }
+      else
+      {
+         // cross term in j1 and k1 directions
+         dx[j1] = Base(1.0);
+         dx[k1] = Base(1.0);
+         Forward(1, dx);
 
-        }
-    }
-    return ddy;
+         dx[j1] = Base(0.0);
+         dx[k1] = Base(0.0);
+         dy = Forward(2, dx);
+
+         // place result in return value
+         for(i = 0; i < m; i++)
+            ddy[i * p + l] = dy[i] - D[i*n+j1] - D[i*n+k1];
+
+      }
+   }
+   return ddy;
 }
 
 } // END CppAD namespace

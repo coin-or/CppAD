@@ -9,18 +9,18 @@
 # include <cppad/utility/time_test.hpp>
 // BEGIN PROTOTYPE
 extern bool link_det_minor(
-    const std::string&         job       ,
-    size_t                     size      ,
-    size_t                     repeat    ,
-    CppAD::vector<double>&     matrix    ,
-    CppAD::vector<double>&     gradient
+   const std::string&         job       ,
+   size_t                     size      ,
+   size_t                     repeat    ,
+   CppAD::vector<double>&     matrix    ,
+   CppAD::vector<double>&     gradient
 );
 // END PROTOTYPE
 /*
 -------------------------------------------------------------------------------
 $begin link_det_minor$$
 $spell
-    det
+   det
 $$
 
 
@@ -28,7 +28,7 @@ $section Speed Testing Gradient of Determinant by Minor Expansion$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
+   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 
 $head Method$$
@@ -72,72 +72,72 @@ $end
 // The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 namespace {
-    void time_det_minor_callback(size_t size, size_t repeat)
-    {   std::string           job("run");
-        CppAD::vector<double> matrix(size * size);
-        CppAD::vector<double> gradient(size * size);
-        //
-        link_det_minor(job, size, repeat, matrix, gradient);
-        return;
-    }
+   void time_det_minor_callback(size_t size, size_t repeat)
+   {  std::string           job("run");
+      CppAD::vector<double> matrix(size * size);
+      CppAD::vector<double> gradient(size * size);
+      //
+      link_det_minor(job, size, repeat, matrix, gradient);
+      return;
+   }
 }
 // ---------------------------------------------------------------------------
 bool available_det_minor(void)
 {
-    size_t size   = 3;
-    size_t repeat = 0;
-    CppAD::vector<double> matrix(size * size);
-    CppAD::vector<double> gradient(size * size);
-    //
-    std::string job = "setup";
-    bool result = link_det_minor(job, size, repeat, matrix, gradient);
-    //
-    job = "teardown";
-    link_det_minor(job, size, repeat, matrix, gradient);
-    //
-    return result;
+   size_t size   = 3;
+   size_t repeat = 0;
+   CppAD::vector<double> matrix(size * size);
+   CppAD::vector<double> gradient(size * size);
+   //
+   std::string job = "setup";
+   bool result = link_det_minor(job, size, repeat, matrix, gradient);
+   //
+   job = "teardown";
+   link_det_minor(job, size, repeat, matrix, gradient);
+   //
+   return result;
 }
 // ---------------------------------------------------------------------------
 bool correct_det_minor(bool is_package_double)
 {
-    size_t  size   = 3;
-    size_t  repeat = 1;
-    CppAD::vector<double> matrix(size * size);
-    CppAD::vector<double> gradient(size * size);
-    //
-    std::string job = "setup";
-    link_det_minor(job, size, repeat, matrix, gradient);
-    //
-    job = "run";
-    link_det_minor(job, size, repeat, matrix, gradient);
-    //
-    bool ok = CppAD::det_grad_33(matrix, gradient);
-    if( is_package_double )
-        ok = CppAD::det_33(matrix, gradient);
-    else
-        ok = CppAD::det_grad_33(matrix, gradient);
-    //
-    job = "teardown";
-    link_det_minor(job, size, repeat, matrix, gradient);
-    //
-    return ok;
+   size_t  size   = 3;
+   size_t  repeat = 1;
+   CppAD::vector<double> matrix(size * size);
+   CppAD::vector<double> gradient(size * size);
+   //
+   std::string job = "setup";
+   link_det_minor(job, size, repeat, matrix, gradient);
+   //
+   job = "run";
+   link_det_minor(job, size, repeat, matrix, gradient);
+   //
+   bool ok = CppAD::det_grad_33(matrix, gradient);
+   if( is_package_double )
+      ok = CppAD::det_33(matrix, gradient);
+   else
+      ok = CppAD::det_grad_33(matrix, gradient);
+   //
+   job = "teardown";
+   link_det_minor(job, size, repeat, matrix, gradient);
+   //
+   return ok;
 }
 double time_det_minor(double time_min, size_t size)
-{   CPPAD_ASSERT_UNKNOWN( size != 0 );
-    //
-    CppAD::vector<double> matrix(size * size);
-    CppAD::vector<double> gradient(size * size);
-    //
-    std::string job    = "setup";
-    size_t      repeat = 0;
-    link_det_minor(job, size, repeat, matrix, gradient);
-    //
-    // job is run in time_det_minor_callback
-    double time = CppAD::time_test(time_det_minor_callback, time_min, size);
-    //
-    job = "teardown";
-    link_det_minor(job, size, repeat, matrix, gradient);
-    //
-    return time;
+{  CPPAD_ASSERT_UNKNOWN( size != 0 );
+   //
+   CppAD::vector<double> matrix(size * size);
+   CppAD::vector<double> gradient(size * size);
+   //
+   std::string job    = "setup";
+   size_t      repeat = 0;
+   link_det_minor(job, size, repeat, matrix, gradient);
+   //
+   // job is run in time_det_minor_callback
+   double time = CppAD::time_test(time_det_minor_callback, time_min, size);
+   //
+   job = "teardown";
+   link_det_minor(job, size, repeat, matrix, gradient);
+   //
+   return time;
 }
 // ---------------------------------------------------------------------------

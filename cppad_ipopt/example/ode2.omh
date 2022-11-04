@@ -35,9 +35,9 @@ $head Forward Problem$$
 We consider the following ordinary differential equation:
 $latex \[
 \begin{array}{rcl}
-    \partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
-    \\
-    \partial_t y_1 (t , a ) & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
+   \partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
+   \\
+   \partial_t y_1 (t , a ) & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
 \end{array}
 \] $$
 with the initial conditions
@@ -59,7 +59,7 @@ Suppose we are also given a measurement vector $latex z \in \B{R}^{Nz}$$
 and for $latex i = 1, \ldots, Nz$$,
 we model $latex z_i$$ by
 $latex \[
-    z_i = y_1 ( s_i , a) + e_i
+   z_i = y_1 ( s_i , a) + e_i
 \] $$
 where $latex s_i \in \B{R}$$ is the time for the $th i$$ measurement,
 $latex e_i \sim {\bf N} (0 , \sigma^2 ) $$ is the corresponding noise,
@@ -70,33 +70,33 @@ The following analytic solution to the forward problem is used
 to simulate a data set:
 $latex \[
 \begin{array}{rcl}
-    y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
-    \\
-    y_1 (t , a) & = &
-    a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
+   y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
+   \\
+   y_1 (t , a) & = &
+   a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
 \end{array}
 \] $$
 
 $subhead Simulation Parameter Values$$
 $table
 $latex \bar{a}_0 = 1$$ $pre $$ $cnext
-    initial value of $latex y_0 (t, a)$$
+   initial value of $latex y_0 (t, a)$$
 $rnext
 $latex \bar{a}_1 = 2$$ $pre $$ $cnext
-    transfer rate from compartment zero to compartment one
+   transfer rate from compartment zero to compartment one
 $rnext
 $latex \bar{a}_2 = 1$$ $pre $$ $cnext
-    transfer rate from compartment one to outside world
+   transfer rate from compartment one to outside world
 $rnext
 $latex \sigma = 0$$ $pre $$ $cnext
-    standard deviation of measurement noise
+   standard deviation of measurement noise
 $rnext
 $latex e_i = 0$$ $pre $$ $cnext
-    simulated measurement noise, $latex i = 1 , \ldots , Nz$$
+   simulated measurement noise, $latex i = 1 , \ldots , Nz$$
 $rnext
 $latex s_i = i * .5$$ $pre $$ $cnext
-    time corresponding to the $th i$$ measurement,
-    $latex i = 1 , \ldots , Nz$$
+   time corresponding to the $th i$$ measurement,
+   $latex i = 1 , \ldots , Nz$$
 $tend
 
 $subhead Simulated Measurement Values$$
@@ -108,8 +108,8 @@ z_i
 \\
 & = &
 e_i + \bar{a}_0 * \bar{a}_1 *
-    \frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
-        { \bar{a}_1 - \bar{a}_2 }
+   \frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
+      { \bar{a}_1 - \bar{a}_2 }
 \end{array}
 \] $$
 for $latex k = 1, \ldots , Nz$$.
@@ -121,22 +121,22 @@ solves the following inverse problem
 $latex \[
 \begin{array}{rcl}
 {\rm minimize} \;
-    & \sum_{i=1}^{Nz} H_i [ y( s_i , a ) , a ]
-    & \;{\rm w.r.t} \; a \in \B{R}^{Na}
+   & \sum_{i=1}^{Nz} H_i [ y( s_i , a ) , a ]
+   & \;{\rm w.r.t} \; a \in \B{R}^{Na}
 \end{array}
 \] $$
 where the functions
 $latex H_i : \B{R}^{Ny} \times \B{R}^{Na} \rightarrow \B{R}$$ is
 defined by
 $latex \[
-    H_i (y, a) = ( z_i - y_1 )^2
+   H_i (y, a) = ( z_i - y_1 )^2
 \] $$
 
 $head Trapezoidal Approximation$$
 This example uses a trapezoidal approximation to solve the ODE.
 This approximation procedures starts with
 $latex \[
-    y^0 = y(0, a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
+   y^0 = y(0, a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
 \] $$
 Given a time grid $latex \{ t_i \}$$ and
 an approximate value $latex y^{i-1} $$ for $latex y ( t_{i-1} , a )$$,
@@ -149,11 +149,11 @@ y^i  =  y^{i-1} +
 where $latex G : \B{R}^{Ny} \times \B{R}^{Na} \rightarrow \B{R}^{Ny}$$ is the
 function representing this ODE; i.e.
 $latex \[
-    G(y, a) = \left(  \begin{array}{c}
-        - a_1 * y_0
-        \\
-        + a_1 * y_0 - a_2 * y_1
-    \end{array} \right)
+   G(y, a) = \left(  \begin{array}{c}
+      - a_1 * y_0
+      \\
+      + a_1 * y_0 - a_2 * y_1
+   \end{array} \right)
 \] $$
 This $latex G(y, a)$$ is linear with respect to $latex y$$, hence
 the implicit equation defining $latex y^i $$ can be solved
@@ -170,9 +170,9 @@ $latex t_0 = 0$$ and
 for $latex i = 1 , \ldots , Nz$$ and for $latex j = 1 , \ldots , N(i)$$,
 $latex \[
 \begin{array}{rcl}
-    \Delta t_i & = & ( s_i - s_{i-1} ) / N(i)
-    \\
-    t_{S(i-1)+j} & = & s_{i-1} + \Delta t_i * j
+   \Delta t_i & = & ( s_i - s_{i-1} ) / N(i)
+   \\
+   t_{S(i-1)+j} & = & s_{i-1} + \Delta t_i * j
 \end{array}
 \] $$
 where $latex s_0 = 0$$,
@@ -222,11 +222,11 @@ $latex \[
   \; a \in \B{R}^{Na}
 \\
 {\rm subject \; to}
-    & y^j  =  y^{j-1} +
+   & y^j  =  y^{j-1} +
 \left[ G( y^{j-1} , a ) + G( y^j , a ) \right] * \frac{ t_j - t_{j-1} }{ 2 }
-    & \; {\rm for} \; j = 1 , \ldots , S(Nz)
+   & \; {\rm for} \; j = 1 , \ldots , S(Nz)
 \\
-    & y^0 = F(a)
+   & y^0 = F(a)
 \end{array}
 \] $$
 where for $latex i = 1, \ldots , Nz$$,
@@ -239,7 +239,7 @@ In addition, the functions that need to be differentiated
 do not involve an iterative procedure.
 
 $children%
-    cppad_ipopt/example/ode_problem.hpp
+   cppad_ipopt/example/ode_problem.hpp
 %$$
 $head Source$$
 The file $code ipopt_nlp_ode_problem.hpp$$ contains
@@ -249,7 +249,7 @@ $end
 -----------------------------------------------------------------------------
 $begin ipopt_nlp_ode_simple$$
 $spell
-    cppad_ipopt_nlp
+   cppad_ipopt_nlp
 $$
 
 $section ODE Fitting Using Simple Representation$$
@@ -271,9 +271,9 @@ x = ( y^0 , \cdots , y^{S(Nz)} , a )
 Note that $latex x \in \B{R}^{S(Nz) + Na}$$ and
 $latex \[
 \begin{array}{rcl}
-    y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
-    \\
-    a   & = & ( x_{Ny *S(Nz) + Ny} , \ldots , x_{Ny * S(Nz) + Na - 1} )
+   y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
+   \\
+   a   & = & ( x_{Ny *S(Nz) + Ny} , \ldots , x_{Ny * S(Nz) + Na - 1} )
 \end{array}
 \] $$
 
@@ -282,7 +282,7 @@ The objective function
 ( $latex fg_0 (x)$$ in $cref cppad_ipopt_nlp$$ )
 has the following representation,
 $latex \[
-    fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
+   fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a )
 \] $$
 
 $head Initial Condition Constraint$$
@@ -290,7 +290,7 @@ For $latex i = 1 , \ldots , Ny$$,
 we define the component functions $latex fg_i (x)$$,
 and corresponding constraint equations, by
 $latex \[
-    0 = fg_i ( x ) = y_i^0 - F_i (a)
+   0 = fg_i ( x ) = y_i^0 - F_i (a)
 \] $$
 
 $head Trapezoidal Approximation Constraint$$
@@ -300,12 +300,12 @@ we define the component functions $latex fg_{Ny*i + j} (x)$$,
 and corresponding constraint equations, by
 $latex \[
 0 = fg_{Ny*i + j } = y_j^{i}  -  y_j^{i-1} -
-    \left[ G_j ( y^i , a ) + G_j ( y^{i-1} , a ) \right] *
-        \frac{t_i - t_{i-1} }{ 2 }
+   \left[ G_j ( y^i , a ) + G_j ( y^{i-1} , a ) \right] *
+      \frac{t_i - t_{i-1} }{ 2 }
 \] $$
 
 $children%
-    cppad_ipopt/example/ode_simple.hpp
+   cppad_ipopt/example/ode_simple.hpp
 %$$
 $head Source$$
 The file $code ipopt_nlp_ode_simple.hpp$$
@@ -316,7 +316,7 @@ $end
 -----------------------------------------------------------------------------
 $begin ipopt_nlp_ode_fast$$
 $spell
-    cppad_ipopt_nlp
+   cppad_ipopt_nlp
 $$
 
 $section ODE Fitting Using Fast Representation$$
@@ -363,37 +363,37 @@ u^{k,0} & = & ( y^{S(k+1} , a )
 \\
 & = &
 (   x_{Ny * S(k+1)} \; , \;
-    \ldots \; , \;
-    x_{Ny * S(k+1) + Ny - 1} \; , \;
-    x_{Ny * S(Nz) + Ny } \; , \;
-    \ldots \; , \;
-    x_{Ny * S(Nz) + Ny + Na - 1}
+   \ldots \; , \;
+   x_{Ny * S(k+1) + Ny - 1} \; , \;
+   x_{Ny * S(Nz) + Ny } \; , \;
+   \ldots \; , \;
+   x_{Ny * S(Nz) + Ny + Na - 1}
 )
 \end{array}
 \] $$
 Thus, the domain indices are given by
 $latex \[
 J(k,0) = \{
-    Ny * S(k+1) \; , \;
-    \ldots  \; , \;
-    Ny * S(k+1) + Ny - 1 \; , \;
-    Ny * S(Nz) + Ny \; , \;
-    \ldots  \; , \;
-    Ny * S(Nz) + Ny + Na - 1
+   Ny * S(k+1) \; , \;
+   \ldots  \; , \;
+   Ny * S(k+1) + Ny - 1 \; , \;
+   Ny * S(Nz) + Ny \; , \;
+   \ldots  \; , \;
+   Ny * S(Nz) + Ny + Na - 1
 \}
 \] $$
 
 $head Initial Condition$$
 We use the following representation for the
 $cref/initial condition constraint/
-    ipopt_nlp_ode_simple/Initial Condition Constraint/$$:
+   ipopt_nlp_ode_simple/Initial Condition Constraint/$$:
 For $latex k = Nz$$ we define the function
 $latex r^k : \B{R}^{Ny} \times \B{R}^{Na + Ny}$$ by
 $latex \[
 \begin{array}{rcl}
-    0 & = & fg_i ( x ) = y_i^0 - F_i (a)
-    \\
-    0 & = & r_{i-1}^k ( u^{k,0} ) = y_i^0 - F_i(a)
+   0 & = & fg_i ( x ) = y_i^0 - F_i (a)
+   \\
+   0 & = & r_{i-1}^k ( u^{k,0} ) = y_i^0 - F_i(a)
 \end{array}
 \] $$
 where $latex i = 1 , \ldots , Ny$$ and
@@ -416,30 +416,30 @@ u^{k,0} & = & ( y^0 , a)
 \\
 & = &
 (   x_0 \; , \;
-    \ldots \; , \;
-    x_{Ny-1} \; , \;
-    x_{Ny * S(Nz) + Ny } \; , \;
-    \ldots \; , \;
-    x_{Ny * S(Nz) + Ny + Na - 1}
+   \ldots \; , \;
+   x_{Ny-1} \; , \;
+   x_{Ny * S(Nz) + Ny } \; , \;
+   \ldots \; , \;
+   x_{Ny * S(Nz) + Ny + Na - 1}
 )
 \end{array}
 \] $$
 Thus, the domain indices are given by
 $latex \[
 J(k,0) = \{
-    0 \; , \;
-    \ldots  \; , \;
-    Ny - 1 \; , \;
-    Ny * S(Nz) + Ny \; , \;
-    \ldots  \; , \;
-    Ny * S(Nz) + Ny + Na - 1
+   0 \; , \;
+   \ldots  \; , \;
+   Ny - 1 \; , \;
+   Ny * S(Nz) + Ny \; , \;
+   \ldots  \; , \;
+   Ny * S(Nz) + Ny + Na - 1
 \}
 \] $$
 
 $head Trapezoidal Approximation$$
 We use the following representation for the
 $cref/trapezoidal approximation constraint/
-    ipopt_nlp_ode_simple/Trapezoidal Approximation Constraint/$$:
+   ipopt_nlp_ode_simple/Trapezoidal Approximation Constraint/$$:
 For $latex k = 1 , \ldots , Nz$$,
 we define the function $latex r^{Nz+k} : \B{R}^{2*Ny+Na} \rightarrow \B{R}^{Ny}$$ by
 $latex \[
@@ -486,28 +486,28 @@ u^{k, \ell} & = & ( y^{i-1} , y^i , a )
 \\
 & = &
 (   x_{Ny * (i-1)} \; , \;
-    \ldots \; , \;
-    x_{Ny * (i+1) - 1} \; , \;
-    x_{Ny * S(Nz) + Ny } \; , \;
-    \ldots \; , \;
-    x_{Ny * S(Nz) + Ny + Na - 1}
+   \ldots \; , \;
+   x_{Ny * (i+1) - 1} \; , \;
+   x_{Ny * S(Nz) + Ny } \; , \;
+   \ldots \; , \;
+   x_{Ny * S(Nz) + Ny + Na - 1}
 )
 \end{array}
 \] $$
 Thus, the domain indices are given by
 $latex \[
 J(k,\ell) = \{
-    Ny * (i-1) \; , \;
-    \ldots  \; , \;
-    Ny * (i+1) - 1 \; , \;
-    Ny * S(Nz) + Ny \; , \;
-    \ldots  \; , \;
-    Ny * S(Nz) + Ny + Na - 1
+   Ny * (i-1) \; , \;
+   \ldots  \; , \;
+   Ny * (i+1) - 1 \; , \;
+   Ny * S(Nz) + Ny \; , \;
+   \ldots  \; , \;
+   Ny * S(Nz) + Ny + Na - 1
 \}
 \] $$
 
 $children%
-    cppad_ipopt/example/ode_fast.hpp
+   cppad_ipopt/example/ode_fast.hpp
 %$$
 $head Source$$
 The file $code ipopt_nlp_ode_fast.hpp$$

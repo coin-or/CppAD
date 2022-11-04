@@ -5,35 +5,35 @@
 
 $begin whats_new_08$$
 $spell
-    autotools
-    dir
-    inline
-    tanh
-    erf
-    nlp
-    fg_vector
-    Bool
-    Ipopt
-    Jacobians
-    Jacobian
-    cygwin
-    retape
-    det
-    Adolc
-    gcc
-    speedtest
-    tarballs
-    cppad
-    cpl
-    gpl
-    tgz
-    Microsoft
-    op
-    CppAD
-    yum
-    vec
-    eval
-    const
+   autotools
+   dir
+   inline
+   tanh
+   erf
+   nlp
+   fg_vector
+   Bool
+   Ipopt
+   Jacobians
+   Jacobian
+   cygwin
+   retape
+   det
+   Adolc
+   gcc
+   speedtest
+   tarballs
+   cppad
+   cpl
+   gpl
+   tgz
+   Microsoft
+   op
+   CppAD
+   yum
+   vec
+   eval
+   const
 $$
 
 $section Changes and Additions to CppAD During 2008$$
@@ -181,7 +181,7 @@ Fix bug in $cref cppad_ipopt_nlp$$ (not recording the function
 at the proper location. Here is the difference that occurred
 multiple places in the $code ipopt_cppad/ipopt_cppad_nlp.cpp$$ source:
 $codep
-    for(j = 0; j < n_; j++)
+   for(j = 0; j < n_; j++)
 -       x_ad_vec[0] = x[j];
 +       x_ad_vec[j] = x[j];
 $$
@@ -214,7 +214,7 @@ This has been fixed.
 In addition, it seems that for some cases (or compilers)
 the assignment
 $codei%
-    %x%[%i%] = %y%[%j%]
+   %x%[%i%] = %y%[%j%]
 %$$
 did not work properly when both $icode x$$ and $icode y$$
 had type $code vectorBool$$.
@@ -376,7 +376,7 @@ $head 02-03$$
 There was an ambiguity problem
 (detected by g++ 4.3) with the following operations
 $codei%
-    %x% %op% %y%
+   %x% %op% %y%
 %$$
 where $icode x$$ and $icode y$$ were $code AD<double>$$ and
 $icode op$$ was a member operator of that class.

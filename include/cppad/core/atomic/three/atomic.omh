@@ -7,8 +7,8 @@ $begin atomic_three$$
 $section Atomic AD Functions: Third Generation$$
 
 $childtable%
-    include/cppad/core/atomic/three/atomic.hpp%
-    example/atomic_three/atomic_three.omh
+   include/cppad/core/atomic/three/atomic.hpp%
+   example/atomic_three/atomic_three.omh
 %$$
 
 $end

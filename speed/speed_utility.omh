@@ -9,16 +9,16 @@ $section Speed Testing Utilities$$
 
 
 $children%
-    include/cppad/speed/det_by_lu.hpp%
-    include/cppad/speed/det_of_minor.hpp%
-    include/cppad/speed/det_by_minor.hpp%
-    include/cppad/speed/det_33.hpp%
-    include/cppad/speed/det_grad_33.hpp%
-    include/cppad/speed/mat_sum_sq.hpp%
-    include/cppad/speed/ode_evaluate.hpp%
-    include/cppad/speed/sparse_jac_fun.hpp%
-    include/cppad/speed/sparse_hes_fun.hpp%
-    include/cppad/speed/uniform_01.hpp
+   include/cppad/speed/det_by_lu.hpp%
+   include/cppad/speed/det_of_minor.hpp%
+   include/cppad/speed/det_by_minor.hpp%
+   include/cppad/speed/det_33.hpp%
+   include/cppad/speed/det_grad_33.hpp%
+   include/cppad/speed/mat_sum_sq.hpp%
+   include/cppad/speed/ode_evaluate.hpp%
+   include/cppad/speed/sparse_jac_fun.hpp%
+   include/cppad/speed/sparse_hes_fun.hpp%
+   include/cppad/speed/uniform_01.hpp
 %$$
 
 $head Speed Main Program$$

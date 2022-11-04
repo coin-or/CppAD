@@ -7,10 +7,10 @@
 /*
 $begin atomic_four_lin_ode_base_solver.hpp$$
 $spell
-    Rosen
-    lin
-    nnz
-    vk
+   Rosen
+   lin
+   nnz
+   vk
 $$
 
 $section
@@ -19,7 +19,7 @@ $$
 
 $head Syntax$$
 $icode%lin_ode%.base_solver(
-    %r%, %step%, %pattern%, %transpose%, %x%, %y%
+   %r%, %step%, %pattern%, %transpose%, %x%, %y%
 )%$$
 
 $head Prototype$$
@@ -60,106 +60,106 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 void atomic_lin_ode<Base>::base_solver(
-    const Base&                    r         ,
-    const Base&                    step      ,
-    const sparse_rc&               pattern   ,
-    const bool&                    transpose ,
-    const CppAD::vector<Base>&     x         ,
-    CppAD::vector<Base>&           y         )
+   const Base&                    r         ,
+   const Base&                    step      ,
+   const sparse_rc&               pattern   ,
+   const bool&                    transpose ,
+   const CppAD::vector<Base>&     x         ,
+   CppAD::vector<Base>&           y         )
 // END_PROTOTYPE
 {
-    class Fun {
-    private:
-        const sparse_rc&           pattern_;
-        const bool&                transpose_;
-        const CppAD::vector<Base>& x_;
-    public:
-        Fun(
-            const sparse_rc&           pattern   ,
-            const bool&                transpose ,
-            const CppAD::vector<Base>& x         )
-        : pattern_(pattern), transpose_(transpose), x_(x)
-        { }
-        void Ode(
-            const Base&                t ,
-            const CppAD::vector<Base>& z ,
-            CppAD::vector<Base>&       f )
-        {   size_t m   = z.size();
-            size_t nnz = pattern_.nnz();
-            CPPAD_ASSERT_UNKNOWN( f.size() == m );
-            CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
-            CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
-            CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
-            //
-            for(size_t i = 0; i < m; ++i)
-                f[i] = Base(0);
-            for(size_t k = 0; k < nnz; ++k)
-            {   size_t i = pattern_.row()[k];
-                size_t j = pattern_.col()[k];
-                if( transpose_ )
-                    std::swap(i, j);
-                f[i] += x_[k] * z[j];
-            }
-        }
-        void Ode_ind(
-            const Base&                t   ,
-            const CppAD::vector<Base>& z   ,
-            CppAD::vector<Base>&       f_t )
-        {   size_t m   = z.size();
+   class Fun {
+   private:
+      const sparse_rc&           pattern_;
+      const bool&                transpose_;
+      const CppAD::vector<Base>& x_;
+   public:
+      Fun(
+         const sparse_rc&           pattern   ,
+         const bool&                transpose ,
+         const CppAD::vector<Base>& x         )
+      : pattern_(pattern), transpose_(transpose), x_(x)
+      { }
+      void Ode(
+         const Base&                t ,
+         const CppAD::vector<Base>& z ,
+         CppAD::vector<Base>&       f )
+      {  size_t m   = z.size();
+         size_t nnz = pattern_.nnz();
+         CPPAD_ASSERT_UNKNOWN( f.size() == m );
+         CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
+         CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
+         CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
+         //
+         for(size_t i = 0; i < m; ++i)
+            f[i] = Base(0);
+         for(size_t k = 0; k < nnz; ++k)
+         {  size_t i = pattern_.row()[k];
+            size_t j = pattern_.col()[k];
+            if( transpose_ )
+               std::swap(i, j);
+            f[i] += x_[k] * z[j];
+         }
+      }
+      void Ode_ind(
+         const Base&                t   ,
+         const CppAD::vector<Base>& z   ,
+         CppAD::vector<Base>&       f_t )
+      {  size_t m   = z.size();
 # ifndef NDEBUG
-            size_t nnz = pattern_.nnz();
-            CPPAD_ASSERT_UNKNOWN( f_t.size() == m );
-            CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
-            CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
-            CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
+         size_t nnz = pattern_.nnz();
+         CPPAD_ASSERT_UNKNOWN( f_t.size() == m );
+         CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
+         CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
+         CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
 # endif
-            //
-            for(size_t i = 0; i < m; ++i)
-                f_t[i] = Base(0);
-        }
-        void Ode_dep(
-            const Base&                t   ,
-            const CppAD::vector<Base>& z   ,
-            CppAD::vector<Base>&       f_x )
-        {   size_t m   = z.size();
-            size_t nnz = pattern_.nnz();
-            CPPAD_ASSERT_UNKNOWN( f_x.size() == m * m );
-            CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
-            CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
-            CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
-            //
-            for(size_t i = 0; i < m * m; ++i)
-                f_x[i] = Base(0);
-            for(size_t k = 0; k < nnz; ++k)
-            {   size_t i = pattern_.row()[k];
-                size_t j = pattern_.col()[k];
-                if( transpose_ )
-                    std::swap(i, j);
-                f_x[i * m + j] = x_[k];
-            }
-        }
-    };
-    //
-    // nnz
-    size_t nnz = pattern.nnz();
-    // m
-    size_t m     = y.size();
-    CPPAD_ASSERT_UNKNOWN( x.size() == nnz + m );
-    //
-    // fun
-    Fun fun(pattern, transpose, x);
-    //
-    // y
-    Base ti       = Base(0.0);
-    Base tf       = r;
-    size_t n_step = 1;
-    if( step < abs(r) )
-        n_step = size_t( Integer( abs(r) / step ) ) + 1;
-    CppAD::vector<Base> zi(m), e(m);
-    for(size_t j = 0; j < m; ++j)
-        zi[j] = x[nnz + j];
-    y = CppAD::Rosen34(fun, n_step, ti, tf, zi, e);
-    return;
+         //
+         for(size_t i = 0; i < m; ++i)
+            f_t[i] = Base(0);
+      }
+      void Ode_dep(
+         const Base&                t   ,
+         const CppAD::vector<Base>& z   ,
+         CppAD::vector<Base>&       f_x )
+      {  size_t m   = z.size();
+         size_t nnz = pattern_.nnz();
+         CPPAD_ASSERT_UNKNOWN( f_x.size() == m * m );
+         CPPAD_ASSERT_UNKNOWN( x_.size() == nnz + m );
+         CPPAD_ASSERT_UNKNOWN( pattern_.nr() == m );
+         CPPAD_ASSERT_UNKNOWN( pattern_.nc() == m );
+         //
+         for(size_t i = 0; i < m * m; ++i)
+            f_x[i] = Base(0);
+         for(size_t k = 0; k < nnz; ++k)
+         {  size_t i = pattern_.row()[k];
+            size_t j = pattern_.col()[k];
+            if( transpose_ )
+               std::swap(i, j);
+            f_x[i * m + j] = x_[k];
+         }
+      }
+   };
+   //
+   // nnz
+   size_t nnz = pattern.nnz();
+   // m
+   size_t m     = y.size();
+   CPPAD_ASSERT_UNKNOWN( x.size() == nnz + m );
+   //
+   // fun
+   Fun fun(pattern, transpose, x);
+   //
+   // y
+   Base ti       = Base(0.0);
+   Base tf       = r;
+   size_t n_step = 1;
+   if( step < abs(r) )
+      n_step = size_t( Integer( abs(r) / step ) ) + 1;
+   CppAD::vector<Base> zi(m), e(m);
+   for(size_t j = 0; j < m; ++j)
+      zi[j] = x[nnz + j];
+   y = CppAD::Rosen34(fun, n_step, ti, tf, zi, e);
+   return;
 }
 } // END_CPPAD_NAMESPACE
 // END C++

@@ -4,29 +4,29 @@
 # ----------------------------------------------------------------------------
 $begin wish_list$$
 $spell
-    Taylor
-    Subgraphs
-    subgraph
-    Jacobians
-    Recomputation
-    optimizer
-    checkpointing
-    grep
-    recomputed
-    iterator
-    Adolc
-    hpp
-    CppAD
-    Atan
-    cppad
-    tapeless
-    jac
-    boolofvoid
-    inline
-    colpack
-    azmul
-    op
-    Vec
+   Taylor
+   Subgraphs
+   subgraph
+   Jacobians
+   Recomputation
+   optimizer
+   checkpointing
+   grep
+   recomputed
+   iterator
+   Adolc
+   hpp
+   CppAD
+   Atan
+   cppad
+   tapeless
+   jac
+   boolofvoid
+   inline
+   colpack
+   azmul
+   op
+   Vec
 $$
 
 $section The CppAD Wish List$$
@@ -70,7 +70,7 @@ $head Reverse Mode$$
 Reverse mode calculation of the function
 $latex f : \B{R} \rightarrow \B{R}$$  defined by $latex y = f(x)$$ where
 $codei%
-    %ay%[0] = pow(%ax%[0], 0.5) * pow(%ax%[0], 0.5)
+   %ay%[0] = pow(%ax%[0], 0.5) * pow(%ax%[0], 0.5)
 %$$
 yields the result zero when $latex x_0 = 0$$;
 see the file $code bug/pow.sh$$.
@@ -110,7 +110,7 @@ Avoid cancellation when computing the difference in the absolute value
 function at the current point $latex \hat{x}$$ the displaced point
 $latex x = \hat{x} + \Delta x$$; i.e.,
 $latex \[
-    |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
+   |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
 \] $$
 
 $comment ------------------------------------------------------------------- $$
@@ -226,7 +226,7 @@ should be delayed to the $code optimization$$ step.
 $subhead Special Operators$$
 Add special operators that can be implemented more efficiently, e.g.,
 $codei%
-    square(%x%) = %x% * %x%
+   square(%x%) = %x% * %x%
 %$$
 and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
@@ -269,7 +269,7 @@ Add tracing the operation sequence to the user API and documentation.
 Tracing the operation sequence is currently done by changing the CppAD
 source code. Use the command
 $codep
-    grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep*.hpp
+   grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep*.hpp
 $$
 to find all the possible tracing flags.
 

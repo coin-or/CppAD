@@ -5,53 +5,53 @@
 
 $begin whats_new_07$$
 $spell
-    autotools
-    mul
-    cxx
-    omh
-    tgz
-    yyyymmdd
-    isnan
-    gcc
-    executables
-    makefiles
-    tarballs
-    autoconf
-    Fadbad
-    Sacado::Tay
-    Dir
-    Ginac
-    xi
-    Bool
-    CppADvector
-    inv
-    namespace
-    det_lu
-    adouble
-    Adolc
-    op
-    sqrt
-    eps
-    mega
-    Kipp
-    vcproj
-    exp_apx
-    Microsoft
-    threadprivate
-    gettimeofday
-    ifndef
-    Vec
-    openmp
-    dy
-    automake
-    makefile
-    CppAD
-    cygwin
-    cppad.hpp
-    config.h
-    dd
-    Adolc
-    Taylor
+   autotools
+   mul
+   cxx
+   omh
+   tgz
+   yyyymmdd
+   isnan
+   gcc
+   executables
+   makefiles
+   tarballs
+   autoconf
+   Fadbad
+   Sacado::Tay
+   Dir
+   Ginac
+   xi
+   Bool
+   CppADvector
+   inv
+   namespace
+   det_lu
+   adouble
+   Adolc
+   op
+   sqrt
+   eps
+   mega
+   Kipp
+   vcproj
+   exp_apx
+   Microsoft
+   threadprivate
+   gettimeofday
+   ifndef
+   Vec
+   openmp
+   dy
+   automake
+   makefile
+   CppAD
+   cygwin
+   cppad.hpp
+   config.h
+   dd
+   Adolc
+   Taylor
 $$
 
 $section Changes and Additions to CppAD During 2007$$
@@ -193,7 +193,7 @@ The instructions for downloading the current version using
 $code subversion$$ have changed.
 The user should now directly edit the file
 $codep
-    trunk/configure
+   trunk/configure
 $$
 in order to set the correct date for the installation
 and to build the corresponding documentation.
@@ -213,7 +213,7 @@ The instructions for downloading the current version using subversion
 have changed.
 The user must now execute the command
 $codep
-    ./build.sh version
+   ./build.sh version
 $$
 in order to set the correct version number for her (or his) installation.
 $pre
@@ -306,7 +306,7 @@ $$
 The routine $cref CheckSimpleVector$$ was changed.
 It used to require conversion of the form
 $codei%
-    %Scalar%(%i%)
+   %Scalar%(%i%)
 %$$
 where $icode i$$ was $code 0$$ or $code 1$$.
 This does not work with when $icode Scalar$$ is
@@ -315,7 +315,7 @@ This requirement has been changed
 (see $cref/restrictions/CheckSimpleVector/Restrictions/$$)
 to support of
 $codei%
-    %x% = %i%
+   %x% = %i%
 %$$
 where $icode x$$ has type $icode Scalar$$
 and $icode i$$ has type $code int$$.
@@ -584,7 +584,7 @@ the $cref/compound assignment/compound_assign/$$ operators did not
 always allow for $code double$$ operands. For example,
 if $icode x$$ had type $code AD< AD<double> >$$
 $codei%
-    %x% += .5;
+   %x% += .5;
 %$$
 would slice the value $code .5$$ to an $code int$$
 and then convert it to an $code AD< AD<double> >$$.
@@ -616,7 +616,7 @@ $cref/05-26/whats_new_07/05-26/$$ update.)
 $head 05-24$$
 Suppose that $icode op$$ is a binary operation and we have
 $codei%
-    %left% %op% %right%
+   %left% %op% %right%
 %$$
 where one of the operands was $code AD< AD<double> >$$ and
 the other operand was $code double$$.
@@ -834,8 +834,8 @@ $subhead 03-28$$
 The conditional include commands were missing on some include files;
 for example
 $codep
-    # ifndef CPPAD_BENDER_QUAD_HPP
-    # define CPPAD_BENDER_QUAD_HPP
+   # ifndef CPPAD_BENDER_QUAD_HPP
+   # define CPPAD_BENDER_QUAD_HPP
 $$
 was missing at the beginning of the $cref BenderQuad$$ include file.
 This has been fixed.
@@ -881,11 +881,11 @@ by having at most one tape per thread.
 $subhead 02-22$$
 The include command in the $cref speed_test$$ documentation was
 $codep
-    # include <speed/speed_test.hpp>
+   # include <speed/speed_test.hpp>
 $$
 but it should have been
 $codep
-    # include <cppad/speed_test.hpp>
+   # include <cppad/speed_test.hpp>
 $$
 This has been fixed.
 

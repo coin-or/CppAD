@@ -5,9 +5,9 @@
 $begin chkpoint_two_chk_fun$$
 
 $spell
-    const
-    chk
-    chkpoint
+   const
+   chk
+   chkpoint
 $$
 
 $section Using Checkpoint Functions$$
@@ -35,7 +35,7 @@ $codei%AD<%Base%>%$$.
 $head ax$$
 This argument has prototype
 $codei%
-    const %ADVector%& ax
+   const %ADVector%& ax
 %$$
 and its size equal to $icode%n% = %fun%.Domain()%$$
 where $cref/fun/chkpoint_two_ctor/fun/$$ is the $codei%ADFun<%Base%>%$$
@@ -47,7 +47,7 @@ $latex y = g(x)$$.
 $head ay$$
 This argument has prototype
 $codei%
-    %ADVector%& ay
+   %ADVector%& ay
 %$$
 and its size must be equal to $icode%m% = %fun%.Range()%$$.
 The input values of its elements do not matter.

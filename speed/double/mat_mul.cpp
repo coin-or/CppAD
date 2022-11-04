@@ -5,15 +5,15 @@
 /*
 $begin double_mat_mul.cpp$$
 $spell
-    onetape
-    CppAD
-    cppad
-    mul_mat
-    hpp
-    sq
-    bool
-    dz
-    typedef
+   onetape
+   CppAD
+   cppad
+   mul_mat
+   hpp
+   sq
+   bool
+   dz
+   typedef
 $$
 
 $section Double Speed: Matrix Multiplication$$
@@ -33,28 +33,28 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_mat_mul(
-    size_t                           size     ,
-    size_t                           repeat   ,
-    CppAD::vector<double>&           x        ,
-    CppAD::vector<double>&           z        ,
-    CppAD::vector<double>&           dz
+   size_t                           size     ,
+   size_t                           repeat   ,
+   CppAD::vector<double>&           x        ,
+   CppAD::vector<double>&           z        ,
+   CppAD::vector<double>&           dz
 )
 {
-    if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
-        return false;
-    // -----------------------------------------------------
-    size_t n = size * size; // number of independent variables
-    CppAD::vector<double> y(n);
+   if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
+      return false;
+   // -----------------------------------------------------
+   size_t n = size * size; // number of independent variables
+   CppAD::vector<double> y(n);
 
-    while(repeat--)
-    {   // get the next matrix
-        CppAD::uniform_01(n, x);
+   while(repeat--)
+   {  // get the next matrix
+      CppAD::uniform_01(n, x);
 
-        // do computation
-        mat_sum_sq(size, x, y, z);
+      // do computation
+      mat_sum_sq(size, x, y, z);
 
-    }
-    return true;
+   }
+   return true;
 }
 /* %$$
 $end

@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin devel_forward$$
 $spell
-    Devel
+   Devel
 $$
 
 $section Devel: Forward Mode$$
 
 $childtable%
-    include/cppad/core/forward/forward.hpp
+   include/cppad/core/forward/forward.hpp
 %$$
 
 $end

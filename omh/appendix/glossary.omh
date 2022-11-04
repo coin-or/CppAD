@@ -6,16 +6,16 @@
 $begin glossary$$
 $aindex head subhead$$
 $spell
-    std
-    Vec
-    cos
-    bool
-    Op
-    Diff
-    Var
-    Cpp
-    enum
-    Taylor
+   std
+   Vec
+   cos
+   bool
+   Op
+   Diff
+   Var
+   Cpp
+   enum
+   Taylor
 $$
 
 $section Glossary$$
@@ -49,7 +49,7 @@ If $icode Base$$ is a type,
 an AD type above $icode Base$$
 is the following sequence of types:
 $codei%
-    AD<%Base%> %,% AD< AD<%Base%> > %,% AD< AD< AD<%Base%> > > %,% %...%
+   AD<%Base%> %,% AD< AD<%Base%> > %,% AD< AD< AD<%Base%> > > %,% %...%
 %$$
 
 $head Base Function$$
@@ -66,8 +66,8 @@ $head Elementary Vector$$
 The $th j$$ elementary vector $latex e^j \in \B{R}^m$$ is defined by
 $latex \[
 e_i^j = \left\{ \begin{array}{ll}
-    1 & {\rm if} \; i = j \\
-    0 & {\rm otherwise}
+   1 & {\rm if} \; i = j \\
+   0 & {\rm otherwise}
 \end{array} \right.
 \] $$
 
@@ -91,15 +91,15 @@ $subhead Dependent$$
 Suppose that $icode x$$ and $icode y$$ are $icode Type$$ objects and
 the result of
 $codei%
-    %x% < %y%
+   %x% < %y%
 %$$
 has type $code bool$$ (where $icode Type$$ is not the same as $code bool$$).
 If one executes the following code
 $codei%
-    if( %x% < %y% )
-        %y% = cos(%x%);
-    else
-        %y% = sin(%x%);
+   if( %x% < %y% )
+      %y% = cos(%x%);
+   else
+      %y% = sin(%x%);
 %$$
 the choice above depends on the value of $icode x$$ and $icode y$$
 and the two choices result in a different $icode Type$$ operation sequence.
@@ -112,9 +112,9 @@ and $icode%x%[%i%]%$$, $icode y$$ are $icode Type$$ objects,
 where $icode Type$$ is different from $code size_t$$.
 The $icode Type$$ sequence of operations corresponding to
 $codei%
-    %y% = %Type%(0);
-    for(%i% = 0; %i% < %n%; %i%++)
-        %y% += %x%[%i%];
+   %y% = %Type%(0);
+   for(%i% = 0; %i% < %n%; %i%++)
+      %y% += %x%[%i%];
 %$$
 does not depend on the value of $icode x$$ or $icode y$$.
 In this case, we say that the $icode Type$$ operation sequence
@@ -151,7 +151,7 @@ A $cref SimpleVector$$ $icode v$$ is a row-major representation of a matrix
 $latex M \in \B{R}^{m \times n}$$ if $icode%v%.size() == %m% * %n%$$ and
 for $latex i = 0 , \ldots , m-1$$, $latex j = 0 , \ldots , n-1$$
 $latex \[
-    M_{i,j} = v[ i \times n + j ]
+   M_{i,j} = v[ i \times n + j ]
 \] $$
 
 $head Sparsity Pattern$$
@@ -185,7 +185,7 @@ $subhead Active$$
 A new tape is created and becomes active
 after each call of the form (see $cref Independent$$)
 $codei%
-    Independent(%x%)
+   Independent(%x%)
 %$$
 All operations that depend on the elements of $icode x$$ are
 recorded on this active tape.
@@ -194,8 +194,8 @@ $subhead Inactive$$
 The $cref/operation sequence/glossary/Operation/Sequence/$$
 stored in a tape can be transferred to a function object using the syntax
 $codei%
-    ADFun<%Base%> %f%( %x%, %y%)
-    %f%.Dependent( %x%, %y%)
+   ADFun<%Base%> %f%( %x%, %y%)
+   %f%.Dependent( %x%, %y%)
 %$$
 see $cref FunConstruct$$.
 After such a transfer, the tape becomes inactive.
@@ -226,11 +226,11 @@ we use the column vector $latex x^{(k)} \in \B{R}^n$$ for the $th k$$ order
 Taylor coefficient corresponding to $latex X$$
 which is defined by
 $latex \[
-    x^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0)
+   x^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0)
 \] $$
 It follows that
 $latex \[
-    X(t) = x^{(0)} + x^{(1)} t + \cdots + x^{(p)} t^p  + R(t)
+   X(t) = x^{(0)} + x^{(1)} t + \cdots + x^{(p)} t^p  + R(t)
 \]$$
 where the remainder $latex R(t)$$ divided by $latex t^p$$
 converges to zero and $latex t$$ goes to zero.
@@ -248,15 +248,15 @@ $cref/Parameter(u)/con_dyn_var/Parameter/$$ returns false.
 For example,
 directly after the code sequence
 $codei%
-    Independent(%x%);
-    AD<double> %u% = %x%[0];
+   Independent(%x%);
+   AD<double> %u% = %x%[0];
 %$$
 the $codei%AD<double>%$$ object $icode u$$ is currently a variable.
 Directly after the code sequence
 $codei%
-    Independent(%x%);
-    AD<double> %u% = %x%[0];
-    %u% = 5;
+   Independent(%x%);
+   AD<double> %u% = %x%[0];
+   %u% = 5;
 %$$
 $icode u$$  is currently a
 $cref/constant/glossary/Parameter/Constant/$$ parameter,

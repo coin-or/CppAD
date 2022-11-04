@@ -5,39 +5,39 @@
 
 $begin whats_new_20$$
 $spell
-    eigen
-    CppAD
-    vec
-    ind
-    omh
-    Cppadcg
-    optionlist
-    Adolc
-    Gitlab
-    Github
-    op
-    optimizer
-    cmake
-    cppad
-    hpp
-    ipopt
-    uninitialized
-    autotools
-    callgrind
-    ar
-    msys
-    Microsoft
-    config
-    std
-    resize
-    Oct
-    msvc
-    cg
-    rc
-    rcv
-    jacobian
-    det
-    Bool
+   eigen
+   CppAD
+   vec
+   ind
+   omh
+   Cppadcg
+   optionlist
+   Adolc
+   Gitlab
+   Github
+   op
+   optimizer
+   cmake
+   cppad
+   hpp
+   ipopt
+   uninitialized
+   autotools
+   callgrind
+   ar
+   msys
+   Microsoft
+   config
+   std
+   resize
+   Oct
+   msvc
+   cg
+   rc
+   rcv
+   jacobian
+   det
+   Bool
 $$
 
 $section Changes and Additions to CppAD During 2020$$
@@ -46,8 +46,8 @@ $head 12-28$$
 $list number$$
 Add the
 $cref/PASS_SPARSE_JACOBIAN_TO_CODE_GEN
-    /cppadcg_sparse_jacobian.cpp
-    /PASS_SPARSE_JACOBIAN_TO_CODE_GEN
+   /cppadcg_sparse_jacobian.cpp
+   /PASS_SPARSE_JACOBIAN_TO_CODE_GEN
 /$$
 option to the cppadcg sparse jacobian speed test
 so one can compare passing a function, or its sparse Jacobian, to
@@ -64,8 +64,8 @@ and $code compiled_fun.cpp$$ in the documentation.
 $lnext
 Add the
 $cref/PASS_JACOBIAN_TO_CODE_GEN
-    /cppadcg_det_minor.cpp
-    /PASS_JACOBIAN_TO_CODE_GEN
+   /cppadcg_det_minor.cpp
+   /PASS_JACOBIAN_TO_CODE_GEN
 /$$
 option to the cppadcg det_minor speed test
 so one can compare passing the determinant or its Jacobian to
@@ -123,14 +123,14 @@ $cref/sparse_rcv/sparse_rcv/other/swap/$$ template classes.
 $lnext
 A move semantics version of the assignment operator was added to the
 $cref/sparse_rc/
-    sparse_rc/
-    other/
-    Move Semantics Assignment and Constructor
+   sparse_rc/
+   other/
+   Move Semantics Assignment and Constructor
 /$$
 $cref/sparse_rcv/
-    sparse_rcv/
-    other/
-    Move Semantics Assignment and Constructor
+   sparse_rcv/
+   other/
+   Move Semantics Assignment and Constructor
 /$$ template classes.
 $lnext
 The $icode job$$ option was added to the
@@ -218,7 +218,7 @@ $head 10-23$$
 Version $code cmake-3.19$$ of cmake had an change that was not backward
 compatible; see
 $href%https://discourse.cmake.org/t/on-windows-check-cxx-source-runs-is-calling-check-source-runs/2065/6%
-    CHECK_CXX_SOURCE_RUNS
+   CHECK_CXX_SOURCE_RUNS
 %$$.
 This broke the CppAD install and was fixed.
 Thus versions of CppAD before 20201023 do not work with version of CMake
@@ -346,11 +346,11 @@ The speed main program
 $cref/correct/speed_main/test/correct/$$
 test results were printed as
 $codei%
-    %package%_%test%_%optionlist%_ok = %result%
+   %package%_%test%_%optionlist%_ok = %result%
 %$$
 This has been changed to
 $codei%
-    %package%_%test%_%optionlist%_correct = %result%
+   %package%_%test%_%optionlist%_correct = %result%
 %$$
 $lend
 

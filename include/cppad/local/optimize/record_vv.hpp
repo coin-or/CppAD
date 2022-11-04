@@ -35,47 +35,47 @@ is the operator and variable indices in the new operation sequence.
 */
 template <class Addr, class Base>
 struct_size_pair record_vv(
-    const player<Base>*                                play           ,
-    const play::const_random_iterator<Addr>&           random_itr     ,
-    const pod_vector<addr_t>&                          new_var        ,
-    size_t                                             i_op           ,
-    recorder<Base>*                                    rec            )
+   const player<Base>*                                play           ,
+   const play::const_random_iterator<Addr>&           random_itr     ,
+   const pod_vector<addr_t>&                          new_var        ,
+   size_t                                             i_op           ,
+   recorder<Base>*                                    rec            )
 {
-    // get_op_info
-    OpCode        op;
-    const addr_t* arg;
-    size_t        i_var;
-    random_itr.op_info(i_op, op, arg, i_var);
-    //
+   // get_op_info
+   OpCode        op;
+   const addr_t* arg;
+   size_t        i_var;
+   random_itr.op_info(i_op, op, arg, i_var);
+   //
 # ifndef NDEBUG
-    switch(op)
-    {   case AddvvOp:
-        case DivvvOp:
-        case MulvvOp:
-        case PowvvOp:
-        case SubvvOp:
-        case ZmulvvOp:
-        break;
+   switch(op)
+   {  case AddvvOp:
+      case DivvvOp:
+      case MulvvOp:
+      case PowvvOp:
+      case SubvvOp:
+      case ZmulvvOp:
+      break;
 
-        default:
-        CPPAD_ASSERT_UNKNOWN(false);
-    }
+      default:
+      CPPAD_ASSERT_UNKNOWN(false);
+   }
 # endif
-    CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_var ); // DAG condition
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_var ); // DAG condition
-    //
-    addr_t new_arg[2];
-    new_arg[0]   = new_var[ random_itr.var2op(size_t(arg[0])) ];
-    new_arg[1]   = new_var[ random_itr.var2op(size_t(arg[1])) ];
-    rec->PutArg( new_arg[0], new_arg[1] );
-    //
-    struct_size_pair ret;
-    ret.i_op  = rec->num_op_rec();
-    ret.i_var = size_t(rec->PutOp(op));
-    CPPAD_ASSERT_UNKNOWN( 0 < new_arg[0] && size_t(new_arg[0]) < ret.i_var );
-    CPPAD_ASSERT_UNKNOWN( 0 < new_arg[1] && size_t(new_arg[1]) < ret.i_var );
-    return ret;
+   CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_var ); // DAG condition
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_var ); // DAG condition
+   //
+   addr_t new_arg[2];
+   new_arg[0]   = new_var[ random_itr.var2op(size_t(arg[0])) ];
+   new_arg[1]   = new_var[ random_itr.var2op(size_t(arg[1])) ];
+   rec->PutArg( new_arg[0], new_arg[1] );
+   //
+   struct_size_pair ret;
+   ret.i_op  = rec->num_op_rec();
+   ret.i_var = size_t(rec->PutOp(op));
+   CPPAD_ASSERT_UNKNOWN( 0 < new_arg[0] && size_t(new_arg[0]) < ret.i_var );
+   CPPAD_ASSERT_UNKNOWN( 0 < new_arg[1] && size_t(new_arg[1]) < ret.i_var );
+   return ret;
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

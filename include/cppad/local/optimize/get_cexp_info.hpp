@@ -15,39 +15,39 @@ namespace CppAD { namespace local { namespace optimize {
 /*!
 $begin optimize_get_cexp_info.hpp$$
 $spell
-    cexp
-    itr
-    op
-    iterator
-    bool
-    Exp
-    deallocate
-    Funap
-    Funav
-    Funrp
-    Funrv
-    num
-    var
+   cexp
+   itr
+   op
+   iterator
+   bool
+   Exp
+   deallocate
+   Funap
+   Funav
+   Funrp
+   Funrv
+   num
+   var
 $$
 
 $section Information for Each Conditional Expression$$
 
 $head Syntax$$
 $codei%get_cexp_info(
-    %play%,
-    %random_itr%,
-    %op_previous%,
-    %op_usage%,
-    %cexp2op%,
-    %cexp_set%,
-    %cexp_info%,
-    %skip_op_true%,
-    %skip_op_false%
+   %play%,
+   %random_itr%,
+   %op_previous%,
+   %op_usage%,
+   %cexp2op%,
+   %cexp_set%,
+   %cexp_info%,
+   %skip_op_true%,
+   %skip_op_false%
 )%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
 
@@ -122,130 +122,130 @@ $end
 // BEGIN_PROTOTYPE
 template <class Addr, class Base>
 void get_cexp_info(
-    const player<Base>*                         play                ,
-    const play::const_random_iterator<Addr>&    random_itr          ,
-    const pod_vector<addr_t>&                   op_previous         ,
-    const pod_vector<usage_t>&                  op_usage            ,
-    const pod_vector<addr_t>&                   cexp2op             ,
-    const sparse::list_setvec&                  cexp_set            ,
-    vector<struct_cexp_info>&                   cexp_info           ,
-    sparse::list_setvec&                        skip_op_true        ,
-    sparse::list_setvec&                        skip_op_false       )
+   const player<Base>*                         play                ,
+   const play::const_random_iterator<Addr>&    random_itr          ,
+   const pod_vector<addr_t>&                   op_previous         ,
+   const pod_vector<usage_t>&                  op_usage            ,
+   const pod_vector<addr_t>&                   cexp2op             ,
+   const sparse::list_setvec&                  cexp_set            ,
+   vector<struct_cexp_info>&                   cexp_info           ,
+   sparse::list_setvec&                        skip_op_true        ,
+   sparse::list_setvec&                        skip_op_false       )
 // END_PROTOTYPE
 {
-    CPPAD_ASSERT_UNKNOWN( cexp_set.n_set() > 0  );
-    CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
+   CPPAD_ASSERT_UNKNOWN( cexp_set.n_set() > 0  );
+   CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
 
-    // number of operators in the tape
-    const size_t num_op = play->num_op_rec();
-    CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
-    CPPAD_ASSERT_UNKNOWN( op_previous.size() == num_op );
-    //
-    // number of conditional expressions in the tape
-    size_t num_cexp_op = cexp2op.size();
-    //
-    // initialize mapping from variable index to operator index
-    CPPAD_ASSERT_UNKNOWN(
-        size_t( (std::numeric_limits<addr_t>::max)() ) >= num_op
-    );
-    // ----------------------------------------------------------------------
-    // compute cexp_info
-    // ----------------------------------------------------------------------
-    //
-    // initialize information for each conditional expression
-    cexp_info.resize(num_cexp_op);
-    skip_op_true.resize(num_cexp_op, num_op);
-    skip_op_false.resize(num_cexp_op, num_op);
-    //
-    for(size_t i = 0; i < num_cexp_op; i++)
-    {   size_t i_op = size_t( cexp2op[i] );
-        CPPAD_ASSERT_UNKNOWN(
-            op_previous[i_op] == 0 || op_usage[i_op] == usage_t(yes_usage)
-        );
-        OpCode        op;     // operator
-        const addr_t* arg;    // arguments
-        size_t        i_var;  // variable index of first result
-        random_itr.op_info(i_op, op, arg, i_var);
-        CPPAD_ASSERT_UNKNOWN( op == CExpOp );
-        //
-        struct_cexp_info info;
-        info.i_op       = addr_t(i_op);
-        info.cop        = CompareOp( arg[0] );
-        info.flag       = static_cast<unsigned char>(arg[1]);
-        info.left       = arg[2];
-        info.right      = arg[3];
-        //
-        // max_left_right
-        addr_t index    = 0;
-        if( arg[1] & 1 )
-            index = std::max<addr_t>(index, info.left);
-        if( arg[1] & 2 )
-            index = std::max<addr_t>(index, info.right);
-        info.max_left_right = index;
-        //
-        cexp_info[i] = info;
-    };
-    // Determine which operators can be conditionally skipped
-    size_t i_op = 0;
-    while(i_op < num_op)
-    {   size_t j_op = i_op;
-        bool keep = op_usage[i_op] != usage_t(no_usage);
-        keep     &= op_usage[i_op] != usage_t(csum_usage);
-        keep     &= op_previous[i_op] == 0;
-        if( keep )
-        {   sparse::list_setvec_const_iterator itr(cexp_set, i_op);
-            if( *itr != cexp_set.end() )
-            {   if( play->GetOp(i_op) == AFunOp )
-                {   // i_op is the first operations in this atomic function call.
-                    // Find the last operation in this call.
-                    ++j_op;
-                    while( play->GetOp(j_op) != AFunOp )
-                    {   switch( play->GetOp(j_op) )
-                        {   case FunapOp:
-                            case FunavOp:
-                            case FunrpOp:
-                            case FunrvOp:
-                            break;
+   // number of operators in the tape
+   const size_t num_op = play->num_op_rec();
+   CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
+   CPPAD_ASSERT_UNKNOWN( op_previous.size() == num_op );
+   //
+   // number of conditional expressions in the tape
+   size_t num_cexp_op = cexp2op.size();
+   //
+   // initialize mapping from variable index to operator index
+   CPPAD_ASSERT_UNKNOWN(
+      size_t( (std::numeric_limits<addr_t>::max)() ) >= num_op
+   );
+   // ----------------------------------------------------------------------
+   // compute cexp_info
+   // ----------------------------------------------------------------------
+   //
+   // initialize information for each conditional expression
+   cexp_info.resize(num_cexp_op);
+   skip_op_true.resize(num_cexp_op, num_op);
+   skip_op_false.resize(num_cexp_op, num_op);
+   //
+   for(size_t i = 0; i < num_cexp_op; i++)
+   {  size_t i_op = size_t( cexp2op[i] );
+      CPPAD_ASSERT_UNKNOWN(
+         op_previous[i_op] == 0 || op_usage[i_op] == usage_t(yes_usage)
+      );
+      OpCode        op;     // operator
+      const addr_t* arg;    // arguments
+      size_t        i_var;  // variable index of first result
+      random_itr.op_info(i_op, op, arg, i_var);
+      CPPAD_ASSERT_UNKNOWN( op == CExpOp );
+      //
+      struct_cexp_info info;
+      info.i_op       = addr_t(i_op);
+      info.cop        = CompareOp( arg[0] );
+      info.flag       = static_cast<unsigned char>(arg[1]);
+      info.left       = arg[2];
+      info.right      = arg[3];
+      //
+      // max_left_right
+      addr_t index    = 0;
+      if( arg[1] & 1 )
+         index = std::max<addr_t>(index, info.left);
+      if( arg[1] & 2 )
+         index = std::max<addr_t>(index, info.right);
+      info.max_left_right = index;
+      //
+      cexp_info[i] = info;
+   };
+   // Determine which operators can be conditionally skipped
+   size_t i_op = 0;
+   while(i_op < num_op)
+   {  size_t j_op = i_op;
+      bool keep = op_usage[i_op] != usage_t(no_usage);
+      keep     &= op_usage[i_op] != usage_t(csum_usage);
+      keep     &= op_previous[i_op] == 0;
+      if( keep )
+      {  sparse::list_setvec_const_iterator itr(cexp_set, i_op);
+         if( *itr != cexp_set.end() )
+         {  if( play->GetOp(i_op) == AFunOp )
+            {  // i_op is the first operations in this atomic function call.
+               // Find the last operation in this call.
+               ++j_op;
+               while( play->GetOp(j_op) != AFunOp )
+               {  switch( play->GetOp(j_op) )
+                  {  case FunapOp:
+                     case FunavOp:
+                     case FunrpOp:
+                     case FunrvOp:
+                     break;
 
-                            default:
-                            CPPAD_ASSERT_UNKNOWN(false);
-                        }
-                        ++j_op;
-                    }
-                }
+                     default:
+                     CPPAD_ASSERT_UNKNOWN(false);
+                  }
+                  ++j_op;
+               }
             }
-            while( *itr != cexp_set.end() )
-            {   size_t element = *itr;
-                size_t index   = element / 2;
-                bool   compare = bool( element % 2 );
-                if( compare == false )
-                {   // cexp_info[index].skip_op_false.push_back(i_op);
-                    skip_op_false.post_element(index, i_op);
-                    if( j_op != i_op )
-                    {   // cexp_info[index].skip_op_false.push_back(j_op);
-                        skip_op_false.post_element(index, j_op);
-                    }
-                }
-                else
-                {   // cexp_info[index].skip_op_true.push_back(i_op);
-                    skip_op_true.post_element(index, i_op);
-                    if( j_op != i_op )
-                    {   // cexp_info[index].skip_op_true.push_back(j_op);
-                        skip_op_true.post_element(index, j_op);
-                    }
-                }
-                ++itr;
+         }
+         while( *itr != cexp_set.end() )
+         {  size_t element = *itr;
+            size_t index   = element / 2;
+            bool   compare = bool( element % 2 );
+            if( compare == false )
+            {  // cexp_info[index].skip_op_false.push_back(i_op);
+               skip_op_false.post_element(index, i_op);
+               if( j_op != i_op )
+               {  // cexp_info[index].skip_op_false.push_back(j_op);
+                  skip_op_false.post_element(index, j_op);
+               }
             }
-        }
-        CPPAD_ASSERT_UNKNOWN( i_op <= j_op );
-        i_op += (1 + j_op) - i_op;
-    }
-    // process postings for skip_op_false, skip_op_true
-    for(size_t i = 0; i < num_cexp_op; ++i)
-    {   skip_op_false.process_post(i);
-        skip_op_true.process_post(i);
-    }
-    return;
+            else
+            {  // cexp_info[index].skip_op_true.push_back(i_op);
+               skip_op_true.post_element(index, i_op);
+               if( j_op != i_op )
+               {  // cexp_info[index].skip_op_true.push_back(j_op);
+                  skip_op_true.post_element(index, j_op);
+               }
+            }
+            ++itr;
+         }
+      }
+      CPPAD_ASSERT_UNKNOWN( i_op <= j_op );
+      i_op += (1 + j_op) - i_op;
+   }
+   // process postings for skip_op_false, skip_op_true
+   for(size_t i = 0; i < num_cexp_op; ++i)
+   {  skip_op_false.process_post(i);
+      skip_op_true.process_post(i);
+   }
+   return;
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

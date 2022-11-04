@@ -5,13 +5,13 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    code_gen_fun.cpp
-    file.cpp
-    function.cpp
-    jacobian.cpp
-    jac_as_fun.cpp
-    sparse_jacobian.cpp
-    sparse_jac_as_fun.cpp
+   code_gen_fun.cpp
+   file.cpp
+   function.cpp
+   jacobian.cpp
+   jac_as_fun.cpp
+   sparse_jacobian.cpp
+   sparse_jac_as_fun.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
@@ -21,8 +21,8 @@ ADD_EXECUTABLE(example_code_gen_fun EXCLUDE_FROM_ALL ${source_list})
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_code_gen_fun
-    ${cppad_lib}
-    ${colpack_libs}
+   ${cppad_lib}
+   ${colpack_libs}
 )
 #
 # check_example_code_gen_fun

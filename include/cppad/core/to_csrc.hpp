@@ -15,33 +15,33 @@
 ------------------------------------------------------------------------------
 $begin to_csrc$$
 $spell
-    Json
-    cpp
-    csrc
-    cppad
-    nu
-    bool
-    Vec
-    typedef
-    const
-    namespace
-    cdecl
-    declspec
-    dllimport
-    jit
-    underbar
+   Json
+   cpp
+   csrc
+   cppad
+   nu
+   bool
+   Vec
+   typedef
+   const
+   namespace
+   cdecl
+   declspec
+   dllimport
+   jit
+   underbar
 $$
 
 $section C Source Code Corresponding to an ADFun Object$$
 
 $head Syntax$$
 $codei%
-    %fun%.to_csrc(%os%, %c_type%)
+   %fun%.to_csrc(%os%, %c_type%)
 %$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
 $head fun$$
@@ -64,11 +64,11 @@ $code float$$, $code double$$, or $code long_double$$.
 
 $head JIT Functions$$
 $icode%flag% = cppad_jit_%function_name%(
-    %nu%, %u%, %ny%, %y%, %compare_change%
+   %nu%, %u%, %ny%, %y%, %compare_change%
 )%$$
 $codei%
 typedef int (*jit_%c_type%)(
-    size_t, const %type%*, size_t, %type%*, size_t*
+   size_t, const %type%*, size_t, %type%*, size_t*
 )
 %$$
 Here $icode type$$ is the same as $icode c_type$$ except that the
@@ -80,11 +80,11 @@ the function type definition.
 
 $head Atomic Callbacks$$
 $icode%flag% = cppad_atomic_%function_name%(
-    %call_id%, %nu%, %u%, %ny%, %y%, %compare_change%
+   %call_id%, %nu%, %u%, %ny%, %y%, %compare_change%
 )%$$
 $codei%
 typedef int (*jit_%c_type%)(
-    size_t, size_t, const %type%*, size_t, %type%*, size_t*
+   size_t, size_t, const %type%*, size_t, %type%*, size_t*
 )
 %$$
 The function type $codei%atomic_%c_type%$$ is defined in the CppAD namespace.
@@ -133,7 +133,7 @@ The $code to_csrc$$ routine is not implemented for
 $cref/VecAD/vecad/$$ operations.
 
 $children%
-    example/jit/jit.omh
+   example/jit/jit.omh
 %$$
 $head Example$$
 The section $cref example_jit$$ contains examples and tests
@@ -154,30 +154,30 @@ $end
 
 
 namespace CppAD {
-    extern "C" {
-        //
-        // jit_c_type
-        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *jit_float)(
-            size_t, const float*, size_t, float*, size_t*
-        );
-        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *jit_double)(
-            size_t, const double*, size_t, double*, size_t*
-        );
-        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *jit_long_double)(
-            size_t, const long double*, size_t, long double*, size_t*
-        );
-        //
-        // atomic_c_type
-        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *atomic_float)(
-            size_t, size_t, const float*, size_t, float*, size_t*
-        );
-        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *atomic_double)(
-            size_t, size_t, const double*, size_t, double*, size_t*
-        );
-        CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *atomic_long_double)(
-            size_t, size_t, const long double*, size_t, long double*, size_t*
-        );
-    }
+   extern "C" {
+      //
+      // jit_c_type
+      CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *jit_float)(
+         size_t, const float*, size_t, float*, size_t*
+      );
+      CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *jit_double)(
+         size_t, const double*, size_t, double*, size_t*
+      );
+      CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *jit_long_double)(
+         size_t, const long double*, size_t, long double*, size_t*
+      );
+      //
+      // atomic_c_type
+      CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *atomic_float)(
+         size_t, size_t, const float*, size_t, float*, size_t*
+      );
+      CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *atomic_double)(
+         size_t, size_t, const double*, size_t, double*, size_t*
+      );
+      CPPAD_IMPORT typedef int (CPPAD_FUN_TYPE *atomic_long_double)(
+         size_t, size_t, const long double*, size_t, long double*, size_t*
+      );
+   }
 }
 
 # undef CPPAD_FUN_TYPE
@@ -186,31 +186,31 @@ namespace CppAD {
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>
 void CppAD::ADFun<Base,RecBase>::to_csrc(
-    std::ostream&      os     ,
-    const std::string& c_type )
+   std::ostream&      os     ,
+   const std::string& c_type )
 // END_PROTOTYPE
-{   //
-    // type
+{  //
+   // type
 # ifndef NDEBUG
-    bool ok = false;
-    ok |= c_type == "float";
-    ok |= c_type == "double";
-    ok |= c_type == "long_double";
-    CPPAD_ASSERT_KNOWN(ok,
-        "f.to_csrc: c_type is not one of the following: "
-        "float, double, long_double"
-        );
+   bool ok = false;
+   ok |= c_type == "float";
+   ok |= c_type == "double";
+   ok |= c_type == "long_double";
+   CPPAD_ASSERT_KNOWN(ok,
+      "f.to_csrc: c_type is not one of the following: "
+      "float, double, long_double"
+      );
 # endif
-    // to_graph return values
-    cpp_graph graph_obj;
-    //
-    // graph corresponding to this function
-    to_graph(graph_obj);
-    //
-    // os
-    local::graph::csrc_writer(os, graph_obj, c_type);
-    //
-    return;
+   // to_graph return values
+   cpp_graph graph_obj;
+   //
+   // graph corresponding to this function
+   to_graph(graph_obj);
+   //
+   // os
+   local::graph::csrc_writer(os, graph_obj, c_type);
+   //
+   return;
 }
 
 # endif

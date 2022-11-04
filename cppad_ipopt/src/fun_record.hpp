@@ -28,7 +28,7 @@ Given a value \f$ u \in {\bf R}^{q[k]} \f$,
  fg_info returns the value \f$ r_k (u) \in {\bf R}^{p[k]} \f$.
 using the syntax
 \verbatim
-    fg_info->eval_r(k, u);
+   fg_info->eval_r(k, u);
 \endverbatim
 No other use is made of fg_info.
 
@@ -50,7 +50,7 @@ is the length of the vector x.
 \param x
 the length of x is equal to n and the point
 \f[
-    u = [ J \circ n ] (x)
+   u = [ J \circ n ] (x)
 \f]
 is the point at which the operation sequence for \f$ r_k \f$ is recorded.
 
@@ -71,36 +71,36 @@ at the value of \f$ u \f$ specified by x and J.
 
 template <class NumVector>
 void fun_record(
-    cppad_ipopt_fg_info*                              fg_info ,
-    size_t                                            k       ,
-    const SizeVector&                                 p       ,
-    const SizeVector&                                 q       ,
-    size_t                                            n       ,
-    const NumVector&                                  x       ,
-    const SizeVector&                                 J       ,
-    CppAD::vector< CppAD::ADFun<Ipopt::Number> >&     r_fun   )
-{   size_t j;
+   cppad_ipopt_fg_info*                              fg_info ,
+   size_t                                            k       ,
+   const SizeVector&                                 p       ,
+   const SizeVector&                                 q       ,
+   size_t                                            n       ,
+   const NumVector&                                  x       ,
+   const SizeVector&                                 J       ,
+   CppAD::vector< CppAD::ADFun<Ipopt::Number> >&     r_fun   )
+{  size_t j;
 
-    // extract u from x
-    ADVector u(q[k]);
-    for(j = 0; j < q[k]; j++)
-    {   // when NDEBUG is not defined, this error should be caught
-        // during the cppad_ipopt_nlp constructor.
-        CPPAD_ASSERT_UNKNOWN( J[j] < n );
-        u[j] = x[ J[j] ];
-    }
+   // extract u from x
+   ADVector u(q[k]);
+   for(j = 0; j < q[k]; j++)
+   {  // when NDEBUG is not defined, this error should be caught
+      // during the cppad_ipopt_nlp constructor.
+      CPPAD_ASSERT_UNKNOWN( J[j] < n );
+      u[j] = x[ J[j] ];
+   }
 
-    // start the recording
-    CppAD::Independent(u);
+   // start the recording
+   CppAD::Independent(u);
 
-    // record the evaulation of r_k (u)
-    ADVector r_k = fg_info->eval_r(k, u);
-    CPPAD_ASSERT_KNOWN( r_k.size() == p[k] ,
-    "cppad_ipopt_nlp: eval_r return value size not equal to p[k]."
-    );
+   // record the evaulation of r_k (u)
+   ADVector r_k = fg_info->eval_r(k, u);
+   CPPAD_ASSERT_KNOWN( r_k.size() == p[k] ,
+   "cppad_ipopt_nlp: eval_r return value size not equal to p[k]."
+   );
 
-    // stop the recording and store operation sequence in
-    r_fun[k].Dependent(u, r_k);
+   // stop the recording and store operation sequence in
+   r_fun[k].Dependent(u, r_k);
 }
 // ---------------------------------------------------------------------------
 } // end namespace cppad_ipopt

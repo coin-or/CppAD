@@ -5,7 +5,7 @@
 /*
 $begin lp_box.cpp$$
 $spell
-    lp
+   lp
 $$
 
 $section abs_normal lp_box: Example and Test$$
@@ -21,7 +21,7 @@ $latex \[
 
 $head Source$$
 $srcthisfile%
-    0%// BEGIN C++%// END C++%
+   0%// BEGIN C++%// END C++%
 1%$$
 
 $end
@@ -32,28 +32,28 @@ $end
 # include "lp_box.hpp"
 
 bool lp_box(void)
-{   bool ok = true;
-    typedef CppAD::vector<double> vector;
-    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-    //
-    size_t n = 2;
-    size_t m = 0;
-    vector A(m), b(m), c(n), d(n), xout(n);
-    c[0] = +1.0;
-    c[1] = -1.0;
-    //
-    d[0] = +2.0;
-    d[1] = +2.0;
-    //
-    size_t level   = 0;
-    size_t maxitr  = 20;
-    //
-    ok &= CppAD::lp_box(level, A, b, c, d, maxitr, xout);
-    //
-    // check optimal value for x
-    ok &= std::fabs( xout[0] + 2.0 ) < eps99;
-    ok &= std::fabs( xout[1] - 2.0 ) < eps99;
-    //
-    return ok;
+{  bool ok = true;
+   typedef CppAD::vector<double> vector;
+   double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+   //
+   size_t n = 2;
+   size_t m = 0;
+   vector A(m), b(m), c(n), d(n), xout(n);
+   c[0] = +1.0;
+   c[1] = -1.0;
+   //
+   d[0] = +2.0;
+   d[1] = +2.0;
+   //
+   size_t level   = 0;
+   size_t maxitr  = 20;
+   //
+   ok &= CppAD::lp_box(level, A, b, c, d, maxitr, xout);
+   //
+   // check optimal value for x
+   ok &= std::fabs( xout[0] + 2.0 ) < eps99;
+   ok &= std::fabs( xout[1] - 2.0 ) < eps99;
+   //
+   return ok;
 }
 // END C++

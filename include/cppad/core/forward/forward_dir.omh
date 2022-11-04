@@ -4,15 +4,15 @@
 # ----------------------------------------------------------------------------
 $begin forward_dir$$
 $spell
-    Taylor
-    const
-    dir
-    cpp
-    yq
-    xq
-    xk
-    std::cout
-    ostream
+   Taylor
+   const
+   dir
+   cpp
+   yq
+   xq
+   xk
+   std::cout
+   ostream
 $$
 
 $section Multiple Directions Forward Mode$$
@@ -30,7 +30,7 @@ defined by its
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$,
 forward mode computes the Taylor coefficients for the function
 $latex \[
-    Y (t) = F [ X(t) ]
+   Y (t) = F [ X(t) ]
 \]$$
 This version of forward mode computes multiple directions as the same
 time (reducing the number of passes through the tape). This requires more
@@ -55,19 +55,19 @@ $cref/range/fun_property/Range/$$ space for $icode f$$.
 $head f$$
 The $cref ADFun$$ object $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
 After this call we will have
 $codei%
-    %f%.size_order()     == %q% + 1
-    %f%.size_direction() == %r%
+   %f%.size_order()     == %q% + 1
+   %f%.size_direction() == %r%
 %$$
 
 $head q$$
 This argument has prototype
 $codei%
-    size_t %q%
+   size_t %q%
 %$$
 It specifies the order of Taylor Coefficient that we are calculating
 and must be greater than zero.
@@ -78,7 +78,7 @@ to compute the zero order coefficients.
 $head r$$
 This argument has prototype
 $codei%
-    size_t %r%
+   size_t %r%
 %$$
 It specifies the number of directions that are computed together.
 If ($icode%r% == 1%$$), you are only using one direction and
@@ -88,7 +88,7 @@ than this more general case.
 $head xq$$
 The argument $icode xq$$ has prototype
 $codei%
-    const %Vector%& %xq%
+   const %Vector%& %xq%
 %$$
 and its size must be $icode%n%*%r%$$
 (see $cref/Vector/forward_dir/Vector/$$ below).
@@ -97,17 +97,17 @@ $latex j = 0 , \ldots , n-1$$,
 the $th j$$ component of the $th q$$ order Taylor coefficient
 for $latex X_\ell (t)$$ is defined by
 $pre
-    $$ $latex x_j^{(q),\ell} = $$ $icode%xq%[ %r% * %j% + %ell% ]%$$
+   $$ $latex x_j^{(q),\ell} = $$ $icode%xq%[ %r% * %j% + %ell% ]%$$
 
 $head Zero Order$$
 For $latex j = 0 , \ldots , n-1$$,
 the $th j$$ component of the zero order Taylor coefficient
 for $latex X_\ell (t)$$ is defined by
 $pre
-    $$ $latex x_j^{(0)} = $$ $icode%xk%[ %j% ]%$$
+   $$ $latex x_j^{(0)} = $$ $icode%xk%[ %j% ]%$$
 where $icode xk$$ corresponds to the previous call
 $codei%
-    %f%.Forward(%k%, %xk%)
+   %f%.Forward(%k%, %xk%)
 %$$
 with $icode%k% = 0%$$.
 
@@ -118,10 +118,10 @@ $latex k = 1, \ldots , q-1$$,
 the $th j$$ component of the $th k$$ order Taylor coefficient
 for $latex X_\ell (t)$$ is defined by
 $pre
-    $$ $latex x_j^{(k),\ell} = $$ $icode%xk%[ %r% * %j% + %ell% ]%$$
+   $$ $latex x_j^{(k),\ell} = $$ $icode%xk%[ %r% * %j% + %ell% ]%$$
 where $icode xk$$ corresponds to the previous call
 $codei%
-    %f%.Forward(%k%, %r%, %xk%)
+   %f%.Forward(%k%, %r%, %xk%)
 %$$
 Note that $icode r$$ must have the same value in this previous call.
 
@@ -136,9 +136,9 @@ Note that the $th k$$ derivative of $latex X_\ell (t)$$ is related to
 its Taylor coefficients by
 $latex \[
 \begin{array}{rcl}
-    x^{(0)}       & = & X_\ell (0)
-    \\
-    x^{(k), \ell} & = & \frac{1}{k !} X_\ell^{(k)} (0)
+   x^{(0)}       & = & X_\ell (0)
+   \\
+   x^{(k), \ell} & = & \frac{1}{k !} X_\ell^{(k)} (0)
 \end{array}
 \] $$
 for $latex k = 1 , \ldots , q$$.
@@ -159,9 +159,9 @@ Note that the $th k$$ derivative of $latex Y_\ell (t)$$ is related to
 its Taylor coefficients by
 $latex \[
 \begin{array}{rcl}
-    y^{(0)}       & = & Y_\ell (0)
-    \\
-    y^{(k), \ell} & = & \frac{1}{k !} Y_\ell^{(k)} (0)
+   y^{(0)}       & = & Y_\ell (0)
+   \\
+   y^{(k), \ell} & = & \frac{1}{k !} Y_\ell^{(k)} (0)
 \end{array}
 \] $$
 for $latex k = 1 , \ldots , q$$.
@@ -169,7 +169,7 @@ for $latex k = 1 , \ldots , q$$.
 $head yq$$
 The argument $icode yq$$ has prototype
 $codei%
-    %Vector% %yq%
+   %Vector% %yq%
 %$$
 and its size is $icode%m%*%r%$$
 (see $cref/Vector/forward_dir/Vector/$$ below).
@@ -178,7 +178,7 @@ $latex i = 0 , \ldots , m-1$$,
 the $th i$$ component of the $th q$$ order Taylor coefficient
 for $latex Y_\ell (t)$$ is given by
 $pre
-    $$ $latex y_i^{(q),\ell} = $$ $icode%yq%[ %r% * %i% + %ell% ]%$$
+   $$ $latex y_i^{(q),\ell} = $$ $icode%yq%[ %r% * %i% + %ell% ]%$$
 
 $head Vector$$
 The type $icode Vector$$ must be a $cref SimpleVector$$ class with
@@ -188,7 +188,7 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $children%
-    example/general/forward_dir.cpp
+   example/general/forward_dir.cpp
 %$$
 $head Example$$
 The file

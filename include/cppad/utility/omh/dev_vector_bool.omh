@@ -5,8 +5,8 @@
 
 $begin dev_vector_bool$$
 $spell
-    CppAD
-    Bool
+   CppAD
+   Bool
 $$
 
 
@@ -16,8 +16,8 @@ $head User API$$
 $cref/vectorBool/CppAD_vector/vectorBool/$$
 
 $childtable%
-    include/cppad/local/utility/vector_bool.hpp%
-    include/cppad/utility/vector_bool.hpp
+   include/cppad/local/utility/vector_bool.hpp%
+   include/cppad/utility/vector_bool.hpp
 %$$
 
 $end

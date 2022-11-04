@@ -6,7 +6,7 @@
 /*
 $begin eigen_array.cpp$$
 $spell
-    Eigen
+   Eigen
 $$
 
 $section Using Eigen Arrays: Example and Test$$
@@ -21,46 +21,46 @@ $end
 # include <cppad/example/cppad_eigen.hpp>
 
 bool eigen_array(void)
-{   bool ok = true;
-    using CppAD::AD;
-    using CppAD::NearEqual;
-    //
-    typedef CppAD::eigen_vector< AD<double> > a_vector;
-    //
-    // domain and range space vectors
-    size_t n  = 10, m = n;
-    a_vector a_x(n), a_y(m);
+{  bool ok = true;
+   using CppAD::AD;
+   using CppAD::NearEqual;
+   //
+   typedef CppAD::eigen_vector< AD<double> > a_vector;
+   //
+   // domain and range space vectors
+   size_t n  = 10, m = n;
+   a_vector a_x(n), a_y(m);
 
-    // set and declare independent variables and start tape recording
-    for(size_t j = 0; j < n; j++)
-        a_x[j] = double(1 + j);
-    CppAD::Independent(a_x);
+   // set and declare independent variables and start tape recording
+   for(size_t j = 0; j < n; j++)
+      a_x[j] = double(1 + j);
+   CppAD::Independent(a_x);
 
-    // evaluate a component wise function
-    for(size_t j = 0; j < n; j++)
-        a_y[j] = a_x[j] + sin( a_x[j] );
+   // evaluate a component wise function
+   for(size_t j = 0; j < n; j++)
+      a_y[j] = a_x[j] + sin( a_x[j] );
 
-    // create f: x -> y and stop tape recording
-    CppAD::ADFun<double> f(a_x, a_y);
+   // create f: x -> y and stop tape recording
+   CppAD::ADFun<double> f(a_x, a_y);
 
-    // compute the derivative of y w.r.t x using CppAD
-    CPPAD_TESTVECTOR(double) x(n);
-    for(size_t j = 0; j < n; j++)
-        x[j] = double(j) + 1.0 / double(j+1);
-    CPPAD_TESTVECTOR(double) jac = f.Jacobian(x);
+   // compute the derivative of y w.r.t x using CppAD
+   CPPAD_TESTVECTOR(double) x(n);
+   for(size_t j = 0; j < n; j++)
+      x[j] = double(j) + 1.0 / double(j+1);
+   CPPAD_TESTVECTOR(double) jac = f.Jacobian(x);
 
-    // check Jacobian
-    double eps = 100. * CppAD::numeric_limits<double>::epsilon();
-    for(size_t i = 0; i < m; i++)
-    {   for(size_t j = 0; j < n; j++)
-        {   double check = 1.0 + cos(x[i]);
-            if( i != j )
-                check = 0.0;
-            ok &= NearEqual(jac[i * n + j], check, eps, eps);
-        }
-    }
+   // check Jacobian
+   double eps = 100. * CppAD::numeric_limits<double>::epsilon();
+   for(size_t i = 0; i < m; i++)
+   {  for(size_t j = 0; j < n; j++)
+      {  double check = 1.0 + cos(x[i]);
+         if( i != j )
+            check = 0.0;
+         ok &= NearEqual(jac[i * n + j], check, eps, eps);
+      }
+   }
 
-    return ok;
+   return ok;
 }
 
 // END C++

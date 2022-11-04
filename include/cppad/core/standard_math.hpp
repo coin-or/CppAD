@@ -8,9 +8,9 @@
 /*
 $begin unary_standard_math$$
 $spell
-    const
-    VecAD
-    fabs
+   const
+   VecAD
+   fabs
 $$
 
 $section The Unary Standard Math Functions$$
@@ -28,36 +28,36 @@ If $icode Base$$ satisfies the
 $cref/base type requirements/base_require/$$
 and argument $icode x$$ has prototype
 $codei%
-    const %Base%& %x%
+   const %Base%& %x%
 %$$
 then the result $icode y$$ has prototype
 $codei%
-    %Base% %y%
+   %Base% %y%
 %$$
 
 $subhead AD<Base>$$
 If the argument $icode x$$ has prototype
 $codei%
-    const AD<%Base%>& %x%
+   const AD<%Base%>& %x%
 %$$
 then the result $icode y$$ has prototype
 $codei%
-    AD<%Base%> %y%
+   AD<%Base%> %y%
 %$$
 
 $subhead VecAD<Base>$$
 If the argument $icode x$$ has prototype
 $codei%
-    const VecAD<%Base%>::reference& %x%
+   const VecAD<%Base%>::reference& %x%
 %$$
 then the result $icode y$$ has prototype
 $codei%
-    AD<%Base%> %y%
+   AD<%Base%> %y%
 %$$
 
 $children%include/cppad/core/std_math_11.hpp
-    %include/cppad/core/abs.hpp
-    %include/cppad/core/sign.hpp
+   %include/cppad/core/abs.hpp
+   %include/cppad/core/sign.hpp
 %$$
 
 $head fun$$
@@ -99,8 +99,8 @@ $begin binary_math$$
 $section The Binary Math Functions$$
 
 $childtable%include/cppad/core/atan2.hpp
-    %include/cppad/core/pow.hpp
-    %include/cppad/core/azmul.hpp
+   %include/cppad/core/pow.hpp
+   %include/cppad/core/azmul.hpp
 %$$
 
 $end

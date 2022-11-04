@@ -5,12 +5,12 @@
 
 $begin research$$
 $spell
-    CppAD
-    Jacobian
-    acyclic
-    subgraph
-    Subgraphs
-    Kasper Kristensen
+   CppAD
+   Jacobian
+   acyclic
+   subgraph
+   Subgraphs
+   Kasper Kristensen
 $$
 
 $section Research and Software Engineering Projects Related to CppAD$$

@@ -4,12 +4,12 @@
 # ----------------------------------------------------------------------------
 $begin base_member$$
 $spell
-    bool
-    const
-    op
-    Bool
-    definition
-    alloc
+   bool
+   const
+   op
+   Bool
+   definition
+   alloc
 $$
 
 $section Required Base Class Member Functions$$
@@ -18,26 +18,26 @@ $head Notation$$
 $table
 $bold Symbol$$ $cnext $bold Meaning$$ $rnext
 $icode Base$$  $cnext
-    The base type corresponding to $codei%AD<%Base%>%$$
+   The base type corresponding to $codei%AD<%Base%>%$$
 $rnext
 $icode b$$     $cnext
-    An object of type $code bool$$
+   An object of type $code bool$$
 $icode i$$     $cnext
-    An object of type $code int$$
+   An object of type $code int$$
 $icode s$$     $cnext
-    An object of type $code size_t$$
+   An object of type $code size_t$$
 $rnext
 $icode d$$     $cnext
-    An object of type $code double$$
+   An object of type $code double$$
 $rnext
 $icode x$$     $cnext
-    An object of type $codei%const %Base%&%$$
+   An object of type $codei%const %Base%&%$$
 $rnext
 $icode y$$     $cnext
-    An object of type $codei%const %Base%&%$$
+   An object of type $codei%const %Base%&%$$
 $rnext
 $icode z$$     $cnext
-    An object of type $icode Base$$
+   An object of type $icode Base$$
 $rnext
 $tend
 
@@ -64,7 +64,7 @@ $code +$$,
 $code -$$
 the following operation must be supported:
 $codei%
-    %z% = %op% %x%$$
+   %z% = %op% %x%$$
 
 $head Assignment Operators$$
 For $icode op$$ equal to
@@ -74,7 +74,7 @@ $code -=$$,
 $code *=$$, and
 $code /=$$ the following operation must be supported:
 $codei%
-    %z% %op% %x%$$
+   %z% %op% %x%$$
 
 $head Binary Operators$$
 For $icode op$$ equal to
@@ -83,7 +83,7 @@ $code -$$,
 $code *$$, and
 $code /$$ the following operation must be supported:
 $codei%
-    %z% = %x% %op% %y%$$
+   %z% = %x% %op% %y%$$
 
 $head Bool Operators$$
 For $icode op$$ equal to
@@ -92,7 +92,7 @@ $code !=$$,
 $code <=$$,
 the following operation must be supported:
 $codei%
-    %b% = %x% %op% %y%$$
+   %b% = %x% %op% %y%$$
 
 $head Example$$
 See the heading Class Definition in

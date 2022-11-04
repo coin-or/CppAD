@@ -8,30 +8,30 @@
 /*!
 $begin configure.hpp$$
 $spell
-    noexcept
-    pragmas
-    unreferenced
-    CppAD
-    cppad
-    yyyymmdd
-    yyyy
-    mm
-    dd
-    adolc
-    cmake
-    colpack
-    eigen
-    ipopt
-    gettimeofday
-    namespace
-    mkstemp
-    tmpnam
-    nullptr
-    sizeof
-    std
-    hpp
-    addr
-    gcc
+   noexcept
+   pragmas
+   unreferenced
+   CppAD
+   cppad
+   yyyymmdd
+   yyyy
+   mm
+   dd
+   adolc
+   cmake
+   colpack
+   eigen
+   ipopt
+   gettimeofday
+   namespace
+   mkstemp
+   tmpnam
+   nullptr
+   sizeof
+   std
+   hpp
+   addr
+   gcc
 $$
 
 $section Preprocessor Symbols Set By CMake Command$$

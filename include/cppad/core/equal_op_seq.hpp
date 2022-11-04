@@ -9,9 +9,9 @@
 ------------------------------------------------------------------------------
 $begin EqualOpSeq$$
 $spell
-    Op
-    const
-    bool
+   Op
+   const
+   bool
 $$
 
 
@@ -37,7 +37,7 @@ $cref/independent variables/glossary/Tape/Independent Variable/$$
 by the same operation sequence.
 After the assignment
 $codei%
-    %y% = %x%
+   %y% = %x%
 %$$
 these two AD objects would not only have equal values,
 but would also correspond to the same operation sequence.
@@ -45,19 +45,19 @@ but would also correspond to the same operation sequence.
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const AD<%Base%> &%x%
+   const AD<%Base%> &%x%
 %$$
 
 $head y$$
 The argument $icode y$$ has prototype
 $codei%
-    const AD<%Base%> &%y%
+   const AD<%Base%> &%y%
 %$$
 
 $head b$$
 The result $icode b$$ has prototype
 $codei%
-    bool %b%
+   bool %b%
 %$$
 The result is true if and only if one of the following cases holds:
 
@@ -77,7 +77,7 @@ $lend
 
 $head Example$$
 $children%
-    example/general/equal_op_seq.cpp
+   example/general/equal_op_seq.cpp
 %$$
 The file
 $cref equal_op_seq.cpp$$
@@ -90,21 +90,21 @@ $end
 
 
 namespace CppAD {
-    template <class Base>
-    CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-    bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
-    {
-        if( Parameter(x) )
-        {   if( Parameter(y) )
-                return EqualOpSeq(x.value_, y.value_);
-            else
-                return false;
-        }
-        else if( Parameter(y) )
+   template <class Base>
+   CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+   bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
+   {
+      if( Parameter(x) )
+      {  if( Parameter(y) )
+            return EqualOpSeq(x.value_, y.value_);
+         else
             return false;
+      }
+      else if( Parameter(y) )
+         return false;
 
-        return (x.taddr_ == y.taddr_);
-    }
+      return (x.taddr_ == y.taddr_);
+   }
 
 }
 

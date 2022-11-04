@@ -6,11 +6,11 @@
 # $begin get_adolc.sh$$ $newlinech #$$
 # $dollar @$$
 # $spell
-#   tgz
-#   Adolc
-#   gz
-#   CppAD
-#   Nov
+#  tgz
+#  Adolc
+#  gz
+#  CppAD
+#  Nov
 # $$
 #
 # $section Download and Install Adolc in Build Directory$$
@@ -49,7 +49,7 @@ version='e1fe476'
 # $head Configuration$$
 # If the file
 # $codei%
-#   external/adolc-%version%.configured
+#  external/adolc-%version%.configured
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
@@ -59,14 +59,14 @@ version='e1fe476'
 package='adolc'
 if [ $0 != "bin/get_$package.sh" ]
 then
-    echo "bin/get_$package.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/get_$package.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 web_page='https://github.com/coin-or/ADOL-C.git'
@@ -75,16 +75,16 @@ cppad_dir=`pwd`
 # n_job
 if which nproc > /dev/null
 then
-    n_job=$(nproc)
+   n_job=$(nproc)
 else
-    n_job=$(sysctl -n hw.ncpu)
+   n_job=$(sysctl -n hw.ncpu)
 fi
 # ----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-    prefix="$cppad_dir/$prefix"
+   prefix="$cppad_dir/$prefix"
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
@@ -92,29 +92,29 @@ configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
-    echo "Skipping configuration because $configured_flag exits"
-    echo_eval cd external/$package.git/build
-    echo_eval make -j $n_job install
-    echo "get_$package.sh: OK"
-    exit 0
+   echo "Skipping configuration because $configured_flag exits"
+   echo_eval cd external/$package.git/build
+   echo_eval make -j $n_job install
+   echo "get_$package.sh: OK"
+   exit 0
 fi
 # --------------------------------------------------------------------------
 if [ -e /usr/lib64 ]
 then
-    libdir='lib64'
+   libdir='lib64'
 else
-    libdir='lib'
+   libdir='lib'
 fi
 # -----------------------------------------------------------------------------
 if [ ! -d external ]
 then
-    echo_eval mkdir external
+   echo_eval mkdir external
 fi
 echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e "$package.git" ]
 then
-    echo_eval git clone $web_page $package.git
+   echo_eval git clone $web_page $package.git
 fi
 echo_eval cd $package.git
 echo_eval git reset --hard
@@ -124,12 +124,12 @@ system=`uname | tr [A-Z] [a-z] | sed -e 's|\([a-z][a-z]*\).*|\1|'`
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
-    echo_eval autoreconf --install --force
+   echo_eval autoreconf --install --force
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
 then
-    echo_eval mkdir build
+   echo_eval mkdir build
 fi
 echo_eval cd build
 # -----------------------------------------------------------------------------

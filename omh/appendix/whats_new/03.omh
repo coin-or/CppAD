@@ -5,34 +5,34 @@
 
 $begin whats_new_03$$
 $spell
-    dir
-    Eq.cpp
-    cppad.hpp
-    Hess
-    Taylor
-    Def
-    indvar
-    bool
-    CppADvector
-    ADdouble
-    sqrt
-    atan
-    exp
-    valarray
-    Faq
-    Lu
-    Det
-    Cpp
-    Microsoft
-    mak
-    std
-    Cygwin
-    Var
-    const
-    namespace
-    Geq
-    Leq
-    ini
+   dir
+   Eq.cpp
+   cppad.hpp
+   Hess
+   Taylor
+   Def
+   indvar
+   bool
+   CppADvector
+   ADdouble
+   sqrt
+   atan
+   exp
+   valarray
+   Faq
+   Lu
+   Det
+   Cpp
+   Microsoft
+   mak
+   std
+   Cygwin
+   Var
+   const
+   namespace
+   Geq
+   Leq
+   ini
 $$
 
 $section Changes and Additions to CppAD During 2003$$
@@ -74,24 +74,24 @@ $head 12-12$$
 The old method where one directly accesses the tape has been removed and the
 following functions are no longer available:
 $codei%
-        size_t %TapeName%.Independent(AD<%Base%> &%indvar%)
-        size_t %TapeName%.Record(size_t %order%)
-        size_t %TapeName%.Stop(void)
-        bool Dependent(const AD<%Base%> &%var%) const
-        bool %TapeName%.Dependent(const AD<%Base%> &%var%) const
-        size_t %TapeName%.Total(void) const
-        size_t %TapeName%.Required(void) const
-        size_t %TapeName%.Erase(void)
-        TapeState %TapeName%.State(void) const
-        size_t %TapeName%.Order(void) const
-        size_t %TapeName%.Required(void) const
-        bool Parameter(CppADvector< AD<%Base%> > &%u%)
-        %TapeName%.Forward(%indvar%)
-        %TapeName%.Reverse(%var%)
-        %TapeName%.Partial(%var%)
-        %TapeName%.ForwardTwo(%indvar%)
-        %TapeName%.ReverseTwo(%var%)
-        %TapeName%.PartialTwo(%var%)
+      size_t %TapeName%.Independent(AD<%Base%> &%indvar%)
+      size_t %TapeName%.Record(size_t %order%)
+      size_t %TapeName%.Stop(void)
+      bool Dependent(const AD<%Base%> &%var%) const
+      bool %TapeName%.Dependent(const AD<%Base%> &%var%) const
+      size_t %TapeName%.Total(void) const
+      size_t %TapeName%.Required(void) const
+      size_t %TapeName%.Erase(void)
+      TapeState %TapeName%.State(void) const
+      size_t %TapeName%.Order(void) const
+      size_t %TapeName%.Required(void) const
+      bool Parameter(CppADvector< AD<%Base%> > &%u%)
+      %TapeName%.Forward(%indvar%)
+      %TapeName%.Reverse(%var%)
+      %TapeName%.Partial(%var%)
+      %TapeName%.ForwardTwo(%indvar%)
+      %TapeName%.ReverseTwo(%var%)
+      %TapeName%.PartialTwo(%var%)
 %$$
 
 
@@ -127,7 +127,7 @@ the resulting speed tests gave much faster results.
 $head 12-01$$
 The following function has been added:
 $codei%
-    void Independent(const CppADvector<%Base%> &%x%)
+   void Independent(const CppADvector<%Base%> &%x%)
 %$$
 which will declare the independent variables and begin recording
 $codei%AD<%Base%>%$$ operations
@@ -284,16 +284,16 @@ were related in any of the following ways,
 they share can share the same record on the tape
 because they will have the same derivatives.
 $codei%
-    %z% = %x% + %zero%        %z% =  %x% * %one%
-    %z% = %zero% + %x%        %z% =  %one% * %x%
-    %z% = %x% - %zero%        %z% =  %x% / %one%
+   %z% = %x% + %zero%        %z% =  %x% * %one%
+   %z% = %zero% + %x%        %z% =  %one% * %x%
+   %z% = %x% - %zero%        %z% =  %x% / %one%
 %$$
 Furthermore, in the following cases, the result
 $icode z$$ is a parameter (equal to zero)
 and need not be recorded in the tape:
 $codei%
-    %z% = %x% * %zero%        %z% =  %zero% / %x%
-    %z% = %zero% * %x%
+   %z% = %x% * %zero%        %z% =  %zero% / %x%
+   %z% = %zero% * %x%
 %$$
 The
 $cref/arithmetic operators/Arithmetic/$$ were
@@ -449,25 +449,25 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 $table
 $bold Version$$
-    $cnext $bold double Rate$$
-    $cnext $bold AD<double> Rate$$
-    $cnext $bold Gradient Rate$$
-    $cnext $bold Hessian Rate$$
-    $cnext $bold Tape Length$$
+   $cnext $bold double Rate$$
+   $cnext $bold AD<double> Rate$$
+   $cnext $bold Gradient Rate$$
+   $cnext $bold Hessian Rate$$
+   $cnext $bold Tape Length$$
 $rnext
 03-08-20
-    $cnext 8,524
-    $cnext 5,278
-    $cnext 4,260
-    $cnext 2,450
-    $cnext 532
+   $cnext 8,524
+   $cnext 5,278
+   $cnext 4,260
+   $cnext 2,450
+   $cnext 532
 $rnext
 03-08-23
-    $cnext 7,869
-    $cnext 4,989
-    $cnext 4,870
-    $cnext 2,637
-    $cnext 464
+   $cnext 7,869
+   $cnext 4,989
+   $cnext 4,870
+   $cnext 2,637
+   $cnext 464
 $tend
 
 $head 08-22$$
@@ -502,25 +502,25 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 $table
 $bold Version$$
-    $cnext $bold double Rate$$
-    $cnext $bold AD<double> Rate$$
-    $cnext $bold Gradient Rate$$
-    $cnext $bold Hessian Rate$$
-    $cnext $bold Tape Length$$
+   $cnext $bold double Rate$$
+   $cnext $bold AD<double> Rate$$
+   $cnext $bold Gradient Rate$$
+   $cnext $bold Hessian Rate$$
+   $cnext $bold Tape Length$$
 $rnext
 03-08-16
-    $cnext 9,509
-    $cnext 5,565
-    $cnext 3,587
-    $cnext 54
-    $cnext 537
+   $cnext 9,509
+   $cnext 5,565
+   $cnext 3,587
+   $cnext 54
+   $cnext 537
 $rnext
 03-08-19
-    $cnext 8,655
-    $cnext 5,313
-    $cnext 4,307
-    $cnext 2,495
-    $cnext 532
+   $cnext 8,655
+   $cnext 5,313
+   $cnext 4,307
+   $cnext 2,495
+   $cnext 532
 $tend
 
 
@@ -552,25 +552,25 @@ The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 $table
 $bold Version$$
-    $cnext $bold double Rate$$
-    $cnext $bold AD<double> Rate$$
-    $cnext $bold Gradient Rate$$
-    $cnext $bold Hessian Rate$$
-    $cnext $bold Tape Length$$
+   $cnext $bold double Rate$$
+   $cnext $bold AD<double> Rate$$
+   $cnext $bold Gradient Rate$$
+   $cnext $bold Hessian Rate$$
+   $cnext $bold Tape Length$$
 $rnext
 03-08-10
-    $cnext 49,201
-    $cnext 7,787
-    $cnext 2,655
-    $cnext 1,809
-    $cnext 824
+   $cnext 49,201
+   $cnext 7,787
+   $cnext 2,655
+   $cnext 1,809
+   $cnext 824
 $rnext
 03-08-11
-    $cnext 35,178
-    $cnext 12,681
-    $cnext 4,521
-    $cnext 2,541
-    $cnext 540
+   $cnext 35,178
+   $cnext 12,681
+   $cnext 4,521
+   $cnext 2,541
+   $cnext 540
 $tend
 In addition the corresponding test case
 $cref lu_solve.cpp$$ was changed to a Hilbert matrix case.
@@ -610,9 +610,9 @@ for the calculation of the gradient and Hessian for
 the Lu determinant test of a 5 by 5 matrix as follows:
 $table
 $bold Version$$
-    $cnext $bold Tape Length$$
-    $cnext $bold Gradient Rate$$
-    $cnext $bold Hessian Rate$$
+   $cnext $bold Tape Length$$
+   $cnext $bold Gradient Rate$$
+   $cnext $bold Hessian Rate$$
 $rnext
 03-08-05 $cnext 176  $cnext 11,362 $cnext 1,149 $rnext
 03-08-06 $cnext 167  $cnext 12,780 $cnext 10,625
@@ -625,12 +625,12 @@ the $cref LuSolve$$ example.
 $head 08-04$$
 Added a the compiler flag
 $codep
-    AbsOfDoubleNotDefined
+   AbsOfDoubleNotDefined
 $$
 to the make files so that it could be removed on systems where the
 function
 $codei%
-    double abs(double %x%)
+   double abs(double %x%)
 %$$ was defined in $code math.h$$.
 
 $head 08-03$$
@@ -679,7 +679,7 @@ operator was changed so the it returns a reference to
 the target.
 This allows for statements of the form
 $codei%
-    %x% = %y% = %z%;
+   %x% = %y% = %z%;
 %$$
 i.e., multiple assignments.
 
@@ -707,9 +707,9 @@ for the calculation of the gradient and Hessian for
 the determinant of a 5 by 5 matrix as follows:
 $table
 $bold Version$$
-    $cnext $bold Tape Length$$
-    $cnext $bold Gradient Rate$$
-    $cnext $bold Hessian Rate$$
+   $cnext $bold Tape Length$$
+   $cnext $bold Gradient Rate$$
+   $cnext $bold Hessian Rate$$
 $rnext
 03-07-22 $cnext 1668 $cnext 1,363 $cnext 53 $rnext
 03-07-26 $cnext 436  $cnext 3,436 $cnext 213

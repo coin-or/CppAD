@@ -5,47 +5,47 @@
 
 $begin whats_new_19$$
 $spell
-    messaging
-    CppAD
-    LeppOp
-    dag
-    mul
-    jac
-    hes
-    chkpoint
-    var
-    subgraph
-    Jacobians
-    jacobian
-    cmake
-    bthread
-    colpack
-    subgraphs
-    bool
-    Json
-    cppad
-    vec
-    yy
-    mmdd
-    yyyy
-    yyyymmdd
-    eigen_cholesky.hpp
-    inv
-    taylor
-    div
-    enum
-    Iterators
-    arg
-    autotools
-    omhelp
-    Goto
-    usr
-    ind
-    uninitialized
-    dyn
-    azmul
-    pos
-    notpos
+   messaging
+   CppAD
+   LeppOp
+   dag
+   mul
+   jac
+   hes
+   chkpoint
+   var
+   subgraph
+   Jacobians
+   jacobian
+   cmake
+   bthread
+   colpack
+   subgraphs
+   bool
+   Json
+   cppad
+   vec
+   yy
+   mmdd
+   yyyy
+   yyyymmdd
+   eigen_cholesky.hpp
+   inv
+   taylor
+   div
+   enum
+   Iterators
+   arg
+   autotools
+   omhelp
+   Goto
+   usr
+   ind
+   uninitialized
+   dyn
+   azmul
+   pos
+   notpos
 $$
 
 $section Changes and Additions to CppAD During 2019$$
@@ -226,8 +226,8 @@ $head 10-02$$
 The default value for $cref/cppad_prefix/cmake/cppad_prefix/$$
 was changed from $code /usr$$ to the value of the cmake variable
 $href%
-    https://cmake.org/cmake/help/v3.0/variable/CMAKE_INSTALL_PREFIX.html%
-    CMAKE_INSTALL_PREFIX
+   https://cmake.org/cmake/help/v3.0/variable/CMAKE_INSTALL_PREFIX.html%
+   CMAKE_INSTALL_PREFIX
 %$$.
 
 $head 09-30$$
@@ -290,9 +290,9 @@ The $code string_vec$$ field was removed from the definition of an
 Json AD graph $cref/function/json_ad_graph/AD Graph/function/$$.
 The corresponding operators will have strings in their
 $cref/op_usage
-    /json_ad_graph
-    /op_usage
-    /Strings In Usage
+   /json_ad_graph
+   /op_usage
+   /Strings In Usage
 /$$.
 
 $lnext
@@ -351,10 +351,10 @@ $lnext
 Improve the documentation for mixing debug and release versions
 of CppAD in the same program; see
 $cref/
-    CPPAD_DEBUG_AND_RELEASE
-    /preprocessor
-    /Documented Here
-    /CPPAD_DEBUG_AND_RELEASE
+   CPPAD_DEBUG_AND_RELEASE
+   /preprocessor
+   /Documented Here
+   /CPPAD_DEBUG_AND_RELEASE
 /$$.
 $lend
 
@@ -400,30 +400,30 @@ $lnext
 Change Json $icode string_vec$$
 from first to second line below:
 $codei%
-    [ %n_string%, [ %first_string%, %...%, %last_string% ] ]
-    %n_string%, [ %first_string%, %...%, %last_string% ]
+   [ %n_string%, [ %first_string%, %...%, %last_string% ] ]
+   %n_string%, [ %first_string%, %...%, %last_string% ]
 %$$
 ($icode string_vec$$ was removed on $cref/08-29/whats_new_19/08-29/$$).
 $lnext
 Change Json $cref/constant_vec/json_ad_graph/constant_vec/$$
 from first to second line below:
 $codei%
-    [ %n_constant%, [ %first_constant%, %...%, %last_constant% ] ]
-    %n_constant%, [ %first_constant%, %...%, %last_constant% ]
+   [ %n_constant%, [ %first_constant%, %...%, %last_constant% ] ]
+   %n_constant%, [ %first_constant%, %...%, %last_constant% ]
 %$$
 $lnext
 Change Json $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$
 from first to second line below:
 $codei%
-    [ %n_op_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
-    %n_op_usage%, [ %first_op_usage%, %...%, %last_op_usage% ]
+   [ %n_op_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
+   %n_op_usage%, [ %first_op_usage%, %...%, %last_op_usage% ]
 %$$
 $lnext
 Change Json $cref/dependent_vec/json_ad_graph/dependent_vec/$$
 from first to second line below:
 $codei%
-    [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
-    %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ]
+   [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
+   %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ]
 %$$
 $lend
 
@@ -671,7 +671,7 @@ There was a problem locating the boost multi-threading library.
 To be specific, the
 $cref/cmake command/cmake/CMake Command/$$ would report
 $codei%
-    Could not find boost multi-threading library
+   Could not find boost multi-threading library
 %$$
 but it would still try to use the library.
 This was because a file name with a $code -$$ in it was

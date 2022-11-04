@@ -5,8 +5,8 @@
 
 $begin SinForward$$
 $spell
-    sin
-    Taylor
+   sin
+   Taylor
 $$
 
 
@@ -14,15 +14,15 @@ $section Sine Function Forward Taylor Polynomial Theory$$
 
 If $latex F(x) = \sin(x) $$
 $latex \[
-    1 * F^{(1)} (x) - 0 * F (x)  = \cos(x)
+   1 * F^{(1)} (x) - 0 * F (x)  = \cos(x)
 \] $$
 and in the
 $xref/
-    ForwardTheory/
-    Standard Math Functions/
-    Differential Equation/
-    standard math function differential equation/
-    1
+   ForwardTheory/
+   Standard Math Functions/
+   Differential Equation/
+   standard math function differential equation/
+   1
 /$$,
 $latex A(x) = 0$$,
 $latex B(x) = 1$$,
@@ -37,11 +37,11 @@ $latex \cos [ X(t) ]$$,
 and $latex F [ X(t) ] $$ respectively.
 It now follows from the general
 $xref/
-    ForwardTheory/
-    Standard Math Functions/
-    Taylor Coefficients Recursion Formula/
-    Taylor coefficients recursion formula/
-    1
+   ForwardTheory/
+   Standard Math Functions/
+   Taylor Coefficients Recursion Formula/
+   Taylor coefficients recursion formula/
+   1
 /$$
 that for $latex j = 0 , 1, \ldots$$,
 $latex \[
@@ -55,12 +55,12 @@ e^{(j)}
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
-    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+   - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \\
 & = & \frac{1}{j+1}
-    \sum_{k=1}^{j+1} k x^{(k)} c^{(j+1-k)}
+   \sum_{k=1}^{j+1} k x^{(k)} c^{(j+1-k)}
 \end{array}
 \] $$
 Using $latex s$$ for the Taylor coefficients of $latex \sin[ X(t) ]$$
@@ -69,7 +69,7 @@ lower order coefficients for $latex \sin[ X(t) ]$$ and $latex \cos[ X(t) ]$$
 by the following formula:
 $latex \[
 s^{(j+1)} = \frac{1}{j+1}
-    \sum_{k=1}^{j+1} k x^{(k)} c^{(j+1-k)}
+   \sum_{k=1}^{j+1} k x^{(k)} c^{(j+1-k)}
 \] $$
 
 $end

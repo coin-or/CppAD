@@ -61,15 +61,15 @@ is the k-th order Taylor coefficient corresponding to z.
 */
 template <class Base>
 void forward_unary1_op(
-    size_t p           ,
-    size_t q           ,
-    size_t i_z         ,
-    size_t i_x         ,
-    size_t cap_order   ,
-    Base*  taylor      )
+   size_t p           ,
+   size_t q           ,
+   size_t i_z         ,
+   size_t i_x         ,
+   size_t cap_order   ,
+   Base*  taylor      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -136,15 +136,15 @@ corresponding to z and the ell-th direction.
 */
 template <class Base>
 void forward_unary1_op_dir(
-    size_t q           ,
-    size_t r           ,
-    size_t i_z         ,
-    size_t i_x         ,
-    size_t cap_order   ,
-    Base*  taylor      )
+   size_t q           ,
+   size_t r           ,
+   size_t i_z         ,
+   size_t i_x         ,
+   size_t cap_order   ,
+   Base*  taylor      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -180,13 +180,13 @@ is the zero order Taylor coefficient corresponding to z.
 */
 template <class Base>
 void forward_unary1_op_0(
-    size_t i_z         ,
-    size_t i_x         ,
-    size_t cap_order   ,
-    Base*  taylor      )
+   size_t i_z         ,
+   size_t i_x         ,
+   size_t cap_order   ,
+   Base*  taylor      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -196,7 +196,7 @@ This routine is given the partial derivatives of a function
 G(z , x , w, u ... )
 and it uses them to compute the partial derivatives of
 \verbatim
-    H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
+   H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
 \endverbatim
 
 \tparam Base
@@ -261,16 +261,16 @@ may be used as work space; i.e., may change in an unspecified manner.
 */
 template <class Base>
 void reverse_unary1_op(
-    size_t      d            ,
-    size_t      i_z          ,
-    size_t      i_x          ,
-    size_t      cap_order    ,
-    const Base* taylor       ,
-    size_t      nc_partial   ,
-    Base*       partial      )
+   size_t      d            ,
+   size_t      i_z          ,
+   size_t      i_x          ,
+   size_t      cap_order    ,
+   const Base* taylor       ,
+   size_t      nc_partial   ,
+   Base*       partial      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 // ==================== Unary operators with two results ====================
@@ -332,15 +332,15 @@ the autillary result y.
 */
 template <class Base>
 void forward_unary2_op(
-    size_t p           ,
-    size_t q           ,
-    size_t i_z         ,
-    size_t i_x         ,
-    size_t cap_order   ,
-    Base*  taylor      )
+   size_t p           ,
+   size_t q           ,
+   size_t i_z         ,
+   size_t i_x         ,
+   size_t cap_order   ,
+   Base*  taylor      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -415,15 +415,15 @@ corresponding to z and the ell-th direction.
 */
 template <class Base>
 void forward_unary2_op_dir(
-    size_t q           ,
-    size_t r           ,
-    size_t i_z         ,
-    size_t i_x         ,
-    size_t cap_order   ,
-    Base*  taylor      )
+   size_t q           ,
+   size_t r           ,
+   size_t i_z         ,
+   size_t i_x         ,
+   size_t cap_order   ,
+   Base*  taylor      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -464,13 +464,13 @@ the autillary result y.
 */
 template <class Base>
 void forward_unary2_op_0(
-    size_t i_z         ,
-    size_t i_x         ,
-    size_t cap_order   ,
-    Base*  taylor      )
+   size_t i_z         ,
+   size_t i_x         ,
+   size_t cap_order   ,
+   Base*  taylor      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -480,7 +480,7 @@ This routine is given the partial derivatives of a function
 G( z , y , x , w , ... )
 and it uses them to compute the partial derivatives of
 \verbatim
-    H( x , w , u , ... ) = G[ z(x) , y(x), x , w , u , ... ]
+   H( x , w , u , ... ) = G[ z(x) , y(x), x , w , u , ... ]
 \endverbatim
 
 \tparam Base
@@ -557,16 +557,16 @@ may be used as work space; i.e., may change in an unspecified manner.
 */
 template <class Base>
 void reverse_unary2_op(
-    size_t      d            ,
-    size_t      i_z          ,
-    size_t      i_x          ,
-    size_t      cap_order    ,
-    const Base* taylor       ,
-    size_t      nc_partial   ,
-    Base*       partial      )
+   size_t      d            ,
+   size_t      i_z          ,
+   size_t      i_x          ,
+   size_t      cap_order    ,
+   const Base* taylor       ,
+   size_t      nc_partial   ,
+   Base*       partial      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 // =================== Binary operators with one result ====================
 
@@ -634,16 +634,16 @@ is the k-th order Taylor coefficient corresponding to z.
 */
 template <class Base>
 void forward_binary_op(
-    size_t        p          ,
-    size_t        q          ,
-    size_t        i_z        ,
-    const addr_t* arg        ,
-    const Base*   parameter  ,
-    size_t        cap_order  ,
-    Base*         taylor     )
+   size_t        p          ,
+   size_t        q          ,
+   size_t        i_z        ,
+   const addr_t* arg        ,
+   const Base*   parameter  ,
+   size_t        cap_order  ,
+   Base*         taylor     )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -728,16 +728,16 @@ corresponding to z and the ell-th direction.
 */
 template <class Base>
 void forward_binary_op_dir(
-    size_t        q          ,
-    size_t        r          ,
-    size_t        i_z        ,
-    const addr_t* arg        ,
-    const Base*   parameter  ,
-    size_t        cap_order  ,
-    Base*         taylor     )
+   size_t        q          ,
+   size_t        r          ,
+   size_t        i_z        ,
+   const addr_t* arg        ,
+   const Base*   parameter  ,
+   size_t        cap_order  ,
+   Base*         taylor     )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 
@@ -788,14 +788,14 @@ is the zero order Taylor coefficient corresponding to z.
 */
 template <class Base>
 void forward_binary_op_0(
-    size_t        i_z         ,
-    const addr_t* arg         ,
-    const Base*   parameter   ,
-    size_t        cap_order   ,
-    Base*         taylor      )
+   size_t        i_z         ,
+   const addr_t* arg         ,
+   const Base*   parameter   ,
+   size_t        cap_order   ,
+   Base*         taylor      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -805,7 +805,7 @@ This routine is given the partial derivatives of a function
 G( z , y , x , w , ... )
 and it uses them to compute the partial derivatives of
 \verbatim
-    H( y , x , w , u , ... ) = G[ z(x , y) , y , x , w , u , ... ]
+   H( y , x , w , u , ... ) = G[ z(x , y) , y , x , w , u , ... ]
 \endverbatim
 
 \tparam Base
@@ -897,17 +897,17 @@ may be used as work space; i.e., may change in an unspecified manner.
 */
 template <class Base>
 void reverse_binary_op(
-    size_t      d            ,
-    size_t      i_z          ,
-    addr_t*     arg          ,
-    const Base* parameter    ,
-    size_t      cap_order    ,
-    const Base* taylor       ,
-    size_t      nc_partial   ,
-    Base*       partial      )
+   size_t      d            ,
+   size_t      i_z          ,
+   addr_t*     arg          ,
+   const Base* parameter    ,
+   size_t      cap_order    ,
+   const Base* taylor       ,
+   size_t      nc_partial   ,
+   Base*       partial      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 // ======================= Pow Function ===================================
 /*!
@@ -930,9 +930,9 @@ i.e. the row index in taylor corresponding to z.
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
 \verbatim
-    z_0 = log(x)
-    z_1 = z0 * y
-    z_2 = exp(z1)
+   z_0 = log(x)
+   z_1 = z0 * y
+   z_2 = exp(z1)
 \endverbatim
 It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y).
 
@@ -983,16 +983,16 @@ is the k-th order Taylor coefficient corresponding to z_j.
 */
 template <class Base>
 void forward_pow_op(
-    size_t        p          ,
-    size_t        q          ,
-    size_t        i_z        ,
-    const addr_t* arg        ,
-    const Base*   parameter  ,
-    size_t        cap_order  ,
-    Base*         taylor     )
+   size_t        p          ,
+   size_t        q          ,
+   size_t        i_z        ,
+   const addr_t* arg        ,
+   const Base*   parameter  ,
+   size_t        cap_order  ,
+   Base*         taylor     )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
 Prototype for multiple direction forward mode z = pow(x, y) (not used).
@@ -1014,9 +1014,9 @@ i.e. the row index in taylor corresponding to z.
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
 \verbatim
-    z_0 = log(x)
-    z_1 = z0 * y
-    z_2 = exp(z1)
+   z_0 = log(x)
+   z_1 = z0 * y
+   z_2 = exp(z1)
 \endverbatim
 It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y).
 
@@ -1090,16 +1090,16 @@ for the ell-th direction.
 */
 template <class Base>
 void forward_pow_op_dir(
-    size_t        q          ,
-    size_t        r          ,
-    size_t        i_z        ,
-    const addr_t* arg        ,
-    const Base*   parameter  ,
-    size_t        cap_order  ,
-    Base*         taylor     )
+   size_t        q          ,
+   size_t        r          ,
+   size_t        i_z        ,
+   const addr_t* arg        ,
+   const Base*   parameter  ,
+   size_t        cap_order  ,
+   Base*         taylor     )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
 Prototype for zero order forward mode z = pow(x, y) (not used).
@@ -1115,9 +1115,9 @@ i.e. the row index in taylor corresponding to z.
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
 \verbatim
-    z_0 = log(x)
-    z_1 = z0 * y
-    z_2 = exp(z1)
+   z_0 = log(x)
+   z_1 = z0 * y
+   z_2 = exp(z1)
 \endverbatim
 It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y).
 
@@ -1158,14 +1158,14 @@ is the zero order Taylor coefficient corresponding to z_j.
 */
 template <class Base>
 void forward_pow_op_0(
-    size_t        i_z        ,
-    const addr_t* arg        ,
-    const Base*   parameter  ,
-    size_t        cap_order  ,
-    Base*         taylor     )
+   size_t        i_z        ,
+   const addr_t* arg        ,
+   const Base*   parameter  ,
+   size_t        cap_order  ,
+   Base*         taylor     )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
 Prototype for reverse mode z = pow(x, y) (not used).
@@ -1174,7 +1174,7 @@ This routine is given the partial derivatives of a function
 G( z , y , x , w , ... )
 and it uses them to compute the partial derivatives of
 \verbatim
-    H( y , x , w , u , ... ) = G[ pow(x , y) , y , x , w , u , ... ]
+   H( y , x , w , u , ... ) = G[ pow(x , y) , y , x , w , u , ... ]
 \endverbatim
 
 \tparam Base
@@ -1192,9 +1192,9 @@ i.e. the row index in taylor corresponding to z.
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
 \verbatim
-    z_0 = log(x)
-    z_1 = z0 * y
-    z_2 = exp(z1)
+   z_0 = log(x)
+   z_1 = z0 * y
+   z_2 = exp(z1)
 \endverbatim
 It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y).
 
@@ -1274,17 +1274,17 @@ may be used as work space; i.e., may change in an unspecified manner.
 */
 template <class Base>
 void reverse_pow_op(
-    size_t      d            ,
-    size_t      i_z          ,
-    addr_t*     arg          ,
-    const Base* parameter    ,
-    size_t      cap_order    ,
-    const Base* taylor       ,
-    size_t      nc_partial   ,
-    Base*       partial      )
+   size_t      d            ,
+   size_t      i_z          ,
+   addr_t*     arg          ,
+   const Base* parameter    ,
+   size_t      cap_order    ,
+   const Base* taylor       ,
+   size_t      nc_partial   ,
+   Base*       partial      )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 // ==================== Sparsity Calculations ==============================
@@ -1297,7 +1297,7 @@ In addition, it is given the revese mode Hessian sparsity
 for the quanity of interest G(z , y , ... )
 and it uses them to compute the sparsity patterns for
 \verbatim
-    H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
+   H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
 \endverbatim
 
 \tparam Vector_set
@@ -1346,14 +1346,14 @@ and on output it corresponds to the function H.
 
 template <class Vector_set>
 void reverse_sparse_hessian_unary_op(
-    size_t              i_z               ,
-    size_t              i_x               ,
-    bool*               rev_jacobian      ,
-    Vector_set&         for_jac_sparsity  ,
-    Vector_set&         rev_hes_sparsity  )
+   size_t              i_z               ,
+   size_t              i_x               ,
+   bool*               rev_jacobian      ,
+   Vector_set&         for_jac_sparsity  ,
+   Vector_set&         rev_hes_sparsity  )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 /*!
@@ -1363,7 +1363,7 @@ This routine is given the sparsity patterns the Hessian
 of a function G(z, y, x, ... )
 and it uses them to compute the sparsity patterns for the Hessian of
 \verbatim
-    H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
+   H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
 \endverbatim
 
 \tparam Vector_set
@@ -1436,14 +1436,14 @@ and on output it correspondst to H.
 */
 template <class Vector_set>
 void reverse_sparse_hessian_binary_op(
-    size_t            i_z                ,
-    const addr_t*     arg                ,
-    bool*             jac_reverse        ,
-    Vector_set&       for_jac_sparsity   ,
-    Vector_set&       rev_hes_sparsity   )
+   size_t            i_z                ,
+   const addr_t*     arg                ,
+   bool*             jac_reverse        ,
+   Vector_set&       for_jac_sparsity   ,
+   Vector_set&       rev_hes_sparsity   )
 {
-    // This routine is only for documentaiton, it should not be used
-    CPPAD_ASSERT_UNKNOWN( false );
+   // This routine is only for documentaiton, it should not be used
+   CPPAD_ASSERT_UNKNOWN( false );
 }
 
 

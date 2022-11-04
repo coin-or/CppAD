@@ -12,7 +12,7 @@ namespace CppAD { namespace local { namespace utility {
 /*
 $begin vector_bool_element$$
 $spell
-    Bool
+   Bool
 $$
 
 $section vectorBoolElement Class$$
@@ -47,28 +47,28 @@ $head Source$$
 $srccode%hpp% */
 class vectorBoolElement {
 private:
-    typedef size_t unit_t;
-    unit_t* unit_;
-    unit_t  mask_;
+   typedef size_t unit_t;
+   unit_t* unit_;
+   unit_t  mask_;
 public:
-    vectorBoolElement(unit_t* unit, unit_t mask )
-    : unit_(unit) , mask_(mask)
-    { }
-    vectorBoolElement(const vectorBoolElement& other)
-    : unit_(other.unit_) , mask_(other.mask_)
-    { }
-    operator bool() const
-    {   return (*unit_ & mask_) != 0; }
-    vectorBoolElement& operator=(bool value)
-    {   if(value) *unit_ |= mask_;
-        else      *unit_ &= ~mask_;
-        return *this;
-    }
-    vectorBoolElement& operator=(const vectorBoolElement& element)
-    {   if( *(element.unit_) & element.mask_ ) *unit_ |= mask_;
-        else                                   *unit_ &= ~mask_;
-        return *this;
-    }
+   vectorBoolElement(unit_t* unit, unit_t mask )
+   : unit_(unit) , mask_(mask)
+   { }
+   vectorBoolElement(const vectorBoolElement& other)
+   : unit_(other.unit_) , mask_(other.mask_)
+   { }
+   operator bool() const
+   {  return (*unit_ & mask_) != 0; }
+   vectorBoolElement& operator=(bool value)
+   {  if(value) *unit_ |= mask_;
+      else      *unit_ &= ~mask_;
+      return *this;
+   }
+   vectorBoolElement& operator=(const vectorBoolElement& element)
+   {  if( *(element.unit_) & element.mask_ ) *unit_ |= mask_;
+      else                                   *unit_ &= ~mask_;
+      return *this;
+   }
 };
 /* %$$
 $end

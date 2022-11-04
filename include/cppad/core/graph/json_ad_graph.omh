@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 $begin json_ad_graph$$
 $spell
-    Json
-    vec
-    enum_op
-    arg
-    ind
-    acyclic
-    str
-    np nx nc
+   Json
+   vec
+   enum_op
+   arg
+   ind
+   acyclic
+   str
+   np nx nc
 $$
 
 $section Json Representation of an AD Graph$$
@@ -22,10 +22,10 @@ $tref cpp_ad_graph$$.
 $head Node Indices$$
 The nodes in an AD graph have the following order:
 $pre
-    p_0 , ... ,  p_{np-1} ,
-    x_0 , ... ,  x_{nx-1} ,
-    c_0 , ... ,  c_{nc-1} ,
-    r_0 , ... ,  r_{no-1}
+   p_0 , ... ,  p_{np-1} ,
+   x_0 , ... ,  x_{nx-1} ,
+   c_0 , ... ,  c_{nc-1} ,
+   r_0 , ... ,  r_{no-1}
 $$
 
 $subhead p$$
@@ -68,8 +68,8 @@ $head Format$$
 A complete description of the format for an AD graph is given below.
 For a general description of Json format see
 $href%
-    https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax%
-    Json data types and syntax
+   https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax%
+   Json data types and syntax
 %$$.
 
 $head Token$$
@@ -111,7 +111,7 @@ $tend
 $head op_define_vec$$
 This vector has the following Json format:
 $codei%
-    [ %n_define%, [ %first_op_define%, %...%, %last_op_define% ] ]
+   [ %n_define%, [ %first_op_define%, %...%, %last_op_define% ] ]
 %$$
 where the non-negative integer $icode n_define$$
 is the number of operator definitions in this vector.
@@ -123,25 +123,25 @@ If an operator has a fixed number of arguments, one result, and
 only node indices for arguments, its definition has the form
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":         %name%,
-    "n_arg":        %n_arg%
+   "op_code":      %op_code%,
+   "name":         %name%,
+   "n_arg":        %n_arg%
 }
 %$$
 Otherwise the operator definition has the form
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":         %name%
+   "op_code":      %op_code%,
+   "name":         %name%
 }
 %$$
 For example, the following is the $icode op_define$$ corresponding to the
 $cref/add/json_graph_op/Binary Operators/add/$$ operator:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":         "add",
-    "n_arg":        2
+   "op_code":      %op_code%,
+   "name":         "add",
+   "n_arg":        2
 }
 %$$
 
@@ -175,7 +175,7 @@ $subhead n_arg In Definition$$
 If $icode n_arg$$ is present in an operator definition,
 it is not in a corresponding $icode op_usage$$ which as the form
 $codei%
-    [ %op_code%, %first_arg%, %...%, %last_arg% ]
+   [ %op_code%, %first_arg%, %...%, %last_arg% ]
 %$$
 
 $subhead n_arg Not In Definition$$
@@ -183,7 +183,7 @@ If $icode n_arg$$ is not in an operator definition,
 it is in a corresponding $icode op_usage$$.
 If there are no strings in a corresponding usage, it has the form
 $codei%
-    [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
+   [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
 
 $subhead Strings In Usage$$
@@ -191,9 +191,9 @@ If $icode n_arg$$ is not in an operator definition,
 and there are strings in a corresponding usage,
 a corresponding usage has the form
 $codei%
-    [ %op_code%, %first_str%, %...%, %last_str%, %n_result%, %n_arg%,
-        [ %first_arg%, %...%, %last_arg% ]
-    ]
+   [ %op_code%, %first_str%, %...%, %last_str%, %n_result%, %n_arg%,
+      [ %first_arg%, %...%, %last_arg% ]
+   ]
 %$$
 where $icode first_str$$ ..., $icode last_str$$,
 are a fixed number of strings that are part of the corresponding operator.
@@ -239,7 +239,7 @@ This is the constant parameter vector (called $icode c$$ above).
 These parameters can be used to define the function and cannot change.
 The Json format for $icode constant_vec$$ is
 $codei%
-    [ %n_constant%, [ %first_constant%, %...%, %last_constant% ] ]
+   [ %n_constant%, [ %first_constant%, %...%, %last_constant% ] ]
 %$$
 Each of the elements of this vector,
 e.g., $icode first_constant$$,
@@ -254,7 +254,7 @@ is the number of elements in this vector
 $head op_usage_vec$$
 The Jason format for an $icode op_usage_vec$$ is
 $codei%
-    [ %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
+   [ %n_usage%, [ %first_op_usage%, %...%, %last_op_usage% ] ]
 %$$
 Each of the elements of this vector,
 e.g. $icode first_op_usage$$,
@@ -269,7 +269,7 @@ This is the vector of dependent variable node indices.
 This identifies which nodes in the graph correspond to dependent variables.
 The Json format for $icode dependent_vec$$ is
 $codei%
-    [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
+   [ %n_dependent%, [ %first_dependent%, %...%, %last_dependent% ] ]
 %$$
 Each of the elements of this vector,
 e.g. $icode first_dependent$$,
@@ -285,9 +285,9 @@ Each operator corresponds to a set of arcs from its argument nodes
 to its result nodes.
 The graph is acyclic; see
 $cref/
-    first_arg, ..., last_arg/
-    json_ad_graph/op_usage/
-    first_arg, ..., last_arg
+   first_arg, ..., last_arg/
+   json_ad_graph/op_usage/
+   first_arg, ..., last_arg
 /$$.
 
 $subhead function_name$$
@@ -299,13 +299,13 @@ $subhead function$$
 The Json AD graph representation of a function is
 $codei%
 {
-    "function_name": %function_name%,
-    "op_define_vec": %op_define_vec%,
-    "n_dynamic_ind": %n_dynamic_ind%,
-    "n_variable_ind": %n_variable_ind%,
-    "constant_vec":  %constant_vec%,
-    "op_usage_vec":  %op_usage_vec%,
-    "dependent_vec": %dependent_vec%
+   "function_name": %function_name%,
+   "op_define_vec": %op_define_vec%,
+   "n_dynamic_ind": %n_dynamic_ind%,
+   "n_variable_ind": %n_variable_ind%,
+   "constant_vec":  %constant_vec%,
+   "op_usage_vec":  %op_usage_vec%,
+   "dependent_vec": %dependent_vec%
 }
 %$$
 This represents a the $latex y = f(x, p)$$ where
@@ -314,10 +314,10 @@ $latex x$$ is the independent variable vector, and
 $latex y$$ is the dependent variable vector.
 
 $childtable%include/cppad/core/graph/json_graph_op.omh
-    %include/cppad/core/graph/from_json.hpp
-    %include/cppad/core/graph/to_json.hpp
-    %example/json/get_started.cpp
-    %example/json/sparse.cpp
+   %include/cppad/core/graph/from_json.hpp
+   %include/cppad/core/graph/to_json.hpp
+   %example/json/get_started.cpp
+   %example/json/sparse.cpp
 %$$
 
 $end

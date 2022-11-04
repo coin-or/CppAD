@@ -10,15 +10,15 @@
 
 template <class Type>
 extern_value<Type>::extern_value(Type value)
-{   value_ = value; }
+{  value_ = value; }
 
 template <class Type>
 void extern_value<Type>::set(Type value)
-{   value_ = value; }
+{  value_ = value; }
 
 template <class Type>
 Type extern_value<Type>::get(void)
-{   return value_; }
+{  return value_; }
 
 INSTANTIATE( float );
 INSTANTIATE( double );

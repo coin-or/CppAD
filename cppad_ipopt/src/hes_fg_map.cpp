@@ -25,7 +25,7 @@ The functions
 We define the function
 \f$ F : {\bf R}^n \rightarrow {\bf R} \f$ by
 \f[
-    F(x) = \sum_{i=0}^m fg(x)_i
+   F(x) = \sum_{i=0}^m fg(x)_i
 \f]
 
 \param fg_info
@@ -33,7 +33,7 @@ For <tt>k = 0 , ... , K-1</tt>,
 for <tt>ell = 0 , ... , L[k]</tt>,
 the function call
 \verbatim
-    fg_info->index(k, ell, I, J);
+   fg_info->index(k, ell, I, J);
 \endverbatim
 is made by hes_fg_map.
 The values k and ell are inputs.
@@ -85,7 +85,7 @@ is a vector with size K.
 For <tt>k = 0 , ... , K-1, pattern_jac_r[k]</tt>
 is a CppAD sparsity pattern for the Hessian of the function
 \f[
-    R(u) = \sum_{i=0}^{p[k]-1} r_k (u)_i
+   R(u) = \sum_{i=0}^{p[k]-1} r_k (u)_i
 \f]
 As such, <tt>pattern_hes_r[k].size() == q[k] * q[k]</tt>.
 
@@ -108,62 +108,62 @@ Furthermore, if <tt>index_jac_g[i].find(j) == index_jac_g[i].end()</tt>,
 then the \f$ (i, j)\f$ entry in the Jacobian of \f$ g(x) \f$ is always zero.
 */
 void hes_fg_map(
-    cppad_ipopt_fg_info*  fg_info                                  ,
-    size_t                                          m              ,
-    size_t                                          n              ,
-    size_t                                          K              ,
-    const CppAD::vector<size_t>&                    L              ,
-    const CppAD::vector<size_t>&                    p              ,
-    const CppAD::vector<size_t>&                    q              ,
-    const CppAD::vector<CppAD::vectorBool>&         pattern_hes_r  ,
-    CppAD::vector<size_t>&                          I              ,
-    CppAD::vector<size_t>&                          J              ,
-    CppAD::vector< std::map<size_t,size_t> >&       index_hes_fg   )
+   cppad_ipopt_fg_info*  fg_info                                  ,
+   size_t                                          m              ,
+   size_t                                          n              ,
+   size_t                                          K              ,
+   const CppAD::vector<size_t>&                    L              ,
+   const CppAD::vector<size_t>&                    p              ,
+   const CppAD::vector<size_t>&                    q              ,
+   const CppAD::vector<CppAD::vectorBool>&         pattern_hes_r  ,
+   CppAD::vector<size_t>&                          I              ,
+   CppAD::vector<size_t>&                          J              ,
+   CppAD::vector< std::map<size_t,size_t> >&       index_hes_fg   )
 {
-    using CppAD::vectorBool;
-    size_t i, j, ij, k, ell;
+   using CppAD::vectorBool;
+   size_t i, j, ij, k, ell;
 
-    CPPAD_ASSERT_UNKNOWN( K == L.size() );
-    CPPAD_ASSERT_UNKNOWN( K == p.size() );
-    CPPAD_ASSERT_UNKNOWN( K == q.size() );
-    CPPAD_ASSERT_UNKNOWN( K == pattern_hes_r.size() );
+   CPPAD_ASSERT_UNKNOWN( K == L.size() );
+   CPPAD_ASSERT_UNKNOWN( K == p.size() );
+   CPPAD_ASSERT_UNKNOWN( K == q.size() );
+   CPPAD_ASSERT_UNKNOWN( K == pattern_hes_r.size() );
 # ifndef NDEBUG
-    for(k = 0; k < K; k++)
-    {    CPPAD_ASSERT_UNKNOWN( p[k] <= I.size() );
+   for(k = 0; k < K; k++)
+   {    CPPAD_ASSERT_UNKNOWN( p[k] <= I.size() );
          CPPAD_ASSERT_UNKNOWN( q[k] <= J.size() );
          CPPAD_ASSERT_UNKNOWN( q[k]*q[k] == pattern_hes_r[k].size() );
-    }
+   }
 # endif
 
-    // Now compute pattern for fg
-    // (use standard set representation because can be huge).
-    CppAD::vector< std::set<size_t> > pattern_hes_fg(n);
-    for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
-    {   fg_info->index(k, ell, I, J);
-        for(i = 0; i < q[k]; i++)
-        {   for(j = 0; j < q[k]; j++)
-            {   ij  = i * q[k] + j;
-                if( pattern_hes_r[k][ij] )
-                    pattern_hes_fg[J[i]].insert(J[j]);
-            }
-        }
-    }
+   // Now compute pattern for fg
+   // (use standard set representation because can be huge).
+   CppAD::vector< std::set<size_t> > pattern_hes_fg(n);
+   for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
+   {  fg_info->index(k, ell, I, J);
+      for(i = 0; i < q[k]; i++)
+      {  for(j = 0; j < q[k]; j++)
+         {  ij  = i * q[k] + j;
+            if( pattern_hes_r[k][ij] )
+               pattern_hes_fg[J[i]].insert(J[j]);
+         }
+      }
+   }
 
-    // Now compute the mapping from (i, j) in the Hessian of fg to the
-    // corresponding index value used by Ipopt to represent the Hessian.
-    CPPAD_ASSERT_UNKNOWN( index_hes_fg.size() == 0 );
-    index_hes_fg.resize(n);
-    std::set<size_t>::const_iterator itr;
-    ell = 0;
-    for(i = 0; i < n; i++)
-    {   for(itr = pattern_hes_fg[i].begin();
-            itr != pattern_hes_fg[i].end();
-            itr++)
-        {
-            index_hes_fg[i][*itr] = ell++;
-        }
-    }
-    return;
+   // Now compute the mapping from (i, j) in the Hessian of fg to the
+   // corresponding index value used by Ipopt to represent the Hessian.
+   CPPAD_ASSERT_UNKNOWN( index_hes_fg.size() == 0 );
+   index_hes_fg.resize(n);
+   std::set<size_t>::const_iterator itr;
+   ell = 0;
+   for(i = 0; i < n; i++)
+   {  for(itr = pattern_hes_fg[i].begin();
+         itr != pattern_hes_fg[i].end();
+         itr++)
+      {
+         index_hes_fg[i][*itr] = ell++;
+      }
+   }
+   return;
 }
 
 // ---------------------------------------------------------------------------

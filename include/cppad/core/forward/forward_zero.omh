@@ -4,12 +4,12 @@
 # ----------------------------------------------------------------------------
 $begin forward_zero$$
 $spell
-    std::cout
-    ostream
-    const
-    Taylor
-    dy
-    Jacobian
+   std::cout
+   ostream
+   const
+   Taylor
+   dy
+   Jacobian
 $$
 
 $section Zero Order Forward Mode: Function Values$$
@@ -24,7 +24,7 @@ We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The result of the syntax above is
 $latex \[
-    y0 = F(x0)
+   y0 = F(x0)
 \] $$
 See the $cref/FunCheck discussion/FunCheck/Discussion/$$ for
 possible differences between $latex F(x)$$ and the algorithm that defined
@@ -33,19 +33,19 @@ the operation sequence.
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
 After this call to $code Forward$$, the value returned by
 $codei%
-    %f%.size_order()
+   %f%.size_order()
 %$$
 will be equal to one (see $cref size_order$$).
 
 $head x0$$
 The argument $icode x0$$ has prototype
 $codei%
-    const %Vector%& %x0%
+   const %Vector%& %x0%
 %$$
 (see $cref/Vector/forward_zero/Vector/$$ below)
 and its size must be equal to $icode n$$, the dimension of the
@@ -56,7 +56,7 @@ If the argument $icode s$$ is not present, $code std::cout$$
 is used in its place.
 Otherwise, this argument has prototype
 $codei%
-    std::ostream& %s%
+   std::ostream& %s%
 %$$
 It specifies where the output corresponding to $cref PrintFor$$,
 and this zero order forward mode call, will be written.
@@ -64,7 +64,7 @@ and this zero order forward mode call, will be written.
 $head y0$$
 The result $icode y0$$ has prototype
 $codei%
-    %Vector% %y0%
+   %Vector% %y0%
 %$$
 (see $cref/Vector/forward_zero/Vector/$$ below)
 and its value is $latex F(x)$$ at $icode%x% = %x0%$$.
@@ -99,7 +99,7 @@ For this special case, $latex q = 0$$,
 $latex x^{(0)}$$ $codei%= %x0%$$,
 $latex X(t) = x^{(0)}$$, and
 $latex \[
-    y^{(0)} = Y(t) = F[ X(t) ] = F( x^{(0)} )
+   y^{(0)} = Y(t) = F[ X(t) ] = F( x^{(0)} )
 \] $$
 which agrees with the specifications for
 $icode y0$$ in the $cref/purpose/forward_zero/Purpose/$$ above.

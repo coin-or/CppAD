@@ -8,14 +8,14 @@
 # include <cppad/cppad.hpp>
 
 namespace CppAD {
-    extern CppAD::AD<double> lu_vec_ad(
-        size_t                           n,
-        size_t                           m,
-        CppAD::VecAD<double>             &Matrix,
-        CppAD::VecAD<double>             &Rhs,
-        CppAD::VecAD<double>             &Result,
-        CppAD::AD<double>                &logdet
-    );
+   extern CppAD::AD<double> lu_vec_ad(
+      size_t                           n,
+      size_t                           m,
+      CppAD::VecAD<double>             &Matrix,
+      CppAD::VecAD<double>             &Rhs,
+      CppAD::VecAD<double>             &Result,
+      CppAD::AD<double>                &logdet
+   );
 }
 
 # endif

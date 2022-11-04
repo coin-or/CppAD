@@ -27,23 +27,23 @@ extern bool ode(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/chkpoint_two";
-    size_t      width = 20;
-    CppAD::test_boolofvoid Run(group, width);
+{  std::string group = "example/chkpoint_two";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
 
-    // This line is used by test_one.sh
+   // This line is used by test_one.sh
 
-    // external compiled tests
-    Run( base2ad,             "base2ad"        );
-    Run( compare,             "compare"        );
-    Run( dynamic,             "dynamic"        );
-    Run( get_started,         "get_started"    );
-    Run( ode,                 "ode"            );
-    //
-    // check for memory leak
-    bool memory_ok = CppAD::thread_alloc::free_all();
-    // print summary at end
-    bool ok = Run.summary(memory_ok);
-    //
-    return static_cast<int>( ! ok );
+   // external compiled tests
+   Run( base2ad,             "base2ad"        );
+   Run( compare,             "compare"        );
+   Run( dynamic,             "dynamic"        );
+   Run( get_started,         "get_started"    );
+   Run( ode,                 "ode"            );
+   //
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   // print summary at end
+   bool ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
 }

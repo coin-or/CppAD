@@ -22,19 +22,19 @@ extern bool ode_fast_check(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "cppad_ipopt/example";
-    size_t      width = 20;
-    CppAD::test_boolofvoid Run(group, width);
+{  std::string group = "cppad_ipopt/example";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
 
-    // external compiled tests
-    Run( ipopt_get_started,   "ipopt_get_started"  );
-    Run( ode_simple_check,    "ode_simple_check"   );
-    Run( ode_fast_check,      "ode_fast_check"     );
-    //
-    // check for memory leak
-    bool memory_ok = CppAD::thread_alloc::free_all();
-    // print summary at end
-    bool ok = Run.summary(memory_ok);
-    //
-    return static_cast<int>( ! ok );
+   // external compiled tests
+   Run( ipopt_get_started,   "ipopt_get_started"  );
+   Run( ode_simple_check,    "ode_simple_check"   );
+   Run( ode_fast_check,      "ode_fast_check"     );
+   //
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   // print summary at end
+   bool ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
 }

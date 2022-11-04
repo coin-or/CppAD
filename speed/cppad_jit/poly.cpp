@@ -5,7 +5,7 @@
 /*
 $begin cppad_jit_poly.cpp$$
 $spell
-    cppad_jit
+   cppad_jit
 $$
 
 $section cppad_jit Speed: Second Derivative of a Polynomial$$
@@ -24,12 +24,12 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_poly(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &a        ,  // coefficients of polynomial
-    CppAD::vector<double>     &z        ,  // polynomial argument value
-    CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
-{   return false; }
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &a        ,  // coefficients of polynomial
+   CppAD::vector<double>     &z        ,  // polynomial argument value
+   CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
+{  return false; }
 /* %$$
 $end
 */

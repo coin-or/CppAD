@@ -6,13 +6,13 @@
 name='clang_simple'
 if [ "$0" != "bug/$name.sh" ]
 then
-    echo "usage: bug/$name.sh"
-    exit 1
+   echo "usage: bug/$name.sh"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 if [ -e build/bug ]
 then
-    rm -r build/bug
+   rm -r build/bug
 fi
 mkdir -p build/bug
 cd build/bug
@@ -21,16 +21,16 @@ cmake ../..
 cat << EOF > $name.cpp
 # include <cppad/cppad.hpp>
 int main(void)
-{   bool ok = true;
-    using std::cout;
-    using CppAD::AD;
-    //
-    std::cout << "Test for issue 31\n";
-    CppAD::CheckSimpleVector<double, CppAD::vector<double> >();
-    //
-    if( ok )
-        return 0;
-    return 1;
+{  bool ok = true;
+   using std::cout;
+   using CppAD::AD;
+   //
+   std::cout << "Test for issue 31\n";
+   CppAD::CheckSimpleVector<double, CppAD::vector<double> >();
+   //
+   if( ok )
+      return 0;
+   return 1;
 }
 EOF
 cxx_flags='-g -O0'
@@ -40,9 +40,9 @@ clang++ -I../../include -isystem $eigen_dir $cxx_flags $name.cpp -o $name
 #
 if ! ./$name
 then
-    echo
-    echo "build/bug/$name: Error"
-    exit 1
+   echo
+   echo "build/bug/$name: Error"
+   exit 1
 fi
 echo
 # ------------------------------------------------------------------------------

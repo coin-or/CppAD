@@ -8,24 +8,24 @@
 /*
 $begin base_cond_exp$$
 $spell
-    alloc
-    Rel
-    hpp
-    enum
-    namespace
-    Op
-    Lt
-    Le
-    Eq
-    Ge
-    Gt
-    Ne
-    cond
-    exp
-    const
-    adolc
-    CppAD
-    inline
+   alloc
+   Rel
+   hpp
+   enum
+   namespace
+   Op
+   Lt
+   Le
+   Eq
+   Ge
+   Gt
+   Ne
+   cond
+   exp
+   const
+   adolc
+   CppAD
+   inline
 $$
 
 $section Base Type Requirements for Conditional Expressions$$
@@ -38,40 +38,40 @@ $head CompareOp$$
 The following $code enum$$ type is used in the specifications below:
 $codep
 namespace CppAD {
-    // The conditional expression operator enum type
-    enum CompareOp
-    {   CompareLt, // less than
-        CompareLe, // less than or equal
-        CompareEq, // equal
-        CompareGe, // greater than or equal
-        CompareGt, // greater than
-        CompareNe  // not equal
-    };
+   // The conditional expression operator enum type
+   enum CompareOp
+   {  CompareLt, // less than
+      CompareLe, // less than or equal
+      CompareEq, // equal
+      CompareGe, // greater than or equal
+      CompareGt, // greater than
+      CompareNe  // not equal
+   };
 }
 $$
 
 $head CondExpTemplate$$
 The type $icode Base$$ must support the syntax
 $codei%
-    %result% = CppAD::CondExpOp(
-        %cop%, %left%, %right%, %exp_if_true%, %exp_if_false%
-    )
+   %result% = CppAD::CondExpOp(
+      %cop%, %left%, %right%, %exp_if_true%, %exp_if_false%
+   )
 %$$
 which computes implements the corresponding $cref CondExp$$
 function when the result has prototype
 $codei%
-    %Base% %result%
+   %Base% %result%
 %$$
 The argument $icode cop$$ has prototype
 $codei%
-    enum CppAD::CompareOp %cop%
+   enum CppAD::CompareOp %cop%
 %$$
 The other arguments have the prototype
 $codei%
-    const %Base%&  %left%
-    const %Base%&  %right%
-    const %Base%&  %exp_if_true%
-    const %Base%&  %exp_if_false%
+   const %Base%&  %left%
+   const %Base%&  %right%
+   const %Base%&  %exp_if_true%
+   const %Base%&  %exp_if_false%
 %$$
 
 $subhead Ordered Type$$
@@ -81,15 +81,15 @@ $code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators
 its $code CondExpOp$$ function can be defined by
 $codei%
 namespace CppAD {
-    inline %Base% CondExpOp(
-    enum CppAD::CompareOp  %cop%            ,
-    const %Base%           &%left%          ,
-    const %Base%           &%right%         ,
-    const %Base%           &%exp_if_true%   ,
-    const %Base%           &%exp_if_false%  )
-    {   return CondExpTemplate(
-            cop, left, right, trueCase, falseCase);
-    }
+   inline %Base% CondExpOp(
+   enum CppAD::CompareOp  %cop%            ,
+   const %Base%           &%left%          ,
+   const %Base%           &%right%         ,
+   const %Base%           &%exp_if_true%   ,
+   const %Base%           &%exp_if_false%  )
+   {  return CondExpTemplate(
+         cop, left, right, trueCase, falseCase);
+   }
 }
 %$$
 For example, see
@@ -105,16 +105,16 @@ the $code CondExpOp$$ function does not make sense.
 In this case one might (but need not) define $code CondExpOp$$ as follows:
 $codei%
 namespace CppAD {
-    inline %Base% CondExpOp(
-    enum CompareOp %cop%           ,
-    const %Base%   &%left%         ,
-    const %Base%   &%right%        ,
-    const %Base%   &%exp_if_true%  ,
-    const %Base%   &%exp_if_false% )
-    {   // attempt to use CondExp with a %Base% argument
-        assert(0);
-        return %Base%(0);
-    }
+   inline %Base% CondExpOp(
+   enum CompareOp %cop%           ,
+   const %Base%   &%left%         ,
+   const %Base%   &%right%        ,
+   const %Base%   &%exp_if_true%  ,
+   const %Base%   &%exp_if_false% )
+   {  // attempt to use CondExp with a %Base% argument
+      assert(0);
+      return %Base%(0);
+   }
 }
 %$$
 For example, see
@@ -123,15 +123,15 @@ $cref/complex CondExpOp/base_complex.hpp/CondExpOp/$$.
 $head CondExpRel$$
 The macro invocation
 $codei%
-    CPPAD_COND_EXP_REL(%Base%)
+   CPPAD_COND_EXP_REL(%Base%)
 %$$
 uses $code CondExpOp$$ above to define the following functions
 $codei%
-    CondExpLt(%left%, %right%, %exp_if_true%, %exp_if_false%)
-    CondExpLe(%left%, %right%, %exp_if_true%, %exp_if_false%)
-    CondExpEq(%left%, %right%, %exp_if_true%, %exp_if_false%)
-    CondExpGe(%left%, %right%, %exp_if_true%, %exp_if_false%)
-    CondExpGt(%left%, %right%, %exp_if_true%, %exp_if_false%)
+   CondExpLt(%left%, %right%, %exp_if_true%, %exp_if_false%)
+   CondExpLe(%left%, %right%, %exp_if_true%, %exp_if_false%)
+   CondExpEq(%left%, %right%, %exp_if_true%, %exp_if_false%)
+   CondExpGe(%left%, %right%, %exp_if_true%, %exp_if_false%)
+   CondExpGt(%left%, %right%, %exp_if_true%, %exp_if_false%)
 %$$
 where the arguments have type $icode Base$$.
 This should be done inside of the CppAD namespace.
@@ -152,39 +152,39 @@ CondExp operations that aid in meeting Base type requirements.
 \def CPPAD_COND_EXP_BASE_REL(Type, Rel, Op)
 This macro defines the operation
 \verbatim
-    CondExpRel(left, right, exp_if_true, exp_if_false)
+   CondExpRel(left, right, exp_if_true, exp_if_false)
 \endverbatim
 The argument Type is the Base type for this base require operation.
 The argument Rel is one of Lt, Le, Eq, Ge, Gt.
 The argument Op is the corresponding CompareOp value.
 */
 # define CPPAD_COND_EXP_BASE_REL(Type, Rel, Op)       \
-    inline Type CondExp##Rel(                        \
-        const Type& left      ,                     \
-        const Type& right     ,                     \
-        const Type& exp_if_true  ,                  \
-        const Type& exp_if_false )                  \
-    {   return CondExpOp(Op, left, right, exp_if_true, exp_if_false); \
-    }
+   inline Type CondExp##Rel(                        \
+      const Type& left      ,                     \
+      const Type& right     ,                     \
+      const Type& exp_if_true  ,                  \
+      const Type& exp_if_false )                  \
+   {  return CondExpOp(Op, left, right, exp_if_true, exp_if_false); \
+   }
 
 /*!
 \def CPPAD_COND_EXP_REL(Type)
 The macro defines the operations
 \verbatim
-    CondExpLt(left, right, exp_if_true, exp_if_false)
-    CondExpLe(left, right, exp_if_true, exp_if_false)
-    CondExpEq(left, right, exp_if_true, exp_if_false)
-    CondExpGe(left, right, exp_if_true, exp_if_false)
-    CondExpGt(left, right, exp_if_true, exp_if_false)
+   CondExpLt(left, right, exp_if_true, exp_if_false)
+   CondExpLe(left, right, exp_if_true, exp_if_false)
+   CondExpEq(left, right, exp_if_true, exp_if_false)
+   CondExpGe(left, right, exp_if_true, exp_if_false)
+   CondExpGt(left, right, exp_if_true, exp_if_false)
 \endverbatim
 The argument Type is the Base type for this base require operation.
 */
 # define CPPAD_COND_EXP_REL(Type)                     \
-    CPPAD_COND_EXP_BASE_REL(Type, Lt, CompareLt)     \
-    CPPAD_COND_EXP_BASE_REL(Type, Le, CompareLe)     \
-    CPPAD_COND_EXP_BASE_REL(Type, Eq, CompareEq)     \
-    CPPAD_COND_EXP_BASE_REL(Type, Ge, CompareGe)     \
-    CPPAD_COND_EXP_BASE_REL(Type, Gt, CompareGt)
+   CPPAD_COND_EXP_BASE_REL(Type, Lt, CompareLt)     \
+   CPPAD_COND_EXP_BASE_REL(Type, Le, CompareLe)     \
+   CPPAD_COND_EXP_BASE_REL(Type, Eq, CompareEq)     \
+   CPPAD_COND_EXP_BASE_REL(Type, Ge, CompareGe)     \
+   CPPAD_COND_EXP_BASE_REL(Type, Gt, CompareGt)
 
 /*!
 Template function to implement Conditional Expressions for simple types
@@ -223,54 +223,54 @@ see exp_if_true and exp_if_false above.
 */
 template <class CompareType, class ResultType>
 ResultType CondExpTemplate(
-    enum  CompareOp            cop          ,
-    const CompareType&         left         ,
-    const CompareType&         right        ,
-    const ResultType&          exp_if_true  ,
-    const ResultType&          exp_if_false )
-{   ResultType returnValue;
-    switch( cop )
-    {
-        case CompareLt:
-        if( left < right )
-            returnValue = exp_if_true;
-        else
-            returnValue = exp_if_false;
-        break;
+   enum  CompareOp            cop          ,
+   const CompareType&         left         ,
+   const CompareType&         right        ,
+   const ResultType&          exp_if_true  ,
+   const ResultType&          exp_if_false )
+{  ResultType returnValue;
+   switch( cop )
+   {
+      case CompareLt:
+      if( left < right )
+         returnValue = exp_if_true;
+      else
+         returnValue = exp_if_false;
+      break;
 
-        case CompareLe:
-        if( left <= right )
-            returnValue = exp_if_true;
-        else
-            returnValue = exp_if_false;
-        break;
+      case CompareLe:
+      if( left <= right )
+         returnValue = exp_if_true;
+      else
+         returnValue = exp_if_false;
+      break;
 
-        case CompareEq:
-        if( left == right )
-            returnValue = exp_if_true;
-        else
-            returnValue = exp_if_false;
-        break;
+      case CompareEq:
+      if( left == right )
+         returnValue = exp_if_true;
+      else
+         returnValue = exp_if_false;
+      break;
 
-        case CompareGe:
-        if( left >= right )
-            returnValue = exp_if_true;
-        else
-            returnValue = exp_if_false;
-        break;
+      case CompareGe:
+      if( left >= right )
+         returnValue = exp_if_true;
+      else
+         returnValue = exp_if_false;
+      break;
 
-        case CompareGt:
-        if( left > right )
-            returnValue = exp_if_true;
-        else
-            returnValue = exp_if_false;
-        break;
+      case CompareGt:
+      if( left > right )
+         returnValue = exp_if_true;
+      else
+         returnValue = exp_if_false;
+      break;
 
-        default:
-        CPPAD_ASSERT_UNKNOWN(0);
-        returnValue = exp_if_true;
-    }
-    return returnValue;
+      default:
+      CPPAD_ASSERT_UNKNOWN(0);
+      returnValue = exp_if_true;
+   }
+   return returnValue;
 }
 
 } // END_CPPAD_NAMESPACE

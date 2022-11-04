@@ -14,10 +14,10 @@ Define the CppAD error checking macros (all of which begin with CPPAD_ASSERT_)
 -------------------------------------------------------------------------------
 $begin cppad_assert$$
 $spell
-    CppAD
-    exp
-    const
-    bool
+   CppAD
+   exp
+   const
+   bool
 $$
 
 
@@ -67,7 +67,7 @@ This expression may be execute any number of times
 $head Msg$$
 The argument $icode msg$$ has prototype
 $codei%
-    const char *%msg%
+   const char *%msg%
 %$$
 and contains a $code '\0'$$ terminated character string.
 This string is a description of the error
@@ -103,13 +103,13 @@ In addition, it will print the specified error message msg.
 # define CPPAD_ASSERT_KNOWN(exp, msg)  // do nothing
 # else
 # define CPPAD_ASSERT_KNOWN(exp, msg)           \
-{   if( ! ( exp ) )                         \
-    CppAD::ErrorHandler::Call(              \
-        true       ,                    \
-        __LINE__   ,                    \
-        __FILE__   ,                    \
-        #exp       ,                    \
-        msg        );                   \
+{  if( ! ( exp ) )                         \
+   CppAD::ErrorHandler::Call(              \
+      true       ,                    \
+      __LINE__   ,                    \
+      __FILE__   ,                    \
+      #exp       ,                    \
+      msg        );                   \
 }
 # endif
 
@@ -129,13 +129,13 @@ which this expected result occurred.
 # define CPPAD_ASSERT_UNKNOWN(exp)      // do nothing
 # else
 # define CPPAD_ASSERT_UNKNOWN(exp)              \
-{   if( ! ( exp ) )                         \
-    CppAD::ErrorHandler::Call(              \
-        false      ,                    \
-        __LINE__   ,                    \
-        __FILE__   ,                    \
-        #exp       ,                    \
-        ""         );                   \
+{  if( ! ( exp ) )                         \
+   CppAD::ErrorHandler::Call(              \
+      false      ,                    \
+      __LINE__   ,                    \
+      __FILE__   ,                    \
+      #exp       ,                    \
+      ""         );                   \
 }
 # endif
 
@@ -148,8 +148,8 @@ or the number of results are not as expected,
 execution is terminated and the source code line number is reported.
 */
 # define CPPAD_ASSERT_NARG_NRES(op, n_arg, n_res)   \
-    CPPAD_ASSERT_UNKNOWN( NumArg(op) == n_arg ) \
-    CPPAD_ASSERT_UNKNOWN( NumRes(op) == n_res )
+   CPPAD_ASSERT_UNKNOWN( NumArg(op) == n_arg ) \
+   CPPAD_ASSERT_UNKNOWN( NumRes(op) == n_res )
 
 /*!
 \def CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
@@ -159,7 +159,7 @@ If NDEBUG is defined, this macro has no effect
 (not even the definition of (assert_first_call).
 Otherwise, the variable
 \code
-    static bool assert_first_call
+   static bool assert_first_call
 \endcode
 is defined and if the first call is executed in parallel mode,
 execution is terminated and the source code line number is reported.
@@ -168,14 +168,14 @@ execution is terminated and the source code line number is reported.
 # define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # else
 # define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL                           \
-    static bool assert_first_call = true;                              \
-    if( assert_first_call )                                            \
-    {   CPPAD_ASSERT_KNOWN(                                           \
-        ! (CppAD::thread_alloc::in_parallel() ),                      \
-        "In parallel mode and parallel_setup has not been called."    \
-        );                                                            \
-        assert_first_call = false;                                    \
-    }
+   static bool assert_first_call = true;                              \
+   if( assert_first_call )                                            \
+   {  CPPAD_ASSERT_KNOWN(                                           \
+      ! (CppAD::thread_alloc::in_parallel() ),                      \
+      "In parallel mode and parallel_setup has not been called."    \
+      );                                                            \
+      assert_first_call = false;                                    \
+   }
 # endif
 
 # endif

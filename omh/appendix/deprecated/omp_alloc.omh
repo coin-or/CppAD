@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin omp_alloc$$
 $spell
-    openmp
-    include/cppad/utility/omp_alloc.hpp
-    CppAD
+   openmp
+   include/cppad/utility/omp_alloc.hpp
+   CppAD
 $$
 
 $section A Quick OpenMP Memory Allocator Used by CppAD$$
@@ -35,7 +35,7 @@ $head Deprecated 2011-08-23$$
 Use $cref thread_alloc$$ instead.
 
 $childtable%
-    include/cppad/utility/omp_alloc.hpp
+   include/cppad/utility/omp_alloc.hpp
 %$$
 
 $end

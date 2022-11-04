@@ -5,8 +5,8 @@
 
 $begin ReverseTheory$$
 $spell
-    Taylor
-    Arctangent
+   Taylor
+   Arctangent
 $$
 
 $section The Theory of Reverse Mode$$
@@ -32,19 +32,19 @@ we are given the $th p$$ order Taylor coefficient row vectors
 $latex x$$, $latex y$$, and  $latex z$$.
 In addition, we are given the partial derivatives of a scalar valued function
 $latex \[
-    G ( z^{(j)} , \ldots , z^{(0)}, x, y)
+   G ( z^{(j)} , \ldots , z^{(0)}, x, y)
 \] $$
 We need to compute the partial derivatives of the scalar valued function
 $latex \[
-    H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  =
-    G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x , y )
+   H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  =
+   G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x , y )
 \] $$
 where $latex z^{(j)}$$ is expressed as a function of the
 $th j-1$$ order Taylor coefficient row
 vector for $latex Z$$ and the vectors $latex x$$, $latex y$$; i.e.,
 $latex z^{(j)}$$ above is a shorthand for
 $latex \[
-    z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x, y )
+   z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x, y )
 \] $$
 If we do not provide a formula for
 a partial derivative of $latex H$$, then that partial derivative
@@ -56,7 +56,7 @@ $subhead Addition$$
 The forward mode formula for
 $cref/addition/ForwardTheory/Binary Operators/Addition/$$ is
 $latex \[
-    z^{(j)} =  x^{(j)} + y^{(j)}
+   z^{(j)} =  x^{(j)} + y^{(j)}
 \] $$
 If follows that for $latex k = 0 , \ldots , j$$
 and $latex l = 0 , \ldots , j-1$$
@@ -76,7 +76,7 @@ $subhead Subtraction$$
 The forward mode formula for
 $cref/subtraction/ForwardTheory/Binary Operators/Subtraction/$$ is
 $latex \[
-    z^{(j)} =  x^{(j)} - y^{(j)}
+   z^{(j)} =  x^{(j)} - y^{(j)}
 \] $$
 If follows that for $latex k = 0 , \ldots , j$$
 $latex \[
@@ -93,7 +93,7 @@ $subhead Multiplication$$
 The forward mode formula for
 $cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$ is
 $latex \[
-    z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
+   z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
 \] $$
 If follows that for $latex k = 0 , \ldots , j$$
 and $latex l = 0 , \ldots , j-1$$
@@ -116,7 +116,7 @@ $latex \[
 z^{(j)} =
 \frac{1}{y^{(0)}}
 \left(
-    x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
+   x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
 \right)
 \] $$
 If follows that for $latex k = 1 , \ldots , j$$
@@ -134,7 +134,7 @@ $latex \[
 \D{H}{ y^{(0)} } & = &
 \D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} \frac{1}{y^{(0)}}
 \left(
-    x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
+   x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
 \right)
 \\
 & = &
@@ -146,33 +146,33 @@ $head Standard Math Functions$$
 The standard math functions have only one argument.
 Hence we are given the partial derivatives of a scalar valued function
 $latex \[
-    G ( z^{(j)} , \ldots , z^{(0)}, x)
+   G ( z^{(j)} , \ldots , z^{(0)}, x)
 \] $$
 We need to compute the partial derivatives of the scalar valued function
 $latex \[
-    H ( z^{(j-1)} , \ldots , z^{(0)}, x)  =
-    G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x)
+   H ( z^{(j-1)} , \ldots , z^{(0)}, x)  =
+   G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x)
 \] $$
 where $latex z^{(j)}$$ is expressed as a function of the
 $th j-1$$ order Taylor coefficient row
 vector for $latex Z$$ and the vector $latex x$$; i.e.,
 $latex z^{(j)}$$ above is a shorthand for
 $latex \[
-    z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x )
+   z^{(j)} ( z^{(j-1)} , \ldots , z^{(0)}, x )
 \] $$
 
 
 $childtable%
-    omh/theory/exp_reverse.omh%
-    omh/theory/log_reverse.omh%
-    omh/theory/sqrt_reverse.omh%
-    omh/theory/sin_cos_reverse.omh%
-    omh/theory/atan_reverse.omh%
-    omh/theory/asin_reverse.omh%
-    omh/theory/acos_reverse.omh%
-    omh/theory/tan_reverse.omh%
-    omh/theory/erf_reverse.omh%
-    omh/theory/pow_reverse.omh
+   omh/theory/exp_reverse.omh%
+   omh/theory/log_reverse.omh%
+   omh/theory/sqrt_reverse.omh%
+   omh/theory/sin_cos_reverse.omh%
+   omh/theory/atan_reverse.omh%
+   omh/theory/asin_reverse.omh%
+   omh/theory/acos_reverse.omh%
+   omh/theory/tan_reverse.omh%
+   omh/theory/erf_reverse.omh%
+   omh/theory/pow_reverse.omh
 %$$
 
 $end

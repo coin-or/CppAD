@@ -7,9 +7,9 @@
 /*
 $begin atomic_four_for_type$$
 $spell
-    afun
-    enum
-    cpp
+   afun
+   enum
+   cpp
 $$
 
 $section Atomic Function Forward Type Calculation$$
@@ -59,7 +59,7 @@ $tend
 $$
 In addition,
 $codei%
-    identical_zero_enum < constant_enum < dynamic_enum < variable_enum
+   identical_zero_enum < constant_enum < dynamic_enum < variable_enum
 %$$
 A value that is identically zero is also a constant parameter.
 In CppAD, multiplication of a variable by a value that is identically zero
@@ -104,8 +104,8 @@ $head Example$$
 The following is an example $code for_type$$ definition taken from
 $cref atomic_four_norm_sq.cpp$$:
 $srcfile%
-    example/atomic_four/norm_sq.cpp%
-    0%// BEGIN FOR_TYPE%// END FOR_TYPE%0
+   example/atomic_four/norm_sq.cpp%
+   0%// BEGIN FOR_TYPE%// END FOR_TYPE%0
 %$$
 
 $end
@@ -117,11 +117,11 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::for_type(
-    size_t                       call_id     ,
-    const vector<ad_type_enum>&  type_x      ,
-    vector<ad_type_enum>&        type_y      )
+   size_t                       call_id     ,
+   const vector<ad_type_enum>&  type_x      ,
+   vector<ad_type_enum>&        type_y      )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 
 } // END_CPPAD_NAMESPACE
 

@@ -4,15 +4,15 @@
 # ----------------------------------------------------------------------------
 $begin dev_vec_ad$$
 $spell
-    Vec
+   Vec
 $$
 
 $section Developer Documentation for VecAD Operations$$
 
 $childtable%
-    include/cppad/core/vec_ad/vec_ad.hpp%
-    include/cppad/local/op/load_op.hpp%
-    include/cppad/local/op/store_op.hpp
+   include/cppad/core/vec_ad/vec_ad.hpp%
+   include/cppad/local/op/load_op.hpp%
+   include/cppad/local/op/store_op.hpp
 %$$
 
 

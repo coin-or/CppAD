@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin function_name$$
 $spell
-    const
-    std
+   const
+   std
 $$
 
 $section Setting and Getting a Function's Name$$
@@ -22,11 +22,11 @@ $cref fun_property$$
 $head f$$
 In the set operation, $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 In the get operation, $icode f$$ has prototype
 $codei%
-    const ADFun<%Base%> %f%
+   const ADFun<%Base%> %f%
 %$$
 (see $codei%ADFun<%Base%>%$$ $cref/constructor/FunConstruct/$$).
 
@@ -34,15 +34,15 @@ $head function_name$$
 is the name of the function.
 In the set operation, $icode function_name$$ has prototype
 $codei%
-    const std::string& %function_name%
+   const std::string& %function_name%
 %$$
 In the get operation, $icode function_name$$ has prototype
 $codei%
-    std::string %function_name%
+   std::string %function_name%
 %$$
 
 $children%
-    example/general/function_name.cpp
+   example/general/function_name.cpp
 %$$
 $head Example$$
 The file $cref function_name.cpp$$ contains an example and test

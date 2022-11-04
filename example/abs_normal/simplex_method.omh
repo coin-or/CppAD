@@ -9,7 +9,7 @@ $$
 $section simplex_method Source Code$$
 
 $srcfile%example/abs_normal/simplex_method.hpp%
-    0%// BEGIN C++%// END C++%
+   0%// BEGIN C++%// END C++%
 0%$$
 
 $end

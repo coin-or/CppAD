@@ -5,9 +5,9 @@
 
 $begin reverse_identity$$
 $spell
-    Taylor
-    Griewank
-    Andreas
+   Taylor
+   Griewank
+   Andreas
 $$
 
 
@@ -34,26 +34,26 @@ $latex W : \B{R} \times \B{R}^{n \times p} \rightarrow \B{R}$$, and
 $latex W_j : \B{R}^{n \times p} \rightarrow \B{R}$$ by
 $latex \[
 \begin{array}{rcl}
-    X(t , x) & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
-    \\
-    W(t, x)   & = &  w_0 F_0 [X(t, x)] + \cdots + w_{m-1} F_{m-1} [X(t, x)]
-    \\
-    W_j (x)   & = & \frac{1}{j!} \Dpow{j}{t} W(0, x)
+   X(t , x) & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
+   \\
+   W(t, x)   & = &  w_0 F_0 [X(t, x)] + \cdots + w_{m-1} F_{m-1} [X(t, x)]
+   \\
+   W_j (x)   & = & \frac{1}{j!} \Dpow{j}{t} W(0, x)
 \end{array}
 \]$$
 where $latex x^{(j)}$$ is the $th j$$ column of $latex x \in \B{R}^{n \times p}$$.
 The theorem below implies that
 $latex \[
-    \D{ W_j }{ x^{(i)} } (x) = \D{ W_{j-i} }{ x^{(0)} } (x)
+   \D{ W_j }{ x^{(i)} } (x) = \D{ W_{j-i} }{ x^{(0)} } (x)
 \] $$
 A $cref/general reverse sweep/reverse_any/$$ calculates the values
 $latex \[
-    \D{ W_{p-1} }{ x^{(i)} } (x)  \hspace{1cm} (i = 0 , \ldots , p-1)
+   \D{ W_{p-1} }{ x^{(i)} } (x)  \hspace{1cm} (i = 0 , \ldots , p-1)
 \] $$
 But the return values for a reverse sweep are specified
 in terms of the more useful values
 $latex \[
-    \D{ W_j }{ x^{(0)} } (x)  \hspace{1cm} (j = 0 , \ldots , p-1)
+   \D{ W_j }{ x^{(0)} } (x)  \hspace{1cm} (j = 0 , \ldots , p-1)
 \] $$
 
 $head Theorem$$
@@ -66,11 +66,11 @@ and
 $latex y^{(j)} : \B{R}^{n \times p }\rightarrow \B{R}^m$$ by
 $latex \[
 \begin{array}{rcl}
-    Z(t, x)  & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
-    \\
-    Y(t, x)  & = & F [ Z(t, x) ]
-    \\
-    y^{(j)} (x) & = & \frac{1}{j !} \Dpow{j}{t} Y(0, x)
+   Z(t, x)  & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
+   \\
+   Y(t, x)  & = & F [ Z(t, x) ]
+   \\
+   y^{(j)} (x) & = & \frac{1}{j !} \Dpow{j}{t} Y(0, x)
 \end{array}
 \] $$
 where $latex x^{(j)}$$ denotes the $th j$$ column of
@@ -91,16 +91,16 @@ $latex \[
 \D{ y^{(j)} }{ x^{(i)} } (x)
 & = &
 \frac{1}{j ! } \D{ }{ x^{(i)} }
-    \left[ \Dpow{j}{t} (F \circ  Z) (t, x)  \right]_{t=0}
+   \left[ \Dpow{j}{t} (F \circ  Z) (t, x)  \right]_{t=0}
 \\
 & = &
 \frac{1}{j ! } \left[ \Dpow{j}{t}
-    \D{ }{ x^{(i)} } (F \circ  Z) (t, x)
+   \D{ }{ x^{(i)} } (F \circ  Z) (t, x)
 \right]_{t=0}
 \\
 & = &
 \frac{1}{j ! } \left\{
-    \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
+   \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
 \right\}_{t=0}
 \end{array}
 \] $$
@@ -117,7 +117,7 @@ $latex \[
 \Dpow{j-k}{t} ( F^{(1)} \circ Z ) (t, x)
 \\
 \left\{
-    \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
+   \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
 \right\}_{t=0}
 & = &
 \left( \begin{array}{c} j \\ i \end{array} \right)

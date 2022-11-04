@@ -21,24 +21,24 @@ A standard set with one element.
 */
 template <class Scalar>
 const std::set<Scalar>& one_element_std_set(void)
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-    static std::set<Scalar> one;
-    if( one.empty() )
-        one.insert(1);
-    return one;
+{  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+   static std::set<Scalar> one;
+   if( one.empty() )
+      one.insert(1);
+   return one;
 }
 /*!
 A standard set with a two elements.
 */
 template <class Scalar>
 const std::set<Scalar>& two_element_std_set(void)
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-    static std::set<Scalar> two;
-    if( two.empty() )
-    {   two.insert(1);
-        two.insert(2);
-    }
-    return two;
+{  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+   static std::set<Scalar> two;
+   if( two.empty() )
+   {  two.insert(1);
+      two.insert(2);
+   }
+   return two;
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

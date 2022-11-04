@@ -4,19 +4,19 @@
 # ----------------------------------------------------------------------------
 $begin atomic_four_lin_ode$$
 $spell
-    nr
-    nc
-    mul
-    lin
-    Rosen
-    Simpson
-    nnz
-    vk
-    CppAD
+   nr
+   nc
+   mul
+   lin
+   Rosen
+   Simpson
+   nnz
+   vk
+   CppAD
 $$
 
 $section
-    Atomic First Order Linear ODE Method: Example Implementation
+   Atomic First Order Linear ODE Method: Example Implementation
 $$
 
 $head Syntax$$
@@ -35,7 +35,7 @@ $head z(t, x)$$
 Construct an atomic operation that computes an
 approximate solution of the first order linear initial value ODE
 $latex \[
-    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
+   z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
 \] $$
 where
 $latex z : \B{R} \times \B{R}^n \rightarrow \B{R}^m$$,
@@ -143,16 +143,16 @@ $subhead Simpson's Rule$$
 $cref/Simpson's rule/atomic_four_lin_ode_reverse.hpp/Simpson's Rule/$$
 is used to approximate the integral
 $latex \[
-    \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
+   \int_0^r \lambda_i (t, x) z_j (r, x) \R{d} t
 \] $$
 Any other approximation for this integral can be used.
 
 $childtable%
-    include/cppad/example/atomic_four/lin_ode/implement.omh
-    %example/atomic_four/lin_ode/forward.cpp
-    %example/atomic_four/lin_ode/reverse.cpp
-    %example/atomic_four/lin_ode/sparsity.cpp
-    %example/atomic_four/lin_ode/rev_depend.cpp
+   include/cppad/example/atomic_four/lin_ode/implement.omh
+   %example/atomic_four/lin_ode/forward.cpp
+   %example/atomic_four/lin_ode/reverse.cpp
+   %example/atomic_four/lin_ode/sparsity.cpp
+   %example/atomic_four/lin_ode/rev_depend.cpp
 %$$
 
 $end

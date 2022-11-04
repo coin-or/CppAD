@@ -8,9 +8,9 @@
 /*
 $begin base_limits$$
 $spell
-    std
-    namespace
-    CppAD
+   std
+   namespace
+   CppAD
 $$
 
 $section Base Type Requirements for Numeric Limits$$
@@ -33,27 +33,27 @@ For most $icode Base$$ types,
 there is a choice of $icode Other$$,
 for which the following preprocessor macro invocation suffices:
 $codei%
-    namespace CppAD {
-        CPPAD_NUMERIC_LIMITS(%Other%, %Base%)
-    }
+   namespace CppAD {
+      CPPAD_NUMERIC_LIMITS(%Other%, %Base%)
+   }
 %$$
 where the macro is defined by
 $srccode%cpp% */
 # define CPPAD_NUMERIC_LIMITS(Other, Base) \
 template <> class numeric_limits<Base>\
 {\
-    public:\
-    static Base min(void) \
-    {   return static_cast<Base>( std::numeric_limits<Other>::min() ); }\
-    static Base max(void) \
-    {   return static_cast<Base>( std::numeric_limits<Other>::max() ); }\
-    static Base epsilon(void) \
-    {   return static_cast<Base>( std::numeric_limits<Other>::epsilon() ); }\
-    static Base quiet_NaN(void) \
-    {   return static_cast<Base>( std::numeric_limits<Other>::quiet_NaN() ); }\
-    static Base infinity(void) \
-    {   return static_cast<Base>( std::numeric_limits<Other>::infinity() ); }\
-    static const int digits10 = std::numeric_limits<Other>::digits10;\
+   public:\
+   static Base min(void) \
+   {  return static_cast<Base>( std::numeric_limits<Other>::min() ); }\
+   static Base max(void) \
+   {  return static_cast<Base>( std::numeric_limits<Other>::max() ); }\
+   static Base epsilon(void) \
+   {  return static_cast<Base>( std::numeric_limits<Other>::epsilon() ); }\
+   static Base quiet_NaN(void) \
+   {  return static_cast<Base>( std::numeric_limits<Other>::quiet_NaN() ); }\
+   static Base infinity(void) \
+   {  return static_cast<Base>( std::numeric_limits<Other>::infinity() ); }\
+   static const int digits10 = std::numeric_limits<Other>::digits10;\
 };
 /* %$$
 $end

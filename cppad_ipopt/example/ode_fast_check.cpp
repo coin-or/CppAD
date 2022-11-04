@@ -7,24 +7,24 @@
 # include "ode_check.hpp"
 
 bool ode_fast_check(void)
-{   bool ok = true;
-    bool retape;
-    size_t i;
+{  bool ok = true;
+   bool retape;
+   size_t i;
 
-    // solution vector
-    NumberVector x;
+   // solution vector
+   NumberVector x;
 
-    // number of time grid intervals between measurement values
-    SizeVector N(Nz + 1);
-    N[0] = 0;
-    for(i = 1; i <= Nz; i++)
-        N[i] = 5;
+   // number of time grid intervals between measurement values
+   SizeVector N(Nz + 1);
+   N[0] = 0;
+   for(i = 1; i <= Nz; i++)
+      N[i] = 5;
 
-    for(i = 0; i < 2; i++)
-    {   retape = bool(i);
-        ipopt_ode_case<FG_fast>(retape, N, x);
-        ok &= ode_check(N, x);
-    }
+   for(i = 0; i < 2; i++)
+   {  retape = bool(i);
+      ipopt_ode_case<FG_fast>(retape, N, x);
+      ok &= ode_check(N, x);
+   }
 
-    return ok;
+   return ok;
 }

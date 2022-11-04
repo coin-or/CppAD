@@ -5,37 +5,37 @@
 
 $begin whats_new_21$$
 $spell
-    CppAD
-    cppad
-    cxx
-    cmake
-    json_lexer
-    std::isdigit
-    Microsoft
-    const
-    ifndef
-    iterator
-    azmul
-    nans
-    optimizer
-    eigen
-    cppadcg
-    ipopt
-    op_enum
-    fabs
-    hpp
-    var
-    vec
-    msys
-    cygwin
-    rcv
-    det
-    ltmain
-    lcppad
-    pkgconfig
-    cplusplus
-    txt
-    atan
+   CppAD
+   cppad
+   cxx
+   cmake
+   json_lexer
+   std::isdigit
+   Microsoft
+   const
+   ifndef
+   iterator
+   azmul
+   nans
+   optimizer
+   eigen
+   cppadcg
+   ipopt
+   op_enum
+   fabs
+   hpp
+   var
+   vec
+   msys
+   cygwin
+   rcv
+   det
+   ltmain
+   lcppad
+   pkgconfig
+   cplusplus
+   txt
+   atan
 $$
 
 $section Changes and Additions to CppAD During 2021$$
@@ -75,7 +75,7 @@ This has been fixed.
 $head 08-27$$
 The following error occurred
 $codei%
-    compile_source_test: cplusplus_201100_ok is defined before expected
+   compile_source_test: cplusplus_201100_ok is defined before expected
 %$$
 if the $cref cmake$$ command was run twice,
 without first removing the $code CMakeCache.txt$$ file.
@@ -153,10 +153,10 @@ The conditional expression example $cref cond_exp.cpp$$ was improved.
 $lnext
 Restore the
 $cref/
-    sparse_rcv copy constructor
-    /sparse_rcv
-    /other
-    /Assignment and Constructor
+   sparse_rcv copy constructor
+   /sparse_rcv
+   /other
+   /Assignment and Constructor
 /$$
 which was removed by mistake when the $code sparse_rcv$$
 move semantics constructor was added.
@@ -232,7 +232,7 @@ Simplify the $cref fabs.cpp$$ example.
 $head 03-08$$
 For years the following comment in reverse.hpp was forgotten:
 $codei%
-    // ? should use += here, first make test to demonstrate bug
+   // ? should use += here, first make test to demonstrate bug
 %$$
 A test case was created to demonstrate this bug and it was fixed
 (see $code duplicate_dependent_var$$ in $code test_more/general/reverse.cpp$$).

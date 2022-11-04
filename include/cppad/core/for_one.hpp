@@ -8,10 +8,10 @@
 /*
 $begin ForOne$$
 $spell
-    dy
-    typename
-    Taylor
-    const
+   dy
+   typename
+   Taylor
+   const
 $$
 
 
@@ -32,14 +32,14 @@ $latex \[
 dy
 = \D{F}{ x_j } (x)
 = \left[
-    \D{ F_0 }{ x_j } (x) , \cdots , \D{ F_{m-1} }{ x_j } (x)
+   \D{ F_0 }{ x_j } (x) , \cdots , \D{ F_{m-1} }{ x_j } (x)
 \right]
 \] $$
 
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 (see $cref/ForOne Uses Forward/ForOne/ForOne Uses Forward/$$ below).
@@ -47,7 +47,7 @@ Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const %Vector% &%x%
+   const %Vector% &%x%
 %$$
 (see $cref/Vector/ForOne/Vector/$$ below)
 and its size
@@ -59,7 +59,7 @@ that point at which to evaluate the partial derivative.
 $head j$$
 The argument $icode j$$ has prototype
 $codei%
-    size_t %j%
+   size_t %j%
 %$$
 an is less than $icode n$$,
 $cref/domain/fun_property/Domain/$$ space for $icode f$$.
@@ -69,7 +69,7 @@ for which we are computing the partial derivative.
 $head dy$$
 The result $icode dy$$ has prototype
 $codei%
-    %Vector% %dy%
+   %Vector% %dy%
 %$$
 (see $cref/Vector/ForOne/Vector/$$ below)
 and its size is $latex m$$, the dimension of the
@@ -78,7 +78,7 @@ The value of $icode dy$$ is the partial of $latex F$$ with respect to
 $latex x_j$$ evaluated at $icode x$$; i.e.,
 for $latex i = 0 , \ldots , m - 1$$
 $latex \[.
-    dy[i] = \D{ F_i }{ x_j } ( x )
+   dy[i] = \D{ F_i }{ x_j } ( x )
 \] $$
 
 
@@ -100,7 +100,7 @@ and the other coefficients are unspecified.
 
 $head Example$$
 $children%
-    example/general/for_one.cpp
+   example/general/for_one.cpp
 %$$
 The routine
 $cref/ForOne/for_one.cpp/$$ is both an example and test.
@@ -116,39 +116,39 @@ namespace CppAD {
 template <class Base, class RecBase>
 template <class Vector>
 Vector ADFun<Base,RecBase>::ForOne(const Vector &x, size_t j)
-{   size_t j1;
+{  size_t j1;
 
-    size_t n = Domain();
-    size_t m = Range();
+   size_t n = Domain();
+   size_t m = Range();
 
-    // check Vector is Simple Vector class with Base type elements
-    CheckSimpleVector<Base, Vector>();
+   // check Vector is Simple Vector class with Base type elements
+   CheckSimpleVector<Base, Vector>();
 
-    CPPAD_ASSERT_KNOWN(
-        x.size() == n,
-        "ForOne: Length of x not equal domain dimension for f"
-    );
-    CPPAD_ASSERT_KNOWN(
-        j < n,
-        "ForOne: the index j is not less than domain dimension for f"
-    );
+   CPPAD_ASSERT_KNOWN(
+      x.size() == n,
+      "ForOne: Length of x not equal domain dimension for f"
+   );
+   CPPAD_ASSERT_KNOWN(
+      j < n,
+      "ForOne: the index j is not less than domain dimension for f"
+   );
 
-    // point at which we are evaluating the second partials
-    Forward(0, x);
+   // point at which we are evaluating the second partials
+   Forward(0, x);
 
-    // direction in which are are taking the derivative
-    Vector dx(n);
-    for(j1 = 0; j1 < n; j1++)
-        dx[j1] = Base(0.0);
-    dx[j] = Base(1.0);
+   // direction in which are are taking the derivative
+   Vector dx(n);
+   for(j1 = 0; j1 < n; j1++)
+      dx[j1] = Base(0.0);
+   dx[j] = Base(1.0);
 
-    // dimension the return value
-    Vector dy(m);
+   // dimension the return value
+   Vector dy(m);
 
-    // compute the return value
-    dy = Forward(1, dx);
+   // compute the return value
+   dy = Forward(1, dx);
 
-    return dy;
+   return dy;
 }
 
 } // END CppAD namespace

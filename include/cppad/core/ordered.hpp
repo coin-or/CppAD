@@ -27,7 +27,7 @@ returns true iff the x is greater than zero.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool GreaterThanZero(const AD<Base> &x)
-{   return GreaterThanZero(x.value_); }
+{  return GreaterThanZero(x.value_); }
 // GreaterThanOrZero =========================================================
 /*!
 Check if an AD<Base> is greater than or equal zero.
@@ -41,7 +41,7 @@ returns true iff the x is greater than or equal zero.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool GreaterThanOrZero(const AD<Base> &x)
-{   return GreaterThanOrZero(x.value_); }
+{  return GreaterThanOrZero(x.value_); }
 // LessThanZero ============================================================
 /*!
 Check if an AD<Base> is less than zero.
@@ -55,7 +55,7 @@ returns true iff the x is less than zero.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool LessThanZero(const AD<Base> &x)
-{   return LessThanZero(x.value_); }
+{  return LessThanZero(x.value_); }
 // LessThanOrZero =========================================================
 /*!
 Check if an AD<Base> is less than or equal zero.
@@ -69,7 +69,7 @@ returns true iff the x is less than or equal zero.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool LessThanOrZero(const AD<Base> &x)
-{   return LessThanOrZero(x.value_); }
+{  return LessThanOrZero(x.value_); }
 // abs_geq =========================================================
 /*!
 Check if absolute value of one AD<Base> is greater or equal another.
@@ -87,7 +87,7 @@ absolute value of y.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool abs_geq(const AD<Base>& x, const AD<Base>& y)
-{   return abs_geq(x.value_, y.value_); }
+{  return abs_geq(x.value_, y.value_); }
 // ============================================================================
 } // END_CPPAD_NAMESPACE
 # endif

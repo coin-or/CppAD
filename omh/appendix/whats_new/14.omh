@@ -6,49 +6,49 @@
 $begin whats_new_14$$
 $dollar @$$
 $spell
-    hes
-    autotools
-    cstdint
-    addr
-    omhelp
-    autoconf
-    automake
-    alloc
-    ifndef
-    asin
-    acos
-    uj
-    op
-    hpp
-    taylor
-    forwardzero
-    forwardone
-    forwardany
-    const
-    doxygen
-    ipopt
-    adolc
-    colpack
-    Jacobian
-    openmp
-    pthread
-    bthread
-    isnan
-    onetape
-    retape
-    fadbad
-    sacado
-    boolsparsity
-    cmake
-    docdir
-    CppAD
-    cppad
-    datadir
-    erf
-    cmath
-    ctor
-    std
-    num
+   hes
+   autotools
+   cstdint
+   addr
+   omhelp
+   autoconf
+   automake
+   alloc
+   ifndef
+   asin
+   acos
+   uj
+   op
+   hpp
+   taylor
+   forwardzero
+   forwardone
+   forwardany
+   const
+   doxygen
+   ipopt
+   adolc
+   colpack
+   Jacobian
+   openmp
+   pthread
+   bthread
+   isnan
+   onetape
+   retape
+   fadbad
+   sacado
+   boolsparsity
+   cmake
+   docdir
+   CppAD
+   cppad
+   datadir
+   erf
+   cmath
+   ctor
+   std
+   num
 $$
 
 $section CppAD Changes and Additions During 2014$$
@@ -63,14 +63,14 @@ $head 12-30$$
 There was a bug in the $cref cmake$$ whereby it would sometimes mistakenly
 exit with the error message
 $codep
-    cppad_max_num_threads is not an integer greater than or equal 4
+   cppad_max_num_threads is not an integer greater than or equal 4
 $$
 This has been fixed.
 
 $head 12-29$$
 The example $code not_complex_ad.cpp$$ was using the type
 $codei%
-    std::complex< CppAD::AD<double> >
+   std::complex< CppAD::AD<double> >
 %$$
 and was failing to compile with the $code clang$$ complier.
 This example has been removed because it is not consistent with the
@@ -229,13 +229,13 @@ version of $cref sparse_jacobian$$.
 Below is an example run of $cref cppad_sparse_jacobian.cpp$$ results
 before this change:
 $codep
-    cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
-    cppad_sparse_jacobian_rate = [ 2973, 431.94, 142.25, 78.64, 26.87 ]
+   cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+   cppad_sparse_jacobian_rate = [ 2973, 431.94, 142.25, 78.64, 26.87 ]
 $$
 and after this change:
 $codep
-    cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
-    cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
+   cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+   cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
 $$
 Due to the success of this change,
 $code multiple direction$$ items were added to the wish list
@@ -437,12 +437,12 @@ $cref/cppad documentation/cmake/cmake_install_docdir/$$
 is now set separately from the data directory
 using the $code cmake$$ option
 $codei%
-    -D cmake_install_docdir=%cmake_install_docdir%
+   -D cmake_install_docdir=%cmake_install_docdir%
 %$$
 This has increased the flexibility of the documentation installation
 and removed the need for the option
 $codei%
-    -D cppad_documentation=%yes_or_no%
+   -D cppad_documentation=%yes_or_no%
 %$$
 which has been removed.
 
@@ -451,8 +451,8 @@ The destination directory for the
 cppad documentation
 used to be one of the following:
 $codei%
-    %prefix%/%datadir%/doc/cppad-%version%
-    %prefix%/%datadir%/doc/%postfix%cppad-%version%
+   %prefix%/%datadir%/doc/cppad-%version%
+   %prefix%/%datadir%/doc/%postfix%cppad-%version%
 %$$
 This has been changed by dropping the $icode version$$ number
 at the end of the directory name.

@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 $begin efficient$$
 $spell
-    omp_alloc
-    ptr
-    num
-    bool
-    const
+   omp_alloc
+   ptr
+   num
+   bool
+   const
 $$
 
 $section Check If A Memory Allocation is Efficient for Another Use$$
@@ -27,7 +27,7 @@ allocation for a specified number of bytes.
 $head v_ptr$$
 This argument has prototype
 $codei%
-    const void* %v_ptr%
+   const void* %v_ptr%
 %$$.
 It must be a pointer to memory that is currently in use; i.e.
 obtained by a previous call to $cref get_memory$$ and not yet returned.
@@ -35,7 +35,7 @@ obtained by a previous call to $cref get_memory$$ and not yet returned.
 $head num_bytes$$
 This argument has prototype
 $codei%
-    size_t %num_bytes%
+   size_t %num_bytes%
 %$$
 It specifies the number of bytes of the memory allocated by $icode v_ptr$$
 that we want to use.
@@ -43,7 +43,7 @@ that we want to use.
 $head flag$$
 The return value has prototype
 $codei%
-    bool %flag%
+   bool %flag%
 %$$
 It is true,
 a call to $code get_memory$$ with
@@ -69,10 +69,10 @@ $end
 -------------------------------------------------------------------------------
 $begin old_max_num_threads$$
 $spell
-    inv
-    CppAD
-    num
-    omp_alloc
+   inv
+   CppAD
+   num
+   omp_alloc
 $$
 $section Set Maximum Number of Threads for omp_alloc Allocator$$
 
@@ -93,7 +93,7 @@ By default there is only one thread and all execution is in sequential mode
 $head number$$
 The argument $icode number$$ has prototype
 $codei%
-    size_t %number%
+   size_t %number%
 %$$
 It must be greater than zero and specifies the maximum number of
 OpenMP threads that will be active at one time.

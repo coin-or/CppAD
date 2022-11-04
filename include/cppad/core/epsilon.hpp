@@ -9,11 +9,11 @@
 ------------------------------------------------------------------------------
 $begin epsilon$$
 $spell
-    std
-    eps
-    CppAD
-    namespace
-    const
+   std
+   eps
+   CppAD
+   namespace
+   const
 $$
 
 $section Machine Epsilon For AD Types$$
@@ -36,7 +36,7 @@ or it can be $icode Base$$ for any $codei%AD<%Base%>%$$ type.
 $head eps$$
 The result $icode eps$$ has prototype
 $codei%
-    %Float% eps
+   %Float% eps
 %$$
 
 $end
@@ -45,9 +45,9 @@ $end
 
 namespace CppAD {
 
-    template <class Type>
-    inline Type epsilon(void)
-    {   return Type ( numeric_limits<Type>::epsilon() ); }
+   template <class Type>
+   inline Type epsilon(void)
+   {  return Type ( numeric_limits<Type>::epsilon() ); }
 
 }
 # endif

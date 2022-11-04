@@ -16,20 +16,20 @@
 ------------------------------------------------------------------------------
 $begin to_json$$
 $spell
-    Json
-    cpp
+   Json
+   cpp
 $$
 
 $section Json AD Graph Corresponding to an ADFun Object$$
 
 $head Syntax$$
 $codei%
-    %json% = %fun%.to_json()
+   %json% = %fun%.to_json()
 %$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
 $head fun$$
@@ -52,7 +52,7 @@ possible $cref ADFun$$ operators; see
 $cref/missing operators/graph_op_enum/Missing Operators/$$.
 
 $children%
-    example/json/to_json.cpp
+   example/json/to_json.cpp
 %$$
 $head Example$$
 The file $cref to_json.cpp$$ is an example and test of this operation.
@@ -63,18 +63,18 @@ $end
 template <class Base, class RecBase>
 std::string CppAD::ADFun<Base,RecBase>::to_json(void)
 // END_PROTOTYPE
-{   //
-    // to_graph return values
-    cpp_graph graph_obj;
-    //
-    // graph corresponding to this function
-    to_graph(graph_obj);
-    //
-    // convert to json
-    std::string json;
-    local::graph::json_writer(json, graph_obj);
-    //
-    return json;
+{  //
+   // to_graph return values
+   cpp_graph graph_obj;
+   //
+   // graph corresponding to this function
+   to_graph(graph_obj);
+   //
+   // convert to json
+   std::string json;
+   local::graph::json_writer(json, graph_obj);
+   //
+   return json;
 }
 
 # endif

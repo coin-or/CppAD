@@ -14,9 +14,9 @@
 /*
 $begin json_parser$$
 $spell
-    Json
-    CppAD
-    obj
+   Json
+   CppAD
+   obj
 $$
 
 $section Json AD Graph Parser$$
@@ -35,10 +35,10 @@ Upon return it is a $cref cpp_ad_graph$$ representation of this function.
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
-    CPPAD_LIB_EXPORT void json_parser(
-        const std::string&  json      ,
-        cpp_graph&          graph_obj
-    );
+   CPPAD_LIB_EXPORT void json_parser(
+      const std::string&  json      ,
+      cpp_graph&          graph_obj
+   );
 } } }
 /* %$$
 $end

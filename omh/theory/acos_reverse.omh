@@ -5,9 +5,9 @@
 
 $begin acos_reverse$$
 $spell
-    acosh
-    acos
-    Taylor
+   acosh
+   acos
+   Taylor
 $$
 
 $section Inverse Cosine and Hyperbolic Cosine Reverse Mode Theory$$
@@ -15,16 +15,16 @@ $section Inverse Cosine and Hyperbolic Cosine Reverse Mode Theory$$
 
 We use the reverse theory
 $cref%standard math function
-    %ReverseTheory
-    %Standard Math Functions
+   %ReverseTheory
+   %Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 In addition, we use the forward mode notation in
 $cref acos_forward$$ for
 $latex \[
 \begin{array}{rcl}
-    Q(t) & = & \mp ( X(t) * X(t) - 1 ) \\
-    B(t) & = & \sqrt{ Q(t) }
+   Q(t) & = & \mp ( X(t) * X(t) - 1 ) \\
+   B(t) & = & \sqrt{ Q(t) }
 \end{array}
 \] $$
 We use $latex q$$ and $latex b$$
@@ -32,7 +32,7 @@ for the $th p$$ order Taylor coefficient
 row vectors corresponding to these functions
 and replace $latex z^{(j)}$$ by
 $latex \[
-    ( z^{(j)} , b^{(j)} )
+   ( z^{(j)} , b^{(j)} )
 \] $$
 in the definition for $latex G$$ and $latex H$$.
 The zero order forward mode formulas for the
@@ -40,9 +40,9 @@ $cref/acos/acos_forward/$$
 function are
 $latex \[
 \begin{array}{rcl}
-    q^{(0)}  & = & \mp ( x^{(0)} x^{(0)} - 1) \\
-    b^{(0)}  & = & \sqrt{ q^{(0)} }    \\
-    z^{(0)}  & = & F ( x^{(0)} )
+   q^{(0)}  & = & \mp ( x^{(0)} x^{(0)} - 1) \\
+   b^{(0)}  & = & \sqrt{ q^{(0)} }    \\
+   z^{(0)}  & = & F ( x^{(0)} )
 \end{array}
 \] $$
 where $latex F(x) = \R{acos} (x)$$ for $latex -$$
@@ -51,19 +51,19 @@ For orders $latex j$$ greater than zero we have
 $latex \[
 \begin{array}{rcl}
 q^{(j)} & = &
-    \mp \sum_{k=0}^j x^{(k)} x^{(j-k)}
+   \mp \sum_{k=0}^j x^{(k)} x^{(j-k)}
 \\
 b^{(j)} & = &
-    \frac{1}{j} \frac{1}{ b^{(0)} }
-    \left(
-        \frac{j}{2} q^{(j)}
-        - \sum_{k=1}^{j-1} k b^{(k)} b^{(j-k)}
-    \right)
+   \frac{1}{j} \frac{1}{ b^{(0)} }
+   \left(
+      \frac{j}{2} q^{(j)}
+      - \sum_{k=1}^{j-1} k b^{(k)} b^{(j-k)}
+   \right)
 \\
 z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} }
 \left(
-    \mp j x^{(j)}
-    - \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
+   \mp j x^{(j)}
+   - \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
 \right)
 \end{array}
 \] $$

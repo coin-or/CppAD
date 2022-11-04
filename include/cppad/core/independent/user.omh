@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 $begin Independent$$
 $spell
-    op
-    alloc
-    num
-    Cpp
-    bool
-    const
-    var
-    typename
+   op
+   alloc
+   num
+   Cpp
+   bool
+   const
+   var
+   typename
 $$
 
 $section Declare Independent Variables and Start Recording$$
@@ -41,11 +41,11 @@ The recording is stopped,
 and the operation sequence is transferred to the AD function object $icode f$$,
 using either the $cref/function constructor/FunConstruct/$$
 $codei%
-    ADFun<%Base%> %f%(%x%, %y%)
+   ADFun<%Base%> %f%(%x%, %y%)
 %$$
 or the $cref/dependent variable specifier/Dependent/$$
 $codei%
-    %f%.Dependent(%x%, %y%)
+   %f%.Dependent(%x%, %y%)
 %$$
 The only other way to stop a recording is using
 $cref abort_recording$$.
@@ -57,7 +57,7 @@ as $codei%AD<%Base%>%$$ variables.
 $head x$$
 The vector $icode x$$ has prototype
 $codei%
-    %ADVector% &%x%
+   %ADVector% &%x%
 %$$
 (see $icode ADVector$$ below).
 The size of the vector $icode x$$, must be greater than zero,
@@ -67,7 +67,7 @@ AD operation sequence.
 $head abort_op_index$$
 If this argument has prototype
 $codei%
-    size_t %abort_op_index%
+   size_t %abort_op_index%
 %$$
 If it is present,
 it specifies the operator index at which the execution will aborted
@@ -84,7 +84,7 @@ for $icode abort_index$$.
 $head record_compare$$
 This argument has prototype
 $codei%
-    bool %record_compare%
+   bool %record_compare%
 %$$
 If it is present,
 it specifies if AD $cref compare$$  operations are recorded.
@@ -99,7 +99,7 @@ If this argument is false, $icode abort_op_index$$ must be zero.
 $head dynamic$$
 If this argument is present, it has prototype
 $codei%
-    const %ADVector%& %dynamic%
+   const %ADVector%& %dynamic%
 %$$
 (see $icode Vector$$ below).
 It specifies the independent
@@ -129,11 +129,11 @@ Each thread can have one, and only one, active recording.
 A call to $code Independent$$ starts the recording for the current thread.
 The recording must be stopped by a corresponding call to
 $codei%
-    ADFun<%Base%> %f%( %x%, %y%)
+   ADFun<%Base%> %f%( %x%, %y%)
 %$$
 or
 $codei%
-    %f%.Dependent( %x%, %y%)
+   %f%.Dependent( %x%, %y%)
 %$$
 or $cref abort_recording$$
 preformed by the same thread; i.e.,
@@ -141,7 +141,7 @@ $cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
 
 $head Example$$
 $children%
-    example/general/independent.cpp
+   example/general/independent.cpp
 %$$
 The file
 $cref independent.cpp$$

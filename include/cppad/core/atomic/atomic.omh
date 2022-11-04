@@ -7,9 +7,9 @@ $begin atomic$$
 $section Atomic AD Functions$$
 
 $childtable%
-    include/cppad/core/atomic/four/atomic.omh%
-    include/cppad/core/atomic/three/atomic.omh%
-    include/cppad/core/chkpoint_two/chkpoint_two.hpp
+   include/cppad/core/atomic/four/atomic.omh%
+   include/cppad/core/atomic/three/atomic.omh%
+   include/cppad/core/chkpoint_two/chkpoint_two.hpp
 %$$
 
 $head Deprecated Atomic Function$$

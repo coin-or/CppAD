@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin min_nso_linear.hpp$$
 $spell
-    nso
+   nso
 $$
 
 $section min_nso_linear Source Code$$
 
 $srcfile%example/abs_normal/min_nso_linear.hpp%
-    0%// BEGIN C++%// END C++%
+   0%// BEGIN C++%// END C++%
 0%$$
 
 $end

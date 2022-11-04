@@ -12,9 +12,9 @@
 /*
 $begin json_writer$$
 $spell
-    Json
-    CppAD
-    obj
+   Json
+   CppAD
+   obj
 $$
 
 $section Json AD Graph Writer$$
@@ -32,10 +32,10 @@ This is a $code cpp_graph$$ object.
 $head Prototype$$
 $srccode%hpp% */
 namespace CppAD { namespace local { namespace graph {
-    CPPAD_LIB_EXPORT void json_writer(
-        std::string&       json        ,
-        const cpp_graph&   graph_obj
-    );
+   CPPAD_LIB_EXPORT void json_writer(
+      std::string&       json        ,
+      const cpp_graph&   graph_obj
+   );
 } } }
 /* %$$
 $end

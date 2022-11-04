@@ -5,9 +5,9 @@
 
 $begin numeric_ad$$
 $spell
-    CppAD
-    namespace
-    alloc
+   CppAD
+   namespace
+   alloc
 $$
 
 
@@ -16,9 +16,9 @@ The routines listed below are numerical utilities that are
 designed to work with CppAD in particular.
 
 $childtable%
-    include/cppad/core/bender_quad.hpp%
-    include/cppad/core/opt_val_hes.hpp%
-    include/cppad/core/lu_ratio.hpp
+   include/cppad/core/bender_quad.hpp%
+   include/cppad/core/opt_val_hes.hpp%
+   include/cppad/core/lu_ratio.hpp
 %$$
 
 $end

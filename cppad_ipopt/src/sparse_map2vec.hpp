@@ -15,10 +15,10 @@ namespace cppad_ipopt {
 */
 
 extern void sparse_map2vec(
-    const CppAD::vector< std::map<size_t, size_t> > sparse,
-    size_t&                                         n_nz  ,
-    CppAD::vector<size_t>&                          i_row ,
-    CppAD::vector<size_t>&                          j_col
+   const CppAD::vector< std::map<size_t, size_t> > sparse,
+   size_t&                                         n_nz  ,
+   CppAD::vector<size_t>&                          i_row ,
+   CppAD::vector<size_t>&                          j_col
 );
 
 // ---------------------------------------------------------------------------

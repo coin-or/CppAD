@@ -9,7 +9,7 @@ $$
 $section abs_min_linear Source Code$$
 
 $srcfile%example/abs_normal/abs_min_linear.hpp%
-    0%// BEGIN C++%// END C++%
+   0%// BEGIN C++%// END C++%
 0%$$
 
 $end

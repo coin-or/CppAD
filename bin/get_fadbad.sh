@@ -5,8 +5,8 @@
 # ----------------------------------------------------------------------------
 # $begin get_fadbad.sh$$ $newlinech #$$
 # $spell
-#   Fadbad
-#   CppAD
+#  Fadbad
+#  CppAD
 # $$
 #
 # $section Download and Install Fadbad in Build Directory$$
@@ -42,14 +42,14 @@ version='2.1'
 package='fadbad'
 if [ $0 != "bin/get_$package.sh" ]
 then
-    echo "bin/get_$package.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/get_$package.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 web_page='http://www.fadbad.com/download'
@@ -59,32 +59,32 @@ cppad_dir=`pwd`
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-    prefix="$cppad_dir/$prefix"
+   prefix="$cppad_dir/$prefix"
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
 if [ ! -d external ]
 then
-    echo_eval mkdir external
+   echo_eval mkdir external
 fi
 echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e "FADBAD++-$version.tar.gz" ]
 then
-    echo_eval wget --no-check-certificate $web_page/FADBAD++-$version.tar.gz
+   echo_eval wget --no-check-certificate $web_page/FADBAD++-$version.tar.gz
 fi
 if [ -e "FADBAD++" ]
 then
-    echo_eval rm -r FADBAD++
+   echo_eval rm -r FADBAD++
 fi
 echo_eval tar -xzf FADBAD++-$version.tar.gz
 if [ ! -e "$prefix/include" ]
 then
-    echo_eval mkdir -p "$prefix/include"
+   echo_eval mkdir -p "$prefix/include"
 fi
 if [ -e "$prefix/include/FADBAD++" ]
 then
-    echo_eval rm -r "$prefix/include/FADBAD++"
+   echo_eval rm -r "$prefix/include/FADBAD++"
 fi
 echo_eval cp -r FADBAD++ "$prefix/include/FADBAD++"
 # -----------------------------------------------------------------------------

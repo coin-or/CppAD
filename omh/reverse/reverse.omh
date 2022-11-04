@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 $begin Reverse$$
 $spell
-    xq
+   xq
 $$
 
 $section Reverse Mode$$
@@ -18,9 +18,9 @@ After such an operation, only the zero order forward
 results are retained (the higher order forward results are lost).
 
 $childtable%
-    omh/reverse/reverse_one.omh%
-    omh/reverse/reverse_two.omh%
-    omh/reverse/reverse_any.omh
+   omh/reverse/reverse_one.omh%
+   omh/reverse/reverse_two.omh%
+   omh/reverse/reverse_any.omh
 %$$
 
 $end

@@ -5,9 +5,9 @@
 
 $begin asin_forward$$
 $spell
-    asinh
-    asin
-    Taylor
+   asinh
+   asin
+   Taylor
 $$
 
 $section Inverse Sine and Hyperbolic Sine Forward Mode Theory$$
@@ -23,13 +23,13 @@ $latex \[
 If $latex F(x)$$ is $latex \R{asin} (x) $$ or $latex \R{asinh} (x)$$
 the corresponding derivative satisfies the equation
 $latex \[
-    \sqrt{ 1 \mp x * x } * F^{(1)} (x) - 0 * F (u)  = 1
+   \sqrt{ 1 \mp x * x } * F^{(1)} (x) - 0 * F (u)  = 1
 \] $$
 and in the
 $cref/standard math function differential equation
-    /ForwardTheory
-    /Standard Math Functions
-    /Differential Equation
+   /ForwardTheory
+   /Standard Math Functions
+   /Differential Equation
 /$$,
 $latex A(x) = 0$$,
 $latex B(x) = \sqrt{1 \mp x * x }$$,
@@ -48,8 +48,8 @@ $latex Q[ X(t) ]$$.
 It follows that
 $latex \[
 q^{(j)} = \left\{ \begin{array}{ll}
-    1 \mp x^{(0)} * x^{(0)}            & {\rm if} \; j = 0 \\
-    \mp \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
+   1 \mp x^{(0)} * x^{(0)}            & {\rm if} \; j = 0 \\
+   \mp \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
 \end{array} \right.
 \] $$
 It follows that
@@ -62,20 +62,20 @@ $latex \[
 b^{(0)}   & = & \sqrt{ q^{(0)} }
 \\
 b^{(j+1)} & = &
-    \frac{1}{j+1} \frac{1}{ b^{(0)} }
-    \left(
-        \frac{j+1}{2} q^{(j+1) }
-        - \sum_{k=1}^j k b^{(k)} b^{(j+1-k)}
-    \right)
+   \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      \frac{j+1}{2} q^{(j+1) }
+      - \sum_{k=1}^j k b^{(k)} b^{(j+1-k)}
+   \right)
 \end{array}
 \] $$
 It now follows from the general
 $xref/
-    ForwardTheory/
-    Standard Math Functions/
-    Taylor Coefficients Recursion Formula/
-    Taylor coefficients recursion formula/
-    1
+   ForwardTheory/
+   Standard Math Functions/
+   Taylor Coefficients Recursion Formula/
+   Taylor coefficients recursion formula/
+   1
 /$$
 that for $latex j = 0 , 1, \ldots$$,
 $latex \[
@@ -86,20 +86,20 @@ e^{(j)}
 & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
 \\
 & = & \left\{ \begin{array}{ll}
-    1 & {\rm if} \; j = 0 \\
-    0 & {\rm otherwise}
+   1 & {\rm if} \; j = 0 \\
+   0 & {\rm otherwise}
 \end{array} \right.
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
-    - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+   \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+   - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
 \right)
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    (j+1) x^{(j+1)}
-    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   (j+1) x^{(j+1)}
+   - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \end{array}
 \] $$

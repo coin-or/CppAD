@@ -5,49 +5,49 @@
 
 $begin whats_new_04$$
 $spell
-    autotools
-    cppad.hpp
-    deps
-    executables
-    Runge
-    Rhs
-    aclocal
-    config
-    Makefile
-    ublas
-    Autoconf
-    Automake
-    cppad
-    yy
-    mm
-    dd
-    Faq
-    acos
-    asin
-    sqrt
-    exp
-    usr
-    nmake
-    mak
-    namespace
-    CppADvector
-    atan
-    cos
-    retape
-    Vec
-    const
-    std
-    Hess
-    depricated
-    Det
-    Lu
-    dsp
-    Arg
-    Cpp
-    Microsoft
-    Taylor
-    dep
-    ind
+   autotools
+   cppad.hpp
+   deps
+   executables
+   Runge
+   Rhs
+   aclocal
+   config
+   Makefile
+   ublas
+   Autoconf
+   Automake
+   cppad
+   yy
+   mm
+   dd
+   Faq
+   acos
+   asin
+   sqrt
+   exp
+   usr
+   nmake
+   mak
+   namespace
+   CppADvector
+   atan
+   cos
+   retape
+   Vec
+   const
+   std
+   Hess
+   depricated
+   Det
+   Lu
+   dsp
+   Arg
+   Cpp
+   Microsoft
+   Taylor
+   dep
+   ind
 $$
 
 $section Changes and Additions to CppAD During 2004$$
@@ -330,13 +330,13 @@ The suggested compression program during
 Windows installation
 was changed from
 $href%
-    http://www.7-zip.org%
-    7-zip
+   http://www.7-zip.org%
+   7-zip
 %$$
 to
 $href%
-    http://www.winzip.com%
-    WinZip
+   http://www.winzip.com%
+   WinZip
 %$$.
 
 
@@ -374,7 +374,7 @@ for example, the $cref/GetStarted/get_started.cpp/$$ example now
 has its own directory and
 the distribution directory is named
 $codei%
-    cppad-%yy%-%mm%-%dd%
+   cppad-%yy%-%mm%-%dd%
 %$$
 where $icode%yy%-%mm%-%dd%$$ is the year, month and date
 of the distribution.
@@ -494,11 +494,11 @@ changed so that they tested higher order derivatives.
 $head 05-29$$
 The forward mode recursion formulas for each of the
 $xref/
-    ForwardTheory/
-    Standard Math Functions/
-    Cases that Apply Recursion Above/
-    standard math functions/
-    1
+   ForwardTheory/
+   Standard Math Functions/
+   Cases that Apply Recursion Above/
+   standard math functions/
+   1
 /$$
 has been split into separate sections.
 $pre
@@ -537,11 +537,11 @@ $code int$$ has been added.
 $head 05-14$$
 Change all of the include syntax
 $codei%
-    # include "%filename%"
+   # include "%filename%"
 %$$
 to the syntax
 $codei%
-    # include <%filename%>
+   # include <%filename%>
 %$$
 so that examples and other use better reflect how one would use CppAD after
 it was installed in a standard include directory; for example
@@ -570,13 +570,13 @@ $pre
 $$
 All of the include commands of the form
 $codei%
-    # include "include/%name%.h"
-    # include "lib/%name%.h"
+   # include "include/%name%.h"
+   # include "lib/%name%.h"
 %$$
 have been changed to the form
 $codei%
-    # include "cppad/include/%name%.h"
-    # include "cppad/lib/%name%.h"
+   # include "cppad/include/%name%.h"
+   # include "cppad/lib/%name%.h"
 %$$
 This will avoid mistakenly loading a file from another package
 that is in the set of directories being searched by the compiler.
@@ -588,11 +588,11 @@ you must specify that $code /usr/local$$ be searched by the compiler.
 Note that if $code /usr/local/cppad/$$ is no longer searched,
 you will have to change
 $codep
-    # include "cppad.hpp"
+   # include "cppad.hpp"
 $$
 to
 $codep
-    # include "cppad/cppad.hpp"
+   # include "cppad/cppad.hpp"
 $$.
 $pre
 
@@ -900,7 +900,7 @@ $icode%r1% = %f%.Rev(%v%)%$$ $cnext $icode%r1% = %f%.Reverse(1, %v%)%$$
 $rnext
 $icode%q1% = %f%.RevTwo(%v%)%$$ $cnext $icode%r2% = %f%.Reverse(2, %v%)%$$
 $rnext
-    $cnext $icode%q1%[%i%] == %r2%[2 * %i% + 1]%$$
+   $cnext $icode%q1%[%i%] == %r2%[2 * %i% + 1]%$$
 $tend
 $pre
 

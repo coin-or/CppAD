@@ -7,16 +7,16 @@
 /*
 $begin Poly$$
 $spell
-    cppad.hpp
-    CppAD
-    namespace
-    cstddef
-    ifndef
-    endif
-    deg
-    const
-    std
-    da
+   cppad.hpp
+   CppAD
+   namespace
+   cstddef
+   ifndef
+   endif
+   deg
+   const
+   std
+   da
 $$
 
 
@@ -31,7 +31,7 @@ $icode%p% = Poly(%k%, %a%, %z%)%$$
 $head Description$$
 Computes the $th k$$ derivative of the polynomial
 $latex \[
-    P(z) = a_0 + a_1 z^1 + \cdots + a_d z^d
+   P(z) = a_0 + a_1 z^1 + \cdots + a_d z^d
 \] $$
 If $icode k$$ is equal to zero, the return value is $latex P(z)$$.
 
@@ -46,14 +46,14 @@ $code Poly$$ within the $code CppAD$$ namespace.
 $head k$$
 The argument $icode k$$ has prototype
 $codei%
-    size_t %k%
+   size_t %k%
 %$$
 It specifies the order of the derivative to calculate.
 
 $head a$$
 The argument $icode a$$ has prototype
 $codei%
-    const %Vector% &%a%
+   const %Vector% &%a%
 %$$
 (see $cref/Vector/Poly/Vector/$$ below).
 It specifies the vector corresponding to the polynomial $latex P(z)$$.
@@ -61,7 +61,7 @@ It specifies the vector corresponding to the polynomial $latex P(z)$$.
 $head z$$
 The argument $icode z$$ has prototype
 $codei%
-    const %Type% &%z%
+   const %Type% &%z%
 %$$
 (see $icode Type$$ below).
 It specifies the point at which to evaluate the polynomial
@@ -69,7 +69,7 @@ It specifies the point at which to evaluate the polynomial
 $head p$$
 The result $icode p$$  has prototype
 $codei%
-    %Type% %p%
+   %Type% %p%
 %$$
 (see $cref/Type/Poly/Type/$$ below)
 and it is equal to the $th k$$ derivative of $latex P(z)$$; i.e.,
@@ -116,8 +116,8 @@ of $icode z$$ and the elements of $icode a$$
 
 
 $children%
-    example/utility/poly.cpp%
-    omh/poly_hpp.omh
+   example/utility/poly.cpp%
+   omh/poly_hpp.omh
 %$$
 
 $head Example$$
@@ -140,45 +140,45 @@ namespace CppAD {    // BEGIN CppAD namespace
 
 template <class Type, class Vector>
 Type Poly(size_t k, const Vector &a, const Type &z)
-{   size_t i;
-    size_t d = a.size() - 1;
+{  size_t i;
+   size_t d = a.size() - 1;
 
-    Type tmp;
+   Type tmp;
 
-    // check Vector is Simple Vector class with Type elements
-    CheckSimpleVector<Type, Vector>();
+   // check Vector is Simple Vector class with Type elements
+   CheckSimpleVector<Type, Vector>();
 
-    // case where derivative order greater than degree of polynomial
-    if( k > d )
-    {   tmp = 0;
-        return tmp;
-    }
-    // case where we are evaluating a derivative
-    if( k > 0 )
-    {   // initialize factor as (k-1) !
-        size_t factor = 1;
-        for(i = 2; i < k; i++)
-            factor *= i;
+   // case where derivative order greater than degree of polynomial
+   if( k > d )
+   {  tmp = 0;
+      return tmp;
+   }
+   // case where we are evaluating a derivative
+   if( k > 0 )
+   {  // initialize factor as (k-1) !
+      size_t factor = 1;
+      for(i = 2; i < k; i++)
+         factor *= i;
 
-        // set b to coefficient vector corresponding to derivative
-        Vector b(d - k + 1);
-        for(i = k; i <= d; i++)
-        {   factor   *= i;
-            tmp       = double( factor );
-            b[i - k]  = a[i] * tmp;
-            factor   /= (i - k + 1);
-        }
-        // value of derivative polynomial
-        return Poly(0, b, z);
-    }
-    // case where we are evaluating the original polynomial
-    Type sum = a[d];
-    i        = d;
-    while(i > 0)
-    {   sum *= z;
-        sum += a[--i];
-    }
-    return sum;
+      // set b to coefficient vector corresponding to derivative
+      Vector b(d - k + 1);
+      for(i = k; i <= d; i++)
+      {  factor   *= i;
+         tmp       = double( factor );
+         b[i - k]  = a[i] * tmp;
+         factor   /= (i - k + 1);
+      }
+      // value of derivative polynomial
+      return Poly(0, b, z);
+   }
+   // case where we are evaluating the original polynomial
+   Type sum = a[d];
+   i        = d;
+   while(i > 0)
+   {  sum *= z;
+      sum += a[--i];
+   }
+   return sum;
 }
 } // END CppAD namespace
 // END C++

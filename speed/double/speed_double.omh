@@ -5,16 +5,16 @@
 
 $begin speed_double$$
 $spell
-    cmake
-    cppad
-    CppAD
-    Cygwin
-    Microsoft
-    chdir
-    Workspace
-    dsw
-    exe
-    sln
+   cmake
+   cppad
+   CppAD
+   Cygwin
+   Microsoft
+   chdir
+   Workspace
+   dsw
+   exe
+   sln
 $$
 
 
@@ -30,25 +30,25 @@ To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
 $cref/build directory/cmake/Build Directory/$$:
 $codei%
-    cd speed/double
-    make check_speed_double VERBOSE=1
+   cd speed/double
+   make check_speed_double VERBOSE=1
 %$$
 You can then run the corresponding speed tests
 with the following command
 $codei%
-    ./speed_double speed %seed%
+   ./speed_double speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
 
 $contents%
-    speed/double/det_minor.cpp%
-    speed/double/det_lu.cpp%
-    speed/double/mat_mul.cpp%
-    speed/double/ode.cpp%
-    speed/double/poly.cpp%
-    speed/double/sparse_hessian.cpp%
-    speed/double/sparse_jacobian.cpp
+   speed/double/det_minor.cpp%
+   speed/double/det_lu.cpp%
+   speed/double/mat_mul.cpp%
+   speed/double/ode.cpp%
+   speed/double/poly.cpp%
+   speed/double/sparse_hessian.cpp%
+   speed/double/sparse_jacobian.cpp
 %$$
 
 $end

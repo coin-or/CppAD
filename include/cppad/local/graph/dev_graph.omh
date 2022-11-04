@@ -4,18 +4,18 @@
 # ----------------------------------------------------------------------------
 $begin dev_graph$$
 $spell
-    Json
+   Json
 $$
 
 $section Developer AD Graph Documentation$$
 
 $childtable%
-    include/cppad/local/graph/cpp_graph_itr.omh%
-    include/cppad/local/graph/cpp_graph_op.hpp%
-    include/cppad/local/graph/json_lexer.omh%
-    include/cppad/local/graph/json_parser.hpp%
-    include/cppad/local/graph/json_writer.hpp%
-    cppad_lib/csrc_writer.cpp
+   include/cppad/local/graph/cpp_graph_itr.omh%
+   include/cppad/local/graph/cpp_graph_op.hpp%
+   include/cppad/local/graph/json_lexer.omh%
+   include/cppad/local/graph/json_parser.hpp%
+   include/cppad/local/graph/json_writer.hpp%
+   cppad_lib/csrc_writer.cpp
 %$$
 
 

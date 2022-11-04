@@ -22,33 +22,33 @@
 # documentation.
 #
 MACRO(compile_source_test defined_ok source variable)
-    #
-    #
-    # check that variable is not yet defined
-    IF( NOT ${defined_ok} )
-        IF( DEFINED ${variable} )
-            MESSAGE(FATAL_ERROR
-                "compile_source_test: ${variable} is defined before expected"
-            )
-        ENDIF( DEFINED ${variable} )
-    ENDIF( NOT ${defined_ok} )
-    #
-    # check that source code compiles
-    CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
-    #
-    # change result varialbe to 0 (1) for fail (succeed).
-    IF( ${variable} )
-        SET(${variable} 1)
-    ELSE( ${variable} )
-        SET(${variable} 0)
-    ENDIF( ${variable} )
-    #
-    # check that varialbe is defined
-    IF( NOT DEFINED ${variable} )
-        MESSAGE(FATAL_ERROR
-            "compile_source_test: error in CMake script."
-        )
-    ENDIF( NOT DEFINED ${variable} )
-    #
-    MESSAGE(STATUS "${variable} = ${${variable}}" )
+   #
+   #
+   # check that variable is not yet defined
+   IF( NOT ${defined_ok} )
+      IF( DEFINED ${variable} )
+         MESSAGE(FATAL_ERROR
+            "compile_source_test: ${variable} is defined before expected"
+         )
+      ENDIF( DEFINED ${variable} )
+   ENDIF( NOT ${defined_ok} )
+   #
+   # check that source code compiles
+   CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
+   #
+   # change result varialbe to 0 (1) for fail (succeed).
+   IF( ${variable} )
+      SET(${variable} 1)
+   ELSE( ${variable} )
+      SET(${variable} 0)
+   ENDIF( ${variable} )
+   #
+   # check that varialbe is defined
+   IF( NOT DEFINED ${variable} )
+      MESSAGE(FATAL_ERROR
+         "compile_source_test: error in CMake script."
+      )
+   ENDIF( NOT DEFINED ${variable} )
+   #
+   MESSAGE(STATUS "${variable} = ${${variable}}" )
 ENDMACRO( compile_source_test )

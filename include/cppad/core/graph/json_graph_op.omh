@@ -4,36 +4,36 @@
 # ----------------------------------------------------------------------------
 $begin json_graph_op$$
 $spell
-    notpos
-    azmul
-    cexp_rel
-    eq
-    lt
-    le
-    Cond
-    Gt
-    log1p
-    expm1
-    erfc
-    erf
-    atanh
-    asinh
-    acosh
-    acos
-    asin
-    atan
-    cos
-    exp
-    sqrt
-    tanh
-    Json
-    arg
-    op
-    mul
-    div
-    chkpoint
-    CppAD
-    neg
+   notpos
+   azmul
+   cexp_rel
+   eq
+   lt
+   le
+   Cond
+   Gt
+   log1p
+   expm1
+   erfc
+   erf
+   atanh
+   asinh
+   acosh
+   acos
+   asin
+   atan
+   cos
+   exp
+   sqrt
+   tanh
+   Json
+   arg
+   op
+   mul
+   div
+   chkpoint
+   CppAD
+   neg
 $$
 
 $section Json AD Graph Operator Definitions$$
@@ -54,15 +54,15 @@ All these operations create one result node and
 have the following Json definition:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":         %name%,
-    "n_arg":        1
+   "op_code":      %op_code%,
+   "name":         %name%,
+   "n_arg":        1
 }
 %$$
 where $icode name$$ is a $cref/string/json_ad_graph/Token/String/$$.
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %arg% ]
+   [ %op_code%, %arg% ]
 %$$
 The possible values for the string $icode name$$ are listed
 in the table below.
@@ -105,15 +105,15 @@ All these operations create one result node and
 have the following Json definition:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":         %name%,
-    "n_arg":        2
+   "op_code":      %op_code%,
+   "name":         %name%,
+   "n_arg":        2
 }
 %$$
 where $icode name$$ is a $cref/string/json_ad_graph/Token/String/$$.
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %first_arg%, %second_arg% ]
+   [ %op_code%, %first_arg%, %second_arg% ]
 %$$
 The possible values for the string $icode name$$ are listed below:
 
@@ -153,13 +153,13 @@ $head sum$$
 This operator has the following Json definition:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":         "sum"
+   "op_code":      %op_code%,
+   "name":         "sum"
 }
 %$$
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
+   [ %op_code%, %n_result%, %n_arg%, [ %first_arg%, %...%, %last_arg% ] ]
 %$$
 where $icode n_result$$ is always $code 1$$.
 This operation creates one node with value equal to
@@ -174,9 +174,9 @@ These operators are $cref/conditional expressions/CondExp/$$
 and have the following Json definition:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":         "cexp_%rel%,
-    "n_arg":        4
+   "op_code":      %op_code%,
+   "name":         "cexp_%rel%,
+   "n_arg":        4
 }
 %$$
 where $icode rel$$ is $code eq$$ (equal),
@@ -188,10 +188,10 @@ the third is $cref/if_true/CondExp/if_true/$$,
 the fourth is $cref/if_false/CondExp/if_false/$$,
 the result is given by
 $codei%
-    if( %left% %cop% %right%)
-        %result% = %if_true%;
-    else
-        %result% = %if_false%;
+   if( %left% %cop% %right%)
+      %result% = %if_true%;
+   else
+      %result% = %if_false%;
 %$$
 where the comparison $icode cop$$ is define by the cases below:
 
@@ -207,11 +207,11 @@ For this operator $icode cop$$ is $code <$$
 $subhead Other Comparisons$$
 Note that
 $codei%
-    CondExpGt(%left%, %right%, %if_true%, %if_false%)
+   CondExpGt(%left%, %right%, %if_true%, %if_false%)
 %$$
 is equivalent to
 $codei%
-    CondExpLe(%left%, %right%, %if_false%, %if_true%)
+   CondExpLe(%left%, %right%, %if_false%, %if_true%)
 %$$
 Similar conversions can be used for all the possible
 $cref/conditional expressions/CondExp/$$.
@@ -225,8 +225,8 @@ These are $cref/comparison/Compare/$$ operators
 and have the following Json definition:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":         "comp_%rel%"
+   "op_code":      %op_code%,
+   "name":         "comp_%rel%"
 }
 %$$
 where $icode rel$$ is $code eq$$ (equal),
@@ -235,7 +235,7 @@ $code le$$ (less than or equal), or
 $code lt$$ (less than).
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %n_result%, %n_arg%, [ %left%, %right% ] ]
+   [ %op_code%, %n_result%, %n_arg%, [ %left%, %right% ] ]
 %$$
 
 $subhead n_result$$
@@ -249,7 +249,7 @@ corresponding to the left and right operands.
 $subhead left, right$$
 The logical comparison is defined as the logical expression
 $codei%
-    %left% %cop% %right%
+   %left% %cop% %right%
 %$$
 The comparison $icode cop$$ is define by the cases below.
 The Json graph corresponds to the comparison being true.
@@ -258,10 +258,10 @@ the comparison is false,
 the Json graph may no longer be valid.
 For example, the Json graph may only contain the code for the true case below:
 $codei%
-    if( %left% %cop% %right% )
-    {   %source code when result is true% }
-    else
-    {   %source code when result is false% }
+   if( %left% %cop% %right% )
+   {  %source code when result is true% }
+   else
+   {  %source code when result is false% }
 %$$
 Including this operator enables CppAD to detect when the graph
 may no longer be a valid representation of the intended function.
@@ -294,13 +294,13 @@ $head Discrete Functions$$
 This operator has the following Json definition:
 $codei%
 {
-    "op_code":     %op_code%,
-    "name":        "discrete"
+   "op_code":     %op_code%,
+   "name":        "discrete"
 }
 %$$
 A corresponding op_usage has the form
 $codei%
-    [ %op_code%, %name%, %n_result%, %n_arg%, [ %arg% ]  ]
+   [ %op_code%, %name%, %n_result%, %n_arg%, [ %arg% ]  ]
 %$$
 
 $subhead name$$
@@ -332,30 +332,30 @@ $subhead Atomic Three$$
 This operator has the following Json definition:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":          "atom"
+   "op_code":      %op_code%,
+   "name":          "atom"
 }
 %$$
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %name%, %n_result%, %n_arg%,
-        [ %first_arg%, %...%, %last_arg% ]
-    ]
+   [ %op_code%, %name%, %n_result%, %n_arg%,
+      [ %first_arg%, %...%, %last_arg% ]
+   ]
 %$$
 
 $subhead Atomic Four$$
 This operator has the following Json definition:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":          "atom4"
+   "op_code":      %op_code%,
+   "name":          "atom4"
 }
 %$$
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %name%, %call_id%, %n_result%, %n_arg%,
-        [ %first_arg%, %...%, %last_arg% ]
-    ]
+   [ %op_code%, %name%, %call_id%, %n_result%, %n_arg%,
+      [ %first_arg%, %...%, %last_arg% ]
+   ]
 %$$
 
 $subhead name$$
@@ -392,13 +392,13 @@ $head Print$$
 This operator has the following Json definition:
 $codei%
 {
-    "op_code":      %op_code%,
-    "name":          "print"
+   "op_code":      %op_code%,
+   "name":          "print"
 }
 %$$
 A corresponding $icode op_usage$$ has the form
 $codei%
-    [ %op_code%, %before%, %after%, %n_result%, %n_arg%, [ %notpos%, %value% ] ]
+   [ %op_code%, %before%, %after%, %n_result%, %n_arg%, [ %notpos%, %value% ] ]
 %$$
 
 $subhead before$$
@@ -428,20 +428,20 @@ The file $cref json_print_op.cpp$$ is an example and test
 of this operator.
 
 $childtable%
-    example/json/unary_op.cpp%
-    example/json/add_op.cpp%
-    example/json/azmul_op.cpp%
-    example/json/div_op.cpp%
-    example/json/mul_op.cpp%
-    example/json/pow_op.cpp%
-    example/json/sub_op.cpp%
-    example/json/sum_op.cpp%
-    example/json/cexp_op.cpp%
-    example/json/comp_op.cpp%
-    example/json/discrete_op.cpp%
-    example/json/atom_op.cpp%
-    example/json/atom4_op.cpp%
-    example/json/print_op.cpp
+   example/json/unary_op.cpp%
+   example/json/add_op.cpp%
+   example/json/azmul_op.cpp%
+   example/json/div_op.cpp%
+   example/json/mul_op.cpp%
+   example/json/pow_op.cpp%
+   example/json/sub_op.cpp%
+   example/json/sum_op.cpp%
+   example/json/cexp_op.cpp%
+   example/json/comp_op.cpp%
+   example/json/discrete_op.cpp%
+   example/json/atom_op.cpp%
+   example/json/atom4_op.cpp%
+   example/json/print_op.cpp
 %$$
 
 $end

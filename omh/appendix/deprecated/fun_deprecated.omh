@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin FunDeprecated$$
 $spell
-    bool
-    VecAD
-    CppAD
-    const
-    Taylor
-    sizeof
-    var
+   bool
+   VecAD
+   CppAD
+   const
+   Taylor
+   sizeof
+   var
 $$
 
 $section ADFun Object Deprecated Member Functions$$
@@ -44,12 +44,12 @@ A recording of and AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
 is started by a call of the form
 $codei%
-    Independent(%x%)
+   Independent(%x%)
 %$$
 If there is only one such recording at the current time,
 you can use $icode%f%.Dependent(%y%)%$$ in place of
 $codei%
-    %f%.Dependent(%x%, %y%)
+   %f%.Dependent(%x%, %y%)
 %$$
 See $cref Dependent$$ for a description of this operation.
 
@@ -62,7 +62,7 @@ This was necessary to allow for multiple threading applications.
 $head Order$$
 The result $icode o$$ has prototype
 $codei%
-    size_t %o%
+   size_t %o%
 %$$
 and is the order of the previous forward operation
 using the function $icode f$$.
@@ -84,7 +84,7 @@ in the ADFun object $icode f$$
 $head Memory$$
 The result
 $codei%
-    size_t %m%
+   size_t %m%
 %$$
 and is the number of memory units ($code sizeof$$) required for the
 information currently stored in $icode f$$.
@@ -103,7 +103,7 @@ Thus the $code Memory$$ function is no longer well defined.
 $head Size$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the number of variables in the operation sequence plus the following:
 one for a phantom variable with tape address zero,
@@ -121,7 +121,7 @@ the number of variables in the operation sequence.
 $head taylor_size$$
 The result $icode t$$ has prototype
 $codei%
-    size_t %t%
+   size_t %t%
 %$$
 and is the number of Taylor coefficient orders
 currently calculated and stored in the ADFun object $icode f$$.
@@ -132,7 +132,7 @@ This function has been replaced by $cref size_order$$.
 $head use_VecAD$$
 The result $icode u$$ has prototype
 $codei%
-    bool %u%
+   bool %u%
 %$$
 If it is true, the
 AD of $icode Base$$
@@ -144,13 +144,13 @@ Otherwise $icode u$$ is false.
 $subhead Deprecated 2006-04-08$$
 You can instead use
 $codei%
-    %u% = %f%.size_VecAD() > 0
+   %u% = %f%.size_VecAD() > 0
 %$$
 
 $head size_taylor$$
 The result $icode v$$ has prototype
 $codei%
-    size_t %v%
+   size_t %v%
 %$$
 and is the number of Taylor coefficient orders
 currently calculated and stored in the ADFun object $icode f$$.
@@ -161,7 +161,7 @@ This function has been replaced by $cref size_order$$.
 $head capacity_taylor$$
 The result $icode w$$ has prototype
 $codei%
-    size_t %w%
+   size_t %w%
 %$$
 and is the number of Taylor coefficient orders currently allocated
 in the ADFun object $icode f$$.

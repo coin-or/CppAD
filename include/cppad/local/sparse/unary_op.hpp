@@ -18,11 +18,11 @@ Forward mode Jacobian sparsity pattern for all unary operators.
 
 The C++ source code corresponding to a unary operation has the form
 \verbatim
-    z = fun(x)
+   z = fun(x)
 \endverbatim
 where fun is a C++ unary function, or it has the form
 \verbatim
-    z = x op q
+   z = x op q
 \endverbatim
 where op is a C++ binary unary operator and q is a parameter.
 
@@ -58,25 +58,25 @@ depends on.
 
 template <class Vector_set>
 void for_jac_unary_op(
-    size_t            i_z           ,
-    size_t            i_x           ,
-    Vector_set&       sparsity      )
+   size_t            i_z           ,
+   size_t            i_x           ,
+   Vector_set&       sparsity      )
 {
-    // check assumptions
-    CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+   // check assumptions
+   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-    sparsity.assignment(i_z, i_x, sparsity);
+   sparsity.assignment(i_z, i_x, sparsity);
 }
 /*!
 Reverse mode Jacobian sparsity pattern for all unary operators.
 
 The C++ source code corresponding to a unary operation has the form
 \verbatim
-    z = fun(x)
+   z = fun(x)
 \endverbatim
 where fun is a C++ unary function, or it has the form
 \verbatim
-    z = x op q
+   z = x op q
 \endverbatim
 where op is a C++ bianry operator and q is a parameter.
 
@@ -84,7 +84,7 @@ This routine is given the sparsity patterns
 for a function G(z, y, ... )
 and it uses them to compute the sparsity patterns for
 \verbatim
-    H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
+   H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
 \endverbatim
 
 \tparam Vector_set
@@ -119,16 +119,16 @@ is the sparsity bit pattern for H with respect to the variable x.
 
 template <class Vector_set>
 void rev_jac_unary_op(
-    size_t     i_z                     ,
-    size_t     i_x                     ,
-    Vector_set&            sparsity    )
+   size_t     i_z                     ,
+   size_t     i_x                     ,
+   Vector_set&            sparsity    )
 {
-    // check assumptions
-    CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+   // check assumptions
+   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-    sparsity.binary_union(i_x, i_x, i_z, sparsity);
+   sparsity.binary_union(i_x, i_x, i_z, sparsity);
 
-    return;
+   return;
 }
 // ---------------------------------------------------------------------------
 /*!
@@ -136,11 +136,11 @@ Reverse mode Hessian sparsity pattern for linear unary operators.
 
 The C++ source code corresponding to this operation is
 \verbatim
-        z = fun(x)
+      z = fun(x)
 \endverbatim
 where fun is a linear functions; e.g. abs, or
 \verbatim
-    z = x op q
+   z = x op q
 \endverbatim
 where op is a C++ binary operator and q is a parameter.
 
@@ -148,23 +148,23 @@ where op is a C++ binary operator and q is a parameter.
 */
 template <class Vector_set>
 void rev_hes_lin_unary_op(
-    size_t              i_z               ,
-    size_t              i_x               ,
-    bool*               rev_jacobian      ,
-    const Vector_set&   for_jac_sparsity  ,
-    Vector_set&         rev_hes_sparsity  )
+   size_t              i_z               ,
+   size_t              i_x               ,
+   bool*               rev_jacobian      ,
+   const Vector_set&   for_jac_sparsity  ,
+   Vector_set&         rev_hes_sparsity  )
 {
-    // check assumptions
-    CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+   // check assumptions
+   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-    // check for no effect
-    if( ! rev_jacobian[i_z] )
-        return;
+   // check for no effect
+   if( ! rev_jacobian[i_z] )
+      return;
 
-    rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
+   rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
 
-    rev_jacobian[i_x] = true;
-    return;
+   rev_jacobian[i_x] = true;
+   return;
 }
 
 /*!
@@ -172,11 +172,11 @@ Reverse mode Hessian sparsity pattern for non-linear unary operators.
 
 The C++ source code corresponding to this operation is
 \verbatim
-        z = fun(x)
+      z = fun(x)
 \endverbatim
 where fun is a non-linear functions; e.g. sin. or
 \verbatim
-    z = q / x
+   z = q / x
 \endverbatim
 where q is a parameter.
 
@@ -185,53 +185,53 @@ where q is a parameter.
 */
 template <class Vector_set>
 void rev_hes_nl_unary_op(
-    size_t              i_z               ,
-    size_t              i_x               ,
-    bool*               rev_jacobian      ,
-    const Vector_set&   for_jac_sparsity  ,
-    Vector_set&         rev_hes_sparsity  )
+   size_t              i_z               ,
+   size_t              i_x               ,
+   bool*               rev_jacobian      ,
+   const Vector_set&   for_jac_sparsity  ,
+   Vector_set&         rev_hes_sparsity  )
 {
-    // check assumptions
-    CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+   // check assumptions
+   CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-    // check for no effect
-    if( ! rev_jacobian[i_z] )
-        return;
+   // check for no effect
+   if( ! rev_jacobian[i_z] )
+      return;
 
-    rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
-    rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
+   rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
+   rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
 
-    rev_jacobian[i_x] = true;
-    return;
+   rev_jacobian[i_x] = true;
+   return;
 }
 // ---------------------------------------------------------------------------
 /*
 $begin for_hes_nl_unary_op$$
 $spell
-    hes
-    nl
-    op
-    np
-    numvar
-    Jacobian
+   hes
+   nl
+   op
+   np
+   numvar
+   Jacobian
 $$
 
 $section Forward Hessian Sparsity for Non-linear Unary Operators$$
 
 $head Syntax$$
 $codei%local::for_hes_nl_unary_op(
-    %np1%, %numvar%, %i_v%, %for_sparsity%
+   %np1%, %numvar%, %i_v%, %for_sparsity%
 )%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_for_hes_nl_unary_op%// END_for_hes_nl_unary_op%1
+   0%// BEGIN_for_hes_nl_unary_op%// END_for_hes_nl_unary_op%1
 %$$
 
 $head C++ Source$$
 The C++ source code corresponding to this operation is
 $codei%
-        %w% = %fun%( %v% )
+      %w% = %fun%( %v% )
 %$$
 where $icode fun$$ is a non-linear function.
 
@@ -278,32 +278,32 @@ $end
 // BEGIN_for_hes_nl_unary_op
 template <class Vector_set>
 void for_hes_nl_unary_op(
-    size_t              np1            ,
-    size_t              numvar         ,
-    size_t              i_w            ,
-    size_t              i_v            ,
-    Vector_set&         for_sparsity   )
+   size_t              np1            ,
+   size_t              numvar         ,
+   size_t              i_w            ,
+   size_t              i_v            ,
+   Vector_set&         for_sparsity   )
 // END_for_hes_nl_unary_op
-{   CPPAD_ASSERT_UNKNOWN( i_v < i_w );
-    CPPAD_ASSERT_UNKNOWN( i_w < numvar );
-    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-    CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
-    CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
+{  CPPAD_ASSERT_UNKNOWN( i_v < i_w );
+   CPPAD_ASSERT_UNKNOWN( i_w < numvar );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.number_elements(np1) == 0 );
 
-    // set Jacobian sparsity J(i_w)
-    for_sparsity.assignment(np1 + i_w, np1 + i_v, for_sparsity);
+   // set Jacobian sparsity J(i_w)
+   for_sparsity.assignment(np1 + i_w, np1 + i_v, for_sparsity);
 
-    // set of independent variables that v depends on
-    typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);
+   // set of independent variables that v depends on
+   typename Vector_set::const_iterator itr(for_sparsity, i_v + np1);
 
-    // loop over independent variables with non-zero partial for v
-    size_t i_x = *itr;
-    while( i_x < np1 )
-    {   // N(i_x) = N(i_x) union J(i_v)
-        for_sparsity.binary_union(i_x, i_x, i_v + np1, for_sparsity);
-        i_x = *(++itr);
-    }
-    return;
+   // loop over independent variables with non-zero partial for v
+   size_t i_x = *itr;
+   while( i_x < np1 )
+   {  // N(i_x) = N(i_x) union J(i_v)
+      for_sparsity.binary_union(i_x, i_x, i_v + np1, for_sparsity);
+      i_x = *(++itr);
+   }
+   return;
 }
 
 } } } // END_CPPAD_LOCAL_SPARSE_NAMESPACE

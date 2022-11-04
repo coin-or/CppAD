@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin pack_setvec$$
 $spell
-    Namespace
-    CppAD
-    setvec
+   Namespace
+   CppAD
+   setvec
 $$
 
 $section Implement SetVector Using Packed Boolean Values$$
@@ -19,7 +19,7 @@ The public member function for the $code list_setvec$$ class implement the
 $cref SetVector$$ concept.
 
 $childtable%
-    include/cppad/local/sparse/pack_setvec.hpp
+   include/cppad/local/sparse/pack_setvec.hpp
 %$$
 
 $end

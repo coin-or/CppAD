@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 # $begin get_eigen.sh$$ $newlinech #$$
 # $spell
-#   gz
-#   Eigen
-#   CppAD
+#  gz
+#  Eigen
+#  CppAD
 # $$
 #
 # $section Download and Install Eigen in Build Directory$$
@@ -40,7 +40,7 @@ version='3.3.7'
 # $head Configuration$$
 # If the file
 # $codei%
-#   external/eigen-%version%.configured
+#  external/eigen-%version%.configured
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
@@ -50,14 +50,14 @@ version='3.3.7'
 package='eigen'
 if [ $0 != "bin/get_$package.sh" ]
 then
-    echo "bin/get_$package.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/get_$package.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 web_page='https://gitlab.com/libeigen/$package.git'
@@ -66,16 +66,16 @@ cppad_dir=`pwd`
 # n_job
 if which nproc > /dev/null
 then
-    n_job=$(nproc)
+   n_job=$(nproc)
 else
-    n_job=$(sysctl -n hw.ncpu)
+   n_job=$(sysctl -n hw.ncpu)
 fi
 # ----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-    prefix="$cppad_dir/$prefix"
+   prefix="$cppad_dir/$prefix"
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
@@ -83,27 +83,27 @@ configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
-    echo "Skipping configuration because $configured_flag exits"
-    echo_eval cd external/$package.git/build
-    echo_eval make -j $n_job install
-    if [ -e $prefix/include/Eigen ]
-    then
-        echo_eval rm $prefix/include/Eigen
-    fi
-    echo_eval ln -s $prefix/include/eigen3/Eigen $prefix/include/Eigen
-    echo "get_$package.sh: OK"
-    exit 0
+   echo "Skipping configuration because $configured_flag exits"
+   echo_eval cd external/$package.git/build
+   echo_eval make -j $n_job install
+   if [ -e $prefix/include/Eigen ]
+   then
+      echo_eval rm $prefix/include/Eigen
+   fi
+   echo_eval ln -s $prefix/include/eigen3/Eigen $prefix/include/Eigen
+   echo "get_$package.sh: OK"
+   exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ ! -d external ]
 then
-    echo_eval mkdir external
+   echo_eval mkdir external
 fi
 echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e $package.git ]
 then
-    echo_eval git clone $web_page $package.git
+   echo_eval git clone $web_page $package.git
 fi
 # -----------------------------------------------------------------------------
 echo_eval cd $package.git
@@ -111,14 +111,14 @@ echo_eval git checkout master
 echo_eval git checkout --quiet $version
 if [ ! -e build ]
 then
-    echo_eval mkdir build
+   echo_eval mkdir build
 fi
 echo_eval cd build
 echo_eval cmake -D CMAKE_INSTALL_PREFIX=$prefix ..
 echo_eval make -j $n_job install
 if [ -e $prefix/include/Eigen ]
 then
-    echo_eval rm $prefix/include/Eigen
+   echo_eval rm $prefix/include/Eigen
 fi
 echo_eval ln -s $prefix/include/eigen3/Eigen $prefix/include/Eigen
 # -----------------------------------------------------------------------------

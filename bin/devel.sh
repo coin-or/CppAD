@@ -12,8 +12,8 @@ image_link='https://coin-or.github.io/CppAD'
 # List of files, besides CMakeLists.txt, that have have a copy of the
 # version number (can be empty).
 version_files='
-    omh/cppad.omh
-    configure.ac
+   omh/cppad.omh
+   configure.ac
 '
 #
 # List of special files, for this repository, that the devel tools ignore.
@@ -24,32 +24,32 @@ version_files='
 # All other names are relavie paths somewhere below the top source directory.
 # BEGIN_SORT_THIS_LINE_PLUS_2
 ignore_files='
-    /.circleci/
-    /.coin-or/projDesc.xml
-    /.github/workflows/
-    /.gitignore
-    /COPYING
-    /ar-lib
-    /authors
-    /batch_edit.sed
-    /bin/build.bat
-    /bin/devel.sh
-    /bin/get_highlight.sh
-    /bin/get_omhelp.sh
-    /bin/run_omhelp.sh
-    /cmake/cppad_uninstall.cmake
-    /coin.png
-    /compile
-    /config.guess
-    /config.sub
-    /configure
-    /configure
-    /depcomp
-    /epl-2.0.txt
-    /install-sh
-    /missing
-    /uw_copy_040507.html
-    makefile.in
+   /.circleci/
+   /.coin-or/projDesc.xml
+   /.github/workflows/
+   /.gitignore
+   /COPYING
+   /ar-lib
+   /authors
+   /batch_edit.sed
+   /bin/build.bat
+   /bin/devel.sh
+   /bin/get_highlight.sh
+   /bin/get_omhelp.sh
+   /bin/run_omhelp.sh
+   /cmake/cppad_uninstall.cmake
+   /coin.png
+   /compile
+   /config.guess
+   /config.sub
+   /configure
+   /configure
+   /depcomp
+   /epl-2.0.txt
+   /install-sh
+   /missing
+   /uw_copy_040507.html
+   makefile.in
 '
 # END_SORT_THIS_LINE_MINUS_2
 # ----------------------------------------------------------------------------

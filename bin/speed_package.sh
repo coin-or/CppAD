@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 if [ "$0" != 'bin/speed_package.sh' ]
 then
-    echo "bin/run_cmake.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/run_cmake.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 #! /bin/bash -e
@@ -31,14 +31,14 @@ s|xpackage|$package|g
 EOF
 if [ -e speed/$package ]
 then
-    echo_eval rm -r speed/$package
+   echo_eval rm -r speed/$package
 fi
 cp -r speed/xpackage speed/$package
 git add speed/$package
 list=`ls speed/$package`
 for file in $list
 do
-    echo_eval sed -i speed/$package/$file -f speed_package.$$
+   echo_eval sed -i speed/$package/$file -f speed_package.$$
 done
 # --------------------------------------------------------
 # omh/speed_package.omh
@@ -67,7 +67,7 @@ s|\$cref/Fadbad/fadbad_prefix/Fadbad Home Page/\$\$,|&\\
 s|^\\( *\\)speed/fadbad/speed_fadbad.omh%|&\\
 \\1speed/$package/speed_$package.omh%|
 s|\$spell|&\\
-    $Package|
+   $Package|
 EOF
 file='speed/speed.omh'
 echo_eval sed -i $file -f speed_package.$$
@@ -87,7 +87,7 @@ cat << EOF > speed_package.$$
 /ENDIF( *cppad_has_fadbad *)/! b end
 s|\$|\\
 IF( cppad_has_$package )\\
-    ADD_SUBDIRECTORY($package)\\
+   ADD_SUBDIRECTORY($package)\\
 ENDIF( cppad_has_$package )|
 : end
 EOF
@@ -115,7 +115,7 @@ s|badiff[.]h|$short_name|
 s|Fadbad|$Package|g
 s|fadbad|$package|g
 s|\$spell|&\\
-    $include_file|
+   $include_file|
 EOF
 file="omh/install/${package}_prefix.omh"
 cp omh/install/fadbad_prefix.omh $file
@@ -124,18 +124,18 @@ echo_eval sed -i $file -f speed_package.$$
 # --------------------------------------------------------
 # omh/install/cmake.omh
 cat << EOF > speed_package.$$
-/^    -D fadbad_prefix=%fadbad_prefix%/! b one
+/^   -D fadbad_prefix=%fadbad_prefix%/! b one
 s|\$|\\
-    -D ${package}_prefix=%${package}_prefix% \\\\|
+   -D ${package}_prefix=%${package}_prefix% \\\\|
 b end
 #
 :one
 s|^\$rref fadbad_prefix\$\\\$|&\\
 \$rref ${package}_prefix\$\$|
-s|^    omh/install/fadbad_prefix.omh%|&\\
-    omh/install/${package}_prefix.omh%|
+s|^   omh/install/fadbad_prefix.omh%|&\\
+   omh/install/${package}_prefix.omh%|
 s|\$spell|&\\
-    $package|
+   $package|
 #
 : end
 EOF
@@ -156,12 +156,12 @@ s|^\\( *\\)--no_fadbad)|\\1--no_$package)\\
 s|^package_list=''|&\\
 if [ "\$yes_$package" == 'yes' ]\\
 then\\
-    if [ ! -e "\$prefix/include/$include_file" ]\\
-    then\\
-        echo "Cannot find \$prefix/include/$include_file"\\
-        exit 1\\
-    fi\\
-    package_list="\$package_list $package"\\
+   if [ ! -e "\$prefix/include/$include_file" ]\\
+   then\\
+      echo "Cannot find \$prefix/include/$include_file"\\
+      exit 1\\
+   fi\\
+   package_list="\$package_list $package"\\
 fi|
 EOF
 file='bin/run_cmake.sh'

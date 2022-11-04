@@ -7,16 +7,16 @@
 /*
 $begin atomic_two_for_sparse_jac$$
 $spell
-    sq
-    mul.hpp
-    afun
-    Jacobian
-    jac
-    const
-    CppAD
-    std
-    bool
-    std
+   sq
+   mul.hpp
+   afun
+   Jacobian
+   jac
+   const
+   CppAD
+   std
+   bool
+   std
 $$
 
 $section Atomic Forward Jacobian Sparsity Patterns$$
@@ -35,7 +35,7 @@ Jacobian sparsity patterns.
 For a fixed matrix $latex R \in \B{R}^{n \times q}$$,
 the Jacobian of $latex f( x + R * u)$$ with respect to $latex u \in \B{R}^q$$ is
 $latex \[
-    S(x) = f^{(1)} (x) * R
+   S(x) = f^{(1)} (x) * R
 \] $$
 Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$,
 $code for_sparse_jac$$ computes a sparsity pattern for $latex S(x)$$.
@@ -52,7 +52,7 @@ $cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
 $subhead q$$
 The argument $icode q$$ has prototype
 $codei%
-    size_t %q%
+   size_t %q%
 %$$
 It specifies the number of columns in
 $latex R \in \B{R}^{n \times q}$$ and the Jacobian
@@ -69,7 +69,7 @@ $latex R \in \B{R}^{n \times q}$$.
 $subhead s$$
 This argument has prototype
 $codei%
-    %atomic_sparsity%& %s%
+   %atomic_sparsity%& %s%
 %$$
 The input values of its elements
 are not specified (must not matter).
@@ -81,17 +81,17 @@ $subhead x$$
 $index deprecated$$
 The argument has prototype
 $codei%
-    const CppAD::vector<%Base%>& %x%
+   const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
 This is the $cref Value$$ value corresponding to the parameters in the
 vector $cref/ax/atomic_two_afun/ax/$$ (when the atomic function was called).
 To be specific, if
 $codei%
-    if( Parameter(%ax%[%i%]) == true )
-        %x%[%i%] = Value( %ax%[%i%] );
-    else
-        %x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
+   if( Parameter(%ax%[%i%]) == true )
+      %x%[%i%] = Value( %ax%[%i%] );
+   else
+      %x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
 The version of this function with out the $icode x$$ argument is deprecated;
 i.e., you should include the argument even if you do not use it.
@@ -99,7 +99,7 @@ i.e., you should include the argument even if you do not use it.
 $head ok$$
 The return value $icode ok$$ has prototype
 $codei%
-    bool %ok%
+   bool %ok%
 %$$
 If it is $code true$$, the corresponding evaluation succeeded,
 otherwise it failed.
@@ -130,44 +130,44 @@ is the integer value for x arguments that are parameters.
 */
 template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
-    size_t                                  q  ,
-    const vector< std::set<size_t> >&       r  ,
+   size_t                                  q  ,
+   const vector< std::set<size_t> >&       r  ,
           vector< std::set<size_t> >&       s  ,
-    const vector<Base>&                     x  )
-{   return false; }
+   const vector<Base>&                     x  )
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
-    size_t                                  q  ,
-    const vector<bool>&                     r  ,
+   size_t                                  q  ,
+   const vector<bool>&                     r  ,
           vector<bool>&                     s  ,
-    const vector<Base>&                     x  )
-{   return false; }
+   const vector<Base>&                     x  )
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
-    size_t                                  q  ,
-    const vectorBool&                       r  ,
+   size_t                                  q  ,
+   const vectorBool&                       r  ,
           vectorBool&                       s  ,
-    const vector<Base>&                     x  )
-{   return false; }
+   const vector<Base>&                     x  )
+{  return false; }
 // deprecated versions
 template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
-    size_t                                  q  ,
-    const vector< std::set<size_t> >&       r  ,
+   size_t                                  q  ,
+   const vector< std::set<size_t> >&       r  ,
           vector< std::set<size_t> >&       s  )
-{   return false; }
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
-    size_t                                  q  ,
-    const vector<bool>&                     r  ,
+   size_t                                  q  ,
+   const vector<bool>&                     r  ,
           vector<bool>&                     s  )
-{   return false; }
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_jac(
-    size_t                                  q  ,
-    const vectorBool&                       r  ,
+   size_t                                  q  ,
+   const vectorBool&                       r  ,
           vectorBool&                       s  )
-{   return false; }
+{  return false; }
 
 /*!
 Link, before case split, from for_jac_sweep to atomic_base.
@@ -196,80 +196,80 @@ is the sparsity for the i-th result for this atomic function.
 template <class Base>
 template <class InternalSparsity>
 bool atomic_base<Base>::for_sparse_jac(
-    const vector<Base>&              x            ,
-    const local::pod_vector<size_t>& x_index      ,
-    const local::pod_vector<size_t>& y_index      ,
-    InternalSparsity&                var_sparsity )
+   const vector<Base>&              x            ,
+   const local::pod_vector<size_t>& x_index      ,
+   const local::pod_vector<size_t>& y_index      ,
+   InternalSparsity&                var_sparsity )
 {
-    // intial results are empty during forward mode
-    size_t q           = var_sparsity.end();
-    bool   input_empty = true;
-    bool   zero_empty  = true;
-    bool   transpose   = false;
-    size_t m           = y_index.size();
-    bool   ok          = false;
-    size_t thread      = thread_alloc::thread_num();
-    allocate_work(thread);
-    //
-    std::string msg    = ": atomic_base.for_sparse_jac: returned false";
-    if( sparsity_ == pack_sparsity_enum )
-    {   vectorBool& pack_r ( work_[thread]->pack_r );
-        vectorBool& pack_s ( work_[thread]->pack_s );
-        local::sparse::get_internal_pattern(
-            transpose, x_index, var_sparsity, pack_r
-        );
-        //
-        pack_s.resize(m * q );
-        ok = for_sparse_jac(q, pack_r, pack_s, x);
-        if( ! ok )
-            ok = for_sparse_jac(q, pack_r, pack_s);
-        if( ! ok )
-        {   msg = atomic_name() + msg + " sparsity = pack_sparsity_enum";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str());
-        }
-        local::sparse::set_internal_pattern(zero_empty, input_empty,
-            transpose, y_index, var_sparsity, pack_s
-        );
-    }
-    else if( sparsity_ == bool_sparsity_enum )
-    {   vector<bool>& bool_r ( work_[thread]->bool_r );
-        vector<bool>& bool_s ( work_[thread]->bool_s );
-        local::sparse::get_internal_pattern(
-            transpose, x_index, var_sparsity, bool_r
-        );
-        bool_s.resize(m * q );
-        ok = for_sparse_jac(q, bool_r, bool_s, x);
-        if( ! ok )
-            ok = for_sparse_jac(q, bool_r, bool_s);
-        if( ! ok )
-        {   msg = atomic_name() + msg + " sparsity = bool_sparsity_enum";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str());
-        }
-        local::sparse::set_internal_pattern(zero_empty, input_empty,
-            transpose, y_index, var_sparsity, bool_s
-        );
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum );
-        vector< std::set<size_t> >& set_r ( work_[thread]->set_r );
-        vector< std::set<size_t> >& set_s ( work_[thread]->set_s );
-        local::sparse::get_internal_pattern(
-            transpose, x_index, var_sparsity, set_r
-        );
-        //
-        set_s.resize(m);
-        ok = for_sparse_jac(q, set_r, set_s, x);
-        if( ! ok )
-            ok = for_sparse_jac(q, set_r, set_s);
-        if( ! ok )
-        {   msg = atomic_name() + msg + " sparsity = set_sparsity_enum";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str());
-        }
-        local::sparse::set_internal_pattern(zero_empty, input_empty,
-            transpose, y_index, var_sparsity, set_s
-        );
-    }
-    return ok;
+   // intial results are empty during forward mode
+   size_t q           = var_sparsity.end();
+   bool   input_empty = true;
+   bool   zero_empty  = true;
+   bool   transpose   = false;
+   size_t m           = y_index.size();
+   bool   ok          = false;
+   size_t thread      = thread_alloc::thread_num();
+   allocate_work(thread);
+   //
+   std::string msg    = ": atomic_base.for_sparse_jac: returned false";
+   if( sparsity_ == pack_sparsity_enum )
+   {  vectorBool& pack_r ( work_[thread]->pack_r );
+      vectorBool& pack_s ( work_[thread]->pack_s );
+      local::sparse::get_internal_pattern(
+         transpose, x_index, var_sparsity, pack_r
+      );
+      //
+      pack_s.resize(m * q );
+      ok = for_sparse_jac(q, pack_r, pack_s, x);
+      if( ! ok )
+         ok = for_sparse_jac(q, pack_r, pack_s);
+      if( ! ok )
+      {  msg = atomic_name() + msg + " sparsity = pack_sparsity_enum";
+         CPPAD_ASSERT_KNOWN(false, msg.c_str());
+      }
+      local::sparse::set_internal_pattern(zero_empty, input_empty,
+         transpose, y_index, var_sparsity, pack_s
+      );
+   }
+   else if( sparsity_ == bool_sparsity_enum )
+   {  vector<bool>& bool_r ( work_[thread]->bool_r );
+      vector<bool>& bool_s ( work_[thread]->bool_s );
+      local::sparse::get_internal_pattern(
+         transpose, x_index, var_sparsity, bool_r
+      );
+      bool_s.resize(m * q );
+      ok = for_sparse_jac(q, bool_r, bool_s, x);
+      if( ! ok )
+         ok = for_sparse_jac(q, bool_r, bool_s);
+      if( ! ok )
+      {  msg = atomic_name() + msg + " sparsity = bool_sparsity_enum";
+         CPPAD_ASSERT_KNOWN(false, msg.c_str());
+      }
+      local::sparse::set_internal_pattern(zero_empty, input_empty,
+         transpose, y_index, var_sparsity, bool_s
+      );
+   }
+   else
+   {  CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum );
+      vector< std::set<size_t> >& set_r ( work_[thread]->set_r );
+      vector< std::set<size_t> >& set_s ( work_[thread]->set_s );
+      local::sparse::get_internal_pattern(
+         transpose, x_index, var_sparsity, set_r
+      );
+      //
+      set_s.resize(m);
+      ok = for_sparse_jac(q, set_r, set_s, x);
+      if( ! ok )
+         ok = for_sparse_jac(q, set_r, set_s);
+      if( ! ok )
+      {  msg = atomic_name() + msg + " sparsity = set_sparsity_enum";
+         CPPAD_ASSERT_KNOWN(false, msg.c_str());
+      }
+      local::sparse::set_internal_pattern(zero_empty, input_empty,
+         transpose, y_index, var_sparsity, set_s
+      );
+   }
+   return ok;
 }
 
 } // END_CPPAD_NAMESPACE

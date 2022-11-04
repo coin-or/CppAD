@@ -5,9 +5,9 @@
 
 $begin det_by_lu.hpp$$
 $spell
-    det_by_lu
-    ifndef
-    endif
+   det_by_lu
+   ifndef
+   endif
 $$
 
 $section Source: det_by_lu$$

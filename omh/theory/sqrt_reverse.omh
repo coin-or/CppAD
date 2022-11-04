@@ -5,8 +5,8 @@
 
 $begin sqrt_reverse$$
 $spell
-    sqrt
-    Taylor
+   sqrt
+   Taylor
 $$
 
 $section Square Root Function Reverse Mode Theory$$
@@ -14,8 +14,8 @@ $section Square Root Function Reverse Mode Theory$$
 
 We use the reverse theory
 $cref%standard math function
-    %ReverseTheory
-    %Standard Math Functions
+   %ReverseTheory
+   %Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 
@@ -23,7 +23,7 @@ The forward mode formulas for the
 $cref/square root/sqrt_forward/$$
 function are
 $latex \[
-    z^{(j)}  =  \sqrt { x^{(0)} }
+   z^{(j)}  =  \sqrt { x^{(0)} }
 \] $$
 
 for the case $latex j = 0$$, and for $latex j > 0$$,
@@ -31,8 +31,8 @@ for the case $latex j = 0$$, and for $latex j > 0$$,
 $latex \[
 z^{(j)}  =  \frac{1}{j} \frac{1}{ z^{(0)} }
 \left(
-    \frac{j}{2} x^{(j) }
-    - \sum_{\ell=1}^{j-1} \ell z^{(\ell)} z^{(j-\ell)}
+   \frac{j}{2} x^{(j) }
+   - \sum_{\ell=1}^{j-1} \ell z^{(\ell)} z^{(j-\ell)}
 \right)
 \] $$
 

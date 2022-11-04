@@ -15,12 +15,12 @@ $section AD Valued Operations and Functions$$
 
 $comment atomic.omh includes atomic_two.hpp$$
 $childtable%
-    include/cppad/core/arithmetic.hpp%
-    include/cppad/core/standard_math.hpp%
-    include/cppad/core/cond_exp.hpp%
-    include/cppad/core/discrete/user.omh%
-    include/cppad/core/numeric_limits.hpp%
-    include/cppad/core/atomic/atomic.omh
+   include/cppad/core/arithmetic.hpp%
+   include/cppad/core/standard_math.hpp%
+   include/cppad/core/cond_exp.hpp%
+   include/cppad/core/discrete/user.omh%
+   include/cppad/core/numeric_limits.hpp%
+   include/cppad/core/atomic/atomic.omh
 %$$
 
 $end

@@ -5,22 +5,22 @@
 /*
 $begin VecAD$$
 $spell
-    cppad.hpp
-    CondExpGt
-    grep
-    Ld
-    vp
-    Lu
-    wc
-    op
-    Ldp
-    Ldv
-    Taylor
-    VecAD
-    const
-    Cpp
-    ind
-    Vec
+   cppad.hpp
+   CondExpGt
+   grep
+   Ld
+   vp
+   Lu
+   wc
+   op
+   Ldp
+   Ldv
+   Taylor
+   VecAD
+   const
+   Cpp
+   ind
+   Vec
 $$
 
 
@@ -50,7 +50,7 @@ $cref/variable/glossary/Variable/$$ or
 $cref/dynamic parameter/glossary/Parameter/Dynamic/$$,
 the indexing operation
 $codei%
-    %vec%[%ind%]
+   %vec%[%ind%]
 %$$
 is recorded in the corresponding $codei%AD<%Base%>%$$
 $cref/operation sequence/glossary/Operation/Sequence/$$ and
@@ -87,7 +87,7 @@ under dynamic parameters in the wish list.
 $head VecAD<Base>::reference$$
 The expression $icode%vec%[%ind%]%$$ has prototype
 $codei%
-    VecAD<%Base%>::reference %vec%[%ind%]
+   VecAD<%Base%>::reference %vec%[%ind%]
 %$$
 which is like the $codei%AD<%Base%>%$$ type
 with some notable exceptions:
@@ -99,7 +99,7 @@ This object cannot be used with the
 $cref Value$$ function to compute the corresponding $icode Base$$ value.
 In some cases, the syntax
 $codei%
-    %vec%[%i%]
+   %vec%[%i%]
 %$$
 can be used to obtain the corresponding $icode Base$$ value; see below.
 
@@ -112,7 +112,7 @@ $code *=$$, or
 $code /=$$.
 For example, the following syntax is not valid:
 $codei%
-    %vec%[%ind%] += %z%;
+   %vec%[%ind%] += %z%;
 %$$
 no matter what the types of $icode z$$.
 
@@ -120,7 +120,7 @@ $lnext
 Assignment to $codei%vec%[%ind%]%$$ returns a $code void$$.
 For example, the following syntax is not valid:
 $codei%
-    %z% = %vec%[%ind%] = %u%;
+   %z% = %vec%[%ind%] = %u%;
 %$$
 no matter what the types of $icode z$$, and $icode u$$.
 
@@ -128,7 +128,7 @@ $lnext
 A $icode%vec%[%ind%]%$$ object cannot appear in a $cref CondExp$$;
 For example, the following syntax is not valid:
 $codei%
-    CondExpGt(%vec%[%ind%], %u%, %v%, %w%)
+   CondExpGt(%vec%[%ind%], %u%, %v%, %w%)
 %$$
 no matter what the types of $icode u$$, $icode v$$, and $icode w$$.
 
@@ -149,7 +149,7 @@ $head Constructor$$
 $subhead vec$$
 The syntax
 $codei%
-    VecAD<%Base%> %vec%(%n%)
+   VecAD<%Base%> %vec%(%n%)
 %$$
 creates an $code VecAD$$ object $icode vec$$ with
 $icode n$$ elements.
@@ -158,13 +158,13 @@ The initial value of the elements of $icode vec$$ is unspecified.
 $subhead n$$
 The argument $icode n$$ has prototype
 $codei%
-    size_t %n%
+   size_t %n%
 %$$
 
 $head size$$
 The syntax
 $codei%
-    %vec%.size()
+   %vec%.size()
 %$$
 returns the number of elements in the vector $icode vec$$;
 i.e., the value of $icode n$$ when it was constructed.
@@ -172,7 +172,7 @@ i.e., the value of $icode n$$ when it was constructed.
 $head Base Indexing$$
 We refer to the syntax
 $codei%
-    %base% = %vec%[%i%]
+   %base% = %vec%[%i%]
 %$$
 as base indexing of a $code VecAD$$ object.
 This indexing is only valid if the vector $icode vec$$ is a
@@ -182,7 +182,7 @@ it does not depend on the independent variables.
 $subhead i$$
 The operand $icode i$$ has prototype
 $codei%
-    size_t %i%
+   size_t %i%
 %$$
 and must be less than $icode n$$; i.e., less than
 the number of elements in $icode vec$$.
@@ -190,13 +190,13 @@ the number of elements in $icode vec$$.
 $subhead base$$
 The result $icode base$$ has prototype
 $codei%
-    %Base%& %base%
+   %Base%& %base%
 %$$
 i.e., it is a reference to the $th i$$ element in the vector $icode vec$$.
 It can be used to change the element value;
 for example,
 $codei%
-    %vec%[%i%] = %b%
+   %vec%[%i%] = %b%
 %$$
 is valid where $icode b$$ is a $icode Base$$ object.
 The reference $icode base$$ is no longer valid once the
@@ -205,14 +205,14 @@ $icode vec$$ changes in any way; i.e., has another assignment.
 $head AD Indexing$$
 We refer to the syntax
 $codei%
-    %vec%[%ind%]
+   %vec%[%ind%]
 %$$
 as AD indexing of a $code VecAD$$ object.
 
 $subhead ind$$
 The argument $icode ind$$ has prototype
 $codei%
-    const AD<%Base%>& %ind%
+   const AD<%Base%>& %ind%
 %$$
 The value of $icode ind$$ must be greater than or equal zero
 and less than $icode n$$; i.e., less than
@@ -221,7 +221,7 @@ the number of elements in $icode vec$$.
 $subhead result$$
 The resulting expression has prototype
 $codei%
-    VecAD<%Base%>::reference %vec%[%ind%]
+   VecAD<%Base%>::reference %vec%[%ind%]
 %$$
 This objects operations are recorded as part of the $codei%AD<%Base%>%$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
@@ -235,10 +235,10 @@ Is the right hand side of the assignment statement
 and specifies the new value for the corresponding element of $icode vec$$.
 It has one of the following prototypes:
 $codei%
-    int   %%                       %right%
-    const %Base%&                  %right%
-    const AD<%Base%>&              %right%
-    const VecAD_reverence<%Base%>& %right%
+   int   %%                       %right%
+   const %Base%&                  %right%
+   const AD<%Base%>&              %right%
+   const VecAD_reverence<%Base%>& %right%
 %$$
 
 $subhead left$$
@@ -246,12 +246,12 @@ Is the left hand side of the assignment statement
 is the current value for the corresponding element of $icode vec$$.
 It has the following prototype:
 $codei%
-    const AD<%Base%>& %left%
+   const AD<%Base%>& %left%
 %$$
 
 $head Example$$
 $children%
-    example/general/vec_ad.cpp
+   example/general/vec_ad.cpp
 %$$
 The file
 $cref vec_ad.cpp$$
@@ -276,12 +276,12 @@ $list number$$
 In the file $code cppad/local/forward1sweep.h$$,
 change the definition of $code CPPAD_FORWARD1SWEEP_TRACE$$ to
 $codep
-    # define CPPAD_FORWARD1SWEEP_TRACE 1
+   # define CPPAD_FORWARD1SWEEP_TRACE 1
 $$
 $lnext
 In the $code Example$$ directory, execute the command
 $codep
-    ./test_one.sh lu_vec_ad_ok.cpp lu_vec_ad.cpp -DNDEBUG > lu_vec_ad_ok.log
+   ./test_one.sh lu_vec_ad_ok.cpp lu_vec_ad.cpp -DNDEBUG > lu_vec_ad_ok.log
 $$
 This will write a trace of all the forward tape operations,
 for the test case $cref lu_vec_ad_ok.cpp$$,
@@ -289,9 +289,9 @@ to the file $code lu_vec_ad_ok.log$$.
 $lnext
 In the $code Example$$ directory execute the commands
 $codep
-    grep "op="           lu_vec_ad_ok.log | wc -l
-    grep "op=Ld[vp]"     lu_vec_ad_ok.log | wc -l
-    grep "op=St[vp][vp]" lu_vec_ad_ok.log | wc -l
+   grep "op="           lu_vec_ad_ok.log | wc -l
+   grep "op=Ld[vp]"     lu_vec_ad_ok.log | wc -l
+   grep "op=St[vp][vp]" lu_vec_ad_ok.log | wc -l
 $$
 The first command counts the number of operators in the tracing,
 the second counts the number of VecAD load operations,

@@ -9,9 +9,9 @@
 -------------------------------------------------------------------------------
 $begin ad_binary$$
 $spell
-    Op
-    VecAD
-    const
+   Op
+   VecAD
+   const
 $$
 
 $section AD Binary Arithmetic Operators$$
@@ -48,7 +48,7 @@ has type $codei%AD<%Base%>%$$ or $codei%VecAD<%Base%>::reference%$$.
 $head x$$
 The operand $icode x$$ has the following prototype
 $codei%
-    const %Type% &%x%
+   const %Type% &%x%
 %$$
 where $icode Type$$ is
 $codei%VecAD<%Base%>::reference%$$,
@@ -59,7 +59,7 @@ $code double$$.
 $head y$$
 The operand $icode y$$ has the following prototype
 $codei%
-    const %Type% &%y%
+   const %Type% &%y%
 %$$
 where $icode Type$$ is
 $codei%VecAD<%Base%>::reference%$$,
@@ -71,7 +71,7 @@ $code double$$.
 $head z$$
 The result $icode z$$ has the following prototype
 $codei%
-    %Type% %z%
+   %Type% %z%
 %$$
 where $icode Type$$ is
 $codei%AD<%Base%>%$$.
@@ -84,10 +84,10 @@ AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $children%
-    example/general/add.cpp%
-    example/general/sub.cpp%
-    example/general/mul.cpp%
-    example/general/div.cpp
+   example/general/add.cpp%
+   example/general/sub.cpp%
+   example/general/mul.cpp%
+   example/general/div.cpp
 %$$
 
 $head Example$$
@@ -106,23 +106,23 @@ $cref/Base functions/glossary/Base Function/$$
 
 $subhead Addition$$
 $latex \[
-    \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
+   \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
 \] $$
 
 $subhead Subtraction$$
 $latex \[
-    \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
+   \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
 \] $$
 
 $subhead Multiplication$$
 $latex \[
-    \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
+   \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
 \] $$
 
 $subhead Division$$
 $latex \[
-    \D{[ f(x) / g(x) ]}{x} =
-        [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
+   \D{[ f(x) / g(x) ]}{x} =
+      [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
 \] $$
 
 $end

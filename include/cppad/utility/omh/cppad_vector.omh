@@ -5,26 +5,26 @@
 
 $begin CppAD_vector$$
 $spell
-    rvalues
-    thread_alloc
-    cppad.hpp
-    Bool
-    resize
-    cout
-    endl
-    std
-    Cpp
-    const
-    vec
-    ostream
-    elem
-    Iterators
-    typename
-    iterator
-    resized
-    dereference
-    itr
-    citr
+   rvalues
+   thread_alloc
+   cppad.hpp
+   Bool
+   resize
+   cout
+   endl
+   std
+   Cpp
+   const
+   vec
+   ostream
+   elem
+   Iterators
+   typename
+   iterator
+   resized
+   dereference
+   itr
+   citr
 $$
 
 
@@ -80,19 +80,19 @@ $head Integer Size$$
 The size $icode n$$ in the constructor syntax below can be an
 $code int$$ (all simple vectors support $code size_t$$):
 $codei%
-    CppAD::vector<%Scalar%> %vec%(%n%)
+   CppAD::vector<%Scalar%> %vec%(%n%)
 %$$
 
 $head capacity$$
 If $icode cap$$ is a $code size_t$$ object,
 $codei%
-    %cap% = %vec%.capacity()
+   %cap% = %vec%.capacity()
 %$$
 set $icode cap$$ to the number of $icode Scalar$$ objects that
 could fit in the memory currently allocated for $icode vec$$.
 Note that
 $codei%
-    %vec%.size() <= %vec%.capacity()
+   %vec%.size() <= %vec%.capacity()
 %$$
 
 $head swap$$
@@ -119,7 +119,7 @@ $subhead Return Reference$$
 A reference to the vector $icode vec$$ is returned.
 An example use of this reference is in multiple assignments of the form
 $codei%
-    %vec% = %other% = %another%
+   %vec% = %other% = %another%
 %$$
 where $icode another$$ is a $codei%CppAD::vector<%Scalar%>%$$ object.
 
@@ -132,7 +132,7 @@ but rather pointers are transferred.
 $head Element Access$$
 If $icode i$$ has type $code size_t$$,
 $codei%
-    %vec%[%i%]
+   %vec%[%i%]
 %$$
 has all the properties listed for a
 $cref/simple vector element access/SimpleVector/Element Access/$$
@@ -155,7 +155,7 @@ $head push_back$$
 If $icode vec$$ has size $icode n$$ and
 $icode scalar$$ has type $icode Scalar$$,
 $codei%
-    %vec%.push_back(%scalar%)
+   %vec%.push_back(%scalar%)
 %$$
 extends the vector so that its new size is $icode%n%+1%$$
 and $icode%vec%[%n%]%$$ is equal to $icode s$$
@@ -166,7 +166,7 @@ If $icode vec$$ has size $icode n$$ and
 $icode simple_vec$$ is a $cref/simple vector/SimpleVector/$$
 with elements of type $icode Scalar$$ and size $icode m$$,
 $codei%
-    %vec%.push_vector(%simple_vec%)
+   %vec%.push_vector(%simple_vec%)
 %$$
 extends the vector $icode vec$$ so that its new size is $icode%n%+%m%$$
 and $icode%vec%[%n% + %i%]%$$ is equal to $icode%simple_vec%[%i%]%$$
@@ -176,7 +176,7 @@ for $icode%i = 1 , ... , m-1%$$
 $head Output$$
 If $icode os$$ is an $code std::ostream$$, the operation
 $codei%
-    %os% << %vec%
+   %os% << %vec%
 %$$
 will output $icode vec$$ to the standard output stream $icode os$$.
 The elements of $icode vec$$ are enclosed at the beginning by a
@@ -186,14 +186,14 @@ and they are enclosed at the end by $code }$$ character.
 It is assumed by this operation that if $icode scalar$$
 is an object with type $icode Scalar$$,
 $codei%
-    %os% << %scalar%
+   %os% << %scalar%
 %$$
 will output the value $icode scalar$$ to $icode os$$.
 
 $head resize$$
 If $icode n$$ is a $code size_t$$,
 $codei%
-    %vec%.resize(%n%)
+   %vec%.resize(%n%)
 %$$
 sets the size of $icode vec$$ equal to $icode n$$.
 
@@ -295,7 +295,7 @@ than $code vectorBool$$.
 $subhead bit_per_unit$$
 The static function call
 $codei%
-    %size% = vectorBool::bit_per_unit()
+   %size% = vectorBool::bit_per_unit()
 %$$
 returns the $code size_t$$ value $icode s$$
 which is equal to the number of boolean values (bits) that are
@@ -330,7 +330,7 @@ $list number$$
 $icode element_t$$ can be converted to $code bool$$; e.g.
 the following syntax is supported:
 $codei%
-    static_cast<bool>( %vec_bool%[%i%] )
+   static_cast<bool>( %vec_bool%[%i%] )
 %$$
 
 $lnext
@@ -338,7 +338,7 @@ $icode element_t$$ supports the assignment operator $code =$$ where the
 right hand side is a $code bool$$ or an $icode element_t$$ object; e.g.,
 if $icode flag$$ has type $code bool$$, the following syntax is supported:
 $codei%
-    %vec_bool%[%i%] = %flag%
+   %vec_bool%[%i%] = %flag%
 %$$
 
 $lnext
@@ -347,7 +347,7 @@ also has type $icode element_t$$.
 For example, if $icode other_flag$$ has type $code bool$$,
 the following syntax is supported:
 $codei%
-    %other_flag% = %vec_bool%[%i%] = %flag%
+   %other_flag% = %vec_bool%[%i%] = %flag%
 %$$
 $lend
 
@@ -376,8 +376,8 @@ $lend
 
 $head Example$$
 $children%
-    example/utility/cppad_vector.cpp%
-    example/utility/vector_bool.cpp
+   example/utility/cppad_vector.cpp%
+   example/utility/vector_bool.cpp
 %$$
 The files
 $cref cppad_vector.cpp$$ and
@@ -388,11 +388,11 @@ They return true if they succeed and false otherwise.
 $head Exercise$$
 Create and run a program that contains the following code:
 $codep
-    CppAD::vector<double> x(3);
-    size_t i;
-    for(i = 0; i < 3; i++)
-        x[i] = 4. - i;
-    std::cout << "x = " << x << std::endl;
+   CppAD::vector<double> x(3);
+   size_t i;
+   for(i = 0; i < 3; i++)
+      x[i] = 4. - i;
+   std::cout << "x = " << x << std::endl;
 $$
 
 $end

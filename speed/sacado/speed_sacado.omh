@@ -5,10 +5,10 @@
 
 $begin speed_sacado$$
 $spell
-    cmake
-    SacadoDir
-    CppAD
-    Cygwin
+   cmake
+   SacadoDir
+   CppAD
+   Cygwin
 $$
 
 
@@ -31,25 +31,25 @@ To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
 $cref/build directory/cmake/Build Directory/$$:
 $codei%
-    cd speed/sacado
-    make check_speed_sacado VERBOSE=1
+   cd speed/sacado
+   make check_speed_sacado VERBOSE=1
 %$$
 You can then run the corresponding speed tests
 with the following command
 $codei%
-    ./speed_sacado speed %seed%
+   ./speed_sacado speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
 
 $contents%
-    speed/sacado/det_minor.cpp%
-    speed/sacado/det_lu.cpp%
-    speed/sacado/mat_mul.cpp%
-    speed/sacado/ode.cpp%
-    speed/sacado/poly.cpp%
-    speed/sacado/sparse_hessian.cpp%
-    speed/sacado/sparse_jacobian.cpp
+   speed/sacado/det_minor.cpp%
+   speed/sacado/det_lu.cpp%
+   speed/sacado/mat_mul.cpp%
+   speed/sacado/ode.cpp%
+   speed/sacado/poly.cpp%
+   speed/sacado/sparse_hessian.cpp%
+   speed/sacado/sparse_jacobian.cpp
 %$$
 
 $end

@@ -29,86 +29,86 @@ $end
 # include <complex>
 
 namespace {
-    typedef CppAD::AD<double> Float;
-    //
-    // -----------------------------------------------------------------
-    bool check_epsilon(void)
-    {   bool ok    = true;
-        Float eps   = CppAD::numeric_limits<Float>::epsilon();
-        Float eps2  = eps / 2.0;
-        Float check = 1.0 + eps;
-        ok         &= 1.0 !=  check;
-        check       = 1.0 + eps2;
-        ok         &= 1.0 == check;
-        return ok;
-    }
-    // -----------------------------------------------------------------
-    bool check_min(void)
-    {   bool ok     = true;
-        Float min   = CppAD::numeric_limits<Float>::min();
-        Float eps   = CppAD::numeric_limits<Float>::epsilon();
-        //
-        Float match = (min / 100.) * 100.;
-        ok         &= fabs(match / min - 1.0)  > 3.0 * eps;
-        //
-        match       = (min * 100.) / 100.;
-        ok         &= fabs(match / min - 1.0)  < 3.0 * eps;
-        return ok;
-    }
-    // -----------------------------------------------------------------
-    bool check_max(void)
-    {   bool ok     = true;
-        Float max   = CppAD::numeric_limits<Float>::max();
-        Float eps   = CppAD::numeric_limits<Float>::epsilon();
-        //
-        Float match = (max * 100.) / 100.;
-        ok         &= fabs(match / max - 1.0) > 3.0 * eps;
-        //
-        match       = (max / 100.) * 100.;
-        ok         &= fabs(match / max - 1.0) < 3.0 * eps;
-        return ok;
-    }
-    // -----------------------------------------------------------------
-    bool check_nan(void)
-    {   bool ok     = true;
-        Float nan   = CppAD::numeric_limits<Float>::quiet_NaN();
-        ok         &= nan != nan;
-        return ok;
-    }
-    // -----------------------------------------------------------------
-    bool check_digits10(void)
-    {   bool ok     = true;
-        Float neg_log_eps =
-            - log10( CppAD::numeric_limits<Float>::epsilon() );
-        int ceil_neg_log_eps =
-            Integer( neg_log_eps );
-        ok &= ceil_neg_log_eps == CppAD::numeric_limits<Float>::digits10;
-        return ok;
-    }
-    // -----------------------------------------------------------------
-    bool check_infinity(void)
-    {   bool ok    = true;
-        Float inf  = CppAD::numeric_limits<Float>::infinity();
-        Float hun  = Float(100);
-        Float tmp  = Float(0);
-        tmp        = inf + hun;
-        ok        &= inf == tmp;
-        tmp        = inf - inf;
-        ok        &= CppAD::isnan( tmp );
-        return ok;
-    }
+   typedef CppAD::AD<double> Float;
+   //
+   // -----------------------------------------------------------------
+   bool check_epsilon(void)
+   {  bool ok    = true;
+      Float eps   = CppAD::numeric_limits<Float>::epsilon();
+      Float eps2  = eps / 2.0;
+      Float check = 1.0 + eps;
+      ok         &= 1.0 !=  check;
+      check       = 1.0 + eps2;
+      ok         &= 1.0 == check;
+      return ok;
+   }
+   // -----------------------------------------------------------------
+   bool check_min(void)
+   {  bool ok     = true;
+      Float min   = CppAD::numeric_limits<Float>::min();
+      Float eps   = CppAD::numeric_limits<Float>::epsilon();
+      //
+      Float match = (min / 100.) * 100.;
+      ok         &= fabs(match / min - 1.0)  > 3.0 * eps;
+      //
+      match       = (min * 100.) / 100.;
+      ok         &= fabs(match / min - 1.0)  < 3.0 * eps;
+      return ok;
+   }
+   // -----------------------------------------------------------------
+   bool check_max(void)
+   {  bool ok     = true;
+      Float max   = CppAD::numeric_limits<Float>::max();
+      Float eps   = CppAD::numeric_limits<Float>::epsilon();
+      //
+      Float match = (max * 100.) / 100.;
+      ok         &= fabs(match / max - 1.0) > 3.0 * eps;
+      //
+      match       = (max / 100.) * 100.;
+      ok         &= fabs(match / max - 1.0) < 3.0 * eps;
+      return ok;
+   }
+   // -----------------------------------------------------------------
+   bool check_nan(void)
+   {  bool ok     = true;
+      Float nan   = CppAD::numeric_limits<Float>::quiet_NaN();
+      ok         &= nan != nan;
+      return ok;
+   }
+   // -----------------------------------------------------------------
+   bool check_digits10(void)
+   {  bool ok     = true;
+      Float neg_log_eps =
+         - log10( CppAD::numeric_limits<Float>::epsilon() );
+      int ceil_neg_log_eps =
+         Integer( neg_log_eps );
+      ok &= ceil_neg_log_eps == CppAD::numeric_limits<Float>::digits10;
+      return ok;
+   }
+   // -----------------------------------------------------------------
+   bool check_infinity(void)
+   {  bool ok    = true;
+      Float inf  = CppAD::numeric_limits<Float>::infinity();
+      Float hun  = Float(100);
+      Float tmp  = Float(0);
+      tmp        = inf + hun;
+      ok        &= inf == tmp;
+      tmp        = inf - inf;
+      ok        &= CppAD::isnan( tmp );
+      return ok;
+   }
 }
 
 bool num_limits(void)
-{   bool ok = true;
+{  bool ok = true;
 
-    ok &= check_epsilon();
-    ok &= check_min();
-    ok &= check_max();
-    ok &= check_nan();
-    ok &= check_digits10();
-    ok &= check_infinity();
+   ok &= check_epsilon();
+   ok &= check_min();
+   ok &= check_max();
+   ok &= check_nan();
+   ok &= check_digits10();
+   ok &= check_infinity();
 
-    return ok;
+   return ok;
 }
 // END C++

@@ -5,18 +5,18 @@
 $begin adolc$$
 $dollar @$$
 $spell
-    dir
-    mul
-    cmake
-    includedirs
-    CppAD
-    adolc
-    adouble
-    colpack
-    cygdrive
-    Cygwin
-    bashrc
-    config
+   dir
+   mul
+   cmake
+   includedirs
+   CppAD
+   adolc
+   adouble
+   colpack
+   cygdrive
+   Cygwin
+   bashrc
+   config
 $$
 
 $section Including Adolc Examples and Tests$$
@@ -43,13 +43,13 @@ specify $code include_adolc=true$$ on the
 $cref cmake$$ command line.
 The value of $code PKG_CONFIG_PATH$$ must be such that the command
 $codei%
-    pkg-config adolc --path --print-errors
+   pkg-config adolc --path --print-errors
 %$$
 finds the location of the file $code adolc.pc$$.
 Note that CppAD assumes adolc has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%
-    --with-colpack=%adolc_prefix%
+   --with-colpack=%adolc_prefix%
 %$$
 In other words ColPack is installed and
 with the same prefix as ACOL-C; see
@@ -61,8 +61,8 @@ line, you will be able to run the Adolc examples listed above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-    cd build/example
-    make check_example
+   cd build/example
+   make check_example
 %$$
 If you do this,
 you will see an indication that the examples
@@ -75,8 +75,8 @@ you will be able to run the Adolc speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-    cd build/speed/adolc
-    make check_speed_adolc
+   cd build/speed/adolc
+   make check_speed_adolc
 %$$
 After executing $code make check_speed_adolc$$,
 you can run a specific Adolc speed tests
@@ -91,8 +91,8 @@ $icode adolc_prefix$$ to $code LD_LIBRARY_PATH$$.
 For example, if you use the $code bash$$ shell to run your programs,
 you could include
 $codei%
-    LD_LIBRARY_PATH=%adolc_prefix%/lib:@{LD_LIBRARY_PATH}
-    export LD_LIBRARY_PATH
+   LD_LIBRARY_PATH=%adolc_prefix%/lib:@{LD_LIBRARY_PATH}
+   export LD_LIBRARY_PATH
 %$$
 in your $code @HOME/.bashrc$$ file.
 
@@ -101,8 +101,8 @@ If you are using Cygwin,
 you may have to add to following lines to the file
 $code .bashrc$$ in your home directory:
 $codei%
-    PATH=%adolc_prefix%/bin:@{PATH}
-    export PATH
+   PATH=%adolc_prefix%/bin:@{PATH}
+   export PATH
 %$$
 in order for Adolc to run properly.
 If $icode adolc_prefix$$ begins with a disk specification,

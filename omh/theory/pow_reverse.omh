@@ -5,21 +5,21 @@
 
 $begin pow_reverse$$
 $spell
-    Taylor
+   Taylor
 $$
 
 $section Power Function Reverse Mode Theory$$
 
 We use the reverse theory
 $cref%standard math function
-    %ReverseTheory
-    %Standard Math Functions
+   %ReverseTheory
+   %Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 The zero order forward mode formula for the
 $cref/power/pow_forward/$$ function is
 $latex \[
-    z^{(0)}  =  F ( x^{(0)} )
+   z^{(0)}  =  F ( x^{(0)} )
 \] $$
 $latex \[
 \begin{array}{rcl}
@@ -35,9 +35,9 @@ $latex \[
 z^{(j)}
 =
 \left. \left(
-    y z^{(0)} x^{(j)}
-    +
-    \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
+   y z^{(0)} x^{(j)}
+   +
+   \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
 \right) \right/ x^{(0)}
 \] $$
 

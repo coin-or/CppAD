@@ -4,16 +4,16 @@
 # ----------------------------------------------------------------------------
 $begin directory$$
 $spell
-    cmake
-    CppAD
-    cppad
-    ipopt
-    omhelp
-    doxydoc
-    omh
-    pkgconfig
-    config
-    doxygen
+   cmake
+   CppAD
+   cppad
+   ipopt
+   omhelp
+   doxydoc
+   omh
+   pkgconfig
+   config
+   doxygen
 $$
 
 $section Directory Structure$$
@@ -24,42 +24,42 @@ The following table lists the sub-directories of the
 $cref/distribution directory/download/Distribution Directory/$$:
 $table
 $code bin$$ $cnext
-    Scripts used for CppAD development.
+   Scripts used for CppAD development.
 $rnext
 $code bug$$ $cnext
-    Used to create a simple CppAD bug report or test.
+   Used to create a simple CppAD bug report or test.
 $rnext
 $code build$$ $cnext
-    Used to build the libraries, examples, and tests.
+   Used to build the libraries, examples, and tests.
 $rnext
 $code cmake$$ $cnext
-    cmake macro files.
+   cmake macro files.
 $rnext
 $code cppad_ipopt$$ $cnext
-    Example and tests for the deprecated cppad_ipopt library.
+   Example and tests for the deprecated cppad_ipopt library.
 $rnext
 $code cppad_lib$$ $cnext
-    Source code corresponding to the CppAD library.
+   Source code corresponding to the CppAD library.
 $code example$$ $cnext
-    Source code for the CppAD examples.
+   Source code for the CppAD examples.
 $rnext
 $code include$$ $cnext
-    The CppAD include directory.
+   The CppAD include directory.
 $rnext
 $code introduction$$ $cnext
-    Source code for the CppAD introduction.
+   Source code for the CppAD introduction.
 $rnext
 $code omh$$ $cnext
-    Contains files that are only used for documentation.
+   Contains files that are only used for documentation.
 $rnext
 $code pkgconfig$$ $cnext
-    Contains the CppAD pkg-config information.
+   Contains the CppAD pkg-config information.
 $rnext
 $code speed$$ $cnext
-    The CppAD speed tests.
+   The CppAD speed tests.
 $rnext
 $code test_more$$ $cnext
-    Tests that are not part of the documentation.
+   Tests that are not part of the documentation.
 $tend
 
 $head Example Directory$$
@@ -68,38 +68,38 @@ directory.
 
 $table
 $code abs_normal$$ $cnext
-    examples using $cref/abs_normal/example_abs_normal/$$ representation of non-smooth functions.
+   examples using $cref/abs_normal/example_abs_normal/$$ representation of non-smooth functions.
 $rnext
 $code atomic_three$$ $cnext
-    $cref atomic_three$$ function examples.
+   $cref atomic_three$$ function examples.
 $rnext
 $code atomic_two$$ $cnext
-    $cref atomic_two$$ examples not yet converted to use $code atomic_three$$.
+   $cref atomic_two$$ examples not yet converted to use $code atomic_three$$.
 $rnext
 $code general$$ $cnext
-    general purpose examples.
+   general purpose examples.
 $rnext
 $code get_started$$ $cnext
-    a good place to get started using CppAD.
+   a good place to get started using CppAD.
 $rnext
 $code ipopt_solve$$ $cnext
-    examples using the $cref ipopt_solve$$ interface to CppAD.
+   examples using the $cref ipopt_solve$$ interface to CppAD.
 $rnext
 $code multi_thread$$ $cnext
-    CppAD $cref/multi_threading/multi_thread/$$ examples.
+   CppAD $cref/multi_threading/multi_thread/$$ examples.
 $rnext
 $code optimize$$ $cnext
-    examples using the $cref optimize$$ operation.
+   examples using the $cref optimize$$ operation.
 $rnext
 $code print_for$$ $cnext
-    examples that used the $cref PrintFor$$ operation.
+   examples that used the $cref PrintFor$$ operation.
 $rnext
 $code sparse$$ $cnext
-    examples using $cref/sparsity_patterns/sparsity_pattern/$$ and
-    $cref/sparse_derivatives/sparse_derivative/$$.
+   examples using $cref/sparsity_patterns/sparsity_pattern/$$ and
+   $cref/sparse_derivatives/sparse_derivative/$$.
 $rnext
 $code utility$$ $cnext
-    example using the CppAD $cref/utilities/utility/$$.
+   example using the CppAD $cref/utilities/utility/$$.
 $tend
 
 

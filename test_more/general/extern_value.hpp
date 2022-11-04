@@ -8,11 +8,11 @@
 template <class Type>
 class extern_value  {
 private:
-    Type value_;
+   Type value_;
 public:
-    extern_value(Type value);
-    void set(Type value);
-    Type get(void);
+   extern_value(Type value);
+   void set(Type value);
+   Type get(void);
 };
 
 # endif

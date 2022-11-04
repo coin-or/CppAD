@@ -7,17 +7,17 @@
 /*
 $begin atomic_three_ctor$$
 $spell
-    enum
-    sq
-    std
-    afun
-    arg
-    CppAD
-    bool
-    ctor
-    const
-    mat_mul_xam.cpp
-    hpp
+   enum
+   sq
+   std
+   afun
+   arg
+   CppAD
+   bool
+   ctor
+   const
+   mat_mul_xam.cpp
+   hpp
 $$
 
 $section Atomic Function Constructor$$
@@ -25,8 +25,8 @@ $section Atomic Function Constructor$$
 $head Syntax$$
 $codei%class %atomic_user% : public CppAD::atomic_three<%Base%> {
 public:
-    %atomic_user%(%ctor_arg_list%) : CppAD::atomic_three<%Base%>(%name%)
-    %...%
+   %atomic_user%(%ctor_arg_list%) : CppAD::atomic_three<%Base%>(%name%)
+   %...%
 };
 %$$
 $icode%atomic_user afun%(%ctor_arg_list%)
@@ -34,7 +34,7 @@ $icode%atomic_user afun%(%ctor_arg_list%)
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
 $head atomic_user$$
@@ -54,11 +54,11 @@ The user defined $icode atomic_user$$ class is a publicly derived class of
 $codei%atomic_three<%Base%>%$$.
 It should be declared as follows:
 $codei%
-    class %atomic_user% : public CppAD::atomic_three<%Base%> {
-    public:
-        %atomic_user%(%ctor_arg_list%) : atomic_three<%Base%>(%name%)
-    %...%
-    };
+   class %atomic_user% : public CppAD::atomic_three<%Base%> {
+   public:
+      %atomic_user%(%ctor_arg_list%) : atomic_three<%Base%>(%name%)
+   %...%
+   };
 %$$
 where $icode ...$$
 denotes the rest of the implementation of the derived class.
@@ -81,7 +81,7 @@ type for this $codei%AD<%Base%>%$$ atomic operation.
 $subhead name$$
 This $code atomic_three$$ constructor argument has the following prototype
 $codei%
-    const std::string& %name%
+   const std::string& %name%
 %$$
 It is the name for this atomic function and is used for error reporting.
 The suggested value for $icode name$$ is $icode afun$$ or $icode atomic_user$$,
@@ -96,8 +96,8 @@ $cref%get_started.cpp%atomic_three_get_started.cpp%Constructor%$$.
 $subhead Use Constructor$$
 The following is an example using a atomic function constructor:
 $cref%get_started.cpp
-    %atomic_three_get_started.cpp
-    %Use Atomic Function%Constructor
+   %atomic_three_get_started.cpp
+   %Use Atomic Function%Constructor
 %$$.
 
 $end
@@ -121,9 +121,9 @@ make sure user does not invoke the default constructor
 */
 template <class Base>
 atomic_three<Base>::atomic_three(void)
-{   CPPAD_ASSERT_KNOWN(false,
-        "Attempt to use the atomic_three default constructor"
-    );
+{  CPPAD_ASSERT_KNOWN(false,
+      "Attempt to use the atomic_three default constructor"
+   );
 }
 /*!
 Constructor
@@ -135,23 +135,23 @@ name used for error reporting
 template <class Base>
 atomic_three<Base>::atomic_three(const std::string& name )
 // END_PROTOTYPE
-{   CPPAD_ASSERT_KNOWN(
-        ! thread_alloc::in_parallel() ,
-        "atomic_three: constructor cannot be called in parallel mode."
-    );
-    //
-    // atomic_index
-    bool        set_null  = false;
-    size_t      index     = 0;
-    size_t      type      = 3;
-    std::string copy_name = name;
-    void*       copy_this = reinterpret_cast<void*>( this );
-    index_  = local::atomic_index<Base>(
-        set_null, index, type, &copy_name, copy_this
-    );
-    // initialize work pointers as null;
-    for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-        work_[thread] = nullptr;
+{  CPPAD_ASSERT_KNOWN(
+      ! thread_alloc::in_parallel() ,
+      "atomic_three: constructor cannot be called in parallel mode."
+   );
+   //
+   // atomic_index
+   bool        set_null  = false;
+   size_t      index     = 0;
+   size_t      type      = 3;
+   std::string copy_name = name;
+   void*       copy_this = reinterpret_cast<void*>( this );
+   index_  = local::atomic_index<Base>(
+      set_null, index, type, &copy_name, copy_this
+   );
+   // initialize work pointers as null;
+   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+      work_[thread] = nullptr;
 }
 
 } // END_CPPAD_NAMESPACE

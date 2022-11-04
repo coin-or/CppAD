@@ -11,54 +11,54 @@
 # define CPPAD_ASSERT_AD_TYPE(ad_obj)
 # else
 # define CPPAD_ASSERT_AD_TYPE(ad_obj)                 \
-    switch(ad_obj.ad_type_)                           \
-    {   case constant_enum:                           \
-        CPPAD_ASSERT_UNKNOWN( ad_obj.tape_id_ == 0 ); \
-        break;                                        \
+   switch(ad_obj.ad_type_)                           \
+   {  case constant_enum:                           \
+      CPPAD_ASSERT_UNKNOWN( ad_obj.tape_id_ == 0 ); \
+      break;                                        \
                                                       \
-        case dynamic_enum:                            \
-        case variable_enum:                           \
-        break;                                        \
+      case dynamic_enum:                            \
+      case variable_enum:                           \
+      break;                                        \
                                                       \
-        default:                                      \
-        CPPAD_ASSERT_UNKNOWN(false);                  \
-    }                                                 \
-    CPPAD_ASSERT_UNKNOWN(                             \
-        ad_obj.tape_id_ == 0 ||                       \
-        ad_obj.ad_type_ == dynamic_enum ||            \
-        ad_obj.ad_type_ == variable_enum              \
-    );
+      default:                                      \
+      CPPAD_ASSERT_UNKNOWN(false);                  \
+   }                                                 \
+   CPPAD_ASSERT_UNKNOWN(                             \
+      ad_obj.tape_id_ == 0 ||                       \
+      ad_obj.ad_type_ == dynamic_enum ||            \
+      ad_obj.ad_type_ == variable_enum              \
+   );
 # endif
 
 
 namespace CppAD {
-    // BEGIN TYPEDEF
-    typedef enum {
-        identical_zero_enum,      // identically zero
-        constant_enum,            // constant parameter
-        dynamic_enum,             // dynamic parameter
-        variable_enum,            // variable
-        number_ad_type_enum       // number of valid values for type_ad_enum
-    } ad_type_enum;
-    // END TYPEDEF
+   // BEGIN TYPEDEF
+   typedef enum {
+      identical_zero_enum,      // identically zero
+      constant_enum,            // constant parameter
+      dynamic_enum,             // dynamic parameter
+      variable_enum,            // variable
+      number_ad_type_enum       // number of valid values for type_ad_enum
+   } ad_type_enum;
+   // END TYPEDEF
 
-    // BEGIN IS_POD
-    namespace local {
-        template <> inline bool
-        is_pod<ad_type_enum>(void) { return true; }
-    }
-    // END IS_POD
+   // BEGIN IS_POD
+   namespace local {
+      template <> inline bool
+      is_pod<ad_type_enum>(void) { return true; }
+   }
+   // END IS_POD
 }
 
 
 /*
 $begin ad_type_enum$$
 $spell
-    enum
-    typedef
-    CppAD
-    namespace
-    obj
+   enum
+   typedef
+   CppAD
+   namespace
+   obj
 $$
 
 $section Type of AD an Object$$
@@ -79,7 +79,7 @@ $cref/atomic_four/atomic_four_for_type/ad_type/$$.
 $head ASSERT_AD_TYPE$$
 If $icode ad_obj$$ is an $codei%AD<%Base%>%$$ object, the syntax
 $codei%
-    CPPAD_ASSERT_AD_TYPE(%ad_obj%)
+   CPPAD_ASSERT_AD_TYPE(%ad_obj%)
 %$$
 check that $icode ad_obj$$ satisfies the following conditions:
 

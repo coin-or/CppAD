@@ -5,9 +5,9 @@
 
 $begin det_33.hpp$$
 $spell
-    det_33
-    ifndef
-    endif
+   det_33
+   ifndef
+   endif
 $$
 
 $section Source: det_33$$

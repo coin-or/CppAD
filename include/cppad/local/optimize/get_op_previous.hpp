@@ -12,33 +12,33 @@ namespace CppAD { namespace local { namespace optimize {
 /*
 $begin optimize_get_op_previous$$
 $spell
-    itr
-    iterator
-    bool
-    Exp
-    num
-    var
-    Op
-    cexp
-    Arg
-    Res
+   itr
+   iterator
+   bool
+   Exp
+   num
+   var
+   Op
+   cexp
+   Arg
+   Res
 $$
 
 $section Get Mapping From Op to Previous Op That is Equivalent$$
 
 $head Syntax$$
 $icode%exceed_collision_limit% = get_op_previous(
-    %collision_limit%,
-    %play%,
-    %random_itr%,
-    %cexp_set%,
-    %op_previous%,
-    %op_usage%
+   %collision_limit%,
+   %play%,
+   %random_itr%,
+   %cexp_set%,
+   %op_previous%,
+   %op_usage%
 )%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
 $head Base$$
@@ -109,159 +109,159 @@ $end
 // BEGIN_PROTOTYPE
 template <class Addr, class Base>
 bool get_op_previous(
-    size_t                                      collision_limit     ,
-    const player<Base>*                         play                ,
-    const play::const_random_iterator<Addr>&    random_itr          ,
-    sparse::list_setvec&                        cexp_set            ,
-    pod_vector<addr_t>&                         op_previous         ,
-    pod_vector<usage_t>&                        op_usage            )
+   size_t                                      collision_limit     ,
+   const player<Base>*                         play                ,
+   const play::const_random_iterator<Addr>&    random_itr          ,
+   sparse::list_setvec&                        cexp_set            ,
+   pod_vector<addr_t>&                         op_previous         ,
+   pod_vector<usage_t>&                        op_usage            )
 // END_PROTOTYPE
-{   bool exceed_collision_limit = false;
-    //
-    // number of operators in the tape
-    const size_t num_op = random_itr.num_op();
-    CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
-    CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
-    op_previous.resize( num_op );
-    //
-    // number of conditional expressions in the tape
-    //
-    // initialize mapping from variable index to operator index
-    CPPAD_ASSERT_UNKNOWN(
-        size_t( (std::numeric_limits<addr_t>::max)() ) >= num_op
-    );
-    // ----------------------------------------------------------------------
-    // compute op_previous
-    // ----------------------------------------------------------------------
-    sparse::list_setvec  hash_table_op;
-    hash_table_op.resize(CPPAD_HASH_TABLE_SIZE, num_op);
-    //
-    pod_vector<bool> work_bool;
-    pod_vector<addr_t> work_addr_t;
-    for(size_t i_op = 0; i_op < num_op; ++i_op)
-    {   op_previous[i_op] = 0;
+{  bool exceed_collision_limit = false;
+   //
+   // number of operators in the tape
+   const size_t num_op = random_itr.num_op();
+   CPPAD_ASSERT_UNKNOWN( op_previous.size() == 0 );
+   CPPAD_ASSERT_UNKNOWN( op_usage.size() == num_op );
+   op_previous.resize( num_op );
+   //
+   // number of conditional expressions in the tape
+   //
+   // initialize mapping from variable index to operator index
+   CPPAD_ASSERT_UNKNOWN(
+      size_t( (std::numeric_limits<addr_t>::max)() ) >= num_op
+   );
+   // ----------------------------------------------------------------------
+   // compute op_previous
+   // ----------------------------------------------------------------------
+   sparse::list_setvec  hash_table_op;
+   hash_table_op.resize(CPPAD_HASH_TABLE_SIZE, num_op);
+   //
+   pod_vector<bool> work_bool;
+   pod_vector<addr_t> work_addr_t;
+   for(size_t i_op = 0; i_op < num_op; ++i_op)
+   {  op_previous[i_op] = 0;
 
-        if( op_usage[i_op] == usage_t(yes_usage) )
-        switch( random_itr.get_op(i_op) )
-        {
-            // ----------------------------------------------------------------
-            // these operators never match pevious operators
-            case BeginOp:
-            case CExpOp:
-            case CSkipOp:
-            case CSumOp:
-            case EndOp:
-            case InvOp:
-            case LdpOp:
-            case LdvOp:
-            case ParOp:
-            case PriOp:
-            case StppOp:
-            case StpvOp:
-            case StvpOp:
-            case StvvOp:
-            case AFunOp:
-            case FunapOp:
-            case FunavOp:
-            case FunrpOp:
-            case FunrvOp:
-            break;
+      if( op_usage[i_op] == usage_t(yes_usage) )
+      switch( random_itr.get_op(i_op) )
+      {
+         // ----------------------------------------------------------------
+         // these operators never match pevious operators
+         case BeginOp:
+         case CExpOp:
+         case CSkipOp:
+         case CSumOp:
+         case EndOp:
+         case InvOp:
+         case LdpOp:
+         case LdvOp:
+         case ParOp:
+         case PriOp:
+         case StppOp:
+         case StpvOp:
+         case StvpOp:
+         case StvvOp:
+         case AFunOp:
+         case FunapOp:
+         case FunavOp:
+         case FunrpOp:
+         case FunrvOp:
+         break;
 
-            // ----------------------------------------------------------------
-            // check for a previous match
-            // BEGIN_SORT_THIS_LINE_PLUS_1
-            case AbsOp:
-            case AcosOp:
-            case AcoshOp:
-            case AddpvOp:
-            case AddvvOp:
-            case AsinOp:
-            case AsinhOp:
-            case AtanOp:
-            case AtanhOp:
-            case CosOp:
-            case CoshOp:
-            case DisOp:
-            case DivpvOp:
-            case DivvpOp:
-            case DivvvOp:
-            case EqppOp:
-            case EqpvOp:
-            case EqvvOp:
-            case ErfOp:
-            case ErfcOp:
-            case ExpOp:
-            case Expm1Op:
-            case LeppOp:
-            case LepvOp:
-            case LevpOp:
-            case LevvOp:
-            case Log1pOp:
-            case LogOp:
-            case LtppOp:
-            case LtpvOp:
-            case LtvpOp:
-            case LtvvOp:
-            case MulpvOp:
-            case MulvvOp:
-            case NegOp:
-            case NeppOp:
-            case NepvOp:
-            case NevvOp:
-            case PowpvOp:
-            case PowvpOp:
-            case PowvvOp:
-            case SignOp:
-            case SinOp:
-            case SinhOp:
-            case SqrtOp:
-            case SubpvOp:
-            case SubvpOp:
-            case SubvvOp:
-            case TanOp:
-            case TanhOp:
-            case ZmulpvOp:
-            case ZmulvpOp:
-            case ZmulvvOp:
-            // END_SORT_THIS_LINE_MINUS_1
-            exceed_collision_limit |= match_op(
-                collision_limit,
-                random_itr,
-                op_previous,
-                i_op,
-                hash_table_op,
-                work_bool,
-                work_addr_t
+         // ----------------------------------------------------------------
+         // check for a previous match
+         // BEGIN_SORT_THIS_LINE_PLUS_1
+         case AbsOp:
+         case AcosOp:
+         case AcoshOp:
+         case AddpvOp:
+         case AddvvOp:
+         case AsinOp:
+         case AsinhOp:
+         case AtanOp:
+         case AtanhOp:
+         case CosOp:
+         case CoshOp:
+         case DisOp:
+         case DivpvOp:
+         case DivvpOp:
+         case DivvvOp:
+         case EqppOp:
+         case EqpvOp:
+         case EqvvOp:
+         case ErfOp:
+         case ErfcOp:
+         case ExpOp:
+         case Expm1Op:
+         case LeppOp:
+         case LepvOp:
+         case LevpOp:
+         case LevvOp:
+         case Log1pOp:
+         case LogOp:
+         case LtppOp:
+         case LtpvOp:
+         case LtvpOp:
+         case LtvvOp:
+         case MulpvOp:
+         case MulvvOp:
+         case NegOp:
+         case NeppOp:
+         case NepvOp:
+         case NevvOp:
+         case PowpvOp:
+         case PowvpOp:
+         case PowvvOp:
+         case SignOp:
+         case SinOp:
+         case SinhOp:
+         case SqrtOp:
+         case SubpvOp:
+         case SubvpOp:
+         case SubvvOp:
+         case TanOp:
+         case TanhOp:
+         case ZmulpvOp:
+         case ZmulvpOp:
+         case ZmulvvOp:
+         // END_SORT_THIS_LINE_MINUS_1
+         exceed_collision_limit |= match_op(
+            collision_limit,
+            random_itr,
+            op_previous,
+            i_op,
+            hash_table_op,
+            work_bool,
+            work_addr_t
+         );
+         if( op_previous[i_op] != 0 )
+         {  // like a unary operator that assigns i_op equal to previous.
+            size_t previous = size_t( op_previous[i_op] );
+            bool sum_op = false;
+            CPPAD_ASSERT_UNKNOWN( previous < i_op );
+            op_inc_arg_usage(
+               play, sum_op, i_op, previous, op_usage, cexp_set
             );
-            if( op_previous[i_op] != 0 )
-            {   // like a unary operator that assigns i_op equal to previous.
-                size_t previous = size_t( op_previous[i_op] );
-                bool sum_op = false;
-                CPPAD_ASSERT_UNKNOWN( previous < i_op );
-                op_inc_arg_usage(
-                    play, sum_op, i_op, previous, op_usage, cexp_set
-                );
-            }
-            break;
+         }
+         break;
 
-            // ----------------------------------------------------------------
-            default:
-            CPPAD_ASSERT_UNKNOWN(false);
-            break;
-        }
-    }
-    /* ---------------------------------------------------------------------
-    // Print out hash code usage summary
-    CppAD::vector<size_t> count(collision_limit + 1);
-    for(size_t i = 0; i <= collision_limit; ++i)
-        count[i] = 0;
-    for(size_t code = 0; code < CPPAD_HASH_TABLE_SIZE; ++code)
-    {   size_t size = hash_table_op.number_elements(code);
-        ++count[size];
-    }
-    std::cout << "count = " << count << "\n";
-    --------------------------------------------------------------------- */
-    return exceed_collision_limit;
+         // ----------------------------------------------------------------
+         default:
+         CPPAD_ASSERT_UNKNOWN(false);
+         break;
+      }
+   }
+   /* ---------------------------------------------------------------------
+   // Print out hash code usage summary
+   CppAD::vector<size_t> count(collision_limit + 1);
+   for(size_t i = 0; i <= collision_limit; ++i)
+      count[i] = 0;
+   for(size_t code = 0; code < CPPAD_HASH_TABLE_SIZE; ++code)
+   {  size_t size = hash_table_op.number_elements(code);
+      ++count[size];
+   }
+   std::cout << "count = " << count << "\n";
+   --------------------------------------------------------------------- */
+   return exceed_collision_limit;
 }
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

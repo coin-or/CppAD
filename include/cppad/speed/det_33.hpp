@@ -7,13 +7,13 @@
 /*
 $begin det_33$$
 $spell
-    cppad
-    CppAD
-    det
-    namespace
-    const
-    bool
-    hpp
+   cppad
+   CppAD
+   det
+   namespace
+   const
+   bool
+   hpp
 $$
 
 $section Check Determinant of 3 by 3 matrix$$
@@ -37,17 +37,17 @@ the file $code cppad/speed/det_33.hpp$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const %Vector% &%x%
+   const %Vector% &%x%
 %$$.
 It contains the elements of the matrix $latex X$$ in row major order; i.e.,
 $latex \[
-    X_{i,j} = x [ i * 3 + j ]
+   X_{i,j} = x [ i * 3 + j ]
 \] $$
 
 $head d$$
 The argument $icode d$$ has prototype
 $codei%
-    const %Vector% &%d%
+   const %Vector% &%d%
 %$$.
 It is tested to see if $icode%d%[0]%$$ it is equal to $latex \det ( X )$$.
 
@@ -55,7 +55,7 @@ $head Vector$$
 If $icode y$$ is a $icode Vector$$ object,
 it must support the syntax
 $codei%
-    %y%[%i%]
+   %y%[%i%]
 %$$
 where $icode i$$ has type $code size_t$$ with value less than 9.
 This must return a $code double$$ value corresponding to the $th i$$
@@ -66,13 +66,13 @@ This is the only requirement of the type $icode Vector$$.
 $head ok$$
 The return value $icode ok$$ has prototype
 $codei%
-    bool %ok%
+   bool %ok%
 %$$
 It is true, if the determinant $icode%d%[0]%$$
 passes the test and false otherwise.
 
 $children%
-    omh/det_33_hpp.omh
+   omh/det_33_hpp.omh
 %$$
 
 $head Source Code$$
@@ -87,20 +87,20 @@ $end
 # include <cppad/utility/near_equal.hpp>
 namespace CppAD {
 template <class Vector>
-    bool det_33(const Vector &x, const Vector &d)
-    {   bool ok = true;
-        double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+   bool det_33(const Vector &x, const Vector &d)
+   {  bool ok = true;
+      double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
-        // use expansion by minors to compute the determinant by hand
-        double check = 0.;
-        check += x[0] * ( x[4] * x[8] - x[5] * x[7] );
-        check -= x[1] * ( x[3] * x[8] - x[5] * x[6] );
-        check += x[2] * ( x[3] * x[7] - x[4] * x[6] );
+      // use expansion by minors to compute the determinant by hand
+      double check = 0.;
+      check += x[0] * ( x[4] * x[8] - x[5] * x[7] );
+      check -= x[1] * ( x[3] * x[8] - x[5] * x[6] );
+      check += x[2] * ( x[3] * x[7] - x[4] * x[6] );
 
-        ok &= CppAD::NearEqual(check, d[0], eps99, eps99);
+      ok &= CppAD::NearEqual(check, d[0], eps99, eps99);
 
-        return ok;
-    }
+      return ok;
+   }
 }
 // END C++
 # endif

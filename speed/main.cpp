@@ -49,33 +49,33 @@
 /*
 $begin speed_main$$
 $spell
-    xpackage
-    jac
-    subgraph
-    Jacobians
-    hes
-    subgraphs
-    subsparsity
-    revsparsity
-    colpack
-    onetape
-    boolsparsity
-    optionlist
-    underbar
-    alloc
-    mat_mul
-    retaped
-    bool
-    ddp
-    cppad
-    adolc
-    fadbad
-    sacado
-    CppAD
-    det
-    lu
-    Jacobian
-    cppadcg
+   xpackage
+   jac
+   subgraph
+   Jacobians
+   hes
+   subgraphs
+   subsparsity
+   revsparsity
+   colpack
+   onetape
+   boolsparsity
+   optionlist
+   underbar
+   alloc
+   mat_mul
+   retaped
+   bool
+   ddp
+   cppad
+   adolc
+   fadbad
+   sacado
+   CppAD
+   det
+   lu
+   Jacobian
+   cppadcg
 $$
 
 
@@ -146,18 +146,18 @@ The command line argument $icode seed$$ is an unsigned integer
 The random number simulator $cref uniform_01$$ is initialized with
 the call
 $codei%
-    uniform_01(%seed%)
+   uniform_01(%seed%)
 %$$
 before any of the testing routines (listed above) are called.
 
 $head Global Options$$
 This global variable has prototype
 $srccode%cpp%
-    extern std::map<std::string, bool> global_option;
+   extern std::map<std::string, bool> global_option;
 %$$
 The syntax
 $codei%
-    global_option["%option%"]
+   global_option["%option%"]
 %$$
 has the value true, if $icode option$$ is present,
 and false otherwise.
@@ -279,8 +279,8 @@ is implemented for this option.
 $head Correctness Results$$
 One, but not both, of the following two output lines
 $codei%
-    %package%_%test%_%optionlist%_available = false
-    %package%_%test%_%optionlist%_ok = %flag%
+   %package%_%test%_%optionlist%_available = false
+   %package%_%test%_%optionlist%_ok = %flag%
 %$$
 is generated for each correctness test where
 $icode package$$ and $icode test$$ are as above,
@@ -293,9 +293,9 @@ $head Speed Results$$
 For each speed test, corresponds to three lines of the
 following form are generated:
 $codei%
-    %package%_%test%_%optionlist%_ok   = %flag%
-    %test%_size = [ %size_1%, %...%, %size_n% ]
-    %package%_%test%_rate = [ %rate_1%, %...%, %rate_n% ]
+   %package%_%test%_%optionlist%_ok   = %flag%
+   %test%_size = [ %size_1%, %...%, %size_n% ]
+   %package%_%test%_rate = [ %rate_1%, %...%, %rate_n% ]
 %$$
 The values $icode package$$, $icode test$$, $icode optionlist$$,
 and $icode flag$$ are as in the correctness results above.
@@ -309,7 +309,7 @@ The $cref/sparse_jacobian/link_sparse_jacobian/$$
 and $cref/sparse_hessian/link_sparse_hessian/$$ tests has an extra output
 line with the following form
 $codei%
-    %package%_sparse_%test%_n_color = [ %n_color_1%, %...%, %n_color_n% ]
+   %package%_sparse_%test%_n_color = [ %n_color_1%, %...%, %n_color_n% ]
 %$$
 were $icode test$$ is $code jacobian$$ ($code hessian$$).
 The values $icode n_color_1$$, ..., $icode n_color_n$$ are the number of
@@ -320,7 +320,7 @@ $cref/sparse_hessian/sparse_hessian/n_sweep/$$.
 
 
 $children%
-    speed/src/link.omh
+   speed/src/link.omh
 %$$
 $head Link Routines$$
 Each $cref/package/speed_main/package/$$
@@ -344,9 +344,9 @@ $end
 // external routines
 
 # define CPPAD_DECLARE_TIME(name)                         \
-    extern bool available_##name(void);                   \
-    extern bool correct_##name(bool is_package_double);   \
-    extern double time_##name(double time_min, size_t size)
+   extern bool available_##name(void);                   \
+   extern bool correct_##name(bool is_package_double);   \
+   extern double time_##name(double time_min, size_t size)
 
 CPPAD_DECLARE_TIME(det_lu);
 CPPAD_DECLARE_TIME(det_minor);
@@ -358,8 +358,8 @@ CPPAD_DECLARE_TIME(sparse_jacobian);
 //
 // some routines defined in src subdirectory
 extern void info_sparse_jacobian(
-    CppAD::vector<size_t>& size_vec    ,
-    CppAD::vector<size_t>& n_color_vec
+   CppAD::vector<size_t>& size_vec    ,
+   CppAD::vector<size_t>& n_color_vec
 );
 extern void info_sparse_hessian(size_t size, size_t& n_color);
 //
@@ -378,452 +378,452 @@ size_t global_seed= 0;
 //
 // --------------------------------------------------------------------------
 namespace {
-    using std::cout;
-    using std::cerr;
-    using std::endl;
-    const char* option_list[] = {
-        "memory",
-        "onetape",
-        "optimize",
-        "atomic",
-        "hes2jac",
-        "subgraph",
-        "boolsparsity",
-        "revsparsity",
-        "subsparsity",
-        "colpack",
-        "symmetric"
-    };
-    size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
-    // ----------------------------------------------------------------
-    // not available test message
-    void not_available_message(const char* test_name)
-    {   cout << AD_PACKAGE << ": " << test_name;
-        cout << " is not availabe with " << endl;
-        int max_len = 0;
-        for(size_t i = 0; i < num_option; i++)
-        {   int len = int( std::strlen( option_list[i] ) );
-            max_len = std::max( max_len, len);
-        }
-        for(size_t i = 0; i < num_option; i++)
-        {   std::string option = option_list[i];
-            if( global_option[option] )
-                cout << std::setw(max_len + 1) << option << " = true\n";
-            else
-                cout << std::setw(max_len + 1) << option << " = false\n";
-        }
-    }
-    // ------------------------------------------------------
-    // output vector in form readable by octave or matlab
-    // convert size_t to int to avoid warning by MS compiler
-    void output(const CppAD::vector<size_t> &v)
-    {   size_t i= 0, n = v.size();
-        cout << "[ ";
-        while(i < n)
-        {   cout << int(v[i++]);
-            if( i < n )
-                cout << ", ";
-        }
-        cout << " ]";
-    }
+   using std::cout;
+   using std::cerr;
+   using std::endl;
+   const char* option_list[] = {
+      "memory",
+      "onetape",
+      "optimize",
+      "atomic",
+      "hes2jac",
+      "subgraph",
+      "boolsparsity",
+      "revsparsity",
+      "subsparsity",
+      "colpack",
+      "symmetric"
+   };
+   size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
+   // ----------------------------------------------------------------
+   // not available test message
+   void not_available_message(const char* test_name)
+   {  cout << AD_PACKAGE << ": " << test_name;
+      cout << " is not availabe with " << endl;
+      int max_len = 0;
+      for(size_t i = 0; i < num_option; i++)
+      {  int len = int( std::strlen( option_list[i] ) );
+         max_len = std::max( max_len, len);
+      }
+      for(size_t i = 0; i < num_option; i++)
+      {  std::string option = option_list[i];
+         if( global_option[option] )
+            cout << std::setw(max_len + 1) << option << " = true\n";
+         else
+            cout << std::setw(max_len + 1) << option << " = false\n";
+      }
+   }
+   // ------------------------------------------------------
+   // output vector in form readable by octave or matlab
+   // convert size_t to int to avoid warning by MS compiler
+   void output(const CppAD::vector<size_t> &v)
+   {  size_t i= 0, n = v.size();
+      cout << "[ ";
+      while(i < n)
+      {  cout << int(v[i++]);
+         if( i < n )
+            cout << ", ";
+      }
+      cout << " ]";
+   }
 
-    // ----------------------------------------------------------------
-    // function that runs one correctness case
-    static size_t Run_ok_count    = 0;
-    static size_t Run_error_count = 0;
-    bool run_correct(
-        bool available_case(void) ,
-        bool correct_case(bool)   ,
-        const char *case_name     )
-    {   bool available = available_case();
-        bool ok        = true;
-        if( available )
-        {
+   // ----------------------------------------------------------------
+   // function that runs one correctness case
+   static size_t Run_ok_count    = 0;
+   static size_t Run_error_count = 0;
+   bool run_correct(
+      bool available_case(void) ,
+      bool correct_case(bool)   ,
+      const char *case_name     )
+   {  bool available = available_case();
+      bool ok        = true;
+      if( available )
+      {
 # ifdef CPPAD_DOUBLE_SPEED
-            bool is_package_double = true;
+         bool is_package_double = true;
 # else
-            bool is_package_double = false;
+         bool is_package_double = false;
 # endif
-            ok = correct_case(is_package_double);
-        }
-        cout << AD_PACKAGE << "_" << case_name;
-        for(size_t i = 0; i < num_option; i++)
-        {   std::string option = option_list[i];
-            if( global_option[option]  )
-                cout << "_" << option;
-        }
-        if( ! available )
-        {   cout << "_available = false" << endl;
-            return ok;
-        }
-        cout << "_correct = ";
-        if( ok )
-        {   cout << " true" << endl;
-            Run_ok_count++;
-        }
-        else
-        {   cout << " false" << endl;
-            Run_error_count++;
-        }
-        return ok;
-    }
-    // ----------------------------------------------------------------
-    // function that runs one speed case
-    void run_speed(
-        double time_case(double time_min,  size_t size)  ,
-        const CppAD::vector<size_t>&        size_vec     ,
-        const std::string&                  case_name    )
-    {   double time_min = 1.;
-        cout << case_name << "_size = ";
-        output(size_vec);
-        cout << endl;
-        cout << AD_PACKAGE << "_" << case_name << "_rate = ";
-        cout << std::fixed;
-        for(size_t i = 0; i < size_vec.size(); i++)
-        {   if( i == 0 )
-                cout << "[ ";
-            else
-                cout << ", ";
-            cout << std::flush;
-            size_t size = size_vec[i];
-            double time = time_case(time_min, size);
-            double rate = 1. / time;
-            if( rate >= 1000 )
-                cout << std::setprecision(0) << rate;
-            else if( rate >= 10 )
-                cout << std::setprecision(2) << rate;
-            else
-                cout << std::setprecision(4) << rate;
-        }
-        cout << " ]" << endl;
-        //
-        return;
-    }
+         ok = correct_case(is_package_double);
+      }
+      cout << AD_PACKAGE << "_" << case_name;
+      for(size_t i = 0; i < num_option; i++)
+      {  std::string option = option_list[i];
+         if( global_option[option]  )
+            cout << "_" << option;
+      }
+      if( ! available )
+      {  cout << "_available = false" << endl;
+         return ok;
+      }
+      cout << "_correct = ";
+      if( ok )
+      {  cout << " true" << endl;
+         Run_ok_count++;
+      }
+      else
+      {  cout << " false" << endl;
+         Run_error_count++;
+      }
+      return ok;
+   }
+   // ----------------------------------------------------------------
+   // function that runs one speed case
+   void run_speed(
+      double time_case(double time_min,  size_t size)  ,
+      const CppAD::vector<size_t>&        size_vec     ,
+      const std::string&                  case_name    )
+   {  double time_min = 1.;
+      cout << case_name << "_size = ";
+      output(size_vec);
+      cout << endl;
+      cout << AD_PACKAGE << "_" << case_name << "_rate = ";
+      cout << std::fixed;
+      for(size_t i = 0; i < size_vec.size(); i++)
+      {  if( i == 0 )
+            cout << "[ ";
+         else
+            cout << ", ";
+         cout << std::flush;
+         size_t size = size_vec[i];
+         double time = time_case(time_min, size);
+         double rate = 1. / time;
+         if( rate >= 1000 )
+            cout << std::setprecision(0) << rate;
+         else if( rate >= 10 )
+            cout << std::setprecision(2) << rate;
+         else
+            cout << std::setprecision(4) << rate;
+      }
+      cout << " ]" << endl;
+      //
+      return;
+   }
 }
 
 // main program that runs all the tests
 int main(int argc, char *argv[])
-{   bool ok = true;
-    enum test_enum {
-        test_correct,
-        test_speed,
-        test_det_lu,
-        test_det_minor,
-        test_mat_mul,
-        test_ode,
-        test_poly,
-        test_sparse_hessian,
-        test_sparse_jacobian,
-        test_error
-    };
-    struct test_struct {
-        const char       *name;
-        const test_enum  index;
-    };
-    const test_struct test_list[]= {
-        { "correct",            test_correct         },
-        { "speed",              test_speed           },
-        { "det_lu",             test_det_lu          },
-        { "det_minor",          test_det_minor       },
-        { "mat_mul",            test_mat_mul         },
-        { "ode",                test_ode             },
-        { "poly",               test_poly            },
-        { "sparse_hessian",     test_sparse_hessian  },
-        { "sparse_jacobian",    test_sparse_jacobian }
-    };
-    const size_t n_test  = sizeof(test_list) / sizeof(test_list[0]);
-    //
-    test_enum match = test_error;
-    int    iseed = 0;
-    bool   error = argc < 3;
-    if( ! error )
-    {   for(size_t i = 0; i < n_test; i++)
-            if( strcmp(test_list[i].name, argv[1]) == 0 )
-                match = test_list[i].index;
-        error = match == test_error;
-        for(size_t i = 0; *(argv[2] + i) != '\0'; ++i)
-        {   error |= *(argv[2] + i) < '0';
-            error |= '9' < *(argv[2] + i);
-        }
-        iseed = std::atoi( argv[2] );
-        error |= iseed < 0;
-        for(size_t i = 0; i < num_option; i++)
-            global_option[ option_list[i] ] = false;
-        for(size_t i = 3; i < size_t(argc); i++)
-        {   bool found = false;
-            for(size_t j = 0; j < num_option; j++)
-            {   if( strcmp(argv[i], option_list[j]) == 0 )
-                {   global_option[ option_list[j] ] = true;
-                    found = true;
-                }
+{  bool ok = true;
+   enum test_enum {
+      test_correct,
+      test_speed,
+      test_det_lu,
+      test_det_minor,
+      test_mat_mul,
+      test_ode,
+      test_poly,
+      test_sparse_hessian,
+      test_sparse_jacobian,
+      test_error
+   };
+   struct test_struct {
+      const char       *name;
+      const test_enum  index;
+   };
+   const test_struct test_list[]= {
+      { "correct",            test_correct         },
+      { "speed",              test_speed           },
+      { "det_lu",             test_det_lu          },
+      { "det_minor",          test_det_minor       },
+      { "mat_mul",            test_mat_mul         },
+      { "ode",                test_ode             },
+      { "poly",               test_poly            },
+      { "sparse_hessian",     test_sparse_hessian  },
+      { "sparse_jacobian",    test_sparse_jacobian }
+   };
+   const size_t n_test  = sizeof(test_list) / sizeof(test_list[0]);
+   //
+   test_enum match = test_error;
+   int    iseed = 0;
+   bool   error = argc < 3;
+   if( ! error )
+   {  for(size_t i = 0; i < n_test; i++)
+         if( strcmp(test_list[i].name, argv[1]) == 0 )
+            match = test_list[i].index;
+      error = match == test_error;
+      for(size_t i = 0; *(argv[2] + i) != '\0'; ++i)
+      {  error |= *(argv[2] + i) < '0';
+         error |= '9' < *(argv[2] + i);
+      }
+      iseed = std::atoi( argv[2] );
+      error |= iseed < 0;
+      for(size_t i = 0; i < num_option; i++)
+         global_option[ option_list[i] ] = false;
+      for(size_t i = 3; i < size_t(argc); i++)
+      {  bool found = false;
+         for(size_t j = 0; j < num_option; j++)
+         {  if( strcmp(argv[i], option_list[j]) == 0 )
+            {  global_option[ option_list[j] ] = true;
+               found = true;
             }
-            error |= ! found;
-        }
-    }
-    if( error )
-    {   cout << "usage: ./speed_"
+         }
+         error |= ! found;
+      }
+   }
+   if( error )
+   {  cout << "usage: ./speed_"
              << AD_PACKAGE << " test seed option_list" << endl;
-        cout << "test choices:";
-        for(size_t i = 0; i < n_test; i++)
-        {   if( i % 5 == 0 )
-                std::cout << "\n\t";
-            else
-                std::cout << ", ";
-            cout << test_list[i].name;
-        }
-        cout << "\n\nseed: is a positive integer used as a random seed.";
-        cout << "\n\noption_list: zero or more of the following:";
-        for(size_t i = 0; i < num_option; i++)
-        {   if( i % 5 == 0 )
-                std::cout << "\n\t";
-            else
-                std::cout << ", ";
-            cout << option_list[i];
-        }
-        cout << endl << endl;
-        return 1;
-    }
-    if( global_option["memory"] )
-        CppAD::thread_alloc::hold_memory(true);
+      cout << "test choices:";
+      for(size_t i = 0; i < n_test; i++)
+      {  if( i % 5 == 0 )
+            std::cout << "\n\t";
+         else
+            std::cout << ", ";
+         cout << test_list[i].name;
+      }
+      cout << "\n\nseed: is a positive integer used as a random seed.";
+      cout << "\n\noption_list: zero or more of the following:";
+      for(size_t i = 0; i < num_option; i++)
+      {  if( i % 5 == 0 )
+            std::cout << "\n\t";
+         else
+            std::cout << ", ";
+         cout << option_list[i];
+      }
+      cout << endl << endl;
+      return 1;
+   }
+   if( global_option["memory"] )
+      CppAD::thread_alloc::hold_memory(true);
 
-    // initialize the random number simulator
-    // (may be re-initialized by sparse jacobain test)
-    global_seed = size_t(iseed);
-    CppAD::uniform_01(global_seed);
+   // initialize the random number simulator
+   // (may be re-initialized by sparse jacobain test)
+   global_seed = size_t(iseed);
+   CppAD::uniform_01(global_seed);
 
-    // arguments needed for speed tests
-    size_t n_size   = 5;
-    CppAD::vector<size_t> size_det_lu(n_size);
-    CppAD::vector<size_t> size_det_minor(n_size);
-    CppAD::vector<size_t> size_mat_mul(n_size);
-    CppAD::vector<size_t> size_ode(n_size);
-    CppAD::vector<size_t> size_poly(n_size);
-    CppAD::vector<size_t> size_sparse_hessian(n_size);
-    CppAD::vector<size_t> size_sparse_jacobian(n_size);
-    for(size_t i = 0; i < n_size; i++)
-    {   size_det_minor[i]   = i + 2;
-        size_det_lu[i]      = 10 * i + 1;
-        size_mat_mul[i]     = 10 * i + 1;
-        size_ode[i]         = 10 * i + 1;
-        size_poly[i]        = 10 * i + 1;
-        size_sparse_hessian[i]  = 150 * (i + 1) * (i + 1);
-        size_sparse_jacobian[i] = 150 * (i + 1) * (i + 1);
-    }
-    switch(match)
-    {
-        // run all the correctness tests
-        case test_correct:
-        ok &= run_correct( available_det_lu, correct_det_lu, "det_lu"
-        );
-        ok &= run_correct(
-            available_det_minor, correct_det_minor, "det_minor"
-        );
-        ok &= run_correct(
-            available_mat_mul, correct_mat_mul, "mat_mul"
-        );
-        ok &= run_correct(
-            available_ode, correct_ode, "ode"
-        );
-        ok &= run_correct( available_poly, correct_poly, "poly"
-        );
-        ok &= run_correct(
-            available_sparse_hessian,
-            correct_sparse_hessian,
-            "sparse_hessian"
-        );
-        ok &= run_correct(
-            available_sparse_jacobian,
-            correct_sparse_jacobian,
-            "sparse_jacobian"
-        );
-        // summarize results
-        assert( ok || (Run_error_count > 0) );
-        if( ok )
-        {   cout << "All " << int(Run_ok_count)
+   // arguments needed for speed tests
+   size_t n_size   = 5;
+   CppAD::vector<size_t> size_det_lu(n_size);
+   CppAD::vector<size_t> size_det_minor(n_size);
+   CppAD::vector<size_t> size_mat_mul(n_size);
+   CppAD::vector<size_t> size_ode(n_size);
+   CppAD::vector<size_t> size_poly(n_size);
+   CppAD::vector<size_t> size_sparse_hessian(n_size);
+   CppAD::vector<size_t> size_sparse_jacobian(n_size);
+   for(size_t i = 0; i < n_size; i++)
+   {  size_det_minor[i]   = i + 2;
+      size_det_lu[i]      = 10 * i + 1;
+      size_mat_mul[i]     = 10 * i + 1;
+      size_ode[i]         = 10 * i + 1;
+      size_poly[i]        = 10 * i + 1;
+      size_sparse_hessian[i]  = 150 * (i + 1) * (i + 1);
+      size_sparse_jacobian[i] = 150 * (i + 1) * (i + 1);
+   }
+   switch(match)
+   {
+      // run all the correctness tests
+      case test_correct:
+      ok &= run_correct( available_det_lu, correct_det_lu, "det_lu"
+      );
+      ok &= run_correct(
+         available_det_minor, correct_det_minor, "det_minor"
+      );
+      ok &= run_correct(
+         available_mat_mul, correct_mat_mul, "mat_mul"
+      );
+      ok &= run_correct(
+         available_ode, correct_ode, "ode"
+      );
+      ok &= run_correct( available_poly, correct_poly, "poly"
+      );
+      ok &= run_correct(
+         available_sparse_hessian,
+         correct_sparse_hessian,
+         "sparse_hessian"
+      );
+      ok &= run_correct(
+         available_sparse_jacobian,
+         correct_sparse_jacobian,
+         "sparse_jacobian"
+      );
+      // summarize results
+      assert( ok || (Run_error_count > 0) );
+      if( ok )
+      {  cout << "All " << int(Run_ok_count)
                  << " correctness tests passed." << endl;
-        }
-        else
-        {   cout << int(Run_error_count)
+      }
+      else
+      {  cout << int(Run_error_count)
                  << " correctness tests failed." << endl;
-        }
-        break;
-        // ---------------------------------------------------------
-        // run all the speed tests
-        case test_speed:
-        if( available_det_lu() ) run_speed(
-            time_det_lu,          size_det_lu,          "det_lu"
-        );
-        if( available_det_minor() ) run_speed(
-            time_det_minor,       size_det_minor,       "det_minor"
-        );
-        if( available_mat_mul() ) run_speed(
-            time_mat_mul,           size_mat_mul,       "mat_mul"
-        );
-        if( available_ode() ) run_speed(
-            time_ode,             size_ode,             "ode"
-        );
-        if( available_poly() ) run_speed(
-            time_poly,            size_poly,            "poly"
-        );
-        if( available_sparse_hessian() ) run_speed(
-            time_sparse_hessian,  size_sparse_hessian,  "sparse_hessian"
-        );
-        if( available_sparse_jacobian() ) run_speed(
-        time_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
-        );
-        ok = true;
-        break;
-        // ---------------------------------------------------------
+      }
+      break;
+      // ---------------------------------------------------------
+      // run all the speed tests
+      case test_speed:
+      if( available_det_lu() ) run_speed(
+         time_det_lu,          size_det_lu,          "det_lu"
+      );
+      if( available_det_minor() ) run_speed(
+         time_det_minor,       size_det_minor,       "det_minor"
+      );
+      if( available_mat_mul() ) run_speed(
+         time_mat_mul,           size_mat_mul,       "mat_mul"
+      );
+      if( available_ode() ) run_speed(
+         time_ode,             size_ode,             "ode"
+      );
+      if( available_poly() ) run_speed(
+         time_poly,            size_poly,            "poly"
+      );
+      if( available_sparse_hessian() ) run_speed(
+         time_sparse_hessian,  size_sparse_hessian,  "sparse_hessian"
+      );
+      if( available_sparse_jacobian() ) run_speed(
+      time_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
+      );
+      ok = true;
+      break;
+      // ---------------------------------------------------------
 
-        case test_det_lu:
-        if( ! available_det_lu() )
-        {   not_available_message( argv[1] );
-            exit(1);
-        }
-        ok &= run_correct(
-            available_det_lu, correct_det_lu, "det_lu")
-        ;
-        run_speed(time_det_lu,    size_det_lu,     "det_lu");
-        break;
-        // ---------------------------------------------------------
+      case test_det_lu:
+      if( ! available_det_lu() )
+      {  not_available_message( argv[1] );
+         exit(1);
+      }
+      ok &= run_correct(
+         available_det_lu, correct_det_lu, "det_lu")
+      ;
+      run_speed(time_det_lu,    size_det_lu,     "det_lu");
+      break;
+      // ---------------------------------------------------------
 
-        case test_det_minor:
-        if( ! available_det_minor() )
-        {   not_available_message( argv[1] );
-            exit(1);
-        }
-        ok &= run_correct(
-            available_det_minor, correct_det_minor, "det_minor"
-        );
-        run_speed(time_det_minor, size_det_minor, "det_minor");
-        break;
-        // ---------------------------------------------------------
+      case test_det_minor:
+      if( ! available_det_minor() )
+      {  not_available_message( argv[1] );
+         exit(1);
+      }
+      ok &= run_correct(
+         available_det_minor, correct_det_minor, "det_minor"
+      );
+      run_speed(time_det_minor, size_det_minor, "det_minor");
+      break;
+      // ---------------------------------------------------------
 
-        case test_mat_mul:
-        if( ! available_mat_mul() )
-        {   not_available_message( argv[1] );
-            exit(1);
-        }
-        ok &= run_correct(
-            available_mat_mul, correct_mat_mul, "mat_mul"
-        );
-        run_speed(time_mat_mul, size_mat_mul, "mat_mul");
-        break;
-        // ---------------------------------------------------------
+      case test_mat_mul:
+      if( ! available_mat_mul() )
+      {  not_available_message( argv[1] );
+         exit(1);
+      }
+      ok &= run_correct(
+         available_mat_mul, correct_mat_mul, "mat_mul"
+      );
+      run_speed(time_mat_mul, size_mat_mul, "mat_mul");
+      break;
+      // ---------------------------------------------------------
 
-        case test_ode:
-        if( ! available_ode() )
-        {   not_available_message( argv[1] );
-            exit(1);
-        }
-        ok &= run_correct(
-            available_ode, correct_ode, "ode"
-        );
-        run_speed(time_ode,      size_ode,      "ode");
-        break;
-        // ---------------------------------------------------------
+      case test_ode:
+      if( ! available_ode() )
+      {  not_available_message( argv[1] );
+         exit(1);
+      }
+      ok &= run_correct(
+         available_ode, correct_ode, "ode"
+      );
+      run_speed(time_ode,      size_ode,      "ode");
+      break;
+      // ---------------------------------------------------------
 
-        case test_poly:
-        if( ! available_poly() )
-        {   not_available_message( argv[1] );
-            exit(1);
-        }
-        ok &= run_correct(
-            available_poly, correct_poly, "poly"
-        );
-        run_speed(time_poly,      size_poly,      "poly");
-        break;
-        // ---------------------------------------------------------
+      case test_poly:
+      if( ! available_poly() )
+      {  not_available_message( argv[1] );
+         exit(1);
+      }
+      ok &= run_correct(
+         available_poly, correct_poly, "poly"
+      );
+      run_speed(time_poly,      size_poly,      "poly");
+      break;
+      // ---------------------------------------------------------
 
-        case test_sparse_hessian:
-        if( ! available_sparse_hessian() )
-        {   not_available_message( argv[1] );
-            exit(1);
-        }
-        ok &= run_correct(
-            available_sparse_hessian,
-            correct_sparse_hessian,
-            "sparse_hessian"
-        );
-        run_speed(
-            time_sparse_hessian, size_sparse_hessian,  "sparse_hessian"
-        );
-        cout << AD_PACKAGE << "_sparse_hessian_n_color = ";
-        for(size_t i = 0; i < size_sparse_hessian.size(); i++)
-        {   if( i == 0 )
-                cout << "[ ";
+      case test_sparse_hessian:
+      if( ! available_sparse_hessian() )
+      {  not_available_message( argv[1] );
+         exit(1);
+      }
+      ok &= run_correct(
+         available_sparse_hessian,
+         correct_sparse_hessian,
+         "sparse_hessian"
+      );
+      run_speed(
+         time_sparse_hessian, size_sparse_hessian,  "sparse_hessian"
+      );
+      cout << AD_PACKAGE << "_sparse_hessian_n_color = ";
+      for(size_t i = 0; i < size_sparse_hessian.size(); i++)
+      {  if( i == 0 )
+            cout << "[ ";
+         else
+            cout << ", ";
+         size_t n_color;
+         info_sparse_hessian(size_sparse_hessian[i], n_color);
+         cout << n_color;
+      }
+      cout << " ]" << endl;
+      break;
+      // ---------------------------------------------------------
+
+      case test_sparse_jacobian:
+      if( ! available_sparse_jacobian() )
+      {  not_available_message( argv[1] );
+         exit(1);
+      }
+      ok &= run_correct(
+         available_sparse_jacobian,
+         correct_sparse_jacobian,
+         "sparse_jacobian"
+      );
+      run_speed(
+         time_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
+      );
+      {  // output values of n_color
+         CppAD::vector<size_t> size_vec, n_color_vec;
+         info_sparse_jacobian(size_vec, n_color_vec);
+         assert( size_sparse_jacobian.size() == size_vec.size() );
+         cout << AD_PACKAGE << "_sparse_jacobian_n_color = ";
+         for(size_t i = 0; i < size_vec.size(); i++)
+         {  assert( size_vec[i] == size_sparse_jacobian[i] );
+            if( i == 0 )
+               cout << "[ ";
             else
-                cout << ", ";
-            size_t n_color;
-            info_sparse_hessian(size_sparse_hessian[i], n_color);
-            cout << n_color;
-        }
-        cout << " ]" << endl;
-        break;
-        // ---------------------------------------------------------
+               cout << ", ";
+            cout << n_color_vec[i];
+         }
+      }
+      cout << " ]" << endl;
+      break;
+      // ---------------------------------------------------------
 
-        case test_sparse_jacobian:
-        if( ! available_sparse_jacobian() )
-        {   not_available_message( argv[1] );
-            exit(1);
-        }
-        ok &= run_correct(
-            available_sparse_jacobian,
-            correct_sparse_jacobian,
-            "sparse_jacobian"
-        );
-        run_speed(
-            time_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
-        );
-        {   // output values of n_color
-            CppAD::vector<size_t> size_vec, n_color_vec;
-            info_sparse_jacobian(size_vec, n_color_vec);
-            assert( size_sparse_jacobian.size() == size_vec.size() );
-            cout << AD_PACKAGE << "_sparse_jacobian_n_color = ";
-            for(size_t i = 0; i < size_vec.size(); i++)
-            {   assert( size_vec[i] == size_sparse_jacobian[i] );
-                if( i == 0 )
-                    cout << "[ ";
-                else
-                    cout << ", ";
-                cout << n_color_vec[i];
-            }
-        }
-        cout << " ]" << endl;
-        break;
-        // ---------------------------------------------------------
-
-        default:
-        assert(0);
-    }
+      default:
+      assert(0);
+   }
 # ifndef NDEBUG
-    // return memory for vectors that are still in scope
-    size_det_lu.clear();
-    size_det_minor.clear();
-    size_mat_mul.clear();
-    size_ode.clear();
-    size_poly.clear();
-    size_sparse_hessian.clear();
-    size_sparse_jacobian.clear();
-    // check for memory leak
-    if( CppAD::thread_alloc::free_all() )
-    {   Run_ok_count++;
-        cout << "No memory leak detected" << endl;
-    }
-    else
-    {   ok = false;
-        Run_error_count++;
-        cout << "Memory leak detected" << endl;
-    }
+   // return memory for vectors that are still in scope
+   size_det_lu.clear();
+   size_det_minor.clear();
+   size_mat_mul.clear();
+   size_ode.clear();
+   size_poly.clear();
+   size_sparse_hessian.clear();
+   size_sparse_jacobian.clear();
+   // check for memory leak
+   if( CppAD::thread_alloc::free_all() )
+   {  Run_ok_count++;
+      cout << "No memory leak detected" << endl;
+   }
+   else
+   {  ok = false;
+      Run_error_count++;
+      cout << "Memory leak detected" << endl;
+   }
 # endif
-    if( global_cppad_thread_alloc_inuse != 0 )
-    {   cout << "memory allocated at end of last cppad speed test = ";
-        cout << global_cppad_thread_alloc_inuse << std::endl;
-    }
-    if( ! ok )
-    {   cout << "speed main: Error\n";
-        exit(1);
-    }
-    std::cout << "speed main: OK\n";
-    return 0;
+   if( global_cppad_thread_alloc_inuse != 0 )
+   {  cout << "memory allocated at end of last cppad speed test = ";
+      cout << global_cppad_thread_alloc_inuse << std::endl;
+   }
+   if( ! ok )
+   {  cout << "speed main: Error\n";
+      exit(1);
+   }
+   std::cout << "speed main: OK\n";
+   return 0;
 }

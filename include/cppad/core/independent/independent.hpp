@@ -11,7 +11,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
 $begin independent_all$$
 $spell
-    op
+   op
 $$
 
 $section Independent: All Arguments Present$$
@@ -24,7 +24,7 @@ $codei%Independent(%x%, %abort_op_index%, %record_compare%, %dynamic%)%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_ALL_ARGUMENT%// END_ALL_ARGUMENT%1
+   0%// BEGIN_ALL_ARGUMENT%// END_ALL_ARGUMENT%1
 %$$
 
 $head Base$$
@@ -51,31 +51,31 @@ $end
 // BEGIN_ALL_ARGUMENT
 template <class ADVector>
 void Independent(
-    ADVector&  x              ,
-    size_t     abort_op_index ,
-    bool       record_compare ,
-    ADVector&  dynamic        )
+   ADVector&  x              ,
+   size_t     abort_op_index ,
+   bool       record_compare ,
+   ADVector&  dynamic        )
 // END_ALL_ARGUMENT
-{   CPPAD_ASSERT_KNOWN(
-        abort_op_index == 0 || record_compare,
-        "Independent: abort_op_index is non-zero and record_compare is false."
-    );
-    typedef typename ADVector::value_type ADBase;
-    typedef typename ADBase::value_type   Base;
-    CPPAD_ASSERT_KNOWN(
-        ADBase::tape_ptr() == nullptr,
-        "Independent: cannot create a new tape because\n"
-        "a previous tape is still active (for this thread).\n"
-        "AD<Base>::abort_recording() would abort this previous recording."
-    );
-    local::ADTape<Base>* tape = ADBase::tape_manage(new_tape_manage);
-    tape->Independent(x, abort_op_index, record_compare, dynamic);
+{  CPPAD_ASSERT_KNOWN(
+      abort_op_index == 0 || record_compare,
+      "Independent: abort_op_index is non-zero and record_compare is false."
+   );
+   typedef typename ADVector::value_type ADBase;
+   typedef typename ADBase::value_type   Base;
+   CPPAD_ASSERT_KNOWN(
+      ADBase::tape_ptr() == nullptr,
+      "Independent: cannot create a new tape because\n"
+      "a previous tape is still active (for this thread).\n"
+      "AD<Base>::abort_recording() would abort this previous recording."
+   );
+   local::ADTape<Base>* tape = ADBase::tape_manage(new_tape_manage);
+   tape->Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*
 ----------------------------------------------------------------------------
 $begin independent_x_abort_record$$
 $spell
-    op
+   op
 $$
 
 $section Independent: Default For dynamic$$
@@ -89,7 +89,7 @@ $codei%Independent(%x%, %abort_op_index%, %record_compare%)%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_THREE_ARGUMENT%// END_THREE_ARGUMENT%1
+   0%// BEGIN_THREE_ARGUMENT%// END_THREE_ARGUMENT%1
 %$$
 
 $head Base$$
@@ -114,14 +114,14 @@ $end
 template <class ADVector>
 void Independent(ADVector &x, size_t abort_op_index, bool record_compare)
 // END_THREE_ARGUMENT
-{   ADVector dynamic(0); // empty vector
-    Independent(x, abort_op_index, record_compare, dynamic);
+{  ADVector dynamic(0); // empty vector
+   Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*
 ------------------------------------------------------------------------------
 $begin independent_x_abort_op_index$$
 $spell
-    op
+   op
 $$
 
 $section Independent: Default For record_compare, dynamic$$
@@ -135,7 +135,7 @@ $codei%Independent(%x%, %abort_op_index%)%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_X_ABORT_OP_INDEX%// END_X_ABORT_OP_INDEX%1
+   0%// BEGIN_X_ABORT_OP_INDEX%// END_X_ABORT_OP_INDEX%1
 %$$
 
 $head Base$$
@@ -157,15 +157,15 @@ $end
 template <class ADVector>
 void Independent(ADVector &x, size_t abort_op_index)
 // END_X_ABORT_OP_INDEX
-{   bool     record_compare = true;
-    ADVector dynamic(0); // empty vector
-    Independent(x, abort_op_index, record_compare, dynamic);
+{  bool     record_compare = true;
+   ADVector dynamic(0); // empty vector
+   Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*
 ------------------------------------------------------------------------------
 $begin independent_x_dynamic$$
 $spell
-    op
+   op
 $$
 
 $section Independent: Default For abort_op_index, record_compare$$
@@ -179,7 +179,7 @@ $codei%Independent(%x%, %dynamic%)%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_X_DYNAMIC%// END_X_DYNAMIC%1
+   0%// BEGIN_X_DYNAMIC%// END_X_DYNAMIC%1
 %$$
 
 $head Base$$
@@ -200,15 +200,15 @@ $end
 template <class ADVector>
 void Independent(ADVector& x, ADVector& dynamic)
 // END_X_DYNAMIC
-{   size_t   abort_op_index = 0;
-    bool     record_compare = true;
-    Independent(x, abort_op_index, record_compare, dynamic);
+{  size_t   abort_op_index = 0;
+   bool     record_compare = true;
+   Independent(x, abort_op_index, record_compare, dynamic);
 }
 /*
 ------------------------------------------------------------------------------
 $begin independent_x$$
 $spell
-    op
+   op
 $$
 
 $section Independent: Default For abort_op_index, record_compare, dynamic$$
@@ -222,7 +222,7 @@ $codei%Independent(%x%)%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN_ONE_ARGUMENT%// END_ONE_ARGUMENT%1
+   0%// BEGIN_ONE_ARGUMENT%// END_ONE_ARGUMENT%1
 %$$
 
 $head Base$$
@@ -240,10 +240,10 @@ $end
 template <class ADVector>
 void Independent(ADVector &x)
 // END_ONE_ARGUMENT
-{   size_t   abort_op_index = 0;
-    bool     record_compare = true;
-    ADVector dynamic(0); // empty vector
-    Independent(x, abort_op_index, record_compare, dynamic);
+{  size_t   abort_op_index = 0;
+   bool     record_compare = true;
+   ADVector dynamic(0); // empty vector
+   Independent(x, abort_op_index, record_compare, dynamic);
 }
 
 } // END_CPPAD_NAMESPACE

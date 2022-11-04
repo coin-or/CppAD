@@ -7,15 +7,15 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    compare_op.cpp
-    conditional_skip.cpp
-    cumulative_sum.cpp
-    forward_active.cpp
-    nest_conditional.cpp
-    optimize.cpp
-    optimize_twice.cpp
-    print_for.cpp
-    reverse_active.cpp
+   compare_op.cpp
+   conditional_skip.cpp
+   cumulative_sum.cpp
+   forward_active.cpp
+   nest_conditional.cpp
+   optimize.cpp
+   optimize_twice.cpp
+   print_for.cpp
+   reverse_active.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
@@ -25,8 +25,8 @@ ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_optimize
-    ${cppad_lib}
-    ${colpack_libs}
+   ${cppad_lib}
+   ${colpack_libs}
 )
 #
 # check_example_optimize

@@ -5,8 +5,8 @@
 
 $begin erf_forward$$
 $spell
-    erf
-    Taylor
+   erf
+   Taylor
 $$
 
 
@@ -15,7 +15,7 @@ $section Error Function Forward Taylor Polynomial Theory$$
 $head Derivatives$$
 Given $latex X(t)$$, we define the function
 $latex \[
-    Z(t) = \R{erf}[ X(t) ]
+   Z(t) = \R{erf}[ X(t) ]
 \]$$
 It follows that
 $latex \[
@@ -27,7 +27,7 @@ Z^{(1)} (t) & = & \R{erf}^{(1)} [ X(t) ] X^{(1)} (t) = Y(t) X^{(1)} (t)
 \] $$
 where we define the function
 $latex \[
-    Y(t) = \frac{2}{ \sqrt{\pi} } \exp \left[ - X(t)^2 \right]
+   Y(t) = \frac{2}{ \sqrt{\pi} } \exp \left[ - X(t)^2 \right]
 \] $$
 
 $head Taylor Coefficients Recursion$$

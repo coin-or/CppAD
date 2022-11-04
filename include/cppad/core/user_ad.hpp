@@ -9,10 +9,10 @@
 
 $begin AD$$
 $spell
-    std
-    bool
-    cos
-    Cpp
+   std
+   bool
+   cos
+   Cpp
 $$
 
 $section AD Objects$$
@@ -40,13 +40,13 @@ Otherwise, see $cref base_require$$.
 
 
 $childtable%
-    include/cppad/core/ad_ctor.hpp%
-    include/cppad/core/ad_assign.hpp%
-    include/cppad/core/convert.hpp%
-    include/cppad/core/ad_valued.hpp%
-    include/cppad/core/bool_valued.hpp%
-    include/cppad/core/vec_ad/user.omh%
-    include/cppad/base_require.hpp
+   include/cppad/core/ad_ctor.hpp%
+   include/cppad/core/ad_assign.hpp%
+   include/cppad/core/convert.hpp%
+   include/cppad/core/ad_valued.hpp%
+   include/cppad/core/bool_valued.hpp%
+   include/cppad/core/vec_ad/user.omh%
+   include/cppad/base_require.hpp
 %$$
 
 $end

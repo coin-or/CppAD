@@ -5,8 +5,8 @@
 /*
 $begin cppad_jit_det_lu.cpp$$
 $spell
-    cppad_jit
-    Lu
+   cppad_jit
+   Lu
 $$
 
 $section cppad_jit Speed: Gradient of Determinant Using Lu Factorization$$
@@ -25,11 +25,11 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_det_lu(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &matrix   ,
-    CppAD::vector<double>     &gradient )
-{   return false; }
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &matrix   ,
+   CppAD::vector<double>     &gradient )
+{  return false; }
 /* %$$
 $end
 */

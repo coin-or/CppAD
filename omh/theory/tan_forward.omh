@@ -5,7 +5,7 @@
 
 $begin tan_forward$$
 $spell
-    Taylor
+   Taylor
 $$
 
 
@@ -26,7 +26,7 @@ $latex \[
 If $latex F(u)$$ is $latex \tan (u)$$ or $latex \tanh (u)$$
 the corresponding derivative is given by
 $latex \[
-    F^{(1)} (u) = 1 \pm F(u)^2
+   F^{(1)} (u) = 1 \pm F(u)^2
 \]$$
 Given $latex X(t)$$, we define the function $latex Z(t) = F[ X(t) ]$$.
 It follows that

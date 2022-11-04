@@ -5,9 +5,9 @@
 
 $begin lu_solve.hpp$$
 $spell
-    Lu
-    ifndef
-    endif
+   Lu
+   ifndef
+   endif
 $$
 
 $section Source: LuSolve$$

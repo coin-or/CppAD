@@ -8,7 +8,7 @@
 /*
 $begin cppadcg_sparse_hessian.cpp$$
 $spell
-    cppadcg
+   cppadcg
 $$
 
 $section Cppadcg Speed: Sparse Hessian$$
@@ -19,15 +19,15 @@ $cref link_sparse_hessian$$
 $srccode%cpp% */
 // A cppadcg version of this test is not yet available
 bool link_sparse_hessian(
-    size_t                            size      ,
-    size_t                            repeat    ,
-    const CppAD::vector<size_t>&      row       ,
-    const CppAD::vector<size_t>&      col       ,
-    CppAD::vector<double>&            x         ,
-    CppAD::vector<double>&            hessian   ,
-    size_t&                           n_color
+   size_t                            size      ,
+   size_t                            repeat    ,
+   const CppAD::vector<size_t>&      row       ,
+   const CppAD::vector<size_t>&      col       ,
+   CppAD::vector<double>&            x         ,
+   CppAD::vector<double>&            hessian   ,
+   size_t&                           n_color
 )
-{   return false; }
+{  return false; }
 /* %$$
 $end
 */

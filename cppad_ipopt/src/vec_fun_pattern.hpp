@@ -16,13 +16,13 @@ namespace cppad_ipopt {
 */
 
 extern void vec_fun_pattern(
-    size_t                                          K              ,
-    const CppAD::vector<size_t>&                    p              ,
-    const CppAD::vector<size_t>&                    q              ,
-    const CppAD::vectorBool&                        retape         ,
-    CppAD::vector< CppAD::ADFun<Ipopt::Number> >&   r_fun          ,
-    CppAD::vector<CppAD::vectorBool>&               pattern_jac_r  ,
-    CppAD::vector<CppAD::vectorBool>&               pattern_hes_r
+   size_t                                          K              ,
+   const CppAD::vector<size_t>&                    p              ,
+   const CppAD::vector<size_t>&                    q              ,
+   const CppAD::vectorBool&                        retape         ,
+   CppAD::vector< CppAD::ADFun<Ipopt::Number> >&   r_fun          ,
+   CppAD::vector<CppAD::vectorBool>&               pattern_jac_r  ,
+   CppAD::vector<CppAD::vectorBool>&               pattern_hes_r
 );
 
 // ---------------------------------------------------------------------------

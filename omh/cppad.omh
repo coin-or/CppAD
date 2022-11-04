@@ -9,15 +9,15 @@ $comment Top level documentaion included by ../doc.omh and ../dev.omh$$
 $escape $$
 $comment default navigate command for all of CppAD documentation$$
 $navigate%
-    Prev%Prev%
-    Next%Next%
-    Across%Index%
-    Up%Up%
-    Down_up_3%_up_3%
-    Down_up_2%_up_2%
-    Down_up_1%_up_1%
-    Down_up_0%_up_0%
-    Current%Headings
+   Prev%Prev%
+   Next%Next%
+   Across%Index%
+   Up%Up%
+   Down_up_3%_up_3%
+   Down_up_2%_up_2%
+   Down_up_1%_up_1%
+   Down_up_0%_up_0%
+   Current%Headings
 %$$
 $comment -------------------------------------------------------------
 default automatic indexing command for all CppAD documentaiton
@@ -39,21 +39,21 @@ $comment
 ==============================================================================
 $$
 $spell
-    cppad
-    templated
-    Microsoft
-    Cpp
-    http
-    www
-    seanet
-    bradbell
-    https
-    github
-    Jacobian
-    Jacobians
-    subgraph
-    Posix
-    Openmp
+   cppad
+   templated
+   Microsoft
+   Cpp
+   http
+   www
+   seanet
+   bradbell
+   https
+   github
+   Jacobian
+   Jacobians
+   subgraph
+   Posix
+   Openmp
 $$
 
 $comment bin/version assumes that : follows cppad version number here$$
@@ -69,17 +69,17 @@ $comment ------------------------------------------------------------------- $$
 
 $table
 $href%https://github.com/coin-or/CppAD/tags%
-    release%$$, $cnext
+   release%$$, $cnext
 $href%https://github.com/coin-or/CppAD/archive/20220000.4.tar.gz%
-    20220000.4%$$, $cnext
+   20220000.4%$$, $cnext
 $href%https://github.com/coin-or/CppAD%
-    github%$$, $cnext
+   github%$$, $cnext
 $href%https://travis-ci.org/coin-or/CppAD%
-    travis%$$, $cnext
+   travis%$$, $cnext
 $href%https://ci.appveyor.com/project/bradbell/cppad%
-    appveyor%$$, $cnext
+   appveyor%$$, $cnext
 $href%https://src.fedoraproject.org/rpms/cppad/blob/master/f/cppad.spec%
-    cppad.spec%$$ $cnext
+   cppad.spec%$$ $cnext
 $tend
 $pre
 

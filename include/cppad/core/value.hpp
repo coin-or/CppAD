@@ -8,7 +8,7 @@
 /*
 $begin Value$$
 $spell
-    const
+   const
 $$
 
 
@@ -29,13 +29,13 @@ $cref/base type/glossary/Base Type/$$.
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const AD<%Base%> &%x%
+   const AD<%Base%> &%x%
 %$$
 
 $head b$$
 The return value $icode b$$ has prototype
 $codei%
-    %Base% %b%
+   %Base% %b%
 %$$
 
 $head Operation Sequence$$
@@ -54,7 +54,7 @@ would not be included in the $code Value$$ result $icode b$$.
 
 $head Example$$
 $children%
-    example/general/value.cpp
+   example/general/value.cpp
 %$$
 The file
 $cref value.cpp$$
@@ -70,15 +70,15 @@ namespace CppAD {
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 Base Value(const AD<Base> &x)
-{   Base result;
-    //
-    CPPAD_ASSERT_KNOWN(
-        ! ( Variable(x) | Dynamic(x) ) ,
-        "Value: argument is a variable or dynamic parameter"
-    );
-    //
-    result = x.value_;
-    return result;
+{  Base result;
+   //
+   CPPAD_ASSERT_KNOWN(
+      ! ( Variable(x) | Dynamic(x) ) ,
+      "Value: argument is a variable or dynamic parameter"
+   );
+   //
+   result = x.value_;
+   return result;
 }
 
 }

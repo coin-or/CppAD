@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin qp_interior.hpp$$
 $spell
-    qp
+   qp
 $$
 
 $section qp_interior Source Code$$
 
 $srcfile%example/abs_normal/qp_interior.hpp%
-    0%// BEGIN C++%// END C++%
+   0%// BEGIN C++%// END C++%
 0%$$
 
 $end

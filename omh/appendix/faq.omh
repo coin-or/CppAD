@@ -5,14 +5,14 @@
 
 $begin Faq$$
 $spell
-    github
-    instantiating
-    faq
-    std
-    whatsnew
-    Namespace
-    CppAD
-    Lu
+   github
+   instantiating
+   faq
+   std
+   whatsnew
+   Namespace
+   CppAD
+   Lu
 $$
 
 $section Frequently Asked Questions and Answers$$
@@ -20,13 +20,13 @@ $section Frequently Asked Questions and Answers$$
 $head Assignment and Independent$$
 Why does the code sequence
 $codei%
-    Independent(%u%);
-    %v% = %u%[0];
+   Independent(%u%);
+   %v% = %u%[0];
 %$$
 behave differently from the code sequence
 $codei%
-    %v% = %u%[0];
-    Independent(%u%);
+   %v% = %u%[0];
+   Independent(%u%);
 %$$
 Before the call to $cref Independent$$,
 $icode%u%[0]%$$ is a $cref/parameter/glossary/Parameter/$$
@@ -72,15 +72,15 @@ $cref ADFun$$ template class.
 $head Complex Types$$
 Which of the following complex types is better:
 $codei%
-    AD< std::complex<%Base%> >
-    std::complex< AD<%Base%> >
+   AD< std::complex<%Base%> >
+   std::complex< AD<%Base%> >
 %$$
 The $cref/complex abs function/abs/Complex Types/$$ is differentiable
 with respect to its real and imaginary parts,
 but it is not complex differentiable.
 Thus one would prefer to use
 $codei%
-    std::complex< AD<%Base%> >
+   std::complex< AD<%Base%> >
 %$$
 On the other hand, the C++ standard only specifies
 $codei%std::complex<%Type%>%$$ where $icode Type$$ is

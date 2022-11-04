@@ -8,16 +8,16 @@
 /*
 $begin testvector$$
 $spell
-    CppAD
-    cmake
-    testvector
-    cppad
-    Eigen
-    ifdef
-    hpp
-    std
-    endif
-    ublas
+   CppAD
+   cmake
+   testvector
+   cppad
+   Eigen
+   ifdef
+   hpp
+   std
+   endif
+   ublas
 $$
 
 
@@ -33,12 +33,12 @@ which template class to use in the examples and tests; see below.
 This shows that any
 $cref/simple vector/SimpleVector/$$ class can be used in place of
 $codei%
-    CPPAD_TESTVECTOR(%Type%)
+   CPPAD_TESTVECTOR(%Type%)
 %$$
 When writing their own code,
 users can choose a specific simple vector they prefer; for example,
 $codei%
-    CppAD::vector<%Type%>
+   CppAD::vector<%Type%>
 %$$
 
 

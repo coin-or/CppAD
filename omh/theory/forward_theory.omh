@@ -5,7 +5,7 @@
 
 $begin ForwardTheory$$
 $spell
-    Taylor
+   Taylor
 $$
 
 $section The Theory of Forward Mode$$
@@ -99,14 +99,14 @@ z^{(j)} & = & \frac{1}{y^{(0)}} \left( x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)} 
 $head Standard Math Functions$$
 Suppose that $latex F $$ is a standard math function and
 $latex \[
-    Z(t) = F[ X(t) ]
+   Z(t) = F[ X(t) ]
 \]$$
 
 $subhead Differential Equation$$
 All of the standard math functions
 satisfy a differential equation of the form
 $latex \[
-    B(u) * F^{(1)} (u) - A(u) * F (u)  = D(u)
+   B(u) * F^{(1)} (u) - A(u) * F (u)  = D(u)
 \] $$
 We use $latex a$$, $latex b$$ and $latex d$$ to denote the
 $th p$$ order Taylor coefficient row vectors for
@@ -138,7 +138,7 @@ E(t) =  D[X(t)] + A[X(t)] * Z(t)
 
 We can compute the value of $latex z^{(0)}$$ using the formula
 $latex \[
-    z^{(0)} = F ( x^{(0)} )
+   z^{(0)} = F ( x^{(0)} )
 \]$$
 Suppose by induction (on $latex j$$) that we are given the
 Taylor coefficients of $latex E(t)$$ up to order $latex j-1$$; i.e.,
@@ -147,7 +147,7 @@ and the coefficients
 $latex z^{(k)}$$ for $latex k = 0 , \ldots , j$$.
 We can compute $latex e^{(j)}$$ using the formula
 $latex \[
-    e^{(j)} = d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
+   e^{(j)} = d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
 \] $$
 We need to complete the induction by finding formulas for $latex z^{(j+1)}$$.
 It follows from the definition of $latex E(t)$$ that
@@ -174,14 +174,14 @@ $latex  \[
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
-    - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+   \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+   - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
 \right)
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
-    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+   - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \end{array}
 \] $$
@@ -190,16 +190,16 @@ and $latex z^{(j+1)}$$.
 
 
 $children%
-    omh/theory/exp_forward.omh%
-    omh/theory/log_forward.omh%
-    omh/theory/sqrt_forward.omh%
-    omh/theory/sin_cos_forward.omh%
-    omh/theory/atan_forward.omh%
-    omh/theory/asin_forward.omh%
-    omh/theory/acos_forward.omh%
-    omh/theory/tan_forward.omh%
-    omh/theory/erf_forward.omh%
-    omh/theory/pow_forward.omh
+   omh/theory/exp_forward.omh%
+   omh/theory/log_forward.omh%
+   omh/theory/sqrt_forward.omh%
+   omh/theory/sin_cos_forward.omh%
+   omh/theory/atan_forward.omh%
+   omh/theory/asin_forward.omh%
+   omh/theory/acos_forward.omh%
+   omh/theory/tan_forward.omh%
+   omh/theory/erf_forward.omh%
+   omh/theory/pow_forward.omh
 %$$
 
 $subhead Cases that Apply Recursion Above$$

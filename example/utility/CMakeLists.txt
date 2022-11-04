@@ -4,43 +4,43 @@
 # ----------------------------------------------------------------------------
 #
 IF( use_cplusplus_2017_ok )
-    SET(dll_lib "dll_lib.cpp")
+   SET(dll_lib "dll_lib.cpp")
 ELSE( use_cplusplus_2017_ok )
-    SET(dll_lib "")
+   SET(dll_lib "")
 ENDIF( use_cplusplus_2017_ok )
 #
 # BEGIN_SORT_THIS_LINE_PLUS_3
 SET(source_list
-    ${dll_lib}
-    check_numeric_type.cpp
-    check_simple_vector.cpp
-    cppad_vector.cpp
-    error_handler.cpp
-    index_sort.cpp
-    lu_factor.cpp
-    lu_invert.cpp
-    lu_solve.cpp
-    nan.cpp
-    near_equal.cpp
-    ode_err_control.cpp
-    ode_err_maxabs.cpp
-    ode_gear.cpp
-    ode_gear_control.cpp
-    poly.cpp
-    pow_int.cpp
-    romberg_mul.cpp
-    romberg_one.cpp
-    rosen_34.cpp
-    runge45_1.cpp
-    runge_45.cpp
-    set_union.cpp
-    simple_vector.cpp
-    sparse_rc.cpp
-    sparse_rcv.cpp
-    thread_alloc.cpp
-    to_string.cpp
-    utility.cpp
-    vector_bool.cpp
+   ${dll_lib}
+   check_numeric_type.cpp
+   check_simple_vector.cpp
+   cppad_vector.cpp
+   error_handler.cpp
+   index_sort.cpp
+   lu_factor.cpp
+   lu_invert.cpp
+   lu_solve.cpp
+   nan.cpp
+   near_equal.cpp
+   ode_err_control.cpp
+   ode_err_maxabs.cpp
+   ode_gear.cpp
+   ode_gear_control.cpp
+   poly.cpp
+   pow_int.cpp
+   romberg_mul.cpp
+   romberg_one.cpp
+   rosen_34.cpp
+   runge45_1.cpp
+   runge_45.cpp
+   set_union.cpp
+   simple_vector.cpp
+   sparse_rc.cpp
+   sparse_rcv.cpp
+   thread_alloc.cpp
+   to_string.cpp
+   utility.cpp
+   vector_bool.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
@@ -50,8 +50,8 @@ ADD_EXECUTABLE(example_utility EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_utility
-    ${cppad_lib}
-    ${colpack_libs}
+   ${cppad_lib}
+   ${colpack_libs}
 )
 #
 # check_example_utility

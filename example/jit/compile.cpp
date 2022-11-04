@@ -6,7 +6,7 @@
 /*
 $begin jit_compile.cpp$$
 $spell
-    csrc
+   csrc
 $$
 
 $section JIT Compiler Options: Example and Test$$
@@ -37,112 +37,112 @@ $end
 
 # include <cppad/cppad.hpp>
 bool compile(void)
-{   bool ok = true;
-    //
-    using CppAD::AD;
-    using CppAD::ADFun;
-    using CppAD::Independent;
-    using CppAD::NearEqual;
-    //
-    // compile
-    std::string compile = "";
-    int flag;
+{  bool ok = true;
+   //
+   using CppAD::AD;
+   using CppAD::ADFun;
+   using CppAD::Independent;
+   using CppAD::NearEqual;
+   //
+   // compile
+   std::string compile = "";
+   int flag;
 # if CPPAD_C_COMPILER_MSVC
-    flag = std::system("cl 1> nul 2> nul");
-    if( flag == 0 )
-        compile = "cl /EHs /EHc /c /LD /TC /O2";
+   flag = std::system("cl 1> nul 2> nul");
+   if( flag == 0 )
+      compile = "cl /EHs /EHc /c /LD /TC /O2";
 # endif
 # if CPPAD_C_COMPILER_GNU
-    flag = std::system("gcc --version > temp");
-    if( flag == 0 )
-        compile = "gcc -c -fPIC -O2";
+   flag = std::system("gcc --version > temp");
+   if( flag == 0 )
+      compile = "gcc -c -fPIC -O2";
 # endif
 # if CPPAD_C_COMPILER_CLANG
 # ifndef __MINGW32__
-    // clang: error: unsupported option '-fPIC' for target
-    // 'x86_64-pc-windows-msys'
-    flag = std::system("clang --version > /dev/null");
-    if( flag == 0 )
-        compile = "clang -c -fPIC -O2";
+   // clang: error: unsupported option '-fPIC' for target
+   // 'x86_64-pc-windows-msys'
+   flag = std::system("clang --version > /dev/null");
+   if( flag == 0 )
+      compile = "clang -c -fPIC -O2";
 # endif
 # endif
-    //
-    if( compile == "" )
-        return ok;
-    // std::cout << "compile = " << compile << "\n";
-    //
-    // nx, ny
-    size_t nx = 2, ny = 1;
-    //
-    // f(x) = x_0 + x_1
-    CPPAD_TESTVECTOR( AD<double> ) ax(nx), ay(ny);
-    ax[0] = 0.0;
-    ax[1] = 1.0;
-    Independent(ax);
-    ay[0] = ax[0] + ax[1];
-    ADFun<double> f(ax, ay);
-    f.function_name_set("f");
-    //
-    // csrc_file
-    // created in std::filesystem::current_path
-    std::string c_type    = "double";
-    std::string csrc_file = "compile.c";
-    std::ofstream ofs;
-    ofs.open(csrc_file , std::ofstream::out);
-    f.to_csrc(ofs, c_type);
-    ofs.close();
-    //
-    // dll_file
-    // created in std::filesystem::current_path
-    std::string dll_file = "jit_compile" DLL_EXT;
-    CPPAD_TESTVECTOR( std::string) csrc_files(1);
-    csrc_files[0] = csrc_file;
-    std::map< std::string, std::string > options;
-    if( compile != "" )
-        options["compile"] = compile;
-    std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
-    if( err_msg != "" )
-    {   std::cerr << "jit_compile: err_msg = " << err_msg << "\n";
-        return false;
-    }
-    // dll_linker
-    CppAD::link_dll_lib dll_linker(dll_file, err_msg);
-    if( err_msg != "" )
-    {   std::cerr << "jit_compile: err_msg = " << err_msg << "\n";
-        return false;
-    }
-    //
-    // f_ptr
-    std::string function_name = "cppad_jit_f";
-    void* void_ptr = dll_linker(function_name, err_msg);
-    if( err_msg != "" )
-    {   std::cerr << "jit_compile: err_msg = " << err_msg << "\n";
-        return false;
-    }
-    //
-    // jit_double
-    using CppAD::jit_double;
-    //
-    // f_ptr
-    jit_double f_ptr =
-        reinterpret_cast<jit_double>(void_ptr);
-    //
-    // x, y, compare_change
-    // y = f(x)
-    size_t compare_change = 0;
-    std::vector<double> x(nx), y(ny);
-    x[0] = 0.3;
-    x[1] = 0.5;
-    f_ptr(nx, x.data(), ny, y.data(), &compare_change);
-    //
-    // ok
-    ok &= compare_change == 0;
-    //
-    // ok
-    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-    double check = x[0] + x[1];
-    ok &= NearEqual(y[0], check, eps99, eps99);
-    //
-    return ok;
+   //
+   if( compile == "" )
+      return ok;
+   // std::cout << "compile = " << compile << "\n";
+   //
+   // nx, ny
+   size_t nx = 2, ny = 1;
+   //
+   // f(x) = x_0 + x_1
+   CPPAD_TESTVECTOR( AD<double> ) ax(nx), ay(ny);
+   ax[0] = 0.0;
+   ax[1] = 1.0;
+   Independent(ax);
+   ay[0] = ax[0] + ax[1];
+   ADFun<double> f(ax, ay);
+   f.function_name_set("f");
+   //
+   // csrc_file
+   // created in std::filesystem::current_path
+   std::string c_type    = "double";
+   std::string csrc_file = "compile.c";
+   std::ofstream ofs;
+   ofs.open(csrc_file , std::ofstream::out);
+   f.to_csrc(ofs, c_type);
+   ofs.close();
+   //
+   // dll_file
+   // created in std::filesystem::current_path
+   std::string dll_file = "jit_compile" DLL_EXT;
+   CPPAD_TESTVECTOR( std::string) csrc_files(1);
+   csrc_files[0] = csrc_file;
+   std::map< std::string, std::string > options;
+   if( compile != "" )
+      options["compile"] = compile;
+   std::string err_msg = CppAD::create_dll_lib(dll_file, csrc_files, options);
+   if( err_msg != "" )
+   {  std::cerr << "jit_compile: err_msg = " << err_msg << "\n";
+      return false;
+   }
+   // dll_linker
+   CppAD::link_dll_lib dll_linker(dll_file, err_msg);
+   if( err_msg != "" )
+   {  std::cerr << "jit_compile: err_msg = " << err_msg << "\n";
+      return false;
+   }
+   //
+   // f_ptr
+   std::string function_name = "cppad_jit_f";
+   void* void_ptr = dll_linker(function_name, err_msg);
+   if( err_msg != "" )
+   {  std::cerr << "jit_compile: err_msg = " << err_msg << "\n";
+      return false;
+   }
+   //
+   // jit_double
+   using CppAD::jit_double;
+   //
+   // f_ptr
+   jit_double f_ptr =
+      reinterpret_cast<jit_double>(void_ptr);
+   //
+   // x, y, compare_change
+   // y = f(x)
+   size_t compare_change = 0;
+   std::vector<double> x(nx), y(ny);
+   x[0] = 0.3;
+   x[1] = 0.5;
+   f_ptr(nx, x.data(), ny, y.data(), &compare_change);
+   //
+   // ok
+   ok &= compare_change == 0;
+   //
+   // ok
+   double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+   double check = x[0] + x[1];
+   ok &= NearEqual(y[0], check, eps99, eps99);
+   //
+   return ok;
 }
 // END C++

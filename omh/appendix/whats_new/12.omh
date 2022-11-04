@@ -6,62 +6,62 @@
 $begin whats_new_12$$
 $dollar @$$
 $spell
-    autotools
-    plugin
-    checkpointing
-    Jacobians
-    doxygen
-    txt
-    sys
-    stdbool
-    datadir
-    pkgconfig
-    cppad_ipopt_nlp
-    includedir includedirs
-    libdir libdirs
-    Ubuntu
-    Microsoft
-    cmake
-    CondExpOp
-    src
-    std
-    hes
-    dw
-    uninitialised
-    resize
-    bool
-    taddr
-    eigen
-    fabs
-    mul
-    det_lu
-    adolc
-    fadbad
-    sacado
-    CppADvector
-    retape
-    Jacobian
-    dir
-    -lteuchos
-    trilinos
-    inorder
-    pthread
-    helgrind
-    Taylor
-    Debian
-    valgrind
-    num
-    alloc
-    makefile
-    hpp
-    gcc
-    cppad-%yyyymmdd%
-    lpthread
-    xout
-    fabs
-    fcur
-    CppAD
-    openmp
+   autotools
+   plugin
+   checkpointing
+   Jacobians
+   doxygen
+   txt
+   sys
+   stdbool
+   datadir
+   pkgconfig
+   cppad_ipopt_nlp
+   includedir includedirs
+   libdir libdirs
+   Ubuntu
+   Microsoft
+   cmake
+   CondExpOp
+   src
+   std
+   hes
+   dw
+   uninitialised
+   resize
+   bool
+   taddr
+   eigen
+   fabs
+   mul
+   det_lu
+   adolc
+   fadbad
+   sacado
+   CppADvector
+   retape
+   Jacobian
+   dir
+   -lteuchos
+   trilinos
+   inorder
+   pthread
+   helgrind
+   Taylor
+   Debian
+   valgrind
+   num
+   alloc
+   makefile
+   hpp
+   gcc
+   cppad-%yyyymmdd%
+   lpthread
+   xout
+   fabs
+   fcur
+   CppAD
+   openmp
 $$
 
 $section CppAD Changes and Additions During 2012$$
@@ -178,11 +178,11 @@ $lnext
 The $cref cmake$$ installation was putting the $code cppad.pc$$
 $cref pkgconfig$$ file in
 $codei%
-    cppad_prefix%/cmake_install_datadir%/cppad.pc
+   cppad_prefix%/cmake_install_datadir%/cppad.pc
 %$$
 This has been fixed and is now
 $codei%
-    cppad_prefix%/cmake_install_datadir%/pkgconfig/cppad.pc
+   cppad_prefix%/cmake_install_datadir%/pkgconfig/cppad.pc
 %$$
 $lnext
 The $cref pkgconfig$$ documentation has been improved.
@@ -441,7 +441,7 @@ Fix a bug in error checking during $cref optimize$$ procedure
 had the following $code valgrind$$ symptom during the
 $code optimize.cpp$$ example:
 $codep
-    ==6344== Conditional jump or move depends on uninitialised value(s)
+   ==6344== Conditional jump or move depends on uninitialised value(s)
 $$
 $lnext
 Fix mistake in old_tan.cpp where $code w[2] = 0$$
@@ -485,7 +485,7 @@ Fix bug in $cref atomic_one$$ functions identification of variables
 that caused old_tan.cpp to fail with error message
 $codep
 Error detected by false result for
-    y_taddr > 0
+   y_taddr > 0
 at line 262 in the file cppad/local/dependent.hpp
 $$
 
@@ -501,8 +501,8 @@ $list number$$
 Change $cref cppad_eigen.hpp$$
 to match new specifications and example in eigen help files on
 $href%
-    http://eigen.tuxfamily.org/dox/TopicCustomizingEigen.html%
-    customizing and extending eigen.
+   http://eigen.tuxfamily.org/dox/TopicCustomizingEigen.html%
+   customizing and extending eigen.
 %$$
 $lnext
 Fix bug whereby a newly constructed $cref VecAD$$ object was a
@@ -758,23 +758,23 @@ directory.
 If you then edited the file $code work/multi_thread/makefile$$
 and changed
 $codep
-    # AM_CXXFLAGS     = -g @(CXX_FLAGS)
-    AM_CXXFLAGS = -DNDEBUG -O2 @(CXX_FLAGS)
+   # AM_CXXFLAGS     = -g @(CXX_FLAGS)
+   AM_CXXFLAGS = -DNDEBUG -O2 @(CXX_FLAGS)
 $$
 to
 $codep
-    AM_CXXFLAGS     = -g @(CXX_FLAGS)
-    # AM_CXXFLAGS = -DNDEBUG -O2 @(CXX_FLAGS)
+   AM_CXXFLAGS     = -g @(CXX_FLAGS)
+   # AM_CXXFLAGS = -DNDEBUG -O2 @(CXX_FLAGS)
 $$
 and then executed the commands
 $codep
-    make clean
-    make pthread_test
-    valgrind --tool=helgrind ./pthread_test simple_ad
+   make clean
+   make pthread_test
+   valgrind --tool=helgrind ./pthread_test simple_ad
 $$
 The following error message would result:
 $icode%
-    ... snip ...%
+   ... snip ...%
 ==7041== Possible data race during write of size 4 at 0x8077460 by thread #1
 ==7041==    at 0x804FE23: CppAD::AD<double>::tape_new() (tape_link.hpp:221)
 %   ... snip ...

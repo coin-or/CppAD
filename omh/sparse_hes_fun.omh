@@ -5,9 +5,9 @@
 
 $begin sparse_hes_fun.hpp$$
 $spell
-    hes
-    ifndef
-    endif
+   hes
+   ifndef
+   endif
 $$
 
 $section Source: sparse_hes_fun$$

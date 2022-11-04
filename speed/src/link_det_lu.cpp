@@ -10,19 +10,19 @@
 
 // BEGIN PROTOTYPE
 extern bool link_det_lu(
-    size_t                     size      ,
-    size_t                     repeat    ,
-    CppAD::vector<double>&     matrix    ,
-    CppAD::vector<double>&     gradient
+   size_t                     size      ,
+   size_t                     repeat    ,
+   CppAD::vector<double>&     matrix    ,
+   CppAD::vector<double>&     gradient
 );
 // END PROTOTYPE
 /*
 -------------------------------------------------------------------------------
 $begin link_det_lu$$
 $spell
-    det_lu
-    bool
-    CppAD
+   det_lu
+   bool
+   CppAD
 $$
 
 
@@ -30,7 +30,7 @@ $section Speed Testing Gradient of Determinant Using Lu Factorization$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
+   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
 %$$
 
 $head Purpose$$
@@ -81,43 +81,43 @@ $end
 // The routines below are documented in dev_link.omh
 // ---------------------------------------------------------------------------
 namespace {
-    void time_det_lu_callback(size_t size, size_t repeat)
-    {   // free statically allocated memory
-        if( size == 0 && repeat == 0 )
-            return;
-        //
-        CppAD::vector<double> matrix(size * size);
-        CppAD::vector<double> gradient(size * size);
+   void time_det_lu_callback(size_t size, size_t repeat)
+   {  // free statically allocated memory
+      if( size == 0 && repeat == 0 )
+         return;
+      //
+      CppAD::vector<double> matrix(size * size);
+      CppAD::vector<double> gradient(size * size);
 
-        link_det_lu(size, repeat, matrix, gradient);
-        return;
-    }
+      link_det_lu(size, repeat, matrix, gradient);
+      return;
+   }
 }
 // ---------------------------------------------------------------------------
 bool available_det_lu(void)
-{   size_t size   = 3;
-    size_t repeat = 1;
-    CppAD::vector<double> matrix(size * size);
-    CppAD::vector<double> gradient(size * size);
+{  size_t size   = 3;
+   size_t repeat = 1;
+   CppAD::vector<double> matrix(size * size);
+   CppAD::vector<double> gradient(size * size);
 
-    return link_det_lu(size, repeat, matrix, gradient);
+   return link_det_lu(size, repeat, matrix, gradient);
 }
 // ---------------------------------------------------------------------------
 bool correct_det_lu(bool is_package_double)
-{   size_t size   = 3;
-    size_t repeat = 1;
-    CppAD::vector<double> matrix(size * size);
-    CppAD::vector<double> gradient(size * size);
+{  size_t size   = 3;
+   size_t repeat = 1;
+   CppAD::vector<double> matrix(size * size);
+   CppAD::vector<double> gradient(size * size);
 
-    link_det_lu(size, repeat, matrix, gradient);
-    bool ok;
-    if( is_package_double )
-        ok = CppAD::det_33(matrix, gradient);
-    else
-        ok = CppAD::det_grad_33(matrix, gradient);
-    return ok;
+   link_det_lu(size, repeat, matrix, gradient);
+   bool ok;
+   if( is_package_double )
+      ok = CppAD::det_33(matrix, gradient);
+   else
+      ok = CppAD::det_grad_33(matrix, gradient);
+   return ok;
 }
 // ---------------------------------------------------------------------------
 double time_det_lu(double time_min, size_t size)
-{   return CppAD::time_test(time_det_lu_callback, time_min, size);
+{  return CppAD::time_test(time_det_lu_callback, time_min, size);
 }

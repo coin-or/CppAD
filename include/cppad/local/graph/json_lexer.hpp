@@ -19,8 +19,8 @@ class json_lexer {
 -------------------------------------------------------------------------------
 $begin json_lexer_member_data$$
 $spell
-    json
-    lexer
+   json
+   lexer
 $$
 
 $section json lexer: Private Data$$
@@ -65,32 +65,32 @@ sets the value of $code function_name_$$.
 $head Source Code$$
 $srccode%hpp% */
 private:
-    const std::string& json_;
-    size_t             index_;
-    size_t             line_number_;
-    size_t             char_number_;
-    std::string        token_;
-    std::string        function_name_;
+   const std::string& json_;
+   size_t             index_;
+   size_t             line_number_;
+   size_t             char_number_;
+   std::string        token_;
+   std::string        function_name_;
 public:
-    const std::string& token(void)       const;
-    size_t             line_number(void) const;
-    size_t             char_number(void) const;
-    void               set_function_name(const std::string& function_name);
+   const std::string& token(void)       const;
+   size_t             line_number(void) const;
+   size_t             char_number(void) const;
+   void               set_function_name(const std::string& function_name);
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_lexer_report_error$$
 $spell
-    json
-    lexer
-    CppAD
+   json
+   lexer
+   CppAD
 $$
 
 $section json lexer: Report an Error$$
 
 $head Syntax$$
 $codei%
-    %json_lexer%.report_error(%expected%, %found%)
+   %json_lexer%.report_error(%expected%, %found%)
 %$$
 
 $head json_lexer$$
@@ -109,21 +109,21 @@ an error parsing this Json AD graph.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    void report_error(const std::string& expected, const std::string& found);
+   void report_error(const std::string& expected, const std::string& found);
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_lexer_next_index$$
 $spell
-    json
-    lexer
+   json
+   lexer
 $$
 
 $section json lexer: Advance Index by One$$
 
 $head Syntax$$
 $codei%
-    %json_lexer%.next_index()
+   %json_lexer%.next_index()
 %$$
 
 $head json_lexer$$
@@ -146,21 +146,21 @@ Otherwise, $code char_number_$$ is increased by one.
 $head Prototype$$
 $srccode%hpp% */
 private:
-    void next_index(void);
+   void next_index(void);
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_lexer_skip_white_space$$
 $spell
-    json
-    lexer
+   json
+   lexer
 $$
 
 $section json lexer: Skip White Space That Separates Tokens$$
 
 $head Syntax$$
 $codei%
-    %json_lexer%.skip_white_space()
+   %json_lexer%.skip_white_space()
 %$$
 
 $head json_lexer$$
@@ -174,24 +174,24 @@ to $code json_.size()$$.
 $head Prototype$$
 $srccode%hpp% */
 private:
-    void skip_white_space(void);
+   void skip_white_space(void);
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_lexer_constructor$$
 $spell
-    json
-    lexer
-    enum
-    op
-    arg
+   json
+   lexer
+   enum
+   op
+   arg
 $$
 
 $section json lexer: Constructor$$
 
 $head Syntax$$
 $codei%
-    local::graph::lexer %json_lexer%(%json%)
+   local::graph::lexer %json_lexer%(%json%)
 %$$
 
 $head json$$
@@ -208,22 +208,22 @@ the error is reported and the constructor does not return.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    json_lexer(const std::string& json);
+   json_lexer(const std::string& json);
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_lexer_check_next_char$$
 $spell
-    json
-    lexer
-    ch
+   json
+   lexer
+   ch
 $$
 
 $section Get and Check Next Single Character Token$$
 
 $head Syntax$$
 $codei%
-    %json_lexer%.check_next_char(%ch%)
+   %json_lexer%.check_next_char(%ch%)
 %$$
 
 $head index_$$
@@ -247,21 +247,21 @@ and contains the character that is found.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    void check_next_char(char ch);
+   void check_next_char(char ch);
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_lexer_check_next_string$$
 $spell
-    json
-    lexer
+   json
+   lexer
 $$
 
 $section Get and Check Next Single Character Token$$
 
 $head Syntax$$
 $codei%
-    %json_lexer%.check_next_string(%expected%)
+   %json_lexer%.check_next_string(%expected%)
 %$$
 
 $head index_$$
@@ -283,23 +283,23 @@ $icode token_$$ is the string that was found.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    void check_next_string(const std::string& expected);
+   void check_next_string(const std::string& expected);
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_lexer_next_non_neg_int$$
 $spell
-    json
-    lexer
-    neg
+   json
+   lexer
+   neg
 $$
 
 $section Get Next Non-Negative Integer$$
 
 $head Syntax$$
 $codei%
-    %json_lexer%.next_non_neg_int()
-    %value% = %json_lexer%.token2size_t()
+   %json_lexer%.next_non_neg_int()
+   %value% = %json_lexer%.token2size_t()
 %$$
 
 $head index_$$
@@ -318,24 +318,24 @@ $icode value$$ is the corresponding value.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    void next_non_neg_int(void);
-    size_t token2size_t(void) const;
+   void next_non_neg_int(void);
+   size_t token2size_t(void) const;
 
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin json_lexer_next_float$$
 $spell
-    json
-    lexer
+   json
+   lexer
 $$
 
 $section Get Next Floating Point Number$$
 
 $head Syntax$$
 $codei%
-    %ok%    = %json_lexer%.next_float()
-    %value% = %json_lexer%.token2double()
+   %ok%    = %json_lexer%.next_float()
+   %value% = %json_lexer%.token2double()
 %$$
 
 $head index_$$
@@ -354,8 +354,8 @@ $icode value$$ is the corresponding value.
 $head Prototype$$
 $srccode%hpp% */
 public:
-    void next_float(void);
-    double token2double(void) const;
+   void next_float(void);
+   double token2double(void) const;
 
 /* %$$
 $end

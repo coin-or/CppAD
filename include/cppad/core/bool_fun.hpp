@@ -8,10 +8,10 @@
 /*
 $begin BoolFun$$
 $spell
-    namespace
-    bool
-    CppAD
-    const
+   namespace
+   bool
+   CppAD
+   const
 $$
 
 
@@ -45,7 +45,7 @@ argument has type $codei%AD<%Base%>%$$.
 $head u$$
 The argument $icode u$$ has prototype
 $codei%
-    const %Base% &%u%
+   const %Base% &%u%
 %$$
 It is the value at which the user provided version of $icode unary_name$$
 is to be evaluated.
@@ -55,7 +55,7 @@ user provided version of $icode binary_name$$.
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const AD<%Base%> &%x%
+   const AD<%Base%> &%x%
 %$$
 It is the value at which the CppAD provided version of $icode unary_name$$
 is to be evaluated.
@@ -65,13 +65,13 @@ CppAD provided version of $icode binary_name$$.
 $head b$$
 The result $icode b$$ has prototype
 $codei%
-    bool %b%
+   bool %b%
 %$$
 
 $head Create Unary$$
 The preprocessor macro invocation
 $codei%
-    CPPAD_BOOL_UNARY(%Base%, %unary_name%)
+   CPPAD_BOOL_UNARY(%Base%, %unary_name%)
 %$$
 defines the version of $icode unary_name$$ with a $codei%AD<%Base%>%$$
 argument.
@@ -90,7 +90,7 @@ arguments have type $codei%AD<%Base%>%$$.
 $head v$$
 The argument $icode v$$ has prototype
 $codei%
-    const %Base% &%v%
+   const %Base% &%v%
 %$$
 It is the second argument to
 the user provided version of $icode binary_name$$.
@@ -98,7 +98,7 @@ the user provided version of $icode binary_name$$.
 $head y$$
 The argument $icode x$$ has prototype
 $codei%
-    const AD<%Base%> &%y%
+   const AD<%Base%> &%y%
 %$$
 It is the second argument to
 the CppAD provided version of $icode binary_name$$.
@@ -106,7 +106,7 @@ the CppAD provided version of $icode binary_name$$.
 $head Create Binary$$
 The preprocessor macro invocation
 $codei%
-    CPPAD_BOOL_BINARY(%Base%, %binary_name%)
+   CPPAD_BOOL_BINARY(%Base%, %binary_name%)
 %$$
 defines the version of $icode binary_name$$ with $codei%AD<%Base%>%$$
 arguments.
@@ -124,7 +124,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-    example/general/bool_fun.cpp
+   example/general/bool_fun.cpp
 %$$
 The file
 $cref bool_fun.cpp$$
@@ -178,11 +178,11 @@ is the argument where we are evaluating the function.
 */
 template <class Base>
 bool AD<Base>::UnaryBool(
-    bool FunName(const Base &x),
-    const AD<Base> &x
+   bool FunName(const Base &x),
+   const AD<Base> &x
 )
 {
-    return FunName(x.value_);
+   return FunName(x.value_);
 }
 
 /*!
@@ -223,11 +223,11 @@ is the second argument where we are evaluating the function at.
 */
 template <class Base>
 bool AD<Base>::BinaryBool(
-    bool FunName(const Base &x, const Base &y),
-    const AD<Base> &x, const AD<Base> &y
+   bool FunName(const Base &x, const Base &y),
+   const AD<Base> &x, const AD<Base> &y
 )
 {
-    return FunName(x.value_, y.value_);
+   return FunName(x.value_, y.value_);
 }
 
 } // END_CPPAD_NAMESPACE

@@ -7,24 +7,24 @@
 /*
 $begin min_nso_quad$$
 $spell
-    hpp
-    qp
-    nso
-    jac
-    Jacobian
-    maxitr
-    smo
+   hpp
+   qp
+   nso
+   jac
+   Jacobian
+   maxitr
+   smo
 $$
 $section Non-Smooth Optimization Using Abs-normal Quadratic Approximations$$
 
 $head Syntax$$
 $icode%ok% = min_nso_quad(
-    %level%, %f%, %g%, %a%, %epsilon%, %maxitr%, %b_in%, %x_in%, %x_out%
+   %level%, %f%, %g%, %a%, %epsilon%, %maxitr%, %b_in%, %x_in%, %x_out%
 )%$$
 
 $head Prototype$$
 $srcthisfile%
-    0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+   0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
 $head Source$$
@@ -106,7 +106,7 @@ To be specific, if $latex b$$ is the current trust region size,
 at each iteration affine approximation is minimized with respect to
 $latex \Delta x$$ and subject to
 $latex \[
-    -b \leq \Delta x_j \leq b
+   -b \leq \Delta x_j \leq b
 \] $$
 for $icode%j% = 0 , %...%, %n%-1%$$.
 It must hold that $icode%b_in% > %epsilon%[0]%$$.
@@ -125,7 +125,7 @@ of the abs-normal approximation for $latex f(x)$$ over the trust region
 is $latex x = \hat{x} + \Delta x$$.
 
 $children%example/abs_normal/min_nso_quad.cpp
-    %example/abs_normal/min_nso_quad.omh
+   %example/abs_normal/min_nso_quad.omh
 %$$
 $head Example$$
 The file $cref min_nso_quad.cpp$$ contains an example and test of
@@ -140,18 +140,18 @@ $end
 
 // BEGIN C++
 namespace {
-    CPPAD_TESTVECTOR(double) min_nso_quad_join(
-        const CPPAD_TESTVECTOR(double)& x ,
-        const CPPAD_TESTVECTOR(double)& u )
-    {   size_t n = x.size();
-        size_t s = u.size();
-        CPPAD_TESTVECTOR(double) xu(n + s);
-        for(size_t j = 0; j < n; j++)
-            xu[j] = x[j];
-        for(size_t j = 0; j < s; j++)
-            xu[n + j] = u[j];
-        return xu;
-    }
+   CPPAD_TESTVECTOR(double) min_nso_quad_join(
+      const CPPAD_TESTVECTOR(double)& x ,
+      const CPPAD_TESTVECTOR(double)& u )
+   {  size_t n = x.size();
+      size_t s = u.size();
+      CPPAD_TESTVECTOR(double) xu(n + s);
+      for(size_t j = 0; j < n; j++)
+         xu[j] = x[j];
+      for(size_t j = 0; j < s; j++)
+         xu[n + j] = u[j];
+      return xu;
+   }
 }
 
 // BEGIN C++
@@ -160,188 +160,188 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class DblVector, class SizeVector>
 bool min_nso_quad(
-    size_t           level     ,
-    ADFun<double>&   f         ,
-    ADFun<double>&   g         ,
-    ADFun<double>&   a         ,
-    const DblVector& epsilon   ,
-    SizeVector       maxitr    ,
-    double           b_in      ,
-    const DblVector& x_in      ,
-    DblVector&       x_out     )
+   size_t           level     ,
+   ADFun<double>&   f         ,
+   ADFun<double>&   g         ,
+   ADFun<double>&   a         ,
+   const DblVector& epsilon   ,
+   SizeVector       maxitr    ,
+   double           b_in      ,
+   const DblVector& x_in      ,
+   DblVector&       x_out     )
 // END PROTOTYPE
 {
-    using std::fabs;
-    //
-    // number of absolute value terms
-    size_t s  = a.Range();
-    //
-    // size of domain for f
-    size_t n  = f.Domain();
-    //
-    // size of range space for f
-    size_t m = f.Range();
-    //
-    CPPAD_ASSERT_KNOWN( g.Domain() == n + s,
-        "min_nso_quad: (g, a) is not an abs-normal for for f"
-    );
-    CPPAD_ASSERT_KNOWN( g.Range() == m + s,
-        "min_nso_quad: (g, a) is not an abs-normal for for f"
-    );
-    CPPAD_ASSERT_KNOWN(
-        level <= 5,
-        "min_nso_quad: level is not less that or equal 5"
-    );
-    CPPAD_ASSERT_KNOWN(
-        size_t(epsilon.size()) == 2,
-        "min_nso_quad: size of epsilon not equal to 2"
-    );
-    CPPAD_ASSERT_KNOWN(
-        size_t(maxitr.size()) == 3,
-        "min_nso_quad: size of maxitr not equal to 3"
-    );
-    CPPAD_ASSERT_KNOWN(
-        g.Domain() > s && g.Range() > s,
-        "min_nso_quad: g, a is not an abs-normal representation"
-    );
-    CPPAD_ASSERT_KNOWN(
-        m == 1,
-        "min_nso_quad: m is not equal to 1"
-    );
-    CPPAD_ASSERT_KNOWN(
-        size_t(x_in.size()) == n,
-        "min_nso_quad: size of x_in not equal to n"
-    );
-    CPPAD_ASSERT_KNOWN(
-        size_t(x_out.size()) == n,
-        "min_nso_quad: size of x_out not equal to n"
-    );
-    CPPAD_ASSERT_KNOWN(
-        epsilon[0] < b_in,
-        "min_nso_quad: b_in <= epsilon[0]"
-    );
-    if( level > 0 )
-    {   std::cout << "start min_nso_quad\n";
-        std::cout << "b_in = " << b_in << "\n";
-        CppAD::abs_print_mat("x_in", n, 1, x_in);
-    }
-    // level in abs_min_quad sub-problem
-    size_t level_tilde = 0;
-    if( level > 0 )
-        level_tilde = level - 1;
-    //
-    // maxitr in abs_min_quad sub-problem
-    SizeVector maxitr_tilde(2);
-    maxitr_tilde[0] = maxitr[1];
-    maxitr_tilde[1] = maxitr[2];
-    //
-    // epsilon in abs_min_quad sub-problem
-    DblVector eps_tilde(2);
-    eps_tilde[0] = epsilon[0] / 10.;
-    eps_tilde[1] = epsilon[1] / 10.;
-    //
-    // current bound
-    double b_cur = b_in;
-    //
-    // initilaize the current x
-    x_out = x_in;
-    //
-    // value of a(x) at current x
-    DblVector a_cur = a.Forward(0, x_out);
-    //
-    // (x_out, a_cur)
-    DblVector xu_cur = min_nso_quad_join(x_out, a_cur);
-    //
-    // value of g[ x_cur, a_cur ]
-    DblVector g_cur = g.Forward(0, xu_cur);
-    //
-    for(size_t itr = 0; itr < maxitr[0]; itr++)
-    {
-        // Jacobian of g[ x_cur, a_cur ]
-        DblVector g_jac = g.Jacobian(xu_cur);
-        //
-        // Hessian at x_cur
-        DblVector f_hes = f.Hessian(x_out, 0);
-        //
-        // bound in abs_min_quad sub-problem
-        DblVector bound_tilde(n);
-        for(size_t j = 0; j < n; j++)
-            bound_tilde[j] = b_cur;
-        //
-        DblVector delta_x(n);
-        bool ok = abs_min_quad(
-            level_tilde, n, m, s,
-            g_cur, g_jac, f_hes, bound_tilde, eps_tilde, maxitr_tilde, delta_x
-        );
-        if( ! ok )
-        {   if( level > 0 )
-                std::cout << "end min_nso_quad: abs_min_quad failed\n";
-            return false;
-        }
-        //
-        // new candidate value for x
-        DblVector x_new(n);
-        double max_delta_x = 0.0;
-        for(size_t j = 0; j < n; j++)
-        {   x_new[j] = x_out[j] + delta_x[j];
-            max_delta_x = std::max(max_delta_x, std::fabs( delta_x[j] ) );
-        }
-        //
-        if( max_delta_x < 0.75 * b_cur && max_delta_x < epsilon[0] )
-        {   if( level > 0 )
-                std::cout << "end min_nso_quad: delta_x is near zero\n";
-            return true;
-        }
-        // value of abs-normal approximation at minimizer
-        DblVector g_tilde = CppAD::abs_eval(n, m, s, g_cur, g_jac, delta_x);
-        //
-        double derivative = (g_tilde[0] - g_cur[0]) / max_delta_x;
-        CPPAD_ASSERT_UNKNOWN( derivative <= 0.0 )
-        if( - epsilon[1] < derivative )
-        {   if( level > 0 )
-                std::cout << "end min_nso_quad: derivative near zero\n";
-            return true;
-        }
-        //
-        // value of a(x) at new x
-        DblVector a_new = a.Forward(0, x_new);
-        //
-        // (x_new, a_new)
-        DblVector xu_new = min_nso_quad_join(x_new, a_new);
-        //
-        // value of g[ x_new, a_new ]
-        DblVector g_new = g.Forward(0, xu_new);
-        //
-        // check for descent of objective
-        double rate_new = (g_new[0] - g_cur[0]) / max_delta_x;
-        if( - epsilon[1] < rate_new )
-        {   // did not get sufficient descent
-            b_cur /= 2.0;
-            if( level > 0 )
-                std::cout << "itr = " << itr
-                << ", rate_new = " << rate_new
-                << ", b_cur = " << b_cur << "\n";
-            //
-        }
-        else
-        {   // got sufficient descent so accept candidate for x
-            x_out  = x_new;
-            a_cur  = a_new;
-            g_cur  = g_new;
-            xu_cur = xu_new;
-            //
-            if( level >  0 )
-            {   std::cout << "itr = " << itr
-                << ", derivative = "<< derivative
-                << ", max_delta_x = "<< max_delta_x
-                << ", objective = " << g_cur[0] << "\n";
-                abs_print_mat("x_out", n, 1, x_out);
-            }
-        }
-    }
-    if( level > 0 )
-        std::cout << "end min_nso_quad: maximum number of iterations exceeded\n";
-    return false;
+   using std::fabs;
+   //
+   // number of absolute value terms
+   size_t s  = a.Range();
+   //
+   // size of domain for f
+   size_t n  = f.Domain();
+   //
+   // size of range space for f
+   size_t m = f.Range();
+   //
+   CPPAD_ASSERT_KNOWN( g.Domain() == n + s,
+      "min_nso_quad: (g, a) is not an abs-normal for for f"
+   );
+   CPPAD_ASSERT_KNOWN( g.Range() == m + s,
+      "min_nso_quad: (g, a) is not an abs-normal for for f"
+   );
+   CPPAD_ASSERT_KNOWN(
+      level <= 5,
+      "min_nso_quad: level is not less that or equal 5"
+   );
+   CPPAD_ASSERT_KNOWN(
+      size_t(epsilon.size()) == 2,
+      "min_nso_quad: size of epsilon not equal to 2"
+   );
+   CPPAD_ASSERT_KNOWN(
+      size_t(maxitr.size()) == 3,
+      "min_nso_quad: size of maxitr not equal to 3"
+   );
+   CPPAD_ASSERT_KNOWN(
+      g.Domain() > s && g.Range() > s,
+      "min_nso_quad: g, a is not an abs-normal representation"
+   );
+   CPPAD_ASSERT_KNOWN(
+      m == 1,
+      "min_nso_quad: m is not equal to 1"
+   );
+   CPPAD_ASSERT_KNOWN(
+      size_t(x_in.size()) == n,
+      "min_nso_quad: size of x_in not equal to n"
+   );
+   CPPAD_ASSERT_KNOWN(
+      size_t(x_out.size()) == n,
+      "min_nso_quad: size of x_out not equal to n"
+   );
+   CPPAD_ASSERT_KNOWN(
+      epsilon[0] < b_in,
+      "min_nso_quad: b_in <= epsilon[0]"
+   );
+   if( level > 0 )
+   {  std::cout << "start min_nso_quad\n";
+      std::cout << "b_in = " << b_in << "\n";
+      CppAD::abs_print_mat("x_in", n, 1, x_in);
+   }
+   // level in abs_min_quad sub-problem
+   size_t level_tilde = 0;
+   if( level > 0 )
+      level_tilde = level - 1;
+   //
+   // maxitr in abs_min_quad sub-problem
+   SizeVector maxitr_tilde(2);
+   maxitr_tilde[0] = maxitr[1];
+   maxitr_tilde[1] = maxitr[2];
+   //
+   // epsilon in abs_min_quad sub-problem
+   DblVector eps_tilde(2);
+   eps_tilde[0] = epsilon[0] / 10.;
+   eps_tilde[1] = epsilon[1] / 10.;
+   //
+   // current bound
+   double b_cur = b_in;
+   //
+   // initilaize the current x
+   x_out = x_in;
+   //
+   // value of a(x) at current x
+   DblVector a_cur = a.Forward(0, x_out);
+   //
+   // (x_out, a_cur)
+   DblVector xu_cur = min_nso_quad_join(x_out, a_cur);
+   //
+   // value of g[ x_cur, a_cur ]
+   DblVector g_cur = g.Forward(0, xu_cur);
+   //
+   for(size_t itr = 0; itr < maxitr[0]; itr++)
+   {
+      // Jacobian of g[ x_cur, a_cur ]
+      DblVector g_jac = g.Jacobian(xu_cur);
+      //
+      // Hessian at x_cur
+      DblVector f_hes = f.Hessian(x_out, 0);
+      //
+      // bound in abs_min_quad sub-problem
+      DblVector bound_tilde(n);
+      for(size_t j = 0; j < n; j++)
+         bound_tilde[j] = b_cur;
+      //
+      DblVector delta_x(n);
+      bool ok = abs_min_quad(
+         level_tilde, n, m, s,
+         g_cur, g_jac, f_hes, bound_tilde, eps_tilde, maxitr_tilde, delta_x
+      );
+      if( ! ok )
+      {  if( level > 0 )
+            std::cout << "end min_nso_quad: abs_min_quad failed\n";
+         return false;
+      }
+      //
+      // new candidate value for x
+      DblVector x_new(n);
+      double max_delta_x = 0.0;
+      for(size_t j = 0; j < n; j++)
+      {  x_new[j] = x_out[j] + delta_x[j];
+         max_delta_x = std::max(max_delta_x, std::fabs( delta_x[j] ) );
+      }
+      //
+      if( max_delta_x < 0.75 * b_cur && max_delta_x < epsilon[0] )
+      {  if( level > 0 )
+            std::cout << "end min_nso_quad: delta_x is near zero\n";
+         return true;
+      }
+      // value of abs-normal approximation at minimizer
+      DblVector g_tilde = CppAD::abs_eval(n, m, s, g_cur, g_jac, delta_x);
+      //
+      double derivative = (g_tilde[0] - g_cur[0]) / max_delta_x;
+      CPPAD_ASSERT_UNKNOWN( derivative <= 0.0 )
+      if( - epsilon[1] < derivative )
+      {  if( level > 0 )
+            std::cout << "end min_nso_quad: derivative near zero\n";
+         return true;
+      }
+      //
+      // value of a(x) at new x
+      DblVector a_new = a.Forward(0, x_new);
+      //
+      // (x_new, a_new)
+      DblVector xu_new = min_nso_quad_join(x_new, a_new);
+      //
+      // value of g[ x_new, a_new ]
+      DblVector g_new = g.Forward(0, xu_new);
+      //
+      // check for descent of objective
+      double rate_new = (g_new[0] - g_cur[0]) / max_delta_x;
+      if( - epsilon[1] < rate_new )
+      {  // did not get sufficient descent
+         b_cur /= 2.0;
+         if( level > 0 )
+            std::cout << "itr = " << itr
+            << ", rate_new = " << rate_new
+            << ", b_cur = " << b_cur << "\n";
+         //
+      }
+      else
+      {  // got sufficient descent so accept candidate for x
+         x_out  = x_new;
+         a_cur  = a_new;
+         g_cur  = g_new;
+         xu_cur = xu_new;
+         //
+         if( level >  0 )
+         {  std::cout << "itr = " << itr
+            << ", derivative = "<< derivative
+            << ", max_delta_x = "<< max_delta_x
+            << ", objective = " << g_cur[0] << "\n";
+            abs_print_mat("x_out", n, 1, x_out);
+         }
+      }
+   }
+   if( level > 0 )
+      std::cout << "end min_nso_quad: maximum number of iterations exceeded\n";
+   return false;
 }
 } // END_CPPAD_NAMESPACE
 // END C++

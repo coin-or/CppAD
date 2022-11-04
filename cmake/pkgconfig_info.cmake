@@ -28,59 +28,59 @@
 # pkgconfig_info_.
 #
 MACRO(pkgconfig_info package system_include)
-    #
-    # include_${package}
-    SET(
-        include_${package}
-        FALSE CACHE BOOL "include ${package} using its pkgconfig file"
-    )
-    print_variable( include_${package} )
-    IF( NOT include_${package} )
-        SET(cppad_has_${package} 0)
-    ELSE( )
-        SET(cppad_has_${package} 1)
-        #
-        # check for pkg-config
-        IF( NOT PKG_CONFIG_FOUND )
-            FIND_PACKAGE(PkgConfig REQUIRED)
-        ENDIF( )
-        #
-        # pkgconfig_info_package
-        IF( ${package} STREQUAL eigen )
-            SET(pkgconfig_info_package  eigen3)
-        ELSE( )
-            SET(pkgconfig_info_package ${package})
-        ENDIF( )
-        #
-        # ${package} info
-        pkg_check_modules(
-            ${pkgconfig_info_package} QUIET ${pkgconfig_info_package} )
-        #
-        IF( ${pkgconfig_info_package}_FOUND )
-            MESSAGE(STATUS "Found ${package} pkg-config file")
-        ELSE( )
-            MESSAGE(FATAL_ERROR
-            "Can't find ${package} pkg-config file or one of its requirements."
-            "\nPKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}"
-        )
-        ENDIF( )
-        #
-        IF( ${package} STREQUAL eigen )
-            SET( eigen_LIBRARIES "${eigen3_LIBRARIES}" )
-        ENDIF()
-        #
-        # pkgconfig_info_dirs
-        STRING(
-            REGEX REPLACE "/coin-or$" ""
-            pkgconfig_info_dirs "${${pkgconfig_info_package}_INCLUDE_DIRS}"
-        )
-        #
-        # INLCUDE_DIRECTORIES
-        IF( ${system_include} )
-            INCLUDE_DIRECTORIES( SYSTEM ${pkgconfig_info_dirs} )
-        ELSE( )
-            INCLUDE_DIRECTORIES( ${pkgconfig_info_dirs} )
-        ENDIF( )
-    ENDIF( )
-    #
+   #
+   # include_${package}
+   SET(
+      include_${package}
+      FALSE CACHE BOOL "include ${package} using its pkgconfig file"
+   )
+   print_variable( include_${package} )
+   IF( NOT include_${package} )
+      SET(cppad_has_${package} 0)
+   ELSE( )
+      SET(cppad_has_${package} 1)
+      #
+      # check for pkg-config
+      IF( NOT PKG_CONFIG_FOUND )
+         FIND_PACKAGE(PkgConfig REQUIRED)
+      ENDIF( )
+      #
+      # pkgconfig_info_package
+      IF( ${package} STREQUAL eigen )
+         SET(pkgconfig_info_package  eigen3)
+      ELSE( )
+         SET(pkgconfig_info_package ${package})
+      ENDIF( )
+      #
+      # ${package} info
+      pkg_check_modules(
+         ${pkgconfig_info_package} QUIET ${pkgconfig_info_package} )
+      #
+      IF( ${pkgconfig_info_package}_FOUND )
+         MESSAGE(STATUS "Found ${package} pkg-config file")
+      ELSE( )
+         MESSAGE(FATAL_ERROR
+         "Can't find ${package} pkg-config file or one of its requirements."
+         "\nPKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}"
+      )
+      ENDIF( )
+      #
+      IF( ${package} STREQUAL eigen )
+         SET( eigen_LIBRARIES "${eigen3_LIBRARIES}" )
+      ENDIF()
+      #
+      # pkgconfig_info_dirs
+      STRING(
+         REGEX REPLACE "/coin-or$" ""
+         pkgconfig_info_dirs "${${pkgconfig_info_package}_INCLUDE_DIRS}"
+      )
+      #
+      # INLCUDE_DIRECTORIES
+      IF( ${system_include} )
+         INCLUDE_DIRECTORIES( SYSTEM ${pkgconfig_info_dirs} )
+      ELSE( )
+         INCLUDE_DIRECTORIES( ${pkgconfig_info_dirs} )
+      ENDIF( )
+   ENDIF( )
+   #
 ENDMACRO(pkgconfig_info)

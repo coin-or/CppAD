@@ -8,47 +8,47 @@
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 next_program() {
-    i_program=`expr $i_program + 1`
-    if [ $i_program -ge $n_program ]
-    then
-        i_program='0'
-    fi
-    case $i_program in
-        0)
-        program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
-        ;;
+   i_program=`expr $i_program + 1`
+   if [ $i_program -ge $n_program ]
+   then
+      i_program='0'
+   fi
+   case $i_program in
+      0)
+      program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
+      ;;
 
-        1)
-        program=`echo "$program_list" | sed -e 's| *[^ ]* *\([^ ]*\).*|\1|'`
-        ;;
+      1)
+      program=`echo "$program_list" | sed -e 's| *[^ ]* *\([^ ]*\).*|\1|'`
+      ;;
 
-        2)
-        program=`echo "$program_list" | sed -e 's| *[^ ]* [^ ]* *||'`
-        ;;
-    esac
+      2)
+      program=`echo "$program_list" | sed -e 's| *[^ ]* [^ ]* *||'`
+      ;;
+   esac
 }
 # -----------------------------------------------------------------------------
 n_program='0'
 program_list=''
 for program in openmp_test pthread_test bthread_test
 do
-    if [ -e "$program" ]
-    then
-        program_list="$program $program_list"
-        n_program=`expr $n_program + 1`
-    fi
+   if [ -e "$program" ]
+   then
+      program_list="$program $program_list"
+      n_program=`expr $n_program + 1`
+   fi
 done
 echo "program_list = $program_list"
 echo "n_program = $n_program"
 if [ "$n_program" = '0' ]
 then
-    echo "example/multi_thread/test.sh: nothing to test"
-    exit 0
+   echo "example/multi_thread/test.sh: nothing to test"
+   exit 0
 fi
 i_program='0'
 next_program
@@ -80,13 +80,13 @@ echo
 # fast cases, do all programs
 for program in openmp_test pthread_test bthread_test
 do
-    if [ -e "$program" ]
-    then
-        echo_eval ./$program a11c
-        echo
-        echo_eval ./$program simple_ad
-        echo
-        echo_eval ./$program team_example
-        echo
-    fi
+   if [ -e "$program" ]
+   then
+      echo_eval ./$program a11c
+      echo
+      echo_eval ./$program simple_ad
+      echo
+      echo_eval ./$program team_example
+      echo
+   fi
 done

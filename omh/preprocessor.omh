@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 $begin preprocessor$$
 $spell
-    Microsoft
-    const
-    nullptr
-    Vec
-    ifndef
-    endif
-    Bool
-    Cpp
+   Microsoft
+   const
+   nullptr
+   Vec
+   ifndef
+   endif
+   Bool
+   Cpp
 $$
 
 $section CppAD API Preprocessor Symbols$$
@@ -30,10 +30,10 @@ when using the Microsoft Visual Studio compiler
 and including $code windows.h$$,
 it is done as follows:
 $codep
-    # ifndef NOMINMAX
-    # define NOMINMAX
-    # endif
-    # include <windows.h>
+   # ifndef NOMINMAX
+   # define NOMINMAX
+   # endif
+   # include <windows.h>
 $$
 
 $head Documented Here$$
@@ -142,31 +142,31 @@ $rnext
 $cref/CPPAD_USER_ATOMIC/atomic_one/Deprecated 2013-05-27/$$
 $rnext
 $cref/
-    CPPAD_CPPADVECTOR/
-    testvector/
-    CppAD::vector/
-    CPPAD_CPPADVECTOR, Deprecated 2022-06-22
+   CPPAD_CPPADVECTOR/
+   testvector/
+   CppAD::vector/
+   CPPAD_CPPADVECTOR, Deprecated 2022-06-22
 /$$
 $rnext
 $cref/
-    CPPAD_STDVECTOR/
-    testvector/
-    std::vector/
-    CPPAD_STDVECTOR, Deprecated 2022-06-22
+   CPPAD_STDVECTOR/
+   testvector/
+   std::vector/
+   CPPAD_STDVECTOR, Deprecated 2022-06-22
 /$$
 $rnext
 $cref/
-    CPPAD_EIGENVECTOR/
-    testvector/
-    CppAD::eigen_vector/
-    CPPAD_EIGENVECTOR, Deprecated 2022-06-22
+   CPPAD_EIGENVECTOR/
+   testvector/
+   CppAD::eigen_vector/
+   CPPAD_EIGENVECTOR, Deprecated 2022-06-22
 /$$
 $rnext
 $cref/
-    CPPAD_BOOSTVECTOR/
-    testvector/
-    boost::numeric::ublas::vector/
-    CPPAD_BOOSTVECTOR, Deprecated 2022-06-22
+   CPPAD_BOOSTVECTOR/
+   testvector/
+   boost::numeric::ublas::vector/
+   CPPAD_BOOSTVECTOR, Deprecated 2022-06-22
 /$$
 $tend
 $comment

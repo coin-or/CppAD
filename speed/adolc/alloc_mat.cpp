@@ -5,8 +5,8 @@
 /*
 $begin adolc_alloc_mat$$
 $spell
-    adolc
-    alloc
+   adolc
+   alloc
 $$
 
 $section Adolc Test Utility: Allocate and Free Memory For a Matrix$$
@@ -42,19 +42,19 @@ $end
 # include <cppad/utility/thread_alloc.hpp>
 
 double** adolc_alloc_mat(size_t m, size_t n)
-{   using CppAD::thread_alloc;
-    size_t size_min = m * n, size_out;
-    double*  vec = thread_alloc::create_array<double>(size_min, size_out);
-    double** mat = thread_alloc::create_array<double*>(size_min, size_out);
+{  using CppAD::thread_alloc;
+   size_t size_min = m * n, size_out;
+   double*  vec = thread_alloc::create_array<double>(size_min, size_out);
+   double** mat = thread_alloc::create_array<double*>(size_min, size_out);
 
-    for(size_t i = 0; i < m; i++)
-        mat[i] = vec + i * n;
+   for(size_t i = 0; i < m; i++)
+      mat[i] = vec + i * n;
 
-    return mat;
+   return mat;
 }
 void adolc_free_mat(double** mat)
-{   using CppAD::thread_alloc;
-    thread_alloc::delete_array(mat[0]);
-    thread_alloc::delete_array(mat);
-    return;
+{  using CppAD::thread_alloc;
+   thread_alloc::delete_array(mat[0]);
+   thread_alloc::delete_array(mat);
+   return;
 }

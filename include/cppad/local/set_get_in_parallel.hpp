@@ -35,23 +35,23 @@ recent setting for this set_get_in_parallel.
 In this case, it is assumed that we are currently in sequential execution mode.
 */
 static bool set_get_in_parallel(
-    bool (*in_parallel_new)(void) ,
-    bool set = false           )
-{   static bool (*in_parallel_user)(void) = nullptr;
+   bool (*in_parallel_new)(void) ,
+   bool set = false           )
+{  static bool (*in_parallel_user)(void) = nullptr;
 
-    if( set )
-    {   in_parallel_user = in_parallel_new;
-        // Doing a raw assert in this case because set_get_in_parallel is used
-        // by ErrorHandler and hence cannot use ErrorHandler.
-        // CPPAD_ASSERT_UNKNOWN( in_parallel_user() == false )
-        assert(in_parallel_user == nullptr || in_parallel_user() == false);
-        return false;
-    }
-    //
-    if( in_parallel_user == nullptr )
-        return false;
-    //
-    return in_parallel_user();
+   if( set )
+   {  in_parallel_user = in_parallel_new;
+      // Doing a raw assert in this case because set_get_in_parallel is used
+      // by ErrorHandler and hence cannot use ErrorHandler.
+      // CPPAD_ASSERT_UNKNOWN( in_parallel_user() == false )
+      assert(in_parallel_user == nullptr || in_parallel_user() == false);
+      return false;
+   }
+   //
+   if( in_parallel_user == nullptr )
+      return false;
+   //
+   return in_parallel_user();
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

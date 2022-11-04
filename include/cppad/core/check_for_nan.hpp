@@ -7,12 +7,12 @@
 /*
 $begin check_for_nan$$
 $spell
-    std
-    vec
-    Cpp
-    const
-    bool
-    newline
+   std
+   vec
+   Cpp
+   const
+   bool
+   newline
 $$
 $section Check an ADFun Object For Nan Results$$
 
@@ -34,19 +34,19 @@ $head f$$
 For the syntax where $icode b$$ is an argument,
 $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 (see $codei%ADFun<%Base%>%$$ $cref/constructor/FunConstruct/$$).
 For the syntax where $icode b$$ is the result,
 $icode f$$ has prototype
 $codei%
-    const ADFun<%Base%> %f%
+   const ADFun<%Base%> %f%
 %$$
 
 $head b$$
 This argument or result has prototype
 $codei%
-    bool %b%
+   bool %b%
 %$$
 If $icode b$$ is true (false),
 future calls to $icode%f%.Forward%$$ will (will not) check for $code nan$$.
@@ -90,7 +90,7 @@ values that result in a $code nan$$.
 $subhead vec$$
 This argument has prototype
 $codei%
-    CppAD::vector<%Base%>& %vec%
+   CppAD::vector<%Base%>& %vec%
 %$$
 It size must be equal to the corresponding value of
 $cref/vector_size/check_for_nan/Error Message/vector_size/$$
@@ -106,7 +106,7 @@ $icode Base$$.)
 $subhead file$$
 This argument has prototype
 $codei%
-    const std::string& %file%
+   const std::string& %file%
 %$$
 It must be the value of
 $cref/file_name/check_for_nan/Error Message/file_name/$$
@@ -114,7 +114,7 @@ in the corresponding error message.
 
 $head Example$$
 $children%
-    example/general/check_for_nan.cpp
+   example/general/check_for_nan.cpp
 %$$
 The file
 $cref check_for_nan.cpp$$
@@ -138,7 +138,7 @@ new value for this flag.
 */
 template <class Base, class RecBase>
 void ADFun<Base,RecBase>::check_for_nan(bool value)
-{   check_for_nan_ = value; }
+{  check_for_nan_ = value; }
 
 /*!
 Get check_for_nan
@@ -148,7 +148,7 @@ current value of check_for_nan_.
 */
 template <class Base, class RecBase>
 bool ADFun<Base,RecBase>::check_for_nan(void) const
-{   return check_for_nan_; }
+{  return check_for_nan_; }
 
 /*!
 Stores a vector in a file when nans occur.
@@ -162,21 +162,21 @@ is the file where the vector is stored
 template <class Base>
 void put_check_for_nan(const CppAD::vector<Base>& vec, std::string& file_name)
 {
-    // char_size
-    std::streamsize char_size = std::streamsize( sizeof(Base) * vec.size() );
-    //
-    // char_ptr
-    const char* char_ptr   = reinterpret_cast<const char*>( vec.data() );
-    //
-    // file_name
-    file_name = local::temp_file();
-    //
-    // write data to file_name
-    std::fstream file_out(file_name.c_str(), std::ios::out|std::ios::binary );
-    file_out.write(char_ptr, char_size);
-    file_out.close();
-    //
-    return;
+   // char_size
+   std::streamsize char_size = std::streamsize( sizeof(Base) * vec.size() );
+   //
+   // char_ptr
+   const char* char_ptr   = reinterpret_cast<const char*>( vec.data() );
+   //
+   // file_name
+   file_name = local::temp_file();
+   //
+   // write data to file_name
+   std::fstream file_out(file_name.c_str(), std::ios::out|std::ios::binary );
+   file_out.write(char_ptr, char_size);
+   file_out.close();
+   //
+   return;
 }
 /*!
 Gets a vector that was stored by put_check_for_nan.
@@ -189,14 +189,14 @@ is the file where the vector is stored
 */
 template <class Base>
 void get_check_for_nan(CppAD::vector<Base>& vec, const std::string& file_name)
-{   //
-    std::streamsize char_size = std::streamsize( sizeof(Base) * vec.size() );
-    char* char_ptr   = reinterpret_cast<char*>( vec.data() );
-    //
-    std::fstream file_in(file_name.c_str(), std::ios::in|std::ios::binary );
-    file_in.read(char_ptr, char_size);
-    //
-    return;
+{  //
+   std::streamsize char_size = std::streamsize( sizeof(Base) * vec.size() );
+   char* char_ptr   = reinterpret_cast<char*>( vec.data() );
+   //
+   std::fstream file_in(file_name.c_str(), std::ios::in|std::ios::binary );
+   file_in.read(char_ptr, char_size);
+   //
+   return;
 }
 
 } // END_CPPAD_NAMESPACE

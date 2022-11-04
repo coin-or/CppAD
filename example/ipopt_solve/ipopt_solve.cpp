@@ -22,21 +22,21 @@ extern bool retape(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/ipopt_solve";
-    size_t      width = 20;
-    CppAD::test_boolofvoid Run(group, width);
+{  std::string group = "example/ipopt_solve";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
 
-    // This line is used by test_one.sh
+   // This line is used by test_one.sh
 
-    // external compiled tests
-    Run( get_started,         "get_started"  );
-    Run( ode_inverse,         "ode_inverse"  );
-    Run( retape,              "retape"       );
-    //
-    // check for memory leak
-    bool memory_ok = CppAD::thread_alloc::free_all();
-    // print summary at end
-    bool ok = Run.summary(memory_ok);
-    //
-    return static_cast<int>( ! ok );
+   // external compiled tests
+   Run( get_started,         "get_started"  );
+   Run( ode_inverse,         "ode_inverse"  );
+   Run( retape,              "retape"       );
+   //
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   // print summary at end
+   bool ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
 }

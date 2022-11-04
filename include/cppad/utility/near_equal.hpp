@@ -8,16 +8,16 @@
 /*
 $begin NearEqual$$
 $spell
-    cppad.hpp
-    sqrt
-    cout
-    endl
-    Microsoft
-    std
-    Cpp
-    namespace
-    const
-    bool
+   cppad.hpp
+   sqrt
+   cout
+   endl
+   Microsoft
+   std
+   Cpp
+   namespace
+   const
+   bool
 $$
 
 $section Determine if Two Values Are Nearly Equal$$
@@ -39,44 +39,44 @@ $head x$$
 The argument $icode x$$
 has one of the following possible prototypes
 $codei%
-    const %Type%               &%x%,
-    const std::complex<%Type%> &%x%,
+   const %Type%               &%x%,
+   const std::complex<%Type%> &%x%,
 %$$
 
 $head y$$
 The argument $icode y$$
 has one of the following possible prototypes
 $codei%
-    const %Type%               &%y%,
-    const std::complex<%Type%> &%y%,
+   const %Type%               &%y%,
+   const std::complex<%Type%> &%y%,
 %$$
 
 $head r$$
 The relative error criteria $icode r$$ has prototype
 $codei%
-    const %Type% &%r%
+   const %Type% &%r%
 %$$
 It must be greater than or equal to zero.
 The relative error condition is defined as:
 $latex \[
-    | x - y | \leq r ( |x| + |y| )
+   | x - y | \leq r ( |x| + |y| )
 \] $$
 
 $head a$$
 The absolute error criteria $icode a$$ has prototype
 $codei%
-    const %Type% &%a%
+   const %Type% &%a%
 %$$
 It must be greater than or equal to zero.
 The absolute error condition is defined as:
 $latex \[
-    | x - y | \leq a
+   | x - y | \leq a
 \] $$
 
 $head b$$
 The return value $icode b$$ has prototype
 $codei%
-    bool %b%
+   bool %b%
 %$$
 If either $icode x$$ or $icode y$$ is infinite or not a number,
 the return value is false.
@@ -93,9 +93,9 @@ In addition, the following operations must be defined objects
 $icode a$$ and $icode b$$ of type $icode Type$$:
 $table
 $bold Operation$$     $cnext
-    $bold Description$$ $rnext
+   $bold Description$$ $rnext
 $icode%a% <= %b%$$  $cnext
-    less that or equal operator (returns a $code bool$$ object)
+   less that or equal operator (returns a $code bool$$ object)
 $tend
 
 $head Include Files$$
@@ -106,7 +106,7 @@ the $code CppAD$$ routines.
 
 $head Example$$
 $children%
-    example/utility/near_equal.cpp
+   example/utility/near_equal.cpp
 %$$
 The file $cref near_equal.cpp$$ contains an example
 and test of $code NearEqual$$.
@@ -115,20 +115,20 @@ It return true if it succeeds and false otherwise.
 $head Exercise$$
 Create and run a program that contains the following code:
 $codep
-    using std::complex;
-    using std::cout;
-    using std::endl;
+   using std::complex;
+   using std::cout;
+   using std::endl;
 
-    complex<double> one(1., 0), i(0., 1);
-    complex<double> x = one / i;
-    complex<double> y = - i;
-    double          r = 1e-12;
-    double          a = 0;
-    bool           ok = CppAD::NearEqual(x, y, r, a);
-    if( ok )
-        cout << "Ok"    << endl;
-    else
-        cout << "Error" << endl;
+   complex<double> one(1., 0), i(0., 1);
+   complex<double> x = one / i;
+   complex<double> y = - i;
+   double          r = 1e-12;
+   double          a = 0;
+   bool           ok = CppAD::NearEqual(x, y, r, a);
+   if( ok )
+      cout << "Ok"    << endl;
+   else
+      cout << "Error" << endl;
 $$
 
 $end
@@ -145,118 +145,118 @@ namespace CppAD { // Begin CppAD namespace
 // determine if both x and y are finite values
 template <class Type>
 bool near_equal_isfinite(const Type &x , const Type &y)
-{   Type infinity = Type( std::numeric_limits<double>::infinity() );
+{  Type infinity = Type( std::numeric_limits<double>::infinity() );
 
-    // handle bug where some compilers return true for nan == nan
-    bool xNan = x != x;
-    bool yNan = y != y;
+   // handle bug where some compilers return true for nan == nan
+   bool xNan = x != x;
+   bool yNan = y != y;
 
-    // infinite cases
-    bool xInf = (x == infinity   || x == - infinity);
-    bool yInf = (x == infinity   || x == - infinity);
+   // infinite cases
+   bool xInf = (x == infinity   || x == - infinity);
+   bool yInf = (x == infinity   || x == - infinity);
 
-    return ! (xNan | yNan | xInf | yInf);
+   return ! (xNan | yNan | xInf | yInf);
 }
 
 template <class Type>
 bool NearEqual(const Type &x, const Type &y, const Type &r, const Type &a)
 {
-    CheckNumericType<Type>();
-    Type zero(0);
+   CheckNumericType<Type>();
+   Type zero(0);
 
-    CPPAD_ASSERT_KNOWN(
-        zero <= r,
-        "Error in NearEqual: relative error is less than zero"
-    );
-    CPPAD_ASSERT_KNOWN(
-        zero <= a,
-        "Error in NearEqual: absolute error is less than zero"
-    );
+   CPPAD_ASSERT_KNOWN(
+      zero <= r,
+      "Error in NearEqual: relative error is less than zero"
+   );
+   CPPAD_ASSERT_KNOWN(
+      zero <= a,
+      "Error in NearEqual: absolute error is less than zero"
+   );
 
-    // check for special cases
-    if( ! CppAD::near_equal_isfinite(x, y) )
-        return false;
+   // check for special cases
+   if( ! CppAD::near_equal_isfinite(x, y) )
+      return false;
 
-    Type ax = x;
-    if( ax <= zero )
-        ax = - ax;
+   Type ax = x;
+   if( ax <= zero )
+      ax = - ax;
 
-    Type ay = y;
-    if( ay <= zero )
-        ay = - ay;
+   Type ay = y;
+   if( ay <= zero )
+      ay = - ay;
 
-    Type ad = x - y;
-    if( ad <= zero )
-        ad = - ad;
+   Type ad = x - y;
+   if( ad <= zero )
+      ad = - ad;
 
-    if( ad <= a )
-        return true;
+   if( ad <= a )
+      return true;
 
-    if( ad <= r * (ax + ay) )
-        return true;
+   if( ad <= r * (ax + ay) )
+      return true;
 
-    return false;
+   return false;
 }
 
 template <class Type>
 bool NearEqual(
-    const std::complex<Type> &x ,
-    const std::complex<Type> &y ,
-    const              Type  &r ,
-    const              Type  & a )
+   const std::complex<Type> &x ,
+   const std::complex<Type> &y ,
+   const              Type  &r ,
+   const              Type  & a )
 {
-    CheckNumericType<Type>();
+   CheckNumericType<Type>();
 # ifndef NDEBUG
-    Type zero(0);
+   Type zero(0);
 # endif
 
-    CPPAD_ASSERT_KNOWN(
-        zero <= r,
-        "Error in NearEqual: relative error is less than zero"
-    );
-    CPPAD_ASSERT_KNOWN(
-        zero <= a,
-        "Error in NearEqual: absolute error is less than zero"
-    );
+   CPPAD_ASSERT_KNOWN(
+      zero <= r,
+      "Error in NearEqual: relative error is less than zero"
+   );
+   CPPAD_ASSERT_KNOWN(
+      zero <= a,
+      "Error in NearEqual: absolute error is less than zero"
+   );
 
-    // check for special cases
-    if( ! CppAD::near_equal_isfinite(x.real(), x.imag()) )
-        return false;
-    if( ! CppAD::near_equal_isfinite(y.real(), y.imag()) )
-        return false;
+   // check for special cases
+   if( ! CppAD::near_equal_isfinite(x.real(), x.imag()) )
+      return false;
+   if( ! CppAD::near_equal_isfinite(y.real(), y.imag()) )
+      return false;
 
-    std::complex<Type> d = x - y;
+   std::complex<Type> d = x - y;
 
-    Type ad = std::abs(d);
-    if( ad <= a )
-        return true;
+   Type ad = std::abs(d);
+   if( ad <= a )
+      return true;
 
-    Type ax = std::abs(x);
-    Type ay = std::abs(y);
-    if( ad <= r * (ax + ay) )
-        return true;
+   Type ax = std::abs(x);
+   Type ay = std::abs(y);
+   if( ad <= r * (ax + ay) )
+      return true;
 
-    return false;
+   return false;
 }
 
 template <class Type>
 bool NearEqual(
-    const std::complex<Type> &x ,
-    const              Type  &y ,
-    const              Type  &r ,
-    const              Type  & a )
+   const std::complex<Type> &x ,
+   const              Type  &y ,
+   const              Type  &r ,
+   const              Type  & a )
 {
-    return NearEqual(x, std::complex<Type>(y, Type(0)), r, a);
+   return NearEqual(x, std::complex<Type>(y, Type(0)), r, a);
 }
 
 template <class Type>
 bool NearEqual(
-    const              Type  &x ,
-    const std::complex<Type> &y ,
-    const              Type  &r ,
-    const              Type  & a )
+   const              Type  &x ,
+   const std::complex<Type> &y ,
+   const              Type  &r ,
+   const              Type  & a )
 {
-    return NearEqual(std::complex<Type>(x, Type(0)), y, r, a);
+   return NearEqual(std::complex<Type>(x, Type(0)), y, r, a);
 }
 
 } // END CppAD namespace

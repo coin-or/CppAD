@@ -5,9 +5,9 @@
 
 $begin uniform_01.hpp$$
 $spell
-    uniform_01
-    ifndef
-    endif
+   uniform_01
+   ifndef
+   endif
 $$
 
 $section Source: uniform_01$$

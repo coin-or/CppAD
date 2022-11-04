@@ -7,16 +7,16 @@
 /*
 $begin atomic_three_jac_sparsity$$
 $spell
-    Jacobian
-    afun
-    jac
+   Jacobian
+   afun
+   jac
 $$
 
 $section Atomic Function Jacobian Sparsity Patterns$$
 
 $head Syntax$$
 $icode%ok% = %afun%.jac_sparsity(
-    %parameter_x%, %type_x%, %dependency%, %select_x%, %select_y%, %pattern_out%
+   %parameter_x%, %type_x%, %dependency%, %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $head Prototype$$
@@ -57,7 +57,7 @@ the calculation of $icode pattern_out$$.
 If $icode%select_x%[%j%]%$$ is false, then there will be no indices
 $icode k$$ such that
 $codei%
-    %pattern_out%.col()[%k%] == %j%
+   %pattern_out%.col()[%k%] == %j%
 %$$.
 
 $head select_y$$
@@ -68,7 +68,7 @@ the calculation of $icode pattern_out$$.
 If $icode%select_y%[%i%]%$$ is false, then there will be no indices
 $icode k$$ such that
 $codei%
-    %pattern_out%.row()[%k%] == %i%
+   %pattern_out%.row()[%k%] == %i%
 %$$.
 
 $head pattern_out$$
@@ -81,8 +81,8 @@ $icode dependency$$ above.
 To be specific, there are non-negative indices
 $icode i$$, $icode j$$, $icode k$$ such that
 $codei%
-    %pattern_out%.row()[%k%] == %i%
-    %pattern_out%.col()[%k%] == %j%
+   %pattern_out%.row()[%k%] == %i%
+   %pattern_out%.col()[%k%] == %j%
 %$$
 if and only if
 $icode%select_x%[%j%]%$$ is true,
@@ -97,7 +97,7 @@ Otherwise it is false.
 
 
 $children%
-    example/atomic_three/jac_sparsity.cpp
+   example/atomic_three/jac_sparsity.cpp
 %$$
 $head Examples$$
 The file $cref atomic_three_jac_sparsity.cpp$$ contains an example and test
@@ -138,14 +138,14 @@ is the dependency or sparsity pattern.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_three<Base>::jac_sparsity(
-    const vector<Base>&                     parameter_x  ,
-    const vector<ad_type_enum>&             type_x       ,
-    bool                                    dependency   ,
-    const vector<bool>&                     select_x     ,
-    const vector<bool>&                     select_y     ,
-    sparse_rc< vector<size_t> >&            pattern_out  )
+   const vector<Base>&                     parameter_x  ,
+   const vector<ad_type_enum>&             type_x       ,
+   bool                                    dependency   ,
+   const vector<bool>&                     select_x     ,
+   const vector<bool>&                     select_y     ,
+   sparse_rc< vector<size_t> >&            pattern_out  )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 /*!
 Link from forward Jacobian sparsity calcuations to atomic_three
 
@@ -185,62 +185,62 @@ is true if the computation succeeds.
 template <class Base>
 template <class InternalSparsity>
 bool atomic_three<Base>::for_jac_sparsity(
-    bool                             dependency   ,
-    const vector<Base>&              parameter_x  ,
-    const vector<ad_type_enum>&      type_x       ,
-    const local::pod_vector<size_t>& x_index      ,
-    const local::pod_vector<size_t>& y_index      ,
-    InternalSparsity&                var_sparsity )
-{   typedef typename InternalSparsity::const_iterator iterator;
+   bool                             dependency   ,
+   const vector<Base>&              parameter_x  ,
+   const vector<ad_type_enum>&      type_x       ,
+   const local::pod_vector<size_t>& x_index      ,
+   const local::pod_vector<size_t>& y_index      ,
+   InternalSparsity&                var_sparsity )
+{  typedef typename InternalSparsity::const_iterator iterator;
 
-    // number of arguments and resutls for this atomic function
-    size_t n = x_index.size();
-    size_t m = y_index.size();
+   // number of arguments and resutls for this atomic function
+   size_t n = x_index.size();
+   size_t m = y_index.size();
 
-    // select_y
-    vector<bool> select_y(m);
-    for(size_t i = 0; i < m; ++i)
-        select_y[i] = y_index[i] != 0;
+   // select_y
+   vector<bool> select_y(m);
+   for(size_t i = 0; i < m; ++i)
+      select_y[i] = y_index[i] != 0;
 
-    // determine select_x
-    vector<bool> select_x(n);
-    for(size_t j = 0; j < n; ++j)
-    {   // check if x_j depends on any previous variable
-        iterator itr(var_sparsity, x_index[j]);
-        size_t ell = *itr;
-        select_x[j] = ell < var_sparsity.end();
-        CPPAD_ASSERT_UNKNOWN( x_index[j] > 0 || ! select_x[j] );
-    }
-    sparse_rc< vector<size_t> > pattern_out;
-    bool ok = jac_sparsity(
-        parameter_x, type_x, dependency, select_x, select_y, pattern_out
-    );
-    if( ! ok )
-        return false;
-    //
-    // transfer sparsity patterns from pattern_out to var_sparsity
-    size_t                nnz = pattern_out.nnz();
-    const vector<size_t>& row( pattern_out.row() );
-    const vector<size_t>& col( pattern_out.col() );
-    for(size_t k = 0; k < nnz; ++k)
-    {   size_t i = row[k];
-        size_t j = col[k];
-        CPPAD_ASSERT_KNOWN(
-            select_y[i] & select_x[j],
-            "atomic: jac_sparsity: pattern_out not in "
-            "select_x or select_y range"
-        );
-        iterator itr(var_sparsity, x_index[j]);
-        size_t ell = *itr;
-        while( ell < var_sparsity.end() )
-        {   var_sparsity.post_element( y_index[i], ell );
-            ell = *(++itr);
-        }
-    }
-    for(size_t i = 0; i < m; ++i)
-        var_sparsity.process_post( y_index[i] );
-    //
-    return true;
+   // determine select_x
+   vector<bool> select_x(n);
+   for(size_t j = 0; j < n; ++j)
+   {  // check if x_j depends on any previous variable
+      iterator itr(var_sparsity, x_index[j]);
+      size_t ell = *itr;
+      select_x[j] = ell < var_sparsity.end();
+      CPPAD_ASSERT_UNKNOWN( x_index[j] > 0 || ! select_x[j] );
+   }
+   sparse_rc< vector<size_t> > pattern_out;
+   bool ok = jac_sparsity(
+      parameter_x, type_x, dependency, select_x, select_y, pattern_out
+   );
+   if( ! ok )
+      return false;
+   //
+   // transfer sparsity patterns from pattern_out to var_sparsity
+   size_t                nnz = pattern_out.nnz();
+   const vector<size_t>& row( pattern_out.row() );
+   const vector<size_t>& col( pattern_out.col() );
+   for(size_t k = 0; k < nnz; ++k)
+   {  size_t i = row[k];
+      size_t j = col[k];
+      CPPAD_ASSERT_KNOWN(
+         select_y[i] & select_x[j],
+         "atomic: jac_sparsity: pattern_out not in "
+         "select_x or select_y range"
+      );
+      iterator itr(var_sparsity, x_index[j]);
+      size_t ell = *itr;
+      while( ell < var_sparsity.end() )
+      {  var_sparsity.post_element( y_index[i], ell );
+         ell = *(++itr);
+      }
+   }
+   for(size_t i = 0; i < m; ++i)
+      var_sparsity.process_post( y_index[i] );
+   //
+   return true;
 }
 /*!
 Link from reverse Jacobian sparsity calcuations to atomic_three
@@ -285,63 +285,63 @@ is true if the computation succeeds.
 template <class Base>
 template <class InternalSparsity>
 bool atomic_three<Base>::rev_jac_sparsity(
-    bool                             dependency   ,
-    const vector<Base>&              parameter_x  ,
-    const vector<ad_type_enum>&      type_x       ,
-    const local::pod_vector<size_t>& x_index      ,
-    const local::pod_vector<size_t>& y_index      ,
-    InternalSparsity&                var_sparsity )
-{   typedef typename InternalSparsity::const_iterator iterator;
+   bool                             dependency   ,
+   const vector<Base>&              parameter_x  ,
+   const vector<ad_type_enum>&      type_x       ,
+   const local::pod_vector<size_t>& x_index      ,
+   const local::pod_vector<size_t>& y_index      ,
+   InternalSparsity&                var_sparsity )
+{  typedef typename InternalSparsity::const_iterator iterator;
 
-    // number of arguments and resutls for this atomic function
-    size_t n = x_index.size();
-    size_t m = y_index.size();
+   // number of arguments and resutls for this atomic function
+   size_t n = x_index.size();
+   size_t m = y_index.size();
 
-    // selection vectors
-    vector<bool> select_x(n), select_y(m);
+   // selection vectors
+   vector<bool> select_x(n), select_y(m);
 
-    // 2DO: perhaps we could use for_type(type_x, type_y)
-    // to reduce the true components in select_x
-    for(size_t j = 0; j < n; ++j)
-        select_x[j] = true;
+   // 2DO: perhaps we could use for_type(type_x, type_y)
+   // to reduce the true components in select_x
+   for(size_t j = 0; j < n; ++j)
+      select_x[j] = true;
 
-    // determine select_y
-    for(size_t i = 0; i < m; ++i)
-    {   // check if y_i has sparsity is non-empty
-        iterator itr(var_sparsity, y_index[i]);
-        size_t ell = *itr;
-        select_y[i] = ell < var_sparsity.end();
-    }
-    sparse_rc< vector<size_t> > pattern_out;
-    bool ok = jac_sparsity(
-        parameter_x, type_x, dependency, select_x, select_y, pattern_out
-    );
-    if( ! ok )
-        return false;
-    //
-    // transfer sparsity patterns from pattern_out to var_sparsity
-    size_t                nnz = pattern_out.nnz();
-    const vector<size_t>& row( pattern_out.row() );
-    const vector<size_t>& col( pattern_out.col() );
-    for(size_t k = 0; k < nnz; ++k)
-    {   size_t i = row[k];
-        size_t j = col[k];
-        CPPAD_ASSERT_KNOWN(
-            select_y[i] & select_x[j],
-            "atomic: jac_sparsity: pattern_out not in "
-            "select_x or select_y range"
-        );
-        iterator itr(var_sparsity, y_index[i]);
-        size_t ell = *itr;
-        while( ell < var_sparsity.end() )
-        {   var_sparsity.post_element( x_index[j], ell );
-            ell = *(++itr);
-        }
-    }
-    for(size_t j = 0; j < n; ++j)
-        var_sparsity.process_post( x_index[j] );
-    //
-    return true;
+   // determine select_y
+   for(size_t i = 0; i < m; ++i)
+   {  // check if y_i has sparsity is non-empty
+      iterator itr(var_sparsity, y_index[i]);
+      size_t ell = *itr;
+      select_y[i] = ell < var_sparsity.end();
+   }
+   sparse_rc< vector<size_t> > pattern_out;
+   bool ok = jac_sparsity(
+      parameter_x, type_x, dependency, select_x, select_y, pattern_out
+   );
+   if( ! ok )
+      return false;
+   //
+   // transfer sparsity patterns from pattern_out to var_sparsity
+   size_t                nnz = pattern_out.nnz();
+   const vector<size_t>& row( pattern_out.row() );
+   const vector<size_t>& col( pattern_out.col() );
+   for(size_t k = 0; k < nnz; ++k)
+   {  size_t i = row[k];
+      size_t j = col[k];
+      CPPAD_ASSERT_KNOWN(
+         select_y[i] & select_x[j],
+         "atomic: jac_sparsity: pattern_out not in "
+         "select_x or select_y range"
+      );
+      iterator itr(var_sparsity, y_index[i]);
+      size_t ell = *itr;
+      while( ell < var_sparsity.end() )
+      {  var_sparsity.post_element( x_index[j], ell );
+         ell = *(++itr);
+      }
+   }
+   for(size_t j = 0; j < n; ++j)
+      var_sparsity.process_post( x_index[j] );
+   //
+   return true;
 }
 
 } // END_CPPAD_NAMESPACE

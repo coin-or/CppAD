@@ -5,30 +5,30 @@
 
 $begin log_reverse$$
 $spell
-    Taylor
+   Taylor
 $$
 
 $section Logarithm Function Reverse Mode Theory$$
 
 We use the reverse theory
 $cref%standard math function
-    %ReverseTheory
-    %Standard Math Functions
+   %ReverseTheory
+   %Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 
 The zero order forward mode formula for the
 $cref/logarithm/log_forward/$$ is
 $latex \[
-    z^{(0)}  =  F( x^{(0)} )
+   z^{(0)}  =  F( x^{(0)} )
 \] $$
 and for $latex j > 0$$,
 $latex \[
 z^{(j)}
 =  \frac{1}{ \bar{b} + x^{(0)} } \frac{1}{j}
 \left(
-    j x^{(j)}
-    - \sum_{k=1}^{j-1} k z^{(k)} x^{(j-k)}
+   j x^{(j)}
+   - \sum_{k=1}^{j-1} k z^{(k)} x^{(j-k)}
 \right)
 \] $$
 where
@@ -36,9 +36,9 @@ $latex \[
 \bar{b}
 =
 \left\{ \begin{array}{ll}
-    0 & \R{if} \; F(x) = \R{log}(x)
-    \\
-    1 & \R{if} \; F(x) = \R{log1p}(x)
+   0 & \R{if} \; F(x) = \R{log}(x)
+   \\
+   1 & \R{if} \; F(x) = \R{log1p}(x)
 \end{array} \right.
 \] $$
 We note that for $latex j > 0$$
@@ -51,8 +51,8 @@ $latex \[
 \frac{1}{ \bar{b} + x^{(0)} }
 \frac{1}{j}
 \left(
-    j x^{(j)}
-    - \sum_{k=1}^{j-1} k z^{(k)} x^{(j-k)}
+   j x^{(j)}
+   - \sum_{k=1}^{j-1} k z^{(k)} x^{(j-k)}
 \right)
 \\
 & = &
@@ -89,11 +89,11 @@ $latex \[
 \\
 \D{H}{ x^{(j-k)} } & = &
 \D{G}{ x^{(j-k)} }  -
-    \D{G}{ z^{(j)} } \frac{1}{ \bar{b} + x^{(0)} } \frac{k}{j}  z^{(k)}
+   \D{G}{ z^{(j)} } \frac{1}{ \bar{b} + x^{(0)} } \frac{k}{j}  z^{(k)}
 \\
 \D{H}{ z^{(k)} } & = &
 \D{G}{ z^{(k)} }  -
-    \D{G}{ z^{(j)} } \frac{1}{ \bar{b} + x^{(0)} } \frac{k}{j}  x^{(j-k)}
+   \D{G}{ z^{(j)} } \frac{1}{ \bar{b} + x^{(0)} } \frac{k}{j}  x^{(j-k)}
 \end{array}
 \] $$
 

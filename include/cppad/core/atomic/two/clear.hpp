@@ -7,8 +7,8 @@
 /*
 $begin atomic_two_clear$$
 $spell
-    sq
-    alloc
+   sq
+   alloc
 $$
 
 $section Free Static Variables$$
@@ -53,31 +53,31 @@ Free all thread_alloc static memory held by atomic_base (avoids reallocations).
 */
 template <class Base>
 void atomic_base<Base>::clear(void)
-{   CPPAD_ASSERT_KNOWN(
-        ! thread_alloc::in_parallel() ,
-        "cannot use atomic_base clear during parallel execution"
-    );
-    bool         set_null = true;
-    size_t       index  = 0;
-    size_t       type  = 0;          // set to avoid warning
-    std::string* name  = nullptr;
-    void*        v_ptr = nullptr; // set to avoid warning
-    size_t       n_atomic = local::atomic_index<Base>(
-        set_null, index, type, name, v_ptr
-    );
-    //
-    set_null = false;
-    for(index = 1; index <= n_atomic; ++index)
-    {   local::atomic_index<Base>(set_null, index, type, name, v_ptr);
-        if( type == 2 )
-        {   atomic_base* op = reinterpret_cast<atomic_base*>(v_ptr);
-            if( op != nullptr )
-            {   for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-                    op->free_work(thread);
-            }
-        }
-    }
-    return;
+{  CPPAD_ASSERT_KNOWN(
+      ! thread_alloc::in_parallel() ,
+      "cannot use atomic_base clear during parallel execution"
+   );
+   bool         set_null = true;
+   size_t       index  = 0;
+   size_t       type  = 0;          // set to avoid warning
+   std::string* name  = nullptr;
+   void*        v_ptr = nullptr; // set to avoid warning
+   size_t       n_atomic = local::atomic_index<Base>(
+      set_null, index, type, name, v_ptr
+   );
+   //
+   set_null = false;
+   for(index = 1; index <= n_atomic; ++index)
+   {  local::atomic_index<Base>(set_null, index, type, name, v_ptr);
+      if( type == 2 )
+      {  atomic_base* op = reinterpret_cast<atomic_base*>(v_ptr);
+         if( op != nullptr )
+         {  for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+               op->free_work(thread);
+         }
+      }
+   }
+   return;
 }
 
 } // END_CPPAD_NAMESPACE

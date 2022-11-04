@@ -8,10 +8,10 @@
 /*
 $begin atomic_four_hes_sparsity$$
 $spell
-    Hessian
-    afun
-    hes
-    ident
+   Hessian
+   afun
+   hes
+   ident
 $$
 
 $section Atomic Function Hessian Sparsity Patterns$$
@@ -20,12 +20,12 @@ $head Syntax$$
 
 $subhead Preferred$$
 $icode%ok% = %afun%.hes_sparsity( %call_id%,
-    %ident_zero_x%, %select_x%, %select_y%, %pattern_out%
+   %ident_zero_x%, %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $subhead Deprecated 2022-05-16$$
 $icode%ok% = %afun%.hes_sparsity( %call_id%,
-    %select_x%, %select_y%, %pattern_out%
+   %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $head Prototype$$
@@ -65,8 +65,8 @@ the calculation of $icode pattern_out$$.
 If $icode%select_x%[%j%]%$$ is false, then there will be no indices
 $icode k$$ such that either of the following hold:
 $codei%
-    %pattern_out%.row()[%k%] == %j%
-    %pattern_out%.col()[%k%] == %j%
+   %pattern_out%.row()[%k%] == %j%
+   %pattern_out%.col()[%k%] == %j%
 %$$.
 
 $head select_y$$
@@ -83,8 +83,8 @@ of the sparsity pattern for Hessian of $latex g_i (x)$$.
 To be specific, there are non-negative indices
 $icode r$$, $icode c$$, and $icode k$$ such that
 $codei%
-    %pattern_out%.row()[%k%] == %r%
-    %pattern_out%.col()[%k%] == %c%
+   %pattern_out%.row()[%k%] == %r%
+   %pattern_out%.col()[%k%] == %c%
 %$$
 if and only if
 there exists an index $icode i$$ such that,
@@ -93,7 +93,7 @@ $icode%select_x%[%r%]%$$ is true,
 $icode%select_x%[%c%]%$$ is true,
 and
 $latex \[
-    \partial_{x(r)} \partial_{x(c)} g_i(x)
+   \partial_{x(r)} \partial_{x(c)} g_i(x)
 \] $$
 is possibly non-zero.
 Note that the sparsity pattern should be symmetric.
@@ -106,8 +106,8 @@ $head Example$$
 The following is an example $code hes_sparsity$$ definition taken from
 $cref atomic_four_norm_sq.cpp$$:
 $srcfile%
-    example/atomic_four/norm_sq.cpp%
-    0%// BEGIN HES_SPARSITY%// END HES_SPARSITY%0
+   example/atomic_four/norm_sq.cpp%
+   0%// BEGIN HES_SPARSITY%// END HES_SPARSITY%0
 %$$
 
 $end
@@ -117,22 +117,22 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::hes_sparsity(
-    size_t                                  call_id      ,
-    const vector<bool>&                     ident_zero_x ,
-    const vector<bool>&                     select_x     ,
-    const vector<bool>&                     select_y     ,
-    sparse_rc< vector<size_t> >&            pattern_out  )
+   size_t                                  call_id      ,
+   const vector<bool>&                     ident_zero_x ,
+   const vector<bool>&                     select_x     ,
+   const vector<bool>&                     select_y     ,
+   sparse_rc< vector<size_t> >&            pattern_out  )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 //
 // deprecated version
 template <class Base>
 bool atomic_four<Base>::hes_sparsity(
-    size_t                                  call_id      ,
-    const vector<bool>&                     select_x     ,
-    const vector<bool>&                     select_y     ,
-    sparse_rc< vector<size_t> >&            pattern_out  )
-{   return false; }
+   size_t                                  call_id      ,
+   const vector<bool>&                     select_x     ,
+   const vector<bool>&                     select_y     ,
+   sparse_rc< vector<size_t> >&            pattern_out  )
+{  return false; }
 
 } // END_CPPAD_NAMESPACE
 

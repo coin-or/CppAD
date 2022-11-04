@@ -5,18 +5,18 @@
 /*
 $begin sacado_det_minor.cpp$$
 $spell
-    onetape
-    cppad
-    det
-    const
-    CppAD
-    typedef
-    diff
-    bool
-    srand
-    Sacado.hpp
-    ADvar
-    Gradcomp
+   onetape
+   cppad
+   det
+   const
+   CppAD
+   typedef
+   diff
+   bool
+   srand
+   Sacado.hpp
+   ADvar
+   Gradcomp
 $$
 
 $section Sacado Speed: Gradient of Determinant by Minor Expansion$$
@@ -41,60 +41,60 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_det_minor(
-    const std::string&         job      ,
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &matrix   ,
-    CppAD::vector<double>     &gradient )
+   const std::string&         job      ,
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &matrix   ,
+   CppAD::vector<double>     &gradient )
 {
-    // --------------------------------------------------------------------
-    // check none of the global options is true
-    typedef std::map<std::string, bool>::iterator iterator;
-    for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
-    {   if( itr->second )
-            return false;
-    }
-    // -----------------------------------------------------
-    // not using job
-    // -----------------------------------------------------
+   // --------------------------------------------------------------------
+   // check none of the global options is true
+   typedef std::map<std::string, bool>::iterator iterator;
+   for(iterator itr=global_option.begin(); itr!=global_option.end(); ++itr)
+   {  if( itr->second )
+         return false;
+   }
+   // -----------------------------------------------------
+   // not using job
+   // -----------------------------------------------------
 
-    // AD types
-    typedef Sacado::Rad::ADvar<double>    r_double;
-    typedef CppAD::vector<r_double>       r_vector;
+   // AD types
+   typedef Sacado::Rad::ADvar<double>    r_double;
+   typedef CppAD::vector<r_double>       r_vector;
 
-    // object for computing deterinant
-    CppAD::det_by_minor<r_double>         r_det(size);
+   // object for computing deterinant
+   CppAD::det_by_minor<r_double>         r_det(size);
 
-    // number of independent variables
-    size_t n = size * size;
+   // number of independent variables
+   size_t n = size * size;
 
-    // independent variable vector
-    r_vector   r_A(n);
+   // independent variable vector
+   r_vector   r_A(n);
 
-    // AD value of the determinant
-    r_double   r_detA;
+   // AD value of the determinant
+   r_double   r_detA;
 
-    // ------------------------------------------------------
-    while(repeat--)
-    {   // get the next matrix
-        CppAD::uniform_01(n, matrix);
+   // ------------------------------------------------------
+   while(repeat--)
+   {  // get the next matrix
+      CppAD::uniform_01(n, matrix);
 
-        // set independent variable values
-        for(size_t j = 0; j < n; ++j)
-            r_A[j] = matrix[j];
+      // set independent variable values
+      for(size_t j = 0; j < n; ++j)
+         r_A[j] = matrix[j];
 
-        // compute the determinant
-        r_detA = r_det(r_A);
+      // compute the determinant
+      r_detA = r_det(r_A);
 
-        // reverse mode compute gradient of last computed value; i.e., detA
-        r_double::Gradcomp();
+      // reverse mode compute gradient of last computed value; i.e., detA
+      r_double::Gradcomp();
 
-        // return gradient
-        for(size_t j =0; j < n; ++j)
-            gradient[j] = r_A[j].adj(); // partial detA w.r.t A[j]
-    }
-    // ---------------------------------------------------------
-    return true;
+      // return gradient
+      for(size_t j =0; j < n; ++j)
+         gradient[j] = r_A[j].adj(); // partial detA w.r.t A[j]
+   }
+   // ---------------------------------------------------------
+   return true;
 }
 /* %$$
 $end

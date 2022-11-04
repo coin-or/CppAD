@@ -5,15 +5,15 @@
 $begin ipopt$$
 $dollar @$$
 $spell
-    IpIpopt
-    dir
-    cppad
-    cmake
-    includedirs
-    hpp
-    config
-    CppAD
-    cflags
+   IpIpopt
+   dir
+   cppad
+   cmake
+   includedirs
+   hpp
+   config
+   CppAD
+   cflags
 $$
 
 $section Including Ipopt Library Examples, Tests, and pkg-config$$
@@ -29,7 +29,7 @@ then the pkg-config will find the
 necessary information to link in ipopt.
 The value of $icode PKG_CONFIG_PATH$$ must be such that the command
 $codei%
-    pkg-config ipopt --path --print-errors
+   pkg-config ipopt --path --print-errors
 %$$
 finds the location of the file $code ipopt.pc$$.
 
@@ -49,7 +49,7 @@ $head Include Directories$$
 It may be necessary to remove $code /coin-or$$ from the end of the
 include directories reported by
 $codei%
-    pkg-config ipopt --cflags
+   pkg-config ipopt --cflags
 %$$
 
 $end

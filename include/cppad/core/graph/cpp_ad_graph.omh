@@ -4,25 +4,25 @@
 # ----------------------------------------------------------------------------
 $begin cpp_ad_graph$$
 $spell
-    std
-    arg
-    asinh
-    acosh
-    atanh
-    erf
-    erfc
-    expm
-    ind
-    vec
-    np
-    nx
-    nc
-    op
-    struct
-    enum
-    cpp
-    Heaviside
-    notpos
+   std
+   arg
+   asinh
+   acosh
+   atanh
+   erf
+   erfc
+   expm
+   ind
+   vec
+   np
+   nx
+   nc
+   op
+   struct
+   enum
+   cpp
+   Heaviside
+   notpos
 $$
 
 $section C++ Representation of an AD Graph$$
@@ -40,10 +40,10 @@ and $icode y$$ is called the dependent variable vector.
 $head Node Indices$$
 The nodes in an AD graph have the following order:
 $pre
-    p_0 , ... ,  p_{np-1} ,
-    x_0 , ... ,  x_{nx-1} ,
-    c_0 , ... ,  c_{nc-1} ,
-    r_0 , ... ,  r_{no-1}
+   p_0 , ... ,  p_{np-1} ,
+   x_0 , ... ,  x_{nx-1} ,
+   c_0 , ... ,  c_{nc-1} ,
+   r_0 , ... ,  r_{no-1}
 $$
 
 $subhead p$$
@@ -143,7 +143,7 @@ for the $th i$$ operator.
 For $icode%j% = 0 , %...%, %n_node_arg%[%i%]-1%$$,
 the $th j$$ node argument for the $th i$$ operator has node index
 $codei%
-    %operator_arg%[ %first_node%[%i%] + %j% ]
+   %operator_arg%[ %first_node%[%i%] + %j% ]
 %$$
 The $icode operator_arg$$ sub-vector for the $th i$$ operator starts are
 $icode%first_node%[%i%]%$$ and has $icode%n_node_arg%[%i%]%$$ elements
@@ -157,12 +157,12 @@ $subhead print_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
 $code print_graph_op$$:
 $codei%
-    %before%[%i%] = %operator_arg%[ %first_node%[%i%] - 2 ]
+   %before%[%i%] = %operator_arg%[ %first_node%[%i%] - 2 ]
 %$$
 is the index in $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$
 of the text that is printed before the value and
 $codei%
-    %after%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
+   %after%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
 is the index in $cref/print_text_vec/cpp_ad_graph/print_text_vec/$$
 of the text that is printed after the value.
@@ -171,19 +171,19 @@ starts at index $icode%first_node%[%i%]-2%$$
 and has $codei%4 = %n_node_arg%[%i%]+2%$$ elements.
 The node with index
 $codei%
-    %notpos%[%i%] = %operator_arg%[ %first_node%[%i%] ]
+   %notpos%[%i%] = %operator_arg%[ %first_node%[%i%] ]
 %$$
 is checked and if it is positive, nothing is printed by this operator.
 Otherwise, the value corresponding to the following node is printed:
 $codei%
-    %value%[%i%] = %operator_arg%[ %first_node%[%i%] + 1 ]
+   %value%[%i%] = %operator_arg%[ %first_node%[%i%] + 1 ]
 %$$
 
 $subhead discrete_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
 $code discrete_graph_op$$:
 $codei%
-    %name_index%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
+   %name_index%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
 is the index in $cref/discrete_name_vec/cpp_ad_graph/discrete_name_vec/$$
 of the function being called by this operator.
@@ -196,16 +196,16 @@ $subhead atom_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
 $code atom_graph_op$$:
 $codei%
-    %name_index%[%i%] = %operator_arg%[ %first_node%[%i%] - 3 ]
+   %name_index%[%i%] = %operator_arg%[ %first_node%[%i%] - 3 ]
 %$$
 is the index in $cref/atomic_name_vec/cpp_ad_graph/atomic_name_vec/$$
 of the function being called by this operator.
 $codei%
-    %n_result%[%i%] = %operator_arg%[ %first_node%[%i%] - 2 ]
+   %n_result%[%i%] = %operator_arg%[ %first_node%[%i%] - 2 ]
 %$$
 is the number of result nodes for this operator.
 $codei%
-    %n_node_arg%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
+   %n_node_arg%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
 is the number of node arguments for this operator.
 For this operator,
@@ -217,7 +217,7 @@ $subhead sum_graph_op$$
 In the case where $icode%operator_vec%[%i%].op_enum%$$ is
 $code sum_graph_op$$:
 $codei%
-    %n_node_arg%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
+   %n_node_arg%[%i%] = %operator_arg%[ %first_node%[%i%] - 1 ]
 %$$
 is the number of node arguments for this operator.
 For this operator,
@@ -235,10 +235,10 @@ The $code cpp_graph$$ class implements the data structure above.
 It is defined by the documentation sections under Contents below:
 
 $childtable%
-    include/cppad/core/graph/graph_op_enum.hpp%
-    include/cppad/core/graph/cpp_graph.omh%
-    include/cppad/core/graph/from_graph.hpp%
-    include/cppad/core/graph/to_graph.hpp
+   include/cppad/core/graph/graph_op_enum.hpp%
+   include/cppad/core/graph/cpp_graph.omh%
+   include/cppad/core/graph/from_graph.hpp%
+   include/cppad/core/graph/to_graph.hpp
 %$$
 
 $end

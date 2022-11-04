@@ -9,10 +9,10 @@
 /*
 $begin atomic_four_jac_sparsity$$
 $spell
-    Jacobian
-    afun
-    jac
-    ident
+   Jacobian
+   afun
+   jac
+   ident
 $$
 
 $section Atomic Function Jacobian Sparsity Patterns$$
@@ -23,12 +23,12 @@ but you should not define both.
 
 $subhead Preferred$$
 $icode%ok% = %afun%.jac_sparsity( %call_id%,
-    %dependency%, %ident_zero_x%, %select_x%, %select_y%, %pattern_out%
+   %dependency%, %ident_zero_x%, %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $subhead Deprecated 2022-05-10$$
 $icode%ok% = %afun%.jac_sparsity(
-    %dependency%, %call_id%, %select_x%, %select_y%, %pattern_out%
+   %dependency%, %call_id%, %select_x%, %select_y%, %pattern_out%
 )%$$
 
 $head Prototype$$
@@ -79,7 +79,7 @@ the calculation of $icode pattern_out$$.
 If $icode%select_x%[%j%]%$$ is false, then there will be no indices
 $icode k$$ such that
 $codei%
-    %pattern_out%.col()[%k%] == %j%
+   %pattern_out%.col()[%k%] == %j%
 %$$.
 If $icode%select_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
 is a variable and $icode%ident_zero_x%[%j%]%$$ will be false.
@@ -92,7 +92,7 @@ the calculation of $icode pattern_out$$.
 If $icode%select_y%[%i%]%$$ is false, then there will be no indices
 $icode k$$ such that
 $codei%
-    %pattern_out%.row()[%k%] == %i%
+   %pattern_out%.row()[%k%] == %i%
 %$$.
 
 $head pattern_out$$
@@ -104,8 +104,8 @@ $cref/afun/atomic_four_ctor/atomic_user/afun/$$.
 To be specific, there are non-negative indices
 $icode i$$, $icode j$$, $icode k$$ such that
 $codei%
-    %pattern_out%.row()[%k%] == %i%
-    %pattern_out%.col()[%k%] == %j%
+   %pattern_out%.row()[%k%] == %i%
+   %pattern_out%.col()[%k%] == %j%
 %$$
 if and only if
 $icode%select_x%[%j%]%$$ is true,
@@ -122,8 +122,8 @@ $head Example$$
 The following is an example $code jac_sparsity$$ definition taken from
 $cref atomic_four_norm_sq.cpp$$:
 $srcfile%
-    example/atomic_four/norm_sq.cpp%
-    0%// BEGIN JAC_SPARSITY%// END JAC_SPARSITY%0
+   example/atomic_four/norm_sq.cpp%
+   0%// BEGIN JAC_SPARSITY%// END JAC_SPARSITY%0
 %$$
 
 $end
@@ -135,24 +135,24 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::jac_sparsity(
-    size_t                                  call_id      ,
-    bool                                    dependency   ,
-    const vector<bool>&                     ident_zero_x ,
-    const vector<bool>&                     select_x     ,
-    const vector<bool>&                     select_y     ,
-    sparse_rc< vector<size_t> >&            pattern_out  )
+   size_t                                  call_id      ,
+   bool                                    dependency   ,
+   const vector<bool>&                     ident_zero_x ,
+   const vector<bool>&                     select_x     ,
+   const vector<bool>&                     select_y     ,
+   sparse_rc< vector<size_t> >&            pattern_out  )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 //
 // deprecated version of jac_sparsity callback
 template <class Base>
 bool atomic_four<Base>::jac_sparsity(
-    size_t                                  call_id      ,
-    bool                                    dependency   ,
-    const vector<bool>&                     select_x     ,
-    const vector<bool>&                     select_y     ,
-    sparse_rc< vector<size_t> >&            pattern_out  )
-{   return false; }
+   size_t                                  call_id      ,
+   bool                                    dependency   ,
+   const vector<bool>&                     select_x     ,
+   const vector<bool>&                     select_y     ,
+   sparse_rc< vector<size_t> >&            pattern_out  )
+{  return false; }
 } // END_CPPAD_NAMESPACE
 
 # endif

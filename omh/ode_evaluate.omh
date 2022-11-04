@@ -5,8 +5,8 @@
 
 $begin ode_evaluate.hpp$$
 $spell
-    ifndef
-    endif
+   ifndef
+   endif
 $$
 
 $section Source: ode_evaluate$$

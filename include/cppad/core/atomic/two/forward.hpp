@@ -7,20 +7,20 @@
 /*
 $begin atomic_two_forward$$
 $spell
-    sq
-    mul.hpp
-    hes
-    afun
-    vx
-    vy
-    ty
-    Taylor
-    const
-    CppAD
-    bool
-    atx
-    aty
-    af
+   sq
+   mul.hpp
+   hes
+   afun
+   vx
+   vy
+   ty
+   Taylor
+   const
+   CppAD
+   bool
+   atx
+   aty
+   af
 $$
 
 $section Atomic Forward Mode$$
@@ -33,7 +33,7 @@ $icode%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %tx%, %ty%)
 %$$
 This syntax is used by $icode%f%.Forward%$$ where $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 and $icode afun$$ is used in $icode f$$.
 
@@ -42,7 +42,7 @@ $icode%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %atx%, %aty%)
 %$$
 This syntax is used by $icode%af%.Forward%$$ where $icode af$$ has prototype
 $codei%
-    ADFun< AD<%Base%> , %Base% > %af%
+   ADFun< AD<%Base%> , %Base% > %af%
 %$$
 and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
@@ -64,7 +64,7 @@ $cref/forward/Forward/$$ mode calculations.
 $head p$$
 The argument $icode p$$ has prototype
 $codei%
-    size_t %p%
+   size_t %p%
 %$$
 It specifies the lowest order Taylor coefficient that we are evaluating.
 During calls to $cref atomic_two_afun$$, $icode%p% == 0%$$.
@@ -72,7 +72,7 @@ During calls to $cref atomic_two_afun$$, $icode%p% == 0%$$.
 $head q$$
 The argument $icode q$$ has prototype
 $codei%
-    size_t %q%
+   size_t %q%
 %$$
 It specifies the highest order Taylor coefficient that we are evaluating.
 During calls to $cref atomic_two_afun$$, $icode%q% == 0%$$.
@@ -80,7 +80,7 @@ During calls to $cref atomic_two_afun$$, $icode%q% == 0%$$.
 $head vx$$
 The $code forward$$ argument $icode vx$$ has prototype
 $codei%
-    const CppAD::vector<bool>& %vx%
+   const CppAD::vector<bool>& %vx%
 %$$
 The case $icode%vx%.size() > 0%$$ only occurs while evaluating a call to
 $cref atomic_two_afun$$.
@@ -93,7 +93,7 @@ $icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
 or $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
 in the corresponding call to
 $codei%
-    %afun%(%ax%, %ay%)
+   %afun%(%ax%, %ay%)
 %$$
 If $icode%vx%.size() == 0%$$,
 then $icode%vy%.size() == 0%$$ and neither of these vectors
@@ -102,7 +102,7 @@ should be used.
 $head vy$$
 The $code forward$$ argument $icode vy$$ has prototype
 $codei%
-    CppAD::vector<bool>& %vy%
+   CppAD::vector<bool>& %vy%
 %$$
 If $icode%vy%.size() == 0%$$, it should not be used.
 Otherwise,
@@ -118,7 +118,7 @@ or dynamic parameter
 $head tx$$
 The argument $icode tx$$ has prototype
 $codei%
-    const CppAD::vector<%Base%>& %tx%
+   const CppAD::vector<%Base%>& %tx%
 %$$
 and $icode%tx%.size() == (%q%+1)*%n%$$.
 It is used by $icode%f%.Forward%$$ where $icode f$$ has type
@@ -127,9 +127,9 @@ For $latex j = 0 , \ldots , n-1$$ and $latex k = 0 , \ldots , q$$,
 we use the Taylor coefficient notation
 $latex \[
 \begin{array}{rcl}
-    x_j^k    & = & tx [ j * ( q + 1 ) + k ]
-    \\
-    X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+   x_j^k    & = & tx [ j * ( q + 1 ) + k ]
+   \\
+   X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
 \end{array}
 \] $$
 Note that superscripts represent an index for $latex x_j^k$$
@@ -137,20 +137,20 @@ and an exponent for $latex t^k$$.
 Also note that the Taylor coefficients for $latex X(t)$$ correspond
 to the derivatives of $latex X(t)$$ at $latex t = 0$$ in the following way:
 $latex \[
-    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+   x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 \] $$
 
 $head atx$$
 The argument $icode atx$$ has prototype
 $codei%
-    const CppAD::vector< AD<%Base%> >& %atx%
+   const CppAD::vector< AD<%Base%> >& %atx%
 %$$
 Otherwise, $icode atx$$ specifications are the same as for $icode tx$$.
 
 $head ty$$
 The argument $icode ty$$ has prototype
 $codei%
-    CppAD::vector<%Base%>& %ty%
+   CppAD::vector<%Base%>& %ty%
 %$$
 and $icode%tx%.size() == (%q%+1)*%m%$$.
 It is set by $icode%f%.Forward%$$ where $icode f$$ has type
@@ -159,11 +159,11 @@ Upon return,
 For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q$$,
 $latex \[
 \begin{array}{rcl}
-    Y_i (t)  & = & f_i [ X(t) ]
-    \\
-    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
-    \\
-    ty [ i * ( q + 1 ) + k ] & = & y_i^k
+   Y_i (t)  & = & f_i [ X(t) ]
+   \\
+   Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+   \\
+   ty [ i * ( q + 1 ) + k ] & = & y_i^k
 \end{array}
 \] $$
 where $latex o( t^q ) / t^q \rightarrow 0$$ as $latex t \rightarrow 0$$.
@@ -172,20 +172,20 @@ and an exponent for $latex t^k$$.
 Also note that the Taylor coefficients for $latex Y(t)$$ correspond
 to the derivatives of $latex Y(t)$$ at $latex t = 0$$ in the following way:
 $latex \[
-    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+   y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 \] $$
 If $latex p > 0$$,
 for $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , p-1$$,
 the input of $icode ty$$ satisfies
 $latex \[
-    ty [ i * ( q + 1 ) + k ] = y_i^k
+   ty [ i * ( q + 1 ) + k ] = y_i^k
 \]$$
 and hence the corresponding elements need not be recalculated.
 
 $head aty$$
 The argument $icode aty$$ has prototype
 $codei%
-    const CppAD::vector< AD<%Base%> >& %aty%
+   const CppAD::vector< AD<%Base%> >& %aty%
 %$$
 Otherwise, $icode aty$$ specifications are the same as for $icode ty$$.
 
@@ -202,11 +202,11 @@ Then you can compute $icode ty$$ using the following formulas:
 $latex \[
 \begin{array}{rcl}
 y_i^0 & = & Y(0)
-        = f_i ( x^0 )
+      = f_i ( x^0 )
 \\
 y_i^1 & = & Y^{(1)} ( 0 )
-        = f_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
-        = f_i^{(1)} ( x^0 ) x^1
+      = f_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
+      = f_i^{(1)} ( x^0 ) x^1
 \\
 y_i^2
 & = & \frac{1}{2 !} Y^{(2)} (0)
@@ -220,7 +220,7 @@ y_i^2
 \] $$
 For $latex i = 0 , \ldots , m-1$$, and $latex k = 0 , 1 , 2$$,
 $latex \[
-    ty [ i * (q + 1) + k ] = y_i^k
+   ty [ i * (q + 1) + k ] = y_i^k
 \] $$
 
 $end
@@ -257,13 +257,13 @@ See the forward mode in user's documentation for atomic_two
 */
 template <class Base>
 bool atomic_base<Base>::forward(
-    size_t                    p  ,
-    size_t                    q  ,
-    const vector<bool>&       vx ,
+   size_t                    p  ,
+   size_t                    q  ,
+   const vector<bool>&       vx ,
           vector<bool>&       vy ,
-    const vector<Base>&       tx ,
+   const vector<Base>&       tx ,
           vector<Base>&       ty )
-{   return false; }
+{  return false; }
 /*!
 Link from atomic_base to forward mode (for replacement by derived class)
 
@@ -289,13 +289,13 @@ See the forward mode in user's documentation for atomic_two
 */
 template <class Base>
 bool atomic_base<Base>::forward(
-    size_t                    p   ,
-    size_t                    q   ,
-    const vector<bool>&       vx  ,
+   size_t                    p   ,
+   size_t                    q   ,
+   const vector<bool>&       vx  ,
           vector<bool>&       vy  ,
-    const vector< AD<Base> >& atx ,
+   const vector< AD<Base> >& atx ,
           vector< AD<Base> >& aty )
-{   return false; }
+{  return false; }
 /*!
 Convert atomic_three interface to atomic_two interface
 
@@ -322,31 +322,31 @@ See the forward mode in user's documentation for atomic_three
 # define CPPAD_ATOMIC_BASE_MUSTDO 0
 template <class Base>
 bool atomic_base<Base>::forward(
-    size_t                       order_low  ,
-    size_t                       order_up   ,
-    const vector<ad_type_enum>&  type_x     ,
-    vector<ad_type_enum>&        type_y     ,
-    const vector<Base>&          taylor_x   ,
-    vector<Base>&                taylor_y   )
-{   //
-    // atomic_base::afun(ax, ay) calls bool version directly
-    CPPAD_ASSERT_UNKNOWN( type_x.size() == 0 );
-    CPPAD_ASSERT_UNKNOWN( type_y.size() == 0 );
-    //
+   size_t                       order_low  ,
+   size_t                       order_up   ,
+   const vector<ad_type_enum>&  type_x     ,
+   vector<ad_type_enum>&        type_y     ,
+   const vector<Base>&          taylor_x   ,
+   vector<Base>&                taylor_y   )
+{  //
+   // atomic_base::afun(ax, ay) calls bool version directly
+   CPPAD_ASSERT_UNKNOWN( type_x.size() == 0 );
+   CPPAD_ASSERT_UNKNOWN( type_y.size() == 0 );
+   //
 # if CPPAD_ATOMIC_BASE_MUSTDO
-    size_t thread = thread_alloc::thread_num();
-    allocate_work(thread);
-    vector <bool>& vx  = work_[thread]->vx;
-    vector <bool>& vy  = work_[thread]->vy;
-    vx.resize(type_x.size());
-    vy.resize(type_y.size());
+   size_t thread = thread_alloc::thread_num();
+   allocate_work(thread);
+   vector <bool>& vx  = work_[thread]->vx;
+   vector <bool>& vy  = work_[thread]->vy;
+   vx.resize(type_x.size());
+   vy.resize(type_y.size());
 # else
-    vector<bool> vx, vy;
+   vector<bool> vx, vy;
 # endif
-    //
-    bool ok = forward(order_low, order_up, vx, vy, taylor_x, taylor_y);
-    //
-    return ok;
+   //
+   bool ok = forward(order_low, order_up, vx, vy, taylor_x, taylor_y);
+   //
+   return ok;
 }
 # undef CPPAD_ATOMIC_BASE_MUSTDO
 /*!
@@ -374,21 +374,21 @@ See the forward mode in user's documentation for atomic_three
 */
 template <class Base>
 bool atomic_base<Base>::forward(
-    size_t                       order_low  ,
-    size_t                       order_up   ,
-    const vector<ad_type_enum>&  type_x     ,
-    vector<ad_type_enum>&        type_y     ,
-    const vector< AD<Base> >&    ataylor_x  ,
-    vector< AD<Base> >&          ataylor_y  )
-{   //
-    // atomic_base::afun(ax, ay) calls bool version directly
-    CPPAD_ASSERT_UNKNOWN( type_x.size() == 0 );
-    CPPAD_ASSERT_UNKNOWN( type_y.size() == 0 );
-    //
-    vector<bool> vx, vy;
-    bool ok = forward(order_low, order_up, vx, vy, ataylor_x, ataylor_y);
-    //
-    return ok;
+   size_t                       order_low  ,
+   size_t                       order_up   ,
+   const vector<ad_type_enum>&  type_x     ,
+   vector<ad_type_enum>&        type_y     ,
+   const vector< AD<Base> >&    ataylor_x  ,
+   vector< AD<Base> >&          ataylor_y  )
+{  //
+   // atomic_base::afun(ax, ay) calls bool version directly
+   CPPAD_ASSERT_UNKNOWN( type_x.size() == 0 );
+   CPPAD_ASSERT_UNKNOWN( type_y.size() == 0 );
+   //
+   vector<bool> vx, vy;
+   bool ok = forward(order_low, order_up, vx, vy, ataylor_x, ataylor_y);
+   //
+   return ok;
 }
 
 } // END_CPPAD_NAMESPACE

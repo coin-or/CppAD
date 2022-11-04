@@ -7,10 +7,10 @@
 /*
 $begin uniform_01$$
 $spell
-    CppAD
-    namespace
-    cppad
-    hpp
+   CppAD
+   namespace
+   cppad
+   hpp
 $$
 
 $section Simulate a [0,1] Uniform Random Variate$$
@@ -35,7 +35,7 @@ the file $code cppad/speed/uniform_01.hpp$$
 $head seed$$
 The argument $icode seed$$ has prototype
 $codei%
-    size_t %seed%
+   size_t %seed%
 %$$
 It specifies a seed
 for the uniform random number generator.
@@ -43,14 +43,14 @@ for the uniform random number generator.
 $head n$$
 The argument $icode n$$ has prototype
 $codei%
-    size_t %n%
+   size_t %n%
 %$$
 It specifies the number of elements in the random vector $icode x$$.
 
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    %Vector% &%x%
+   %Vector% &%x%
 %$$.
 The input value of the elements of $icode x$$ does not matter.
 Upon return, the elements of $icode x$$ are set to values
@@ -60,14 +60,14 @@ $head Vector$$
 If $icode y$$ is a $code double$$ value,
 the object $icode x$$ must support the syntax
 $codei%
-    %x%[%i%] = %y%
+   %x%[%i%] = %y%
 %$$
 where $icode i$$ has type $code size_t$$ with value less than
 or equal $latex n-1$$.
 This is the only requirement of the type $icode Vector$$.
 
 $children%
-    omh/uniform_01_hpp.omh
+   omh/uniform_01_hpp.omh
 %$$
 
 $head Source Code$$
@@ -82,15 +82,15 @@ $end
 # include <cstdlib>
 
 namespace CppAD {
-    inline void uniform_01(size_t seed)
-    {   std::srand( (unsigned int) seed); }
+   inline void uniform_01(size_t seed)
+   {  std::srand( (unsigned int) seed); }
 
-    template <class Vector>
-    void uniform_01(size_t n, Vector &x)
-    {   static double factor = 1. / double(RAND_MAX);
-        while(n--)
-            x[n] = std::rand() * factor;
-    }
+   template <class Vector>
+   void uniform_01(size_t n, Vector &x)
+   {  static double factor = 1. / double(RAND_MAX);
+      while(n--)
+         x[n] = std::rand() * factor;
+   }
 }
 // END C++
 # endif

@@ -5,56 +5,56 @@
 
 $begin whats_new_06$$
 $spell
-    autotools
-    speedtest
-    apx
-    exp_eps
-    Alloc
-    fadbad
-    exp
-    Dir
-    Romberg
-    yyyymmdd
-    yy-mm-dd
-    Det
-    cppad
-    Adolc
-    Makefile
-    omh
-    config.h
-    Microsoft
-    hpp
-    valgrind memcheck
-    Kasper Kristensen
-    taylor
-    BAvector
-    fy
-    uninitialized
-    Tautschnig
-    resize
-    gcc
-    var
-    const
-    dw
-    VecADelem
-    atan
-    namespace
-    Cygwin
-    messaging
-    usr
-    aclocal
-    automake
-    autoconf
-    user
-    underquoted
-    Hes
-    Jac
-    CppAD
-    sed
-    gprof
-    Mul.h
-    Div.h
-    det_lu
+   autotools
+   speedtest
+   apx
+   exp_eps
+   Alloc
+   fadbad
+   exp
+   Dir
+   Romberg
+   yyyymmdd
+   yy-mm-dd
+   Det
+   cppad
+   Adolc
+   Makefile
+   omh
+   config.h
+   Microsoft
+   hpp
+   valgrind memcheck
+   Kasper Kristensen
+   taylor
+   BAvector
+   fy
+   uninitialized
+   Tautschnig
+   resize
+   gcc
+   var
+   const
+   dw
+   VecADelem
+   atan
+   namespace
+   Cygwin
+   messaging
+   usr
+   aclocal
+   automake
+   autoconf
+   user
+   underquoted
+   Hes
+   Jac
+   CppAD
+   sed
+   gprof
+   Mul.h
+   Div.h
+   det_lu
 $$
 
 $section Changes and Additions to CppAD During 2006$$
@@ -184,17 +184,17 @@ The wish list item
 to simplify and better organize the speed tests been completed:
 $table
 $cref|speed/|speed|$$
-    $cnext template functions that are speed tested  $rnext
+   $cnext template functions that are speed tested  $rnext
 $code speed/example$$
-    $cnext example usage of speed template functions $rnext
+   $cnext example usage of speed template functions $rnext
 $cref|speed/adolc|speed_adolc|$$
-    $cnext Adolc drivers for the template functions  $rnext
+   $cnext Adolc drivers for the template functions  $rnext
 $cref|speed/cppad|speed_cppad|$$
-    $cnext CppAD drivers for the template functions  $rnext
+   $cnext CppAD drivers for the template functions  $rnext
 $cref|speed/fadbad|speed_fadbad|$$
-    $cnext Fadbad drivers for the template functions $rnext
+   $cnext Fadbad drivers for the template functions $rnext
 $cref|speed/profile|autotools|Profiling CppAD|$$
-    $cnext profiling version of CppAD drivers
+   $cnext profiling version of CppAD drivers
 $tend
 
 
@@ -231,7 +231,7 @@ $cref/atomic_base/glossary/Operation/Atomic/$$ operation.
 This function used to return a $code nan$$ if
 $icode x$$ is negative because it was implemented as
 $codei%
-    pow(%x%, %y%) = exp( log(%x%) * %y% )
+   pow(%x%, %y%) = exp( log(%x%) * %y% )
 %$$
 This has been fixed so that the function and its derivatives are now
 calculated properly when $icode x$$ is less than zero.
@@ -315,13 +315,13 @@ Cygwin packages, and other system packages,
 should not have a dash in the version number.
 See
 $href%
-    http://cygwin.com/setup.html#naming%
-    cygwin package file naming
+   http://cygwin.com/setup.html#naming%
+   cygwin package file naming
 %$$
 or, to quote the
 $href%
-    http://www.rpm.org/max-rpm/ch-rpm-file-format.html%
-    rpm file naming convention
+   http://www.rpm.org/max-rpm/ch-rpm-file-format.html%
+   rpm file naming convention
 %$$
 $italic
 The only restriction placed on the version is that
@@ -525,8 +525,8 @@ $lend
 $head 08-17$$
 Some error message occurred while executing
 $codep
-    valgrind --tool=memcheck example/example
-    valgrind --tool=memcheck TestMore/TestMore
+   valgrind --tool=memcheck example/example
+   valgrind --tool=memcheck TestMore/TestMore
 
 $$
 These were not really bugs, but they have been fixed to avoid
@@ -766,10 +766,10 @@ $cref/VecAD<Base>::reference/VecAD/VecAD<Base>::reference/$$
 to $cref AD$$ gave a compile error (this has been fixed).
 Code example for this fix
 $codep
-    VecAD<double> V(1);
-    AD<double> zero = 0;
-    V[zero] = 1.;
-    static_cast< AD<double> > ( V[zero] );
+   VecAD<double> V(1);
+   AD<double> zero = 0;
+   V[zero] = 1.;
+   static_cast< AD<double> > ( V[zero] );
 $$
 
 
@@ -1089,8 +1089,8 @@ $$
 There was a bug $cref RevTwo$$ that was not detected by the
 $cref rev_two.cpp$$ test. This bug was reported by
 $href%
-    http://list.coin-or.org/pipermail/cppad/2006-February/000020.html%
-    Kasper Kristensen
+   http://list.coin-or.org/pipermail/cppad/2006-February/000020.html%
+   Kasper Kristensen
 %$$
 A test was added $code TestMore/rev_two.cpp$$ that detects this problem
 and the problem has been fixed.
@@ -1159,8 +1159,8 @@ $head 01-08$$
 The aclocal program is part of the automake and autoconf system.
 It often generates warnings of the form:
 $codei%
-    /usr/share/aclocal/%...%: warning: underquoted definition of
-    %...%
+   /usr/share/aclocal/%...%: warning: underquoted definition of
+   %...%
 %$$
 The shell script file $code FixAclocal$$,
 which attempts to fix these warnings,

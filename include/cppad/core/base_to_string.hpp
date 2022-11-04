@@ -7,14 +7,14 @@
 /*
 $begin base_to_string$$
 $spell
-    std
-    namespace
-    CppAD
-    struct
-    const
-    stringstream
-    setprecision
-    str
+   std
+   namespace
+   CppAD
+   struct
+   const
+   stringstream
+   setprecision
+   str
 $$
 
 $section Extending to_string To Another Floating Point Type$$
@@ -29,9 +29,9 @@ $head CPPAD_TO_STRING$$
 For most $icode Base$$ types,
 the following can be used to define the specialization:
 $codei%
-    namespace CppAD {
-        CPPAD_TO_STRING(%Base%)
-    }
+   namespace CppAD {
+      CPPAD_TO_STRING(%Base%)
+   }
 %$$
 Note that the $code CPPAD_TO_STRING$$ macro assumes that the
 $cref base_limits$$ and $cref base_std_math$$ have already been defined
@@ -40,13 +40,13 @@ This macro is defined as follows:
 $srccode%cpp% */
 # define CPPAD_TO_STRING(Base) \
 template <> struct to_string_struct<Base>\
-{   std::string operator()(const Base& value) \
-    {   std::stringstream os;\
-        int n_digits = 1 + CppAD::numeric_limits<Base>::digits10; \
-        os << std::setprecision(n_digits);\
-        os << value;\
-        return os.str();\
-    }\
+{  std::string operator()(const Base& value) \
+   {  std::stringstream os;\
+      int n_digits = 1 + CppAD::numeric_limits<Base>::digits10; \
+      os << std::setprecision(n_digits);\
+      os << value;\
+      return os.str();\
+   }\
 };
 /* %$$
 $end

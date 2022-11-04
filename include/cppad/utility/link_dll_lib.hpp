@@ -7,10 +7,10 @@
 /*
 $begin link_dll_lib$$
 $spell
-    dll
-    cppad
-    hpp
-    ptr
+   dll
+   cppad
+   hpp
+   ptr
 $$
 
 $section Link a Dynamic Link Library$$
@@ -46,7 +46,7 @@ Is a $code void*$$ version of a pointer the function corresponding to
 $icode function_name$$.
 
 $children%
-    example/utility/dll_lib.cpp
+   example/utility/dll_lib.cpp
 %$$
 $head Example$$
 The file $cref dll_lib.cpp$$ contains an example and test of
@@ -61,26 +61,26 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 class link_dll_lib {
 private:
-    // pointer to the dll object
-    void* handle_;
-    //
-    // error message during constructor
-    std::string ctor_err_msg_;
-    //
+   // pointer to the dll object
+   void* handle_;
+   //
+   // error message during constructor
+   std::string ctor_err_msg_;
+   //
 # ifdef _WIN32
-    static void*       dlopen(const char *filename, int flag);
-    static void*       dlsym(void* handle, const char* symbol);
-    static int         dlclose(void* handle);
-    static const char* dlerror(void);
+   static void*       dlopen(const char *filename, int flag);
+   static void*       dlsym(void* handle, const char* symbol);
+   static int         dlclose(void* handle);
+   static const char* dlerror(void);
 # endif
-    //
+   //
 public:
-    // BEGIN_PROTOTYPE
-    link_dll_lib(const std::string& dll_file, std::string& err_msg);
-    ~link_dll_lib(void);
-    void* operator()
-    (const std::string& function_name, std::string& err_msg) const;
-    // END_PROTOTYPE
+   // BEGIN_PROTOTYPE
+   link_dll_lib(const std::string& dll_file, std::string& err_msg);
+   ~link_dll_lib(void);
+   void* operator()
+   (const std::string& function_name, std::string& err_msg) const;
+   // END_PROTOTYPE
 };
 
 } // END_CPPAD_NAMESPACE

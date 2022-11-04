@@ -9,10 +9,10 @@
 -------------------------------------------------------------------------------
 $begin Compare$$
 $spell
-    cos
-    Op
-    bool
-    const
+   cos
+   Op
+   bool
+   const
 $$
 
 
@@ -47,21 +47,21 @@ $tend
 $head x$$
 The operand $icode x$$ has prototype
 $codei%
-    const %Type% &%x%
+   const %Type% &%x%
 %$$
 where $icode Type$$ is $codei%AD<%Base%>%$$, $icode Base$$, or $code int$$.
 
 $head y$$
 The operand $icode y$$ has prototype
 $codei%
-    const %Type% &%y%
+   const %Type% &%y%
 %$$
 where $icode Type$$ is $codei%AD<%Base%>%$$, $icode Base$$, or $code int$$.
 
 $head b$$
 The result $icode b$$ has type
 $codei%
-    bool %b%
+   bool %b%
 %$$
 
 $head Operation Sequence$$
@@ -79,10 +79,10 @@ the tape corresponding to $codei%AD<%Base%>%$$ is recording,
 $icode b$$ is true,
 and the subsequent code is
 $codei%
-    if( %b% )
-        %y% = cos(%x%);
-    else
-        %y% = sin(%x%);
+   if( %b% )
+      %y% = cos(%x%);
+   else
+      %y% = sin(%x%);
 %$$
 only the assignment $icode%y% = cos(%x%)%$$ is recorded on the tape
 (if $icode x$$ is a $cref/parameter/glossary/Parameter/$$,
@@ -102,7 +102,7 @@ $icode Base$$.
 
 $head Example$$
 $children%
-    example/general/compare.cpp
+   example/general/compare.cpp
 %$$
 The file
 $cref compare.cpp$$
@@ -117,94 +117,94 @@ namespace CppAD {
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator < (const AD<Base> &left , const AD<Base> &right)
-{   bool result    =  (left.value_ < right.value_);
-    //
-    // check if we are recording compare operators
-    local::ADTape<Base> *tape = AD<Base>::tape_ptr();
-    if( tape == nullptr )
-        return result;
-    if( ! tape->Rec_.get_record_compare() )
-        return result;
-    tape_id_t tape_id = tape->id_;
-    // tape_id cannot match the default value for tape_id_; i.e., 0
-    CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+{  bool result    =  (left.value_ < right.value_);
+   //
+   // check if we are recording compare operators
+   local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+   if( tape == nullptr )
+      return result;
+   if( ! tape->Rec_.get_record_compare() )
+      return result;
+   tape_id_t tape_id = tape->id_;
+   // tape_id cannot match the default value for tape_id_; i.e., 0
+   CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
-    // check if left and right tapes match
-    bool match_left  = left.tape_id_  == tape_id;
-    bool match_right = right.tape_id_ == tape_id;
+   // check if left and right tapes match
+   bool match_left  = left.tape_id_  == tape_id;
+   bool match_right = right.tape_id_ == tape_id;
 
-    // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
-    bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
+   // check if left and right are dynamic parameters
+   bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
+   bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
-    // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
-    bool var_right = match_right & (right.ad_type_ != dynamic_enum);
+   // check if left and right are variables
+   bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
+   bool var_right = match_right & (right.ad_type_ != dynamic_enum);
 
-    CPPAD_ASSERT_KNOWN(
-        left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
-        "< : AD variables or dynamic parameters on different threads."
-    );
-    if( var_left )
-    {   if( var_right )
-        {   // variable < variable
-            if( result )
-            {   tape->Rec_.PutOp(local::LtvvOp);
-                tape->Rec_.PutArg(left.taddr_, right.taddr_);
-            }
-            else
-            {   tape->Rec_.PutOp(local::LevvOp);
-                tape->Rec_.PutArg(right.taddr_, left.taddr_);
-            }
-        }
-        else
-        {   // variable < parameter
-            addr_t p = right.taddr_;
-            if( ! dyn_right )
-                p = tape->Rec_.put_con_par(right.value_);
-            if( result )
-            {   tape->Rec_.PutOp(local::LtvpOp);
-                tape->Rec_.PutArg(left.taddr_, p);
-            }
-            else
-            {   tape->Rec_.PutOp(local::LepvOp);
-                tape->Rec_.PutArg(p, left.taddr_);
-            }
-        }
-    }
-    else if ( var_right )
-    {   // parameter < variable
-        addr_t p = left.taddr_;
-        if( ! dyn_left )
-            p = tape->Rec_.put_con_par(left.value_);
-        if( result )
-        {   tape->Rec_.PutOp(local::LtpvOp);
-            tape->Rec_.PutArg(p, right.taddr_);
-        }
-        else
-        {   tape->Rec_.PutOp(local::LevpOp);
-            tape->Rec_.PutArg(right.taddr_, p);
-        }
-    }
-    else if( dyn_left | dyn_right )
-    {   // parameter < parameter
-        addr_t arg0 = left.taddr_;
-        addr_t arg1 = right.taddr_;
-        if( ! dyn_left )
-            arg0 = tape->Rec_.put_con_par(left.value_);
-        if( ! dyn_right )
-            arg1 = tape->Rec_.put_con_par(right.value_);
-        //
-        if( result )
-        {   tape->Rec_.PutOp(local::LtppOp);
-            tape->Rec_.PutArg(arg0, arg1);
-        }
-        else
-        {   tape->Rec_.PutOp(local::LeppOp);
-            tape->Rec_.PutArg(arg1, arg0);
-        }
-    }
-    return result;
+   CPPAD_ASSERT_KNOWN(
+      left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
+      "< : AD variables or dynamic parameters on different threads."
+   );
+   if( var_left )
+   {  if( var_right )
+      {  // variable < variable
+         if( result )
+         {  tape->Rec_.PutOp(local::LtvvOp);
+            tape->Rec_.PutArg(left.taddr_, right.taddr_);
+         }
+         else
+         {  tape->Rec_.PutOp(local::LevvOp);
+            tape->Rec_.PutArg(right.taddr_, left.taddr_);
+         }
+      }
+      else
+      {  // variable < parameter
+         addr_t p = right.taddr_;
+         if( ! dyn_right )
+            p = tape->Rec_.put_con_par(right.value_);
+         if( result )
+         {  tape->Rec_.PutOp(local::LtvpOp);
+            tape->Rec_.PutArg(left.taddr_, p);
+         }
+         else
+         {  tape->Rec_.PutOp(local::LepvOp);
+            tape->Rec_.PutArg(p, left.taddr_);
+         }
+      }
+   }
+   else if ( var_right )
+   {  // parameter < variable
+      addr_t p = left.taddr_;
+      if( ! dyn_left )
+         p = tape->Rec_.put_con_par(left.value_);
+      if( result )
+      {  tape->Rec_.PutOp(local::LtpvOp);
+         tape->Rec_.PutArg(p, right.taddr_);
+      }
+      else
+      {  tape->Rec_.PutOp(local::LevpOp);
+         tape->Rec_.PutArg(right.taddr_, p);
+      }
+   }
+   else if( dyn_left | dyn_right )
+   {  // parameter < parameter
+      addr_t arg0 = left.taddr_;
+      addr_t arg1 = right.taddr_;
+      if( ! dyn_left )
+         arg0 = tape->Rec_.put_con_par(left.value_);
+      if( ! dyn_right )
+         arg1 = tape->Rec_.put_con_par(right.value_);
+      //
+      if( result )
+      {  tape->Rec_.PutOp(local::LtppOp);
+         tape->Rec_.PutArg(arg0, arg1);
+      }
+      else
+      {  tape->Rec_.PutOp(local::LeppOp);
+         tape->Rec_.PutArg(arg1, arg0);
+      }
+   }
+   return result;
 }
 // convert other cases into the case above
 CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<)
@@ -213,94 +213,94 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator <= (const AD<Base> &left , const AD<Base> &right)
-{   bool result    =  (left.value_ <= right.value_);
-    //
-    // check if we are recording compare operators
-    local::ADTape<Base> *tape = AD<Base>::tape_ptr();
-    if( tape == nullptr )
-        return result;
-    if( ! tape->Rec_.get_record_compare() )
-        return result;
-    tape_id_t tape_id = tape->id_;
-    // tape_id cannot match the default value for tape_id_; i.e., 0
-    CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+{  bool result    =  (left.value_ <= right.value_);
+   //
+   // check if we are recording compare operators
+   local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+   if( tape == nullptr )
+      return result;
+   if( ! tape->Rec_.get_record_compare() )
+      return result;
+   tape_id_t tape_id = tape->id_;
+   // tape_id cannot match the default value for tape_id_; i.e., 0
+   CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
-    // check if left and right tapes match
-    bool match_left  = left.tape_id_  == tape_id;
-    bool match_right = right.tape_id_ == tape_id;
+   // check if left and right tapes match
+   bool match_left  = left.tape_id_  == tape_id;
+   bool match_right = right.tape_id_ == tape_id;
 
-    // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
-    bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
+   // check if left and right are dynamic parameters
+   bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
+   bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
-    // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
-    bool var_right = match_right & (right.ad_type_ != dynamic_enum);
+   // check if left and right are variables
+   bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
+   bool var_right = match_right & (right.ad_type_ != dynamic_enum);
 
-    CPPAD_ASSERT_KNOWN(
-        left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
-        "<= : AD variables or dynamic parameters on different threads."
-    );
-    if( var_left )
-    {   if( var_right )
-        {   // variable <= variable
-            if( result )
-            {   tape->Rec_.PutOp(local::LevvOp);
-                tape->Rec_.PutArg(left.taddr_, right.taddr_);
-            }
-            else
-            {   tape->Rec_.PutOp(local::LtvvOp);
-                tape->Rec_.PutArg(right.taddr_, left.taddr_);
-            }
-        }
-        else
-        {   // variable <= parameter
-            addr_t p = right.taddr_;
-            if( ! dyn_right )
-                p = tape->Rec_.put_con_par(right.value_);
-            if( result )
-            {   tape->Rec_.PutOp(local::LevpOp);
-                tape->Rec_.PutArg(left.taddr_, p);
-            }
-            else
-            {   tape->Rec_.PutOp(local::LtpvOp);
-                tape->Rec_.PutArg(p, left.taddr_);
-            }
-        }
-    }
-    else if ( var_right )
-    {   // parameter <= variable
-        addr_t p = left.taddr_;
-        if( ! dyn_left )
-            p = tape->Rec_.put_con_par(left.value_);
-        if( result )
-        {   tape->Rec_.PutOp(local::LepvOp);
-            tape->Rec_.PutArg(p, right.taddr_);
-        }
-        else
-        {   tape->Rec_.PutOp(local::LtvpOp);
-            tape->Rec_.PutArg(right.taddr_, p);
-        }
-    }
-    else if( dyn_left | dyn_right )
-    {   // parameter <= parameter
-        addr_t arg0 = left.taddr_;
-        addr_t arg1 = right.taddr_;
-        if( ! dyn_left )
-            arg0 = tape->Rec_.put_con_par(left.value_);
-        if( ! dyn_right )
-            arg1 = tape->Rec_.put_con_par(right.value_);
-        //
-        if( result )
-        {   tape->Rec_.PutOp(local::LeppOp);
-            tape->Rec_.PutArg(arg0, arg1);
-        }
-        else
-        {   tape->Rec_.PutOp(local::LtppOp);
-            tape->Rec_.PutArg(arg1, arg0);
-        }
-    }
-    return result;
+   CPPAD_ASSERT_KNOWN(
+      left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
+      "<= : AD variables or dynamic parameters on different threads."
+   );
+   if( var_left )
+   {  if( var_right )
+      {  // variable <= variable
+         if( result )
+         {  tape->Rec_.PutOp(local::LevvOp);
+            tape->Rec_.PutArg(left.taddr_, right.taddr_);
+         }
+         else
+         {  tape->Rec_.PutOp(local::LtvvOp);
+            tape->Rec_.PutArg(right.taddr_, left.taddr_);
+         }
+      }
+      else
+      {  // variable <= parameter
+         addr_t p = right.taddr_;
+         if( ! dyn_right )
+            p = tape->Rec_.put_con_par(right.value_);
+         if( result )
+         {  tape->Rec_.PutOp(local::LevpOp);
+            tape->Rec_.PutArg(left.taddr_, p);
+         }
+         else
+         {  tape->Rec_.PutOp(local::LtpvOp);
+            tape->Rec_.PutArg(p, left.taddr_);
+         }
+      }
+   }
+   else if ( var_right )
+   {  // parameter <= variable
+      addr_t p = left.taddr_;
+      if( ! dyn_left )
+         p = tape->Rec_.put_con_par(left.value_);
+      if( result )
+      {  tape->Rec_.PutOp(local::LepvOp);
+         tape->Rec_.PutArg(p, right.taddr_);
+      }
+      else
+      {  tape->Rec_.PutOp(local::LtvpOp);
+         tape->Rec_.PutArg(right.taddr_, p);
+      }
+   }
+   else if( dyn_left | dyn_right )
+   {  // parameter <= parameter
+      addr_t arg0 = left.taddr_;
+      addr_t arg1 = right.taddr_;
+      if( ! dyn_left )
+         arg0 = tape->Rec_.put_con_par(left.value_);
+      if( ! dyn_right )
+         arg1 = tape->Rec_.put_con_par(right.value_);
+      //
+      if( result )
+      {  tape->Rec_.PutOp(local::LeppOp);
+         tape->Rec_.PutArg(arg0, arg1);
+      }
+      else
+      {  tape->Rec_.PutOp(local::LtppOp);
+         tape->Rec_.PutArg(arg1, arg0);
+      }
+   }
+   return result;
 }
 // convert other cases into the case above
 CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<=)
@@ -309,94 +309,94 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<=)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator > (const AD<Base> &left , const AD<Base> &right)
-{   bool result    =  (left.value_ > right.value_);
-    //
-    // check if we are recording compare operators
-    local::ADTape<Base> *tape = AD<Base>::tape_ptr();
-    if( tape == nullptr )
-        return result;
-    if( ! tape->Rec_.get_record_compare() )
-        return result;
-    tape_id_t tape_id = tape->id_;
-    // tape_id cannot match the default value for tape_id_; i.e., 0
-    CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+{  bool result    =  (left.value_ > right.value_);
+   //
+   // check if we are recording compare operators
+   local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+   if( tape == nullptr )
+      return result;
+   if( ! tape->Rec_.get_record_compare() )
+      return result;
+   tape_id_t tape_id = tape->id_;
+   // tape_id cannot match the default value for tape_id_; i.e., 0
+   CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
-    // check if left and right tapes match
-    bool match_left  = left.tape_id_  == tape_id;
-    bool match_right = right.tape_id_ == tape_id;
+   // check if left and right tapes match
+   bool match_left  = left.tape_id_  == tape_id;
+   bool match_right = right.tape_id_ == tape_id;
 
-    // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
-    bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
+   // check if left and right are dynamic parameters
+   bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
+   bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
-    // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
-    bool var_right = match_right & (right.ad_type_ != dynamic_enum);
+   // check if left and right are variables
+   bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
+   bool var_right = match_right & (right.ad_type_ != dynamic_enum);
 
-    CPPAD_ASSERT_KNOWN(
-        left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
-        "> : AD variables or dynamic parameters on different threads."
-    );
-    if( var_left )
-    {   if( var_right )
-        {   // variable > variable
-            if( result )
-            {   tape->Rec_.PutOp(local::LtvvOp);
-                tape->Rec_.PutArg(right.taddr_, left.taddr_);
-            }
-            else
-            {   tape->Rec_.PutOp(local::LevvOp);
-                tape->Rec_.PutArg(left.taddr_, right.taddr_);
-            }
-        }
-        else
-        {   // variable > parameter
-            addr_t p = right.taddr_;
-            if( ! dyn_right )
-                p = tape->Rec_.put_con_par(right.value_);
-            if( result )
-            {   tape->Rec_.PutOp(local::LtpvOp);
-                tape->Rec_.PutArg(p, left.taddr_);
-            }
-            else
-            {   tape->Rec_.PutOp(local::LevpOp);
-                tape->Rec_.PutArg(left.taddr_, p);
-            }
-        }
-    }
-    else if ( var_right )
-    {   // parameter > variable
-        addr_t p = left.taddr_;
-        if( ! dyn_left )
-            p = tape->Rec_.put_con_par(left.value_);
-        if( result )
-        {   tape->Rec_.PutOp(local::LtvpOp);
-            tape->Rec_.PutArg(right.taddr_, p);
-        }
-        else
-        {   tape->Rec_.PutOp(local::LepvOp);
-            tape->Rec_.PutArg(p, right.taddr_);
-        }
-    }
-    else if( dyn_left | dyn_right )
-    {   // parameter > parameter
-        addr_t arg0 = left.taddr_;
-        addr_t arg1 = right.taddr_;
-        if( ! dyn_left )
-            arg0 = tape->Rec_.put_con_par(left.value_);
-        if( ! dyn_right )
-            arg1 = tape->Rec_.put_con_par(right.value_);
-        //
-        if( result )
-        {   tape->Rec_.PutOp(local::LtppOp);
-            tape->Rec_.PutArg(arg1, arg0);
-        }
-        else
-        {   tape->Rec_.PutOp(local::LeppOp);
-            tape->Rec_.PutArg(arg0, arg1);
-        }
-    }
-    return result;
+   CPPAD_ASSERT_KNOWN(
+      left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
+      "> : AD variables or dynamic parameters on different threads."
+   );
+   if( var_left )
+   {  if( var_right )
+      {  // variable > variable
+         if( result )
+         {  tape->Rec_.PutOp(local::LtvvOp);
+            tape->Rec_.PutArg(right.taddr_, left.taddr_);
+         }
+         else
+         {  tape->Rec_.PutOp(local::LevvOp);
+            tape->Rec_.PutArg(left.taddr_, right.taddr_);
+         }
+      }
+      else
+      {  // variable > parameter
+         addr_t p = right.taddr_;
+         if( ! dyn_right )
+            p = tape->Rec_.put_con_par(right.value_);
+         if( result )
+         {  tape->Rec_.PutOp(local::LtpvOp);
+            tape->Rec_.PutArg(p, left.taddr_);
+         }
+         else
+         {  tape->Rec_.PutOp(local::LevpOp);
+            tape->Rec_.PutArg(left.taddr_, p);
+         }
+      }
+   }
+   else if ( var_right )
+   {  // parameter > variable
+      addr_t p = left.taddr_;
+      if( ! dyn_left )
+         p = tape->Rec_.put_con_par(left.value_);
+      if( result )
+      {  tape->Rec_.PutOp(local::LtvpOp);
+         tape->Rec_.PutArg(right.taddr_, p);
+      }
+      else
+      {  tape->Rec_.PutOp(local::LepvOp);
+         tape->Rec_.PutArg(p, right.taddr_);
+      }
+   }
+   else if( dyn_left | dyn_right )
+   {  // parameter > parameter
+      addr_t arg0 = left.taddr_;
+      addr_t arg1 = right.taddr_;
+      if( ! dyn_left )
+         arg0 = tape->Rec_.put_con_par(left.value_);
+      if( ! dyn_right )
+         arg1 = tape->Rec_.put_con_par(right.value_);
+      //
+      if( result )
+      {  tape->Rec_.PutOp(local::LtppOp);
+         tape->Rec_.PutArg(arg1, arg0);
+      }
+      else
+      {  tape->Rec_.PutOp(local::LeppOp);
+         tape->Rec_.PutArg(arg0, arg1);
+      }
+   }
+   return result;
 }
 // convert other cases into the case above
 CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>)
@@ -405,94 +405,94 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator >= (const AD<Base> &left , const AD<Base> &right)
-{   bool result    =  (left.value_ >= right.value_);
-    //
-    // check if we are recording compare operators
-    local::ADTape<Base> *tape = AD<Base>::tape_ptr();
-    if( tape == nullptr )
-        return result;
-    if( ! tape->Rec_.get_record_compare() )
-        return result;
-    tape_id_t tape_id = tape->id_;
-    // tape_id cannot match the default value for tape_id_; i.e., 0
-    CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+{  bool result    =  (left.value_ >= right.value_);
+   //
+   // check if we are recording compare operators
+   local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+   if( tape == nullptr )
+      return result;
+   if( ! tape->Rec_.get_record_compare() )
+      return result;
+   tape_id_t tape_id = tape->id_;
+   // tape_id cannot match the default value for tape_id_; i.e., 0
+   CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
-    // check if left and right tapes match
-    bool match_left  = left.tape_id_  == tape_id;
-    bool match_right = right.tape_id_ == tape_id;
+   // check if left and right tapes match
+   bool match_left  = left.tape_id_  == tape_id;
+   bool match_right = right.tape_id_ == tape_id;
 
-    // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
-    bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
+   // check if left and right are dynamic parameters
+   bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
+   bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
-    // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
-    bool var_right = match_right & (right.ad_type_ != dynamic_enum);
+   // check if left and right are variables
+   bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
+   bool var_right = match_right & (right.ad_type_ != dynamic_enum);
 
-    CPPAD_ASSERT_KNOWN(
-        left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
-        ">= : AD variables or dynamic parameters on different threads."
-    );
-    if( var_left )
-    {   if( var_right )
-        {   // variable >= variable
-            if( result )
-            {   tape->Rec_.PutOp(local::LevvOp);
-                tape->Rec_.PutArg(right.taddr_, left.taddr_);
-            }
-            else
-            {   tape->Rec_.PutOp(local::LtvvOp);
-                tape->Rec_.PutArg(left.taddr_, right.taddr_);
-            }
-        }
-        else
-        {   // variable >= parameter
-            addr_t p = right.taddr_;
-            if( ! dyn_right )
-                p = tape->Rec_.put_con_par(right.value_);
-            if( result )
-            {   tape->Rec_.PutOp(local::LepvOp);
-                tape->Rec_.PutArg(p, left.taddr_);
-            }
-            else
-            {   tape->Rec_.PutOp(local::LtvpOp);
-                tape->Rec_.PutArg(left.taddr_, p);
-            }
-        }
-    }
-    else if ( var_right )
-    {   // parameter >= variable
-        addr_t p = left.taddr_;
-        if( ! dyn_left )
-            p = tape->Rec_.put_con_par(left.value_);
-        if( result )
-        {   tape->Rec_.PutOp(local::LevpOp);
-            tape->Rec_.PutArg(right.taddr_, p);
-        }
-        else
-        {   tape->Rec_.PutOp(local::LtpvOp);
-            tape->Rec_.PutArg(p, right.taddr_);
-        }
-    }
-    else if( dyn_left | dyn_right )
-    {   // parameter >= parameter
-        addr_t arg0 = left.taddr_;
-        addr_t arg1 = right.taddr_;
-        if( ! dyn_left )
-            arg0 = tape->Rec_.put_con_par(left.value_);
-        if( ! dyn_right )
-            arg1 = tape->Rec_.put_con_par(right.value_);
-        //
-        if( result )
-        {   tape->Rec_.PutOp(local::LeppOp);
-            tape->Rec_.PutArg(arg1, arg0);
-        }
-        else
-        {   tape->Rec_.PutOp(local::LtppOp);
-            tape->Rec_.PutArg(arg0, arg1);
-        }
-    }
-    return result;
+   CPPAD_ASSERT_KNOWN(
+      left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
+      ">= : AD variables or dynamic parameters on different threads."
+   );
+   if( var_left )
+   {  if( var_right )
+      {  // variable >= variable
+         if( result )
+         {  tape->Rec_.PutOp(local::LevvOp);
+            tape->Rec_.PutArg(right.taddr_, left.taddr_);
+         }
+         else
+         {  tape->Rec_.PutOp(local::LtvvOp);
+            tape->Rec_.PutArg(left.taddr_, right.taddr_);
+         }
+      }
+      else
+      {  // variable >= parameter
+         addr_t p = right.taddr_;
+         if( ! dyn_right )
+            p = tape->Rec_.put_con_par(right.value_);
+         if( result )
+         {  tape->Rec_.PutOp(local::LepvOp);
+            tape->Rec_.PutArg(p, left.taddr_);
+         }
+         else
+         {  tape->Rec_.PutOp(local::LtvpOp);
+            tape->Rec_.PutArg(left.taddr_, p);
+         }
+      }
+   }
+   else if ( var_right )
+   {  // parameter >= variable
+      addr_t p = left.taddr_;
+      if( ! dyn_left )
+         p = tape->Rec_.put_con_par(left.value_);
+      if( result )
+      {  tape->Rec_.PutOp(local::LevpOp);
+         tape->Rec_.PutArg(right.taddr_, p);
+      }
+      else
+      {  tape->Rec_.PutOp(local::LtpvOp);
+         tape->Rec_.PutArg(p, right.taddr_);
+      }
+   }
+   else if( dyn_left | dyn_right )
+   {  // parameter >= parameter
+      addr_t arg0 = left.taddr_;
+      addr_t arg1 = right.taddr_;
+      if( ! dyn_left )
+         arg0 = tape->Rec_.put_con_par(left.value_);
+      if( ! dyn_right )
+         arg1 = tape->Rec_.put_con_par(right.value_);
+      //
+      if( result )
+      {  tape->Rec_.PutOp(local::LeppOp);
+         tape->Rec_.PutArg(arg1, arg0);
+      }
+      else
+      {  tape->Rec_.PutOp(local::LtppOp);
+         tape->Rec_.PutArg(arg0, arg1);
+      }
+   }
+   return result;
 }
 // convert other cases into the case above
 CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>=)
@@ -501,40 +501,40 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>=)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator == (const AD<Base> &left , const AD<Base> &right)
-{   bool result    =  (left.value_ == right.value_);
-    //
-    // check if we are recording compare operators
-    local::ADTape<Base> *tape = AD<Base>::tape_ptr();
-    if( tape == nullptr )
-        return result;
-    if( ! tape->Rec_.get_record_compare() )
-        return result;
-    tape_id_t tape_id = tape->id_;
-    // tape_id cannot match the default value for tape_id_; i.e., 0
-    CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+{  bool result    =  (left.value_ == right.value_);
+   //
+   // check if we are recording compare operators
+   local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+   if( tape == nullptr )
+      return result;
+   if( ! tape->Rec_.get_record_compare() )
+      return result;
+   tape_id_t tape_id = tape->id_;
+   // tape_id cannot match the default value for tape_id_; i.e., 0
+   CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
-    // check if left and right tapes match
-    bool match_left  = left.tape_id_  == tape_id;
-    bool match_right = right.tape_id_ == tape_id;
+   // check if left and right tapes match
+   bool match_left  = left.tape_id_  == tape_id;
+   bool match_right = right.tape_id_ == tape_id;
 
-    // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
-    bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
+   // check if left and right are dynamic parameters
+   bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
+   bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
-    // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
-    bool var_right = match_right & (right.ad_type_ != dynamic_enum);
+   // check if left and right are variables
+   bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
+   bool var_right = match_right & (right.ad_type_ != dynamic_enum);
 
-    CPPAD_ASSERT_KNOWN(
-        left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
-        "==: AD variables or dynamic parameters on different threads."
-    );
-    //
-    tape->Rec_.comp_eq(
-        var_left, var_right, dyn_left, dyn_right, left, right, result
-    );
-    //
-    return result;
+   CPPAD_ASSERT_KNOWN(
+      left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
+      "==: AD variables or dynamic parameters on different threads."
+   );
+   //
+   tape->Rec_.comp_eq(
+      var_left, var_right, dyn_left, dyn_right, left, right, result
+   );
+   //
+   return result;
 }
 // convert other cases into the case above
 CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(==)
@@ -543,82 +543,82 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(==)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator != (const AD<Base> &left , const AD<Base> &right)
-{   bool result    =  (left.value_ != right.value_);
-    //
-    // check if we are recording compare operators
-    local::ADTape<Base> *tape = AD<Base>::tape_ptr();
-    if( tape == nullptr )
-        return result;
-    if( ! tape->Rec_.get_record_compare() )
-        return result;
-    tape_id_t tape_id = tape->id_;
-    // tape_id cannot match the default value for tape_id_; i.e., 0
-    CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+{  bool result    =  (left.value_ != right.value_);
+   //
+   // check if we are recording compare operators
+   local::ADTape<Base> *tape = AD<Base>::tape_ptr();
+   if( tape == nullptr )
+      return result;
+   if( ! tape->Rec_.get_record_compare() )
+      return result;
+   tape_id_t tape_id = tape->id_;
+   // tape_id cannot match the default value for tape_id_; i.e., 0
+   CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
 
-    // check if left and right tapes match
-    bool match_left  = left.tape_id_  == tape_id;
-    bool match_right = right.tape_id_ == tape_id;
+   // check if left and right tapes match
+   bool match_left  = left.tape_id_  == tape_id;
+   bool match_right = right.tape_id_ == tape_id;
 
-    // check if left and right are dynamic parameters
-    bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
-    bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
+   // check if left and right are dynamic parameters
+   bool dyn_left  = match_left  & (left.ad_type_ == dynamic_enum);
+   bool dyn_right = match_right & (right.ad_type_ == dynamic_enum);
 
-    // check if left and right are variables
-    bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
-    bool var_right = match_right & (right.ad_type_ != dynamic_enum);
+   // check if left and right are variables
+   bool var_left  = match_left  & (left.ad_type_ != dynamic_enum);
+   bool var_right = match_right & (right.ad_type_ != dynamic_enum);
 
-    CPPAD_ASSERT_KNOWN(
-        left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
-        "!=: AD variables or dynamic parameters on different threads."
-    );
-    if( var_left )
-    {   if( var_right )
-        {   // variable == variable
-            tape->Rec_.PutArg(left.taddr_, right.taddr_);
-            if( result )
-                tape->Rec_.PutOp(local::NevvOp);
-            else
-                tape->Rec_.PutOp(local::EqvvOp);
-        }
-        else
-        {   // variable == parameter
-            addr_t p = right.taddr_;
-            if( ! dyn_right )
-                p = tape->Rec_.put_con_par(right.value_);
-            tape->Rec_.PutArg(p, left.taddr_);
-            if( result )
-                tape->Rec_.PutOp(local::NepvOp);
-            else
-                tape->Rec_.PutOp(local::EqpvOp);
-        }
-    }
-    else if ( var_right )
-    {   // parameter == variable
-        addr_t p = left.taddr_;
-        if( ! dyn_left )
-            p = tape->Rec_.put_con_par(left.value_);
-        tape->Rec_.PutArg(p, right.taddr_);
-        if( result )
+   CPPAD_ASSERT_KNOWN(
+      left.tape_id_ == right.tape_id_ || ! match_left || ! match_right ,
+      "!=: AD variables or dynamic parameters on different threads."
+   );
+   if( var_left )
+   {  if( var_right )
+      {  // variable == variable
+         tape->Rec_.PutArg(left.taddr_, right.taddr_);
+         if( result )
+            tape->Rec_.PutOp(local::NevvOp);
+         else
+            tape->Rec_.PutOp(local::EqvvOp);
+      }
+      else
+      {  // variable == parameter
+         addr_t p = right.taddr_;
+         if( ! dyn_right )
+            p = tape->Rec_.put_con_par(right.value_);
+         tape->Rec_.PutArg(p, left.taddr_);
+         if( result )
             tape->Rec_.PutOp(local::NepvOp);
-        else
+         else
             tape->Rec_.PutOp(local::EqpvOp);
-    }
-    else if( dyn_left | dyn_right )
-    {   // parameter == parameter
-        addr_t arg0 = left.taddr_;
-        addr_t arg1 = right.taddr_;
-        if( ! dyn_left )
-            arg0 = tape->Rec_.put_con_par(left.value_);
-        if( ! dyn_right )
-            arg1 = tape->Rec_.put_con_par(right.value_);
-        //
-        tape->Rec_.PutArg(arg0, arg1);
-        if( result )
-            tape->Rec_.PutOp(local::NeppOp);
-        else
-            tape->Rec_.PutOp(local::EqppOp);
-    }
-    return result;
+      }
+   }
+   else if ( var_right )
+   {  // parameter == variable
+      addr_t p = left.taddr_;
+      if( ! dyn_left )
+         p = tape->Rec_.put_con_par(left.value_);
+      tape->Rec_.PutArg(p, right.taddr_);
+      if( result )
+         tape->Rec_.PutOp(local::NepvOp);
+      else
+         tape->Rec_.PutOp(local::EqpvOp);
+   }
+   else if( dyn_left | dyn_right )
+   {  // parameter == parameter
+      addr_t arg0 = left.taddr_;
+      addr_t arg1 = right.taddr_;
+      if( ! dyn_left )
+         arg0 = tape->Rec_.put_con_par(left.value_);
+      if( ! dyn_right )
+         arg1 = tape->Rec_.put_con_par(right.value_);
+      //
+      tape->Rec_.PutArg(arg0, arg1);
+      if( result )
+         tape->Rec_.PutOp(local::NeppOp);
+      else
+         tape->Rec_.PutOp(local::EqppOp);
+   }
+   return result;
 }
 // convert other cases into the case above
 CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(!=)

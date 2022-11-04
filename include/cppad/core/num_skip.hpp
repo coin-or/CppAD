@@ -8,9 +8,9 @@
 /*
 $begin number_skip$$
 $spell
-    optimizer
-    var
-    taylor_
+   optimizer
+   var
+   taylor_
 $$
 
 
@@ -40,11 +40,11 @@ $cref/f.Forward/Forward/$$ for order zero).
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 
 $children%
-    example/general/number_skip.cpp
+   example/general/number_skip.cpp
 %$$
 $head Example$$
 The file $cref number_skip.cpp$$
@@ -63,52 +63,52 @@ namespace CppAD {
 // 2DO: compute this value during zero order forward operations.
 template <class Base, class RecBase>
 size_t ADFun<Base,RecBase>::number_skip(void)
-{   // must pass through operation sequence to map operations to variables
+{  // must pass through operation sequence to map operations to variables
 
-    // information defined by atomic forward
-    size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0;
+   // information defined by atomic forward
+   size_t atom_index=0, atom_old=0, atom_m=0, atom_n=0;
 
-    // number of variables skipped
-    size_t num_var_skip = 0;
+   // number of variables skipped
+   size_t num_var_skip = 0;
 
-    // start playback
-    local::play::const_sequential_iterator itr = play_.begin();
-    local::OpCode op;
-    size_t        i_var;
-    const addr_t* arg;
-    itr.op_info(op, arg, i_var);
-    CPPAD_ASSERT_UNKNOWN(op == local::BeginOp)
-    while(op != local::EndOp)
-    {   // next op
-        (++itr).op_info(op, arg, i_var);
-        //
-        if( op == local::AFunOp )
-        {   // skip only appears at front or back AFunOp of atomic function call
-            bool skip_call = cskip_op_[ itr.op_index() ];
-            local::play::atom_op_info<Base>(
-                op, arg, atom_index, atom_old, atom_m, atom_n
+   // start playback
+   local::play::const_sequential_iterator itr = play_.begin();
+   local::OpCode op;
+   size_t        i_var;
+   const addr_t* arg;
+   itr.op_info(op, arg, i_var);
+   CPPAD_ASSERT_UNKNOWN(op == local::BeginOp)
+   while(op != local::EndOp)
+   {  // next op
+      (++itr).op_info(op, arg, i_var);
+      //
+      if( op == local::AFunOp )
+      {  // skip only appears at front or back AFunOp of atomic function call
+         bool skip_call = cskip_op_[ itr.op_index() ];
+         local::play::atom_op_info<Base>(
+            op, arg, atom_index, atom_old, atom_m, atom_n
+         );
+         CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+         size_t num_op = atom_m + atom_n + 1;
+         for(size_t i = 0; i < num_op; i++)
+         {  CPPAD_ASSERT_UNKNOWN(
+               op != local::CSkipOp && op != local::CSumOp
             );
-            CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
-            size_t num_op = atom_m + atom_n + 1;
-            for(size_t i = 0; i < num_op; i++)
-            {   CPPAD_ASSERT_UNKNOWN(
-                    op != local::CSkipOp && op != local::CSumOp
-                );
-                (++itr).op_info(op, arg, i_var);
-                if( skip_call )
-                    num_var_skip += NumRes(op);
-            }
-            CPPAD_ASSERT_UNKNOWN( op == local::AFunOp );
-        }
-        else
-        {   if( cskip_op_[ itr.op_index() ] )
-                num_var_skip += NumRes(op);
-            //
-            if( (op == local::CSkipOp) | (op == local::CSumOp) )
-                itr.correct_before_increment();
-        }
-    }
-    return num_var_skip;
+            (++itr).op_info(op, arg, i_var);
+            if( skip_call )
+               num_var_skip += NumRes(op);
+         }
+         CPPAD_ASSERT_UNKNOWN( op == local::AFunOp );
+      }
+      else
+      {  if( cskip_op_[ itr.op_index() ] )
+            num_var_skip += NumRes(op);
+         //
+         if( (op == local::CSkipOp) | (op == local::CSumOp) )
+            itr.correct_before_increment();
+      }
+   }
+   return num_var_skip;
 }
 
 } // END CppAD namespace

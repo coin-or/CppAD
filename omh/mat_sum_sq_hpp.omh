@@ -5,9 +5,9 @@
 
 $begin mat_sum_sq.hpp$$
 $spell
-    sq
-    ifndef
-    endif
+   sq
+   ifndef
+   endif
 $$
 
 $section Source: mat_sum_sq$$

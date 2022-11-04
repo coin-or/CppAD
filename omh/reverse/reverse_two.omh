@@ -6,9 +6,9 @@ $begin reverse_two$$
 
 $section Second Order Reverse Mode$$
 $spell
-    taylor
-    const
-    dw
+   taylor
+   const
+   dw
 $$
 
 
@@ -27,7 +27,7 @@ For $latex k = 0, 1$$,
 the vector $latex x^{(k)} \in \B{R}^n$$ is defined as the value of
 $icode x_k$$ in the previous call (counting this call) of the form
 $codei%
-    %f%.Forward(%k%, %x_k%)
+   %f%.Forward(%k%, %x_k%)
 %$$
 If there is no previous call with $latex k = 0$$,
 $latex x^{(0)}$$ is the value of the independent variables when the
@@ -47,19 +47,19 @@ W_0 ( u ) & = & w_0 * F_0 ( u ) + \cdots + w_{m-1} * F_{m-1} (u)
 \\
 W_1 ( u ) & = &
 w_0 * F_0^{(1)} ( u ) * x^{(1)}
-    + \cdots + w_{m-1} * F_{m-1}^{(1)} (u) * x^{(1)}
+   + \cdots + w_{m-1} * F_{m-1}^{(1)} (u) * x^{(1)}
 \end{array}
 \] $$
 This operation computes the derivatives
 $latex \[
 \begin{array}{rcl}
 W_0^{(1)} (u) & = &
-    w_0 * F_0^{(1)} ( u ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (u)
+   w_0 * F_0^{(1)} ( u ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (u)
 \\
 W_1^{(1)} (u) & = &
-    w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u )
-    + \cdots +
-    w_{m-1} * \left( x^{(1)} \right)^\R{T} F_{m-1}^{(2)} (u)
+   w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u )
+   + \cdots +
+   w_{m-1} * \left( x^{(1)} \right)^\R{T} F_{m-1}^{(2)} (u)
 \end{array}
 \] $$
 at $latex u = x^{(0)}$$.
@@ -67,18 +67,18 @@ at $latex u = x^{(0)}$$.
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-    const ADFun<%Base%> %f%
+   const ADFun<%Base%> %f%
 %$$
 Before this call to $code Reverse$$, the value returned by
 $codei%
-    %f%.size_order()
+   %f%.size_order()
 %$$
 must be greater than or equal two (see $cref size_order$$).
 
 $head w$$
 The argument $icode w$$ has prototype
 $codei%
-    const %Vector% &%w%
+   const %Vector% &%w%
 %$$
 (see $cref/Vector/reverse_two/Vector/$$ below)
 and its size
@@ -88,7 +88,7 @@ $cref/range/fun_property/Range/$$ space for $icode f$$.
 $head dw$$
 The result $icode dw$$ has prototype
 $codei%
-    %Vector% %dw%
+   %Vector% %dw%
 %$$
 (see $cref/Vector/reverse_two/Vector/$$ below).
 It contains both the derivative
@@ -161,8 +161,8 @@ dw[ j * 2 + 1 ] = \DD{ F_i }{ x_j }{ x_\ell } \left( x^{(0)} \right)
 
 $head Example$$
 $children%
-    example/general/reverse_two.cpp%
-    example/general/hes_times_dir.cpp
+   example/general/reverse_two.cpp%
+   example/general/hes_times_dir.cpp
 %$$
 The files
 $cref reverse_two.cpp$$

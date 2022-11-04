@@ -5,21 +5,21 @@
 
 $begin fun_property$$
 $spell
-    inuse
-    Addr
-    CppAD
-    sizeof
-    op
-    arg
-    enum
-    Taylor
-    const
-    bool
-    var
-    VecAD
-    subgraph
-    dyn
-    ind
+   inuse
+   Addr
+   CppAD
+   sizeof
+   op
+   arg
+   enum
+   Taylor
+   const
+   bool
+   var
+   VecAD
+   subgraph
+   dyn
+   ind
 $$
 
 $section ADFun Function Properties$$
@@ -71,19 +71,19 @@ $code size_var$$ returns zero.)
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-    const ADFun<%Base%> %f%
+   const ADFun<%Base%> %f%
 %$$
 (see $codei%ADFun<%Base%>%$$ $cref/constructor/FunConstruct/$$).
 
 $head Domain$$
 The result $icode n$$ has prototype
 $codei%
-    size_t %n%
+   size_t %n%
 %$$
 and is the dimension of the domain space corresponding to $icode f$$.
 This is equal to the size of the vector $icode x$$ in the call
 $codei%
-    Independent(%x%)
+   Independent(%x%)
 %$$
 that starting recording the operation sequence
 currently stored in $icode f$$
@@ -92,16 +92,16 @@ currently stored in $icode f$$
 $head Range$$
 The result $icode m$$ has prototype
 $codei%
-    size_t %m%
+   size_t %m%
 %$$
 and is the dimension of the range space corresponding to $icode f$$.
 This is equal to the size of the vector $icode y$$ in syntax
 $codei%
-    ADFun<%Base> %f%(%x%, %y%)
+   ADFun<%Base> %f%(%x%, %y%)
 %$$
 or
 $codei%
-    %f%.Dependent(%y%)
+   %f%.Dependent(%y%)
 %$$
 depending on which stored the operation sequence currently in $icode f$$
 (see $cref FunConstruct$$ and $cref Dependent$$).
@@ -109,12 +109,12 @@ depending on which stored the operation sequence currently in $icode f$$
 $head Parameter$$
 The argument $icode i$$ has prototype
 $codei%
-    size_t %i%
+   size_t %i%
 %$$
 and $latex 0 \leq i < m$$.
 The result $icode p$$ has prototype
 $codei%
-    bool %p%
+   bool %p%
 %$$
 It is true if the $th i$$ component of range space for $latex F$$
 corresponds to a
@@ -122,14 +122,14 @@ $cref/parameter/glossary/Parameter/$$ in the operation sequence.
 In this case,
 the $th i$$ component of $latex F$$ is constant and
 $latex \[
-    \D{F_i}{x_j} (x) = 0
+   \D{F_i}{x_j} (x) = 0
 \] $$
 for $latex j = 0 , \ldots , n-1$$ and all $latex x \in \B{R}^n$$.
 
 $head size_var$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the number of variables in the operation sequence plus the following:
 one for a phantom variable with tape address zero,
@@ -149,7 +149,7 @@ $code size_var$$ returns zero
 $head size_par$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the number of parameters in the operation sequence
 (include a phantom parameter at index zero that is not used).
@@ -163,7 +163,7 @@ Note that one $icode Base$$ value is required for each parameter.
 $head size_op$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the number of operations in the operation sequence.
 Some operators, like comparison operators,
@@ -177,7 +177,7 @@ Note that one $code enum$$ value is required for each operator.
 $head size_op_arg$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the total number of operator arguments in the operation sequence.
 For example, Binary operators (e.g. addition) have two arguments.
@@ -189,7 +189,7 @@ phantom argument with index 0 that is not used.
 $head size_text$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the total characters used in the $cref PrintFor$$ commands
 in this operation sequence.
@@ -197,7 +197,7 @@ in this operation sequence.
 $head size_VecAD$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the number of $cref VecAD$$ vectors,
 plus the number of elements in the vectors.
@@ -207,7 +207,7 @@ independent variables are stored in the operation sequence.
 $head size_random$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the amount of memory currently holding information
 for randomly access the operator sequence.
@@ -226,7 +226,7 @@ will free this extra memory.
 $head size_dyn_ind$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the number of independent
 $cref/dynamic/glossary/Parameter/Dynamic/$$ parameters
@@ -238,7 +238,7 @@ corresponding call to $code Independent$$.
 $head size_dyn_par$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the number of
 $cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
@@ -249,7 +249,7 @@ This includes the independent dynamic parameters.
 $head size_dyn_arg$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the total number of dynamic parameter operator arguments
 in the operation sequence.
@@ -261,22 +261,22 @@ for each argument.
 $head size_op_seq$$
 The result $icode s$$ has prototype
 $codei%
-    size_t %s%
+   size_t %s%
 %$$
 and is the amount of memory required to store the operation sequence
 (not counting a small amount of memory required for every operation sequence).
 For the current version of CppAD, this is given by
 $comment see size_t player::Memory(void)$$
 $codei%
-    %s% = %f%.size_op()      * sizeof(CPPAD_VEC_ENUM_TYPE)
-        + %f%.size_op_arg()  * sizeof(%tape_addr_type%)
-        + %f%.size_par()     * sizeof(%Base%)
-        + %f%.size_par()     * sizeof(bool)
-        + %f%.size_dyn_par() * sizeof(CPPAD_VEC_ENUM_TYPE)
-        + %f%.size_dyn_par() * sizeof(%tape_addr_type%)
-        + %f%.size_dyn_arg() * sizeof(%tape_addr_type%)
-        + %f%.size_text()    * sizeof(char)
-        + %f%.size_VecAD()   * sizeof(%tape_addr_type%)
+   %s% = %f%.size_op()      * sizeof(CPPAD_VEC_ENUM_TYPE)
+      + %f%.size_op_arg()  * sizeof(%tape_addr_type%)
+      + %f%.size_par()     * sizeof(%Base%)
+      + %f%.size_par()     * sizeof(bool)
+      + %f%.size_dyn_par() * sizeof(CPPAD_VEC_ENUM_TYPE)
+      + %f%.size_dyn_par() * sizeof(%tape_addr_type%)
+      + %f%.size_dyn_arg() * sizeof(%tape_addr_type%)
+      + %f%.size_text()    * sizeof(char)
+      + %f%.size_VecAD()   * sizeof(%tape_addr_type%)
 %$$
 see $cref/tape_addr_type/cmake/cppad_tape_addr_type/$$.
 Note that this is the minimal amount of memory that can hold
@@ -288,7 +288,7 @@ of the CppAD API and may change.
 
 $head Example$$
 $children%
-    example/general/fun_property.cpp
+   example/general/fun_property.cpp
 %$$
 The file
 $cref fun_property.cpp$$

@@ -5,11 +5,11 @@
 # ----------------------------------------------------------------------------
 # $begin get_ipopt.sh$$ $newlinech #$$
 # $spell
-#   tgz
-#   Ipopt
-#   CppAD
-#   Blas
-#   Lapack
+#  tgz
+#  Ipopt
+#  CppAD
+#  Blas
+#  Lapack
 # $$
 #
 # $section Download and Install Ipopt in Build Directory$$
@@ -47,7 +47,7 @@ version='3.13.2'
 # $head Configuration$$
 # If the file
 # $codei%
-#   external/ipopt-%version%.configured
+#  external/ipopt-%version%.configured
 # %$$
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
@@ -57,14 +57,14 @@ version='3.13.2'
 package='ipopt'
 if [ $0 != "bin/get_$package.sh" ]
 then
-    echo "bin/get_$package.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/get_$package.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 coinbrew='https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew'
@@ -73,16 +73,16 @@ cppad_dir=`pwd`
 # n_proc
 if which nproc >& /dev/null
 then
-    n_job=$(nproc)
+   n_job=$(nproc)
 else
-    n_job=$(sysctl -n hw.ncpu)
+   n_job=$(sysctl -n hw.ncpu)
 fi
 # -----------------------------------------------------------------------------
 # prefix
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-    prefix="$cppad_dir/$prefix"
+   prefix="$cppad_dir/$prefix"
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
@@ -90,27 +90,27 @@ configured_flag="external/$package-${version}.configured"
 echo "Executing get_$package.sh"
 if [ -e "$configured_flag" ]
 then
-    echo "Skipping configuration because $configured_flag exits"
-    echo_eval cd external
-    ./coinbrew -j $n_job install Ipopt --no-prompt
-    echo "get_$package.sh: OK"
-    exit 0
+   echo "Skipping configuration because $configured_flag exits"
+   echo_eval cd external
+   ./coinbrew -j $n_job install Ipopt --no-prompt
+   echo "get_$package.sh: OK"
+   exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ ! -d external ]
 then
-    echo_eval mkdir external
+   echo_eval mkdir external
 fi
 echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e coinbrew ]
 then
-    echo_eval wget $coinbrew
-    echo_eval chmod +x coinbrew
+   echo_eval wget $coinbrew
+   echo_eval chmod +x coinbrew
 fi
 if [ ! -e Ipoot ]
 then
-    ./coinbrew fetch Ipopt@$version --no-prompt
+   ./coinbrew fetch Ipopt@$version --no-prompt
 fi
 # -----------------------------------------------------------------------------
 # klugde necessary until coin or mumps fixes this problem
@@ -121,16 +121,16 @@ cat << EOF > junk.f
 EOF
 if gfortran -c -fallow-argument-mismatch junk.f >& /dev/null
 then
-    echo 'Adding -fallow-argument-mismatch to Mumps fortran compiler flags'
-    ADD_FCFLAGS='ADD_FCFLAGS=-fallow-argument-mismatch'
+   echo 'Adding -fallow-argument-mismatch to Mumps fortran compiler flags'
+   ADD_FCFLAGS='ADD_FCFLAGS=-fallow-argument-mismatch'
 else
-    ADD_FCFLAGS=''
+   ADD_FCFLAGS=''
 fi
 # -----------------------------------------------------------------------------
 echo_eval ./coinbrew -j $n_job build Ipopt@$version \
-    --prefix=$prefix --test --no-prompt --verbosity=3 $ADD_FCFLAGS
+   --prefix=$prefix --test --no-prompt --verbosity=3 $ADD_FCFLAGS
 echo_eval ./coinbrew -j $n_job install Ipopt@$version \
-    --no-prompt
+   --no-prompt
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$configured_flag
 echo "get_$package.sh: OK"

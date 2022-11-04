@@ -18,10 +18,10 @@ AM_CXXFLAGS =  \
 #
 #
 LDADD             = \
-                    $(CPPAD_IPOPT_LIBS) \
-                    $(FCLIBS) \
-                    $(PTHREAD_LIB) \
-                    $(DL_LIB)
+               $(CPPAD_IPOPT_LIBS) \
+               $(FCLIBS) \
+               $(PTHREAD_LIB) \
+               $(DL_LIB)
 #
 solve_SOURCES   = \
 	get_started.cpp \

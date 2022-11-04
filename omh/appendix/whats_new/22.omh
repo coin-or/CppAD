@@ -5,46 +5,46 @@
 
 $begin whats_new_22$$
 $spell
-    CppAD
-    op
-    neg
-    mul
-    div
-    iterator
-    iterators
-    cppad_lib
-    hpp
-    rc
-    json
-    cmake
-    nx
-    af
-    Vec
-    Jacobian
-    ident
-    tmpnam
-    nullptr
-    cppadcg
-    eigen
-    isinf
-    isnan
-    std
-    namespace
-    hes
-    lin
-    rel
-    txt
-    Simpson
-    Tc
-    msys
-    jit
-    csrc
-    Num
-    Op
-    Microsoft
-    posix
-    gcc
-    handeling
+   CppAD
+   op
+   neg
+   mul
+   div
+   iterator
+   iterators
+   cppad_lib
+   hpp
+   rc
+   json
+   cmake
+   nx
+   af
+   Vec
+   Jacobian
+   ident
+   tmpnam
+   nullptr
+   cppadcg
+   eigen
+   isinf
+   isnan
+   std
+   namespace
+   hes
+   lin
+   rel
+   txt
+   Simpson
+   Tc
+   msys
+   jit
+   csrc
+   Num
+   Op
+   Microsoft
+   posix
+   gcc
+   handeling
 $$
 
 $section Changes and Additions to CppAD During 2022$$
@@ -259,8 +259,8 @@ $head 05-12$$
 The $cref cmake$$ script $code cmake/compile_source_test.cmake$$ was not
 working properly on Darwin systems which resulted in the following warning:
 $codei%
-    warning: 'tmpnam' is deprecated:  %...%
-        file_name = tmpnam( nullptr );
+   warning: 'tmpnam' is deprecated:  %...%
+      file_name = tmpnam( nullptr );
 %$$
 This has been fixed.
 
@@ -310,11 +310,11 @@ To be specific, if a discrete function was used during the recording of
 $icode f$$ and $icode%af% = %f%.base2ad()%$$, the following assert
 would happen during forward mode calculations using the $icode af$$ function:
 $codei%
-    error from unknown source
-    Error detected by false result for
-        index < List().size()
-    at line 325 in the file
-    %...% discrete.hpp
+   error from unknown source
+   Error detected by false result for
+      index < List().size()
+   at line 325 in the file
+   %...% discrete.hpp
 %$$
 This bug has been fixed.
 
@@ -420,7 +420,7 @@ The $cref atomic_four_mat_mul$$ example class was added.
 $lnext
 The $cref atomic_four_vector$$ include path has changed to
 $codei%
-    # include <cppad/example/atomic_four/vector.hpp>
+   # include <cppad/example/atomic_four/vector.hpp>
 %$$
 $lend
 

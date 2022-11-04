@@ -18,14 +18,14 @@ LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 # Include source for cppad_ipopt library so we build it without debugging
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    ../src/cppad_ipopt_nlp.cpp
-    ../src/fun_record.hpp
-    ../src/hes_fg_map.cpp
-    ../src/jac_g_map.cpp
-    ../src/sparse_map2vec.cpp
-    ../src/vec_fun_pattern.cpp
-    ode_speed.cpp
-    speed.cpp
+   ../src/cppad_ipopt_nlp.cpp
+   ../src/fun_record.hpp
+   ../src/hes_fg_map.cpp
+   ../src/jac_g_map.cpp
+   ../src/sparse_map2vec.cpp
+   ../src/vec_fun_pattern.cpp
+   ode_speed.cpp
+   speed.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
@@ -35,11 +35,11 @@ ADD_EXECUTABLE( cppad_ipopt_speed EXCLUDE_FROM_ALL ${source_list} )
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(
-    cppad_ipopt_speed
-    cppad_ipopt
-    ${cppad_lib}
-    ${ipopt_LIBRARIES}
-    ${colpack_libs}
+   cppad_ipopt_speed
+   cppad_ipopt
+   ${cppad_lib}
+   ${ipopt_LIBRARIES}
+   ${colpack_libs}
 )
 
 # check_cppad_ipopt_speed

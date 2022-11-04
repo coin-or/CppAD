@@ -54,82 +54,82 @@ indices.
 */
 template <class Addr>
 void random_setup(
-    size_t                                    num_var    ,
-    const pod_vector<opcode_t>&               op_vec     ,
-    const pod_vector<addr_t>&                 arg_vec    ,
-    pod_vector<Addr>*                         op2arg_vec ,
-    pod_vector<Addr>*                         op2var_vec ,
-    pod_vector<Addr>*                         var2op_vec )
+   size_t                                    num_var    ,
+   const pod_vector<opcode_t>&               op_vec     ,
+   const pod_vector<addr_t>&                 arg_vec    ,
+   pod_vector<Addr>*                         op2arg_vec ,
+   pod_vector<Addr>*                         op2var_vec ,
+   pod_vector<Addr>*                         var2op_vec )
 {
-    if( op2arg_vec->size() != 0 )
-    {   CPPAD_ASSERT_UNKNOWN( op2arg_vec->size() == op_vec.size() );
-        CPPAD_ASSERT_UNKNOWN( op2var_vec->size() == op_vec.size() );
-        CPPAD_ASSERT_UNKNOWN( var2op_vec->size() == num_var        );
-        return;
-    }
-    CPPAD_ASSERT_UNKNOWN( op2var_vec->size() == 0         );
-    CPPAD_ASSERT_UNKNOWN( op2var_vec->size() == 0         );
-    CPPAD_ASSERT_UNKNOWN( var2op_vec->size() == 0         );
-    CPPAD_ASSERT_UNKNOWN( OpCode( op_vec[0] ) == BeginOp );
-    CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
-    //
-    size_t num_op     = op_vec.size();
-    size_t  var_index = 0;
-    size_t  arg_index = 0;
-    //
-    op2arg_vec->resize( num_op );
-    op2var_vec->resize( num_op );
-    var2op_vec->resize( num_var  );
+   if( op2arg_vec->size() != 0 )
+   {  CPPAD_ASSERT_UNKNOWN( op2arg_vec->size() == op_vec.size() );
+      CPPAD_ASSERT_UNKNOWN( op2var_vec->size() == op_vec.size() );
+      CPPAD_ASSERT_UNKNOWN( var2op_vec->size() == num_var        );
+      return;
+   }
+   CPPAD_ASSERT_UNKNOWN( op2var_vec->size() == 0         );
+   CPPAD_ASSERT_UNKNOWN( op2var_vec->size() == 0         );
+   CPPAD_ASSERT_UNKNOWN( var2op_vec->size() == 0         );
+   CPPAD_ASSERT_UNKNOWN( OpCode( op_vec[0] ) == BeginOp );
+   CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
+   //
+   size_t num_op     = op_vec.size();
+   size_t  var_index = 0;
+   size_t  arg_index = 0;
+   //
+   op2arg_vec->resize( num_op );
+   op2var_vec->resize( num_op );
+   var2op_vec->resize( num_var  );
 # ifndef NDEBUG
-    // value of var2op for auxillary variables is num_op (invalid)
-    for(size_t i_var = 0; i_var < num_var; ++i_var)
-        (*var2op_vec)[i_var] = Addr( num_op );
-    // value of op2var is num_var (invalid) when NumRes(op) = 0
-    for(size_t i_op = 0; i_op < num_op; ++i_op)
-        (*op2var_vec)[i_op] = Addr( num_var );
+   // value of var2op for auxillary variables is num_op (invalid)
+   for(size_t i_var = 0; i_var < num_var; ++i_var)
+      (*var2op_vec)[i_var] = Addr( num_op );
+   // value of op2var is num_var (invalid) when NumRes(op) = 0
+   for(size_t i_op = 0; i_op < num_op; ++i_op)
+      (*op2var_vec)[i_op] = Addr( num_var );
 # endif
-    for(size_t i_op = 0; i_op < num_op; ++i_op)
-    {   OpCode  op          = OpCode( op_vec[i_op] );
-        //
-        // index of first argument for this operator
-        (*op2arg_vec)[i_op]   = Addr( arg_index );
-        arg_index            += NumArg(op);
-        //
-        // index of first result for next operator
-        var_index  += NumRes(op);
-        if( NumRes(op) > 0 )
-        {   // index of last (primary) result for this operator
-            (*op2var_vec)[i_op] = Addr( var_index - 1 );
-            //
-            // mapping from primary variable to its operator
-            (*var2op_vec)[var_index - 1] = Addr( i_op );
-        }
-        // CSumOp
-        if( op == CSumOp )
-        {   CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-            //
-            // pointer to first argument for this operator
-            const addr_t* op_arg = arg_vec.data() + arg_index;
-            //
-            // The actual number of arugments for this operator is
-            // op_arg[4] + 1
-            // Correct index of first argument for next operator
-            arg_index += size_t(op_arg[4] + 1);
-        }
-        //
-        // CSkip
-        if( op == CSkipOp )
-        {   CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
-            //
-            // pointer to first argument for this operator
-            const addr_t* op_arg = arg_vec.data() + arg_index;
-            //
-            // The actual number of arugments for this operator is
-            // 7 + op_arg[4] + op_arg[5].
-            // Correct index of first argument for next operator.
-            arg_index += size_t(7 + op_arg[4] + op_arg[5]);
-        }
-    }
+   for(size_t i_op = 0; i_op < num_op; ++i_op)
+   {  OpCode  op          = OpCode( op_vec[i_op] );
+      //
+      // index of first argument for this operator
+      (*op2arg_vec)[i_op]   = Addr( arg_index );
+      arg_index            += NumArg(op);
+      //
+      // index of first result for next operator
+      var_index  += NumRes(op);
+      if( NumRes(op) > 0 )
+      {  // index of last (primary) result for this operator
+         (*op2var_vec)[i_op] = Addr( var_index - 1 );
+         //
+         // mapping from primary variable to its operator
+         (*var2op_vec)[var_index - 1] = Addr( i_op );
+      }
+      // CSumOp
+      if( op == CSumOp )
+      {  CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+         //
+         // pointer to first argument for this operator
+         const addr_t* op_arg = arg_vec.data() + arg_index;
+         //
+         // The actual number of arugments for this operator is
+         // op_arg[4] + 1
+         // Correct index of first argument for next operator
+         arg_index += size_t(op_arg[4] + 1);
+      }
+      //
+      // CSkip
+      if( op == CSkipOp )
+      {  CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+         //
+         // pointer to first argument for this operator
+         const addr_t* op_arg = arg_vec.data() + arg_index;
+         //
+         // The actual number of arugments for this operator is
+         // 7 + op_arg[4] + op_arg[5].
+         // Correct index of first argument for next operator.
+         arg_index += size_t(7 + op_arg[4] + op_arg[5]);
+      }
+   }
 }
 
 } } } // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE

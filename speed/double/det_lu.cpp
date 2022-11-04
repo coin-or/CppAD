@@ -5,13 +5,13 @@
 /*
 $begin double_det_lu.cpp$$
 $spell
-    onetape
-    bool
-    cppad
-    hpp
-    Lu
-    det
-    CppAD
+   onetape
+   bool
+   cppad
+   hpp
+   Lu
+   det
+   CppAD
 $$
 
 $section Double Speed: Determinant Using Lu Factorization$$
@@ -31,28 +31,28 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_det_lu(
-    size_t                           size     ,
-    size_t                           repeat   ,
-    CppAD::vector<double>           &matrix   ,
-    CppAD::vector<double>           &det      )
+   size_t                           size     ,
+   size_t                           repeat   ,
+   CppAD::vector<double>           &matrix   ,
+   CppAD::vector<double>           &det      )
 {
-    if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
-        return false;
-    // -----------------------------------------------------
-    // setup
-    CppAD::det_by_lu<double>  Det(size);
-    size_t n = size * size; // number of independent variables
+   if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
+      return false;
+   // -----------------------------------------------------
+   // setup
+   CppAD::det_by_lu<double>  Det(size);
+   size_t n = size * size; // number of independent variables
 
-    // ------------------------------------------------------
+   // ------------------------------------------------------
 
-    while(repeat--)
-    {   // get the next matrix
-        CppAD::uniform_01(n, matrix);
+   while(repeat--)
+   {  // get the next matrix
+      CppAD::uniform_01(n, matrix);
 
-        // computation of the determinant
-        det[0] = Det(matrix);
-    }
-    return true;
+      // computation of the determinant
+      det[0] = Det(matrix);
+   }
+   return true;
 }
 /* %$$
 $end

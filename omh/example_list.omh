@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin ListAllExamples$$
 $spell
-    CppAD
+   CppAD
 $$
 
 $section List All (Except Deprecated) CppAD Examples$$
 
 $comment
-    omit:   TestOne.cpp OneCase.cpp lu_vec_ad.cpp
+   omit:   TestOne.cpp OneCase.cpp lu_vec_ad.cpp
 $$
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
@@ -355,7 +355,7 @@ $end
 -----------------------------------------------------------------------------
 $begin General$$
 $spell
-    Cpp
+   Cpp
 $$
 
 $section General Examples$$
@@ -367,36 +367,36 @@ example using the $cref/addition operator/ad_binary/$$.
 The examples list in this section are of a more general nature.
 
 $childtable%
-    example/general/ad_fun.cpp%
-    example/general/ad_in_c.cpp%
-    example/sparse/conj_grad.cpp%
-    include/cppad/example/cppad_eigen.hpp %
-    example/general/hes_minor_det.cpp%
-    example/general/hes_lu_det.cpp%
-    example/general/interface2c.cpp%
-    example/general/jac_minor_det.cpp%
-    example/general/jac_lu_det.cpp%
-    omh/mul_level.omh%
-    example/general/ode_stiff.cpp%
-    example/general/mul_level_ode.cpp%
-    example/general/mul_level_adolc_ode.cpp%
-    example/general/stack_machine.cpp%
-    cppad_lib/code_gen_fun.cpp
+   example/general/ad_fun.cpp%
+   example/general/ad_in_c.cpp%
+   example/sparse/conj_grad.cpp%
+   include/cppad/example/cppad_eigen.hpp %
+   example/general/hes_minor_det.cpp%
+   example/general/hes_lu_det.cpp%
+   example/general/interface2c.cpp%
+   example/general/jac_minor_det.cpp%
+   example/general/jac_lu_det.cpp%
+   omh/mul_level.omh%
+   example/general/ode_stiff.cpp%
+   example/general/mul_level_ode.cpp%
+   example/general/mul_level_adolc_ode.cpp%
+   example/general/stack_machine.cpp%
+   cppad_lib/code_gen_fun.cpp
 %$$
 
 $end
 -----------------------------------------------------------------------------
 $begin ExampleUtility$$
 $spell
-    CppAD
+   CppAD
 $$
 
 $section Utility Routines used by CppAD Examples$$
 
 $childtable%
-    example/general/general.cpp%
-    speed/example/example.cpp%
-    example/general/lu_vec_ad.cpp
+   example/general/general.cpp%
+   speed/example/example.cpp%
+   example/general/lu_vec_ad.cpp
 %$$
 
 $end

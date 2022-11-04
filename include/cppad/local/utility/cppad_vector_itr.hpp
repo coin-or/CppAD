@@ -11,13 +11,13 @@
 ------------------------------------------------------------------------------
 $begin cppad_vector_itr_define$$
 $spell
-    Iterator
-    cppad
-    itr
-    undef
-    const
-    endif
-    hpp
+   Iterator
+   cppad
+   itr
+   undef
+   const
+   endif
+   hpp
 $$
 
 $section Vector Class Iterator Preprocessor Definitions$$
@@ -73,34 +73,34 @@ template <class Type> class CPPAD_VECTOR_ITR {
 -----------------------------------------------------------------------------
 $begin cppad_vector_itr_traits$$
 $spell
-    Iterator
+   Iterator
 $$
 
 $section Vector Class Iterator Traits and Friends$$
 
 $srccode%hpp% */
 # if ! CPPAD_CONST
-    friend class const_cppad_vector_itr<Type>;
+   friend class const_cppad_vector_itr<Type>;
 # endif
 public:
-    typedef std::random_access_iterator_tag    iterator_category;
-    typedef Type                               value_type;
-    typedef std::ptrdiff_t                     difference_type;
-    typedef Type*                              pointer;
-    typedef Type&                              reference;
+   typedef std::random_access_iterator_tag    iterator_category;
+   typedef Type                               value_type;
+   typedef std::ptrdiff_t                     difference_type;
+   typedef Type*                              pointer;
+   typedef Type&                              reference;
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin cppad_vector_itr_ctor$$
 $spell
-    Iterator
-    ptr
-    cppad
-    Namespace
-    CppAD
-    const
-    iterators
-    itr
+   Iterator
+   ptr
+   cppad
+   Namespace
+   CppAD
+   const
+   iterators
+   itr
 $$
 
 $section Vector Class Iterator Member Data and Constructors$$
@@ -158,61 +158,61 @@ $head Source$$
 $srccode%hpp% */
 private:
 # if CPPAD_CONST
-    const Type* const* data_;
+   const Type* const* data_;
 # else
-    Type* const*       data_;
+   Type* const*       data_;
 # endif
-    const size_t*      length_;
-    difference_type    index_;
-    void check_element(void) const CPPAD_NDEBUG_NOEXCEPT
-    {   CPPAD_ASSERT_KNOWN( 0 <= index_ && size_t(index_) < *length_,
-            "CppAD vector iterator: accessing element out of range"
-        );
-    }
-    void check_cop(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
-    {   CPPAD_ASSERT_KNOWN( data_ == other.data_,
-            "CppAD vector iterator: comparing indices from different vectors"
-        );
-    }
+   const size_t*      length_;
+   difference_type    index_;
+   void check_element(void) const CPPAD_NDEBUG_NOEXCEPT
+   {  CPPAD_ASSERT_KNOWN( 0 <= index_ && size_t(index_) < *length_,
+         "CppAD vector iterator: accessing element out of range"
+      );
+   }
+   void check_cop(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+   {  CPPAD_ASSERT_KNOWN( data_ == other.data_,
+         "CppAD vector iterator: comparing indices from different vectors"
+      );
+   }
 public:
-    CPPAD_VECTOR_ITR(void) noexcept
-    : data_(nullptr), length_(nullptr), index_(0)
-    { }
+   CPPAD_VECTOR_ITR(void) noexcept
+   : data_(nullptr), length_(nullptr), index_(0)
+   { }
 # if CPPAD_CONST
-    const_cppad_vector_itr(
-        const Type* const* data, const size_t* length, difference_type index
-    ) noexcept
-    : data_(data), length_(length), index_( difference_type(index) )
-    { }
-    // ctor a const_iterator from an iterator
-    const_cppad_vector_itr(
-        const cppad_vector_itr<Type>& non_const_other
-    ) noexcept
-    {   data_       = non_const_other.data_;
-        length_     = non_const_other.length_;
-        index_      = non_const_other.index_;
-    }
+   const_cppad_vector_itr(
+      const Type* const* data, const size_t* length, difference_type index
+   ) noexcept
+   : data_(data), length_(length), index_( difference_type(index) )
+   { }
+   // ctor a const_iterator from an iterator
+   const_cppad_vector_itr(
+      const cppad_vector_itr<Type>& non_const_other
+   ) noexcept
+   {  data_       = non_const_other.data_;
+      length_     = non_const_other.length_;
+      index_      = non_const_other.index_;
+   }
 # else
-    cppad_vector_itr(
-        Type* const* data, const size_t* length, difference_type index
-    ) noexcept
-    : data_(data), length_(length), index_( difference_type(index) )
-    { }
+   cppad_vector_itr(
+      Type* const* data, const size_t* length, difference_type index
+   ) noexcept
+   : data_(data), length_(length), index_( difference_type(index) )
+   { }
 # endif
-    void operator=(const CPPAD_VECTOR_ITR& other) noexcept
-    {   data_       = other.data_;
-        length_     = other.length_;
-        index_      = other.index_;
-    }
-    CPPAD_VECTOR_ITR(const CPPAD_VECTOR_ITR& other) noexcept
-    {   *this = other; }
+   void operator=(const CPPAD_VECTOR_ITR& other) noexcept
+   {  data_       = other.data_;
+      length_     = other.length_;
+      index_      = other.index_;
+   }
+   CPPAD_VECTOR_ITR(const CPPAD_VECTOR_ITR& other) noexcept
+   {  *this = other; }
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin cppad_vector_itr_inc$$
 $spell
-    Iterator
-    itr
+   Iterator
+   itr
 $$
 
 $section Vector Class Iterator Increment Operators$$
@@ -230,36 +230,36 @@ $icode%itr%--
 $head Source$$
 $srccode%hpp% */
 public:
-    CPPAD_VECTOR_ITR& operator++(void) noexcept
-    {   ++index_;
-        return *this;
-    }
-    CPPAD_VECTOR_ITR& operator--(void) noexcept
-    {   --index_;
-        return *this;
-    }
-    CPPAD_VECTOR_ITR operator++(int) noexcept
-    {   CPPAD_VECTOR_ITR ret(*this);
-        ++index_;
-        return ret;
-    }
-    CPPAD_VECTOR_ITR operator--(int) noexcept
-    {   CPPAD_VECTOR_ITR ret(*this);
-        --index_;
-        return ret;
-    }
+   CPPAD_VECTOR_ITR& operator++(void) noexcept
+   {  ++index_;
+      return *this;
+   }
+   CPPAD_VECTOR_ITR& operator--(void) noexcept
+   {  --index_;
+      return *this;
+   }
+   CPPAD_VECTOR_ITR operator++(int) noexcept
+   {  CPPAD_VECTOR_ITR ret(*this);
+      ++index_;
+      return ret;
+   }
+   CPPAD_VECTOR_ITR operator--(int) noexcept
+   {  CPPAD_VECTOR_ITR ret(*this);
+      --index_;
+      return ret;
+   }
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin cppad_vector_itr_equal$$
 $spell
-    itr
-    Iterator
+   itr
+   Iterator
 $$
 
 $section Vector Class Iterator Equality Operators$$
 $spell
-    iterators
+   iterators
 $$
 
 $head Syntax$$
@@ -275,21 +275,21 @@ $code data_$$ vectors
 $head Source$$
 $srccode%hpp% */
 public:
-    bool operator==(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
-    {   check_cop(other);
-        return index_ == other.index_;
-    }
-    bool operator!=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
-    {   check_cop(other);
-        return index_ != other.index_;
-    }
+   bool operator==(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+   {  check_cop(other);
+      return index_ == other.index_;
+   }
+   bool operator!=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+   {  check_cop(other);
+      return index_ != other.index_;
+   }
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin cppad_vector_itr_element$$
 $spell
-    itr
-    Iterator
+   itr
+   Iterator
 $$
 
 $section Vector Class Iterator Access Elements$$
@@ -308,37 +308,37 @@ $head Source$$
 $srccode%hpp% */
 public:
 # if CPPAD_CONST
-    const Type& operator*(void) const
-    {   check_element();
-        return (*data_)[index_];
-    }
-    const Type& operator[](difference_type n)
-    {   return *(*this + n);
-    }
-    const Type& operator[](size_t n)
-    {   return *( *this + difference_type(n) );
-    }
+   const Type& operator*(void) const
+   {  check_element();
+      return (*data_)[index_];
+   }
+   const Type& operator[](difference_type n)
+   {  return *(*this + n);
+   }
+   const Type& operator[](size_t n)
+   {  return *( *this + difference_type(n) );
+   }
 # else
-    Type& operator*(void)
-    {   check_element();
-        return (*data_)[index_];
-    }
-    Type& operator[](difference_type n)
-    {   return *(*this + n);
-    }
-    Type& operator[](size_t n)
-    {   return *( *this + difference_type(n) );
-    }
+   Type& operator*(void)
+   {  check_element();
+      return (*data_)[index_];
+   }
+   Type& operator[](difference_type n)
+   {  return *(*this + n);
+   }
+   Type& operator[](size_t n)
+   {  return *( *this + difference_type(n) );
+   }
 # endif
 /* %$$
 $end
 -------------------------------------------------------------------------------
 $begin cppad_vector_itr_random$$
 $spell
-    itr
-    Iterator
-    bool
-    iterators
+   itr
+   Iterator
+   bool
+   iterators
 $$
 
 $section Vector Class Iterator Random Access$$
@@ -379,45 +379,45 @@ $code data_$$ vectors
 $head Source$$
 $srccode%hpp% */
 public:
-    // sum and difference operators
-    CPPAD_VECTOR_ITR& operator+=(difference_type n) noexcept
-    {   index_ += n;
-        return *this;
-    }
-    CPPAD_VECTOR_ITR& operator-=(difference_type n) noexcept
-    {   index_ -= n;
-        return *this;
-    }
-    CPPAD_VECTOR_ITR operator+(difference_type n) const noexcept
-    {   return CPPAD_VECTOR_ITR(data_, length_, index_ + n);
-    }
-    CPPAD_VECTOR_ITR operator-(difference_type n) const noexcept
-    {   return CPPAD_VECTOR_ITR(data_, length_, index_ - n);
-    }
-    difference_type  operator-(const CPPAD_VECTOR_ITR& other) const
-    noexcept
-    {   return index_ - other.index_;
-    }
-    // comparison operators
-    bool operator<(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
-    {   check_cop(other);
-        return index_ < other.index_;
-    }
-    bool operator<=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
-    {   check_cop(other);
-        return index_ <= other.index_;
-    }
-    bool operator>(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
-    {   check_cop(other);
-        return index_ > other.index_;
-    }
-    bool operator>=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
-    {   check_cop(other);
-        return index_ >= other.index_;
-    }
+   // sum and difference operators
+   CPPAD_VECTOR_ITR& operator+=(difference_type n) noexcept
+   {  index_ += n;
+      return *this;
+   }
+   CPPAD_VECTOR_ITR& operator-=(difference_type n) noexcept
+   {  index_ -= n;
+      return *this;
+   }
+   CPPAD_VECTOR_ITR operator+(difference_type n) const noexcept
+   {  return CPPAD_VECTOR_ITR(data_, length_, index_ + n);
+   }
+   CPPAD_VECTOR_ITR operator-(difference_type n) const noexcept
+   {  return CPPAD_VECTOR_ITR(data_, length_, index_ - n);
+   }
+   difference_type  operator-(const CPPAD_VECTOR_ITR& other) const
+   noexcept
+   {  return index_ - other.index_;
+   }
+   // comparison operators
+   bool operator<(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+   {  check_cop(other);
+      return index_ < other.index_;
+   }
+   bool operator<=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+   {  check_cop(other);
+      return index_ <= other.index_;
+   }
+   bool operator>(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+   {  check_cop(other);
+      return index_ > other.index_;
+   }
+   bool operator>=(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
+   {  check_cop(other);
+      return index_ >= other.index_;
+   }
 /* %$$
 $srcthisfile%
-    0%// BEGIN_BINARY_OP%// END_BINARY_OP%1
+   0%// BEGIN_BINARY_OP%// END_BINARY_OP%1
 %$$
 $end
 */
@@ -427,16 +427,16 @@ $end
 
 // BEGIN_BINARY_OP
 template <class Type> CPPAD_VECTOR_ITR<Type> operator+(
-    typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
-    const CPPAD_VECTOR_ITR<Type>&               other   ) noexcept
-{   return
-    CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n + other.index_ );
+   typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
+   const CPPAD_VECTOR_ITR<Type>&               other   ) noexcept
+{  return
+   CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n + other.index_ );
 }
 template <class Type> CPPAD_VECTOR_ITR<Type> operator-(
-    typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
-    const CPPAD_VECTOR_ITR<Type>&               other   ) noexcept
-{   return
-    CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n - other.index_ );
+   typename CPPAD_VECTOR_ITR<Type>::difference_type n  ,
+   const CPPAD_VECTOR_ITR<Type>&               other   ) noexcept
+{  return
+   CPPAD_VECTOR_ITR<Type>(other.data_, other.length_, n - other.index_ );
 }
 // END_BINARY_OP
 

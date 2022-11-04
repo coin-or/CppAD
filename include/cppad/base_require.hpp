@@ -8,21 +8,21 @@
 /*
 $begin base_require$$
 $spell
-    azmul
-    ostream
-    alloc
-    eps
-    std
-    cppad.hpp
-    namespace
-    bool
-    const
-    CppAD
-    enum
-    inline
-    Op
-    std
-    CondExp
+   azmul
+   ostream
+   alloc
+   eps
+   std
+   cppad.hpp
+   namespace
+   bool
+   const
+   CppAD
+   enum
+   inline
+   Op
+   std
+   CondExp
 $$
 
 $section AD<Base> Requirements for a CppAD Base Type$$
@@ -68,7 +68,7 @@ $cref NumericType$$.
 $head Output Operator$$
 The type $icode Base$$ must support the syntax
 $codei%
-    %os% << %x%
+   %os% << %x%
 %$$
 where $icode os$$ is an $code std::ostream&$$
 and $icode x$$ is a $code const base_alloc&$$.
@@ -78,16 +78,16 @@ $cref/base_alloc/base_alloc.hpp/Output Operator/$$.
 $head Integer$$
 The type $icode Base$$ must support the syntax
 $codei%
-    %i% = CppAD::Integer(%x%)
+   %i% = CppAD::Integer(%x%)
 %$$
 which converts $icode x$$ to an $code int$$.
 The argument $icode x$$ has prototype
 $codei%
-    const %Base%& %x%
+   const %Base%& %x%
 %$$
 and the return value $icode i$$ has prototype
 $codei%
-    int %i%
+   int %i%
 %$$
 
 $subhead Suggestion$$
@@ -95,8 +95,8 @@ In many cases, the $icode Base$$ version of the $code Integer$$ function
 can be defined by
 $codei%
 namespace CppAD {
-    inline int Integer(const %Base%& x)
-    {   return static_cast<int>(x); }
+   inline int Integer(const %Base%& x)
+   {  return static_cast<int>(x); }
 }
 %$$
 For example, see
@@ -106,37 +106,37 @@ $cref/base_alloc/base_alloc.hpp/Integer/$$.
 $head Absolute Zero, azmul$$
 The type $icode Base$$ must support the syntax
 $codei%
-    %z% = azmul(%x%, %y%)
+   %z% = azmul(%x%, %y%)
 %$$
 see; $cref azmul$$.
 The following preprocessor macro invocation suffices
 (for most $icode Base$$ types):
 $codei%
 namespace CppAD {
-    CPPAD_AZMUL(%Base%)
+   CPPAD_AZMUL(%Base%)
 }
 %$$
 where the macro is defined by
 $srccode%cpp% */
 # define CPPAD_AZMUL(Base) \
-    inline Base azmul(const Base& x, const Base& y) \
-    {   Base zero(0.0);   \
-        if( x == zero ) \
-            return zero;  \
-        return x * y;     \
-    }
+   inline Base azmul(const Base& x, const Base& y) \
+   {  Base zero(0.0);   \
+      if( x == zero ) \
+         return zero;  \
+      return x * y;     \
+   }
 /* %$$
 
 $childtable%
-    omh/base_require/base_member.omh%
-    include/cppad/core/base_cond_exp.hpp%
-    omh/base_require/base_identical.omh%
-    omh/base_require/base_ordered.omh%
-    include/cppad/core/base_std_math.hpp%
-    include/cppad/core/base_limits.hpp%
-    include/cppad/core/base_to_string.hpp%
-    include/cppad/core/base_hash.hpp%
-    omh/base_require/base_example.omh
+   omh/base_require/base_member.omh%
+   include/cppad/core/base_cond_exp.hpp%
+   omh/base_require/base_identical.omh%
+   omh/base_require/base_ordered.omh%
+   include/cppad/core/base_std_math.hpp%
+   include/cppad/core/base_limits.hpp%
+   include/cppad/core/base_to_string.hpp%
+   include/cppad/core/base_hash.hpp%
+   omh/base_require/base_example.omh
 %$$
 
 $end

@@ -17,9 +17,9 @@ namespace CppAD { namespace local { namespace sweep {
 /*
 $begin atomic_forward_callback$$
 $spell
-    Taylor
-    afun
-    CppAD
+   Taylor
+   afun
+   CppAD
 $$
 
 $section Forward Mode Callback to Atomic Functions$$
@@ -72,99 +72,99 @@ $end
 // BEGIN_FORWARD
 template <class Base, class RecBase>
 void call_atomic_forward(
-    const vector<Base>&          parameter_x ,
-    const vector<ad_type_enum>&  type_x      ,
-    size_t                       need_y      ,
-    const vector<bool>&          select_y    ,
-    size_t                       order_low   ,
-    size_t                       order_up    ,
-    size_t                       atom_index  ,
-    size_t                       call_id     ,
-    const vector<Base>&          taylor_x    ,
-    vector<Base>&                taylor_y    )
+   const vector<Base>&          parameter_x ,
+   const vector<ad_type_enum>&  type_x      ,
+   size_t                       need_y      ,
+   const vector<bool>&          select_y    ,
+   size_t                       order_low   ,
+   size_t                       order_up    ,
+   size_t                       atom_index  ,
+   size_t                       call_id     ,
+   const vector<Base>&          taylor_x    ,
+   vector<Base>&                taylor_y    )
 // END_FORWARD
-{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
-    bool         set_null = false;
-    size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = nullptr;
-    void*        v_ptr    = nullptr; // set to avoid warning
-    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+{  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+   bool         set_null = false;
+   size_t       type     = 0;          // set to avoid warning
+   std::string* name_ptr = nullptr;
+   void*        v_ptr    = nullptr; // set to avoid warning
+   local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != nullptr;
-    if( ok )
-    {
-        if( type == 2 )
-        {   atomic_base<RecBase>* afun =
-                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(call_id);
-            vector<ad_type_enum> empty;
-            ok = afun->forward(
-                order_low, order_up, empty, empty, taylor_x, taylor_y
-            );
-        }
-        else if( type == 3 )
-        {   CPPAD_ASSERT_UNKNOWN( type == 3 );
-            atomic_three<RecBase>* afun =
-                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-            ok = afun->forward(
-                parameter_x, type_x,
-                need_y, order_low, order_up, taylor_x, taylor_y
-            );
-        }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-            atomic_four<RecBase>* afun =
-                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->forward(
-                call_id, select_y, order_low, order_up, taylor_x, taylor_y
-            );
-        }
-    }
-    if( ! ok )
-    {   // now take the extra time to copy the name
-        std::string name;
-        local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
-        std::string msg = name;
-        if( v_ptr == nullptr )
-            msg += ": this atomic function has been deleted";
-        else
-            msg += ": atomic forward returned false";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
-# else
-    if( type == 2 )
-    {   atomic_base<RecBase>* afun =
+   bool ok = v_ptr != nullptr;
+   if( ok )
+   {
+      if( type == 2 )
+      {  atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        vector<ad_type_enum> empty;
-        afun->set_old(call_id);
-        afun->forward(
+         afun->set_old(call_id);
+         vector<ad_type_enum> empty;
+         ok = afun->forward(
             order_low, order_up, empty, empty, taylor_x, taylor_y
-        );
-    }
-    else if( type == 3 )
-    {   atomic_three<RecBase>* afun =
+         );
+      }
+      else if( type == 3 )
+      {  CPPAD_ASSERT_UNKNOWN( type == 3 );
+         atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        afun->forward(
+         ok = afun->forward(
             parameter_x, type_x,
             need_y, order_low, order_up, taylor_x, taylor_y
-        );
-    }
-    else
-    {   atomic_four<RecBase>* afun =
+         );
+      }
+      else
+      {  CPPAD_ASSERT_UNKNOWN( type == 4 );
+         atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->forward(
+         ok = afun->forward(
             call_id, select_y, order_low, order_up, taylor_x, taylor_y
-        );
-    }
+         );
+      }
+   }
+   if( ! ok )
+   {  // now take the extra time to copy the name
+      std::string name;
+      local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
+      std::string msg = name;
+      if( v_ptr == nullptr )
+         msg += ": this atomic function has been deleted";
+      else
+         msg += ": atomic forward returned false";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
+# else
+   if( type == 2 )
+   {  atomic_base<RecBase>* afun =
+         reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+      vector<ad_type_enum> empty;
+      afun->set_old(call_id);
+      afun->forward(
+         order_low, order_up, empty, empty, taylor_x, taylor_y
+      );
+   }
+   else if( type == 3 )
+   {  atomic_three<RecBase>* afun =
+         reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+      afun->forward(
+         parameter_x, type_x,
+         need_y, order_low, order_up, taylor_x, taylor_y
+      );
+   }
+   else
+   {  atomic_four<RecBase>* afun =
+         reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+      afun->forward(
+         call_id, select_y, order_low, order_up, taylor_x, taylor_y
+      );
+   }
 # endif
 }
 // ----------------------------------------------------------------------------
 /*
 $begin atomic_reverse_callback$$
 $spell
-    CppAD
-    Taylor
-    Jacobian
+   CppAD
+   Taylor
+   Jacobian
 $$
 
 $section Reverse Mode callback to Atomic Functions$$
@@ -218,99 +218,99 @@ $end
 // BEGIN_REVERSE
 template <class Base, class RecBase>
 void call_atomic_reverse(
-    const vector<Base>&          parameter_x ,
-    const vector<ad_type_enum>&  type_x      ,
-    const vector<bool>&          select_x    ,
-    size_t                       order_up    ,
-    size_t                       atom_index  ,
-    size_t                       call_id     ,
-    const vector<Base>&          taylor_x    ,
-    const vector<Base>&          taylor_y    ,
-    vector<Base>&                partial_x   ,
-    const vector<Base>&          partial_y   )
+   const vector<Base>&          parameter_x ,
+   const vector<ad_type_enum>&  type_x      ,
+   const vector<bool>&          select_x    ,
+   size_t                       order_up    ,
+   size_t                       atom_index  ,
+   size_t                       call_id     ,
+   const vector<Base>&          taylor_x    ,
+   const vector<Base>&          taylor_y    ,
+   vector<Base>&                partial_x   ,
+   const vector<Base>&          partial_y   )
 // END_REVERSE
-{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
-    bool         set_null = false;
-    size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = nullptr;
-    void*        v_ptr    = nullptr; // set to avoid warning
-    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+{  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+   bool         set_null = false;
+   size_t       type     = 0;          // set to avoid warning
+   std::string* name_ptr = nullptr;
+   void*        v_ptr    = nullptr; // set to avoid warning
+   local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
 # ifndef NDEBUG
-    bool ok = v_ptr != nullptr;
-    if( ok )
-    {
-        if( type == 2 )
-        {   atomic_base<RecBase>* afun =
-                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(call_id);
-            ok = afun->reverse(
-                order_up, taylor_x, taylor_y, partial_x, partial_y
-            );
-        }
-        else if( type == 3 )
-        {   atomic_three<RecBase>* afun =
-                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-            ok = afun->reverse(
-                parameter_x, type_x,
-                order_up, taylor_x, taylor_y, partial_x, partial_y
-            );
-        }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-            atomic_four<RecBase>* afun =
-                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->reverse(
-                call_id, select_x,
-                order_up, taylor_x, taylor_y, partial_x, partial_y
-            );
-        }
-    }
-    if( ! ok )
-    {   // now take the extra time to copy the name
-        std::string name;
-        local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
-        std::string msg = name;
-        if( v_ptr == nullptr )
-            msg += ": this atomic function has been deleted";
-        else
-            msg += ": atomic reverse returned false";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
-# else
-    if( type == 2 )
-    {   atomic_base<RecBase>* afun =
+   bool ok = v_ptr != nullptr;
+   if( ok )
+   {
+      if( type == 2 )
+      {  atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(call_id);
-        afun->reverse(
+         afun->set_old(call_id);
+         ok = afun->reverse(
             order_up, taylor_x, taylor_y, partial_x, partial_y
-        );
-    }
-    else if( type == 3 )
-    {   atomic_three<RecBase>* afun =
+         );
+      }
+      else if( type == 3 )
+      {  atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        afun->reverse(
+         ok = afun->reverse(
             parameter_x, type_x,
             order_up, taylor_x, taylor_y, partial_x, partial_y
-        );
-    }
-    else
-    {   atomic_four<RecBase>* afun =
+         );
+      }
+      else
+      {  CPPAD_ASSERT_UNKNOWN( type == 4 );
+         atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->reverse(
+         ok = afun->reverse(
             call_id, select_x,
             order_up, taylor_x, taylor_y, partial_x, partial_y
-        );
-    }
+         );
+      }
+   }
+   if( ! ok )
+   {  // now take the extra time to copy the name
+      std::string name;
+      local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
+      std::string msg = name;
+      if( v_ptr == nullptr )
+         msg += ": this atomic function has been deleted";
+      else
+         msg += ": atomic reverse returned false";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
+# else
+   if( type == 2 )
+   {  atomic_base<RecBase>* afun =
+         reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+      afun->set_old(call_id);
+      afun->reverse(
+         order_up, taylor_x, taylor_y, partial_x, partial_y
+      );
+   }
+   else if( type == 3 )
+   {  atomic_three<RecBase>* afun =
+         reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+      afun->reverse(
+         parameter_x, type_x,
+         order_up, taylor_x, taylor_y, partial_x, partial_y
+      );
+   }
+   else
+   {  atomic_four<RecBase>* afun =
+         reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+      afun->reverse(
+         call_id, select_x,
+         order_up, taylor_x, taylor_y, partial_x, partial_y
+      );
+   }
 # endif
 }
 // ----------------------------------------------------------------------------
 /*
 $begin atomic_for_jac_sparsity_callback$$
 $spell
-    CppAD
-    setvec
-    var
-    Jacobian
+   CppAD
+   setvec
+   var
+   Jacobian
 $$
 
 $section Forward Jacobian Sparsity Callback to Atomic Functions$$
@@ -363,107 +363,107 @@ $end
 // BEGIN_FOR_JAC_SPARSITY
 template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_for_jac_sparsity(
-    size_t                       atom_index    ,
-    size_t                       call_id       ,
-    bool                         dependency    ,
-    const vector<Base>&          parameter_x   ,
-    const vector<ad_type_enum>&  type_x        ,
-    const pod_vector<size_t>&    x_index       ,
-    const pod_vector<size_t>&    y_index       ,
-    InternalSparsity&            var_sparsity  )
+   size_t                       atom_index    ,
+   size_t                       call_id       ,
+   bool                         dependency    ,
+   const vector<Base>&          parameter_x   ,
+   const vector<ad_type_enum>&  type_x        ,
+   const pod_vector<size_t>&    x_index       ,
+   const pod_vector<size_t>&    y_index       ,
+   InternalSparsity&            var_sparsity  )
 // END_FOR_JAC_SPARSITY
-{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
-    bool         set_null = false;
-    size_t       type     = 0;       // set to avoid warning
-    std::string* name_ptr = nullptr;
-    void*        v_ptr    = nullptr; // set to avoid warning
-    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    //
-    // ident_zero_x
-    vector<bool> ident_zero_x;
-    if( type == 4 )
-    {   size_t n = x_index.size();
-        ident_zero_x.resize(n);
-        for(size_t j = 0; j < n; ++j)
-        {   if( type_x[j] >= constant_enum )
-                ident_zero_x[j] = false;
-            else
-                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
-        }
-    }
+{  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+   bool         set_null = false;
+   size_t       type     = 0;       // set to avoid warning
+   std::string* name_ptr = nullptr;
+   void*        v_ptr    = nullptr; // set to avoid warning
+   local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+   //
+   // ident_zero_x
+   vector<bool> ident_zero_x;
+   if( type == 4 )
+   {  size_t n = x_index.size();
+      ident_zero_x.resize(n);
+      for(size_t j = 0; j < n; ++j)
+      {  if( type_x[j] >= constant_enum )
+            ident_zero_x[j] = false;
+         else
+            ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+      }
+   }
 # ifndef NDEBUG
-    bool ok = v_ptr != nullptr;
-    if ( ok )
-    {
-        if( type == 2 )
-        {   atomic_base<RecBase>* afun =
-                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(call_id);
-            ok = afun->for_sparse_jac(
-                parameter_x, x_index, y_index, var_sparsity
-            );
-        }
-        else if( type == 3 )
-        {   atomic_three<RecBase>* afun =
-                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-            ok = afun->for_jac_sparsity(
-            dependency, parameter_x, type_x, x_index, y_index, var_sparsity
-            );
-        }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-            atomic_four<RecBase>* afun =
-                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->for_jac_sparsity( call_id,
-                dependency, ident_zero_x, x_index, y_index, var_sparsity
-            );
-        }
-    }
-    if( ! ok )
-    {   // now take the extra time to copy the name
-        std::string name;
-        local::atomic_index<RecBase>(
-            set_null, atom_index, type, &name, v_ptr
-        );
-        std::string msg = name;
-        if( v_ptr == nullptr )
-            msg += ": this atomic function has been deleted";
-        else
-            msg += ": atomic jac_sparsity returned false";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
+   bool ok = v_ptr != nullptr;
+   if ( ok )
+   {
+      if( type == 2 )
+      {  atomic_base<RecBase>* afun =
+            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+         afun->set_old(call_id);
+         ok = afun->for_sparse_jac(
+            parameter_x, x_index, y_index, var_sparsity
+         );
+      }
+      else if( type == 3 )
+      {  atomic_three<RecBase>* afun =
+            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+         ok = afun->for_jac_sparsity(
+         dependency, parameter_x, type_x, x_index, y_index, var_sparsity
+         );
+      }
+      else
+      {  CPPAD_ASSERT_UNKNOWN( type == 4 );
+         atomic_four<RecBase>* afun =
+            reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+         ok = afun->for_jac_sparsity( call_id,
+            dependency, ident_zero_x, x_index, y_index, var_sparsity
+         );
+      }
+   }
+   if( ! ok )
+   {  // now take the extra time to copy the name
+      std::string name;
+      local::atomic_index<RecBase>(
+         set_null, atom_index, type, &name, v_ptr
+      );
+      std::string msg = name;
+      if( v_ptr == nullptr )
+         msg += ": this atomic function has been deleted";
+      else
+         msg += ": atomic jac_sparsity returned false";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
 # else
    if( type == 2 )
-    {   atomic_base<RecBase>* afun =
-            reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(call_id);
-        afun->for_sparse_jac(
-            parameter_x, x_index, y_index, var_sparsity
-        );
-    }
-    else if( type == 3 )
-    {   atomic_three<RecBase>* afun =
-            reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        afun->for_jac_sparsity(
-            dependency, parameter_x, type_x, x_index, y_index, var_sparsity
-        );
-    }
-    else
-    {   atomic_four<RecBase>* afun =
-            reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->for_jac_sparsity( call_id,
-            dependency, ident_zero_x, x_index, y_index, var_sparsity
-        );
-    }
+   {  atomic_base<RecBase>* afun =
+         reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+      afun->set_old(call_id);
+      afun->for_sparse_jac(
+         parameter_x, x_index, y_index, var_sparsity
+      );
+   }
+   else if( type == 3 )
+   {  atomic_three<RecBase>* afun =
+         reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+      afun->for_jac_sparsity(
+         dependency, parameter_x, type_x, x_index, y_index, var_sparsity
+      );
+   }
+   else
+   {  atomic_four<RecBase>* afun =
+         reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+      afun->for_jac_sparsity( call_id,
+         dependency, ident_zero_x, x_index, y_index, var_sparsity
+      );
+   }
 # endif
 }
 // ----------------------------------------------------------------------------
 /*
 $begin atomic_rev_jac_sparsity_callback$$
 $spell
-    Jacobian
-    setvec
-    var
+   Jacobian
+   setvec
+   var
 $$
 
 $section Reverse Jacobian sparsity Callback to Atomic Functions$$
@@ -515,111 +515,111 @@ $end
 // BEGIN_REV_JAC_SPARSITY
 template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_rev_jac_sparsity(
-    size_t                       atom_index    ,
-    size_t                       call_id       ,
-    bool                         dependency    ,
-    const vector<Base>&          parameter_x   ,
-    const vector<ad_type_enum>&  type_x        ,
-    const pod_vector<size_t>&    x_index       ,
-    const pod_vector<size_t>&    y_index       ,
-    InternalSparsity&            var_sparsity  )
+   size_t                       atom_index    ,
+   size_t                       call_id       ,
+   bool                         dependency    ,
+   const vector<Base>&          parameter_x   ,
+   const vector<ad_type_enum>&  type_x        ,
+   const pod_vector<size_t>&    x_index       ,
+   const pod_vector<size_t>&    y_index       ,
+   InternalSparsity&            var_sparsity  )
 // END_REV_JAC_SPARSITY
-{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
-    bool         set_null = false;
-    size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = nullptr;
-    void*        v_ptr    = nullptr; // set to avoid warning
-    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    //
-    // ident_zero_x
-    vector<bool> ident_zero_x;
-    if( type == 4 )
-    {   size_t n = x_index.size();
-        ident_zero_x.resize(n);
-        for(size_t j = 0; j < n; ++j)
-        {   if( type_x[j] >= constant_enum )
-                ident_zero_x[j] = false;
-            else
-                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
-        }
-    }
+{  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+   bool         set_null = false;
+   size_t       type     = 0;          // set to avoid warning
+   std::string* name_ptr = nullptr;
+   void*        v_ptr    = nullptr; // set to avoid warning
+   local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+   //
+   // ident_zero_x
+   vector<bool> ident_zero_x;
+   if( type == 4 )
+   {  size_t n = x_index.size();
+      ident_zero_x.resize(n);
+      for(size_t j = 0; j < n; ++j)
+      {  if( type_x[j] >= constant_enum )
+            ident_zero_x[j] = false;
+         else
+            ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+      }
+   }
 # ifndef NDEBUG
-    bool ok = v_ptr != nullptr;
-    if( ok )
-    {
-        if( type == 2 )
-        {   atomic_base<RecBase>* afun =
-                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(call_id);
-            ok = afun->rev_sparse_jac(
-                parameter_x, x_index, y_index, var_sparsity
-            );
-        }
-        else if( type == 3 )
-        {   atomic_three<RecBase>* afun =
-                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-            ok = afun->rev_jac_sparsity(
-            dependency, parameter_x, type_x, x_index, y_index, var_sparsity
-            );
-        }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-            atomic_four<RecBase>* afun =
-                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->rev_jac_sparsity(call_id,
-                dependency, ident_zero_x, x_index, y_index, var_sparsity
-            );
-        }
-    }
-    if( ! ok )
-    {   // now take the extra time to copy the name
-        std::string name;
-        local::atomic_index<RecBase>(
-            set_null, atom_index, type, &name, v_ptr
-        );
-        std::string msg = name;
-        if( v_ptr == nullptr )
-            msg += ": this atomic function has been deleted";
-        else
-            msg += ": atomic jac_sparsity returned false";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
-# else
-    if( type == 2 )
-    {   atomic_base<RecBase>* afun =
+   bool ok = v_ptr != nullptr;
+   if( ok )
+   {
+      if( type == 2 )
+      {  atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(call_id);
-        afun->rev_sparse_jac(
+         afun->set_old(call_id);
+         ok = afun->rev_sparse_jac(
             parameter_x, x_index, y_index, var_sparsity
-        );
-    }
-    else if( type == 3 )
-    {   atomic_three<RecBase>* afun =
+         );
+      }
+      else if( type == 3 )
+      {  atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        afun->rev_jac_sparsity(
-            dependency, parameter_x, type_x, x_index, y_index, var_sparsity
-        );
-    }
-    else
-    {   atomic_four<RecBase>* afun =
+         ok = afun->rev_jac_sparsity(
+         dependency, parameter_x, type_x, x_index, y_index, var_sparsity
+         );
+      }
+      else
+      {  CPPAD_ASSERT_UNKNOWN( type == 4 );
+         atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->rev_jac_sparsity(call_id,
+         ok = afun->rev_jac_sparsity(call_id,
             dependency, ident_zero_x, x_index, y_index, var_sparsity
-        );
-    }
+         );
+      }
+   }
+   if( ! ok )
+   {  // now take the extra time to copy the name
+      std::string name;
+      local::atomic_index<RecBase>(
+         set_null, atom_index, type, &name, v_ptr
+      );
+      std::string msg = name;
+      if( v_ptr == nullptr )
+         msg += ": this atomic function has been deleted";
+      else
+         msg += ": atomic jac_sparsity returned false";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
+# else
+   if( type == 2 )
+   {  atomic_base<RecBase>* afun =
+         reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+      afun->set_old(call_id);
+      afun->rev_sparse_jac(
+         parameter_x, x_index, y_index, var_sparsity
+      );
+   }
+   else if( type == 3 )
+   {  atomic_three<RecBase>* afun =
+         reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+      afun->rev_jac_sparsity(
+         dependency, parameter_x, type_x, x_index, y_index, var_sparsity
+      );
+   }
+   else
+   {  atomic_four<RecBase>* afun =
+         reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+      afun->rev_jac_sparsity(call_id,
+         dependency, ident_zero_x, x_index, y_index, var_sparsity
+      );
+   }
 # endif
 }
 // ----------------------------------------------------------------------------
 /*
 $begin atomic_for_hes_sparsity_callback$$
 $spell
-    hes
-    np
-    numvar
-    jac
-    Jacobian
-    afun
-    setvec
+   hes
+   np
+   numvar
+   jac
+   Jacobian
+   afun
+   setvec
 $$
 
 $section Forward Hessian Sparsity Callback to Atomic Functions$$
@@ -705,106 +705,48 @@ $end
 // BEGIN_FOR_HES_SPARSITY
 template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_for_hes_sparsity(
-    size_t                       atom_index        ,
-    size_t                       call_id           ,
-    const vector<Base>&          parameter_x       ,
-    const vector<ad_type_enum>&  type_x            ,
-    const pod_vector<size_t>&    x_index           ,
-    const pod_vector<size_t>&    y_index           ,
-    size_t                       np1               ,
-    size_t                       numvar            ,
-    const InternalSparsity&      rev_jac_sparsity  ,
-    InternalSparsity&            for_sparsity      )
+   size_t                       atom_index        ,
+   size_t                       call_id           ,
+   const vector<Base>&          parameter_x       ,
+   const vector<ad_type_enum>&  type_x            ,
+   const pod_vector<size_t>&    x_index           ,
+   const pod_vector<size_t>&    y_index           ,
+   size_t                       np1               ,
+   size_t                       numvar            ,
+   const InternalSparsity&      rev_jac_sparsity  ,
+   InternalSparsity&            for_sparsity      )
 // END_FOR_HES_SPARSITY
-{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
-    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-    CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
+{  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
 
-    bool         set_null = false;
-    size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = nullptr;
-    void*        v_ptr    = nullptr; // set to avoid warning
-    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    //
-    // ident_zero_x
-    vector<bool> ident_zero_x;
-    if( type == 4 )
-    {   size_t n = x_index.size();
-        ident_zero_x.resize(n);
-        for(size_t j = 0; j < n; ++j)
-        {   if( type_x[j] >= constant_enum )
-                ident_zero_x[j] = false;
-            else
-                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
-        }
-    }
+   bool         set_null = false;
+   size_t       type     = 0;          // set to avoid warning
+   std::string* name_ptr = nullptr;
+   void*        v_ptr    = nullptr; // set to avoid warning
+   local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+   //
+   // ident_zero_x
+   vector<bool> ident_zero_x;
+   if( type == 4 )
+   {  size_t n = x_index.size();
+      ident_zero_x.resize(n);
+      for(size_t j = 0; j < n; ++j)
+      {  if( type_x[j] >= constant_enum )
+            ident_zero_x[j] = false;
+         else
+            ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+      }
+   }
 # ifndef NDEBUG
-    bool ok = v_ptr != nullptr;
-    if( ok )
-    {
-        if( type == 2 )
-        {   atomic_base<RecBase>* afun =
-                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(call_id);
-            ok = afun->for_sparse_hes(
-                parameter_x,
-                x_index,
-                y_index,
-                np1,
-                numvar,
-                rev_jac_sparsity,
-                for_sparsity
-            );
-        }
-        else if( type == 3 )
-        {   atomic_three<RecBase>* afun =
-                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-            ok = afun->for_hes_sparsity(
-                parameter_x,
-                type_x,
-                x_index,
-                y_index,
-                np1,
-                numvar,
-                rev_jac_sparsity,
-                for_sparsity
-            );
-        }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-            atomic_four<RecBase>* afun =
-                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->for_hes_sparsity(
-                call_id,
-                ident_zero_x,
-                x_index,
-                y_index,
-                np1,
-                numvar,
-                rev_jac_sparsity,
-                for_sparsity
-            );
-        }
-    }
-    if( ! ok )
-    {   // now take the extra time to copy the name
-        std::string name;
-        local::atomic_index<RecBase>(
-            set_null, atom_index, type, &name, v_ptr
-        );
-        std::string msg = name;
-        if( v_ptr == nullptr )
-            msg += ": this atomic function has been deleted";
-        else
-            msg += ": atomic hes_sparsity returned false";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
-# else
-    if( type == 2 )
-    {   atomic_base<RecBase>* afun =
+   bool ok = v_ptr != nullptr;
+   if( ok )
+   {
+      if( type == 2 )
+      {  atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(call_id);
-        afun->for_sparse_hes(
+         afun->set_old(call_id);
+         ok = afun->for_sparse_hes(
             parameter_x,
             x_index,
             y_index,
@@ -812,12 +754,12 @@ void call_atomic_for_hes_sparsity(
             numvar,
             rev_jac_sparsity,
             for_sparsity
-        );
-    }
-    else if( type == 3 )
-    {   atomic_three<RecBase>* afun =
+         );
+      }
+      else if( type == 3 )
+      {  atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        afun->for_hes_sparsity(
+         ok = afun->for_hes_sparsity(
             parameter_x,
             type_x,
             x_index,
@@ -826,12 +768,13 @@ void call_atomic_for_hes_sparsity(
             numvar,
             rev_jac_sparsity,
             for_sparsity
-        );
-    }
-    else
-    {   atomic_four<RecBase>* afun =
+         );
+      }
+      else
+      {  CPPAD_ASSERT_UNKNOWN( type == 4 );
+         atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->for_hes_sparsity(
+         ok = afun->for_hes_sparsity(
             call_id,
             ident_zero_x,
             x_index,
@@ -840,18 +783,75 @@ void call_atomic_for_hes_sparsity(
             numvar,
             rev_jac_sparsity,
             for_sparsity
-        );
-    }
+         );
+      }
+   }
+   if( ! ok )
+   {  // now take the extra time to copy the name
+      std::string name;
+      local::atomic_index<RecBase>(
+         set_null, atom_index, type, &name, v_ptr
+      );
+      std::string msg = name;
+      if( v_ptr == nullptr )
+         msg += ": this atomic function has been deleted";
+      else
+         msg += ": atomic hes_sparsity returned false";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
+# else
+   if( type == 2 )
+   {  atomic_base<RecBase>* afun =
+         reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+      afun->set_old(call_id);
+      afun->for_sparse_hes(
+         parameter_x,
+         x_index,
+         y_index,
+         np1,
+         numvar,
+         rev_jac_sparsity,
+         for_sparsity
+      );
+   }
+   else if( type == 3 )
+   {  atomic_three<RecBase>* afun =
+         reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+      afun->for_hes_sparsity(
+         parameter_x,
+         type_x,
+         x_index,
+         y_index,
+         np1,
+         numvar,
+         rev_jac_sparsity,
+         for_sparsity
+      );
+   }
+   else
+   {  atomic_four<RecBase>* afun =
+         reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+      afun->for_hes_sparsity(
+         call_id,
+         ident_zero_x,
+         x_index,
+         y_index,
+         np1,
+         numvar,
+         rev_jac_sparsity,
+         for_sparsity
+      );
+   }
 # endif
 }
 // ----------------------------------------------------------------------------
 /*
 $begin atomic_rev_hes_sparsity_callback$$
 $spell
-    setvec
-    jac
-    Jacobian
-    hes
+   setvec
+   jac
+   Jacobian
+   hes
 $$
 
 $section Reverse Hessian Sparsity Callback to Atomic Functions$$
@@ -911,111 +911,56 @@ $end
 // BEGIN_REV_HES_SPARSITY
 template <class Base, class RecBase, class InternalSparsity>
 void call_atomic_rev_hes_sparsity(
-    size_t                       atom_index        ,
-    size_t                       call_id           ,
-    const vector<Base>&          parameter_x       ,
-    const vector<ad_type_enum>&  type_x            ,
-    const pod_vector<size_t>&    x_index           ,
-    const pod_vector<size_t>&    y_index           ,
-    const InternalSparsity&      for_jac_sparsity  ,
-    bool*                        rev_jac_flag      ,
-    InternalSparsity&            rev_hes_sparsity  )
+   size_t                       atom_index        ,
+   size_t                       call_id           ,
+   const vector<Base>&          parameter_x       ,
+   const vector<ad_type_enum>&  type_x            ,
+   const pod_vector<size_t>&    x_index           ,
+   const pod_vector<size_t>&    y_index           ,
+   const InternalSparsity&      for_jac_sparsity  ,
+   bool*                        rev_jac_flag      ,
+   InternalSparsity&            rev_hes_sparsity  )
 // END_REV_HES_SPARSITY
-{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
-    bool         set_null = false;
-    size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = nullptr;
-    void*        v_ptr    = nullptr; // set to avoid warning
-    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    //
-    // ident_zero_x
-    vector<bool> ident_zero_x;
-    if( type == 4 )
-    {   size_t n = x_index.size();
-        ident_zero_x.resize(n);
-        for(size_t j = 0; j < n; ++j)
-        {   if( type_x[j] >= constant_enum )
-                ident_zero_x[j] = false;
-            else
-                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
-        }
-    }
+{  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+   bool         set_null = false;
+   size_t       type     = 0;          // set to avoid warning
+   std::string* name_ptr = nullptr;
+   void*        v_ptr    = nullptr; // set to avoid warning
+   local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+   //
+   // ident_zero_x
+   vector<bool> ident_zero_x;
+   if( type == 4 )
+   {  size_t n = x_index.size();
+      ident_zero_x.resize(n);
+      for(size_t j = 0; j < n; ++j)
+      {  if( type_x[j] >= constant_enum )
+            ident_zero_x[j] = false;
+         else
+            ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+      }
+   }
 # ifndef NDEBUG
-    bool ok = v_ptr != nullptr;
-    if( ok )
-    {
-        if( type == 2 )
-        {   atomic_base<RecBase>* afun =
-                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(call_id);
-            ok = afun->rev_sparse_hes(
-                parameter_x,
-                x_index,
-                y_index,
-                for_jac_sparsity,
-                rev_jac_flag,
-                rev_hes_sparsity
-            );
-        }
-        else if( type == 3 )
-        {   atomic_three<RecBase>* afun =
-                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-            ok = afun->rev_hes_sparsity(
-                parameter_x,
-                type_x,
-                x_index,
-                y_index,
-                for_jac_sparsity,
-                rev_jac_flag,
-                rev_hes_sparsity
-            );
-        }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-            atomic_four<RecBase>* afun =
-                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            ok = afun->rev_hes_sparsity(
-                call_id,
-                ident_zero_x,
-                x_index,
-                y_index,
-                for_jac_sparsity,
-                rev_jac_flag,
-                rev_hes_sparsity
-            );
-        }
-    }
-    if( ! ok )
-    {   // now take the extra time to copy the name
-        std::string name;
-        local::atomic_index<RecBase>(
-            set_null, atom_index, type, &name, v_ptr
-        );
-        std::string msg = name;
-        if( v_ptr == nullptr )
-            msg += ": this atomic function has been deleted";
-        else
-            msg += ": atomic hes_sparsity returned false";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
-# else
-    if( type == 2 )
-    {   atomic_base<RecBase>* afun =
+   bool ok = v_ptr != nullptr;
+   if( ok )
+   {
+      if( type == 2 )
+      {  atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        afun->set_old(call_id);
-        afun->rev_sparse_hes(
+         afun->set_old(call_id);
+         ok = afun->rev_sparse_hes(
             parameter_x,
             x_index,
             y_index,
             for_jac_sparsity,
             rev_jac_flag,
             rev_hes_sparsity
-        );
-    }
-    else if( type == 3 )
-    {   atomic_three<RecBase>* afun =
+         );
+      }
+      else if( type == 3 )
+      {  atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        afun->rev_hes_sparsity(
+         ok = afun->rev_hes_sparsity(
             parameter_x,
             type_x,
             x_index,
@@ -1023,12 +968,13 @@ void call_atomic_rev_hes_sparsity(
             for_jac_sparsity,
             rev_jac_flag,
             rev_hes_sparsity
-        );
-    }
-    else
-    {   atomic_four<RecBase>* afun =
+         );
+      }
+      else
+      {  CPPAD_ASSERT_UNKNOWN( type == 4 );
+         atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        afun->rev_hes_sparsity(
+         ok = afun->rev_hes_sparsity(
             call_id,
             ident_zero_x,
             x_index,
@@ -1036,8 +982,62 @@ void call_atomic_rev_hes_sparsity(
             for_jac_sparsity,
             rev_jac_flag,
             rev_hes_sparsity
-        );
-    }
+         );
+      }
+   }
+   if( ! ok )
+   {  // now take the extra time to copy the name
+      std::string name;
+      local::atomic_index<RecBase>(
+         set_null, atom_index, type, &name, v_ptr
+      );
+      std::string msg = name;
+      if( v_ptr == nullptr )
+         msg += ": this atomic function has been deleted";
+      else
+         msg += ": atomic hes_sparsity returned false";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
+# else
+   if( type == 2 )
+   {  atomic_base<RecBase>* afun =
+         reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+      afun->set_old(call_id);
+      afun->rev_sparse_hes(
+         parameter_x,
+         x_index,
+         y_index,
+         for_jac_sparsity,
+         rev_jac_flag,
+         rev_hes_sparsity
+      );
+   }
+   else if( type == 3 )
+   {  atomic_three<RecBase>* afun =
+         reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+      afun->rev_hes_sparsity(
+         parameter_x,
+         type_x,
+         x_index,
+         y_index,
+         for_jac_sparsity,
+         rev_jac_flag,
+         rev_hes_sparsity
+      );
+   }
+   else
+   {  atomic_four<RecBase>* afun =
+         reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+      afun->rev_hes_sparsity(
+         call_id,
+         ident_zero_x,
+         x_index,
+         y_index,
+         for_jac_sparsity,
+         rev_jac_flag,
+         rev_hes_sparsity
+      );
+   }
 # endif
 }
 // ----------------------------------------------------------------------------
@@ -1074,90 +1074,90 @@ $end
 // BEGIN_REV_DEPEND
 template <class Base, class RecBase>
 void call_atomic_rev_depend(
-    size_t                      atom_index   ,
-    size_t                      call_id      ,
-    const vector<Base>&         parameter_x  ,
-    const vector<ad_type_enum>& type_x       ,
-    vector<bool>&               depend_x     ,
-    const vector<bool>&         depend_y     )
+   size_t                      atom_index   ,
+   size_t                      call_id      ,
+   const vector<Base>&         parameter_x  ,
+   const vector<ad_type_enum>& type_x       ,
+   vector<bool>&               depend_x     ,
+   const vector<bool>&         depend_y     )
 // END_REV_DEPEND
-{   CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
-    bool         set_null = false;
-    size_t       type     = 0;          // set to avoid warning
-    std::string* name_ptr = nullptr;
-    void*        v_ptr    = nullptr; // set to avoid warning
-    local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
-    //
-    // ident_zero_x
-    vector<bool> ident_zero_x;
-    if( type == 4 )
-    {   size_t n = parameter_x.size();
-        ident_zero_x.resize(n);
-        for(size_t j = 0; j < n; ++j)
-        {   if( type_x[j] >= constant_enum )
-                ident_zero_x[j] = false;
-            else
-                ident_zero_x[j] = IdenticalZero( parameter_x[j] );
-        }
-    }
+{  CPPAD_ASSERT_UNKNOWN( 0 < atom_index );
+   bool         set_null = false;
+   size_t       type     = 0;          // set to avoid warning
+   std::string* name_ptr = nullptr;
+   void*        v_ptr    = nullptr; // set to avoid warning
+   local::atomic_index<RecBase>(set_null, atom_index, type, name_ptr, v_ptr);
+   //
+   // ident_zero_x
+   vector<bool> ident_zero_x;
+   if( type == 4 )
+   {  size_t n = parameter_x.size();
+      ident_zero_x.resize(n);
+      for(size_t j = 0; j < n; ++j)
+      {  if( type_x[j] >= constant_enum )
+            ident_zero_x[j] = false;
+         else
+            ident_zero_x[j] = IdenticalZero( parameter_x[j] );
+      }
+   }
 # ifndef NDEBUG
-    bool ok = v_ptr != nullptr;
-    if( ok )
-    {
-        if( type == 2 )
-        {   atomic_base<RecBase>* afun =
-                reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-            afun->set_old(call_id);
-            vector<ad_type_enum> empty;
-            ok = afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
-        }
-        else if( type == 3 )
-        {   atomic_three<RecBase>* afun =
-                reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-            ok = afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
-        }
-        else
-        {   CPPAD_ASSERT_UNKNOWN( type == 4 );
-            atomic_four<RecBase>* afun =
-                reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-            // rev_depend does not have a wrapper that drops back to
-            // deprecated version of this function.
-            ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
-            if( ! ok ) ok = afun->rev_depend(call_id, depend_x, depend_y);
-        }
-    }
-    if( ! ok )
-    {   // now take the extra time to copy the name
-        std::string name;
-        local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
-        std::string msg = name;
-        if( v_ptr == nullptr )
-            msg += ": this atomic function has been deleted";
-        else
-            msg += ": atomic rev_depend returned false";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
-# else
-    if( type == 2 )
-    {   atomic_base<RecBase>* afun =
+   bool ok = v_ptr != nullptr;
+   if( ok )
+   {
+      if( type == 2 )
+      {  atomic_base<RecBase>* afun =
             reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
-        vector<ad_type_enum> empty;
-        afun->set_old(call_id);
-        afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
-    }
-    else if( type == 3 )
-    {   atomic_three<RecBase>* afun =
+         afun->set_old(call_id);
+         vector<ad_type_enum> empty;
+         ok = afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
+      }
+      else if( type == 3 )
+      {  atomic_three<RecBase>* afun =
             reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
-        afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
-    }
-    else
-    {   atomic_four<RecBase>* afun =
+         ok = afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
+      }
+      else
+      {  CPPAD_ASSERT_UNKNOWN( type == 4 );
+         atomic_four<RecBase>* afun =
             reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
-        // rev_depend does not have a wrapper that drops back to
-        // deprecated version of this function.
-        bool ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
-        if( ! ok ) afun->rev_depend(call_id, depend_x, depend_y);
-    }
+         // rev_depend does not have a wrapper that drops back to
+         // deprecated version of this function.
+         ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
+         if( ! ok ) ok = afun->rev_depend(call_id, depend_x, depend_y);
+      }
+   }
+   if( ! ok )
+   {  // now take the extra time to copy the name
+      std::string name;
+      local::atomic_index<RecBase>(set_null, atom_index, type, &name, v_ptr);
+      std::string msg = name;
+      if( v_ptr == nullptr )
+         msg += ": this atomic function has been deleted";
+      else
+         msg += ": atomic rev_depend returned false";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
+# else
+   if( type == 2 )
+   {  atomic_base<RecBase>* afun =
+         reinterpret_cast< atomic_base<RecBase>* >(v_ptr);
+      vector<ad_type_enum> empty;
+      afun->set_old(call_id);
+      afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
+   }
+   else if( type == 3 )
+   {  atomic_three<RecBase>* afun =
+         reinterpret_cast< atomic_three<RecBase>* >(v_ptr);
+      afun->rev_depend(parameter_x, type_x, depend_x, depend_y);
+   }
+   else
+   {  atomic_four<RecBase>* afun =
+         reinterpret_cast< atomic_four<RecBase>* >(v_ptr);
+      // rev_depend does not have a wrapper that drops back to
+      // deprecated version of this function.
+      bool ok = afun->rev_depend(call_id, ident_zero_x, depend_x, depend_y);
+      if( ! ok ) afun->rev_depend(call_id, depend_x, depend_y);
+   }
 # endif
 }
 

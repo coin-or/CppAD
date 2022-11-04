@@ -7,17 +7,17 @@
 /*
 $begin atomic_three_rev_depend$$
 $spell
-    afun
-    enum
-    cpp
-    taylor.hpp
+   afun
+   enum
+   cpp
+   taylor.hpp
 $$
 
 $section Atomic Function Reverse Dependency Calculation$$
 
 $head Syntax$$
 $icode%ok% = %afun%.rev_depend(
-    %parameter_x%, %type_x%, %depend_x%, %depend_y%
+   %parameter_x%, %type_x%, %depend_x%, %depend_y%
 )%$$
 
 $subhead Prototype$$
@@ -73,7 +73,7 @@ If this calculation succeeded, $icode ok$$ is true.
 Otherwise, it is false.
 
 $childtable%
-    example/atomic_three/rev_depend.cpp
+   example/atomic_three/rev_depend.cpp
 %$$
 $head Example$$
 The following is an example of a atomic function $code rev_depend$$ definition:
@@ -108,12 +108,12 @@ specifies which components of y affect values of interest.
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_three<Base>::rev_depend(
-    const vector<Base>&         parameter_x ,
-    const vector<ad_type_enum>& type_x      ,
-    vector<bool>&               depend_x    ,
-    const vector<bool>&         depend_y    )
+   const vector<Base>&         parameter_x ,
+   const vector<ad_type_enum>& type_x      ,
+   vector<bool>&               depend_x    ,
+   const vector<bool>&         depend_y    )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 
 } // END_CPPAD_NAMESPACE
 

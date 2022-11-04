@@ -56,12 +56,12 @@ the result for this operator depends on the selected independent variables.
 In addition, upon input, there is no i_op such that in_subgraph[i_op] == i_dep.
 Note that for atomic function call operators i_op,
 \code
-    n_dep_ < in_subgraph[i_op]
+   n_dep_ < in_subgraph[i_op]
 \endcode
 except for the first AFunOp in the atomic function call sequence.
 For the first AFunOp,
 \code
-    in_subgraph[i_op] <= n_dep_
+   in_subgraph[i_op] <= n_dep_
 \endcode
 if any result for the atomic function call
 depends on the selected independent variables.
@@ -76,81 +76,81 @@ It is then set to have value true.
 */
 template <class Addr>
 void subgraph_info::get_rev(
-    const play::const_random_iterator<Addr>&   random_itr  ,
-    const pod_vector<size_t>&                  dep_taddr   ,
-    addr_t                                     i_dep       ,
-    pod_vector<addr_t>&                        subgraph    )
-{   // check sizes
-    CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
+   const play::const_random_iterator<Addr>&   random_itr  ,
+   const pod_vector<size_t>&                  dep_taddr   ,
+   addr_t                                     i_dep       ,
+   pod_vector<addr_t>&                        subgraph    )
+{  // check sizes
+   CPPAD_ASSERT_UNKNOWN( map_user_op_.size()   == n_op_ );
 
-    // process_range_
-    CPPAD_ASSERT_UNKNOWN( process_range_[i_dep] == false );
-    process_range_[i_dep] = true;
+   // process_range_
+   CPPAD_ASSERT_UNKNOWN( process_range_[i_dep] == false );
+   process_range_[i_dep] = true;
 
-    // special value; see init_rev_in_subgraph
-    addr_t depend_yes = addr_t( n_dep_ );
+   // special value; see init_rev_in_subgraph
+   addr_t depend_yes = addr_t( n_dep_ );
 
-    // assumption on i_dep
-    CPPAD_ASSERT_UNKNOWN( i_dep < depend_yes );
+   // assumption on i_dep
+   CPPAD_ASSERT_UNKNOWN( i_dep < depend_yes );
 
-    // start with an empty subgraph for this dependent variable
-    subgraph.resize(0);
+   // start with an empty subgraph for this dependent variable
+   subgraph.resize(0);
 
-    // tape index corresponding to this dependent variable
-    size_t i_var = dep_taddr[i_dep];
+   // tape index corresponding to this dependent variable
+   size_t i_var = dep_taddr[i_dep];
 
-    // operator corresponding to this dependent variable
-    size_t i_op = random_itr.var2op(i_var);
-    i_op        = size_t( map_user_op_[i_op] );
+   // operator corresponding to this dependent variable
+   size_t i_op = random_itr.var2op(i_var);
+   i_op        = size_t( map_user_op_[i_op] );
 
-    // if this variable depends on the selected indepent variables
-    // process its subgraph
-    CPPAD_ASSERT_UNKNOWN( in_subgraph_[i_op] != i_dep )
-    if( in_subgraph_[i_op] <= depend_yes )
-    {   subgraph.push_back( addr_t(i_op) );
-        in_subgraph_[i_op] = i_dep;
-    }
+   // if this variable depends on the selected indepent variables
+   // process its subgraph
+   CPPAD_ASSERT_UNKNOWN( in_subgraph_[i_op] != i_dep )
+   if( in_subgraph_[i_op] <= depend_yes )
+   {  subgraph.push_back( addr_t(i_op) );
+      in_subgraph_[i_op] = i_dep;
+   }
 
-    // space used to return set of arguments that are variables
-    pod_vector<size_t> argument_variable;
+   // space used to return set of arguments that are variables
+   pod_vector<size_t> argument_variable;
 
-    // temporary space used by get_argument_variable
-    pod_vector<bool> work;
+   // temporary space used by get_argument_variable
+   pod_vector<bool> work;
 
-    // scan all the operators in this subgraph
-    size_t sub_index = 0;
-    while(sub_index < subgraph.size() )
-    {   // this operator connected to this dependent and selected independent
-        i_op = size_t( subgraph[sub_index] );
-        CPPAD_ASSERT_UNKNOWN( in_subgraph_[i_op] == i_dep );
-        //
-        // There must be a result for this operator
+   // scan all the operators in this subgraph
+   size_t sub_index = 0;
+   while(sub_index < subgraph.size() )
+   {  // this operator connected to this dependent and selected independent
+      i_op = size_t( subgraph[sub_index] );
+      CPPAD_ASSERT_UNKNOWN( in_subgraph_[i_op] == i_dep );
+      //
+      // There must be a result for this operator
 # ifndef NDEBUG
-        OpCode op = random_itr.get_op(i_op);
-        CPPAD_ASSERT_UNKNOWN(op == AFunOp || NumRes(op) > 0 );
+      OpCode op = random_itr.get_op(i_op);
+      CPPAD_ASSERT_UNKNOWN(op == AFunOp || NumRes(op) > 0 );
 # endif
-        //
-        // which variables are connected to this operator
-        get_argument_variable(random_itr, i_op, argument_variable, work);
-        for(size_t j = 0; j < argument_variable.size(); ++j)
-        {   // add the corresponding operators to the subgraph
-            size_t j_var = argument_variable[j];
-            size_t j_op  = random_itr.var2op(j_var);
-            j_op         = size_t( map_user_op_[j_op] );
-            bool add = in_subgraph_[j_op] <= depend_yes;
-            add     &= in_subgraph_[j_op] != i_dep;
-            if( random_itr.get_op(j_op) == InvOp )
-            {   CPPAD_ASSERT_UNKNOWN( j_op == j_var );
-                add &= select_domain_[j_var - 1];
-            }
-            if( add )
-            {   subgraph.push_back( addr_t(j_op) );
-                in_subgraph_[j_op] = i_dep;
-            }
-        }
-        // we are done scaning this subgraph operator
-        ++sub_index;
-    }
+      //
+      // which variables are connected to this operator
+      get_argument_variable(random_itr, i_op, argument_variable, work);
+      for(size_t j = 0; j < argument_variable.size(); ++j)
+      {  // add the corresponding operators to the subgraph
+         size_t j_var = argument_variable[j];
+         size_t j_op  = random_itr.var2op(j_var);
+         j_op         = size_t( map_user_op_[j_op] );
+         bool add = in_subgraph_[j_op] <= depend_yes;
+         add     &= in_subgraph_[j_op] != i_dep;
+         if( random_itr.get_op(j_op) == InvOp )
+         {  CPPAD_ASSERT_UNKNOWN( j_op == j_var );
+            add &= select_domain_[j_var - 1];
+         }
+         if( add )
+         {  subgraph.push_back( addr_t(j_op) );
+            in_subgraph_[j_op] = i_dep;
+         }
+      }
+      // we are done scaning this subgraph operator
+      ++sub_index;
+   }
 }
 
 } } } // END_CPPAD_LOCAL_SUBGRAPH_NAMESPACE

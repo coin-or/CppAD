@@ -5,12 +5,12 @@
 
 $begin mul_level$$
 $spell
-    Taylor
-    fout
-    const
-    var
-    Cpp
-    Arg
+   Taylor
+   fout
+   const
+   var
+   Cpp
+   Arg
 $$
 
 
@@ -72,7 +72,7 @@ $cref/variables/glossary/Variable/$$
 in the $codei AD<double>$$ recording,
 we must first declaring these variables; i.e.,
 $codei%
-    Independent(%a1x%)
+   Independent(%a1x%)
 %$$
 where $icode a1x$$ is
 a $cref SimpleVector$$ with elements of type $codei AD<double>$$.
@@ -82,7 +82,7 @@ operations performed using $codei AD<double>$$ class objects.
 $subhead Start AD< AD<double> > Recording$$
 The next step is to declare the independent variables using
 $codei%
-    Independent(%a2x%)
+   Independent(%a2x%)
 %$$
 where $icode a2x$$ is
 a $cref SimpleVector$$ with elements of type
@@ -95,7 +95,7 @@ The next step is to calculate the inner function
 using $codei AD< AD<double> >$$ class objects.
 We then stop the recording using
 $codei%
-    %a1f%.Dependent(%a2x%, %a2y%)
+   %a1f%.Dependent(%a2x%, %a2y%)
 %$$
 where $icode a2y$$ is
 a $cref SimpleVector$$ with elements of type
@@ -109,7 +109,7 @@ $cref/variables/glossary/Variable/$$
 in the $codei AD<double>$$ recording,
 it is preferred to delay declaring these variables to this point; i.e.,
 $codei%
-    Independent(%a1x%)
+   Independent(%a1x%)
 %$$
 where $icode a1x$$ is
 a $cref SimpleVector$$ with elements of type $codei AD<double>$$.
@@ -123,7 +123,7 @@ Note that derivatives of the inner function can be included
 in the calculation of the outer function using $icode a1f$$.
 We then stop the recording of $codei AD<double>$$ operations using
 $codei%
-    %g%.Dependent(%a1x%, %a1y%)
+   %g%.Dependent(%a1x%, %a1y%)
 %$$
 where $icode a1y$$ is
 a $cref SimpleVector$$ with elements of type
@@ -135,8 +135,8 @@ The AD function object $icode g$$ can then be used to calculate
 the derivatives of the outer function.
 
 $children%
-    example/general/mul_level.cpp%
-    example/general/change_param.cpp
+   example/general/mul_level.cpp%
+   example/general/change_param.cpp
 %$$
 
 $head Example$$

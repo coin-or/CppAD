@@ -6,9 +6,9 @@ $begin reverse_one$$
 
 $section First Order Reverse Mode$$
 $spell
-    taylor
-    const
-    dw
+   taylor
+   const
+   dw
 $$
 
 
@@ -21,12 +21,12 @@ We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The function $latex W : \B{R}^n \rightarrow \B{R}$$ is defined by
 $latex \[
-    W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
+   W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
 \] $$
 The result of this operation is the derivative
 $latex dw = W^{(1)} (x)$$; i.e.,
 $latex \[
-    dw = w_0 * F_0^{(1)} ( x ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (x)
+   dw = w_0 * F_0^{(1)} ( x ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (x)
 \] $$
 Note that if $latex w$$ is the $th i$$
 $cref/elementary vector/glossary/Elementary Vector/$$,
@@ -35,11 +35,11 @@ $latex dw = F_i^{(1)} (x)$$.
 $head f$$
 The object $icode f$$ has prototype
 $codei%
-    const ADFun<%Base%> %f%
+   const ADFun<%Base%> %f%
 %$$
 Before this call to $code Reverse$$, the value returned by
 $codei%
-    %f%.size_order()
+   %f%.size_order()
 %$$
 must be greater than or equal one (see $cref size_order$$).
 
@@ -48,7 +48,7 @@ The vector $icode x$$ in expression for $icode dw$$ above
 corresponds to the previous call to $cref forward_zero$$
 using this ADFun object $icode f$$; i.e.,
 $codei%
-    %f%.Forward(0, %x%)
+   %f%.Forward(0, %x%)
 %$$
 If there is no previous call with the first argument zero,
 the value of the $cref/independent/Independent/$$ variables
@@ -58,7 +58,7 @@ for $icode x$$.
 $head w$$
 The argument $icode w$$ has prototype
 $codei%
-    const %Vector% &%w%
+   const %Vector% &%w%
 %$$
 (see $cref/Vector/reverse_one/Vector/$$ below)
 and its size
@@ -68,7 +68,7 @@ $cref/range/fun_property/Range/$$ space for $icode f$$.
 $head dw$$
 The result $icode dw$$ has prototype
 $codei%
-    %Vector% %dw%
+   %Vector% %dw%
 %$$
 (see $cref/Vector/reverse_one/Vector/$$ below)
 and its value is the derivative $latex W^{(1)} (x)$$.
@@ -85,7 +85,7 @@ if this is not the case.
 
 $head Example$$
 $children%
-    example/general/reverse_one.cpp
+   example/general/reverse_one.cpp
 %$$
 The file
 $cref reverse_one.cpp$$

@@ -8,14 +8,14 @@
 /*
 $begin sparse2eigen$$
 $spell
-    CppAD
-    Eigen
-    cppad.hpp
-    const
-    Ptr
-    nnz
-    cmake
-    namespace
+   CppAD
+   Eigen
+   cppad.hpp
+   const
+   Ptr
+   nnz
+   cmake
+   namespace
 $$
 
 $section Convert A CppAD Sparse Matrix to an Eigen Sparse Matrix$$
@@ -27,7 +27,7 @@ $codei%sparse2eigen(%source%, %destination%)%$$
 
 $head Prototype$$
 $srcthisfile%0
-    %// BEGIN_PROTOTYPE%// END_PROTOTYPE%
+   %// BEGIN_PROTOTYPE%// END_PROTOTYPE%
 1%$$
 
 $head Include$$
@@ -66,20 +66,20 @@ $head Compressed$$
 The result matrix $icode destination$$
 is in compressed format. For example, let
 $codei%
-    size_t %%           %nnz%       = %source%.nnz();
-    const %s_vector%&   %s_value%   = %source%.val();
-    const %value_type%* %d_value%   = %destination%.valuePtr();
-    const %s_vector%&   %row_major% = %source%.row_major();
-    const %s_vector%&   %col_major% = %source%.col_major();
+   size_t %%           %nnz%       = %source%.nnz();
+   const %s_vector%&   %s_value%   = %source%.val();
+   const %value_type%* %d_value%   = %destination%.valuePtr();
+   const %s_vector%&   %row_major% = %source%.row_major();
+   const %s_vector%&   %col_major% = %source%.col_major();
 %$$
 It follows that, for $icode%k% = 0 , %...%, %nnz%$$:
 If $icode Options$$ is $code Eigen::RowMajor$$,
 $codei%
-    %d_value%[%k%] == %s_value%[ %row_major%[%k%] ]
+   %d_value%[%k%] == %s_value%[ %row_major%[%k%] ]
 %$$
 If $icode Options$$ is $code Eigen::ColMajor$$,
 $codei%
-    %d_value%[%k%] == %s_value%[ %col_major%[%k%] ]
+   %d_value%[%k%] == %s_value%[ %col_major%[%k%] ]
 %$$
 
 $children%example/sparse/sparse2eigen.cpp
@@ -105,26 +105,26 @@ void sparse2eigen(
 const CppAD::sparse_rcv<SizeVector, ValueVector>&               source       ,
 Eigen::SparseMatrix<typename ValueVector::value_type, Options>& destination  )
 // END_PROTOTYPE
-{   using Eigen::Index;
-    typedef typename ValueVector::value_type value_type;
-    typedef Eigen::Triplet<value_type>       triplet;
-    std::vector<triplet> vec( source.nnz() );
-    //
-    const SizeVector&  row = source.row();
-    const SizeVector&  col = source.col();
-    const ValueVector& val = source.val();
-    //
-    for(size_t k = 0; k < source.nnz(); k++)
-        vec[k] = triplet( int(row[k]), int(col[k]), val[k] );
-    //
-    size_t nr = source.nr();
-    size_t nc = source.nc();
-    destination.resize( Index(nr), Index(nc) );
-    destination.setFromTriplets(vec.begin(), vec.end());
-    //
-    CPPAD_ASSERT_UNKNOWN( destination.isCompressed() );
-    //
-    return;
+{  using Eigen::Index;
+   typedef typename ValueVector::value_type value_type;
+   typedef Eigen::Triplet<value_type>       triplet;
+   std::vector<triplet> vec( source.nnz() );
+   //
+   const SizeVector&  row = source.row();
+   const SizeVector&  col = source.col();
+   const ValueVector& val = source.val();
+   //
+   for(size_t k = 0; k < source.nnz(); k++)
+      vec[k] = triplet( int(row[k]), int(col[k]), val[k] );
+   //
+   size_t nr = source.nr();
+   size_t nc = source.nc();
+   destination.resize( Index(nr), Index(nc) );
+   destination.setFromTriplets(vec.begin(), vec.end());
+   //
+   CPPAD_ASSERT_UNKNOWN( destination.isCompressed() );
+   //
+   return;
 }
 
 } // END_CPPAD_NAMESPACE

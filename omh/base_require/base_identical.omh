@@ -5,15 +5,15 @@
 /*
 $begin base_identical$$
 $spell
-    alloc
-    adolc
-    Op
-    const
-    CppAD
-    adolc
-    namespace
-    bool
-    inline
+   alloc
+   adolc
+   Op
+   const
+   CppAD
+   adolc
+   namespace
+   bool
+   inline
 $$
 
 $section Base Type Requirements for Identically Equal Comparisons$$
@@ -23,19 +23,19 @@ If function $cref EqualOpSeq$$ is used with
 arguments of type $codei%AD<%Base%>%$$,
 the type $icode Base$$ must support the syntax
 $codei%
-    %b% = CppAD::EqualOpSeq(%u%, %v%)
+   %b% = CppAD::EqualOpSeq(%u%, %v%)
 %$$
 This should return true if and only if
 $icode u$$ is identically equal to $icode v$$
 and it makes no different which one is used.
 The arguments $icode u$$ and $icode v$$ have prototype
 $codei%
-    const %Base%& %u%
-    const %Base%& %v%
+   const %Base%& %u%
+   const %Base%& %v%
 %$$
 The return value $icode b$$ has prototype
 $codei%
-    bool %b%
+   bool %b%
 %$$
 
 $subhead The Simple Case$$
@@ -43,8 +43,8 @@ If $icode Base$$ is a relatively simple type,
 the $code EqualOpSeq$$ function can be defined by
 $codei%
 namespace CppAD {
-    inline %Base% EqualOpSeq(const %Base%& u, const %Base%& v)
-    {   return u == v; }
+   inline %Base% EqualOpSeq(const %Base%& u, const %Base%& v)
+   {  return u == v; }
 }
 %$$
 For example, see
@@ -80,15 +80,15 @@ see the more complicated case above.
 $subhead Prototypes$$
 The argument $icode u$$ has prototype
 $codei%
-    const %Base% %u%
+   const %Base% %u%
 %$$
 If it is present, the argument $icode v$$ has prototype
 $codei%
-    const %Base% %v%
+   const %Base% %v%
 %$$
 The result $icode b$$ has prototype
 $codei%
-    bool %b%
+   bool %b%
 %$$
 
 $subhead Identical Functions$$
@@ -98,18 +98,18 @@ $table
 $bold Syntax$$ $cnext $bold Result$$
 $rnext
 $icode%b% = IdenticalCon(%u%)%$$ $pre  $$
-    $cnext the $icode Base$$ value will always be the same
+   $cnext the $icode Base$$ value will always be the same
 $rnext
 $icode%b% = IdenticalZero(%u%)%$$ $pre  $$
-    $cnext $icode u$$ equals zero and $codei%IdenticalCon(%u%)%$$
+   $cnext $icode u$$ equals zero and $codei%IdenticalCon(%u%)%$$
 $rnext
 $icode%b% = IdenticalOne(%u%)%$$ $pre  $$
-    $cnext $icode u$$ equals one and $codei%IdenticalCon(%u%)%$$
+   $cnext $icode u$$ equals one and $codei%IdenticalCon(%u%)%$$
 $rnext
 $icode%b% = IdenticalEqualCon(%u%, %v%)%$$ $pre  $$
-    $cnext $icode u$$ equals $icode v$$,
-    $codei%IdenticalCon(%u%)%$$ and
-    $codei%IdenticalCon(%v%)%$$
+   $cnext $icode u$$ equals $icode v$$,
+   $codei%IdenticalCon(%u%)%$$ and
+   $codei%IdenticalCon(%v%)%$$
 $tend
 
 $subhead Examples$$

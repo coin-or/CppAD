@@ -5,9 +5,9 @@
 
 $begin sparse_jac_fun.hpp$$
 $spell
-    jac
-    ifndef
-    endif
+   jac
+   ifndef
+   endif
 $$
 
 $section Source: sparse_jac_fun$$

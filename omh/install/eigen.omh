@@ -5,17 +5,17 @@
 $begin eigen$$
 $dollar @$$
 $spell
-    testvector
-    dir
-    namespace
-    Eigen
-    Cpp
-    includedirs
-    includedir
-    cmake
-    det
-    cppad
-    config
+   testvector
+   dir
+   namespace
+   Eigen
+   Cpp
+   includedirs
+   includedir
+   cmake
+   det
+   cppad
+   config
 $$
 
 $section Including Eigen Examples, Tests, and sparse2eigen$$
@@ -48,7 +48,7 @@ specify $code include_eigen=true$$ on the
 $cref cmake$$ command line.
 The value of $icode PKG_CONFIG_PATH$$ must be such that the command
 $codei%
-    pkg-config eigen3 --path --print-errors
+   pkg-config eigen3 --path --print-errors
 %$$
 finds the location of the file $code eigen3.pc$$.
 
@@ -57,7 +57,7 @@ With Eigen it is possible to use $codei%-D eigen_prefix=%eigen_prefix%$$
 on the cmake command line.
 In this case, the sub-directory $code Eigen$$ must exist in a directory
 $codei%
-    %eigen_prefix%/%includedir%
+   %eigen_prefix%/%includedir%
 %$$
 where $icode include_dir$$ is one of the directories in the
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$ list
@@ -70,8 +70,8 @@ you will be able to run the Eigen examples list above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-    cd build/example
-    make check_example
+   cd build/example
+   make check_example
 %$$
 If you do this,
 you will see an indication that the examples
@@ -81,7 +81,7 @@ have passed their correctness check.
 $head Test Vector$$
 If you have specified $icode eigen_prefix$$ you can choose
 $codei%
-    -D cppad_testvector=eigen
+   -D cppad_testvector=eigen
 %$$
 on the $cref/cmake command/cmake/CMake Command/$$ line.
 This we set the CppAD $cref testvector$$ to use Eigen vectors.

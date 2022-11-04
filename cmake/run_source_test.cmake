@@ -18,26 +18,26 @@
 # CMAKE_REQUIRED_name is set to the empty string.
 #
 MACRO(run_source_test source variable)
-    IF( DEFINED ${variable} )
-        MESSAGE(ERROR
-            "run_source_test: ${variable} is defined before expected"
-        )
-    ENDIF( DEFINED ${variable} )
-    SET(CMAKE_REQUIRED_DEFINITIONS "" )
-    SET(CMAKE_REQUIRED_INCLUDES    "" )
-    SET(CMAKE_REQUIRED_LIBRARIES   "" )
-    IF( cppad_cxx_flags )
-        SET(CMAKE_REQUIRED_FLAGS   "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS}" )
-    ELSE( cppad_cxx_flags )
-        SET(CMAKE_REQUIRED_FLAGS   "" )
-    ENDIF( cppad_cxx_flags )
-    CHECK_CXX_SOURCE_RUNS("${source}" ${variable} )
-    IF( ${variable} )
-        SET(${variable} 1)
-    ELSE( ${variable} )
-        SET(${variable} 0)
-    ENDIF( ${variable} )
-    MESSAGE(STATUS "${variable} = ${${variable}}" )
-    #
-    SET(CMAKE_REQUIRED_FLAGS        "" )
+   IF( DEFINED ${variable} )
+      MESSAGE(ERROR
+         "run_source_test: ${variable} is defined before expected"
+      )
+   ENDIF( DEFINED ${variable} )
+   SET(CMAKE_REQUIRED_DEFINITIONS "" )
+   SET(CMAKE_REQUIRED_INCLUDES    "" )
+   SET(CMAKE_REQUIRED_LIBRARIES   "" )
+   IF( cppad_cxx_flags )
+      SET(CMAKE_REQUIRED_FLAGS   "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS}" )
+   ELSE( cppad_cxx_flags )
+      SET(CMAKE_REQUIRED_FLAGS   "" )
+   ENDIF( cppad_cxx_flags )
+   CHECK_CXX_SOURCE_RUNS("${source}" ${variable} )
+   IF( ${variable} )
+      SET(${variable} 1)
+   ELSE( ${variable} )
+      SET(${variable} 0)
+   ENDIF( ${variable} )
+   MESSAGE(STATUS "${variable} = ${${variable}}" )
+   #
+   SET(CMAKE_REQUIRED_FLAGS        "" )
 ENDMACRO( run_source_test )

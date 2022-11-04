@@ -18,16 +18,16 @@ namespace CppAD { namespace local { namespace optimize  {
 Information about one old variable that is part of a new CSumOp operation.
 */
 struct struct_csum_op_info {
-    /// Pointer to first argument (child) for this old operator.
-    /// Set by the reverse sweep at beginning of optimization.
-    const addr_t*       arg;
+   /// Pointer to first argument (child) for this old operator.
+   /// Set by the reverse sweep at beginning of optimization.
+   const addr_t*       arg;
 
-    /// Was this old variable added to the summation
-    /// (if not it was subtracted)
-    bool                add;
+   /// Was this old variable added to the summation
+   /// (if not it was subtracted)
+   bool                add;
 
-    /// Operator for which this old variable is the result, NumRes(op) > 0.
-    OpCode              op;
+   /// Operator for which this old variable is the result, NumRes(op) > 0.
+   OpCode              op;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

@@ -7,11 +7,11 @@
 /*
 $begin atomic_four_rev_depend$$
 $spell
-    afun
-    enum
-    cpp
-    taylor
-    ident
+   afun
+   enum
+   cpp
+   taylor
+   ident
 $$
 
 $section Atomic Function Reverse Dependency$$
@@ -22,12 +22,12 @@ but you should not define both.
 
 $subhead Preferred$$
 $icode%ok% = %afun%.rev_depend(%call_id%,
-    %ident_zero_x%, %depend_x%, %depend_y%
+   %ident_zero_x%, %depend_x%, %depend_y%
 )%$$
 
 $subhead Deprecated 2022-05-10$$
 $icode%ok% = %afun%.rev_depend(%call_id%,
-    %depend_x%, %depend_y%
+   %depend_x%, %depend_y%
 )%$$
 
 $subhead Prototype$$
@@ -96,8 +96,8 @@ $head Example$$
 The following is an example $code rev_depend$$ definition taken from
 $cref atomic_four_norm_sq.cpp$$:
 $srcfile%
-    example/atomic_four/norm_sq.cpp%
-    0%// BEGIN REV_DEPEND%// END REV_DEPEND%0
+   example/atomic_four/norm_sq.cpp%
+   0%// BEGIN REV_DEPEND%// END REV_DEPEND%0
 %$$
 
 $end
@@ -108,21 +108,21 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::rev_depend(
-    size_t                      call_id      ,
-    vector<bool>&               ident_zero_x ,
-    vector<bool>&               depend_x     ,
-    const vector<bool>&         depend_y     )
+   size_t                      call_id      ,
+   vector<bool>&               ident_zero_x ,
+   vector<bool>&               depend_x     ,
+   const vector<bool>&         depend_y     )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 
 // deprecated version
 template <class Base>
 bool atomic_four<Base>::rev_depend(
-    size_t                      call_id     ,
-    vector<bool>&               depend_x    ,
-    const vector<bool>&         depend_y    )
+   size_t                      call_id     ,
+   vector<bool>&               depend_x    ,
+   const vector<bool>&         depend_y    )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 
 } // END_CPPAD_NAMESPACE
 

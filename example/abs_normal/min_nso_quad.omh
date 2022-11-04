@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin min_nso_quad.hpp$$
 $spell
-    nso
+   nso
 $$
 
 $section min_nso_quad Source Code$$
 
 $srcfile%example/abs_normal/min_nso_quad.hpp%
-    0%// BEGIN C++%// END C++%
+   0%// BEGIN C++%// END C++%
 0%$$
 
 $end

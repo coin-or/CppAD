@@ -7,25 +7,25 @@
 /*
 $begin atomic_three_reverse$$
 $spell
-    sq
-    mul.hpp
-    afun
-    ty
-    px
-    py
-    Taylor
-    const
-    CppAD
-    atx
-    aty
-    apx
-    apy
-    af
-    aparameter
-    enum
-    azmul
-    ataylor
-    apartial
+   sq
+   mul.hpp
+   afun
+   ty
+   px
+   py
+   Taylor
+   const
+   CppAD
+   atx
+   aty
+   apx
+   apy
+   af
+   aparameter
+   enum
+   azmul
+   ataylor
+   apartial
 $$
 
 $section Atomic Function Reverse Mode$$
@@ -33,15 +33,15 @@ $section Atomic Function Reverse Mode$$
 $head Base$$
 This syntax is used by $icode%f%.Reverse%$$ where $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 and $icode afun$$ is used in $icode f$$;
 see $cref/Base/atomic_three_afun/Base/$$.
 
 $subhead Syntax$$
 $icode%ok% = %afun%.reverse(
-    %parameter_x%, %type_x%,
-    %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
+   %parameter_x%, %type_x%,
+   %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
 )
 %$$
 
@@ -52,14 +52,14 @@ $srcthisfile%0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
 $head AD<Base>$$
 This syntax is used by $icode%af%.Reverse%$$ where $icode af$$ has prototype
 $codei%
-    ADFun< AD<%Base%> , %Base% > %af%
+   ADFun< AD<%Base%> , %Base% > %af%
 %$$
 and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
 
 $subhead Syntax$$
 $icode%ok% = %afun%.reverse(
-    %aparameter_x%, %type_x%,
-    %order_up%, %ataylor_x%, %ataylor_y%, %apartial_x%, %apartial_y%
+   %aparameter_x%, %type_x%,
+   %order_up%, %ataylor_x%, %ataylor_y%, %apartial_x%, %apartial_y%
 )
 %$$
 
@@ -98,9 +98,9 @@ For $latex j = 0 , \ldots , n-1$$ and $latex k = 0 , \ldots , q$$,
 we use the Taylor coefficient notation
 $latex \[
 \begin{array}{rcl}
-    x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
-    \\
-    X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+   x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
+   \\
+   X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
 \end{array}
 \] $$
 Note that superscripts represent an index for $latex x_j^k$$
@@ -108,23 +108,23 @@ and an exponent for $latex t^k$$.
 Also note that the Taylor coefficients for $latex X(t)$$ correspond
 to the derivatives of $latex X(t)$$ at $latex t = 0$$ in the following way:
 $latex \[
-    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+   x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
 \] $$
 
 $subhead parameters$$
 If the $th j$$ component of $icode x$$ corresponds to a parameter,
 $codei%
-    %type_x%[%j%] < CppAD::variable_enum
+   %type_x%[%j%] < CppAD::variable_enum
 %$$
 In this case,
 the $th j$$ component of $icode parameter_x$$ is equal to $latex x_j^0$$;
 i.e.,
 $codei%
-    %parameter_x%[%j%] == %taylor_x%[ %j% * ( %q% + 1 ) + 0 ]
+   %parameter_x%[%j%] == %taylor_x%[ %j% * ( %q% + 1 ) + 0 ]
 %$$
 Furthermore, for $icode%k% > 0%$$,
 $codei%
-    %taylor_x%[ %j% * ( %q% + 1 ) + %k% ] == 0
+   %taylor_x%[ %j% * ( %q% + 1 ) + %k% ] == 0
 %$$
 
 $head ataylor_x$$
@@ -137,11 +137,11 @@ For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q$$,
 we use the Taylor coefficient notation
 $latex \[
 \begin{array}{rcl}
-    Y_i (t)  & = & g_i [ X(t) ]
-    \\
-    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
-    \\
-    y_i^k    & = & \R{taylor\_y} [ i * ( q + 1 ) + k ]
+   Y_i (t)  & = & g_i [ X(t) ]
+   \\
+   Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+   \\
+   y_i^k    & = & \R{taylor\_y} [ i * ( q + 1 ) + k ]
 \end{array}
 \] $$
 where $latex o( t^q ) / t^q \rightarrow 0$$ as $latex t \rightarrow 0$$.
@@ -150,7 +150,7 @@ and an exponent for $latex t^k$$.
 Also note that the Taylor coefficients for $latex Y(t)$$ correspond
 to the derivatives of $latex Y(t)$$ at $latex t = 0$$ in the following way:
 $latex \[
-    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+   y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
 \] $$
 
 $head ataylor_y$$
@@ -160,20 +160,20 @@ The specifications for $icode ataylor_y$$ is the same as for $icode taylor_y$$
 $head F$$
 We use the notation $latex \{ x_j^k \} \in \B{R}^{n \times (q+1)}$$ for
 $latex \[
-    \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
+   \{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
 \]$$
 We use the notation $latex \{ y_i^k \} \in \B{R}^{m \times (q+1)}$$ for
 $latex \[
-    \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
+   \{ y_i^k \W{:} i = 0 , \ldots , m-1, k = 0 , \ldots , q \}
 \]$$
 We define the function
 $latex F : \B{R}^{n \times (q+1)} \rightarrow \B{R}^{m \times (q+1)}$$ by
 $latex \[
-    y_i^k = F_i^k [ \{ x_j^k \} ]
+   y_i^k = F_i^k [ \{ x_j^k \} ]
 \] $$
 Note that
 $latex \[
-    F_i^0 ( \{ x_j^k \} ) = g_i ( X(0) )  = g_i ( x^0 )
+   F_i^0 ( \{ x_j^k \} ) = g_i ( X(0) )  = g_i ( x^0 )
 \] $$
 We also note that
 $latex F_i^\ell ( \{ x_j^k \} )$$ is a function of
@@ -187,14 +187,14 @@ to denote an arbitrary scalar valued function of $latex \{ y_i^k \}$$.
 We use $latex H : \B{R}^{n \times (q+1)} \rightarrow \B{R}$$
 defined by
 $latex \[
-    H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
+   H ( \{ x_j^k \} ) = G[ F( \{ x_j^k \} ) ]
 \] $$
 
 $head partial_y$$
 The size of $icode partial_y$$ is $codei%(%q%+1)*%m%%$$.
 For $latex i = 0 , \ldots , m-1$$, $latex k = 0 , \ldots , q$$,
 $latex \[
-    \R{partial\_y} [ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
+   \R{partial\_y} [ i * (q + 1 ) + k ] = \partial G / \partial y_i^k
 \] $$
 
 $head apartial_y$$
@@ -213,7 +213,7 @@ $latex \[
 \\
 & = &
 ( \partial G / \partial \{ y_i^k \} ) \cdot
-    ( \partial \{ y_i^k \} / \partial x_j^\ell )
+   ( \partial \{ y_i^k \} / \partial x_j^\ell )
 \\
 & = &
 \sum_{k=0}^q
@@ -259,7 +259,7 @@ If this calculation succeeded, $icode ok$$ is true.
 Otherwise it is false.
 
 $children%
-    example/atomic_three/reverse.cpp
+   example/atomic_three/reverse.cpp
 %$$
 $head Examples$$
 The file $cref atomic_three_reverse.cpp$$ contains an example and test
@@ -303,15 +303,15 @@ See atomic_three_reverse mode use documentation
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_three<Base>::reverse(
-    const vector<Base>&         parameter_x ,
-    const vector<ad_type_enum>& type_x      ,
-    size_t                      order_up    ,
-    const vector<Base>&         taylor_x    ,
-    const vector<Base>&         taylor_y    ,
-    vector<Base>&               partial_x   ,
-    const vector<Base>&         partial_y   )
+   const vector<Base>&         parameter_x ,
+   const vector<ad_type_enum>& type_x      ,
+   size_t                      order_up    ,
+   const vector<Base>&         taylor_x    ,
+   const vector<Base>&         taylor_y    ,
+   vector<Base>&               partial_x   ,
+   const vector<Base>&         partial_y   )
 // END_PROTOTYPE_BASE
-{   return false; }
+{  return false; }
 
 /*!
 Link from reverse mode sweep to users routine.
@@ -343,15 +343,15 @@ See atomic_three_reverse mode use documentation
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_three<Base>::reverse(
-    const vector< AD<Base> >&       aparameter_x ,
-    const vector<ad_type_enum>&     type_x       ,
-    size_t                          order_up     ,
-    const vector< AD<Base> >&       ataylor_x    ,
-    const vector< AD<Base> >&       ataylor_y    ,
-    vector< AD<Base> >&             apartial_x   ,
-    const vector< AD<Base> >&       apartial_y   )
+   const vector< AD<Base> >&       aparameter_x ,
+   const vector<ad_type_enum>&     type_x       ,
+   size_t                          order_up     ,
+   const vector< AD<Base> >&       ataylor_x    ,
+   const vector< AD<Base> >&       ataylor_y    ,
+   vector< AD<Base> >&             apartial_x   ,
+   const vector< AD<Base> >&       apartial_y   )
 // END_PROTOTYPE_AD_BASE
-{   return false; }
+{  return false; }
 
 } // END_CPPAD_NAMESPACE
 # endif

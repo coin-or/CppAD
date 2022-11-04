@@ -4,18 +4,18 @@
 # ----------------------------------------------------------------------------
 $begin forward_order$$
 $spell
-    std::cout
-    ostream
-    xk
-    xp
-    yp
-    Ind
-    vp
-    uj
-    Taylor
-    const
-    xq
-    yq
+   std::cout
+   ostream
+   xk
+   xp
+   yp
+   Ind
+   vp
+   uj
+   Taylor
+   const
+   xq
+   yq
 $$
 
 $section Multiple Order Forward Mode$$
@@ -36,7 +36,7 @@ defined by its
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$,
 forward mode computes the Taylor coefficients for the function
 $latex \[
-    Y (t) = F [ X(t) ]
+   Y (t) = F [ X(t) ]
 \]$$
 
 $subhead Function Values$$
@@ -62,13 +62,13 @@ $cref/range/fun_property/Range/$$ space for $icode f$$.
 $head f$$
 The $cref ADFun$$ object $icode f$$ has prototype
 $codei%
-    ADFun<%Base%> %f%
+   ADFun<%Base%> %f%
 %$$
 Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
 After this call we will have
 $codei%
-    %f%.size_order()     == %q% + 1
-    %f%.size_direction() == 1
+   %f%.size_order()     == %q% + 1
+   %f%.size_direction() == 1
 %$$
 
 $head One Order$$
@@ -76,22 +76,22 @@ If $icode%xq%.size() == %n%$$,
 then we are only computing one order.
 In this case, before this call we must have
 $codei%
-    %f%.size_order()     >= %q%
-    %f%.size_direction() == 1
+   %f%.size_order()     >= %q%
+   %f%.size_direction() == 1
 %$$
 
 
 $head q$$
 The argument $icode q$$ has prototype
 $codei%
-    size_t %q%
+   size_t %q%
 %$$
 and specifies the highest order of the Taylor coefficients to be calculated.
 
 $head xq$$
 The argument $icode xq$$ has prototype
 $codei%
-    const %BaseVector%& %xq%
+   const %BaseVector%& %xq%
 %$$
 (see $cref/BaseVector/forward_order/BaseVector/$$ below).
 As above, we use $icode n$$ to denote the dimension of the
@@ -100,7 +100,7 @@ The size of $icode xq$$ must be either $icode n$$ or
 $icode%n%*(%q%+1)%$$.
 After this call we will have
 $codei%
-    %f%.size_order()     == %q% + 1
+   %f%.size_order()     == %q% + 1
 %$$
 
 $subhead One Order$$
@@ -108,12 +108,12 @@ If $icode%xq%.size() == %n%$$,
 the $th q$$ order Taylor coefficient for $latex X(t)$$
 is defined by
 $pre
-    $$ $latex x^{(q)} = $$ $icode xq$$.
+   $$ $latex x^{(q)} = $$ $icode xq$$.
 For $latex k = 0 , \ldots , q-1$$,
 the Taylor coefficient $latex x^{(k)}$$
 is defined by $icode xk$$ in the previous call to
 $codei%
-    %f%.Forward(%k%, %xk%)
+   %f%.Forward(%k%, %xk%)
 %$$
 
 $subhead Multiple Orders$$
@@ -123,7 +123,7 @@ $latex j = 0 , \ldots , n-1$$,
 the $th j$$ component of the $th k$$ order Taylor coefficient
 for $latex X(t)$$ is defined by
 $pre
-    $$ $latex x_j^{(k)} = $$ $icode%xq%[ (%q%+1) * %j% + %k% ]%$$
+   $$ $latex x_j^{(k)} = $$ $icode%xq%[ (%q%+1) * %j% + %k% ]%$$
 
 $subhead Restrictions$$
 Note if $icode f$$ uses $cref atomic_one$$ functions,
@@ -134,7 +134,7 @@ If the argument $icode s$$ is not present, $code std::cout$$
 is used in its place.
 Otherwise, this argument has prototype
 $codei%
-    std::ostream& %s%
+   std::ostream& %s%
 %$$
 If order zero is begin calculated,
 $icode s$$ specifies where the output corresponding to $cref PrintFor$$
@@ -147,13 +147,13 @@ The function
 $latex X : \B{R} \rightarrow \B{R}^n$$ is defined using
 the Taylor coefficients $latex x^{(k)} \in \B{R}^n$$:
 $latex \[
-    X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q
+   X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q
 \] $$
 Note that for $latex k = 0 , \ldots , q$$,
 the $th k$$ derivative of $latex X(t)$$ is related to the
 Taylor coefficients by the equation
 $latex \[
-    x^{(k)} = \frac{1}{k !} X^{(k)} (0)
+   x^{(k)} = \frac{1}{k !} X^{(k)} (0)
 \] $$
 
 $head Y(t)$$
@@ -163,19 +163,19 @@ $latex Y(t) = F[ X(t) ] $$.
 We use $latex y^{(k)} \in \B{R}^m$$
 to denote the $th k$$ order Taylor coefficient of $latex Y(t)$$; i.e.,
 $latex \[
-    Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q )
+   Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q )
 \] $$
 where $latex o( t^q ) * t^{-q} \rightarrow 0$$ as $latex t \rightarrow 0$$.
 Note that $latex y^{(k)}$$ is related to
 the $th k$$ derivative of $latex Y(t)$$ by the equation
 $latex \[
-    y^{(k)} = \frac{1}{k !} Y^{(k)} (0)
+   y^{(k)} = \frac{1}{k !} Y^{(k)} (0)
 \] $$
 
 $head yq$$
 The return value $icode yq$$ has prototype
 $codei%
-    %BaseVector% %yq%
+   %BaseVector% %yq%
 %$$
 (see $cref/BaseVector/forward_order/BaseVector/$$ below).
 
@@ -185,7 +185,7 @@ the vector $icode yq$$ has size $icode m$$.
 The $th q$$ order Taylor coefficient for $latex Y(t)$$
 is returned as
 $codei%
-    %yq%$$ $latex = y^{(q)}$$.
+   %yq%$$ $latex = y^{(q)}$$.
 
 $subhead Multiple Orders$$
 If $icode%xq%.size() == %n%*(%q%+1)%$$,
@@ -195,7 +195,7 @@ for $latex i = 0 , \ldots , m-1$$,
 the $th i$$ component of the $th k$$ order Taylor coefficient
 for $latex Y(t)$$ is returned as
 $codei%
-    %yq%[ (%q%+1) * %i% + %k% ]%$$ $latex = y_i^{(k)}$$
+   %yq%[ (%q%+1) * %i% + %k% ]%$$ $latex = y_i^{(k)}$$
 
 $head BaseVector$$
 The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
@@ -223,8 +223,8 @@ corresponds to the second order
 $cref/special case/forward_two/Special Case/$$.
 
 $children%
-    example/general/forward.cpp%
-    example/general/forward_order.cpp
+   example/general/forward.cpp%
+   example/general/forward_order.cpp
 %$$
 $head Example$$
 The files

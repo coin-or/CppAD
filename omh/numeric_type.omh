@@ -6,9 +6,9 @@
 /*
 $begin NumericType$$
 $spell
-    const
-    std
-    valarray
+   const
+   std
+   valarray
 $$
 
 
@@ -26,7 +26,7 @@ that a type satisfies these conditions.
 $head Default Constructor$$
 The syntax
 $codei%
-    %NumericType% %x%;
+   %NumericType% %x%;
 %$$
 creates a $icode NumericType$$ object
 with an unspecified value.
@@ -35,7 +35,7 @@ $head Constructor From Integer$$
 If $icode i$$ is an $code int$$,
 the syntax
 $codei%
-    %NumericType% %x%(%i%);
+   %NumericType% %x%(%i%);
 %$$
 creates a $icode NumericType$$ object with a value
 equal to $icode i$$ where $icode i$$ can be $code const$$.
@@ -44,7 +44,7 @@ $head Copy Constructor$$
 If $icode x$$ is a $icode NumericType$$ object
 the syntax
 $codei%
-    %NumericType% %y%(%x%);
+   %NumericType% %y%(%x%);
 %$$
 creates a $icode NumericType$$ object $icode y$$
 with the same value as $icode x$$
@@ -54,14 +54,14 @@ $head Assignment$$
 If $icode x$$ and $icode y$$ are $icode NumericType$$ objects,
 the syntax
 $codei%
-    %x% = %y%
+   %x% = %y%
 %$$
 sets the value of $icode x$$ equal to the value of $icode y$$
 where $icode y$$ can be $code const$$.
 The expression corresponding to this operation is unspecified; i.e.,
 it could be $code void$$ and hence
 $codei%
-    %x% = %y% = %z%
+   %x% = %y% = %z%
 %$$
 may not be legal.
 
@@ -74,32 +74,32 @@ $icode NumericType$$ can be replaced by any type that can
 be used just like a $icode NumericType$$ object.
 $table
 $bold Operation$$     $cnext $bold Description$$               $cnext
-    $bold Result Type$$  $rnext
+   $bold Result Type$$  $rnext
 $codei%+%x%$$        $cnext unary plus                        $cnext
-    $icode NumericType$$    $rnext
+   $icode NumericType$$    $rnext
 $codei%-%x%$$        $cnext unary minus                       $cnext
-    $icode NumericType$$    $rnext
+   $icode NumericType$$    $rnext
 $icode%x% +  %y%$$  $cnext binary addition                   $cnext
-    $icode NumericType$$    $rnext
+   $icode NumericType$$    $rnext
 $icode%x% -  %y%$$  $cnext binary subtraction                $cnext
-    $icode NumericType$$    $rnext
+   $icode NumericType$$    $rnext
 $icode%x% *  %y%$$  $cnext binary multiplication             $cnext
-    $icode NumericType$$    $rnext
+   $icode NumericType$$    $rnext
 $icode%x% /  %y%$$  $cnext binary division                   $cnext
-    $icode NumericType$$    $rnext
+   $icode NumericType$$    $rnext
 $icode%z% += %y%$$  $cnext compound assignment addition       $cnext
-    unspecified          $rnext
+   unspecified          $rnext
 $icode%z% -= %y%$$  $cnext compound assignment subtraction    $cnext
-    unspecified          $rnext
+   unspecified          $rnext
 $icode%z% *= %y%$$  $cnext compound assignment multiplication $cnext
-    unspecified          $rnext
+   unspecified          $rnext
 $icode%z% /= %y%$$  $cnext compound assignment division       $cnext
-    unspecified
+   unspecified
 $tend
 
 $head Example$$
 $children%
-    example/general/numeric_type.cpp
+   example/general/numeric_type.cpp
 %$$
 The file
 $cref numeric_type.cpp$$

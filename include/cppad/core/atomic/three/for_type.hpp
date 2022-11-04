@@ -7,9 +7,9 @@
 /*
 $begin atomic_three_for_type$$
 $spell
-    afun
-    enum
-    cpp
+   afun
+   enum
+   cpp
 $$
 
 $section Atomic Function Forward Type Calculation$$
@@ -27,7 +27,7 @@ This calculation is sometimes referred to as a forward dependency analysis.
 $head Usage$$
 This syntax and prototype are used by
 $codei%
-    %afun%(%ax%, %ay%)
+   %afun%(%ax%, %ay%)
 %$$
 where $cref/afun/atomic_three_ctor/atomic_user/afun/$$
 is a user defined atomic function.
@@ -99,11 +99,11 @@ constants, dynamics, and variables
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_three<Base>::for_type(
-    const vector<Base>&          parameter_x ,
-    const vector<ad_type_enum>&  type_x      ,
-    vector<ad_type_enum>&        type_y      )
+   const vector<Base>&          parameter_x ,
+   const vector<ad_type_enum>&  type_x      ,
+   vector<ad_type_enum>&        type_y      )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 
 } // END_CPPAD_NAMESPACE
 

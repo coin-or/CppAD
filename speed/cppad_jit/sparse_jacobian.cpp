@@ -8,8 +8,8 @@
 /*
 $begin cppad_jit_sparse_jacobian.cpp$$
 $spell
-    cppad_jit
-    jacobian
+   cppad_jit
+   jacobian
 $$
 
 $section cppad_jit Speed: sparse_jacobian$$
@@ -20,17 +20,17 @@ $cref link_sparse_jacobian$$
 $srccode%cpp% */
 // A cppad_jit version of this test is not yet available
 bool link_sparse_jacobian(
-    const std::string&               job      ,
-    size_t                           size     ,
-    size_t                           repeat   ,
-    size_t                           m        ,
-    const CppAD::vector<size_t>&     row      ,
-    const CppAD::vector<size_t>&     col      ,
-    CppAD::vector<double>&           x        ,
-    CppAD::vector<double>&           jacobian ,
-    size_t&                          n_color  )
+   const std::string&               job      ,
+   size_t                           size     ,
+   size_t                           repeat   ,
+   size_t                           m        ,
+   const CppAD::vector<size_t>&     row      ,
+   const CppAD::vector<size_t>&     col      ,
+   CppAD::vector<double>&           x        ,
+   CppAD::vector<double>&           jacobian ,
+   size_t&                          n_color  )
 {
-    return false;
+   return false;
 }
 /* %$$
 $end

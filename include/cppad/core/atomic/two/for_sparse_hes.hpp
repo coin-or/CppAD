@@ -7,17 +7,17 @@
 /*
 $begin atomic_two_for_sparse_hes$$
 $spell
-    sq
-    mul.hpp
-    vx
-    afun
-    Jacobian
-    jac
-    CppAD
-    std
-    bool
-    hes
-    const
+   sq
+   mul.hpp
+   vx
+   afun
+   Jacobian
+   jac
+   CppAD
+   std
+   bool
+   hes
+   const
 $$
 
 $section Atomic Forward Hessian Sparsity Patterns$$
@@ -43,7 +43,7 @@ a diagonal matrix $latex R \in \B{R}^{n \times n}$$, and
 a row vector $latex S \in \B{R}^{1 \times m}$$,
 this routine computes the sparsity pattern for
 $latex \[
-    H(x) = R^\R{T} \cdot (S \cdot f)^{(2)}( x ) \cdot R
+   H(x) = R^\R{T} \cdot (S \cdot f)^{(2)}( x ) \cdot R
 \] $$
 
 $head Implementation$$
@@ -63,7 +63,7 @@ $icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
 or $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
 in the corresponding call to
 $codei%
-    %afun%(%ax%, %ay%)
+   %afun%(%ax%, %ay%)
 %$$
 
 $subhead r$$
@@ -97,17 +97,17 @@ $subhead x$$
 $index deprecated$$
 The argument has prototype
 $codei%
-    const CppAD::vector<%Base%>& %x%
+   const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
 This is the $cref Value$$ value corresponding to the parameters in the
 vector $cref/ax/atomic_two_afun/ax/$$ (when the atomic function was called).
 To be specific, if
 $codei%
-    if( Parameter(%ax%[%i%]) == true )
-        %x%[%i%] = Value( %ax%[%i%] );
-    else
-        %x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
+   if( Parameter(%ax%[%i%]) == true )
+      %x%[%i%] = Value( %ax%[%i%] );
+   else
+      %x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
 The version of this function with out the $icode x$$ argument is deprecated;
 i.e., you should include the argument even if you do not use it.
@@ -141,50 +141,50 @@ is the integer value of the x arguments that are parameters.
 */
 template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
-    const vector<bool>&             vx ,
-    const vector<bool>&             r  ,
-    const vector<bool>&             s  ,
-    vector< std::set<size_t> >&     h  ,
-    const vector<Base>&             x  )
-{   return false; }
+   const vector<bool>&             vx ,
+   const vector<bool>&             r  ,
+   const vector<bool>&             s  ,
+   vector< std::set<size_t> >&     h  ,
+   const vector<Base>&             x  )
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
-    const vector<bool>&             vx ,
-    const vector<bool>&             r  ,
-    const vector<bool>&             s  ,
-    vector<bool>&                   h  ,
-    const vector<Base>&             x  )
-{   return false; }
+   const vector<bool>&             vx ,
+   const vector<bool>&             r  ,
+   const vector<bool>&             s  ,
+   vector<bool>&                   h  ,
+   const vector<Base>&             x  )
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
-    const vector<bool>&             vx ,
-    const vector<bool>&             r  ,
-    const vector<bool>&             s  ,
-    vectorBool&                     h  ,
-    const vector<Base>&             x  )
+   const vector<bool>&             vx ,
+   const vector<bool>&             r  ,
+   const vector<bool>&             s  ,
+   vectorBool&                     h  ,
+   const vector<Base>&             x  )
 // deprecated versions
-{   return false; }
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
-    const vector<bool>&             vx ,
-    const vector<bool>&             r  ,
-    const vector<bool>&             s  ,
-    vector< std::set<size_t> >&     h  )
-{   return false; }
+   const vector<bool>&             vx ,
+   const vector<bool>&             r  ,
+   const vector<bool>&             s  ,
+   vector< std::set<size_t> >&     h  )
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
-    const vector<bool>&             vx ,
-    const vector<bool>&             r  ,
-    const vector<bool>&             s  ,
-    vector<bool>&                   h  )
-{   return false; }
+   const vector<bool>&             vx ,
+   const vector<bool>&             r  ,
+   const vector<bool>&             s  ,
+   vector<bool>&                   h  )
+{  return false; }
 template <class Base>
 bool atomic_base<Base>::for_sparse_hes(
-    const vector<bool>&             vx ,
-    const vector<bool>&             r  ,
-    const vector<bool>&             s  ,
-    vectorBool&                     h  )
-{   return false; }
+   const vector<bool>&             vx ,
+   const vector<bool>&             r  ,
+   const vector<bool>&             s  ,
+   vectorBool&                     h  )
+{  return false; }
 /*!
 Link, before case split, from for_hes_sweep to atomic_base.
 2DO: move this functiton outside this file so can change
@@ -223,126 +223,126 @@ have been included.
 template <class Base>
 template <class InternalSparsity>
 bool atomic_base<Base>::for_sparse_hes(
-    const vector<Base>&              x                ,
-    const local::pod_vector<size_t>& x_index          ,
-    const local::pod_vector<size_t>& y_index          ,
-    size_t                           np1              ,
-    size_t                           numvar           ,
-    const InternalSparsity&          rev_jac_sparsity ,
-    InternalSparsity&                for_sparsity     )
-{   typedef typename InternalSparsity::const_iterator const_iterator;
-    CPPAD_ASSERT_UNKNOWN( rev_jac_sparsity.end() == 1 );
-    CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
-    CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
-    size_t n      = x_index.size();
-    size_t m      = y_index.size();
-    bool   ok     = false;
-    size_t thread = thread_alloc::thread_num();
-    allocate_work(thread);
-    //
-    // vx
-    vector<bool> vx(n);
-    for(size_t j = 0; j < n; j++)
-        vx[j] = x_index[j] != 0;
-    //
-    // bool_r
-    vector<bool>& bool_r( work_[thread]->bool_r );
-    bool_r.resize(n);
-    for(size_t j = 0; j < n; j++)
-    {   // check if we must compute row and column j of h
-        const_iterator itr(for_sparsity, np1 + x_index[j]);
-        size_t i = *itr;
-        bool_r[j] = i < np1;
-    }
-    //
-    // bool s
-    vector<bool>& bool_s( work_[thread]->bool_s );
-    bool_s.resize(m);
-    for(size_t i = 0; i < m; i++)
-    {   // check if row i of result is included in h
-        bool_s[i] = rev_jac_sparsity.is_element(y_index[i], 0);
-    }
-    //
-    // h
-    vectorBool&                 pack_h( work_[thread]->pack_h );
-    vector<bool>&               bool_h( work_[thread]->bool_h );
-    vector< std::set<size_t> >& set_h(  work_[thread]->set_h );
-    //
-    // call user's version of atomic function
-    std::string msg    = ": atomic_base.for_sparse_hes: returned false";
-    if( sparsity_ == pack_sparsity_enum )
-    {   pack_h.resize(n * n);
-        ok = for_sparse_hes(vx, bool_r, bool_s, pack_h, x);
-        if( ! ok )
-            ok = for_sparse_hes(vx, bool_r, bool_s, pack_h);
-        if( ! ok )
-        {   msg = atomic_name() + msg + " sparsity = pack_sparsity_enum";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str());
-        }
-    }
-    else if( sparsity_ == bool_sparsity_enum )
-    {   bool_h.resize(n * n);
-        ok = for_sparse_hes(vx, bool_r, bool_s, bool_h, x);
-        if( ! ok )
-            ok = for_sparse_hes(vx, bool_r, bool_s, bool_h);
-        if( ! ok )
-        {   msg = atomic_name() + msg + " sparsity = bool_sparsity_enum";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str());
-        }
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum )
-        set_h.resize(n);
-        ok = for_sparse_hes(vx, bool_r, bool_s, set_h, x);
-        if( ! ok )
-            ok = for_sparse_hes(vx, bool_r, bool_s, set_h);
-        if( ! ok )
-        {   msg = atomic_name() + msg + " sparsity = set_sparsity_enum";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str());
-        }
-    }
-    CPPAD_ASSERT_UNKNOWN( ok );
-    //
-    // modify hessian in calling routine
-    for(size_t i = 0; i < n; i++)
-    {   for(size_t j = 0; j < n; j++)
-        {   if( (x_index[i] > 0) & (x_index[j] > 0) )
-            {   bool flag = false;
-                switch( sparsity_ )
-                {   case pack_sparsity_enum:
-                    flag = pack_h[i * n + j];
-                    break;
-                    //
-                    case bool_sparsity_enum:
-                    flag = bool_h[i * n + j];
-                    break;
-                    //
-                    case set_sparsity_enum:
-                    flag = set_h[i].find(j) != set_h[i].end();
-                    break;
-                }
-                if( flag )
-                {   const_iterator itr_i(for_sparsity, np1 + x_index[i]);
-                    size_t i_x = *itr_i;
-                    while( i_x < np1 )
-                    {   for_sparsity.binary_union(
-                            i_x, i_x, np1 + x_index[j], for_sparsity
-                        );
-                        i_x = *(++itr_i);
-                    }
-                    const_iterator itr_j(for_sparsity, np1 + x_index[j]);
-                    size_t j_x = *itr_j;
-                    while( j_x < np1 )
-                    {   for_sparsity.binary_union(
-                            j_x, j_x, np1 + x_index[i], for_sparsity
-                        );
-                        j_x = *(++itr_j);
-                    }
-                }
+   const vector<Base>&              x                ,
+   const local::pod_vector<size_t>& x_index          ,
+   const local::pod_vector<size_t>& y_index          ,
+   size_t                           np1              ,
+   size_t                           numvar           ,
+   const InternalSparsity&          rev_jac_sparsity ,
+   InternalSparsity&                for_sparsity     )
+{  typedef typename InternalSparsity::const_iterator const_iterator;
+   CPPAD_ASSERT_UNKNOWN( rev_jac_sparsity.end() == 1 );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.end() == np1 );
+   CPPAD_ASSERT_UNKNOWN( for_sparsity.n_set() == np1 + numvar );
+   size_t n      = x_index.size();
+   size_t m      = y_index.size();
+   bool   ok     = false;
+   size_t thread = thread_alloc::thread_num();
+   allocate_work(thread);
+   //
+   // vx
+   vector<bool> vx(n);
+   for(size_t j = 0; j < n; j++)
+      vx[j] = x_index[j] != 0;
+   //
+   // bool_r
+   vector<bool>& bool_r( work_[thread]->bool_r );
+   bool_r.resize(n);
+   for(size_t j = 0; j < n; j++)
+   {  // check if we must compute row and column j of h
+      const_iterator itr(for_sparsity, np1 + x_index[j]);
+      size_t i = *itr;
+      bool_r[j] = i < np1;
+   }
+   //
+   // bool s
+   vector<bool>& bool_s( work_[thread]->bool_s );
+   bool_s.resize(m);
+   for(size_t i = 0; i < m; i++)
+   {  // check if row i of result is included in h
+      bool_s[i] = rev_jac_sparsity.is_element(y_index[i], 0);
+   }
+   //
+   // h
+   vectorBool&                 pack_h( work_[thread]->pack_h );
+   vector<bool>&               bool_h( work_[thread]->bool_h );
+   vector< std::set<size_t> >& set_h(  work_[thread]->set_h );
+   //
+   // call user's version of atomic function
+   std::string msg    = ": atomic_base.for_sparse_hes: returned false";
+   if( sparsity_ == pack_sparsity_enum )
+   {  pack_h.resize(n * n);
+      ok = for_sparse_hes(vx, bool_r, bool_s, pack_h, x);
+      if( ! ok )
+         ok = for_sparse_hes(vx, bool_r, bool_s, pack_h);
+      if( ! ok )
+      {  msg = atomic_name() + msg + " sparsity = pack_sparsity_enum";
+         CPPAD_ASSERT_KNOWN(false, msg.c_str());
+      }
+   }
+   else if( sparsity_ == bool_sparsity_enum )
+   {  bool_h.resize(n * n);
+      ok = for_sparse_hes(vx, bool_r, bool_s, bool_h, x);
+      if( ! ok )
+         ok = for_sparse_hes(vx, bool_r, bool_s, bool_h);
+      if( ! ok )
+      {  msg = atomic_name() + msg + " sparsity = bool_sparsity_enum";
+         CPPAD_ASSERT_KNOWN(false, msg.c_str());
+      }
+   }
+   else
+   {  CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum )
+      set_h.resize(n);
+      ok = for_sparse_hes(vx, bool_r, bool_s, set_h, x);
+      if( ! ok )
+         ok = for_sparse_hes(vx, bool_r, bool_s, set_h);
+      if( ! ok )
+      {  msg = atomic_name() + msg + " sparsity = set_sparsity_enum";
+         CPPAD_ASSERT_KNOWN(false, msg.c_str());
+      }
+   }
+   CPPAD_ASSERT_UNKNOWN( ok );
+   //
+   // modify hessian in calling routine
+   for(size_t i = 0; i < n; i++)
+   {  for(size_t j = 0; j < n; j++)
+      {  if( (x_index[i] > 0) & (x_index[j] > 0) )
+         {  bool flag = false;
+            switch( sparsity_ )
+            {  case pack_sparsity_enum:
+               flag = pack_h[i * n + j];
+               break;
+               //
+               case bool_sparsity_enum:
+               flag = bool_h[i * n + j];
+               break;
+               //
+               case set_sparsity_enum:
+               flag = set_h[i].find(j) != set_h[i].end();
+               break;
             }
-        }
-    }
-    return ok;
+            if( flag )
+            {  const_iterator itr_i(for_sparsity, np1 + x_index[i]);
+               size_t i_x = *itr_i;
+               while( i_x < np1 )
+               {  for_sparsity.binary_union(
+                     i_x, i_x, np1 + x_index[j], for_sparsity
+                  );
+                  i_x = *(++itr_i);
+               }
+               const_iterator itr_j(for_sparsity, np1 + x_index[j]);
+               size_t j_x = *itr_j;
+               while( j_x < np1 )
+               {  for_sparsity.binary_union(
+                     j_x, j_x, np1 + x_index[i], for_sparsity
+                  );
+                  j_x = *(++itr_j);
+               }
+            }
+         }
+      }
+   }
+   return ok;
 }
 
 } // END_CPPAD_NAMESPACE

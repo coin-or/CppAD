@@ -7,9 +7,9 @@ $begin dev_sparse$$
 $section Developer Sparse Documentation$$
 
 $childtable%
-    include/cppad/local/sparse/unary_op.hpp%
-    include/cppad/local/sparse/binary_op.hpp%
-    include/cppad/local/sparse/setvector.omh
+   include/cppad/local/sparse/unary_op.hpp%
+   include/cppad/local/sparse/binary_op.hpp%
+   include/cppad/local/sparse/setvector.omh
 %$$
 
 

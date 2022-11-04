@@ -7,16 +7,16 @@
 /*
 $begin det_by_lu$$
 $spell
-    CppAD
-    cppad
-    lu
-    hpp
-    typedef
-    const
-    hpp
-    Det
-    CPPAD_TESTVECTOR
-    namespace
+   CppAD
+   cppad
+   lu
+   hpp
+   typedef
+   const
+   hpp
+   Det
+   CPPAD_TESTVECTOR
+   namespace
 $$
 
 $section Determinant Using Expansion by Lu Factorization$$
@@ -39,7 +39,7 @@ the file $code cppad/speed/det_by_lu.hpp$$
 $head Constructor$$
 The syntax
 $codei%
-    det_by_lu<%Scalar%> %det%(%n%)
+   det_by_lu<%Scalar%> %det%(%n%)
 %$$
 constructs the object $icode det$$ which can be used for
 evaluating the determinant of $icode n$$ by $icode n$$ matrices
@@ -52,20 +52,20 @@ $cref NumericType$$
 $head n$$
 The argument $icode n$$ has prototype
 $codei%
-    size_t %n%
+   size_t %n%
 %$$
 
 $head det$$
 The syntax
 $codei%
-    %d% = %det%(%a%)
+   %d% = %det%(%a%)
 %$$
 returns the determinant of the matrix $latex A$$ using LU factorization.
 
 $subhead a$$
 The argument $icode a$$ has prototype
 $codei%
-    const %Vector% &%a%
+   const %Vector% &%a%
 %$$
 It must be a $icode Vector$$ with length $latex n * n$$ and with
 It must be a $icode Vector$$ with length $latex n * n$$ and with
@@ -73,20 +73,20 @@ elements of type $icode Scalar$$.
 The elements of the $latex n \times n$$ matrix $latex A$$ are defined,
 for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
 $latex \[
-    A_{i,j} = a[ i * m + j]
+   A_{i,j} = a[ i * m + j]
 \] $$
 
 $subhead d$$
 The return value $icode d$$ has prototype
 $codei%
-    %Scalar% %d%
+   %Scalar% %d%
 %$$
 
 $head Vector$$
 If $icode y$$ is a $icode Vector$$ object,
 it must support the syntax
 $codei%
-    %y%[%i%]
+   %y%[%i%]
 %$$
 where $icode i$$ has type $code size_t$$ with value less than $latex n * n$$.
 This must return a $icode Scalar$$ value corresponding to the $th i$$
@@ -94,8 +94,8 @@ element of the vector $icode y$$.
 This is the only requirement of the type $icode Vector$$.
 
 $children%
-    speed/example/det_by_lu.cpp%
-    omh/det_by_lu_hpp.omh
+   speed/example/det_by_lu.cpp%
+   omh/det_by_lu_hpp.omh
 %$$
 
 
@@ -123,52 +123,52 @@ namespace CppAD {
 template <class Scalar>
 class det_by_lu {
 private:
-    const size_t m_;
-    const size_t n_;
-    CppAD::vector<Scalar> A_;
-    CppAD::vector<Scalar> B_;
-    CppAD::vector<Scalar> X_;
+   const size_t m_;
+   const size_t n_;
+   CppAD::vector<Scalar> A_;
+   CppAD::vector<Scalar> B_;
+   CppAD::vector<Scalar> X_;
 public:
-    det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
-    {   }
+   det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
+   {  }
 
-    template <class Vector>
-    Scalar operator()(const Vector &x)
-    {
+   template <class Vector>
+   Scalar operator()(const Vector &x)
+   {
 
-        Scalar       logdet;
-        Scalar       det;
-        int          signdet;
-        size_t       i;
+      Scalar       logdet;
+      Scalar       det;
+      int          signdet;
+      size_t       i;
 
-        // copy matrix so it is not overwritten
-        for(i = 0; i < n_ * n_; i++)
-            A_[i] = x[i];
+      // copy matrix so it is not overwritten
+      for(i = 0; i < n_ * n_; i++)
+         A_[i] = x[i];
 
-        // comput log determinant
-        signdet = CppAD::LuSolve(
-            n_, m_, A_, B_, X_, logdet);
+      // comput log determinant
+      signdet = CppAD::LuSolve(
+         n_, m_, A_, B_, X_, logdet);
 
 /*
-        // Do not do this for speed test because it makes floating
-        // point operation sequence very simple.
-        if( signdet == 0 )
-            det = 0;
-        else
-            det =  Scalar( signdet ) * exp( logdet );
+      // Do not do this for speed test because it makes floating
+      // point operation sequence very simple.
+      if( signdet == 0 )
+         det = 0;
+      else
+         det =  Scalar( signdet ) * exp( logdet );
 */
 
-        // convert to determinant
-        det     = Scalar( signdet ) * exp( logdet );
+      // convert to determinant
+      det     = Scalar( signdet ) * exp( logdet );
 
 # ifdef FADBAD
-        // Fadbad requires tempories to be set to constants
-        for(i = 0; i < n_ * n_; i++)
-            A_[i] = 0;
+      // Fadbad requires tempories to be set to constants
+      for(i = 0; i < n_ * n_; i++)
+         A_[i] = 0;
 # endif
 
-        return det;
-    }
+      return det;
+   }
 };
 } // END CppAD namespace
 // END C++

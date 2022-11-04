@@ -8,8 +8,8 @@
 /*
 $begin ad_to_string$$
 $spell
-    const
-    std
+   const
+   std
 $$
 
 $section Convert An AD or Base Type to String$$
@@ -23,8 +23,8 @@ $cref to_string$$, $cref base_to_string$$
 $head value$$
 The argument $icode value$$ has prototype
 $codei%
-    const AD<%Base%>& %value%
-    const %Base%&     %value%
+   const AD<%Base%>& %value%
+   const %Base%&     %value%
 %$$
 where $icode Base$$ is a type that supports the
 $cref base_to_string$$ type requirement.
@@ -32,7 +32,7 @@ $cref base_to_string$$ type requirement.
 $head s$$
 The return value has prototype
 $codei%
-    std::string %s%
+   std::string %s%
 %$$
 and contains a representation of the specified $icode value$$.
 If $icode value$$ is an AD type,
@@ -49,14 +49,14 @@ $end
 
 namespace CppAD {
 
-    // Template definition is in cppad/utility/to_string.hpp.
-    // Partial specialzation for AD<Base> types
-    template<class Base>
-    struct to_string_struct< CppAD::AD<Base> >
-    {   std::string operator()(const CppAD::AD<Base>& value)
-        {   to_string_struct<Base> ts;
-            return ts( Value( Var2Par( value ) ) ); }
-    };
+   // Template definition is in cppad/utility/to_string.hpp.
+   // Partial specialzation for AD<Base> types
+   template<class Base>
+   struct to_string_struct< CppAD::AD<Base> >
+   {  std::string operator()(const CppAD::AD<Base>& value)
+      {  to_string_struct<Base> ts;
+         return ts( Value( Var2Par( value ) ) ); }
+   };
 
 }
 

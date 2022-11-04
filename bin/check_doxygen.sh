@@ -5,14 +5,14 @@
 # ----------------------------------------------------------------------------
 if [ ! -e "bin/check_doxygen.sh" ]
 then
-    echo "bin/check_doxygen.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/check_doxygen.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 if ! bin/run_doxygen.sh
 then
-    echo 'check_doxygen.sh: Error'
-    exit 1
+   echo 'check_doxygen.sh: Error'
+   exit 1
 fi
 echo 'check_doxygen.sh: OK'
 exit 0

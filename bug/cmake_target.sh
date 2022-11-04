@@ -10,22 +10,22 @@ echo
 #
 if [ -e build ]
 then
-    rm -r build
+   rm -r build
 fi
 mkdir build
 cd    build
 cat << EOF > hello_one.cpp
 # include <iostream>
 int main(void)
-{   std::cout << "hello_one" << std::endl << std::endl;
-    return 0;
+{  std::cout << "hello_one" << std::endl << std::endl;
+   return 0;
 }
 EOF
 cat << EOF > hello_two.cpp
 # include <iostream>
 int main(void)
-{   std::cout << "hello_two" << std::endl << std::endl;
-    return 0;
+{  std::cout << "hello_two" << std::endl << std::endl;
+   return 0;
 }
 EOF
 cat << EOF > CMakeLists.txt

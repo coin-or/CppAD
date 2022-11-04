@@ -4,20 +4,20 @@
 # ----------------------------------------------------------------------------
 $begin devel_independent$$
 $spell
-    op
-    alloc
-    num
-    Cpp
-    bool
-    const
-    var
-    typename
+   op
+   alloc
+   num
+   Cpp
+   bool
+   const
+   var
+   typename
 $$
 
 $section Developer Documentation for Independent$$
 
 $childtable%
-    include/cppad/core/independent/independent.hpp
+   include/cppad/core/independent/independent.hpp
 %$$
 
 $end

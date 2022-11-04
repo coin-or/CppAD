@@ -9,9 +9,9 @@
 -------------------------------------------------------------------------------
 $begin compound_assign$$
 $spell
-    Op
-    VecAD
-    const
+   Op
+   VecAD
+   const
 $$
 
 $section AD Compound Assignment Operators$$
@@ -45,13 +45,13 @@ The type $icode Base$$ is determined by the operand $icode x$$.
 $head x$$
 The operand $icode x$$ has the following prototype
 $codei%
-    AD<%Base%> &%x%
+   AD<%Base%> &%x%
 %$$
 
 $head y$$
 The operand $icode y$$ has the following prototype
 $codei%
-    const %Type% &%y%
+   const %Type% &%y%
 %$$
 where $icode Type$$ is
 $codei%VecAD<%Base%>::reference%$$,
@@ -64,11 +64,11 @@ The result of this assignment
 can be used as a reference to $icode x$$.
 For example, if $icode z$$ has the following type
 $codei%
-    AD<%Base%> %z%
+   AD<%Base%> %z%
 %$$
 then the syntax
 $codei%
-    %z% = %x% += %y%
+   %z% = %x% += %y%
 %$$
 will compute $icode x$$ plus $icode y$$
 and then assign this value to both $icode x$$ and $icode z$$.
@@ -82,10 +82,10 @@ AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $children%
-    example/general/add_eq.cpp%
-    example/general/sub_eq.cpp%
-    example/general/mul_eq.cpp%
-    example/general/div_eq.cpp
+   example/general/add_eq.cpp%
+   example/general/sub_eq.cpp%
+   example/general/mul_eq.cpp%
+   example/general/div_eq.cpp
 %$$
 
 $head Example$$
@@ -104,23 +104,23 @@ $cref/Base functions/glossary/Base Function/$$
 
 $subhead Addition$$
 $latex \[
-    \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
+   \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
 \] $$
 
 $subhead Subtraction$$
 $latex \[
-    \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
+   \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
 \] $$
 
 $subhead Multiplication$$
 $latex \[
-    \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
+   \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
 \] $$
 
 $subhead Division$$
 $latex \[
-    \D{[ f(x) / g(x) ]}{x} =
-        [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
+   \D{[ f(x) / g(x) ]}{x} =
+      [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
 \] $$
 
 $end

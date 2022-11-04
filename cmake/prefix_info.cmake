@@ -30,43 +30,43 @@
 # prefix_info_.
 #
 MACRO(prefix_info package system_include)
-    #
-    # ${package}_prefix
-    SET(${package}_prefix NOTFOUND CACHE PATH "${package} install prefix")
-    print_variable( ${package}_prefix )
-    #
-    # prefix_info_value
-    SET( prefix_info_value "${${package}_prefix}" )
-    #
-    IF( "${prefix_info_value}" STREQUAL "NOTFOUND" )
-        SET(cppad_has_${package} 0)
-    ELSE( )
-        SET(cppad_has_${package} 1)
-        #
-        # prefix_info_subdir
-        FOREACH(prefix_info_subdir ${cmake_install_includedirs})
-            #
-            # prefix_info_dir
-            SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
-            IF(IS_DIRECTORY "${prefix_info_dir}" )
-                MESSAGE(STATUS "    Found ${prefix_info_dir}")
-                IF( ${system_include} )
-                    INCLUDE_DIRECTORIES( SYSTEM "${prefix_info_dir}" )
-                ELSE( )
-                    INCLUDE_DIRECTORIES( "${prefix_info_dir}" )
-                ENDIF( )
+   #
+   # ${package}_prefix
+   SET(${package}_prefix NOTFOUND CACHE PATH "${package} install prefix")
+   print_variable( ${package}_prefix )
+   #
+   # prefix_info_value
+   SET( prefix_info_value "${${package}_prefix}" )
+   #
+   IF( "${prefix_info_value}" STREQUAL "NOTFOUND" )
+      SET(cppad_has_${package} 0)
+   ELSE( )
+      SET(cppad_has_${package} 1)
+      #
+      # prefix_info_subdir
+      FOREACH(prefix_info_subdir ${cmake_install_includedirs})
+         #
+         # prefix_info_dir
+         SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
+         IF(IS_DIRECTORY "${prefix_info_dir}" )
+            MESSAGE(STATUS "    Found ${prefix_info_dir}")
+            IF( ${system_include} )
+               INCLUDE_DIRECTORIES( SYSTEM "${prefix_info_dir}" )
+            ELSE( )
+               INCLUDE_DIRECTORIES( "${prefix_info_dir}" )
             ENDIF( )
-        ENDFOREACH( )
-        #
-        # prefix_info_subdir
-        FOREACH(prefix_info_subdir ${cmake_install_libdirs})
-            #
-            # prefix_info_dir
-            SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
-            IF(IS_DIRECTORY "${prefix_info_dir}" )
-                MESSAGE(STATUS "    Found ${prefix_info_dir}")
-                LINK_DIRECTORIES( "${prefix_info_dir}" )
-            ENDIF( )
-        ENDFOREACH()
-    ENDIF (  )
+         ENDIF( )
+      ENDFOREACH( )
+      #
+      # prefix_info_subdir
+      FOREACH(prefix_info_subdir ${cmake_install_libdirs})
+         #
+         # prefix_info_dir
+         SET( prefix_info_dir "${prefix_info_value}/${prefix_info_subdir}" )
+         IF(IS_DIRECTORY "${prefix_info_dir}" )
+            MESSAGE(STATUS "    Found ${prefix_info_dir}")
+            LINK_DIRECTORIES( "${prefix_info_dir}" )
+         ENDIF( )
+      ENDFOREACH()
+   ENDIF (  )
 ENDMACRO( )

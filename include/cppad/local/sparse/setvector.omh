@@ -5,14 +5,14 @@
 
 $begin SetVector$$
 $spell
-    dereference
-    itr
-    iterator
-    const
-    resize
-    vec
-    CppAD
-    bool
+   dereference
+   itr
+   iterator
+   const
+   resize
+   vec
+   CppAD
+   bool
 $$
 
 $section C++ Concept: Vector of Sets With size_t Elements$$
@@ -29,7 +29,7 @@ $subhead Constructor$$
 In the specifications below, $icode vec$$ and $icode other$$
 are $icode SetVector$$ objects created using the default constructor; e.g.,
 $codei%
-    %SetVector% %vec%, %other%;
+   %SetVector% %vec%, %other%;
 %$$
 After this constructor the vectors are empty; i.e.,
 there are no sets in either vector.
@@ -40,7 +40,7 @@ but must have the same $cref/end/SetVector/Vector Operations/end/$$ value.
 $subhead resize$$
 This operation has the following syntax:
 $codei%
-    %vec%.resize(%n_set%, %end%)
+   %vec%.resize(%n_set%, %end%)
 %$$
 The argument $icode n_set$$ has type $code size_t$$ and is the
 number of sets in $icode vec$$.
@@ -54,7 +54,7 @@ any allocated memory to keep track of this vector of sets is freed.
 $subhead n_set$$
 The syntax
 $codei%
-    %n_set% = %vec%.n_set()
+   %n_set% = %vec%.n_set()
 %$$
 sets the $code size_t$$ value $icode n_set$$ equal to the
 number of sets in $icode vec$$.
@@ -63,7 +63,7 @@ The $icode vec$$ object is $code const$$ for this operation.
 $subhead end$$
 The syntax
 $codei%
-    %end% = %vec%.end()
+   %end% = %vec%.end()
 %$$
 sets the $code size_t$$ value $icode end$$ equal to the
 end value for the sets in $icode vec$$.
@@ -75,7 +75,7 @@ $subhead Assignment$$
 The following
 makes $icode vec$$ into a separate copy of $icode other$$:
 $codei%
-    %vec% = %other%
+   %vec% = %other%
 %$$
 The $icode other$$ object is $code const$$ for this operation.
 
@@ -83,13 +83,13 @@ $subhead swap$$
 The following
 exchanges to vector of sets in $icode vec$$ and $icode other$$:
 $codei%
-    %vec%.swap(%other%)
+   %vec%.swap(%other%)
 %$$
 
 $head number_elements$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,
 $codei%
-    %count% = %vec%.number_elements(%i%)
+   %count% = %vec%.number_elements(%i%)
 %$$
 returns the $code size_t$$ value $icode count$$
 equal to the number of elements in the $th i$$ set.
@@ -100,7 +100,7 @@ $head add_element$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$
 and $icode element$$ is a $code size_t$$ value less than $icode end$$,
 $codei%
-    %vec%.add_element(%i%, %element%)
+   %vec%.add_element(%i%, %element%)
 %$$
 adds the specified element to the $th i$$ set.
 
@@ -108,7 +108,7 @@ $head post_element$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$
 and $icode element$$ is a $code size_t$$ value less than $icode end$$,
 $codei%
-    %vec%.post_element(%i%, %element%)
+   %vec%.post_element(%i%, %element%)
 %$$
 post the specified element for addition to the $th i$$ set.
 Posting multiple elements to one set and then processing them may be faster
@@ -120,7 +120,7 @@ between a $code post_element$$ and the corresponding $code process_post$$.
 $head process_post$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,
 $codei%
-    %vec%.process_post(%i%)
+   %vec%.process_post(%i%)
 %$$
 Processes all of the posts that have been made for the $th i$$ set; i.e.,
 adds the posted elements to the set.
@@ -129,7 +129,7 @@ $head is_element$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$
 and $icode element$$ is a $code size_t$$ value less than $icode end$$,
 $codei%
-    %find% = %vec%.is_element(%i%, %element%)
+   %find% = %vec%.is_element(%i%, %element%)
 %$$
 returns the $code bool$$ value $icode find$$
 which is  true (false) if the specified element is in
@@ -139,7 +139,7 @@ The $icode vec$$ object is $code const$$ for this operation.
 $head clear$$
 If $icode i$$ is a $code size_t$$ value less than $icode n_set$$,
 $codei%
-    %vec%.clear(%i%)
+   %vec%.clear(%i%)
 %$$
 assigns the empty set to the $th i$$ set.
 It is OK to have postings to $th i$$ that have not been processed
@@ -149,7 +149,7 @@ $head assignment$$
 If $icode this_target$$ and $icode other_source$$
 are $code size_t$$ with value less than the end value,
 $codei%
-    %vec%.assignment(%this_target%, %other_source%, %other%)
+   %vec%.assignment(%this_target%, %other_source%, %other%)
 %$$
 sets the $icode this_target$$ set in $icode vec$$
 equal to the $icode other_source$$ set in $icode other$$.
@@ -163,9 +163,9 @@ $head binary_union$$
 If $icode this_target$$, $icode this_left$$, and $icode other_right$$
 are $code size_t$$ with value less than the end value,
 $codei%
-    %vec%.binary_union(
-        %this_target%, %this_left%, %other_right%, %other%
-    )
+   %vec%.binary_union(
+      %this_target%, %this_left%, %other_right%, %other%
+   )
 %$$
 sets the $icode this_target$$ set in $icode vec$$ equal to the union of
 the $icode this_left$$ set in $icode vec$$ and
@@ -181,9 +181,9 @@ $head binary_intersection$$
 If $icode this_target$$, $icode this_left$$, and $icode other_right$$
 are $code size_t$$ with value less than the end value,
 $codei%
-    %vec%.binary_intersection(
-        %this_target%, %this_left%, %other_right%, %other%
-    )
+   %vec%.binary_intersection(
+      %this_target%, %this_left%, %other_right%, %other%
+   )
 %$$
 sets the $icode this_target$$ set in $icode vec$$ equal to the intersection of
 the $icode this_left$$ set in $icode vec$$ and
@@ -203,7 +203,7 @@ Given a $icode SetVector$$ object $icode vec$$,
 and a $code size_t$$ index $icode i$$,
 a constant iterator $icode itr$$ is constructed as follows:
 $codei%
-    %SetVector%::const_iterator %itr%(%vec%, %i%)
+   %SetVector%::const_iterator %itr%(%vec%, %i%)
 %$$
 After this constructor, $icode itr$$ points to the first
 (smallest) element in the $th i$$ set.
@@ -213,7 +213,7 @@ It is an error to have postings to $th i$$ that have not been processed.
 $subhead Dereference$$
 The operation
 $codei%
-    %element% = *%itr
+   %element% = *%itr
 %$$
 sets the $code size_t$$ value $icode element$$ to the current element value.
 If $icode element$$ is equal to value $icode%vec%.end()%$$,
@@ -228,7 +228,7 @@ The increment operation is not defined when the value of
 $codei%*%itr%$$ is equal to $icode%vec%.end()%$$.
 The operation
 $codei%
-    %element% = *(++%itr%)
+   %element% = *(++%itr%)
 %$$
 increments the iterator $icode itr$$ and sets $icode element$$
 to the deference after the increment (see dereference above).
@@ -236,8 +236,8 @@ It is an error to have postings to $th i$$ that have not been processed.
 
 $head Implementation$$
 $children%
-    include/cppad/local/sparse/list_setvec.omh%
-    include/cppad/local/sparse/pack_setvec.omh
+   include/cppad/local/sparse/list_setvec.omh%
+   include/cppad/local/sparse/pack_setvec.omh
 %$$
 $table
 $rref list_setvec$$

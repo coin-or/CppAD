@@ -6,12 +6,12 @@
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    atomic.cpp
-    compile.cpp
-    dynamic.cpp
-    get_started.cpp
-    jit.cpp
-    to_csrc.cpp
+   atomic.cpp
+   compile.cpp
+   dynamic.cpp
+   get_started.cpp
+   jit.cpp
+   to_csrc.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #
@@ -21,8 +21,8 @@ ADD_EXECUTABLE(example_jit EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_jit
-    ${cppad_lib}
-    ${colpack_libs}
+   ${cppad_lib}
+   ${colpack_libs}
 )
 #
 # check_example_jit

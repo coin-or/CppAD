@@ -5,7 +5,7 @@
 
 $begin taylor_ode$$
 $spell
-    Taylor
+   Taylor
 $$
 
 $section AD Theory for Solving ODE's Using Taylor's Method$$
@@ -29,7 +29,7 @@ $latex g(y)$$; see $cref forward_order$$.
 It follows from $latex y^1 (t) = z(t)$$ that
 $latex y^{p+1} (t) = z^p (t) $$
 $latex \[
-    y^{(p+1)} (t) = z^{(p)} (t) / (k + 1)
+   y^{(p+1)} (t) = z^{(p)} (t) / (k + 1)
 \] $$
 where $latex y^{(k)} (t)$$ is the $th k$$ order Taylor coefficient
 for $latex y(t)$$; i.e., $latex y^k (t) / k !$$.

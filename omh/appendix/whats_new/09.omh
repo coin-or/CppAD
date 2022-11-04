@@ -5,44 +5,44 @@
 
 $begin whats_new_09$$
 $spell
-    nlp
-    autotools
-    openmp
-    arg
-    std
-    bool
-    Microsoft
-    retape
-    isnan
-    atan
-    asin
-    acos
-    sqrt
-    OMhelp
-    doxygen
-    exp_eps_apx
-    cos
-    tarball
-    IpIpoptApplication
-    IpoptDir
-    autoconf
-    automake
-    config
-    jacobian
-    valgrind
-    svn
-    Prev
-    CppAD
-    Adolc
-    cppad
-    hpp
-    op
-    pycppad
-    cond_exp
-    VecAD
-    Jacobians
-    Jac
-    Taylor
+   nlp
+   autotools
+   openmp
+   arg
+   std
+   bool
+   Microsoft
+   retape
+   isnan
+   atan
+   asin
+   acos
+   sqrt
+   OMhelp
+   doxygen
+   exp_eps_apx
+   cos
+   tarball
+   IpIpoptApplication
+   IpoptDir
+   autoconf
+   automake
+   config
+   jacobian
+   valgrind
+   svn
+   Prev
+   CppAD
+   Adolc
+   cppad
+   hpp
+   op
+   pycppad
+   cond_exp
+   VecAD
+   Jacobians
+   Jac
+   Taylor
 $$
 
 $section Changes and Additions to CppAD During 2009$$
@@ -532,8 +532,8 @@ $$
 Previously, CppAD speed and comparison tests used Adolc-1.10.2.
 The version used in the tests has been upgraded to
 $href%
-    https://projects.coin-or.org/ADOL-C%
-    Adolc-2.0.0.
+   https://projects.coin-or.org/ADOL-C%
+   Adolc-2.0.0.
 %$$
 $pre
 

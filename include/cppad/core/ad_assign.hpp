@@ -10,8 +10,8 @@
 
 $begin ad_assign$$
 $spell
-    Vec
-    const
+   Vec
+   const
 $$
 
 
@@ -27,7 +27,7 @@ In either case,
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const %Type% &%x%
+   const %Type% &%x%
 %$$
 where $icode Type$$ is
 $codei%VecAD<%Base%>::reference%$$,
@@ -39,12 +39,12 @@ $icode%Base%(%x%)%$$.
 $head y$$
 The target $icode y$$ has prototype
 $codei%
-    AD<%Base%> %y%
+   AD<%Base%> %y%
 %$$
 
 $head Example$$
 $children%
-    example/general/ad_assign.cpp
+   example/general/ad_assign.cpp
 %$$
 The file $cref ad_assign.cpp$$ contain examples and tests of these operations.
 It test returns true if it succeeds and false otherwise.
@@ -67,12 +67,12 @@ because they may be optimized better than the code below:
 \code
 template <class Base>
 AD<Base>& AD<Base>::operator=(const AD<Base> &right)
-{   value_    = right.value_;
-    tape_id_  = right.tape_id_;
-    taddr_    = right.taddr_;
-    ad_type_  = right.ad_type_;
+{  value_    = right.value_;
+   tape_id_  = right.tape_id_;
+   taddr_    = right.taddr_;
+   ad_type_  = right.ad_type_;
 
-    return *this;
+   return *this;
 }
 \endcode
 */
@@ -90,11 +90,11 @@ so this object is initially a parameter.
 */
 template <class Base>
 AD<Base>& AD<Base>::operator=(const Base &b)
-{   value_   = b;
-    tape_id_ = 0;
-    //
-    CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
-    return *this;
+{  value_   = b;
+   tape_id_ = 0;
+   //
+   CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
+   return *this;
 }
 
 /*!
@@ -105,9 +105,9 @@ Base type for this AD object.
 */
 template <class Base>
 AD<Base>& AD<Base>::operator=(const VecAD_reference<Base> &x)
-{   *this = x.ADBase();
-    CPPAD_ASSERT_UNKNOWN( ! Dynamic(*this) );
-    return *this;
+{  *this = x.ADBase();
+   CPPAD_ASSERT_UNKNOWN( ! Dynamic(*this) );
+   return *this;
 }
 
 /*!
@@ -127,9 +127,9 @@ is the object that is being assigned to an AD<Base> object.
 template <class Base>
 template <class T>
 AD<Base>& AD<Base>::operator=(const T &t)
-{   *this = Base(t);
-    CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
-    return *this;
+{  *this = Base(t);
+   CPPAD_ASSERT_UNKNOWN( ! ( Variable(*this) | Dynamic(*this) ) );
+   return *this;
 }
 
 

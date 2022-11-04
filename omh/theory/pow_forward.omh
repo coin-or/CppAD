@@ -5,7 +5,7 @@
 
 $begin pow_forward$$
 $spell
-    Taylor
+   Taylor
 $$
 
 $section Power Function Forward Mode Theory$$
@@ -19,9 +19,9 @@ x * F^{(1)} (x) -  y F(x) = 0
 \] $$
 This is the
 $cref/standard math function differential equation
-    /ForwardTheory
-    /Standard Math Functions
-    /Differential Equation
+   /ForwardTheory
+   /Standard Math Functions
+   /Differential Equation
 /$$,
 where
 $latex A(x) = y$$,
@@ -38,9 +38,9 @@ It follows that
 $latex b^j = x^j$$, $latex d^j = 0$$,
 $latex \[
 a^{(j)} = \left\{ \begin{array}{ll}
-    y & \R{if} \; j = 0
-    \\
-    0 & \R{otherwise}
+   y & \R{if} \; j = 0
+   \\
+   0 & \R{otherwise}
 \end{array} \right.
 \] $$
 
@@ -48,15 +48,15 @@ $head Taylor Coefficients Recursion$$
 
 $subhead z^(0)$$
 $latex \[
-    z^{(0)} = F ( x^{(0)} )
+   z^{(0)} = F ( x^{(0)} )
 \]$$
 
 $subhead e^(j)$$
 $latex \[
 \begin{array}{rcl}
-    e^{(j)} & = & d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
-    \\
-    e^{(j)} & = & y * z^{(j)}
+   e^{(j)} & = & d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
+   \\
+   e^{(j)} & = & y * z^{(j)}
 \end{array}
 \] $$
 
@@ -66,22 +66,22 @@ $latex  \[
 \begin{array}{rcl}
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
-    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+   - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \\
 & = & \frac{1}{j+1} \frac{1}{ x^{(0)} }
 \left(
-    y \sum_{k=1}^{j+1} k x^{(k)} z^{(j+1-k)}
-    - \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
+   y \sum_{k=1}^{j+1} k x^{(k)} z^{(j+1-k)}
+   - \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
 \right)
 \\
 & = &
 \frac{1}{j+1} \frac{1}{ x^{(0)} }
 \left(
-    y (j+1) x^{(j+1)} z^{(0)}
-    +
-    \sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
+   y (j+1) x^{(j+1)} z^{(0)}
+   +
+   \sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
 \right)
 \\
 & = &
@@ -97,9 +97,9 @@ $latex  \[
 z^{(j)}
 & = &
 \left. \left(
-    y z^{(0)} x^{(j)}
-    +
-    \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
+   y z^{(0)} x^{(j)}
+   +
+   \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
 \right) \right/ x^{(0)}
 \end{array}
 \] $$

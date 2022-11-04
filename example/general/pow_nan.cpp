@@ -18,7 +18,7 @@ $latex x < 0$$ and one tries to compute a derivatives
 This is because the derivative of the log is $latex 1 / x$$
 and the power function uses the representation
 $latex \[
-    \R{pow}(x, y) = \exp [ y \cdot \log(x) ]
+   \R{pow}(x, y) = \exp [ y \cdot \log(x) ]
 \] $$
 
 $head Problem$$
@@ -36,49 +36,49 @@ $end
 # include <cmath>
 
 bool pow_nan(void)
-{   bool ok = true;
+{  bool ok = true;
 
-    using std::cout;
-    using CppAD::AD;
-    using CppAD::vector;
-    //
-    vector<double>       x(2), y(2), dx(2), dy(2), ddx(2), ddy(2);
-    vector< AD<double> > ax(2), ay(2);
-    //
-    // variable vector
-    ax[0] = x[0]  = -1.0;
-    ax[1] = x[1] = 2.0;
-    //
-    CppAD::Independent(ax);
-    //
-    ay[0] = pow( ax[0], ax[1] );
-    ay[1] = pow( ax[0], 2.0 );
-    //
-    CppAD::ADFun<double> f(ax, ay);
-    //
-    // check_for_nan is set false so it does not generate an assert
-    // when compiling with debugging
-    f.check_for_nan(false);
-    //
-    // Zero order forward does not generate nan
-    y  = f.Forward(0, x);
-    ok &= y[0] == 1.0;
-    ok &= y[1] == 1.0;
-    //
-    // First order forward generates a nan
-    dx[0] = 1.0;
-    dx[1] = 1.0;
-    dy = f.Forward(1, dx);
-    ok &= std::isnan( dy[0] );
-    ok &= dy[1] == -2.0;
-    //
-    // Second order Taylor coefficient is 1/2 times second derivative
-    ddx[0] = 0.0;
-    ddx[1] = 0.0;
-    ddy = f.Forward(2, ddx);
-    ok &= std::isnan( ddy[0] );
-    ok &= ddy[1] == 1.0;
-    //
-    return ok;
+   using std::cout;
+   using CppAD::AD;
+   using CppAD::vector;
+   //
+   vector<double>       x(2), y(2), dx(2), dy(2), ddx(2), ddy(2);
+   vector< AD<double> > ax(2), ay(2);
+   //
+   // variable vector
+   ax[0] = x[0]  = -1.0;
+   ax[1] = x[1] = 2.0;
+   //
+   CppAD::Independent(ax);
+   //
+   ay[0] = pow( ax[0], ax[1] );
+   ay[1] = pow( ax[0], 2.0 );
+   //
+   CppAD::ADFun<double> f(ax, ay);
+   //
+   // check_for_nan is set false so it does not generate an assert
+   // when compiling with debugging
+   f.check_for_nan(false);
+   //
+   // Zero order forward does not generate nan
+   y  = f.Forward(0, x);
+   ok &= y[0] == 1.0;
+   ok &= y[1] == 1.0;
+   //
+   // First order forward generates a nan
+   dx[0] = 1.0;
+   dx[1] = 1.0;
+   dy = f.Forward(1, dx);
+   ok &= std::isnan( dy[0] );
+   ok &= dy[1] == -2.0;
+   //
+   // Second order Taylor coefficient is 1/2 times second derivative
+   ddx[0] = 0.0;
+   ddx[1] = 0.0;
+   ddy = f.Forward(2, ddx);
+   ok &= std::isnan( ddy[0] );
+   ok &= ddy[1] == 1.0;
+   //
+   return ok;
 }
 // END C++

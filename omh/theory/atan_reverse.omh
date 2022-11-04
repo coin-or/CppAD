@@ -5,9 +5,9 @@
 
 $begin atan_reverse$$
 $spell
-    atan
-    atanh
-    Taylor
+   atan
+   atanh
+   Taylor
 $$
 
 $section Inverse Tangent and Hyperbolic Tangent Reverse Mode Theory$$
@@ -15,21 +15,21 @@ $section Inverse Tangent and Hyperbolic Tangent Reverse Mode Theory$$
 
 We use the reverse theory
 $cref%standard math function
-    %ReverseTheory
-    %Standard Math Functions
+   %ReverseTheory
+   %Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 In addition, we use the forward mode notation in
 $cref atan_forward$$ for
 $latex \[
-    B(t) = 1 \pm X(t) * X(t)
+   B(t) = 1 \pm X(t) * X(t)
 \] $$
 We use $latex b$$
 for the $th p$$ order Taylor coefficient
 row vectors corresponding to $latex B(t)$$
 and replace $latex z^{(j)}$$ by
 $latex \[
-    ( z^{(j)} , b^{(j)} )
+   ( z^{(j)} , b^{(j)} )
 \] $$
 in the definition for $latex G$$ and $latex H$$.
 The zero order forward mode formulas for the
@@ -37,8 +37,8 @@ $cref/atan/atan_forward/$$
 function are
 $latex \[
 \begin{array}{rcl}
-    z^{(0)}  & = & F ( x^{(0)} ) \\
-    b^{(0)}  & = & 1 \pm x^{(0)} x^{(0)}
+   z^{(0)}  & = & F ( x^{(0)} ) \\
+   b^{(0)}  & = & 1 \pm x^{(0)} x^{(0)}
 \end{array}
 \] $$
 where $latex F(x) = \R{atan} (x)$$ for $latex +$$
@@ -47,12 +47,12 @@ For orders $latex j$$ greater than zero we have
 $latex \[
 \begin{array}{rcl}
 b^{(j)} & = &
-    \pm \sum_{k=0}^j x^{(k)} x^{(j-k)}
+   \pm \sum_{k=0}^j x^{(k)} x^{(j-k)}
 \\
 z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} }
 \left(
-    j x^{(j)}
-    - \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
+   j x^{(j)}
+   - \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
 \right)
 \end{array}
 \] $$

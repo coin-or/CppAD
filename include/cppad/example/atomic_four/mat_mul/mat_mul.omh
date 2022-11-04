@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 $begin atomic_four_mat_mul$$
 $spell
-    Taylor
-    nr
-    nc
-    mul
+   Taylor
+   nr
+   nc
+   mul
 $$
 
 $section Atomic Matrix Multiply Class: Example Implementation$$
@@ -46,17 +46,17 @@ $head x$$
 We use $icode x$$ to denote the argument to the atomic function.
 The size of this vector must be
 $icode%
-    n = n_left * n_middle + n_middle * n_right
+   n = n_left * n_middle + n_middle * n_right
 %$$
 The matrix $icode A$$ is stored in row major order at the beginning of
 $icode x$$; i.e. its $icode (i,k)$$ element is
 $icode%
-    A(i,k) = x[ i * n_middle + k]
+   A(i,k) = x[ i * n_middle + k]
 %$$
 The matrix $icode B$$ is stored in row major order at the end of
 $icode x$$; i.e. its $icode (k,j)$$ element is
 $icode%
-    B(k,j) = x[ n_left * n_middle + k * n_right + j ]
+   B(k,j) = x[ n_left * n_middle + k * n_right + j ]
 %$$
 
 $head y$$
@@ -66,7 +66,7 @@ $icode m = n_middle * n_right$$.
 The matrix $icode C$$ is stored in row major order in $icode y$$;
 i.e. its $icode (i,k)$$ element is
 $icode%
-    C(i,j) = y[ i * n_right + j]
+   C(i,j) = y[ i * n_right + j]
 %$$
 
 $head Theory$$
@@ -75,71 +75,71 @@ $subhead Forward$$
 For $latex k = 0 , \ldots $$, the $th k$$ order Taylor coefficient
 $latex C^{(k)}$$ is given by
 $latex \[
-    C^{(k)} = \sum_{\ell = 0}^{k} A^{(\ell)} B^{(k-\ell)}
+   C^{(k)} = \sum_{\ell = 0}^{k} A^{(\ell)} B^{(k-\ell)}
 \] $$
 
 $subhead Matrix Argument Scalar Valued Function$$
 Suppose $latex \bar{F}$$ is the derivative of the
 scalar value function $latex s(F)$$ with respect to the matrix $latex F$$; i.e.,
 $latex \[
-    \bar{F}_{i,j} = \frac{ \partial s } { \partial F_{i,j} }
+   \bar{F}_{i,j} = \frac{ \partial s } { \partial F_{i,j} }
 \] $$
 Also suppose that $latex t$$ is a scalar valued argument and
 $latex \[
-    F(t) = D(t) E(t)
+   F(t) = D(t) E(t)
 \] $$
 It follows that
 $latex \[
-    F'(t) = D'(t) E(t) +  D(t) E'(t)
+   F'(t) = D'(t) E(t) +  D(t) E'(t)
 \] $$
 
 $latex \[
-    (s \circ F)'(t)
-    =
-    \R{tr} [ \bar{F}^\R{T} F'(t) ]
+   (s \circ F)'(t)
+   =
+   \R{tr} [ \bar{F}^\R{T} F'(t) ]
 \] $$
 $latex \[
-    =
-    \R{tr} [ \bar{F}^\R{T} D'(t) E(t) ] +
-    \R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]
+   =
+   \R{tr} [ \bar{F}^\R{T} D'(t) E(t) ] +
+   \R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]
 \] $$
 $latex \[
-    =
-    \R{tr} [ E(t) \bar{F}^\R{T} D'(t) ] +
-    \R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]
+   =
+   \R{tr} [ E(t) \bar{F}^\R{T} D'(t) ] +
+   \R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]
 \] $$
 Letting $latex E(t) = 0$$ and $latex D(t) = \Delta^{i,j} (t)$$
 (where $latex \Delta^{i,j} (t)$$ is the matrix that is zero,
 except for $latex i = j$$ where it is $latex t$$) we have
 $latex \[
-    \bar{D}_{i,j}
-    = \frac{ \partial s } { \partial D_{i,j} }
-    = (s \circ F)'(t)
-    = \R{tr} [ E(t) \bar{F}^\R{T} \Delta^{i,j}(1) ]
+   \bar{D}_{i,j}
+   = \frac{ \partial s } { \partial D_{i,j} }
+   = (s \circ F)'(t)
+   = \R{tr} [ E(t) \bar{F}^\R{T} \Delta^{i,j}(1) ]
 \] $$
 $latex \[
-    \bar{D}_{i,j}
-    = \sum_k D_{j,k} \bar{F}^\R{T}_{k,i}
-    = \sum_k \bar{F}_{i,k} E^\R{T}_{k,j}
+   \bar{D}_{i,j}
+   = \sum_k D_{j,k} \bar{F}^\R{T}_{k,i}
+   = \sum_k \bar{F}_{i,k} E^\R{T}_{k,j}
 \] $$
 $latex \[
-    \bar{D} = \bar{F} E^\R{T}
+   \bar{D} = \bar{F} E^\R{T}
 \] $$
 Letting $latex D(t) = 0$$ and $latex E(t) = \Delta^{i,j} (t)$$
 we have
 $latex \[
-    \bar{E}_{i,j}
-    = \frac{ \partial s } { \partial E_{i,j} }
-    = (s \circ F)'(t)
-    = \R{tr} [ \bar{F}^\R{T} D(t) \Delta^{i,j} ]
+   \bar{E}_{i,j}
+   = \frac{ \partial s } { \partial E_{i,j} }
+   = (s \circ F)'(t)
+   = \R{tr} [ \bar{F}^\R{T} D(t) \Delta^{i,j} ]
 \] $$
 $latex \[
-    \bar{E}_{i,j}
-    = \sum_k \bar{F}^\R{T}_{j,k} C_{k,i}
-    = \sum_k D^\R{T}_{i,k} \bar{F}_{k,j}
+   \bar{E}_{i,j}
+   = \sum_k \bar{F}^\R{T}_{j,k} C_{k,i}
+   = \sum_k D^\R{T}_{i,k} \bar{F}_{k,j}
 \] $$
 $latex \[
-    \bar{E} = D^\R{T} \bar{F}
+   \bar{E} = D^\R{T} \bar{F}
 \] $$
 
 $subhead Reverse$$
@@ -153,12 +153,12 @@ $latex \[
 \] $$
 
 $childtable%
-    include/cppad/example/atomic_four/mat_mul/implement.omh
-    %example/atomic_four/mat_mul/forward.cpp
-    %example/atomic_four/mat_mul/reverse.cpp
-    %example/atomic_four/mat_mul/sparsity.cpp
-    %example/atomic_four/mat_mul/rev_depend.cpp
-    %example/atomic_four/mat_mul/identical_zero.cpp
+   include/cppad/example/atomic_four/mat_mul/implement.omh
+   %example/atomic_four/mat_mul/forward.cpp
+   %example/atomic_four/mat_mul/reverse.cpp
+   %example/atomic_four/mat_mul/sparsity.cpp
+   %example/atomic_four/mat_mul/rev_depend.cpp
+   %example/atomic_four/mat_mul/identical_zero.cpp
 %$$
 
 $end

@@ -26,58 +26,58 @@ $end
 # endif
 
 namespace {
-    double current_second(void)
-    {
+   double current_second(void)
+   {
 # if CPPAD_HAS_GETTIMEOFDAY & CPPAD_NOT_MICOROSOFT
-        struct timeval value;
-        gettimeofday(&value, 0);
-        return double(value.tv_sec) + double(value.tv_usec) * 1e-6;
+      struct timeval value;
+      gettimeofday(&value, 0);
+      return double(value.tv_sec) + double(value.tv_usec) * 1e-6;
 # else
-        return (double) clock() / (double) CLOCKS_PER_SEC;
+      return (double) clock() / (double) CLOCKS_PER_SEC;
 # endif
-    }
+   }
 }
 
 double ode_speed(const char* name, size_t& count)
 {
-    // determine simple and retape flags
-    bool simple = true, retape = true;
-    if( std::strcmp(name, "simple_retape_no") == 0 )
-    {   simple = true; retape = false; }
-    else if( std::strcmp(name, "simple_retape_yes") == 0 )
-    {   simple = true; retape = true; }
-    else if( std::strcmp(name, "fast_retape_no") == 0 )
-    {   simple = false; retape = false; }
-    else if( std::strcmp(name, "fast_retape_yes") == 0 )
-    {   simple = false; retape = true; }
-    else
-        assert(false);
+   // determine simple and retape flags
+   bool simple = true, retape = true;
+   if( std::strcmp(name, "simple_retape_no") == 0 )
+   {  simple = true; retape = false; }
+   else if( std::strcmp(name, "simple_retape_yes") == 0 )
+   {  simple = true; retape = true; }
+   else if( std::strcmp(name, "fast_retape_no") == 0 )
+   {  simple = false; retape = false; }
+   else if( std::strcmp(name, "fast_retape_yes") == 0 )
+   {  simple = false; retape = true; }
+   else
+      assert(false);
 
-    size_t i;
-    double s0, s1;
-    size_t  c0, c1;
+   size_t i;
+   double s0, s1;
+   size_t  c0, c1;
 
-    // solution vector
-    NumberVector x;
+   // solution vector
+   NumberVector x;
 
-    // number of time grid intervals between measurement values
-    SizeVector N(Nz + 1);
-    N[0] = 0;
-    for(i = 1; i <= Nz; i++)
-    {   N[i] = 10;
-        // n   += N[i] * Ny;
-    }
-    // n += Na;
+   // number of time grid intervals between measurement values
+   SizeVector N(Nz + 1);
+   N[0] = 0;
+   for(i = 1; i <= Nz; i++)
+   {  N[i] = 10;
+      // n   += N[i] * Ny;
+   }
+   // n += Na;
 
-    s0              = current_second();
-    c0              = count_eval_r();
-    if( simple )
-        ipopt_ode_case<FG_simple>(retape, N, x);
-    else
-        ipopt_ode_case<FG_fast>(retape, N, x);
-    s1              = current_second();
-    c1              = count_eval_r();
-    count           = c1 - c0 - 1;
-    return s1 - s0;
+   s0              = current_second();
+   c0              = count_eval_r();
+   if( simple )
+      ipopt_ode_case<FG_simple>(retape, N, x);
+   else
+      ipopt_ode_case<FG_fast>(retape, N, x);
+   s1              = current_second();
+   c1              = count_eval_r();
+   count           = c1 - c0 - 1;
+   return s1 - s0;
 }
 // END C++

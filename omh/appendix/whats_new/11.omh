@@ -5,63 +5,63 @@
 
 $begin whats_new_11$$
 $spell
-    mul
-    autotools
-    eps
-    cxx
-    namespace
-    boostvector
-    mega
-    inv
-    bthread
-    pthread
-    pthreads
-    Std
-    retape
-    cygwin
-    vcproj
-    pthread
-    https
-    abs_geq
-    CondExpRel
-    num
-    Taylor
-    Tanh
-    Rosen
-    Runge
-    executables
-    matlab
-    Addr
-    sizeof
-    undefine
-    config
-    adolc
-    initializer
-    vec
-    Bool
-    op
-    omp_alloc
-    isnan
-    gcc
-    hasnan
-    instantiation
-    Microsoft
-    svn
-    hes
-    openmp
-    prefixdir
-    pkgconfig
-    Fadbad
-    Wshadow
-    omh
-    dir
-    libspeed
-    cppad_ipopt_nlp.hpp
-    automake
-    makefile
-    builddir
-    gpl
-    http://www.coin-or.org/download/source/CppAD/cppad-20110101.0.cpl.tgz
+   mul
+   autotools
+   eps
+   cxx
+   namespace
+   boostvector
+   mega
+   inv
+   bthread
+   pthread
+   pthreads
+   Std
+   retape
+   cygwin
+   vcproj
+   pthread
+   https
+   abs_geq
+   CondExpRel
+   num
+   Taylor
+   Tanh
+   Rosen
+   Runge
+   executables
+   matlab
+   Addr
+   sizeof
+   undefine
+   config
+   adolc
+   initializer
+   vec
+   Bool
+   op
+   omp_alloc
+   isnan
+   gcc
+   hasnan
+   instantiation
+   Microsoft
+   svn
+   hes
+   openmp
+   prefixdir
+   pkgconfig
+   Fadbad
+   Wshadow
+   omh
+   dir
+   libspeed
+   cppad_ipopt_nlp.hpp
+   automake
+   makefile
+   builddir
+   gpl
+   http://www.coin-or.org/download/source/CppAD/cppad-20110101.0.cpl.tgz
 $$
 
 $section Changes and Additions to CppAD During 2011$$
@@ -107,7 +107,7 @@ was created to avoid these problems.
 The simplest way to make old $cref cppad_ipopt_nlp$$ code work with this
 change is to use the command
 $codep
-    using namespace cppad_ipopt;
+   using namespace cppad_ipopt;
 $$
 
 $head 12-20$$
@@ -246,7 +246,7 @@ and pthread management to $cref team_pthread.cpp$$.
 $lnext
 All of the make files were modified so that the command
 $codep
-    make test
+   make test
 $$
 would run the tests for the current directory.
 $lnext
@@ -277,8 +277,8 @@ $head 09-06$$
 $list number$$
 Add the
 $href%
-    http://www.boost.org/doc/libs/1_47_0/doc/html/thread.html%
-    boost multi-threading
+   http://www.boost.org/doc/libs/1_47_0/doc/html/thread.html%
+   boost multi-threading
 %$$
 examples $cref a11c_bthread.cpp$$ and $code bthread_simple_ad.cpp$$.
 $lnext
@@ -327,7 +327,7 @@ $list number$$
 Modify the CppAD trunk using the
 changes from svn revision 2060 to revision 2081 in the branch
 $codep
-    https://projects.coin-or.org/svn/CppAD/branches/pthread
+   https://projects.coin-or.org/svn/CppAD/branches/pthread
 $$
 These changes are described below under the headings
 $cref/08-21/whats_new_11/09-01/08-21/$$ through
@@ -419,7 +419,7 @@ $head 08-11$$
 Modify the CppAD trunk using the
 changes from svn revision 2044 to revision 2056 in the branch
 $codep
-    https://projects.coin-or.org/svn/CppAD/branches/base_require
+   https://projects.coin-or.org/svn/CppAD/branches/base_require
 $$
 These changes are described below under the headings
 $cref/08-04/whats_new_11/08-11/08-04/$$ through
@@ -429,7 +429,7 @@ $subhead 08-10$$
 $list number$$
 Add the output stream optional argument $icode s$$ in
 $codei%
-    %f%.Forward(0, %x%, %s%)
+   %f%.Forward(0, %x%, %s%)
 %$$
 See $cref/zero order forward mode/forward_zero/$$ and $cref PrintFor$$.
 $lnext
@@ -506,7 +506,7 @@ $lend
 $head 07-31$$
 Add a conditional version of the $cref PrintFor$$ command
 $codei%
-    PrintFor(%text%, %y%, %z%)
+   PrintFor(%text%, %y%, %z%)
 %$$
 which only prints when $icode%z% <= 0%$$.
 This is useful for error reporting during forward mode; i.e.,
@@ -663,10 +663,10 @@ $head 06-23$$
 $list number$$
 Fix a bug whereby the assert
 $codei%
-    Error detected by false result for
-        ! omp_in_parallel()
-    at line %n% in the file
-    %prefix%/include/cppad/omp_alloc.hpp
+   Error detected by false result for
+      ! omp_in_parallel()
+   at line %n% in the file
+   %prefix%/include/cppad/omp_alloc.hpp
 %$$
 sometimes occurred.
 $lnext
@@ -734,8 +734,8 @@ Fix Visual Studio project files that were broken during the change on 05-22.
 In addition, in the file $code cppad/omp_alloc.hpp$$,
 suppress the following Microsoft Visual Studio warning
 $codep
-    warning C4345: behavior change: an object of POD type constructed with
-    an initializer of the form () will be default-initialized
+   warning C4345: behavior change: an object of POD type constructed with
+   an initializer of the form () will be default-initialized
 $$
 
 
@@ -768,9 +768,9 @@ to the CppAD vector class.
 $lnext
 The simple vector
 $cref/
-    element constructor and destructor/
-    SimpleVector/
-    Element Constructor and Destructor
+   element constructor and destructor/
+   SimpleVector/
+   Element Constructor and Destructor
 /$$
 description has been changed to explicitly specify that the
 default constructor is used to initialize elements of the array.
@@ -813,8 +813,8 @@ The Microsoft Visual Studio 2003 project files
 for the Windows examples and tests no longer worked because
 the current version of CppAD uses local types in template instantiation; see
 $href%
-    http://msdn.microsoft.com/en-us/library/bh44f2cb(v=vs.71).aspx%
-    Compiler Error C2918
+   http://msdn.microsoft.com/en-us/library/bh44f2cb(v=vs.71).aspx%
+   Compiler Error C2918
 %$$.
 These project files were converted to Visual Studio 2008 where they do work
 (if you use a later version, Visual Studio should automatically

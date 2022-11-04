@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 $begin exp_eps.hpp$$
 $spell
-    exp_eps
+   exp_eps
 $$
 
 $section exp_eps: Implementation$$
@@ -15,7 +15,7 @@ $end
 -----------------------------------------------------------------------------
 $begin exp_eps.cpp$$
 $spell
-    exp_eps
+   exp_eps
 $$
 
 $section exp_eps: Test of exp_eps$$
@@ -26,9 +26,9 @@ $end
 -----------------------------------------------------------------------------
 $begin exp_eps_for0$$
 $spell
-    cpp
-    exp_eps_seq
-    bool
+   cpp
+   exp_eps_seq
+   bool
 $$
 
 $section exp_eps: Operation Sequence and Zero Order Forward Sweep$$
@@ -44,7 +44,7 @@ For this case,
 the mathematical form for the operation sequence
 corresponding to the $code exp_eps$$ is
 $latex \[
-    f( x , \varepsilon ) = 1 + x + x^2 / 2
+   f( x , \varepsilon ) = 1 + x + x^2 / 2
 \] $$
 Note that, for these particular values of $icode x$$ and $icode epsilon$$,
 this is the same as the mathematical form for
@@ -96,53 +96,53 @@ $subhead Sweep$$
 $center
 $table
 $bold Index$$
-    $cnext $pre  $$ $cnext $bold Code$$
-    $cnext $pre  $$ $cnext $bold Operation$$
-    $cnext $pre  $$ $cnext $bold Zero Order$$
+   $cnext $pre  $$ $cnext $bold Code$$
+   $cnext $pre  $$ $cnext $bold Operation$$
+   $cnext $pre  $$ $cnext $bold Zero Order$$
 $rnext
 1
-    $cnext $pre  $$ $cnext $code abs_x = x;$$
-    $cnext $cnext $latex v_1 = x $$
-    $cnext $cnext $latex v_1^{(0)} = 0.5$$
+   $cnext $pre  $$ $cnext $code abs_x = x;$$
+   $cnext $cnext $latex v_1 = x $$
+   $cnext $cnext $latex v_1^{(0)} = 0.5$$
 $rnext
 2
-    $cnext $pre  $$ $cnext $code temp  = term * abs_x;$$
-    $cnext $cnext $latex v_2 = 1 * v_1 $$
-    $cnext $cnext $latex v_2^{(0)} = 0.5$$
+   $cnext $pre  $$ $cnext $code temp  = term * abs_x;$$
+   $cnext $cnext $latex v_2 = 1 * v_1 $$
+   $cnext $cnext $latex v_2^{(0)} = 0.5$$
 $rnext
 3
-    $cnext $pre  $$ $cnext $code term = temp / Type(k);$$
-    $cnext $cnext $latex v_3 = v_2 / 1$$
-    $cnext $cnext $latex v_3^{(0)} = 0.5$$
+   $cnext $pre  $$ $cnext $code term = temp / Type(k);$$
+   $cnext $cnext $latex v_3 = v_2 / 1$$
+   $cnext $cnext $latex v_3^{(0)} = 0.5$$
 $rnext
 4
-    $cnext $pre  $$ $cnext $code sum  = sum + term;$$
-    $cnext $cnext $latex v_4 = 1 + v_3 $$
-    $cnext $cnext $latex v_4^{(0)} = 1.5$$
+   $cnext $pre  $$ $cnext $code sum  = sum + term;$$
+   $cnext $cnext $latex v_4 = 1 + v_3 $$
+   $cnext $cnext $latex v_4^{(0)} = 1.5$$
 $rnext
 5
-    $cnext $pre  $$ $cnext  $code temp  = term * abs_x;$$
-    $cnext $cnext $latex v_5 = v_3 * v_1 $$
-    $cnext $cnext $latex v_5^{(0)} = 0.25$$
+   $cnext $pre  $$ $cnext  $code temp  = term * abs_x;$$
+   $cnext $cnext $latex v_5 = v_3 * v_1 $$
+   $cnext $cnext $latex v_5^{(0)} = 0.25$$
 $rnext
 6
-    $cnext $pre  $$ $cnext $code term = temp / Type(k);$$
-    $cnext $cnext $latex v_6 = v_5 / 2$$
-    $cnext $cnext $latex v_6^{(0)} = 0.125$$
+   $cnext $pre  $$ $cnext $code term = temp / Type(k);$$
+   $cnext $cnext $latex v_6 = v_5 / 2$$
+   $cnext $cnext $latex v_6^{(0)} = 0.125$$
 $rnext
 7
-    $cnext $pre  $$ $cnext $code sum  = sum + term;$$
-    $cnext $cnext $latex v_7 = v_4 + v_6 $$
-    $cnext $cnext $latex v_7^{(0)} = 1.625$$
+   $cnext $pre  $$ $cnext $code sum  = sum + term;$$
+   $cnext $cnext $latex v_7 = v_4 + v_6 $$
+   $cnext $cnext $latex v_7^{(0)} = 1.625$$
 $tend
 $$
 
 $head Return Value$$
 The return value for this case is
 $latex \[
-    1.625 =
-    v_7^{(0)} =
-    f ( x^{(0)} , \varepsilon^{(0)} )
+   1.625 =
+   v_7^{(0)} =
+   f ( x^{(0)} , \varepsilon^{(0)} )
 \] $$
 
 $head Comparisons$$
@@ -150,8 +150,8 @@ If $icode x$$ were negative,
 or if $icode epsilon$$ were a much smaller or much larger value,
 the results of the following comparisons could be different:
 $codep
-    if( Type(0) > x )
-    while(term > epsilon)
+   if( Type(0) > x )
+   while(term > epsilon)
 $$
 This in turn would result in a different operation sequence.
 Thus the operation sequence above only corresponds to
@@ -162,7 +162,7 @@ of $latex x = 0.5$$ for which the comparisons would have the
 same result and hence the operation sequence would be the same.
 
 $children%
-    introduction/exp_eps_for0.cpp
+   introduction/exp_eps_for0.cpp
 %$$
 
 $head Verification$$
@@ -190,7 +190,7 @@ $end
 -----------------------------------------------------------------------------
 $begin exp_eps_for1$$
 $spell
-    exp_eps_for
+   exp_eps_for
 $$
 
 $section exp_eps: First Order Forward Sweep$$
@@ -202,9 +202,9 @@ We define $latex x(t)$$ and $latex \varepsilon(t) ]$$ near $latex t = 0$$
 by the first order expansions
 $latex \[
 \begin{array}{rcl}
-    x(t) & = & x^{(0)} + x^{(1)} * t
-    \\
-    \varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
+   x(t) & = & x^{(0)} + x^{(1)} * t
+   \\
+   \varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
 \end{array}
 \]$$
 It follows that $latex x^{(0)}$$ ($latex \varepsilon^{(0)}$$) is the zero,
@@ -256,7 +256,7 @@ $subhead First Order$$
 The First Order column contains the first order derivatives
 for the corresponding variable in the operation sequence; i.e.,
 $latex \[
-    v_j (t) = v_j^{(0)} + v_j^{(1)} t
+   v_j (t) = v_j^{(0)} + v_j^{(1)} t
 \] $$
 We use $latex x^{(1)} = 1$$ and $latex \varepsilon^{(1)} = 0$$,
 so that differentiation with respect to $latex t$$,
@@ -270,59 +270,59 @@ $subhead Sweep$$
 $center
 $table
 $bold Index$$
-    $cnext $pre  $$ $cnext $bold Operation$$
-    $cnext $pre  $$ $cnext $bold Zero Order$$
-    $cnext $pre  $$ $cnext $bold Derivative$$
-    $cnext $pre  $$ $cnext $bold First Order$$
+   $cnext $pre  $$ $cnext $bold Operation$$
+   $cnext $pre  $$ $cnext $bold Zero Order$$
+   $cnext $pre  $$ $cnext $bold Derivative$$
+   $cnext $pre  $$ $cnext $bold First Order$$
 $rnext
 1
-    $cnext $pre  $$ $cnext $latex v_1 = x $$
-    $cnext $cnext 0.5
-    $cnext $cnext
-    $latex v_1^{(1)} = x^{(1)}  $$
-    $cnext $cnext  $latex v_1^{(1)} = 1$$
+   $cnext $pre  $$ $cnext $latex v_1 = x $$
+   $cnext $cnext 0.5
+   $cnext $cnext
+   $latex v_1^{(1)} = x^{(1)}  $$
+   $cnext $cnext  $latex v_1^{(1)} = 1$$
 $rnext
 2
-    $cnext $pre  $$ $cnext $latex v_2 = 1 * v_1$$
-    $cnext $cnext 0.5
-    $cnext $cnext
-    $latex v_2^{(1)} = 1 * v_1^{(1)}$$
-    $cnext $cnext $latex v_2^{(1)} = 1$$
+   $cnext $pre  $$ $cnext $latex v_2 = 1 * v_1$$
+   $cnext $cnext 0.5
+   $cnext $cnext
+   $latex v_2^{(1)} = 1 * v_1^{(1)}$$
+   $cnext $cnext $latex v_2^{(1)} = 1$$
 $rnext
 3
-    $cnext $pre  $$ $cnext $latex v_3 = v_2 / 1$$
-    $cnext $cnext 0.5
-    $cnext $cnext
-    $latex v_3^{(1)} = v_2^{(1)} / 1$$
-    $cnext $cnext $latex v_3^{(1)} = 1$$
+   $cnext $pre  $$ $cnext $latex v_3 = v_2 / 1$$
+   $cnext $cnext 0.5
+   $cnext $cnext
+   $latex v_3^{(1)} = v_2^{(1)} / 1$$
+   $cnext $cnext $latex v_3^{(1)} = 1$$
 $rnext
 4
-    $cnext $pre  $$ $cnext $latex v_4 = 1 + v_3$$
-    $cnext $cnext 1.5
-    $cnext $cnext
-    $latex v_4^{(1)} = v_3^{(1)} $$
-    $cnext $cnext $latex v_4^{(1)} = 1$$
+   $cnext $pre  $$ $cnext $latex v_4 = 1 + v_3$$
+   $cnext $cnext 1.5
+   $cnext $cnext
+   $latex v_4^{(1)} = v_3^{(1)} $$
+   $cnext $cnext $latex v_4^{(1)} = 1$$
 $rnext
 5
-    $cnext $pre  $$ $cnext $latex v_5 = v_3 * v_1$$
-    $cnext $cnext 0.25
-    $cnext $cnext
-    $latex v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}$$
-    $cnext $cnext $latex v_5^{(1)} = 1$$
+   $cnext $pre  $$ $cnext $latex v_5 = v_3 * v_1$$
+   $cnext $cnext 0.25
+   $cnext $cnext
+   $latex v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}$$
+   $cnext $cnext $latex v_5^{(1)} = 1$$
 $rnext
 6
-    $cnext $pre  $$ $cnext $latex v_6 = v_5 / 2$$
-    $cnext $cnext 0.125
-    $cnext $cnext
-    $latex v_6^{(1)} = v_5^{(1)} / 2$$
-    $cnext $cnext $latex v_6^{(1)} = 0.5$$
+   $cnext $pre  $$ $cnext $latex v_6 = v_5 / 2$$
+   $cnext $cnext 0.125
+   $cnext $cnext
+   $latex v_6^{(1)} = v_5^{(1)} / 2$$
+   $cnext $cnext $latex v_6^{(1)} = 0.5$$
 $rnext
 7
-    $cnext $pre  $$ $cnext $latex v_7 = v_4 + v_6$$
-    $cnext $cnext 1.625
-    $cnext $cnext
-    $latex  v_7^{(1)} = v_4^{(1)} + v_6^{(1)}$$
-    $cnext $cnext $latex  v_7^{(1)} = 1.5$$
+   $cnext $pre  $$ $cnext $latex v_7 = v_4 + v_6$$
+   $cnext $cnext 1.625
+   $cnext $cnext
+   $latex  v_7^{(1)} = v_4^{(1)} + v_6^{(1)}$$
+   $cnext $cnext $latex  v_7^{(1)} = 1.5$$
 $tend
 $$
 
@@ -345,7 +345,7 @@ v_7^{(1)} =
 $latex x^{(1)} = 1$$ and $latex \varepsilon^{(1)} = 0$$.)
 
 $children%
-    introduction/exp_eps_for1.cpp
+   introduction/exp_eps_for1.cpp
 %$$
 
 $head Verification$$
@@ -370,7 +370,7 @@ $lnext
 Suppose that $latex x = .1$$ and $latex \epsilon = .2$$,
 what is the operation sequence corresponding to
 $codei%
-    exp_eps(%x%, %epsilon%)
+   exp_eps(%x%, %epsilon%)
 %$$
 $lend
 
@@ -378,7 +378,7 @@ $end
 -----------------------------------------------------------------------------
 $begin exp_eps_rev1$$
 $spell
-    exp_eps_rev
+   exp_eps_rev
 $$
 
 $section exp_eps: First Order Reverse Sweep$$
@@ -441,7 +441,7 @@ All the other partial derivatives of $latex f_7$$ are zero.
 $head Index 7: f_6$$
 The last operation has index 7,
 $latex \[
-    v_7 =   v_4 + v_6
+   v_7 =   v_4 + v_6
 \] $$
 We define the function
 $latex f_6 ( v_1 , v_2 , v_3 , v_4 , v_5 , v_6 ) $$
@@ -457,12 +457,12 @@ $latex \[
 \begin{array}{rcll}
 \D{f_6}{v_4}
 & = & \D{f_7}{v_4} +
-    \D{f_7}{v_7} * \D{v_7}{v_4}
+   \D{f_7}{v_7} * \D{v_7}{v_4}
 & = 1
 \\
 \D{f_6}{v_6}
 & = & \D{f_7}{v_6} +
-    \D{f_7}{v_7} * \D{v_7}{v_6}
+   \D{f_7}{v_7} * \D{v_7}{v_6}
 & = 1
 \end{array}
 \] $$
@@ -471,7 +471,7 @@ All the other partial derivatives of $latex f_6$$ are zero.
 $head Index 6: f_5$$
 The previous operation has index 6,
 $latex \[
-    v_6 = v_5 / 2
+   v_6 = v_5 / 2
 \] $$
 We define the function
 $latex f_5 (  v_1 , v_2 , v_3 , v_4 , v_5 ) $$
@@ -490,7 +490,7 @@ $latex \[
 \\
 \D{f_5}{v_5}
 & = & \D{f_6}{v_5} +
-    \D{f_6}{v_6} * \D{v_6}{v_5}
+   \D{f_6}{v_6} * \D{v_6}{v_5}
 & = 0.5
 \end{array}
 \] $$
@@ -499,7 +499,7 @@ All the other partial derivatives of $latex f_5$$ are zero.
 $head Index 5: f_4$$
 The previous operation has index 5,
 $latex \[
-    v_5 = v_3 * v_1
+   v_5 = v_3 * v_1
 \] $$
 We define the function
 $latex f_4 (  v_1 , v_2 , v_3 , v_4 ) $$
@@ -516,14 +516,14 @@ $latex \[
 \begin{array}{rcll}
 \D{f_4}{v_1}
 & = & \D{f_5}{v_1} +
-    \D{f_5}{v_5} * \D{v_5}{v_1}
+   \D{f_5}{v_5} * \D{v_5}{v_1}
 & =  0.25
 \\
 \D{f_4}{v_2} & = & \D{f_5}{v_2}  & = 0
 \\
 \D{f_4}{v_3}
 & = & \D{f_5}{v_3} +
-    \D{f_5}{v_5} * \D{v_5}{v_3}
+   \D{f_5}{v_5} * \D{v_5}{v_3}
 & =  0.25
 \\
 \D{f_4}{v_4}
@@ -535,7 +535,7 @@ $latex \[
 $head Index 4: f_3$$
 The previous operation has index 4,
 $latex \[
-    v_4 = 1 + v_3
+   v_4 = 1 + v_3
 \] $$
 We define the function
 $latex f_3 (  v_1 , v_2 , v_3 ) $$
@@ -556,7 +556,7 @@ $latex \[
 \\
 \D{f_3}{v_3}
 & = & \D{f_4}{v_3} +
-    \D{f_4}{v_4} * \D{v_4}{v_3}
+   \D{f_4}{v_4} * \D{v_4}{v_3}
 & =  1.25
 \end{array}
 \] $$
@@ -565,7 +565,7 @@ $latex \[
 $head Index 3: f_2$$
 The previous operation has index 3,
 $latex \[
-    v_3 = v_2 / 1
+   v_3 = v_2 / 1
 \] $$
 We define the function
 $latex f_2 (  v_1 , v_2 ) $$
@@ -583,7 +583,7 @@ $latex \[
 & =  0.25
 \\
 \D{f_2}{v_2} & = & \D{f_3}{v_2}  +
-    \D{f_3}{v_3} * \D{v_3}{v_2}
+   \D{f_3}{v_3} * \D{v_3}{v_2}
 & = 1.25
 \end{array}
 \] $$
@@ -591,7 +591,7 @@ $latex \[
 $head Index 2: f_1$$
 The previous operation has index 1,
 $latex \[
-    v_2 = 1 * v_1
+   v_2 = 1 * v_1
 \] $$
 We define the function
 $latex f_1 (  v_1 ) $$
@@ -605,7 +605,7 @@ It follows that
 $latex \[
 \begin{array}{rcll}
 \D{f_1}{v_1} & = & \D{f_2}{v_1}  +
-    \D{f_2}{v_2} * \D{v_2}{v_1}
+   \D{f_2}{v_2} * \D{v_2}{v_1}
 & = 1.5
 \end{array}
 \] $$
@@ -620,7 +620,7 @@ same result for the partial in the $icode x$$ direction.
 
 
 $children%
-    introduction/exp_eps_rev1.cpp
+   introduction/exp_eps_rev1.cpp
 %$$
 
 $head Verification$$
@@ -655,7 +655,7 @@ $end
 -----------------------------------------------------------------------------
 $begin exp_eps_for2$$
 $spell
-    exp_eps_for
+   exp_eps_for
 $$
 
 $section exp_eps: Second Order Forward Mode$$
@@ -668,18 +668,18 @@ We define $latex x(t)$$ and $latex \varepsilon(t) ]$$ near $latex t = 0$$
 by the second order expansions
 $latex \[
 \begin{array}{rcl}
-    x(t) & = & x^{(0)} + x^{(1)} * t  + x^{(2)} * t^2 / 2
-    \\
-    \varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
+   x(t) & = & x^{(0)} + x^{(1)} * t  + x^{(2)} * t^2 / 2
+   \\
+   \varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
                      +   \varepsilon^{(2)} * t^2 / 2
 \end{array}
 \]$$
 It follows that for $latex k = 0 , 1 , 2$$,
 $latex \[
 \begin{array}{rcl}
-    x^{(k)}  & = & \dpow{k}{t} x (0)
-    \\
-    \varepsilon^{(k)}  & = & \dpow{k}{t} \varepsilon (0)
+   x^{(k)}  & = & \dpow{k}{t} x (0)
+   \\
+   \varepsilon^{(k)}  & = & \dpow{k}{t} \varepsilon (0)
 \end{array}
 \] $$
 
@@ -741,7 +741,7 @@ The Second column contains the second order derivatives
 for the corresponding variable in the operation sequence; i.e.,
 the second order expansion for the $th i$$ variable is given by
 $latex \[
-    v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+   v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
 \] $$
 We use $latex x^{(1)} = 1$$, $latex x^{(2)} = 0$$,
 use $latex \varepsilon^{(1)} = 1$$, and $latex \varepsilon^{(2)} = 0$$
@@ -756,75 +756,75 @@ $subhead Sweep$$
 $center
 $table
 $bold Index$$
-    $cnext $pre  $$ $cnext $bold Zero$$
-    $cnext $pre  $$ $cnext $bold Operation$$
-    $cnext $pre  $$ $cnext $bold First$$
-    $cnext $pre  $$ $cnext $bold Derivative$$
-    $cnext $pre  $$ $cnext $bold Second$$
+   $cnext $pre  $$ $cnext $bold Zero$$
+   $cnext $pre  $$ $cnext $bold Operation$$
+   $cnext $pre  $$ $cnext $bold First$$
+   $cnext $pre  $$ $cnext $bold Derivative$$
+   $cnext $pre  $$ $cnext $bold Second$$
 $rnext
 1
-    $cnext $cnext 0.5
-    $cnext $cnext
-    $latex v_1^{(1)} = x^{(1)}  $$
-    $cnext $cnext 1
-    $cnext $cnext
-    $latex v_2^{(2)} = x^{(2)}  $$
-    $cnext $cnext 0
+   $cnext $cnext 0.5
+   $cnext $cnext
+   $latex v_1^{(1)} = x^{(1)}  $$
+   $cnext $cnext 1
+   $cnext $cnext
+   $latex v_2^{(2)} = x^{(2)}  $$
+   $cnext $cnext 0
 $rnext
 2
-    $cnext $cnext 0.5
-    $cnext $cnext
-    $latex v_2^{(1)} = 1 * v_1^{(1)}$$
-    $cnext $cnext 1
-    $cnext $cnext
-    $latex v_2^{(2)} = 1 * v_1^{(2)}$$
-    $cnext $cnext 0
+   $cnext $cnext 0.5
+   $cnext $cnext
+   $latex v_2^{(1)} = 1 * v_1^{(1)}$$
+   $cnext $cnext 1
+   $cnext $cnext
+   $latex v_2^{(2)} = 1 * v_1^{(2)}$$
+   $cnext $cnext 0
 $rnext
 3
-    $cnext $cnext 0.5
-    $cnext $cnext
-    $latex v_3^{(1)} = v_2^{(1)} / 1$$
-    $cnext $cnext 1
-    $cnext $cnext
-    $latex v_3^{(2)} = v_2^{(2)} / 1$$
-    $cnext $cnext 0
+   $cnext $cnext 0.5
+   $cnext $cnext
+   $latex v_3^{(1)} = v_2^{(1)} / 1$$
+   $cnext $cnext 1
+   $cnext $cnext
+   $latex v_3^{(2)} = v_2^{(2)} / 1$$
+   $cnext $cnext 0
 $rnext
 4
-    $cnext $cnext 1.5
-    $cnext $cnext
-    $latex v_4^{(1)} = v_3^{(1)} $$
-    $cnext $cnext 1
-    $cnext $cnext
-    $latex v_4^{(2)} = v_3^{(2)} $$
-    $cnext $cnext 0
+   $cnext $cnext 1.5
+   $cnext $cnext
+   $latex v_4^{(1)} = v_3^{(1)} $$
+   $cnext $cnext 1
+   $cnext $cnext
+   $latex v_4^{(2)} = v_3^{(2)} $$
+   $cnext $cnext 0
 $rnext
 5
-    $cnext $cnext 0.25
-    $cnext $cnext
-    $latex v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}$$
-    $cnext $cnext 1
-    $cnext $cnext
-    $latex v_5^{(2)} = v_3^{(2)} * v_1^{(0)} + 2 * v_3^{(1)} * v_1^{(1)}
+   $cnext $cnext 0.25
+   $cnext $cnext
+   $latex v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}$$
+   $cnext $cnext 1
+   $cnext $cnext
+   $latex v_5^{(2)} = v_3^{(2)} * v_1^{(0)} + 2 * v_3^{(1)} * v_1^{(1)}
                      + v_3^{(0)} * v_1^{(2)}$$
-    $cnext $cnext 2
+   $cnext $cnext 2
 $rnext
 6
-    $cnext $cnext 0.125
-    $cnext $cnext
-    $latex v_6^{(1)} = v_5^{(1)} / 2$$
-    $cnext $cnext 0.5
-    $cnext $cnext
-    $latex v_6^{(2)} = v_5^{(2)} / 2$$
-    $cnext $cnext 1
+   $cnext $cnext 0.125
+   $cnext $cnext
+   $latex v_6^{(1)} = v_5^{(1)} / 2$$
+   $cnext $cnext 0.5
+   $cnext $cnext
+   $latex v_6^{(2)} = v_5^{(2)} / 2$$
+   $cnext $cnext 1
 $rnext
 7
-    $cnext $cnext 1.625
-    $cnext $cnext
-    $latex  v_7^{(1)} = v_4^{(1)} + v_6^{(1)}$$
-    $cnext $cnext 1.5
-    $cnext $cnext
-    $latex  v_7^{(2)} = v_4^{(2)} + v_6^{(2)}$$
-    $cnext $cnext 1
+   $cnext $cnext 1.625
+   $cnext $cnext
+   $latex  v_7^{(1)} = v_4^{(1)} + v_6^{(1)}$$
+   $cnext $cnext 1.5
+   $cnext $cnext
+   $latex  v_7^{(2)} = v_4^{(2)} + v_6^{(2)}$$
+   $cnext $cnext 1
 $tend
 $$
 
@@ -848,7 +848,7 @@ $latex x^{(1)} = 1$$, $latex x^{(2)} = 0$$,
 $latex \varepsilon^{(1)} = 1$$, and $latex \varepsilon^{(2)} = 0$$.)
 
 $children%
-    introduction/exp_eps_for2.cpp
+   introduction/exp_eps_for2.cpp
 %$$
 $head Verification$$
 The file $cref exp_eps_for2.cpp$$ contains a routine
@@ -877,7 +877,7 @@ $end
 -----------------------------------------------------------------------------
 $begin exp_eps_rev2$$
 $spell
-    exp_eps_rev
+   exp_eps_rev
 $$
 
 $section exp_eps: Second Order Reverse Sweep$$
@@ -931,7 +931,7 @@ is both an argument and the value of the function; i.e.,
 $latex \[
 \begin{array}{rcl}
 f_7 \left(
-    v_1^{(0)} , v_1^{(1)} , \ldots , v_7^{(0)} , v_7^{(1)}
+   v_1^{(0)} , v_1^{(1)} , \ldots , v_7^{(0)} , v_7^{(1)}
 \right)
 & = & v_7^{(1)}
 \\
@@ -944,9 +944,9 @@ $head Index 7: f_6$$
 The last operation has index 7,
 $latex \[
 \begin{array}{rcl}
-    v_7^{(0)} & = &   v_4^{(0)} + v_6^{(0)}
-    \\
-    v_7^{(1)} & = &   v_4^{(1)} + v_6^{(1)}
+   v_7^{(0)} & = &   v_4^{(0)} + v_6^{(0)}
+   \\
+   v_7^{(1)} & = &   v_4^{(1)} + v_6^{(1)}
 \end{array}
 \] $$
 We define the function
@@ -957,8 +957,8 @@ this operation; i.e.
 $latex \[
 f_6  =
 f_7 \left[ v_1^{(0)} , \ldots , v_6^{(1)} ,
-    v_7^{(0)} \left( v_4^{(0)} , v_6^{(0)} \right)  ,
-    v_7^{(1)} \left( v_4^{(1)} , v_6^{(1)} \right)
+   v_7^{(0)} \left( v_4^{(0)} , v_6^{(0)} \right)  ,
+   v_7^{(1)} \left( v_4^{(1)} , v_6^{(1)} \right)
 \right]
 \] $$
 It follows that
@@ -966,12 +966,12 @@ $latex \[
 \begin{array}{rcll}
 \D{f_6}{v_4^{(1)}}
 & = & \D{f_7}{v_4^{(1)}} +
-    \D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_4^{(1)}}
+   \D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_4^{(1)}}
 & = 1
 \\
 \D{f_6}{v_6^{(1)}}
 & = & \D{f_7}{v_6^{(1)}} +
-    \D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_6^{(1)}}
+   \D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_6^{(1)}}
 & = 1
 \end{array}
 \] $$
@@ -981,9 +981,9 @@ $head Index 6: f_5$$
 The previous operation has index 6,
 $latex \[
 \begin{array}{rcl}
-    v_6^{(0)} & = & v_5^{(0)} / 2
-    \\
-    v_6^{(1)} & = & v_5^{(1)} / 2
+   v_6^{(0)} & = & v_5^{(0)} / 2
+   \\
+   v_6^{(1)} & = & v_5^{(1)} / 2
 \end{array}
 \] $$
 We define the function
@@ -994,8 +994,8 @@ this operation; i.e.
 $latex \[
 f_5 =
 f_6 \left[ v_1^{(0)} , \ldots , v_5^{(1)} ,
-    v_6^{(0)} \left( v_5^{(0)} \right) ,
-    v_6^{(1)} \left( v_5^{(1)} \right)
+   v_6^{(0)} \left( v_5^{(0)} \right) ,
+   v_6^{(1)} \left( v_5^{(1)} \right)
 \right]
 \] $$
 It follows that
@@ -1007,7 +1007,7 @@ $latex \[
 \\
 \D{f_5}{v_5^{(1)}}
 & = & \D{f_6}{v_5} +
-    \D{f_6}{v_6^{(1)}} * \D{v_6^{(1)}}{v_5^{(1)}}
+   \D{f_6}{v_6^{(1)}} * \D{v_6^{(1)}}{v_5^{(1)}}
 & = 0.5
 \end{array}
 \] $$
@@ -1017,9 +1017,9 @@ $head Index 5: f_4$$
 The previous operation has index 5,
 $latex \[
 \begin{array}{rcl}
-    v_5^{(0)} & = & v_3^{(0)} * v_1^{(0)}
-    \\
-    v_5^{(1)} & = & v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}
+   v_5^{(0)} & = & v_3^{(0)} * v_1^{(0)}
+   \\
+   v_5^{(1)} & = & v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}
 \end{array}
 \] $$
 We define the function
@@ -1030,8 +1030,8 @@ this operation; i.e.
 $latex \[
 f_4 =
 f_5 \left[  v_1^{(0)} , \ldots , v_4^{(1)} ,
-    v_5^{(0)} \left( v_1^{(0)}, v_3^{(0)} \right) ,
-    v_5^{(1)} \left( v_1^{(0)}, v_1^{(1)}, v_3^{(0)} , v_3^{(1)} \right) ,
+   v_5^{(0)} \left( v_1^{(0)}, v_3^{(0)} \right) ,
+   v_5^{(1)} \left( v_1^{(0)}, v_1^{(1)}, v_3^{(0)} , v_3^{(1)} \right) ,
 \right]
 \] $$
 Given the information from the forward sweep, we have
@@ -1074,9 +1074,9 @@ $head Index 4: f_3$$
 The previous operation has index 4,
 $latex \[
 \begin{array}{rcl}
-    v_4^{(0)} = 1 + v_3^{(0)}
-    \\
-    v_4^{(1)} = v_3^{(1)}
+   v_4^{(0)} = 1 + v_3^{(0)}
+   \\
+   v_4^{(1)} = v_3^{(1)}
 \end{array}
 \] $$
 We define the function
@@ -1087,8 +1087,8 @@ this operation; i.e.
 $latex \[
 f_3 =
 f_4 \left[ v_1^{(0)} , \ldots , v_3^{(1)} ,
-    v_4^{(0)} \left( v_3^{(0)} \right) ,
-    v_4^{(1)} \left( v_3^{(1)} \right)
+   v_4^{(0)} \left( v_3^{(0)} \right) ,
+   v_4^{(1)} \left( v_3^{(1)} \right)
 \right]
 \] $$
 It follows that
@@ -1127,9 +1127,9 @@ $head Index 3: f_2$$
 The previous operation has index 3,
 $latex \[
 \begin{array}{rcl}
-    v_3^{(0)} & = & v_2^{(0)} / 1
-    \\
-    v_3^{(1)} & = & v_2^{(1)} / 1
+   v_3^{(0)} & = & v_2^{(0)} / 1
+   \\
+   v_3^{(1)} & = & v_2^{(1)} / 1
 \end{array}
 \] $$
 We define the function
@@ -1140,8 +1140,8 @@ this operation; i.e.
 $latex \[
 f_2 =
 f_3 \left[ v_1^{(0)} , \ldots , v_2^{(1)} ,
-    v_3^{(0)} \left( v_2^{(0)} \right) ,
-    v_3^{(1)} \left( v_2^{(1)} \right)
+   v_3^{(0)} \left( v_2^{(0)} \right) ,
+   v_3^{(1)} \left( v_2^{(1)} \right)
 \right]
 \] $$
 It follows that
@@ -1171,9 +1171,9 @@ $head Index 2: f_1$$
 The previous operation has index 1,
 $latex \[
 \begin{array}{rcl}
-    v_2^{(0)} & = & 1 * v_1^{(0)}
-    \\
-    v_2^{(1)} & = & 1 * v_1^{(1)}
+   v_2^{(0)} & = & 1 * v_1^{(0)}
+   \\
+   v_2^{(1)} & = & 1 * v_1^{(1)}
 \end{array}
 \] $$
 We define the function
@@ -1184,8 +1184,8 @@ this operation; i.e.
 $latex \[
 f_1 =
 f_2 \left[  v_1^{(0)} , v_1^{(1)} ,
-    v_2^{(0)} \left( v_1^{(0)} \right)  ,
-    v_2^{(1)} \left( v_1^{(1)} \right)
+   v_2^{(0)} \left( v_1^{(0)} \right)  ,
+   v_2^{(1)} \left( v_1^{(1)} \right)
 \right]
 \] $$
 It follows that
@@ -1219,7 +1219,7 @@ with respect to $latex x$$.
 
 
 $children%
-    introduction/exp_eps_rev2.cpp
+   introduction/exp_eps_rev2.cpp
 %$$
 
 $head Verification$$

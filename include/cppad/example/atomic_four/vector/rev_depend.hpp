@@ -7,8 +7,8 @@
 /*
 $begin atomic_four_vector_rev_depend.hpp$$
 $spell
-    Jacobian
-    jac
+   Jacobian
+   jac
 $$
 
 $section Atomic Vector Forward Type Calculation: Example Implementation$$
@@ -34,28 +34,28 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // rev_depend override
 template <class Base>
 bool atomic_vector<Base>::rev_depend(
-    size_t                         call_id     ,
-    CppAD::vector<bool>&           depend_x    ,
-    const CppAD::vector<bool>&     depend_y    )
+   size_t                         call_id     ,
+   CppAD::vector<bool>&           depend_x    ,
+   const CppAD::vector<bool>&     depend_y    )
 {
-    // n, m
-    size_t n     = depend_x.size();
-    size_t m     = depend_y.size();
-    //
-    // type_y
-    if( n == m  )
-    {   // unary operator
-        for(size_t i = 0; i < m; ++i)
-            depend_x[i] = depend_y[i];
-    }
-    else
-    {   // binary operator
-        for(size_t i = 0; i < m; ++i)
-        {   depend_x[i]     = depend_y[i];
-            depend_x[m + i] = depend_y[i];
-        }
-    }
-    return true;
+   // n, m
+   size_t n     = depend_x.size();
+   size_t m     = depend_y.size();
+   //
+   // type_y
+   if( n == m  )
+   {  // unary operator
+      for(size_t i = 0; i < m; ++i)
+         depend_x[i] = depend_y[i];
+   }
+   else
+   {  // binary operator
+      for(size_t i = 0; i < m; ++i)
+      {  depend_x[i]     = depend_y[i];
+         depend_x[m + i] = depend_y[i];
+      }
+   }
+   return true;
 }
 } // END_CPPAD_NAMESPACE
 // END C++

@@ -7,12 +7,12 @@
 /*
 $begin base_hash$$
 $spell
-    alloc
-    Cpp
-    adouble
-    valgrind
-    const
-    inline
+   alloc
+   Cpp
+   adouble
+   valgrind
+   const
+   inline
 $$
 
 $section Base Type Requirements for Hash Coding Values$$
@@ -39,20 +39,20 @@ when these are used to form the hash code.
 $head x$$
 This argument has prototype
 $codei%
-    const %Base%& %x
+   const %Base%& %x
 %$$
 It is the value we are forming a hash code for.
 
 $head code$$
 The return value $icode code$$ has prototype
 $codei%
-    unsigned short %code%
+   unsigned short %code%
 %$$
 It is the hash code corresponding to $icode x$$. This intention is the
 commonly used values will have different hash codes.
 The hash code must satisfy
 $codei%
-    %code% < CPPAD_HASH_TABLE_SIZE
+   %code% < CPPAD_HASH_TABLE_SIZE
 %$$
 so that it is a valid index into the hash code table.
 

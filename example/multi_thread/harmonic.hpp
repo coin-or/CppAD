@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 bool harmonic_time(
-    double& time_out, double test_time, size_t num_threads, size_t mega_sum
+   double& time_out, double test_time, size_t num_threads, size_t mega_sum
 );
 
 # endif

@@ -358,11 +358,11 @@ AM_CXXFLAGS = \
 #
 #
 LDADD = \
-                    -lcppad_ipopt \
-                    $(CPPAD_IPOPT_LIBS) \
-                    $(FCLIBS) \
-                    $(PTHREAD_LIB) \
-                    $(DL_LIB)
+               -lcppad_ipopt \
+               $(CPPAD_IPOPT_LIBS) \
+               $(FCLIBS) \
+               $(PTHREAD_LIB) \
+               $(DL_LIB)
 
 AM_LDFLAGS = -L../src
 #

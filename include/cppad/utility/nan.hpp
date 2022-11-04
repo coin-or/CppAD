@@ -7,13 +7,13 @@
 /*
 $begin nan$$
 $spell
-    hasnan
-    cppad
-    hpp
-    CppAD
-    isnan
-    bool
-    const
+   hasnan
+   cppad
+   hpp
+   CppAD
+   isnan
+   bool
+   const
 $$
 
 $section Obtain Nan or Determine if a Value is Nan$$
@@ -30,7 +30,7 @@ It obtain and check for the value not a number $code nan$$.
 The IEEE standard specifies that a floating point value $icode a$$
 is $code nan$$ if and only if the following returns true
 $codei%
-    %a% != %a%
+   %a% != %a%
 %$$
 
 $head Include$$
@@ -51,13 +51,13 @@ This routine determines if a scalar value is $code nan$$.
 $subhead s$$
 The argument $icode s$$ has prototype
 $codei%
-    const %Scalar% %s%
+   const %Scalar% %s%
 %$$
 
 $subhead b$$
 The return value $icode b$$ has prototype
 $codei%
-    bool %b%
+   bool %b%
 %$$
 It is true if the value $icode s$$ is $code nan$$.
 
@@ -68,14 +68,14 @@ $cref SimpleVector$$ has an element that is $code nan$$.
 $subhead v$$
 The argument $icode v$$ has prototype
 $codei%
-    const %Vector% &%v%
+   const %Vector% &%v%
 %$$
 (see $cref/Vector/nan/Vector/$$ for the definition of $icode Vector$$).
 
 $subhead b$$
 The return value $icode b$$ has prototype
 $codei%
-    bool %b%
+   bool %b%
 %$$
 It is true if the vector $icode v$$ has a $code nan$$.
 
@@ -93,7 +93,7 @@ $icode%s% = nan(%z%)
 $subhead z$$
 The argument $icode z$$ has prototype
 $codei%
-    const %Scalar% &%z%
+   const %Scalar% &%z%
 %$$
 and its value is zero
 (see $cref/Scalar/nan/Scalar/$$ for the definition of $icode Scalar$$).
@@ -101,7 +101,7 @@ and its value is zero
 $subhead s$$
 The return value $icode s$$ has prototype
 $codei%
-    %Scalar% %s%
+   %Scalar% %s%
 %$$
 It is the value $code nan$$ for this floating point type.
 
@@ -110,13 +110,13 @@ The type $icode Scalar$$ must support the following operations;
 $table
 $bold Operation$$ $cnext $bold Description$$  $rnext
 $icode%a% / %b%$$ $cnext
-    division operator (returns a $icode Scalar$$ object)
+   division operator (returns a $icode Scalar$$ object)
 $rnext
 $icode%a% == %b%$$ $cnext
-    equality operator (returns a $code bool$$ object)
+   equality operator (returns a $code bool$$ object)
 $rnext
 $icode%a% != %b%$$ $cnext
-    not equality operator (returns a $code bool$$ object)
+   not equality operator (returns a $code bool$$ object)
 $tend
 Note that the division operator will be used with $icode a$$ and $icode b$$
 equal to zero. For some types (e.g. $code int$$) this may generate
@@ -127,7 +127,7 @@ The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 elements of type $icode Scalar$$.
 
 $children%
-    example/utility/nan.cpp
+   example/utility/nan.cpp
 %$$
 $head Example$$
 The file $cref nan.cpp$$
@@ -160,25 +160,25 @@ namespace CppAD { // BEGIN CppAD namespace
 
 template <class Scalar>
 bool isnan(const Scalar &s)
-{   return (s != s);
+{  return (s != s);
 }
 
 template <class Vector>
 bool hasnan(const Vector &v)
 {
-    bool found_nan;
-    size_t i;
-    i   = v.size();
-    found_nan = false;
-    // on MS Visual Studio 2012, CppAD required in front of isnan ?
-    while(i--)
-        found_nan |= CppAD::isnan(v[i]);
-    return found_nan;
+   bool found_nan;
+   size_t i;
+   i   = v.size();
+   found_nan = false;
+   // on MS Visual Studio 2012, CppAD required in front of isnan ?
+   while(i--)
+      found_nan |= CppAD::isnan(v[i]);
+   return found_nan;
 }
 
 template <class Scalar>
 Scalar nan(const Scalar &zero)
-{   return zero / zero;
+{  return zero / zero;
 }
 
 } // End CppAD namespace

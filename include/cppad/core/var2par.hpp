@@ -10,8 +10,8 @@
 
 $begin Var2Par$$
 $spell
-    var
-    const
+   var
+   const
 $$
 
 
@@ -31,7 +31,7 @@ with the same value as $icode x$$.
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const AD<%Base%> &x
+   const AD<%Base%> &x
 %$$
 The argument $icode x$$ may be a
 variable, dynamic parameter, or constant parameter.
@@ -39,13 +39,13 @@ variable, dynamic parameter, or constant parameter.
 $head y$$
 The result $icode y$$ has prototype
 $codei%
-    AD<%Base%> &y
+   AD<%Base%> &y
 %$$
 and is a constant parameter.
 
 $head Example$$
 $children%
-    example/general/var2par.cpp
+   example/general/var2par.cpp
 %$$
 The file
 $cref var2par.cpp$$
@@ -61,16 +61,16 @@ namespace CppAD {
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 AD<Base> Var2Par(const AD<Base> &x)
-{   AD<Base> y(x.value_);
-    return y;
+{  AD<Base> y(x.value_);
+   return y;
 }
 
 
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 AD<Base> Var2Par(const VecAD_reference<Base> &x)
-{   AD<Base> y(x.ADBase());
-    y.id_ = 0;
+{  AD<Base> y(x.ADBase());
+   y.id_ = 0;
 }
 
 

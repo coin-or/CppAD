@@ -5,10 +5,10 @@
 /*
 $begin switch_var_dyn.cpp$$
 $spell
-    add
-    Json
-    dyn2var
-    cpp
+   add
+   Json
+   dyn2var
+   cpp
 $$
 
 $section Switching Between Variables and Dynamic Parameters: Example and Test$$
@@ -42,63 +42,63 @@ $end
 # include <cppad/cppad.hpp>
 
 bool switch_var_dyn(void)
-{   bool ok = true;
-    using std::string;
-    //
-    // f(x_0, x_1, x_2) = y_0 = x_2 * ( x_0 + x_1 );
-    CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(3), ay(1);
-    for(size_t j = 0; j < 3; ++j)
-        ax[j] = CppAD::AD<double>(j);
-    Independent(ax);
-    ay[0] = ax[2] * ( ax[0] + ax[1] );
-    CppAD::ADFun<double> f(ax, ay);
-    ok &= f.Domain() == 3;
-    ok &= f.Range() == 1;
-    ok &= f.size_dyn_ind() == 0;
-    //
-    // set independent variables and parameters
-    CPPAD_TESTVECTOR(double) p(0), x(3);
-    x[0] = 2.0;
-    x[1] = 3.0;
-    x[2] = 4.0;
-    //
-    // compute y = f(x)
-    f.new_dynamic(p);
-    CPPAD_TESTVECTOR(double) y = f.Forward(0, x);
-    //
-    // check result
-    ok &= y[0] == x[2] * ( x[0] + x[1] );
-    // -----------------------------------------------------------------------
-    //
-    // C++ graph object
-    CppAD::cpp_graph graph_obj;
-    f.to_graph(graph_obj);
-    //
-    // change x[0]->p[0], x[1]->p[1], x[2]->x[0]
-    CppAD::vector<bool> dyn2var(0), var2dyn(3);
-    var2dyn[0] = true;
-    var2dyn[1] = true;
-    var2dyn[2] = false;
-    f.from_graph(graph_obj, dyn2var, var2dyn);
-    p.resize(2);
-    x.resize(1);
-    //
-    ok &= f.Domain() == 1;
-    ok &= f.Range() == 1;
-    ok &= f.size_dyn_ind() == 2;
-    //
-    // set independent variables and parameters
-    p[0] = 1.0;
-    p[1] = 2.0;
-    x[0] = 3.0;
-    //
-    // compute y = f(x, p)
-    f.new_dynamic(p);
-    y = f.Forward(0, x);
-    //
-    // check result
-    ok &= y[0] == x[0] * ( p[0] + p[1] );
-    //
-    return ok;
+{  bool ok = true;
+   using std::string;
+   //
+   // f(x_0, x_1, x_2) = y_0 = x_2 * ( x_0 + x_1 );
+   CPPAD_TESTVECTOR( CppAD::AD<double> ) ax(3), ay(1);
+   for(size_t j = 0; j < 3; ++j)
+      ax[j] = CppAD::AD<double>(j);
+   Independent(ax);
+   ay[0] = ax[2] * ( ax[0] + ax[1] );
+   CppAD::ADFun<double> f(ax, ay);
+   ok &= f.Domain() == 3;
+   ok &= f.Range() == 1;
+   ok &= f.size_dyn_ind() == 0;
+   //
+   // set independent variables and parameters
+   CPPAD_TESTVECTOR(double) p(0), x(3);
+   x[0] = 2.0;
+   x[1] = 3.0;
+   x[2] = 4.0;
+   //
+   // compute y = f(x)
+   f.new_dynamic(p);
+   CPPAD_TESTVECTOR(double) y = f.Forward(0, x);
+   //
+   // check result
+   ok &= y[0] == x[2] * ( x[0] + x[1] );
+   // -----------------------------------------------------------------------
+   //
+   // C++ graph object
+   CppAD::cpp_graph graph_obj;
+   f.to_graph(graph_obj);
+   //
+   // change x[0]->p[0], x[1]->p[1], x[2]->x[0]
+   CppAD::vector<bool> dyn2var(0), var2dyn(3);
+   var2dyn[0] = true;
+   var2dyn[1] = true;
+   var2dyn[2] = false;
+   f.from_graph(graph_obj, dyn2var, var2dyn);
+   p.resize(2);
+   x.resize(1);
+   //
+   ok &= f.Domain() == 1;
+   ok &= f.Range() == 1;
+   ok &= f.size_dyn_ind() == 2;
+   //
+   // set independent variables and parameters
+   p[0] = 1.0;
+   p[1] = 2.0;
+   x[0] = 3.0;
+   //
+   // compute y = f(x, p)
+   f.new_dynamic(p);
+   y = f.Forward(0, x);
+   //
+   // check result
+   ok &= y[0] == x[0] * ( p[0] + p[1] );
+   //
+   return ok;
 }
 // END C++

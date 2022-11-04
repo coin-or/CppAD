@@ -9,7 +9,7 @@ $$
 $section abs_min_quad Source Code$$
 
 $srcfile%example/abs_normal/abs_min_quad.hpp%
-    0%// BEGIN C++%// END C++%
+   0%// BEGIN C++%// END C++%
 0%$$
 
 $end

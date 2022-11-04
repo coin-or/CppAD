@@ -5,9 +5,9 @@
 
 $begin det_grad_33.hpp$$
 $spell
-    det_grad_33
-    ifndef
-    endif
+   det_grad_33
+   ifndef
+   endif
 $$
 
 $section Source: det_grad_33$$

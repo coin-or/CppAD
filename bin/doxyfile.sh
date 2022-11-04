@@ -5,15 +5,15 @@
 # ----------------------------------------------------------------------------
 if [ ! -e "bin/doxyfile.sh" ]
 then
-    echo "bin/doxyfile.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/doxyfile.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 if [ "$3" == "" ]
 then
-    echo "usage: bin/doxyfile.sh version error_file output_directory"
-    echo "creates the doxygen configuration file ./doxyfile"
-    exit 1
+   echo "usage: bin/doxyfile.sh version error_file output_directory"
+   echo "creates the doxygen configuration file ./doxyfile"
+   exit 1
 fi
 version="$1"
 error_file="$2"
@@ -82,10 +82,10 @@ WARN_LOGFILE            = $error_file
 WARN_NO_PARAMDOC        = YES
 EOF
 sed \
-    -e 's/^/s|^\\(/' \
-    -e 's/ *=/ *=\\).*|\\1/' \
-    -e 's/$/|/' \
-    -i doxyfile.$$
+   -e 's/^/s|^\\(/' \
+   -e 's/ *=/ *=\\).*|\\1/' \
+   -e 's/$/|/' \
+   -i doxyfile.$$
 #
 #
 echo "sed -f doxyfile.$$ -i doxyfile"

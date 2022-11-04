@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin cpp_graph_itr$$
 $spell
-    Iterator
+   Iterator
 $$
 
 $section C++ AD Graph Iterator Class$$
 
 $childtable%
-    include/cppad/local/graph/cpp_graph_itr.hpp
+   include/cppad/local/graph/cpp_graph_itr.hpp
 %$$
 
 $end

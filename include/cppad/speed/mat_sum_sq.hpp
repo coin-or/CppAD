@@ -7,13 +7,13 @@
 /*
 $begin mat_sum_sq$$
 $spell
-    sq
-    namespace
-    const
-    CppAD
-    sq
-    cppad
-    hpp
+   sq
+   namespace
+   const
+   CppAD
+   sq
+   cppad
+   hpp
 $$
 
 $section Sum Elements of a Matrix Times Itself$$
@@ -28,9 +28,9 @@ This routine is intended for use with the matrix multiply speed tests;
 to be specific, it computes
 $latex \[
 \begin{array}{rcl}
-    y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
-    \\
-    z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
+   y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+   \\
+   z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
 \end{array}
 \] $$
 see $cref link_mat_mul$$.
@@ -44,34 +44,34 @@ the file $code cppad/speed/mat_sum_sq.hpp$$
 $head n$$
 This argument has prototype
 $codei%
-    size_t %n%
+   size_t %n%
 %$$
 It specifies the size of the matrices.
 
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-    const %Vector% &%x%
+   const %Vector% &%x%
 %$$
 and $icode%x%.size() == %n% * %n%$$.
 It contains the elements of $latex x$$ in row major order; i.e.,
 $latex \[
-    x_{i,j} = x [ i * n + j ]
+   x_{i,j} = x [ i * n + j ]
 \] $$
 
 $head y$$
 The argument $icode y$$ has prototype
 $codei%
-    %Vector%& %y%
+   %Vector%& %y%
 %$$
 and $icode%y%.size() == %n% * %n%$$.
 The input value of its elements does not matter.
 Upon return,
 $latex \[
 \begin{array}{rcl}
-    y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
-    \\
-    y[ i * n + j ] & = & y_{i,j}
+   y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+   \\
+   y[ i * n + j ] & = & y_{i,j}
 \end{array}
 \] $$
 
@@ -79,15 +79,15 @@ $latex \[
 $head z$$
 The argument $icode d$$ has prototype
 $codei%
-    %Vector%& %z%
+   %Vector%& %z%
 %$$.
 The input value of its element does not matter.
 Upon return
 $latex \[
 \begin{array}{rcl}
-    z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
-    \\
-    z[0] & = & z_0
+   z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
+   \\
+   z[0] & = & z_0
 \end{array}
 \] $$
 
@@ -99,8 +99,8 @@ addition, multiplication, and assignment to both its own type
 and to a double value.
 
 $children%
-    speed/example/mat_sum_sq.cpp%
-    omh/mat_sum_sq_hpp.omh
+   speed/example/mat_sum_sq.cpp%
+   omh/mat_sum_sq_hpp.omh
 %$$
 
 
@@ -121,24 +121,24 @@ $end
 # include <cstddef>
 //
 namespace CppAD {
-    template <class Vector>
-    void mat_sum_sq(size_t n, Vector& x , Vector& y , Vector& z)
-    {   size_t i, j, k;
-        // Very simple computation of y = x * x for speed comparison
-        for(i = 0; i < n; i++)
-        {   for(j = 0; j < n; j++)
-            {   y[i * n + j] = 0.;
-                for(k = 0; k < n; k++)
-                    y[i * n + j] += x[i * n + k] * x[k * n + j];
-            }
-        }
-        z[0] = 0.;
-        for(i = 0; i < n; i++)
-        {   for(j = 0; j < n; j++)
-                z[0] += y[i * n + j];
-        }
-        return;
-    }
+   template <class Vector>
+   void mat_sum_sq(size_t n, Vector& x , Vector& y , Vector& z)
+   {  size_t i, j, k;
+      // Very simple computation of y = x * x for speed comparison
+      for(i = 0; i < n; i++)
+      {  for(j = 0; j < n; j++)
+         {  y[i * n + j] = 0.;
+            for(k = 0; k < n; k++)
+               y[i * n + j] += x[i * n + k] * x[k * n + j];
+         }
+      }
+      z[0] = 0.;
+      for(i = 0; i < n; i++)
+      {  for(j = 0; j < n; j++)
+            z[0] += y[i * n + j];
+      }
+      return;
+   }
 
 }
 // END C++

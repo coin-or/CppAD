@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin list_setvec$$
 $spell
-    Namespace
-    CppAD
-    setvec
+   Namespace
+   CppAD
+   setvec
 $$
 
 $section Implement SetVector Using Singly Linked Lists$$
@@ -19,7 +19,7 @@ The public member function for the $code list_setvec$$ class implement the
 $cref SetVector$$ concept.
 
 $childtable%
-    include/cppad/local/sparse/list_setvec.hpp
+   include/cppad/local/sparse/list_setvec.hpp
 %$$
 
 $end

@@ -5,17 +5,17 @@
 # ----------------------------------------------------------------------------
 if [ $0 != "bin/sort_all.sh" ]
 then
-    echo "bin/sort_all.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/sort_all.sh: must be executed from its parent directory"
+   exit 1
 fi
 list=`git grep -l 'BEGIN_SORT_THIS_LINE_PLUS_' | sed \
-    -e '/\/makefile.in$/d' \
-    -e '\/^makefile.in$/d' \
-    -e '/\/sort_all.sh$/d' `
+   -e '/\/makefile.in$/d' \
+   -e '\/^makefile.in$/d' \
+   -e '/\/sort_all.sh$/d' `
 #
 for file in $list
 do
-    sort.sh $file
+   sort.sh $file
 done
 #
 # ----------------------------------------------------------------------------

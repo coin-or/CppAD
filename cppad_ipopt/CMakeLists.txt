@@ -8,9 +8,9 @@ SET(check_cppad_ipopt_depends "")
 
 # assert include_ipopt
 IF ( NOT include_ipopt )
-    MESSAGE(FATAL_ERROR
-        "include_ipopt is not on the cmake command line"
-    )
+   MESSAGE(FATAL_ERROR
+      "include_ipopt is not on the cmake command line"
+   )
 ENDIF ( NOT include_ipopt )
 
 # The CMakeLists.txt file in the specified source directory is processed

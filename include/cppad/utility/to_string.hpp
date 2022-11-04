@@ -8,11 +8,11 @@
 /*
 $begin to_string$$
 $spell
-    cppad.hpp
-    long long
-    std
-    const
-    ostringstream
+   cppad.hpp
+   long long
+   std
+   const
+   ostringstream
 $$
 
 $section Convert Certain Types to a String$$
@@ -51,7 +51,7 @@ $head value$$
 $subhead Integer$$
 The argument $icode value$$ can have the following prototype
 $codei%
-    const %Integer%&  %value%
+   const %Integer%&  %value%
 %$$
 where $icode Integer$$ is any of the fundamental integer types; e.g.,
 $code short int$$ and $code unsigned long$$.
@@ -61,7 +61,7 @@ $code unsigned long long$$ is also a fundamental integer type.
 $subhead Float$$
 The argument $icode value$$ can have the following prototype
 $codei%
-    const %Float%&  %value%
+   const %Float%&  %value%
 %$$
 where $icode Float$$ is any of the fundamental floating point types; i.e.,
 $code float$$, $code double$$, and $code long double$$.
@@ -69,7 +69,7 @@ $code float$$, $code double$$, and $code long double$$.
 $head s$$
 The return value has prototype
 $codei%
-    std::string %s%
+   std::string %s%
 %$$
 and contains a representation of the specified $icode value$$.
 
@@ -84,7 +84,7 @@ enough digits are used in the representation so that
 the result is accurate to withing round off error.
 
 $children%
-    example/utility/to_string.cpp
+   example/utility/to_string.cpp
 %$$
 $head Example$$
 The file $cref to_string.cpp$$
@@ -100,64 +100,64 @@ $end
 
 # define CPPAD_SPECIALIZE_TO_STRING_INTEGER(Type) \
 template <> struct to_string_struct<Type>\
-{   std::string operator()(const Type& value) \
-    {   std::stringstream os;\
-        os << value;\
-        return os.str();\
-    }\
+{  std::string operator()(const Type& value) \
+   {  std::stringstream os;\
+      os << value;\
+      return os.str();\
+   }\
 };
 
 # define CPPAD_SPECIALIZE_TO_STRING_FLOAT(Float) \
 template <> struct to_string_struct<Float>\
-{   std::string operator()(const Float& value) \
-    {   std::stringstream os;\
-        int n_digits = 1 + std::numeric_limits<Float>::digits10;\
-        os << std::setprecision(n_digits);\
-        os << value;\
-        return os.str();\
-    }\
+{  std::string operator()(const Float& value) \
+   {  std::stringstream os;\
+      int n_digits = 1 + std::numeric_limits<Float>::digits10;\
+      os << std::setprecision(n_digits);\
+      os << value;\
+      return os.str();\
+   }\
 };
 
 namespace CppAD {
 
-    // Default implementation,
-    // each type must define its own specilization.
-    template <class Type>
-    struct to_string_struct
-    {   std::string operator()(const Type& value)
-        {   CPPAD_ASSERT_KNOWN(
-                false,
-                "to_string is not implemented for this type"
-            );
-            // return empty string
-            return std::string("");
-        }
-    };
+   // Default implementation,
+   // each type must define its own specilization.
+   template <class Type>
+   struct to_string_struct
+   {  std::string operator()(const Type& value)
+      {  CPPAD_ASSERT_KNOWN(
+            false,
+            "to_string is not implemented for this type"
+         );
+         // return empty string
+         return std::string("");
+      }
+   };
 
-    // specialization for the fundamental integer types
-    CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed short)
-    CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned short)
-    //
-    CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed int)
-    CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned int)
-    //
-    CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed long)
-    CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned long)
-    //
-    CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed long long)
-    CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned long long)
+   // specialization for the fundamental integer types
+   CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed short)
+   CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned short)
+   //
+   CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed int)
+   CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned int)
+   //
+   CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed long)
+   CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned long)
+   //
+   CPPAD_SPECIALIZE_TO_STRING_INTEGER(signed long long)
+   CPPAD_SPECIALIZE_TO_STRING_INTEGER(unsigned long long)
 
-    // specialization for the fundamental floating point types
-    CPPAD_SPECIALIZE_TO_STRING_FLOAT(float)
-    CPPAD_SPECIALIZE_TO_STRING_FLOAT(double)
-    CPPAD_SPECIALIZE_TO_STRING_FLOAT(long double)
+   // specialization for the fundamental floating point types
+   CPPAD_SPECIALIZE_TO_STRING_FLOAT(float)
+   CPPAD_SPECIALIZE_TO_STRING_FLOAT(double)
+   CPPAD_SPECIALIZE_TO_STRING_FLOAT(long double)
 
-    // link from function to function object in structure
-    template<class Type>
-    std::string to_string(const Type& value)
-    {   to_string_struct<Type> to_str;
-        return to_str(value);
-    }
+   // link from function to function object in structure
+   template<class Type>
+   std::string to_string(const Type& value)
+   {  to_string_struct<Type> to_str;
+      return to_str(value);
+   }
 }
 
 # undef CPPAD_SPECIALIZE_TO_STRING_FLOAT

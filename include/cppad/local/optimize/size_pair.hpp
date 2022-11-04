@@ -16,8 +16,8 @@ namespace CppAD { namespace local { namespace optimize  {
 Information for one variable in one operation sequence.
 */
 struct struct_size_pair {
-    size_t i_op;  /// operator index for this variable
-    size_t i_var; /// variable index for this variable
+   size_t i_op;  /// operator index for this variable
+   size_t i_var; /// variable index for this variable
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

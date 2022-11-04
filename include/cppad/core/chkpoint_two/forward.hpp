@@ -37,30 +37,30 @@ See the forward mode in user's documentation for atomic_three
 */
 template <class Base>
 bool chkpoint_two<Base>::forward(
-    const vector<Base>&          parameter_x ,
-    const vector<ad_type_enum>&  type_x      ,
-    size_t                       need_y      ,
-    size_t                       order_low   ,
-    size_t                       order_up    ,
-    const vector<Base>&          taylor_x    ,
-    vector<Base>&                taylor_y    )
-{   ADFun<Base>* g_ptr = &g_;
-    if( use_in_parallel_ )
-    {   size_t thread = thread_alloc::thread_num();
-        allocate_member(thread);
-        g_ptr = &(member_[thread]->g_);
-    }
+   const vector<Base>&          parameter_x ,
+   const vector<ad_type_enum>&  type_x      ,
+   size_t                       need_y      ,
+   size_t                       order_low   ,
+   size_t                       order_up    ,
+   const vector<Base>&          taylor_x    ,
+   vector<Base>&                taylor_y    )
+{  ADFun<Base>* g_ptr = &g_;
+   if( use_in_parallel_ )
+   {  size_t thread = thread_alloc::thread_num();
+      allocate_member(thread);
+      g_ptr = &(member_[thread]->g_);
+   }
 # ifndef NDEBUG
-    else if( thread_alloc::in_parallel() )
-    {   std::string msg = atomic_three<Base>::atomic_name();
-        msg += ": use_in_parallel is false and in_parallel() is true";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
+   else if( thread_alloc::in_parallel() )
+   {  std::string msg = atomic_three<Base>::atomic_name();
+      msg += ": use_in_parallel is false and in_parallel() is true";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
 # endif
-    // compute forward mode results for all values and orders
-    taylor_y = g_ptr->Forward(order_up, taylor_x);
-    //
-    return true;
+   // compute forward mode results for all values and orders
+   taylor_y = g_ptr->Forward(order_up, taylor_x);
+   //
+   return true;
 }
 /*!
 Link from chkpoint_two to AD forward mode
@@ -90,33 +90,33 @@ See the forward mode in user's documentation for atomic_three
 */
 template <class Base>
 bool chkpoint_two<Base>::forward(
-    const vector< AD<Base> >&    aparameter_x ,
-    const vector<ad_type_enum>&  type_x       ,
-    size_t                       need_y       ,
-    size_t                       order_low    ,
-    size_t                       order_up     ,
-    const vector< AD<Base> >&    ataylor_x    ,
-    vector< AD<Base> >&          ataylor_y    )
-{   if( ! use_base2ad_ )
-        return false;
-    //
-    ADFun< AD<Base>, Base >* ag_ptr = &ag_;
-    if( use_in_parallel_ )
-    {   size_t thread = thread_alloc::thread_num();
-        allocate_member(thread);
-        ag_ptr = &(member_[thread]->ag_);
-    }
+   const vector< AD<Base> >&    aparameter_x ,
+   const vector<ad_type_enum>&  type_x       ,
+   size_t                       need_y       ,
+   size_t                       order_low    ,
+   size_t                       order_up     ,
+   const vector< AD<Base> >&    ataylor_x    ,
+   vector< AD<Base> >&          ataylor_y    )
+{  if( ! use_base2ad_ )
+      return false;
+   //
+   ADFun< AD<Base>, Base >* ag_ptr = &ag_;
+   if( use_in_parallel_ )
+   {  size_t thread = thread_alloc::thread_num();
+      allocate_member(thread);
+      ag_ptr = &(member_[thread]->ag_);
+   }
 # ifndef NDEBUG
-    else if( thread_alloc::in_parallel() )
-    {   std::string msg = atomic_three<Base>::atomic_name();
-        msg += ": use_in_parallel is false and in_parallel() is true";
-        CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-    }
+   else if( thread_alloc::in_parallel() )
+   {  std::string msg = atomic_three<Base>::atomic_name();
+      msg += ": use_in_parallel is false and in_parallel() is true";
+      CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+   }
 # endif
-    // compute forward mode results for all values and orders
-    ataylor_y = ag_ptr->Forward(order_up, ataylor_x);
-    //
-    return true;
+   // compute forward mode results for all values and orders
+   ataylor_y = ag_ptr->Forward(order_up, ataylor_x);
+   //
+   return true;
 }
 
 } // END_CPPAD_NAMESPACE

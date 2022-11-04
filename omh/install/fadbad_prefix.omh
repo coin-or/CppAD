@@ -5,12 +5,12 @@
 $begin fadbad_prefix$$
 $dollar @$$
 $spell
-    dir
-    CppAD
-    fadbad
-    cmake
-    badiff
-    includedirs
+   dir
+   CppAD
+   fadbad
+   cmake
+   badiff
+   includedirs
 $$
 
 $section Including Fadbad Speed Tests$$
@@ -30,7 +30,7 @@ The value of $icode fadbad_prefix$$ must be such that,
 for one of the directories $icode dir$$ in
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-    %fadbad_prefix%/%dir%/FADBAD++/badiff.h
+   %fadbad_prefix%/%dir%/FADBAD++/badiff.h
 %$$
 is a valid way to reference to the include file $code badiff.h$$;
 
@@ -40,8 +40,8 @@ you will be able to run the Fadbad speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-    cd build/speed/fadbad
-    make check_speed_fadbad
+   cd build/speed/fadbad
+   make check_speed_fadbad
 %$$
 After executing $code make check_speed_fadbad$$,
 you can run a specific Fadbad speed test

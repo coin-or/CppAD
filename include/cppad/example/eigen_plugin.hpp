@@ -7,8 +7,8 @@
 /*$
 $begin eigen_plugin.hpp$$
 $spell
-    eigen_plugin.hpp
-    typedef
+   eigen_plugin.hpp
+   typedef
 $$
 
 $section Source Code for eigen_plugin.hpp$$

@@ -5,9 +5,9 @@
 
 $begin det_by_minor.hpp$$
 $spell
-    det_by_minor
-    ifndef
-    endif
+   det_by_minor
+   ifndef
+   endif
 $$
 
 $section Source: det_by_minor$$

@@ -5,17 +5,17 @@
 /*
 $begin forward_binary_op$$
 $spell
-    const addr_t arg
-    subvp
-    Taylor
-    op
+   const addr_t arg
+   subvp
+   Taylor
+   op
 $$
 
 $section Variable Forward Binary Operators$$
 
 $head Syntax$$
 $codei%forward_%name%_op(
-    %p%, %q%, %i_z%, %arg%, %parameter% %cap_order%, %taylor%
+   %p%, %q%, %i_z%, %arg%, %parameter% %cap_order%, %taylor%
 )%$$
 
 $head Assumption$$
@@ -92,7 +92,7 @@ This argument has type $icode%Base%*%$$.
 The Taylor coefficient corresponding to
 variable $icode i$$ and order $icode k$$ is
 $codei%
-    %taylor%[ %i% * %cap_order% + %k% ]
+   %taylor%[ %i% * %cap_order% + %k% ]
 %$$.
 
 $subhead Input$$
@@ -113,17 +113,17 @@ $end
 ------------------------------------------------------------------------------
 $begin forward_binary_op_dir$$
 $spell
-    const addr_t arg
-    op
-    tpv
-    Taylor
+   const addr_t arg
+   op
+   tpv
+   Taylor
 $$
 
 $section Multiple Direction Forward Binary Operators$$
 
 $head Syntax$$
 $codei%forward_%name%_op(
-    %q%, %r%, %i_z%, %arg%, %parameter%, %cap_order%, %taylor%
+   %q%, %r%, %i_z%, %arg%, %parameter%, %cap_order%, %taylor%
 )%$$
 
 $head Assumption$$
@@ -192,7 +192,7 @@ is the maximum number of orders that will fit in $icode taylor$$.
 The zero order Taylor coefficient for a variable
 is the same for all directions.  We use the notation
 $codei%
-    %tpv% = (%cap_order% - 1) * r + 1
+   %tpv% = (%cap_order% - 1) * r + 1
 %$$
 which is the number of Taylor coefficients per variable.
 
@@ -200,14 +200,14 @@ $head taylor$$
 This argument has type $icode%Base%*%$$.
 The zero order Taylor coefficient for variable $icode i$$ is
 $codei%
-    %taylor%[ %i% * %tpv% + 0 ]
+   %taylor%[ %i% * %tpv% + 0 ]
 %$$.
 For $icode k > 0$$,
 and $icode%ell% = 0 , %..% , %r-1%$$,
 The Taylor coefficient for variable $icode i$$,
 order $icode k$$, and direction $icode ell$$ is
 $codei%
-    %taylor%[ %i% * %tpv% + (%k% - 1) * %r% + %ell% + 1 ]
+   %taylor%[ %i% * %tpv% + (%k% - 1) * %r% + %ell% + 1 ]
 %$$.
 
 $head Input$$
@@ -233,16 +233,16 @@ $end
 /*
 $begin forward_binary_op_0$$
 $spell
-    const addr_t arg
-    op
-    Taylor
+   const addr_t arg
+   op
+   Taylor
 $$
 
 $section Zero Order Forward Binary Operators$$
 
 $head Syntax$$
 $codei%forward_%name%_op_0(
-    %i_z%, %arg%, %parameter%, %cap_order%, %taylor%
+   %i_z%, %arg%, %parameter%, %cap_order%, %taylor%
 )%$$
 
 $head Assumption$$
@@ -305,7 +305,7 @@ This argument has type $icode%Base%*%$$.
 The Taylor coefficient corresponding to
 variable $icode i$$ and order $icode k$$ is
 $codei%
-    %taylor%[ %i% * %cap_order% + %k% ]
+   %taylor%[ %i% * %cap_order% + %k% ]
 %$$.
 
 $subhead Input$$
@@ -322,11 +322,11 @@ $end
 /*
 $begin reverse_binary_op$$
 $spell
-    const addr_ arg
-    op
-    Taylor
-    nc
-    const
+   const addr_ arg
+   op
+   Taylor
+   nc
+   const
 $$
 
 $section Reverse Binary Operators$$
@@ -361,7 +361,7 @@ $subhead H$$
 We use $latex H(y, x, w, \ldots )$$ to denote the scalar valued function
 of the variables up to variable index $icode%i_z%-1%$$ defined by
 $latex \[
-    H(y, x, w, \ldots ) = G [ z(x, y), y, x, w, \ldots ) ]
+   H(y, x, w, \ldots ) = G [ z(x, y), y, x, w, \ldots ) ]
 \]$$
 
 $head Base$$
@@ -412,7 +412,7 @@ This argument has type $codei%const %Base%*%$$.
 The Taylor coefficient corresponding to
 variable $icode i$$ and order $icode k$$ is
 $codei%
-    %taylor%[ %i% * %cap_order% + %k% ]
+   %taylor%[ %i% * %cap_order% + %k% ]
 %$$.
 
 $head nc_partial$$
@@ -424,7 +424,7 @@ This argument has type $icode%Base%*%$$.
 The partial derivative w.r.t. variable $icode i$$ and
 Taylor coefficient of order $icode k$$ is
 $code%
-    %partial% [ %i% * %nc_partial% + k ]
+   %partial% [ %i% * %nc_partial% + k ]
 %$$
 for $icode%k% = 0 , %...%, %d%$$.
 

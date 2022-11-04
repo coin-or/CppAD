@@ -5,16 +5,16 @@
 $begin colpack_prefix$$
 $dollar @$$
 $spell
-    datadir
-    cppad.hpp
-    namespace
-    std
-    CppAD
-    includedirs
-    colpack
-    cmake
-    dir
-    Jacobians
+   datadir
+   cppad.hpp
+   namespace
+   std
+   CppAD
+   includedirs
+   colpack
+   cmake
+   dir
+   Jacobians
 $$
 
 $section Enabling Colpack Sparsity Calculations$$
@@ -36,14 +36,14 @@ The value of $icode colpack_prefix$$ must be such that,
 for one of the directories $icode dir$$ in
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-    %colpack_prefix%/%dir%/ColPack/ColPackHeaders.h
+   %colpack_prefix%/%dir%/ColPack/ColPackHeaders.h
 %$$
 is a valid way to reference to the include file $code ColPackHeaders.h$$.
 
 $head cppad_lib$$
 The Colpack header files has a
 $codei%
-    using namespace std
+   using namespace std
 %$$
 at the global level.
 For this reason, CppAD does not include these files.
@@ -51,9 +51,9 @@ It is therefore necessary to link the object library $code cppad_lib$$
 when using Colpack.
 
 $children%example/sparse/colpack_jac.cpp
-    %example/sparse/colpack_jacobian.cpp
-    %example/sparse/colpack_hes.cpp
-    %example/sparse/colpack_hessian.cpp
+   %example/sparse/colpack_jacobian.cpp
+   %example/sparse/colpack_hes.cpp
+   %example/sparse/colpack_hessian.cpp
 %$$
 $head Example$$
 The file $cref colpack_jac.cpp$$ ($cref colpack_hes.cpp$$)

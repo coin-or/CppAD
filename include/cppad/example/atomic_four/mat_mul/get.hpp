@@ -7,7 +7,7 @@
 /*
 $begin atomic_four_mat_mul_get.hpp$$
 $spell
-    mul
+   mul
 $$
 
 $section atomic_mat_mul Get Routine: Example Implementation$$
@@ -46,22 +46,22 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Base>
 void atomic_mat_mul<Base>::get(
-    size_t call_id, size_t& n_left, size_t& n_middle, size_t& n_right
+   size_t call_id, size_t& n_left, size_t& n_middle, size_t& n_right
 )
 // END PROTOTYPE
 {
-    // thread
-    size_t thread = thread_alloc::thread_num();
-    assert( work_[thread] != nullptr );
-    assert( thread == (*work_[thread])[call_id].thread );
-    //
-    // n_left, n_middle, n_right
-    call_struct& call = (*work_[thread])[call_id];
-    n_left   = call.n_left;
-    n_middle = call.n_middle;
-    n_right  = call.n_right;
-    //
-    return;
+   // thread
+   size_t thread = thread_alloc::thread_num();
+   assert( work_[thread] != nullptr );
+   assert( thread == (*work_[thread])[call_id].thread );
+   //
+   // n_left, n_middle, n_right
+   call_struct& call = (*work_[thread])[call_id];
+   n_left   = call.n_left;
+   n_middle = call.n_middle;
+   n_right  = call.n_right;
+   //
+   return;
 }
 } // END_CPPAD_NAMESPACE
 // END C++

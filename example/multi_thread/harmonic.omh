@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 $begin harmonic.cpp$$
 $spell
-    cpp
+   cpp
 $$
 
 $section Multi-Threading Harmonic Summation Example / Test$$
@@ -12,7 +12,7 @@ $section Multi-Threading Harmonic Summation Example / Test$$
 $head Source File$$
 All of the routines below are located in the file
 $codep
-    example/multi_thread/harmonic.cpp
+   example/multi_thread/harmonic.cpp
 $$
 
 $childtable%example/multi_thread/harmonic.cpp%$$

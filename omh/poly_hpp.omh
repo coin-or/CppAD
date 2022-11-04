@@ -5,9 +5,9 @@
 
 $begin poly.hpp$$
 $spell
-    Lu
-    ifndef
-    endif
+   Lu
+   ifndef
+   endif
 $$
 
 $section Source: Poly$$

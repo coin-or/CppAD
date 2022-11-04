@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin lp_box.hpp$$
 $spell
-    lp
+   lp
 $$
 
 $section lp_box Source Code$$
 
 $srcfile%example/abs_normal/lp_box.hpp%
-    0%// BEGIN C++%// END C++%
+   0%// BEGIN C++%// END C++%
 0%$$
 
 $end

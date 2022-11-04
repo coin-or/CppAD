@@ -5,16 +5,16 @@
 /*
 $begin double_ode.cpp$$
 $spell
-    onetape
-    Jacobian
-    CppAD
-    cppad
-    hpp
-    bool
-    cstring
-    retape
-    resize
-    endif
+   onetape
+   Jacobian
+   CppAD
+   cppad
+   hpp
+   bool
+   cstring
+   retape
+   resize
+   endif
 $$
 
 $section Double Speed: Ode Solution$$
@@ -36,35 +36,35 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_ode(
-    size_t                     size       ,
-    size_t                     repeat     ,
-    CppAD::vector<double>      &x         ,
-    CppAD::vector<double>      &jacobian
+   size_t                     size       ,
+   size_t                     repeat     ,
+   CppAD::vector<double>      &x         ,
+   CppAD::vector<double>      &jacobian
 )
 {
-    if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
-        return false;
-    // -------------------------------------------------------------
-    // setup
-    assert( x.size() == size );
+   if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
+      return false;
+   // -------------------------------------------------------------
+   // setup
+   assert( x.size() == size );
 
-    size_t n = size;
+   size_t n = size;
 
-    size_t m = 0;
-    CppAD::vector<double> f(n);
+   size_t m = 0;
+   CppAD::vector<double> f(n);
 
-    while(repeat--)
-    {   // choose next x value
-        uniform_01(n, x);
+   while(repeat--)
+   {  // choose next x value
+      uniform_01(n, x);
 
-        // evaluate function
-        CppAD::ode_evaluate(x, m, f);
+      // evaluate function
+      CppAD::ode_evaluate(x, m, f);
 
-    }
-    size_t i;
-    for(i = 0; i < n; i++)
-        jacobian[i] = f[i];
-    return true;
+   }
+   size_t i;
+   for(i = 0; i < n; i++)
+      jacobian[i] = f[i];
+   return true;
 }
 /* %$$
 $end

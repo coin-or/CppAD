@@ -6,74 +6,74 @@
 $begin cmake$$
 $escape $$
 $spell
-    bitwise
-    Wno
-    github
-    Rel
-    cppadcg
-    msys
-    Hsc
-    autotools
-    mkdir
-    vcvarsall
-    cstdint
-    uint
-    pkgconfig
-    ctor
-    op
-    arg
-    sizeof
-    testvector
-    std
-    Wshadow
-    namespace
-    adouble
-    colpack
-    dir
-    makefile
-    usr
-    hpp
-    xml
-    ipopt
-    libcppad
-    CppAD
-    txt
-    Microsoft
-    Makefiles
-    cmake
-    Dcmake
-    cppad
-    adolc
-    boost
-    eigen
-    fadbad
-    sacado
-    datadir
-    docdir
-    includedirs
-    libdirs
-    cxx
-    max num
-    postfix
-    id
-    addr
-    grep
-    VecAD
-    minsys
-    mingw
-    pacman
-    gcc
-    yyyymmdd
-    yyyy
-    mm
-    dd
-    dylib
-    gprof
-    sed
-    rmdir
-    nmake
-    exe
-    config
+   bitwise
+   Wno
+   github
+   Rel
+   cppadcg
+   msys
+   Hsc
+   autotools
+   mkdir
+   vcvarsall
+   cstdint
+   uint
+   pkgconfig
+   ctor
+   op
+   arg
+   sizeof
+   testvector
+   std
+   Wshadow
+   namespace
+   adouble
+   colpack
+   dir
+   makefile
+   usr
+   hpp
+   xml
+   ipopt
+   libcppad
+   CppAD
+   txt
+   Microsoft
+   Makefiles
+   cmake
+   Dcmake
+   cppad
+   adolc
+   boost
+   eigen
+   fadbad
+   sacado
+   datadir
+   docdir
+   includedirs
+   libdirs
+   cxx
+   max num
+   postfix
+   id
+   addr
+   grep
+   VecAD
+   minsys
+   mingw
+   pacman
+   gcc
+   yyyymmdd
+   yyyy
+   mm
+   dd
+   dylib
+   gprof
+   sed
+   rmdir
+   nmake
+   exe
+   config
 $$
 
 $section Using CMake to Configure CppAD$$
@@ -98,7 +98,7 @@ $head CMake Command$$
 $subhead Simple$$
 The simplest version of the $code cmake$$ command is
 $codei%
-    cmake ..
+   cmake ..
 %$$
 This assumes that you are starting in the $code build$$ directory
 (so that $code ..$$ refers to the distribution directory).
@@ -127,41 +127,41 @@ $subhead Options$$
 The full version of the command, with all its optional arguments is:
 $codei%
 cmake %%                                                                     \
-    -D CMAKE_VERBOSE_MAKEFILE=%cmake_verbose_makefile%                       \
-    -D CMAKE_BUILD_TYPE=%cmake_build_type%                                   \
-    -G %generator%                                                           \
-    \
-    -D cppad_prefix=%cppad_prefix%                                           \
-    -D cppad_postfix=%cppad_postfix%                                         \
-    \
-    -D cmake_install_includedirs=%cmake_install_includedirs%                 \
-    -D cmake_install_libdirs=%cmake_install_libdirs%                         \
-    \
-    -D cmake_install_datadir=%cmake_install_datadir%                         \
-    -D cmake_install_docdir=%cmake_install_docdir%                           \
-    \
-    -D cmake_defined_ok=%cmake_defined_ok%                                   \
-    -D cmake_needs_dot_slash=%cmake_needs_dot_slash%                         \
-    \
-    -D include_adolc=%true_or_false%                                         \
-    -D include_eigen=%true_or_false%                                         \
-    -D include_ipopt=%true_or_false%                                         \
-    -D include_cppadcg=%true_or_false%                                       \
-    \
-    -D eigen_prefix=%eigen_prefix%
-    -D colpack_prefix=%colpack_prefix%                                       \
-    -D fadbad_prefix=%fadbad_prefix%                                         \
-    -D sacado_prefix=%sacado_prefix%                                         \
-    \
-    -D cppad_cxx_flags=%cppad_cxx_flags%                                     \
-    -D cppad_profile_flag=%cppad_profile_flag%                               \
-    -D cppad_testvector=%cppad_testvector%                                   \
-    -D cppad_max_num_threads=%cppad_max_num_threads%                         \
-    -D cppad_tape_id_type=%cppad_tape_id_type%                               \
-    -D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
-    -D cppad_debug_which=%cppad_debug_which%                                 \
-    \
-    ..
+   -D CMAKE_VERBOSE_MAKEFILE=%cmake_verbose_makefile%                       \
+   -D CMAKE_BUILD_TYPE=%cmake_build_type%                                   \
+   -G %generator%                                                           \
+   \
+   -D cppad_prefix=%cppad_prefix%                                           \
+   -D cppad_postfix=%cppad_postfix%                                         \
+   \
+   -D cmake_install_includedirs=%cmake_install_includedirs%                 \
+   -D cmake_install_libdirs=%cmake_install_libdirs%                         \
+   \
+   -D cmake_install_datadir=%cmake_install_datadir%                         \
+   -D cmake_install_docdir=%cmake_install_docdir%                           \
+   \
+   -D cmake_defined_ok=%cmake_defined_ok%                                   \
+   -D cmake_needs_dot_slash=%cmake_needs_dot_slash%                         \
+   \
+   -D include_adolc=%true_or_false%                                         \
+   -D include_eigen=%true_or_false%                                         \
+   -D include_ipopt=%true_or_false%                                         \
+   -D include_cppadcg=%true_or_false%                                       \
+   \
+   -D eigen_prefix=%eigen_prefix%
+   -D colpack_prefix=%colpack_prefix%                                       \
+   -D fadbad_prefix=%fadbad_prefix%                                         \
+   -D sacado_prefix=%sacado_prefix%                                         \
+   \
+   -D cppad_cxx_flags=%cppad_cxx_flags%                                     \
+   -D cppad_profile_flag=%cppad_profile_flag%                               \
+   -D cppad_testvector=%cppad_testvector%                                   \
+   -D cppad_max_num_threads=%cppad_max_num_threads%                         \
+   -D cppad_tape_id_type=%cppad_tape_id_type%                               \
+   -D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
+   -D cppad_debug_which=%cppad_debug_which%                                 \
+   \
+   ..
 %$$
 
 $subhead msys2$$
@@ -175,12 +175,12 @@ $subhead Visual Studio$$
 $list number$$
 Launch the Visual Studio
 $href%https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs%
-    developer command prompt
+   developer command prompt
 %$$
 $lnext
 Use the command
 $codep
-    where cmake.exe
+   where cmake.exe
 $$
 to see if $code cmake.exe$$ comes with your version of Visual Studio.
 If not, download and install the win64-x64 version of
@@ -201,15 +201,15 @@ $subhead autotools$$
 The autotools build with the Visual Studio compiler should work
 with the following configure and test commands
 $codep
-    mkdir build
-    cd build
-    ../configure CC=cl CXX=cl CXX_FLAGS="-DEBUG"
-    make test
+   mkdir build
+   cd build
+   ../configure CC=cl CXX=cl CXX_FLAGS="-DEBUG"
+   make test
 $$
 An optimized versions was tested using
 $codep
-    ../configure CXX=cl CC=cl CXX_FLAGS="-DNDEBUG -O2 -EHsc"
-    make test
+   ../configure CXX=cl CC=cl CXX_FLAGS="-DNDEBUG -O2 -EHsc"
+   make test
 $$
 The commands above need to be run a Dos window,
 that has the $code vcvarsall.bat$$ settings,
@@ -224,7 +224,7 @@ by this command. If you have the $code grep$$ program,
 and store the output in $code cmake.log$$, you can get a list of
 all the test options with the command:
 $codep
-    grep 'make check' cmake.log
+   grep 'make check' cmake.log
 $$
 
 $head cmake_verbose_makefile$$
@@ -271,7 +271,7 @@ $head cppad_prefix$$
 This is the top level absolute path below which
 all of the CppAD files are installed by the command
 $codei%
-    make install
+   make install
 %$$
 For example,
 if $icode cppad_prefix$$ is $code /usr$$,
@@ -279,7 +279,7 @@ $icode cmake_install_includedirs$$ is $code include$$, and
 $icode cppad_postfix$$ is not specified,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
-    /usr/include/cppad/cppad.hpp
+   /usr/include/cppad/cppad.hpp
 %$$
 The default value for $icode cppad_prefix$$ is the value of
 $icode CMAKE_INSTALL_PREFIX$$; see the cmake documentation.
@@ -295,7 +295,7 @@ $icode cmake_install_includedirs$$ is $code include$$, and
 $icode cppad_postfix$$ is $code coin-or$$,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
-    /usr/include/coin-or/cppad/cppad.hpp
+   /usr/include/coin-or/cppad/cppad.hpp
 %$$
 The default value for $icode cppad_postfix$$ is empty; i.e,
 there is no bottom level relative directory for the installed files.
@@ -313,7 +313,7 @@ $icode cmake_install_includedirs$$ is $code include$$, and
 $icode cppad_postfix$$ is not specified,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
-    /usr/include/cppad/cppad.hpp
+   /usr/include/cppad/cppad.hpp
 %$$
 The default value for this directory list is $code include$$.
 
@@ -333,7 +333,7 @@ $icode cmake_install_libdirs$$ is $code lib$$,
 $icode cppad_postfix$$ is not specified,
 the CppAD library is installed in
 $codei%
-    /usr/lib/libcppad_lib.%ext%.%major%.%release%
+   /usr/lib/libcppad_lib.%ext%.%major%.%release%
 %$$
 Here $icode major$$ is the major library version number,
 $icode release$$ is the release number for this version,
@@ -341,12 +341,12 @@ and $icode ext$$ is the extension for shared libraries on this system.
 If $icode yyyymmdd$$ is the CppAD $cref/version/download/Version/$$ number,
 the major CppAD library version number is
 $codei%
-    %major% = %dd% - 1 + 31 * ( %mm% - 1 + 12 * ( %yyyy% - 2019) )
+   %major% = %dd% - 1 + 31 * ( %mm% - 1 + 12 * ( %yyyy% - 2019) )
 %$$
 If there is no $cref/release/download/Release/$$ for this version of CppAD,
 the CppAD library is installed in
 $codei%
-    /usr/lib/libcppad_lib.%ext%.%major%
+   /usr/lib/libcppad_lib.%ext%.%major%
 %$$
 The Mac is special, $icode ext$$ is $code dylib$$ and comes
 at the end of the file name for that system.
@@ -360,7 +360,7 @@ $icode cmake_install_datadir$$ is $code share$$, and
 $icode cppad_postfix$$ is not specified,
 the $cref pkgconfig$$ file $code cppad.pc$$ is installed in the location
 $codei%
-    /usr/share/pkgconfig/cppad.pc
+   /usr/share/pkgconfig/cppad.pc
 %$$
 The default value for $icode cmake_install_datadir$$ is $code share$$.
 
@@ -373,7 +373,7 @@ $icode cmake_install_docdir$$ is $code share/doc$$, and
 $icode cppad_postfix$$ is not specified,
 the file $code cppad.xml$$ is installed in the location
 $codei%
-    /usr/share/doc/cppad/cppad.xml
+   /usr/share/doc/cppad/cppad.xml
 %$$
 There is no default value for $icode cmake_install_docdir$$.
 If it is not specified, the documentation files are not installed.
@@ -442,7 +442,7 @@ These flags must be valid for the C++ compiler
 on your system.
 For example, if you are using $code g++$$ you could specify
 $codep
-    -D cppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++17 -Wshadow"
+   -D cppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++17 -Wshadow"
 $$
 $subhead C++17$$
 In order for the compiler to take advantage of features that are in C++17
@@ -454,9 +454,9 @@ and which to compile for release. Hence debug and release flags should
 not be included in $icode cppad_cxx_flags$$.
 See also the
 $cref/CPPAD_DEBUG_AND_RELEASE
-    /preprocessor
-    /Documented Here
-    /CPPAD_DEBUG_AND_RELEASE
+   /preprocessor
+   /Documented Here
+   /CPPAD_DEBUG_AND_RELEASE
 /$$
 compiler flag (which should not be included in $icode cppad_cxx_flags$$).
 
@@ -475,10 +475,10 @@ is present.
 If this flag is specified, you can run the gnu profiler with the following
 command:
 $codei%
-    cd build/speed/profile
-    make check_speed_profile
-    ./speed_profile %test seed option_list%
-    gprof -b speed_profile | sed -f gprof.sed
+   cd build/speed/profile
+   make check_speed_profile
+   ./speed_profile %test seed option_list%
+   gprof -b speed_profile | sed -f gprof.sed
 %$$
 
 $head cppad_testvector$$
@@ -506,7 +506,7 @@ The smaller the value of $codei%sizeof(%cppad_tape_id_type%)%$$,
 the less memory is used.
 On the other hand, the value
 $codei%
-    std::numeric_limits<%cppad_tape_id_type%>::max()
+   std::numeric_limits<%cppad_tape_id_type%>::max()
 %$$
 must be larger than the maximum number of tapes used by one thread times
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$.
@@ -531,7 +531,7 @@ The smaller the value of $codei%sizeof(%cppad_tape_addr_type%)%$$,
 the less memory is used.
 On the other hand, the value
 $codei%
-    std::numeric_limits<%cppad_tape_addr_type%>::max()
+   std::numeric_limits<%cppad_tape_addr_type%>::max()
 %$$
 must be larger than any of the following:
 $cref/size_op/fun_property/size_op/$$,
@@ -565,15 +565,15 @@ If $code CMAKE_BUILD_TYPE$$ is specified on the command line,
 then $icode cppad_debug_which$$ must be the empty string (its default value).
 
 $children%
-    bin/get_optional.sh%
-    omh/install/adolc.omh%
-    omh/install/eigen.omh%
-    omh/install/cppadcg.omh%
-    omh/install/ipopt.omh%
-    omh/install/fadbad_prefix.omh%
-    omh/install/sacado_prefix.omh%
-    omh/install/colpack_prefix.omh%
-    omh/install/testvector.omh
+   bin/get_optional.sh%
+   omh/install/adolc.omh%
+   omh/install/eigen.omh%
+   omh/install/cppadcg.omh%
+   omh/install/ipopt.omh%
+   omh/install/fadbad_prefix.omh%
+   omh/install/sacado_prefix.omh%
+   omh/install/colpack_prefix.omh%
+   omh/install/testvector.omh
 %$$
 
 

@@ -7,7 +7,7 @@ $begin cpp_graph$$
 $section A C++ AD Graph Class$$
 
 $childtable%
-    include/cppad/core/graph/cpp_graph.hpp
+   include/cppad/core/graph/cpp_graph.hpp
 %$$
 
 $end

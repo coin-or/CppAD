@@ -5,8 +5,8 @@
 /*
 $begin xpackage_det_lu.cpp$$
 $spell
-    xpackage
-    Lu
+   xpackage
+   Lu
 $$
 
 $section Xpackage Speed: Gradient of Determinant Using Lu Factorization$$
@@ -25,11 +25,11 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_det_lu(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &matrix   ,
-    CppAD::vector<double>     &gradient )
-{   return false; }
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &matrix   ,
+   CppAD::vector<double>     &gradient )
+{  return false; }
 /* %$$
 $end
 */

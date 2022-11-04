@@ -7,16 +7,16 @@ $begin atomic_four_mat_mul_implement$$
 $section Implementing Atomic Matrix Multiply$$
 
 $childtable%
-    include/cppad/example/atomic_four/mat_mul/mat_mul.hpp
-    %include/cppad/example/atomic_four/mat_mul/set.hpp
-    %include/cppad/example/atomic_four/mat_mul/get.hpp
-    %include/cppad/example/atomic_four/mat_mul/base_mat_mul.hpp
-    %include/cppad/example/atomic_four/mat_mul/for_type.hpp
-    %include/cppad/example/atomic_four/mat_mul/forward.hpp
-    %include/cppad/example/atomic_four/mat_mul/reverse.hpp
-    %include/cppad/example/atomic_four/mat_mul/jac_sparsity.hpp
-    %include/cppad/example/atomic_four/mat_mul/hes_sparsity.hpp
-    %include/cppad/example/atomic_four/mat_mul/rev_depend.hpp
+   include/cppad/example/atomic_four/mat_mul/mat_mul.hpp
+   %include/cppad/example/atomic_four/mat_mul/set.hpp
+   %include/cppad/example/atomic_four/mat_mul/get.hpp
+   %include/cppad/example/atomic_four/mat_mul/base_mat_mul.hpp
+   %include/cppad/example/atomic_four/mat_mul/for_type.hpp
+   %include/cppad/example/atomic_four/mat_mul/forward.hpp
+   %include/cppad/example/atomic_four/mat_mul/reverse.hpp
+   %include/cppad/example/atomic_four/mat_mul/jac_sparsity.hpp
+   %include/cppad/example/atomic_four/mat_mul/hes_sparsity.hpp
+   %include/cppad/example/atomic_four/mat_mul/rev_depend.hpp
 %$$
 
 $end

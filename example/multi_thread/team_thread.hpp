@@ -7,16 +7,16 @@
 /*
 $begin team_thread.hpp$$
 $spell
-    pthreads
-    const
-    cstddef
-    bool
-    pthread
-    initializes
-    hpp
-    num
-    CppAD
-    ta
+   pthreads
+   const
+   cstddef
+   bool
+   pthread
+   initializes
+   hpp
+   num
+   CppAD
+   ta
 $$
 $section Specifications for A Team of AD Threads$$
 
@@ -70,14 +70,14 @@ $head team_destroy$$
 This routine terminates all the other threads except for
 thread number zero; i.e., it terminates the threads corresponding to
 $codei%
-    %thread_num% = 1 , ... , %num_threads%-1
+   %thread_num% = 1 , ... , %num_threads%-1
 %$$
 
 $head team_name$$
 This routines returns a name that identifies this thread_team.
 The return value has prototype
 $codei%
-    const char* %name%
+   const char* %name%
 %$$
 and is a statically allocated $code '\0'$$ terminated C string.
 
@@ -88,9 +88,9 @@ corresponding call.
 Otherwise it is $code true$$.
 
 $children%
-    example/multi_thread/openmp/team_openmp.cpp%
-    example/multi_thread/bthread/team_bthread.cpp%
-    example/multi_thread/pthread/team_pthread.cpp
+   example/multi_thread/openmp/team_openmp.cpp%
+   example/multi_thread/bthread/team_bthread.cpp%
+   example/multi_thread/pthread/team_pthread.cpp
 %$$
 
 $head Example Use$$

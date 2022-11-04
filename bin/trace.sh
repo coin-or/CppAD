@@ -5,8 +5,8 @@
 # ----------------------------------------------------------------------------
 if [ $0 != "bin/trace.sh" ]
 then
-    echo "bin/trace.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/trace.sh: must be executed from its parent directory"
+   exit 1
 fi
 file="include/cppad/local/sweep/$1"
 option="$2"
@@ -14,22 +14,22 @@ option="$2"
 ok='yes'
 if [ "$option" != '0' ] && [ "$option" != '1' ]
 then
-    ok='no'
+   ok='no'
 fi
 if [ "$ok" == 'yes' ]
 then
-    if ! grep '_TRACE [01]' $file > /dev/null
-    then
-        ok='no'
-    fi
+   if ! grep '_TRACE [01]' $file > /dev/null
+   then
+      ok='no'
+   fi
 fi
 if [ "$ok" == 'no' ]
 then
-    echo 'usage: bin/trace.sh file (0|1)'
-    echo 'Sets trace in file to off (0) or on (1) where the file is one of:'
-    grep -l '_TRACE [01]' include/cppad/local/sweep/*.hpp | \
-        sed -e 's|^include/cppad/local/sweep/||'
-    exit 1
+   echo 'usage: bin/trace.sh file (0|1)'
+   echo 'Sets trace in file to off (0) or on (1) where the file is one of:'
+   grep -l '_TRACE [01]' include/cppad/local/sweep/*.hpp | \
+      sed -e 's|^include/cppad/local/sweep/||'
+   exit 1
 fi
 old=`grep '_TRACE [01]' $file`
 sed -e "s|TRACE [01]|TRACE $option|" -i $file

@@ -6,7 +6,7 @@
 /*
 $begin opt_val_hes.cpp$$
 $spell
-    hes
+   hes
 $$
 
 $section opt_val_hes: Example and Test$$
@@ -45,9 +45,9 @@ Y(x) \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
 - \sum_{k=0}^{\ell-1} \sin ( x * t_k ) z_k
 \\
 Y(x) & = & \frac{
-    \sum_{k=0}^{\ell-1} \sin( x * t_k ) z_k
-    }{
-    \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
+   \sum_{k=0}^{\ell-1} \sin( x * t_k ) z_k
+   }{
+   \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
 }
 \end{array}
 \] $$
@@ -62,126 +62,126 @@ $end
 # include <cppad/cppad.hpp>
 
 namespace {
-    using CppAD::AD;
-    typedef CPPAD_TESTVECTOR(double)       BaseVector;
-    typedef CPPAD_TESTVECTOR(AD<double>) ADVector;
+   using CppAD::AD;
+   typedef CPPAD_TESTVECTOR(double)       BaseVector;
+   typedef CPPAD_TESTVECTOR(AD<double>) ADVector;
 
-    class Fun {
-    private:
-        const BaseVector t_;    // measurement times
-        const BaseVector z_;    // measurement values
-    public:
-        typedef ADVector ad_vector;
-        // constructor
-        Fun(const BaseVector &t, const BaseVector &z)
-        : t_(t) , z_(z)
-        {   assert( t.size() == z.size() ); }
-        // ell
-        size_t ell(void) const
-        {   return t_.size(); }
-        // Fun.s
-        AD<double> s(size_t k, const ad_vector& x, const ad_vector& y) const
-        {
-            AD<double> residual = y[0] * sin( x[0] * t_[k] ) - z_[k];
-            AD<double> s_k      = .5 * residual * residual;
+   class Fun {
+   private:
+      const BaseVector t_;    // measurement times
+      const BaseVector z_;    // measurement values
+   public:
+      typedef ADVector ad_vector;
+      // constructor
+      Fun(const BaseVector &t, const BaseVector &z)
+      : t_(t) , z_(z)
+      {  assert( t.size() == z.size() ); }
+      // ell
+      size_t ell(void) const
+      {  return t_.size(); }
+      // Fun.s
+      AD<double> s(size_t k, const ad_vector& x, const ad_vector& y) const
+      {
+         AD<double> residual = y[0] * sin( x[0] * t_[k] ) - z_[k];
+         AD<double> s_k      = .5 * residual * residual;
 
-            return s_k;
-        }
-        // Fun.sy
-        ad_vector sy(size_t k, const ad_vector& x, const ad_vector& y) const
-        {   assert( y.size() == 1);
-            ad_vector sy_k(1);
+         return s_k;
+      }
+      // Fun.sy
+      ad_vector sy(size_t k, const ad_vector& x, const ad_vector& y) const
+      {  assert( y.size() == 1);
+         ad_vector sy_k(1);
 
-            AD<double> residual = y[0] * sin( x[0] * t_[k] ) - z_[k];
-            sy_k[0] = residual * sin( x[0] * t_[k] );
+         AD<double> residual = y[0] * sin( x[0] * t_[k] ) - z_[k];
+         sy_k[0] = residual * sin( x[0] * t_[k] );
 
-            return sy_k;
-        }
-    };
-    // Used to test calculation of Hessian of V
-    AD<double> V(const ADVector& x, const BaseVector& t, const BaseVector& z)
-    {   // compute Y(x)
-        AD<double> numerator = 0.;
-        AD<double> denominator = 0.;
-        size_t k;
-        for(k = 0; k < size_t(t.size()); k++)
-        {   numerator   += sin( x[0] * t[k] ) * z[k];
-            denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] );
-        }
-        AD<double> y = numerator / denominator;
+         return sy_k;
+      }
+   };
+   // Used to test calculation of Hessian of V
+   AD<double> V(const ADVector& x, const BaseVector& t, const BaseVector& z)
+   {  // compute Y(x)
+      AD<double> numerator = 0.;
+      AD<double> denominator = 0.;
+      size_t k;
+      for(k = 0; k < size_t(t.size()); k++)
+      {  numerator   += sin( x[0] * t[k] ) * z[k];
+         denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] );
+      }
+      AD<double> y = numerator / denominator;
 
-        // V(x) = F[x, Y(x)]
-        AD<double> sum = 0;
-        for(k = 0; k < size_t(t.size()); k++)
-        {   AD<double> residual = y * sin( x[0] * t[k] ) - z[k];
-            sum += .5 * residual * residual;
-        }
-        return sum;
-    }
+      // V(x) = F[x, Y(x)]
+      AD<double> sum = 0;
+      for(k = 0; k < size_t(t.size()); k++)
+      {  AD<double> residual = y * sin( x[0] * t[k] ) - z[k];
+         sum += .5 * residual * residual;
+      }
+      return sum;
+   }
 }
 
 bool opt_val_hes(void)
-{   bool ok = true;
-    using CppAD::AD;
-    using CppAD::NearEqual;
+{  bool ok = true;
+   using CppAD::AD;
+   using CppAD::NearEqual;
 
-    // temporary indices
-    size_t j, k;
+   // temporary indices
+   size_t j, k;
 
-    // x space vector
-    size_t n = 1;
-    BaseVector x(n);
-    x[0] = 2. * 3.141592653;
+   // x space vector
+   size_t n = 1;
+   BaseVector x(n);
+   x[0] = 2. * 3.141592653;
 
-    // y space vector
-    size_t m = 1;
-    BaseVector y(m);
-    y[0] = 1.;
+   // y space vector
+   size_t m = 1;
+   BaseVector y(m);
+   y[0] = 1.;
 
-    // t and z vectors
-    size_t ell = 10;
-    BaseVector t(ell);
-    BaseVector z(ell);
-    for(k = 0; k < ell; k++)
-    {   t[k] = double(k) / double(ell);       // time of measurement
-        z[k] = y[0] * sin( x[0] * t[k] );     // data without noise
-    }
+   // t and z vectors
+   size_t ell = 10;
+   BaseVector t(ell);
+   BaseVector z(ell);
+   for(k = 0; k < ell; k++)
+   {  t[k] = double(k) / double(ell);       // time of measurement
+      z[k] = y[0] * sin( x[0] * t[k] );     // data without noise
+   }
 
-    // construct the function object
-    Fun fun(t, z);
+   // construct the function object
+   Fun fun(t, z);
 
-    // evaluate the Jacobian and Hessian
-    BaseVector jac(n), hes(n * n);
+   // evaluate the Jacobian and Hessian
+   BaseVector jac(n), hes(n * n);
 # ifndef NDEBUG
-    int signdet =
+   int signdet =
 # endif
-    CppAD::opt_val_hes(x, y, fun, jac, hes);
+   CppAD::opt_val_hes(x, y, fun, jac, hes);
 
-    // we know that F_yy is positive definate for this case
-    assert( signdet == 1 );
+   // we know that F_yy is positive definate for this case
+   assert( signdet == 1 );
 
-    // create ADFun object g corresponding to V(x)
-    ADVector a_x(n), a_v(1);
-    for(j = 0; j < n; j++)
-        a_x[j] = x[j];
-    Independent(a_x);
-    a_v[0] = V(a_x, t, z);
-    CppAD::ADFun<double> g(a_x, a_v);
+   // create ADFun object g corresponding to V(x)
+   ADVector a_x(n), a_v(1);
+   for(j = 0; j < n; j++)
+      a_x[j] = x[j];
+   Independent(a_x);
+   a_v[0] = V(a_x, t, z);
+   CppAD::ADFun<double> g(a_x, a_v);
 
-    // accuracy for checks
-    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
+   // accuracy for checks
+   double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
-    // check Jacobian
-    BaseVector check_jac = g.Jacobian(x);
-    for(j = 0; j < n; j++)
-        ok &= NearEqual(jac[j], check_jac[j], eps, eps);
+   // check Jacobian
+   BaseVector check_jac = g.Jacobian(x);
+   for(j = 0; j < n; j++)
+      ok &= NearEqual(jac[j], check_jac[j], eps, eps);
 
-    // check Hessian
-    BaseVector check_hes = g.Hessian(x, 0);
-    for(j = 0; j < n*n; j++)
-        ok &= NearEqual(hes[j], check_hes[j], eps, eps);
+   // check Hessian
+   BaseVector check_hes = g.Hessian(x, 0);
+   for(j = 0; j < n*n; j++)
+      ok &= NearEqual(hes[j], check_hes[j], eps, eps);
 
-    return ok;
+   return ok;
 }
 
 // END C++

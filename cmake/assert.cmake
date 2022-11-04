@@ -11,8 +11,8 @@
 #
 MACRO(assert variable)
      IF( NOT ${variable} )
-        MESSAGE(FATAL_ERROR
-            "Error: ${variable} is false in ${CMAKE_CURRENT_LIST_FILE}"
-        )
+      MESSAGE(FATAL_ERROR
+         "Error: ${variable} is false in ${CMAKE_CURRENT_LIST_FILE}"
+      )
      ENDIF( NOT ${variable} )
 ENDMACRO(assert)

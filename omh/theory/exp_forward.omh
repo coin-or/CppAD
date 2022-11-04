@@ -5,9 +5,9 @@
 
 $begin exp_forward$$
 $spell
-    exp
-    expm1
-    Taylor
+   exp
+   expm1
+   Taylor
 $$
 
 $section Exponential Function Forward Mode Theory$$
@@ -21,17 +21,17 @@ $latex \[
 d^{(0)}
 =
 \left\{ \begin{array}{ll}
-    0 & \R{if} \; F(x) = \R{exp}(x)
-    \\
-    1 & \R{if} \; F(x) = \R{expm1}(x)
+   0 & \R{if} \; F(x) = \R{exp}(x)
+   \\
+   1 & \R{if} \; F(x) = \R{expm1}(x)
 \end{array} \right.
 \] $$
 where the equation above defines $latex d^{(0)}$$.
 In the
 $cref/standard math function differential equation
-    /ForwardTheory
-    /Standard Math Functions
-    /Differential Equation
+   /ForwardTheory
+   /Standard Math Functions
+   /Differential Equation
 /$$,
 $latex A(x) = 1$$,
 $latex B(x) = 1$$,
@@ -59,12 +59,12 @@ e^{(j+1)}
 \\
 z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-    \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
-    - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+   - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \\
 & = & x^{(j+1)} d^{(0)}
-    + \frac{1}{j+1} \sum_{k=1}^{j+1} k x^{(k)} z^{(j+1-k)}
+   + \frac{1}{j+1} \sum_{k=1}^{j+1} k x^{(k)} z^{(j+1-k)}
 \end{array}
 \] $$
 

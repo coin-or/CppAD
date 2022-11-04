@@ -16,22 +16,22 @@ First generation checkpoint functions.
 /*
 $begin chkpoint_one$$
 $spell
-    mul
-    chkpoint
-    alloc
-    inuse
-    sv
-    var
-    cppad.hpp
-    CppAD
-    checkpoint
-    checkpointing
-    algo
-    atom_fun
-    const
-    enum
-    bool
-    recomputed
+   mul
+   chkpoint
+   alloc
+   inuse
+   sv
+   var
+   cppad.hpp
+   CppAD
+   checkpoint
+   checkpointing
+   algo
+   atom_fun
+   const
+   enum
+   bool
+   recomputed
 $$
 
 $section Checkpoint Functions: First Generation$$
@@ -42,7 +42,7 @@ Use $cref chkpoint_two$$ instead.
 
 $head Syntax$$
 $codei%checkpoint<%Base%> %atom_fun%(
-    %name%, %algo%, %ax%, %ay%, %sparsity%, %optimize%
+   %name%, %algo%, %ax%, %ay%, %sparsity%, %optimize%
 )
 %sv% = %atom_fun%.size_var()
 %atom_fun%.option(%option_value%)
@@ -102,7 +102,7 @@ instead of user provided derivatives.
 $head constructor$$
 The syntax for the checkpoint constructor is
 $codei%
-    checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%)
+   checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%)
 %$$
 $list number$$
 This constructor cannot be called in $cref/parallel/ta_in_parallel/$$ mode.
@@ -129,7 +129,7 @@ $codei%AD<%Base%>%$$.
 $head name$$
 This $icode checkpoint$$ constructor argument has prototype
 $codei%
-    const char* %name%
+   const char* %name%
 %$$
 It is the name used for error reporting.
 The suggested value for $icode name$$ is $icode atom_fun$$; i.e.,
@@ -138,7 +138,7 @@ the same name as used for the object being constructed.
 $head ax$$
 This argument has prototype
 $codei%
-    const %ADVector%& %ax%
+   const %ADVector%& %ax%
 %$$
 and size must be equal to $icode n$$.
 It specifies vector $latex x \in \B{R}^n$$
@@ -148,7 +148,7 @@ $latex y = f(x)$$ is to be evaluated.
 $head ay$$
 This argument has prototype
 $codei%
-    %ADVector%& %ay%
+   %ADVector%& %ay%
 %$$
 Its input size must be equal to $icode m$$ and does not change.
 The input values of its elements do not matter.
@@ -158,7 +158,7 @@ $latex y = f(x)$$.
 $head sparsity$$
 This argument has prototype
 $codei%
-    atomic_base<%Base%>::option_enum %sparsity%
+   atomic_base<%Base%>::option_enum %sparsity%
 %$$
 It specifies $cref/sparsity/atomic_two_ctor/atomic_base/sparsity/$$
 in the $code atomic_base$$ constructor and must be either
@@ -170,7 +170,7 @@ This argument is optional and its default value is unspecified.
 $head optimize$$
 This argument has prototype
 $codei%
-    bool %optimize%
+   bool %optimize%
 %$$
 It specifies if the recording corresponding to the atomic function
 should be $cref/optimized/optimize/$$.
@@ -185,7 +185,7 @@ This argument is optional and its default value is true.
 $head size_var$$
 This $code size_var$$ member function return value has prototype
 $codei%
-    size_t %sv%
+   size_t %sv%
 %$$
 It is the $cref/size_var/fun_property/size_var/$$ for the
 $codei%ADFun<%Base%>%$$ object is used to store the operation sequence
@@ -201,7 +201,7 @@ $head algo$$
 The type of $icode algo$$ is arbitrary, except for the fact that
 the syntax
 $codei%
-    %algo%(%ax%, %ay%)
+   %algo%(%ax%, %ay%)
 %$$
 must evaluate the function $latex y = f(x)$$ using
 $codei%AD<%Base%>%$$ operations.
@@ -249,352 +249,352 @@ template <class Base>
 class checkpoint : public atomic_base<Base> {
 // ---------------------------------------------------------------------------
 private:
-    /// same as option_enum in base class
-    typedef typename atomic_base<Base>::option_enum option_enum;
-    //
-    // ------------------------------------------------------------------------
-    // member_
-    // ------------------------------------------------------------------------
-    // same checkpoint object can be used by multiple threads
-    struct member_struct {
-        //
-        /// AD function corresponding to this checkpoint object
-        ADFun<Base>             f_;
-        ADFun< AD<Base>, Base > af_;
-        //
-        /// sparsity for entire Jacobian f(x)^{(1)}
-        /// does not change so can cache it
-        local::sparse::list_setvec jac_sparse_set_;
-        vectorBool                 jac_sparse_bool_;
-        //
-        /// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
-        local::sparse::list_setvec hes_sparse_set_;
-        vectorBool                 hes_sparse_bool_;
-    };
-    /// This version of work is const except during constructor
-    member_struct const_member_;
+   /// same as option_enum in base class
+   typedef typename atomic_base<Base>::option_enum option_enum;
+   //
+   // ------------------------------------------------------------------------
+   // member_
+   // ------------------------------------------------------------------------
+   // same checkpoint object can be used by multiple threads
+   struct member_struct {
+      //
+      /// AD function corresponding to this checkpoint object
+      ADFun<Base>             f_;
+      ADFun< AD<Base>, Base > af_;
+      //
+      /// sparsity for entire Jacobian f(x)^{(1)}
+      /// does not change so can cache it
+      local::sparse::list_setvec jac_sparse_set_;
+      vectorBool                 jac_sparse_bool_;
+      //
+      /// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
+      local::sparse::list_setvec hes_sparse_set_;
+      vectorBool                 hes_sparse_bool_;
+   };
+   /// This version of work is const except during constructor
+   member_struct const_member_;
 
-    /// use pointers and allocate memory to avoid false sharing
-    member_struct* member_[CPPAD_MAX_NUM_THREADS];
-    //
-    /// allocate member_ for this thread
-    void allocate_member(size_t thread)
-    {   if( member_[thread] == nullptr )
-        {   member_[thread] = new member_struct;
-            // The function is recorded in sequential mode and placed in
-            // const_member_.f_, other threads have copy.
-            member_[thread]->f_ = const_member_.f_;
-        }
-        return;
-    }
-    //
-    /// free member_ for this thread
-    void free_member(size_t thread)
-    {   if( member_[thread] != nullptr )
-        {   delete member_[thread];
-            member_[thread] = nullptr;
-        }
-        return;
-    }
-    // ------------------------------------------------------------------------
-    option_enum sparsity(void)
-    {   return static_cast< atomic_base<Base>* >(this)->sparsity(); }
-    // ------------------------------------------------------------------------
-    /// set jac_sparse_set_
-    void set_jac_sparse_set(void);
-    /// set jac_sparse_bool_
-    void set_jac_sparse_bool(void);
-    // ------------------------------------------------------------------------
-    /// set hes_sparse_set_
-    void set_hes_sparse_set(void);
-    /// set hes_sparse_bool_
-    void set_hes_sparse_bool(void);
-    // ------------------------------------------------------------------------
-    /*!
-    Link from user_atomic to forward sparse Jacobian pack and bool
+   /// use pointers and allocate memory to avoid false sharing
+   member_struct* member_[CPPAD_MAX_NUM_THREADS];
+   //
+   /// allocate member_ for this thread
+   void allocate_member(size_t thread)
+   {  if( member_[thread] == nullptr )
+      {  member_[thread] = new member_struct;
+         // The function is recorded in sequential mode and placed in
+         // const_member_.f_, other threads have copy.
+         member_[thread]->f_ = const_member_.f_;
+      }
+      return;
+   }
+   //
+   /// free member_ for this thread
+   void free_member(size_t thread)
+   {  if( member_[thread] != nullptr )
+      {  delete member_[thread];
+         member_[thread] = nullptr;
+      }
+      return;
+   }
+   // ------------------------------------------------------------------------
+   option_enum sparsity(void)
+   {  return static_cast< atomic_base<Base>* >(this)->sparsity(); }
+   // ------------------------------------------------------------------------
+   /// set jac_sparse_set_
+   void set_jac_sparse_set(void);
+   /// set jac_sparse_bool_
+   void set_jac_sparse_bool(void);
+   // ------------------------------------------------------------------------
+   /// set hes_sparse_set_
+   void set_hes_sparse_set(void);
+   /// set hes_sparse_bool_
+   void set_hes_sparse_bool(void);
+   // ------------------------------------------------------------------------
+   /*!
+   Link from user_atomic to forward sparse Jacobian pack and bool
 
-    \copydetails atomic_base::for_sparse_jac
-    */
-    template <class sparsity_type>
-    bool for_sparse_jac(
-        size_t                                  q  ,
-        const sparsity_type&                    r  ,
+   \copydetails atomic_base::for_sparse_jac
+   */
+   template <class sparsity_type>
+   bool for_sparse_jac(
+      size_t                                  q  ,
+      const sparsity_type&                    r  ,
               sparsity_type&                    s  ,
-        const vector<Base>&                     x
-    );
-    // ------------------------------------------------------------------------
-    /*!
-    Link from user_atomic to reverse sparse Jacobian pack and bool
+      const vector<Base>&                     x
+   );
+   // ------------------------------------------------------------------------
+   /*!
+   Link from user_atomic to reverse sparse Jacobian pack and bool
 
-    \copydetails atomic_base::rev_sparse_jac
-    */
-    template <class sparsity_type>
-    bool rev_sparse_jac(
-        size_t                                  q  ,
-        const sparsity_type&                    rt ,
+   \copydetails atomic_base::rev_sparse_jac
+   */
+   template <class sparsity_type>
+   bool rev_sparse_jac(
+      size_t                                  q  ,
+      const sparsity_type&                    rt ,
               sparsity_type&                    st ,
-        const vector<Base>&                     x
-    );
-    /*!
-    Link from user_atomic to reverse sparse Hessian  bools
+      const vector<Base>&                     x
+   );
+   /*!
+   Link from user_atomic to reverse sparse Hessian  bools
 
-    \copydetails atomic_base::rev_sparse_hes
-    */
-    template <class sparsity_type>
-    bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
+   \copydetails atomic_base::rev_sparse_hes
+   */
+   template <class sparsity_type>
+   bool rev_sparse_hes(
+      const vector<bool>&                     vx ,
+      const vector<bool>&                     s  ,
               vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const sparsity_type&                    r  ,
-        const sparsity_type&                    u  ,
+      size_t                                  q  ,
+      const sparsity_type&                    r  ,
+      const sparsity_type&                    u  ,
               sparsity_type&                    v  ,
-        const vector<Base>&                     x
-    );
+      const vector<Base>&                     x
+   );
 public:
-    // ------------------------------------------------------------------------
-    /*!
-    Constructor of a checkpoint object
+   // ------------------------------------------------------------------------
+   /*!
+   Constructor of a checkpoint object
 
-    \param name [in]
-    is the user's name for the AD version of this atomic operation.
+   \param name [in]
+   is the user's name for the AD version of this atomic operation.
 
-    \param algo [in/out]
-    user routine that compute AD function values
-    (not const because state may change during evaluation).
+   \param algo [in/out]
+   user routine that compute AD function values
+   (not const because state may change during evaluation).
 
-    \param ax [in]
-    argument value where algo operation sequence is taped.
+   \param ax [in]
+   argument value where algo operation sequence is taped.
 
-    \param ay [out]
-    function value at specified argument value.
+   \param ay [out]
+   function value at specified argument value.
 
-    \param sparsity [in]
-    what type of sparsity patterns are computed by this function,
-    pack_sparsity_enum bool_sparsity_enum, or set_sparsity_enum.
-    The default value is unspecified.
+   \param sparsity [in]
+   what type of sparsity patterns are computed by this function,
+   pack_sparsity_enum bool_sparsity_enum, or set_sparsity_enum.
+   The default value is unspecified.
 
-    \param optimize [in]
-    should the operation sequence corresponding to the algo be optimized.
-    The default value is true, but it is
-    sometimes useful to use false for debugging purposes.
-    */
-    template <class Algo, class ADVector>
-    checkpoint(
-        const char*                    name            ,
-        Algo&                          algo            ,
-        const ADVector&                ax              ,
-        ADVector&                      ay              ,
-        option_enum                    sparsity =
-                atomic_base<Base>::pack_sparsity_enum  ,
-        bool                           optimize = true
-    );
-    /// destructor
-    ~checkpoint(void)
-    {
+   \param optimize [in]
+   should the operation sequence corresponding to the algo be optimized.
+   The default value is true, but it is
+   sometimes useful to use false for debugging purposes.
+   */
+   template <class Algo, class ADVector>
+   checkpoint(
+      const char*                    name            ,
+      Algo&                          algo            ,
+      const ADVector&                ax              ,
+      ADVector&                      ay              ,
+      option_enum                    sparsity =
+            atomic_base<Base>::pack_sparsity_enum  ,
+      bool                           optimize = true
+   );
+   /// destructor
+   ~checkpoint(void)
+   {
 # ifndef NDEBUG
-        if( thread_alloc::in_parallel() )
-        {   std::string msg = atomic_base<Base>::atomic_name();
-            msg += ": checkpoint destructor called in parallel mode.";
-            CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-        }
+      if( thread_alloc::in_parallel() )
+      {  std::string msg = atomic_base<Base>::atomic_name();
+         msg += ": checkpoint destructor called in parallel mode.";
+         CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+      }
 # endif
-        for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
-            free_member(thread);
-    }
-    // ------------------------------------------------------------------------
-    /*!
-    Implement the user call to atom_fun.size_var().
-    */
-    size_t size_var(void)
-    {   // make sure member_ is allocated for this thread
-        size_t thread = thread_alloc::thread_num();
-        allocate_member(thread);
-        //
-        return member_[thread]->f_.size_var();
-    }
-    // ------------------------------------------------------------------------
-    /*!
-    Implement the user call to atom_fun(ax, ay).
+      for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; ++thread)
+         free_member(thread);
+   }
+   // ------------------------------------------------------------------------
+   /*!
+   Implement the user call to atom_fun.size_var().
+   */
+   size_t size_var(void)
+   {  // make sure member_ is allocated for this thread
+      size_t thread = thread_alloc::thread_num();
+      allocate_member(thread);
+      //
+      return member_[thread]->f_.size_var();
+   }
+   // ------------------------------------------------------------------------
+   /*!
+   Implement the user call to atom_fun(ax, ay).
 
-    \tparam ADVector
-    A simple vector class with elements of type AD<Base>.
+   \tparam ADVector
+   A simple vector class with elements of type AD<Base>.
 
-    \param id
-    optional parameter which must be zero if present.
+   \param id
+   optional parameter which must be zero if present.
 
-    \param ax
-    is the argument vector for this call,
-    ax.size() determines the number of arguments.
+   \param ax
+   is the argument vector for this call,
+   ax.size() determines the number of arguments.
 
-    \param ay
-    is the result vector for this call,
-    ay.size() determines the number of results.
-    */
-    template <class ADVector>
-    void operator()(const ADVector& ax, ADVector& ay, size_t id = 0)
-    {   CPPAD_ASSERT_KNOWN(
-            id == 0,
-            "checkpoint: id is non-zero in atom_fun(ax, ay, id)"
-        );
-        this->atomic_base<Base>::operator()(ax, ay, id);
-    }
-    // ------------------------------------------------------------------------
-    /*!
-    Link from user_atomic to forward mode
+   \param ay
+   is the result vector for this call,
+   ay.size() determines the number of results.
+   */
+   template <class ADVector>
+   void operator()(const ADVector& ax, ADVector& ay, size_t id = 0)
+   {  CPPAD_ASSERT_KNOWN(
+         id == 0,
+         "checkpoint: id is non-zero in atom_fun(ax, ay, id)"
+      );
+      this->atomic_base<Base>::operator()(ax, ay, id);
+   }
+   // ------------------------------------------------------------------------
+   /*!
+   Link from user_atomic to forward mode
 
-    \copydetails atomic_base::forward
-    */
-    virtual bool forward(
-        size_t                      p  ,
-        size_t                      q  ,
-        const vector<bool>&         vx ,
+   \copydetails atomic_base::forward
+   */
+   virtual bool forward(
+      size_t                      p  ,
+      size_t                      q  ,
+      const vector<bool>&         vx ,
               vector<bool>&         vy ,
-        const vector<Base>&         tx ,
+      const vector<Base>&         tx ,
               vector<Base>&         ty
-    );
-    virtual bool forward(
-        size_t                      p   ,
-        size_t                      q   ,
-        const vector<bool>&         vx  ,
+   );
+   virtual bool forward(
+      size_t                      p   ,
+      size_t                      q   ,
+      const vector<bool>&         vx  ,
               vector<bool>&         vy  ,
-        const vector< AD<Base> >&   atx ,
+      const vector< AD<Base> >&   atx ,
               vector< AD<Base> >&   aty
-    );
-    // ------------------------------------------------------------------------
-    /*!
-    Link from user_atomic to reverse mode
+   );
+   // ------------------------------------------------------------------------
+   /*!
+   Link from user_atomic to reverse mode
 
-    \copydetails atomic_base::reverse
-    */
-    virtual bool reverse(
-        size_t                          q  ,
-        const vector<Base>&             tx ,
-        const vector<Base>&             ty ,
+   \copydetails atomic_base::reverse
+   */
+   virtual bool reverse(
+      size_t                          q  ,
+      const vector<Base>&             tx ,
+      const vector<Base>&             ty ,
               vector<Base>&             px ,
-        const vector<Base>&             py
-    );
-    virtual bool reverse(
-        size_t                          q  ,
-        const vector< AD<Base> >&       atx ,
-        const vector< AD<Base> >&       aty ,
+      const vector<Base>&             py
+   );
+   virtual bool reverse(
+      size_t                          q  ,
+      const vector< AD<Base> >&       atx ,
+      const vector< AD<Base> >&       aty ,
               vector< AD<Base> >&       apx ,
-        const vector< AD<Base> >&       apy
-    );
-    // ------------------------------------------------------------------------
-    /*!
-    Link from user_atomic to forward sparse Jacobian pack
+      const vector< AD<Base> >&       apy
+   );
+   // ------------------------------------------------------------------------
+   /*!
+   Link from user_atomic to forward sparse Jacobian pack
 
-    \copydetails atomic_base::for_sparse_jac
-    */
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vectorBool&                       r  ,
+   \copydetails atomic_base::for_sparse_jac
+   */
+   virtual bool for_sparse_jac(
+      size_t                                  q  ,
+      const vectorBool&                       r  ,
               vectorBool&                       s  ,
-        const vector<Base>&                     x
-    );
-    /*!
-    Link from user_atomic to forward sparse Jacobian bool
+      const vector<Base>&                     x
+   );
+   /*!
+   Link from user_atomic to forward sparse Jacobian bool
 
-    \copydetails atomic_base::for_sparse_jac
-    */
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vector<bool>&                     r  ,
+   \copydetails atomic_base::for_sparse_jac
+   */
+   virtual bool for_sparse_jac(
+      size_t                                  q  ,
+      const vector<bool>&                     r  ,
               vector<bool>&                     s  ,
-        const vector<Base>&                     x
-    );
-    /*!
-    Link from user_atomic to forward sparse Jacobian sets
+      const vector<Base>&                     x
+   );
+   /*!
+   Link from user_atomic to forward sparse Jacobian sets
 
-    \copydetails atomic_base::for_sparse_jac
-    */
-    virtual bool for_sparse_jac(
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       r  ,
+   \copydetails atomic_base::for_sparse_jac
+   */
+   virtual bool for_sparse_jac(
+      size_t                                  q  ,
+      const vector< std::set<size_t> >&       r  ,
               vector< std::set<size_t> >&       s  ,
-        const vector<Base>&                     x
-    );
-    // ------------------------------------------------------------------------
-    /*!
-    Link from user_atomic to reverse sparse Jacobian pack
+      const vector<Base>&                     x
+   );
+   // ------------------------------------------------------------------------
+   /*!
+   Link from user_atomic to reverse sparse Jacobian pack
 
-    \copydetails atomic_base::rev_sparse_jac
-    */
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vectorBool&                       rt ,
+   \copydetails atomic_base::rev_sparse_jac
+   */
+   virtual bool rev_sparse_jac(
+      size_t                                  q  ,
+      const vectorBool&                       rt ,
               vectorBool&                       st ,
-        const vector<Base>&                     x
-    );
-    /*!
-    Link from user_atomic to reverse sparse Jacobian bool
+      const vector<Base>&                     x
+   );
+   /*!
+   Link from user_atomic to reverse sparse Jacobian bool
 
-    \copydetails atomic_base::rev_sparse_jac
-    */
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vector<bool>&                     rt ,
+   \copydetails atomic_base::rev_sparse_jac
+   */
+   virtual bool rev_sparse_jac(
+      size_t                                  q  ,
+      const vector<bool>&                     rt ,
               vector<bool>&                     st ,
-        const vector<Base>&                     x
-    );
-    /*!
-    Link from user_atomic to reverse Jacobian sets
+      const vector<Base>&                     x
+   );
+   /*!
+   Link from user_atomic to reverse Jacobian sets
 
-    \copydetails atomic_base::rev_sparse_jac
-    */
-    virtual bool rev_sparse_jac(
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       rt ,
+   \copydetails atomic_base::rev_sparse_jac
+   */
+   virtual bool rev_sparse_jac(
+      size_t                                  q  ,
+      const vector< std::set<size_t> >&       rt ,
               vector< std::set<size_t> >&       st ,
-        const vector<Base>&                     x
-    );
-    // ------------------------------------------------------------------------
-    /*!
-    Link from user_atomic to reverse sparse Hessian pack
+      const vector<Base>&                     x
+   );
+   // ------------------------------------------------------------------------
+   /*!
+   Link from user_atomic to reverse sparse Hessian pack
 
-    \copydetails atomic_base::rev_sparse_hes
-    */
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
+   \copydetails atomic_base::rev_sparse_hes
+   */
+   virtual bool rev_sparse_hes(
+      const vector<bool>&                     vx ,
+      const vector<bool>&                     s  ,
               vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vectorBool&                       r  ,
-        const vectorBool&                       u  ,
+      size_t                                  q  ,
+      const vectorBool&                       r  ,
+      const vectorBool&                       u  ,
               vectorBool&                       v  ,
-        const vector<Base>&                     x
-    );
-    /*!
-    Link from user_atomic to reverse sparse Hessian bool
+      const vector<Base>&                     x
+   );
+   /*!
+   Link from user_atomic to reverse sparse Hessian bool
 
-    \copydetails atomic_base::rev_sparse_hes
-    */
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
+   \copydetails atomic_base::rev_sparse_hes
+   */
+   virtual bool rev_sparse_hes(
+      const vector<bool>&                     vx ,
+      const vector<bool>&                     s  ,
               vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vector<bool>&                     r  ,
-        const vector<bool>&                     u  ,
+      size_t                                  q  ,
+      const vector<bool>&                     r  ,
+      const vector<bool>&                     u  ,
               vector<bool>&                     v  ,
-        const vector<Base>&                     x
-    );
-    /*!
-    Link from user_atomic to reverse sparse Hessian sets
+      const vector<Base>&                     x
+   );
+   /*!
+   Link from user_atomic to reverse sparse Hessian sets
 
-    \copydetails atomic_base::rev_sparse_hes
-    */
-    virtual bool rev_sparse_hes(
-        const vector<bool>&                     vx ,
-        const vector<bool>&                     s  ,
+   \copydetails atomic_base::rev_sparse_hes
+   */
+   virtual bool rev_sparse_hes(
+      const vector<bool>&                     vx ,
+      const vector<bool>&                     s  ,
               vector<bool>&                     t  ,
-        size_t                                  q  ,
-        const vector< std::set<size_t> >&       r  ,
-        const vector< std::set<size_t> >&       u  ,
+      size_t                                  q  ,
+      const vector< std::set<size_t> >&       r  ,
+      const vector< std::set<size_t> >&       u  ,
               vector< std::set<size_t> >&       v  ,
-        const vector<Base>&                     x
-    );
+      const vector<Base>&                     x
+   );
 };
 
 } // END_CPPAD_NAMESPACE

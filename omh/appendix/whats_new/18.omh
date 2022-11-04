@@ -5,44 +5,44 @@
 
 $begin whats_new_18$$
 $spell
-    chkpoint
-    eps
-    autotools
-    Microsoft
-    CppAD
-    jac
-    hes
-    Jacobian
-    rcv
-    subgraph
-    op_arg
-    enum
-    std
-    addr
-    cppad
-    enums
-    dyn
-    ind
-    uninstalled
-    Vec
-    valgrind
-    Eigen
-    namespace
-    Taylor
-    af
-    Wconversion
-    gcc
-    Wfloat
-    addons
-    Kasper Kristensen
-    Subgraph
-    msys
-    cmake
-    bool
-    erf
-    tmb
-    inline
-    mingw
+   chkpoint
+   eps
+   autotools
+   Microsoft
+   CppAD
+   jac
+   hes
+   Jacobian
+   rcv
+   subgraph
+   op_arg
+   enum
+   std
+   addr
+   cppad
+   enums
+   dyn
+   ind
+   uninstalled
+   Vec
+   valgrind
+   Eigen
+   namespace
+   Taylor
+   af
+   Wconversion
+   gcc
+   Wfloat
+   addons
+   Kasper Kristensen
+   Subgraph
+   msys
+   cmake
+   bool
+   erf
+   tmb
+   inline
+   mingw
 $$
 
 $section Changes and Additions to CppAD During 2018$$

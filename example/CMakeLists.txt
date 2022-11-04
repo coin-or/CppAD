@@ -28,12 +28,12 @@ ADD_SUBDIRECTORY(utility)
 #
 # code_gen_fun examples
 IF( cppad_has_cppadcg )
-    ADD_SUBDIRECTORY(code_gen_fun)
+   ADD_SUBDIRECTORY(code_gen_fun)
 ENDIF( cppad_has_cppadcg )
 #
 # ipopt_solve examples
 IF( cppad_has_ipopt)
-    ADD_SUBDIRECTORY(ipopt_solve)
+   ADD_SUBDIRECTORY(ipopt_solve)
 ENDIF( cppad_has_ipopt)
 
 

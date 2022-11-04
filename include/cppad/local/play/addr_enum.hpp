@@ -13,9 +13,9 @@ namespace CppAD { namespace local { namespace play {
 */
 /// enum corresponding to type used for addressing iterators for a player
 enum addr_enum {
-    unsigned_short_enum  ,
-    unsigned_int_enum    ,
-    size_t_enum
+   unsigned_short_enum  ,
+   unsigned_int_enum    ,
+   size_t_enum
 };
 
 } } } // BEGIN_CPPAD_LOCAL_PLAY_NAMESPACE

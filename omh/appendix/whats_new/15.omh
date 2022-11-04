@@ -6,65 +6,65 @@
 $begin whats_new_15$$
 $dollar @$$
 $spell
-    erfc
-    chkpoint
-    sq
-    autotools
-    addon
-    runge
-    lcppad
-    ind
-    const
-    enum
-    ctor
-    dimensioned
-    cskip_op
-    adolc
-    zdouble
-    expm1
-    eigen
-    expm1
-    atanh
-    acosh
-    asinh
-    src
-    op
-    onetape
-    CppAD
-    colpack
-    hes
-    cppad
-    Jacobian
-    gettimeofday
-    cmake
-    hpp
-    dir
-    includedirs
-    libdirs
-    datadir
-    docdir
-    std
-    cxx
-    erf
-    var
-    NumRes
-    chrono
-    aeps
-    CondExpGt
-    hasnan
-    Adolc
-    resize
-    bool
-    alloc
-    adouble
-    gmtime
-    asctime
-    ipopt
-    fadbad
-    sacado
-    unreferenced
-    azmul
-    retape
+   erfc
+   chkpoint
+   sq
+   autotools
+   addon
+   runge
+   lcppad
+   ind
+   const
+   enum
+   ctor
+   dimensioned
+   cskip_op
+   adolc
+   zdouble
+   expm1
+   eigen
+   expm1
+   atanh
+   acosh
+   asinh
+   src
+   op
+   onetape
+   CppAD
+   colpack
+   hes
+   cppad
+   Jacobian
+   gettimeofday
+   cmake
+   hpp
+   dir
+   includedirs
+   libdirs
+   datadir
+   docdir
+   std
+   cxx
+   erf
+   var
+   NumRes
+   chrono
+   aeps
+   CondExpGt
+   hasnan
+   Adolc
+   resize
+   bool
+   alloc
+   adouble
+   gmtime
+   asctime
+   ipopt
+   fadbad
+   sacado
+   unreferenced
+   azmul
+   retape
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -85,7 +85,7 @@ Separate $cref to_string$$ from $cref ad_to_string$$ so that it
 can be used without the rest of CppAD; i.e.,
 by including
 $codei%
-    # include <cppad/utility/to_string.hpp>
+   # include <cppad/utility/to_string.hpp>
 %$$
 
 
@@ -132,11 +132,11 @@ The individual $cref utility$$ include files have been deprecated; see
 $cref include_deprecated$$.
 For example,
 $codep
-    # include <cppad/runge_45.hpp>
+   # include <cppad/runge_45.hpp>
 $$
 You should us the utility include instead; i.e.,
 $codep
-    # include <cppad/utility.hpp>
+   # include <cppad/utility.hpp>
 $$
 $lnext
 The $cref numeric_ad$$ routines where moved from the $code library$$
@@ -156,7 +156,7 @@ $head 11-25$$
 $list number$$
 CppAD now installs the object library
 $codep
-    -lcppad_lib
+   -lcppad_lib
 $$
 to be included when linking.
 Currently, it is only required when
@@ -165,7 +165,7 @@ $cref/cmake command/cmake/CMake Command/$$.
 $lnext
 It is no longer necessary to compile and link the file
 $codep
-    cppad_colpack.cpp
+   cppad_colpack.cpp
 $$
 when $cref colpack_prefix$$
 is specified during the install process; see
@@ -564,10 +564,10 @@ the result of the conditional expression might not be determined
 during forward mode.
 This would generate an assert of the form:
 $codei%
-    Error detected by false result for
-        IdenticalCon(%side%)
-    at line %number% in the file
-        %...%/include/cppad/local/cskip_op.hpp
+   Error detected by false result for
+      IdenticalCon(%side%)
+   at line %number% in the file
+      %...%/include/cppad/local/cskip_op.hpp
 %$$
 where $icode side$$ was $code left$$ or $code right$$
 and $icode number$$ was the line number of an assert in $code cskip_op.hpp$$.
@@ -672,7 +672,7 @@ for $icode work$$ and $icode p$$.
 $head 03-13$$
 Remove the syntax
 $codei%
-    AD<%Base%> %y% = %x%
+   AD<%Base%> %y% = %x%
 %$$
 for the $cref/AD constructor/ad_ctor/$$ documentation because it does not
 work when the constructor is $cref/explicit/ad_ctor/x/explicit/$$.
@@ -697,16 +697,16 @@ through the $cref/conditional expression/condexp/$$
 case that is not used.
 For example, if
 $codep
-    Independent(ax);
-    AD<double> aeps = 1e-10;
-    ay[0] = CondExpGt( ax[0], aeps, 1.0/ax[0], 1.0/aeps );
-    ADFun<double> f(ax, ay);
+   Independent(ax);
+   AD<double> aeps = 1e-10;
+   ay[0] = CondExpGt( ax[0], aeps, 1.0/ax[0], 1.0/aeps );
+   ADFun<double> f(ax, ay);
 $$
 The corresponding reverse mode calculation,
 at $code x[0] = 0.0$$, would result in
 $codep
-    Error detected by false result for
-    ! ( hasnan(value) && check_for_nan_ )
+   Error detected by false result for
+   ! ( hasnan(value) && check_for_nan_ )
 $$
 This has been fixed so that only the conditional expression case that is used
 affects the reverse mode results.
@@ -737,8 +737,8 @@ Fix a bug in the optimization of conditional expressions. To be specific,
 if $cref/NDEBUG/faq/Speed/NDEBUG/$$ is not defined, one could get
 an assert with the message:
 $codep
-    Error detected by false result for
-        var_index_ >= NumRes(op_)
+   Error detected by false result for
+      var_index_ >= NumRes(op_)
 $$
 
 $head 02-10$$
@@ -789,7 +789,7 @@ $head 02-02$$
 Improve the documentation for the
 $cref/cmake command/cmake/CMake Command/$$ line options
 $codei%
-    cmake_install_%dir%
+   cmake_install_%dir%
 %$$
 for $icode dir$$ equal to
 $code prefix$$, $code postfix$$, $code includedirs$$, $code libdirs$$,
@@ -813,7 +813,7 @@ There was a bug in the $cref cmake$$ install detection of compiler features.
 One symptom of this bug was that on systems that had the $code gettimeofday$$
 function, the cmake install would sometimes report
 $codei%
-    cppad_has_gettimeofday = 0
+   cppad_has_gettimeofday = 0
 %$$
 This has been fixed.
 
@@ -838,7 +838,7 @@ even if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined and
 even if $cref/f.optimize()/optimize/$$ has been called.
 The deprecated function $code CompareChange$$ used to always return zero after
 $codei%
-    %f%.optimize()
+   %f%.optimize()
 %$$
 and was not even defined when $code NDEBUG$$ was defined.
 There was a resulting speed effect for this; see

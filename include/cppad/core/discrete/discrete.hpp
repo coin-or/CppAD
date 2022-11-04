@@ -75,19 +75,19 @@ $srccode%hpp% */
 template <class Base>
 class discrete {
 private:
-    template <class Type> friend void parallel_ad(void);
-    typedef Base (*F) (const Base& x);
-    const std::string    name_;
-    const F              f_;
-    const size_t         index_;
+   template <class Type> friend void parallel_ad(void);
+   typedef Base (*F) (const Base& x);
+   const std::string    name_;
+   const F              f_;
+   const size_t         index_;
 /* %$$
 $end
 ------------------------------------------------------------------------------
 $begin discrete_list$$
 $spell
-    alloc
-    std
-    CppAD
+   alloc
+   std
+   CppAD
 $$
 $section List of all objects in the discrete class$$
 
@@ -111,11 +111,11 @@ $cref/thread_alloc::free_all/ta_free_all/$$ is called by testing routines.
 $head Source Code$$
 $srccode%hpp% */
 private:
-    static std::vector<discrete *>& List(void)
-    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-        static std::vector<discrete *> list;
-        return list;
-    }
+   static std::vector<discrete *>& List(void)
+   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+      static std::vector<discrete *> list;
+      return list;
+   }
 /* %$$
 $end
  ------------------------------------------------------------------------------
@@ -137,8 +137,8 @@ is the number of discrete functions for this $icode Base$$ type.
 $head Source Code$$
 $srccode%hpp% */
 public:
-    static size_t list_size(void)
-    {   return List().size(); }
+   static size_t list_size(void)
+   {  return List().size(); }
 /* %$$
 $end
  ------------------------------------------------------------------------------
@@ -176,17 +176,17 @@ the static object returned by $cref discrete_list$$.
 $end
 */
 public:
-    discrete(const char* name, F f) :
-    name_(name), f_(f) , index_( List().size() )
-    {   std::string msg = "discrete: first call to the discrete function ";
-        msg  += name;
-        msg  += " is in parallel mode.";
-        CPPAD_ASSERT_KNOWN(
-            ! thread_alloc::in_parallel() ,
-            msg.c_str()
-        );
-        List().push_back(this);
-    }
+   discrete(const char* name, F f) :
+   name_(name), f_(f) , index_( List().size() )
+   {  std::string msg = "discrete: first call to the discrete function ";
+      msg  += name;
+      msg  += " is in parallel mode.";
+      CPPAD_ASSERT_KNOWN(
+         ! thread_alloc::in_parallel() ,
+         msg.c_str()
+      );
+      List().push_back(this);
+   }
 /*
  ------------------------------------------------------------------------------
 $begin discrete_ad$$
@@ -205,68 +205,68 @@ is the return value for the AD version of this function.
 
 $head Prototype$$
 $srccode%hpp% */
-    AD<Base> ad(const AD<Base> &ax) const
+   AD<Base> ad(const AD<Base> &ax) const
 /* %$$
 $end
 */
-    {
-        CPPAD_ASSERT_KNOWN(
+   {
+      CPPAD_ASSERT_KNOWN(
+         size_t( std::numeric_limits<addr_t>::max() ) >= index_,
+         "discrete: cppad_tape_addr_type maximum not large enough"
+      );
+      //
+      AD<Base> ay;
+      ay.value_ = f_(ax.value_);
+      //
+      // check if there is a recording in progress
+      local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+      if( tape == nullptr )
+         return ay;
+      //
+      // check if argument is a constant parameter
+      if( ax.tape_id_ != tape->id_ )
+         return ay;
+      //
+      if( ax.ad_type_ == dynamic_enum )
+      {
+         // tape dynamic paramter operation
+         ay.taddr_   = tape->Rec_.put_dyn_par(
+            ay.value_, local::dis_dyn, addr_t(index_), ax.taddr_
+         );
+         ay.tape_id_  = ax.tape_id_;
+         ay.ad_type_  = dynamic_enum;
+
+         // make result a dynamic parameter
+         ay.tape_id_    = tape->id_;
+         ay.ad_type_    = dynamic_enum;
+
+         CPPAD_ASSERT_UNKNOWN( Dynamic(ay) );
+      }
+      else if( ax.ad_type_ == variable_enum )
+      {
+         CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DisOp) == 1 );
+         CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DisOp) == 2 );
+
+         // put operand addresses in the tape
+         CPPAD_ASSERT_KNOWN(
             size_t( std::numeric_limits<addr_t>::max() ) >= index_,
             "discrete: cppad_tape_addr_type maximum not large enough"
-        );
-        //
-        AD<Base> ay;
-        ay.value_ = f_(ax.value_);
-        //
-        // check if there is a recording in progress
-        local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-        if( tape == nullptr )
-            return ay;
-        //
-        // check if argument is a constant parameter
-        if( ax.tape_id_ != tape->id_ )
-            return ay;
-        //
-        if( ax.ad_type_ == dynamic_enum )
-        {
-            // tape dynamic paramter operation
-            ay.taddr_   = tape->Rec_.put_dyn_par(
-                ay.value_, local::dis_dyn, addr_t(index_), ax.taddr_
-            );
-            ay.tape_id_  = ax.tape_id_;
-            ay.ad_type_  = dynamic_enum;
+         );
+         tape->Rec_.PutArg(addr_t(index_), ax.taddr_);
+         // put operator in the tape
+         ay.taddr_ = tape->Rec_.PutOp(local::DisOp);
+         // make result a variable
+         ay.tape_id_    = tape->id_;
+         ay.ad_type_    = variable_enum;
 
-            // make result a dynamic parameter
-            ay.tape_id_    = tape->id_;
-            ay.ad_type_    = dynamic_enum;
-
-            CPPAD_ASSERT_UNKNOWN( Dynamic(ay) );
-        }
-        else if( ax.ad_type_ == variable_enum )
-        {
-            CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DisOp) == 1 );
-            CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DisOp) == 2 );
-
-            // put operand addresses in the tape
-            CPPAD_ASSERT_KNOWN(
-                size_t( std::numeric_limits<addr_t>::max() ) >= index_,
-                "discrete: cppad_tape_addr_type maximum not large enough"
-            );
-            tape->Rec_.PutArg(addr_t(index_), ax.taddr_);
-            // put operator in the tape
-            ay.taddr_ = tape->Rec_.PutOp(local::DisOp);
-            // make result a variable
-            ay.tape_id_    = tape->id_;
-            ay.ad_type_    = variable_enum;
-
-            CPPAD_ASSERT_UNKNOWN( Variable(ay) );
-        }
-        else
-        {   // other types not yet being used and should have this tape id
-            CPPAD_ASSERT_UNKNOWN(false);
-        }
-        return ay;
-    }
+         CPPAD_ASSERT_UNKNOWN( Variable(ay) );
+      }
+      else
+      {  // other types not yet being used and should have this tape id
+         CPPAD_ASSERT_UNKNOWN(false);
+      }
+      return ay;
+   }
 /*
 ------------------------------------------------------------------------------
 $begin discrete_name$$
@@ -285,14 +285,14 @@ Is the index, in the list, for this discrete function.
 
 $head Source Code$$
 $srccode%hpp% */
-    static const char* name(size_t index)
-    {   return List()[index]->name_.c_str(); }
+   static const char* name(size_t index)
+   {  return List()[index]->name_.c_str(); }
 /* %$$
 $end
 ------------------------------------------------------------------------------
 $begin discrete_eval$$
 $spell
-    eval
+   eval
 $$
 $section Link From Forward Mode Sweep to Users Routine$$
 
@@ -314,16 +314,16 @@ result for the $icode Base$$ version of this function.
 
 $head Source Code$$
 $srccode%hpp% */
-    static Base eval(size_t index, const Base& x)
-    {   CPPAD_ASSERT_UNKNOWN(index < List().size() );
-        return List()[index]->f_(x);
-    }
+   static Base eval(size_t index, const Base& x)
+   {  CPPAD_ASSERT_UNKNOWN(index < List().size() );
+      return List()[index]->f_(x);
+   }
 /* %$$
 $end
 ------------------------------------------------------------------------------
 $begin discrete_ad_eval$$
 $spell
-    eval
+   eval
 $$
 $section Link From Forward Mode Sweep to AD Version of Discrete Function$$
 
@@ -345,10 +345,10 @@ result for the $codei%AD<%Base%>%$$ version of this function.
 
 $head Source Code$$
 $srccode%hpp% */
-    static AD<Base> ad_eval(size_t index, const AD<Base>& ax)
-    {   CPPAD_ASSERT_UNKNOWN(index < List().size() );
-        return List()[index]->ad(ax);
-    }
+   static AD<Base> ad_eval(size_t index, const AD<Base>& ax)
+   {  CPPAD_ASSERT_UNKNOWN(index < List().size() );
+      return List()[index]->ad(ax);
+   }
 /* %$$
 $end
 */

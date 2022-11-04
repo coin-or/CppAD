@@ -5,7 +5,7 @@
 /*
 $begin cppadcg_ode.cpp$$
 $spell
-    cppadcg
+   cppadcg
 $$
 
 $section Cppadcg Speed: Ode$$
@@ -23,11 +23,11 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_ode(
-    size_t                     size       ,
-    size_t                     repeat     ,
-    CppAD::vector<double>      &x         ,
-    CppAD::vector<double>      &jacobian  )
-{   return false; }
+   size_t                     size       ,
+   size_t                     repeat     ,
+   CppAD::vector<double>      &x         ,
+   CppAD::vector<double>      &jacobian  )
+{  return false; }
 /* %$$
 $end
 */

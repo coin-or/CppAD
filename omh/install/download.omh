@@ -5,29 +5,29 @@
 
 $begin download$$
 $spell
-    yyyy
-    mm
-    dd
-    omhelp
-    https
-    org
-    dir
-    exe
-    gpl
-    xzf
-    CppAD
-    cppad
-    rel
-    gz
-    hpp
-    github
-    git git
-    htm
-    grep
-    txt
-    gh
-    html
-    svn
+   yyyy
+   mm
+   dd
+   omhelp
+   https
+   org
+   dir
+   exe
+   gpl
+   xzf
+   CppAD
+   cppad
+   rel
+   gz
+   hpp
+   github
+   git git
+   htm
+   grep
+   txt
+   gh
+   html
+   svn
 $$
 $dollar @$$
 
@@ -77,7 +77,7 @@ $head Git$$
 CppAD source code development is current done using $code git$$
 You can a git clone of the current version using the command
 $codei%
-    git clone https://github.com/coin-or/CppAD.git cppad.git
+   git clone https://github.com/coin-or/CppAD.git cppad.git
 %$$
 This procedure requires that
 the $href|https://en.wikipedia.org/wiki/Git_%28software%29|git|$$
@@ -89,20 +89,20 @@ and changing into the distribution directory,
 use the following command to determine the corresponding
 $cref/version/download/Version/$$:
 $codep
-    grep '^SET(cppad_version' CMakeLists.txt
+   grep '^SET(cppad_version' CMakeLists.txt
 $$
 Use the following command to determine the git $icode hash$$ code
 corresponding to this version:
 $codep
-    git show-ref | grep 'refs/heads/master'
+   git show-ref | grep 'refs/heads/master'
 $$
 You can get an old version using the command
 $codei%
-    git checkout -q %hash%
+   git checkout -q %hash%
 %$$
 You can check the corresponding version number using the command
 $codep
-    grep '^SET(cppad_version' CMakeLists.txt
+   grep '^SET(cppad_version' CMakeLists.txt
 $$
 
 $subhead Compressed Archives$$
@@ -120,14 +120,14 @@ You can get the documentation
 for an other versions of CppAD.
 To do so, in the distribution directory execute the following commands:
 $codep
-    git checkout gh-pages
-    git log > junk.log
+   git checkout gh-pages
+   git log > junk.log
 $$
 The file $code junk.log$$ will contain the git $icode hash$$ codes
 for different version of the documentation along with the date.
 Select the $icode hash$$ for the version you are using, execute the command
 $codei%
-    git checkout %hash%
+   git checkout %hash%
 %$$
 You can then view documentation for version you are using by opening the file
 $code doc/index.html$$ in a web browser.
@@ -137,13 +137,13 @@ The documentation for CppAD can be built, from a clone of the git repository,
 using $href%http://www.seanet.com/~bradbell/omhelp/%OMhelp%$$.
 You will need to install the $code omhelp$$ command so that
 $codep
-    which omhelp
+   which omhelp
 $$
 shows it is in your path.
 Once you have done this,
 in the distribution directory execute the following command:
 $codei%
-    bin/run_omhelp.sh htm
+   bin/run_omhelp.sh htm
 %$$
 You can then view documentation for version you are using by opening the file
 $code doc/index.html$$ in a web browser.

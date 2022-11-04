@@ -5,57 +5,57 @@
 
 $begin whats_new_05$$
 $spell
-    autotools
-    html
-    Dir
-    cppad.hpp
-    acos
-    asin
-    autoconf
-    ptr
-    Erf
-    CppADlib
-    logdet
-    valarray
-    Jacobian
-    bool
-    yy
-    mm
-    dd
-    pkzip
-    gz
-    Neg
-    maxabs
-    Romberg
-    cos
-    Le
-    Lt
-    Eq
-    Ge
-    Gt
-    op
-    gcc
-    Cygwin
-    std
-    Lu
-    CppADvector
-    Jon Pearce
-    namespace
-    dsw
-    dsp
-    sln
-    vcproj
-    CondExp
-    Microsoft
-    inline
-    scur
-    Vec
-    Rosen
-    Runge-Kutta
-    Linux
-    typedef
-    Cpp
-    atan
+   autotools
+   html
+   Dir
+   cppad.hpp
+   acos
+   asin
+   autoconf
+   ptr
+   Erf
+   CppADlib
+   logdet
+   valarray
+   Jacobian
+   bool
+   yy
+   mm
+   dd
+   pkzip
+   gz
+   Neg
+   maxabs
+   Romberg
+   cos
+   Le
+   Lt
+   Eq
+   Ge
+   Gt
+   op
+   gcc
+   Cygwin
+   std
+   Lu
+   CppADvector
+   Jon Pearce
+   namespace
+   dsw
+   dsp
+   sln
+   vcproj
+   CondExp
+   Microsoft
+   inline
+   scur
+   Vec
+   Rosen
+   Runge-Kutta
+   Linux
+   typedef
+   Cpp
+   atan
 $$
 
 $section Changes and Additions to CppAD During 2005$$
@@ -103,20 +103,20 @@ memory.
 The bug mentioned on $cref/12-01/whats_new_05/12-01/$$ resurfaced
 and the corresponding routine was changed as follows:
 $codep
-    static local::ADTape<Base> *Tape(void)
-    {   // If we return &tape, instead of creating and returning ptr,
-        // there seems to be a bug in g++ with -O2 option.
-        static local::ADTape<Base> tape;
-        static local::ADTape<Base> *ptr = &tape;
-        return ptr;
-    }
+   static local::ADTape<Base> *Tape(void)
+   {  // If we return &tape, instead of creating and returning ptr,
+      // there seems to be a bug in g++ with -O2 option.
+      static local::ADTape<Base> tape;
+      static local::ADTape<Base> *ptr = &tape;
+      return ptr;
+   }
 $$
 
 $head 12-16$$
 The $cref NearEqual$$ function documentation for the relative error case
 was changed to
 $codei%
-    | %x% - %y% | <= %r% * ( |%x%| + |%y%| )
+   | %x% - %y% | <= %r% * ( |%x%| + |%y%| )
 %$$
 so that there is no problem with division by zero when
 $icode x$$ and $icode y$$ are zero
@@ -210,8 +210,8 @@ $$
 Add a Home icon,
 that links to the
 $href%
-    http://www.coin-or.org/CppAD/%
-    CppAD home page
+   http://www.coin-or.org/CppAD/%
+   CppAD home page
 %$$,
 to the top left of the navigation frame
 (left frame) for each documentation section.
@@ -232,8 +232,8 @@ The dates in this file used to correspond to
 local time for when the change was checked
 into the
 $href%
-    http://projects.coin-or.org/CppAD/browser%
-    subversion repository
+   http://projects.coin-or.org/CppAD/browser%
+   subversion repository
 %$$.
 From now on the dates in this file will correspond to the first
 version of CppAD where the change appears; i.e., the date in the
@@ -260,10 +260,10 @@ The speed test of $cref lu_vec_ad.cpp$$ has been reinstated.
 It appears that there is some sort of bug in the gcc compiler with
 the -O2 option whereby the following member function
 $codep
-    static local::ADTape<Base> *Tape(void)
-    {   static local::ADTape<Base> tape;
-        return &tape;
-    }
+   static local::ADTape<Base> *Tape(void)
+   {  static local::ADTape<Base> tape;
+      return &tape;
+   }
 $$
 (in $code cppad/local/AD.h$$)
 would sometimes return a null value (during $cref VecAD$$ operations).
@@ -764,21 +764,21 @@ inline the rest of putting operators in the tape.
 For example,
 here is part of the speed test output before this change:
 $codep
-    Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
-    size = 5 rate = 230
-    size = 4 rate = 1,055
-    size = 3 rate = 3,408
-    size = 2 rate = 7,571
-    size = 1 rate = 13,642
+   Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
+   size = 5 rate = 230
+   size = 4 rate = 1,055
+   size = 3 rate = 3,408
+   size = 2 rate = 7,571
+   size = 1 rate = 13,642
 $$
 and here is the same output after this change:
 $codep
-    Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
-    size = 5 rate = 448
-    size = 4 rate = 2,004
-    size = 3 rate = 5,761
-    size = 2 rate = 10,221
-    size = 1 rate = 14,734
+   Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
+   size = 5 rate = 448
+   size = 4 rate = 2,004
+   size = 3 rate = 5,761
+   size = 2 rate = 10,221
+   size = 1 rate = 14,734
 $$
 Note that your results will vary depending on operating system and machine.
 

@@ -5,14 +5,14 @@
 
 $begin NewFeature$$
 $spell
-    cppad.hpp
-    CppAD
-    Makefile
-    Microsoft
-    OMhelp
-    cvs
-    dsp
-    nobase
+   cppad.hpp
+   CppAD
+   Makefile
+   Microsoft
+   OMhelp
+   cvs
+   dsp
+   nobase
 $$
 
 $section Adding a New Feature to the CppAD Distribution$$
