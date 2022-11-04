@@ -40,9 +40,7 @@ $section cppad-20221104:
 C++ Algorithmic Differentiation Package Developer Documentation
 $$
 
-$include omh/cppad.omh$$
-
-$children%
+$childtable%
    omh/install/install.omh%
    omh/theory/theory.omh%
    include/cppad/core/user_ad.hpp%
