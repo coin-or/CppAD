@@ -4,40 +4,6 @@ $comment
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 $$
-$comment Top level documentaion included by ../doc.omh and ../dev.omh$$
-
-$escape $$
-$comment default navigate command for all of CppAD documentation$$
-$navigate%
-   Prev%Prev%
-   Next%Next%
-   Across%Index%
-   Up%Up%
-   Down_up_3%_up_3%
-   Down_up_2%_up_2%
-   Down_up_1%_up_1%
-   Down_up_0%_up_0%
-   Current%Headings
-%$$
-$comment -------------------------------------------------------------
-default automatic indexing command for all CppAD documentaiton
-$$
-$aindex section head subhead$$
-$comment -------------------------------------------------------------
-Latex used throughout the CppAD documentation
-$$
-$latex
-\newcommand{\W}[1]{ \; #1 \; }
-\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
-\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
-\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }
-$$
-$comment
-==============================================================================
-$$
 $spell
    cppad
    templated
@@ -55,10 +21,6 @@ $spell
    Posix
    Openmp
 $$
-
-$comment bin/version assumes that : follows cppad version number here$$
-$section
-cppad-20221104: A C++ Algorithmic Differentiation Package$$
 
 $comment =================================================================== $$
 $align middle$$
