@@ -89,14 +89,14 @@ $cref/constant parameter/glossary/Parameter/Constant/$$
 $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
 or $cref/variable/glossary/Variable/$$.
 It has the following possible values:
-$center
+
 $table
 $icode ad_type_enum$$  $pre  $$   $cnext Meaning $rnext
 $code constant_enum$$  $pre  $$   $cnext constant parameter $rnext
 $code dynamic_enum$$   $pre  $$   $cnext dynamic parameter  $rnext
 $code variable_enum$$  $pre  $$   $cnext variable
 $tend
-$$
+
 In addition,
 $code constant_enum < dynamic_enum < variable_enum$$.
 
