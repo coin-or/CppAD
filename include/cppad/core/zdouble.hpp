@@ -43,7 +43,7 @@ $codei%    zdouble z(i)
 %$$
 $icode%    z1% %op% %x%
 %$$
-were $icode i$$ is a $code size_t$$,
+were $icode i$$ is a $code size_t$$, $code long$$, or $code int$$,
 $icode x$$ is a $code double$$ or $code zdouble$$,
 and $icode op$$ is $code =$$, $code +=$$, $code -=$$, $code *=$$
 or $code /=-$$.
@@ -282,6 +282,10 @@ public:
     { }
     /// Constructor from int
     zdouble(const int& i)
+    : dbl_( double(i) )
+    { }
+    /// Constructor from long
+    zdouble(const long& i)
     : dbl_( double(i) )
     { }
     //
