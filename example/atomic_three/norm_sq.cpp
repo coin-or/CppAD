@@ -9,6 +9,8 @@ $spell
    sq
    bool
    enum
+   jac
+   hes
 $$
 
 $section Atomic Euclidean Norm Squared: Example and Test$$
@@ -21,8 +23,6 @@ $latex n = 2$$, $latex m = 1$$, where
 $latex \[
    g(x) =  x_0^2 + x_1^2
 \] $$
-
-$nospell
 
 $head Start Class Definition$$
 $srccode%cpp% */
@@ -361,6 +361,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

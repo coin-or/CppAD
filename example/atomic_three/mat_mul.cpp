@@ -7,6 +7,8 @@
 $begin atomic_three_mat_mul.cpp$$
 $spell
    mul
+   jac
+   hes
 $$
 
 $section User Atomic Matrix Multiply: Example and Test$$
@@ -21,8 +23,6 @@ $children%
 $head Class Definition$$
 This example uses the file $cref atomic_three_mat_mul.hpp$$
 which defines matrix multiply as a $cref atomic_three$$ operation.
-
-$nospell
 
 $head Use Atomic Function$$
 $srccode%cpp% */
@@ -260,6 +260,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

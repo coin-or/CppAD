@@ -39,8 +39,6 @@ $head Class Definition$$
 This example uses the file $cref atomic_two_eigen_mat_inv.hpp$$
 which defines matrix multiply as a $cref atomic_two$$ operation.
 
-$nospell
-
 $head Use Atomic Function$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
@@ -175,6 +173,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

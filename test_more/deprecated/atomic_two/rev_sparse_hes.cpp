@@ -35,8 +35,6 @@ f_1^{(2)} ( x ) = \left( \begin{array}{ccc}
 \end{array} \right)
 \] $$
 
-$nospell
-
 $head Start  Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
@@ -339,6 +337,5 @@ bool rev_sparse_hes(void)
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

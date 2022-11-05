@@ -10,6 +10,7 @@ $begin atomic_two_eigen_mat_inv.hpp$$
 $spell
    Eigen
    Taylor
+   op
 $$
 
 $section atomic_two Eigen Matrix Inversion Class$$
@@ -120,8 +121,6 @@ $latex \[
    \bar{A}_0
    = \bar{A}_0 - R_0^\R{T} \bar{R}_0 R_0^\R{T}
 \]$$
-
-$nospell
 
 $head Start Class Definition$$
 $srccode%cpp% */
@@ -380,7 +379,6 @@ $srccode%cpp% */
 
 }  // END_EMPTY_NAMESPACE
 /* %$$
-$$ $comment end nospell$$
 $end
 */
 

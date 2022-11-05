@@ -25,8 +25,6 @@ $latex \[
 $head sparsity$$
 This example only uses bool sparsity patterns.
 
-$nospell
-
 $head Start Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
@@ -371,6 +369,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

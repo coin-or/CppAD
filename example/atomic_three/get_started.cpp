@@ -12,8 +12,6 @@ $head Purpose$$
 This example demonstrates the minimal amount of information
 necessary for a $cref atomic_three$$ function.
 
-$nospell
-
 $head Start Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>  // CppAD include file
@@ -149,6 +147,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

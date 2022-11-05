@@ -19,8 +19,6 @@ $latex g_0 (x) = x_0 * x_ 0$$,
 $latex g_1 (x) = x_0 * x_ 1$$,
 $latex g_2 (x) = x_1 * x_ 2$$.
 
-$nospell
-
 $head Start Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>  // CppAD include file
@@ -213,6 +211,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

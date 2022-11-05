@@ -20,8 +20,6 @@ functions as atomic function operations.
 $head sparsity$$
 This atomic operation can use both set and bool sparsity patterns.
 
-$nospell
-
 $head Start Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
@@ -521,6 +519,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

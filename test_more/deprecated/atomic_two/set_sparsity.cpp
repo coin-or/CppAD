@@ -23,8 +23,6 @@ f( x ) = \left( \begin{array}{c}
 $head set_sparsity_enum$$
 This example only uses set sparsity patterns.
 
-$nospell
-
 $head Start Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
@@ -330,6 +328,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

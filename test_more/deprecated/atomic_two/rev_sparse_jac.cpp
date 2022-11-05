@@ -32,8 +32,6 @@ x_1  & x_0 & 0
 \end{array} \right)
 \] $$
 
-$nospell
-
 $head Start  Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
@@ -235,6 +233,5 @@ bool rev_sparse_jac(void)
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

@@ -662,7 +662,6 @@ $srccode%cpp% */
 }; // End of mat_mul class
 }  // End empty namespace
 /* %$$
-$comment end nospell$$
 $end
 */
 

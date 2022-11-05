@@ -8,6 +8,8 @@ $begin atomic_three_tangent.cpp$$
 $spell
    Tanh
    bool
+   jac
+   hes
 $$
 
 $section Tan and Tanh as User Atomic Operations: Example and Test$$
@@ -19,8 +21,6 @@ functions as atomic function operations.
 It also uses $code AD<float>$$,
 while most atomic examples use $code AD<double>$$.
 
-
-$nospell
 
 $head Start Class Definition$$
 $srccode%cpp% */
@@ -404,6 +404,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

@@ -7,6 +7,8 @@
 $begin atomic_three_reciprocal.cpp$$
 $spell
    enum
+   jac
+   hes
 $$
 
 $section Reciprocal as an Atomic Operation: Example and Test$$
@@ -16,8 +18,6 @@ This example demonstrates using $cref atomic_three$$
 to define the operation
 $latex g : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 1$$, $latex m = 1$$, and $latex g(x) = 1 / x$$.
-
-$nospell
 
 $head Start Class Definition$$
 $srccode%cpp% */
@@ -385,6 +385,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

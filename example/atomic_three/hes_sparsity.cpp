@@ -6,6 +6,8 @@
 $begin atomic_three_hes_sparsity.cpp$$
 $spell
    Jacobian
+   jac
+   hes
 $$
 
 $section Atomic Forward Hessian Sparsity: Example and Test$$
@@ -48,8 +50,6 @@ g_1^{(2)} ( x ) = \left( \begin{array}{ccc}
    0 & 0 & 0
 \end{array} \right)
 \] $$
-
-$nospell
 
 $head Start  Class Definition$$
 $srccode%cpp% */
@@ -388,6 +388,5 @@ bool hes_sparsity(void)
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

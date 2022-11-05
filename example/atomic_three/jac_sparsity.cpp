@@ -6,6 +6,7 @@
 $begin atomic_three_jac_sparsity.cpp$$
 $spell
    Jacobian
+   jac
 $$
 
 $section Atomic Function Jacobian Sparsity: Example and Test$$
@@ -32,8 +33,6 @@ g^{(1)} (x) = \left( \begin{array}{ccc}
 x_1  & x_0 & 0
 \end{array} \right)
 \] $$
-
-$nospell
 
 $head Start  Class Definition$$
 $srccode%cpp% */
@@ -309,6 +308,5 @@ bool jac_sparsity(void)
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

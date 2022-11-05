@@ -45,8 +45,6 @@ f_1^{(2)} ( x ) = \left( \begin{array}{ccc}
 \end{array} \right)
 \] $$
 
-$nospell
-
 $head Start  Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
@@ -286,6 +284,5 @@ bool forward(void)
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */

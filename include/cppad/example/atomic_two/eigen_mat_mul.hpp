@@ -12,6 +12,9 @@ $spell
    Taylor
    nr
    nc
+   op
+   jac
+   hes
 $$
 
 $section atomic_two Eigen Matrix Multiply Class$$
@@ -94,8 +97,6 @@ $latex \[
 \bar{B}_{k-\ell} =  \bar{B}_{k-\ell} + A_\ell^\R{T} \bar{R}_k
 \] $$
 
-
-$nospell
 
 $head Start Class Definition$$
 $srccode%cpp% */
@@ -643,7 +644,6 @@ $srccode%cpp% */
 
 }  // END_EMPTY_NAMESPACE
 /* %$$
-$$ $comment end nospell$$
 $end
 */
 

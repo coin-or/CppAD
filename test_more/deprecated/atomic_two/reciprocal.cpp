@@ -20,8 +20,6 @@ $latex n = 1$$, $latex m = 1$$, and $latex f(x) = 1 / x$$.
 $head sparsity$$
 This example only uses set sparsity patterns.
 
-$nospell
-
 $head Start Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
@@ -387,6 +385,5 @@ $srccode%cpp% */
    return ok;
 }
 /* %$$
-$$ $comment end nospell$$
 $end
 */
