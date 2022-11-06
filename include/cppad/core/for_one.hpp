@@ -77,7 +77,7 @@ $cref/range/fun_property/Range/$$ space for $icode f$$.
 The value of $icode dy$$ is the partial of $latex F$$ with respect to
 $latex x_j$$ evaluated at $icode x$$; i.e.,
 for $latex i = 0 , \ldots , m - 1$$
-$latex \[.
+$latex \[
    dy[i] = \D{ F_i }{ x_j } ( x )
 \] $$
 

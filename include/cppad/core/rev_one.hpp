@@ -76,7 +76,7 @@ $cref/domain/fun_property/Domain/$$ space for $icode f$$.
 The value of $icode dw$$ is the derivative of $latex F_i$$
 evaluated at $icode x$$; i.e.,
 for $latex j = 0 , \ldots , n - 1 $$
-$latex \[.
+$latex \[
    dw[ j ] = \D{ F_i }{ x_j } ( x )
 \] $$
 

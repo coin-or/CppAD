@@ -65,7 +65,7 @@ $cref/range/fun_property/Range/$$
 dimensions for $icode f$$.
 For $latex i = 0 , \ldots , m - 1 $$
 and $latex j = 0 , \ldots , n - 1$$
-$latex \[.
+$latex \[
    jac[ i * n + j ] = \D{ F_i }{ x_j } ( x )
 \] $$
 
