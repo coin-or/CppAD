@@ -138,7 +138,7 @@ Use its $cref/default constructor/FunConstruct/Default Constructor/$$ instead
 and its assignment operator.
 
 $head swap$$
-The swap operation $code%f%.swap(%g%)%$$ exchanges the contents of
+The swap operation $icode%f%.swap(%g%)%$$ exchanges the contents of
 the two $codei%ADFun<%Base%>%$$ functions; i.e.,
 $icode f$$ ($icode g$$) before the swap is identical to
 $icode g$$ ($icode f$$) after the swap.

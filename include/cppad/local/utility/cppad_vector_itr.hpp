@@ -352,7 +352,7 @@ $icode%itr% = %n% %+-% %other%
 %$$
 $icode%n% = %itr% - %other%
 %$$
-$code%b% = %itr% %cop% %other%
+$icode%b% = %itr% %cop% %other%
 %$$
 
 $subhead +-$$

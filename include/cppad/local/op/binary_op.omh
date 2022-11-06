@@ -423,7 +423,7 @@ $head partial$$
 This argument has type $icode%Base%*%$$.
 The partial derivative w.r.t. variable $icode i$$ and
 Taylor coefficient of order $icode k$$ is
-$code%
+$codei%
    %partial% [ %i% * %nc_partial% + k ]
 %$$
 for $icode%k% = 0 , %...%, %d%$$.
