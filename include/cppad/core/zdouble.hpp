@@ -36,9 +36,9 @@ $codei%    zdouble z(i)
 %$$
 $icode%    z1% %op% %x%
 %$$
-were $icode i$$ is a $code size_t$$,
+were $icode i$$ is a $code size_t$$ or $icode long$$ or $code int$$,
 $icode x$$ is a $code double$$ or $code zdouble$$,
-and $icode op$$ is $code =$$, $code +=$$, $code -=$$, $code *=$$
+and $icode op$$ is $code =$$ or $code +=$$ or $code -=$$ or $code *=$$
 or $code /=-$$.
 
 $subhead Comparison Operators$$
@@ -271,6 +271,10 @@ public:
    { }
    /// Constructor from size_t
    zdouble(const size_t& i)
+   : dbl_( double(i) )
+   { }
+   /// Constructor from long
+   zdouble(const long& i)
    : dbl_( double(i) )
    { }
    /// Constructor from int

@@ -45,9 +45,15 @@ $spell
    posix
    gcc
    handeling
+   zdouble
 $$
 
 $section Changes and Additions to CppAD During 2022$$
+
+$head 11-05$$
+Fix a conversion error during the tests by extending the zdouble
+$cref/constructor/zdouble/Syntax/Constructor and Assignment/$$
+to $codei%zdouble(%i%)%$$ where $icode i$$ is $code long$$.
 
 $head 08-30$$
 The $cref optimize$$ operations was not handeling
