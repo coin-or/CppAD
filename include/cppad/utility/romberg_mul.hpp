@@ -143,11 +143,7 @@ $children%
    example/utility/romberg_mul.cpp
 %$$
 $head Example$$
-$comment%
-   example/utility/romberg_mul.cpp
-%$$
-The file
-$cref Rombergmul.cpp$$
+The file $cref romberg_mul.cpp$$
 contains an example and test a test of using this routine.
 
 $head Source Code$$

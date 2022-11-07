@@ -120,9 +120,6 @@ $children%
    example/utility/romberg_one.cpp
 %$$
 $head Example$$
-$comment%
-   example/utility/romberg_one.cpp
-%$$
 The file
 $cref romberg_one.cpp$$
 contains an example and test a test of using this routine.

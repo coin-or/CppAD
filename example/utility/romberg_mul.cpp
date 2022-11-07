@@ -4,12 +4,12 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin Rombergmul.cpp$$
+$begin romberg_mul.cpp$$
 $spell
    Romberg
 $$
 
-$section One Dimensional Romberg Integration: Example and Test$$
+$section Multi-Dimensional Romberg Integration: Example and Test$$
 
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

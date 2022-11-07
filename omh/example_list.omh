@@ -16,7 +16,6 @@ $$
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $table
 $rref AddEq.cpp$$
-$rref Rombergmul.cpp$$
 $rref a11c_bthread.cpp$$
 $rref a11c_openmp.cpp$$
 $rref a11c_pthread.cpp$$
@@ -290,6 +289,7 @@ $rref rev_two.cpp$$
 $rref reverse_one.cpp$$
 $rref reverse_three.cpp$$
 $rref reverse_two.cpp$$
+$rref romberg_mul.cpp$$
 $rref romberg_one.cpp$$
 $rref rosen_34.cpp$$
 $rref runge45_1.cpp$$
