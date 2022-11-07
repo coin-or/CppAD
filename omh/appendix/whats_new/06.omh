@@ -247,7 +247,7 @@ $pre
 $$
 The prototype for $code int$$ arguments in binary operations
 (for example $cref/addition/ad_binary/$$) was documented as
-$syntax const int &$$ but was actually just plain $code int$$.
+$code const int &$$ but was actually just plain $code int$$.
 This has been fixed.
 (Later changed to $code double$$.)
 
