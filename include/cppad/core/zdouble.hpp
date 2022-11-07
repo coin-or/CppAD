@@ -77,9 +77,9 @@ $icode%
 %$$
 returns 'not a number' when $icode z1$$ has type $code zdouble$$.
 Note that this template function needs to be specialized because
-$codei
+$codei%
    zdouble(0.0) ==  zdouble(0.0) / zdouble(0.0)
-$$
+%$$
 
 
 $head Motivation$$
