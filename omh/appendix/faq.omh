@@ -158,8 +158,7 @@ the CppAD $cref testvector$$ class ?
 $pre
 
 $$
-The preprocessor symbol
-$small $cref/CPPAD_TESTVECTOR/testvector/$$ $$
+The preprocessor symbol $code CPPAD_TESTVECTOR$$ ( see $cref testvector$$ )
 determines which
 $cref SimpleVector$$ template class is used for extensive testing.
 The default definition for $code CPPAD_TESTVECTOR$$ is the

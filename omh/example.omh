@@ -40,8 +40,8 @@ show how the examples can be run on your system.
 
 
 $head The CppAD Test Vector Template Class$$
-Many of the examples use the
-$small $cref/CPPAD_TESTVECTOR/testvector/$$ $$ preprocessor symbol
+Many of the examples use the $code CPPAD_TESTVECTOR$$ preprocessor symbol
+( see $cref testvector$$ )
 to determine which $cref SimpleVector$$ template class is used with
 the examples.
 
