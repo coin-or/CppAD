@@ -30,27 +30,36 @@ $$
 
 $subhead p$$
 The sub-vector
-$pre p_0, ... , p_{np-1}$$ is the independent dynamic parameter vector;
+$pre
+   p_0, ... , p_{np-1}
+$$
+is the independent dynamic parameter vector;
 see $cref/n_dynamic_ind/json_ad_graph/dynamic_ind_vec/n_dynamic_ind/$$.
 The node index corresponding to $icode p_0$$ is $code 1$$.
 
 $subhead x$$
 The sub-vector
-$pre x_0, ... , x_{nx-1}$$ is the independent variable vector;
+$pre
+   x_0, ... , x_{nx-1}
+$$
+is the independent variable vector;
 see $cref/n_variable_ind/json_ad_graph/variable_ind_vec/n_variable_ind/$$.
 The node index corresponding to $icode x_0$$ is
 the index corresponding to $icode p_0$$ plus $icode np$$.
 
 $subhead c$$
 The sub-vector
-$pre c_0, ... , c_{nc-1}$$ is the constant parameter vector;
+$pre
+   c_0, ... , c_{nc-1}
+$$
+is the constant parameter vector;
 see $cref/constant_vec/json_ad_graph/constant_vec/$$.
 The node index corresponding to $icode c_0$$ is
 the index corresponding to $icode x_0$$ plus $icode nx$$.
 
 $subhead r_i$$
 For $icode%i%=0,%...%,%no%-1%$$
-the sub-vector $pre r_i$$
+the sub-vector $icode r_i$$
 is the result vector for the $th i$$ operator usage;
 see $cref/op_usage_vec/json_ad_graph/op_usage_vec/$$.
 The value $icode no$$ is the number of operator usages; see
@@ -103,7 +112,7 @@ Token      $cnext Usage                                           $rnext
 $code ,$$  $cnext separates entries in a list                     $rnext
 $code :$$  $cnext separates name from corresponding value         $rnext
 $code {$$  $cnext starts a list of name $code :$$ value pairs     $rnext
-$code }$$  $cnext ends a list of name $code:$$ value pairs        $rnext
+$code }$$  $cnext ends a list of name $code :$$ value pairs        $rnext
 $code [$$  $cnext starts a list of values                         $rnext
 $code ]$$  $cnext ends a list of values
 $tend
