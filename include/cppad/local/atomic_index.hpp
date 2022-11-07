@@ -95,7 +95,7 @@ Otherwise if $icode index_in$$ is zero,
 $icode index_out$$ is non-zero and is the $icode index_in$$ value
 corresponding to the input values for
 $icode type$$, $codei%*%name%$$, and $icode ptr$$.
-Otherwise, $index_out$$ is zero.
+Otherwise, $icode index_out$$ is zero.
 
 $end
 */
