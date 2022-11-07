@@ -425,7 +425,6 @@ $end
          data_[unit_index] &= ~mask;
    }
 /* %$$
-$end
 -------------------------------------------------------------------------------
 $begin vector_bool_push_vector$$
 $spell
