@@ -15,9 +15,7 @@ $index Romberg, example$$
 $index example, Romberg$$
 $index test, Romberg$$
 
-$code
 old verbatim%example/romberg_one.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

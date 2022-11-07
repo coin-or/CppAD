@@ -83,7 +83,7 @@ $head ipopt_library_paths$$
 If you are linking to a shared version of the Ipopt library,
 you may have to add a path to the $code LD_LIBRARY_PATH$$.
 You can determine the directory you need to add using the command
-$code
+$codei%
    pkg-config ipopt --libs
 %$$
 The output will have the following form
