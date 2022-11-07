@@ -13,15 +13,13 @@ $$
 $section Source: det_of_minor$$
 
 
-$code
+$codei%
 # ifndef CPPAD_DET_OF_MINOR_HPP
-$pre
-$$
 # define CPPAD_DET_OF_MINOR_HPP
+%$$
 
 $srcfile%include/cppad/speed/det_of_minor.hpp%0%// BEGIN C++%// END C++%$$
 
-# endif
-$$
+$code # endif $$
 
 $end
