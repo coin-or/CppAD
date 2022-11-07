@@ -13,15 +13,13 @@ $$
 $section Source: det_33$$
 
 
-$code
+$codei%
 # ifndef CPPAD_DET_33_HPP
-$pre
-$$
 # define CPPAD_DET_33_HPP
+%$$
 
 $srcfile%include/cppad/speed/det_33.hpp%0%// BEGIN C++%// END C++%$$
 
-# endif
-$$
+$code # endif$$
 
 $end
