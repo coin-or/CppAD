@@ -78,7 +78,7 @@ $codei%VecAD_reverence %ref%(%vec%, %ind%)
 %$$
 $icode%ref% = %right%
 %$$
-$icode ref cop right
+$icode%ref cop right
 %$$
 $icode%element% = %ref%.ADBase()
 %$$
