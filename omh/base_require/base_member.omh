@@ -16,14 +16,17 @@ $section Required Base Class Member Functions$$
 
 $head Notation$$
 $table
-$bold Symbol$$ $cnext $bold Meaning$$ $rnext
+$bold Symbol$$ $cnext $bold Meaning$$
+$rnext
 $icode Base$$  $cnext
    The base type corresponding to $codei%AD<%Base%>%$$
 $rnext
 $icode b$$     $cnext
    An object of type $code bool$$
+$rnext
 $icode i$$     $cnext
    An object of type $code int$$
+$rnext
 $icode s$$     $cnext
    An object of type $code size_t$$
 $rnext
