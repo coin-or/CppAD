@@ -305,9 +305,6 @@ $latex \[
 where $latex \partial_{x(0)}$$ denotes the partial with respect
 to $latex x^{(0)}$$.
 
-$code
-$comment%example/rev_checkpoint.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 $end
 */
 template <class Vector>

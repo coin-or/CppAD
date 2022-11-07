@@ -19,10 +19,6 @@ The values in the rest of the sparsity pattern do not matter.
 $head See Also$$
 $cref sub_sparse_hes.cpp$$
 
-$code
-$comment%example/sparse/sparse_sub_hes.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
-
 $end
 */
 // BEGIN C++
