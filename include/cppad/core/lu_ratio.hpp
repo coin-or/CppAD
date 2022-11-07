@@ -24,7 +24,7 @@ $$
 $section LU Factorization of A Square Matrix and Stability Calculation$$
 
 $head Syntax$$
-$code# include <cppad/cppad.hpp>$$
+$code # include <cppad/cppad.hpp>$$
 $pre
 $$
 $icode%sign% = LuRatio(%ip%, %jp%, %LU%, %ratio%)%$$

@@ -378,7 +378,7 @@ $lend
 
 $head 09-16$$
 The conditional expressions, $cref CondExp$$, were not working
-for the type $code< CppAD::AD<adouble> >$$ where $code adouble$$
+for the type $code < CppAD::AD<adouble> >$$ where $code adouble$$
 is the ADOL-C AD type.
 This has been fixed by adding a call to
 $cref/CPPAD_COND_EXP_REL/base_adolc.hpp/CondExpRel/$$ in
