@@ -15,7 +15,7 @@ $$
 
 $section Base Type Requirements for Numeric Limits$$
 
-$head CppAD::numeric_limits$$
+$head numeric_limits$$
 A specialization for
 $cref/CppAD::numeric_limits/numeric_limits/$$
 must be defined in order to use the type $codei%AD<%Base%>%$$.
