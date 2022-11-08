@@ -29,11 +29,11 @@ $section Determine Amount of Time to Execute a Test$$
 $head Syntax$$
 $codei%# include <cppad/utility/time_test.hpp>
 %$$
-$icode%time% = time_test(%test%, %time_min%)
+$icode%time% = time_test(%test_fun%, %time_min%)
 %$$
-$icode%time% = time_test(%test%, %time_min%, %test_size%)
+$icode%time% = time_test(%test_fun%, %time_min%, %test_size%)
 %$$
-$icode%time% = time_test(%test%, %time_min%, %test_size%, %repeat_out%)
+$icode%time% = time_test(%test_fun%, %time_min%, %test_size%, %repeat_out%)
 %$$
 
 $head Purpose$$
@@ -61,20 +61,20 @@ This file is included by $code cppad/cppad.hpp$$
 and it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
-$head test$$
-The $code time_test$$ argument $icode test$$ is a function,
+$head test_fun$$
+The $code time_test$$ argument $icode test_fun$$ is a function,
 or function object.
 In the case where $icode test_size$$ is not present,
-$icode test$$ supports the syntax
+$icode test_fun$$ supports the syntax
 $codei%
-   %test%(%repeat%)
+   %test_fun%(%repeat%)
 %$$
 In the case where $icode test_size$$ is present,
-$icode test$$ supports the syntax
+$icode test_fun$$ supports the syntax
 $codei%
-   %test%(%size%, %repeat%)
+   %test_fun%(%size%, %repeat%)
 %$$
-In either case, the return value for $icode test$$ is $code void$$.
+In either case, the return value for $icode test_fun$$ is $code void$$.
 
 $subhead size$$
 If the argument $icode size$$ is present,
@@ -85,7 +85,7 @@ $codei%
 and is equal to the $icode test_size$$ argument to $code time_test$$.
 
 $subhead repeat$$
-The $icode test$$ argument $icode repeat$$ has prototype
+The $icode test_fun$$ argument $icode repeat$$ has prototype
 $codei%
    size_t %repeat%
 %$$
@@ -97,8 +97,8 @@ $codei%
    double %time_min%
 %$$
 It specifies the minimum amount of time in seconds
-that the $icode test$$ routine should take.
-The $icode repeat$$ argument to $icode test$$ is increased
+that the repeats of $icode test_fun$$ routine should take.
+The $icode repeat$$ argument to $icode test_fun$$ is increased
 until this amount of execution time (or more) is reached.
 
 $head test_size$$
@@ -107,7 +107,7 @@ $codei%
    size_t %test_size%
 %$$
 In this case $icode test_size$$ will be present, and have the same value,
-in each call to $icode test$$.
+in each call to $icode test_fun$$.
 
 $head repeat_out$$
 If this argument is present, it has prototype
@@ -115,11 +115,11 @@ $codei%
    size_t& %repeat_out%
 %$$
 This input value of this argument does not matter.
-Upon return, it is the value of $cref/repeat/time_test/test/repeat/$$
+Upon return, it is the value of $cref/repeat/time_test/test_fun/repeat/$$
 that corresponds to the return value $icode time$$; i.e.,
-the actual total time of the test is
+the total time for the repeats of the test is
 $codei%
-   %total_time% = %repeat% * %time%
+   %total_time% = %repeat_out% * %time%
 %$$
 
 $head time$$
@@ -128,7 +128,8 @@ $codei%
    double %time%
 %$$
 and is the number of wall clock seconds that it took
-to execute $icode test$$ divided by the value used for $icode repeat$$.
+to execute the repeats of $icode test_fun$$
+divided by the value used for $icode repeat$$.
 
 $head Timing$$
 The routine $cref elapsed_seconds$$ will be used to determine the
