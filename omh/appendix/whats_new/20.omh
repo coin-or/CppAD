@@ -5,6 +5,8 @@
 
 $begin whats_new_20$$
 $spell
+   mm
+   dd
    eigen
    CppAD
    vec
@@ -42,7 +44,9 @@ $$
 
 $section Changes and Additions to CppAD During 2020$$
 
-$head 12-28$$
+$head mm-dd$$
+
+$subhead 12-28$$
 $list number$$
 Add the
 $cref/PASS_SPARSE_JACOBIAN_TO_CODE_GEN
@@ -57,7 +61,7 @@ Move $code compiled_fun$$ to $cref code_gen_fun$$,
 to emphasize the fact that it used the CppADCodeGen package.
 $lend
 
-$head 12-27$$
+$subhead 12-27$$
 $list number$$
 Include the example implementations $code compiled_fun.hpp$$
 and $code compiled_fun.cpp$$ in the documentation.
@@ -72,7 +76,7 @@ so one can compare passing the determinant or its Jacobian to
 CppADCodeGen (for the same eventual result).
 $lend
 
-$head 12-21$$
+$subhead 12-21$$
 $list number$$
 Add a move semantics version of the copy constructor to
 $cref ADFun$$, $cref sparse_rc$$, $cref sparse_rcv$$, and
@@ -88,7 +92,7 @@ $cref runge_45.cpp$$, and $cref rosen_34.cpp$$
 from $code example/general$$ to $code example/utility/$$.
 $lend
 
-$head 12-20$$
+$subhead 12-20$$
 $list number$$
 The $cref rosen_34.cpp$$ example was changed to use
 $cref/dynamic/independent/dynamic/$$ parameters so it does not
@@ -107,7 +111,7 @@ that are vectors.)
 $lend
 
 
-$head 12-19$$
+$subhead 12-19$$
 Merge in $code cg$$ branch which had the following changes:
 
 $list number$$
@@ -147,27 +151,27 @@ and move semantics copy constructor, were added.
 This ensures the move semantics assignment operator does not make any copies.
 $lend
 
-$head 12-12$$
+$subhead 12-12$$
 Change the location where the source code for the
 $cref/optional/get_optional.sh/$$ packages is stored from
 $code build/external$$ to $code external$$.
 This enables one to remove the old build directory
 without having to rebuild the optional packages.
 
-$head 12-11$$
+$subhead 12-11$$
 Change the autotools $cref/configure/autotools/Configure/$$ script
 so that it does better detection of the microsoft cl compiler.
 In addition, add documentation for the
 $cref/--enable-msvc/autotools/--enable-msvc/$$ option.
 
-$head 12-06$$
+$subhead 12-06$$
 Fix $code bin/get_cppadcg.sh$$ install of newer version
 of cppadcg.
 
-$head 12-05$$
+$subhead 12-05$$
 Advance to Oct 9, 2020 version of cppadcg.
 
-$head 12-04$$
+$subhead 12-04$$
 $list number$$
 The cppad vector $cref/resize/cppad_vector/resize/$$ operation
 now preserves the data even if the new size does not fit in the
@@ -182,23 +186,23 @@ Fix the $code example/utility/to_string.cpp$$ test; see
 $href%https://github.com/coin-or/CppAD/issues/44%issue 44%$$.
 $lend
 
-$head 12-03$$
+$subhead 12-03$$
 $bold API Change:$$ support of c++11 is required for this,
 and future versions of CppAD.
 
-$head 12-02$$
+$subhead 12-02$$
 The $cref pkgconfig$$ files were modified to make user of the fields
 $code Requires.private$$ and $code Libs.private$$.
 In addition, the
 $cref/extra definitions/pkgconfig/cppad.pc/Extra Definitions/$$
 were added.
 
-$head 12-01$$
+$subhead 12-01$$
 There was a mistake in the 20201130 version that caused
 $code CPPAD_HAS_IPOPT$$ and $code CPPAD_HAS_ADOLC$$ to be undefined,
 instead of 0 or 1, this has been fixed.
 
-$head 11-29$$
+$subhead 11-29$$
 $list number$$
 Use pkg-config to determine install prefix for
 adolc, eigen, ipopt, and cppadcg; see
@@ -210,11 +214,11 @@ $lnext
 Fix warning that the variable $code not_used_rec_base$$ was not initialized.
 $lend
 
-$head 10-26$$
+$subhead 10-26$$
 Improve the documentation for building the CppAD tests using
 $cref/Visual Studio/cmake/CMake Command/Visual Studio/$$.
 
-$head 10-23$$
+$subhead 10-23$$
 Version $code cmake-3.19$$ of cmake had an change that was not backward
 compatible; see
 $href%https://discourse.cmake.org/t/on-windows-check-cxx-source-runs-is-calling-check-source-runs/2065/6%
@@ -224,23 +228,23 @@ This broke the CppAD install and was fixed.
 Thus versions of CppAD before 20201023 do not work with version of CMake
 at or after 3.18.
 
-$head 10-22$$
+$subhead 10-22$$
 Add $code ar-lib$$ to github repository distribution.
 This fixes a problem with autotools build when using the
 Microsoft C++ compiler and $code msys2$$.
 
-$head 10-21$$
+$subhead 10-21$$
 Modify the source file $code match_op.hpp$$ to avoid a
 possibly un-initialized warning on some compilers.
 
-$head 10-20$$
+$subhead 10-20$$
 The $icode have_ar$$ variable has been removed from the
 $cref autotools$$ configuration and the configuration now exits
 if $code AM_PROG_AR$$ does not find an archiving tool.
 This was done to try and solve some configuration problems with
 a combination of $code msys2$$ and the Visual Studio compiler.
 
-$head 10-17$$
+$subhead 10-17$$
 $list number$$
 The $cref autotools$$ configuration would fail when it tried
 to compile a $cref cppadcg$$ include file
@@ -259,15 +263,15 @@ $code speed_profile$$ program.
 (We also use $code callgrind$$ to do CppAD speed profiling.)
 $lend
 
-$head 09-05$$
+$subhead 09-05$$
 Fix some errors and warnings when building with Visual Studio 2019; e.g. see
 $href%https://github.com/coin-or/CppAD/issues/60%issue 60%$$.
 
-$head 06-08$$
+$subhead 06-08$$
 Fix compiler warning in $code match_op.hpp$$ about
 possibly uninitialized variable.
 
-$head 06-04$$
+$subhead 06-04$$
 $list number$$
 Advance $cref get_ipopt.sh$$ to ipopt-3.13.2.
 $lnext
@@ -275,14 +279,14 @@ Fix some compiler warnings generated by g++-10.1.1.
 $lend
 
 
-$head 05-27$$
+$subhead 05-27$$
 If $cref/include_ipopt/cmake/include_ipopt/$$ is on the cmake command line,
 $cref ipopt_solve$$ is automatically included by $code cppad/cppad.hpp$$.
 The $cref sparse2eigen$$ utility can still be used even
 if $cref/include_eigen/cmake/include_eigen/$$ is not specified on the cmake command line.
 
 
-$head 05-26$$
+$subhead 05-26$$
 $list number$$
 There was a bug in conditional expressions when the
 $cref/left/condexp/left/$$ or $cref/right/condexp/right/$$ argument is a
@@ -293,7 +297,7 @@ $lnext
 Advance most recent release from 20200000.2 to 20200000.3.
 $lend
 
-$head 05-23$$
+$subhead 05-23$$
 $list number$$
 The $code optimize$$ hash coding used to remove identical expressions
 was improved. The can make a big difference for very large programs.
@@ -306,7 +310,7 @@ function was added so one can check if a larger collision limit
 might make a difference.
 $lend
 
-$head 05-01$$
+$subhead 05-01$$
 $list number$$
 A problem was fixed in the $cref get_adolc.sh$$
 installation of the optional package Adolc .
@@ -321,24 +325,24 @@ interferes with recognizes pieces of summations that are
 the same in different cumulative sums.
 $lend
 
-$head 03-11$$
+$subhead 03-11$$
 The $code CppAD::vector$$ constructor was extended to allow its
 $cref/size/CppAD_vector/Integer Size/$$ to be a $code int$$
 (this used to generate a warning when using the $code clang$$ compiler).
 
-$head 02-02$$
+$subhead 02-02$$
 The $code get_optional.sh$$ prefix was extended so that it could be a
 $cref/relative path/get_optional.sh/prefix/Relative Path/$$.
 In addition
 $cref/configuration/get_optional.sh/prefix/Configuration/$$
 instructions were added to cover the case where the prefix is changed.
 
-$head 02-01$$
+$subhead 02-01$$
 The $cref/get_optional.log/get_optional.sh/get_optional.log/$$
 and $cref/get_optional.err/get_optional.sh/get_optional.err/$$ files
 were added so one can see the progress of the $code get_optional.sh$$ script.
 
-$head 01-29$$
+$subhead 01-29$$
 $list number$$
 Add the $cref cppadcg_sparse_jacobian.cpp$$ speed test.
 $lnext
@@ -354,7 +358,7 @@ $codei%
 %$$
 $lend
 
-$head 01-24$$
+$subhead 01-24$$
 $list number$$
 Add the $cref cppadcg_det_minor.cpp$$ speed test.
 This is the first test using $cref cppadcg$$
@@ -365,7 +369,7 @@ The package name was removed from the speed test size output
 $cref/speed results/speed_main/Speed Results/$$.
 $lend
 
-$head 01-22$$
+$subhead 01-22$$
 $list number$$
 Add a $cref json_get_started.cpp$$ example.
 $lnext
@@ -373,18 +377,18 @@ Move the section $cref example_abs_normal$$ below
 the section $cref abs_normal_fun$$.
 $lend
 
-$head 01-18$$
+$subhead 01-18$$
 Modify the option package install scripts so they all use the same
 install $cref/prefix/get_optional.sh/prefix/$$
 that the user can change in the file $code bin/get_optional.sh$$.
 In addition, these scripts were updated to use more recent versions
 of the optional packages.
 
-$head 01-17$$
+$subhead 01-17$$
 Create an example / template for adding a new package to the speed tests;
 see $cref speed_xpackage$$.
 
-$head 01-12$$
+$subhead 01-12$$
 Documentation was added for the
 $cref/special requirements/base_ordered/Special Requirements/$$
 when the $icode Base$$ type does not support ordered comparison.
@@ -392,14 +396,14 @@ As a consequence, the reverse mode the derivative of $codei%pow(%x%, %y%)%$$
 may result in zero (not nan) when $icode x$$ is zero; see the
 $cref/reverse mode/wish_list/Reverse Mode/$$ wish list item.
 
-$head 01-06$$
+$subhead 01-06$$
 The $code VecAD$$ objects have been extended to work with
 dynamic parameters. However, this is not as efficient as it should be; see
 $cref/efficiency/VecAD/Efficiency/$$ and
 $cref/VecAD vectors/wish_list/Dynamic Parameters/VecAD Vectors/$$
 under dynamic parameters in the wish list.
 
-$head 01-04$$
+$subhead 01-04$$
 $list number$$
 The $cref VecAD$$ documentation was re-written.
 $lnext

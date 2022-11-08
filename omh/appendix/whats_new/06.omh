@@ -5,6 +5,8 @@
 
 $begin whats_new_06$$
 $spell
+   mm
+   dd
    autotools
    speedtest
    apx
@@ -59,14 +61,10 @@ $$
 
 $section Changes and Additions to CppAD During 2006$$
 
+$head mm-dd$$
 
-$head Introduction$$
-This section contains a list of the changes to CppAD during 2006
-(in reverse order by date).
-The purpose of this section is to
-assist you in learning about changes between various versions of CppAD.
 
-$head 12-24$$
+$subhead 12-24$$
 Move $code exp_eps_ad$$ to $code exp_eps_cppad$$ and
 add exercises to the following sections:
 $cref exp_eps_rev1$$,
@@ -79,14 +77,14 @@ $cref exp_eps_for0$$,
 $cref exp_eps_for1$$,
 $cref exp_eps_rev1$$.
 
-$head 12-23$$
+$subhead 12-23$$
 Add exercises to the following sections:
 $cref get_started.cpp$$,
 $cref exp_eps$$,
 $cref exp_eps_for0$$, and
 $cref exp_eps_for1$$.
 
-$head 12-22$$
+$subhead 12-22$$
 Move $cref get_started.cpp$$ below the $cref introduction$$ directory.
 $pre
 
@@ -99,7 +97,7 @@ to build both the $cref get_started.cpp$$ and $cref exp_apx.cpp$$
 example programs.
 (The $code --with-GetStarted$$ configure command line option has been removed.)
 
-$head 12-21$$
+$subhead 12-21$$
 Add the $cref/source code for Poly/poly.hpp/$$ to the documentation
 and include $cref Poly$$ in the in the $cref speed_utility$$ section.
 $pre
@@ -112,7 +110,7 @@ In addition some sections has switched position between
 the top level $cref CppAD$$ and the $cref Appendix$$.
 
 
-$head 12-19$$
+$subhead 12-19$$
 Reorganize so that the source code is below the corresponding routine
 in the documentation tree (instead of at the same level) for the
 following routines:
@@ -140,7 +138,7 @@ $cref LuFactor$$,
 $cref LuSolve$$.
 
 
-$head 12-18$$
+$subhead 12-18$$
 Make the $cref speed$$ source code easier to read.
 $pre
 
@@ -148,7 +146,7 @@ $$
 Change the speed test output name $code det_poly$$ to $code poly$$
 (as it should have been).
 
-$head 12-17$$
+$subhead 12-17$$
 The speed test $cref det_grad_33$$ was missing its documentation
 (this has been fixed).
 In addition, the titles and indexing for the speed test documentation
@@ -179,7 +177,7 @@ Add the $cref/poly/link_poly/$$ speed test for all three packages.
 In addition, correct a missing include in $cref poly$$ routine.
 
 
-$head 12-15$$
+$subhead 12-15$$
 The wish list item
 to simplify and better organize the speed tests been completed:
 $table
@@ -198,18 +196,18 @@ $cref|speed/profile|autotools|Profiling CppAD|$$
 $tend
 
 
-$head 12-13$$
+$subhead 12-13$$
 Next step for the speed wish list item:
 remove $code speed_cppad$$ from the documentation and replace it by
 $code speed/cppad$$, see $cref speed_cppad$$ for the new CppAD speed
 test routines.
 
-$head 12-12$$
+$subhead 12-12$$
 Started the speed wish list item by
 move the $code adolc$$ director to $code speed/adolc$$ and
 $code fadbad$$ to $code speed/fadbad$$.
 
-$head 12-11$$
+$subhead 12-11$$
 Started the speed wish list item by
 creating the $code speed/example$$ directory and moving the relevant
 examples from
@@ -225,7 +223,7 @@ $$
 A new $cref speed_test$$ routine was added to the library.
 
 
-$head 12-10$$
+$subhead 12-10$$
 The $cref pow$$ function was changed to be a an $codei%AD<%Base%>%$$
 $cref/atomic_base/glossary/Operation/Atomic/$$ operation.
 This function used to return a $code nan$$ if
@@ -240,7 +238,7 @@ and the $cref pow.cpp$$ example was changed to
 test more cases and to use the same variable
 names as in the documentation.
 
-$head 12-09$$
+$subhead 12-09$$
 A speed wish list item was added to the wish list.
 $pre
 
@@ -251,7 +249,7 @@ $code const int &$$ but was actually just plain $code int$$.
 This has been fixed.
 (Later changed to $code double$$.)
 
-$head 12-07$$
+$subhead 12-07$$
 Fix bug in the
 subversion installation instructions; see
 $href%http://list.coin-or.org/pipermail/cppad/2006q4/000076.html%bug report%$$.
@@ -262,7 +260,7 @@ The some of the automatically generated $code makefile.in$$ files
 had an improper license statement in the GPL license version.
 This has been fixed.
 
-$head 12-05$$
+$subhead 12-05$$
 Add the unix installation
 $cref/--with-Documentation/autotools/--with-Documentation/$$ option
 and remove the
@@ -275,7 +273,7 @@ $cref whats_new$$ section above the section for each particular year.
 Also improve the CppAD distribution $code README$$ file.
 
 
-$head 12-03$$
+$subhead 12-03$$
 The include file directory $code CppAD$$ was changed to be all
 lower case; i.e., $code cppad$$.
 If you are using a Unix system, see $cref include_deprecated$$.
@@ -292,7 +290,7 @@ C++ header files should have the $code .hpp$$ extension.
 $lend
 
 
-$head 12-02$$
+$subhead 12-02$$
 Put explanation of version numbering in the
 download instructions.
 $pre
@@ -301,16 +299,16 @@ $$
 Correct some file name references under the Windows heading in
 $cref speed_cppad$$.
 
-$head 12-01$$
+$subhead 12-01$$
 All of the $code Makefile.am$$ and $code Makefile$$ files were changed
 to lower case; i.e., $code makefile.am$$ and $code makefile$$.
 $pre
 
 $$
 Fix compiler warning while compiling $code cppad/RombergOne/$$
-(mistake occurred during $cref/11-20/whats_new_06/11-29/$$ change).
+(mistake occurred during $cref/11-20/whats_new_06/mm-dd/11-29/$$ change).
 
-$head 11-30$$
+$subhead 11-30$$
 Cygwin packages, and other system packages,
 should not have a dash in the version number.
 See
@@ -332,20 +330,20 @@ CppAD version numbering has be changed from
 $icode%yy%-%mm%-%dd%$$ format to $icode yyyymmdd$$; i.e.
 $code cppad-06-11-30$$ was changed to $code cppad-20061130$$.
 
-$head 11-29$$
+$subhead 11-29$$
 There was a problem using $cref RombergOne$$ with floating point
 types other than $code double$$. This has been fixed.
 
-$head 11-28$$
+$subhead 11-28$$
 The $cref/installation/Install/$$ download files were not being built
 because $code Makefile.am$$ referenced $code Doc$$ when it should have
 referenced $code doc$$. This has been fixed.
 
-$head 11-23$$
+$subhead 11-23$$
 A Version Numbering entry was added to the
-$cref wish_list$$ (this was completed on $cref/11-30/whats_new_06/11-30/$$).
+$cref wish_list$$ (this was completed on $cref/11-30/whats_new_06/mm-dd/11-30/$$).
 
-$head 11-18$$
+$subhead 11-18$$
 The example routine that computes determinants using expansion
 by minors $code DetOfMinor$$ was changed to $cref det_of_minor$$,
 in preparation for
@@ -355,7 +353,7 @@ its dependence on the rest of CppAD was removed
 (it no longer includes $cref/CppAD.h/cppad/$$).
 
 
-$head 11-12$$
+$subhead 11-12$$
 The
 $cref general.cpp$$ and
 $code test_more/test_more.cpp$$
@@ -370,16 +368,16 @@ examples and testing
 should have been changes to use lower case file names on
 as part of the 11-08 change below. This has been fixed.
 
-$head 11-08$$
+$subhead 11-08$$
 Move the $code Example$$ directory to $code example$$
 and change all its files to use lower case names.
 
-$head 11-06$$
+$subhead 11-06$$
 Move the $code TestMore$$ directory to $code test_more$$
 and change all its files to use lower case names.
 
 
-$head 11-05$$
+$subhead 11-05$$
 Remove references in the $cref speed_cppad$$ tests to the
 $code Memory$$ and $code Size$$ functions because they
 have been $cref/deprecated/FunDeprecated/$$.
@@ -389,7 +387,7 @@ $$
 Correct some references to $code var_size$$ that should have been
 $cref/size_var/fun_property/size_var/$$.
 
-$head 11-04$$
+$subhead 11-04$$
 Put text written to standard output in the documentation for the
 $cref/get_started.cpp/get_started.cpp/Output/$$ and
 $code print_for.cpp$$ examples.
@@ -404,7 +402,7 @@ $$
 Move the $code Speed$$ directory to $code speed$$
 and change all its files to use lower case names.
 
-$head 11-02$$
+$subhead 11-02$$
 The $code print_for$$ directory was referenced as $code PrintFor$$
 in the root CppAD $code Makefile.am$$ this has been fixed.
 $pre
@@ -419,15 +417,15 @@ $$
 Move the $code GetStarted$$ directory to $code get_started$$
 and change all its files to use lower case names.
 
-$head 11-01$$
+$subhead 11-01$$
 Move the $code PrintFor$$ directory to $code print_for$$
 and change all its files to use lower case names.
 
-$head 10-31$$
+$subhead 10-31$$
 Move the $code SpeedExample$$ directory to $code speed_cppad_example$$
 and change all its files to use lower case names.
 
-$head 10-29$$
+$subhead 10-29$$
 Move the $code Adolc$$ directory to $code adolc$$
 and change all its files to use lower case names.
 $pre
@@ -441,7 +439,7 @@ $$
 The file $code Makefile.am$$ in the distribution directory had the
 CPL copyright message in the GPL version. This has been fixed.
 
-$head 10-28$$
+$subhead 10-28$$
 The copyright message in the script files
 $code example/OneTest$$ and $code TestMore/OneTest$$ were GPL
 (in the CPL distribution).
@@ -450,18 +448,18 @@ $code example/OneTest.sh$$ and $code TestMore/OneTest.sh$$ so that
 the distribution automatically edits the copyright message.
 
 
-$head 10-27$$
+$subhead 10-27$$
 Change $cref hes_lagrangian.cpp$$ example so that it computes the
 Lagrangian two ways. One is simpler and the other can be used
 to avoid re-taping operation sequence.
 
-$head 10-26$$
+$subhead 10-26$$
 Change $cref hes_lagrangian.cpp$$ example so that it modifies
 the independent variable vector between the call to
 $cref Independent$$ and the $codei%ADFun<%Base%>%$$
 $cref/constructor/FunConstruct/$$.
 
-$head 10-25$$
+$subhead 10-25$$
 A subversion install procedure was
 added to the documentation.
 $pre
@@ -477,7 +475,7 @@ Added the example
 $cref hes_lagrangian.cpp$$ which computes the Hessian
 of a Lagrangian.
 
-$head 10-18$$
+$subhead 10-18$$
 Document and fix possible conflicts for
 $cref/preprocessor symbols/preprocessor/$$
 that do not begin with $code CppAD$$ or $code CPPAD_$$.
@@ -487,12 +485,12 @@ $$
 Include a default value for the file $code cppad/config.h$$
 in the subversion repository.
 
-$head 10-16$$
+$subhead 10-16$$
 Fix bug when using $cref OdeErrControl$$ with the type
 $code AD< AD<double> >$$.
 
 
-$head 10-10$$
+$subhead 10-10$$
 Add the $cref Var2Par$$ function so it is possible
 to obtain the $cref Value$$ of a variable.
 Move the $code Discrete.cpp$$ example to $cref tape_index.cpp$$.
@@ -500,7 +498,7 @@ Fix the Microsoft project file so that the Windows install
 examples and testing works properly
 (it was missing the $cref stack_machine.cpp$$ example).
 
-$head 09-30$$
+$subhead 09-30$$
 These changes were grouped together because it took a while for Coin-Or
 to review the dual licensing version and because it was not possible to
 get the nightly build changed:
@@ -522,7 +520,7 @@ $lnext
 Add the $cref stack_machine.cpp$$ example.
 $lend
 
-$head 08-17$$
+$subhead 08-17$$
 Some error message occurred while executing
 $codep
    valgrind --tool=memcheck example/example
@@ -532,21 +530,21 @@ $$
 These were not really bugs, but they have been fixed to avoid
 this conflict between CppAD and $href%http://valgrind.org/%valgrind%$$.
 
-$head 07-14$$
+$subhead 07-14$$
 Make some improvements were made to the $cref Introduction$$,
 $cref exp_eps.hpp$$ and $cref exp_eps_rev1$$ sections.
 
-$head 07-12$$
+$subhead 07-12$$
 Use a drop down menu for the navigation links, instead of a separate frame
 for the navigation links, for each section in the documentation.
 
-$head 06-29$$
+$subhead 06-29$$
 Newer versions of the gcc compiler generated an error because
 $cref erf$$ was using $cref CondExp$$ before it was defined.
 This was found by Kasper Kristensen and his fix has been
 included in the CppAD distribution.
 
-$head 06-22$$
+$subhead 06-22$$
 The $cref ADFun$$ operation
 $icode%f%(%x%, %y%)%$$ no longer executes a zero order
 $cref Forward$$ operation when a new operation sequence is stored in
@@ -555,7 +553,7 @@ In addition, the syntax for this operation was changed to
 $icode%f%.Dependent(%y%)%$$ (see $cref Dependent$$).
 
 $comment ----------------------------------------------------------- $$
-$head 06-19$$
+$subhead 06-19$$
 The changes listed under 06-17 and 06-18 were made in the branches/ADFun branch
 of the CppAD subversion repository. They did not get merged into the trunk
 and become part of the distribution until 06-19. This accomplished the
@@ -589,7 +587,7 @@ $lend
 
 $comment ----------------------------------------------------------- $$
 
-$head 06-17$$
+$subhead 06-17$$
 The location where the distribution files are stored has changed
 and this broke the Download Current Version links for the
 unix and windows installation.
@@ -612,17 +610,17 @@ by changing $icode Vector$$ to $icode BAvector$$ to emphasize that
 it corresponds to a vector of $icode Base$$ objects.
 
 
-$head 06-15$$
+$subhead 06-15$$
 Change $cref BenderQuad$$ to use $icode%Base%$$ instead of
 $codei%AD<%Base%>%$$ where every possible.
 This allows for more calculations to be done in the base type; i.e.,
 is more efficient.
 
-$head 06-09$$
+$subhead 06-09$$
 Add a size check (size one) for the
 $cref/function value argument, g/BenderQuad/g/$$ in $code BenderQuad$$.
 
-$head 06-07$$
+$subhead 06-07$$
 Some major changes were made to the notation in
 $cref get_started.cpp$$ (to make it easier to start using CppAD).
 $pre
@@ -631,27 +629,27 @@ $$
 In the $cref Introduction$$ example,
 $latex exp_eps$$ was changed to $latex {\rm exp\_eps}$$.
 
-$head 06-05$$
+$subhead 06-05$$
 Change $cref BenderQuad$$
 $latex F_y (x, y)$$ to $latex H(x,y)$$ so applies in a more
 general setting.
 This was another change to the $code BenderQuad$$ interface,
 $icode%fun%.fy%$$ was changed to $icode%fun%.h%$$.
 
-$head 06-02$$
+$subhead 06-02$$
 Newer versions of the gcc compiler generated a warning for possible
 use of an uninitialized pointer.
 This was found by Michael Tautschnig and his fix has been
 included in the CppAD distribution.
 
 
-$head 05-31$$
+$subhead 05-31$$
 The interface to $cref BenderQuad$$ has been changed.
 Now all the function evaluation routines
 are member functions of one class object.
 This makes it easy for them to share common data.
 
-$head 05-29$$
+$subhead 05-29$$
 Change statement of command syntax to
 be in the same browser frame as the command documentation
 (for all the commands with a syntax statement).
@@ -661,7 +659,7 @@ the syntax for that command is automatically included.
 Before the user needed to
 follow another link to see to the command syntax.
 
-$head 05-27$$
+$subhead 05-27$$
 Added $cref BenderQuad$$ for computing the Hessian of
 Bender's reduced objective function.
 $pre
@@ -670,13 +668,13 @@ $$
 Added special specifications for $code resize(0)$$
 to $cref CppAD_vector$$.
 
-$head 05-03$$
+$subhead 05-03$$
 The g++ (GCC) 4.1.0 (Red Hat 4.1.0-3) compiler reported an error
 because certain functions were used before being defined
 (version 3.4.4 did not complain about this).
 This has been fixed.
 
-$head 04-29$$
+$subhead 04-29$$
 Change all of the example and test driver programs so that they return
 error codes; i.e., zero for no error and one for an error.
 $pre
@@ -685,20 +683,20 @@ $$
 Add more discussion and a reference for a
 $code gcc 3.4.4 -O2$$ bug (since been removed).
 
-$head 04-28$$
+$subhead 04-28$$
 Improve the $cref get_started.cpp$$ example and move
 it so that it is visible at the too level of the documentation.
 
-$head 04-26$$
+$subhead 04-26$$
 The programs in $cref Introduction$$ have been converted to automated
 test that return true or false with the driver program
 $cref/Introduction/exp_apx.cpp/$$.
 
-$head 04-25$$
+$subhead 04-25$$
 Add an $cref Introduction$$ section to the documentation
 (replaces old example that was part of the $cref Theory$$ section).
 
-$head 04-19$$
+$subhead 04-19$$
 A discussion was added near the end of the $cref FunCheck$$ documentation.
 And the cross references to the $cref CompareChange$$ discussion
 were changed to the FunCheck discussion.
@@ -707,7 +705,7 @@ $pre
 $$
 An operation sequence entry was added to the $cref wish_list$$.
 
-$head 04-18$$
+$subhead 04-18$$
 The new definitions for
 $cref/AD of Base/glossary/AD of Base/$$
 and
@@ -720,7 +718,7 @@ Add the $cref FunCheck$$ section for checking that a sequence of
 operations is as intended.
 
 
-$head 04-17$$
+$subhead 04-17$$
 The documentation for $cref SpeedTest$$ and $cref Poly$$ was improved.
 $pre
 
@@ -735,19 +733,19 @@ The definition of AD sequence of operations was made abstract
 and moved to the glossary as
 $cref/Type operation sequence/glossary/Operation/Sequence/$$.
 
-$head 04-15$$
+$subhead 04-15$$
 The $cref mul_level$$ example was moved from
 $cref ADFun$$ to $cref General$$.
 The documentation for $cref SpeedTest$$ was improved.
 
-$head 04-14$$
+$subhead 04-14$$
 Documentation and examples were improved for the following routines:
 $cref ForTwo$$,
 $cref RevTwo$$.
 In addition, the computation in $code RevTwo$$ was made more efficient
 (it used to possibly calculate some first order partials that were not used).
 
-$head 04-13$$
+$subhead 04-13$$
 Documentation and examples were improved for the following routines:
 $cref Jacobian$$,
 $cref ForOne$$,
@@ -755,7 +753,7 @@ $cref RevOne$$,
 and $cref Hessian$$.
 
 
-$head 04-08$$
+$subhead 04-08$$
 In the case where $cref/use_VecAD/FunDeprecated/use_VecAD/$$ is true,
 the $cref ForSparseJac$$ calculation in only for the current
 independent variable values.
@@ -780,7 +778,7 @@ $$
 
 
 
-$head 04-06$$
+$subhead 04-06$$
 The $cref ForSparseJac$$, $cref RevSparseJac$$, $cref RevSparseHes$$
 sparsity results are now valid for
 all independent variable values
@@ -800,18 +798,18 @@ $$
 The $code var_size$$ member function was changed to
 $cref/size_var/fun_property/size_var/$$
 (this is not backward compatible, but $code var_size$$ was just added on
-$cref/04-03/whats_new_06/04-03/$$).
+$cref/04-03/whats_new_06/mm-dd/04-03/$$).
 
 
-$head 04-05$$
+$subhead 04-05$$
 The documentation and example for $cref CompareChange$$ were
 improved and moved to be part of the $cref Forward$$ section.
 
-$head 04-04$$
+$subhead 04-04$$
 The documentation and examples for $cref Reverse$$ were
 improved and split into $cref reverse_one$$ and $cref reverse_any$$.
 
-$head 04-03$$
+$subhead 04-03$$
 Create separate sections for the
 $cref/zero/forward_zero/$$ and $cref forward_one$$ first order case
 of $cref Forward$$ mode.
@@ -832,7 +830,7 @@ $$
 Change the examples that use $cref Reverse$$ to use the same
 return value notation as the documentation; i.e., $code dw$$.
 
-$head 04-02$$
+$subhead 04-02$$
 The member functions of $cref ADFun$$ that return properties of
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
@@ -856,7 +854,7 @@ Remove the old $code Fun.cpp$$ example and extend
 $cref independent.cpp$$ so that it demonstrates using different
 choices for the $cref SimpleVector$$ type.
 
-$head 04-01$$
+$subhead 04-01$$
 Move the $cref/ADFun Constructor/FunConstruct/$$ to its own separate
 section, improve its documentation, and use $cref independent.cpp$$
 for its example.
@@ -871,10 +869,10 @@ $pre
 $$
 The wish list entry for Memory usage
 was updated on 04-01.
-The request was implemented on $cref/06-19/whats_new_06/06-19/$$
+The request was implemented on $cref/06-19/whats_new_06/mm-dd/06-19/$$
 and the entry was removed from the wish list.
 
-$head 03-31$$
+$subhead 03-31$$
 Add examples for the $cref/Parameter, Variable/con_dyn_var/$$ and
 $cref Independent$$ functions.
 $pre
@@ -891,7 +889,7 @@ refer to the range space vector instead of the dependent variable vector
 because some of the components may not be
 $cref/variables/glossary/Variable/$$.
 
-$head 03-30$$
+$subhead 03-30$$
 Move the $cref LuRatio$$ section below $cref LuDetAndSolve$$.
 $pre
 
@@ -917,7 +915,7 @@ $cref/VecAD<Base>::reference/VecAD/VecAD<Base>::reference/$$
 so that it stands out of the text better.
 
 
-$head 03-29$$
+$subhead 03-29$$
 Mention the $cref/VecAD<Base>::reference/VecAD/VecAD<Base>::reference/$$ case in
 documentation and examples for
 $cref abs$$, $cref atan2$$, $cref erf$$, and $cref pow$$.
@@ -938,7 +936,7 @@ $$
 Extend $cref erf$$ to include $code float$$, $code double$$,
 and $codei%VecAD<%Base%>::reference%$$.
 
-$head 03-28$$
+$subhead 03-28$$
 Mention the
 $cref/VecAD<Base>::reference/VecAD/VecAD<Base>::reference/$$ case in
 documentation and examples for
@@ -949,7 +947,7 @@ $cref compound_assign$$, and
 $cref unary_standard_math$$
 
 
-$head 03-27$$
+$subhead 03-27$$
 Extend and improve the
 $cref/VecAD exceptions/VecAD/VecAD<Base>::reference/Exceptions/$$.
 $pre
@@ -960,7 +958,7 @@ and generally improve
 $cref/addition/ad_binary/$$ documentation and examples.
 
 
-$head 03-26$$
+$subhead 03-26$$
 Improve documentation and examples for $cref VecAD$$ and change
 its element type from
 $codei%VecADelem<%Base%>%$$ to $codei%VecAD_reference<%Base%>%$$
@@ -981,31 +979,31 @@ $cref/VecAD<Base>::reference/VecAD/VecAD<Base>::reference/$$ case
 (and mention in documentation and examples).
 
 
-$head 03-24$$
+$subhead 03-24$$
 Move $cref VecAD$$ and $cref LuRatio$$ from the old ExtendDomain section
 to $cref AD$$.
 
-$head 03-23$$
+$subhead 03-23$$
 Improve documentation and examples for
 $cref CondExp$$ and $cref Discrete$$.
 Move both of these sections from ExtendDomain to $cref ADValued$$.
 
-$head 03-22$$
+$subhead 03-22$$
 The documentation sections under $cref AD$$
 have been organized into a new set of sub-groups.
 
-$head 03-18$$
+$subhead 03-18$$
 The documentation and example for $cref PrintFor$$ have been improved.
 The sections below $cref AD$$
 in the documentation have been organized into subgroups.
 
-$head 03-17$$
+$subhead 03-17$$
 The documentation and examples have been improved for the
 following functions:
 $cref BoolFun$$, and
 $cref NearEqualExt$$.
 
-$head 03-16$$
+$subhead 03-16$$
 Improve the documentation and example for the $cref pow$$ function.
 This includes splitting out and generalizing the integer case
 $cref pow_int$$.
@@ -1016,11 +1014,11 @@ The copies of the $code atan2$$ function were included
 in the CppAD namespace for the
 $code float$$ and $code double$$ types.
 
-$head 03-15$$
+$subhead 03-15$$
 Improve the introduction to $cref CppAD$$ on the top level page
 of the documentation.
 
-$head 03-11$$
+$subhead 03-11$$
 The file $code cppad/local/MathOther.h$$ had a file name case error
 that prevented the documentation from building and tests from running
 (except under Cygwin which is not really case sensitive).
@@ -1035,7 +1033,7 @@ It will be used to improve the user's understanding of exactly
 how an $cref ADFun$$ object is related to the C++ algorithm.
 
 
-$head 03-10$$
+$subhead 03-10$$
 The math functions that are not under $cref unary_standard_math$$ have
 been grouped under $code MathOther$$.
 $pre
@@ -1045,7 +1043,7 @@ The documentation and examples have been improved for the
 following functions:
 $cref abs$$, $cref atan2$$.
 
-$head 03-09$$
+$subhead 03-09$$
 The examples
 $cref cos.cpp$$,
 $cref cosh.cpp$$,
@@ -1057,7 +1055,7 @@ $cref sinh.cpp$$,
 $cref sqrt.cpp$$
 have been improved.
 
-$head 03-07$$
+$subhead 03-07$$
 The $code tan$$ function has been added to CppAD.
 $pre
 
@@ -1065,27 +1063,27 @@ $$
 The examples $cref Acos.cpp$$, $cref Asin.cpp$$ and
 $cref atan.cpp$$ have been improved.
 
-$head 03-05$$
+$subhead 03-05$$
 The AD standard math unary functions documentation
 has been grouped together with improved documentation
 in $cref unary_standard_math$$.
 
-$head 02-28$$
+$subhead 02-28$$
 The $cref ad_output$$ and $cref Abs$$
 documentation and example have been improved.
 Minor improvements were also made to the $cref lu_vec_ad.cpp$$ documentation.
 
-$head 02-25$$
+$subhead 02-25$$
 The $cref Compare$$ documentation and example have been improved.
 
-$head 02-24$$
+$subhead 02-24$$
 The documentation and examples have been improved for the following sections:
 $cref/division/ad_binary/$$, $cref/-=/compound_assign/$$, $cref/*=/compound_assign/$$, and $cref%/=%compound_assign%$$.
 
-$head 02-23$$
+$subhead 02-23$$
 The $cref/multiplication/ad_binary/$$ documentation and example have been improved.
 
-$head 02-21$$
+$subhead 02-21$$
 The $cref/subtraction/ad_binary/$$ documentation and example have been improved.
 $pre
 
@@ -1100,14 +1098,14 @@ A test was added $code TestMore/rev_two.cpp$$ that detects this problem
 and the problem has been fixed.
 
 
-$head 02-15$$
+$subhead 02-15$$
 The $cref/+=/compound_assign/$$ documentation and example have been improved.
 
-$head 02-14$$
+$subhead 02-14$$
 The $cref/addition/ad_binary/$$ documentation and example have been improved.
 
 
-$head 02-13$$
+$subhead 02-13$$
 Combine the old binary operator and compound assignment documentation
 into $cref Arithmetic$$ documentation.
 $pre
@@ -1116,13 +1114,13 @@ $$
 The documentation and examples have been improved for the following sections:
 $cref/assignment/ad_assign/$$, $cref UnaryPlus$$, $xref UnaryMinus$$.
 
-$head 02-11$$
+$subhead 02-11$$
 The documentation and examples have been improved for the following sections:
 $cref ad_ctor$$,
 $cref ad_ctor$$ and $cref ad_assign$$, and
 $cref Value$$.
 
-$head 02-10$$
+$subhead 02-10$$
 This is the beginning of a pass to improve the documentation:
 The documentation sections
 The CopyBase (formerly FromBase and now part of $cref ad_ctor$$ and $cref ad_assign$$) and
@@ -1134,7 +1132,7 @@ $$
 Some of the error messaging during $cref ADFun$$ construction
 has been improved.
 
-$head 02-04$$
+$subhead 02-04$$
 There was a read memory access past the end of an array in
 $cref/CppAD::vector::push_back/CppAD_vector/push_back/$$.
 This has been fixed and in addition
@@ -1148,18 +1146,18 @@ had static vectors to avoid recalculation on each call.
 These have been changed to be plain vectors to avoid memory
 leak detection by $cref/TrackCount/TrackNewDel/TrackCount/$$.
 
-$head 01-20$$
+$subhead 01-20$$
 Add software guidelines
 to the wish list.
 
-$head 01-18$$
+$subhead 01-18$$
 Improve the definition for
 $cref/parameters/glossary/Parameter/$$ and
 $cref/variables/glossary/Variable/$$.
 Remove unnecessary reference to parameter and variable
 in  documentation for $cref Independent$$.
 
-$head 01-08$$
+$subhead 01-08$$
 The aclocal program is part of the automake and autoconf system.
 It often generates warnings of the form:
 $codei%
@@ -1170,7 +1168,7 @@ The shell script file $code FixAclocal$$,
 which attempts to fix these warnings,
 was added to the distribution.
 
-$head 01-07$$
+$subhead 01-07$$
 Change CppAD error handler from using the macros defined in
 $code cppad/CppADError.h$$ to using a class defined in
 $cref%include/cppad/utility/error_handler.hpp%ErrorHandler%$$.
@@ -1178,7 +1176,7 @@ The macros $code CppADUnknownError$$ and $code CppADUsageError$$
 have been deprecated (they are temporarily still available in the
 file $code cppad/local/CppADError.h$$).
 
-$head 01-02$$
+$subhead 01-02$$
 Add the sed script $code Speed/gprof.sed$$ to aid in the display of the
 $cref/profiling/autotools/Profiling CppAD/$$ output.
 $pre
@@ -1188,7 +1186,7 @@ Make the following source code files easier to understand:
 $code Add.h$$, $code Sub.h$$, $code Mul.h$$, $code Div.h$$
 (in the directory $code cppad/local$$).
 
-$head 01-05$$
+$subhead 01-05$$
 Make the following source code files easier to understand:
 $code RevSparseHes.h$$,
 $code Reverse.h$$,

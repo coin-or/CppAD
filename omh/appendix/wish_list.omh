@@ -214,7 +214,7 @@ $subhead Atomic Functions$$
 There is some confusion as to the value of the Taylor coefficients
 for atomic function arguments and results that have been optimized out.
 See $cref/atomic functions/optimize/Atomic Functions/$$ in optimize,
-$cref/02-16/whats_new_21/02-16/$$ in whats new for 2021,
+$cref/02-16/whats_new_21/mm-dd/02-16/$$ in whats new for 2021,
 $cref/optimize/atomic_three_rev_depend/depend_x/Optimize/$$
 in atomic_three, and
 $cref/optimize/atomic_four_rev_depend/depend_x/Optimize/$$ in atomic_four.

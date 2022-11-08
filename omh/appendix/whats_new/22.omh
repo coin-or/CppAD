@@ -5,6 +5,8 @@
 
 $begin whats_new_22$$
 $spell
+   mm
+   dd
    CppAD
    op
    neg
@@ -50,24 +52,26 @@ $$
 
 $section Changes and Additions to CppAD During 2022$$
 
-$head 11-05$$
+$head mm-dd$$
+
+$subhead 11-05$$
 Fix a conversion error during the tests by extending the zdouble
 $cref/constructor/zdouble/Syntax/Constructor and Assignment/$$
 to $codei%zdouble(%i%)%$$ where $icode i$$ is $code long$$.
 
-$head 08-30$$
+$subhead 08-30$$
 The $cref optimize$$ operations was not handeling
 comparison operators that only had parameters,
 with at least one dynamic parameter.
 This has been fixed.
 
-$head 07-16$$
+$subhead 07-16$$
 Add the option to configure eigen using
 $cref/eigen_prefix/cmake/eigen_prefix/$$,
 as well as with
 $cref/include_eigen/cmake/include_eigen/$$.
 
-$head 07-14$$
+$subhead 07-14$$
 $list number$$
 There was a mistake in the implementation of the
 $cref/explicit/ad_ctor/x/explicit/$$ $codei%AD<%Base%>%$$ constructor.
@@ -84,13 +88,13 @@ $cref base_require$$.
 (Defining a base class is an advanced topic and only for experts).
 $lend
 
-$head 07-12$$
+$subhead 07-12$$
 The $cref/cmake command/cmake/CMake Command/$$ was not properly determining
 when posix threads could be used (when using a C compiler other than gcc).
 This suppressed the running of the corresponding examples; e.g.,
 $cref a11c_pthread.cpp$$.
 
-$head 07-10$$
+$subhead 07-10$$
 $list number$$
 Add the $cref/cmake_needs_dot_slash/cmake/cmake_needs_dot_slash/$$ symbol
 to the cmake command line.
@@ -105,19 +109,19 @@ $lnext
 Suppress the Microsoft compiler divide by zero warning, C4723.
 $lend
 
-$head 07-08$$
+$subhead 07-08$$
 Change $href%https://github.com/coin-or/CppAD/actions%github actions%$$:
 run on pushes to the master and stable branches, and
 run on all pull requests.
 
-$head 07-05$$
+$subhead 07-05$$
 Merge in pull_155 branch.
 This enabled the use of binary operators with Eigen matrices of
 type $codei%AD<%Base%>%$$ and type $icode Base$$;
 see $cref/ScalarBinaryOpTraits/cppad_eigen.hpp/Eigen ScalarBinaryOpTraits/$$
 in $code cppad_eigen.hpp$$.
 
-$head 06-23$$
+$subhead 06-23$$
 $list number$$
 Change $icode x$$ to $cref/u/to_csrc/u/$$ in the $code to_csrc$$ operation
 and add specifications as the position of the independent dynamic
@@ -136,7 +140,7 @@ to the cmake command line.
 This enables one to run cmake with a $code CMakeCache.txt$$ file.
 $lend
 
-$head 06-22$$
+$subhead 06-22$$
 $list number$$
 Modify the $cref/msys2/cmake/CMake Command/msys2/$$
 and $cref/visual studio/cmake/CMake Command/Visual Studio/$$
@@ -157,12 +161,12 @@ $codei%CPPAD_%package%VECTOR%$$ for $icode package$$ equal to
 $code CPPAD$$, $code STD$$, $code BOOST$$, $code EIGEN$$.
 $lend
 
-$head 06-21$$
+$subhead 06-21$$
 Change the visual C++ JIT compile flag $code /Tc$$ to the flag $code /TC$$,
 so that the C source file need not follow directly after in the compile
 command. This fixed a test failure when using that compiler.
 
-$head 06-20$$
+$subhead 06-20$$
 JIT C source code generation, compilation, and linking were added using
 the following new features, examples, and speed tests:
 $table
@@ -177,12 +181,12 @@ $list number$$
 Fix a clang++ compiler warning in the file check_for_nan.hpp.
 $lend
 
-$head 05-27$$
+$subhead 05-27$$
 Add the theory, but not implementation, for the atomic linear ODE
 second order reverse mode; see
 $cref atomic_four_lin_ode_reverse_2$$.
 
-$head 05-26$$
+$subhead 05-26$$
 $list number$$
 The atomic linear ODE maximum $cref/step/atomic_four_lin_ode/step/$$ size
 was not being enforced during the reverse mode
@@ -194,12 +198,12 @@ Make $cref/extend_ode/atomic_four_lin_ode_forward.hpp/extend_ode/$$
 a separate function in the atomic linear ODE example.
 $lend
 
-$head 05-20$$
+$subhead 05-20$$
 Merge in the pull_144 branch.
 This fixed some problems with the windows visual studio build; see
 the corresponding pull request.
 
-$head 05-19$$
+$subhead 05-19$$
 $list number$$
 The atomic four $code base_lin_ode$$ function was changed to
 $cref/base_solver/atomic_four_lin_ode_base_solver.hpp/$$.
@@ -210,12 +214,12 @@ Fix setting of debug and release flags in
 $code test_more/debug_rel/CMakeLists.txt$$.
 $lend
 
-$head 05-17$$
+$subhead 05-17$$
 The $cref atomic_four_lin_ode_rev_depend.hpp$$ example was added.
 In addition, remove the Under Construction headings from the
 $cref atomic_four_lin_ode$$ sections (it is ready for use).
 
-$head 05-16$$
+$subhead 05-16$$
 $list number$$
 The $cref/ident_zero_x/atomic_four_hes_sparsity/ident_zero_x/$$ argument
 was added to the atomic four Hessian sparsity callback.
@@ -232,7 +236,7 @@ do not include $icode ident_zero_x$$ and mention that this version
 of the callback is deprecated.
 $lend
 
-$head 05-15$$
+$subhead 05-15$$
 
 $list number$$
 Merge in the pull_140 branch.
@@ -254,14 +258,14 @@ Add the $cref atomic_four_lin_ode_hes_sparsity.hpp$$ example.
 
 $lend
 
-$head 05-13$$
+$subhead 05-13$$
 The $cref/code_gen_fun examples/code_gen_fun/Examples/$$ were
 not being built even when
 $cref/include_cppadcg/cmake/include_cppadcg/$$
 was specified on the cmake command line.
 This has been fixed.
 
-$head 05-12$$
+$subhead 05-12$$
 The $cref cmake$$ script $code cmake/compile_source_test.cmake$$ was not
 working properly on Darwin systems which resulted in the following warning:
 $codei%
@@ -271,19 +275,19 @@ $codei%
 This has been fixed.
 
 
-$head 05-11$$
+$subhead 05-11$$
 A mathematical $cref/theory/atomic_four_lin_ode_jac_sparsity.hpp/Theory/$$
 was added to the linear ODE Jacobian sparsity pattern example.
 In addition, the corresponding code was changed to match the theory.
 This may, or may not, have fixed some bugs in the previous version
 of this routine.
 
-$head 05-10$$
+$subhead 05-10$$
 The $cref/ident_zero_x/atomic_four_jac_sparsity/ident_zero_x/$$ argument
 was added to the atomic four Jacobian sparsity callback.
 The previous version of this callback still works but is deprecated.
 
-$head 05-09$$
+$subhead 05-09$$
 $list number$$
 Add a theory section to the linear ODE
 $cref/for_type/atomic_four_lin_ode_for_type.hpp/Theory/$$ section.
@@ -303,13 +307,13 @@ will be called once for each atomic function call and before any other
 of the callbacks for the atomic function call.
 $lend
 
-$head 05-07$$
+$subhead 05-07$$
 Add the $cref base2vec_ad.cpp$$ example demonstrating that $cref base2ad$$
 does not convert $cref VecAD$$ operations as might be expected.
 Add a link to this example in both the base2ad and VecAD documentation
 and a $cref/base2ad wish_list/wish_list/base2ad/$$ item about this.
 
-$head 05-06$$
+$subhead 05-06$$
 There was a bug in combining the $cref discrete$$ functions with the
 $cref base2ad$$ operation.
 To be specific, if a discrete function was used during the recording of
@@ -324,7 +328,7 @@ $codei%
 %$$
 This bug has been fixed.
 
-$head 04-21$$
+$subhead 04-21$$
 $list number$$
 Modify $cref atomic_four_lin_ode_set.hpp$$ and
 $cref atomic_four_lin_ode_get.hpp$$ to re-use sparsity patterns
@@ -338,7 +342,7 @@ $cref/CPPAD_ASSERT_UNKNOWN/cppad_assert/Unknown/$$.
 $lend
 
 
-$head 04-20$$
+$subhead 04-20$$
 Add the
 $cref/set_row_major/sparse_rc/set_row_major/$$,
 $cref/get_row_major/sparse_rc/get_row_major/$$,
@@ -346,11 +350,11 @@ $cref/set_col_major/sparse_rc/set_col_major/$$,
 $cref/get_col_major/sparse_rc/get_col_major/$$,
 functions to the $code sparse_rc$$ template class.
 
-$head 04-19$$
+$subhead 04-19$$
 Change the ODE solver in $cref atomic_four_lin_ode$$ from
 $cref runge45$$ to $cref rosen34$$.
 
-$head 04-15$$
+$subhead 04-15$$
 $list number$$
 Add $cref atomic_four_lin_ode$$ an example of making the solution
 of an ODE an atomic operation.
@@ -361,15 +365,15 @@ Add the $cref/equality/sparse_rc/other/Equality/$$ operator
 to the sparsity pattern template class.
 $lend
 
-$head 03-29$$
+$subhead 03-29$$
 Add the $cref atomic_four_lin_ode$$ example
 which is not yet complete.
 
-$head 03-26$$
+$subhead 03-26$$
 Change $code y(nx)$$ to $code y(ny)$$ in
 $cref  atomic_four_mat_mul_forward.cpp$$.
 
-$head 03-25$$
+$subhead 03-25$$
 $list number$$
 Fix $cref atomic_four_mat_mul$$ by changing it's base class
 from $code atomic_four<double>$$ to $codei%atomic_four<%Base%>%$$;
@@ -380,33 +384,33 @@ $lnext
 Change $code atomic_vector$$ to $cref atomic_four_vector$$.
 $lend
 
-$head 03-24$$
+$subhead 03-24$$
 Fix $cref atomic_four_vector$$ by changing it's base class
 from $code atomic_four<double>$$ to $codei%atomic_four<%Base%>%$$.
 Make some other similar corrections in $cref atomic_four_vector.hpp$$.
 
-$head 03-23$$
+$subhead 03-23$$
 Improve error detection and message when both
 $cref/cmake_build_type/cmake/cmake_build_type/$$ and
 $cref/cppad_debug_which/cmake/cppad_debug_which/$$ are chosen
 during the install procedure.
 
-$head 02-21$$
+$subhead 02-21$$
 Extend the json graph representation to include
 $cref/atomic four/json_graph_op/Atomic Functions/Atomic Four/$$ functions.
 For example, see $cref json_atom4_op.cpp$$.
 
-$head 02-19$$
+$subhead 02-19$$
 Extend the C++ graph representation to include atomic four
 $cref/atomic functions/graph_op_enum/Atomic Function/$$.
 For example, see $cref graph_atom4_op.cpp$$.
 
-$head 02-18$$
+$subhead 02-18$$
 Fixed the value of $icode%after%[%i%]%$$ in the
 $cref/print_graph_op/cpp_ad_graph/operator_arg/print_graph_op/$$ documentation.
 To be specific, $code - 2$$ was changed to $code - 1$$.
 
-$head 02-17$$
+$subhead 02-17$$
 Add $code identical_zero$$ to the possible
 $cref/ad_type/atomic_four_for_type/ad_type/$$ values in
 the atomic four $code for_type$$ function.
@@ -415,12 +419,12 @@ $cref atomic_four_mat_mul_for_type.hpp$$, and
 $cref atomic_four_mat_mul_identical_zero.cpp$$
 for an examples using this feature.
 
-$head 02-16$$
+$subhead 02-16$$
 Use the $cref atomic_four_norm_sq.cpp$$ overrides
 as examples for the virtual functions in the $cref atomic_four$$
 base class.
 
-$head 02-13$$
+$subhead 02-13$$
 $list number$$
 The $cref atomic_four_mat_mul$$ example class was added.
 $lnext
@@ -430,28 +434,28 @@ $codei%
 %$$
 $lend
 
-$head 02-12$$
+$subhead 02-12$$
 Add the $cref/push_back/sparse_rc/push_back/$$ and
 output stream (see $cref/os/sparse_rc/os/$$) operations
 to the $code sparse_rc$$ template class.
 
-$head 02-11$$
+$subhead 02-11$$
 The value of $code Libs:$$ in the $code cppad.pc$$ $cref pkgconfig$$ file
 was not being set correctly for some cases. This has been fixed.
 
-$head 02-01$$
+$subhead 02-01$$
 Fix a possible integer overflow in the $cref to_string.cpp$$ example
 (might cause the test to fail).
 
-$head 01-27$$
+$subhead 01-27$$
 Convert $cref atomic_four_forward.cpp$$ from an atomic_three
 to an atomic_four example.
 
-$head 01-25$$
+$subhead 01-25$$
 Convert $cref atomic_four_dynamic.cpp$$ from an atomic_three
 to an atomic_four example.
 
-$head 01-23$$
+$subhead 01-23$$
 $list number$$
 Add $cref atomic_four$$, a simpler interface to atomic functions.
 This has the optional $cref/call_id/atomic_four_call/call_id/$$ argument
@@ -467,13 +471,13 @@ Remove element-by-element atomic operations from $cref wish_list$$
 $lend
 
 
-$head 01-19$$
+$subhead 01-19$$
 Edit wish_list cppad_lib
 $cref/requirement/wish_list/cppad_lib/Requirement/$$ item.
 Add an $cref/atomic functions/wish_list/Optimization/Atomic Functions/$$
 item to the optimization wish list.
 
-$head 01-15$$
+$subhead 01-15$$
 $list number$$
 Fix some conversion warnings generated by the clang compiler
 for the $cref atomic_four_vector$$ example.
@@ -482,7 +486,7 @@ Correct the order of p, q in function calls in
 $cref atomic_four_vector_forward_op.hpp$$.
 $lend
 
-$head 01-06$$
+$subhead 01-06$$
 $list number$$
 Fix the $code []$$ operator using CppAD vector
 $cref/iterators/CppAD_vector/Iterators/operator[]/$$.
@@ -492,14 +496,14 @@ Add reverse mode to the $cref atomic_four_vector$$,  mul, div, operators
 and fix some warning used $code size_t$$ iterator indices.
 $lend
 
-$head 01-04$$
+$subhead 01-04$$
 $list number$$
 Add the neg operator to $cref atomic_four_vector$$.
 $lnext
 Add reverse mode to the atomic_vector,  add, sub, and neg operators.
 $lend
 
-$head 01-01$$
+$subhead 01-01$$
 The $code example/atomic_three/vector_op.cpp$$ example
 (see $cref atomic_four_vector$$) was split into multiple files and moved into the
 $code example/atomic_vector$$ directory.

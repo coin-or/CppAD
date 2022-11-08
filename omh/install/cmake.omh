@@ -284,7 +284,7 @@ $codei%
 The default value for $icode cppad_prefix$$ is the value of
 $icode CMAKE_INSTALL_PREFIX$$; see the cmake documentation.
 (Before 2019-10-02 the default value was $code /usr$$; see
-the heading 10-02 on $cref/whats_new_19/whats_new_19/10-02/$$.)
+the heading 10-02 on $cref/whats_new_19/whats_new_19/mm-dd/10-02/$$.)
 
 $head cppad_postfix$$
 This is the bottom level relative path below which

@@ -6,6 +6,8 @@
 $begin whats_new_12$$
 $dollar @$$
 $spell
+   mm
+   dd
    autotools
    plugin
    checkpointing
@@ -66,13 +68,9 @@ $$
 
 $section CppAD Changes and Additions During 2012$$
 
-$head Introduction$$
-This section contains a list of the changes to CppAD during 2012
-(in reverse order by date).
-The purpose of this section is to
-assist you in learning about changes between various versions of CppAD.
+$head mm-dd$$
 
-$head 12-30$$
+$subhead 12-30$$
 $list number$$
 Merge changes in $code branches/ipopt_solve$$ to $code trunk$$,
 delete that branch, and
@@ -85,7 +83,7 @@ $lnext
 Add the $codei%AD<%Base%>%$$ input stream operator $cref/>>/ad_input/$$.
 $lend
 
-$head 12-29$$
+$subhead 12-29$$
 In $code branches/ipopt_solve$$:
 $list number$$
 Complete implementation of sparse Jacobian and Hessian calculations
@@ -104,7 +102,7 @@ $cref/Hessian uses forward/Hessian/Hessian Uses Forward/$$.
 $lend
 
 
-$head 12-28$$
+$subhead 12-28$$
 In $code branches/ipopt_solve$$:
 $list number$$
 Add the $cref ipopt_solve_retape.cpp$$ and $cref ipopt_solve_ode_inverse.cpp$$
@@ -116,13 +114,13 @@ As well as allowing for adding $code ipopt::solve$$ special options; e.g.,
 $cref/retape/ipopt_solve/options/Retape/$$.
 $lend
 
-$head 12-27$$
+$subhead 12-27$$
 In $code branches/ipopt_solve$$:
 Change documentation section names that begin with $code cppad_ipopt$$
 to begin with $cref/ipopt_nlp/cppad_ipopt_nlp/$$
 to distinguish them from $cref/CppAD::ipopt::solve/ipopt_solve/$$.
 
-$head 12-26$$
+$subhead 12-26$$
 In $code branches/ipopt_solve$$:
 $list number$$
 Convert documentation most all documentation references from
@@ -138,13 +136,13 @@ This is a first version of $code ipopt_solve$$ and its speed
 and memory use needs to be improved.
 $lend
 
-$head 12-23$$
+$subhead 12-23$$
 Copy development $code trunk$$ to $code branches/ipopt_solve$$.
 
-$head 12-22$$
+$subhead 12-22$$
 Define a doxygen module (group) for each file that has doxygen documentation.
 
-$head 12-20$$
+$subhead 12-20$$
 $list number$$
 The $cref/install instructions/install/Instructions/$$
 were installing $code cppad/CMakeLists.txt$$ and $code cppad/configure.hpp.in$$
@@ -155,21 +153,21 @@ $lnext
 Advance the version number to $code cppad-20121220$$.
 $lend
 
-$head 12-19$$
+$subhead 12-19$$
 The files $code <stdbool.h>$$ and $code <sys/time.h>$$
 do not exist for all C compilers,
 and this caused a problem when using the Windows compiler.
 This has been fixed by defining the type bool inside the
 $code compare_c/det_by_minor.c$$ source code.
 
-$head 12-17$$
+$subhead 12-17$$
 There was a mistake in a check for a valid op code in the
 file $code hash_code.hpp$$.
 This mistake could generate a C++ assertion with an unknown error source.
 It has been fixed.
 
 
-$head 12-15$$
+$subhead 12-15$$
 $list number$$
 Advance version number from $code 20121120$$ to $code 20121215$$.
 Note that the CppAD version number no longer automatically advances with the
@@ -195,7 +193,7 @@ was fixed
 $lend
 
 
-$head 12-14$$
+$subhead 12-14$$
 $list number$$
 Fix the old $cref autotools$$ so that it works with the
 new $code cppad.pc$$.
@@ -206,7 +204,7 @@ $cref/--with-Documentation/autotools/--with-Documentation/$$ option
 $lend
 
 
-$head 12-13$$
+$subhead 12-13$$
 $list number$$
 Include documentation for $cref ipopt$$
 $lnext
@@ -217,7 +215,7 @@ $cref pkgconfig$$.
 $lend
 
 
-$head 11-28$$
+$subhead 11-28$$
 Update the $cref wish_list$$:
 $list number$$
 Remove Microsoft compiler warning item that has been fixed.
@@ -246,7 +244,7 @@ Add new $code atomic_one$$ $cref wish_list$$ item (since removed).
 
 $lend
 
-$head 11-21$$
+$subhead 11-21$$
 $list number$$
 Fix the
 $cref/version/download/Version/$$ number in link to the
@@ -258,7 +256,7 @@ the $code export$$ instead of $code checkout$$ command.
 This avoids downloading the source code control files.
 $lend
 
-$head 11-20$$
+$subhead 11-20$$
 $list number$$
 The $code cmake$$ variables
 $code cmake_install_includedir$$ and
@@ -271,7 +269,7 @@ $lnext
 Advance version number to $code cppad-20121120$$.
 $lend
 
-$head 11-17$$
+$subhead 11-17$$
 $list number$$
 Finish documenting the new $cref cmake$$ configuration instructions
 and deprecate the old $cref/unix/autotools/$$ instructions.
@@ -285,11 +283,11 @@ Include the $cref/C versus C++/compare_c/$$ speed comparison
 in the $cref cmake$$ build.
 $lend
 
-$head 11-16$$
+$subhead 11-16$$
 Fix a warning that occurred in $cref Rosen34$$
 when it was compiled with the preprocessor symbol $code NDEBUG$$ defined.
 
-$head 11-14$$
+$subhead 11-14$$
 Advanced the CppAD version to $code cppad-20121114$$.
 
 $list number$$
@@ -323,15 +321,15 @@ The wish list items were completed and removed.
 $lend
 
 
-$head 11-09$$
+$subhead 11-09$$
 The $cref team_pthread.cpp$$ was failing to link on Ubuntu 12.04
 because the libraries were not at the end of the link line.
 This has been  fixed.
 
-$head 11-06$$
+$subhead 11-06$$
 $list number$$
 Remove some remaining references to the old licenses CPL-1.0 and GPL-2.0;
-see $cref/10-24/whats_new_12/10-24/$$.
+see $cref/10-24/whats_new_12/mm-dd/10-24/$$.
 $lnext
 Remove out of date Microsoft project files from the distribution.
 The build system is being converted to use
@@ -342,33 +340,33 @@ $code bin/run_cmake.sh$$ to see how to use $code cmake$$ with CppAD.
 $lend
 
 
-$head 11-04$$
+$subhead 11-04$$
 Add missing return value to the example $code base_alloc$$
 $cref/CondExpOp/base_alloc.hpp/CondExpOp/$$ function.
 This has been fixed and the comments for this example have been improved.
 
-$head 10-31$$
+$subhead 10-31$$
 The CppAD $cref/profiling/autotools/Profiling CppAD/$$ was not compiling
 the $code speed/src/*.cpp$$ files with the profiling flag.
 This has been changes
 (only for the profiling speed test).
 
-$head 10-30$$
+$subhead 10-30$$
 The $cref/fadbad_dir/autotools/fadbad_dir/$$ directory install instructions
 were changed.
 To be specific, $code FADBAD++$$ was changed to $code include/FADBAD++$$.
 This makes it more like the other optional packages.
 
-$head 10-25$$
+$subhead 10-25$$
 The test $cref runge45_1.cpp$$ was failing when using gcc-4.5.2.
 This has been fixed by properly defining $codei%fabs(%x%)%$$ where
 $icode x$$ is a double (without the $code std$$ in front).
 
-$head 10-24$$
+$subhead 10-24$$
 Change the CppAD licenses from CPL-1.0 and GPL-2.0 to
 EPL-1.0 and GPL-3.0.
 
-$head 10-12$$
+$subhead 10-12$$
 $list number$$
 Change all the multiple levels of AD examples to
 start with $cref mul_level$$.
@@ -381,7 +379,7 @@ Add $cref taylor_ode.cpp$$ as a example of Taylor's method for solving ODEs,
 to multi-level AD.)
 $lend
 
-$head 10-04$$
+$subhead 10-04$$
 $list number$$
 Change $cref speed_main$$ so that it outputs small rates (less than 1000)
 with two decimal points of precision (instead of as integers).
@@ -392,18 +390,18 @@ Add the optional $cref/test_size/time_test/test_size/$$ argument
 to the $code time_test$$ routine.
 $lend
 
-$head 10-03$$
+$subhead 10-03$$
 Change the $code hold_memory$$ speed to option to just
 $cref/memory/speed_main/Global Options/memory/$$.
 In addition, in the speed test output, include all of the options
 that are present in the output variable name;
 see $cref/speed results/speed_main/Speed Results/$$.
 
-$head 10-02$$
+$subhead 10-02$$
 Fix another problem with Debian's $code /bin/sh$$ shell executing
-$code example/multi_thread/test.sh$$; see $cref/03-17/whats_new_12/03-17/$$
+$code example/multi_thread/test.sh$$; see $cref/03-17/whats_new_12/mm-dd/03-17/$$
 
-$head 09-24$$
+$subhead 09-24$$
 Improve documentation for the
 $cref atomic_one$$
 $cref/rev_hes_sparse/atomic_one/rev_hes_sparse/$$
@@ -412,11 +410,11 @@ $cref/v/atomic_one/rev_hes_sparse/v/$$.
 In addition,
 add sparsity calculations to the old_reciprocal.cpp example.
 
-$head 09-11$$
+$subhead 09-11$$
 Add $code user_simple.cpp$$,
 a simpler $cref atomic_one$$ example.
 
-$head 08-05$$
+$subhead 08-05$$
 $list number$$
 A new type was added for the internal representation of
 $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
@@ -427,7 +425,7 @@ A new speed test, $cref compare_c$$, compares the speed of the same
 source code compiled with C and C++.
 $lend
 
-$head 07-30$$
+$subhead 07-30$$
 $list number$$
 The $cref/clear/CppAD_vector/clear/$$ function was added to
 $code CppAD::vector$$.
@@ -451,7 +449,7 @@ $codep
 $$
 $lend
 
-$head 07-08$$
+$subhead 07-08$$
 $list number$$
 Improve the documentation for $cref pow$$ and $cref pow_int$$.
 $lnext
@@ -460,17 +458,17 @@ e.g. change $code vectorBool.cpp$$ to $cref vector_bool.cpp$$
 for the example $code example/utility/vector_bool.cpp$$.
 $lend
 
-$head 07-07$$
+$subhead 07-07$$
 Add the $code CPPAD_TAPE_ID_TYPE$$ argument to the
 $cref/configure/autotools/Configure/$$ command line.
 
-$head 07-05$$
+$subhead 07-05$$
 Deprecate $code CPPAD_TEST_VECTOR$$ and use
 $cref/CPPAD_TESTVECTOR/testvector/$$ in its place.
 This fixes a problem introduced by changes on 07-03 whereby code that
 used $code CPPAD_TEST_VECTOR$$ would no longer work.
 
-$head 07-04$$
+$subhead 07-04$$
 $list number$$
 Replace the requirement that the $cref SimpleVector$$
 $cref/size/SimpleVector/size/$$ function return a $code size_t$$ value to
@@ -480,7 +478,7 @@ The $cref/--with-eigenvector/autotools/Configure/$$ option was
 added to the $code configure$$ command line.
 $lend
 
-$head 07-03$$
+$subhead 07-03$$
 Fix bug in $cref atomic_one$$ functions identification of variables
 that caused old_tan.cpp to fail with error message
 $codep
@@ -489,14 +487,14 @@ Error detected by false result for
 at line 262 in the file cppad/local/dependent.hpp
 $$
 
-$head 07-02$$
+$subhead 07-02$$
 Add  $code eigen_plugin.hpp$$ so that
 an Eigen vector can be used as a
 $cref SimpleVector$$.
 This has since been removed; see
-$cref/2017-05-11/whats_new_17/05-12/$$.
+$cref/2017-05-11/whats_new_17/mm-dd/05-12/$$.
 
-$head 07-01$$
+$subhead 07-01$$
 $list number$$
 Change $cref cppad_eigen.hpp$$
 to match new specifications and example in eigen help files on
@@ -515,7 +513,7 @@ $lnext
 Add the $cref eigen_array.cpp$$ example.
 $lend
 
-$head 06-17$$
+$subhead 06-17$$
 $list number$$
 Move $cref epsilon$$ to $cref numeric_limits$$
 and add the functions $code min$$ and $code max$$
@@ -530,26 +528,26 @@ all non-complex AD types.
 $lend
 
 
-$head 06-16$$
+$subhead 06-16$$
 Add the example $cref eigen_det.cpp$$ that uses the
 $href%http://eigen.tuxfamily.org%Eigen%$$
 linear algebra package.
 
-$head 06-15$$
+$subhead 06-15$$
 Include the $cref base_adolc.hpp$$ as
 $code <cppad/example/base_adolc.hpp>$$ under the
 $cref/prefix_dir/autotools/prefix_dir/$$ directory.
 
-$head 06-12$$
+$subhead 06-12$$
 Increase the size and of the
 $cref/sparse Jacobian speed tests/link_sparse_jacobian/$$.
 
-$head 06-10$$
+$subhead 06-10$$
 $list number$$
 Add the $cref/hold_memory/speed_main/Global Options/memory/$$ option
 to the speed test main program.
 This was changed to just $code memory$$; see
-$cref/10-03/whats_new_12/10-03/$$.
+$cref/10-03/whats_new_12/mm-dd/10-03/$$.
 $lnext
 In $cref cppad_sparse_jacobian.cpp$$,
 change $code USE_BOOL_SPARSITY$$ from true to false.
@@ -557,18 +555,18 @@ In addition, change the number of non-zeros per row from about approximately
 three to approximately ten.
 $lend
 
-$head 06-09$$
+$subhead 06-09$$
 Change $cref adolc_sparse_jacobian.cpp$$ to use the sparse adolc
 Jacobian (instead of the full Jacobian) driver.
 This was also done for $cref adolc_sparse_hessian.cpp$$,
 but there is a problem with the test that is being investigated.
 
-$head 06-08$$
+$subhead 06-08$$
 Implement the matrix multiply speed test $cref link_mat_mul$$ for all packages
 (there is a problem with the $cref fadbad_mat_mul.cpp$$
 implementation and it is being looked into).
 
-$head 06-07$$
+$subhead 06-07$$
 Make all the speed tests implementations (for the specific packages)
 uniform by having a Specification and Implementation heading and similar
 indexing. For example, see
@@ -578,10 +576,10 @@ $cref double_det_minor.cpp$$,
 $cref fadbad_det_minor.cpp$$, and
 $cref sacado_det_minor.cpp$$.
 
-$head 06-05$$
+$subhead 06-05$$
 Add the $cref sacado_ode.cpp$$ speed test.
 
-$head 06-04$$
+$subhead 06-04$$
 $list number$$
 The specifications for $cref Runge45$$ where changes so that
 it uses the $code fabs$$ function instead of the $code <$$ operation.
@@ -600,7 +598,7 @@ Add the $cref adolc_ode.cpp$$ and $cref fadbad_ode.cpp$$ speed tests
 (and edit the $cref cppad_ode.cpp$$ test).
 $lend
 
-$head 06-03$$
+$subhead 06-03$$
 $list number$$
 The $code CppAD::vector$$ class was extended to allow assignment
 with the target of size zero and the source of non-zero size;
@@ -610,7 +608,7 @@ A memory leak and a bug in $code cppad_mat_mul.cpp$$ were fixed
 (the bug was related to the change to $code CppAD::vector$$ above).
 $lend
 
-$head 06-02$$
+$subhead 06-02$$
 $list number$$
 Remove the deprecated symbol
 $code CppADvector$$ from the
@@ -642,7 +640,7 @@ for $icode test$$ equal to
 $code det_lu$$, $code det_minor$$, $code poly$$.
 $lend
 
-$head 06-01$$
+$subhead 06-01$$
 Change
 $cref cppad_sparse_hessian.cpp$$ and
 $cref cppad_sparse_jacobian.cpp$$
@@ -651,14 +649,14 @@ the $icode row$$, $icode col$$ interface to $cref sparse_hessian$$.
 In addition, implement the speed test
 $code retape$$ speed test option for these tests.
 
-$head 05-31$$
+$subhead 05-31$$
 Add the $code cppad_print_optimize$$ routine to so that the corresponding
 code does not need to be reproduced for all the
 $cref speed_cppad$$ tests.
 In addition, during CppAD speed tests,
 print out the optimization results for each test size.
 
-$head 05-30$$
+$subhead 05-30$$
 Change specifications for
 $cref link_sparse_hessian$$ so that the row and column indices are
 inputs (instead of being chosen randomly by the test for each repetition).
@@ -666,19 +664,19 @@ This enables use of the
 $code retape$$ speed test option
 during sparse Hessian speed tests.
 
-$head 05-29$$
+$subhead 05-29$$
 Add $cref index_sort$$ to the general purpose template $cref/utilities/utility/$$
 so that it can be used by the implementations of
 $cref link_sparse_jacobian$$ and $cref link_sparse_hessian$$.
 
-$head 05-27$$
+$subhead 05-27$$
 Split the sparse Jacobian and Hessian test function the separate function
 $cref sparse_jac_fun$$ and $cref sparse_hes_fun$$
 (do not use sparse Hessian for both).
 In addition, change row and column indices from $icode i$$
 and $icode j$$ to $icode row$$ and $icode col$$.
 
-$head 05-24$$
+$subhead 05-24$$
 Merged in changes from $code branches/sparse$$:
 $list number$$
 A new interface was added to
@@ -698,7 +696,7 @@ to include definition of the corresponding $icode n$$ and $icode m$$.
 $lend
 
 
-$head 04-19$$
+$subhead 04-19$$
 The $cref/BOOST_DIR/autotools/boost_dir/$$
 configure command line value has been changed to be the corresponding
 prefix during the installation of boost.
@@ -711,22 +709,22 @@ In addition, it fixes some bugs in the detection of the boost
 multi-threading library.
 
 
-$head 04-18$$
+$subhead 04-18$$
 Add documentation and testing for not using $cref/free_all/ta_free_all/$$ and
 $cref/atomic_one clear/atomic_one/clear/$$ while in
 $cref/parallel/ta_in_parallel/$$ mode.
 
-$head 04-17$$
+$subhead 04-17$$
 Fix bug when using $cref atomic_one$$ functions with
 $cref/multi_threading/multi_thread/$$.
 
-$head 04-10$$
+$subhead 04-10$$
 Add control of the
 $cref/max_num_threads/autotools/max_num_threads/$$ argument
 to the unix
 $cref/configure/autotools/Configure/$$ command.
 
-$head 04-06$$
+$subhead 04-06$$
 $list number$$
 A change was made to the way that the tapes were managed to reduce
 false sharing during $cref/multi-threading/multi_thread/$$.
@@ -743,12 +741,12 @@ $cref speed_sacado$$ tests.
 but is necessary for $code trilinos-10.10.1$$)
 $lend
 
-$head 04-05$$
+$subhead 04-05$$
 The restriction was added that
 $cref parallel_ad$$ cannot be called while a tape is being recorded.
 This was necessary inorder to initialize some new statics in the tape.
 
-$head 04-01$$
+$subhead 04-01$$
 Fixed a race condition when using CppAD with
 $cref/multi-threading/multi_thread/$$.
 This has been fixed and the error message below no longer occurs.
@@ -782,18 +780,18 @@ $icode%
 
 
 
-$head 03-27$$
+$subhead 03-27$$
 Reduce the amount of memory allocation and copying of information during
 a $cref Dependent$$ operation or an $code ADFun$$
 $cref/sequence constructor/FunConstruct/Sequence Constructor/$$.
 
-$head 03-26$$
+$subhead 03-26$$
 Calling $code taylor_capacity$$, with to with capacity equal to zero,
 was not
 $cref/freeing memory/capacity_order/c/Freeing Memory/$$.
 This has been fixed.
 
-$head 03-23$$
+$subhead 03-23$$
 $list number$$
 Improve, the multi-threading examples
 $cref simple_ad_openmp.cpp$$,
@@ -812,13 +810,13 @@ Add a debugging check to make sure $cref CheckSimpleVector$$
 is initialized in sequential mode.
 $lend
 
-$head 03-21$$
+$subhead 03-21$$
 Fix an incorrect error check in $code thread_alloc$$
 that did not allow $cref ta_return_memory$$
 to return memory in sequential execution mode that was allocated by a
 different thread during parallel execution.
 
-$head 03-17$$
+$subhead 03-17$$
 Debian recently converted the default shell corresponding to
 $code /bin/sh$$ to  $code dash$$
 (which caused $code example/multi_thread/test.sh$$ to fail).
@@ -829,7 +827,7 @@ http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html%
 Posix Shell
 %$$.
 
-$head 03-11$$
+$subhead 03-11$$
 There was a bug in $cref thread_alloc$$ where extra memory was held
 onto even if $cref/hold_memory/ta_hold_memory/$$ was never called
 and only one thread was used by the program.  This caused
@@ -845,7 +843,7 @@ If $code hold_memory$$ is used,
 one should call $cref/free_available/ta_free_available/$$ for all threads.
 
 
-$head 03-03$$
+$subhead 03-03$$
 $list number$$
 Add the examples
 $cref simple_ad_openmp.cpp$$,
@@ -857,7 +855,7 @@ Fix bug in finding boost multi-threading library
 is not the prefix during the boost installation).
 $lend
 
-$head 03-02$$
+$subhead 03-02$$
 $list number$$
 Change the name $code simple_ad.cpp$$ to $cref team_example.cpp$$
 $lnext
@@ -872,7 +870,7 @@ pass their individual test; i.e. $codei%work_all_[%thread_num%]%.ok%$$
 is true for all $icode thread_num$$.
 $lend
 
-$head 02-11$$
+$subhead 02-11$$
 $list number$$
 The requirements in
 $cref base_member$$ were missing from the $cref base_require$$ documentation.
@@ -887,7 +885,7 @@ $code memory_leak$$ when $cref/num_threads/ta_num_threads/$$
 is greater than one
 (still can't be in parallel mode).
 
-$head 02-10$$
+$subhead 02-10$$
 $list number$$
 Add the missing Base class requirements in
 the entire $cref base_member$$ section
@@ -898,7 +896,7 @@ Add the $cref base_alloc.hpp$$ example.
 $lend
 
 
-$head 02-09$$
+$subhead 02-09$$
 $list number$$
 Add the $icode set_static$$ to $cref memory_leak$$.
 This is necessary for testing base types that allocate memory
@@ -908,19 +906,19 @@ Fix memory allocation bug in $code cppad/local/pod_vector.hpp$$
 when each element of the $cref/Base/base_require/$$ type allocated memory.
 $lend
 
-$head 01-30$$
+$subhead 01-30$$
 Make another attempt to fix linking with boost threads where the wrong
 version of the library is in the system include directory; i.e.,
 to have $cref/boost_dir/autotools/boost_dir/$$ override the default
 library.
 
-$head 01-27$$
+$subhead 01-27$$
 There were some problems with
 $cref/configure's/autotools/Configure/$$ automatic detection of
 the boost multi-threading library.
 These have been fixed.
 
-$head 01-24$$
+$subhead 01-24$$
 It used to be that $cref thread_alloc$$ did not hold onto memory
 when $icode num_threads$$ was one in the previous call to
 $cref/parallel_setup/ta_parallel_setup/$$.
@@ -938,11 +936,11 @@ $codei%
 thread_alloc::hold_memory(%num_threads% > 1);
 %$$
 
-$head 01-23$$
+$subhead 01-23$$
 Change variable notation and use $cref optimize$$ in
 $cref mul_level.cpp$$.
 
-$head 01-20$$
+$subhead 01-20$$
 $list number$$
 Add the example $cref change_param.cpp$$
 which shows how to compute derivatives of functions that have
@@ -954,7 +952,7 @@ has been improved.
 (The fact that it can be used for $icode Base$$ types was missing.)
 $lend
 
-$head 01-19$$
+$subhead 01-19$$
 $list number$$
 In cases where $code test.sh$$ is trivial,
 put its operations in corresponding makefile.
@@ -966,7 +964,7 @@ Run $code example/multi_thread/test.sh$$ from source directory
 (no need to copy to build directory).
 $lend
 
-$head 01-16$$
+$subhead 01-16$$
 The test program $code example/multi_thread/test.sh$$ failed if the
 $cref/openmp_flags/autotools/openmp_flags/$$ not present in the
 $code configure$$ command.
@@ -975,19 +973,19 @@ In addition, this $code test.sh$$ has been made faster by cycling through
 the available threading systems instead of doing every system for every
 test.
 
-$head 01-15$$
+$subhead 01-15$$
 Fix $code make test$$ so it works when
 $cref/configure/autotools/Configure/$$ is run in the distribution directory
 $codei%cppad-%yyyymmdd%$$
 (not just when it is run in a different directory).
 
 
-$head 01-12$$
+$subhead 01-12$$
 The $code -lpthread$$ library was missing from the
 $cref multi_thread$$ test program linker command.
 This has been fixed.
 
-$head 01-07$$
+$subhead 01-07$$
 $list number$$
 A duplicated code block beginning with
 $codep
@@ -1005,7 +1003,7 @@ $code sub_length_ / 2$$ was change to $code sub_length_$$.
 
 $lend
 
-$head 01-02$$
+$subhead 01-02$$
 $list number$$
 The $cref thread_alloc$$ memory allocator was changed to avoid
 certain false sharing situations

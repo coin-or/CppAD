@@ -5,6 +5,8 @@
 
 $begin whats_new_10$$
 $spell
+   mm
+   dd
    autotools
    Wshadow
    pkg-config
@@ -36,13 +38,9 @@ $$
 
 $section Changes and Additions to CppAD During 2010$$
 
-$head Introduction$$
-This section contains a list of the changes to CppAD during 2010
-(in reverse order by date).
-The purpose of this section is to
-assist you in learning about changes between various versions of CppAD.
+$head mm-dd$$
 
-$head 12-31$$
+$subhead 12-31$$
 $list number$$
 Add specifications for the CppAD $cref pkgconfig$$ files.
 $lnext
@@ -58,14 +56,14 @@ sparse_pack.hpp:101:2: warning: declaration of 'end' shadows a member of 'this'
 %$$
 $lend
 
-$head 11-27$$
+$subhead 11-27$$
 If $code NDEBUB$$ was defined,
 the default CppAD $cref/error handler/ErrorHandler/$$ would return
 because its $code assert$$ had no effect in this case.
 This has been fixed by placing a call to $code std::exit(1)$$
 after its assert.
 
-$head 09-26$$
+$subhead 09-26$$
 There was a bug
 (introduced on 09-22)
 in $code make test$$
@@ -75,24 +73,24 @@ other than the distribution directory
 This has been fixed.
 
 
-$head 09-22$$
+$subhead 09-22$$
 Promote $cref cppad_ipopt_nlp$$ from an example to a library
 that gets installed
 (provided that the $cref/ipopt_dir/autotools/ipopt_dir/$$
 is specified on the $code configure$$ command line).
 
-$head 08-21$$
+$subhead 08-21$$
 Fix problems with linking of $cref cppad_ipopt_nlp$$ test with
 both older and newer versions of $code ipopt$$.
 
-$head 07-14$$
+$subhead 07-14$$
 The new versions of ipopt use $code pkg-config$$ to record the location
 where its necessary libraries are stored on the system.
 The cppad $cref/configure/autotools/Configure/$$ command has
 been improved so that it can work both with versions of ipopt that use
 $code pkg-config$$ and ones that don't.
 
-$head 07-11$$
+$subhead 07-11$$
 Old versions of the ipopt library were located in
 $icode%ipopt_dir%/lib/libipopt.%*%$$
 (see $cref/ipopt_dir/autotools/ipopt_dir/$$),
@@ -103,7 +101,7 @@ search path so that the
 cppad_ipopt_nlp examples
 work with both old and new versions of ipopt.
 
-$head 06-01$$
+$subhead 06-01$$
 In the case where the preprocessor symbol $code NDEBUG$$ was defined
 (see $cref/speed/Faq/Speed/$$),
 the function
@@ -114,12 +112,12 @@ was not defined; see
 $href%http://list.coin-or.org/pipermail/cppad/2010q2/000166.html%bug report%$$.
 This has been fixed.
 
-$head 04-28$$
+$subhead 04-28$$
 Change the multi-level taping examples
 $cref mul_level.cpp$$ and $cref mul_level_adolc.cpp$$
 to be more efficient.
 
-$head 04-26$$
+$subhead 04-26$$
 Include Blas and Linpack libraries in makefile links for
 $cref cppad_ipopt_nlp$$ examples.
 This removes the need to use get.Blas when building Ipopt.
@@ -130,7 +128,7 @@ The speed test in $code cppad_ipopt/speed$$ was missing
 a link to the library $code ../src/libcppad_ipopt.a$$.
 This has been fixed.
 
-$head 04-24$$
+$subhead 04-24$$
 There was a bug in the error checking done by $code cppad/local/sub_op.hpp$$
 that caused the following improper abort:
 $codei%
@@ -145,50 +143,50 @@ which can be downloaded from the CppAD
 $href%http://www.coin-or.org/download/source/CppAD/%download directory%$$.
 
 
-$head 04-01$$
+$subhead 04-01$$
 Some of the $cref speed_utility$$ library
 (in $code speed/src$$) was being compiled for debugging.
 This has been changed and they are now compiled with debugging off
 and optimization on.
 
-$head 03-11$$
+$subhead 03-11$$
 The old $cref reverse_any$$ example was moved to $cref reverse_three.cpp$$,
 the old checkpoint example is now the general case reverse example,
 and a better $code checkpoint.cpp/$$ example was created.
 
-$head 03-10$$
+$subhead 03-10$$
 The $cref optimize$$ routine would mistakenly remove some
 expressions that depended on the independent variables and that
 affected the result of certain $cref CondExp$$ operations.
 This has been fixed.
 
-$head 03-09$$
+$subhead 03-09$$
 Extend $cref reverse_any$$ so that it can be used for
 $cref/checkpointing/chkpoint_one/$$; i.e.,
 splitting reverse mode calculations at function composition points.
 
-$head 03-03$$
+$subhead 03-03$$
 Fixed a bug in handling
 $cref/vector of boolean/glossary/Sparsity Pattern/Boolean Vector/$$
 sparsity patterns.
 (when the number of elements per set was a multiple of
 $code sizeof(size_t))$$.
 
-$head 02-11$$
+$subhead 02-11$$
 The $code speed$$ directory has been reorganized and the
 common part of the $cref/link routines/speed_main/Link Routines/$$,
 as well as the $code microsoft_timer$$,
 have been moved to the subdirectory $code speed/src$$
 where a library is built.
 
-$head 02-08$$
-A bug was introduced in the $cref/02-05/whats_new_10/02-05/$$
+$subhead 02-08$$
+A bug was introduced in the $cref/02-05/whats_new_10/mm-dd/02-05/$$
 change whereby the $code make$$ command tried to build the
 $code libcppad_ipopt.a$$ library even if $code IPOPT_DIR$$ was
 not specified on the $cref/configure/autotools/Configure/$$ command line.
 This has been fixed.
 
-$head 02-06$$
+$subhead 02-06$$
 The Microsoft project files for the speed tests were extended
 so that the worked properly for the Release (as well as the Debug)
 configuration.
@@ -201,7 +199,7 @@ Add an automated check for $cref optimize$$ bug
 fixed on $code 02-05$$.
 (Automatic checking for $cref PrintFor$$ bug was added on $code 02-05$$.)
 
-$head 02-05$$
+$subhead 02-05$$
 $list number$$
 Simplify running all the tests by adding the
 $code make test$$ command.
@@ -221,7 +219,7 @@ Fix two significant bugs. One in the $cref optimize$$ command
 and the other in the $cref PrintFor$$ command.
 $lend
 
-$head 02-03$$
+$subhead 02-03$$
 Fix a mistakes in the test $cref bender_quad.cpp$$.
 In addition, the $cref optimize$$ routine was used to reduce the
 tape before doing the calculations.
@@ -231,12 +229,12 @@ $$
 The routine $cref opt_val_hes$$ was added as an alternative to
 $cref BenderQuad$$.
 
-$head 01-26$$
+$subhead 01-26$$
 Another speed improvement was made to $cref cppad_ipopt_nlp$$.
 To be specific, the Lagragian multipliers where checked and components
 that were zero were excluded form the Hessian evaluation.
 
-$head 01-24$$
+$subhead 01-24$$
 It appears that in $cref cppad_ipopt_nlp$$, when $code retape[k]$$ was true,
 and $code L[k] > 1$$, it was possible to use the wrong operation sequence
 in the calculations (though a test case that demonstrated this could not be
@@ -254,13 +252,13 @@ for a long time,  that did not show up until now. Basically,
 the check had code of the was using an undefined value.
 This has been fixed.
 
-$head 01-23$$
+$subhead 01-23$$
 Improve the sparsity patterns and reduce the amount of memory
 required for large sparse problems using $cref cppad_ipopt_nlp$$.
 The speed test $code cppad_ipopt/speed$$ showed significant improvement.
 
 
-$head 01-20$$
+$subhead 01-20$$
 We plan to split up the
 $code ipopt_cppad/src/ipopt_cppad_nlp.hpp$$ include file.
 In preparation,
@@ -270,7 +268,7 @@ $code # ifdef$$ commands in the new include files
 (note that they must begin with $code CPPAD$$).
 
 
-$head 01-18$$
+$subhead 01-18$$
 The $code ipopt_cppad$$ subdirectory of the distribution
 has been split into an $code src$$, $code example$$, and $code speed$$
 subdirectories.
@@ -278,7 +276,7 @@ The $code example$$ ($code speed$$)
 subdirectory is where one builds the $cref cppad_ipopt_nlp$$ examples
 (speed tests).
 
-$head 01-04$$
+$subhead 01-04$$
 The following items have been fulfilled and
 hence were removed for the $cref wish_list$$:
 $list number$$

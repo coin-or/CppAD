@@ -16,7 +16,7 @@ $head Purpose$$
 This example show how to use row and column index sparsity patterns
 $cref sparse_rc$$ to compute sparse Jacobians and Hessians.
 This became the preferred way to represent sparsity on
-$cref/2017-02-09/whats_new_17/02-09/$$.
+$cref/2017-02-09/whats_new_17/mm-dd/02-09/$$.
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
