@@ -220,11 +220,11 @@ $head See Also$$
 $cref code_gen_fun$$, $cref code_gen_fun.hpp$$
 
 $head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%2%$$
+$srcthisfile%0%// BEGIN_C++%// END_C++%1%$$
 
 $end
 */
-// BEGIN C++
+// BEGIN_C++
 # include <cppad/example/code_gen_fun.hpp>
 
 // ---------------------------------------------------------------------------
@@ -355,4 +355,4 @@ code_gen_fun::sparse_jacobian(const CppAD::vector<double>& x)
    //
    return Jrcv;
 }
-// END C++
+// END_C++
