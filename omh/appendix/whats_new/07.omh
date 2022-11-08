@@ -429,7 +429,8 @@ which has been deprecated.
 $head 07-26$$
 Merge in changes made in $code branches/test_vector$$.
 
-$subhead 07-26$$
+$list number$$
+07-26:
 Change all occurrences of $code CppADvector$$,
 in the files $codei%test_more/%*%.cpp%$$ and $codei%speed/%*%/%*%.cpp%$$,
 where changed to $code CPPAD_TEST_VECTOR$$.
@@ -438,7 +439,8 @@ were edited to reflect that fact that it has been deprecated.
 The documentation index and search for
 deprecated items has been improved.
 
-$subhead 07-25$$
+$lnext
+07-25:
 Deprecate the preprocessor symbol $code CppADvector$$
 and start changing it to
 $code CPPAD_TEST_VECTOR$$.
@@ -448,6 +450,8 @@ $$
 Change all occurrences of $code CppADvector$$,
 in the $codei%example/%*%.cpp%$$ files,
 to $code CPPAD_TEST_VECTOR$$.
+
+$lend
 
 $head 07-23$$
 The $cref TrackNewDel$$ macros
@@ -717,22 +721,26 @@ Improve the $cref reverse_identity$$ proof.
 $head 04-11$$
 Merge in changes made in $code branches/intro$$.
 
-$subhead 04-11$$
+$list number$$
+04-11:
 Add $cref exp_eps_rev2$$ and its verification routine
 $cref exp_eps_rev2.cpp$$.
 
-$subhead 04-10$$
+$lnext
+04-10:
 Finished off $cref exp_2_rev2$$ and
 added $cref exp_2_rev2.cpp$$ which verifies its calculations.
 Added second order calculations to $cref exp_2_cppad$$.
 Added $cref exp_eps_for2$$ and its verification routine.
 
 
-$subhead 04-07$$
+$lnext
+04-07:
 Added a preliminary version of $cref exp_2_rev2$$
 (does not yet have verification or exercises).
 
-$subhead 04-06$$
+$lnext
+04-06:
 Fixed a problem with the Microsoft Visual Studio project file
 $code introduction/exp_apx/exp_apx.vcproj$$
 (it did not track the file name changes of the form
@@ -743,16 +751,20 @@ $pre
 $$
 Added $cref exp_2_for2$$ to introduction.
 
-$subhead 04-05$$
+$lnext
+04-05:
 Use order expansions in introduction; e.g., the
 $cref/second order expansion/exp_2_for2/Second Order Expansion/$$
 for the $cref exp_2$$ example.
+
+$lend
 
 $head 03-31$$
 Merge in changes made in $code branches/intro$$
 and remove the corresponding Introduction item from the wish list:
 
-$subhead 03-31$$
+$list number$$
+03-31:
 Create the a simpler exponential approximation in the $cref introduction$$
 called $cref exp_2$$ which has a different program
 variable for each variable in the operation sequence.
@@ -764,11 +776,14 @@ $latex v_1 , \ldots , v_7$$ notation so that variables directly
 correspond to index in operation sequence (as with the $cref exp_2$$
 example).
 
-$subhead 03-30$$
+$lnext
+03-30:
 The Microsoft project file $code introduction/exp_apx/exp_apx.vcproj$$
 was referencing $code exp_apx_ad.cpp$$ which no longer exists.
 It has been changed to reference $code exp_apx_cppad.cpp$$
 which is the new name for that file.
+
+$lend
 
 
 $head 03-29$$
@@ -797,11 +812,13 @@ Included the changes from openmp branch
 so that so CppAD does not use the OpenMP $code threadprivate$$ command
 (some systems do not support this command).
 
-$subhead 03-15$$
+$list number$$
+03-15:
 Add command line arguments to $code openmp_newton_example.cpp$$, and
 modified $code openmp/run.sh$$ to allow for more flexible testing.
 
-$subhead 03-14$$
+$lnext
+03-14:
 Fixed some Microsoft compiler warnings by explicitly converting from
 $code size_t$$ to $code int$$.
 $pre
@@ -816,21 +833,24 @@ $pre
 $$
 Some minor changes were made in an effort to speed up the multi-threading case.
 
-$subhead 03-13$$
+$lnext
+03-13:
 Started a new openmp branch and created a version of CppAD
 that does not use the OpenMP $code threadprivate$$ command
 (not supported on some systems).
+
+$lend
 
 $head 03-09$$
 Included the changes from openmp branch
 so that OpenMP can be used with CppAD,
 see $cref omp_max_thread$$.
-The changes
-dated between $cref/02-15/whats_new_07/03-09/02-15/$$ and 03-28 below
+The changes below
 were made in the openmp branch and transferred to the trunk on 03-09.
 
 
-$subhead 03-28$$
+$list number$$
+03-28:
 The conditional include commands were missing on some include files;
 for example
 $codep
@@ -866,7 +886,8 @@ have been removed (it's purpose was multi-threading which
 has been implemented).
 
 
-$subhead 02-27$$
+$lnext
+02-27:
 The $cref speed$$ include files are currently being distributed
 above the $code cppad$$ include directory.
 A fix this wish list item has been added.
@@ -878,7 +899,8 @@ management for the tapes. This was made simpler (and faster)
 by having at most one tape per thread.
 
 
-$subhead 02-22$$
+$lnext
+02-22:
 The include command in the $cref speed_test$$ documentation was
 $codep
    # include <speed/speed_test.hpp>
@@ -889,7 +911,8 @@ $codep
 $$
 This has been fixed.
 
-$subhead 02-17$$
+$lnext
+02-17:
 An entry about optimizing the operation
 sequence in an $cref/ADFun/FunConstruct/$$ object was added to the
 $cref wish_list$$.
@@ -900,7 +923,8 @@ Change the argument syntax for $cref Dependent$$ and deprecate the
 $cref/old Dependent syntax/FunDeprecated/Dependent/$$.
 
 
-$subhead 02-16$$
+$lnext
+02-16:
 Added $codei%VecAD<%Base%>%$$ as a valid argument type for the
 $cref/Parameter/con_dyn_var/Parameter/$$
 and $cref/Variable/con_dyn_var/Variable/$$ functions.
@@ -909,9 +933,12 @@ is was extended to be allowed during taping so long as the
 VecAD object is a parameter.
 
 
-$subhead 02-15$$
+$lnext
+02-15:
 Fixed the $code example/test_one.sh$$ script
 (it was using its old name $code one_test$$).
+
+$lend
 
 $head 02-06$$
 The $cref BenderQuad$$ documentation was improved by adding the fact
