@@ -101,8 +101,9 @@ NumArg(op) == 2, NumRes(op) == 1,  q < cap_order, 0 < r
 
 $end
 */
-
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+
+// ---------------------------------------------------------------------------
 // BEGIN_PROTOTYPE
 template <class RecBase>
 void forward_dis_op(
@@ -134,7 +135,7 @@ void forward_dis_op(
       for(size_t k = p; k <= q; k++)
          z[ (k-1) * r + 1 + ell ] = RecBase(0.0);
 }
-// BEGIN_PROTOTYPE
+// ---------------------------------------------------------------------------
 template <class RecBase>
 void forward_dis_op(
    size_t        p           ,
@@ -144,7 +145,6 @@ void forward_dis_op(
    const addr_t* arg         ,
    size_t        cap_order   ,
    AD<RecBase>*  ataylor     )
-// END_PROTOTYPE
 {
    // check assumptions
    CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
@@ -165,7 +165,6 @@ void forward_dis_op(
       for(size_t k = p; k <= q; k++)
          az[ (k-1) * r + 1 + ell ] = AD<RecBase>(0.0);
 }
-
 
 } } // END_CPPAD_LOCAL_NAMESPACE
 # endif
