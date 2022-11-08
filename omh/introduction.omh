@@ -106,10 +106,8 @@ and $cref exp_eps$$ presentation.
 $head Reference$$
 An in-depth review of AD theory and methods can be found in
 the book
-$icode
-Evaluating Derivatives:
-Principles and Techniques of Algorithmic Differentiation
-$$,
+$icode Evaluating Derivatives:$$
+$icode Principles and Techniques of Algorithmic Differentiation$$,
 Andreas Griewank,
 SIAM Frontiers in Applied Mathematics,
 2000.
