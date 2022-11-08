@@ -323,16 +323,15 @@ $cref/parallel_setup/ta_parallel_setup/$$.
 $lend
 
 $head 09-01$$
-$list number$$
 Modify the CppAD trunk using the
 changes from svn revision 2060 to revision 2081 in the branch
 $codep
    https://projects.coin-or.org/svn/CppAD/branches/pthread
 $$
-These changes are described below under the headings
-$cref/08-21/whats_new_11/09-01/08-21/$$ through
-$cref/08-31/whats_new_11/09-01/08-31/$$.
-$lnext
+These changes are described below.
+
+$list number$$
+09-01:
 There was a bug in the $cref atomic_one$$ functions
 in the case where none of the elements of the argument to the function
 was a $cref/variable/glossary/Variable/$$.
@@ -340,74 +339,81 @@ This has been fixed.
 In addition, old_tan.cpp generated an assert for this
 case and this has also been fixed (in addition to including an example
 for this case).
-$lend
 
-$subhead 08-31$$
-$list number$$
+$lnext
+08-31:
 Move the $code sum_i_inv_time.cpp$$ test from
 $code openmp/run.sh$$ to $code openmp/run.cpp$$.
 $lnext
+08-31:
 Change $code --with-openmp$$ to
 $cref/OPENMP_FLAGS=openmp_flags/autotools/openmp_flags/$$ configure
 command line argument.
-$lend
 
-$subhead 08-30$$
-$list number$$
+$lnext
+08-30:
 Create the $code openmp/run.cpp$$ program
 and move the $code openmp_multi_newton.cpp$$ test from
 $code openmp/run.sh$$ to $code openmp/run.cpp$$.
 This uses $cref/configure/autotools/Configure/$$
 information for building the tests.
 $lnext
+08-30:
 Document the $code --with-openmp$$ configure
 command line argument.
 $lnext
+08-30:
 Move $code openmp/multi_newton.hpp$$ to
 $code openmp/newton_method.hpp$$ and
 $code openmp/multi_newton.cpp$$ to
 $code openmp/newton_example.cpp$$.
-$lend
 
-$subhead 08-25$$
-$list number$$
+$lnext
+08-25:
 Replace $cref omp_alloc$$ by $cref thread_alloc$$ in
 $cref multi_thread$$, the section on how to use CppAD in parallel.
 $lnext
+08-25:
 Implement $cref omp_alloc$$ as links to corresponding $cref thread_alloc$$
 sections.
 $lnext
+08-25:
 Create the $code pthread_simple_ad.cpp$$ example that does AD using the
 pthread library.
 In addition, fix some problems in $code openmp_simple_ad.cpp$$
 $lnext
+08-25:
 Move $code openmp/example_a11c.cpp$$ to
 $cref|example/a11c_openmp.cpp|a11c_openmp.cpp|$$.
 $lnext
+08-25:
 Move $code openmp/parallel_ad.cpp$$ to
 $code openmp_simple_ad.cpp$$.
-$lend
 
-$subhead 08-23$$
+$lnext
+08-23:
 Beginning steps in replacing $cref omp_alloc$$ by $cref thread_alloc$$:
-$list number$$
 Replace $cref omp_alloc$$ by $cref thread_alloc$$
 in the $cref/utilities/utility/$$.
 $lnext
+08-23:
 move $cref omp_alloc$$ to the deprecated section of the
 documentation.
 $lnext
+08-23:
 Change all $cref omp_alloc$$ section names to begin with $code omp_$$,
 and change all $cref thread_alloc$$ section names to begin with $code new_$$.
 $lnext
+08-23:
 Convert $cref CppAD_vector$$ from using $cref omp_alloc$$ to using
 $cref thread_alloc$$ for memory allocation.
 $lnext
+08-23:
 Extend the $cref memory_leak$$ routine to also check the
 $cref thread_alloc$$ allocator.
-$lend
 
-$subhead 08-21$$
+$lnext
+08-21:
 Create the OpenMP and pthread examples
 $cref a11c_openmp.cpp$$,
 $cref a11c_pthread.cpp$$, and
@@ -415,55 +421,57 @@ $code openmp_simple_ad.cpp$$.
 These OpenMP examples were originally in the $code openmp$$ directory,
 and have been moved, and modified to conform, to the normal example directory.
 
+$lend
+
 $head 08-11$$
 Modify the CppAD trunk using the
 changes from svn revision 2044 to revision 2056 in the branch
 $codep
    https://projects.coin-or.org/svn/CppAD/branches/base_require
 $$
-These changes are described below under the headings
-$cref/08-04/whats_new_11/08-11/08-04/$$ through
-$cref/08-10/whats_new_11/08-11/08-10/$$.
+These changes are described below.
 
-$subhead 08-10$$
 $list number$$
+08-10:
 Add the output stream optional argument $icode s$$ in
 $codei%
    %f%.Forward(0, %x%, %s%)
 %$$
 See $cref/zero order forward mode/forward_zero/$$ and $cref PrintFor$$.
 $lnext
+08-10:
 Improve omp_alloc.cpp example.
-$lend
 
 
-$subhead 08-09$$
-$list number$$
+$lnext
+08-09:
 $cref base_require$$:
 Add $cref/epsilon/numeric_limits/epsilon/$$ to the
 $icode Base$$ type requirements.
 $lnext
+08-09:
 Extend $code epsilon$$ to AD types.
-$lend
 
-$subhead 08-08$$
-$list number$$
+$lnext
+08-08:
 Improve the $cref base_require$$ documentation for
 $cref/standard math functions/base_std_math/$$.
 $lnext
+08-08:
 $cref base_require$$:
 Add $code abs_geq$$ to the $cref/requirements/base_require/$$
 for a user defined $icode Base$$ type.
 $lnext
+08-08:
 Check that zero order forward mode results are approximately equal,
 instead of exactly equal,
 after an $cref optimize$$ operation.
 This fixes a bug in the optimize correctness check
 (The  order of operations can be changed by $code optimize$$
 and hence the zero order forward mode results may not be exactly the same.)
-$lend
 
-$subhead 08-07$$
+$lnext
+08-07:
 Improve the $cref base_require$$ documentation for
 $cref/EqualOpSeq/base_identical/EqualOpSeq/$$,
 $cref/Identical/base_identical/Identical/$$
@@ -471,22 +479,25 @@ $cref/Integer/base_require/Integer/$$, and
 $cref/Ordered/base_ordered/$$
 operations.
 
-$subhead 08-06$$
+$lnext
+08-06:
 Add the $cref/CondExpRel/base_cond_exp/CondExpRel/$$ paragraph to the
 base requirements documentation.
 This was missing and are required for
 $cref CondExp$$ to work with $codei%AD<%Base%>%$$ arguments
 and a non-standard $icode Base$$ type.
 
-$subhead 08-04$$
-$list number$$
+$lnext
+08-04:
 $cref base_require$$:
 Change the $cref/include/base_require/Include Order/$$ file name to
 $cref/base_require.hpp/base_require/$$.
 $lnext
+08-04:
 Use $cref base_float.hpp$$ and $cref base_double.hpp$$ as additional examples
 for the $cref/CondExp Base requirements/base_cond_exp/$$
 requirements.
+
 $lend
 
 $head 08-03$$
@@ -613,10 +624,8 @@ Fix $cref CheckNumericType$$ and $cref CheckSimpleVector$$
 so they work properly when used in parallel mode.
 $lend
 
-
-$subhead openmp/run.sh$$
-The following changes were made to $code openmp/run.sh$$:
 $list number$$
+The changes below were made on the $code openmp/run.sh$$ branch:
 $lnext
 Change to $code openmp/run.sh$$
 maximum number of threads
