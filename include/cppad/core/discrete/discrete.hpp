@@ -58,7 +58,7 @@ $head parallel_ad$$
 is a friend of this class so it can call List to initialize
 its static data.
 
-$head F$$
+$head Fun$$
 is the type for the user routine that computes $icode Base$$ function values.
 
 $head name_$$
@@ -76,9 +76,9 @@ template <class Base>
 class discrete {
 private:
    template <class Type> friend void parallel_ad(void);
-   typedef Base (*F) (const Base& x);
+   typedef Base (*Fun) (const Base& x);
    const std::string    name_;
-   const F              f_;
+   const Fun            f_;
    const size_t         index_;
 /* %$$
 $end
@@ -176,7 +176,7 @@ the static object returned by $cref discrete_list$$.
 $end
 */
 public:
-   discrete(const char* name, F f) :
+   discrete(const char* name, Fun f) :
    name_(name), f_(f) , index_( List().size() )
    {  std::string msg = "discrete: first call to the discrete function ";
       msg  += name;
