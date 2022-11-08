@@ -53,10 +53,10 @@ $spell
    Powvv
 $$
 
+$section Variable Op Codes$$
+
 $head Namespace$$
 All of these definitions are in the $code CppAD::local$$ namespace.
-
-$section Variable Op Codes$$
 
 $head opcode_t$$
 This type is used to save space when storing operator enum type in vectors.
