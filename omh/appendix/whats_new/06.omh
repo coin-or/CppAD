@@ -569,19 +569,23 @@ We may even want to erase the AD operation sequence so that
 $cref ADFun$$ objects use even less memory and can be used
 for a subsequent AD operation sequence."
 
-$subhead 06-17$$
+$list number$$
+06-17:
 Added $cref capacity_order$$ which can be used to control
 the amount of memory used to store $cref Forward$$ results.
 Also $cref/deprecated/FunDeprecated/$$ $code taylor_size$$, and defined
 $cref size_order$$ in its place.
 
-$subhead 06-18$$
+$lnext
+06-18:
 Added the $cref/ADFun default constructor/FunConstruct/$$
 and the ability to
 $cref/store a new operation sequence/Dependent/$$
 in an $code ADFun$$ object with out having to use
 $code ADFun$$ pointers together with $code new$$
 and $code delete$$.
+
+$lend
 
 $comment ----------------------------------------------------------- $$
 
