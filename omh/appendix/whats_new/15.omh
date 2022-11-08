@@ -556,7 +556,7 @@ Remove the multiple directions with list item.
 
 $head 05-26$$
 
-$subhead cond_exp_1$$
+$head 05-26: cond_exp_1$$
 There was a problem using
 $cref/conditional expressions/CondExp/$$
 with $cref/multiple levels of AD/mul_level/$$ where
@@ -573,7 +573,7 @@ where $icode side$$ was $code left$$ or $code right$$
 and $icode number$$ was the line number of an assert in $code cskip_op.hpp$$.
 This has been fixed.
 
-$subhead cond_exp_2$$
+$head 05-26: cond_exp_2$$
 There was a problem with using
 $cref/conditional expressions/CondExp/$$ and $cref/reverse mode/reverse/$$
 with $cref/multiple levels of AD/mul_level/$$.
