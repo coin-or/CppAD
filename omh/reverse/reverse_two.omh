@@ -36,7 +36,7 @@ AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 
 
-$head W$$
+$head Capital W$$
 The functions
 $latex W_0 : \B{R}^n \rightarrow \B{R}$$ and
 $latex W_1 : \B{R}^n \rightarrow \B{R}$$
@@ -75,7 +75,7 @@ $codei%
 %$$
 must be greater than or equal two (see $cref size_order$$).
 
-$head w$$
+$head Lower w$$
 The argument $icode w$$ has prototype
 $codei%
    const %Vector% &%w%
