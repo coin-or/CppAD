@@ -63,17 +63,20 @@ the derivative of the determinant
 (which is faster than using the definition of the determinant).
 
 $head Outline$$
-$list Alpha$$
-Demonstrate the use of CppAD to calculate derivatives of a
-polynomial: $cref get_started.cpp$$.
 
-$lnext
+$subhead A. get_started$$
+See $cref get_started.cpp$$ for an example that uses
+CppAD to calculate derivatives of a polynomial.
+
+$subhead B. Example Algorithms$$
 Present two algorithms that approximate the exponential function.
 The first algorithm $cref exp_2.hpp$$ is simpler and does not
 include any logical variables or loops.
 The second algorithm $cref exp_eps.hpp$$ includes
 logical operations and a $code while$$ loop.
-For each of these algorithms, do the following:
+
+$subhead C. Example Steps$$
+For each of the algorithms, exp_2 and exp_eps, do the following:
 
 $list number$$
 Define the mathematical function corresponding to the algorithm
@@ -95,11 +98,10 @@ of the operation sequence
 ($cref exp_2_cppad$$ and $cref exp_eps_cppad$$).
 $lend
 
-$lnext
+$subhead D. Testing Examples$$
 The program $cref exp_apx.cpp$$ runs all of the test
 routines that validate the calculations in the $cref exp_2$$
 and $cref exp_eps$$ presentation.
-$lend
 
 $head Reference$$
 An in-depth review of AD theory and methods can be found in
