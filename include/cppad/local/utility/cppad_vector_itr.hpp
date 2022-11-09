@@ -355,10 +355,10 @@ $icode%n% = %itr% - %other%
 $icode%b% = %itr% %cop% %other%
 %$$
 
-$subhead +-$$
+$head Plus or Minus$$
 The notation $icode +-$$ above is either $code +$$ or $code -$$.
 
-$subhead cop$$
+$head cop$$
 is one of the following:
 $code <$$, $code <=$$,
 $code >$$, $code >=$$.
