@@ -83,10 +83,12 @@ $icode%ref cop right
 $icode%element% = %ref%.ADBase()
 %$$
 
-$head vec_$$
+$head Member Variables$$
+
+$subhead vec_$$
 This private data is a reference to $icode vec$$ in the constructor.
 
-$head ind_$$
+$subhead ind_$$
 This private data is a copy of $icode ind$$ in the constructor.
 
 $head Base$$
