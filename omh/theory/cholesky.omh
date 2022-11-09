@@ -214,7 +214,7 @@ $latex \[
 
 $head Reverse Mode$$
 
-$subhead Case k = 0$$
+$subhead k Equal To 0$$
 For the case $latex k = 0$$,
 $latex \[
    \dot{A}_0
@@ -252,7 +252,7 @@ and $latex \bar{A}_0$$ is the partial before and after
 is before and after $latex L_0$$ is removed from the scalar function
 dependency.
 
-$subhead Case k > 0$$
+$subhead k Greater Than 0$$
 In the case where $latex k > 0$$,
 $latex \[
    A_k = L_k L_0^\R{T}  + L_0 L_k^\R{T}  + B_k
