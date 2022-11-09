@@ -121,7 +121,7 @@ bool atomic_four<Base>::rev_depend(
    size_t                      call_id     ,
    vector<bool>&               depend_x    ,
    const vector<bool>&         depend_y    )
-// END_PROTOTYPE
+// end deprecated version
 {  return false; }
 
 } // END_CPPAD_NAMESPACE
