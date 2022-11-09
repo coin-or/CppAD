@@ -70,17 +70,17 @@ no tracing is printed.
 If $icode%level% == 1%$$,
 a trace of the $code qp_interior$$ optimization is printed.
 
-$head c$$
+$head Lower c$$
 This is the vector $latex c$$ in the problem.
 
-$head C$$
+$head Upper C$$
 This is a $cref/row-major/glossary/Row-major Representation/$$
 of the matrix $latex C$$ in the problem.
 
-$head g$$
+$head Lower g$$
 This is the vector $latex g$$ in the problem.
 
-$head G$$
+$head Upper G$$
 This is a $cref/row-major/glossary/Row-major Representation/$$
 of the matrix $latex G$$ in the problem.
 
