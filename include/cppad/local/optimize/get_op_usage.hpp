@@ -49,7 +49,7 @@ $$
 
 $head Prototype$$
 $srcthisfile%
-   0%// BEGIN_OP_INC_ARG_USAGE%// END_PROTOTYPE%1
+   0%// BEGIN_OP_INC_ARG_USAGE%// END_OP_INC_ARG_USAGE%1
 %$$
 
 
@@ -106,7 +106,7 @@ void op_inc_arg_usage(
    size_t                      i_arg          ,
    pod_vector<usage_t>&        op_usage       ,
    sparse::list_setvec&        cexp_set       )
-// END_PROTOTYPE
+// END_OP_INC_ARG_USAGE
 {  // value of argument input on input to this routine
    enum_usage arg_usage = enum_usage( op_usage[i_arg] );
    //
@@ -164,7 +164,7 @@ $$
 
 $head Prototype$$
 $srcthisfile%
-   0%// BEGIN_GET_OP_USAGE%// END_PROTOTYPE%1
+   0%// BEGIN_GET_OP_USAGE%// END_GET_OP_USAGE%1
 %$$
 
 $head Base$$
@@ -257,7 +257,7 @@ void get_op_usage(
    sparse::list_setvec&                        cexp_set            ,
    pod_vector<bool>&                           vecad_used          ,
    pod_vector<usage_t>&                        op_usage            )
-// END_PROTOTYPE
+// END_GET_OP_USAGE
 {
    CPPAD_ASSERT_UNKNOWN( cexp_set.n_set()  == 0 );
    CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );
