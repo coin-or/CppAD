@@ -84,17 +84,17 @@ This is the vector of upper limits for $latex x$$ in the problem.
 If $icode%a%[%j%]%$$ is plus infinity, there is no upper limit
 for $latex x_j$$.
 
-$head c$$
+$head Lower c$$
 This is the value of the inequality constraint function at $latex x = 0$$.
 
-$head C$$
+$head Upper C$$
 This is a $cref/row-major/glossary/Row-major Representation/$$ representation
 of thee the inequality constraint matrix $latex C$$.
 
-$head g$$
+$head Lower g$$
 This is the gradient of the objective function.
 
-$head G$$
+$head Upper G$$
 This is a row-major representation of the Hessian of the objective function.
 For $latex j = 0 , \ldots , n-1$$,
 $latex - \infty < a_j$$ or
