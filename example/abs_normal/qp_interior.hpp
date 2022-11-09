@@ -360,7 +360,7 @@ namespace {
       return F_0;
    }
 }
-// BEGIN C++
+//
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE

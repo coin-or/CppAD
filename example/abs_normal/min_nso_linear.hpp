@@ -156,7 +156,6 @@ namespace {
    }
 }
 
-// BEGIN C++
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
