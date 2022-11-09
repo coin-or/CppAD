@@ -348,7 +348,7 @@ In this syntax $icode vec$$ is not $code const$$
 and the value $icode%vec%[%i%]%$$ is a
 $cref/vectorBoolElement/vector_bool_element/$$.
 
-$head Source$$
+$head Source Code$$
 $srccode%hpp% */
    bool operator[](size_t i) const
    {  CPPAD_ASSERT_KNOWN( i < length_,
