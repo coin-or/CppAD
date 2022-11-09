@@ -25,24 +25,26 @@ $$
 
 $section json lexer: Private Data$$
 
-$head graph_$$
+$head Member Variables$$
+
+$subhead graph_$$
 The $cref json_ad_graph$$.
 
-$head index_$$
+$subhead index_$$
 is the index in the graph for the current character.
 If a token is returned, this corresponds to the last character
 it the token.
 
-$head line_number_$$
+$subhead line_number_$$
 line number in the graph for the current character
 
-$head char_number_$$
+$subhead char_number_$$
 character number in the graph for the current character
 
-$head token_$$
+$subhead token_$$
 used to return tokens.
 
-$head function_name_$$
+$subhead function_name_$$
 is the function name for this graph.
 This is initialized as empty,
 should be set as soon as it is parsed,
