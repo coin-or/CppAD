@@ -48,11 +48,11 @@ $href%https://bradbell.github.io/cppad_swig%swig%$$
    $cnext $code cppad_swig$$ $cnext
    A C++ AD Library with a Swig Interface to Perl, Octave, and Python
 $rnext
-$href%https://bradbell.github.io/cppad_py%py%$$
+$href%https://bradbell.github.io/cppad_py%cppad_py%$$
    $cnext $code cppad_py$$ $cnext
    A Python Interface to CppAD
 $rnext
-$href%http://www.seanet.com/~bradbell/pycppad/pycppad.htm%py%$$ $cnext
+$href%http://www.seanet.com/~bradbell/pycppad/pycppad.htm%pycppad%$$ $cnext
    $code pycppad$$ $cnext
    A Python Interface to CppAD (no longer being developed)
 $tend
