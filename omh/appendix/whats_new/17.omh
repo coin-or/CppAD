@@ -112,9 +112,7 @@ $lend
 $subhead 11-19$$
 Add the $cref subgraph_reverse$$ method for computing
 sparse derivatives.
-This was inspired by the
-$href%https://cran.r-project.org/web/packages/TMB/index.html%TMB%$$ package.
-
+This was inspired by the TMB package.
 
 $subhead 11-15$$
 $list number$$
