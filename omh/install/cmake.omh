@@ -80,13 +80,11 @@ $section Using CMake to Configure CppAD$$
 
 
 $head The CMake Program$$
-The
-$href%http://www.cmake.org/cmake/help/install.html%cmake%$$
-program enables one to create a single set of scripts,
+The cmake program enables one to create a single set of scripts,
 called $code CMakeLists.txt$$,
 that can be used to test and install a program on Unix, Microsoft, or
-Apple operating systems.
-For example, one can use it to automatically generate Microsoft project files.
+Apple operating systems; see
+$href%http://www.cmake.org/cmake/help/install.html%install cmake%$$ .
 
 $head Build Directory$$
 Create $code build$$, a subdirectory of the
@@ -183,8 +181,8 @@ $codep
    where cmake.exe
 $$
 to see if $code cmake.exe$$ comes with your version of Visual Studio.
-If not, download and install the win64-x64 version of
-$href%https://cmake.org/download/%cmake%$$.
+If not, download and install the win64-x64 version of the
+$href%https://cmake.org/download/%cmake program%$$.
 Make sure you select the box that adds $code cmake$$ to your execution path.
 $lnext
 In the command window, change into the directory where the cppad git
