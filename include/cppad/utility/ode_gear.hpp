@@ -336,7 +336,7 @@ $latex \[
 
 $head Gear's Method$$
 C. W. Gear,
-``Simultaneous Numerical Solution of Differential-Algebraic Equations,''
+$italic Simultaneous Numerical Solution of Differential-Algebraic Equations$$,
 IEEE Transactions on Circuit Theory,
 vol. 18, no. 1, pp. 89-95, Jan. 1971.
 
