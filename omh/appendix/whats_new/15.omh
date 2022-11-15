@@ -552,8 +552,6 @@ The absolute zero item has been completed and the
 numeric limit item was modified on implementation.
 Remove the multiple directions with list item.
 
-$subhead 05-26$$
-
 $subhead 05-26: cond_exp_1$$
 There was a problem using
 $cref/conditional expressions/CondExp/$$

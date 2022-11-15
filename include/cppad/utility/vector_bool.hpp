@@ -136,7 +136,7 @@ with $icode%n% = %other%.size()%$$ elements and $code n_unit_$$
 greater than or equal $code unit_min()$$.
 
 $head Destructor$$
-If $code n_unit_$$ is non-zero, the memory corresponding to data_
+If $code n_unit_$$ is non-zero, the memory corresponding to $code data_$$
 is returned to thread_alloc.
 
 $head Source$$
