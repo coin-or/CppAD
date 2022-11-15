@@ -85,7 +85,7 @@
 #
 # $subhead Compile Flags$$
 # The necessary flags for compiling code that includes CppAD,
-#  before CppAD is installed, can be obtained with the command
+# before CppAD is installed, can be obtained with the command
 # $codep
 #     pkg-config --cflags cppad-uninstalled
 # $$
