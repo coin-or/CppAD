@@ -51,19 +51,19 @@ $codei%
    for file in `ls speed/%your_package%`
    do
       sed -i speed/%your_package%/@file \
-         -e 's|xpackage|%your_package%|' \
-         -e 's|Xpackage|%Your_package%|' \
-         -e 's|CPPAD_XPACKAGE_SPEED|%YOUR_PACKGE%|'
+         -e 's/xpackage/%your_package%/' \
+         -e 's/Xpackage/%Your_package%/' \
+         -e 's/CPPAD_XPACKAGE_SPEED/%YOUR_PACKGE%/'
    done
    git checkout speed/CMakeLists.txt
    sed -i speed/CMakeLists.txt \
-      -e 's|^.*(xpackage)|ADD_SUBDIRECTORY(%your_package%)\n&|'
+      -e 's/^.*(xpackage)/ADD_SUBDIRECTORY(%your_package%)\n&/'
    git checkout speed/main.cpp
    line1='# ifdef CPPAD_%YOUR_PACKAGE%_SPEED'
    line2='# define AD_PACKAGE "%your_package%"'
    line3='# endif'
    sed -i speed/main.cpp \
-      -e "/CPPAD_XPACKAGE_SPEED/s|^|@line1\n@line2\n@line3\n|"
+      -e "/CPPAD_XPACKAGE_SPEED/s/^/@line1\n@line2\n@line3\n/"
 %$$
 where $icode your_package$$ has been replaced by the name of the new package
 $icode Your_package$$ is a capitalized version of the name, and
