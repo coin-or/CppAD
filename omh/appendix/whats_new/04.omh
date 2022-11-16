@@ -116,7 +116,7 @@ returns the number of comparison operations that have changed.
 $subhead 11-10$$
 The $cref get_started.cpp$$ example was changed to use the
 $cref Jacobian$$ driver.
-In addition, more $cref/index/_index/$$ entries,
+In addition, more index entries,
 that point to the $cref/easy to use drivers/Drivers/$$,
 were added.
 

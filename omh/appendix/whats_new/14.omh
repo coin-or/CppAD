@@ -136,11 +136,11 @@ $cref/cppad_tape_addr_type/cmake/cppad_tape_addr_type/cstdint/$$ and
 $cref/cppad_tape_id_type/cmake/cppad_tape_id_type/cstdint/$$.
 
 $subhead 12-15$$
-Correct the title and $cref _index$$ entries for $cref forward_two$$
+Correct the title and index entries for $cref forward_two$$
 from first to second order.
 
 $subhead 11-28$$
-Improve the $cref/index/_index/$$ and $code search$$ using
+Improve the index and $code search$$ using
 a new version of the $code omhelp$$ documentation tool.
 
 $subhead 11-27$$
