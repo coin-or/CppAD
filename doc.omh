@@ -112,7 +112,7 @@ $subhead Recording Operations$$
 A sequence of $codei%AD<%Base%>%$$
 $cref/operations/glossary/Operation/Sequence/$$
 can be recorded and stored in an
-$cref/AD function object/ADFun/$$ object.
+$cref/AD function object/ADFun/$$.
 This object can then be used to evaluate
 function values and arbitrary order derivatives,
 and sparsity patterns of derivative values using the $icode Base$$ type.
@@ -168,12 +168,12 @@ are expressed using derivatives of other functions.
 $subhead Atomic Functions$$
 User defined derivative calculations for arbitrary functions
 can also be included in
-a recording using $cref/atomic functions/atomic_two/$$ functions.
+a recording using $cref/atomic functions/atomic_two/$$.
 A special $cref/checkpoint/chkpoint_one/$$ class is included
 which allows one to record a function and reuse it as
 an atomic operation in other functions.
 There also is a special interface for user defined unary
-$cref/discrete functions/Discrete/$$ functions; i.e.,
+$cref/discrete functions/Discrete/$$; i.e.,
 functions that depend on the
 $cref/independent variables/glossary/Tape/Independent Variable/$$
 but which have identically zero derivatives (e.g., a step function).
