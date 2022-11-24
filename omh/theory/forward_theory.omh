@@ -20,7 +20,7 @@ $latex X(t)$$, $latex Y(t)$$, and $icode Z(t)$$ are scalar valued functions
 and the corresponding $th p$$ order Taylor coefficients row vectors are
 $latex x$$, $latex y$$ and $latex z$$; i.e.,
 $latex \[
-\begin{array}{lcr}
+\begin{array}{rcl}
 X(t) & = & x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p + o( t^p ) \\
 Y(t) & = & y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + o( t^p ) \\
 Z(t) & = & z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + o( t^p )

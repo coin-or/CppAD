@@ -25,9 +25,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{acos}^{(1)} (x) & = & - (1 - x * x)^{-1/2}
-\end{array}
+   \R{acos}^{(1)} (x) = - (1 - x * x)^{-1/2}
 \] $$
 
 $head Example$$
@@ -94,9 +92,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{asin}^{(1)} (x) & = & (1 - x * x)^{-1/2}
-\end{array}
+   \R{asin}^{(1)} (x) = (1 - x * x)^{-1/2}
 \] $$
 
 $head Example$$
@@ -163,9 +159,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{atan}^{(1)} (x) & = & \frac{1}{1 + x^2}
-\end{array}
+   \R{atan}^{(1)} (x) = \frac{1}{1 + x^2}
 \] $$
 
 $head Example$$
@@ -233,9 +227,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{cos}^{(1)} (x) & = & - \sin(x)
-\end{array}
+   \R{cos}^{(1)} (x) = - \sin(x)
 \] $$
 
 $head Example$$
@@ -267,9 +259,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{cosh}^{(1)} (x) & = &  \sinh(x)
-\end{array}
+   \R{cosh}^{(1)} (x) = \sinh(x)
 \] $$
 
 $head Example$$
@@ -372,9 +362,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{exp}^{(1)} (x) & = &  \exp(x)
-\end{array}
+   \R{exp}^{(1)} (x) = \exp(x)
 \] $$
 
 $head Example$$
@@ -437,9 +425,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{log}^{(1)} (x) & = &  \frac{1}{x}
-\end{array}
+   \R{log}^{(1)} (x) = \frac{1}{x}
 \] $$
 
 $head Example$$
@@ -500,9 +486,7 @@ for a unary standard math function.
 $head Method$$
 CppAD uses the representation
 $latex \[
-\begin{array}{lcr}
-   {\rm log10} (x) & = & \log(x) / \log(10)
-\end{array}
+   {\rm log10} (x) = \log(x) / \log(10)
 \] $$
 
 $head Example$$
@@ -534,9 +518,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{sin}^{(1)} (x) & = &  \cos(x)
-\end{array}
+   \R{sin}^{(1)} (x) = \cos(x)
 \] $$
 
 $head Example$$
@@ -568,9 +550,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{sinh}^{(1)} (x) & = &  \cosh(x)
-\end{array}
+   \R{sinh}^{(1)} (x) = \cosh(x)
 \] $$
 
 $head Example$$
@@ -602,9 +582,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{sqrt}^{(1)} (x) & = &  \frac{1}{2 \R{sqrt} (x) }
-\end{array}
+   \R{sqrt}^{(1)} (x) = \frac{1}{2 \R{sqrt} (x) }
 \] $$
 
 $head Example$$
@@ -636,9 +614,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{tan}^{(1)} (x) & = &  1 + \tan (x)^2
-\end{array}
+   \R{tan}^{(1)} (x) = 1 + \tan (x)^2
 \] $$
 
 $head Example$$
@@ -670,9 +646,7 @@ This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Derivative$$
 $latex \[
-\begin{array}{lcr}
-   \R{tanh}^{(1)} (x) & = &  1 - \tanh (x)^2
-\end{array}
+   \R{tanh}^{(1)} (x) = 1 - \tanh (x)^2
 \] $$
 
 $head Example$$
