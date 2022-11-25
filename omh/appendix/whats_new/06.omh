@@ -890,7 +890,7 @@ because some of the components may not be
 $cref/variables/glossary/Variable/$$.
 
 $subhead 03-30$$
-Move the $cref LuRatio$$ section below $cref LuDetAndSolve$$.
+Move the $cref LuRatio$$ section below $cref lu_det_and_solve$$.
 $pre
 
 $$

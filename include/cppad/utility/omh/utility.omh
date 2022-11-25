@@ -93,7 +93,7 @@ $table
 $rref nan$$
 $rref pow_int$$
 $rref Poly$$
-$rref LuDetAndSolve$$
+$rref lu_det_and_solve$$
 $rref RombergOne$$
 $rref RombergMul$$
 $rref Runge45$$
