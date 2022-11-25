@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin AddEq.cpp$$
+$begin add_eq.cpp$$
 
 $section AD Compound Assignment Addition: Example and Test$$
 

@@ -92,7 +92,7 @@ $head Example$$
 The following files contain examples and tests of these functions.
 Each test returns true if it succeeds and false otherwise.
 $table
-$rref AddEq.cpp$$
+$rref add_eq.cpp$$
 $rref sub_eq.cpp$$
 $rref mul_eq.cpp$$
 $rref div_eq.cpp$$
