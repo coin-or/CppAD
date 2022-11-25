@@ -15,7 +15,7 @@ $cref/division/forward_theory/Binary Operators/Division/$$.
 
 $head Reverse Mode$$
 see theory for reverse mode
-$cref/division/ReverseTheory/Binary Operators/Division/$$.
+$cref/division/reverse_theory/Binary Operators/Division/$$.
 
 $head Example$$
 The file $cref atomic_four_vector_div.cpp$$ contains an example

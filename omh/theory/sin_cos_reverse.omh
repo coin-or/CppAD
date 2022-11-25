@@ -14,7 +14,7 @@ $section Trigonometric and Hyperbolic Sine and Cosine Reverse Theory$$
 
 We use the reverse theory
 $cref%standard math function
-   %ReverseTheory
+   %reverse_theory
    %Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.

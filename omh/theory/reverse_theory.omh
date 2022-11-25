@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-$begin ReverseTheory$$
+$begin reverse_theory$$
 $spell
    Taylor
    Arctangent

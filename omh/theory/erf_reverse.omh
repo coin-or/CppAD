@@ -14,7 +14,7 @@ $section Error Function Reverse Mode Theory$$
 
 $head Notation$$
 We use the reverse theory
-$cref/standard math function/ReverseTheory/Standard Math Functions/$$
+$cref/standard math function/reverse_theory/Standard Math Functions/$$
 definition for the functions $latex H$$ and $latex G$$.
 
 $head Positive Orders Z(t)$$

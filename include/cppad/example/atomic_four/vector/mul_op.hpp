@@ -15,7 +15,7 @@ $cref/multiplication/forward_theory/Binary Operators/Multiplication/$$.
 
 $head Reverse Mode$$
 see theory for reverse mode
-$cref/multiplication/ReverseTheory/Binary Operators/Multiplication/$$.
+$cref/multiplication/reverse_theory/Binary Operators/Multiplication/$$.
 
 $head Example$$
 The file $cref atomic_four_vector_mul.cpp$$ contains an example

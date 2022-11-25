@@ -15,7 +15,7 @@ $cref/addition/forward_theory/Binary Operators/Addition/$$.
 
 $head Reverse Mode$$
 see theory for reverse mode
-$cref/addition/ReverseTheory/Binary Operators/Addition/$$.
+$cref/addition/reverse_theory/Binary Operators/Addition/$$.
 
 $head Example$$
 The file $cref atomic_four_vector_add.cpp$$ contains an example

@@ -13,7 +13,7 @@ $section Tangent and Hyperbolic Tangent Reverse Mode Theory$$
 
 $head Notation$$
 We use the reverse theory
-$cref/standard math function/ReverseTheory/Standard Math Functions/$$
+$cref/standard math function/reverse_theory/Standard Math Functions/$$
 definition for the functions $latex H$$ and $latex G$$.
 In addition, we use the forward mode notation in $cref tan_forward$$ for
 $latex X(t)$$, $latex Y(t)$$ and $latex Z(t)$$.

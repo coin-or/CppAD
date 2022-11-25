@@ -15,7 +15,7 @@ $cref/subtraction/forward_theory/Binary Operators/Subtraction/$$.
 
 $head Reverse Mode$$
 see theory for reverse mode
-$cref/subtraction/ReverseTheory/Binary Operators/Subtraction/$$.
+$cref/subtraction/reverse_theory/Binary Operators/Subtraction/$$.
 
 $head Example$$
 The file $cref atomic_four_vector_sub.cpp$$ contains an example

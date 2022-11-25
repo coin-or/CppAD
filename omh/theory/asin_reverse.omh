@@ -15,7 +15,7 @@ $section Inverse Sine and Hyperbolic Sine Reverse Mode Theory$$
 
 We use the reverse theory
 $cref%standard math function
-   %ReverseTheory
+   %reverse_theory
    %Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
