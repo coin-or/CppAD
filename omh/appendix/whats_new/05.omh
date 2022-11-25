@@ -528,7 +528,7 @@ in CppAD error macros has been improved.
 
 $subhead 08-24$$
 Changed $code Romberg$$ to $cref RombergOne$$ and added $cref RombergMul$$.
-In addition, added missing entries to $cref ListAllExamples$$
+In addition, added missing entries to $cref list_all_examples$$
 and reorganized $cref/utilities/utility/$$.
 
 $subhead 08-20$$
@@ -759,7 +759,7 @@ $pre
 
 $$
 Add a section containing a list of
-$cref/all the examples/ListAllExamples/$$.
+$cref/all the examples/list_all_examples/$$.
 
 $subhead 05-19$$
 A significant improvement in speed was obtained by moving

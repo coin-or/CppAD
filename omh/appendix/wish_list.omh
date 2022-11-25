@@ -204,7 +204,7 @@ For general purpose use, the $cref test_boolofvoid$$ should be usable
 without including a memory check at the end.
 
 $head Example$$
-Split the $cref/example list/ListAllExamples/$$
+Split the $cref/example list/list_all_examples/$$
 into separate groups by the corresponding example subdirectory.
 
 $comment ----------------------------------------------------------------- $$

@@ -394,7 +394,7 @@ $code print_for.cpp$$ examples.
 (Now documentation can be built from a subversion checkout with out
 needing to execute automake.)
 The $code PrintFor.cpp$$ and
-$code speedtest.cpp$$ examples were missing in $cref ListAllExamples$$
+$code speedtest.cpp$$ examples were missing in $cref list_all_examples$$
 (which has been fixed).
 $pre
 

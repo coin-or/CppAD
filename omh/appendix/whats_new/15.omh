@@ -238,7 +238,7 @@ In addition, remove checking that all user API preprocessor symbols
 are in this section form the $cref wish_list$$.
 $lnext
 Alphabetize and make some corrections to
-$cref/list of examples/ListAllExamples/$$.
+$cref/list of examples/list_all_examples/$$.
 $lnext
 The documentation for some of the $cref deprecated$$ features
 was missing the date when they were deprecated.

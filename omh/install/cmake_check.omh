@@ -51,7 +51,7 @@ $code make check_introduction$$   $cnext
    the $cref Introduction$$ functions
 $rnext
 $code make check_example$$   $cnext
-   the normal $cref/example/listallexamples/$$ functions plus some deprecated
+   the normal $cref/example/list_all_examples/$$ functions plus some deprecated
    examples.
 $rnext
 $code make check_test_more$$ $cnext

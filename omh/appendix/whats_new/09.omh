@@ -483,7 +483,7 @@ This was has been fixed (revision 1362).
 
 $subhead 03-24$$
 Added cross references in
-the $cref/examples/ListAllExamples/$$ to occurrence of the following tokens:
+the $cref/examples/list_all_examples/$$ to occurrence of the following tokens:
 $cref AD$$,
 $cref/ADFun/fun_construct/$$,
 $code CPPAD_TEST_VECTOR$$,

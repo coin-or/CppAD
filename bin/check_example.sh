@@ -16,7 +16,7 @@ file_list=`git ls-files | sed -n \
    -e '/^example\//p'`
 #
 sed < omh/example_list.omh > check_example.$$ \
-   -n -e '/[$]begin ListAllExamples\$\$/,/\$end/p'
+   -n -e '/[$]begin list_all_examples\$\$/,/\$end/p'
 #
 # Make sure all example names are of the form *.cpp or *.hpp
 check=`sed -n -e '/$rref [0-9a-zA-Z_]*\.[hc]pp/d' \
