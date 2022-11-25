@@ -8,7 +8,8 @@ $begin atomic_four_devel$$
 $section atomic_four Developer Documentation$$
 
 $childtable%
-   include/cppad/core/atomic/four/devel/jac_sparsity.hpp
+   include/cppad/core/atomic/four/devel/jac_sparsity.hpp%
+   include/cppad/core/atomic/four/devel/hes_sparsity.hpp
 %$$
 
 $end

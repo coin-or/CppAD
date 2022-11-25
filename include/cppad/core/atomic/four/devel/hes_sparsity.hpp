@@ -9,14 +9,23 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
 -----------------------------------------------------------------------------
 $begin atomic_four_for_hes_sparsity$$
+$spell
+   ident
+   np
+   numvar
+   num_var
+   Jacobian
+   jac
+   hes
+$$
 
-$section Link from Forward Hesswian Sparsity Sweep to atomic_four Callback$$
+$section Link from Forward Hessian Sparsity Sweep to atomic_four Callback$$
 
 $head Prototype$$
 $srcthisfile%0%// BEGIN_FOR_HES_SPARSITY%// END_FOR_HES_SPARSITY%1%$$
 
 $head InternalSparsity$$
-Is the used internaly for sparsity calculations; i.e.,
+Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 $head call_id [in]$$
@@ -51,7 +60,7 @@ The sparsity patterns with index zero and index $icode np1$$ are empty
 
 $subhead On Input$$
 On input, for j = 0, ... , n-1,
-the forward Jacobian sparsity for the $th j$$ arguemnt to the atomic fucntion
+the forward Jacobian sparsity for the $th j$$ argument to the atomic function
 is the sparsity pattern with index $icode%np1% + %x_index[j]%$$.
 In addition, the sparsity pattern with index $th j+1$$ contains
 the non-zero cross partial indices where $th j+1$$ is the other index.
@@ -59,7 +68,7 @@ This Hessian does not include the atomic operation.
 
 $subhead On Output$$
 On output, for i = 0, ... , m-1,
-the forward Jacobian sparsity for the $th i$$ result of the atomic fucntion
+the forward Jacobian sparsity for the $th i$$ result of the atomic function
 is the sparsity pattern with index $icode%np1% + %y_index[i]%$$.
 In addition, the sparsity pattern with index $th j+1$$ contains
 the non-zero cross partial indices where $th j+1$$ is the other index.
@@ -73,11 +82,12 @@ computing the Hessian of.
 
 $head hes_sparsity_for$$
 This is the sparsity pattern for the Hessian. On input, the non-linear
-terms in the atomic fuction have not been included. Upon return, they
+terms in the atomic function have not been included. Upon return, they
 have been included.
 
 $end
 */
+// BEGIN_FOR_HES_SPARSITY
 template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::for_hes_sparsity(
@@ -89,6 +99,7 @@ bool atomic_four<Base>::for_hes_sparsity(
    size_t                           numvar           ,
    const InternalSparsity&          rev_jac_pattern  ,
    InternalSparsity&                for_sparsity     )
+// END_FOR_HES_SPARSITY
 {  typedef typename InternalSparsity::const_iterator const_iterator;
    //
    CPPAD_ASSERT_UNKNOWN( rev_jac_pattern.end() == 1 );
@@ -191,6 +202,13 @@ bool atomic_four<Base>::for_hes_sparsity(
 }
 /*
 $begin atomic_four_rev_hes_sparsity$$
+$spell
+   ident
+   np
+   Jacobian
+   hes
+   jac
+$$
 
 $section Link from Reverse Hessian Sparsity Sweep to atomic_four Callback$$
 
@@ -198,7 +216,7 @@ $head Prototype$$
 $srcthisfile%0%// BEGIN_REV_HES_SPARSITY%// END_REV_HES_SPARSITY%1%$$
 
 $head InternalSparsity$$
-Is the used internaly for sparsity calculations; i.e.,
+Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
 $head call_id [in]$$
@@ -227,19 +245,20 @@ is the forward Jacobian pattern for the j-th argument to this atomic function.
 $head rev_jac_flag$$
 On input, for i = 0, ... , m-1, rev_jac_flag[ y_index[i] ] is true
 if the function we are computing the Hessian of has possibly non-zero Jacobian
-w.r.t varialbe y_index[i].
+w.r.t variable y_index[i].
 On output, for j = 0, ... , n, rev_jac_flag[ x_index[j] ] is set to true
-if the varialbe with index x_index[j] has possible non-zero Jacobian
-with repect to one of the true y_index[i] cases.
-Otherwise, rev_jac_flag [ x_inde[j] ] is not changed.
+if the variable with index x_index[j] has possible non-zero Jacobian
+with respect to one of the true y_index[i] cases.
+Otherwise, rev_jac_flag [ x_index[j] ] is not changed.
 
 $head hes_sparsity_rev$$
 Is the reverse mode sparsity pattern for the Hessian. On input, the non-linear
-terms in the atomic fuction have not been included. Upon return, they
+terms in the atomic function have not been included. Upon return, they
 have been included.
 
 $end
 */
+// BEGIN_REV_HES_SPARSITY
 template <class Base>
 template <class InternalSparsity>
 bool atomic_four<Base>::rev_hes_sparsity(
@@ -250,6 +269,7 @@ bool atomic_four<Base>::rev_hes_sparsity(
    const InternalSparsity&          for_jac_pattern  ,
    bool*                            rev_jac_flag     ,
    InternalSparsity&                hes_sparsity_rev )
+// END_REV_HES_SPARSITY
 {  CPPAD_ASSERT_UNKNOWN( for_jac_pattern.number_elements(0) == 0 );
    CPPAD_ASSERT_UNKNOWN( ! rev_jac_flag[0] );
    //
