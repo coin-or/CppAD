@@ -27,7 +27,7 @@ $section ADFun Objects$$
 $head Purpose$$
 An AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
-is stored in an $code ADFun$$ object by its $cref FunConstruct$$.
+is stored in an $code ADFun$$ object by its $cref fun_construct$$.
 The $code ADFun$$ object can then be used to calculate function values,
 derivative values, and other values related to the corresponding function.
 

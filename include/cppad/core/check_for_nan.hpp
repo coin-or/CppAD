@@ -36,7 +36,7 @@ $icode f$$ has prototype
 $codei%
    ADFun<%Base%> %f%
 %$$
-(see $codei%ADFun<%Base%>%$$ $cref/constructor/FunConstruct/$$).
+(see $codei%ADFun<%Base%>%$$ $cref/constructor/fun_construct/$$).
 For the syntax where $icode b$$ is the result,
 $icode f$$ has prototype
 $codei%

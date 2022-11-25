@@ -39,7 +39,7 @@ it must be transferred to a function object or aborted; see below.
 $head Stop Recording$$
 The recording is stopped,
 and the operation sequence is transferred to the AD function object $icode f$$,
-using either the $cref/function constructor/FunConstruct/$$
+using either the $cref/function constructor/fun_construct/$$
 $codei%
    ADFun<%Base%> %f%(%x%, %y%)
 %$$

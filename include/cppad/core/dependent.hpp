@@ -72,7 +72,7 @@ The vector $icode y$$ has prototype
 $codei%
    const %ADvector% &%y%
 %$$
-(see $cref/ADvector/FunConstruct/$$ below).
+(see $cref/ADvector/fun_construct/$$ below).
 The length of $icode y$$ must be greater than zero
 and is the dimension of the range space for $icode f$$.
 

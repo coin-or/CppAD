@@ -505,7 +505,7 @@ $href%
 $lnext
 Fix bug whereby a newly constructed $cref VecAD$$ object was a
 $cref/variable/con_dyn_var/Variable/$$ (instead of a parameter) directly after construction
-(when no previous $cref/ADFun/FunConstruct/$$ object had been created).
+(when no previous $cref/ADFun/fun_construct/$$ object had been created).
 $lnext
 Change a $code ok != a == 0.$$ to $code ok &= a == 0.$$ in
 the example $cref ad_ctor.cpp$$.
@@ -783,7 +783,7 @@ $icode%
 $subhead 03-27$$
 Reduce the amount of memory allocation and copying of information during
 a $cref Dependent$$ operation or an $code ADFun$$
-$cref/sequence constructor/FunConstruct/Sequence Constructor/$$.
+$cref/sequence constructor/fun_construct/Sequence Constructor/$$.
 
 $subhead 03-26$$
 Calling $code taylor_capacity$$, with to with capacity equal to zero,

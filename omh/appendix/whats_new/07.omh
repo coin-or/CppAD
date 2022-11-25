@@ -386,7 +386,7 @@ when this happens.
 $pre
 
 $$
-Fix an $cref/Sequence Constructor/FunConstruct/Sequence Constructor/$$
+Fix an $cref/Sequence Constructor/fun_construct/Sequence Constructor/$$
 referenced to $code Dependent$$ in documentation
 (was using the $cref FunDeprecated$$ one argument syntax).
 $pre
@@ -912,7 +912,7 @@ This has been fixed.
 $lnext
 02-17:
 An entry about optimizing the operation
-sequence in an $cref/ADFun/FunConstruct/$$ object was added to the
+sequence in an $cref/ADFun/fun_construct/$$ object was added to the
 $cref wish_list$$.
 $pre
 

@@ -35,7 +35,7 @@ extern bool FunCheck(void);
 extern bool Mul(void);
 extern bool MulEq(void);
 extern bool MulZeroOne(void);
-extern bool NearEqualExt(void);
+extern bool near_equal_ext(void);
 extern bool Neg(void);
 extern bool Poly(void);
 extern bool Pow(void);
@@ -160,7 +160,7 @@ int main(void)
    Run( Mul,             "Mul"            );
    Run( MulEq,           "MulEq"          );
    Run( MulZeroOne,      "MulZeroOne"     );
-   Run( NearEqualExt,    "NearEqualExt"   );
+   Run( near_equal_ext,  "near_equal_ext" );
    Run( Neg,             "Neg"            );
    Run( Poly,            "Poly"           );
    Run( Pow,             "Pow"            );

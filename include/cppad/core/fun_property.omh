@@ -73,7 +73,7 @@ The object $icode f$$ has prototype
 $codei%
    const ADFun<%Base%> %f%
 %$$
-(see $codei%ADFun<%Base%>%$$ $cref/constructor/FunConstruct/$$).
+(see $codei%ADFun<%Base%>%$$ $cref/constructor/fun_construct/$$).
 
 $head Domain$$
 The result $icode n$$ has prototype
@@ -87,7 +87,7 @@ $codei%
 %$$
 that starting recording the operation sequence
 currently stored in $icode f$$
-(see $cref FunConstruct$$ and $cref Dependent$$).
+(see $cref fun_construct$$ and $cref Dependent$$).
 
 $head Range$$
 The result $icode m$$ has prototype
@@ -104,7 +104,7 @@ $codei%
    %f%.Dependent(%y%)
 %$$
 depending on which stored the operation sequence currently in $icode f$$
-(see $cref FunConstruct$$ and $cref Dependent$$).
+(see $cref fun_construct$$ and $cref Dependent$$).
 
 $head Parameter$$
 The argument $icode i$$ has prototype
@@ -144,7 +144,7 @@ $pre
 $$
 If there is no operation sequence stored in $icode f$$,
 $code size_var$$ returns zero
-(see $cref/default constructor/FunConstruct/Default Constructor/$$).
+(see $cref/default constructor/fun_construct/Default Constructor/$$).
 
 $head size_par$$
 The result $icode s$$ has prototype

@@ -43,7 +43,7 @@ per variable,direction in the AD operation sequence,
 currently calculated and stored in the ADFun object $icode f$$.
 
 $head Constructor$$
-Directly after the $cref FunConstruct$$ syntax
+Directly after the $cref fun_construct$$ syntax
 $codei%
    ADFun<%Base%> %f%(%x%, %y%)
 %$$

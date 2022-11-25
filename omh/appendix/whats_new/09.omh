@@ -54,7 +54,7 @@ $head mm-dd$$
 
 $subhead 12-23$$
 The
-$code ADFun$$ $cref/assignment operator/FunConstruct/Assignment Operator/$$
+$code ADFun$$ $cref/assignment operator/fun_construct/Assignment Operator/$$
 was changed so that it now copies forward mode
 Taylor coefficients and sparsity pattern information.
 (This assignment operator was added on $cref/10-24/whats_new_09/mm-dd/10-24/$$.)
@@ -143,7 +143,7 @@ and split and $code ipopt_cppad_ode.cpp$$
 into $code ipopt_nlp_ode_fast.hpp$$ and $code ipopt_nlp_ode_check.cpp$$.
 
 $subhead 10-24$$
-Added the $cref/assignment operator/FunConstruct/Assignment Operator/$$
+Added the $cref/assignment operator/fun_construct/Assignment Operator/$$
 to the $code ADFun$$ object class.
 This makes a copy of the entire operation sequence in another
 function object.
@@ -151,7 +151,7 @@ The intention is that the two functions objects can do calculations in
 parallel.
 In addition,
 CppAD now check for the $code ADFun$$
-$cref/copy constructor/FunConstruct/Copy Constructor/$$
+$cref/copy constructor/fun_construct/Copy Constructor/$$
 and generates an error message if it is used.
 
 $subhead 10-23$$
@@ -485,7 +485,7 @@ $subhead 03-24$$
 Added cross references in
 the $cref/examples/ListAllExamples/$$ to occurrence of the following tokens:
 $cref AD$$,
-$cref/ADFun/FunConstruct/$$,
+$cref/ADFun/fun_construct/$$,
 $code CPPAD_TEST_VECTOR$$,
 $cref Forward$$,
 $cref Independent$$,
@@ -547,6 +547,6 @@ $latex o ( t^{p-1} ) / t^{1-p} \rightarrow 0$$.
 
 $subhead 01-06$$
 Made some minor improvements to the documentation in
-$cref FunConstruct$$.
+$cref fun_construct$$.
 
 $end

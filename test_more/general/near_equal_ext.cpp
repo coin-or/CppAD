@@ -10,7 +10,7 @@ Old example now just used for validation testing
 # include <cppad/cppad.hpp>
 # include <complex>
 
-bool NearEqualExt(void)
+bool near_equal_ext(void)
 {  bool ok = true;
    using CppAD::AD;
    using CppAD::NearEqual;

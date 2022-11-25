@@ -123,7 +123,7 @@ $codei%
    %f%.optimize();
 %$$
 See the discussion about
-$cref/sequence constructors/FunConstruct/Sequence Constructor/$$.
+$cref/sequence constructors/fun_construct/Sequence Constructor/$$.
 
 $head Taylor Coefficients$$
 Any Taylor coefficients in the function object are lost; i.e.,

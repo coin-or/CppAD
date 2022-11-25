@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin FunConstruct$$
+$begin fun_construct$$
 $spell
    alloc
    num
@@ -134,7 +134,7 @@ $codei%
    ADFun<%Base%> %g%(%f%)
 %$$
 where $icode f$$ is an $codei%ADFun<%Base%>%$$ object.
-Use its $cref/default constructor/FunConstruct/Default Constructor/$$ instead
+Use its $cref/default constructor/fun_construct/Default Constructor/$$ instead
 and its assignment operator.
 
 $head swap$$

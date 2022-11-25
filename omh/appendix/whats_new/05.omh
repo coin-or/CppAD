@@ -133,7 +133,7 @@ In addition, more extensive testing was done in $cref near_equal.cpp$$.
 
 
 $subhead 12-15$$
-Extend $cref NearEqual$$ and $cref NearEqualExt$$
+Extend $cref NearEqual$$ and $cref near_equal_ext$$
 to cover more cases while converting them from,
 a library function in $code lib/CppADlib.a$$
 and an utility in $code example/NearEqualExt.h$$,

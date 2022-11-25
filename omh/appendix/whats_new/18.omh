@@ -286,7 +286,7 @@ and changed to use the same notation as $cref taylor_ode$$.
 
 $subhead 09-15$$
 $list number$$
-Add a $cref/move semantics/FunConstruct/Assignment Operator/Move Semantics/$$
+Add a $cref/move semantics/fun_construct/Assignment Operator/Move Semantics/$$
 version of the function assignment operator.
 $lnext
 Move AD theory for using Taylor's method to solve an ode to the separate

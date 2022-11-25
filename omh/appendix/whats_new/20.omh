@@ -98,11 +98,11 @@ The $cref rosen_34.cpp$$ example was changed to use
 $cref/dynamic/independent/dynamic/$$ parameters so it does not
 need to record a new function for every argument value.
 The new version of this example also uses the
-ADFun $cref/swap/FunConstruct/swap/$$ operation to avoid
+ADFun $cref/swap/fun_construct/swap/$$ operation to avoid
 making a separate copy of an ADFun object.
 $lnext
 Fix a bug in the
-ADFun $cref/swap/FunConstruct/swap/$$, which was added on 12-19.
+ADFun $cref/swap/fun_construct/swap/$$, which was added on 12-19.
 $lnext
 Add a move semantic version of the copy constructor to
 the $cref cppad_vector$$ template class.
@@ -146,7 +146,7 @@ The $code compiled_fun$$ example for using CppADCodeGen was added
 In addition, $cref cppadcg_sparse_jacobian.cpp$$ and
 $cref cppadcg_det_minor.cpp$$ examples were modified to use this utility.
 $lnext
-The ADFun $cref/swap/FunConstruct/swap/$$ operation,
+The ADFun $cref/swap/fun_construct/swap/$$ operation,
 and move semantics copy constructor, were added.
 This ensures the move semantics assignment operator does not make any copies.
 $lend

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-WARNING: This file is used an an example by omh/FunConstruct.omh.
+WARNING: This file is used an an example by fun_construct.
 
 $begin independent.cpp$$
 

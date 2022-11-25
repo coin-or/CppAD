@@ -28,7 +28,7 @@ In the get operation, $icode f$$ has prototype
 $codei%
    const ADFun<%Base%> %f%
 %$$
-(see $codei%ADFun<%Base%>%$$ $cref/constructor/FunConstruct/$$).
+(see $codei%ADFun<%Base%>%$$ $cref/constructor/fun_construct/$$).
 
 $head function_name$$
 is the name of the function.

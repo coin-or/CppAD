@@ -106,7 +106,7 @@ This works fine except when there are
 $cref/multiple levels of AD/mul_level/$$; e.g.,
 when using $codei%AD< AD<double> >%$$.
 In this case the corresponding AD function objects have type
-$cref/ADFun< AD<double> >/FunConstruct/$$.
+$cref/ADFun< AD<double> >/fun_construct/$$.
 When these AD function objects compute derivatives using
 $cref reverse$$ mode, the conditional expressions are represented use
 zeros to multiply the expression that is not used.

@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin NearEqualExt$$
+$begin near_equal_ext$$
 $spell
    cout
    endl

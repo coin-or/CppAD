@@ -82,7 +82,7 @@ Note that, if $cref ta_hold_memory$$ is true, this memory is not actually
 returned to the system, but rather held for future use by the same thread.
 
 $head Original State$$
-If $icode f$$ is $cref/constructed/FunConstruct/$$ with the syntax
+If $icode f$$ is $cref/constructed/fun_construct/$$ with the syntax
 $codei%
    ADFun<%Base%> %f%(%x%, %y%)
 %$$,

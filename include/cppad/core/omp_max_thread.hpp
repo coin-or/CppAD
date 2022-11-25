@@ -50,7 +50,7 @@ All of the operations with the corresponding variables
 must be preformed by the same OpenMP thread.
 This includes the corresponding call to
 $cref/f.Dependent(x,y)/Dependent/$$ or the
-$cref/ADFun f(x, y)/FunConstruct/Sequence Constructor/$$
+$cref/ADFun f(x, y)/fun_construct/Sequence Constructor/$$
 during which the tape stops recording and the variables
 become parameters.
 

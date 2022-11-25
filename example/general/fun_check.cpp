@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-! WARNING: This file is used as an example by FunConstruct and Dependent
+! WARNING: This file is used as an example by fun_construct and Dependent
 
 $begin fun_check.cpp$$
 $spell

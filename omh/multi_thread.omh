@@ -65,7 +65,7 @@ $cref/cpp_graph_ctor/cpp_graph_ctor/Parallel Mode/$$.
 
 $head Same Thread$$
 Some operations must be preformed by the same thread:
-$cref/ADFun/FunConstruct/Parallel Mode/$$,
+$cref/ADFun/fun_construct/Parallel Mode/$$,
 $cref Independent$$, $cref Dependent$$.
 
 

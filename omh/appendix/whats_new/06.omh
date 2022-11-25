@@ -457,7 +457,7 @@ $subhead 10-26$$
 Change $cref hes_lagrangian.cpp$$ example so that it modifies
 the independent variable vector between the call to
 $cref Independent$$ and the $codei%ADFun<%Base%>%$$
-$cref/constructor/FunConstruct/$$.
+$cref/constructor/fun_construct/$$.
 
 $subhead 10-25$$
 A subversion install procedure was
@@ -576,7 +576,7 @@ $cref size_order$$ in its place.
 
 $lnext
 06-18:
-Added the $cref/ADFun default constructor/FunConstruct/$$
+Added the $cref/ADFun default constructor/fun_construct/$$
 and the ability to
 $cref/store a new operation sequence/Dependent/$$
 in an $code ADFun$$ object with out having to use
@@ -855,7 +855,7 @@ $cref independent.cpp$$ so that it demonstrates using different
 choices for the $cref SimpleVector$$ type.
 
 $subhead 04-01$$
-Move the $cref/ADFun Constructor/FunConstruct/$$ to its own separate
+Move the $cref/ADFun Constructor/fun_construct/$$ to its own separate
 section, improve its documentation, and use $cref independent.cpp$$
 for its example.
 $pre
@@ -906,7 +906,7 @@ $pre
 
 $$
 Add mention of taping to
-$cref Erf$$, $cref bool_fun$$, $cref NearEqualExt$$,and $cref Pow$$.
+$cref Erf$$, $cref bool_fun$$, $cref near_equal_ext$$,and $cref Pow$$.
 $pre
 
 $$
@@ -1001,7 +1001,7 @@ $subhead 03-17$$
 The documentation and examples have been improved for the
 following functions:
 $cref bool_fun$$, and
-$cref NearEqualExt$$.
+$cref near_equal_ext$$.
 
 $subhead 03-16$$
 Improve the documentation and example for the $cref pow$$ function.

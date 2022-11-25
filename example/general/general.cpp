@@ -68,7 +68,7 @@ extern bool Jacobian(void);
 extern bool LuRatio(void);
 extern bool Mul(void);
 extern bool MulEq(void);
-extern bool NearEqualExt(void);
+extern bool near_equal_ext(void);
 extern bool NumericType(void);
 extern bool OdeStiff(void);
 extern bool RevOne(void);
@@ -186,7 +186,7 @@ int main(void)
    Run( LuRatio,           "LuRatio"          );
    Run( Mul,               "Mul"              );
    Run( MulEq,             "MulEq"            );
-   Run( NearEqualExt,      "NearEqualExt"     );
+   Run( near_equal_ext,    "near_equal_ext"   );
    Run( NumericType,       "NumericType"      );
    Run( OdeStiff,          "OdeStiff"         );
    Run( RevOne,            "RevOne"           );

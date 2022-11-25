@@ -197,7 +197,7 @@ $codei%
    ADFun<%Base%> %f%( %x%, %y%)
    %f%.Dependent( %x%, %y%)
 %$$
-see $cref FunConstruct$$.
+see $cref fun_construct$$.
 After such a transfer, the tape becomes inactive.
 The tape becomes inactive, without storing the operation sequence,
 after a call to $cref abort_recording$$.
