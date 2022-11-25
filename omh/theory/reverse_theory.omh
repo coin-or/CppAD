@@ -54,7 +54,7 @@ $head Binary Operators$$
 
 $subhead Addition$$
 The forward mode formula for
-$cref/addition/ForwardTheory/Binary Operators/Addition/$$ is
+$cref/addition/forward_theory/Binary Operators/Addition/$$ is
 $latex \[
    z^{(j)} =  x^{(j)} + y^{(j)}
 \] $$
@@ -74,7 +74,7 @@ $latex \[
 
 $subhead Subtraction$$
 The forward mode formula for
-$cref/subtraction/ForwardTheory/Binary Operators/Subtraction/$$ is
+$cref/subtraction/forward_theory/Binary Operators/Subtraction/$$ is
 $latex \[
    z^{(j)} =  x^{(j)} - y^{(j)}
 \] $$
@@ -91,7 +91,7 @@ $latex \[
 
 $subhead Multiplication$$
 The forward mode formula for
-$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$ is
+$cref/multiplication/forward_theory/Binary Operators/Multiplication/$$ is
 $latex \[
    z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
 \] $$
@@ -111,7 +111,7 @@ $latex \[
 
 $subhead Division$$
 The forward mode formula for
-$cref/division/ForwardTheory/Binary Operators/Division/$$ is
+$cref/division/forward_theory/Binary Operators/Division/$$ is
 $latex \[
 z^{(j)} =
 \frac{1}{y^{(0)}}

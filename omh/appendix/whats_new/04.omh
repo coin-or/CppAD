@@ -491,7 +491,7 @@ changed so that they tested higher order derivatives.
 $subhead 05-29$$
 The forward mode recursion formulas for each of the
 $xref/
-   ForwardTheory/
+   forward_theory/
    Standard Math Functions/
    Cases that Apply Recursion Above/
    standard math functions/

@@ -11,7 +11,7 @@ $section Atomic Vector Add Operator: Example Implementation$$
 
 $head Forward Mode$$
 see theory for forward mode
-$cref/addition/ForwardTheory/Binary Operators/Addition/$$.
+$cref/addition/forward_theory/Binary Operators/Addition/$$.
 
 $head Reverse Mode$$
 see theory for reverse mode

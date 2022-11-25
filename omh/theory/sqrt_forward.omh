@@ -18,7 +18,7 @@ $latex \[
 \] $$
 and in the
 $cref/standard math function differential equation
-   /ForwardTheory
+   /forward_theory
    /Standard Math Functions
    /Differential Equation
 /$$,
@@ -34,7 +34,7 @@ $latex D [ X (t) ] $$,
 and $latex F [ X(t) ] $$ respectively.
 It now follows from the general
 $cref/Taylor coefficients recursion formula
-   /ForwardTheory
+   /forward_theory
    /Standard Math Functions
    /Taylor Coefficients Recursion Formula
 /$$

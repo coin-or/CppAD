@@ -11,7 +11,7 @@ $section Atomic Vector Multiply Operator: Example Implementation$$
 
 $head Forward Mode$$
 see theory for forward mode
-$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$.
+$cref/multiplication/forward_theory/Binary Operators/Multiplication/$$.
 
 $head Reverse Mode$$
 see theory for reverse mode

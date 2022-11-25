@@ -18,7 +18,7 @@ $section Trigonometric and Hyperbolic Sine and Cosine Forward Theory$$
 $head Differential Equation$$
 The
 $cref/standard math function differential equation
-   /ForwardTheory
+   /forward_theory
    /Standard Math Functions
    /Differential Equation
 /$$
@@ -63,7 +63,7 @@ $latex D [ X (t) ] $$,
 and $latex F [ X(t) ] $$ respectively.
 It now follows from the general
 $xref/
-   ForwardTheory/
+   forward_theory/
    Standard Math Functions/
    Taylor Coefficients Recursion Formula/
    Taylor coefficients recursion formula/

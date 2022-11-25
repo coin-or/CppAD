@@ -11,7 +11,7 @@ $section Atomic Vector Subtract Operator: Example Implementation$$
 
 $head Forward Mode$$
 see theory for forward mode
-$cref/subtraction/ForwardTheory/Binary Operators/Subtraction/$$.
+$cref/subtraction/forward_theory/Binary Operators/Subtraction/$$.
 
 $head Reverse Mode$$
 see theory for reverse mode

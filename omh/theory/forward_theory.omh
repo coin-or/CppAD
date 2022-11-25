@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-$begin ForwardTheory$$
+$begin forward_theory$$
 $spell
    Taylor
 $$
@@ -164,7 +164,7 @@ o( t^p )
 \] $$
 Setting the left and right side coefficients of $latex t^j$$ equal,
 and using the formula for
-$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$,
+$cref/multiplication/forward_theory/Binary Operators/Multiplication/$$,
 we obtain
 $latex  \[
 \begin{array}{rcl}

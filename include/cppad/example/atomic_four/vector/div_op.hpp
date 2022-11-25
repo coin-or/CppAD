@@ -11,7 +11,7 @@ $section Atomic Vector Divide Operator: Example Implementation$$
 
 $head Forward Mode$$
 see theory for forward mode
-$cref/division/ForwardTheory/Binary Operators/Division/$$.
+$cref/division/forward_theory/Binary Operators/Division/$$.
 
 $head Reverse Mode$$
 see theory for reverse mode
