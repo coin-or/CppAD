@@ -648,9 +648,9 @@ $subhead 07-10$$
 $list number$$
 Add link to $tref Discrete$$ in $cref multi_thread$$.
 $lnext
-Make use of the $cref TrackNewDel$$ routines
+Make use of the $cref track_new_del$$ routines
 $cref omp_in_parallel$$ execution mode an error (it never worked properly);
-see $cref/TrackNewDel multi-threading/TrackNewDel/Multi-Threading/$$.
+see $cref/TrackNewDel multi-threading/track_new_del/Multi-Threading/$$.
 $lnext
 Change $cref memory_leak$$ so that it checks for a leak in all threads.
 This is what $code openmp_newton_example.cpp$$ and
@@ -748,7 +748,7 @@ $$
 
 $subhead 05-22$$
 $list number$$
-The old memory tracking routines $cref TrackNewDel$$ have been deprecated.
+The old memory tracking routines $cref track_new_del$$ have been deprecated.
 Their use should be replaced using the $cref omp_alloc$$
 a memory allocator which is designed to work well in a multi-threading OpenMP
 environment; see $cref/purpose/omp_alloc/Purpose/$$.

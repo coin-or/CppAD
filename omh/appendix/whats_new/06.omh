@@ -380,7 +380,7 @@ and change all its files to use lower case names.
 $subhead 11-05$$
 Remove references in the $cref speed_cppad$$ tests to the
 $code Memory$$ and $code Size$$ functions because they
-have been $cref/deprecated/FunDeprecated/$$.
+have been $cref/deprecated/fun_deprecated/$$.
 $pre
 
 $$
@@ -571,7 +571,7 @@ $list number$$
 06-17:
 Added $cref capacity_order$$ which can be used to control
 the amount of memory used to store $cref Forward$$ results.
-Also $cref/deprecated/FunDeprecated/$$ $code taylor_size$$, and defined
+Also $cref/deprecated/fun_deprecated/$$ $code taylor_size$$, and defined
 $cref size_order$$ in its place.
 
 $lnext
@@ -754,7 +754,7 @@ and $cref Hessian$$.
 
 
 $subhead 04-08$$
-In the case where $cref/use_VecAD/FunDeprecated/use_VecAD/$$ is true,
+In the case where $cref/use_VecAD/fun_deprecated/use_VecAD/$$ is true,
 the $cref ForSparseJac$$ calculation in only for the current
 independent variable values.
 In this case, the sparsity pattern can be (and has been)
@@ -790,7 +790,7 @@ documentation and examples were improved.
 $pre
 
 $$
-The $cref/useVecAD/FunDeprecated/use_VecAD/$$
+The $cref/useVecAD/fun_deprecated/use_VecAD/$$
 member function was added to $cref ADFun$$ objects.
 $pre
 
@@ -816,7 +816,7 @@ of $cref Forward$$ mode.
 $pre
 
 $$
-The ADFun $cref/Size/FunDeprecated/Size/$$ member function
+The ADFun $cref/Size/fun_deprecated/Size/$$ member function
 has been deprecated (use $cref size_order$$ instead).
 $pre
 
@@ -862,7 +862,7 @@ $pre
 
 $$
 The following member functions of $cref ADFun$$ have been
-$cref/deprecated/FunDeprecated/$$:
+$cref/deprecated/fun_deprecated/$$:
 $code Order$$, $code Memory$$.
 $pre
 
@@ -1136,7 +1136,7 @@ $subhead 02-04$$
 There was a read memory access past the end of an array in
 $cref/CppAD::vector::push_back/CppAD_vector/push_back/$$.
 This has been fixed and in addition
-$cref TrackNewDel$$ is now used to do and check the allocation in
+$cref track_new_del$$ is now used to do and check the allocation in
 $code CppAD::vector$$.
 $pre
 
@@ -1144,7 +1144,7 @@ $$
 The routines $cref Runge45$$ and $cref Rosen34$$
 had static vectors to avoid recalculation on each call.
 These have been changed to be plain vectors to avoid memory
-leak detection by $cref/TrackCount/TrackNewDel/TrackCount/$$.
+leak detection by $cref/TrackCount/track_new_del/TrackCount/$$.
 
 $subhead 01-20$$
 Add software guidelines

@@ -131,7 +131,7 @@ CppAD/SpeedTest.h          $pre  $$ $cnext cppad/speed_test.hpp
 $rnext
 
 CppAD/TrackNewDel.h        $pre  $$ $cnext cppad/track_new_del.hpp
-   $pre  $$ $cnext $cref TrackNewDel$$
+   $pre  $$ $cnext $cref track_new_del$$
 $tend
 
 $end

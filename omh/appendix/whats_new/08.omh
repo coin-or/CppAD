@@ -328,7 +328,7 @@ speed and correctness tests (now available).
 $subhead 04-10$$
 Change all the
 $cref/Adolc speed/speed_adolc/$$ examples to use
-$cref TrackNewDel$$ instead of using $code new$$ and $code delete$$
+$cref track_new_del$$ instead of using $code new$$ and $code delete$$
 directly.
 This makes it easy to check for memory allocation errors and leaks
 (when $code NDEBUG$$ is not defined).

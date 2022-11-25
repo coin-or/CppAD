@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin TrackNewDel$$
+$begin track_new_del$$
 $spell
    cppad.hpp
    Cpp

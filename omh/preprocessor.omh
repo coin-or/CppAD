@@ -117,23 +117,23 @@ $subhead Deprecated$$
 $table
 $cref/CppADCreateDiscrete/Discrete/CppADCreateDiscrete Deprecated 2007-07-28/$$
 $rnext
-$cref/CPPAD_TRACK_NEW_VEC/TrackNewDel/TrackNewVec/Macro/$$
+$cref/CPPAD_TRACK_NEW_VEC/track_new_del/TrackNewVec/Macro/$$
 $rnext
-$cref/CPPAD_TRACK_DEL_VEC/TrackNewDel/TrackDelVec/Macro/$$
+$cref/CPPAD_TRACK_DEL_VEC/track_new_del/TrackDelVec/Macro/$$
 $rnext
-$cref/CPPAD_TRACK_EXTEND/TrackNewDel/TrackExtend/Macro/$$
+$cref/CPPAD_TRACK_EXTEND/track_new_del/TrackExtend/Macro/$$
 $rnext
-$cref/CPPAD_TRACK_COUNT/TrackNewDel/TrackCount/Macro/$$
+$cref/CPPAD_TRACK_COUNT/track_new_del/TrackCount/Macro/$$
 $rnext
 $cref/CPPAD_USER_ATOMIC/atomic_one/$$
 $rnext
-$cref/CppADTrackNewVec/TrackNewDel/TrackNewVec/Previously Deprecated/$$
+$cref/CppADTrackNewVec/track_new_del/TrackNewVec/Previously Deprecated/$$
 $rnext
-$cref/CppADTrackDelVec/TrackNewDel/TrackDelVec/Previously Deprecated/$$
+$cref/CppADTrackDelVec/track_new_del/TrackDelVec/Previously Deprecated/$$
 $rnext
-$cref/CppADTrackExtend/TrackNewDel/TrackExtend/Previously Deprecated/$$
+$cref/CppADTrackExtend/track_new_del/TrackExtend/Previously Deprecated/$$
 $rnext
-$cref/CppADTrackCount/TrackNewDel/TrackCount/Previously Deprecated/$$
+$cref/CppADTrackCount/track_new_del/TrackCount/Previously Deprecated/$$
 $rnext
 $cref/CppADCreateBinaryBool/bool_fun/Deprecated 2007-07-31/$$
 $rnext

@@ -388,12 +388,12 @@ $pre
 $$
 Fix an $cref/Sequence Constructor/fun_construct/Sequence Constructor/$$
 referenced to $code Dependent$$ in documentation
-(was using the $cref FunDeprecated$$ one argument syntax).
+(was using the $cref fun_deprecated$$ one argument syntax).
 $pre
 
 $$
 Add comment about mixing debug and non-debug versions of
-CppAD in $cref/TrackDelVec/TrackNewDel/TrackDelVec/$$ error message.
+CppAD in $cref/TrackDelVec/track_new_del/TrackDelVec/$$ error message.
 
 
 $subhead 07-30$$
@@ -452,7 +452,7 @@ to $code CPPAD_TEST_VECTOR$$.
 $lend
 
 $subhead 07-23$$
-The $cref TrackNewDel$$ macros
+The $cref track_new_del$$ macros
 $code CppADTrackNewVec$$,
 $code CppADTrackDelVec$$, and
 $code CppADTrackExtend$$ have been deprecated.
@@ -511,7 +511,7 @@ This has been fixed.
 $subhead 07-18$$
 A realistic example using Adolc with CppAD
 $cref mul_level_adolc_ode.cpp$$ was added.
-The documentation for $cref TrackNewDel$$ was improved.
+The documentation for $cref track_new_del$$ was improved.
 
 $subhead 07-14$$
 Add a discussion at the beginning of
@@ -918,7 +918,7 @@ $pre
 
 $$
 Change the argument syntax for $cref Dependent$$ and deprecate the
-$cref/old Dependent syntax/FunDeprecated/Dependent/$$.
+$cref/old Dependent syntax/fun_deprecated/Dependent/$$.
 
 
 $lnext

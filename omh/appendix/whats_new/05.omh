@@ -100,7 +100,7 @@ at the top (to help when comparing output between different versions).
 
 
 $subhead 12-19$$
-The $cref TrackNewDel$$ routines were added for track memory allocation
+The $cref track_new_del$$ routines were added for track memory allocation
 and deletion with $code new[]$$ and $code delete[]$$.
 This is in preparation for making CppAD more efficient in it's use of
 memory.

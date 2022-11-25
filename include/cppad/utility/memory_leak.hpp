@@ -31,7 +31,7 @@ $icode%flag% = %memory_leak%(%add_static%)%$$
 $head Purpose$$
 This routine checks that the are no memory leaks
 caused by improper use of $cref thread_alloc$$ memory allocator.
-The deprecated memory allocator $cref TrackNewDel$$ is also checked.
+The deprecated memory allocator $cref track_new_del$$ is also checked.
 Memory errors in the deprecated $cref omp_alloc$$ allocator are
 reported as being in $code thread_alloc$$.
 
@@ -90,7 +90,7 @@ $code memory_leak$$ returns false.
 
 $head TRACK_COUNT$$
 It is assumed that, when $code memory_leak$$ is called,
-$cref/TrackCount/TrackNewDel/TrackCount/$$ will return a zero value.
+$cref/TrackCount/track_new_del/TrackCount/$$ will return a zero value.
 If it returns a non-zero value,
 $code memory_leak$$ returns false.
 

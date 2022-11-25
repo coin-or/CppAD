@@ -289,9 +289,9 @@ $lend
 $subhead 03-18$$
 $list number$$
 The
-$cref/size_taylor/FunDeprecated/size_taylor/$$
+$cref/size_taylor/fun_deprecated/size_taylor/$$
 and
-$cref/capacity_taylor/FunDeprecated/capacity_taylor/$$
+$cref/capacity_taylor/fun_deprecated/capacity_taylor/$$
 functions were deprecated;
 use $cref size_order$$ and $cref capacity_order$$ instead.
 $lnext
