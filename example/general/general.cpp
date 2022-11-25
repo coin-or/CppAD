@@ -82,7 +82,7 @@ extern bool SubEq(void);
 extern bool Tan(void);
 extern bool Tanh(void);
 extern bool TapeIndex(void);
-extern bool UnaryMinus(void);
+extern bool unary_minus(void);
 extern bool UnaryPlus(void);
 extern bool Value(void);
 extern bool Var2Par(void);
@@ -200,7 +200,7 @@ int main(void)
    Run( Tan,               "Tan"              );
    Run( Tanh,              "Tanh"             );
    Run( TapeIndex,         "TapeIndex"        );
-   Run( UnaryMinus,        "UnaryMinus"       );
+   Run( unary_minus,       "unary_minus"      );
    Run( UnaryPlus,         "UnaryPlus"        );
    Run( Value,             "Value"            );
    Run( Var2Par,           "Var2Par"          );

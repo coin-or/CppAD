@@ -469,7 +469,7 @@ $tend
 
 $subhead 08-22$$
 The
-$cref/unary minus/UnaryMinus/$$ operator was added to the AD operations.
+$cref/unary minus/unary_minus/$$ operator was added to the AD operations.
 
 
 $subhead 08-19$$

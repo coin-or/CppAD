@@ -941,7 +941,7 @@ Mention the
 $cref/VecAD<Base>::reference/VecAD/VecAD<Base>::reference/$$ case in
 documentation and examples for
 $cref UnaryPlus$$,
-$cref UnaryMinus$$,
+$cref unary_minus$$,
 $cref ad_binary$$,
 $cref compound_assign$$, and
 $cref unary_standard_math$$
@@ -1112,7 +1112,7 @@ $pre
 
 $$
 The documentation and examples have been improved for the following sections:
-$cref/assignment/ad_assign/$$, $cref UnaryPlus$$, $xref UnaryMinus$$.
+$cref/assignment/ad_assign/$$, $cref UnaryPlus$$, $xref unary_minus$$.
 
 $subhead 02-11$$
 The documentation and examples have been improved for the following sections:

@@ -21,7 +21,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-bool UnaryMinus(void)
+bool unary_minus(void)
 {  bool ok = true;
    using CppAD::AD;
 

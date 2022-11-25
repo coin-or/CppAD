@@ -325,7 +325,7 @@ $subhead 08-18$$
 $list number$$
 Fix some remaining clang warnings.
 $lnext
-Fix $cref Integer$$ and $cref/unary minus/UnaryMinus/$$ for
+Fix $cref Integer$$ and $cref/unary minus/unary_minus/$$ for
 $cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
 $lend
 
