@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin old_usead_1.cpp$$
+@begin old_usead_1.cpp@@
 $spell
    checkpoint
    var

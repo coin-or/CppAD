@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin TrackNewDel.cpp$$
+@begin TrackNewDel.cpp@@
 
 $section Tracking Use of New and Delete: Example and Test$$
 

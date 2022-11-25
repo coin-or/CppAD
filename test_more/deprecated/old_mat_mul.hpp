@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin old_mat_mul.hpp$$
+@begin old_mat_mul.hpp@@
 $spell
    old_mat_mul.hpp
    cppad

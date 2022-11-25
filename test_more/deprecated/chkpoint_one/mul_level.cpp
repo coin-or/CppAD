@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin chkpoint_one_mul_level.cpp$$
+@begin chkpoint_one_mul_level.cpp@@
 $spell
    checkpointing
 $$

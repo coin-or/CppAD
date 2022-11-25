@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_tangent.cpp$$
+@begin atomic_two_tangent.cpp@@
 $spell
    Tanh
    bool

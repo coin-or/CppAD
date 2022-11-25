@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_reciprocal.cpp$$
+@begin atomic_two_reciprocal.cpp@@
 $spell
    enum
 $$

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin zdouble.cpp$$
+@begin zdouble.cpp@@
 $spell
    zdouble
 $$

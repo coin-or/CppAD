@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_base2ad.cpp$$
+@begin atomic_two_base2ad.cpp@@
 
 $section base2ad with Atomic Operations: Example and Test$$
 

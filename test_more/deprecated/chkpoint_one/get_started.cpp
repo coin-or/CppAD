@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin chkpoint_one_get_started.cpp$$
+@begin chkpoint_one_get_started.cpp@@
 $spell
    checkpointing
    Taylor

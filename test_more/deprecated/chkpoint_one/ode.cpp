@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin chkpoint_one_ode.cpp$$
+@begin chkpoint_one_ode.cpp@@
 $spell
    Checkpointing
    Runge-Kutta

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_two_for_sparse_hes.cpp$$
+@begin atomic_two_for_sparse_hes.cpp@@
 
 $section Atomic Forward Hessian Sparsity: Example and Test$$
 

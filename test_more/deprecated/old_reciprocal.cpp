@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin old_reciprocal.cpp$$
+@begin old_reciprocal.cpp@@
 $section Old Atomic Operation Reciprocal: Example and Test$$
 
 $head Deprecated 2013-05-27$$

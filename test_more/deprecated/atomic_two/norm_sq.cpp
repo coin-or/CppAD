@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_norm_sq.cpp$$
+@begin atomic_two_norm_sq.cpp@@
 $spell
    sq
    bool

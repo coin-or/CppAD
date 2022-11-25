@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_mat_mul.cpp$$
+@begin atomic_two_mat_mul.cpp@@
 $spell
    mul
 $$

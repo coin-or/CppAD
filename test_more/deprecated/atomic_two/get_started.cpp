@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_get_started.cpp$$
+@begin atomic_two_get_started.cpp@@
 
 $section Getting Started with Atomic Operations: Example and Test$$
 

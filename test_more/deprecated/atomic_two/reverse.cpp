@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_two_reverse.cpp$$
+@begin atomic_two_reverse.cpp@@
 $spell
    Jacobian
 $$

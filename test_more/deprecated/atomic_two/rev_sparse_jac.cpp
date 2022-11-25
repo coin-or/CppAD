@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_two_rev_sparse_jac.cpp$$
+@begin atomic_two_rev_sparse_jac.cpp@@
 $spell
    Jacobian
    Jacobians

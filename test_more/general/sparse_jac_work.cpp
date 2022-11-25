@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_jac_work.cpp$$
+@begin sparse_jac_work.cpp@@
 $spell
    Cpp
    Jacobian
