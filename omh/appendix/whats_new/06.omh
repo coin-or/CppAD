@@ -906,7 +906,7 @@ $pre
 
 $$
 Add mention of taping to
-$cref Erf$$, $cref BoolFun$$, $cref NearEqualExt$$,and $cref Pow$$.
+$cref Erf$$, $cref bool_fun$$, $cref NearEqualExt$$,and $cref Pow$$.
 $pre
 
 $$
@@ -1000,7 +1000,7 @@ in the documentation have been organized into subgroups.
 $subhead 03-17$$
 The documentation and examples have been improved for the
 following functions:
-$cref BoolFun$$, and
+$cref bool_fun$$, and
 $cref NearEqualExt$$.
 
 $subhead 03-16$$

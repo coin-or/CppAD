@@ -24,7 +24,7 @@ $children%
 $table
 $rref Compare$$
 $rref NearEqualExt$$
-$rref BoolFun$$
+$rref bool_fun$$
 $rref con_dyn_var$$
 $rref EqualOpSeq$$
 $tend

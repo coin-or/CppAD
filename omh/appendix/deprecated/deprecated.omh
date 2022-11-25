@@ -37,10 +37,10 @@ $childtable%
 $head Name Changes$$
 $table
 $code CppADCreateUnaryBool$$ $cnext
-   see Deprecated 2007-07-31 in $tref BoolFun$$
+   see Deprecated 2007-07-31 in $tref bool_fun$$
 $rnext
 $code CppADCreateDiscrete$$  $cnext
-   see Deprecated 2007-07-31 in $tref BoolFun$$
+   see Deprecated 2007-07-31 in $tref bool_fun$$
 $rnext
 $codei%nan(%zero%)%$$ $cnext
     $cref/nan(zero)/nan/nan(zero)/$$

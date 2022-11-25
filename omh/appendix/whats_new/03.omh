@@ -533,7 +533,7 @@ $cref LuSolve$$ routine was extended to
 handle complex arguments.
 Because the complex absolute value function is nowhere differentiable,
 this required the allowing for user defined
-$cref/boolean valued functions with AD arguments/BoolFun/$$.
+$cref/boolean valued functions with AD arguments/bool_fun/$$.
 The examples
 $cref lu_solve.cpp$$
 and

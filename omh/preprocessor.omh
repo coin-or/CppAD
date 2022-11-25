@@ -80,9 +80,9 @@ $$
 
 $head Documented Elsewhere$$
 $table
-$cref/CPPAD_BOOL_BINARY/BoolFun/Create Binary/$$
+$cref/CPPAD_BOOL_BINARY/bool_fun/Create Binary/$$
 $rnext
-$cref/CPPAD_BOOL_UNARY/BoolFun/Create Unary/$$
+$cref/CPPAD_BOOL_UNARY/bool_fun/Create Unary/$$
 $rnext
 $cref/CPPAD_DISCRETE_FUNCTION/Discrete/$$
 $rnext
@@ -135,9 +135,9 @@ $cref/CppADTrackExtend/TrackNewDel/TrackExtend/Previously Deprecated/$$
 $rnext
 $cref/CppADTrackCount/TrackNewDel/TrackCount/Previously Deprecated/$$
 $rnext
-$cref/CppADCreateBinaryBool/BoolFun/Deprecated 2007-07-31/$$
+$cref/CppADCreateBinaryBool/bool_fun/Deprecated 2007-07-31/$$
 $rnext
-$cref/CppADCreateUnaryBool/BoolFun/Deprecated 2007-07-31/$$
+$cref/CppADCreateUnaryBool/bool_fun/Deprecated 2007-07-31/$$
 $rnext
 $cref/CPPAD_USER_ATOMIC/atomic_one/Deprecated 2013-05-27/$$
 $rnext
