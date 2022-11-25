@@ -386,7 +386,7 @@ $childtable%
 
 $end
 -----------------------------------------------------------------------------
-$begin ExampleUtility$$
+$begin example_utility$$
 $spell
    CppAD
 $$

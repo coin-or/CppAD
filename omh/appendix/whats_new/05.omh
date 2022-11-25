@@ -724,7 +724,7 @@ policy (see Section 2) was added to the distribution.
 
 $subhead 06-24$$
 The $code List2Vector$$
-$cref/example utility/ExampleUtility/$$ is no longer used and has
+$cref/example utility/example_utility/$$ is no longer used and has
 been removed.
 
 $subhead 06-18$$
