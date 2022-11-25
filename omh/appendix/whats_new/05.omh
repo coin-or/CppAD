@@ -500,7 +500,7 @@ enables future changes to the implementation of these routines
 
 
 $subhead 09-09$$
-Add the $cref UnaryPlus$$ operator and move the $code Neg$$
+Add the $cref unary_plus$$ operator and move the $code Neg$$
 examples and tests to $cref unary_minus$$.
 
 $subhead 09-07$$

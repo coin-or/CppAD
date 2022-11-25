@@ -83,7 +83,7 @@ extern bool Tan(void);
 extern bool Tanh(void);
 extern bool TapeIndex(void);
 extern bool unary_minus(void);
-extern bool UnaryPlus(void);
+extern bool unary_plus(void);
 extern bool Value(void);
 extern bool Var2Par(void);
 extern bool abort_recording(void);
@@ -201,7 +201,7 @@ int main(void)
    Run( Tanh,              "Tanh"             );
    Run( TapeIndex,         "TapeIndex"        );
    Run( unary_minus,       "unary_minus"      );
-   Run( UnaryPlus,         "UnaryPlus"        );
+   Run( unary_plus,        "unary_plus"       );
    Run( Value,             "Value"            );
    Run( Var2Par,           "Var2Par"          );
    Run( abort_recording,   "abort_recording"  );
