@@ -15,6 +15,7 @@ $childtable%
    include/cppad/local/graph/json_lexer.omh%
    include/cppad/local/graph/json_parser.hpp%
    include/cppad/local/graph/json_writer.hpp%
+   include/cppad/local/graph/csrc_writer.hpp%
    cppad_lib/csrc_writer.cpp
 %$$
 

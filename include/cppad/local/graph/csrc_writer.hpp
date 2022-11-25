@@ -14,19 +14,13 @@ $begin csrc_writer$$
 $spell
    CppAD
    obj
+   csrc
 $$
 
-$section C Source Code Writer$$
+$section Prototype for csrc_writer$$
 
 $head Syntax$$
-$codei%csrc_writer( %csrc%, %graph_obj% )%$$
-
-$head os$$
-The C source code representation of an AD function
-is written to $icode os$$.
-
-$head graph_obj$$
-This is a $code cpp_graph$$ representation of the function.
+$codei%csrc_writer( %csrc%, %graph_obj%, %type% )%$$
 
 $head Prototype$$
 $srccode%hpp% */
@@ -38,6 +32,10 @@ namespace CppAD { namespace local { namespace graph {
    );
 } } }
 /* %$$
+
+$head See$$
+$cref cpp_csrc_writer$$
+
 $end
 */
 
