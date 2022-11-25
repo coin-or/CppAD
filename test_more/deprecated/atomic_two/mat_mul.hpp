@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_three_mat_mul.hpp$$
+@begin atomic_three_mat_mul.hpp$$
 $spell
    Taylor
    ty

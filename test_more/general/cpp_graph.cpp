@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin graph_unary_op.cpp$$
+@begin graph_unary_op.cpp$$
 $spell
    sin
 $$
