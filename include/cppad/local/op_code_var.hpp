@@ -504,78 +504,78 @@ inline size_t NumArg( OpCode op)
 
    // agreement with OpCode is checked by bin/check_op_code.sh
    static const size_t NumArgTable[] = {
-      1, // AbsOp
-      1, // AcosOp
-      1, // AcoshOp
-      2, // AddpvOp
-      2, // AddvvOp
-      4, // AFunOp
-      1, // AsinOp
-      1, // AsinhOp
-      1, // AtanOp
-      1, // AtanhOp
-      1, // BeginOp  offset first real argument to have index 1
-      6, // CExpOp
-      1, // CosOp
-      1, // CoshOp
-      0, // CSkipOp  (actually has a variable number of arguments, not zero)
-      0, // CSumOp   (actually has a variable number of arguments, not zero)
-      2, // DisOp
-      2, // DivpvOp
-      2, // DivvpOp
-      2, // DivvvOp
-      0, // EndOp
-      2, // EqppOp
-      2, // EqpvOp
-      2, // EqvvOp
-      3, // ErfOp
-      3, // ErfcOp
-      1, // ExpOp
-      1, // Expm1Op
-      1, // FunapOp
-      1, // FunavOp
-      1, // FunrpOp
-      0, // FunrvOp
-      0, // InvOp
-      3, // LdpOp
-      3, // LdvOp
-      2, // LeppOp
-      2, // LepvOp
-      2, // LevpOp
-      2, // LevvOp
-      1, // LogOp
-      1, // Log1pOp
-      2, // LtppOp
-      2, // LtpvOp
-      2, // LtvpOp
-      2, // LtvvOp
-      2, // MulpvOp
-      2, // MulvvOp
-      1, // NegOp
-      2, // NeppOp
-      2, // NepvOp
-      2, // NevvOp
-      1, // ParOp
-      2, // PowpvOp
-      2, // PowvpOp
-      2, // PowvvOp
-      5, // PriOp
-      1, // SignOp
-      1, // SinOp
-      1, // SinhOp
-      1, // SqrtOp
-      3, // StppOp
-      3, // StpvOp
-      3, // StvpOp
-      3, // StvvOp
-      2, // SubpvOp
-      2, // SubvpOp
-      2, // SubvvOp
-      1, // TanOp
-      1, // TanhOp
-      2, // ZmulpvOp
-      2, // ZmulvpOp
-      2, // ZmulvvOp
+      /* AbsOp    */ 1,
+      /* AcosOp   */ 1,
+      /* AcoshOp  */ 1,
+      /* AddpvOp  */ 2,
+      /* AddvvOp  */ 2,
+      /* AFunOp   */ 4,
+      /* AsinOp   */ 1,
+      /* AsinhOp  */ 1,
+      /* AtanOp   */ 1,
+      /* AtanhOp  */ 1,
+      /* BeginOp  */ 1,  // offset first real argument to have index 1
+      /* CExpOp   */ 6,
+      /* CosOp    */ 1,
+      /* CoshOp   */ 1,
+      /* CSkipOp  */ 0,  // (has a variable number of arguments, not zero)
+      /* CSumOp   */ 0,  // (has a variable number of arguments, not zero)
+      /* DisOp    */ 2,
+      /* DivpvOp  */ 2,
+      /* DivvpOp  */ 2,
+      /* DivvvOp  */ 2,
+      /* EndOp    */ 0,
+      /* EqppOp   */ 2,
+      /* EqpvOp   */ 2,
+      /* EqvvOp   */ 2,
+      /* ErfOp    */ 3,
+      /* ErfcOp   */ 3,
+      /* ExpOp    */ 1,
+      /* Expm1Op  */ 1,
+      /* FunapOp  */ 1,
+      /* FunavOp  */ 1,
+      /* FunrpOp  */ 1,
+      /* FunrvOp  */ 0,
+      /* InvOp    */ 0,
+      /* LdpOp    */ 3,
+      /* LdvOp    */ 3,
+      /* LeppOp   */ 2,
+      /* LepvOp   */ 2,
+      /* LevpOp   */ 2,
+      /* LevvOp   */ 2,
+      /* LogOp    */ 1,
+      /* Log1pOp  */ 1,
+      /* LtppOp   */ 2,
+      /* LtpvOp   */ 2,
+      /* LtvpOp   */ 2,
+      /* LtvvOp   */ 2,
+      /* MulpvOp  */ 2,
+      /* MulvvOp  */ 2,
+      /* NegOp    */ 1,
+      /* NeppOp   */ 2,
+      /* NepvOp   */ 2,
+      /* NevvOp   */ 2,
+      /* ParOp    */ 1,
+      /* PowpvOp  */ 2,
+      /* PowvpOp  */ 2,
+      /* PowvvOp  */ 2,
+      /* PriOp    */ 5,
+      /* SignOp   */ 1,
+      /* SinOp    */ 1,
+      /* SinhOp   */ 1,
+      /* SqrtOp   */ 1,
+      /* StppOp   */ 3,
+      /* StpvOp   */ 3,
+      /* StvpOp   */ 3,
+      /* StvvOp   */ 3,
+      /* SubpvOp  */ 2,
+      /* SubvpOp  */ 2,
+      /* SubvvOp  */ 2,
+      /* TanOp    */ 1,
+      /* TanhOp   */ 1,
+      /* ZmulpvOp */ 2,
+      /* ZmulvpOp */ 2,
+      /* ZmulvvOp */ 2,
       0  // NumberOp not used
    };
 # ifndef NDEBUG
@@ -623,78 +623,78 @@ inline size_t NumRes(OpCode op)
 
    // agreement with OpCode is checked by bin/check_op_code.sh
    static const size_t NumResTable[] = {
-      1, // AbsOp
-      2, // AcosOp
-      2, // AcoshOp
-      1, // AddpvOp
-      1, // AddvvOp
-      0, // AFunOp
-      2, // AsinOp
-      2, // AsinhOp
-      2, // AtanOp
-      2, // AtanhOp
-      1, // BeginOp  offsets first variable to have index one (not zero)
-      1, // CExpOp
-      2, // CosOp
-      2, // CoshOp
-      0, // CSkipOp
-      1, // CSumOp
-      1, // DisOp
-      1, // DivpvOp
-      1, // DivvpOp
-      1, // DivvvOp
-      0, // EndOp
-      0, // EqppOp
-      0, // EqpvOp
-      0, // EqvvOp
-      5, // ErfOp
-      5, // ErfcOp
-      1, // ExpOp
-      1, // Expm1Op
-      0, // FunapOp
-      0, // FunavOp
-      0, // FunrpOp
-      1, // FunrvOp
-      1, // InvOp
-      1, // LdpOp
-      1, // LdvOp
-      0, // LeppOp
-      0, // LepvOp
-      0, // LevpOp
-      0, // LevvOp
-      1, // LogOp
-      1, // Log1pOp
-      0, // LtppOp
-      0, // LtpvOp
-      0, // LtvpOp
-      0, // LtvvOp
-      1, // MulpvOp
-      1, // MulvvOp
-      1, // NegOp
-      0, // NeppOp
-      0, // NepvOp
-      0, // NevvOp
-      1, // ParOp
-      3, // PowpvOp
-      1, // PowvpOp
-      3, // PowvvOp
-      0, // PriOp
-      1, // SignOp
-      2, // SinOp
-      2, // SinhOp
-      1, // SqrtOp
-      0, // StppOp
-      0, // StpvOp
-      0, // StvpOp
-      0, // StvvOp
-      1, // SubpvOp
-      1, // SubvpOp
-      1, // SubvvOp
-      2, // TanOp
-      2, // TanhOp
-      1, // ZmulpvOp
-      1, // ZmulvpOp
-      1, // ZmulvvOp
+      /* AbsOp    */ 1,
+      /* AcosOp   */ 2,
+      /* AcoshOp  */ 2,
+      /* AddpvOp  */ 1,
+      /* AddvvOp  */ 1,
+      /* AFunOp   */ 0,
+      /* AsinOp   */ 2,
+      /* AsinhOp  */ 2,
+      /* AtanOp   */ 2,
+      /* AtanhOp  */ 2,
+      /* BeginOp  */ 1,  // offsets first variable to have index one (not zero)
+      /* CExpOp   */ 1,
+      /* CosOp    */ 2,
+      /* CoshOp   */ 2,
+      /* CSkipOp  */ 0,
+      /* CSumOp   */ 1,
+      /* DisOp    */ 1,
+      /* DivpvOp  */ 1,
+      /* DivvpOp  */ 1,
+      /* DivvvOp  */ 1,
+      /* EndOp    */ 0,
+      /* EqppOp   */ 0,
+      /* EqpvOp   */ 0,
+      /* EqvvOp   */ 0,
+      /* ErfOp    */ 5,
+      /* ErfcOp   */ 5,
+      /* ExpOp    */ 1,
+      /* Expm1Op  */ 1,
+      /* FunapOp  */ 0,
+      /* FunavOp  */ 0,
+      /* FunrpOp  */ 0,
+      /* FunrvOp  */ 1,
+      /* InvOp    */ 1,
+      /* LdpOp    */ 1,
+      /* LdvOp    */ 1,
+      /* LeppOp   */ 0,
+      /* LepvOp   */ 0,
+      /* LevpOp   */ 0,
+      /* LevvOp   */ 0,
+      /* LogOp    */ 1,
+      /* Log1pOp  */ 1,
+      /* LtppOp   */ 0,
+      /* LtpvOp   */ 0,
+      /* LtvpOp   */ 0,
+      /* LtvvOp   */ 0,
+      /* MulpvOp  */ 1,
+      /* MulvvOp  */ 1,
+      /* NegOp    */ 1,
+      /* NeppOp   */ 0,
+      /* NepvOp   */ 0,
+      /* NevvOp   */ 0,
+      /* ParOp    */ 1,
+      /* PowpvOp  */ 3,
+      /* PowvpOp  */ 1,
+      /* PowvvOp  */ 3,
+      /* PriOp    */ 0,
+      /* SignOp   */ 1,
+      /* SinOp    */ 2,
+      /* SinhOp   */ 2,
+      /* SqrtOp   */ 1,
+      /* StppOp   */ 0,
+      /* StpvOp   */ 0,
+      /* StvpOp   */ 0,
+      /* StvvOp   */ 0,
+      /* SubpvOp  */ 1,
+      /* SubvpOp  */ 1,
+      /* SubvvOp  */ 1,
+      /* TanOp    */ 2,
+      /* TanhOp   */ 2,
+      /* ZmulpvOp */ 1,
+      /* ZmulvpOp */ 1,
+      /* ZmulvvOp */ 1,
       0  // NumberOp not used and avoids g++ 4.3.2 warn when pycppad builds
    };
    // check ensuring conversion to size_t is as expected
@@ -717,83 +717,84 @@ name of the specified operation.
 \param op
 Operator for which we are fetching the name
 */
-inline const char* OpName(OpCode op)
+inline std::string OpName(OpCode op)
 {  // agreement with OpCode is checked by bin/check_op_code.sh
    static const char *OpNameTable[] = {
-      "Abs"   ,
-      "Acos"  ,
-      "Acosh" ,
-      "Addpv" ,
-      "Addvv" ,
-      "AFun"  ,
-      "Asin"  ,
-      "Asinh" ,
-      "Atan"  ,
-      "Atanh" ,
-      "Begin" ,
-      "CExp"  ,
-      "Cos"   ,
-      "Cosh"  ,
-      "CSkip" ,
-      "CSum"  ,
-      "Dis"   ,
-      "Divpv" ,
-      "Divvp" ,
-      "Divvv" ,
-      "End"   ,
-      "Eqpp"  ,
-      "Eqpv"  ,
-      "Eqvv"  ,
-      "Erf"   ,
-      "Erfc"  ,
-      "Exp"   ,
-      "Expm1" ,
-      "Funap" ,
-      "Funav" ,
-      "Funrp" ,
-      "Funrv" ,
-      "Inv"   ,
-      "Ldp"   ,
-      "Ldv"   ,
-      "Lepp"  ,
-      "Lepv"  ,
-      "Levp"  ,
-      "Levv"  ,
-      "Log"   ,
-      "Log1p" ,
-      "Ltpp"  ,
-      "Ltpv"  ,
-      "Ltvp"  ,
-      "Ltvv"  ,
-      "Mulpv" ,
-      "Mulvv" ,
-      "Neg"   ,
-      "Nepp"  ,
-      "Nepv"  ,
-      "Nevv"  ,
-      "Par"   ,
-      "Powpv" ,
-      "Powvp" ,
-      "Powvv" ,
-      "Pri"   ,
-      "Sign"  ,
-      "Sin"   ,
-      "Sinh"  ,
-      "Sqrt"  ,
-      "Stpp"  ,
-      "Stpv"  ,
-      "Stvp"  ,
-      "Stvv"  ,
-      "Subpv" ,
-      "Subvp" ,
-      "Subvv" ,
-      "Tan"   ,
-      "Tanh"  ,
-      "Zmulpv",
-      "Zmulvp",
-      "Zmulvv",
+      "AbsOp"   ,
+      "AcosOp"  ,
+      "AcoshOp" ,
+      "AddpvOp" ,
+      "AddvvOp" ,
+      "AFunOp"  ,
+      "AsinOp"  ,
+      "AsinhOp" ,
+      "AtanOp"  ,
+      "AtanhOp" ,
+      "BeginOp" ,
+      "CExpOp"  ,
+      "CosOp"   ,
+      "CoshOp"  ,
+      "CSkipOp" ,
+      "CSumOp"  ,
+      "DisOp"   ,
+      "DivpvOp" ,
+      "DivvpOp" ,
+      "DivvvOp" ,
+      "EndOp"   ,
+      "EqppOp"  ,
+      "EqpvOp"  ,
+      "EqvvOp"  ,
+      "ErfOp"   ,
+      "ErfcOp"  ,
+      "ExpOp"   ,
+      "Expm1Op" ,
+      "FunapOp" ,
+      "FunavOp" ,
+      "FunrpOp" ,
+      "FunrvOp" ,
+      "InvOp"   ,
+      "LdpOp"   ,
+      "LdvOp"   ,
+      "LeppOp"  ,
+      "LepvOp"  ,
+      "LevpOp"  ,
+      "LevvOp"  ,
+      "LogOp"   ,
+      "Log1pOp" ,
+      "LtppOp"  ,
+      "LtpvOp"  ,
+      "LtvpOp"  ,
+      "LtvvOp"  ,
+      "MulpvOp" ,
+      "MulvvOp" ,
+      "NegOp"   ,
+      "NeppOp"  ,
+      "NepvOp"  ,
+      "NevvOp"  ,
+      "ParOp"   ,
+      "PowpvOp" ,
+      "PowvpOp" ,
+      "PowvvOp" ,
+      "PriOp"   ,
+      "SignOp"  ,
+      "SinOp"   ,
+      "SinhOp"  ,
+      "SqrtOp"  ,
+      "StppOp"  ,
+      "StpvOp"  ,
+      "StvpOp"  ,
+      "StvvOp"  ,
+      "SubpvOp" ,
+      "SubvpOp" ,
+      "SubvvOp" ,
+      "TanOp"   ,
+      "TanhOp"  ,
+      "ZmulpvOp",
+      "ZmulvpOp",
+      "ZmulvvOp",
       "Number"  // not used
    };
+
    // check ensuring conversion to size_t is as expected
    CPPAD_ASSERT_UNKNOWN(
       size_t(NumberOp) + 1 == sizeof(OpNameTable)/sizeof(OpNameTable[0])
@@ -801,7 +802,11 @@ inline const char* OpName(OpCode op)
    // this test ensures that all indices are within the table
    CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
 
-   return OpNameTable[op];
+   // result
+   std::string result = OpNameTable[op];
+   result             = result.substr(0, result.size() - 2);
+
+   return result;
 }
 
 /*!
@@ -918,11 +923,11 @@ void printOp(
    else
       printOpField(os,  "v=",      "",    5);
    if( op == CExpOp || op == CSkipOp )
-   {  printOpField(os, "", OpName(op), 5);
+   {  printOpField(os, "", OpName(op).c_str(), 5);
       printOpField(os, "", CompareOpName[ arg[0] ], 3);
    }
    else
-      printOpField(os, "", OpName(op), 8);
+      printOpField(os, "", OpName(op).c_str(), 8);
 
    // print other fields
    size_t ncol = 5;
