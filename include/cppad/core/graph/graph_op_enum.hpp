@@ -164,7 +164,7 @@ $lend
 
 $head Enum Values$$
 $srcthisfile%
-   0%// BEGIN_SORT_THIS_LINE_PLUS_2%// END_SORT_THIS_LINE_MINUS_3%1
+   0%SORT_THIS_LINE_PLUS_2%SORT_THIS_LINE_MINUS_3%1
 %$$
 
 $head Examples$$

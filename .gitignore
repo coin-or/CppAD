@@ -17,7 +17,8 @@
 /external/
 /new/
 /new.*/
-/sphinx/rst/
+/rst/
+/html/
 # directory that is ignored by master, but not by gh-pages
 /doc/
 # ----------------------------------------------------------------------------
