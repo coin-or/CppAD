@@ -12,7 +12,7 @@ $spell
    CppAD
 $$
 
-$section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
+$section Nonlinear Programming Using CppAD and Ipopt: Getting Started$$
 
 $head Purpose$$
 This example program demonstrates how to use the class cppad_ipopt_nlp to

@@ -7,9 +7,11 @@ $begin ipopt_nlp_ode$$
 $section Example Simultaneous Solution of Forward and Inverse Problem$$
 
 $contents%
+   cppad_ipopt/example/get_started.cpp%
    cppad_ipopt/example/ode2.omh%
    cppad_ipopt/example/ode_run.hpp%
-   cppad_ipopt/example/ode_check.cpp
+   cppad_ipopt/example/ode_check.cpp%
+   cppad_ipopt/speed/ode_speed.cpp
 %$$
 
 
