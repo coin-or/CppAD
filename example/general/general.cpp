@@ -68,7 +68,6 @@ extern bool Jacobian(void);
 extern bool LuRatio(void);
 extern bool Mul(void);
 extern bool MulEq(void);
-extern bool near_equal_ext(void);
 extern bool NumericType(void);
 extern bool OdeStiff(void);
 extern bool RevOne(void);
@@ -82,8 +81,6 @@ extern bool SubEq(void);
 extern bool Tan(void);
 extern bool Tanh(void);
 extern bool TapeIndex(void);
-extern bool unary_minus(void);
-extern bool unary_plus(void);
 extern bool Value(void);
 extern bool Var2Par(void);
 extern bool abort_recording(void);
@@ -132,6 +129,7 @@ extern bool mul_level(void);
 extern bool mul_level_adolc(void);
 extern bool mul_level_adolc_ode(void);
 extern bool mul_level_ode(void);
+extern bool near_equal_ext(void);
 extern bool new_dynamic(void);
 extern bool num_limits(void);
 extern bool number_skip(void);
@@ -145,6 +143,8 @@ extern bool reverse_three(void);
 extern bool reverse_two(void);
 extern bool sign(void);
 extern bool taylor_ode(void);
+extern bool unary_minus(void);
+extern bool unary_plus(void);
 extern bool vec_ad(void);
 // END_SORT_THIS_LINE_MINUS_1
 
@@ -186,7 +186,6 @@ int main(void)
    Run( LuRatio,           "LuRatio"          );
    Run( Mul,               "Mul"              );
    Run( MulEq,             "MulEq"            );
-   Run( near_equal_ext,    "near_equal_ext"   );
    Run( NumericType,       "NumericType"      );
    Run( OdeStiff,          "OdeStiff"         );
    Run( RevOne,            "RevOne"           );
@@ -200,8 +199,6 @@ int main(void)
    Run( Tan,               "Tan"              );
    Run( Tanh,              "Tanh"             );
    Run( TapeIndex,         "TapeIndex"        );
-   Run( unary_minus,       "unary_minus"      );
-   Run( unary_plus,        "unary_plus"       );
    Run( Value,             "Value"            );
    Run( Var2Par,           "Var2Par"          );
    Run( abort_recording,   "abort_recording"  );
@@ -245,6 +242,7 @@ int main(void)
    Run( lu_vec_ad_ok,      "lu_vec_ad_ok"     );
    Run( mul_level,         "mul_level"        );
    Run( mul_level_ode,     "mul_level_ode"    );
+   Run( near_equal_ext,    "near_equal_ext"   );
    Run( new_dynamic,       "new_dynamic"      );
    Run( num_limits,        "num_limits"       );
    Run( number_skip,       "number_skip"      );
@@ -257,6 +255,8 @@ int main(void)
    Run( reverse_two,       "reverse_two"      );
    Run( sign,              "sign"             );
    Run( taylor_ode,        "ode_taylor"       );
+   Run( unary_minus,       "unary_minus"      );
+   Run( unary_plus,        "unary_plus"       );
    Run( vec_ad,            "vec_ad"           );
    // END_SORT_THIS_LINE_MINUS_1
 # ifndef CPPAD_DEBUG_AND_RELEASE

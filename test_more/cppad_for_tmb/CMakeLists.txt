@@ -14,8 +14,8 @@ SET(cppad_cxx_flags "${cppad_cxx_flags} ${OpenMP_CXX_FLAGS} -DCPPAD_FOR_TMB")
 SET(source_list
    ${name}.cpp
    implicit_ctor.cpp
-   multi_atomic_two.cpp
    multi_atomic_three.cpp
+   multi_atomic_two.cpp
    multi_chkpoint_one.cpp
    multi_chkpoint_two.cpp
    perfer_reverse.cpp

@@ -6,7 +6,6 @@
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
    add.cpp
-   vector.cpp
    div.cpp
    hes_sparsity.cpp
    jac_sparsity.cpp
@@ -14,6 +13,7 @@ SET(source_list
    neg.cpp
    rev_depend.cpp
    sub.cpp
+   vector.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

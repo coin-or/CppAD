@@ -165,8 +165,8 @@ enum op_code_dyn {
    cosh_dyn,      // unary
    dis_dyn,       // 2 arguments: discrete function
    div_dyn,       // binary
-   erfc_dyn,      // unary
    erf_dyn,       // unary
+   erfc_dyn,      // unary
    exp_dyn,       // unary
    expm1_dyn,     // unary
    fabs_dyn,      // unary
@@ -252,8 +252,8 @@ inline size_t num_arg_dyn(op_code_dyn op)
       /* cosh_dyn */     1,
       /* dis_dyn */      2,
       /* div_dyn */      2,
-      /* erfc_dyn */     1,
       /* erf_dyn */      1,
+      /* erfc_dyn */     1,
       /* exp_dyn */      1,
       /* expm1_dyn */    1,
       /* fabs_dyn */     1,
@@ -342,8 +342,8 @@ inline const char* op_name_dyn(op_code_dyn op)
       /* cosh_dyn */     "cosh",
       /* dis_dyn */      "dis",
       /* div_dyn */      "div",
-      /* erfc_dyn */     "erfc",
       /* erf_dyn */      "erf",
+      /* erfc_dyn */     "erfc",
       /* exp_dyn */      "exp",
       /* expm1_dyn */    "expm1",
       /* fabs_dyn */     "fabs",

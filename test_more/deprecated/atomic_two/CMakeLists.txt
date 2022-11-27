@@ -21,9 +21,9 @@ SET(source_list
    mat_mul.cpp
    norm_sq.cpp
    reciprocal.cpp
-   reverse.cpp
    rev_sparse_hes.cpp
    rev_sparse_jac.cpp
+   reverse.cpp
    set_sparsity.cpp
    tangent.cpp
 )

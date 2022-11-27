@@ -126,7 +126,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/graph/from_graph.hpp \
 	cppad/core/graph/from_json.hpp \
 	cppad/core/graph/graph_op_enum.hpp \
-	cppad/core/to_csrc.hpp
 	cppad/core/graph/to_graph.hpp \
 	cppad/core/graph/to_json.hpp \
 	cppad/core/hash_code.hpp \
@@ -171,6 +170,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/subgraph_sparsity.hpp \
 	cppad/core/tape_link.hpp \
 	cppad/core/testvector.hpp \
+	cppad/core/to_csrc.hpp
 	cppad/core/unary_minus.hpp \
 	cppad/core/unary_plus.hpp \
 	cppad/core/undef.hpp \

@@ -15,7 +15,6 @@ $$
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $table
-$rref add_eq.cpp$$
 $rref a11c_bthread.cpp$$
 $rref a11c_openmp.cpp$$
 $rref a11c_pthread.cpp$$
@@ -36,6 +35,7 @@ $rref ad_in_c.cpp$$
 $rref ad_input.cpp$$
 $rref ad_output.cpp$$
 $rref add.cpp$$
+$rref add_eq.cpp$$
 $rref asin.cpp$$
 $rref asinh.cpp$$
 $rref atan.cpp$$

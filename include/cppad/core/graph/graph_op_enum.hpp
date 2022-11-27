@@ -164,7 +164,7 @@ $lend
 
 $head Enum Values$$
 $srcthisfile%
-   0%SORT_THIS_LINE_PLUS_2%SORT_THIS_LINE_MINUS_3%1
+   0%SORT_THIS_LINE_PLUS_3%SORT_THIS_LINE_MINUS_4%1
 %$$
 
 $head Examples$$
@@ -188,7 +188,7 @@ $childtable%
 
 $end
 */
-// BEGIN_SORT_THIS_LINE_PLUS_2
+// BEGIN_SORT_THIS_LINE_PLUS_3
 namespace CppAD { namespace graph {
    enum graph_op_enum {
       abs_graph_op,      // unary: absolute value
@@ -199,8 +199,8 @@ namespace CppAD { namespace graph {
       asinh_graph_op,    // unary: inverse hyperbolic sine
       atan_graph_op,     // unary: inverse tangent
       atanh_graph_op,    // unary: inverse hyperbolic tangent
-      atom_graph_op,     // atomic three function call
       atom4_graph_op,    // atomic four function call
+      atom_graph_op,     // atomic three function call
       azmul_graph_op,    // binary: absolute zero multiplication
       cexp_eq_graph_op,  // conditional expression: ==
       cexp_le_graph_op,  // conditional expression: <=
@@ -219,8 +219,8 @@ namespace CppAD { namespace graph {
       expm1_graph_op,    // unary: exponential minus one
       log1p_graph_op,    // unary: logarithm of one plus argument
       log_graph_op,      // unary: logarithm
-      neg_graph_op,      // unary: minus
       mul_graph_op,      // binary: multiplication
+      neg_graph_op,      // unary: minus
       pow_graph_op,      // binary: first argument raised to second argument
       print_graph_op,    // print during zero order forward
       sign_graph_op,     // unary: sign of argument
@@ -234,7 +234,7 @@ namespace CppAD { namespace graph {
       n_graph_op         // number of graph_op_enum operators
    };
 } }
-// END_SORT_THIS_LINE_MINUS_3
+// END_SORT_THIS_LINE_MINUS_4
 
 
 # endif

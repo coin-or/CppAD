@@ -397,22 +397,22 @@ $head Source$$
 $srccode%hpp% */
 // BEGIN_SORT_THIS_LINE_PLUS_2
 enum OpCode {
+   AFunOp,   // see its heading above
    AbsOp,    // unary fabs
    AcosOp,   // unary acos
    AcoshOp,  // unary acosh
    AddpvOp,  // binary +
    AddvvOp,  // ...
-   AFunOp,   // see its heading above
    AsinOp,   // unary asin
    AsinhOp,  // unary asinh
    AtanOp,   // unary atan
    AtanhOp,  // unary atanh
    BeginOp,  // see its heading above
    CExpOp,   // ...
-   CosOp,    // unary cos
-   CoshOp,   // unary cosh
    CSkipOp,  // see its heading above
    CSumOp,   // ...
+   CosOp,    // unary cos
+   CoshOp,   // unary cosh
    DisOp,    // ...
    DivpvOp,  // binary /
    DivvpOp,  // ...
@@ -436,8 +436,8 @@ enum OpCode {
    LepvOp,   // ...
    LevpOp,   // ...
    LevvOp,   // ...
-   LogOp,    // unary log
    Log1pOp,  // unary log1p
+   LogOp,    // unary log
    LtppOp,   // compare <
    LtpvOp,   // ...
    LtvpOp,   // ...
@@ -503,23 +503,24 @@ inline size_t NumArg( OpCode op)
 {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 
    // agreement with OpCode is checked by bin/check_op_code.sh
+   // BEGIN_SORT_THIS_LINE_PLUS_2
    static const size_t NumArgTable[] = {
+      /* AFunOp   */ 4,
       /* AbsOp    */ 1,
       /* AcosOp   */ 1,
       /* AcoshOp  */ 1,
       /* AddpvOp  */ 2,
       /* AddvvOp  */ 2,
-      /* AFunOp   */ 4,
       /* AsinOp   */ 1,
       /* AsinhOp  */ 1,
       /* AtanOp   */ 1,
       /* AtanhOp  */ 1,
       /* BeginOp  */ 1,  // offset first real argument to have index 1
       /* CExpOp   */ 6,
-      /* CosOp    */ 1,
-      /* CoshOp   */ 1,
       /* CSkipOp  */ 0,  // (has a variable number of arguments, not zero)
       /* CSumOp   */ 0,  // (has a variable number of arguments, not zero)
+      /* CosOp    */ 1,
+      /* CoshOp   */ 1,
       /* DisOp    */ 2,
       /* DivpvOp  */ 2,
       /* DivvpOp  */ 2,
@@ -543,8 +544,8 @@ inline size_t NumArg( OpCode op)
       /* LepvOp   */ 2,
       /* LevpOp   */ 2,
       /* LevvOp   */ 2,
-      /* LogOp    */ 1,
       /* Log1pOp  */ 1,
+      /* LogOp    */ 1,
       /* LtppOp   */ 2,
       /* LtpvOp   */ 2,
       /* LtvpOp   */ 2,
@@ -578,6 +579,7 @@ inline size_t NumArg( OpCode op)
       /* ZmulvvOp */ 2,
       0  // NumberOp not used
    };
+   // END_SORT_THIS_LINE_MINUS_3
 # ifndef NDEBUG
    // only do these checks once to save time
    static bool first = true;
@@ -622,23 +624,24 @@ inline size_t NumRes(OpCode op)
 {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 
    // agreement with OpCode is checked by bin/check_op_code.sh
+   // BEGIN_SORT_THIS_LINE_PLUS_2
    static const size_t NumResTable[] = {
+      /* AFunOp   */ 0,
       /* AbsOp    */ 1,
       /* AcosOp   */ 2,
       /* AcoshOp  */ 2,
       /* AddpvOp  */ 1,
       /* AddvvOp  */ 1,
-      /* AFunOp   */ 0,
       /* AsinOp   */ 2,
       /* AsinhOp  */ 2,
       /* AtanOp   */ 2,
       /* AtanhOp  */ 2,
       /* BeginOp  */ 1,  // offsets first variable to have index one (not zero)
       /* CExpOp   */ 1,
-      /* CosOp    */ 2,
-      /* CoshOp   */ 2,
       /* CSkipOp  */ 0,
       /* CSumOp   */ 1,
+      /* CosOp    */ 2,
+      /* CoshOp   */ 2,
       /* DisOp    */ 1,
       /* DivpvOp  */ 1,
       /* DivvpOp  */ 1,
@@ -662,8 +665,8 @@ inline size_t NumRes(OpCode op)
       /* LepvOp   */ 0,
       /* LevpOp   */ 0,
       /* LevvOp   */ 0,
-      /* LogOp    */ 1,
       /* Log1pOp  */ 1,
+      /* LogOp    */ 1,
       /* LtppOp   */ 0,
       /* LtpvOp   */ 0,
       /* LtvpOp   */ 0,
@@ -697,6 +700,7 @@ inline size_t NumRes(OpCode op)
       /* ZmulvvOp */ 1,
       0  // NumberOp not used and avoids g++ 4.3.2 warn when pycppad builds
    };
+   // END_SORT_THIS_LINE_MINUS_3
    // check ensuring conversion to size_t is as expected
    CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) + 1 ==
       sizeof(NumResTable) / sizeof(NumResTable[0])
@@ -719,23 +723,24 @@ Operator for which we are fetching the name
 */
 inline std::string OpName(OpCode op)
 {  // agreement with OpCode is checked by bin/check_op_code.sh
+   // BEGIN_SORT_THIS_LINE_PLUS_2
    static const char *OpNameTable[] = {
+      "AFunOp"  ,
       "AbsOp"   ,
       "AcosOp"  ,
       "AcoshOp" ,
       "AddpvOp" ,
       "AddvvOp" ,
-      "AFunOp"  ,
       "AsinOp"  ,
       "AsinhOp" ,
       "AtanOp"  ,
       "AtanhOp" ,
       "BeginOp" ,
       "CExpOp"  ,
-      "CosOp"   ,
-      "CoshOp"  ,
       "CSkipOp" ,
       "CSumOp"  ,
+      "CosOp"   ,
+      "CoshOp"  ,
       "DisOp"   ,
       "DivpvOp" ,
       "DivvpOp" ,
@@ -759,8 +764,8 @@ inline std::string OpName(OpCode op)
       "LepvOp"  ,
       "LevpOp"  ,
       "LevvOp"  ,
-      "LogOp"   ,
       "Log1pOp" ,
+      "LogOp"   ,
       "LtppOp"  ,
       "LtpvOp"  ,
       "LtvpOp"  ,
@@ -794,6 +799,7 @@ inline std::string OpName(OpCode op)
       "ZmulvvOp",
       "Number"  // not used
    };
+   // END_SORT_THIS_LINE_MINUS_3
 
    // check ensuring conversion to size_t is as expected
    CPPAD_ASSERT_UNKNOWN(

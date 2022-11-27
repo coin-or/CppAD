@@ -8,10 +8,10 @@ SET(source_list
    code_gen_fun.cpp
    file.cpp
    function.cpp
-   jacobian.cpp
    jac_as_fun.cpp
-   sparse_jacobian.cpp
+   jacobian.cpp
    sparse_jac_as_fun.cpp
+   sparse_jacobian.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 

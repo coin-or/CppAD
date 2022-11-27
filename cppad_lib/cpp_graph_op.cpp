@@ -47,8 +47,8 @@ void set_operator_info(void)
       { asinh_graph_op,    "asinh",    1 }, // 1 result
       { atan_graph_op,     "atan",     1 }, // 1 result
       { atanh_graph_op,    "atanh",    1 }, // 1 result
-      { atom_graph_op,     "atom",     0 }, // See Atomic Function
       { atom4_graph_op,    "atom4",    0 }, // See Atomic Function
+      { atom_graph_op,     "atom",     0 }, // See Atomic Function
       { azmul_graph_op,    "azmul",    2 }, // 1 result
       { cexp_eq_graph_op,  "cexp_eq",  4 }, // 1 result
       { cexp_le_graph_op,  "cexp_le",  4 }, // 1 result
@@ -67,8 +67,8 @@ void set_operator_info(void)
       { expm1_graph_op,    "expm1",    1 }, // 1 result
       { log1p_graph_op,    "log1p",    1 }, // 1 result
       { log_graph_op,      "log",      1 }, // 1 result
-      { neg_graph_op,      "neg",      1 }, // 1 result
       { mul_graph_op,      "mul",      2 }, // 1 result
+      { neg_graph_op,      "neg",      1 }, // 1 result
       { pow_graph_op,      "pow",      2 }, // 1 result
       { print_graph_op,    "print",    0 }, // See Print
       { sign_graph_op,     "sign",     1 }, // 1 result
