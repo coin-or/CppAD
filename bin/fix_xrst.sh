@@ -76,5 +76,29 @@ s/\n      echo_eval *run_omhelp.sh doc/\\
 EOF
 edit_file bin/package.sh
 # -----------------------------------------------------------------------------
+file=xrst.toml
+cp $file ~/trash
+sed -n -e '1,/^latex_macro = \[/p'      $file > temp.1
+sed -n -e '/\[project_dictionary\]/,$p' $file > temp.3
+cat << EOF > temp.2
+   '\\newcommand{\\W}[1]{ \\; #1 \\; }',
+   '\\newcommand{\\R}[1]{ {\\rm #1} }',
+   '\\newcommand{\\B}[1]{ {\\bf #1} }',
+   '\\newcommand{\\D}[2]{ \\frac{\\partial #1}{\\partial #2} }',
+   '\\newcommand{\\DD}[3]{ \\frac{\\partial^2 #1}{\\partial #2 \\partial #3} }',
+   '\\newcommand{\\Dpow}[2]{ \\frac{\\partial^{#1}}{\\partial  {#2}^{#1}} }',
+   '\\newcommand{\\dpow}[2]{ \\frac{ {\\rm d}^{#1}}{{\\rm d}\\, {#2}^{#1}} }',
+]
+
+EOF
+cat temp.1 temp.2 temp.3 > $file
+echo '--------------------------------------------------------------------'
+if diff $file ~/trash
+then
+   echo "$file: no changes"
+else
+   echo "$file: changes above"
+fi
+# -----------------------------------------------------------------------------
 echo 'fix_xrst.sh: OK'
 exit 0
