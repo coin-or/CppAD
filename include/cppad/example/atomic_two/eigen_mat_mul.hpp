@@ -420,7 +420,7 @@ $srccode%cpp% */
       size_t                                       q ,
       // sparsity pattern for the matrix R
       const CppAD::vector< std::set<size_t> >&     r ,
-      /* sparsity pattern for the matrix S = f'(x) * R */
+      // sparsity pattern for the matrix S = f'(x) * R
       CppAD::vector< std::set<size_t> >&           s ,
       const CppAD::vector<Base>&                   x )
    {
@@ -469,7 +469,7 @@ $srccode%cpp% */
       size_t                                      q  ,
       // sparsity pattern for the matrix R^T
       const CppAD::vector< std::set<size_t> >&    rt ,
-      /* sparsity pattern for the matrix S^T = f'(x)^T * R^T */
+      // sparsity pattern for the matrix S^T = f'(x)^T * R^T
       CppAD::vector< std::set<size_t> >&          st ,
       const CppAD::vector<Base>&                   x )
    {
@@ -567,18 +567,18 @@ $srccode%cpp% */
    virtual bool rev_sparse_hes(
       // which components of x are variables for this call
       const CppAD::vector<bool>&                   vx,
-      /* sparsity pattern for S[x] = g'[f(x)] */
+      // sparsity pattern for S(x) = g'[f(x)]
       const CppAD::vector<bool>&                   s ,
-      /* sparsity pattern for d/dx g[f(x)] = S(x) * f'(x) */
+      // sparsity pattern for d/dx g[f(x)] = S(x) * f'(x)
       CppAD::vector<bool>&                         t ,
       // number of columns in R, U(x), and V(x)
       size_t                                       q ,
       // sparsity pattern for R
       const CppAD::vector< std::set<size_t> >&     r ,
-      /* sparsity pattern for U[x] = g^[(2)] [ f(x) ] * f'(x) * R */
+      // sparsity pattern for U(x) = g^{(2)} [ f(x) ] * f'(x) * R
       const CppAD::vector< std::set<size_t> >&     u ,
       // sparsity pattern for
-      /* V[x] = f'(x)^T * U(x) + sum_{i=0}^{m-1} S_i(x) f_i^{(2)} (x) * R */
+      // V(x) = f'(x)^T * U(x) + sum_{i=0}^{m-1} S_i(x) f_i^{(2)} (x) * R
       CppAD::vector< std::set<size_t> >&           v ,
       // parameters as integers
       const CppAD::vector<Base>&                   x )
