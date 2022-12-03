@@ -69,8 +69,7 @@ s/\n      echo_eval *run_omhelp.sh doc/\\
       sed -i xrst.toml -e "s|^default *=.*|default = 'doc.xrst'|"\\
       echo_eval xrst \\\\\\
          --local_toc \\\\\\
-         --html_theme sphinx_rtd_theme \\\\\\
-         --output_dir doc/
+         --html_theme sphinx_rtd_theme/
 #
 : end
 EOF
