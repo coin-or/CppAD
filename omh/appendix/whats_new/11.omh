@@ -942,7 +942,7 @@ to
 $icode%prefixdir%/share/pkgconfig/cppad.pc%$$;
 see
 $href%http://lists.fedoraproject.org/pipermail/devel/2011-January/147915.html%
-devel@lists.fedoraproject.org%$$.
+devel lists.fedoraproject.org%$$.
 
 $subhead 01-16$$
 The following have been fixed:
