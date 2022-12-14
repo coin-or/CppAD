@@ -55,7 +55,8 @@ bool get_started(void)
    using CppAD::NearEqual;
    //
    // f
-   // f(r, a) =  (x_0 * cos(x_1) , x_0 * sin(x_1))^T
+   // f_0 (x_0, x_1) =  x_0 * cos(x_1)
+   // f_1 (x_0, x_1) =  x_0 * sin(x_1)
    size_t n = 2;
    size_t m = 2;
    CPPAD_TESTVECTOR( AD<double> ) ax(n), ay(m);

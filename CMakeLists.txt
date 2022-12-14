@@ -144,7 +144,7 @@ command_line_arg(cmake_install_libdirs lib STRING
 #
 # cmake_defined_ok
 command_line_arg(cmake_defined_ok TRUE BOOL
-   "If false, check that some symboles only get defined once"
+   "If false, check that some symbols only get defined once"
    "If true, you can use CMakeCache.txt to store previous settings"
 )
 #
