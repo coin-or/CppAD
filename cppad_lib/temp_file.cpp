@@ -4,6 +4,10 @@
 // ----------------------------------------------------------------------------
 /*
 $begin temp_file$$
+$spell
+   mkstemp
+   CppAD
+$$
 
 $section Create a New Empty Temporary File$$
 
@@ -17,7 +21,7 @@ This file did not exist when $code temp_file$$ was called.
 It has been created and is empty upon return.
 
 $subhead Empty$$
-This routine failed if the reutrn value $icode file_name$$ is empty.
+This routine failed if the return value $icode file_name$$ is empty.
 
 $head Thread Safe$$
 This routine is thread safe when C++17 and $code mkstemp$$ are available
