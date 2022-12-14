@@ -44,7 +44,7 @@ d
 b end
 #
 : one
-s|{xrst_begin CppAD}|&\\
+s|\{xrst_begin CppAD}|&\\
 {xrst_spell\\
    png\\
    github\\
