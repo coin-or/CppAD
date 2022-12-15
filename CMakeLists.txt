@@ -521,12 +521,12 @@ CONFIGURE_FILE(
 INSTALL(
    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/cppad/"
    DESTINATION ${cppad_abs_includedir}/cppad
-   FILES_MATCHING PATTERN "*.hpp" PATTERN "omh" EXCLUDE
+   FILES_MATCHING PATTERN "*.hpp" PATTERN "xrst" EXCLUDE
 )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad
 IF ( cmake_install_docdir )
-   INSTALL( DIRECTORY "doc/" DESTINATION ${cppad_abs_docdir}/cppad )
+   INSTALL( DIRECTORY "html/" DESTINATION ${cppad_abs_docdir}/cppad )
 ENDIF ( cmake_install_docdir )
 
 # =============================================================================

@@ -9,13 +9,13 @@ then
    exit 1
 fi
 # -----------------------------------------------------------------------------
-echo "Checking that all examples are in omh/example_list.omh"
+echo "Checking that all examples are in xrst/example_list.xrst"
 echo "-------------------------------------------------------"
 file_list=`git ls-files | sed -n \
    -e '/^example\/deprecated\//d' \
    -e '/^example\//p'`
 #
-sed < omh/example_list.omh > check_example.$$ \
+sed < xrst/example_list.xrst > check_example.$$ \
    -n -e '/[$]begin list_all_examples\$\$/,/\$end/p'
 #
 # Make sure all example names are of the form *.cpp or *.hpp
@@ -31,14 +31,14 @@ ok="yes"
 for file in $file_list
 do
    # only files in example directory with [$]begin *.cpp or *.hpp
-   # e.g., example/multi_thread/harmonic.omh has [$]begin harmonic.cpp$$ in it
+   # e.g., example/multi_thread/harmonic.xrst has [$]begin harmonic.cpp$$ in it
    name=`grep '[$]begin *[0-9a-zA-Z_]*\.[hc]pp' $file |
       sed -e 's/.*[$]begin *//' -e 's/ *$$.*//'`
    if [ "$name" != "" ]
    then
       if ! grep "$name" check_example.$$ > /dev/null
       then
-         echo "$name is missing from omh/example_list.omh"
+         echo "$name is missing from xrst/example_list.xrst"
          ok="no"
       fi
    fi

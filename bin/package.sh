@@ -44,10 +44,10 @@ version=`sed -n -e '/^SET( *cppad_version *"[0-9.]*"/p' CMakeLists.txt | \
    sed -e 's|.*"\([^"]*\)".*|\1|'`
 date=`echo $version | sed -e 's|\.[0-9]*$||'`
 # -----------------------------------------------------------------------------
-# doc
-if [ -e 'doc' ]
+# html
+if [ -e 'html' ]
 then
-   echo_eval rm -r doc
+   echo_eval rm -r html
 fi
 cat << EOF > $src_dir/package.$$
 /^commit/! b end
@@ -69,21 +69,24 @@ then
    git_hash=`git log origin/gh-pages | sed -n -f $src_dir/package.$$ | head -1`
    if [ "$git_hash" != '' ]
    then
-      echo 'create ./doc'
-      mkdir doc
-      list=`git ls-tree --name-only $git_hash:doc`
+      echo 'create ./html'
+      mkdir html
+      list=`git ls-tree --name-only $git_hash:html`
       for file in $list
       do
-         git show $git_hash:doc/$file > doc/$file
+         git show $git_hash:html/$file > html/$file
       done
-   elif which run_omhelp.sh > /dev/null
+   elif which xrst > /dev/null
    then
-      # omhelp is available, so build documentation for this version
-      echo_eval run_omhelp.sh doc
+      # xrst is available, so build documentation for this version
+      echo_eval xrst \
+         --local_toc \
+         --html_theme sphinx_rtd_theme \
+         --group_list default
    else
 cat << EOF
 Cannot find gh-pages documentation for this version: $version
-and cannot find run_omhelp.sh on this system.
+and cannot find xrst on this system.
 
 If you wish to skip the documentation for this system use
 bin/package.sh --no_doc. Otherwise, use the following steps:
@@ -141,7 +144,7 @@ tar -xzf tar.tgz
 rm tar.tgz
 if [ "$include_doc" == 'yes' ]
 then
-   cp -r ../../doc doc
+   cp -r ../html html
 fi
 cd ..
 tar --create cppad-$version --gzip --file=cppad-$version.tgz

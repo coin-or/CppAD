@@ -19,7 +19,7 @@ add_on_list='CG PY TMB MIXED'
 echo 'CPPAD_DEBUG_AND_RELEASE' > check_define.1
 #
 # preprocessor symbols in user API
-sed -n -e "/^# *undef /p" omh/preprocessor.omh | sed \
+sed -n -e "/^# *undef /p" xrst/preprocessor.xrst | sed \
    -e "s/^# *undef  *\([A-Za-z0-9_]*\).*/\1/" > check_define.2
 #
 for file in $file_list
