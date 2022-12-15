@@ -36,7 +36,6 @@ ignore_files='
    /bin/devel.sh
    /bin/get_highlight.sh
    /bin/get_omhelp.sh
-   /bin/run_omhelp.sh
    /cmake/cppad_uninstall.cmake
    /coin.png
    /compile
@@ -50,6 +49,7 @@ ignore_files='
    /missing
    /sphinx/preamble.rst
    /uw_copy_040507.html
+   /xrst.toml
    makefile.in
 '
 # END_SORT_THIS_LINE_MINUS_2
