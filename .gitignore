@@ -1,26 +1,33 @@
 # ----------------------------------------------------------------------------
 # specific files
+#
+# created by autotools
 /aclocal.m4
 /autom4te.cache
+#
+# cmake configure files
 /bin/test_one.sh
 /include/cppad/configure.hpp
-/doxyfile
-/git_commit.sh
+#
+# create by bin/test_one.sh 
 /test_one.cpp
 /test_one.exe
+#
+# git commit script
+/git_commit.sh
 # ----------------------------------------------------------------------------
 # specific directories
+#
+# buld directories
 /build/
 /build2/
-/dev/
-/doxydoc/
+#
+# for building external packages
 /external/
+#
+# for caching git changes
 /new/
 /new.*/
-/rst/
-/html/
-# directory that is ignored by master, but not by gh-pages
-/doc/
 # ----------------------------------------------------------------------------
 # specific extensions in top direcotry
 /*.err
