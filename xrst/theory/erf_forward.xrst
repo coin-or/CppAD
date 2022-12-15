@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin erf_forward}
+
+Error Function Forward Taylor Polynomial Theory
+###############################################
+
+Derivatives
+***********
+Given :math:`X(t)`, we define the function
+
+.. math::
+
+   Z(t) = \R{erf}[ X(t) ]
+
+It follows that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \R{erf}^{(1)} ( u ) & = & ( 2 / \sqrt{\pi} ) \exp \left( - u^2 \right)
+   \\
+   Z^{(1)} (t) & = & \R{erf}^{(1)} [ X(t) ] X^{(1)} (t) = Y(t) X^{(1)} (t)
+   \end{eqnarray}
+
+where we define the function
+
+.. math::
+
+   Y(t) = \frac{2}{ \sqrt{\pi} } \exp \left[ - X(t)^2 \right]
+
+Taylor Coefficients Recursion
+*****************************
+Suppose that we are given the Taylor coefficients
+up to order :math:`j` for the function :math:`X(t)` and :math:`Y(t)`.
+We need a formula that computes the coefficient of order :math:`j`
+for :math:`Z(t)`.
+Using the equation above for :math:`Z^{(1)} (t)`, we have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \sum_{k=1}^j k z^{(k)} t^{k-1}
+   & = &
+   \left[ \sum_{k=0}^j y^{(k)} t^k        \right]
+   \left[ \sum_{k=1}^j k x^{(k)} t^{k-1}  \right]
+   +
+   o( t^{j-1} )
+   \end{eqnarray}
+
+Setting the coefficients of :math:`t^{j-1}` equal, we have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   j z^{(j)}
+   =
+   \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+   \\
+   z^{(j)}
+   =
+   \frac{1}{j} \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+   \end{eqnarray}
+
+{xrst_end erf_forward}

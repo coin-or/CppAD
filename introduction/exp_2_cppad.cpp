@@ -3,64 +3,48 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin exp_2_cppad$$
-$spell
-   Taylor
-   coef
-   resize
-   cppad.hpp
-   cmath
-   fabs
-   bool
-   exp_2_cppad
-   dx
-   dy
-   dw
-   endl
-   hpp
-   http
-   org
-   std
-   www
-   CppAD
-   apx
-$$
+{xrst_begin exp_2_cppad}
 
-$section exp_2: CppAD Forward and Reverse Sweeps$$.
+exp_2: CppAD Forward and Reverse Sweeps
+#######################################
 
-$head Purpose$$
+Purpose
+*******
 Use CppAD forward and reverse modes to compute the
-partial derivative with respect to $latex x$$,
-at the point $latex x = .5$$,
+partial derivative with respect to :math:`x`,
+at the point :math:`x = .5`,
 of the function
-$codei%
-   exp_2(%x%)
-%$$
-as defined by the $cref exp_2.hpp$$ include file.
 
-$head Exercises$$
-$list number$$
-Create and test a modified version of the routine below that computes
-the same order derivatives with respect to $latex x$$,
-at the point $latex x = .1$$
-of the function
-$codei%
-   exp_2(%x%)
-%$$
-$lnext
-Create a routine called
-$codei%
-   exp_3(%x%)
-%$$
-that evaluates the function
-$latex \[
-   f(x) = 1 + x^2 / 2 + x^3 / 6
-\] $$
-Test a modified version of the routine below that computes
-the derivative of $latex f(x)$$
-at the point $latex x = .5$$.
-$lend
-$srccode%cpp% */
+   ``exp_2`` ( *x* )
+
+as defined by the :ref:`exp_2.hpp-name` include file.
+
+Exercises
+*********
+
+#. Create and test a modified version of the routine below that computes
+   the same order derivatives with respect to :math:`x`,
+   at the point :math:`x = .1`
+   of the function
+
+      ``exp_2`` ( *x* )
+
+#. Create a routine called
+
+      ``exp_3`` ( *x* )
+
+   that evaluates the function
+
+   .. math::
+
+      f(x) = 1 + x^2 / 2 + x^3 / 6
+
+   Test a modified version of the routine below that computes
+   the derivative of :math:`f(x)`
+   at the point :math:`x = .5`.
+
+{xrst_spell_off}
+{xrst_code cpp} */
 
 # include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/
 # include "exp_2.hpp"        // second order exponential approximation
@@ -128,6 +112,8 @@ bool exp_2_cppad(void)
    return ok;
 }
 
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end exp_2_cppad}
 */

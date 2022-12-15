@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin subgraph_sparsity.cpp$$
-$spell
-   Subgraph
-$$
+{xrst_begin subgraph_sparsity.cpp}
 
-$section Subgraph Dependency Sparsity Patterns: Example and Test$$
+Subgraph Dependency Sparsity Patterns: Example and Test
+#######################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end subgraph_sparsity.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -4,19 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin lu_vec_ad_ok.cpp$$
-$spell
-   Geq
-   Cpp
-   Lu
-$$
+{xrst_begin lu_vec_ad_ok.cpp}
 
-$section Lu Factor and Solve With Recorded Pivoting: Example and Test$$
+Lu Factor and Solve With Recorded Pivoting: Example and Test
+############################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end lu_vec_ad_ok.cpp}
 */
 
 // BEGIN C++

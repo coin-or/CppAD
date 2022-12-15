@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin acosh.cpp$$
-$spell
-   cosh
-   acosh
-$$
+{xrst_begin acosh.cpp}
 
-$section The AD acosh Function: Example and Test$$
+The AD acosh Function: Example and Test
+#######################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end acosh.cpp}
 */
 // BEGIN C++
 

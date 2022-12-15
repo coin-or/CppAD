@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin expm1.cpp$$
-$spell
-   exp
-$$
+{xrst_begin expm1.cpp}
 
-$section The AD exp Function: Example and Test$$
+The AD exp Function: Example and Test
+#####################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end expm1.cpp}
 */
 // BEGIN C++
 

@@ -9,41 +9,44 @@
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
 ------------------------------------------------------------------------------
-$begin put_var_vecad_ind$$
-$spell
-   Vec
-   var
+{xrst_begin put_var_vecad_ind}
+{xrst_spell
    vecad
-   ind
-   taddr
-$$
+}
 
-$section Add One Index to End of Combined Variable VecAD Vector$$
+Add One Index to End of Combined Variable VecAD Vector
+######################################################
 
-$head Syntax$$
-$icode%offset% = %rec%.put_var_vecad_ind(%vec_ind%)%$$
+Syntax
+******
+*offset* = *rec* . ``put_var_vecad_ind`` ( *vec_ind* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PUT_VAR_VECAD_IND%// END_PUT_VAR_VECAD_IND%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PUT_VAR_VECAD_IND
+   // END_PUT_VAR_VECAD_IND
+}
 
-$head Purpose$$
+Purpose
+*******
 For each variable VecAD vector, this routine is used to store the length
 of the vector followed by the parameter index corresponding to initial
 value in the vector; i.e., the values just before it changed from a parameter
 to a variable.
 
-$head vec_ind$$
+vec_ind
+*******
 is the index to be placed at the end of the combined vector of VecAD indices.
 
-$head offset$$
+offset
+******
 is the index in the combined variable VecAD vector
-where the value $icode vec_ind$$ is stored.
+where the value *vec_ind* is stored.
 This index starts at zero after the recorder default constructor and
 increments by one for each call to put_var_vecad_ind.
 
-$end
+{xrst_end put_var_vecad_ind}
 */
 // BEGIN_PUT_VAR_VECAD_IND
 template <class Base>
@@ -59,41 +62,47 @@ addr_t recorder<Base>::put_var_vecad_ind(addr_t vec_ind)
 }
 /*
 ------------------------------------------------------------------------------
-$begin recorder_put_var_vecad$$
-$spell
-   Vec
-   var
-   vecad
+{xrst_begin recorder_put_var_vecad}
+{xrst_spell
    taddr
-$$
-$section Tape Initialization for a Variable VecAD Object$$
+   vecad
+}
+Tape Initialization for a Variable VecAD Object
+###############################################
 
-$head Syntax$$
-$icode%offset% = %rec%.put_var_vecad(%length%, %taddr%)%$$
+Syntax
+******
+*offset* = *rec* . ``put_var_vecad`` ( *length* , *taddr* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PUT_VAR_VECAD_VEC%// END_PUT_VAR_VECAD_VEC%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PUT_VAR_VECAD_VEC
+   // END_PUT_VAR_VECAD_VEC
+}
 
-$head Usage$$
+Usage
+*****
 This routine should be called once for each variable VecAD object just
 before it changes from a parameter to a variable.
 
-$head length$$
+length
+******
 is the size of the VecAD object.
 
-$head taddr$$
+taddr
+*****
 vector of parameter indices corresponding to the value of this VecAD vector
 just before it becomes a variable.
 
-$head offset$$
+offset
+******
 index of the start of this VecAD vector in the combined variable VecAD vector.
-The value corresponding to $icode offset$$ is the length of this VecAD vector.
-There are $icode length$$ more indices following the length.
+The value corresponding to *offset* is the length of this VecAD vector.
+There are *length* more indices following the length.
 These values are the parameter indices.
 
-$end
+{xrst_end recorder_put_var_vecad}
 */
 // BEGIN_PUT_VAR_VECAD_VEC
 template <class Base>

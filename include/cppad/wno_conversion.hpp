@@ -6,27 +6,27 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin wno_conversion$$
-$spell
-   cppad
+{xrst_begin wno_conversion}
+{xrst_spell
    wno
-   cpp
-   hpp
-$$
+}
 
-$section Suppress Suspect Implicit Conversion Warnings$$
+Suppress Suspect Implicit Conversion Warnings
+#############################################
 
-$head Syntax$$
-$codei%# include <cppad/wno_conversion.hpp>%$$
+Syntax
+******
+# ``include <cppad/wno_conversion.hpp>``
 
-$head Purpose$$
+Purpose
+*******
 In many cases it is good to have warnings for implicit conversions
 that may loose range or precision.
 The include command above, before any other includes, suppresses
 these warning for a particular compilation unit (which usually corresponds
-to a $icode%*%.cpp%$$ file).
+to a * . ``cpp`` file).
 
-$end
+{xrst_end wno_conversion}
 */
 
 # include <cppad/configure.hpp>

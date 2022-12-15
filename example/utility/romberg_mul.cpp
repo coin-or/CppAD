@@ -4,17 +4,20 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin romberg_mul.cpp$$
-$spell
-   Romberg
-$$
+{xrst_begin romberg_mul.cpp}
+{xrst_spell
+   romberg
+}
 
-$section Multi-Dimensional Romberg Integration: Example and Test$$
+Multi-Dimensional Romberg Integration: Example and Test
+#######################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end romberg_mul.cpp}
 */
 // BEGIN C++
 

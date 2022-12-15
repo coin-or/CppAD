@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin hes_lu_det.cpp$$
-$spell
-   Lu
-   Cpp
-$$
+{xrst_begin hes_lu_det.cpp}
 
-$section Gradient of Determinant Using LU Factorization: Example and Test$$
+Gradient of Determinant Using LU Factorization: Example and Test
+################################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end hes_lu_det.cpp}
 */
 // BEGIN C++
 // Complex examples should supppress conversion warnings

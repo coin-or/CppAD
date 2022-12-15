@@ -5,93 +5,94 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_call$$
+{xrst_begin atomic_four_call}
 
-$spell
-   sq
-   mul
-   afun
-   const
-   CppAD
-   mat_mul.cpp
-   std
-   cppad
-$$
+Calling an Atomic Function
+##########################
 
-$section Calling an Atomic Function$$
+Syntax
+******
 
-$head Syntax$$
-$icode%afun%(%ax%, %ay%)
-%$$
-$icode%ay% = %afun%(%call_id%, %ax%, %ay%)
-%$$
+| *afun* ( *ax* , *ay* )
+| *ay* = *afun* ( *call_id* , *ax* , *ay* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head Purpose$$
-Given $icode ax$$, this call computes the corresponding value of $icode ay$$.
-If $codei%AD<%Base%>%$$ operations are being recorded,
+Purpose
+*******
+Given *ax* , this call computes the corresponding value of *ay* .
+If ``AD<`` *Base* > operations are being recorded,
 it enters the computation as an atomic operation in the recording;
-see $cref/start recording/Independent/Start Recording/$$.
+see :ref:`Independent@Start Recording` .
 
-$head Base$$
-This is the $cref/Base/atomic_four_ctor/atomic_four/Base/$$
-in the $icode afun$$ constructor.
-It is also the $icode Base$$ type of the elements of
-$icode ax$$ and $icode ay$$ in the atomic function call.
-To be specific, the elements of $icode ax$$ and $icode ay$$ have type
-$codei%AD%<%Base%>%$$.
+Base
+****
+This is the :ref:`atomic_four_ctor@atomic_four@Base`
+in the *afun* constructor.
+It is also the *Base* type of the elements of
+*ax* and *ay* in the atomic function call.
+To be specific, the elements of *ax* and *ay* have type
+``AD`` < ``Base`` > .
 
-$head ADVector$$
-The type $icode ADVector$$ must be a
-$cref/simple vector class/SimpleVector/$$ with elements of type
-$codei%AD<%Base%>%$$.
+ADVector
+********
+The type *ADVector* must be a
+:ref:`simple vector class<SimpleVector-name>` with elements of type
+``AD<`` *Base* > .
 
-$head afun$$
-is a $cref/atomic_user/atomic_four_ctor/atomic_user/$$ object
-and this $icode afun$$ function call is implemented by the
-$cref/atomic_four/atomic_four_ctor/atomic_four/$$ class.
+afun
+****
+is a :ref:`atomic_four_ctor@atomic_user` object
+and this *afun* function call is implemented by the
+:ref:`atomic_four_ctor@atomic_four` class.
 
-$head ax$$
-The size of this vector determines$icode n$$.
-It specifies vector $latex x \in \B{R}^n$$
-at which an $codei%AD<%Base%>%$$ version of
-$latex y = g(x)$$ is to be evaluated.
+ax
+**
+The size of this vector determines *n* .
+It specifies vector :math:`x \in \B{R}^n`
+at which an ``AD<`` *Base* > version of
+:math:`y = g(x)` is to be evaluated.
 
-$head ay$$
-The size of this vector determines $icode m$$.
+ay
+**
+The size of this vector determines *m* .
 The input values of its elements
 are not specified (must not matter).
-Upon return, it is an $codei%AD<%Base%>%$$ version of
-$latex y = g(x)$$.
+Upon return, it is an ``AD<`` *Base* > version of
+:math:`y = g(x)`.
 
-$head call_id$$
+call_id
+*******
 This optional argument has default value zero.
 It can be used to specify additional information about this call to
-$icode afun$$. For example, it could specify the index in vector of structures
-in the $icode afun$$ object where the actual information is placed.
+*afun* . For example, it could specify the index in vector of structures
+in the *afun* object where the actual information is placed.
 
-$head for_type$$
-The $cref/for_type/atomic_four_for_type/$$ routine will be called once,
+for_type
+********
+The :ref:`for_type<atomic_four_for_type-name>` routine will be called once,
 for each call to an atomic function,
 before any other callbacks corresponding to the atomic function call.
-This enables you to store, during the $code for_type$$ routine,
+This enables you to store, during the ``for_type`` routine,
 the values in
-$cref/type_x/atomic_four_for_type/type_x/$$ and or
-$cref/type_y/atomic_four_for_type/type_y/$$ corresponding
+:ref:`atomic_four_for_type@type_x` and or
+:ref:`atomic_four_for_type@type_y` corresponding
 to this atomic function call.
 
-$subhead Restriction$$
-The value of $icode call_id$$ must be less than or equal
-$codei%
-   std::numeric_limits<%cppad_tape_id_type%>::max()
-%$$
-see $cref/cppad_tape_id_type/cmake/cppad_tape_id_type/$$.
+Restriction
+===========
+The value of *call_id* must be less than or equal
 
-$end
+   ``std::numeric_limits<`` *cppad_tape_id_type* >:: ``max`` ()
+
+see :ref:`cmake@cppad_tape_id_type` .
+
+{xrst_end atomic_four_call}
 -----------------------------------------------------------------------------
 */
 

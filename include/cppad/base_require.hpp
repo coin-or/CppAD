@@ -6,118 +6,116 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin base_require$$
-$spell
-   azmul
+{xrst_begin base_require}
+{xrst_spell
+   commutative
    ostream
-   alloc
-   eps
-   std
-   cppad.hpp
-   namespace
-   bool
-   const
-   CppAD
-   enum
-   inline
-   Op
-   std
-   CondExp
-$$
+}
 
-$section AD<Base> Requirements for a CppAD Base Type$$
+AD<Base> Requirements for a CppAD Base Type
+###########################################
 
-$head Syntax$$
-$code # include <cppad/base_require.hpp>$$
+Syntax
+******
+``# include <cppad/base_require.hpp>``
 
-$head Purpose$$
+Purpose
+*******
 This section lists the requirements for the type
-$icode Base$$ so that the type $codei%AD<%Base%>%$$ can be used.
+*Base* so that the type ``AD<`` *Base* > can be used.
 
-$head API Warning$$
-Defining a CppAD $icode Base$$ type is an advanced use of CppAD.
+API Warning
+***********
+Defining a CppAD *Base* type is an advanced use of CppAD.
 This part of the CppAD API changes with time. The most common change
 is adding more requirements.
-Search for $code base_require$$ in the
-current $cref whats_new$$ section for these changes.
+Search for ``base_require`` in the
+current :ref:`whats_new-name` section for these changes.
 
-$head Standard Base Types$$
-In the case where $icode Base$$ is
-$code float$$,
-$code double$$,
-$code std::complex<float>$$,
-$code std::complex<double>$$,
-or $codei%AD<%Other%>%$$,
+Standard Base Types
+*******************
+In the case where *Base* is
+``float`` ,
+``double`` ,
+``std::complex<float>`` ,
+``std::complex<double>`` ,
+or ``AD<`` *Other* > ,
 these requirements are provided by including the file
-$code cppad/cppad.hpp$$.
-In the documentation, The notation $latex \B{R}$$ denotes
+``cppad/cppad.hpp`` .
+In the documentation, The notation :math:`\B{R}` denotes
 the field corresponding to the base type.
 Multiplication must be commutative for this field,
 but it need not be the reals; e.g., the complex numbers.
 
-$head Include Order$$
+Include Order
+*************
 If you are linking a non-standard base type to CppAD,
-you must first include the file $code cppad/base_require.hpp$$,
+you must first include the file ``cppad/base_require.hpp`` ,
 then provide the specifications below,
-and then include the file $code cppad/cppad.hpp$$.
+and then include the file ``cppad/cppad.hpp`` .
 
-$head Numeric Type$$
-The type $icode Base$$ must support all the operations for a
-$cref NumericType$$.
+Numeric Type
+************
+The type *Base* must support all the operations for a
+:ref:`NumericType-name` .
 
-$head Output Operator$$
-The type $icode Base$$ must support the syntax
-$codei%
-   %os% << %x%
-%$$
-where $icode os$$ is an $code std::ostream&$$
-and $icode x$$ is a $code const base_alloc&$$.
+Output Operator
+***************
+The type *Base* must support the syntax
+
+   *os* << *x*
+
+where *os* is an ``std::ostream&``
+and *x* is a ``const base_alloc&`` .
 For example, see
-$cref/base_alloc/base_alloc.hpp/Output Operator/$$.
+:ref:`base_alloc<base_alloc.hpp@Output Operator>` .
 
-$head Integer$$
-The type $icode Base$$ must support the syntax
-$codei%
-   %i% = CppAD::Integer(%x%)
-%$$
-which converts $icode x$$ to an $code int$$.
-The argument $icode x$$ has prototype
-$codei%
-   const %Base%& %x%
-%$$
-and the return value $icode i$$ has prototype
-$codei%
-   int %i%
-%$$
+Integer
+*******
+The type *Base* must support the syntax
 
-$subhead Suggestion$$
-In many cases, the $icode Base$$ version of the $code Integer$$ function
+   *i* = ``CppAD::Integer`` ( *x* )
+
+which converts *x* to an ``int`` .
+The argument *x* has prototype
+
+   ``const`` *Base* & *x*
+
+and the return value *i* has prototype
+
+   ``int`` *i*
+
+Suggestion
+==========
+In many cases, the *Base* version of the ``Integer`` function
 can be defined by
-$codei%
-namespace CppAD {
-   inline int Integer(const %Base%& x)
-   {  return static_cast<int>(x); }
-}
-%$$
-For example, see
-$cref/base_float/base_float.hpp/Integer/$$ and
-$cref/base_alloc/base_alloc.hpp/Integer/$$.
 
-$head Absolute Zero, azmul$$
-The type $icode Base$$ must support the syntax
-$codei%
-   %z% = azmul(%x%, %y%)
-%$$
-see; $cref azmul$$.
+| ``namespace CppAD`` {
+| |tab| ``inline int Integer`` ( ``const`` *Base* & ``x`` )
+| |tab| { ``return static_cast<int>`` ( ``x`` ); }
+| }
+
+For example, see
+:ref:`base_float<base_float.hpp@Integer>` and
+:ref:`base_alloc<base_alloc.hpp@Integer>` .
+
+Absolute Zero, azmul
+********************
+The type *Base* must support the syntax
+
+   *z* = ``azmul`` ( *x* , *y* )
+
+see; :ref:`azmul-name` .
 The following preprocessor macro invocation suffices
-(for most $icode Base$$ types):
-$codei%
-namespace CppAD {
-   CPPAD_AZMUL(%Base%)
-}
-%$$
+(for most *Base* types):
+
+| ``namespace CppAD`` {
+| |tab| ``CPPAD_AZMUL`` ( *Base* )
+| }
+
 where the macro is defined by
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # define CPPAD_AZMUL(Base) \
    inline Base azmul(const Base& x, const Base& y) \
    {  Base zero(0.0);   \
@@ -125,21 +123,24 @@ $srccode%cpp% */
          return zero;  \
       return x * y;     \
    }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$childtable%
-   omh/base_require/base_member.omh%
-   include/cppad/core/base_cond_exp.hpp%
-   omh/base_require/base_identical.omh%
-   omh/base_require/base_ordered.omh%
-   include/cppad/core/base_std_math.hpp%
-   include/cppad/core/base_limits.hpp%
-   include/cppad/core/base_to_string.hpp%
-   include/cppad/core/base_hash.hpp%
-   omh/base_require/base_example.omh
-%$$
+Contents
+********
+{xrst_toc_table
+   xrst/base_require/base_member.xrst
+   include/cppad/core/base_cond_exp.hpp
+   xrst/base_require/base_identical.xrst
+   xrst/base_require/base_ordered.xrst
+   include/cppad/core/base_std_math.hpp
+   include/cppad/core/base_limits.hpp
+   include/cppad/core/base_to_string.hpp
+   include/cppad/core/base_hash.hpp
+   xrst/base_require/base_example.xrst
+}
 
-$end
+{xrst_end base_require}
 */
 
 // definitions that must come before base implementations

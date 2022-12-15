@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin example_abs_normal}
+{xrst_spell
+   bernt
+   griewank
+   radons
+   streubel
+   uwe
+}
+
+Examples and Tests: Abs-normal Representation of Non-Smooth Functions
+#####################################################################
+
+Reference
+*********
+Andreas Griewank, Jens-Uwe Bernt, Manuel Radons, Tom Streubel,
+*Solving piecewise linear systems in abs-normal form* ,
+Linear Algebra and its Applications,
+vol. 471 (2015), pages 500-530.
+
+Contents
+********
+{xrst_toc_table
+   example/abs_normal/get_started.cpp
+   example/abs_normal/abs_print_mat.hpp
+   example/abs_normal/abs_eval.hpp
+   example/abs_normal/simplex_method.hpp
+   example/abs_normal/lp_box.hpp
+   example/abs_normal/abs_min_linear.hpp
+   example/abs_normal/min_nso_linear.hpp
+   example/abs_normal/qp_interior.hpp
+   example/abs_normal/qp_box.hpp
+   example/abs_normal/abs_min_quad.hpp
+   example/abs_normal/min_nso_quad.hpp
+}
+
+{xrst_end example_abs_normal}

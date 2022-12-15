@@ -3,170 +3,205 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ipopt_solve_ode_inverse.cpp$$
-$spell
-$$
+{xrst_begin ipopt_solve_ode_inverse.cpp}
+{xrst_spell
+   np
+   nz
+   trapezoidal
+}
 
-$section ODE Inverse Problem Definitions: Source Code$$
+ODE Inverse Problem Definitions: Source Code
+############################################
 
-
-$head Purpose$$
+Purpose
+*******
 This example demonstrates how to invert for parameters
 in a ODE where the solution of the ODE is numerically approximated.
 
-$head Forward Problem$$
+Forward Problem
+***************
 We consider the following ordinary differential equation:
-$latex \[
-\begin{array}{rcl}
-   \partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
-   \\
-   \partial_t y_1 (t , a )  & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      \partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
+      \\
+      \partial_t y_1 (t , a )  & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
+   \end{eqnarray}
+
 with the initial conditions
-$latex \[
+
+.. math::
+
    y_0 (0 , a) = ( a_0 , 0 )^\R{T}
-\] $$
+
 Our forward problem is stated as follows:
-Given $latex a \in \B{R}^3$$
-determine the value of $latex y ( t , a ) $$,
-for $latex t \in R$$, that solves the initial value problem above.
+Given :math:`a \in \B{R}^3`
+determine the value of :math:`y ( t , a )`,
+for :math:`t \in R`, that solves the initial value problem above.
 
-$head Measurements$$
-Suppose we are also given measurement times $latex s \in \B{R}^5$$
-and  a measurement vector $latex z \in \B{R}^4$$
-and for $latex i = 0, \ldots, 3$$, we model $latex z_i$$ by
-$latex \[
+Measurements
+************
+Suppose we are also given measurement times :math:`s \in \B{R}^5`
+and  a measurement vector :math:`z \in \B{R}^4`
+and for :math:`i = 0, \ldots, 3`, we model :math:`z_i` by
+
+.. math::
+
    z_i = y_1 ( s_{i+1} , a) + e_i
-\] $$
-where $latex e_{i-1} \sim {\bf N} (0 , \sigma^2 )$$
-is the measurement noise,
-and $latex \sigma > 0$$ is the standard deviation of the noise.
 
-$subhead Simulation Analytic Solution$$
+where :math:`e_{i-1} \sim {\bf N} (0 , \sigma^2 )`
+is the measurement noise,
+and :math:`\sigma > 0` is the standard deviation of the noise.
+
+Simulation Analytic Solution
+============================
 The following analytic solution to the forward problem is used
 to simulate a data set:
-$latex \[
-\begin{array}{rcl}
-   y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
-   \\
-   y_1 (t , a) & = &
-   a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
-\end{array}
-\] $$
 
-$subhead Simulation Parameter Values$$
-$table
-$latex \bar{a}_0 = 1$$ $pre $$ $cnext
-   initial value of $latex y_0 (t, a)$$
-$rnext
-$latex \bar{a}_1 = 2$$ $pre $$ $cnext
-   transfer rate from compartment zero to compartment one
-$rnext
-$latex \bar{a}_2 = 1$$ $pre $$ $cnext
-   transfer rate from compartment one to outside world
-$rnext
-$latex \sigma = 0$$ $pre $$ $cnext
-   standard deviation of measurement noise
-$rnext
-$latex e_i = 0$$ $pre $$ $cnext
-   simulated measurement noise, $latex i = 1 , \ldots , Nz$$
-$rnext
-$latex s_i = i * .5$$ $pre $$ $cnext
-   time corresponding to the $th i$$ measurement,
-   $latex i = 0 , \ldots , 3$$
-$tend
+.. math::
+   :nowrap:
 
-$subhead Simulated Measurement Values$$
+   \begin{eqnarray}
+      y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
+      \\
+      y_1 (t , a) & = &
+      a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
+   \end{eqnarray}
+
+Simulation Parameter Values
+===========================
+
+.. list-table::
+
+   * - :math:`\bar{a}_0 = 1`
+     - initial value of :math:`y_0 (t, a)`
+   * - :math:`\bar{a}_1 = 2`
+     - transfer rate from compartment zero to compartment one
+   * - :math:`\bar{a}_2 = 1`
+     - transfer rate from compartment one to outside world
+   * - :math:`\sigma = 0`
+     - standard deviation of measurement noise
+   * - :math:`e_i = 0`
+     - simulated measurement noise, :math:`i = 1 , \ldots , Nz`
+   * - :math:`s_i = i * .5`
+     - time corresponding to the *i*-th measurement,
+       :math:`i = 0 , \ldots , 3`
+
+Simulated Measurement Values
+============================
 The simulated measurement values are given by the equation
-$latex \[
-\begin{array}{rcl}
-z_i
-& = &  e_i + y_1 ( s_{i+1} , \bar{a} )
-\\
-& = &
-\bar{a}_0 * \bar{a}_1 *
-   \frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
-      { \bar{a}_1 - \bar{a}_2 }
-\end{array}
-\] $$
-for $latex i = 0, \ldots , 3$$.
 
+.. math::
+   :nowrap:
 
-$head Inverse Problem$$
-The maximum likelihood estimate for $latex a$$ given $latex z$$
-solves the following optimization problem
-$latex \[
-\begin{array}{rcl}
-{\rm minimize} \;
-   & \sum_{i=0}^3 ( z_i - y_1 ( s_{i+1} , a ) )^2
-   & \;{\rm w.r.t} \; a \in \B{R}^3
-\end{array}
-\] $$
-
-$head Trapezoidal Approximation$$
-We are given a number of approximation points per measurement interval
-$latex np$$ and define the time grid $latex t \in \B{R}^{4 \cdot np + 1}$$
-as follows:
-$latex t_0 = s_0$$ and
-for $latex i = 0 , 1 , 2, 3$$, $latex j = 1 , \ldots , np$$
-$latex \[
-   t_{i \cdot np + j} = s_i + (s_{i+1} - s{i}) \frac{i}{np}
-\] $$
-We note that for $latex i = 1 , \ldots , 4$$,
-$latex t_{i \cdot np} = s_i$$.
-This example uses a trapezoidal approximation to solve the ODE.
-Given $latex a \in \B{R}^3$$ and $latex y^{k-1} \approx y( t_{k-1} , a )$$,
-the a trapezoidal method approximates $latex y ( t_j , a )$$
-by the value $latex y^k \in \B{R}^2$$ ) that solves the equation
-$latex \[
-y^k  =  y^{k-1} + \frac{G( y^k , a ) + G( y^{k-1} , a ) }{2} * (t_k - t_{k-1})
-\] $$
-where $latex G : \B{R}^2 \times \B{R}^3 \rightarrow \B{R}^2$$ is defined by
-$latex \[
-\begin{array}{rcl}
-   G_0 ( y , a ) & = & - a_1 * y_0
+   \begin{eqnarray}
+   z_i
+   & = &  e_i + y_1 ( s_{i+1} , \bar{a} )
    \\
-   G_1 ( y , a ) & = & + a_1 * y_0  - a_2 * y_1
-\end{array}
-\] $$
+   & = &
+   \bar{a}_0 * \bar{a}_1 *
+      \frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
+         { \bar{a}_1 - \bar{a}_2 }
+   \end{eqnarray}
 
-$head Solution Method$$
+for :math:`i = 0, \ldots , 3`.
+
+Inverse Problem
+***************
+The maximum likelihood estimate for :math:`a` given :math:`z`
+solves the following optimization problem
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   {\rm minimize} \;
+      & \sum_{i=0}^3 ( z_i - y_1 ( s_{i+1} , a ) )^2
+      & \;{\rm w.r.t} \; a \in \B{R}^3
+   \end{eqnarray}
+
+Trapezoidal Approximation
+*************************
+We are given a number of approximation points per measurement interval
+:math:`np` and define the time grid :math:`t \in \B{R}^{4 \cdot np + 1}`
+as follows:
+:math:`t_0 = s_0` and
+for :math:`i = 0 , 1 , 2, 3`, :math:`j = 1 , \ldots , np`
+
+.. math::
+
+   t_{i \cdot np + j} = s_i + (s_{i+1} - s{i}) \frac{i}{np}
+
+We note that for :math:`i = 1 , \ldots , 4`,
+:math:`t_{i \cdot np} = s_i`.
+This example uses a trapezoidal approximation to solve the ODE.
+Given :math:`a \in \B{R}^3` and :math:`y^{k-1} \approx y( t_{k-1} , a )`,
+the a trapezoidal method approximates :math:`y ( t_j , a )`
+by the value :math:`y^k \in \B{R}^2` ) that solves the equation
+
+.. math::
+
+   y^k  =  y^{k-1} + \frac{G( y^k , a ) + G( y^{k-1} , a ) }{2} * (t_k - t_{k-1})
+
+where :math:`G : \B{R}^2 \times \B{R}^3 \rightarrow \B{R}^2` is defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      G_0 ( y , a ) & = & - a_1 * y_0
+      \\
+      G_1 ( y , a ) & = & + a_1 * y_0  - a_2 * y_1
+   \end{eqnarray}
+
+Solution Method
+***************
 We use constraints to embed the
 forward problem in the inverse problem.
 To be specific, we solve the optimization problem
-$latex \[
-\begin{array}{rcl}
-{\rm minimize}
-& \sum_{i=0}^3 ( z_i - y_1^{(i+1) \cdot np} )^2
-& \; {\rm w.r.t} \; a \in \B{R}^3
-   \; y^0 \in \B{R}^2 , \ldots , y^{3 \cdot np -1} \in \B{R}^2
-\\
-{\rm subject \; to}
-   0 = y^0 - ( a_0 , 0 )^\R{T}
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   {\rm minimize}
+   & \sum_{i=0}^3 ( z_i - y_1^{(i+1) \cdot np} )^2
+   & \; {\rm w.r.t} \; a \in \B{R}^3
+      \; y^0 \in \B{R}^2 , \ldots , y^{3 \cdot np -1} \in \B{R}^2
    \\
-   & 0 = y^k  -  y^{k-1} -
-   \frac{G( y^k , a ) + G( y^{k-1} , a ) }{2}  (t_k - t_{k-1})
-   & \; {\rm for} \; k = 1 , \ldots , 4 \cdot np
-\end{array}
-\] $$
+   {\rm subject \; to}
+      0 = y^0 - ( a_0 , 0 )^\R{T}
+      \\
+      & 0 = y^k  -  y^{k-1} -
+      \frac{G( y^k , a ) + G( y^{k-1} , a ) }{2}  (t_k - t_{k-1})
+      & \; {\rm for} \; k = 1 , \ldots , 4 \cdot np
+   \end{eqnarray}
+
 The code below we using the notation
-$latex x \in \B{3 + (4 \cdot np + 1) \cdot 2}$$ defined by
-$latex \[
+:math:`x \in \B{3 + (4 \cdot np + 1) \cdot 2}` defined by
+
+.. math::
+
    x = \left(
       a_0, a_1, a_2 ,
       y_0^0, y_1^0,
       \ldots ,
       y_0^{4 \cdot np}, y_1^{4 \cdots np}
    \right)
-\] $$
 
-$head Source$$
+Source
+******
 The following source code
 implements the ODE inversion method proposed above:
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ipopt_solve_ode_inverse.cpp}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

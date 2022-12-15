@@ -4,19 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin bool_fun.cpp$$
-$spell
-   bool
-   Geq
-   Cpp
-$$
+{xrst_begin bool_fun.cpp}
 
-$section AD Boolean Functions: Example and Test$$
+AD Boolean Functions: Example and Test
+######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end bool_fun.cpp}
 */
 // BEGIN C++
 

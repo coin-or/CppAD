@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ad_output.cpp$$
-$spell
-   Cpp
-   cstddef
-$$
+{xrst_begin ad_output.cpp}
 
-$section AD Output Operator: Example and Test$$
+AD Output Operator: Example and Test
+####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end ad_output.cpp}
 */
 // BEGIN C++
 

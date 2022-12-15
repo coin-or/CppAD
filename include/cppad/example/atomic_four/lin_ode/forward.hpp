@@ -5,79 +5,87 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_forward.hpp$$
-$spell
-   lin
-   Taylor
-$$
+{xrst_begin atomic_four_lin_ode_forward.hpp}
 
-$section
 Atomic Linear ODE Forward Mode: Example Implementation
-$$
+######################################################
 
-$head Purpose$$
-The $code forward$$ routine overrides the virtual functions
+Purpose
+*******
+The ``forward`` routine overrides the virtual functions
 used by the atomic_four base; see
-$cref/forward/atomic_four_forward/$$.
+:ref:`forward<atomic_four_forward-name>` .
 
-$head Theory$$
+Theory
+******
 Suppose we are given Taylor coefficients
-$latex x^0$$, $latex x^1$$, for
-$cref/x/atomic_four_lin_ode/x/$$.
+:math:`x^0`, :math:`x^1`, for
+:ref:`atomic_four_lin_ode@x` .
 The zero order Taylor coefficient for
-$cref/z(t, x)/atomic_four_lin_ode/z(t, x)/$$ solves
+:ref:`atomic_four_lin_ode@z(t, x)` solves
 the following initial value ODE:
-$latex \[
+
+.. math::
+
    z_t^0 (t) = A^0 z(t) \W{,} z^0 (0) = b^0
-\] $$
-Note that $latex A^0$$ and $latex b^0$$
-are just certain components of $latex x^0$$; see
-$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$ and
-$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$.
-The first order Taylor coefficient for $latex z(t, x)$$ solves
+
+Note that :math:`A^0` and :math:`b^0`
+are just certain components of :math:`x^0`; see
+:ref:`atomic_four_lin_ode@x@A(x)` and
+:ref:`atomic_four_lin_ode@x@b(x)` .
+The first order Taylor coefficient for :math:`z(t, x)` solves
 the following initial value ODE:
-$latex \[
+
+.. math::
+
    z_t^1 (t)
    =
    A^0 z^1 (t) + A^1 z^0 (t) \W{,} z^1 (0) = b^1
-\] $$
-Note that $latex A^1$$ and $latex c^1$$
-are just certain components of $latex x^1$$.
-We can solve for $latex z^1 (t)$$ using the following extended
+
+Note that :math:`A^1` and :math:`c^1`
+are just certain components of :math:`x^1`.
+We can solve for :math:`z^1 (t)` using the following extended
 initial value ODE:
-$latex \[
-\left[ \begin{array}{c}
-z^0_t (t, x) \\
-z^1_t (t, x)
-\end{array} \right]
-=
-\left[ \begin{array}{cc}
-A^0 & 0   \\
-A^1 & A^0
-\end{array} \right]
-\left[ \begin{array}{c}
-z^0 (t, x) \\
-z^1 (t, x)
-\end{array} \right]
-\; , \;
-\left[ \begin{array}{c}
-z^0 (0, x) \\
-z^1 (0, x)
-\end{array} \right]
-=
-\left[ \begin{array}{c}
-b^0 \\
-b^1
-\end{array} \right]
-\] $$
 
-$head extend_ode$$
+.. math::
+
+   \left[ \begin{array}{c}
+   z^0_t (t, x) \\
+   z^1_t (t, x)
+   \end{array} \right]
+   =
+   \left[ \begin{array}{cc}
+   A^0 & 0   \\
+   A^1 & A^0
+   \end{array} \right]
+   \left[ \begin{array}{c}
+   z^0 (t, x) \\
+   z^1 (t, x)
+   \end{array} \right]
+   \; , \;
+   \left[ \begin{array}{c}
+   z^0 (0, x) \\
+   z^1 (0, x)
+   \end{array} \right]
+   =
+   \left[ \begin{array}{c}
+   b^0 \\
+   b^1
+   \end{array} \right]
+
+extend_ode
+**********
 The extended system above is created form the original system by the
-$code extend_ode$$ function defined below:
+``extend_ode`` function defined below:
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_forward.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>

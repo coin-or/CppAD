@@ -4,36 +4,38 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin cond_exp.cpp$$
-$spell
-   Cpp
-   cstddef
-   CondExp
-$$
+{xrst_begin cond_exp.cpp}
 
-$section Conditional Expressions: Example and Test$$
+Conditional Expressions: Example and Test
+#########################################
 
-$head See Also$$
-$cref optimize_conditional_skip.cpp$$
+See Also
+********
+:ref:`optimize_conditional_skip.cpp-name`
 
+Description
+***********
+Use ``CondExp`` to compute
 
-$head Description$$
-Use $code CondExp$$ to compute
-$latex \[
+.. math::
+
    f(x) = \sum_{j=0}^{m-1} x_j \log( x_j )
-\] $$
+
 and its derivative at various argument values
-( where $latex x_j \geq 0$$ )
+( where :math:`x_j \geq 0` )
 with out having to re-tape; i.e.,
-using only one $cref ADFun$$ object.
-Note that $latex x_j \log ( x_j ) \rightarrow 0 $$
-as $latex x_j \downarrow 0$$ and
-we need to handle the case $latex x_j = 0$$
+using only one :ref:`ADFun-name` object.
+Note that :math:`x_j \log ( x_j ) \rightarrow 0`
+as :math:`x_j \downarrow 0` and
+we need to handle the case :math:`x_j = 0`
 in a special way to avoid returning zero times minus infinity.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end cond_exp.cpp}
 */
 // BEGIN C++
 

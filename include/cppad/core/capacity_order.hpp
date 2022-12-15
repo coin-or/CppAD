@@ -6,101 +6,105 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin capacity_order$$
-$spell
-   var
-   taylor_
+{xrst_begin capacity_order}
+{xrst_spell
    xq
    yq
-$$
+}
 
+Controlling Taylor Coefficients Memory Allocation
+#################################################
 
-$section Controlling Taylor Coefficients Memory Allocation$$
+Syntax
+******
+*f* . ``capacity_order`` ( *c* )
 
-$head Syntax$$
-$icode%f%.capacity_order(%c%)%$$
+See Also
+========
+:ref:`fun_property-name`
 
-$subhead See Also$$
-$cref fun_property$$
+Purpose
+*******
+The Taylor coefficients calculated by :ref:`Forward-name` mode calculations
+are retained in an :ref:`ADFun-name` object for subsequent use during
+:ref:`Reverse-name` mode and higher order Forward mode calculations.
+For example, a call to :ref:`Forward<forward_order-name>` with the syntax
 
-$head Purpose$$
-The Taylor coefficients calculated by $cref Forward$$ mode calculations
-are retained in an $cref ADFun$$ object for subsequent use during
-$cref Reverse$$ mode and higher order Forward mode calculations.
-For example, a call to $cref/Forward/forward_order/$$ with the syntax
-$codei%
-      %yq% = %f%.Forward(%q%, %xq%)
-%$$
-where $icode%q% > 0%$$ and  $icode%xq%.size() == %f%.Domain()%$$,
+   *yq* = *f* . ``Forward`` ( *q* , *xq* )
+
+where *q*  > 0 and  *xq* . ``size`` () == *f* . ``Domain`` () ,
 uses the lower order Taylor coefficients and
-computes the $th q$$ order Taylor coefficients for all
-the variables in the operation sequence corresponding to $icode f$$.
-The $code capacity_order$$ operation allows you to control that
+computes the *q*-th order Taylor coefficients for all
+the variables in the operation sequence corresponding to *f* .
+The ``capacity_order`` operation allows you to control that
 amount of memory that is retained by an AD function object
-(to hold $code Forward$$ results for subsequent calculations).
+(to hold ``Forward`` results for subsequent calculations).
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
+f
+*
+The object *f* has prototype
 
-$head c$$
-The argument $icode c$$ has prototype
-$codei%
-   size_t %c%
-%$$
+   ``ADFun<`` *Base* > *f*
+
+c
+*
+The argument *c* has prototype
+
+   ``size_t`` *c*
+
 It specifies the number of Taylor coefficient orders that are allocated
-in the AD operation sequence corresponding to $icode f$$.
+in the AD operation sequence corresponding to *f* .
 
-$subhead Pre-Allocating Memory$$
-If you plan to make calls to $code Forward$$ with the maximum value of
-$icode q$$ equal to $icode Q$$,
+Pre-Allocating Memory
+=====================
+If you plan to make calls to ``Forward`` with the maximum value of
+*q* equal to *Q* ,
 it should be faster to pre-allocate memory for these calls using
-$codei%
-   %f%.capacity_order(%c%)
-%$$
-with $icode c$$ equal to $latex Q + 1$$.
-If you do no do this, $code Forward$$ will automatically allocate memory
-and will copy the results to a larger buffer, when necessary.
-$pre
 
-$$
-Note that each call to $cref Dependent$$ frees the old memory
+   *f* . ``capacity_order`` ( *c* )
+
+with *c* equal to :math:`Q + 1`.
+If you do no do this, ``Forward`` will automatically allocate memory
+and will copy the results to a larger buffer, when necessary.
+
+Note that each call to :ref:`Dependent-name` frees the old memory
 connected to the function object and sets the corresponding
 taylor capacity to zero.
 
-$subhead Freeing Memory$$
-If you no longer need the Taylor coefficients of order $icode q$$
-and higher (that are stored in $icode f$$),
-you can reduce the memory allocated to $icode f$$ using
-$codei%
-   %f%.capacity_order(%c%)
-%$$
-with $icode c$$ equal to $icode q$$.
-Note that, if $cref ta_hold_memory$$ is true, this memory is not actually
+Freeing Memory
+==============
+If you no longer need the Taylor coefficients of order *q*
+and higher (that are stored in *f* ),
+you can reduce the memory allocated to *f* using
+
+   *f* . ``capacity_order`` ( *c* )
+
+with *c* equal to *q* .
+Note that, if :ref:`ta_hold_memory-name` is true, this memory is not actually
 returned to the system, but rather held for future use by the same thread.
 
-$head Original State$$
-If $icode f$$ is $cref/constructed/fun_construct/$$ with the syntax
-$codei%
-   ADFun<%Base%> %f%(%x%, %y%)
-%$$,
-there is an implicit call to $cref forward_zero$$ with $icode xq$$ equal to
-the value of the
-$cref/independent variables/glossary/Tape/Independent Variable/$$
-when the AD operation sequence was recorded.
-This corresponds to $icode%c% == 1%$$.
+Original State
+**************
+If *f* is :ref:`constructed<fun_construct-name>` with the syntax
 
-$children%
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+,
+there is an implicit call to :ref:`forward_zero-name` with *xq* equal to
+the value of the
+:ref:`independent variables<glossary@Tape@Independent Variable>`
+when the AD operation sequence was recorded.
+This corresponds to *c*  == 1 .
+{xrst_toc_hidden
    example/general/capacity_order.cpp
-%$$
-$head Example$$
+}
+Example
+*******
 The file
-$cref capacity_order.cpp$$
+:ref:`capacity_order.cpp-name`
 contains an example and test of these operations.
 
-$end
+{xrst_end capacity_order}
 -----------------------------------------------------------------------------
 */
 

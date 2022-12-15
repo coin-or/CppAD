@@ -3,35 +3,41 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cpp_csrc_writer$$
-$spell
-   Cpp
-   src
-   obj
+{xrst_begin cpp_csrc_writer}
+{xrst_spell
    csrc
-$$
+}
 
-$section Converts Cpp Graph to C Source$$
+Converts Cpp Graph to C Source
+##############################
 
-$head Syntax$$
-$code csrc_writer(%os%, %graph_obj%, %c_type%)
-%$$
+Syntax
+******
+``csrc_writer(%os%, %graph_obj%, %c_type%)``
+``%``
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head os$$
-The C source code corresponding to the function is written to $icode os$$.
+os
+**
+The C source code corresponding to the function is written to *os* .
 
-$head graph$$
+graph
+*****
 is the C++ graph representation of the function.
 
-$head c_type$$
+c_type
+******
 this specifies the type corresponding to the C source code and must
 be one of the following:
-$code float$$, $code double$$, or $code long_double$$.
+``float`` , ``double`` , or ``long_double`` .
 
-$end
+{xrst_end cpp_csrc_writer}
 */
 
 # include <cppad/local/pod_vector.hpp>

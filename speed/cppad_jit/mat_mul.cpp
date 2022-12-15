@@ -3,20 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_jit_mat_mul.cpp$$
-$spell
-   cppad_jit
-$$
+{xrst_begin cppad_jit_mat_mul.cpp}
 
-$section cppad_jit Speed: Matrix Multiplication$$
+cppad_jit Speed: Matrix Multiplication
+######################################
 
+Specifications
+**************
+:ref:`link_mat_mul-name`
 
-$head Specifications$$
-$cref link_mat_mul$$
-
-$head Implementation$$
+Implementation
+**************
 // a cppad_jit version of this test is not yet implemented
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <map>
 # include <cppad/utility/vector.hpp>
 
@@ -30,6 +30,8 @@ bool link_mat_mul(
    CppAD::vector<double>&           z        ,
    CppAD::vector<double>&           dz       )
 {  return false; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_jit_mat_mul.cpp}
 */

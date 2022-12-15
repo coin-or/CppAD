@@ -3,31 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_mat_mul.cpp$$
-$spell
-   cppad
-   mul
-   hpp
-   bool
-   onetape
-   sq
-   var
-   std::cout
-   endl
-   CppAD
-   dz
-   typedef
-$$
+{xrst_begin cppad_mat_mul.cpp}
 
-$section CppAD Speed, Matrix Multiplication$$
+CppAD Speed, Matrix Multiplication
+##################################
 
+Specifications
+**************
+See :ref:`link_mat_mul-name` .
 
-$head Specifications$$
-See $cref link_mat_mul$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -182,6 +171,8 @@ bool link_mat_mul(
 
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_mat_mul.cpp}
 */

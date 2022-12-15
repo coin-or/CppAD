@@ -6,196 +6,205 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin LuRatio$$
-$spell
-   cppad.hpp
-   xk
-   Cpp
-   Lu
-   bool
-   const
-   ip
+{xrst_begin LuRatio}
+{xrst_spell
    jp
-   std
-   ADvector
-$$
+   permuted
+   revaluate
+   xk
+}
 
+LU Factorization of A Square Matrix and Stability Calculation
+#############################################################
 
-$section LU Factorization of A Square Matrix and Stability Calculation$$
+Syntax
+******
+``# include <cppad/cppad.hpp>``
 
-$head Syntax$$
-$code # include <cppad/cppad.hpp>$$
-$pre
-$$
-$icode%sign% = LuRatio(%ip%, %jp%, %LU%, %ratio%)%$$
+*sign* = ``LuRatio`` ( *ip* , *jp* , *LU* , *ratio* )
 
+Description
+***********
+Computes an LU factorization of the matrix *A*
+where *A* is a square matrix.
+A measure of the numerical stability called *ratio* is calculated.
+This ratio is useful when the results of ``LuRatio`` are
+used as part of an :ref:`ADFun-name` object.
 
-$head Description$$
-Computes an LU factorization of the matrix $icode A$$
-where $icode A$$ is a square matrix.
-A measure of the numerical stability called $icode ratio$$ is calculated.
-This ratio is useful when the results of $code LuRatio$$ are
-used as part of an $cref ADFun$$ object.
-
-$head Include$$
+Include
+*******
 This routine is designed to be used with AD objects and
-requires the $code cppad/cppad.hpp$$ file to be included.
+requires the ``cppad/cppad.hpp`` file to be included.
 
-$head Matrix Storage$$
+Matrix Storage
+**************
 All matrices are stored in row major order.
-To be specific, if $latex Y$$ is a vector
-that contains a $latex p$$ by $latex q$$ matrix,
-the size of $latex Y$$ must be equal to $latex  p * q $$ and for
-$latex i = 0 , \ldots , p-1$$,
-$latex j = 0 , \ldots , q-1$$,
-$latex \[
+To be specific, if :math:`Y` is a vector
+that contains a :math:`p` by :math:`q` matrix,
+the size of :math:`Y` must be equal to :math:`p * q` and for
+:math:`i = 0 , \ldots , p-1`,
+:math:`j = 0 , \ldots , q-1`,
+
+.. math::
+
    Y_{i,j} = Y[ i * q + j ]
-\] $$
 
-$head sign$$
-The return value $icode sign$$ has prototype
-$codei%
-   int %sign%
-%$$
-If $icode A$$ is invertible, $icode sign$$ is plus or minus one
+sign
+****
+The return value *sign* has prototype
+
+   ``int`` *sign*
+
+If *A* is invertible, *sign* is plus or minus one
 and is the sign of the permutation corresponding to the row ordering
-$icode ip$$ and column ordering $icode jp$$.
-If $icode A$$ is not invertible, $icode sign$$ is zero.
+*ip* and column ordering *jp* .
+If *A* is not invertible, *sign* is zero.
 
-$head ip$$
-The argument $icode ip$$ has prototype
-$codei%
-   %SizeVector% &%ip%
-%$$
-(see description of $cref/SizeVector/LuFactor/SizeVector/$$ below).
-The size of $icode ip$$ is referred to as $icode n$$ in the
+ip
+**
+The argument *ip* has prototype
+
+   *SizeVector* & *ip*
+
+(see description of :ref:`LuFactor@SizeVector` below).
+The size of *ip* is referred to as *n* in the
 specifications below.
-The input value of the elements of $icode ip$$ does not matter.
-The output value of the elements of $icode ip$$ determine
+The input value of the elements of *ip* does not matter.
+The output value of the elements of *ip* determine
 the order of the rows in the permuted matrix.
 
-$head jp$$
-The argument $icode jp$$ has prototype
-$codei%
-   %SizeVector% &%jp%
-%$$
-(see description of $cref/SizeVector/LuFactor/SizeVector/$$ below).
-The size of $icode jp$$ must be equal to $icode n$$.
-The input value of the elements of $icode jp$$ does not matter.
-The output value of the elements of $icode jp$$ determine
+jp
+**
+The argument *jp* has prototype
+
+   *SizeVector* & *jp*
+
+(see description of :ref:`LuFactor@SizeVector` below).
+The size of *jp* must be equal to *n* .
+The input value of the elements of *jp* does not matter.
+The output value of the elements of *jp* determine
 the order of the columns in the permuted matrix.
 
-$head LU$$
-The argument $icode LU$$ has the prototype
-$codei%
-   %ADvector% &%LU%
-%$$
-and the size of $icode LU$$ must equal $latex n * n$$
-(see description of $cref/ADvector/LuRatio/ADvector/$$ below).
+LU
+**
+The argument *LU* has the prototype
 
-$subhead A$$
-We define $icode A$$ as the matrix corresponding to the input
-value of $icode LU$$.
+   *ADvector* & *LU*
 
-$subhead P$$
-We define the permuted matrix $icode P$$ in terms of $icode A$$ by
-$codei%
-   %P%(%i%, %j%) = %A%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
+and the size of *LU* must equal :math:`n * n`
+(see description of :ref:`LuRatio@ADvector` below).
 
-$subhead L$$
-We define the lower triangular matrix $icode L$$ in terms of the
-output value of $icode LU$$.
-The matrix $icode L$$ is zero above the diagonal
+A
+=
+We define *A* as the matrix corresponding to the input
+value of *LU* .
+
+P
+=
+We define the permuted matrix *P* in terms of *A* by
+
+   *P* ( *i* , *j* ) = *A* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+L
+=
+We define the lower triangular matrix *L* in terms of the
+output value of *LU* .
+The matrix *L* is zero above the diagonal
 and the rest of the elements are defined by
-$codei%
-   %L%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
-for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , i$$.
 
-$subhead U$$
-We define the upper triangular matrix $icode U$$ in terms of the
-output value of $icode LU$$.
-The matrix $icode U$$ is zero below the diagonal,
+   *L* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , i`.
+
+U
+=
+We define the upper triangular matrix *U* in terms of the
+output value of *LU* .
+The matrix *U* is zero below the diagonal,
 one on the diagonal,
 and the rest of the elements are defined by
-$codei%
-   %U%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
-for $latex i = 0 , \ldots , n-2$$ and $latex j = i+1 , \ldots , n-1$$.
 
-$subhead Factor$$
-If the return value $icode sign$$ is non-zero,
-$codei%
-   %L% * %U% = %P%
-%$$
-If the return value of $icode sign$$ is zero,
-the contents of $icode L$$ and $icode U$$ are not defined.
+   *U* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
 
-$subhead Determinant$$
-If the return value $icode sign$$ is zero,
-the determinant of $icode A$$ is zero.
-If $icode sign$$ is non-zero,
-using the output value of $icode LU$$
-the determinant of the matrix $icode A$$ is equal to
-$codei%
-%sign% * %LU%[%ip%[0], %jp%[0]] * %...% * %LU%[%ip%[%n%-1], %jp%[%n%-1]]
-%$$
+for :math:`i = 0 , \ldots , n-2` and :math:`j = i+1 , \ldots , n-1`.
 
-$head ratio$$
-The argument $icode ratio$$ has prototype
-$codei%
-   AD<%Base%> &%ratio%
-%$$
-On input, the value of $icode ratio$$ does not matter.
+Factor
+======
+If the return value *sign* is non-zero,
+
+   *L* * *U* = *P*
+
+If the return value of *sign* is zero,
+the contents of *L* and *U* are not defined.
+
+Determinant
+===========
+If the return value *sign* is zero,
+the determinant of *A* is zero.
+If *sign* is non-zero,
+using the output value of *LU*
+the determinant of the matrix *A* is equal to
+
+   *sign* * *LU* [ *ip* [0], *jp* [0]] * ... * *LU* [ *ip* [ *n* ``-1`` ], *jp* [ *n* ``-1`` ]]
+
+ratio
+*****
+The argument *ratio* has prototype
+
+   ``AD<`` *Base* > & *ratio*
+
+On input, the value of *ratio* does not matter.
 On output it is a measure of how good the choice of pivots is.
-For $latex p = 0 , \ldots , n-1$$,
-the $th p$$ pivot element is the element of maximum absolute value of a
-$latex (n-p) \times (n-p)$$ sub-matrix.
+For :math:`p = 0 , \ldots , n-1`,
+the *p*-th pivot element is the element of maximum absolute value of a
+:math:`(n-p) \times (n-p)` sub-matrix.
 The ratio of each element of sub-matrix divided by the pivot element
 is computed.
-The return value of $icode ratio$$ is the maximum absolute value of
+The return value of *ratio* is the maximum absolute value of
 such ratios over with respect to all elements and all the pivots.
 
-$subhead Purpose$$
-Suppose that the execution of a call to $code LuRatio$$
-is recorded in the $codei%ADFun<%Base%>%$$ object $icode F$$.
-Then a call to $cref Forward$$ of the form
-$codei%
-   %F%.Forward(%k%, %xk%)
-%$$
-with $icode k$$ equal to zero will revaluate this Lu factorization
-with the same pivots and a new value for $icode A$$.
-In this case, the resulting $icode ratio$$ may not be one.
-If $icode ratio$$ is too large (the meaning of too large is up to you),
-the current pivots do not yield a stable LU factorization of $icode A$$.
-A better choice for the pivots (for this value of $icode A$$)
-will be made if you recreate the $code ADFun$$ object
-starting with the $cref Independent$$ variable values
-that correspond to the vector $icode xk$$.
+Purpose
+=======
+Suppose that the execution of a call to ``LuRatio``
+is recorded in the ``ADFun<`` *Base* > object *F* .
+Then a call to :ref:`Forward-name` of the form
 
-$head SizeVector$$
-The type $icode SizeVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type size_t/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+   *F* . ``Forward`` ( *k* , *xk* )
+
+with *k* equal to zero will revaluate this Lu factorization
+with the same pivots and a new value for *A* .
+In this case, the resulting *ratio* may not be one.
+If *ratio* is too large (the meaning of too large is up to you),
+the current pivots do not yield a stable LU factorization of *A* .
+A better choice for the pivots (for this value of *A* )
+will be made if you recreate the ``ADFun`` object
+starting with the :ref:`Independent-name` variable values
+that correspond to the vector *xk* .
+
+SizeVector
+**********
+The type *SizeVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type size_t<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head ADvector$$
-The type $icode ADvector$$ must be a
-$cref/simple vector class/SimpleVector/$$ with elements of type
-$codei%AD<%Base%>%$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+ADvector
+********
+The type *ADvector* must be a
+:ref:`simple vector class<SimpleVector-name>` with elements of type
+``AD<`` *Base* > .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/lu_ratio.cpp
-%$$
-The file $cref lu_ratio.cpp$$
-contains an example and test of using $code LuRatio$$.
+}
+The file :ref:`lu_ratio.cpp-name`
+contains an example and test of using ``LuRatio`` .
 
-$end
+{xrst_end LuRatio}
 --------------------------------------------------------------------------
 */
 namespace CppAD { // BEGIN CppAD namespace

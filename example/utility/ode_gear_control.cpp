@@ -4,34 +4,40 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ode_gear_control.cpp$$
-$spell
-   Runge
-$$
+{xrst_begin ode_gear_control.cpp}
 
-$section OdeGearControl: Example and Test$$
-
+OdeGearControl: Example and Test
+################################
 
 Define
-$latex X : \B{R} \rightarrow \B{R}^2$$ by
-$latex \[
-\begin{array}{rcl}
-X_0 (t) & = &  - \exp ( - w_0 t )  \\
-X_1 (t) & = & \frac{w_0}{w_1 - w_0} [ \exp ( - w_0 t ) - \exp( - w_1 t )]
-\end{array}
-\] $$
-It follows that $latex X_0 (0) = 1$$, $latex X_1 (0) = 0$$ and
-$latex \[
-\begin{array}{rcl}
-   X_0^{(1)} (t) & = & - w_0 X_0 (t)  \\
-   X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t)
-\end{array}
-\] $$
+:math:`X : \B{R} \rightarrow \B{R}^2` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   X_0 (t) & = &  - \exp ( - w_0 t )  \\
+   X_1 (t) & = & \frac{w_0}{w_1 - w_0} [ \exp ( - w_0 t ) - \exp( - w_1 t )]
+   \end{eqnarray}
+
+It follows that :math:`X_0 (0) = 1`, :math:`X_1 (0) = 0` and
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X_0^{(1)} (t) & = & - w_0 X_0 (t)  \\
+      X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t)
+   \end{eqnarray}
+
 The example tests OdeGearControl using the relations above:
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ode_gear_control.cpp}
 */
 // BEGIN C++
 

@@ -6,119 +6,123 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin NearEqual$$
-$spell
-   cppad.hpp
-   sqrt
+{xrst_begin NearEqual}
+{xrst_spell
    cout
    endl
-   Microsoft
-   std
-   Cpp
-   namespace
-   const
-   bool
-$$
+}
 
-$section Determine if Two Values Are Nearly Equal$$
+Determine if Two Values Are Nearly Equal
+########################################
 
+Syntax
+******
 
-$head Syntax$$
+   # ``include <cppad/utility/near_equal.hpp>``
 
-$codei%# include <cppad/utility/near_equal.hpp>
-%$$
-$icode%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
+*b* = ``NearEqual`` ( *x* , *y* , *r* , *a* )
 
-
-$head Purpose$$
+Purpose
+*******
 Returns true,
-if $icode x$$ and $icode y$$ are nearly equal,
+if *x* and *y* are nearly equal,
 and false otherwise.
 
-$head x$$
-The argument $icode x$$
+x
+*
+The argument *x*
 has one of the following possible prototypes
-$codei%
-   const %Type%               &%x%,
-   const std::complex<%Type%> &%x%,
-%$$
 
-$head y$$
-The argument $icode y$$
+| |tab| ``const`` *Type* & *x* ,
+| |tab| ``const std::complex<`` *Type* > & *x* ,
+
+y
+*
+The argument *y*
 has one of the following possible prototypes
-$codei%
-   const %Type%               &%y%,
-   const std::complex<%Type%> &%y%,
-%$$
 
-$head r$$
-The relative error criteria $icode r$$ has prototype
-$codei%
-   const %Type% &%r%
-%$$
+| |tab| ``const`` *Type* & *y* ,
+| |tab| ``const std::complex<`` *Type* > & *y* ,
+
+r
+*
+The relative error criteria *r* has prototype
+
+   ``const`` *Type* & *r*
+
 It must be greater than or equal to zero.
 The relative error condition is defined as:
-$latex \[
-   | x - y | \leq r ( |x| + |y| )
-\] $$
 
-$head a$$
-The absolute error criteria $icode a$$ has prototype
-$codei%
-   const %Type% &%a%
-%$$
+.. math::
+
+   | x - y | \leq r ( |x| + |y| )
+
+a
+*
+The absolute error criteria *a* has prototype
+
+   ``const`` *Type* & *a*
+
 It must be greater than or equal to zero.
 The absolute error condition is defined as:
-$latex \[
-   | x - y | \leq a
-\] $$
 
-$head b$$
-The return value $icode b$$ has prototype
-$codei%
-   bool %b%
-%$$
-If either $icode x$$ or $icode y$$ is infinite or not a number,
+.. math::
+
+   | x - y | \leq a
+
+b
+*
+The return value *b* has prototype
+
+   ``bool`` *b*
+
+If either *x* or *y* is infinite or not a number,
 the return value is false.
 Otherwise, if either the relative or absolute error
 condition (defined above) is satisfied, the return value is true.
 Otherwise, the return value is false.
 
-$head Type$$
-The type $icode Type$$ must be a
-$cref NumericType$$.
-The routine $cref CheckNumericType$$ will generate
+Type
+****
+The type *Type* must be a
+:ref:`NumericType-name` .
+The routine :ref:`CheckNumericType-name` will generate
 an error message if this is not the case.
 In addition, the following operations must be defined objects
-$icode a$$ and $icode b$$ of type $icode Type$$:
-$table
-$bold Operation$$     $cnext
-   $bold Description$$ $rnext
-$icode%a% <= %b%$$  $cnext
-   less that or equal operator (returns a $code bool$$ object)
-$tend
+*a* and *b* of type *Type* :
 
-$head Include Files$$
-The file $code cppad/utility/near_equal.hpp$$
-is included by $code cppad/cppad.hpp$$
+.. list-table::
+
+   * - **Operation**
+     - **Description**
+   * - *a* <= *b*
+     - less that or equal operator (returns a ``bool`` object)
+
+Include Files
+*************
+The file ``cppad/utility/near_equal.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/utility/near_equal.cpp
-%$$
-The file $cref near_equal.cpp$$ contains an example
-and test of $code NearEqual$$.
+}
+The file :ref:`near_equal.cpp-name` contains an example
+and test of ``NearEqual`` .
 It return true if it succeeds and false otherwise.
 
-$head Exercise$$
+Exercise
+********
 Create and run a program that contains the following code:
-$codep
+::
+
    using std::complex;
    using std::cout;
    using std::endl;
-
+   
    complex<double> one(1., 0), i(0., 1);
    complex<double> x = one / i;
    complex<double> y = - i;
@@ -126,12 +130,11 @@ $codep
    double          a = 0;
    bool           ok = CppAD::NearEqual(x, y, r, a);
    if( ok )
-      cout << "Ok"    << endl;
+   cout << "Ok"    << endl;
    else
-      cout << "Error" << endl;
-$$
+   cout << "Error" << endl;
 
-$end
+{xrst_end NearEqual}
 
 */
 

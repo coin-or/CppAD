@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin rev_two.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin rev_two.cpp}
 
-$section Second Partials Reverse Driver: Example and Test$$
+Second Partials Reverse Driver: Example and Test
+################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end rev_two.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

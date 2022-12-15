@@ -5,187 +5,198 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_three_define$$
-$spell
-   taylor
-   ctor
-   afun
-   arg
-   jac
-   hes
-   CppAD
-   enum
-   mul
-   hpp
-   const
-$$
+{xrst_begin atomic_three_define}
 
-$section Defining Atomic Functions: Third Generation$$
+Defining Atomic Functions: Third Generation
+###########################################
 
-$head Syntax$$
+Syntax
+******
 
-$subhead Define Class$$
-$codei%class %atomic_user% : public CppAD::atomic_three<%Base%> {
-   %...%
-};%$$
+Define Class
+============
 
-$subhead Construct Atomic Function$$
-$icode%atomic_user% %afun%(%ctor_arg_list%)%$$
+| ``class`` *atomic_user* : ``public CppAD::atomic_three<`` *Base* > {
+| |tab| ...
+| };
 
-$subhead Use Atomic Function$$
-$icode%afun%(%ax%, %ay%)%$$
+Construct Atomic Function
+=========================
+*atomic_user* *afun* ( *ctor_arg_list* )
 
-$subhead Class Member Callbacks$$
-$icode%ok% = %afun%.for_type(
-   %parameter_x%, %type_x%, %type_y%
-)
-%ok% = %afun%.forward(
-   %parameter_x%, %type_x%,
-   %need_y%, %order_low%, %order_up%, %taylor_x%, %taylor_y%
-)
-%ok% = %afun%.reverse(
-   %parameter_x%, %type_x%,
-   %order_up%, %taylor_x%, %taylor_y%, %partial_x%, %partial_y%
-)
-%ok% = %afun%.jac_sparsity(
-   %parameter_x%, %type_x%, %dependency%, %select_x% %select_y%, %pattern_out%
-)
-%ok% = %afun%.hes_sparsity(
-   %parameter_x%, %type_x%, %select_x% %select_y%, %pattern_out%
-)
-%ok% = %afun%.rev_depend(
-   %parameter_x%, %type_x%, %depend_x%, %depend_y%
-)%$$
+Use Atomic Function
+===================
+*afun* ( *ax* , *ay* )
 
-$head See Also$$
-$cref chkpoint_two$$, $cref atomic_two$$
+Class Member Callbacks
+======================
 
-$head Purpose$$
+| *ok* = *afun* . ``for_type`` (
+| |tab| *parameter_x* , *type_x* , *type_y*
+| )
+| *ok* = *afun* . ``forward`` (
+| |tab| *parameter_x* , *type_x* ,
+| |tab| *need_y* , *order_low* , *order_up* , *taylor_x* , *taylor_y*
+| )
+| *ok* = *afun* . ``reverse`` (
+| |tab| *parameter_x* , *type_x* ,
+| |tab| *order_up* , *taylor_x* , *taylor_y* , *partial_x* , *partial_y*
+| )
+| *ok* = *afun* . ``jac_sparsity`` (
+| |tab| *parameter_x* , *type_x* , *dependency* , *select_x* *select_y* , *pattern_out*
+| )
+| *ok* = *afun* . ``hes_sparsity`` (
+| |tab| *parameter_x* , *type_x* , *select_x* *select_y* , *pattern_out*
+| )
+| *ok* = *afun* . ``rev_depend`` (
+| |tab| *parameter_x* , *type_x* , *depend_x* , *depend_y*
+| )
 
-$subhead Speed$$
+See Also
+********
+:ref:`chkpoint_two-name` , :ref:`atomic_two-name`
+
+Purpose
+*******
+
+Speed
+=====
 In some cases, it is possible to compute derivatives of a function
-$latex \[
-   y = g(x) \; {\rm where} \; g : \B{R}^n \rightarrow \B{R}^m
-\] $$
-more efficiently than by coding it using $codei%AD<%Base%>%$$
-$cref/atomic/glossary/Operation/Atomic/$$ operations
-and letting CppAD do the rest.
-The class $codei%atomic_three%<%Base%>%$$ is used to
-create a new atomic operation corresponding to a function $latex g(x)$$
-where the user specifies how to compute the derivatives
-and sparsity patterns for $latex g(x)$$.
 
-$subhead Reduce Memory$$
-If the function $latex g(x)$$ is used many times during the recording
-of an $cref ADFun$$ object,
-using an atomic version of $latex g(x)$$ removes the need for repeated
-copies of the corresponding $codei%AD<%Base%>%$$ operations and variables
+.. math::
+
+   y = g(x) \; {\rm where} \; g : \B{R}^n \rightarrow \B{R}^m
+
+more efficiently than by coding it using ``AD<`` *Base* >
+:ref:`glossary@Operation@Atomic` operations
+and letting CppAD do the rest.
+The class ``atomic_three`` < ``Base`` > is used to
+create a new atomic operation corresponding to a function :math:`g(x)`
+where the user specifies how to compute the derivatives
+and sparsity patterns for :math:`g(x)`.
+
+Reduce Memory
+=============
+If the function :math:`g(x)` is used many times during the recording
+of an :ref:`ADFun-name` object,
+using an atomic version of :math:`g(x)` removes the need for repeated
+copies of the corresponding ``AD<`` *Base* > operations and variables
 in the recording.
 
-$head ad_type$$
-The type $code CppAD::ad_type_enum$$
+ad_type
+*******
+The type ``CppAD::ad_type_enum``
 is used to specify if an AD object is a
-$cref/constant parameter/glossary/Parameter/Constant/$$
-$cref/dynamic parameter/glossary/Parameter/Dynamic/$$
-or $cref/variable/glossary/Variable/$$.
+:ref:`constant parameter<glossary@Parameter@Constant>`
+:ref:`dynamic parameter<glossary@Parameter@Dynamic>`
+or :ref:`glossary@Variable` .
 It has the following possible values:
 
-$table
-$icode ad_type_enum$$  $pre  $$   $cnext Meaning $rnext
-$code constant_enum$$  $pre  $$   $cnext constant parameter $rnext
-$code dynamic_enum$$   $pre  $$   $cnext dynamic parameter  $rnext
-$code variable_enum$$  $pre  $$   $cnext variable
-$tend
+.. csv-table::
+   :widths: auto
+
+   *ad_type_enum*,Meaning
+   ``constant_enum``,constant parameter
+   ``dynamic_enum``,dynamic parameter
+   ``variable_enum``,variable
 
 In addition,
-$code constant_enum < dynamic_enum < variable_enum$$.
+``constant_enum < dynamic_enum < variable_enum`` .
 
-$head Virtual Functions$$
+Virtual Functions
+*****************
 The
-$cref/callback functions/atomic_three_define/Syntax/Class Member Callbacks/$$
+:ref:`callback functions<atomic_three_define@Syntax@Class Member Callbacks>`
 are implemented by defining the virtual functions in the
-$icode atomic_user$$ class.
+*atomic_user* class.
 These functions compute derivatives,
 sparsity patterns, and dependency relations.
 Each virtual function has a default implementation
-that returns $icode%ok% == false%$$.
-The $cref/for_type/atomic_three_for_type/$$
-and $cref/forward/atomic_three_forward/$$ function
-(for the case $icode%order_up% == 0%$$) must be implemented.
+that returns *ok* == ``false`` .
+The :ref:`for_type<atomic_three_for_type-name>`
+and :ref:`forward<atomic_three_forward-name>` function
+(for the case *order_up*  == 0 ) must be implemented.
 Otherwise, only those functions and orders
 required by the your calculations need to be implemented.
 For example,
-$icode forward$$ for the case $icode%order_up% == 2%$$ can just return
-$icode%ok% == false%$$ unless you require
+*forward* for the case *order_up*  == 2 can just return
+*ok* == ``false`` unless you require
 forward mode calculation of second derivatives.
 
-$head Base$$
+Base
+****
 This is the base type of the elements of
-$cref/ax/atomic_three_afun/ax/$$ and $cref/ay/atomic_three_afun/ay/$$
-in the corresponding $icode%afun%(%ax%, %ay%)%$$ call; i.e.,
-the elements of $icode ax$$ and $icode ay$$ have type
-$codei%AD<%Base%>%$$.
+:ref:`atomic_three_afun@ax` and :ref:`atomic_three_afun@ay`
+in the corresponding *afun* ( *ax* , *ay* ) call; i.e.,
+the elements of *ax* and *ay* have type
+``AD<`` *Base* > .
 
-$head parameter_x$$
+parameter_x
+***********
 All the virtual functions include this argument which has prototype
-$codei%
-   const CppAD::vector<%Base%> %parameter_x%
-%$$
-Its size is equal to $icode%n% = %ax%.size()%$$
-in corresponding $icode%afun%(%ax%, %ay%)%$$ call.
 
-$subhead Constant$$
-For $icode%j% =0,%...%,%n%-1%$$,
-if $icode%ax%[%j%]%$$ is a $cref/constant/con_dyn_var/Constant/$$ parameter,
-$codei%
-   %parameter_x%[%j%] == %ax%[%j%]
-%$$
+   ``const CppAD::vector<`` *Base* > *parameter_x*
 
-$subhead Dynamic$$
-If $icode%ax%[%j%]%$$ is a $cref/dynamic/con_dyn_var/Dynamic/$$ parameter,
-$icode%parameter_x%[%j%]%$$ value of $icode%ax%[%j%]%$$ corresponding to the
-previous call to $cref new_dynamic$$ for the corresponding function object.
+Its size is equal to *n* = *ax* . ``size`` ()
+in corresponding *afun* ( *ax* , *ay* ) call.
 
-$subhead Variable$$
-If $icode%ax%[%j%]%$$ is a variable,
-the value of $icode%parameter_x%[%j%]%$$ is not specified.
+Constant
+========
+For *j* =0,..., *n* ``-1`` ,
+if *ax* [ *j* ] is a :ref:`con_dyn_var@Constant` parameter,
+
+   *parameter_x* [ *j* ] == *ax* [ *j* ]
+
+Dynamic
+=======
+If *ax* [ *j* ] is a :ref:`con_dyn_var@Dynamic` parameter,
+*parameter_x* [ *j* ] value of *ax* [ *j* ] corresponding to the
+previous call to :ref:`new_dynamic-name` for the corresponding function object.
+
+Variable
+========
+If *ax* [ *j* ] is a variable,
+the value of *parameter_x* [ *j* ] is not specified.
 See the
-$cref/atomic_three_mat_mul.hpp/atomic_three_mat_mul.hpp/Purpose/parameter_x/$$
-for an example using $icode parameter_x$$.
+:ref:`atomic_three_mat_mul.hpp<atomic_three_mat_mul.hpp@Purpose@parameter_x>`
+for an example using *parameter_x* .
 
-$head type_x$$
+type_x
+******
 All the virtual functions include this argument.
-Its size is equal to $icode%n% = %ax%.size()%$$
-in corresponding $icode%afun%(%ax%, %ay%)%$$ call.
-For $icode%j% =0,%...%,%n%-1%$$,
-if $icode%ax%[%j%]%$$ is a constant parameter,
-$codei%
-   %type_x%[%j%] == CppAD::constant_enum
-%$$
-if $icode%ax%[%j%]%$$ is a dynamic parameter,
-$codei%
-   %type_x%[%j%] == CppAD::dynamic_enum
-%$$
-if $icode%ax%[%j%]%$$ is a variable,
-$codei%
-   %type_x%[%j%] == CppAD::variable_enum
-%$$
+Its size is equal to *n* = *ax* . ``size`` ()
+in corresponding *afun* ( *ax* , *ay* ) call.
+For *j* =0,..., *n* ``-1`` ,
+if *ax* [ *j* ] is a constant parameter,
+
+   *type_x* [ *j* ] == ``CppAD::constant_enum``
+
+if *ax* [ *j* ] is a dynamic parameter,
+
+   *type_x* [ *j* ] == ``CppAD::dynamic_enum``
+
+if *ax* [ *j* ] is a variable,
+
+   *type_x* [ *j* ] == ``CppAD::variable_enum``
+
 See the
-$cref/atomic_three_mat_mul.hpp/atomic_three_mat_mul.hpp/Purpose/type_x/$$
-for an example using $icode type_x$$.
+:ref:`atomic_three_mat_mul.hpp<atomic_three_mat_mul.hpp@Purpose@type_x>`
+for an example using *type_x* .
 
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atomic/three/ctor.hpp
+   include/cppad/core/atomic/three/afun.hpp
+   include/cppad/core/atomic/three/for_type.hpp
+   include/cppad/core/atomic/three/forward.hpp
+   include/cppad/core/atomic/three/reverse.hpp
+   include/cppad/core/atomic/three/jac_sparsity.hpp
+   include/cppad/core/atomic/three/hes_sparsity.hpp
+   include/cppad/core/atomic/three/rev_depend.hpp
+}
 
-$childtable%include/cppad/core/atomic/three/ctor.hpp
-   %include/cppad/core/atomic/three/afun.hpp
-   %include/cppad/core/atomic/three/for_type.hpp
-   %include/cppad/core/atomic/three/forward.hpp
-   %include/cppad/core/atomic/three/reverse.hpp
-   %include/cppad/core/atomic/three/jac_sparsity.hpp
-   %include/cppad/core/atomic/three/hes_sparsity.hpp
-   %include/cppad/core/atomic/three/rev_depend.hpp
-%$$
-
-$end
+{xrst_end atomic_three_define}
 -------------------------------------------------------------------------------
 */
 

@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin Bib}
+{xrst_spell
+   abramowitz
+   bibliography
+   flannery
+   fortran
+   griewank
+   rosenbrock
+   shampine
+   stegun
+   stroustrup
+   teukolsky
+   vetterling
+}
+
+Bibliography
+############
+
+Abramowitz and Stegun
+*********************
+Handbook of Mathematical Functions,
+Dover, New York.
+
+The C++ Programming Language
+****************************
+Bjarne Stroustrup,
+The C++ Programming Language,
+Special ed.,
+AT&T, 2000
+
+Evaluating Derivatives
+**********************
+Evaluating Derivatives: Principles and Techniques of
+Algorithmic Differentiation,
+Andreas Griewank,
+SIAM,
+Philadelphia,
+2000
+
+Numerical Recipes
+*****************
+Numerical Recipes in Fortran:
+The Art of Scientific Computing,
+Second Edition,
+William H. Press,
+William T. Vetterling,
+Saul, A. Teukolsky,
+Brian R. Flannery,
+Cambridge University Press,
+1992
+
+Shampine, L.F.
+**************
+Implementation of Rosenbrock Methods,
+ACM Transactions on Mathematical Software,
+Vol. 8,
+No. 2,
+June 1982.
+
+{xrst_end Bib}
+

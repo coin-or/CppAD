@@ -4,20 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin for_sparse_jac.cpp$$
-$spell
-   Jacobian
-   Jac
-   Dep
-   Cpp
-$$
+{xrst_begin for_sparse_jac.cpp}
 
-$section Forward Mode Jacobian Sparsity: Example and Test$$
+Forward Mode Jacobian Sparsity: Example and Test
+################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end for_sparse_jac.cpp}
 */
 // BEGIN C++
 

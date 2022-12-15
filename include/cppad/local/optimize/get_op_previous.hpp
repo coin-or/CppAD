@@ -10,52 +10,53 @@
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
 /*
-$begin optimize_get_op_previous$$
-$spell
-   itr
-   iterator
-   bool
-   Exp
-   num
-   var
-   Op
+{xrst_begin optimize_get_op_previous}
+{xrst_spell
    cexp
-   Arg
-   Res
-$$
+}
 
-$section Get Mapping From Op to Previous Op That is Equivalent$$
+Get Mapping From Op to Previous Op That is Equivalent
+#####################################################
 
-$head Syntax$$
-$icode%exceed_collision_limit% = get_op_previous(
-   %collision_limit%,
-   %play%,
-   %random_itr%,
-   %cexp_set%,
-   %op_previous%,
-   %op_usage%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| *exceed_collision_limit* = ``get_op_previous`` (
+| |tab| *collision_limit* ,
+| |tab| *play* ,
+| |tab| *random_itr* ,
+| |tab| *cexp_set* ,
+| |tab| *op_previous* ,
+| |tab| *op_usage*
+| )
 
-$head Base$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Base
+****
 base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by this routine are done using type Base.
 
-$head collision_limit$$
+collision_limit
+***************
 is the maximum number of collisions (matches)
 allowed in the hash expression has table.
 
-$head play$$
+play
+****
 is the old operation sequence.
 
-$head random_itr$$
+random_itr
+**********
 is a random iterator for the old operation sequence.
 
-$head cexp_set$$
+cexp_set
+********
 set[i] is a set of elements for the i-th operator.
 Suppose that e is an element of set[i], j = e / 2, k = e % 2.
 If the comparison for the j-th conditional expression is equal to bool(k),
@@ -64,34 +65,34 @@ Note the j indexes the CExpOp operators in the operation sequence.
 On input, cexp_set is does not count previous optimization.
 On output, it does count previous optimization.
 
-$head op_previous$$
+op_previous
+***********
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
 Let j = op_previous[i]. If j = 0, no replacement was found for i-th operator.
 If j != 0:
-$list number$$
-j < i
-$lnext
-op_previous[j] == 0
-$lnext
-op_usage[j] == usage_t(yes_usage)
-$lnext
-i-th operator has NumArg(op) <= 3
-$lnext
-i-th operator has 0 < NumRes(op)
-$lnext
-i-th operator is not one of the following:
-$nospell PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.$$
-$lnext
-i-th operator is not one of the load store operator:
-$nospell LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.$$
-$lnext
-i-th operator is not a atomic function operator:
-$nospell AFunOp, FunapOp, FunavOp, FunrpOp, FunrvOp.$$
-$lend
 
-$head op_usage$$
+#. j < i
+#. op_previous[j] == 0
+#. op_usage[j] == usage_t(yes_usage)
+#. i-th operator has NumArg(op) <= 3
+#. i-th operator has 0 < NumRes(op)
+#. i-th operator is not one of the following:
+   {xrst_spell_off}
+   PriOp, ParOp, InvOp, EndOp, CexpOp, BeginOp.
+   {xrst_spell_on}
+#. i-th operator is not one of the load store operator:
+   {xrst_spell_off}
+   LtpvOp, LtvpOp, LtvvOp, StppOp, StpvOp, StvpOp, StvvOp.
+   {xrst_spell_on}
+#. i-th operator is not a atomic function operator:
+   {xrst_spell_off}
+   AFunOp, FunapOp, FunavOp, FunrpOp, FunrvOp.
+   {xrst_spell_on}
+
+op_usage
+********
 The size of this vector is the number of operators in the
 old operation sequence.i.e., play->nun_var_rec().
 On input, op_usage[i] is the usage for
@@ -99,11 +100,12 @@ the i-th operator in the operation sequence not counting previous
 optimization.
 On output, it is the usage counting previous operator optimization.
 
-$head exceed_collision_limit$$
-If the $icode collision_limit$$ is exceeded (is not exceeded),
+exceed_collision_limit
+**********************
+If the *collision_limit* is exceeded (is not exceeded),
 the return value is true (false).
 
-$end
+{xrst_end optimize_get_op_previous}
 */
 
 // BEGIN_PROTOTYPE

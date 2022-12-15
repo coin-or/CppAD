@@ -9,78 +9,82 @@
 namespace CppAD { namespace local { namespace optimize  {
 
 /*!
-$begin optimize_record_csum$$
-$spell
-   iutr
-   iterator
-   op
-   var
-   itr
-   NumRes
+{xrst_begin optimize_record_csum}
+{xrst_spell
+   addpv
+   addvv
    csum
-   Addpv
-   Addvv
-   Subpv
-   Subvp
-   Subvv
-$$
+   subpv
+   subvp
+   subvv
+}
 
-$section Recording a Cumulative Summation Operator$$
+Recording a Cumulative Summation Operator
+#########################################
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_RECORD_CSUM%// END_PROROTYPE%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_RECORD_CSUM
+   // END_PROROTYPE
+}
 
-$head play$$
+play
+****
 player object corresponding to the old recording.
 
-$head random_itr$$
+random_itr
+**********
 is a random iterator corresponding to the old operation sequence.
 
-$head op_usage$$
+op_usage
+********
 mapping from old operator index to how it is used.
 
-$head new_par$$
+new_par
+*******
 mapping from old parameter index to parameter index in new recording.
 
-$head new_var$$
+new_var
+*******
 mapping from old operator index to variable index in new recording.
 
-$head current$$
+current
+*******
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-We use the notation $icode%i_op% = %random_itr%.var2op(%current%)%$$.
+We use the notation *i_op* = *random_itr* . ``var2op`` ( *current* ) .
 It follows that  NumRes( random_itr.get_op[i_op] ) > 0.
 If 0 < j_op < i_op, either op_usage[j_op] == usage_t(csum_usage),
 op_usage[j_op] = usage_t(no_usage), or new_var[j_op] != 0.
 
-$head rec$$
+rec
+***
 is the object that will record the new operations.
 
-$head return$$
+return
+******
 is the operator and variable indices in the new operation sequence.
 
-$head stack$$
+stack
+*****
 Is temporary work space. On input and output,
 stack.op_info, stack.add_var, and stack.sub_var, are all empty.
 These stacks are passed in so that they are created once
-and then be reused with calls to $code record_csum$$.
+and then be reused with calls to ``record_csum`` .
 
-$head Assumptions$$
-$list number$$
-random_itr.get_op[i_op] must be one of the following:
-CSumOp, AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-$lnext
-op_usage[i_op] == usage_t(yes_usage).
-$lnext
-Either this is a CSumOp, or
-op_usage[j_op] == usage_t(csum_usage) is true from some
-j_op that corresponds to a variable that is an argument to
-random_itr.get_op[i_op].
-$lend
+Assumptions
+***********
 
-$end
+#. random_itr.get_op[i_op] must be one of the following:
+   CSumOp, AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
+#. op_usage[i_op] == usage_t(yes_usage).
+#. Either this is a CSumOp, or
+   op_usage[j_op] == usage_t(csum_usage) is true from some
+   j_op that corresponds to a variable that is an argument to
+   random_itr.get_op[i_op].
+
+{xrst_end optimize_record_csum}
 */
 
 // BEGIN_RECORD_CSUM

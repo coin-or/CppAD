@@ -5,54 +5,57 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin CheckNumericType$$
-$spell
-   alloc
-   cppad.hpp
-   CppAD
-$$
+{xrst_begin CheckNumericType}
+{xrst_spell
+   preforms
+}
 
-$section Check NumericType Class Concept$$
+Check NumericType Class Concept
+###############################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/check_numeric_type.hpp>
-%$$
-$codei%CheckNumericType<%NumericType%>()%$$
+   # ``include <cppad/utility/check_numeric_type.hpp>``
 
+``CheckNumericType<`` *NumericType* >()
 
-$head Purpose$$
+Purpose
+*******
 The syntax
-$codei%
-   CheckNumericType<%NumericType%>()
-%$$
+
+   ``CheckNumericType<`` *NumericType* >()
+
 preforms compile and run time checks that the type specified
-by $icode NumericType$$ satisfies all the requirements for
-a $cref NumericType$$ class.
+by *NumericType* satisfies all the requirements for
+a :ref:`NumericType-name` class.
 If a requirement is not satisfied,
 a an error message makes it clear what condition is not satisfied.
 
-$head Include$$
-The file $code cppad/utility/check_numeric_type.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/check_numeric_type.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest
 if the CppAD include files.
 
-$head Parallel Mode$$
-The routine $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
+Parallel Mode
+*************
+The routine :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
 must be called before it
-can be used in $cref/parallel/ta_in_parallel/$$ mode.
+can be used in :ref:`parallel<ta_in_parallel-name>` mode.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/utility/check_numeric_type.cpp
-%$$
-The file $cref check_numeric_type.cpp$$
+}
+The file :ref:`check_numeric_type.cpp-name`
 contains an example and test of this function.
 The comments in this example suggest a way to change the example
 so an error message occurs.
 
-$end
+{xrst_end CheckNumericType}
 ---------------------------------------------------------------------------
 */
 

@@ -1,0 +1,156 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin preprocessor}
+{xrst_spell
+   complier
+   nullptr
+}
+
+CppAD API Preprocessor Symbols
+##############################
+
+Rule
+****
+The CppAD include files defines preprocessor symbols all of which begin
+with ``CPPAD_`` .
+Note that there are some old, deprecated preprocessor symbols that
+begin with ``CppAD`` .
+In this section we list all of the CppAD preprocessor symbols that
+are part of the CppAD Application Interface (API).
+
+NOMINMAX, windows.h
+*******************
+There is one exception to the rule above,
+when using the Microsoft Visual Studio compiler
+and including ``windows.h`` ,
+it is done as follows:
+::
+
+   # ifndef NOMINMAX
+   # define NOMINMAX
+   # endif
+   # include <windows.h>
+
+Documented Here
+***************
+
+CPPAD_DEBUG_AND_RELEASE
+=======================
+This flag is an exception because it is defined (or not) by the user
+during the inclusion of the CppAD header files; e.g., when using ``g++``
+one could put ``-D CPPAD_DEBUG_AND_RELEASE`` on the complier command line.
+If it is defined, less error checking is done and the
+debug and release versions of CppAD can be mixed in the same program.
+Of particular note is that :ref:`thread_alloc-name` does less error checking.
+For programs that do a lot of memory allocation,
+this can be a significant time savings when ``NDEBUG`` is defined.
+{xrst_comment
+# undef CPPAD_DEBUG_AND_RELEASE
+}
+
+CPPAD_NULL
+**********
+Deprecated 2020-12-03:
+This preprocessor symbol was used for a null pointer before c++11.
+Replace it by ``nullptr`` .
+{xrst_comment
+# undef CPPAD_NULL
+}
+
+CPPAD_PACKAGE_STRING
+====================
+Is a ``const char*`` representation of this version of CppAD.
+{xrst_comment
+# undef CPPAD_PACKAGE_STRING
+}
+
+CPPAD_USE_CPLUSPLUS_2011
+************************
+Deprecated 2020-12-03:
+Is it OK for CppAD to use C++11 features. This is always 1 (for true).
+{xrst_comment
+# undef CPPAD_USE_CPLUSPLUS_2011
+}
+
+CPPAD_USE_CPLUSPLUS_2017
+************************
+Is it OK for CppAD to use C++17 features.
+{xrst_comment
+# undef CPPAD_USE_CPLUSPLUS_2017
+}
+
+Documented Elsewhere
+********************
+
+.. list-table::
+
+   * - :ref:`CPPAD_BOOL_BINARY<bool_fun@Create Binary>`
+   * - :ref:`CPPAD_BOOL_UNARY<bool_fun@Create Unary>`
+   * - :ref:`CPPAD_DISCRETE_FUNCTION<Discrete-name>`
+   * - :ref:`multi_thread@CPPAD_MAX_NUM_THREADS`
+   * - :ref:`base_limits@CPPAD_NUMERIC_LIMITS`
+   * - :ref:`base_std_math@CPPAD_STANDARD_MATH_UNARY`
+   * - :ref:`cmake@cppad_tape_addr_type`
+   * - :ref:`cmake@cppad_tape_id_type`
+   * - :ref:`CPPAD_TESTVECTOR<testvector-name>`
+   * - :ref:`base_to_string@CPPAD_TO_STRING`
+
+{xrst_comment
+# undef CPPAD_BOOL_BINARY
+# undef CPPAD_BOOL_UNARY
+# undef CPPAD_DISCRETE_FUNCTION
+# undef CPPAD_MAX_NUM_THREADS
+# undef CPPAD_NUMERIC_LIMITS
+# undef CPPAD_STANDARD_MATH_UNARY
+# undef CPPAD_TAPE_ADDR_TYPE
+# undef CPPAD_TAPE_ID_TYPE
+# undef CPPAD_TESTVECTOR
+# undef CPPAD_TO_STRING
+}
+
+Deprecated
+==========
+
+.. list-table::
+
+   * - :ref:`CppADCreateDiscrete<Discrete@CppADCreateDiscrete Deprecated 2007-07-28>`
+   * - :ref:`CPPAD_TRACK_NEW_VEC<track_new_del@TrackNewVec@Macro>`
+   * - :ref:`CPPAD_TRACK_DEL_VEC<track_new_del@TrackDelVec@Macro>`
+   * - :ref:`CPPAD_TRACK_EXTEND<track_new_del@TrackExtend@Macro>`
+   * - :ref:`CPPAD_TRACK_COUNT<track_new_del@TrackCount@Macro>`
+   * - :ref:`CPPAD_USER_ATOMIC<atomic_one-name>`
+   * - :ref:`CppADTrackNewVec<track_new_del@TrackNewVec@Previously Deprecated>`
+   * - :ref:`CppADTrackDelVec<track_new_del@TrackDelVec@Previously Deprecated>`
+   * - :ref:`CppADTrackExtend<track_new_del@TrackExtend@Previously Deprecated>`
+   * - :ref:`CppADTrackCount<track_new_del@TrackCount@Previously Deprecated>`
+   * - :ref:`CppADCreateBinaryBool<bool_fun@Deprecated 2007-07-31>`
+   * - :ref:`CppADCreateUnaryBool<bool_fun@Deprecated 2007-07-31>`
+   * - :ref:`CPPAD_USER_ATOMIC<atomic_one@Deprecated 2013-05-27>`
+   * - :ref:`CPPAD_CPPADVECTOR<testvector@CppAD::vector@CPPAD_CPPADVECTOR, Deprecated 2022-06-22>`
+   * - :ref:`CPPAD_STDVECTOR<testvector@std::vector@CPPAD_STDVECTOR, Deprecated 2022-06-22>`
+   * - :ref:`CPPAD_EIGENVECTOR<testvector@CppAD::eigen_vector@CPPAD_EIGENVECTOR, Deprecated 2022-06-22>`
+   * - :ref:`CPPAD_BOOSTVECTOR<testvector@boost::numeric::ublas::vector@CPPAD_BOOSTVECTOR, Deprecated 2022-06-22>`
+
+{xrst_comment
+# undef CppADCreateDiscrete
+# undef CPPAD_TRACK_NEW_VEC
+# undef CPPAD_TRACK_DEL_VEC
+# undef CPPAD_TRACK_EXTEND
+# undef CPPAD_TRACK_COUNT
+# undef CPPAD_USER_ATOMIC
+# undef CppADTrackNewVec
+# undef CppADTrackDelVec
+# undef CppADTrackExtend
+# undef CppADTrackCount
+# undef CppADCreateBinaryBool
+# undef CppADCreateUnaryBool
+# undef CPPAD_USER_ATOMIC
+# undef CPPAD_CPPADVECTOR
+# undef CPPAD_STDVECTOR
+# undef CPPAD_EIGENVECTOR
+# undef CPPAD_BOOSTVECTOR
+}
+
+{xrst_end preprocessor}

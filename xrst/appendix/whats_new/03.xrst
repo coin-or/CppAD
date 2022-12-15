@@ -1,0 +1,750 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_03}
+{xrst_spell
+   constructor constructor
+   ddouble
+   differentiable
+   dodds
+   faq
+   geq
+   gnu
+   goddard
+   hess
+   hilbert
+   indvar
+   integrator
+   leq
+   predefined
+   temporaries
+   valarray
+}
+
+Changes and Additions to CppAD During 2003
+##########################################
+
+mm-dd
+*****
+
+12-24
+=====
+Some references to ``double`` should have been references
+to the :ref:`glossary@Base Type`
+(in reverse mode and in the ``Grad/`` and ``Hess`` functions).
+This has been fixed.
+
+12-22
+=====
+The preprocessor symbol ``WIN32`` was being used to determine
+if one was using Microsoft's C++ compiler.
+This symbol is predefined by the
+`MinGW <http://www.mingw.org>`_ version of the GNU C++ compiler
+and hence CppAD had errors during installation using MinGW.
+This has been fixed by using the preprocessor symbol
+``_MSC_VER`` to determine if
+one is using the Microsoft C++ compiler.
+
+12-14
+=====
+The extended system solvers ``OdeOne`` and ``OdeTwo`` have
+been removed from the distribution.
+In addition, the interface to the ODE solvers have been simplified.
+
+12-13
+=====
+Remove the ``CppADCreateTape`` macro
+and have the tapes created and grow automatically.
+
+12-12
+=====
+The old method where one directly accesses the tape has been removed and the
+following functions are no longer available:
+
+| |tab| |tab| ``size_t`` *TapeName* . ``Independent`` ( ``AD<`` *Base* > & *indvar* )
+| |tab| |tab| ``size_t`` *TapeName* . ``Record`` ( ``size_t`` *order* )
+| |tab| |tab| ``size_t`` *TapeName* . ``Stop`` ( ``void`` )
+| |tab| |tab| ``bool Dependent`` ( ``const AD<`` *Base* > & *var* ) ``const``
+| |tab| |tab| ``bool`` *TapeName* . ``Dependent`` ( ``const AD<`` *Base* > & *var* ) ``const``
+| |tab| |tab| ``size_t`` *TapeName* . ``Total`` ( ``void`` ) ``const``
+| |tab| |tab| ``size_t`` *TapeName* . ``Required`` ( ``void`` ) ``const``
+| |tab| |tab| ``size_t`` *TapeName* . ``Erase`` ( ``void`` )
+| |tab| |tab| ``TapeState`` *TapeName* . ``State`` ( ``void`` ) ``const``
+| |tab| |tab| ``size_t`` *TapeName* . ``Order`` ( ``void`` ) ``const``
+| |tab| |tab| ``size_t`` *TapeName* . ``Required`` ( ``void`` ) ``const``
+| |tab| |tab| ``bool Parameter`` ( ``CppADvector< AD<`` *Base* > > & *u* )
+| |tab| |tab| *TapeName* . ``Forward`` ( *indvar* )
+| |tab| |tab| *TapeName* . ``Reverse`` ( *var* )
+| |tab| |tab| *TapeName* . ``Partial`` ( *var* )
+| |tab| |tab| *TapeName* . ``ForwardTwo`` ( *indvar* )
+| |tab| |tab| *TapeName* . ``ReverseTwo`` ( *var* )
+| |tab| |tab| *TapeName* . ``PartialTwo`` ( *var* )
+
+12-10
+=====
+The change on :ref:`whats_new_03@mm-dd@12-01` make the taping process simpler
+if one does not directly access
+``CppADCreateTape`` .
+The :ref:`examples<example-name>` were changed to not use
+*TapeName* .
+The following examples were skipped because
+they document the functions that access *TapeName* :
+``DefFun.cpp`` ,
+``For.cpp`` ,
+``for_two.cpp`` ,
+``Rev.cpp`` , and
+``rev_two.cpp`` .
+
+12-05
+=====
+There was a bug in
+*f* . ``Rev`` and
+*f* . ``RevTwo`` and
+when two dependent variables were always equal and shared
+the same location in the tape.
+This has been fixed.
+
+The ODE Example was changed to tape the solution
+(and not use ``OdeOne`` or ``OdeTwo`` ).
+This is simpler to use and
+the resulting speed tests gave much faster results.
+
+12-01
+=====
+The following function has been added:
+
+   ``void Independent`` ( ``const CppADvector<`` *Base* > & *x* )
+
+which will declare the independent variables and begin recording
+``AD<`` *Base* > operations
+(see :ref:`Independent-name` ).
+The :ref:`ADFun-name` constructor was modified so that it
+stops the recording and erases that tape as well as creates the
+:ref:`ADFun-name` object.
+In addition, the tape no longer needs to be specified in the constructor.
+
+11-21
+=====
+Add ``StiffZero`` to set of ODE solvers.
+
+11-20
+=====
+The ``AbsGeq`` and ``LeqZero`` in
+:ref:`LuSolve-name` were changed to template functions so they could have
+default definitions in the case where the ``<=`` and ``>=``
+operators are defined.
+This made the ``double`` and ``AD<double>`` use of
+``LuSolve`` simpler because the user need not worry about these functions.
+On the other hand, it made the ``std::complex``
+and ``AD<std::complex>`` use of
+``LuSolve`` more complex.
+
+The member function names for the
+*fun* argument to ODE were changed from
+*fun* . ``f`` to
+*fun* . ``Ode``
+and from
+*fun* . ``g`` to
+*fun* . ``Ode_ini`` .
+
+11-16
+=====
+The table of contents was reorganized
+to provide a better grouping of the documentation.
+
+The :ref:`LuSolve-name` utility is now part of the distribution
+and not just an example; i.e.,
+it is automatically included by
+``cppad.hpp`` .
+
+11-15
+=====
+The
+ODE solver was modified so that it can
+be used with any type (not just an AD type.
+This was useful for the speed testing.
+It is also useful for determining how the integrator
+steps should be before starting the tape.
+
+The template argument *Type* was changed to
+*Base* where ever it was the
+:ref:`glossary@Base Type` of an AD class.
+
+11-14
+=====
+An
+``speed_cppad/OdeSpeed.cpp/`` test was added
+and some changes were made to the
+ODE interface in order to make it faster.
+The most significant change was in the specifications for
+the ODE function object *fun* .
+
+11-12
+=====
+The user defined unary function example
+``example/UnaryFun.cpp`` was incorrect.
+It has been corrected and extended.
+
+11-11
+=====
+The :ref:`CppAD::vector<CppAD_vector-name>` template class is now
+used where the ``std::vector`` template class was previously used.
+You can replace the ``CppAD::vector`` class
+with a vector template class of your choosing during the
+:ref:`Install-name` procedure.
+
+11-06
+=====
+The documentation for
+:ref:`taping derivative calculations<mul_level-name>` was improved
+as well as the corresponding example.
+In order to make this simpler,
+the example tape name ``DoubleTape`` was changed to ``ADdoubleTape``
+(and the other example tape names were also changed).
+
+11-04
+=====
+The ODE utility was changed from an example to
+part of the distribution.
+In addition, it was extended so that it now supports taping the
+solution of the differential equations (case *order* equal zero)
+or solving the extended set of differential equations
+for both first and second derivatives (cases *order* equal
+one and two).
+In addition, an initial condition that depends on the parameter
+values is also allowed.
+
+11-02
+=====
+It is now legal to differentiate a
+:ref:`glossary@Parameter`
+with respect to an
+:ref:`glossary@Tape@Independent Variable`
+(parameter derivatives are always equal to zero).
+This is an extension of the
+``Reverse`` ,
+``Partial`` ,
+``ReverseTwo`` , and
+``PartialTwo``
+functions.
+
+10-21
+=====
+All the ``CppAD`` include files,
+except ``cppad.hpp`` were moved into an ``include`` subdirectory.
+
+10-16
+=====
+The :ref:`ADFun-name` template class was added so that one can save
+a tape recording and use it as a differentiable function.
+The ``ADFun`` functions supports directional derivatives in both
+:ref:`Forward-name` and :ref:`Reverse-name` mode where as the
+tape only supports partial derivatives.
+
+10-14
+=====
+The ``sqrt`` function was added to the
+:ref:`unary_standard_math-name` functions.
+In addition, a definition of the power function for the types
+``float`` and ``double``
+was automatically included in the ``CppAD`` namespace.
+
+The :ref:`Value-name` function was changed so that it can
+be called when the tape is in the Empty state.
+
+10-10
+=====
+The ``atan`` function was added to the
+:ref:`unary_standard_math-name` functions.
+
+10-06
+=====
+In the notation below, *zero* and *one*
+are parameters that are exactly equal to zero and one.
+If the variables *z* and *x*
+were related in any of the following ways,
+they share can share the same record on the tape
+because they will have the same derivatives.
+
+| |tab| *z* = *x* + *zero* *z* = *x* * *one*
+| |tab| *z* = *zero* + *x* *z* = *one* * *x*
+| |tab| *z* = *x* ``-`` *zero* *z* = *x* / *one*
+
+Furthermore, in the following cases, the result
+*z* is a parameter (equal to zero)
+and need not be recorded in the tape:
+
+| |tab| *z* = *x* * *zero* *z* = *zero* / *x*
+| |tab| *z* = *zero* * *x*
+
+The
+:ref:`arithmetic operators<Arithmetic-name>` were
+all checked to make sure they did not add to the tape
+in these special cases.
+The total record count for the program in the Example directory
+was 552 before this change
+and 458 after.
+
+10-05
+=====
+The process of converting the tape to operators was completed.
+In order to make this conversion, the binary user defined
+functions were removed.
+(Bob Goddard
+suggested a very nice way to keep the unary functions.)
+Another significant change was made to the user interface during this procedure,
+the standard math library functions
+are now part of the CppAD distribution and not defined by the user.
+
+The function *TapeName* . ``Total`` was added
+to make it easy to track how many tape records are used by
+the test suite.
+This will help with future optimization of the CppAD recording process.
+
+There was a bug
+(found by `Mike Dodds <mailto:magister@u.washington.edu>`_)
+in the error checking of the
+*TapeName.Erase* function.
+If ``Erase`` was called twice in a row,
+and ``NDEBUG`` was false during compilation,
+the program would abort.
+This has been fixed.
+
+09-30
+=====
+A process of changing the tape from storing partial derivatives to
+storing operators has been started.
+This will make the tape smaller and it will enable the computation
+of higher derivatives with out having to tape the tape
+(see :ref:`mul_level-name` ).
+The Add, Subtract, Multiply and Divide operators have been converted.
+The user defined functions are presenting some difficulties,
+so this process has not yet been completed.
+
+There was a bug in reverse mode when an dependent variable
+was exactly equal to an independent variable.
+In this case, it was possible for it to be located
+before other of the independent variables on the tape.
+These other independent variable partials were not initialized
+to zero before the reverse calculation and hence had what ever
+value was left by the previous mode calculation.
+This has been fixed and the
+``Eq.cpp`` example has been changed to test for this case.
+
+The following tape functions were changed to be declared
+``const`` because they do not modify the tape in any way:
+``State`` ,
+``Order`` ,
+``Required`` ,
+``Dependent`` , and
+:ref:`con_dyn_var@Parameter` .
+
+09-20
+=====
+The functions ``Grad`` and ``Hess`` were
+changed to use function objects
+instead of function pointers.
+
+09-19
+=====
+The higher order constructors (in standard valarray) were removed from the
+ODE example in order to avoid memory allocation of temporaries
+(and hence increase speed).
+In addition, the function objects in the
+ODE examples were changed to be ``const`` .
+
+09-18
+=====
+An ordinary differential equation solver was added.
+In addition,
+the extended system to differentiate the solution was included.
+
+09-15
+=====
+The linked list of AD variables was not being maintained correctly
+by the AD destructor.
+This was fixed by have the destructor use ``RemoveFromVarList``
+to remove variables from the list.
+(``RemoveFromVarList`` is a private AD member function
+not visible to the user.)
+
+09-14
+=====
+There is a new Faq question about evaluating derivatives at multiple
+values for the
+:ref:`Faq@Independent Variables` .
+
+09-13
+=====
+An example that uses
+``AD< AD<double> >``
+to compute higher derivatives was added.
+
+The name ``GaussEliminate`` was changed to
+:ref:`LuSolve-name` to better reflect the solution method.
+
+09-06
+=====
+Changed the
+:ref:`get_started.cpp-name` and :ref:`complex_poly.cpp-name` examples
+so they use a template function with both base type and AD type arguments.
+(The resulting code is simpler and a good use of templates.)
+
+09-05
+=====
+A :ref:`getting started<get_started.cpp-name>`
+example was added and the organization
+of the :ref:`Examples<example-name>` was changed.
+
+09-04
+=====
+The ``AbsOfDoubleNotDefine`` flag is no longer used
+and it was removed from the Windows
+:ref:`Install-name` instructions.
+
+The 03-09-03 distribution did not have the proper date
+attached to it.
+The distribution script has been changed so that attaching
+the proper date is automated
+(i.e., this should not happen again).
+
+A :ref:`faq-title` section was started.
+
+09-03
+=====
+Added the
+:ref:`Value-name` function which returns
+the :ref:`glossary@Base Type` value
+corresponding to an AD object.
+
+08-23
+=====
+A new version of Cygwin was installed on the development system
+(this may affect the timing tests reported in this document).
+In addition, :ref:`LuSolve-name` was changed to use back substitution
+instead of reduction to an identity matrix. This reduced the number
+of floating point operations corresponding to evaluation of the determinant.
+The following results correspond to the speed test
+of DetLu on a 9 by 9 matrix:
+
+.. list-table::
+
+   * - **Version**
+     - **double Rate**
+     - **AD<double> Rate**
+     - **Gradient Rate**
+     - **Hessian Rate**
+     - **Tape Length**
+   * - 03-08-20
+     - 8,524
+     - 5,278
+     - 4,260
+     - 2,450
+     - 532
+   * - 03-08-23
+     - 7,869
+     - 4,989
+     - 4,870
+     - 2,637
+     - 464
+
+08-22
+=====
+The
+:ref:`unary minus<unary_minus-name>` operator was added to the AD operations.
+
+08-19
+=====
+The standard math function
+examples were extended to include the complex case.
+
+The
+:ref:`LuSolve-name`
+routine what changed to use
+``std::vector<`` *Base* > & arguments in place of
+*Base*  * arguments.
+This removes the need to use ``new`` and ``delete``
+with ``LuSolve`` .
+
+When testing the speed of the change to using standard vector,
+it was noticed that the LuSolve routine
+was much slower. (see times for 03-08-16 below).
+This was do to computing the determinant instead of the log
+of the determinant.
+Converting back to the log of the determinant regained
+the high speeds.
+The following results correspond to the speed test
+of DetLu on a 9 by 9 matrix:
+
+.. list-table::
+
+   * - **Version**
+     - **double Rate**
+     - **AD<double> Rate**
+     - **Gradient Rate**
+     - **Hessian Rate**
+     - **Tape Length**
+   * - 03-08-16
+     - 9,509
+     - 5,565
+     - 3,587
+     - 54
+     - 537
+   * - 03-08-19
+     - 8,655
+     - 5,313
+     - 4,307
+     - 2,495
+     - 532
+
+08-17
+=====
+The macro
+``CppADTapeOverflow`` was added
+so that CppAD can check for tape overflow
+even in the ``NDEBUG`` preprocessor flag is defined.
+
+08-16
+=====
+The
+:ref:`LuSolve-name` routine was extended to
+handle complex arguments.
+Because the complex absolute value function is nowhere differentiable,
+this required the allowing for user defined
+:ref:`boolean valued functions with AD arguments<bool_fun-name>` .
+The examples
+:ref:`lu_solve.cpp-name`
+and
+``GradLu.cpp``
+were converted to a complex case.
+
+08-11
+=====
+The routine :ref:`LuSolve-name` was made more efficient
+so that it is more useful as a tool for
+differentiating linear algebra calculations.
+The following results correspond to the speed test
+of DetLu on a 9 by 9 matrix:
+
+.. list-table::
+
+   * - **Version**
+     - **double Rate**
+     - **AD<double> Rate**
+     - **Gradient Rate**
+     - **Hessian Rate**
+     - **Tape Length**
+   * - 03-08-10
+     - 49,201
+     - 7,787
+     - 2,655
+     - 1,809
+     - 824
+   * - 03-08-11
+     - 35,178
+     - 12,681
+     - 4,521
+     - 2,541
+     - 540
+
+In addition the corresponding test case
+:ref:`lu_solve.cpp-name` was changed to a Hilbert matrix case.
+
+08-10
+=====
+A :ref:`complex polynomial<complex_poly.cpp-name>`
+example was added.
+
+The documentation and type conversion in
+:ref:`LuSolve-name` was improved.
+
+The absolute value function was removed from the examples because
+some systems do not yet properly support ``double abs`` ( ``double`` *x* ) ,
+
+08-07
+=====
+Because the change to the multiplication operator had such
+a large positive effect,
+all of the
+:ref:`arithmetic operators<Arithmetic-name>`
+were modified to reduce the amount of information
+in the tape (where possible).
+
+08-06
+=====
+During Lu factorization, certain elements of the matrix
+are know to be zero or one and do not depend on the variables.
+The :ref:`multiplication<ad_binary-name>` operator was modified to take
+advantage of this fact.
+This reduced the size of the tape and increased the speed
+for the calculation of the gradient and Hessian for
+the Lu determinant test of a 5 by 5 matrix as follows:
+
+.. list-table::
+
+   * - **Version**
+     - **Tape Length**
+     - **Gradient Rate**
+     - **Hessian Rate**
+   * - 03-08-05
+     - 176
+     - 11,362
+     - 1,149
+   * - 03-08-06
+     - 167
+     - 12,780
+     - 10,625
+
+08-05
+=====
+Fixed a mistake in the calculation of the sign of the determinant in
+the :ref:`LuSolve-name` example.
+
+08-04
+=====
+Added a the compiler flag
+::
+
+   AbsOfDoubleNotDefined
+
+to the make files so that it could be removed on systems where the
+function
+
+   ``double abs`` ( ``double`` *x* )
+
+was defined in ``math.h`` .
+
+08-03
+=====
+The
+``Grad`` and ``Hess`` functions were modified
+to handel the case where the function does not depend on
+the independent variables.
+
+The
+:ref:`LuSolve-name` example was added to show how
+on can differentiate linear algebra calculations.
+In addition, it was used to add another set of
+:ref:`speed tests<speed_cppad-name>` .
+
+The standard Math functions were added both
+as examples of defining atomic operations and to support
+mathematical operations for the ``AD<double>`` case.
+
+The :ref:`\<\<<ad_output-name>` operator was added to the ``AD``
+template class for output to streams.
+
+08-01
+=====
+The
+:ref:`compound assignment<Arithmetic-name>` operators were added
+to the ``AD`` template class.
+
+The name of the ``Speed/SpeedTest`` program was changed to
+:ref:`Speed/Speed<speed_cppad-name>` .
+In addition, ``Speed/SpeedRun`` was changed to
+``Speed/SpeedTest`` .
+
+07-30
+=====
+The
+:ref:`assignment<ad_assign-name>`
+operator was changed so the it returns a reference to
+the target.
+This allows for statements of the form
+
+   *x* = *y* = *z* ;
+
+i.e., multiple assignments.
+
+07-29
+=====
+If the
+:ref:`AD copy constructor<ad_ctor-name>` constructor or
+:ref:`assignment<ad_assign-name>` operator
+used an
+:ref:`glossary@Tape@Independent Variable`
+for its source value,
+the result was also an independent variable.
+This has been fixed so that the result is
+a dependent variable in these cases.
+
+07-26
+=====
+The ``AD<`` *Base* > data structure
+was changed to include a doubly linked list of variables.
+This enabled  the
+:ref:`AD copy constructor<ad_ctor-name>` constructor and
+:ref:`assignment<ad_assign-name>` operator
+to create multiple references to
+the same place in the tape.
+This reduced the size of the tape and increased the speed
+for the calculation of the gradient and Hessian for
+the determinant of a 5 by 5 matrix as follows:
+
+.. list-table::
+
+   * - **Version**
+     - **Tape Length**
+     - **Gradient Rate**
+     - **Hessian Rate**
+   * - 03-07-22
+     - 1668
+     - 1,363
+     - 53
+   * - 03-07-26
+     - 436
+     - 3,436
+     - 213
+
+07-22
+=====
+The facility was added so that the user can define
+binary functions
+together with their derivatives.
+(This facility has been removed because it is better to define
+binary functions using AD variables.)
+
+The Windows version make file directive ``/I ..\..``
+in ``example\Example.mak`` and ``Speed\Speed.mak``
+was changed to ``/I ..`` (as it should have been).
+
+07-20
+=====
+The facility was added so that the user can define
+unary functions,
+together with their derivatives.
+For example, the standard math functions such as
+:ref:`exp<exp.cpp-name>`
+are good candidates for such definitions.
+(This feature has been replaced by and the standard math functions
+are now part of the AD types, see :ref:`AD-name` .)
+
+The first Alpha for the Windows
+:ref:`installation<Install-name>` was released.
+
+07-18
+=====
+Computing the determinant of a minor of a matrix
+:ref:`det_of_minor-name`
+was documented as a realistic example using CppAD.
+
+07-16
+=====
+Fixed some non-standard constructions that caused problems
+with the installation on other machines.
+
+Compiled and ran the tests under Microsoft Windows.
+(The Windows release should not take much more work.)
+
+07-14
+=====
+First Alpha release of CppAD
+and is being released under the
+:ref:`Gnu Public License<License-name>` .
+It is intended for use by a Unix system.
+A Microsoft release is intended in the near future.
+
+{xrst_end whats_new_03}

@@ -5,101 +5,99 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_two_ctor$$
-$spell
-   enum
-   sq
-   std
-   afun
-   arg
-   CppAD
-   bool
-   ctor
-   const
-   mat_mul_xam.cpp
-   hpp
-$$
+{xrst_begin atomic_two_ctor}
 
-$section Atomic Function Constructor$$
+Atomic Function Constructor
+###########################
 
-$head Syntax$$
-$icode%atomic_user afun%(%ctor_arg_list%)
-%$$
-$codei%atomic_base<%Base%>(%name%, %sparsity%)
-%$$
+Syntax
+******
 
-$head atomic_user$$
+| *atomic_user afun* ( *ctor_arg_list* )
+| ``atomic_base<`` *Base* >( *name* , *sparsity* )
 
-$subhead ctor_arg_list$$
-Is a list of arguments for the $icode atomic_user$$ constructor.
+atomic_user
+***********
 
-$subhead afun$$
-The object $icode afun$$ must stay in scope for as long
+ctor_arg_list
+=============
+Is a list of arguments for the *atomic_user* constructor.
+
+afun
+====
+The object *afun* must stay in scope for as long
 as the corresponding atomic function is used.
-This includes use by any $cref/ADFun<Base>/ADFun/$$ that
-has this $icode atomic_user$$ operation in its
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+This includes use by any :ref:`ADFun\<Base><ADFun-name>` that
+has this *atomic_user* operation in its
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$subhead Implementation$$
-The user defined $icode atomic_user$$ class is a publicly derived class of
-$codei%atomic_base<%Base%>%$$.
+Implementation
+==============
+The user defined *atomic_user* class is a publicly derived class of
+``atomic_base<`` *Base* > .
 It should be declared as follows:
-$codei%
-   class %atomic_user% : public CppAD::atomic_base<%Base%> {
-   public:
-      %atomic_user%(%ctor_arg_list%) : atomic_base<%Base%>(%name%, %sparsity%)
-   %...%
-   };
-%$$
-where $icode ...$$
+
+| |tab| ``class`` *atomic_user* : ``public CppAD::atomic_base<`` *Base* > {
+| |tab| ``public:``
+| |tab| |tab| *atomic_user* ( *ctor_arg_list* ) : ``atomic_base<`` *Base* >( *name* , *sparsity* )
+| |tab| ...
+| |tab| };
+
+where ...
 denotes the rest of the implementation of the derived class.
 This includes completing the constructor and
 all the virtual functions that have their
-$code atomic_base$$ implementations replaced by
-$icode atomic_user$$ implementations.
+``atomic_base`` implementations replaced by
+*atomic_user* implementations.
 
-$head atomic_base$$
+atomic_base
+***********
 
-$subhead Restrictions$$
-The $code atomic_base$$ constructor and destructor cannot be called in
-$cref/parallel/ta_in_parallel/$$ mode.
+Restrictions
+============
+The ``atomic_base`` constructor and destructor cannot be called in
+:ref:`parallel<ta_in_parallel-name>` mode.
 
-$subhead Base$$
+Base
+====
 The template parameter determines the
-$icode Base$$ type for this $codei%AD<%Base%>%$$ atomic operation.
+*Base* type for this ``AD<`` *Base* > atomic operation.
 
-$subhead name$$
-This $code atomic_base$$ constructor argument has the following prototype
-$codei%
-   const std::string& %name%
-%$$
+name
+====
+This ``atomic_base`` constructor argument has the following prototype
+
+   ``const std::string&`` *name*
+
 It is the name for this atomic function and is used for error reporting.
-The suggested value for $icode name$$ is $icode afun$$ or $icode atomic_user$$,
+The suggested value for *name* is *afun* or *atomic_user* ,
 i.e., the name of the corresponding atomic object or class.
 
-$subhead sparsity$$
-This $code atomic_base$$ constructor argument has prototype
-$codei%
-   atomic_base<%Base%>::option_enum %sparsity%
-%$$
-The current $icode sparsity$$ for an $code atomic_base$$ object
+sparsity
+========
+This ``atomic_base`` constructor argument has prototype
+
+   ``atomic_base<`` *Base* >:: ``option_enum`` *sparsity*
+
+The current *sparsity* for an ``atomic_base`` object
 determines which type of sparsity patterns it uses
 and its value is one of the following:
-$table
-$icode sparsity$$   $cnext sparsity patterns $rnext
-$codei%atomic_base<%Base%>::pack_sparsity_enum%$$ $pre  $$ $cnext
-   $cref/vectorBool/CppAD_vector/vectorBool/$$
-$rnext
-$codei%atomic_base<%Base%>::bool_sparsity_enum%$$ $pre  $$ $cnext
-   $cref/vector/CppAD_vector/$$$code <bool>$$
-$rnext
-$codei%atomic_base<%Base%>::set_sparsity_enum%$$ $pre  $$ $cnext
-   $cref/vector/CppAD_vector/$$$code <std::set<std::size_t> >$$
-$tend
-There is a default value for $icode sparsity$$ if it is not
+
+.. list-table::
+
+   * - *sparsity*
+     - sparsity patterns
+   * - ``atomic_base<`` *Base* >:: ``pack_sparsity_enum``
+     - :ref:`CppAD_vector@vectorBool`
+   * - ``atomic_base<`` *Base* >:: ``bool_sparsity_enum``
+     - :ref:`vector<CppAD_vector-name>` ``<bool>``
+   * - ``atomic_base<`` *Base* >:: ``set_sparsity_enum``
+     - :ref:`vector<CppAD_vector-name>` ``<std::set<std::size_t> >``
+
+There is a default value for *sparsity* if it is not
 included in the constructor (which may be either the bool or set option).
 
-$end
+{xrst_end atomic_two_ctor}
 -------------------------------------------------------------------------------
 */
 

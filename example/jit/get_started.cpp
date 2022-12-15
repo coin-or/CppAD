@@ -4,21 +4,24 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin jit_get_started.cpp$$
-$spell
-   CppAD
-$$
+{xrst_begin jit_get_started.cpp}
 
-$section JIT Computation of Derivatives: Example and Test$$
+JIT Computation of Derivatives: Example and Test
+################################################
 
-$head Purpose$$
+Purpose
+*******
 This is a simple example using CppAD for Just In Time (JIT)
 compilation, linking, and running of C source code that computes derivatives.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end jit_get_started.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

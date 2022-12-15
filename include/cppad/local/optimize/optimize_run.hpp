@@ -24,109 +24,126 @@
 namespace CppAD { namespace local { namespace optimize  {
 
 /*!
-$begin optimize_run$$
-$spell
-   dep_taddr
-   Addr
-   const
-   iterator
-   PriOp
-   optimizer
-$$
+{xrst_begin optimize_run}
+{xrst_spell
+   dep
+   substring
+   taddr
+}
 
-$section Convert a player object to an optimized recorder object $$
+Convert a player object to an optimized recorder object
+#######################################################
 
-$head Syntax$$
-$codei%exceed_collision_limit% = local::optimize::optimize_run(
-   %options%, %n%, %dep_taddr%, %play%, %rec%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| *exceed_collision_limit* = ``local::optimize::optimize_run`` (
+| |tab| ``options`` , ``n`` , ``dep_taddr`` , ``play`` , ``rec``
+| )
 
-$head Addr$$
-Type to use for array elements in $code const_random_iterator$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head Base$$
+Addr
+****
+Type to use for array elements in ``const_random_iterator`` .
+
+Base
+****
 Base type for the operator; i.e., this operation was recorded
-using $codei%AD<%Base%>%$$
-and computations by this routine are done using type $icode Base$$.
+using ``AD<`` *Base* >
+and computations by this routine are done using type *Base* .
 
-$head options$$
+options
+*******
 
-$subhead no_conditional_skip$$
+no_conditional_skip
+===================
 If this sub-string appears,
 conditional skip operations will not be generated.
 This may make the optimize routine use significantly less memory
 and take significantly less time.
 
-$subhead no_compare_op$$
+no_compare_op
+=============
 If this sub-string appears,
 then comparison operators will be removed from the optimized tape.
-These operators are necessary for the $cref compare_change$$ feature to be
+These operators are necessary for the :ref:`compare_change-name` feature to be
 meaningful in the resulting recording.
 On the other hand, they are not necessary and take extra time
 when this feature is not needed.
 
-$subhead no_print_for_op$$
+no_print_for_op
+===============
 If this sub-string appears,
-then $cref printfor$$ operators $code PriOp$$
+then :ref:`printfor-name` operators ``PriOp``
 will be removed from the optimized tape.
 These operators are useful for reporting problems evaluating derivatives
 at independent variable values different from those used to record a function.
 
-$subhead no_cumulative_sum_op$$
+no_cumulative_sum_op
+====================
 If this sub-string appears,
 no cumulative sum operations will be generated during the optimization; see
-$cref optimize_cumulative_sum.cpp$$.
+:ref:`optimize_cumulative_sum.cpp-name` .
 
-$subhead collision_limit=value$$
+collision_limit=value
+=====================
 If this substring appears,
-where $icode value$$ is a sequence of decimal digits,
-the optimizer's hash code collision limit will be set to $icode value$$.
+where *value* is a sequence of decimal digits,
+the optimizer's hash code collision limit will be set to *value* .
 When the collision limit is exceeded, the expressions with that hash code
 are removed and a new lists of expressions with that has code is started.
-The larger $icode value$$, the more identical expressions the optimizer
+The larger *value* , the more identical expressions the optimizer
 can recognize, but the slower the optimizer may run.
-The default for $icode value$$ is $code 10$$.
+The default for *value* is ``10`` .
 
-$head n$$
+n
+*
 is the number of independent variables on the tape.
 
-$head dep_taddr$$
+dep_taddr
+*********
 On input this vector contains the indices for each of the dependent
-variable values in the operation sequence corresponding to $icode play$$.
+variable values in the operation sequence corresponding to *play* .
 Upon return it contains the indices for the same variables but in
-the operation sequence corresponding to $icode rec$$.
+the operation sequence corresponding to *rec* .
 
-$head play$$
+play
+****
 This is the operation sequence that we are optimizing.
-It is $code const$$ except for the fact that
-$icode%play%->setup_random ()%$$is called.
+It is ``const`` except for the fact that
+*play* ``->setup_random`` () is called.
 
-$head rec$$
+rec
+***
 The input contents of this recording must be empty; i.e.,
 it corresponds to directly after the default constructor.
 Upon return, it contains an optimized version of the
-operation sequence corresponding to $icode play$$.
+operation sequence corresponding to *play* .
 
-$head exceed_collision_limit$$
-If the $icode collision_limit$$ is exceeded (is not exceeded),
+exceed_collision_limit
+**********************
+If the *collision_limit* is exceeded (is not exceeded),
 the return value is true (false).
 
-$childtable%
-   include/cppad/local/optimize/cexp_info.hpp%
-   include/cppad/local/optimize/get_cexp_info.hpp%
-   include/cppad/local/optimize/get_op_usage.hpp%
-   include/cppad/local/optimize/get_par_usage.hpp%
-   include/cppad/local/optimize/record_csum.hpp%
-   include/cppad/local/optimize/match_op.hpp%
+Contents
+********
+{xrst_toc_table
+   include/cppad/local/optimize/cexp_info.hpp
+   include/cppad/local/optimize/get_cexp_info.hpp
+   include/cppad/local/optimize/get_op_usage.hpp
+   include/cppad/local/optimize/get_par_usage.hpp
+   include/cppad/local/optimize/record_csum.hpp
+   include/cppad/local/optimize/match_op.hpp
    include/cppad/local/optimize/get_op_previous.hpp
-%$$
+}
 
-$end
+{xrst_end optimize_run}
 */
 
 // BEGIN_PROTOTYPE

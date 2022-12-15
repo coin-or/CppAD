@@ -3,55 +3,65 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_three_jac_sparsity.cpp$$
-$spell
-   Jacobian
-   jac
-$$
+{xrst_begin atomic_three_jac_sparsity.cpp}
 
-$section Atomic Function Jacobian Sparsity: Example and Test$$
+Atomic Function Jacobian Sparsity: Example and Test
+###################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates calculation of a Jacobian sparsity pattern
 using an atomic operation.
 
-$head Function$$
+Function
+********
 For this example, the atomic function
-$latex g : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
-$latex \[
-g(x) = \left( \begin{array}{c}
-   x_2 * x_2 \\
-   x_0 * x_1
-\end{array} \right)
-\] $$
+:math:`g : \B{R}^3 \rightarrow \B{R}^2` is defined by
 
-$head Jacobian$$
+.. math::
+
+   g(x) = \left( \begin{array}{c}
+      x_2 * x_2 \\
+      x_0 * x_1
+   \end{array} \right)
+
+Jacobian
+********
 The corresponding Jacobian is
-$latex \[
-g^{(1)} (x) = \left( \begin{array}{ccc}
-  0  &   0 & 2 x_2 \\
-x_1  & x_0 & 0
-\end{array} \right)
-\] $$
 
-$head Start  Class Definition$$
-$srccode%cpp% */
+.. math::
+
+   g^{(1)} (x) = \left( \begin{array}{ccc}
+     0  &   0 & 2 x_2 \\
+   x_1  & x_0 & 0
+   \end{array} \right)
+
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 namespace {          // begin empty namespace
 using CppAD::vector; // abbreviate CppAD::vector as vector
 //
 class atomic_jac_sparsity : public CppAD::atomic_three<double> {
-/* %$$
-$head Constructor $$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 public:
    atomic_jac_sparsity(const std::string& name) :
    CppAD::atomic_three<double>(name)
    { }
 private:
-/* %$$
-$head for_type$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_type
+********
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate type_y
    bool for_type(
       const vector<double>&               parameter_x ,
@@ -67,9 +77,12 @@ $srccode%cpp% */
       type_y[1] = std::max(type_x[0], type_x[1]);
       return true;
    }
-/* %$$
-$head forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    bool forward(
       const vector<double>&              parameter_x  ,
@@ -99,9 +112,12 @@ $srccode%cpp% */
 
       return ok;
    }
-/* %$$
-$head jac_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+jac_sparsity
+************
+{xrst_spell_off}
+{xrst_code cpp} */
    // Jacobian sparsity routine called by CppAD
    bool jac_sparsity(
       const vector<double>&               parameter_x ,
@@ -157,9 +173,12 @@ $srccode%cpp% */
    }
 }; // End of atomic_three_jac_sparsity class
 
-/* %$$
-$head Use Atomic Function$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 bool use_jac_sparsity(bool x_1_variable, bool forward)
 {  bool ok = true;
    using CppAD::AD;
@@ -283,9 +302,12 @@ bool use_jac_sparsity(bool x_1_variable, bool forward)
    return ok;
 }
 }  // End empty namespace
-/* %$$
-$head Test with u_1 Both a Variable and a Parameter$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Test with u_1 Both a Variable and a Parameter
+*********************************************
+{xrst_spell_off}
+{xrst_code cpp} */
 bool jac_sparsity(void)
 {  bool ok           = true;
    //
@@ -307,6 +329,8 @@ bool jac_sparsity(void)
    //
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_three_jac_sparsity.cpp}
 */

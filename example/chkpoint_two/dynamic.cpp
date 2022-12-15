@@ -4,21 +4,23 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin chkpoint_two_dynamic.cpp$$
-$spell
+{xrst_begin chkpoint_two_dynamic.cpp}
 
-$$
+Checkpoint Functions with Dynamic Parameters: Example and Test
+##############################################################
 
-$section Checkpoint Functions with Dynamic Parameters: Example and Test$$
-
-$head Purpose$$
+Purpose
+*******
 This example demonstrates using dynamic parameters with a
-$cref chkpoint_two$$ function.
+:ref:`chkpoint_two-name` function.
 
-$head g(x)$$
+g(x)
+****
 For this example, the checkpoint function
-$latex g : \B{R}^2 \rightarrow \B{R}^3$$ is defined by
-$latex \[
+:math:`g : \B{R}^2 \rightarrow \B{R}^3` is defined by
+
+.. math::
+
    g(x)
    =
    \left( \begin{array}{c}
@@ -26,18 +28,23 @@ $latex \[
       x_0 \cdot x_ 0 \\
       x_1 \cdot x_ 0
    \end{array} \right)
-\] $$
-where $latex p_0$$ is a dynamic parameter in the definition of $latex g(x)$$
 
-$head f(x)$$
-The function $latex f(x) : \B{R}^2 \rightarrow \B{R}^3$$
-is defined by $latex f(x) = q_0 \cdot g(x)$$ where $latex q_0$$
-is a dynamic parameter in the definition of $latex f(x)$$.
+where :math:`p_0` is a dynamic parameter in the definition of :math:`g(x)`
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+f(x)
+****
+The function :math:`f(x) : \B{R}^2 \rightarrow \B{R}^3`
+is defined by :math:`f(x) = q_0 \cdot g(x)` where :math:`q_0`
+is a dynamic parameter in the definition of :math:`f(x)`.
 
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end chkpoint_two_dynamic.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

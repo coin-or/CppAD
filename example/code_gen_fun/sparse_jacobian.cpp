@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin code_gen_fun_sparse_jacobian.cpp$$
-$spell
-   jacobian
-$$
+{xrst_begin code_gen_fun_sparse_jacobian.cpp}
 
-$section Evaluate Sparse Jacobian of a Code Gen Function: Example and Test$$
+Evaluate Sparse Jacobian of a Code Gen Function: Example and Test
+#################################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end code_gen_fun_sparse_jacobian.cpp}
 */
 // BEGIN C++
 # include <cppad/example/code_gen_fun.hpp>

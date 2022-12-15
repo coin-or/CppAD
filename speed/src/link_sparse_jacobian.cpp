@@ -20,36 +20,40 @@ namespace { // BEGIN_EMPTY_NAMESPACE
    static CppAD::vector<size_t> callback_col_;
 /*
 ------------------------------------------------------------------------------
-$begin sparse_jacobian_choose_row_col$$
-$spell
-   Jacobian
-   CppAD
-$$
-$section Randomly Choose Row and Column Indices for Sparse Jacobian$$
+{xrst_begin sparse_jacobian_choose_row_col}
+Randomly Choose Row and Column Indices for Sparse Jacobian
+##########################################################
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_CHOOSE_ROW_COL%// END_CHOOSE_ROW_COL%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CHOOSE_ROW_COL
+   // END_CHOOSE_ROW_COL
+}
 
-$head n$$
+n
+*
 is the dimension of the domain space for the function f(x).
 
-$head m$$
+m
+*
 is the dimension of the range space for the function f(x).
 
-$head row$$
-The input size and elements of $icode row$$ do not matter.
+row
+***
+The input size and elements of *row* do not matter.
 Upon return it is the chosen row indices.
 
-$head col$$
-The input size and elements of $icode col$$ do not matter.
+col
+***
+The input size and elements of *col* do not matter.
 Upon return it is the chosen column indices.
 
-$head Row Major$$
+Row Major
+*********
 The result is in row major order.
 
-$end
+{xrst_end sparse_jacobian_choose_row_col}
 */
 // BEGIN_CHOOSE_ROW_COL
 void choose_row_col(
@@ -122,41 +126,41 @@ void choose_row_col(
 } // END_EMPTY_NAMESPACE
 /*
 ------------------------------------------------------------------------------
-$begin info_sparse_jacobian$$
-$spell
-   Jacobian
-   Namespace
-   CppAD
-   vec
-$$
+{xrst_begin info_sparse_jacobian}
 
-$section Sparse Jacobian Speed Test Information$$
+Sparse Jacobian Speed Test Information
+######################################
 
-$head Namespace$$
+Namespace
+*********
 This function is in the global namespace, not the CppAD namespace.
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_INFO_SPARSE_JACOBIAN%// END_INFO_SPARSE_JACOBIAN%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_INFO_SPARSE_JACOBIAN
+   // END_INFO_SPARSE_JACOBIAN
+}
 
-$head size_vec$$
-The input value of $icode size_vec$$ does not matter.
+size_vec
+********
+The input value of *size_vec* does not matter.
 Upon return, it contains the values (in order) of
-$cref/size/speed_time/size/$$ in the previous call to
-$code time_sparse_jacobian$$.
-Only calls since the previous call to $code info_sparse_jacobian$$
+:ref:`speed_time@size` in the previous call to
+``time_sparse_jacobian`` .
+Only calls since the previous call to ``info_sparse_jacobian``
 are included.
 
-$head n_color$$
-The input value of $icode n_color_vec$$ does not matter.
-Upon return, it has the same size as $icode size_vec$$.
-The value $icode%n_color%[%j%]%$$ is the value of
-$cref/n_color/link_sparse_jacobian/n_color/$$
-returned by a call to $code link_sparse_jacobian$$
-with size equal to $icode%size_vec%[%j%]%$$.
+n_color
+*******
+The input value of *n_color_vec* does not matter.
+Upon return, it has the same size as *size_vec* .
+The value *n_color* [ *j* ] is the value of
+:ref:`link_sparse_jacobian@n_color`
+returned by a call to ``link_sparse_jacobian``
+with size equal to *size_vec* [ *j* ] .
 
-$end
+{xrst_end info_sparse_jacobian}
 */
 // BEGIN_INFO_SPARSE_JACOBIAN
 void info_sparse_jacobian(

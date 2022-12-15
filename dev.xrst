@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin CppAD}
+
+{xrst_comment --------------------------------------------------------------
+default values for all the CppAD Developer documentation
+}
+
+:math:`\newcommand{\W}[1]{ \; #1 \; }`
+:math:`\newcommand{\R}[1]{ {\rm #1} }`
+:math:`\newcommand{\B}[1]{ {\bf #1} }`
+:math:`\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }`
+:math:`\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }`
+:math:`\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }`
+:math:`\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }`
+
+{xrst_comment -------------------------------------------------------------- }
+
+cppad-20221104: C++ Algorithmic Differentiation Package Developer Documentation
+###############################################################################
+
+Contents
+********
+{xrst_toc_table
+   xrst/install/install.xrst
+   xrst/theory/theory.xrst
+   include/cppad/core/user_ad.hpp
+   include/cppad/core/ad_fun.hpp
+   xrst/preprocessor.xrst
+   xrst/multi_thread.xrst
+   include/cppad/utility/xrst/utility.xrst
+   include/cppad/ipopt/solve.hpp
+   xrst/example.xrst
+   speed/speed.xrst
+   xrst/appendix/appendix.xrst
+   xrst/devel/devel.xrst
+}
+
+{xrst_end CppAD}

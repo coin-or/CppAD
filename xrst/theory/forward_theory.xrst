@@ -1,0 +1,260 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin forward_theory}
+
+The Theory of Forward Mode
+##########################
+
+Taylor Notation
+***************
+In Taylor notation, each variable corresponds to
+a function of a single argument which we denote by *t*
+(see Section 10.2 of
+:ref:`Bib@Evaluating Derivatives` ).
+Here and below
+:math:`X(t)`, :math:`Y(t)`, and *Z* ( *t* ) are scalar valued functions
+and the corresponding *p*-th order Taylor coefficients row vectors are
+:math:`x`, :math:`y` and :math:`z`; i.e.,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   X(t) & = & x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p + o( t^p ) \\
+   Y(t) & = & y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + o( t^p ) \\
+   Z(t) & = & z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + o( t^p )
+   \end{eqnarray}
+
+For the purposes of this section, we are given :math:`x` and :math:`y`
+and need to determine :math:`z`.
+
+Binary Operators
+****************
+
+Addition
+========
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   Z(t)
+   & = & X(t)   + Y(t)
+   \\
+   \sum_{j=0}^p z^{(j)} * t^j
+   & = & \sum_{j=0}^p x^{(j)} * t^j + \sum_{j=0}^p y^{(j)} * t^j  + o( t^p )
+   \\
+   z^{(j)} & = & x^{(j)} + y^{(j)}
+   \end{eqnarray}
+
+Subtraction
+===========
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   Z(t)
+   & = & X(t) - Y(t)
+   \\
+   \sum_{j=0}^p z^{(j)} * t^j
+   & = & \sum_{j=0}^p x^{(j)} * t^j - \sum_{j=0}^p y^{(j)} * t^j  + o( t^p )
+   \\
+   z^{(j)} & = & x^{(j)} - y^{(j)}
+   \end{eqnarray}
+
+Multiplication
+==============
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   Z(t)
+   & = & X(t) * Y(t)
+   \\
+   \sum_{j=0}^p z^{(j)} * t^j
+   & = & \left( \sum_{j=0}^p x^{(j)} * t^j \right)
+   *
+   \left( \sum_{j=0}^p y^{(j)} * t^j \right) + o( t^p )
+   \\
+   z^{(j)} & = & \sum_{k=0}^j x^{(j-k)} * y^{(k)}
+   \end{eqnarray}
+
+Division
+========
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   Z(t)
+   & = & X(t) / Y(t)
+   \\
+   x
+   & = & z * y
+   \\
+   \sum_{j=0}^p x^{(j)} * t^j
+   & = &
+   \left( \sum_{j=0}^p z^{(j)} * t^j \right)
+   *
+   \left( \sum_{j=0}^p y^{(j)} * t^j \right)
+   +
+   o( t^p )
+   \\
+   x^{(j)} & = & \sum_{k=0}^j z^{(j-k)} y^{(k)}
+   \\
+   z^{(j)} & = & \frac{1}{y^{(0)}} \left( x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)} \right)
+   \end{eqnarray}
+
+Standard Math Functions
+***********************
+Suppose that :math:`F` is a standard math function and
+
+.. math::
+
+   Z(t) = F[ X(t) ]
+
+Differential Equation
+=====================
+All of the standard math functions
+satisfy a differential equation of the form
+
+.. math::
+
+   B(u) * F^{(1)} (u) - A(u) * F (u)  = D(u)
+
+We use :math:`a`, :math:`b` and :math:`d` to denote the
+*p*-th order Taylor coefficient row vectors for
+:math:`A [ X (t) ]`, :math:`B [ X (t) ]` and :math:`D [ X (t) ]`
+respectively.
+We assume that these coefficients are known functions of :math:`x`,
+the *p*-th order Taylor coefficients for :math:`X(t)`.
+
+Taylor Coefficients Recursion Formula
+=====================================
+Our problem here is to express :math:`z`,
+the *p*-th order Taylor coefficient row vector for :math:`Z(t)`,
+in terms of these other known coefficients.
+It follows from the formulas above that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   Z^{(1)} (t)
+   & = & F^{(1)} [ X(t) ] * X^{(1)} (t)
+   \\
+   B[ X(t) ] * Z^{(1)} (t)
+   & = & \{ D[ X(t) ] + A[ X(t) ] * Z(t) \} * X^{(1)} (t)
+   \\
+   B[ X(t) ] * Z^{(1)} (t) & = & E(t) * X^{(1)} (t)
+   \end{eqnarray}
+
+where we define
+
+.. math::
+
+   E(t) =  D[X(t)] + A[X(t)] * Z(t)
+
+We can compute the value of :math:`z^{(0)}` using the formula
+
+.. math::
+
+   z^{(0)} = F ( x^{(0)} )
+
+Suppose by induction (on :math:`j`) that we are given the
+Taylor coefficients of :math:`E(t)` up to order :math:`j-1`; i.e.,
+:math:`e^{(k)}` for :math:`k = 0 , \ldots , j-1`
+and the coefficients
+:math:`z^{(k)}` for :math:`k = 0 , \ldots , j`.
+We can compute :math:`e^{(j)}` using the formula
+
+.. math::
+
+   e^{(j)} = d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
+
+We need to complete the induction by finding formulas for :math:`z^{(j+1)}`.
+It follows from the definition of :math:`E(t)` that
+
+.. math::
+
+   \left( \sum_{k=0}^j b^{(k)} * t^k \right)
+   *
+   \left( \sum_{k=1}^{j+1} k z^{(k)} * t^{k-1} \right)
+   =
+   \left( \sum_{k=0}^j e^{(k)} * t^k \right)
+   *
+   \left( \sum_{k=1}^{j+1} k x^{(k)} * t^{k-1} \right)
+   +
+   o( t^p )
+
+Setting the left and right side coefficients of :math:`t^j` equal,
+and using the formula for
+:ref:`forward_theory@Binary Operators@Multiplication` ,
+we obtain
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \sum_{k=0}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+   & = &
+   \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+   \\
+   z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+      - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+   \right)
+   \\
+   z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+      - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \right)
+   \end{eqnarray}
+
+This completes the induction that computes :math:`e^{(j)}`
+and :math:`z^{(j+1)}`.
+{xrst_toc_hidden
+   xrst/theory/exp_forward.xrst
+   xrst/theory/log_forward.xrst
+   xrst/theory/sqrt_forward.xrst
+   xrst/theory/sin_cos_forward.xrst
+   xrst/theory/atan_forward.xrst
+   xrst/theory/asin_forward.xrst
+   xrst/theory/acos_forward.xrst
+   xrst/theory/pow_forward.xrst
+   xrst/theory/tan_forward.xrst
+   xrst/theory/erf_forward.xrst
+}
+
+Cases that Apply Recursion Above
+================================
+
+.. csv-table::
+   :widths: auto
+
+   exp_forward,:ref:`exp_forward-title`
+   log_forward,:ref:`log_forward-title`
+   sqrt_forward,:ref:`sqrt_forward-title`
+   sin_cos_forward,:ref:`sin_cos_forward-title`
+   atan_forward,:ref:`atan_forward-title`
+   asin_forward,:ref:`asin_forward-title`
+   acos_forward,:ref:`acos_forward-title`
+   pow_forward,:ref:`pow_forward-title`
+
+Special Cases
+=============
+
+.. csv-table::
+   :widths: auto
+
+   tan_forward,:ref:`tan_forward-title`
+   erf_forward,:ref:`erf_forward-title`
+
+{xrst_end forward_theory}

@@ -4,14 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin div.cpp$$
+{xrst_begin div.cpp}
 
-$section AD Binary Division: Example and Test$$
+AD Binary Division: Example and Test
+####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end div.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

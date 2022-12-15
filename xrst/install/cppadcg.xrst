@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin cppadcg}
+
+Including CppADCodeGen Examples and Tests
+#########################################
+
+CppADCodeGen Home Page
+**********************
+https://github.com/joaoleal/CppADCodeGen.git
+
+Purpose
+*******
+CppAD includes examples and test that use the CppADCodeGen package,
+abbreviated as ``cppadcg`` , see:
+:ref:`code_gen_fun-name` .
+
+include_cppadcg
+***************
+If ``include_cppadcg=true`` is on the cmake command line,
+then the pkg-config will find the
+necessary information to include cppadcg.
+The value of *PKG_CONFIG_PATH* must be such that the command
+
+   ``pkg-config cppadcg --path --print-errors``
+
+finds the location of the file ``cppadcg.pc`` .
+
+Speed Tests
+***********
+If ``include_cppadcg=true`` is on the cmake command line,
+you will be able to run the cppadcg speed correctness tests
+by executing the following commands starting in the
+:ref:`download@Distribution Directory` :
+
+| |tab| ``cd build/speed/cppadcg``
+| |tab| ``make check_speed_cppadcg``
+
+After executing ``make check_speed_cppadcg`` ,
+you can run a specific cppadcg speed test
+by executing the command ``./speed_cppadcg`` ;
+see :ref:`speed_main-name` for the meaning of the command line
+options to this program.
+
+get_cppadcg
+***********
+If you are using Unix, you can download and install
+a copy of cppadcg using :ref:`get_cppadcg.sh-name` .
+The corresponding install prefix is
+``build/prefix`` .
+
+{xrst_end cppadcg}

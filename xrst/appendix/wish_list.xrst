@@ -1,0 +1,299 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin wish_list}
+{xrst_spell
+   boolofvoid
+   grep
+   multiplications
+   recomputation
+   recomputed
+   specifier
+   tapeless
+}
+
+The CppAD Wish List
+###################
+
+See Also
+********
+:ref:`research-name`
+
+Purpose
+*******
+The items on this list are improvements and extensions to CppAD
+that are currently being considered.
+
+base2ad
+*******
+It would be nice if :ref:`base2ad-name` functioned as expected with
+:ref:`VecAD-name` operations; see :ref:`base2vec_ad.cpp-name` .
+
+Dynamic Parameters
+******************
+
+Comparison Operators
+====================
+The comparisons for dynamic parameters are not being included
+in the :ref:`Independent@record_compare` is true.
+This should be fixed and included in the
+:ref:`compare_change@number` returned by
+*f* . ``compare_change`` .
+In addition, we will need a way to know if
+:ref:`compare_change@op_index` corresponds to a
+variable or dynamic parameter operator.
+
+VecAD Vectors
+=============
+Currently, when a :ref:`VecAD-name` vector only depends on dynamic parameters
+it becomes a variable; see :ref:`VecAD@Efficiency` .
+This is a simple solution to the problem of having to pass the state of
+a vector, when it becomes a variable,
+from a dynamic sweep to a zero order forward mode sweep.
+
+Graph Operators
+***************
+The :ref:`graph_op_enum@Missing Operators` should be
+implemented so that they can be include in conversion between :ref:`ADFun-name`
+objects and the AD graphs; see :ref:`cpp_ad_graph-name` , :ref:`json_ad_graph-name` .
+
+Reverse Mode
+************
+Reverse mode calculation of the function
+:math:`f : \B{R} \rightarrow \B{R}`  defined by :math:`y = f(x)` where
+
+   *ay* [0] = ``pow`` ( *ax* [0], 0.5) * ``pow`` ( *ax* [0], 0.5)
+
+yields the result zero when :math:`x_0 = 0`;
+see the file ``bug/pow.sh`` .
+This is a feature of using :ref:`azmul-name` to select which components of
+a function are differentiated.
+This enables one component to yield :ref:`nan-name` for a partial derivative
+while another might not.
+If a separate flag was used for which variables are selected,
+reverse mode multiplications would not need to be converted to ``azmul``
+and the function above would return ``nan`` for the derivative value.
+This may also be faster that using ``azmul`` .
+
+Atomic Examples
+***************
+Convert the remaining
+:ref:`atomic_two_examples<atomic_two_example-name>` , and
+:ref:`atomic_three_examples<atomic_three_example-name>`
+to use the :ref:`atomic_four-name` interface.
+
+{xrst_comment -------------------------------------------------------------- }
+Abs-normal
+**********
+
+Atomic Functions
+================
+The :ref:`abs_normal_fun-name` conversion does not handle
+atomic functions. This should be fixed.
+
+Return Functions
+================
+Change the :ref:`abs_normal_fun-name` to return the functions
+:ref:`abs_normal_fun@g@z(x, u)` and
+:ref:`abs_normal_fun@g@y(x, u)` instead of
+:math:`g(x, u)` and :math:`a(x)`.
+We can add a utility that computes :math:`a(x)` using
+:math:`z(x, u)`, :math:`a_i (x) = | z_i (x, a(x) ) |`
+and :math:`z_i` does not depends on :math:`u_j` for :math:`j \geq i`.
+
+Cancellation
+============
+Avoid cancellation when computing the difference in the absolute value
+function at the current point :math:`\hat{x}` the displaced point
+:math:`x = \hat{x} + \Delta x`; i.e.,
+
+.. math::
+
+   |z_i (x, \tilde{a}(x) ) | - |z_i (\hat{x}, a(\hat{x}) ) |
+
+{xrst_comment -------------------------------------------------------------- }
+cppad_lib
+*********
+
+Requirement
+===========
+Currently ``cppad_lib`` library is only needed if one uses
+:ref:`colpack<colpack_prefix-name>` ,
+:ref:`json_ad_graph-name` ,
+:ref:`cpp_ad_graph-name` , or
+:ref:`code_gen_fun-name` ..
+
+inline
+======
+The C++ ``inline`` specifier is used to avoid multiple copies
+of functions (that are not templates) during the link process.
+Perhaps some of these functions should be regular functions and part
+in the :ref:`colpack_prefix@cppad_lib` library.
+
+Compilation Speed
+=================
+Perhaps complication speed when using ``AD<double>``
+could significantly be increased by including some of it's member functions
+in the cppad_lib library.
+
+{xrst_comment ------------------------------------------------------------- }
+checkpoint
+**********
+
+Tapeless AD
+===========
+Perhaps there should be a version of the
+:ref:`chkpoint_two-name`
+class that uses a tapeless AD package to compute
+the derivative values.
+This would allow for algorithms where the operations sequence
+depends on the independent variable values.
+There is a question as to how sparsity patterns would be determined
+in this case.
+Perhaps they would be passed into the constructor.
+If it was known to be constant,
+the user could compute the pattern using CppAD.
+Otherwise, the user could input
+a conservative estimate of the pattern that would be correct.
+
+Re-taping
+=========
+Perhaps the ``checkpoint`` class should allow for re-taping
+derivative values.
+This would also allow for algorithms where the operations sequence
+depends on the independent variable values.
+Perhaps (as for tapeless entry above)
+the sparsity pattern should be passed into the constructor.
+
+Testing
+=======
+There should be some examples and tests for both speed and memory use
+that demonstrate that checkpointing is useful.
+
+{xrst_comment -------------------------------------------------------------- }
+Subgraph
+********
+
+Forward Mode
+============
+The :ref:`subgraph_jac_rev-name` routine computes sparsity patterns
+of Jacobians using reverse mode.
+It is possible that a forward mode version of this method would be
+better for some cases.
+
+Sparsity
+========
+The :ref:`subgraph_sparsity-name` calculation treats
+each atomic function call as if
+all of its outputs depend on all of its inputs;
+see :ref:`subgraph_sparsity@Atomic Function` .
+These sparsity patterns could be made more efficient
+(could have fewer possibly non-zeros entries)
+by using the sparsity patterns for the atomic functions.
+
+{xrst_comment -------------------------------------------------------------- }
+
+check_finite
+************
+
+#. Sometimes one only gets infinite value during zero order forward
+   and nan when computing corresponding derivatives.
+   Change :ref:`check_for_nan-name` to ``check_finite``
+   (not infinite or nan) so that error detection happens during zero
+   order forward instead of later.
+#. In addition, the current :ref:`check_for_nan-name` writes the corresponding
+   zero order values to a temporary file.
+   It would be nice if the ``check_finite`` routine made writing
+   the zero order values optional.
+
+test_boolofvoid
+***************
+For general purpose use, the :ref:`test_boolofvoid-name` should be usable
+without including a memory check at the end.
+
+Example
+*******
+Split the :ref:`example list<list_all_examples-name>`
+into separate groups by the corresponding example subdirectory.
+
+{xrst_comment ------------------------------------------------------------ }
+Optimization
+************
+
+Atomic Functions
+================
+There is some confusion as to the value of the Taylor coefficients
+for atomic function arguments and results that have been optimized out.
+See :ref:`optimize@Atomic Functions` in optimize,
+:ref:`whats_new_21@mm-dd@02-16` in whats new for 2021,
+:ref:`atomic_three_rev_depend@depend_x@Optimize`
+in atomic_three, and
+:ref:`atomic_four_rev_depend@depend_x@Optimize` in atomic_four.
+
+Taping
+======
+Perhaps some of the optimization done while taping forward mode
+should be delayed to the ``optimization`` step.
+
+Special Operators
+=================
+Add special operators that can be implemented more efficiently, e.g.,
+
+   ``square`` ( *x* ) = *x* * *x*
+
+and have the optimizer recognize when they should be used.
+(They could also be in the user API, but it would not be expected
+that the user would use them.)
+
+{xrst_comment --------------------------------------------------------------}
+
+Base Requirements
+*****************
+Change the :ref:`Base requirements<base_require-name>` to use template
+specialization instead of functions so that there is a default value
+for each function. The default would result in a
+:ref:`cppad_assert@Known` assert when the operation is used and not
+defined by the base class.
+An example of this type of template specialization can be found in
+the implementation of :ref:`to_string-name` .
+
+Adolc
+*****
+Create a documentation page that shows how to convert Adolc commands to
+CppAD commands.
+
+Forward Mode Recomputation
+**************************
+If the results of :ref:`forward_order-name` have already been computed and are still
+stored in the :ref:`ADFun-name` object (see :ref:`size_order-name` ),
+then they do not need to be recomputed and the results can just be returned.
+
+Iterator Interface
+******************
+All of the CppAD simple vector interfaces should also have an
+iterator version for the following reasons:
+
+#. It would not be necessary to copy information to simple vectors
+   when it was originally stored in a different type of container.
+#. It would not be necessary to reallocate memory for a result that is
+   repeatedly calculated
+   (because an iterator for the result container would be passed in).
+
+Tracing
+*******
+Add tracing the operation sequence to the user API and documentation.
+Tracing the operation sequence is currently done by changing the CppAD
+source code. Use the command
+::
+
+   grep '^# *define *CPPAD_.*_TRACE' cppad/local/sweep\*.hpp
+
+to find all the possible tracing flags.
+
+atan2
+*****
+The :ref:`Atan2-name` function could be made faster by adding
+a special operator for it.
+
+{xrst_end wish_list}

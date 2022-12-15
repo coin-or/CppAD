@@ -12,36 +12,42 @@
 # include <cppad/core/graph/cpp_graph.hpp>
 
 /*
-$begin json_parser$$
-$spell
-   Json
-   CppAD
-   obj
-$$
+{xrst_begin json_parser}
+{xrst_spell
+   parser
+}
 
-$section Json AD Graph Parser$$
+Json AD Graph Parser
+####################
 
-$head Syntax$$
-$codei%json_parser(%json%, %graph_obj%)%$$
+Syntax
+******
+``json_parser`` ( *json* , *graph_obj* )
 
-$head json$$
-The $cref json_ad_graph$$.
+json
+****
+The :ref:`json_ad_graph-name` .
 
-$head graph_obj$$
-This is a $code cpp_graph$$ object.
+graph_obj
+*********
+This is a ``cpp_graph`` object.
 The input value of the object does not matter.
-Upon return it is a $cref cpp_ad_graph$$ representation of this function.
+Upon return it is a :ref:`cpp_ad_graph-name` representation of this function.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 namespace CppAD { namespace local { namespace graph {
    CPPAD_LIB_EXPORT void json_parser(
       const std::string&  json      ,
       cpp_graph&          graph_obj
    );
 } } }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_parser}
 */
 
 

@@ -1,0 +1,220 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin forward_dir}
+{xrst_spell
+   xk
+   xq
+   yq
+}
+
+Multiple Directions Forward Mode
+################################
+
+Syntax
+******
+
+   *yq* = *f* . ``Forward`` ( *q* , *r* , *xq* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+Given a function :math:`X : \B{R} \rightarrow \B{R}^n`,
+defined by its
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` ,
+forward mode computes the Taylor coefficients for the function
+
+.. math::
+
+   Y (t) = F [ X(t) ]
+
+This version of forward mode computes multiple directions as the same
+time (reducing the number of passes through the tape). This requires more
+memory, but might be faster in some cases.
+
+Reverse Mode
+************
+Reverse mode for multiple directions has not yet been implemented.
+If you have speed tests that indicate that multiple direction forward
+mode is faster, and you want to try multiple direction reverse mode,
+contact the CppAD project manager.
+
+Notation
+********
+
+n
+=
+We use *n* to denote the dimension of the
+:ref:`fun_property@Domain` space for *f* .
+
+m
+=
+We use *m* to denote the dimension of the
+:ref:`fun_property@Range` space for *f* .
+
+f
+*
+The :ref:`ADFun-name` object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const`` .
+After this call we will have
+
+| |tab| *f* . ``size_order`` ()     == *q*  + 1
+| |tab| *f* . ``size_direction`` () == *r*
+
+q
+*
+This argument has prototype
+
+   ``size_t`` *q*
+
+It specifies the order of Taylor Coefficient that we are calculating
+and must be greater than zero.
+The zero order coefficients can only have one direction computed
+and stored in *f* so use :ref:`forward_zero-name`
+to compute the zero order coefficients.
+
+r
+*
+This argument has prototype
+
+   ``size_t`` *r*
+
+It specifies the number of directions that are computed together.
+If ( *r*  == 1 ), you are only using one direction and
+:ref:`forward_order-name` is simpler, and should be faster,
+than this more general case.
+
+xq
+**
+The argument *xq* has prototype
+
+   ``const`` *Vector* & *xq*
+
+and its size must be *n* * *r*
+(see :ref:`forward_dir@Vector` below).
+For :math:`\ell = 0 , \ldots , r-1`,
+:math:`j = 0 , \ldots , n-1`,
+the *j*-th component of the *q*-th order Taylor coefficient
+for :math:`X_\ell (t)` is defined by
+
+|tab| :math:`x_j^{(q),\ell} =` *xq* [ *r* * *j* + *ell*  ]
+
+Zero Order
+**********
+For :math:`j = 0 , \ldots , n-1`,
+the *j*-th component of the zero order Taylor coefficient
+for :math:`X_\ell (t)` is defined by
+
+|tab| :math:`x_j^{(0)} =` *xk* [ *j*  ]
+where *xk* corresponds to the previous call
+
+   *f* . ``Forward`` ( *k* , *xk* )
+
+with *k*  = 0 .
+
+Non-Zero Lower Orders
+*********************
+For :math:`\ell = 0 , \ldots , r-1`,
+:math:`j = 0 , \ldots , n-1`,
+:math:`k = 1, \ldots , q-1`,
+the *j*-th component of the *k*-th order Taylor coefficient
+for :math:`X_\ell (t)` is defined by
+
+|tab| :math:`x_j^{(k),\ell} =` *xk* [ *r* * *j* + *ell*  ]
+where *xk* corresponds to the previous call
+
+   *f* . ``Forward`` ( *k* , *r* , *xk* )
+
+Note that *r* must have the same value in this previous call.
+
+X(t)
+****
+For :math:`\ell = 0 , \ldots , r-1`, the function
+:math:`X_\ell : \B{R} \rightarrow \B{R}^n` is defined using
+the Taylor coefficients :math:`x^{(k),\ell} \in \B{R}^n`:
+
+.. math::
+
+   X_\ell (t) = x^{(0)}  + x^{(1),\ell} * t^1 + \cdots +  x^{(q),\ell} t^q
+
+Note that the *k*-th derivative of :math:`X_\ell (t)` is related to
+its Taylor coefficients by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      x^{(0)}       & = & X_\ell (0)
+      \\
+      x^{(k), \ell} & = & \frac{1}{k !} X_\ell^{(k)} (0)
+   \end{eqnarray}
+
+for :math:`k = 1 , \ldots , q`.
+
+Y(t)
+****
+For :math:`\ell = 0 , \ldots , r-1`, the function
+:math:`Y_\ell : \B{R} \rightarrow \B{R}^m`  is defined by
+:math:`Y_\ell (t) = F[ X_\ell (t) ]`.
+We use :math:`y^{(0)}` for the zero order coefficient
+and :math:`y^{(k),\ell} \in \B{R}^m` to denote the
+hight order coefficients; i.e.,
+
+.. math::
+
+   Y_\ell (t) = y^{(0)} + y^{(1),\ell} * t^1 + \cdots + y^{(q),\ell} * t^q
+   + o( t^q )
+
+where :math:`o( t^q ) * t^{-q} \rightarrow 0` as :math:`t \rightarrow 0`.
+Note that the *k*-th derivative of :math:`Y_\ell (t)` is related to
+its Taylor coefficients by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      y^{(0)}       & = & Y_\ell (0)
+      \\
+      y^{(k), \ell} & = & \frac{1}{k !} Y_\ell^{(k)} (0)
+   \end{eqnarray}
+
+for :math:`k = 1 , \ldots , q`.
+
+yq
+**
+The argument *yq* has prototype
+
+   *Vector* *yq*
+
+and its size is *m* * *r*
+(see :ref:`forward_dir@Vector` below).
+For :math:`\ell = 0 , \ldots , r-1`,
+:math:`i = 0 , \ldots , m-1`,
+the *i*-th component of the *q*-th order Taylor coefficient
+for :math:`Y_\ell (t)` is given by
+
+|tab| :math:`y_i^{(q),\ell} =` *yq* [ *r* * *i* + *ell*  ]
+
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+{xrst_toc_hidden
+   example/general/forward_dir.cpp
+}
+Example
+*******
+The file
+:ref:`forward_dir.cpp-name`
+contains an example and test using one order (multiple orders).
+They return true if they succeed and false otherwise.
+
+{xrst_end forward_dir}

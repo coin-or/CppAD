@@ -6,51 +6,51 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin number_skip$$
-$spell
-   optimizer
-   var
-   taylor_
-$$
+{xrst_begin number_skip}
 
+Number of Variables that Can be Skipped
+#######################################
 
-$section Number of Variables that Can be Skipped$$
+Syntax
+******
+*n* = *f* . ``number_skip`` ()
 
-$head Syntax$$
-$icode%n% = %f%.number_skip()%$$
+See Also
+========
+:ref:`fun_property-name`
 
-$subhead See Also$$
-$cref fun_property$$
-
-$head Purpose$$
-The $cref/conditional expressions/CondExp/$$ use either the
-$cref/if_true/CondExp/$$ or $cref/if_false/CondExp/$$.
+Purpose
+*******
+The :ref:`conditional expressions<CondExp-name>` use either the
+:ref:`if_true<CondExp-name>` or :ref:`if_false<CondExp-name>` .
 Hence, some terms only need to be evaluated
 depending on the value of the comparison in the conditional expression.
-The $cref optimize$$ option is capable of detecting some of these
+The :ref:`optimize-name` option is capable of detecting some of these
 case and determining variables that can be skipped.
 This routine returns the number such variables.
 
-$head n$$
-The return value $icode n$$ has type $code size_t$$
+n
+*
+The return value *n* has type ``size_t``
 is the number of variables that the optimizer has determined can be skipped
 (given the independent variable values specified by the previous call to
-$cref/f.Forward/Forward/$$ for order zero).
+:ref:`f.Forward<Forward-name>` for order zero).
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
+f
+*
+The object *f* has prototype
 
-$children%
+   ``ADFun<`` *Base* > *f*
+
+{xrst_toc_hidden
    example/general/number_skip.cpp
-%$$
-$head Example$$
-The file $cref number_skip.cpp$$
+}
+Example
+*******
+The file :ref:`number_skip.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end number_skip}
 -----------------------------------------------------------------------------
 */
 

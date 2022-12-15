@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ode_evaluate.cpp$$
-$spell
-$$
+{xrst_begin ode_evaluate.cpp}
 
+ode_evaluate: Example and test
+##############################
 
-$section ode_evaluate: Example and test$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end ode_evaluate.cpp}
 */
 // BEGIN C++
 # include <cppad/speed/ode_evaluate.hpp>

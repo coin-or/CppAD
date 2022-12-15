@@ -4,14 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin tape_index.cpp$$
+{xrst_begin tape_index.cpp}
 
-$section Taping Array Index Operation: Example and Test$$
+Taping Array Index Operation: Example and Test
+##############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end tape_index.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

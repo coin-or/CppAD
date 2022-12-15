@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin hessian.cpp$$
-$spell
-   Cpp
-   Hessian
-$$
+{xrst_begin hessian.cpp}
 
-$section Hessian: Example and Test$$
+Hessian: Example and Test
+#########################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end hessian.cpp}
 */
 // BEGIN C++
 

@@ -3,53 +3,60 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_sacado.sh$$ $newlinech #$$
-# $spell
-#  trilinos
-#  gz
-#  Sacado
-#  CppAD
-# $$
+# {xrst_begin get_sacado.sh} 
+# {xrst_spell
+#     trilinos
+# }
+# {xrst_comment_ch #}
 #
-# $section Download and Install Sacado in Build Directory$$
+# Download and Install Sacado in Build Directory
+# ##############################################
 #
-# $head Syntax$$
-# $code bin/get_sacado.sh$$
+# Syntax
+# ******
+# ``bin/get_sacado.sh``
 #
-# $head Purpose$$
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
-# $cref/Sacado/sacado_prefix/Sacado Home Page/$$
-# in the CppAD $code build$$ directory.
+# :ref:`Sacado<sacado_prefix@Sacado Home Page>`
+# in the CppAD ``build`` directory.
 #
-# $head Distribution Directory$$
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# $cref/distribution directory/download/Distribution Directory/$$.
+# :ref:`download@Distribution Directory` .
 #
-# $head Source Directory$$
+# Source Directory
+# ****************
 # The Sacado source code is downloaded into the sub-directory
-# $code external/trilinos.git$$ below the distribution directory.
+# ``external/trilinos.git`` below the distribution directory.
 #
-# $head Prefix$$
-# The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional.sh$$ is used for this install.
+# Prefix
+# ******
+# The :ref:`get_optional.sh@prefix`
+# in the file ``bin/get_optional.sh`` is used for this install.
 #
-# $head Version$$
+# Version
+# *******
 # This will install the version of Sacado corresponding to the following
 # version of Trilinos:
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 version='13-0-1'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Configuration$$
+# Configuration
+# *************
 # If the file
-# $codei%
-#  external/sacado-%version%.configured
-# %$$
+#
+#     ``external/sacado-`` *version* . ``configured``
+#
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
 #
-#
-# $end
+# {xrst_end get_sacado.sh}
 # -----------------------------------------------------------------------------
 package='sacado'
 if [ $0 != "bin/get_$package.sh" ]

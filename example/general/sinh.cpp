@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sinh.cpp$$
-$spell
-   sinh
-$$
+{xrst_begin sinh.cpp}
 
-$section The AD sinh Function: Example and Test$$
+The AD sinh Function: Example and Test
+######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sinh.cpp}
 */
 // BEGIN C++
 

@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ad_assign.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin ad_assign.cpp}
 
-$section AD Assignment: Example and Test$$
+AD Assignment: Example and Test
+###############################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+{xrst_end ad_assign.cpp}
 */
 // BEGIN C++
 

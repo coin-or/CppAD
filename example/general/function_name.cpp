@@ -4,15 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin function_name.cpp$$
-$spell
-$$
+{xrst_begin function_name.cpp}
 
-$section ADFun Function Name: Example and Test$$
+ADFun Function Name: Example and Test
+#####################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end function_name.cpp}
 */
 // BEGIN C++
 

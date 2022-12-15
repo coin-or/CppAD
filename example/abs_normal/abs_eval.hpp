@@ -5,90 +5,100 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin abs_eval$$
-$spell
-   jac
-   Jacobian
-   eval
-   hpp
-$$
-$section abs_normal: Evaluate First Order Approximation$$
+{xrst_begin abs_eval}
+{xrst_spell
+   tilde
+}
+abs_normal: Evaluate First Order Approximation
+##############################################
 
-$head Syntax$$
-$icode%g_tilde% = abs_eval(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$
+Syntax
+******
+*g_tilde* = ``abs_eval`` ( *n* , *m* , *s* , *g_hat* , *g_jac* , *delta_x* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Source$$
+Source
+******
 This following is a link to the source code for this example:
-$cref/abs_eval.hpp/abs_eval.hpp/$$.
+:ref:`abs_eval.hpp-name` .
 
-$head Purpose$$
+Purpose
+*******
 Given a current that abs-normal representation at a point
-$latex \hat{x} \in \B{R}^n$$,
-and a $latex \Delta x \in \B{R}^n$$,
+:math:`\hat{x} \in \B{R}^n`,
+and a :math:`\Delta x \in \B{R}^n`,
 this routine evaluates the abs-normal
-$cref/approximation for f(x)
-   /abs_normal_fun
-   /Abs-normal Approximation
-   /Approximating f(x)
-/$$
-where $latex x = \hat{x} + \Delta x$$.
+:ref:`approximation for f(x)<abs_normal_fun@Abs-normal Approximation@Approximating f(x)>`
+where :math:`x = \hat{x} + \Delta x`.
 
-$head Vector$$
-The type $icode Vector$$ is a
-simple vector with elements of type $code double$$.
+Vector
+******
+The type *Vector* is a
+simple vector with elements of type ``double`` .
 
-$head f$$
-We use the notation $icode f$$ for the original function; see
-$cref/f/abs_normal_fun/f/$$.
+f
+*
+We use the notation *f* for the original function; see
+:ref:`abs_normal_fun@f` .
 
-$head n$$
-This is the dimension of the domain space for $icode f$$; see
-$cref/n/abs_normal_fun/f/n/$$.
+n
+*
+This is the dimension of the domain space for *f* ; see
+:ref:`abs_normal_fun@f@n` .
 
-$head m$$
-This is the dimension of the range space for $icode f$$; see
-$cref/m/abs_normal_fun/f/m/$$.
+m
+*
+This is the dimension of the range space for *f* ; see
+:ref:`abs_normal_fun@f@m` .
 
-$head s$$
-This is the number of absolute value terms in $icode f$$; see
+s
+*
+This is the number of absolute value terms in *f* ; see
 
-$head g$$
-We use the notation $icode g$$ for the abs-normal representation of $icode f$$;
-see $cref/g/abs_normal_fun/g/$$.
+g
+*
+We use the notation *g* for the abs-normal representation of *f* ;
+see :ref:`abs_normal_fun@g` .
 
-$head g_hat$$
-This vector has size $icode%m% + %s%$$ and is the value of
-$icode g(x, u)$$ at $latex x = \hat{x}$$ and $latex u = a( \hat{x} )$$.
+g_hat
+*****
+This vector has size *m* + *s* and is the value of
+*g* ( *x* , *u* ) at :math:`x = \hat{x}` and :math:`u = a( \hat{x} )`.
 
-$head g_jac$$
-This vector has size $codei%(%m% + %s%) * (%n% + %s%)%$$ and is the Jacobian of
-$latex g(x, u)$$ at $latex x = \hat{x}$$ and $latex u = a( \hat{x} )$$.
+g_jac
+*****
+This vector has size ( *m* + *s* ) * ( *n* + *s* ) and is the Jacobian of
+:math:`g(x, u)` at :math:`x = \hat{x}` and :math:`u = a( \hat{x} )`.
 
-$head delta_x$$
-This vector has size $icode n$$ and is the difference
-$latex \Delta x = x - \hat{x}$$,
-where $latex x$$ is the point that we are approximating $latex f(x)$$.
+delta_x
+*******
+This vector has size *n* and is the difference
+:math:`\Delta x = x - \hat{x}`,
+where :math:`x` is the point that we are approximating :math:`f(x)`.
 
-$head g_tilde$$
-This vector has size $icode%m% + %s%$$ and is a the
+g_tilde
+*******
+This vector has size *m* + *s* and is a the
 first order approximation for
-$cref/g/abs_normal_fun/g/$$
+:ref:`abs_normal_fun@g`
 that corresponds to the point
-$latex x = \hat{x} + \Delta x$$ and $latex u = a(x)$$.
+:math:`x = \hat{x} + \Delta x` and :math:`u = a(x)`.
+{xrst_toc_hidden
+   example/abs_normal/abs_eval.cpp
+   example/abs_normal/abs_eval.xrst
+}
+Example
+*******
+The file :ref:`abs_eval.cpp-name` contains an example and test of
+``abs_eval`` .
 
-$children%example/abs_normal/abs_eval.cpp
-   %example/abs_normal/abs_eval.omh
-%$$
-$head Example$$
-The file $cref abs_eval.cpp$$ contains an example and test of
-$code abs_eval$$.
-
-$end
+{xrst_end abs_eval}
 -----------------------------------------------------------------------------
 */
 

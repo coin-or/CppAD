@@ -3,21 +3,13 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin exp_2_rev1.cpp$$
-$spell
-   cstddef
-   cmath
-   exp_2_rev
-   bool
-   std
-   fabs
-$$
+{xrst_begin exp_2_rev1.cpp}
 
-$section exp_2: Verify First Order Reverse Sweep$$
+exp_2: Verify First Order Reverse Sweep
+#######################################
 
-
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cstddef>                 // define size_t
 # include <cmath>                   // prototype for fabs
 extern bool exp_2_for0(double *v0); // computes zero order forward sweep
@@ -58,6 +50,8 @@ bool exp_2_rev1(void)
 
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end exp_2_rev1.cpp}
 */

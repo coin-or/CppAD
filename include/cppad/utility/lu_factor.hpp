@@ -6,222 +6,227 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin LuFactor$$
-$spell
-   cppad.hpp
-   Cpp
-   Geq
-   Lu
-   bool
-   const
-   ip
+{xrst_begin LuFactor}
+{xrst_spell
+   geq
    jp
-   namespace
-   std
-   typename
-$$
+   permuted
+   specializations
+}
 
+LU Factorization of A Square Matrix
+###################################
 
-$section LU Factorization of A Square Matrix$$
+Syntax
+******
 
-$pre
-$$
+   # ``include <cppad/utility/lu_factor.hpp>``
 
-$head Syntax$$
-$codei%# include <cppad/utility/lu_factor.hpp>
-%$$
-$icode%sign% = LuFactor(%ip%, %jp%, %LU%)%$$
+*sign* = ``LuFactor`` ( *ip* , *jp* , *LU* )
 
+Description
+***********
+Computes an LU factorization of the matrix *A*
+where *A* is a square matrix.
 
-$head Description$$
-Computes an LU factorization of the matrix $icode A$$
-where $icode A$$ is a square matrix.
-
-$head Include$$
-The file $code cppad/utility/lu_factor.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/lu_factor.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head Matrix Storage$$
+Matrix Storage
+**************
 All matrices are stored in row major order.
-To be specific, if $latex Y$$ is a vector
-that contains a $latex p$$ by $latex q$$ matrix,
-the size of $latex Y$$ must be equal to $latex  p * q $$ and for
-$latex i = 0 , \ldots , p-1$$,
-$latex j = 0 , \ldots , q-1$$,
-$latex \[
+To be specific, if :math:`Y` is a vector
+that contains a :math:`p` by :math:`q` matrix,
+the size of :math:`Y` must be equal to :math:`p * q` and for
+:math:`i = 0 , \ldots , p-1`,
+:math:`j = 0 , \ldots , q-1`,
+
+.. math::
+
    Y_{i,j} = Y[ i * q + j ]
-\] $$
 
-$head sign$$
-The return value $icode sign$$ has prototype
-$codei%
-   int %sign%
-%$$
-If $icode A$$ is invertible, $icode sign$$ is plus or minus one
+sign
+****
+The return value *sign* has prototype
+
+   ``int`` *sign*
+
+If *A* is invertible, *sign* is plus or minus one
 and is the sign of the permutation corresponding to the row ordering
-$icode ip$$ and column ordering $icode jp$$.
-If $icode A$$ is not invertible, $icode sign$$ is zero.
+*ip* and column ordering *jp* .
+If *A* is not invertible, *sign* is zero.
 
-$head ip$$
-The argument $icode ip$$ has prototype
-$codei%
-   %SizeVector% &%ip%
-%$$
-(see description of $cref/SizeVector/LuFactor/SizeVector/$$ below).
-The size of $icode ip$$ is referred to as $icode n$$ in the
+ip
+**
+The argument *ip* has prototype
+
+   *SizeVector* & *ip*
+
+(see description of :ref:`LuFactor@SizeVector` below).
+The size of *ip* is referred to as *n* in the
 specifications below.
-The input value of the elements of $icode ip$$ does not matter.
-The output value of the elements of $icode ip$$ determine
+The input value of the elements of *ip* does not matter.
+The output value of the elements of *ip* determine
 the order of the rows in the permuted matrix.
 
-$head jp$$
-The argument $icode jp$$ has prototype
-$codei%
-   %SizeVector% &%jp%
-%$$
-(see description of $cref/SizeVector/LuFactor/SizeVector/$$ below).
-The size of $icode jp$$ must be equal to $icode n$$.
-The input value of the elements of $icode jp$$ does not matter.
-The output value of the elements of $icode jp$$ determine
+jp
+**
+The argument *jp* has prototype
+
+   *SizeVector* & *jp*
+
+(see description of :ref:`LuFactor@SizeVector` below).
+The size of *jp* must be equal to *n* .
+The input value of the elements of *jp* does not matter.
+The output value of the elements of *jp* determine
 the order of the columns in the permuted matrix.
 
-$head LU$$
-The argument $icode LU$$ has the prototype
-$codei%
-   %FloatVector% &%LU%
-%$$
-and the size of $icode LU$$ must equal $latex n * n$$
-(see description of $cref/FloatVector/LuFactor/FloatVector/$$ below).
+LU
+**
+The argument *LU* has the prototype
 
-$subhead A$$
-We define $icode A$$ as the matrix corresponding to the input
-value of $icode LU$$.
+   *FloatVector* & *LU*
 
-$subhead P$$
-We define the permuted matrix $icode P$$ in terms of $icode A$$ by
-$codei%
-   %P%(%i%, %j%) = %A%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
+and the size of *LU* must equal :math:`n * n`
+(see description of :ref:`LuFactor@FloatVector` below).
 
-$subhead L$$
-We define the lower triangular matrix $icode L$$ in terms of the
-output value of $icode LU$$.
-The matrix $icode L$$ is zero above the diagonal
+A
+=
+We define *A* as the matrix corresponding to the input
+value of *LU* .
+
+P
+=
+We define the permuted matrix *P* in terms of *A* by
+
+   *P* ( *i* , *j* ) = *A* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+L
+=
+We define the lower triangular matrix *L* in terms of the
+output value of *LU* .
+The matrix *L* is zero above the diagonal
 and the rest of the elements are defined by
-$codei%
-   %L%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
-for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , i$$.
 
-$subhead U$$
-We define the upper triangular matrix $icode U$$ in terms of the
-output value of $icode LU$$.
-The matrix $icode U$$ is zero below the diagonal,
+   *L* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , i`.
+
+U
+=
+We define the upper triangular matrix *U* in terms of the
+output value of *LU* .
+The matrix *U* is zero below the diagonal,
 one on the diagonal,
 and the rest of the elements are defined by
-$codei%
-   %U%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
-for $latex i = 0 , \ldots , n-2$$ and $latex j = i+1 , \ldots , n-1$$.
 
-$subhead Factor$$
-If the return value $icode sign$$ is non-zero,
-$codei%
-   %L% * %U% = %P%
-%$$
-If the return value of $icode sign$$ is zero,
-the contents of $icode L$$ and $icode U$$ are not defined.
+   *U* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
 
-$subhead Determinant$$
-If the return value $icode sign$$ is zero,
-the determinant of $icode A$$ is zero.
-If $icode sign$$ is non-zero,
-using the output value of $icode LU$$
-the determinant of the matrix $icode A$$ is equal to
-$codei%
-%sign% * %LU%[%ip%[0], %jp%[0]] * %...% * %LU%[%ip%[%n%-1], %jp%[%n%-1]]
-%$$
+for :math:`i = 0 , \ldots , n-2` and :math:`j = i+1 , \ldots , n-1`.
 
-$head SizeVector$$
-The type $icode SizeVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type size_t/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+Factor
+======
+If the return value *sign* is non-zero,
+
+   *L* * *U* = *P*
+
+If the return value of *sign* is zero,
+the contents of *L* and *U* are not defined.
+
+Determinant
+===========
+If the return value *sign* is zero,
+the determinant of *A* is zero.
+If *sign* is non-zero,
+using the output value of *LU*
+the determinant of the matrix *A* is equal to
+
+   *sign* * *LU* [ *ip* [0], *jp* [0]] * ... * *LU* [ *ip* [ *n* ``-1`` ], *jp* [ *n* ``-1`` ]]
+
+SizeVector
+**********
+The type *SizeVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type size_t<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head FloatVector$$
-The type $icode FloatVector$$ must be a
-$cref/simple vector class/SimpleVector/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+FloatVector
+***********
+The type *FloatVector* must be a
+:ref:`simple vector class<SimpleVector-name>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Float$$
+Float
+*****
 This notation is used to denote the type corresponding
-to the elements of a $icode FloatVector$$.
-The type $icode Float$$ must satisfy the conditions
-for a $cref NumericType$$ type.
-The routine $cref CheckNumericType$$ will generate an error message
+to the elements of a *FloatVector* .
+The type *Float* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
 if this is not the case.
 In addition, the following operations must be defined for any pair
-of $icode Float$$ objects $icode x$$ and $icode y$$:
+of *Float* objects *x* and *y* :
 
-$table
-$bold Operation$$ $cnext $bold Description$$  $rnext
-$codei%log(%x%)%$$ $cnext
-   returns the logarithm of $icode x$$ as a $icode Float$$ object
-$tend
+.. list-table::
 
-$head AbsGeq$$
-Including the file $code lu_factor.hpp$$ defines the template function
-$codei%
-   template <class %Float%>
-   bool AbsGeq<%Float%>(const %Float% &%x%, const %Float% &%y%)
-%$$
-in the $code CppAD$$ namespace.
+   * - **Operation**
+     - **Description**
+   * - ``log`` ( *x* )
+     - returns the logarithm of *x* as a *Float* object
+
+AbsGeq
+******
+Including the file ``lu_factor.hpp`` defines the template function
+
+| |tab| ``template <class`` *Float* >
+| |tab| ``bool AbsGeq<`` *Float* >( ``const`` *Float* & *x* , ``const`` *Float* & *y* )
+
+in the ``CppAD`` namespace.
 This function returns true if the absolute value of
-$icode x$$ is greater than or equal the absolute value of $icode y$$.
-It is used by $code LuFactor$$ to choose the pivot elements.
+*x* is greater than or equal the absolute value of *y* .
+It is used by ``LuFactor`` to choose the pivot elements.
 This template function definition uses the operator
-$code <=$$ to obtain the absolute value for $icode Float$$ objects.
-If this operator is not defined for your use of $icode Float$$,
+``<=`` to obtain the absolute value for *Float* objects.
+If this operator is not defined for your use of *Float* ,
 you will need to specialize this template so that it works for your
-use of $code LuFactor$$.
-$pre
+use of ``LuFactor`` .
 
-$$
-Complex numbers do not have the operation $code <=$$ defined.
+Complex numbers do not have the operation ``<=`` defined.
 The specializations
-$codei%
-bool AbsGeq< std::complex<float> >
-   (const std::complex<float> &%x%, const std::complex<float> &%y%)
-bool AbsGeq< std::complex<double> >
-   (const std::complex<double> &%x%, const std::complex<double> &%y%)
-%$$
-are define by including $code lu_factor.hpp$$
+
+| ``bool AbsGeq< std::complex<float> >``
+| |tab| ( ``const std::complex<float> &`` *x* , ``const std::complex<float> &`` *y* )
+| ``bool AbsGeq< std::complex<double> >``
+| |tab| ( ``const std::complex<double> &`` *x* , ``const std::complex<double> &`` *y* )
+
+are define by including ``lu_factor.hpp``
 These return true if the sum of the square of the real and imaginary parts
-of $icode x$$ is greater than or equal the
-sum of the square of the real and imaginary parts of $icode y$$.
-
-$children%
-   example/utility/lu_factor.cpp%
-   omh/lu_factor_hpp.omh
-%$$
-$head Example$$
+of *x* is greater than or equal the
+sum of the square of the real and imaginary parts of *y* .
+{xrst_toc_hidden
+   example/utility/lu_factor.cpp
+   xrst/lu_factor_hpp.xrst
+}
+Example
+*******
 The file
-$cref lu_factor.cpp$$
-contains an example and test of using $code LuFactor$$ by itself.
-$pre
+:ref:`lu_factor.cpp-name`
+contains an example and test of using ``LuFactor`` by itself.
 
-$$
-The file $cref lu_solve.hpp$$ provides a useful example usage of
-$code LuFactor$$ with $code LuInvert$$.
+The file :ref:`lu_solve.hpp-name` provides a useful example usage of
+``LuFactor`` with ``LuInvert`` .
 
-$head Source$$
-The file $cref lu_factor.hpp$$ contains the
+Source
+******
+The file :ref:`lu_factor.hpp-name` contains the
 current source code that implements these specifications.
 
-$end
+{xrst_end LuFactor}
 --------------------------------------------------------------------------
 */
 // BEGIN C++

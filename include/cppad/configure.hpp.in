@@ -6,56 +6,52 @@
 // ----------------------------------------------------------------------------
 
 /*!
-$begin configure.hpp$$
-$spell
-   noexcept
-   pragmas
-   unreferenced
-   CppAD
-   cppad
-   yyyymmdd
-   yyyy
-   mm
-   dd
-   adolc
-   cmake
-   colpack
-   eigen
-   ipopt
+{xrst_begin configure.hpp}
+{xrst_spell
+   cl
+   complier
    gettimeofday
-   namespace
    mkstemp
-   tmpnam
+   noexcept
    nullptr
-   sizeof
-   std
-   hpp
-   addr
-   gcc
-$$
+   pragmas
+   tmpnam
+   unreferenced
+   yyyy
+   yyyymmdd
+}
 
-$section Preprocessor Symbols Set By CMake Command$$
+Preprocessor Symbols Set By CMake Command
+#########################################
 
-$head CPPAD_COMPILER_HAS_CONVERSION_WARN$$
+CPPAD_COMPILER_HAS_CONVERSION_WARN
+**********************************
 is the compiler a variant of g++ and has conversion warnings
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_COMPILER_HAS_CONVERSION_WARN @compiler_has_conversion_warn@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS$$
+CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS
+**********************************************
 This macro is only used to document the pragmas that disables the
 follow warnings:
 
-$subhead C4100$$
+C4100
+=====
 unreferenced formal parameter.
 
-$subhead C4127$$
+C4127
+=====
 conditional expression is constant.
 
-$subhead C4723$$
+C4723
+=====
 The second operand in a divide operation evaluated to zero at compile time.
 
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS 1
 # if _MSC_VER
 # pragma warning( disable : 4100 )
@@ -63,103 +59,144 @@ $srccode%hpp% */
 # pragma warning( disable : 4723 )
 # endif
 # undef CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_USE_CPLUSPLUS_2011$$
+CPPAD_USE_CPLUSPLUS_2011
+************************
 Deprecated 2020-12-03:
 Is it OK to use C++11 features. This is always 1 (for true).
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_USE_CPLUSPLUS_2011 1
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_USE_CPLUSPLUS_2017$$
+CPPAD_USE_CPLUSPLUS_2017
+************************
 Deprecated 2020-12-03:
 Is it OK for CppAD use C++17 features.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_USE_CPLUSPLUS_2017 @use_cplusplus_2017_ok@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_PACKAGE_STRING$$
+CPPAD_PACKAGE_STRING
+********************
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_PACKAGE_STRING "cppad-@cppad_version@"
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_HAS_ADOLC$$
+CPPAD_HAS_ADOLC
+***************
 Was include_adolc=true on the cmake command line.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_HAS_ADOLC @cppad_has_adolc@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_HAS_COLPACK$$
+CPPAD_HAS_COLPACK
+*****************
 Was a colpack_prefix specified on the cmake command line.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_HAS_COLPACK @cppad_has_colpack@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_HAS_EIGEN$$
+CPPAD_HAS_EIGEN
+***************
 Was include_eigen=true on the cmake command line.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_HAS_EIGEN @cppad_has_eigen@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_HAS_IPOPT$$
+CPPAD_HAS_IPOPT
+***************
 Was include_ipopt=true on the cmake command line.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_HAS_IPOPT @cppad_has_ipopt@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_DEPRECATED$$
+CPPAD_DEPRECATED
+****************
 This symbol is not currently being used.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_DEPRECATED @cppad_deprecated_01@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_BOOSTVECTOR$$
+CPPAD_BOOSTVECTOR
+*****************
 If this symbol is one, and _MSC_VER is not defined,
 we are using boost vector for CPPAD_TESTVECTOR.
 It this symbol is zero,
 we are not using boost vector for CPPAD_TESTVECTOR.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_BOOSTVECTOR @cppad_boostvector@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_CPPADVECTOR$$
+CPPAD_CPPADVECTOR
+*****************
 If this symbol is one,
 we are using CppAD vector for CPPAD_TESTVECTOR.
 It this symbol is zero,
 we are not using CppAD vector for CPPAD_TESTVECTOR.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_CPPADVECTOR @cppad_cppadvector@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_STDVECTOR$$
+CPPAD_STDVECTOR
+***************
 If this symbol is one,
 we are using standard vector for CPPAD_TESTVECTOR.
 It this symbol is zero,
 we are not using standard vector for CPPAD_TESTVECTOR.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_STDVECTOR @cppad_stdvector@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_EIGENVECTOR$$
+CPPAD_EIGENVECTOR
+*****************
 If this symbol is one,
 we are using Eigen vector for CPPAD_TESTVECTOR.
 If this symbol is zero,
 we are not using Eigen vector for CPPAD_TESTVECTOR.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_EIGENVECTOR @cppad_eigenvector@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_HAS_GETTIMEOFDAY$$
+CPPAD_HAS_GETTIMEOFDAY
+**********************
 If this symbol is one, and _MSC_VER is not defined,
 this system supports the gettimeofday function.
 Otherwise, this symbol should be zero.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_HAS_GETTIMEOFDAY @cppad_has_gettimeofday@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_TAPE_ADDR_TYPE$$
+CPPAD_TAPE_ADDR_TYPE
+********************
 Is the type used to store address on the tape. If not size_t, then
 <code>sizeof(CPPAD_TAPE_ADDR_TYPE) <= sizeof( size_t )</code>
 to conserve memory.
@@ -169,11 +206,14 @@ and conversion to size_t.
 Make sure that the type chosen returns true for is_pod<CPPAD_TAPE_ADDR_TYPE>
 in pod_vector.hpp.
 This type is later defined as addr_t in the CppAD namespace.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_TAPE_ADDR_TYPE @cppad_tape_addr_type@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_TAPE_ID_TYPE$$
+CPPAD_TAPE_ID_TYPE
+******************
 Is the type used to store tape identifiers. If not size_t, then
 <code>sizeof(CPPAD_TAPE_ID_TYPE) <= sizeof( size_t )</code>
 to conserve memory.
@@ -183,68 +223,91 @@ and conversion to size_t.
 Make sure that the type chosen returns true for is_pod<CPPAD_TAPE_ID_TYPE>
 in pod_vector.hpp.
 This type is later defined as tape_id_t in the CppAD namespace.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_TAPE_ID_TYPE @cppad_tape_id_type@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_MAX_NUM_THREADS$$
+CPPAD_MAX_NUM_THREADS
+*********************
 Specifies the maximum number of threads that CppAD can support
 (must be greater than or equal four).
 
 The user may define CPPAD_MAX_NUM_THREADS before including any of the CppAD
 header files.  If it is not yet defined,
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # ifndef CPPAD_MAX_NUM_THREADS
 # define CPPAD_MAX_NUM_THREADS @cppad_max_num_threads@
 # endif
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_HAS_MKSTEMP$$
+CPPAD_HAS_MKSTEMP
+*****************
 if true, mkstemp works in C++ on this system.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_HAS_MKSTEMP @cppad_has_mkstemp@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_HAS_TMPNAM_S$$
+CPPAD_HAS_TMPNAM_S
+******************
 If true, tmpnam_s works in C++ on this system.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_HAS_TMPNAM_S @cppad_has_tmpnam_s@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_NULL$$
+CPPAD_NULL
+**********
 Deprecated 2020-12-03:
 This preprocessor symbol was used for a null pointer before c++11.
-Replace it by $code nullptr$$.
+Replace it by ``nullptr`` .
 
-$head CPPAD_NOEXCEPT$$
+CPPAD_NOEXCEPT
+**************
 Deprecated 2020-12-03:
 This preprocessor symbol was used for no exception before c++11,
-replace it by $code noexcept$$.
+replace it by ``noexcept`` .
 
-$subhead CPPAD_NDEBUG_NOEXCEPT$$
+CPPAD_NDEBUG_NOEXCEPT
+=====================
 This preprocessor symbol is
-$code noexcept$$ when C++11 is available and $code NDEBUG$$ is defined.
+``noexcept`` when C++11 is available and ``NDEBUG`` is defined.
 Otherwise it is empty.
 
-$head CPPAD_C_COMPILER_GNU$$
-If true, the C complier is $code gcc$$
-$srccode%hpp% */
+CPPAD_C_COMPILER_GNU
+********************
+If true, the C complier is ``gcc``
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_C_COMPILER_GNU @cppad_c_compiler_gnu@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_C_COMPILER_MSVC$$
-If true, the C complier is $code cl$$
-$srccode%hpp% */
+CPPAD_C_COMPILER_MSVC
+*********************
+If true, the C complier is ``cl``
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_C_COMPILER_MSVC @cppad_c_compiler_msvc@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CPPAD_C_COMPILER_CLANG$$
-If true, the C complier is $code cl$$
-$srccode%hpp% */
+CPPAD_C_COMPILER_CLANG
+**********************
+If true, the C complier is ``cl``
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_C_COMPILER_CLANG @cppad_c_compiler_clang@
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$end
+{xrst_end configure.hpp}
 */
 // -------------------------------------------------
 # define CPPAD_NULL                nullptr

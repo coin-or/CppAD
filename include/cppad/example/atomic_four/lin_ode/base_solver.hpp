@@ -5,51 +5,57 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_base_solver.hpp$$
-$spell
-   Rosen
-   lin
-   nnz
-   vk
-$$
+{xrst_begin atomic_four_lin_ode_base_solver.hpp}
 
-$section
 Atomic Multiply Base Matrices: Example Implementation
-$$
+#####################################################
 
-$head Syntax$$
-$icode%lin_ode%.base_solver(
-   %r%, %step%, %pattern%, %transpose%, %x%, %y%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+| *lin_ode* . ``base_solver`` (
+| |tab| *r* , *step* , *pattern* , *transpose* , *x* , *y*
+| )
 
-$head Notation$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Notation
+********
 We use the notation:
-$cref/call_id/atomic_four_lin_ode/call_id/$$
-$cref/r/atomic_four_lin_ode/r/$$
-$cref/pattern/atomic_four_lin_ode/pattern/$$
-$cref/transpose/atomic_four_lin_ode/transpose/$$
-$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
-$cref/row/atomic_four_lin_ode/pattern/row/$$,
-$cref/col/atomic_four_lin_ode/pattern/col/$$,
-$cref/x/atomic_four_lin_ode/x/$$,
-$cref/n/atomic_four_lin_ode/x/n/$$,
-$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
-$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
-$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
-$cref/m/atomic_four_lin_ode/y(x)/m/$$,
-$cref/vk(x)/atomic_four_lin_ode/vk(x)/$$
+:ref:`atomic_four_lin_ode@call_id`
+:ref:`atomic_four_lin_ode@r`
+:ref:`atomic_four_lin_ode@pattern`
+:ref:`atomic_four_lin_ode@transpose`
+:ref:`atomic_four_lin_ode@pattern@nnz` ,
+:ref:`atomic_four_lin_ode@pattern@row` ,
+:ref:`atomic_four_lin_ode@pattern@col` ,
+:ref:`atomic_four_lin_ode@x` ,
+:ref:`atomic_four_lin_ode@x@n` ,
+:ref:`atomic_four_lin_ode@x@A(x)` ,
+:ref:`atomic_four_lin_ode@x@b(x)` ,
+:ref:`atomic_four_lin_ode@y(x)` ,
+:ref:`atomic_four_lin_ode@y(x)@m` ,
+:ref:`atomic_four_lin_ode@vk(x)`
 
-$head Rosen34$$
+Rosen34
+*******
 This example uses one step of
-$cref rosen34$$ ODE solver.
+:ref:`rosen34-name` ODE solver.
 Any initial value ODE solver, with any number of steps, could be used.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_base_solver.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>

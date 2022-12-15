@@ -3,17 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sparse_jac_fun.cpp$$
-$spell
-   jac
-$$
+{xrst_begin sparse_jac_fun.cpp}
 
+sparse_jac_fun: Example and test
+################################
 
-$section sparse_jac_fun: Example and test$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sparse_jac_fun.cpp}
 */
 // BEGIN C++
 # include <cppad/speed/sparse_jac_fun.hpp>

@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin chkpoint_two_base2ad.cpp$$
-$spell
-   checkpointing
-   Taylor
-$$
+{xrst_begin chkpoint_two_base2ad.cpp}
 
-$section Checkpointing With base2ad: Example and Test$$
+Checkpointing With base2ad: Example and Test
+############################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end chkpoint_two_base2ad.cpp}
 */
 // BEGIN C++
 

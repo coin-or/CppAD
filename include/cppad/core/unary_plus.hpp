@@ -6,65 +6,63 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin unary_plus$$
-$spell
-   Vec
-   const
-   inline
-$$
+{xrst_begin unary_plus}
 
+AD Unary Plus Operator
+######################
 
-$section AD Unary Plus Operator$$
+Syntax
+******
 
-$head Syntax$$
+*y* = + *x*
 
-$icode%y% = + %x%$$
-
-
-$head Purpose$$
+Purpose
+*******
 Performs the unary plus operation
-(the result $icode y$$ is equal to the operand $icode x$$).
+(the result *y* is equal to the operand *x* ).
 
+x
+*
+The operand *x* has one of the following prototypes
 
-$head x$$
-The operand $icode x$$ has one of the following prototypes
-$codei%
-   const AD<%Base%>               &%x%
-   const VecAD<%Base%>::reference &%x%
-%$$
+| |tab| ``const AD<`` *Base* >               & *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference &`` *x*
 
-$head y$$
-The result $icode y$$ has type
-$codei%
-   AD<%Base%> %y%
-%$$
-It is equal to the operand $icode x$$.
+y
+*
+The result *y* has type
 
-$head Operation Sequence$$
-This is an AD of $icode Base$$
-$cref/atomic operation/glossary/Operation/Atomic/$$
+   ``AD<`` *Base* > *y*
+
+It is equal to the operand *x* .
+
+Operation Sequence
+******************
+This is an AD of *Base*
+:ref:`atomic operation<glossary@Operation@Atomic>`
 and hence is part of the current
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Derivative$$
-If $latex f$$ is a
-$cref/Base function/glossary/Base Function/$$,
-$latex \[
+Derivative
+**********
+If :math:`f` is a
+:ref:`glossary@Base Function` ,
+
+.. math::
+
    \D{[ + f(x) ]}{x} = \D{f(x)}{x}
-\] $$
 
-
-
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/unary_plus.cpp
-%$$
+}
 The file
-$cref unary_plus.cpp$$
+:ref:`unary_plus.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end unary_plus}
 -------------------------------------------------------------------------------
 */
 

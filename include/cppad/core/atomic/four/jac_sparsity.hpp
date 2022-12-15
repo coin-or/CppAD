@@ -7,126 +7,143 @@
 # include <cppad/core/atomic/four/devel/jac_sparsity.hpp>
 
 /*
-$begin atomic_four_jac_sparsity$$
-$spell
-   Jacobian
-   afun
-   jac
-   ident
-$$
+{xrst_begin atomic_four_jac_sparsity}
 
-$section Atomic Function Jacobian Sparsity Patterns$$
+Atomic Function Jacobian Sparsity Patterns
+##########################################
 
-$head Syntax$$
+Syntax
+******
 You can define one or the other of the following callbacks,
 but you should not define both.
 
-$subhead Preferred$$
-$icode%ok% = %afun%.jac_sparsity( %call_id%,
-   %dependency%, %ident_zero_x%, %select_x%, %select_y%, %pattern_out%
-)%$$
+Preferred
+=========
 
-$subhead Deprecated 2022-05-10$$
-$icode%ok% = %afun%.jac_sparsity(
-   %dependency%, %call_id%, %select_x%, %select_y%, %pattern_out%
-)%$$
+| *ok* = *afun* . ``jac_sparsity`` ( *call_id* ,
+| |tab| *dependency* , *ident_zero_x* , *select_x* , *select_y* , *pattern_out*
+| )
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+Deprecated 2022-05-10
+=====================
 
-$head Implementation$$
+| *ok* = *afun* . ``jac_sparsity`` (
+| |tab| *dependency* , *call_id* , *select_x* , *select_y* , *pattern_out*
+| )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Implementation
+**************
 This function must be defined if
-$cref/afun/atomic_four_ctor/atomic_user/afun/$$ is
-used to define an $cref ADFun$$ object $icode f$$,
-and Jacobian sparsity patterns are computed for $icode f$$.
+:ref:`atomic_four_ctor@atomic_user@afun` is
+used to define an :ref:`ADFun-name` object *f* ,
+and Jacobian sparsity patterns are computed for *f* .
 (Computing Hessian sparsity patterns
 requires Jacobian sparsity patterns.)
 
-$head Base$$
-See $cref/Base/atomic_four_call/Base/$$.
+Base
+****
+See :ref:`atomic_four_call@Base` .
 
-$head vector$$
-is the $cref CppAD_vector$$ template class.
+vector
+******
+is the :ref:`CppAD_vector-name` template class.
 
-$head call_id$$
-See $cref/call_id/atomic_four_call/call_id/$$.
+call_id
+*******
+See :ref:`atomic_four_call@call_id` .
 
-$head dependency$$
-If $icode dependency$$ is true,
-then $icode pattern_out$$ is a
-$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
+dependency
+**********
+If *dependency* is true,
+then *pattern_out* is a
+:ref:`dependency.cpp@Dependency Pattern`
 for this atomic function.
 Otherwise it is a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$ for the
+:ref:`glossary@Sparsity Pattern` for the
 derivative of the atomic function.
 
-$head ident_zero_x$$
+ident_zero_x
+************
 This can sometimes be used to create more efficient sparsity patterns.
 If you do not see a way to do this, you can just ignore it.
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
-If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+atomic function; i.e. the size of *ax* .
+If *ident_zero_x* [ *j* ] is true, the argument *ax* [ *j* ]
 is a constant parameter that is identically zero.
 An identically zero value times any other value can be treated
 as being identically zero.
 
-$head select_x$$
+select_x
+********
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
+atomic function; i.e. the size of *ax* .
 It specifies which domain components are included in
-the calculation of $icode pattern_out$$.
-If $icode%select_x%[%j%]%$$ is false, then there will be no indices
-$icode k$$ such that
-$codei%
-   %pattern_out%.col()[%k%] == %j%
-%$$.
-If $icode%select_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
-is a variable and $icode%ident_zero_x%[%j%]%$$ will be false.
+the calculation of *pattern_out* .
+If *select_x* [ *j* ] is false, then there will be no indices
+*k* such that
 
-$head select_y$$
+   *pattern_out* . ``col`` ()[ *k* ] == *j*
+
+.
+If *select_x* [ *j* ] is true, the argument *ax* [ *j* ]
+is a variable and *ident_zero_x* [ *j* ] will be false.
+
+select_y
+********
 This argument has size equal to the number of results to this
-atomic function; i.e. the size of $icode ay$$.
+atomic function; i.e. the size of *ay* .
 It specifies which range components are included in
-the calculation of $icode pattern_out$$.
-If $icode%select_y%[%i%]%$$ is false, then there will be no indices
-$icode k$$ such that
-$codei%
-   %pattern_out%.row()[%k%] == %i%
-%$$.
+the calculation of *pattern_out* .
+If *select_y* [ *i* ] is false, then there will be no indices
+*k* such that
 
-$head pattern_out$$
-This input value of $icode pattern_out$$ does not matter.
+   *pattern_out* . ``row`` ()[ *k* ] == *i*
+
+.
+
+pattern_out
+***********
+This input value of *pattern_out* does not matter.
 Upon return it is a
-dependency or sparsity pattern for the Jacobian of $latex g(x)$$,
+dependency or sparsity pattern for the Jacobian of :math:`g(x)`,
 the function corresponding to
-$cref/afun/atomic_four_ctor/atomic_user/afun/$$.
+:ref:`atomic_four_ctor@atomic_user@afun` .
 To be specific, there are non-negative indices
-$icode i$$, $icode j$$, $icode k$$ such that
-$codei%
-   %pattern_out%.row()[%k%] == %i%
-   %pattern_out%.col()[%k%] == %j%
-%$$
-if and only if
-$icode%select_x%[%j%]%$$ is true,
-$icode%select_y%[%j%]%$$ is true,
-and $latex g_i(x)$$ depends on the value of $latex x_j$$
-(and the partial of $latex g_i(x)$$ with respect to
-$latex x_j$$ is possibly non-zero).
+*i* , *j* , *k* such that
 
-$head ok$$
-If this calculation succeeded, $icode ok$$ is true.
+| |tab| *pattern_out* . ``row`` ()[ *k* ] == *i*
+| |tab| *pattern_out* . ``col`` ()[ *k* ] == *j*
+
+if and only if
+*select_x* [ *j* ] is true,
+*select_y* [ *j* ] is true,
+and :math:`g_i(x)` depends on the value of :math:`x_j`
+(and the partial of :math:`g_i(x)` with respect to
+:math:`x_j` is possibly non-zero).
+
+ok
+**
+If this calculation succeeded, *ok* is true.
 Otherwise it is false.
 
-$head Example$$
-The following is an example $code jac_sparsity$$ definition taken from
-$cref atomic_four_norm_sq.cpp$$:
-$srcfile%
-   example/atomic_four/norm_sq.cpp%
-   0%// BEGIN JAC_SPARSITY%// END JAC_SPARSITY%0
-%$$
+Example
+*******
+The following is an example ``jac_sparsity`` definition taken from
+:ref:`atomic_four_norm_sq.cpp-name` :
+{xrst_literal
+   example/atomic_four/norm_sq.cpp
+   // BEGIN JAC_SPARSITY
+   // END JAC_SPARSITY
+}
 
-$end
+{xrst_end atomic_four_jac_sparsity}
 -----------------------------------------------------------------------------
 */
 

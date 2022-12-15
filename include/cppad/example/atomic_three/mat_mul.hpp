@@ -6,107 +6,117 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_three_mat_mul.hpp$$
-$spell
-   Taylor
-   ty
-   px
-   CppAD
-   jac
-   hes
+{xrst_begin atomic_three_mat_mul.hpp}
+{xrst_spell
    nr
-   nc
-   afun
-   mul
-$$
+   px
+   tx
+}
 
-$section Matrix Multiply as an Atomic Operation$$
+Matrix Multiply as an Atomic Operation
+######################################
 
-$head See Also$$
-$cref atomic_two_eigen_mat_mul.hpp$$
+See Also
+********
+:ref:`atomic_two_eigen_mat_mul.hpp-name`
 
-$head Purpose$$
-Use scalar $code double$$ operations in an $cref atomic_three$$ operation
-that computes the matrix product for $code AD<double$$ operations.
+Purpose
+*******
+Use scalar ``double`` operations in an :ref:`atomic_three-name` operation
+that computes the matrix product for ``AD<double`` operations.
 
-$subhead parameter_x$$
+parameter_x
+===========
 This example demonstrates the use of the
-$cref/parameter_x/atomic_three_define/parameter_x/$$
-argument to the $cref atomic_three$$ virtual functions.
+:ref:`atomic_three_define@parameter_x`
+argument to the :ref:`atomic_three-name` virtual functions.
 
-$subhead type_x$$
+type_x
+======
 This example also demonstrates the use of the
-$cref/type_x/atomic_three_define/type_x/$$
-argument to the $cref atomic_three$$ virtual functions.
+:ref:`atomic_three_define@type_x`
+argument to the :ref:`atomic_three-name` virtual functions.
 
-$head Matrix Dimensions$$
-The first three components of the argument vector $icode ax$$
-in the call $icode%afun%(%ax%, %ay%)%$$
+Matrix Dimensions
+*****************
+The first three components of the argument vector *ax*
+in the call *afun* ( *ax* , *ay* )
 are parameters and contain the matrix dimensions.
 This enables them to be different for each use of the same atomic
-function $icode afun$$.
+function *afun* .
 These dimensions are:
-$table
-$icode%ax%[0]%$$  $pre  $$
-   $cnext $icode nr_left$$ $pre  $$
-   $cnext number of rows in the left matrix and result matrix
-$rend
-$icode%ax%[1]%$$  $pre  $$
-   $cnext $icode n_middle$$ $pre  $$
-   $cnext columns in the left matrix and rows in right matrix
-$rend
-$icode%ax%[2]%$$  $pre  $$
-   $cnext $icode nc_right$$ $pre  $$
-   $cnext number of columns in the right matrix and result matrix
-$tend
 
+.. list-table::
 
-$head Left Matrix$$
+   * - *ax* [0]
+     - *nr_left*
+     - number of rows in the left matrix and result matrix
+       $rend
+       *ax* [1]
+     - *n_middle*
+     - columns in the left matrix and rows in right matrix
+       $rend
+       *ax* [2]
+     - *nc_right*
+     - number of columns in the right matrix and result matrix
+
+Left Matrix
+***********
 The number of elements in the left matrix is
-$codei%
-   %n_left% = %nr_left% * %n_middle%
-%$$
-The elements are in
-$icode%ax%[3]%$$ through $icode%ax%[2+%n_left%]%$$ in row major order.
 
-$head Right Matrix$$
+   *n_left* = *nr_left* * *n_middle*
+
+The elements are in
+*ax* [3] through *ax* [2+ *n_left* ] in row major order.
+
+Right Matrix
+************
 The number of elements in the right matrix is
-$codei%
-   %n_right% = %n_middle% * %nc_right%
-%$$
-The elements are in
-$icode%ax%[3+%n_left%]%$$ through
-$icode%ax%[2+%n_left%+%n_right%]%$$ in row major order.
 
-$head Result Matrix$$
+   *n_right* = *n_middle* * *nc_right*
+
+The elements are in
+*ax* [3+ *n_left* ] through
+*ax* [2+ *n_left* + *n_right* ] in row major order.
+
+Result Matrix
+*************
 The number of elements in the result matrix is
-$codei%
-   %n_result% = %nr_left% * %nc_right%
-%$$
-The elements are in
-$icode%ay%[0]%$$ through $icode%ay%[%n_result%-1]%$$ in row major order.
 
-$head Start Class Definition$$
-$srccode%cpp% */
+   *n_result* = *nr_left* * *nc_right*
+
+The elements are in
+*ay* [0] through *ay* [ *n_result* ``-1`` ] in row major order.
+
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 namespace { // Begin empty namespace
 using CppAD::vector;
 //
 // matrix result = left * right
 class atomic_mat_mul : public CppAD::atomic_three<double> {
-/* %$$
-$head Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 public:
    // ---------------------------------------------------------------------
    // constructor
    atomic_mat_mul(void) : CppAD::atomic_three<double>("mat_mul")
    { }
 private:
-/* %$$
-$head Left Operand Element Index$$
-Index in the Taylor coefficient matrix $icode tx$$ of a left matrix element.
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Left Operand Element Index
+**************************
+Index in the Taylor coefficient matrix *tx* of a left matrix element.
+{xrst_spell_off}
+{xrst_code cpp} */
    size_t left(
       size_t i        , // left matrix row index
       size_t j        , // left matrix column index
@@ -119,10 +129,13 @@ $srccode%cpp% */
       assert( j < n_middle );
       return (3 + i * n_middle + j) * nk + k;
    }
-/* %$$
-$head Right Operand Element Index$$
-Index in the Taylor coefficient matrix $icode tx$$ of a right matrix element.
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Right Operand Element Index
+***************************
+Index in the Taylor coefficient matrix *tx* of a right matrix element.
+{xrst_spell_off}
+{xrst_code cpp} */
    size_t right(
       size_t i        , // right matrix row index
       size_t j        , // right matrix column index
@@ -136,10 +149,13 @@ $srccode%cpp% */
       size_t offset = 3 + nr_left * n_middle;
       return (offset + i * nc_right + j) * nk + k;
    }
-/* %$$
-$head Result Element Index$$
-Index in the Taylor coefficient matrix $icode ty$$ of a result matrix element.
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Result Element Index
+********************
+Index in the Taylor coefficient matrix *ty* of a result matrix element.
+{xrst_spell_off}
+{xrst_code cpp} */
    size_t result(
       size_t i        , // result matrix row index
       size_t j        , // result matrix column index
@@ -152,11 +168,14 @@ $srccode%cpp% */
       assert( j < nc_right );
       return (i * nc_right + j) * nk + k;
    }
-/* %$$
-$head Forward Matrix Multiply$$
-Forward mode multiply Taylor coefficients in $icode tx$$ and sum into
-$icode ty$$ (for one pair of left and right orders)
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Forward Matrix Multiply
+***********************
+Forward mode multiply Taylor coefficients in *tx* and sum into
+*ty* (for one pair of left and right orders)
+{xrst_spell_off}
+{xrst_code cpp} */
    void forward_multiply(
       size_t                 k_left   , // order for left coefficients
       size_t                 k_right  , // order for right coefficients
@@ -195,11 +214,14 @@ $srccode%cpp% */
          }
       }
    }
-/* %$$
-$head Reverse Matrix Multiply$$
-Reverse mode partials of Taylor coefficients and sum into $icode px$$
+/* {xrst_code}
+{xrst_spell_on}
+Reverse Matrix Multiply
+***********************
+Reverse mode partials of Taylor coefficients and sum into *px*
 (for one pair of left and right orders)
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
    void reverse_multiply(
       size_t                 k_left  , // order for left coefficients
       size_t                 k_right , // order for right coefficients
@@ -243,10 +265,13 @@ $srccode%cpp% */
       }
       return;
    }
-/* %$$
-$head for_type$$
-Routine called by CppAD during $cref/afun(ax, ay)/atomic_three_afun/$$.
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_type
+********
+Routine called by CppAD during :ref:`afun(ax, ay)<atomic_three_afun-name>` .
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate type_y
    virtual bool for_type(
       const vector<double>&               parameter_x ,
@@ -304,10 +329,13 @@ $srccode%cpp% */
       }
       return true;
    }
-/* %$$
-$head forward$$
-Routine called by CppAD during $cref Forward$$ mode.
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+*******
+Routine called by CppAD during :ref:`Forward-name` mode.
+{xrst_spell_off}
+{xrst_code cpp} */
    virtual bool forward(
       const vector<double>&              parameter_x ,
       const vector<CppAD::ad_type_enum>& type_x ,
@@ -351,10 +379,13 @@ $srccode%cpp% */
       // all orders are implemented, so always return true
       return true;
    }
-/* %$$
-$head reverse$$
-Routine called by CppAD during $cref Reverse$$ mode.
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+*******
+Routine called by CppAD during :ref:`Reverse-name` mode.
+{xrst_spell_off}
+{xrst_code cpp} */
    virtual bool reverse(
       const vector<double>&              parameter_x ,
       const vector<CppAD::ad_type_enum>& type_x      ,
@@ -393,9 +424,12 @@ $srccode%cpp% */
       // all orders are implented, so always return true
       return true;
    }
-/* %$$
-$head jac_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+jac_sparsity
+************
+{xrst_spell_off}
+{xrst_code cpp} */
    // Jacobian sparsity routine called by CppAD
    virtual bool jac_sparsity(
       const vector<double>&               parameter_x ,
@@ -492,9 +526,12 @@ $srccode%cpp% */
       //
       return true;
    }
-/* %$$
-$head hes_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+hes_sparsity
+************
+{xrst_spell_off}
+{xrst_code cpp} */
    // Jacobian sparsity routine called by CppAD
    virtual bool hes_sparsity(
       const vector<double>&               parameter_x ,
@@ -576,10 +613,13 @@ $srccode%cpp% */
       //
       return true;
    }
-/* %$$
-$head rev_depend$$
-Routine called when a function using $code mat_mul$$ is optimized.
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+rev_depend
+**********
+Routine called when a function using ``mat_mul`` is optimized.
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate depend_x
    virtual bool rev_depend(
       const vector<double>&              parameter_x ,
@@ -640,13 +680,18 @@ $srccode%cpp% */
       }
       return true;
    }
-/* %$$
-$head End Class Definition$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+End Class Definition
+********************
+{xrst_spell_off}
+{xrst_code cpp} */
 }; // End of mat_mul class
 }  // End empty namespace
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_three_mat_mul.hpp}
 */
 
 

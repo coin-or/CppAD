@@ -5,114 +5,111 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_two_for_sparse_hes$$
-$spell
-   sq
-   mul.hpp
+{xrst_begin atomic_two_for_sparse_hes}
+{xrst_spell
    vx
-   afun
-   Jacobian
-   jac
-   CppAD
-   std
-   bool
-   hes
-   const
-$$
+}
 
-$section Atomic Forward Hessian Sparsity Patterns$$
+Atomic Forward Hessian Sparsity Patterns
+########################################
 
-$head Syntax$$
-$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%, %x%)%$$
+Syntax
+******
+*ok* = *afun* . ``for_sparse_hes`` ( *vx* , *r* , *s* , *h* , *x* )
 
-$head Deprecated 2016-06-27$$
-$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%)%$$
+Deprecated 2016-06-27
+*********************
+*ok* = *afun* . ``for_sparse_hes`` ( *vx* , *r* , *s* , *h* )
 
-$head Purpose$$
-This function is used by $cref ForSparseHes$$ to compute
+Purpose
+*******
+This function is used by :ref:`ForSparseHes-name` to compute
 Hessian sparsity patterns.
-If you are using $cref ForSparseHes$$,
+If you are using :ref:`ForSparseHes-name` ,
 one of the versions of this
 virtual function must be defined by the
-$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
-$pre
+:ref:`atomic_two_ctor@atomic_user` class.
 
-$$
-Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
-a diagonal matrix $latex R \in \B{R}^{n \times n}$$, and
-a row vector $latex S \in \B{R}^{1 \times m}$$,
+Given a :ref:`glossary@Sparsity Pattern` for
+a diagonal matrix :math:`R \in \B{R}^{n \times n}`, and
+a row vector :math:`S \in \B{R}^{1 \times m}`,
 this routine computes the sparsity pattern for
-$latex \[
+
+.. math::
+
    H(x) = R^\R{T} \cdot (S \cdot f)^{(2)}( x ) \cdot R
-\] $$
 
-$head Implementation$$
-If you are using and $cref ForSparseHes$$,
+Implementation
+**************
+If you are using and :ref:`ForSparseHes-name` ,
 this virtual function must be defined by the
-$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
+:ref:`atomic_two_ctor@atomic_user` class.
 
-$subhead vx$$
-The argument $icode vx$$ has prototype
-$codei%
-     const CppAD:vector<bool>& %vx%
-%$$
-$icode%vx%.size() == %n%$$, and
-for $latex j = 0 , \ldots , n-1$$,
-$icode%vx%[%j%]%$$ is true if and only if
-$icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
-or $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
+vx
+==
+The argument *vx* has prototype
+
+   ``const CppAD:vector<bool>&`` *vx*
+
+*vx* . ``size`` () == *n* , and
+for :math:`j = 0 , \ldots , n-1`,
+*vx* [ *j* ] is true if and only if
+*ax* [ *j* ] is a :ref:`glossary@Variable`
+or :ref:`dynamic parameter<glossary@Parameter@Dynamic>`
 in the corresponding call to
-$codei%
-   %afun%(%ax%, %ay%)
-%$$
 
-$subhead r$$
+   *afun* ( *ax* , *ay* )
+
+r
+=
 This argument has prototype
-$codei%
-     const CppAD:vector<bool>& %r%
-%$$
-and is a $cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
-the diagonal of $latex R \in \B{R}^{n \times n}$$.
 
-$subhead s$$
-The argument $icode s$$ has prototype
-$codei%
-     const CppAD:vector<bool>& %s%
-%$$
-and its size is $icode m$$.
-It is a sparsity pattern for $latex S \in \B{R}^{1 \times m}$$.
+   ``const CppAD:vector<bool>&`` *r*
 
-$subhead h$$
+and is a :ref:`atomic_two_option@atomic_sparsity` pattern for
+the diagonal of :math:`R \in \B{R}^{n \times n}`.
+
+s
+=
+The argument *s* has prototype
+
+   ``const CppAD:vector<bool>&`` *s*
+
+and its size is *m* .
+It is a sparsity pattern for :math:`S \in \B{R}^{1 \times m}`.
+
+h
+=
 This argument has prototype
-$codei%
-     %atomic_sparsity%& %h%
-%$$
+
+   *atomic_sparsity* & *h*
+
 The input value of its elements
 are not specified (must not matter).
-Upon return, $icode h$$ is a
-$cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
-$latex H(x) \in \B{R}^{n \times n}$$ which is defined above.
+Upon return, *h* is a
+:ref:`atomic_two_option@atomic_sparsity` pattern for
+:math:`H(x) \in \B{R}^{n \times n}` which is defined above.
 
-$subhead x$$
-$index deprecated$$
+x
+=
 The argument has prototype
-$codei%
-   const CppAD::vector<%Base%>& %x%
-%$$
-and size is equal to the $icode n$$.
-This is the $cref Value$$ value corresponding to the parameters in the
-vector $cref/ax/atomic_two_afun/ax/$$ (when the atomic function was called).
+
+   ``const CppAD::vector<`` *Base* >& *x*
+
+and size is equal to the *n* .
+This is the :ref:`Value-name` value corresponding to the parameters in the
+vector :ref:`atomic_two_afun@ax` (when the atomic function was called).
 To be specific, if
-$codei%
-   if( Parameter(%ax%[%i%]) == true )
-      %x%[%i%] = Value( %ax%[%i%] );
-   else
-      %x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
-%$$
-The version of this function with out the $icode x$$ argument is deprecated;
+
+| |tab| ``if`` ( ``Parameter`` ( *ax* [ *i* ]) == ``true`` )
+| |tab| |tab| *x* [ *i* ] = ``Value`` ( *ax* [ *i* ] );
+| |tab| ``else``
+| |tab| |tab| *x* [ *i* ] = ``CppAD::numeric_limits<`` *Base* >:: ``quiet_NaN`` ();
+
+The version of this function with out the *x* argument is deprecated;
 i.e., you should include the argument even if you do not use it.
 
-$end
+{xrst_end atomic_two_for_sparse_hes}
 -----------------------------------------------------------------------------
 */
 

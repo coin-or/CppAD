@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin value.cpp$$
-$spell
-   Cpp
-   cstddef
-$$
+{xrst_begin value.cpp}
 
-$section Convert From AD to its Base Type: Example and Test$$
+Convert From AD to its Base Type: Example and Test
+##################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end value.cpp}
 */
 // BEGIN C++
 

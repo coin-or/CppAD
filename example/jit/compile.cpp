@@ -4,21 +4,24 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin jit_compile.cpp$$
-$spell
-   csrc
-$$
+{xrst_begin jit_compile.cpp}
 
-$section JIT Compiler Options: Example and Test$$
+JIT Compiler Options: Example and Test
+######################################
 
-$head compile$$
+compile
+*******
 This example demonstrates setting the JIT
-$cref/compile/create_dll_lib/options/compile/$$ option.
+:ref:`create_dll_lib@options@compile` option.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end jit_compile.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

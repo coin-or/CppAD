@@ -4,28 +4,25 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin taylor_ode.cpp$$
-$spell
-   Taylor
-   Cpp
-   const
-   std
-   Adolc
-   adouble
-$$
+{xrst_begin taylor_ode.cpp}
 
-$section Taylor's Ode Solver: An Example and Test$$
+Taylor's Ode Solver: An Example and Test
+########################################
 
-$head Purpose$$
-This example uses the method described in $cref taylor_ode$$
+Purpose
+*******
+This example uses the method described in :ref:`taylor_ode-name`
 to solve an ODE.
 
-$head ODE$$
+ODE
+***
 The ODE is defined by
-$latex y(0) = 0$$ and $latex y^1 (t) = g[ y(t) ]$$
+:math:`y(0) = 0` and :math:`y^1 (t) = g[ y(t) ]`
 where the function
-$latex g : \B{R}^n \rightarrow \B{R}^n$$ is defined by
-$latex \[
+:math:`g : \B{R}^n \rightarrow \B{R}^n` is defined by
+
+.. math::
+
    g(y)
    =
    \left( \begin{array}{c}
@@ -34,15 +31,18 @@ $latex \[
          \vdots                  \\
          y_{n-1}
    \end{array} \right)
-\] $$
-and the initial condition is $latex z(0) = 0$$.
 
-$head ODE Solution$$
+and the initial condition is :math:`z(0) = 0`.
+
+ODE Solution
+************
 The solution for this example can be calculated by
 starting with the first row and then using the solution
 for the first row to solve the second and so on.
 Doing this we obtain
-$latex \[
+
+.. math::
+
    y(t) =
    \left( \begin{array}{c}
       t           \\
@@ -50,11 +50,13 @@ $latex \[
       \vdots      \\
       t^n / n !
    \end{array} \right)
-\] $$
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end taylor_ode.cpp}
 --------------------------------------------------------------------------
 */
 // BEGIN C++

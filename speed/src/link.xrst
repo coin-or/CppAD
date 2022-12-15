@@ -1,0 +1,104 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin link_routines}
+{xrst_spell
+   teardown
+}
+
+Package Specific Speed Test Linking Routines
+############################################
+
+Syntax
+******
+
+   *available* = *link_name* ( *job* , *size* , *repeat* , *other_arguments*  )
+
+Purpose
+*******
+Each :ref:`speed_main@package`
+defines a version of each *link_name* listed below.
+This is used by the :ref:`speed_main-name` program
+to run the corresponding speed and correctness tests.
+
+Thread Save
+***********
+The *link_name* routines may use static memory for setup and teardown
+and hence may not be thread safe.
+
+link_name
+*********
+The routine *link_name* in the syntax is one of the following:
+
+Contents
+********
+{xrst_toc_table
+   speed/src/link_det_lu.cpp
+   speed/src/link_det_minor.cpp
+   speed/src/link_mat_mul.cpp
+   speed/src/link_ode.cpp
+   speed/src/link_poly.cpp
+   speed/src/link_sparse_hessian.hpp
+   speed/src/link_sparse_jacobian.hpp
+}
+
+Namespace
+*********
+These routines are in the global namespace, not the CppAD namespace.
+
+available
+*********
+The ``bool`` return value *available* is true (false)
+if the speed test *name* is (is not) available for this package.
+
+job
+***
+This argument can be used to cache information that does not
+depend on the function argument value without having the corresponding time
+included in the test results.
+This is expected to be important when the global option
+:ref:`speed_main@Global Options@onetape` is true.
+The ``const std::string&`` argument *job*
+has one of the following values:
+
+setup
+=====
+This is the first call with a new value for *size*
+and will not be used for timing.
+It can be used to setup information that should not be included in timing
+how long this routine takes.
+
+run
+===
+This call will be used for timing how long this routine takes.
+The previous call *job* was either ``setup`` or ``run``
+and had the same value of *size* .
+
+teardown
+========
+This is the last call with this value of *size*
+and will not be used for timing.
+It should be used to take down the setup; e.g., fee any memory that
+was allocated.
+
+size
+****
+The ``size_t`` argument *size* this is the size parameter for this
+test.  Larger sizes correspond to more computation per call.
+
+repeat
+******
+If *job* is ``run`` ,
+the *size_t* argument *repeat* is the number of
+randomly chosen argument values that the test derivatives should be
+evaluated for.
+The value of *repeat* is always greater than or equal one
+and all the ``link_`` *name* output values are always calculated.
+
+other_arguments
+***************
+Each link function routine has specific specifications
+for *size* and their other arguments.
+
+{xrst_end link_routines}

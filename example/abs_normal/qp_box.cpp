@@ -3,28 +3,34 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin qp_box.cpp$$
-$spell
+{xrst_begin qp_box.cpp}
+{xrst_spell
    qp
-$$
+   rl
+}
 
-$section abs_normal qp_box: Example and Test$$
+abs_normal qp_box: Example and Test
+###################################
 
-$head Problem$$
+Problem
+*******
 Our original problem is
-$latex \[
-\begin{array}{rl}
-\R{minimize}      & x_0 - x_1 \; \R{w.r.t} \; x \in \B{R}^2 \\
-\R{subject \; to} & -2 \leq x_0 \leq +2 \; \R{and} \; -2 \leq x_1 \leq +2
-\end{array}
-\] $$
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN C++%// END C++%
-1%$$
+.. math::
 
-$end
+   \begin{array}{rl}
+   \R{minimize}      & x_0 - x_1 \; \R{w.r.t} \; x \in \B{R}^2 \\
+   \R{subject \; to} & -2 \leq x_0 \leq +2 \; \R{and} \; -2 \leq x_1 \leq +2
+   \end{array}
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end qp_box.cpp}
 */
 // BEGIN C++
 # include <limits>

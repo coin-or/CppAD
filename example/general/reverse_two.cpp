@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin reverse_two.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin reverse_two.cpp}
 
-$section Second Order Reverse ModeExample and Test$$
+Second Order Reverse ModeExample and Test
+#########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end reverse_two.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

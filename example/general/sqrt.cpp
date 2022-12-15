@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sqrt.cpp$$
-$spell
-   sqrt
-$$
+{xrst_begin sqrt.cpp}
 
-$section The AD sqrt Function: Example and Test$$
+The AD sqrt Function: Example and Test
+######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sqrt.cpp}
 */
 // BEGIN C++
 

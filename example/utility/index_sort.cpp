@@ -4,14 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin index_sort.cpp$$
+{xrst_begin index_sort.cpp}
 
-$section Index Sort: Example and Test$$
+Index Sort: Example and Test
+############################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end index_sort.cpp}
 */
 // BEGIN C++
 # include <cppad/utility/index_sort.hpp>

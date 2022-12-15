@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin cosh.cpp$$
-$spell
-$$
+{xrst_begin cosh.cpp}
 
-$section The AD cosh Function: Example and Test$$
+The AD cosh Function: Example and Test
+######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end cosh.cpp}
 */
 // BEGIN C++
 

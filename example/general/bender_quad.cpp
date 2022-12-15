@@ -4,55 +4,63 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin bender_quad.cpp$$
-$spell
+{xrst_begin bender_quad.cpp}
+{xrst_spell
    argmin
-$$
+}
 
-$section BenderQuad: Example and Test$$
-
+BenderQuad: Example and Test
+############################
 
 Define
-$latex F : \B{R} \times \B{R} \rightarrow \B{R}$$ by
-$latex \[
-F(x, y)
-=
-\frac{1}{2} \sum_{i=1}^N [ y * \sin ( x * t_i ) - z_i ]^2
-\] $$
-where $latex z \in \B{R}^N$$ is a fixed vector.
+:math:`F : \B{R} \times \B{R} \rightarrow \B{R}` by
+
+.. math::
+
+   F(x, y)
+   =
+   \frac{1}{2} \sum_{i=1}^N [ y * \sin ( x * t_i ) - z_i ]^2
+
+where :math:`z \in \B{R}^N` is a fixed vector.
 It follows that
-$latex \[
-\begin{array}{rcl}
-\partial_y F(x, y)
-& = &
-\sum_{i=1}^N [ y * \sin ( x * t_i ) - z_i ] \sin( x * t_i )
-\\
-\partial_y \partial_y F(x, y)
-& = &
-\sum_{i=1}^N \sin ( x t_i )^2
-\end{array}
-\] $$
-Furthermore if we define $latex Y(x)$$
-as the argmin of $latex F(x, y)$$ with respect to $latex y$$,
-$latex \[
-\begin{array}{rcl}
-Y(x)
-& = &
-y - [ \partial_y \partial_y F(x, y) ]^{-1} \partial_y F[x,  y]
-\\
-& = &
-\left.
-   \sum_{i=1}^N z_i \sin ( x t_i )
-      \right/
-         \sum_{i=1}^N z_i \sin ( x * t_i )^2
-\end{array}
-\] $$
 
+.. math::
+   :nowrap:
 
+   \begin{eqnarray}
+   \partial_y F(x, y)
+   & = &
+   \sum_{i=1}^N [ y * \sin ( x * t_i ) - z_i ] \sin( x * t_i )
+   \\
+   \partial_y \partial_y F(x, y)
+   & = &
+   \sum_{i=1}^N \sin ( x t_i )^2
+   \end{eqnarray}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Furthermore if we define :math:`Y(x)`
+as the argmin of :math:`F(x, y)` with respect to :math:`y`,
 
-$end
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   Y(x)
+   & = &
+   y - [ \partial_y \partial_y F(x, y) ]^{-1} \partial_y F[x,  y]
+   \\
+   & = &
+   \left.
+      \sum_{i=1}^N z_i \sin ( x t_i )
+         \right/
+            \sum_{i=1}^N z_i \sin ( x * t_i )^2
+   \end{eqnarray}
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end bender_quad.cpp}
 */
 // BEGIN C++
 

@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse2eigen.cpp$$
-$spell
-   Eigen
-   Cpp
-$$
+{xrst_begin sparse2eigen.cpp}
 
-$section Converting CppAD Sparse Matrix to Eigen Format: Example and Test$$
+Converting CppAD Sparse Matrix to Eigen Format: Example and Test
+################################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sparse2eigen.cpp}
 */
 // BEGIN C++
 # include <cppad/utility/sparse2eigen.hpp>

@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin var2par.cpp$$
-$spell
-   Var
-   Cpp
-$$
+{xrst_begin var2par.cpp}
 
-$section Convert a Variable or Dynamic Parameter a Constant: Example and Test$$
+Convert a Variable or Dynamic Parameter a Constant: Example and Test
+####################################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end var2par.cpp}
 */
 // BEGIN C++
 

@@ -3,68 +3,78 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul_identical_zero.cpp$$
-$spell
-   enum
-$$
+{xrst_begin atomic_four_mat_mul_identical_zero.cpp}
 
-$section Atomic Matrix Multiply Identical Zero: Example and Test$$
+Atomic Matrix Multiply Identical Zero: Example and Test
+#######################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates how the
-$cref atomic_four_mat_mul_for_type.hpp$$
-routine uses the $icode identical_zero_enum$$ type to reduce the number
+:ref:`atomic_four_mat_mul_for_type.hpp-name`
+routine uses the *identical_zero_enum* type to reduce the number
 of variables.
 
-$head Zero$$
+Zero
+****
 The first case computes the following matrix product
-$latex \[
-\left( \begin{array}{ccc}
-u_0 & 0   & 0 \\
-0   & u_1 & 0 \\
-0   & 0   & u_2
-\end{array} \right)
-\left( \begin{array}{ccc}
-u_3 & 0   & 0 \\
-0   & u_4 & 0 \\
-0   & 0   & u_5
-\end{array} \right)
-=
-\left( \begin{array}{ccc}
-u_0 u_3 & 0       & 0 \\
-0       & u_1 u_4 & 0 \\
-0       & 0       & u_2 u_5
-\end{array} \right)
-\] $$
+
+.. math::
+
+   \left( \begin{array}{ccc}
+   u_0 & 0   & 0 \\
+   0   & u_1 & 0 \\
+   0   & 0   & u_2
+   \end{array} \right)
+   \left( \begin{array}{ccc}
+   u_3 & 0   & 0 \\
+   0   & u_4 & 0 \\
+   0   & 0   & u_5
+   \end{array} \right)
+   =
+   \left( \begin{array}{ccc}
+   u_0 u_3 & 0       & 0 \\
+   0       & u_1 u_4 & 0 \\
+   0       & 0       & u_2 u_5
+   \end{array} \right)
+
 The result matrix for this case has three variables,
 one for each product on the diagonal.
 
-$head One$$
+One
+***
 The second case computes the following matrix product
-$latex \[
-\left( \begin{array}{ccc}
-u_0 & 1   & 1 \\
-1   & u_1 & 1 \\
-1   & 1   & u_2
-\end{array} \right)
-\left( \begin{array}{ccc}
-u_3 & 1   & 1 \\
-1   & u_4 & 1 \\
-1   & 1   & u_5
-\end{array} \right)
-=
-\left( \begin{array}{ccc}
-u_0 u_3 + 2   & u_0 + u_3 + 1 & u_0 + u_5 + 1 \\
-u_1 + u_3 + 1 & u_1 u_4 + 2   & u_1 + u_5 + 1  \\
-u_2 + u_3 + 1 & u_2 + u_4 + 1 & u_2 u_5 + 2
-\end{array} \right)
-\] $$
+
+.. math::
+
+   \left( \begin{array}{ccc}
+   u_0 & 1   & 1 \\
+   1   & u_1 & 1 \\
+   1   & 1   & u_2
+   \end{array} \right)
+   \left( \begin{array}{ccc}
+   u_3 & 1   & 1 \\
+   1   & u_4 & 1 \\
+   1   & 1   & u_5
+   \end{array} \right)
+   =
+   \left( \begin{array}{ccc}
+   u_0 u_3 + 2   & u_0 + u_3 + 1 & u_0 + u_5 + 1 \\
+   u_1 + u_3 + 1 & u_1 u_4 + 2   & u_1 + u_5 + 1  \\
+   u_2 + u_3 + 1 & u_2 + u_4 + 1 & u_2 u_5 + 2
+   \end{array} \right)
+
 The result matrix for this case has nine variables,
 one for each of its elements.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_identical_zero.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

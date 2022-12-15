@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin asinh.cpp$$
-$spell
-   sinh
-   asinh
-$$
+{xrst_begin asinh.cpp}
 
-$section The AD asinh Function: Example and Test$$
+The AD asinh Function: Example and Test
+#######################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end asinh.cpp}
 */
 // BEGIN C++
 

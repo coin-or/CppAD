@@ -5,80 +5,90 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin create_dll_lib$$
-$spell
-   CppAD
-   std
-   cppad
-   dll
-   hpp
+{xrst_begin create_dll_lib}
+{xrst_spell
+   cl
    csrc
-   Hs
-   Hc
-   gcc
-$$
+   dll
+   hc
+   hs
+   msg
+}
 
-$section Create a Dynamic Link Library$$
+Create a Dynamic Link Library
+#############################
 
-$head Syntax$$
-$codei%# include <cppad/utility/create_dll_lib.hpp>
-%$$
-$icode%err_msg% = create_dll_lib(%dll_file%, %csrc_files%, %options%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_CREATE_DLL_LIB%// END_CREATE_DLL_LIB%1%$$
+| # ``include <cppad/utility/create_dll_lib.hpp>``
+| *err_msg* = ``create_dll_lib`` ( *dll_file* , *csrc_files* , *options* )
 
-$head include$$
-As with all the CppAD utilities, $code create_dll_lib.hpp$$ is included
-by $code <cppad/cppad.hpp>$$, and can also be included separately.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CREATE_DLL_LIB
+   // END_CREATE_DLL_LIB
+}
 
-$head dll_file$$
-This is the file where the dynamic link library file named $icode dll_file$$.
+include
+*******
+As with all the CppAD utilities, ``create_dll_lib.hpp`` is included
+by ``<cppad/cppad.hpp>`` , and can also be included separately.
+
+dll_file
+********
+This is the file where the dynamic link library file named *dll_file* .
 This file name must have the proper extension for a dynamic link library
-($code .so$$ on unix and $code .dll$$ on windows).
+(``.so`` on unix and ``.dll`` on windows).
 
-$head StringVector$$
-The type $icode StringVector$$ is a simple vector with elements
-of type $code std::string$$.
+StringVector
+************
+The type *StringVector* is a simple vector with elements
+of type ``std::string`` .
 
-$head csrc_files$$
-The vector $icode csrc_files$$ contains the names of the C source
+csrc_files
+**********
+The vector *csrc_files* contains the names of the C source
 files that are compiled and linked to the library.
 These files do not have to have a specific extension.
 
-$head options$$
+options
+*******
 The possible keys in this map are documented below.
 The default value for each key is used when the key
-does not appear in $icode options$$.
+does not appear in *options* .
 
-$subhead compile$$
+compile
+=======
 This is an abbreviated version of the compile command.
 It does not include the output file flag or output file name.
-If $code _MSC_VER$$ is defined, the default value for this option is
-$code cl /EHs /EHc /c /LD /TC$$
-If $code _MSC_VER$$ is not defined, the default value for this option is
-$code gcc -c -fPIC$$.
+If ``_MSC_VER`` is defined, the default value for this option is
+``cl /EHs /EHc /c /LD /TC``
+If ``_MSC_VER`` is not defined, the default value for this option is
+``gcc -c -fPIC`` .
 
-$subhead link$$
+link
+====
 This is an abbreviated version of the link command.
 It does not include the output file flag or output file name.
-If $code _MSC_VER$$ is defined, the default value for this option is
-$code link /DLL$$
-If $code _MSC_VER$$ is not defined, the default value for this option is
-$code gcc -shared$$.
+If ``_MSC_VER`` is defined, the default value for this option is
+``link /DLL``
+If ``_MSC_VER`` is not defined, the default value for this option is
+``gcc -shared`` .
 
-
-$head err_msg$$
+err_msg
+*******
 If this string is empty, no error occurred.
-Otherwise the processing aborted and $icode err_msg$$ is the corresponding
+Otherwise the processing aborted and *err_msg* is the corresponding
 error message.
 
-$head Example$$
-The file $cref dll_lib.cpp$$ contains an example and test of
-$code create_dll_lib$$.
+Example
+*******
+The file :ref:`dll_lib.cpp-name` contains an example and test of
+``create_dll_lib`` .
 
-$end
+{xrst_end create_dll_lib}
 */
 # include <map>
 # include <cppad/local/temp_file.hpp>

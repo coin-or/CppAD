@@ -8,50 +8,52 @@
 /*
 ------------------------------------------------------------------------------
 
-$begin Var2Par$$
-$spell
-   var
-   const
-$$
+{xrst_begin Var2Par}
 
+Convert an AD Variable or Dynamic Parameter to a Constant
+#########################################################
 
-$section Convert an AD Variable or Dynamic Parameter to a Constant$$
+Syntax
+******
+*y* = ``Var2Par`` ( *x* )
 
-$head Syntax$$
-$icode%y% = Var2Par(%x%)%$$
+See Also
+********
+:ref:`value-name`
 
-$head See Also$$
-$cref value$$
-
-$head Purpose$$
+Purpose
+*******
 Returns a
-$cref/constant parameter/glossary/Parameter/Constant/$$ $icode y$$
-with the same value as $icode x$$.
+:ref:`constant parameter<glossary@Parameter@Constant>` *y*
+with the same value as *x* .
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const AD<%Base%> &x
-%$$
-The argument $icode x$$ may be a
+x
+*
+The argument *x* has prototype
+
+   ``const AD<`` *Base* > & ``x``
+
+The argument *x* may be a
 variable, dynamic parameter, or constant parameter.
 
-$head y$$
-The result $icode y$$ has prototype
-$codei%
-   AD<%Base%> &y
-%$$
+y
+*
+The result *y* has prototype
+
+   ``AD<`` *Base* > & ``y``
+
 and is a constant parameter.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/var2par.cpp
-%$$
+}
 The file
-$cref var2par.cpp$$
+:ref:`var2par.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end Var2Par}
 ------------------------------------------------------------------------------
 */
 

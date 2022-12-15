@@ -4,22 +4,31 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin jit_to_csrc.cpp$$
-$spell
+{xrst_begin jit_to_csrc.cpp}
+{xrst_spell
    csrc
-$$
+}
 
-$section C Source Code Corresponding to a Function: Example and Test$$
+C Source Code Corresponding to a Function: Example and Test
+###########################################################
 
-$head to_csrc$$
-The actual call to $code to_csrc$$ is in the following section of the
+to_csrc
+*******
+The actual call to ``to_csrc`` is in the following section of the
 example below:
-$srcthisfile%0%// BEGIN_TO_CSRC%// END_TO_CSRC%1%$$
+{xrst_literal
+   // BEGIN_TO_CSRC
+   // END_TO_CSRC
+}
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end jit_to_csrc.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

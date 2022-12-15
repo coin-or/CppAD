@@ -5,26 +5,34 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector_add_op.hpp$$
+{xrst_begin atomic_four_vector_add_op.hpp}
 
-$section Atomic Vector Add Operator: Example Implementation$$
+Atomic Vector Add Operator: Example Implementation
+##################################################
 
-$head Forward Mode$$
+Forward Mode
+************
 see theory for forward mode
-$cref/addition/forward_theory/Binary Operators/Addition/$$.
+:ref:`forward_theory@Binary Operators@Addition` .
 
-$head Reverse Mode$$
+Reverse Mode
+************
 see theory for reverse mode
-$cref/addition/reverse_theory/Binary Operators/Addition/$$.
+:ref:`reverse_theory@Binary Operators@Addition` .
 
-$head Example$$
-The file $cref atomic_four_vector_add.cpp$$ contains an example
+Example
+*******
+The file :ref:`atomic_four_vector_add.cpp-name` contains an example
 and test for this operator.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end atomic_four_vector_add_op.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/vector/vector.hpp>

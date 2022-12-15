@@ -47,298 +47,305 @@
 # endif
 
 /*
-$begin speed_main$$
-$spell
-   xpackage
-   jac
-   subgraph
-   Jacobians
-   hes
+{xrst_begin speed_main}
+{xrst_spell
+   boolsparsity
+   onetape
+   optionlist
+   retaped
+   revsparsity
    subgraphs
    subsparsity
-   revsparsity
-   colpack
-   onetape
-   boolsparsity
-   optionlist
    underbar
-   alloc
-   mat_mul
-   retaped
-   bool
-   ddp
-   cppad
-   adolc
-   fadbad
-   sacado
-   CppAD
-   det
-   lu
-   Jacobian
-   cppadcg
-$$
+}
 
+Running the Speed Test Program
+##############################
 
-$section Running the Speed Test Program$$
+Syntax
+******
+``speed/`` *package* / ``speed_`` *package* *test* *seed* *option_list*
 
-$head Syntax$$
-$codei%speed/%package%/speed_%package% %test% %seed% %option_list%$$
-
-$head Purpose$$
+Purpose
+*******
 A version of this program runs the correctness tests
-or the speed tests for one AD package identified by $icode package$$.
+or the speed tests for one AD package identified by *package* .
 
-$head package$$
+package
+*******
 
-$subhead AD Package$$
+AD Package
+==========
 The command line argument
-$icode package$$ specifies one of the AD package.
+*package* specifies one of the AD package.
 The CppAD distribution comes with support for the following packages:
-$cref/adolc/speed_adolc/$$,
-$cref/cppad/speed_cppad/$$,
-$cref/fadbad/speed_fadbad/$$,
-$cref/sacado/speed_sacado/$$,
-$cref/cppadcg/speed_cppadcg/$$.
+:ref:`adolc<speed_adolc-name>` ,
+:ref:`cppad<speed_cppad-name>` ,
+:ref:`fadbad<speed_fadbad-name>` ,
+:ref:`sacado<speed_sacado-name>` ,
+:ref:`cppadcg<speed_cppadcg-name>` .
 You can extend this program to include other package;
-see $cref speed_xpackage$$.
+see :ref:`speed_xpackage-name` .
 
-$subhead double$$
+double
+======
 The value
-$icode package$$ can be $code double$$ in which case
+*package* can be ``double`` in which case
 the function values (instead of derivatives) are computed
 using double precision operations.
 This enables one to compare the speed of computing function
-values in $code double$$ to the speed of the derivative computations.
+values in ``double`` to the speed of the derivative computations.
 (It is often useful to divide the speed of the derivative computation by
-the speed of the function evaluation in $code double$$.)
+the speed of the function evaluation in ``double`` .)
 
-$subhead profile$$
-In the special case where $icode package$$ is $code profile$$,
+profile
+=======
+In the special case where *package* is ``profile`` ,
 the CppAD package is compiled and run with profiling to aid in determining
 where it is spending most of its time.
 
-$head test$$
-The argument $icode test$$ specifies which test to run
+test
+****
+The argument *test* specifies which test to run
 and has the following possible values:
-$cref/correct/speed_main/test/correct/$$,
-$cref/speed/speed_main/test/speed/$$,
-$cref/det_minor/link_det_minor/$$,
-$cref/det_lu/link_det_lu/$$,
-$cref/mat_mul/link_mat_mul/$$,
-$cref/ode/link_ode/$$,
-$cref/poly/link_poly/$$,
-$cref/sparse_hessian/link_sparse_hessian/$$,
-$cref/sparse_jacobian/link_sparse_jacobian/$$.
+:ref:`speed_main@test@correct` ,
+:ref:`speed_main@test@speed` ,
+:ref:`det_minor<link_det_minor-name>` ,
+:ref:`det_lu<link_det_lu-name>` ,
+:ref:`mat_mul<link_mat_mul-name>` ,
+:ref:`ode<link_ode-name>` ,
+:ref:`poly<link_poly-name>` ,
+:ref:`sparse_hessian<link_sparse_hessian-name>` ,
+:ref:`sparse_jacobian<link_sparse_jacobian-name>` .
 You can experiment with changing the implementation of a
 particular test for a particular package.
 
-$subhead correct$$
-If $icode test$$ is equal to $code correct$$,
+correct
+=======
+If *test* is equal to ``correct`` ,
 all of the correctness tests are run.
 
-$subhead speed$$
-If $icode test$$ is equal to $code speed$$,
+speed
+=====
+If *test* is equal to ``speed`` ,
 all of the speed tests are run.
 
-$head seed$$
-The command line argument $icode seed$$ is an unsigned integer
+seed
+****
+The command line argument *seed* is an unsigned integer
 (all its characters are between 0 and 9).
-The random number simulator $cref uniform_01$$ is initialized with
+The random number simulator :ref:`uniform_01-name` is initialized with
 the call
-$codei%
-   uniform_01(%seed%)
-%$$
+
+   ``uniform_01`` ( *seed* )
+
 before any of the testing routines (listed above) are called.
 
-$head Global Options$$
+Global Options
+**************
 This global variable has prototype
-$srccode%cpp%
+{xrst_spell_off}
+{xrst_code cpp}
    extern std::map<std::string, bool> global_option;
-%$$
+{xrst_code}
+{xrst_spell_on}
 The syntax
-$codei%
-   global_option["%option%"]
-%$$
-has the value true, if $icode option$$ is present,
+
+   ``global_option`` [" *option* "]
+
+has the value true, if *option* is present,
 and false otherwise.
-This is true for each option that follows $icode seed$$.
+This is true for each option that follows *seed* .
 The order of the options does not matter and the list can be empty.
 Each option, is be a separate command line argument to the main program.
 The documentation below specifics how the
-$cref speed_cppad$$ program uses these options.
+:ref:`speed_cppad-name` program uses these options.
 It is the intention that other packages use each option in a similar
 way or make it invalid.
 The implementation of each test should check that the option
 setting are valid for that test and if not it should return false;
-for example, see the source code for $cref adolc_sparse_hessian.cpp$$.
+for example, see the source code for :ref:`adolc_sparse_hessian.cpp-name` .
 
-$subhead onetape$$
+onetape
+=======
 If this option is present,
-$cref speed_cppad$$ will use one taping of the operation
+:ref:`speed_cppad-name` will use one taping of the operation
 sequence for all the repetitions of that speed test.
 Otherwise, the
-$cref/operation sequence/glossary/Operation/Sequence/$$
+:ref:`operation sequence<glossary@Operation@Sequence>`
 will be retaped for each test repetition.
-$pre
 
-$$
-All of the tests, except $cref/det_lu/link_det_lu/$$,
+All of the tests, except :ref:`det_lu<link_det_lu-name>` ,
 have the same operation sequence for each repetition.
-The operation sequence for $code det_lu$$
+The operation sequence for ``det_lu``
 may be different because it depends on the matrix for which the determinant
 is being calculated.
-For this reason, $cref cppad_det_lu.cpp$$ returns false,
+For this reason, :ref:`cppad_det_lu.cpp-name` returns false,
 to indicate that the test not implemented,
-when $code global_onetape$$ is true.
+when ``global_onetape`` is true.
 
-$subhead memory$$
+memory
+======
 This option is special because individual CppAD speed tests need not do
 anything different if this option is true or false.
-If the $code memory$$ option is present, the CppAD
-$cref/hold_memory/ta_hold_memory/$$ routine will be called by
+If the ``memory`` option is present, the CppAD
+:ref:`hold_memory<ta_hold_memory-name>` routine will be called by
 the speed test main program before any of the tests are executed
-This should make the CppAD $code thread_alloc$$ allocator faster.
+This should make the CppAD ``thread_alloc`` allocator faster.
 If it is not present, CppAD will used standard memory allocation.
 Another package might use this option for a different
 memory allocation method.
 
-$subhead optimize$$
+optimize
+========
 If this option is present,
-CppAD will $cref optimize$$
+CppAD will :ref:`optimize-name`
 the operation sequence before doing computations.
 If it is false, this optimization will not be done.
 Note that this option is usually slower unless it is combined with the
-$code onetape$$ option.
+``onetape`` option.
 
-$subhead atomic$$
+atomic
+======
 If this option is present,
 CppAD will use a user defined
-$cref/atomic/atomic_two/$$ operation is used for the test.
+:ref:`atomic<atomic_two-name>` operation is used for the test.
 So far, CppAD has only implemented
-the $cref/mat_mul/link_mat_mul/$$ test as an atomic operation.
+the :ref:`mat_mul<link_mat_mul-name>` test as an atomic operation.
 
-$subhead hes2jac$$
+hes2jac
+=======
 If this option is present,
-$cref speed_cppad$$ will compute hessians as the Jacobian
+:ref:`speed_cppad-name` will compute hessians as the Jacobian
 of the gradient.
 This is accomplished using
-$cref/multiple levels/mul_level/$$ of AD.
+:ref:`multiple levels<mul_level-name>` of AD.
 So far, CppAD has only implemented
-the $cref/sparse_hessian/link_sparse_hessian/$$
+the :ref:`sparse_hessian<link_sparse_hessian-name>`
 test in this manner.
 
-$subhead subgraph$$
+subgraph
+========
 If this option is present,
-$cref speed_cppad$$ will compute sparse Jacobians using subgraphs.
-The CppAD $cref/sparse_jacobian/link_sparse_jacobian/$$
+:ref:`speed_cppad-name` will compute sparse Jacobians using subgraphs.
+The CppAD :ref:`sparse_jacobian<link_sparse_jacobian-name>`
 test is implemented for this option.
-In addition, the CppAD $cref/sparse_hessian/link_sparse_hessian/$$
-test is implemented for this option when $code hes2jac$$ is present.
+In addition, the CppAD :ref:`sparse_hessian<link_sparse_hessian-name>`
+test is implemented for this option when ``hes2jac`` is present.
 
-$head Sparsity Options$$
+Sparsity Options
+****************
 The following options only apply to the
-$cref/sparse_jacobian/link_sparse_jacobian/$$ and
-$cref/sparse_hessian/link_sparse_hessian/$$ tests.
+:ref:`sparse_jacobian<link_sparse_jacobian-name>` and
+:ref:`sparse_hessian<link_sparse_hessian-name>` tests.
 The other tests return false when any of these options
 are present.
 
-$subhead boolsparsity$$
+boolsparsity
+============
 If this option is present, CppAD will use a
-$cref/vectors of bool/glossary/Sparsity Pattern/Boolean Vector/$$
+:ref:`vectors of bool<glossary@Sparsity Pattern@Boolean Vector>`
 to compute sparsity patterns.
 Otherwise CppAD will use
-$cref/vectors of sets/glossary/Sparsity Pattern/Vector of Sets/$$.
+:ref:`vectors of sets<glossary@Sparsity Pattern@Vector of Sets>` .
 
-$subhead revsparsity$$
+revsparsity
+===========
 If this option is present,
 CppAD will use reverse mode for to compute sparsity patterns.
 Otherwise CppAD will use forward mode.
 
-$subhead subsparsity$$
+subsparsity
+===========
 If this option is present,
 CppAD will use subgraphs to compute sparsity patterns.
 If
-$code boolsparsity$$, $code revsparsity$$, or $code colpack$$ is also present,
+``boolsparsity`` , ``revsparsity`` , or ``colpack`` is also present,
 the CppAD speed tests will return false; i.e., these options are not
-supported by $cref subgraph_sparsity$$.
+supported by :ref:`subgraph_sparsity-name` .
 
-$subhead colpack$$
+colpack
+=======
 If this option is present,
-CppAD will use $cref/colpack/colpack_prefix/$$ to do the coloring.
+CppAD will use :ref:`colpack<colpack_prefix-name>` to do the coloring.
 Otherwise, it will use it's own coloring algorithm.
 
-$subhead symmetric$$
+symmetric
+=========
 If this option is present, CppAD will use a symmetric
-$cref/coloring method/sparse_hessian/work/color_method/$$
+:ref:`coloring method<sparse_hessian@work@color_method>`
 for computing Hessian sparsity patterns.
 Otherwise, it will use a general coloring method.
 The CppAD
-$cref/sparse_hessian/link_sparse_hessian/$$ test
+:ref:`sparse_hessian<link_sparse_hessian-name>` test
 is implemented for this option.
 
-$head Correctness Results$$
+Correctness Results
+*******************
 One, but not both, of the following two output lines
-$codei%
-   %package%_%test%_%optionlist%_available = false
-   %package%_%test%_%optionlist%_ok = %flag%
-%$$
-is generated for each correctness test where
-$icode package$$ and $icode test$$ are as above,
-$icode optionlist$$ are the options (in $icode option_list$$)
-separated by the underbar $code _$$ character
-(whereas they are separated by spaces in $icode option_list$$),
-and $icode flag$$ is $code true$$ or $code false$$.
 
-$head Speed Results$$
+| |tab| *package* _ *test* _ *optionlist* _ ``available`` = ``false``
+| |tab| *package* _ *test* _ *optionlist* _ ``ok`` = *flag*
+
+is generated for each correctness test where
+*package* and *test* are as above,
+*optionlist* are the options (in *option_list* )
+separated by the underbar ``_`` character
+(whereas they are separated by spaces in *option_list* ),
+and *flag* is ``true`` or ``false`` .
+
+Speed Results
+*************
 For each speed test, corresponds to three lines of the
 following form are generated:
-$codei%
-   %package%_%test%_%optionlist%_ok   = %flag%
-   %test%_size = [ %size_1%, %...%, %size_n% ]
-   %package%_%test%_rate = [ %rate_1%, %...%, %rate_n% ]
-%$$
-The values $icode package$$, $icode test$$, $icode optionlist$$,
-and $icode flag$$ are as in the correctness results above.
-The values $icode size_1$$, ..., $icode size_n$$ are the
+
+| |tab| *package* _ *test* _ *optionlist* _ ``ok`` = *flag*
+| |tab| *test* _ ``size`` = [ *size_1* , ..., *size_n*  ]
+| |tab| *package* _ *test* _ ``rate`` = [ *rate_1* , ..., *rate_n*  ]
+
+The values *package* , *test* , *optionlist* ,
+and *flag* are as in the correctness results above.
+The values *size_1* , ..., *size_n* are the
 size arguments used for the corresponding tests.
-The values $icode rate_1$$, ..., $icode rate_n$$ are the number of times
+The values *rate_1* , ..., *rate_n* are the number of times
 per second that the corresponding size problem executed.
 
-$subhead n_color$$
-The $cref/sparse_jacobian/link_sparse_jacobian/$$
-and $cref/sparse_hessian/link_sparse_hessian/$$ tests has an extra output
+n_color
+=======
+The :ref:`sparse_jacobian<link_sparse_jacobian-name>`
+and :ref:`sparse_hessian<link_sparse_hessian-name>` tests has an extra output
 line with the following form
-$codei%
-   %package%_sparse_%test%_n_color = [ %n_color_1%, %...%, %n_color_n% ]
-%$$
-were $icode test$$ is $code jacobian$$ ($code hessian$$).
-The values $icode n_color_1$$, ..., $icode n_color_n$$ are the number of
+
+   *package* _ ``sparse_`` *test* _ ``n_color`` = [ *n_color_1* , ..., *n_color_n*  ]
+
+were *test* is ``jacobian`` (``hessian`` ).
+The values *n_color_1* , ..., *n_color_n* are the number of
 colors used for each sparse Jacobian (Hessian) calculation; see
-$icode n_color$$ for
-$cref/sparse_jac/sparse_jac/n_color/$$ and $icode n_sweep$$ for
-$cref/sparse_hessian/sparse_hessian/n_sweep/$$.
-
-
-$children%
-   speed/src/link.omh
-%$$
-$head Link Routines$$
-Each $cref/package/speed_main/package/$$
+*n_color* for
+:ref:`sparse_jac<sparse_jac@n_color>` and *n_sweep* for
+:ref:`sparse_hessian<sparse_hessian@n_sweep>` .
+{xrst_toc_hidden
+   speed/src/link.xrst
+}
+Link Routines
+*************
+Each :ref:`speed_main@package`
 defines it's own version of one of the
-$cref link_routines$$ listed below.
+:ref:`link_routines-name` listed below.
 Each of these routines links this main program to the corresponding test:
-$table
-$rref link_det_lu$$
-$rref link_det_minor$$
-$rref link_mat_mul$$
-$rref link_ode$$
-$rref link_poly$$
-$rref link_sparse_hessian$$
-$rref link_sparse_jacobian$$
-$tend
 
+.. csv-table::
+   :widths: auto
 
-$end
+   link_det_lu,:ref:`link_det_lu-title`
+   link_det_minor,:ref:`link_det_minor-title`
+   link_mat_mul,:ref:`link_mat_mul-title`
+   link_ode,:ref:`link_ode-title`
+   link_poly,:ref:`link_poly-title`
+   link_sparse_hessian,:ref:`link_sparse_hessian-title`
+   link_sparse_jacobian,:ref:`link_sparse_jacobian-title`
+
+{xrst_end speed_main}
 -----------------------------------------------------------------------------
 */
 // external routines

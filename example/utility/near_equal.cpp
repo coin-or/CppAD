@@ -4,24 +4,24 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin near_equal.cpp$$
-$spell
-   cpp
-   abs
-o   Microsoft
-$$
+{xrst_begin near_equal.cpp}
 
-$section NearEqual Function: Example and Test$$
+NearEqual Function: Example and Test
+####################################
 
-$head File Name$$
-This file is called $code near_equal.cpp$$ instead of
-$code NearEqual.cpp$$
-to avoid a name conflict with $code ../lib/NearEqual.cpp$$
+File Name
+*********
+This file is called ``near_equal.cpp`` instead of
+``NearEqual.cpp``
+to avoid a name conflict with ``../lib/NearEqual.cpp``
 in the corresponding Microsoft project file.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end near_equal.cpp}
 */
 // BEGIN C++
 

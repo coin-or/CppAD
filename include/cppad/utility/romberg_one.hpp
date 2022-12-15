@@ -5,130 +5,141 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin RombergOne$$
-$spell
-   cppad.hpp
-   bool
-   const
-   Cpp
-   RombergOne
-$$
+{xrst_begin RombergOne}
+{xrst_spell
+   romberg
+   test test
+}
 
-$section One DimensionalRomberg Integration$$
+One DimensionalRomberg Integration
+##################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/romberg_one.hpp>
-%$$
-$icode%r% = RombergOne(%F%, %a%, %b%, %n%, %e%)%$$
+   # ``include <cppad/utility/romberg_one.hpp>``
 
+*r* = ``RombergOne`` ( *F* , *a* , *b* , *n* , *e* )
 
-$head Description$$
+Description
+***********
 Returns the Romberg integration estimate
-$latex r$$ for a one dimensional integral
-$latex \[
-r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}
-\] $$
+:math:`r` for a one dimensional integral
 
-$head Include$$
-The file $code cppad/utility/romberg_one.hpp$$
-is included by $code cppad/cppad.hpp$$
+.. math::
+
+   r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}
+
+Include
+*******
+The file ``cppad/utility/romberg_one.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head r$$
-The return value $icode r$$ has prototype
-$codei%
-   %Float% %r%
-%$$
-It is the estimate computed by $code RombergOne$$ for the integral above.
+r
+*
+The return value *r* has prototype
 
-$head F$$
-The object $icode F$$ can be of any type, but it must support
+   *Float* *r*
+
+It is the estimate computed by ``RombergOne`` for the integral above.
+
+F
+*
+The object *F* can be of any type, but it must support
 the operation
-$codei%
-   %F%(%x%)
-%$$
-The argument $icode x$$ to $icode F$$ has prototype
-$codei%
-   const %Float% &%x%
-%$$
-The return value of $icode F$$ is a $icode Float$$ object
-(see description of $cref/Float/RombergOne/Float/$$ below).
 
-$head a$$
-The argument $icode a$$ has prototype
-$codei%
-   const %Float% &%a%
-%$$
+   *F* ( *x* )
+
+The argument *x* to *F* has prototype
+
+   ``const`` *Float* & *x*
+
+The return value of *F* is a *Float* object
+(see description of :ref:`RombergOne@Float` below).
+
+a
+*
+The argument *a* has prototype
+
+   ``const`` *Float* & *a*
+
 It specifies the lower limit for the integration.
 
-$head b$$
-The argument $icode b$$ has prototype
-$codei%
-   const %Float% &%b%
-%$$
+b
+*
+The argument *b* has prototype
+
+   ``const`` *Float* & *b*
+
 It specifies the upper limit for the integration.
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-   size_t %n%
-%$$
-A total number of $latex 2^{n-1} + 1$$ evaluations of $icode%F%(%x%)%$$
+n
+*
+The argument *n* has prototype
+
+   ``size_t`` *n*
+
+A total number of :math:`2^{n-1} + 1` evaluations of *F* ( *x* )
 are used to estimate the integral.
 
-$head p$$
-The argument $icode p$$ has prototype
-$codei%
-   size_t %p%
-%$$
-It must be less than or equal $latex n$$
+p
+*
+The argument *p* has prototype
+
+   ``size_t`` *p*
+
+It must be less than or equal :math:`n`
 and determines the accuracy order in the approximation for the integral
-that is returned by $code RombergOne$$.
+that is returned by ``RombergOne`` .
 To be specific
-$latex \[
-r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}
-\] $$
 
+.. math::
 
-$head e$$
-The argument $icode e$$ has prototype
-$codei%
-   %Float% &%e%
-%$$
-The input value of $icode e$$ does not matter
+   r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}
+
+e
+*
+The argument *e* has prototype
+
+   *Float* & *e*
+
+The input value of *e* does not matter
 and its output value is an approximation for the error in
 the integral estimates; i.e.,
-$latex \[
+
+.. math::
+
    e \approx \left| r - \int_a^b F(x) {\bf d} x \right|
-\] $$
 
-$head Float$$
-The type $icode Float$$ must satisfy the conditions
-for a $cref NumericType$$ type.
-The routine $cref CheckNumericType$$ will generate an error message
+Float
+*****
+The type *Float* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
 if this is not the case.
-In addition, if $icode x$$ and $icode y$$ are $icode Float$$ objects,
-$codei%
-   %x% < %y%
-%$$
-returns the $code bool$$ value true if $icode x$$ is less than
-$icode y$$ and false otherwise.
+In addition, if *x* and *y* are *Float* objects,
 
-$children%
+   *x* < *y*
+
+returns the ``bool`` value true if *x* is less than
+*y* and false otherwise.
+{xrst_toc_hidden
    example/utility/romberg_one.cpp
-%$$
-$head Example$$
+}
+Example
+*******
 The file
-$cref romberg_one.cpp$$
+:ref:`romberg_one.cpp-name`
 contains an example and test a test of using this routine.
 
-$head Source Code$$
+Source Code
+***********
 The source code for this routine is in the file
-$code cppad/romberg_one.hpp$$.
+``cppad/romberg_one.hpp`` .
 
-$end
+{xrst_end RombergOne}
 */
 
 # include <cppad/utility/check_numeric_type.hpp>

@@ -4,39 +4,40 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin mul_level_ode.cpp$$
-$spell
-   Taylor
-   Cpp
-   const
-   std
-   Adolc
-   adouble
-$$
+{xrst_begin mul_level_ode.cpp}
+{xrst_spell
+   cccc
+}
 
-$section Taylor's Ode Solver: A Multi-Level AD Example and Test$$
+Taylor's Ode Solver: A Multi-Level AD Example and Test
+######################################################
 
-$head See Also$$
-$cref taylor_ode.cpp$$, $cref base2ad.cpp$$, $cref mul_level_adolc_ode.cpp$$
+See Also
+********
+:ref:`taylor_ode.cpp-name` , :ref:`base2ad.cpp-name` , :ref:`mul_level_adolc_ode.cpp-name`
 
-$head Purpose$$
+Purpose
+*******
 This is a realistic example using
-two levels of AD; see $cref mul_level$$.
-The first level uses $code AD<double>$$ to tape the solution of an
+two levels of AD; see :ref:`mul_level-name` .
+The first level uses ``AD<double>`` to tape the solution of an
 ordinary differential equation.
 This solution is then differentiated with respect to a parameter vector.
-The second level uses $code AD< AD<double> >$$
+The second level uses ``AD< AD<double> >``
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
 
-$head ODE$$
+ODE
+***
 For this example the function
-$latex y : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
-$latex y(0, x) = 0$$ and
-$latex \partial_t y(t, x) = g(y, x)$$ where
-$latex g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
-$latex \[
+:math:`y : \B{R} \times \B{R}^n \rightarrow \B{R}^n` is defined by
+:math:`y(0, x) = 0` and
+:math:`\partial_t y(t, x) = g(y, x)` where
+:math:`g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n` is defined by
+
+.. math::
+
    g(y, x) =
    \left( \begin{array}{c}
          x_0     \\
@@ -44,14 +45,16 @@ $latex \[
          \vdots  \\
          x_{n-1} y_{n-2}
    \end{array} \right)
-\] $$
 
-$head ODE Solution$$
+ODE Solution
+************
 The solution for this example can be calculated by
 starting with the first row and then using the solution
 for the first row to solve the second and so on.
 Doing this we obtain
-$latex \[
+
+.. math::
+
    y(t, x ) =
    \left( \begin{array}{c}
       x_0 t                  \\
@@ -59,34 +62,42 @@ $latex \[
       \vdots                 \\
       x_{n-1} x_{n-2} \ldots x_0 t^n / n !
    \end{array} \right)
-\] $$
 
-$head Derivative of ODE Solution$$
+Derivative of ODE Solution
+**************************
 Differentiating the solution above,
-with respect to the parameter vector $latex x$$,
+with respect to the parameter vector :math:`x`,
 we notice that
-$latex \[
-\partial_x y(t, x ) =
-\left( \begin{array}{cccc}
-y_0 (t,x) / x_0      & 0                   & \cdots & 0      \\
-y_1 (t,x) / x_0      & y_1 (t,x) / x_1     & 0      & \vdots \\
-\vdots               & \vdots              & \ddots & 0      \\
-y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
-\end{array} \right)
-\] $$
 
-$head Taylor's Method Using AD$$
-We define the function $latex z(t, x)$$ by the equation
-$latex \[
+.. math::
+
+   \partial_x y(t, x ) =
+   \left( \begin{array}{cccc}
+   y_0 (t,x) / x_0      & 0                   & \cdots & 0      \\
+   y_1 (t,x) / x_0      & y_1 (t,x) / x_1     & 0      & \vdots \\
+   \vdots               & \vdots              & \ddots & 0      \\
+   y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
+   \end{array} \right)
+
+Taylor's Method Using AD
+************************
+We define the function :math:`z(t, x)` by the equation
+
+.. math::
+
    z ( t , x ) = g[ y ( t , x ) ] = h [ x , y( t , x ) ]
-\] $$
-see $cref taylor_ode$$ for the method used to compute the
-Taylor coefficients w.r.t $latex t$$ of $latex y(t, x)$$.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+see :ref:`taylor_ode-name` for the method used to compute the
+Taylor coefficients w.r.t :math:`t` of :math:`y(t, x)`.
 
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end mul_level_ode.cpp}
 --------------------------------------------------------------------------
 */
 // BEGIN C++

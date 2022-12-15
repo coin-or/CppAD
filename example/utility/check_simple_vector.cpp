@@ -4,13 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin check_simple_vector.cpp$$
+{xrst_begin check_simple_vector.cpp}
 
-$section The CheckSimpleVector Function: Example and Test$$
+The CheckSimpleVector Function: Example and Test
+################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end check_simple_vector.cpp}
 */
 // BEGIN C++
 

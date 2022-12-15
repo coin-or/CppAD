@@ -4,15 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin pow.cpp$$
-$spell
-$$
+{xrst_begin pow.cpp}
 
-$section The AD Power Function: Example and Test$$
+The AD Power Function: Example and Test
+#######################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end pow.cpp}
 */
 // BEGIN C++
 

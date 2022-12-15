@@ -5,37 +5,33 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sparse_hes_fun$$
-$spell
-   hes
-   cppad
-   hpp
+{xrst_begin sparse_hes_fun}
+{xrst_spell
    fp
-   CppAD
-   namespace
-   const
-   bool
-   exp
-   arg
-$$
+}
 
-$section Evaluate a Function That Has a Sparse Hessian$$
+Evaluate a Function That Has a Sparse Hessian
+#############################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/speed/sparse_hes_fun.hpp>
-%$$
-$codei%sparse_hes_fun(%n%, %x%, %row%, %col%, %p%, %fp%)%$$
+   # ``include <cppad/speed/sparse_hes_fun.hpp>``
 
-$head Purpose$$
+``sparse_hes_fun`` ( *n* , *x* , *row* , *col* , *p* , *fp* )
+
+Purpose
+*******
 This routine evaluates
-$latex f(x)$$, $latex f^{(1)} (x)$$, or $latex f^{(2)} (x)$$
-where the Hessian $latex f^{(2)} (x)$$ is sparse.
-The function $latex f : \B{R}^n \rightarrow \B{R}$$ only depends on the
-size and contents of the index vectors $icode row$$ and $icode col$$.
+:math:`f(x)`, :math:`f^{(1)} (x)`, or :math:`f^{(2)} (x)`
+where the Hessian :math:`f^{(2)} (x)` is sparse.
+The function :math:`f : \B{R}^n \rightarrow \B{R}` only depends on the
+size and contents of the index vectors *row* and *col* .
 The non-zero entries in the Hessian of this function have
 one of the following forms:
-$latex \[
+
+.. math::
+
    \DD{f}{x[row[k]]}{x[row[k]]}
    \; , \;
    \DD{f}{x[row[k]]}{x[col[k]]}
@@ -43,115 +39,128 @@ $latex \[
    \DD{f}{x[col[k]]}{x[row[k]]}
    \; , \;
    \DD{f}{x[col[k]]}{x[col[k]]}
-\] $$
-for some $latex k $$ between zero and $latex K-1 $$.
+
+for some :math:`k` between zero and :math:`K-1`.
 All the other terms of the Hessian are zero.
 
-$head Inclusion$$
-The template function $code sparse_hes_fun$$
-is defined in the $code CppAD$$ namespace by including
-the file $code cppad/speed/sparse_hes_fun.hpp$$
+Inclusion
+*********
+The template function ``sparse_hes_fun``
+is defined in the ``CppAD`` namespace by including
+the file ``cppad/speed/sparse_hes_fun.hpp``
 (relative to the CppAD distribution directory).
 
-$head Float$$
-The type $icode Float$$ must be a $cref NumericType$$.
-In addition, if $icode y$$ and $icode z$$ are $icode Float$$ objects,
-$codei%
-   %y% = exp(%z%)
-%$$
-must set the $icode y$$ equal the exponential of $icode z$$, i.e.,
-the derivative of $icode y$$ with respect to $icode z$$ is equal to $icode y$$.
+Float
+*****
+The type *Float* must be a :ref:`NumericType-name` .
+In addition, if *y* and *z* are *Float* objects,
 
-$head FloatVector$$
-The type $icode FloatVector$$ is any
-$cref SimpleVector$$, or it can be a raw pointer,
-with elements of type $icode Float$$.
+   *y* = ``exp`` ( *z* )
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-   size_t %n%
-%$$
-It specifies the dimension for the domain space for $latex f(x)$$.
+must set the *y* equal the exponential of *z* , i.e.,
+the derivative of *y* with respect to *z* is equal to *y* .
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %FloatVector%& %x%
-%$$
+FloatVector
+***********
+The type *FloatVector* is any
+:ref:`SimpleVector-name` , or it can be a raw pointer,
+with elements of type *Float* .
+
+n
+*
+The argument *n* has prototype
+
+   ``size_t`` *n*
+
+It specifies the dimension for the domain space for :math:`f(x)`.
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *FloatVector* & *x*
+
 It contains the argument value for which the function,
 or its derivative, is being evaluated.
-We use $latex n$$ to denote the size of the vector $icode x$$.
+We use :math:`n` to denote the size of the vector *x* .
 
-$head row$$
-The argument $icode row$$ has prototype
-$codei%
-     const CppAD::vector<size_t>& %row%
-%$$
+row
+***
+The argument *row* has prototype
+
+   ``const CppAD::vector<size_t>&`` *row*
+
 It specifies one of the first
-index of $latex x$$ for each non-zero Hessian term
-(see $cref/purpose/sparse_hes_fun/Purpose/$$ above).
-All the elements of $icode row$$ must be between zero and $icode%n%-1%$$.
-The value $latex K$$ is defined by $icode%K% = %row%.size()%$$.
+index of :math:`x` for each non-zero Hessian term
+(see :ref:`sparse_hes_fun@Purpose` above).
+All the elements of *row* must be between zero and *n* ``-1`` .
+The value :math:`K` is defined by *K* = *row* . ``size`` () .
 
-$head col$$
-The argument $icode col$$ has prototype
-$codei%
-     const CppAD::vector<size_t>& %col%
-%$$
-and its size must be $latex K$$; i.e., the same as for $icode col$$.
+col
+***
+The argument *col* has prototype
+
+   ``const CppAD::vector<size_t>&`` *col*
+
+and its size must be :math:`K`; i.e., the same as for *col* .
 It specifies the second
-index of $latex x$$ for the non-zero Hessian terms.
-All the elements of $icode col$$ must be between zero and $icode%n%-1%$$.
+index of :math:`x` for the non-zero Hessian terms.
+All the elements of *col* must be between zero and *n* ``-1`` .
 There are no duplicated entries requested, to be specific,
-if $icode%k1% != %k2%$$ then
-$codei%
-   ( %row%[%k1%] , %col%[%k1%] ) != ( %row%[%k2%] , %col%[%k2%] )
-%$$
+if *k1* != *k2* then
 
-$head p$$
-The argument $icode p$$ has prototype
-$codei%
-   size_t %p%
-%$$
+   ( *row* [ *k1* ] , *col* [ *k1* ] ) != ( *row* [ *k2* ] , *col* [ *k2* ] )
+
+p
+*
+The argument *p* has prototype
+
+   ``size_t`` *p*
+
 It is either zero or two and
-specifies the order of the derivative of $latex f$$
-that is being evaluated, i.e., $latex f^{(p)} (x)$$ is evaluated.
+specifies the order of the derivative of :math:`f`
+that is being evaluated, i.e., :math:`f^{(p)} (x)` is evaluated.
 
-$head fp$$
-The argument $icode fp$$ has prototype
-$codei%
-   %FloatVector%& %fp%
-%$$
-The input value of the elements of $icode fp$$ does not matter.
+fp
+**
+The argument *fp* has prototype
 
-$subhead Function$$
-If $icode p$$ is zero, $icode fp$$ has size one and
-$icode%fp%[0]%$$ is the value of $latex f(x)$$.
+   *FloatVector* & *fp*
 
-$subhead Hessian$$
-If $icode p$$ is two, $icode fp$$ has size $icode K$$ and
-for $latex k = 0 , \ldots , K-1$$,
-$latex \[
+The input value of the elements of *fp* does not matter.
+
+Function
+========
+If *p* is zero, *fp* has size one and
+*fp* [0] is the value of :math:`f(x)`.
+
+Hessian
+=======
+If *p* is two, *fp* has size *K* and
+for :math:`k = 0 , \ldots , K-1`,
+
+.. math::
+
    \DD{f}{ x[ \R{row}[k] ] }{ x[ \R{col}[k] ]} = fp [k]
-\] $$
 
-$children%
-   speed/example/sparse_hes_fun.cpp%
-   omh/sparse_hes_fun.omh
-%$$
+{xrst_toc_hidden
+   speed/example/sparse_hes_fun.cpp
+   xrst/sparse_hes_fun.xrst
+}
 
-$head Example$$
+Example
+*******
 The file
-$cref sparse_hes_fun.cpp$$
-contains an example and test  of $code sparse_hes_fun.hpp$$.
+:ref:`sparse_hes_fun.cpp-name`
+contains an example and test  of ``sparse_hes_fun.hpp`` .
 
-$head Source Code$$
+Source Code
+***********
 The file
-$cref sparse_hes_fun.hpp$$
+:ref:`sparse_hes_fun.hpp-name`
 contains the source code for this template function.
 
-$end
+{xrst_end sparse_hes_fun}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

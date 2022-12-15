@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin elapsed_seconds.cpp$$
-$spell
-   Cpp
-   Lu
-$$
+{xrst_begin elapsed_seconds.cpp}
 
-$section Elapsed Seconds: Example and Test$$
+Elapsed Seconds: Example and Test
+#################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end elapsed_seconds.cpp}
 */
 // BEGIN C++
 # include <cppad/utility/elapsed_seconds.hpp>

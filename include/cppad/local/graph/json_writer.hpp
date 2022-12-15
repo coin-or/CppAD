@@ -10,35 +10,38 @@
 # include <cppad/local/graph/cpp_graph_op.hpp>
 
 /*
-$begin json_writer$$
-$spell
-   Json
-   CppAD
-   obj
-$$
+{xrst_begin json_writer}
 
-$section Json AD Graph Writer$$
+Json AD Graph Writer
+####################
 
-$head Syntax$$
-$codei%json_writer( %json%, %graph_obj% )%$$
+Syntax
+******
+``json_writer`` ( *json* , *graph_obj*  )
 
-$head json$$
-The input value of $icode json$$ does not matter,
-upon return it a $cref/json/json_ad_graph/$$ representation of the AD graph.
+json
+****
+The input value of *json* does not matter,
+upon return it a :ref:`json<json_ad_graph-name>` representation of the AD graph.
 
-$head graph_obj$$
-This is a $code cpp_graph$$ object.
+graph_obj
+*********
+This is a ``cpp_graph`` object.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 namespace CppAD { namespace local { namespace graph {
    CPPAD_LIB_EXPORT void json_writer(
       std::string&       json        ,
       const cpp_graph&   graph_obj
    );
 } } }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_writer}
 */
 
 

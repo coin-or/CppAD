@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin cos.cpp$$
-$spell
-   cos
-$$
+{xrst_begin cos.cpp}
 
-$section The AD cos Function: Example and Test$$
+The AD cos Function: Example and Test
+#####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end cos.cpp}
 */
 // BEGIN C++
 

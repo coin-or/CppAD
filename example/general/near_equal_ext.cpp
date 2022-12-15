@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin near_equal_ext.cpp$$
-$spell
-   cpp
-   abs
-o   Microsoft
-$$
+{xrst_begin near_equal_ext.cpp}
 
-$section Compare AD with Base Objects: Example and Test$$
+Compare AD with Base Objects: Example and Test
+##############################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end near_equal_ext.cpp}
 */
 // BEGIN C++
 

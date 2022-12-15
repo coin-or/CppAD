@@ -3,23 +3,24 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin base_require.cpp$$
-$spell
-   alloc
-$$
+{xrst_begin base_require.cpp}
 
-$section Using a User Defined AD Base Type: Example and Test$$
+Using a User Defined AD Base Type: Example and Test
+###################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Purpose
+*******
+The type ``base_alloc`` , defined in :ref:`base_alloc.hpp-name` ,
+meets the requirements specified by :ref:`base_require-name`
+for *Base* in ``AD<`` *Base* > .
+The program below is an example use of ``AD<base_alloc>`` .
 
-$head Purpose$$
-The type $code base_alloc$$, defined in $cref base_alloc.hpp$$,
-meets the requirements specified by $cref base_require$$
-for $icode Base$$ in $codei%AD<%Base%>%$$.
-The program below is an example use of $codei%AD<base_alloc>%$$.
-
-$end
+{xrst_end base_require.cpp}
 */
 // BEGIN C++
 // suppress conversion warnings before other includes

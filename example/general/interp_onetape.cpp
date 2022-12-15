@@ -4,23 +4,24 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin interp_onetape.cpp$$
-$spell
+{xrst_begin interp_onetape.cpp}
+{xrst_spell
    retaping
-   retape
-$$
+}
 
-$section Interpolation With Out Retaping: Example and Test$$
+Interpolation With Out Retaping: Example and Test
+#################################################
 
+See Also
+********
+:ref:`interp_retape.cpp-name`
 
-$head See Also$$
-$cref interp_retape.cpp$$
-$pre
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end interp_onetape.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

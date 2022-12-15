@@ -6,112 +6,119 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ErrorHandler$$
-$spell
-   cppad.hpp
-   CppAD
-   exp
-   bool
-   const
-$$
+{xrst_begin ErrorHandler}
+{xrst_spell
+   destructed
+   msg
+   test test
+}
 
-$section Replacing the CppAD Error Handler$$
+Replacing the CppAD Error Handler
+#################################
 
-$head Syntax$$
-$codei%# include <cppad/utility/error_handler.hpp>
-%$$
-$codei%ErrorHandler %info%(%handler%)
-%$$
-$codei%ErrorHandler::Call(%known%, %line%, %file%, %exp%, %msg%)
-%$$
+Syntax
+******
 
-$head Constructor$$
-When you construct a $code ErrorHandler$$ object,
-the current CppAD error handler is replaced by $icode handler$$.
+| # ``include <cppad/utility/error_handler.hpp>``
+| ``ErrorHandler`` *info* ( *handler* )
+| ``ErrorHandler::Call`` ( *known* , *line* , *file* , *exp* , *msg* )
+
+Constructor
+***********
+When you construct a ``ErrorHandler`` object,
+the current CppAD error handler is replaced by *handler* .
 When the object is destructed, the previous CppAD error handler is restored.
 
-$subhead Parallel Mode$$
-The $code ErrorHandler$$ constructor and destructor cannot be called in
-$cref/parallel/ta_in_parallel/$$ execution mode.
-If this rule is not abided by, a raw C++ $code assert$$,
+Parallel Mode
+=============
+The ``ErrorHandler`` constructor and destructor cannot be called in
+:ref:`parallel<ta_in_parallel-name>` execution mode.
+If this rule is not abided by, a raw C++ ``assert`` ,
 instead of one that uses this error handler, will be generated.
 
-$head Call$$
-When $code ErrorHandler::Call$$ is called,
+Call
+****
+When ``ErrorHandler::Call`` is called,
 the current CppAD error handler is used to report an error.
 This starts out as a default error handler and can be replaced
-using the $code ErrorHandler$$ constructor.
+using the ``ErrorHandler`` constructor.
 
-$head info$$
-The object $icode info$$ is used to store information
+info
+****
+The object *info* is used to store information
 that is necessary to restore the previous CppAD error handler.
-This restoration is done when the destructor for $icode info$$ is called.
+This restoration is done when the destructor for *info* is called.
 
+handler
+*******
+The argument *handler* has prototype
 
-$head handler$$
-The argument $icode handler$$ has prototype
-$codei%
-   void (*%handler%)
-      (bool, int, const char *, const char *, const char *);
-%$$
+| |tab| ``void`` (* *handler* )
+| |tab| |tab| ( ``bool`` , ``int`` , ``const char`` * , ``const char`` * , ``const char`` * );
+
 When an error is detected,
 it is called with the syntax
-$codei%
-   %handler% (%known%, %line%, %file%, %exp%, %msg%)
-%$$
-This routine should not return; i.e., upon detection of the error,
-the routine calling $icode handler$$ does not know how to proceed.
 
-$head known$$
-The $icode handler$$ argument $icode known$$ has prototype
-$codei%
-   bool %known%
-%$$
+   *handler* ( *known* , *line* , *file* , *exp* , *msg* )
+
+This routine should not return; i.e., upon detection of the error,
+the routine calling *handler* does not know how to proceed.
+
+known
+*****
+The *handler* argument *known* has prototype
+
+   ``bool`` *known*
+
 If it is true, the error being reported is from a know problem.
 
-$head line$$
-The $icode handler$$ argument $icode line$$ has prototype
-$codei%
-   int %line%
-%$$
+line
+****
+The *handler* argument *line* has prototype
+
+   ``int`` *line*
+
 It reports the source code line number where the error is detected.
 
-$head file$$
-The $icode handler$$ argument $icode file$$ has prototype
-$codei%
-   const char *%file%
-%$$
-and is a $code '\0'$$ terminated character vector.
+file
+****
+The *handler* argument *file* has prototype
+
+   ``const char`` * *file*
+
+and is a ``'\0'`` terminated character vector.
 It reports the source code file where the error is detected.
 
-$head exp$$
-The $icode handler$$ argument $icode exp$$ has prototype
-$codei%
-   const char *%exp%
-%$$
-and is a $code '\0'$$ terminated character vector.
+exp
+***
+The *handler* argument *exp* has prototype
+
+   ``const char`` * *exp*
+
+and is a ``'\0'`` terminated character vector.
 It is a source code boolean expression that should have been true,
 but is false,
-and thereby causes this call to $icode handler$$.
+and thereby causes this call to *handler* .
 
-$head msg$$
-The $icode handler$$ argument $icode msg$$ has prototype
-$codei%
-   const char *%msg%
-%$$
-and is a $code '\0'$$ terminated character vector.
+msg
+***
+The *handler* argument *msg* has prototype
+
+   ``const char`` * *msg*
+
+and is a ``'\0'`` terminated character vector.
 It reports the meaning of the error from the C++ programmers point of view.
-
-$children%
-   example/utility/error_handler.cpp%
+{xrst_toc_hidden
+   example/utility/error_handler.cpp
    include/cppad/core/cppad_assert.hpp
-%$$
-$head Example$$
+}
+Example
+*******
 The file
-$cref error_handler.cpp$$
+:ref:`error_handler.cpp-name`
 contains an example and test a test of using this routine.
 
-$end
+{xrst_end ErrorHandler}
 ---------------------------------------------------------------------------
 */
 

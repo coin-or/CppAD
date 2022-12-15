@@ -3,17 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin graph_unary_op.cpp$$
-$spell
-   sin
-$$
+{xrst_begin graph_unary_op.cpp}
 
-$section Graph Unary Operator: Example and Test$$
+Graph Unary Operator: Example and Test
+######################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end graph_unary_op.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed_cppadcg}
+{xrst_spell
+   onetape
+}
+
+Speed Test Derivatives Using Cppadcg
+####################################
+
+Purpose
+*******
+CppAD has a set of speed tests that are used to compare
+Cppadcg with other AD packages.
+This section links to the source code the Cppadcg speed tests
+(any suggestions to make the Cppadcg results faster are welcome).
+
+Building Tests
+**************
+Starting in the
+:ref:`cmake@Build Directory` ,
+execute the following commands
+
+| |tab| ``cd build/speed/cppadcg``
+| |tab| ./ ``speed_cppadcg`` *test* *seed* *option_list*
+
+A message saying that the sizes are incorrect will be printed.
+In addition, it will say that source code with the correct sizes
+has been created.
+If you then execute
+
+   ``make check_speed_cppadcg VERBOSE`` =1
+
+It will build ``speed_cppadcg`` with the proper sizes and
+run its correctness tests.
+
+Running Tests
+*************
+You can then run the corresponding speed tests
+with the either of the following commands:
+
+| |tab| ./ ``speed_cppadcg speed`` *seed* ``onetape``
+| |tab| ./ ``speed_cppadcg speed`` *seed* ``onetape optimize``
+
+where *seed* is a positive integer.
+See :ref:`speed_main-name` for more options.
+
+Contents
+********
+{xrst_toc_list
+   speed/cppadcg/det_minor.cpp
+   speed/cppadcg/det_lu.cpp
+   speed/cppadcg/mat_mul.cpp
+   speed/cppadcg/ode.cpp
+   speed/cppadcg/poly.cpp
+   speed/cppadcg/sparse_hessian.cpp
+   speed/cppadcg/sparse_jacobian.cpp
+}
+
+{xrst_end speed_cppadcg}

@@ -1,0 +1,297 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+/*
+{xrst_begin VecAD}
+{xrst_spell
+   grep
+   ld
+   ldp
+   ldv
+   st
+   vp
+   wc
+}
+
+AD Vectors that Record Index Operations
+#######################################
+
+Syntax
+******
+``VecAD<`` *Base* > *vec* ( *n* )
+
+*vec* . ``size`` ()
+
+*base* = *vec* [ *i* ]
+
+| *abase* = *vec* [ *ind* ]
+| *vec* [ *ind* ]   = *right*
+| *left* = *vec* [ *ind* ]
+
+Purpose
+*******
+If either *vec* or *ind* is a
+:ref:`glossary@Variable` or
+:ref:`dynamic parameter<glossary@Parameter@Dynamic>` ,
+the indexing operation
+
+   *vec* [ *ind* ]
+
+is recorded in the corresponding ``AD<`` *Base* >
+:ref:`operation sequence<glossary@Operation@Sequence>` and
+included in the corresponding :ref:`ADFun-name` object *f* .
+Such an index can change each time
+zero order :ref:`f.Forward<Forward-name>` is used; i.e.,
+each time *f* is evaluated with new value for the
+:ref:`independent variables<glossary@Tape@Independent Variable>` .
+Note that the value of *vec* [ *ind* ]
+depends on the value of *ind*
+in a discrete fashion and CppAD computes its partial derivative with
+respect to *ind* as zero.
+
+Alternatives
+************
+If only the values in *vec* ,
+and not the indices *ind* ,
+depend on the independent variables,
+a :ref:`SimpleVector-name` with elements of type ``AD<`` *Base* >
+would be more efficient than using ``VecAD<`` *Base* > .
+If only the indices, and not the values in the vector,
+depend on the independent variables,
+a :ref:`Discrete-name` functions would be a much more efficient.
+
+Efficiency
+**********
+If one uses ``VecAD`` vector where one could use a simple vector,
+the :ref:`sparsity_pattern-name` will be less efficient
+because the dependence on different elements cannot be separated.
+In addition, ``VecAD`` objects that only depend on dynamic parameters
+are treated as if they were variables making sparsity patterns
+even less efficient (have more possibly non-zero values than necessary);
+see :ref:`wish_list@Dynamic Parameters@VecAD Vectors`
+under dynamic parameters in the wish list.
+
+VecAD<Base>::reference
+**********************
+The expression *vec* [ *ind* ] has prototype
+
+   ``VecAD<`` *Base* >:: ``reference`` *vec* [ *ind* ]
+
+which is like the ``AD<`` *Base* > type
+with some notable exceptions:
+
+Exceptions
+==========
+
+#. This object cannot be used with the
+   :ref:`Value-name` function to compute the corresponding *Base* value.
+   In some cases, the syntax
+
+      *vec* [ *i* ]
+
+   can be used to obtain the corresponding *Base* value; see below.
+
+#. This object cannot be used as the left hand side in a
+   with a :ref:`compound assignment<compound_assign-name>` ; i.e.,
+   ``+=`` ,
+   ``-=`` ,
+   ``*=`` , or
+   ``/=`` .
+   For example, the following syntax is not valid:
+
+      *vec* [ *ind* ] += *z* ;
+
+   no matter what the types of *z* .
+
+#. Assignment to ``vec`` [ ``ind`` ] returns a ``void`` .
+   For example, the following syntax is not valid:
+
+      *z* = *vec* [ *ind* ] = *u* ;
+
+   no matter what the types of *z* , and *u* .
+
+#. A *vec* [ *ind* ] object cannot appear in a :ref:`CondExp-name` ;
+   For example, the following syntax is not valid:
+
+      ``CondExpGt`` ( *vec* [ *ind* ], *u* , *v* , *w* )
+
+   no matter what the types of *u* , *v* , and *w* .
+
+#. A *vec* [ *ind* ] object should not be used with the
+   ``Constant`` , ``Dynamic`` , ``Parameter`` , and ``Variable``
+   functions (see :ref:`con_dyn_var-name` ).
+   The entire vector *vec* should be used instead.
+
+#. A ``VecAD`` vector
+   cannot be passed to ``Independent`` function.
+
+Constructor
+***********
+
+vec
+===
+The syntax
+
+   ``VecAD<`` *Base* > *vec* ( *n* )
+
+creates an ``VecAD`` object *vec* with
+*n* elements.
+The initial value of the elements of *vec* is unspecified.
+
+n
+=
+The argument *n* has prototype
+
+   ``size_t`` *n*
+
+size
+****
+The syntax
+
+   *vec* . ``size`` ()
+
+returns the number of elements in the vector *vec* ;
+i.e., the value of *n* when it was constructed.
+
+Base Indexing
+*************
+We refer to the syntax
+
+   *base* = *vec* [ *i* ]
+
+as base indexing of a ``VecAD`` object.
+This indexing is only valid if the vector *vec* is a
+:ref:`con_dyn_var@Constant` ; i.e.,
+it does not depend on the independent variables.
+
+i
+=
+The operand *i* has prototype
+
+   ``size_t`` *i*
+
+and must be less than *n* ; i.e., less than
+the number of elements in *vec* .
+
+base
+====
+The result *base* has prototype
+
+   *Base* & *base*
+
+i.e., it is a reference to the *i*-th element in the vector *vec* .
+It can be used to change the element value;
+for example,
+
+   *vec* [ *i* ] = *b*
+
+is valid where *b* is a *Base* object.
+The reference *base* is no longer valid once the
+*vec* changes in any way; i.e., has another assignment.
+
+AD Indexing
+***********
+We refer to the syntax
+
+   *vec* [ *ind* ]
+
+as AD indexing of a ``VecAD`` object.
+
+ind
+===
+The argument *ind* has prototype
+
+   ``const AD<`` *Base* >& *ind*
+
+The value of *ind* must be greater than or equal zero
+and less than *n* ; i.e., less than
+the number of elements in *vec* .
+
+result
+======
+The resulting expression has prototype
+
+   ``VecAD<`` *Base* >:: ``reference`` *vec* [ *ind* ]
+
+This objects operations are recorded as part of the ``AD<`` *Base* >
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+It acts like a reference to the
+element with index ``floor`` ( *ind* ) in the vector *vec* ;
+( ``floor`` ( *ind* ) is
+the greatest integer less than or equal *ind* ).
+
+right
+=====
+Is the right hand side of the assignment statement
+and specifies the new value for the corresponding element of *vec* .
+It has one of the following prototypes:
+
+| |tab| ``int`` *right*
+| |tab| ``const`` *Base* & *right*
+| |tab| ``const AD<`` *Base* >& *right*
+| |tab| ``const VecAD_reverence<`` *Base* >& *right*
+
+left
+====
+Is the left hand side of the assignment statement
+is the current value for the corresponding element of *vec* .
+It has the following prototype:
+
+   ``const AD<`` *Base* >& *left*
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/vec_ad.cpp
+}
+The file
+:ref:`vec_ad.cpp-name`
+contains an example and test using ``VecAD`` vectors.
+
+base2ad
+*******
+Forward mode on a ``base2ad`` function does not preserve
+:ref:`VecAD-name` operations (which might be expected); see the
+:ref:`base2vec_ad.cpp-name` example.
+
+Speed and Memory
+****************
+The :ref:`VecAD-name` vector type is inefficient because every
+time an element of a vector is accessed, a new CppAD
+:ref:`glossary@Variable` is created on the tape
+using either the ``Ldp`` or ``Ldv`` operation
+(unless all of the elements of the vector are
+:ref:`parameters<glossary@Parameter>` ).
+The effect of this can be seen by executing the following steps:
+
+#. In the file ``cppad/local/forward1sweep.h`` ,
+   change the definition of ``CPPAD_FORWARD1SWEEP_TRACE`` to
+   ::
+
+      # define CPPAD_FORWARD1SWEEP_TRACE 1
+
+#. In the ``Example`` directory, execute the command
+   ::
+
+      ./test_one.sh lu_vec_ad_ok.cpp lu_vec_ad.cpp -DNDEBUG > lu_vec_ad_ok.log
+
+   This will write a trace of all the forward tape operations,
+   for the test case :ref:`lu_vec_ad_ok.cpp-name` ,
+   to the file ``lu_vec_ad_ok.log`` .
+#. In the ``Example`` directory execute the commands
+   ::
+
+      grep "op="           lu_vec_ad_ok.log | wc -l
+      grep "op=Ld[vp]"     lu_vec_ad_ok.log | wc -l
+      grep "op=St[vp][vp]" lu_vec_ad_ok.log | wc -l
+
+   The first command counts the number of operators in the tracing,
+   the second counts the number of VecAD load operations,
+   and the third counts the number of VecAD store operations.
+   (For CppAD version 05-11-20 these counts were 956, 348, and 118
+   respectively.)
+
+{xrst_end VecAD}
+------------------------------------------------------------------------
+*/

@@ -3,13 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin optimize_reverse_active.cpp$$
+{xrst_begin optimize_reverse_active.cpp}
 
-$section Optimize Reverse Activity Analysis: Example and Test$$
+Optimize Reverse Activity Analysis: Example and Test
+####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end optimize_reverse_active.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

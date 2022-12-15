@@ -3,24 +3,31 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector_neg.cpp$$
+{xrst_begin atomic_four_vector_neg.cpp}
 
-$section Atomic Vector Negation Example$$
+Atomic Vector Negation Example
+##############################
 
-$head f(u, w)$$
+f(u, w)
+*******
 For this example,
-$latex f : \B{R}^{2m} \rightarrow \B{R}^m$$
-is defined by $latex f(u, w) = u - w$$.
-where $icode u$$ and $icode w$$ are in $latex \B{R}^m$$.
+:math:`f : \B{R}^{2m} \rightarrow \B{R}^m`
+is defined by :math:`f(u, w) = u - w`.
+where *u* and *w* are in :math:`\B{R}^m`.
 
-$head g(u, w)$$
-For this example $latex g : \B{R}^{2m} \rightarrow \B{R}^m$$
-is defined by $latex g_i (u, w) = \partial_{w[i]}  f_i (u, w)$$
+g(u, w)
+*******
+For this example :math:`g : \B{R}^{2m} \rightarrow \B{R}^m`
+is defined by :math:`g_i (u, w) = \partial_{w[i]}  f_i (u, w)`
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end atomic_four_vector_neg.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

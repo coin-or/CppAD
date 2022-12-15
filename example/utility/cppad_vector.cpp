@@ -4,21 +4,23 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin cppad_vector.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin cppad_vector.cpp}
 
-$section CppAD::vector Template Class: Example and Test$$
+CppAD::vector Template Class: Example and Test
+##############################################
 
-$head Purpose$$
+Purpose
+*******
 This is an example and test of the features of the
-$cref CppAD_vector$$ class that are not included in the
-$cref SimpleVector$$ concept.
+:ref:`CppAD_vector-name` class that are not included in the
+:ref:`SimpleVector-name` concept.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end cppad_vector.cpp}
 */
 // BEGIN C++
 

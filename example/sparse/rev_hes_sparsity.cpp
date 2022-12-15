@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin rev_hes_sparsity.cpp$$
-$spell
-   Hessian
-   Cpp
-$$
+{xrst_begin rev_hes_sparsity.cpp}
 
-$section Reverse Mode Hessian Sparsity: Example and Test$$
+Reverse Mode Hessian Sparsity: Example and Test
+###############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end rev_hes_sparsity.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

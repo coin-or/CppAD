@@ -4,37 +4,42 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin min_nso_linear.cpp$$
-$spell
+{xrst_begin min_nso_linear.cpp}
+{xrst_spell
    nso
-   smo
-$$
+}
 
-$section abs_normal min_nso_linear: Example and Test$$
+abs_normal min_nso_linear: Example and Test
+###########################################
 
-$head Purpose$$
+Purpose
+*******
 We minimize the function
-$latex f : \B{R}^3 \rightarrow \B{R}$$ defined by
-$latex \[
-\begin{array}{rcl}
-f( x_0, x_1, x_2  ) & = & x_0^2 + 2 (x_0 + x_1)^2 + | x_2 |
-\end{array}
-\] $$
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
 
-$head Discussion$$
-This routine uses $cref abs_min_linear$$ which uses $cref lp_box$$,
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   f( x_0, x_1, x_2  ) & = & x_0^2 + 2 (x_0 + x_1)^2 + | x_2 |
+   \end{eqnarray}
+
+Discussion
+**********
+This routine uses :ref:`abs_min_linear-name` which uses :ref:`lp_box-name` ,
 a linear programming algorithm.
-It is mean to be compared with $cref min_nso_quad.cpp$$ which uses
+It is mean to be compared with :ref:`min_nso_quad.cpp-name` which uses
 a quadratic programing algorithm for the same problem.
-To see this comparison, set $icode%level% = 1%$$ is both examples.
+To see this comparison, set *level*  = 1 is both examples.
 
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN C++%// END C++%
-1%$$
-
-$end
+{xrst_end min_nso_linear.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

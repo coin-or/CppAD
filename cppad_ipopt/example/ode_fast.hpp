@@ -5,17 +5,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ipopt_nlp_ode_fast.hpp$$
-$spell
-   cppad_ipopt_nlp
-$$
+{xrst_begin ipopt_nlp_ode_fast.hpp}
 
-$section ODE Fitting Using Fast Representation$$
+ODE Fitting Using Fast Representation
+#####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end ipopt_nlp_ode_fast.hpp}
 */
 
 // BEGIN C++

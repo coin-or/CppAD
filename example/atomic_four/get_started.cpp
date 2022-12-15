@@ -4,25 +4,31 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_four_get_started.cpp$$
+{xrst_begin atomic_four_get_started.cpp}
 
-$section Getting Started with Atomic Functions: Example and Test$$
+Getting Started with Atomic Functions: Example and Test
+#######################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates the minimal amount of information
-necessary for a $cref atomic_four$$ function.
+necessary for a :ref:`atomic_four-name` function.
 
-$head Define Atomic Function$$
-$srcthisfile%0
-   %// BEGIN_DEFINE_ATOMIC_FUNCTION%// END_DEFINE_ATOMIC_FUNCTION%
-1%$$
+Define Atomic Function
+**********************
+{xrst_literal
+   // BEGIN_DEFINE_ATOMIC_FUNCTION
+   // END_DEFINE_ATOMIC_FUNCTION
+}
 
-$head Use Atomic Function$$
-$srcthisfile%0
-   %// BEGIN_USE_ATOMIC_FUNCTION%// END_USE_ATOMIC_FUNCTION%
-1%$$
+Use Atomic Function
+*******************
+{xrst_literal
+   // BEGIN_USE_ATOMIC_FUNCTION
+   // END_USE_ATOMIC_FUNCTION
+}
 
-$end
+{xrst_end atomic_four_get_started.cpp}
 */
 # include <cppad/cppad.hpp>  // CppAD include file
 

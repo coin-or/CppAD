@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin forward_order.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin forward_order.cpp}
 
-$section Forward Mode: Example and Test of Multiple Orders$$
+Forward Mode: Example and Test of Multiple Orders
+#################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end forward_order.cpp}
 */
 // BEGIN C++
 # include <limits>

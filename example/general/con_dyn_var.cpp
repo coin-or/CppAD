@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin con_dyn_var.cpp$$
+{xrst_begin con_dyn_var.cpp}
 
-$section AD Parameter and Variable Functions: Example and Test$$
+AD Parameter and Variable Functions: Example and Test
+#####################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-
-
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end con_dyn_var.cpp}
 */
 // BEGIN C++
 

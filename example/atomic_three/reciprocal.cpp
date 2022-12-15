@@ -4,39 +4,44 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_three_reciprocal.cpp$$
-$spell
-   enum
-   jac
-   hes
-$$
+{xrst_begin atomic_three_reciprocal.cpp}
 
-$section Reciprocal as an Atomic Operation: Example and Test$$
+Reciprocal as an Atomic Operation: Example and Test
+###################################################
 
-$head Function$$
-This example demonstrates using $cref atomic_three$$
+Function
+********
+This example demonstrates using :ref:`atomic_three-name`
 to define the operation
-$latex g : \B{R}^n \rightarrow \B{R}^m$$ where
-$latex n = 1$$, $latex m = 1$$, and $latex g(x) = 1 / x$$.
+:math:`g : \B{R}^n \rightarrow \B{R}^m` where
+:math:`n = 1`, :math:`m = 1`, and :math:`g(x) = 1 / x`.
 
-$head Start Class Definition$$
-$srccode%cpp% */
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 namespace {           // isolate items below to this file
 using CppAD::vector;  // abbreivate CppAD::vector as vector
 //
 class atomic_reciprocal : public CppAD::atomic_three<double> {
-/* %$$
-$head Constructor $$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 public:
    atomic_reciprocal(const std::string& name) :
    CppAD::atomic_three<double>(name)
    { }
 private:
-/* %$$
-$head for_type$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_type
+********
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate type_y
    bool for_type(
       const vector<double>&               parameter_x ,
@@ -50,9 +55,12 @@ $srccode%cpp% */
       type_y[0] = type_x[0];
       return true;
    }
-/* %$$
-$head forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    bool forward(
       const vector<double>&              parameter_x ,
@@ -106,9 +114,12 @@ $srccode%cpp% */
       assert( ! ok );
       return ok;
    }
-/* %$$
-$head reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse mode routine called by CppAD
    bool reverse(
       const vector<double>&               parameter_x ,
@@ -177,9 +188,12 @@ $srccode%cpp% */
       }
       return ok;
    }
-/* %$$
-$head jac_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+jac_sparsity
+************
+{xrst_spell_off}
+{xrst_code cpp} */
    // Jacobian sparsity routine called by CppAD
    bool jac_sparsity(
       const vector<double>&               parameter_x ,
@@ -211,9 +225,12 @@ $srccode%cpp% */
 
       return true;
    }
-/* %$$
-$head hes_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+hes_sparsity
+************
+{xrst_spell_off}
+{xrst_code cpp} */
    // Hessian sparsity routine called by CppAD
    bool hes_sparsity(
       const vector<double>&               parameter_x ,
@@ -243,29 +260,41 @@ $srccode%cpp% */
 
       return true;
    }
-/* %$$
-$head End Class Definition$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+End Class Definition
+********************
+{xrst_spell_off}
+{xrst_code cpp} */
 }; // End of atomic_reciprocal class
 }  // End empty namespace
 
-/* %$$
-$head Use Atomic Function$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 bool reciprocal(void)
 {  bool ok = true;
    using CppAD::AD;
    using CppAD::NearEqual;
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // --------------------------------------------------------------------
    // Create the atomic reciprocal object
    atomic_reciprocal afun("atomic_reciprocal");
-/* %$$
-$subhead Recording$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Recording
+=========
+{xrst_spell_off}
+{xrst_code cpp} */
    // Create the function f(x) = 1 / g(x) = x
    //
    // domain space vector
@@ -291,9 +320,12 @@ $srccode%cpp% */
    // create f: x -> y and stop tape recording
    CppAD::ADFun<double> f;
    f.Dependent (ax, av);  // g(x) = x
-/* %$$
-$subhead forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // check function value
    double check = x0;
    ok &= NearEqual( Value(av[0]) , check,  eps, eps);
@@ -319,9 +351,12 @@ $srccode%cpp% */
    v_q    = f.Forward(q, x_q);
    check  = 0.;
    ok &= NearEqual(v_q[0] , check,  eps, eps);
-/* %$$
-$subhead reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // third order reverse mode
    q     = 3;
    vector<double> w(m), dw(n * q);
@@ -332,9 +367,12 @@ $srccode%cpp% */
    check = 0.;
    ok &= NearEqual(dw[1] , check,  eps, eps);
    ok &= NearEqual(dw[2] , check,  eps, eps);
-/* %$$
-$subhead for_jac_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_jac_sparsity
+================
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode Jacobian sparstiy pattern
    CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_in, pattern_out;
    pattern_in.resize(1, 1, 1);
@@ -348,9 +386,12 @@ $srccode%cpp% */
    ok &= pattern_out.nnz() == 1;
    ok &= pattern_out.row()[0] == 0;
    ok &= pattern_out.col()[0] == 0;
-/* %$$
-$subhead rev_sparse_jac$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+rev_sparse_jac
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse mode Jacobian sparstiy pattern
    f.rev_jac_sparsity(
       pattern_in, transpose, dependency, internal_bool, pattern_out
@@ -358,9 +399,12 @@ $srccode%cpp% */
    ok &= pattern_out.nnz() == 1;
    ok &= pattern_out.row()[0] == 0;
    ok &= pattern_out.col()[0] == 0;
-/* %$$
-$subhead rev_sparse_hes$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+rev_sparse_hes
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    // Hessian sparsity (using previous for_jac_sparsity call)
    CPPAD_TESTVECTOR(bool) select_y(m);
    select_y[0] = true;
@@ -370,9 +414,12 @@ $srccode%cpp% */
    ok &= pattern_out.nnz() == 1;
    ok &= pattern_out.row()[0] == 0;
    ok &= pattern_out.col()[0] == 0;
-/* %$$
-$subhead for_sparse_hes$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_sparse_hes
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    // Hessian sparsity
    CPPAD_TESTVECTOR(bool) select_x(n);
    select_x[0] = true;
@@ -384,6 +431,8 @@ $srccode%cpp% */
    ok &= pattern_out.col()[0] == 0;
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_three_reciprocal.cpp}
 */

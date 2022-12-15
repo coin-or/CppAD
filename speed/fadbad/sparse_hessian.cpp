@@ -6,17 +6,13 @@
 # include <cppad/utility/vector.hpp>
 
 /*
-$begin fadbad_sparse_hessian.cpp$$
-$spell
-   const
-   Fadbad
-   bool
-   CppAD
-$$
+{xrst_begin fadbad_sparse_hessian.cpp}
 
-$section Fadbad Speed: Sparse Hessian$$
+Fadbad Speed: Sparse Hessian
+############################
 
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // A fadbad version of this test is not yet available
 bool link_sparse_hessian(
    size_t                            size      ,
@@ -30,6 +26,8 @@ bool link_sparse_hessian(
 {
    return false;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fadbad_sparse_hessian.cpp}
 */

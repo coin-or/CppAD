@@ -5,99 +5,109 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
-$begin atomic_index$$
-$spell
-   ptr
-   Cpp
-$$
+{xrst_begin atomic_index}
 
-$section Store and Retrieve Atomic Function Information by Index$$
+Store and Retrieve Atomic Function Information by Index
+#######################################################
 
-$head Syntax$$
-$icode%index_out% = local::atomic_index<%Base%>(
-   %set_null%, %index_in%, %type%, %name%, %ptr%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_ATOMIC_INDEX%// END_PROTOTYPE%1
-%$$
+| *index_out* = ``local::atomic_index<`` *Base* >(
+| |tab| *set_null* , *index_in* , *type* , *name* , *ptr*
+| )
 
-$head Base$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ATOMIC_INDEX
+   // END_PROTOTYPE
+}
+
+Base
+****
 Is the base type for the tape for the atomic functions
 that we are using an index to identify.
 
-$head Get Number Case$$
+Get Number Case
+***************
 The get number case is defined by
-$icode set_null$$ is true and $icode index_in$$ is zero.
-For this case, $icode index_out$$ is set to
-the number of atomic functions stored in $codei%atomic_index<%Base%>%$$
+*set_null* is true and *index_in* is zero.
+For this case, *index_out* is set to
+the number of atomic functions stored in ``atomic_index<`` *Base* >
 and no information is stored or changed.
-In this case, the atomic functions correspond to $icode index_in$$ from
-one to $icode index_out$$ inclusive.
+In this case, the atomic functions correspond to *index_in* from
+one to *index_out* inclusive.
 
-$head set_null$$
-If $icode set_null$$ is true and $icode index_in$$ is zero,
+set_null
+********
+If *set_null* is true and *index_in* is zero,
 this argument is just used to signal the get number case.
-Otherwise, $icode set_null$$
+Otherwise, *set_null*
 should only be true during a call to an atomic function destructor.
-In this case, the $icode ptr$$ corresponding to $icode index_in$$
+In this case, the *ptr* corresponding to *index_in*
 is set to null
 (so that CppAD knows the corresponding atomic function no longer works).
 
-$head index_in$$
-If $icode index_in$$ is zero and $icode set_null$$ is true,
+index_in
+********
+If *index_in* is zero and *set_null* is true,
 this argument is just used to signal the get number case.
 Otherwise, see below:
 
-
-$subhead zero$$
-The value $icode index_in$$ should only be zero
+zero
+====
+The value *index_in* should only be zero
 during a call to an atomic function constructor.
 In this case, a copy of the input value of
-$icode type$$, $codei%*%name%$$, and $icode ptr$$ are stored.
-The value $icode index_out$$
-is the $icode index_in$$ value corresponding to these input values.
+*type* , * *name* , and *ptr* are stored.
+The value *index_out*
+is the *index_in* value corresponding to these input values.
 
-$subhead non-zero$$
-If $icode index_in$$ is non-zero,
+non-zero
+========
+If *index_in* is non-zero,
 the information corresponding to this index is returned.
 
-$head type$$
+type
+****
 This argument is not used in the get number case.
-Otherwise if $icode index_in$$ is zero, $icode type$$ is an input.
-Otherwise it is set to the value corresponding to $icode index_in$$.
+Otherwise if *index_in* is zero, *type* is an input.
+Otherwise it is set to the value corresponding to *index_in* .
 The type corresponding to an index is intended to be
-2 for $cref atomic_two$$ functions,
-3 for $cref atomic_three$$ functions, and
-4 for $cref atomic_four$$ functions,
+2 for :ref:`atomic_two-name` functions,
+3 for :ref:`atomic_three-name` functions, and
+4 for :ref:`atomic_four-name` functions,
 
-$head name$$
+name
+****
 This argument is not used in the get number case.
-Otherwise if $icode index_in$$ is zero,
-$icode name$$ is an input and must not be null.
-Otherwise, if $icode name$$ is not null, $codei%*%name%$$
-is set to the name corresponding to $icode index_in$$.
-Allowing for $icode name$$ to be null avoids
+Otherwise if *index_in* is zero,
+*name* is an input and must not be null.
+Otherwise, if *name* is not null, * *name*
+is set to the name corresponding to *index_in* .
+Allowing for *name* to be null avoids
 a string copy when it is not needed.
 
-$head ptr$$
+ptr
+***
 This argument is not used in the get number case.
-Otherwise if $icode index_in$$ is zero, $icode ptr$$ is an input.
-Otherwise it is set to the value corresponding to $icode index_in$$.
-In the special case where $icode set_null$$ is true,
-$icode ptr$$ is set to the null pointer and this is the $icode ptr$$ value
-corresponding to $icode index_in$$ for future calls to $code atomic_index$$.
+Otherwise if *index_in* is zero, *ptr* is an input.
+Otherwise it is set to the value corresponding to *index_in* .
+In the special case where *set_null* is true,
+*ptr* is set to the null pointer and this is the *ptr* value
+corresponding to *index_in* for future calls to ``atomic_index`` .
 
-$head index_out$$
+index_out
+*********
 In the get number case, this is the number of atomic functions.
-Otherwise if $icode index_in$$ is zero,
-$icode index_out$$ is non-zero and is the $icode index_in$$ value
+Otherwise if *index_in* is zero,
+*index_out* is non-zero and is the *index_in* value
 corresponding to the input values for
-$icode type$$, $codei%*%name%$$, and $icode ptr$$.
-Otherwise, $icode index_out$$ is zero.
+*type* , * *name* , and *ptr* .
+Otherwise, *index_out* is zero.
 
-$end
+{xrst_end atomic_index}
 */
 # include <vector>
 # include <cppad/utility/thread_alloc.hpp>

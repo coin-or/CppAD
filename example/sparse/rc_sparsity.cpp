@@ -4,23 +4,24 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin rc_sparsity.cpp$$
-$spell
-   Bool
-   Jacobians
-$$
+{xrst_begin rc_sparsity.cpp}
 
-$section Preferred Sparsity Patterns: Row and Column Indices: Example and Test$$
+Preferred Sparsity Patterns: Row and Column Indices: Example and Test
+#####################################################################
 
-$head Purpose$$
+Purpose
+*******
 This example show how to use row and column index sparsity patterns
-$cref sparse_rc$$ to compute sparse Jacobians and Hessians.
+:ref:`sparse_rc-name` to compute sparse Jacobians and Hessians.
 This became the preferred way to represent sparsity on
-$cref/2017-02-09/whats_new_17/mm-dd/02-09/$$.
+:ref:`2017-02-09<whats_new_17@mm-dd@02-09>` .
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end rc_sparsity.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

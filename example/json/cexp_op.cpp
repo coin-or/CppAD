@@ -3,18 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin json_cexp_op.cpp$$
-$spell
-   abs
-   Json
-$$
+{xrst_begin json_cexp_op.cpp}
 
-$section Json Conditional Expressions: Example and Test$$
+Json Conditional Expressions: Example and Test
+##############################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end json_cexp_op.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sin.cpp$$
-$spell
-   sin
-$$
+{xrst_begin sin.cpp}
 
-$section The AD sin Function: Example and Test$$
+The AD sin Function: Example and Test
+#####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sin.cpp}
 */
 // BEGIN C++
 

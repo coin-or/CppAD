@@ -3,18 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin graph_azmul_op.cpp$$
-$spell
-   add
-   Json
-$$
+{xrst_begin graph_azmul_op.cpp}
 
-$section C++ AD Graph add Operator: Example and Test$$
+C++ AD Graph add Operator: Example and Test
+###########################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end graph_azmul_op.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

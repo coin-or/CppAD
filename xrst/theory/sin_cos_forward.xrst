@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin sin_cos_forward}
+
+Trigonometric and Hyperbolic Sine and Cosine Forward Theory
+###########################################################
+
+Differential Equation
+*********************
+The
+:ref:`standard math function differential equation<forward_theory@Standard Math Functions@Differential Equation>`
+is
+
+.. math::
+
+   B(u) * F^{(1)} (u) - A(u) * F (u)  = D(u)
+
+In this sections we consider forward mode for the following choices:
+
+.. csv-table::
+   :widths: auto
+
+   ,,:math:`F(u)`,,:math:`\sin(u)`,,:math:`\cos(u)`,,:math:`\sinh(u)`,,:math:`\cosh(u)`
+   ,,:math:`A(u)`,,:math:`0`,,:math:`0`,,:math:`0`,,:math:`0`
+   ,,:math:`B(u)`,,:math:`1`,,:math:`1`,,:math:`1`,,:math:`1`
+   ,,:math:`D(u)`,,:math:`\cos(u)`,,:math:`- \sin(u)`,,:math:`\cosh(u)`,,:math:`\sinh(u)`
+
+We use :math:`a`, :math:`b`, :math:`d` and :math:`f` for the
+Taylor coefficients of
+:math:`A [ X (t) ]`,
+:math:`B [ X (t) ]`,
+:math:`D [ X (t) ]`,
+and :math:`F [ X(t) ]` respectively.
+It now follows from the general
+:ref:`forward_theory@Standard Math Functions@Taylor Coefficients Recursion Formula`
+that for :math:`j = 0 , 1, \ldots`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   f^{(0)} & = & D ( x^{(0)} )
+   \\
+   e^{(j)}
+   & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * f^{(k)}
+   \\
+   & = & d^{(j)}
+   \\
+   f^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+      - \sum_{k=1}^j k f^{(k)}  b^{(j+1-k)}
+   \right)
+   \\
+   & = & \frac{1}{j+1}
+      \sum_{k=1}^{j+1} k x^{(k)} d^{(j+1-k)}
+   \end{eqnarray}
+
+The formula above generates the
+order :math:`j+1` coefficient of :math:`F[ X(t) ]` from the
+lower order coefficients for :math:`X(t)` and :math:`D[ X(t) ]`.
+
+{xrst_end sin_cos_forward}

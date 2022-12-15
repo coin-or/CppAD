@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin new_dynamic.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin new_dynamic.cpp}
 
-$section Dynamic Parameters: Example and Test$$
+Dynamic Parameters: Example and Test
+####################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end new_dynamic.cpp}
 */
 // BEGIN C++
 # include <limits>

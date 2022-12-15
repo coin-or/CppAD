@@ -7,68 +7,65 @@
 
 /*
 -------------------------------------------------------------------------------
-$begin atan2$$
-$spell
-   Vec
-   CppAD
-   namespace
-   std
-   atan
-   const
-$$
+{xrst_begin atan2}
 
+AD Two Argument Inverse Tangent Function
+########################################
 
-$section AD Two Argument Inverse Tangent Function$$
+Syntax
+******
+*theta* = ``atan2`` ( *y* , *x* )
 
-$head Syntax$$
-$icode%theta% = atan2(%y%, %x%)%$$
-
-
-$head Purpose$$
-Determines an angle $latex \theta \in [ - \pi , + \pi ]$$
+Purpose
+*******
+Determines an angle :math:`\theta \in [ - \pi , + \pi ]`
 such that
-$latex \[
-\begin{array}{rcl}
-   \sin ( \theta )  & = & y / \sqrt{ x^2 + y^2 }  \\
-   \cos ( \theta )  & = & x / \sqrt{ x^2 + y^2 }
-\end{array}
-\] $$
 
-$head y$$
-The argument $icode y$$ has one of the following prototypes
-$codei%
-   const AD<%Base%>               &%y%
-   const VecAD<%Base%>::reference &%y%
-%$$
+.. math::
+   :nowrap:
 
-$head x$$
-The argument $icode x$$ has one of the following prototypes
-$codei%
-   const AD<%Base%>               &%x%
-   const VecAD<%Base%>::reference &%x%
-%$$
+   \begin{eqnarray}
+      \sin ( \theta )  & = & y / \sqrt{ x^2 + y^2 }  \\
+      \cos ( \theta )  & = & x / \sqrt{ x^2 + y^2 }
+   \end{eqnarray}
 
-$head theta$$
-The result $icode theta$$ has prototype
-$codei%
-   AD<%Base%> %theta%
-%$$
+y
+*
+The argument *y* has one of the following prototypes
 
-$head Operation Sequence$$
-The AD of $icode Base$$
-operation sequence used to calculate $icode theta$$ is
-$cref/independent/glossary/Operation/Independent/$$
-of $icode x$$ and $icode y$$.
+| |tab| ``const AD<`` *Base* >               & *y*
+| |tab| ``const VecAD<`` *Base* >:: ``reference &`` *y*
 
-$head Example$$
-$children%
+x
+*
+The argument *x* has one of the following prototypes
+
+| |tab| ``const AD<`` *Base* >               & *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference &`` *x*
+
+theta
+*****
+The result *theta* has prototype
+
+   ``AD<`` *Base* > *theta*
+
+Operation Sequence
+******************
+The AD of *Base*
+operation sequence used to calculate *theta* is
+:ref:`glossary@Operation@Independent`
+of *x* and *y* .
+
+Example
+*******
+{xrst_toc_hidden
    example/general/atan2.cpp
-%$$
+}
 The file
-$cref atan2.cpp$$
+:ref:`atan2.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end atan2}
 -------------------------------------------------------------------------------
 */
 

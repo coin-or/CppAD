@@ -6,351 +6,379 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin OdeGearControl$$
-$spell
-   cppad.hpp
-   CppAD
-   xf
-   xi
-   smin
-   smax
+{xrst_begin OdeGearControl}
+{xrst_spell
+   dep
    eabs
-   ef
+   erel
    maxabs
    nstep
-   tf
    sini
-   erel
-   dep
-   const
+   smax
+   smin
    tb
-   ta
-   exp
-$$
+   test test
+   tf
+   xf
+}
 
+An Error Controller for Gear's Ode Solvers
+##########################################
 
+Syntax
+******
 
-$section An Error Controller for Gear's Ode Solvers$$
+| # ``include <cppad/utility/ode_gear_control.hpp>``
+| *xf* = ``OdeGearControl`` ( *F* , *M* , *ti* , *tf* , *xi* ,
+| |tab| ``smin`` , ``smax`` , ``sini`` , ``eabs`` , ``erel`` , ``ef`` , ``maxabs`` , ``nstep``  )
 
-$head Syntax$$
-$codei%# include <cppad/utility/ode_gear_control.hpp>
-%$$
-$icode%xf% = OdeGearControl(%F%, %M%, %ti%, %tf%, %xi%,
-   %smin%, %smax%, %sini%, %eabs%, %erel%, %ef% , %maxabs%, %nstep% )%$$
-
-
-$head Purpose$$
-Let $latex \B{R}$$ denote the real numbers
-and let $latex f : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ be a smooth function.
-We define $latex X : [ti , tf] \rightarrow \B{R}^n$$ by
+Purpose
+*******
+Let :math:`\B{R}` denote the real numbers
+and let :math:`f : \B{R} \times \B{R}^n \rightarrow \B{R}^n` be a smooth function.
+We define :math:`X : [ti , tf] \rightarrow \B{R}^n` by
 the following initial value problem:
-$latex \[
-\begin{array}{rcl}
-   X(ti)  & = & xi    \\
-   X'(t)  & = & f[t , X(t)]
-\end{array}
-\] $$
-The routine $cref OdeGear$$ is a stiff multi-step method that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X(ti)  & = & xi    \\
+      X'(t)  & = & f[t , X(t)]
+   \end{eqnarray}
+
+The routine :ref:`OdeGear-name` is a stiff multi-step method that
 can be used to approximate the solution to this equation.
-The routine $code OdeGearControl$$ sets up this multi-step method
+The routine ``OdeGearControl`` sets up this multi-step method
 and controls the error during such an approximation.
 
-$head Include$$
-The file $code cppad/utility/ode_gear_control.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/ode_gear_control.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head Notation$$
-The template parameter types $cref/Scalar/OdeGearControl/Scalar/$$ and
-$cref/Vector/OdeGearControl/Vector/$$ are documented below.
+Notation
+********
+The template parameter types :ref:`OdeGearControl@Scalar` and
+:ref:`OdeGearControl@Vector` are documented below.
 
-$head xf$$
-The return value $icode xf$$ has the prototype
-$codei%
-   %Vector% %xf%
-%$$
-and the size of $icode xf$$ is equal to $icode n$$
-(see description of $cref/Vector/OdeGear/Vector/$$ below).
-It is the approximation for $latex X(tf)$$.
+xf
+**
+The return value *xf* has the prototype
 
-$head Fun$$
-The class $icode Fun$$
-and the object $icode F$$ satisfy the prototype
-$codei%
-   %Fun% &%F%
-%$$
+   *Vector* *xf*
+
+and the size of *xf* is equal to *n*
+(see description of :ref:`OdeGear@Vector` below).
+It is the approximation for :math:`X(tf)`.
+
+Fun
+***
+The class *Fun*
+and the object *F* satisfy the prototype
+
+   *Fun* & *F*
+
 This must support the following set of calls
-$codei%
-   %F%.Ode(%t%, %x%, %f%)
-   %F%.Ode_dep(%t%, %x%, %f_x%)
-%$$
 
-$subhead t$$
-The argument $icode t$$ has prototype
-$codei%
-   const %Scalar% &%t%
-%$$
-(see description of $cref/Scalar/OdeGear/Scalar/$$ below).
+| |tab| *F* . ``Ode`` ( *t* , *x* , *f* )
+| |tab| *F* . ``Ode_dep`` ( *t* , *x* , *f_x* )
 
-$subhead x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Vector% &%x%
-%$$
-and has size $icode N$$
-(see description of $cref/Vector/OdeGear/Vector/$$ below).
+t
+=
+The argument *t* has prototype
 
-$subhead f$$
-The argument $icode f$$ to $icode%F%.Ode%$$ has prototype
-$codei%
-   %Vector% &%f%
-%$$
-On input and output, $icode f$$ is a vector of size $icode N$$
-and the input values of the elements of $icode f$$ do not matter.
+   ``const`` *Scalar* & *t*
+
+(see description of :ref:`OdeGear@Scalar` below).
+
+x
+=
+The argument *x* has prototype
+
+   ``const`` *Vector* & *x*
+
+and has size *N*
+(see description of :ref:`OdeGear@Vector` below).
+
+f
+=
+The argument *f* to *F* . ``Ode`` has prototype
+
+   *Vector* & *f*
+
+On input and output, *f* is a vector of size *N*
+and the input values of the elements of *f* do not matter.
 On output,
-$icode f$$ is set equal to $latex f(t, x)$$
-(see $icode f(t, x)$$ in $cref/Purpose/OdeGear/Purpose/$$).
+*f* is set equal to :math:`f(t, x)`
+(see *f* ( *t* , *x* ) in :ref:`OdeGear@Purpose` ).
 
-$subhead f_x$$
-The argument $icode f_x$$ has prototype
-$codei%
-   %Vector% &%f_x%
-%$$
-On input and output, $icode f_x$$ is a vector of size $latex N * N$$
-and the input values of the elements of $icode f_x$$ do not matter.
+f_x
+===
+The argument *f_x* has prototype
+
+   *Vector* & *f_x*
+
+On input and output, *f_x* is a vector of size :math:`N * N`
+and the input values of the elements of *f_x* do not matter.
 On output,
-$latex \[
+
+.. math::
+
    f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
-\] $$
 
-$subhead Warning$$
-The arguments $icode f$$, and $icode f_x$$
+Warning
+=======
+The arguments *f* , and *f_x*
 must have a call by reference in their prototypes; i.e.,
-do not forget the $code &$$ in the prototype for
-$icode f$$ and $icode f_x$$.
+do not forget the ``&`` in the prototype for
+*f* and *f_x* .
 
-$head M$$
-The argument $icode M$$ has prototype
-$codei%
-   size_t %M%
-%$$
+M
+*
+The argument *M* has prototype
+
+   ``size_t`` *M*
+
 It specifies the order of the multi-step method; i.e.,
 the order of the approximating polynomial
 (after the initialization process).
-The argument $icode M$$ must greater than or equal one.
+The argument *M* must greater than or equal one.
 
-$head ti$$
-The argument $icode ti$$ has prototype
-$codei%
-   const %Scalar% &%ti%
-%$$
+ti
+**
+The argument *ti* has prototype
+
+   ``const`` *Scalar* & *ti*
+
 It specifies the initial time for the integration of
 the differential equation.
 
-$head tf$$
-The argument $icode tf$$ has prototype
-$codei%
-   const %Scalar% &%tf%
-%$$
+tf
+**
+The argument *tf* has prototype
+
+   ``const`` *Scalar* & *tf*
+
 It specifies the final time for the integration of
 the differential equation.
 
-$head xi$$
-The argument $icode xi$$ has prototype
-$codei%
-   const %Vector% &%xi%
-%$$
-and size $icode n$$.
-It specifies value of $latex X(ti)$$.
+xi
+**
+The argument *xi* has prototype
 
-$head smin$$
-The argument $icode smin$$ has prototype
-$codei%
-   const %Scalar% &%smin%
-%$$
-The minimum value of $latex T[M] -  T[M-1]$$ in a call to $code OdeGear$$
-will be $latex smin$$ except for the last two calls where it may be
-as small as $latex smin / 2$$.
-The value of $icode smin$$ must be less than or equal $icode smax$$.
+   ``const`` *Vector* & *xi*
 
-$head smax$$
-The argument $icode smax$$ has prototype
-$codei%
-   const %Scalar% &%smax%
-%$$
+and size *n* .
+It specifies value of :math:`X(ti)`.
+
+smin
+****
+The argument *smin* has prototype
+
+   ``const`` *Scalar* & *smin*
+
+The minimum value of :math:`T[M] -  T[M-1]` in a call to ``OdeGear``
+will be :math:`smin` except for the last two calls where it may be
+as small as :math:`smin / 2`.
+The value of *smin* must be less than or equal *smax* .
+
+smax
+****
+The argument *smax* has prototype
+
+   ``const`` *Scalar* & *smax*
+
 It specifies the maximum step size to use during the integration;
-i.e., the maximum value for $latex T[M] - T[M-1]$$
-in a call to $code OdeGear$$.
+i.e., the maximum value for :math:`T[M] - T[M-1]`
+in a call to ``OdeGear`` .
 
-$head sini$$
-The argument $icode sini$$ has prototype
-$codei%
-   %Scalar% &%sini%
-%$$
-The value of $icode sini$$ is the minimum
+sini
+****
+The argument *sini* has prototype
+
+   *Scalar* & *sini*
+
+The value of *sini* is the minimum
 step size to use during initialization of the multi-step method; i.e.,
-for calls to $code OdeGear$$ where $latex m < M$$.
-The value of $icode sini$$ must be less than or equal $icode smax$$
-(and can also be less than $icode smin$$).
+for calls to ``OdeGear`` where :math:`m < M`.
+The value of *sini* must be less than or equal *smax*
+(and can also be less than *smin* ).
 
-$head eabs$$
-The argument $icode eabs$$ has prototype
-$codei%
-   const %Vector% &%eabs%
-%$$
-and size $icode n$$.
-Each of the elements of $icode eabs$$ must be
+eabs
+****
+The argument *eabs* has prototype
+
+   ``const`` *Vector* & *eabs*
+
+and size *n* .
+Each of the elements of *eabs* must be
 greater than or equal zero.
 It specifies a bound for the absolute
-error in the return value $icode xf$$ as an approximation for $latex X(tf)$$.
+error in the return value *xf* as an approximation for :math:`X(tf)`.
 (see the
-$cref/error criteria discussion/OdeGearControl/Error Criteria Discussion/$$
+:ref:`OdeGearControl@Error Criteria Discussion`
 below).
 
-$head erel$$
-The argument $icode erel$$ has prototype
-$codei%
-   const %Scalar% &%erel%
-%$$
+erel
+****
+The argument *erel* has prototype
+
+   ``const`` *Scalar* & *erel*
+
 and is greater than or equal zero.
 It specifies a bound for the relative
-error in the return value $icode xf$$ as an approximation for $latex X(tf)$$
+error in the return value *xf* as an approximation for :math:`X(tf)`
 (see the
-$cref/error criteria discussion/OdeGearControl/Error Criteria Discussion/$$
+:ref:`OdeGearControl@Error Criteria Discussion`
 below).
 
-$head ef$$
-The argument value $icode ef$$ has prototype
-$codei%
-   %Vector% &%ef%
-%$$
-and size $icode n$$.
+ef
+**
+The argument value *ef* has prototype
+
+   *Vector* & *ef*
+
+and size *n* .
 The input value of its elements does not matter.
 On output,
 it contains an estimated bound for the
-absolute error in the approximation $icode xf$$; i.e.,
-$latex \[
-   ef_i > | X( tf )_i - xf_i |
-\] $$
+absolute error in the approximation *xf* ; i.e.,
 
-$head maxabs$$
-The argument $icode maxabs$$ is optional in the call to $code OdeGearControl$$.
+.. math::
+
+   ef_i > | X( tf )_i - xf_i |
+
+maxabs
+******
+The argument *maxabs* is optional in the call to ``OdeGearControl`` .
 If it is present, it has the prototype
-$codei%
-   %Vector% &%maxabs%
-%$$
-and size $icode n$$.
+
+   *Vector* & *maxabs*
+
+and size *n* .
 The input value of its elements does not matter.
 On output,
 it contains an estimate for the
-maximum absolute value of $latex X(t)$$; i.e.,
-$latex \[
+maximum absolute value of :math:`X(t)`; i.e.,
+
+.. math::
+
    maxabs[i] \approx \max \left\{
       | X( t )_i | \; : \;  t \in [ti, tf]
    \right\}
-\] $$
 
-$head nstep$$
-The argument $icode nstep$$ has the prototype
-$codei%
-   %size_t% &%nstep%
-%$$
+nstep
+*****
+The argument *nstep* has the prototype
+
+   *size_t* & *nstep*
+
 Its input value does not matter and its output value
-is the number of calls to $cref OdeGear$$
-used by $code OdeGearControl$$.
+is the number of calls to :ref:`OdeGear-name`
+used by ``OdeGearControl`` .
 
-$head Error Criteria Discussion$$
-The relative error criteria $icode erel$$ and
-absolute error criteria $icode eabs$$ are enforced during each step of the
+Error Criteria Discussion
+*************************
+The relative error criteria *erel* and
+absolute error criteria *eabs* are enforced during each step of the
 integration of the ordinary differential equations.
 In addition, they are inversely scaled by the step size so that
 the total error bound is less than the sum of the error bounds.
-To be specific, if $latex \tilde{X} (t)$$ is the approximate solution
-at time $latex t$$,
-$icode ta$$ is the initial step time,
-and $icode tb$$ is the final step time,
-$latex \[
-\left| \tilde{X} (tb)_j  - X (tb)_j \right|
-\leq
-\frac{tf - ti}{tb - ta}
-\left[ eabs[j] + erel \;  | \tilde{X} (tb)_j | \right]
-\] $$
-If $latex X(tb)_j$$ is near zero for some $latex tb \in [ti , tf]$$,
-and one uses an absolute error criteria $latex eabs[j]$$ of zero,
-the error criteria above will force $code OdeGearControl$$
-to use step sizes equal to
-$cref/smin/OdeGearControl/smin/$$
-for steps ending near $latex tb$$.
-In this case, the error relative to $icode maxabs$$ can be judged after
-$code OdeGearControl$$ returns.
-If $icode ef$$ is to large relative to $icode maxabs$$,
-$code OdeGearControl$$ can be called again
-with a smaller value of $icode smin$$.
+To be specific, if :math:`\tilde{X} (t)` is the approximate solution
+at time :math:`t`,
+*ta* is the initial step time,
+and *tb* is the final step time,
 
-$head Scalar$$
-The type $icode Scalar$$ must satisfy the conditions
-for a $cref NumericType$$ type.
-The routine $cref CheckNumericType$$ will generate an error message
+.. math::
+
+   \left| \tilde{X} (tb)_j  - X (tb)_j \right|
+   \leq
+   \frac{tf - ti}{tb - ta}
+   \left[ eabs[j] + erel \;  | \tilde{X} (tb)_j | \right]
+
+If :math:`X(tb)_j` is near zero for some :math:`tb \in [ti , tf]`,
+and one uses an absolute error criteria :math:`eabs[j]` of zero,
+the error criteria above will force ``OdeGearControl``
+to use step sizes equal to
+:ref:`OdeGearControl@smin`
+for steps ending near :math:`tb`.
+In this case, the error relative to *maxabs* can be judged after
+``OdeGearControl`` returns.
+If *ef* is to large relative to *maxabs* ,
+``OdeGearControl`` can be called again
+with a smaller value of *smin* .
+
+Scalar
+******
+The type *Scalar* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
 if this is not the case.
 In addition, the following operations must be defined for
-$icode Scalar$$ objects $icode a$$ and $icode b$$:
+*Scalar* objects *a* and *b* :
 
-$table
-$bold Operation$$ $cnext $bold Description$$  $rnext
-$icode%a% <= %b%$$ $cnext
-   returns true (false) if $icode a$$ is less than or equal
-   (greater than) $icode b$$.
-$rnext
-$icode%a% == %b%$$ $cnext
-   returns true (false) if $icode a$$ is equal to $icode b$$.
-$rnext
-$codei%log(%a%)%$$ $cnext
-   returns a $icode Scalar$$ equal to the logarithm of $icode a$$
-$rnext
-$codei%exp(%a%)%$$ $cnext
-   returns a $icode Scalar$$ equal to the exponential of $icode a$$
-$tend
+.. list-table::
 
+   * - **Operation**
+     - **Description**
+   * - *a* <= *b*
+     - returns true (false) if *a* is less than or equal
+       (greater than) *b* .
+   * - *a* == *b*
+     - returns true (false) if *a* is equal to *b* .
+   * - ``log`` ( *a* )
+     - returns a *Scalar* equal to the logarithm of *a*
+   * - ``exp`` ( *a* )
+     - returns a *Scalar* equal to the exponential of *a*
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type Scalar/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type Scalar<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/utility/ode_gear_control.cpp
-%$$
+}
 The file
-$cref ode_gear_control.cpp$$
+:ref:`ode_gear_control.cpp-name`
 contains an example and test a test of using this routine.
 
-$head Theory$$
-Let $latex e(s)$$ be the error as a function of the
-step size $latex s$$ and suppose that there is a constant
-$latex K$$ such that $latex e(s) = K s^m$$.
-Let $latex a$$ be our error bound.
-Given the value of $latex e(s)$$, a step of size $latex \lambda s$$
+Theory
+******
+Let :math:`e(s)` be the error as a function of the
+step size :math:`s` and suppose that there is a constant
+:math:`K` such that :math:`e(s) = K s^m`.
+Let :math:`a` be our error bound.
+Given the value of :math:`e(s)`, a step of size :math:`\lambda s`
 would be ok provided that
-$latex \[
-\begin{array}{rcl}
-   a  & \geq & e( \lambda s ) (tf - ti) / ( \lambda s ) \\
-   a  & \geq & K \lambda^m s^m (tf - ti) / ( \lambda s ) \\
-   a  & \geq & \lambda^{m-1} s^{m-1} (tf - ti) e(s) / s^m \\
-   a  & \geq & \lambda^{m-1} (tf - ti) e(s) / s           \\
-   \lambda^{m-1} & \leq & \frac{a}{e(s)} \frac{s}{tf - ti}
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      a  & \geq & e( \lambda s ) (tf - ti) / ( \lambda s ) \\
+      a  & \geq & K \lambda^m s^m (tf - ti) / ( \lambda s ) \\
+      a  & \geq & \lambda^{m-1} s^{m-1} (tf - ti) e(s) / s^m \\
+      a  & \geq & \lambda^{m-1} (tf - ti) e(s) / s           \\
+      \lambda^{m-1} & \leq & \frac{a}{e(s)} \frac{s}{tf - ti}
+   \end{eqnarray}
+
 Thus if the right hand side of the last inequality is greater
-than or equal to one, the step of size $latex s$$ is ok.
+than or equal to one, the step of size :math:`s` is ok.
 
-$head Source Code$$
+Source Code
+***********
 The source code for this routine is in the file
-$code cppad/ode_gear_control.hpp$$.
+``cppad/ode_gear_control.hpp`` .
 
-$end
+{xrst_end OdeGearControl}
 --------------------------------------------------------------------------
 */
 

@@ -4,31 +4,39 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_three_rev_depend.cpp$$
+{xrst_begin atomic_three_rev_depend.cpp}
 
-$section Atomic Functions Reverse Dependency Analysis: Example and Test$$
+Atomic Functions Reverse Dependency Analysis: Example and Test
+##############################################################
 
-$head Purpose$$
-This example demonstrates using $cref atomic_three$$ function
+Purpose
+*******
+This example demonstrates using :ref:`atomic_three-name` function
 in the definition of a function that is optimized.
 
-$head Function$$
+Function
+********
 For this example, the atomic function
-$latex g : \B{R}^3 \rightarrow \B{R}^3$$ is defined by
-$latex g_0 (x) = x_0 * x_0$$,
-$latex g_1 (x) = x_0 * x_1$$,
-$latex g_2 (x) = x_1 * x_2$$.
+:math:`g : \B{R}^3 \rightarrow \B{R}^3` is defined by
+:math:`g_0 (x) = x_0 * x_0`,
+:math:`g_1 (x) = x_0 * x_1`,
+:math:`g_2 (x) = x_1 * x_2`.
 
-$head Start Class Definition$$
-$srccode%cpp% */
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>  // CppAD include file
 namespace {                  // start empty namespace
 using CppAD::vector;         // abbreviate CppAD::vector using vector
 // start definition of atomic derived class using atomic_three interface
 class atomic_optimize : public CppAD::atomic_three<double> {
-/* %$$
-$head Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 public:
    // can use const char* name when calling this constructor
    atomic_optimize(const std::string& name) : // can have more arguments
@@ -36,9 +44,12 @@ public:
    { }
 
 private:
-/* %$$
-$head for_type$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_type
+********
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate type_y
    bool for_type(
       const vector<double>&               parameter_x ,
@@ -54,9 +65,12 @@ $srccode%cpp% */
       type_y[2] = std::max( type_x[1], type_x[2] );
       return true;
    }
-/* %$$
-$head rev_depend$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+rev_depend
+**********
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate depend_x
    bool rev_depend(
       const vector<double>&               parameter_x ,
@@ -73,9 +87,12 @@ $srccode%cpp% */
       depend_x[2] = depend_y[2];
       return true;
    }
-/* %$$
-$head forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    bool forward(
       const vector<double>&               parameter_x ,
@@ -128,28 +145,40 @@ $srccode%cpp% */
 
       return ok;
    }
-/* %$$
-$head End Class Definition$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+End Class Definition
+********************
+{xrst_spell_off}
+{xrst_code cpp} */
 }; // End of atomic_optimize class
 }  // End empty namespace
 
-/* %$$
-$head Use Atomic Function$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 bool rev_depend(void)
 {  bool ok = true;
    using CppAD::AD;
    using CppAD::NearEqual;
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // Create the atomic dynamic object corresponding to g(x)
    atomic_optimize afun("atomic_optimize");
-/* %$$
-$subhead Recording$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Recording
+=========
+{xrst_spell_off}
+{xrst_code cpp} */
    // Create the function f(u) = g(c, p, u) for this example.
    //
    // constant parameter
@@ -190,15 +219,21 @@ $srccode%cpp% */
    // create f: u -> y and stop tape recording
    CppAD::ADFun<double> f;
    f.Dependent (au, ay);  // f(u) = (c * c, c * p, p * u)
-/* %$$
-$subhead optimize$$
+/* {xrst_code}
+{xrst_spell_on}
+optimize
+========
 This operation does a callback to
-$cref/rev_depend/atomic_three_rev_depend.cpp/rev_depend/$$ defined above
-$srccode%cpp% */
+:ref:`atomic_three_rev_depend.cpp@rev_depend` defined above
+{xrst_spell_off}
+{xrst_code cpp} */
    f.optimize();
-/* %$$
-$subhead forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // check function value
    double check = c_0 * c_0;
    ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
@@ -231,11 +266,16 @@ $srccode%cpp% */
    check = p[0] * u_0;
    ok    &= NearEqual(y_q[2] , check,  eps, eps);
 
-/* %$$
-$subhead Return Test Result$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Return Test Result
+==================
+{xrst_spell_off}
+{xrst_code cpp} */
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_three_rev_depend.cpp}
 */

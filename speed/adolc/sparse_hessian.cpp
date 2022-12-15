@@ -3,38 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin adolc_sparse_hessian.cpp$$
-$spell
-   colpack
-   boolsparsity
-   onetape
-   hess
-   int
-   nnz
-   cind
-   const
-   hes
-   thread_alloc
-   arg
-   cppad
-   adouble
-   CppAD
-   adolc
-   hpp
-   bool
-   typedef
-   endif
-$$
+{xrst_begin adolc_sparse_hessian.cpp}
 
-$section Adolc Speed: Sparse Hessian$$
+Adolc Speed: Sparse Hessian
+###########################
 
+Specifications
+**************
+See :ref:`link_sparse_hessian-name` .
 
-$head Specifications$$
-See $cref link_sparse_hessian$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -69,7 +51,6 @@ bool link_sparse_hessian(
    typedef double*          DblVector;
    typedef adouble          ADScalar;
    typedef ADScalar*        ADVector;
-
 
    size_t order = 0;    // derivative order corresponding to function
    size_t m = 1;        // number of dependent variables
@@ -235,6 +216,8 @@ bool link_sparse_hessian(
    return true;
 
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end adolc_sparse_hessian.cpp}
 */

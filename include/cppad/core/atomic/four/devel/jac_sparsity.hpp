@@ -9,55 +9,63 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*
 ------------------------------------------------------------------------------
-$begin atomic_four_for_jac_sparsity$$
-$spell
-   Jacobian
-   var
-   ident
-$$
+{xrst_begin atomic_four_for_jac_sparsity}
 
-$section Link from Forward Jacobian Sparsity Sweep to atomic_four Callback$$
+Link from Forward Jacobian Sparsity Sweep to atomic_four Callback
+#################################################################
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_FOR_JAC_SPARSITY%// END_FOR_JAC_SPARSITY%1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FOR_JAC_SPARSITY
+   // END_FOR_JAC_SPARSITY
+}
 
-$head InternalSparsity$$
+InternalSparsity
+****************
 is the type used for internal sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
-$head call_id$$
-see $cref/call_id/atomic_four_call/call_id/$$.
+call_id
+*******
+see :ref:`atomic_four_call@call_id` .
 
-$head dependency$$
+dependency
+**********
 if true, calculate dependency pattern,
 otherwise calculate sparsity pattern.
 
-$head ident_zero_x$$
+ident_zero_x
+************
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
-If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+atomic function; i.e. the size of *ax* .
+If *ident_zero_x* [ *j* ] is true, the argument *ax* [ *j* ]
 is a constant parameter that is identically zero.
 
-$head x_index$$
+x_index
+*******
 is the variable index, on the tape, for the arguments to this atomic function.
 This size of x_index is, the number of arguments to this atomic function.
 The index zero is used for parameters.
 
-$head y_index$$
+y_index
+*******
 is the variable index, on the tape, for the results for this atomic function.
 This size of y_index is m, the number of results for this atomic function.
 The index zero is used for parameters.
 
-$head var_sparsity$$
+var_sparsity
+************
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 is the sparsity for the j-th argument to this atomic function.
 On output, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
 is the sparsity for the i-th result for this atomic function.
 
-$head Return Value$$
+Return Value
+************
 is true if the computation succeeds.
 
-$end
+{xrst_end atomic_four_for_jac_sparsity}
 */
 // BEGIN_FOR_JAC_SPARSITY
 template <class Base>
@@ -130,57 +138,66 @@ bool atomic_four<Base>::for_jac_sparsity(
 
 /*
 ------------------------------------------------------------------------------
-$begin atomic_four_rev_jac_sparsity$$
-$spell
-   Jacobian
-   var
-   ident
-$$
+{xrst_begin atomic_four_rev_jac_sparsity}
 
-$section Link from Reverse Jacobian Sparsity Sweep to atomic_four Callback$$
+Link from Reverse Jacobian Sparsity Sweep to atomic_four Callback
+#################################################################
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_REV_JAC_SPARSITY%// END_REV_JAC_SPARSITY%1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_REV_JAC_SPARSITY
+   // END_REV_JAC_SPARSITY
+}
 
-$head InternalSparsity$$
+InternalSparsity
+****************
 Is the type used for internal sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
-$head call_id$$
-see $cref/call_id/atomic_four_call/call_id/$$
+call_id
+*******
+see :ref:`atomic_four_call@call_id`
 
-$head dependency$$
+dependency
+**********
 if true, calculate dependency pattern,
 otherwise calculate sparsity pattern.
 
-$head ident_zero_x$$
+ident_zero_x
+************
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
-If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+atomic function; i.e. the size of *ax* .
+If *ident_zero_x* [ *j* ] is true, the argument *ax* [ *j* ]
 is a constant parameter that is identically zero.
 
-$head x_index$$
+x_index
+*******
 is the variable index, on the tape, for the arguments to this atomic function.
 This size of x_index is n, the number of arguments to this atomic function.
 The index zero is used for parameters.
 
-$head y_index$$
+y_index
+*******
 is the variable index, on the tape, for the results for this atomic function.
 This size of y_index is m, the number of results for this atomic function.
 The index zero is used for parameters.
 
-$head var_sparsity$$
+var_sparsity
+************
 We are given a sparsity pattern an outer function G(y, x) and compute
 the pattern for an inner function H(x), which is the outer functions
 with the components of y treated as functions of x; i.e.
 H(x) = G( Y(x), x).
 
-$subhead y_index$$
+y_index
+=======
 On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
 is the sparsity of the outer function with respect to the i-th
 result for this atomic function.
 
-$subhead x_index$$
+x_index
+=======
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 is the sparsity for the outer function with respect to the j-th
 argument to this atomic function.
@@ -188,10 +205,11 @@ On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 is the sparsity for the inner function with respect to the j-th
 argument to this atomic function.
 
-$head Return Value$$
+Return Value
+************
 is true if the computation succeeds.
 
-$end
+{xrst_end atomic_four_rev_jac_sparsity}
 */
 // BEGIN_REV_JAC_SPARSITY
 template <class Base>

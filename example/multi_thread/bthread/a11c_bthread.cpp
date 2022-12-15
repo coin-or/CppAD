@@ -4,22 +4,23 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin a11c_bthread.cpp$$
-$spell
-   bthread
-   bthreads
-   CppAD
-   const
-$$
+{xrst_begin a11c_bthread.cpp}
 
-$section A Simple Boost Thread Example and Test$$
+A Simple Boost Thread Example and Test
+######################################
 
-$head Purpose$$
+Purpose
+*******
 This example just demonstrates Boost threads and does not use CppAD at all.
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end a11c_bthread.cpp}
 ----------------------------------------------------------------------------
 */
 // BEGIN C++

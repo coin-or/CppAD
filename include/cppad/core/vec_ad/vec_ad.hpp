@@ -8,35 +8,38 @@
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
 /*
  ------------------------------------------------------------------------------
-$begin vec_ad_comp_assign$$
-$spell
-   Vec
-   op
-$$
-$section VecAD: Prints Error Message If A Compound Assignment Is Used$$
+{xrst_begin vec_ad_comp_assign}
+VecAD: Prints Error Message If A Compound Assignment Is Used
+############################################################
 
-$head Syntax$$
-$codei%CPPAD_VEC_AD_COMP_ASSIGN(%cop%)
-%$$
-$icode%ref cop right
-%$$
+Syntax
+******
 
-$head CPPAD_VEC_AD_COMP_ASSIGN$$
-This macro defines the compound assignment operator $icode cop$$
+| ``CPPAD_VEC_AD_COMP_ASSIGN`` ( *cop* )
+| ``ref cop right``
+
+CPPAD_VEC_AD_COMP_ASSIGN
+************************
+This macro defines the compound assignment operator *cop*
 for a VecAD reference element to be an error with an error message.
 
-$head cop$$
+cop
+***
 Is one of the following computed assignment operators:
-+= , -= , *= , /=.
++= , -= , \*= , /=.
 
-$head ref$$
+ref
+***
 is the VecAD reference.
 
-$head right$$
+right
+*****
 is the right hand side for the compound assignment.
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_VEC_AD_COMP_ASSIGN(cop)                              \
 VecAD_reference& operator cop (const VecAD_reference<Base> &right)  \
 {  CPPAD_ASSERT_KNOWN(false,                                       \
@@ -62,80 +65,82 @@ VecAD_reference& operator cop (int right)                           \
    );                                                              \
    return *this;                                                   \
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end vec_ad_comp_assign}
 ------------------------------------------------------------------------------
-$begin vec_ad_reference$$
-$spell
-   Vec
-   ind
-   const
-$$
-$section VecAD Element Reference Class$$
+{xrst_begin vec_ad_reference}
+VecAD Element Reference Class
+#############################
 
-$head Syntax$$
-$codei%VecAD_reverence %ref%(%vec%, %ind%)
-%$$
-$icode%ref% = %right%
-%$$
-$icode%ref cop right
-%$$
-$icode%element% = %ref%.ADBase()
-%$$
+Syntax
+******
 
-$head Member Variables$$
+| ``VecAD_reverence`` *ref* ( *vec* , *ind* )
+| *ref* = *right*
+| ``ref cop right``
+| ``element`` = ``ref`` . *ADBase* ()
 
-$subhead vec_$$
-This private data is a reference to $icode vec$$ in the constructor.
+Member Variables
+****************
 
-$subhead ind_$$
-This private data is a copy of $icode ind$$ in the constructor.
+vec\_
+=====
+This private data is a reference to *vec* in the constructor.
 
-$head Base$$
+ind\_
+=====
+This private data is a copy of *ind* in the constructor.
+
+Base
+****
 Elements of this reference class act like an
-$codei%AD<%Base%>%$$ object (in a restricted sense),
-in addition they track (on the tape) the index $icode ind$$ they correspond to.
+``AD<`` *Base* > object (in a restricted sense),
+in addition they track (on the tape) the index *ind* they correspond to.
 
-$head vec$$
+vec
+***
 is the vector containing the element being referenced and has prototype
-$codei%
-   VecAD<%Base%> %vec%
-%$$
 
-$head ind$$
+   ``VecAD<`` *Base* > *vec*
+
+ind
+***
 is the index of the element being referenced and has prototype
-$codei%
-   const AD<%Base%>& ind
-%$$
-If $icode%ind%.tape_id_%$$ matches a current recording,
-so does $icode%vec%.tape_id_%$$ and
-the $cref/AD type/atomic_three_define/ad_type/$$ corresponding to $icode vec$$
-includes this indexing operation; i.e., it is greater than or equal
-the AD type corresponding to $icode ind$$.
 
-$head right$$
+   ``const AD<`` *Base* >& ``ind``
+
+If *ind* . ``tape_id_`` matches a current recording,
+so does *vec* . ``tape_id_`` and
+the :ref:`AD type<atomic_three_define@ad_type>` corresponding to *vec*
+includes this indexing operation; i.e., it is greater than or equal
+the AD type corresponding to *ind* .
+
+right
+*****
 Is the right hand side of the assignment statement and has one
 of the following prototypes:
-$codei%
-   int   %%                       %right%
-   const %Base%&                  %right%
-   const AD<%Base%>&              %right%
-   const VecAD_reverence<%Base%>& %right%
-%$$
 
-$head cop$$
+| |tab| ``int`` *right*
+| |tab| ``const`` *Base* & *right*
+| |tab| ``const AD<`` *Base* >& *right*
+| |tab| ``const VecAD_reverence<`` *Base* >& *right*
+
+cop
+***
 Is one of the following computed assignment operators:
-+= , -= , *= , /=.
++= , -= , \*= , /=.
 All of these operations report an error.
 
-$head element$$
-Is a copy of the element corresponding to the reference $icode ref$$
+element
+*******
+Is a copy of the element corresponding to the reference *ref*
 and has prototype:
-$codei%
-   AD<%Base%> %element%
-%$$
 
-$end
+   ``AD<`` *Base* > *element*
+
+{xrst_end vec_ad_reference}
 */
 template <class Base>
 class VecAD_reference {
@@ -259,84 +264,92 @@ public:
 };
 // ---------------------------------------------------------------------------
 /*!
-$begin vec_ad_class$$
-$spell
-   Vec
-   ind
-   enum
+{xrst_begin vec_ad_class}
+{xrst_spell
    taddr
-$$
-$section VecAD Class Objects$$
+}
+VecAD Class Objects
+###################
 
-$head Syntax$$
-$codei%VecAD %empty%, %vec%(%length%)
-%$$
-$icode%length% = %vec%.size()
-%$$
-$icode%b% = %vec%[%i%]
-%$$
-$icode%ref% = %vec%[%ind%]
-%$$
+Syntax
+******
 
-$head length$$
+| ``VecAD`` *empty* , *vec* ( *length* )
+| *length* = *vec* . ``size`` ()
+| *b* = *vec* [ *i* ]
+| *ref* = *vec* [ *ind* ]
+
+length
+******
 is the size of the vector and has prototype
-$codei%
-     size_t %length%
-%$$
 
-$head Private Members$$
-$srcthisfile%
-   0%// BEGIN_VECAD_PRIVATE_DATA%// END_VECAD_PRIVATE_DATA%1
-%$$
+   ``size_t`` *length*
 
-$subhead length_$$
-is a copy of $icode length$$.
+Private Members
+***************
+{xrst_literal
+   // BEGIN_VECAD_PRIVATE_DATA
+   // END_VECAD_PRIVATE_DATA
+}
 
-$subhead data_$$
-This vector has size $icode length$$ and
+length\_
+========
+is a copy of *length* .
+
+data\_
+======
+This vector has size *length* and
 contains the value of the elements of the vector.
 
-$subhead taddr_$$
-This vector has size $icode length$$.
-If $code tape_id_$$ matches the current recording
-and $code ad_type_$$ is $code dynamic_enum$$,
-$codei%taddr[%i%]%$$ is the parameter index for the corresponding element.
+taddr\_
+=======
+This vector has size *length* .
+If ``tape_id_`` matches the current recording
+and ``ad_type_`` is ``dynamic_enum`` ,
+``taddr`` [ *i* ] is the parameter index for the corresponding element.
 
-$subhead offset_$$
-If $icode tape_id_$$ is the current tape,
-$icode offset_$$ is the index of the first element of this vector
+offset\_
+========
+If *tape_id_* is the current tape,
+*offset_* is the index of the first element of this vector
 in the combined vector that contains all the VecAD elements for this recording.
-$icode%offset_%-1%$$ is the index of the size of this vector
+*offset_* ``-1`` is the index of the size of this vector
 in the combined vector.
 
-$subhead tape_id_$$
+tape_id\_
+=========
 is the tape currently associated with this vector.
 
-$subhead ad_type_$$
-is the $cref/ad_type/atomic_three_define/ad_type/$$ corresponding to this
+ad_type\_
+=========
+is the :ref:`atomic_three_define@ad_type` corresponding to this
 vector.
 
-$head i$$
-is a $code size_t$$ value less than $icode length$$.
-This form of indexing can only be used when $icode vec$$ is a
+i
+*
+is a ``size_t`` value less than *length* .
+This form of indexing can only be used when *vec* is a
 constant parameter; i.e., its operations are not being recorded.
 
-$head b$$
-is a reference to the $icode Base$$ value
-for the $th i$$ element of the vector.
+b
+*
+is a reference to the *Base* value
+for the *i*-th element of the vector.
 
-$head ind$$
-is a $codei%AD<%Base%>%$$ value less than $icode length$$.
+ind
+***
+is a ``AD<`` *Base* > value less than *length* .
 This form of indexing gets recorded and the value of the index
 can change.
 
-$head ref$$
-is a reference to the $codei%AD<%Base%>%$$ value
-for the $th x$$ element of the vector.
+ref
+***
+is a reference to the ``AD<`` *Base* > value
+for the *x*-th element of the vector.
 If the vector is a parameter and the index is a variable,
 the vector is changed to be a variable.
 
-$end
+{xrst_end vec_ad_class}
 */
 template <class Base>
 class VecAD {

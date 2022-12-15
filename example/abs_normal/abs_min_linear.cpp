@@ -4,40 +4,51 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin abs_min_linear.cpp$$
+{xrst_begin abs_min_linear.cpp}
+{xrst_spell
+   affine
+   minimizer
+}
 
-$section abs_min_linear: Example and Test$$
+abs_min_linear: Example and Test
+################################
 
-$head Purpose$$
+Purpose
+*******
 The function
-$latex f : \B{R}^3 \rightarrow \B{R}$$ defined by
-$latex \[
-\begin{array}{rcl}
-f( x_0, x_1  )
-& = &
-| d_0 - x_0 | + | d_1 - x_0 | + | d_2 - x_0 |
-\\
-& + &
-| d_3 - x_1 | + | d_4 - x_1 | + | d_5 - x_1 |
-\\
-\end{array}
-\] $$
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   f( x_0, x_1  )
+   & = &
+   | d_0 - x_0 | + | d_1 - x_0 | + | d_2 - x_0 |
+   \\
+   & + &
+   | d_3 - x_1 | + | d_4 - x_1 | + | d_5 - x_1 |
+   \\
+   \end{eqnarray}
+
 is affine, except for its absolute value terms.
 For this case, the abs_normal approximation should be equal
 to the function itself.
 In addition, the function is convex and
-$cref abs_min_linear$$ should find its global minimizer.
+:ref:`abs_min_linear-name` should find its global minimizer.
 The minimizer of this function is
-$latex x_0 = \R{median}( d_0, d_1, d_2 )$$
+:math:`x_0 = \R{median}( d_0, d_1, d_2 )`
 and
-$latex x_1 = \R{median}( d_3, d_4, d_5 )$$
+:math:`x_1 = \R{median}( d_3, d_4, d_5 )`
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN C++%// END C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end abs_min_linear.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

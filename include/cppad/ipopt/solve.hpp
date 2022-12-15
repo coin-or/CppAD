@@ -5,388 +5,391 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ipopt_solve$$
-$spell
-   Jacobian
-   Jacobians
-   retape
-   Bvector
-   bool
-   infeasibility
-   const
-   cpp
-   cppad
-   doesn't
-   ADvector
-   eval
+{xrst_begin ipopt_solve}
+{xrst_spell
+   bvector
    fg
    gl
-   gu
-   hpp
-   inf
-   ipopt
+   infeasibility
+   iterates
+   lagrange
    maxiter
    naninf
-   nf
    ng
    nx
-   obj
-   optimizer
-   std
-   xi
+   rll
+   unrecoverable
    xl
-   xu
    zl
-   zu
-   cmake
-$$
+}
 
-$section Use Ipopt to Solve a Nonlinear Programming Problem$$
+Use Ipopt to Solve a Nonlinear Programming Problem
+##################################################
 
-$head Syntax$$
-$codei%# include <cppad/ipopt/solve.hpp>
-%$$
-$codei%ipopt::solve(
-   %options%, %xi%, %xl%, %xu%, %gl%, %gu%, %fg_eval%, %solution%
-)%$$
+Syntax
+******
 
-$head Purpose$$
-The function $code ipopt::solve$$ solves nonlinear programming
+| # ``include <cppad/ipopt/solve.hpp>``
+| ``ipopt::solve`` (
+| |tab| *options* , *xi* , *xl* , *xu* , *gl* , *gu* , *fg_eval* , *solution*
+| )
+
+Purpose
+*******
+The function ``ipopt::solve`` solves nonlinear programming
 problems of the form
-$latex \[
-\begin{array}{rll}
-{\rm minimize}      & f (x)
-\\
-{\rm subject \; to} & gl \leq g(x) \leq gu
-\\
-               & xl  \leq x   \leq xu
-\end{array}
-\] $$
+
+.. math::
+
+   \begin{array}{rll}
+   {\rm minimize}      & f (x)
+   \\
+   {\rm subject \; to} & gl \leq g(x) \leq gu
+   \\
+                  & xl  \leq x   \leq xu
+   \end{array}
+
 This is done using
-$href%
-   http://www.coin-or.org/projects/Ipopt.xml%
-   Ipopt
-%$$
+`Ipopt <http://www.coin-or.org/projects/Ipopt.xml>`_
 optimizer and CppAD for the derivative and sparsity calculations.
 
-$head Include File$$
-If $cref/include_ipopt/cmake/include_ipopt/$$ is on the cmake command line,
-the file $code cppad/ipopt/solve.hpp$$ is included by $code cppad/cppad.hpp$$.
+Include File
+************
+If :ref:`cmake@include_ipopt` is on the cmake command line,
+the file ``cppad/ipopt/solve.hpp`` is included by ``cppad/cppad.hpp`` .
 Otherwise,
-$code cppad/ipopt/solve.hpp$$ can be included directly
-(If $code cppad/cppad.hpp$$ has not yet been included,
-$code cppad/ipopt/solve.hpp$$ will automatically include it.)
+``cppad/ipopt/solve.hpp`` can be included directly
+(If ``cppad/cppad.hpp`` has not yet been included,
+``cppad/ipopt/solve.hpp`` will automatically include it.)
 
-$head Bvector$$
-The type $icode Bvector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$.
+Bvector
+*******
+The type *Bvector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` .
 
-$head Dvector$$
-The type $icode DVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code double$$.
+Dvector
+*******
+The type *DVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``double`` .
 
-$head options$$
-The argument $icode options$$ has prototype
-$codei%
-   const std::string %options%
-%$$
+options
+*******
+The argument *options* has prototype
+
+   ``const std::string`` *options*
+
 It contains a list of options.
 Each option, including the last option,
-is terminated by the $code '\n'$$ character.
+is terminated by the ``'\n'`` character.
 Each line consists of two or three tokens separated by one or more spaces.
 
-$subhead Retape$$
+Retape
+======
 You can set the retape flag with the following syntax:
-$codei%
-   Retape %value%
-%$$
-If the value is $code true$$, $code ipopt::solve$$ with retape the
-$cref/operation sequence/glossary/Operation/Sequence/$$ for each
-new value of $icode x$$.
-If the value is $code false$$, $code ipopt::solve$$
-will tape the operation sequence at the value
-of $icode xi$$ and use that sequence for the entire optimization process.
-The default value is $code false$$.
 
-$subhead Sparse$$
+   ``Retape`` *value*
+
+If the value is ``true`` , ``ipopt::solve`` with retape the
+:ref:`operation sequence<glossary@Operation@Sequence>` for each
+new value of *x* .
+If the value is ``false`` , ``ipopt::solve``
+will tape the operation sequence at the value
+of *xi* and use that sequence for the entire optimization process.
+The default value is ``false`` .
+
+Sparse
+======
 You can set the sparse Jacobian and Hessian flag with the following syntax:
-$codei%
-   Sparse %value% %direction%
-%$$
-If the value is $code true$$, $code ipopt::solve$$ will use a sparse
+
+   ``Sparse`` *value* *direction*
+
+If the value is ``true`` , ``ipopt::solve`` will use a sparse
 matrix representation for the computation of Jacobians and Hessians.
 Otherwise, it will use a full matrix representation for
 these calculations.
-The default for $icode value$$ is $code false$$.
+The default for *value* is ``false`` .
 If sparse is true, retape must be false.
-$pre
 
-$$
-It is unclear if $cref sparse_jacobian$$ would be faster user
+It is unclear if :ref:`sparse_jacobian-name` would be faster user
 forward or reverse mode so you are able to choose the direction.
 If
-$codei%
-   %value% == true && %direction% == forward
-%$$
-the Jacobians will be calculated using $code SparseJacobianForward$$.
+
+   *value* == ``true &&`` *direction* == ``forward``
+
+the Jacobians will be calculated using ``SparseJacobianForward`` .
 If
-$codei%
-   %value% == true && %direction% == reverse
-%$$
-the Jacobians will be calculated using $code SparseJacobianReverse$$.
 
-$subhead String$$
+   *value* == ``true &&`` *direction* == ``reverse``
+
+the Jacobians will be calculated using ``SparseJacobianReverse`` .
+
+String
+======
 You can set any Ipopt string option using a line with the following syntax:
-$codei%
-   String %name% %value%
-%$$
-Here $icode name$$ is any valid Ipopt string option
-and $icode value$$ is its setting.
 
-$subhead Numeric$$
+   ``String`` *name* *value*
+
+Here *name* is any valid Ipopt string option
+and *value* is its setting.
+
+Numeric
+=======
 You can set any Ipopt numeric option using a line with the following syntax:
-$codei%
-   Numeric %name% %value%
-%$$
-Here $icode name$$ is any valid Ipopt numeric option
-and $icode value$$ is its setting.
 
-$subhead Integer$$
+   ``Numeric`` *name* *value*
+
+Here *name* is any valid Ipopt numeric option
+and *value* is its setting.
+
+Integer
+=======
 You can set any Ipopt integer option using a line with the following syntax:
-$codei%
-   Integer %name% %value%
-%$$
-Here $icode name$$ is any valid Ipopt integer option
-and $icode value$$ is its setting.
 
-$head xi$$
-The argument $icode xi$$ has prototype
-$codei%
-   const %Vector%& %xi%
-%$$
-and its size is equal to $icode nx$$.
+   ``Integer`` *name* *value*
+
+Here *name* is any valid Ipopt integer option
+and *value* is its setting.
+
+xi
+**
+The argument *xi* has prototype
+
+   ``const`` *Vector* & *xi*
+
+and its size is equal to *nx* .
 It specifies the initial point where Ipopt starts the optimization process.
 
-$head xl$$
-The argument $icode xl$$ has prototype
-$codei%
-   const %Vector%& %xl%
-%$$
-and its size is equal to $icode nx$$.
+xl
+**
+The argument *xl* has prototype
+
+   ``const`` *Vector* & *xl*
+
+and its size is equal to *nx* .
 It specifies the lower limits for the argument in the optimization problem.
 
-$head xu$$
-The argument $icode xu$$ has prototype
-$codei%
-   const %Vector%& %xu%
-%$$
-and its size is equal to $icode nx$$.
+xu
+**
+The argument *xu* has prototype
+
+   ``const`` *Vector* & *xu*
+
+and its size is equal to *nx* .
 It specifies the upper limits for the argument in the optimization problem.
 
-$head gl$$
-The argument $icode gl$$ has prototype
-$codei%
-   const %Vector%& %gl%
-%$$
-and its size is equal to $icode ng$$.
+gl
+**
+The argument *gl* has prototype
+
+   ``const`` *Vector* & *gl*
+
+and its size is equal to *ng* .
 It specifies the lower limits for the constraints in the optimization problem.
 
-$head gu$$
-The argument $icode gu$$ has prototype
-$codei%
-   const %Vector%& %gu%
-%$$
-and its size is equal to $icode ng$$.
+gu
+**
+The argument *gu* has prototype
+
+   ``const`` *Vector* & *gu*
+
+and its size is equal to *ng* .
 It specifies the upper limits for the constraints in the optimization problem.
 
-$head fg_eval$$
-The argument $icode fg_eval$$ has prototype
-$codei%
-   %FG_eval% %fg_eval%
-%$$
-where the class $icode FG_eval$$ is unspecified except for the fact that
+fg_eval
+*******
+The argument *fg_eval* has prototype
+
+   *FG_eval* *fg_eval*
+
+where the class *FG_eval* is unspecified except for the fact that
 it supports the syntax
-$codei%
-   %FG_eval%::ADvector
-   %fg_eval%(%fg%, %x%)
-%$$
-The type $icode ADvector$$
-and the arguments to $icode fg$$, $icode x$$ have the following meaning:
 
-$subhead ADvector$$
-The type $icode%FG_eval%::ADvector%$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code AD<double>$$.
+| |tab| *FG_eval* :: ``ADvector``
+| |tab| *fg_eval* ( *fg* , *x* )
 
-$subhead x$$
-The $icode fg_eval$$ argument $icode x$$ has prototype
-$codei%
-   const %ADvector%& %x%
-%$$
-where $icode%nx% = %x%.size()%$$.
+The type *ADvector*
+and the arguments to *fg* , *x* have the following meaning:
 
-$subhead fg$$
-The $icode fg_eval$$ argument $icode fg$$ has prototype
-$codei%
-   %ADvector%& %fg%
-%$$
-where $codei%1 + %ng% = %fg%.size()%$$.
-The input value of the elements of $icode fg$$ does not matter.
-Upon return from $icode fg_eval$$,
-$codei%
-   %fg%[0] =%$$ $latex f (x)$$ $codei%
-%$$
-and   for $latex i = 0, \ldots , ng-1$$,
-$codei%
-   %fg%[1 + %i%] =%$$ $latex g_i (x)$$
+ADvector
+========
+The type *FG_eval* :: ``ADvector`` must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``AD<double>`` .
 
-$head solution$$
-The argument $icode solution$$ has prototype
-$codei%
-   ipopt::solve_result<%Dvector%>& %solution%
-%$$
-After the optimization process is completed, $icode solution$$ contains
+x
+=
+The *fg_eval* argument *x* has prototype
+
+   ``const`` *ADvector* & *x*
+
+where *nx* = *x* . ``size`` () .
+
+fg
+==
+The *fg_eval* argument *fg* has prototype
+
+   *ADvector* & *fg*
+
+where 1 + *ng* = *fg* . ``size`` () .
+The input value of the elements of *fg* does not matter.
+Upon return from *fg_eval* ,
+
+   ``fg`` [0] =
+
+:math:`f (x)`
+
+and   for :math:`i = 0, \ldots , ng-1`,
+
+   ``fg`` [1 + ``i`` ] =
+
+:math:`g_i (x)`
+
+solution
+********
+The argument *solution* has prototype
+
+   ``ipopt::solve_result<`` *Dvector* >& *solution*
+
+After the optimization process is completed, *solution* contains
 the following information:
 
-$subhead status$$
-The $icode status$$ field of $icode solution$$ has prototype
-$codei%
-   ipopt::solve_result<%Dvector%>::status_type %solution%.status
-%$$
+status
+======
+The *status* field of *solution* has prototype
+
+   ``ipopt::solve_result<`` *Dvector* >:: ``status_type`` *solution* . ``status``
+
 It is the final Ipopt status for the optimizer.
 Here is a list of the possible values for the status:
 
-$table
-$icode status$$ $cnext Meaning
-$rnext
-not_defined $cnext
-The optimizer did not return a final status for this problem.
-$rnext
-unknown $cnext
-The status returned by the optimizer is not defined in the Ipopt
-documentation for $code finalize_solution$$.
-$rnext
-success $cnext
-Algorithm terminated successfully at a point satisfying the convergence
-tolerances (see Ipopt options).
-$rnext
-maxiter_exceeded $cnext
-The maximum number of iterations was exceeded (see Ipopt options).
-$rnext
-stop_at_tiny_step $cnext
-Algorithm terminated because progress was very slow.
-$rnext
-stop_at_acceptable_point $cnext
-Algorithm stopped at a point that was converged,
-not to the 'desired' tolerances, but to 'acceptable' tolerances
-(see Ipopt options).
-$rnext
-local_infeasibility $cnext
-Algorithm converged to a non-feasible point
-(problem may have no solution).
-$rnext
-user_requested_stop $cnext
-This return value should not happen.
-$rnext
-diverging_iterates $cnext
-It the iterates are diverging.
-$rnext
-restoration_failure $cnext
-Restoration phase failed, algorithm doesn't know how to proceed.
-$rnext
-error_in_step_computation $cnext
-An unrecoverable error occurred while Ipopt tried to
-compute the search direction.
-$rnext
-invalid_number_detected $cnext
-Algorithm received an invalid number (such as $code nan$$ or $code inf$$)
-from the users function $icode%fg_info%.eval%$$ or from the CppAD evaluations
-of its derivatives
-(see the Ipopt option $code check_derivatives_for_naninf$$).
-$rnext
-internal_error $cnext
-An unknown Ipopt internal error occurred.
-Contact the Ipopt authors through the mailing list.
-$tend
+.. list-table::
 
-$subhead x$$
-The $code x$$ field of $icode solution$$ has prototype
-$codei%
-   %Vector% %solution%.x
-%$$
-and its size is equal to $icode nx$$.
-It is the final $latex x$$ value for the optimizer.
+   * - *status*
+     - Meaning
+   * - not_defined
+     - The optimizer did not return a final status for this problem.
+   * - unknown
+     - The status returned by the optimizer is not defined in the Ipopt
+       documentation for ``finalize_solution`` .
+   * - success
+     - Algorithm terminated successfully at a point satisfying the convergence
+       tolerances (see Ipopt options).
+   * - maxiter_exceeded
+     - The maximum number of iterations was exceeded (see Ipopt options).
+   * - stop_at_tiny_step
+     - Algorithm terminated because progress was very slow.
+   * - stop_at_acceptable_point
+     - Algorithm stopped at a point that was converged,
+       not to the 'desired' tolerances, but to 'acceptable' tolerances
+       (see Ipopt options).
+   * - local_infeasibility
+     - Algorithm converged to a non-feasible point
+       (problem may have no solution).
+   * - user_requested_stop
+     - This return value should not happen.
+   * - diverging_iterates
+     - It the iterates are diverging.
+   * - restoration_failure
+     - Restoration phase failed, algorithm doesn't know how to proceed.
+   * - error_in_step_computation
+     - An unrecoverable error occurred while Ipopt tried to
+       compute the search direction.
+   * - invalid_number_detected
+     - Algorithm received an invalid number (such as ``nan`` or ``inf`` )
+       from the users function *fg_info* . ``eval`` or from the CppAD evaluations
+       of its derivatives
+       (see the Ipopt option ``check_derivatives_for_naninf`` ).
+   * - internal_error
+     - An unknown Ipopt internal error occurred.
+       Contact the Ipopt authors through the mailing list.
 
-$subhead zl$$
-The $code zl$$ field of $icode solution$$ has prototype
-$codei%
-   %Vector% %solution%.zl
-%$$
-and its size is equal to $icode nx$$.
+x
+=
+The ``x`` field of *solution* has prototype
+
+   *Vector* *solution* . ``x``
+
+and its size is equal to *nx* .
+It is the final :math:`x` value for the optimizer.
+
+zl
+==
+The ``zl`` field of *solution* has prototype
+
+   *Vector* *solution* . ``zl``
+
+and its size is equal to *nx* .
 It is the final Lagrange multipliers for the
-lower bounds on $latex x$$.
+lower bounds on :math:`x`.
 
-$subhead zu$$
-The $code zu$$ field of $icode solution$$ has prototype
-$codei%
-   %Vector% %solution%.zu
-%$$
-and its size is equal to $icode nx$$.
+zu
+==
+The ``zu`` field of *solution* has prototype
+
+   *Vector* *solution* . ``zu``
+
+and its size is equal to *nx* .
 It is the final Lagrange multipliers for the
-upper bounds on $latex x$$.
+upper bounds on :math:`x`.
 
-$subhead g$$
-The $code g$$ field of $icode solution$$ has prototype
-$codei%
-   %Vector% %solution%.g
-%$$
-and its size is equal to $icode ng$$.
-It is the final value for the constraint function $latex g(x)$$.
+g
+=
+The ``g`` field of *solution* has prototype
 
-$subhead lambda$$
-The $code lambda$$ field of $icode solution$$ has prototype
-$codei%
-   %Vector%> %solution%.lambda
-%$$
-and its size is equal to $icode ng$$.
+   *Vector* *solution* . ``g``
+
+and its size is equal to *ng* .
+It is the final value for the constraint function :math:`g(x)`.
+
+lambda
+======
+The ``lambda`` field of *solution* has prototype
+
+   *Vector* > *solution* . ``lambda``
+
+and its size is equal to *ng* .
 It is the final value for the
 Lagrange multipliers corresponding to the constraint function.
 
-$subhead obj_value$$
-The $code obj_value$$ field of $icode solution$$ has prototype
-$codei%
-   double %solution%.obj_value
-%$$
-It is the final value of the objective function $latex f(x)$$.
+obj_value
+=========
+The ``obj_value`` field of *solution* has prototype
 
-$children%
-   example/ipopt_solve/get_started.cpp%
-   example/ipopt_solve/retape.cpp%
+   ``double`` *solution* . ``obj_value``
+
+It is the final value of the objective function :math:`f(x)`.
+{xrst_toc_hidden
+   example/ipopt_solve/get_started.cpp
+   example/ipopt_solve/retape.cpp
    example/ipopt_solve/ode_inverse.cpp
-%$$
-$head Example$$
+}
+Example
+*******
 All the examples return true if it succeeds and false otherwise.
 
-$subhead get_started$$
+get_started
+===========
 The file
-$cref%example/ipopt_solve/get_started.cpp%ipopt_solve_get_started.cpp%$$
-is an example and test of $code ipopt::solve$$
+:ref:`example/ipopt_solve/get_started.cpp<ipopt_solve_get_started.cpp-name>`
+is an example and test of ``ipopt::solve``
 taken from the Ipopt manual.
 
-$subhead retape$$
+retape
+======
 The file
-$cref%example/ipopt_solve/retape.cpp%ipopt_solve_retape.cpp%$$
+:ref:`example/ipopt_solve/retape.cpp<ipopt_solve_retape.cpp-name>`
 demonstrates when it is necessary to specify
-$cref/retape/ipopt_solve/options/Retape/$$ as true.
+:ref:`ipopt_solve@options@Retape` as true.
 
-$subhead ode_inverse$$
+ode_inverse
+===========
 The file
-$cref%example/ipopt_solve/ode_inverse.cpp%ipopt_solve_ode_inverse.cpp%$$
+:ref:`example/ipopt_solve/ode_inverse.cpp<ipopt_solve_ode_inverse.cpp-name>`
 demonstrates using Ipopt to solve for parameters in an ODE model.
 
-$end
+{xrst_end ipopt_solve}
 -------------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>

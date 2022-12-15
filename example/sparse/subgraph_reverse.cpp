@@ -4,16 +4,20 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin subgraph_reverse.cpp$$
-$spell
-   Subgraphs
-$$
+{xrst_begin subgraph_reverse.cpp}
+{xrst_spell
+   subgraphs
+}
 
-$section Computing Reverse Mode on Subgraphs: Example and Test$$
+Computing Reverse Mode on Subgraphs: Example and Test
+#####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end subgraph_reverse.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -5,85 +5,88 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin det_grad_33$$
-$spell
-   cppad
-   CppAD
-   det
-   namespace
-   const
-   bool
-   hpp
-$$
+{xrst_begin det_grad_33}
 
-$section Check Gradient of Determinant of 3 by 3 matrix$$
+Check Gradient of Determinant of 3 by 3 matrix
+##############################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/speed/det_grad_33.hpp>
-%$$
-$icode%ok% = det_grad_33(%x%, %g%)%$$
+   # ``include <cppad/speed/det_grad_33.hpp>``
 
-$head Purpose$$
+*ok* = ``det_grad_33`` ( *x* , *g* )
+
+Purpose
+*******
 This routine can be used to check a method for computing the
 gradient of the determinant of a matrix.
 
-$head Inclusion$$
-The template function $code det_grad_33$$ is defined in the $code CppAD$$
+Inclusion
+*********
+The template function ``det_grad_33`` is defined in the ``CppAD``
 namespace by including
-the file $code cppad/speed/det_grad_33.hpp$$
+the file ``cppad/speed/det_grad_33.hpp``
 (relative to the CppAD distribution directory).
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Vector% &%x%
-%$$.
-It contains the elements of the matrix $latex X$$ in row major order; i.e.,
-$latex \[
+x
+*
+The argument *x* has prototype
+
+   ``const`` *Vector* & *x*
+
+.
+It contains the elements of the matrix :math:`X` in row major order; i.e.,
+
+.. math::
+
    X_{i,j} = x [ i * 3 + j ]
-\] $$
 
-$head g$$
-The argument $icode g$$ has prototype
-$codei%
-   const %Vector% &%g%
-%$$.
+g
+*
+The argument *g* has prototype
+
+   ``const`` *Vector* & *g*
+
+.
 It contains the elements of the gradient of
-$latex \det ( X )$$ in row major order; i.e.,
-$latex \[
+:math:`\det ( X )` in row major order; i.e.,
+
+.. math::
+
    \D{\det (X)}{X(i,j)} = g [ i * 3 + j ]
-\] $$
 
-$head Vector$$
-If $icode y$$ is a $icode Vector$$ object,
+Vector
+******
+If *y* is a *Vector* object,
 it must support the syntax
-$codei%
-   %y%[%i%]
-%$$
-where $icode i$$ has type $code size_t$$ with value less than 9.
-This must return a $code double$$ value corresponding to the $th i$$
-element of the vector $icode y$$.
-This is the only requirement of the type $icode Vector$$.
 
-$head ok$$
-The return value $icode ok$$ has prototype
-$codei%
-   bool %ok%
-%$$
-It is true, if the gradient $icode g$$
+   *y* [ *i* ]
+
+where *i* has type ``size_t`` with value less than 9.
+This must return a ``double`` value corresponding to the *i*-th
+element of the vector *y* .
+This is the only requirement of the type *Vector* .
+
+ok
+**
+The return value *ok* has prototype
+
+   ``bool`` *ok*
+
+It is true, if the gradient *g*
 passes the test and false otherwise.
+{xrst_toc_hidden
+   xrst/det_grad_33_hpp.xrst
+}
 
-$children%
-   omh/det_grad_33_hpp.omh
-%$$
-
-$head Source Code$$
+Source Code
+***********
 The file
-$cref det_grad_33.hpp$$
+:ref:`det_grad_33.hpp-name`
 contains the source code for this template function.
 
-$end
+{xrst_end det_grad_33}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

@@ -6,31 +6,28 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin bool_valued$$
-$spell
-   Bool
-$$
+{xrst_begin bool_valued}
 
-
-$section Bool Valued Operations and Functions with AD Arguments$$
-
-$children%
-   include/cppad/core/compare.hpp%
-   include/cppad/core/near_equal_ext.hpp%
-   include/cppad/core/bool_fun.hpp%
-   include/cppad/core/con_dyn_var.hpp%
+Bool Valued Operations and Functions with AD Arguments
+######################################################
+{xrst_toc_hidden
+   include/cppad/core/compare.hpp
+   include/cppad/core/near_equal_ext.hpp
+   include/cppad/core/bool_fun.hpp
+   include/cppad/core/con_dyn_var.hpp
    include/cppad/core/equal_op_seq.hpp
-%$$
-$table
-$rref Compare$$
-$rref near_equal_ext$$
-$rref bool_fun$$
-$rref con_dyn_var$$
-$rref EqualOpSeq$$
-$tend
+}
 
+.. csv-table::
+   :widths: auto
 
-$end
+   Compare,:ref:`Compare-title`
+   near_equal_ext,:ref:`near_equal_ext-title`
+   bool_fun,:ref:`bool_fun-title`
+   con_dyn_var,:ref:`con_dyn_var-title`
+   EqualOpSeq,:ref:`EqualOpSeq-title`
+
+{xrst_end bool_valued}
 */
 
 # include <cppad/core/compare.hpp>

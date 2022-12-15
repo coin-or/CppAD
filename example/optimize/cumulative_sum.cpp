@@ -3,14 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin optimize_cumulative_sum.cpp$$
+{xrst_begin optimize_cumulative_sum.cpp}
 
-$section Optimize Cumulative Sum Operations: Example and Test$$
+Optimize Cumulative Sum Operations: Example and Test
+####################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end optimize_cumulative_sum.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

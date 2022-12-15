@@ -3,10 +3,10 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-#! /bin/bash 
+#! /bin/bash
 #
 message="
-usage: adolc_usrparms.sh <dir> 
+usage: adolc_usrparms.sh <dir>
        adolc_usrparms.sh <dir> <bufsize> <tbufsize> show
        adolc_usrparms.sh <dir> <bufsize> <tbufsize> modify
 
@@ -14,20 +14,20 @@ The frist usage prints the value of BUFSIZE and TBUFSIZE.
 The second usage show how the usrparms.h file would be modified.
 The third usage actually modifies the file.
 
-<dir>: 
-The distribution directory corresponding to adolc; e.g., adolc-1.10.2. 
+<dir>:
+The distribution directory corresponding to adolc; e.g., adolc-1.10.2.
 The file where the buffer sizes are specified is <dir>/adolc/usrparms.h.
 
-BUFSIZE: 
+BUFSIZE:
 Buffer size for tapes.
 
-TBUFSIZE: 
+TBUFSIZE:
 Buffer size for temporary Taylor store.
 
-<bufsize>: 
+<bufsize>:
 the value we are changing the Adolc BUFSIZE parameter to.
 
-<tbufsize>: 
+<tbufsize>:
 the value we are changing the Adolc TBUFSIZE parameter to.
 "
 if [ "$1" == "" ]
@@ -40,12 +40,12 @@ if [ ! -e $file ]
 then
    echo "adolc_usrparms.sh: cannot find the file $file"
    exit 1
-fi 
+fi
 #
 # case where we print the value of BUFSIZE and  TBUFSIZE
 if [ "$2" == "" ]
 then
-   grep "^#define T*BUFSIZE" < $file  
+   grep "^#define T*BUFSIZE" < $file
    exit 0
 fi
 same="/* Previous: \1\2 */ \3\n#define"

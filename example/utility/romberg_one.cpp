@@ -4,17 +4,20 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin romberg_one.cpp$$
-$spell
-   Romberg
-$$
+{xrst_begin romberg_one.cpp}
+{xrst_spell
+   romberg
+}
 
-$section One Dimensional Romberg Integration: Example and Test$$
+One Dimensional Romberg Integration: Example and Test
+#####################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end romberg_one.cpp}
 */
 // BEGIN C++
 

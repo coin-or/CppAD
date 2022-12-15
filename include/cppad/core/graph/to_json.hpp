@@ -14,50 +14,54 @@
 
 /*
 ------------------------------------------------------------------------------
-$begin to_json$$
-$spell
-   Json
-   cpp
-$$
+{xrst_begin to_json}
 
-$section Json AD Graph Corresponding to an ADFun Object$$
+Json AD Graph Corresponding to an ADFun Object
+##############################################
 
-$head Syntax$$
-$codei%
-   %json% = %fun%.to_json()
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+   *json* = *fun* . ``to_json`` ()
 
-$head fun$$
-is the $cref/ADFun/adfun/$$ object.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head json$$
-The return value of $icode json$$ is a
-$cref json_ad_graph$$ representation of the corresponding function.
+fun
+***
+is the :ref:`adfun-name` object.
 
-$head Base$$
-is the type corresponding to this $cref/ADFun/adfun/$$ object;
-i.e., its calculations are done using the type $icode Base$$.
+json
+****
+The return value of *json* is a
+:ref:`json_ad_graph-name` representation of the corresponding function.
 
-$head RecBase$$
-in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
 
-$head Restrictions$$
-The $code to_json$$ routine is not yet implement for some
-possible $cref ADFun$$ operators; see
-$cref/missing operators/graph_op_enum/Missing Operators/$$.
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
 
-$children%
+Restrictions
+************
+The ``to_json`` routine is not yet implement for some
+possible :ref:`ADFun-name` operators; see
+:ref:`graph_op_enum@Missing Operators` .
+{xrst_toc_hidden
    example/json/to_json.cpp
-%$$
-$head Example$$
-The file $cref to_json.cpp$$ is an example and test of this operation.
+}
+Example
+*******
+The file :ref:`to_json.cpp-name` is an example and test of this operation.
 
-$end
+{xrst_end to_json}
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>

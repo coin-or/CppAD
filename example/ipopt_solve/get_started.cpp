@@ -5,39 +5,42 @@
 
 /*
 
-$begin ipopt_solve_get_started.cpp$$
-$spell
-   cppad_nlp
-   IpoptDir
-   CppAD
-   cmake
-$$
+{xrst_begin ipopt_solve_get_started.cpp}
+{xrst_spell
+   lc
+}
 
-$section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
+Nonlinear Programming Using CppAD and Ipopt: Example and Test
+#############################################################
 
-$head Purpose$$
-This example program demonstrates how to use $cref ipopt_solve$$ to
+Purpose
+*******
+This example program demonstrates how to use :ref:`ipopt_solve-name` to
 solve the example problem in the Ipopt documentation; i.e., the problem
-$latex \[
-\begin{array}{lc}
-{\rm minimize \; }      &  x_1 * x_4 * (x_1 + x_2 + x_3) + x_3
-\\
-{\rm subject \; to \; } &  x_1 * x_2 * x_3 * x_4  \geq 25
-\\
-                  &  x_1^2 + x_2^2 + x_3^2 + x_4^2 = 40
-\\
-                  &  1 \leq x_1, x_2, x_3, x_4 \leq 5
-\end{array}
-\] $$
 
+.. math::
 
-$head Configuration Requirement$$
+   \begin{array}{lc}
+   {\rm minimize \; }      &  x_1 * x_4 * (x_1 + x_2 + x_3) + x_3
+   \\
+   {\rm subject \; to \; } &  x_1 * x_2 * x_3 * x_4  \geq 25
+   \\
+                     &  x_1^2 + x_2^2 + x_3^2 + x_4^2 = 40
+   \\
+                     &  1 \leq x_1, x_2, x_3, x_4 \leq 5
+   \end{array}
+
+Configuration Requirement
+*************************
 This example will be compiled and tested provided
-$cref/include_ipopt/cmake/include_ipopt/$$ is on the cmake command line.
+:ref:`cmake@include_ipopt` is on the cmake command line.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ipopt_solve_get_started.cpp}
 */
 // BEGIN C++
 # include <cppad/ipopt/solve.hpp>

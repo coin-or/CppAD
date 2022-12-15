@@ -4,44 +4,47 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_four_norm_sq.cpp$$
-$spell
-   sq
-   bool
-   enum
-$$
+{xrst_begin atomic_four_norm_sq.cpp}
+{xrst_spell
+   euclidean
+}
 
-$section Atomic Euclidean Norm Squared: Example and Test$$
+Atomic Euclidean Norm Squared: Example and Test
+###############################################
 
-$head Function$$
-This example demonstrates using $cref atomic_four$$
+Function
+********
+This example demonstrates using :ref:`atomic_four-name`
 to define the operation
-$latex g : \B{R}^n \rightarrow \B{R}$$ where
-$latex \[
+:math:`g : \B{R}^n \rightarrow \B{R}` where
+
+.. math::
+
    g(x) =  x_0^2 + \cdots + x_{n-1}^2
-\] $$
 
-$head Purpose$$
+Purpose
+*******
 This atomic function demonstrates the following cases:
-$list number$$
-an arbitrary number of arguments $icode n$$
-$lnext
-zero and first order forward mode.
-$lnext
-first order derivatives using reverse mode.
-$lend
 
-$head Define Atomic Function$$
-$srcthisfile%0
-   %// BEGIN_DEFINE_ATOMIC_FUNCTION%// END_DEFINE_ATOMIC_FUNCTION%
-1%$$
+#. an arbitrary number of arguments *n*
+#. zero and first order forward mode.
+#. first order derivatives using reverse mode.
 
-$head Use Atomic Function$$
-$srcthisfile%0
-   %// BEGIN_USE_ATOMIC_FUNCTION%// END_USE_ATOMIC_FUNCTION%
-1%$$
+Define Atomic Function
+**********************
+{xrst_literal
+   // BEGIN_DEFINE_ATOMIC_FUNCTION
+   // END_DEFINE_ATOMIC_FUNCTION
+}
 
-$end
+Use Atomic Function
+*******************
+{xrst_literal
+   // BEGIN_USE_ATOMIC_FUNCTION
+   // END_USE_ATOMIC_FUNCTION
+}
+
+{xrst_end atomic_four_norm_sq.cpp}
 */
 # include <cppad/cppad.hpp>
 

@@ -12,70 +12,47 @@
 # include <cppad/utility/thread_alloc.hpp>
 
 /*
-$begin base_complex.hpp$$
-$spell
-   azmul
-   expm1
-   atanh
-   acosh
-   asinh
-   endif
-   eps
-   abs_geq
-   Rel
-   Lt Le Eq Ge Gt
-   imag
-   gcc
+{xrst_begin base_complex.hpp}
+{xrst_spell
+   complier
+   invocations
    isnan
-   cppad.hpp
-   sqrt
-   exp
-   cos
-   std
-   const
-   CppAD
-   Op
-   inline
-   enum
-   undef
-   acos
-   asin
-   atan
-   erf
-   erfc
-   Cond
-   namespace
-   bool
-$$
+}
 
+Enable use of AD<Base> where Base is std::complex<double>
+#########################################################
+{xrst_toc_hidden
+   example/general/complex_poly.cpp
+}
+Example
+*******
+The file :ref:`complex_poly.cpp-name` contains an example use of
+``std::complex<double>`` type for a CppAD *Base* type.
 
-$section Enable use of AD<Base> where Base is std::complex<double>$$
-
-$children%example/general/complex_poly.cpp
-%$$
-$head Example$$
-The file $cref complex_poly.cpp$$ contains an example use of
-$code std::complex<double>$$ type for a CppAD $icode Base$$ type.
-
-$head Include Order$$
-This file is included before $code <cppad/cppad.hpp>$$
+Include Order
+*************
+This file is included before ``<cppad/cppad.hpp>``
 so it is necessary to define the error handler
 in addition to including
-$cref/base_require.hpp/base_require/Include Order/$$
-$srccode%cpp% */
+:ref:`base_require.hpp<base_require@Include Order>`
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <limits>
 # include <complex>
 # include <cppad/base_require.hpp>
 # include <cppad/core/cppad_assert.hpp>
 
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CondExpOp$$
-The type $code std::complex<double>$$ does not supports the
-$code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators; see
-$cref/not ordered/base_cond_exp/CondExpTemplate/Not Ordered/$$.
-Hence its $code CondExpOp$$ function is defined by
-$srccode%cpp% */
+CondExpOp
+*********
+The type ``std::complex<double>`` does not supports the
+``<`` , ``<=`` , ``==`` , ``>=`` , and ``>`` operators; see
+:ref:`base_cond_exp@CondExpTemplate@Not Ordered` .
+Hence its ``CondExpOp`` function is defined by
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline std::complex<double> CondExpOp(
       enum CppAD::CompareOp      cop        ,
@@ -91,24 +68,30 @@ namespace CppAD {
       return std::complex<double>(0);
    }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CondExpRel$$
-The $cref/CPPAD_COND_EXP_REL/base_cond_exp/CondExpRel/$$ macro invocation
-$srccode%cpp% */
+CondExpRel
+**********
+The :ref:`CPPAD_COND_EXP_REL<base_cond_exp@CondExpRel>` macro invocation
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_COND_EXP_REL( std::complex<double> )
 }
-/* %$$
-used $code CondExpOp$$ above to
-define $codei%CondExp%Rel%$$ for $code std::complex<double>$$ arguments
-and $icode%Rel%$$ equal to
-$code Lt$$, $code Le$$, $code Eq$$, $code Ge$$, and $code Gt$$.
+/* {xrst_code}
+{xrst_spell_on}
+used ``CondExpOp`` above to
+define ``CondExp`` *Rel* for ``std::complex<double>`` arguments
+and *Rel* equal to
+``Lt`` , ``Le`` , ``Eq`` , ``Ge`` , and ``Gt`` .
 
-$head EqualOpSeq$$
+EqualOpSeq
+**********
 Complex numbers do not carry operation sequence information.
 Thus they are equal in this sense if and only if there values are equal.
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool EqualOpSeq(
       const std::complex<double> &x ,
@@ -116,12 +99,15 @@ namespace CppAD {
    {  return x == y;
    }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Identical$$
+Identical
+*********
 Complex numbers do not carry operation sequence information.
 Thus they are all parameters so the identical functions just check values.
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool IdenticalCon(const std::complex<double> &x)
    {  return true; }
@@ -133,11 +119,14 @@ namespace CppAD {
       const std::complex<double> &x, const std::complex<double> &y)
    {  return (x == y); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Ordered$$
+Ordered
+*******
 Complex types do not support comparison operators,
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # undef  CPPAD_USER_MACRO
 # define CPPAD_USER_MACRO(Fun)                                     \
 inline bool Fun(const std::complex<double>& x)                     \
@@ -158,49 +147,61 @@ namespace CppAD {
       const std::complex<double>& y )
    {  return std::abs(x) >= std::abs(y); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Integer$$
+Integer
+*******
 The implementation of this function must agree
 with the CppAD user specifications for complex arguments to the
-$cref/Integer/Integer/x/Complex Types/$$ function:
-$srccode%cpp% */
+:ref:`Integer<Integer@x@Complex Types>` function:
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline int Integer(const std::complex<double> &x)
    {  return static_cast<int>( x.real() ); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head azmul$$
-$srccode%cpp% */
+azmul
+*****
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_AZMUL( std::complex<double> )
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head isnan$$
+isnan
+*****
 The gcc 4.1.1 complier defines the function
-$codei%
-   int std::complex<double>::isnan( std::complex<double> %z% )
-%$$
+
+   ``int std::complex<double>::isnan`` ( ``std::complex<double>`` *z*  )
+
 (which is not specified in the C++ 1998 standard ISO/IEC 14882).
 This causes an ambiguity between the function above and the CppAD
-$cref/isnan/nan/$$ template function.
+:ref:`isnan<nan-name>` template function.
 We avoid this ambiguity by defining a non-template version of
 this function in the CppAD namespace.
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool isnan(const std::complex<double>& z)
    {  return (z != z);
    }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Valid Unary Math$$
+Valid Unary Math
+****************
 The following macro invocations define the standard unary
 math functions that are valid with complex arguments and are
-required to use $code AD< std::complex<double> >$$.
-$srccode%cpp% */
+required to use ``AD< std::complex<double> >`` .
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cos)
    CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cosh)
@@ -210,13 +211,16 @@ namespace CppAD {
    CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sinh)
    CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sqrt)
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Invalid Unary Math$$
+Invalid Unary Math
+******************
 The following macro definition and invocations define the standard unary
 math functions that are invalid with complex arguments and are
-required to use $code AD< std::complex<double> >$$.
-$srccode%cpp% */
+required to use ``AD< std::complex<double> >`` .
+{xrst_spell_off}
+{xrst_code cpp} */
 # undef  CPPAD_USER_MACRO
 # define CPPAD_USER_MACRO(Fun)                                     \
 inline std::complex<double> Fun(const std::complex<double>& x)     \
@@ -242,38 +246,49 @@ namespace CppAD {
    CPPAD_USER_MACRO(expm1)
    CPPAD_USER_MACRO(log1p)
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head pow $$
-The following defines a $code CppAD::pow$$ function that
-is required to use $code AD< std::complex<double> >$$:
-$srccode%cpp% */
+pow
+***
+The following defines a ``CppAD::pow`` function that
+is required to use ``AD< std::complex<double> >`` :
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline std::complex<double> pow(
       const std::complex<double> &x ,
       const std::complex<double> &y )
    {  return std::pow(x, y); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head numeric_limits$$
-The following defines the CppAD $cref numeric_limits$$
-for the type $code std::complex<double>$$:
-$srccode%cpp% */
+numeric_limits
+**************
+The following defines the CppAD :ref:`numeric_limits-name`
+for the type ``std::complex<double>`` :
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_NUMERIC_LIMITS(double, std::complex<double>)
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head to_string$$
-The following defines the function CppAD $cref to_string$$
-for the type $code std::complex<double>$$:
-$srccode%cpp% */
+to_string
+*********
+The following defines the function CppAD :ref:`to_string-name`
+for the type ``std::complex<double>`` :
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_TO_STRING(std::complex<double>)
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end base_complex.hpp}
 */
 # undef  CPPAD_USER_MACRO_ONE
 # define CPPAD_USER_MACRO_ONE(Fun)                                 \

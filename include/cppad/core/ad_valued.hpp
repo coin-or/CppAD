@@ -6,24 +6,25 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ADValued$$
-$spell
-$$
+{xrst_begin ADValued}
 
+AD Valued Operations and Functions
+##################################
 
-$section AD Valued Operations and Functions$$
+{xrst_comment atomic.omh includes atomic_two.hpp}
 
-$comment atomic.omh includes atomic_two.hpp$$
-$childtable%
-   include/cppad/core/arithmetic.hpp%
-   include/cppad/core/standard_math.hpp%
-   include/cppad/core/cond_exp.hpp%
-   include/cppad/core/discrete/user.omh%
-   include/cppad/core/numeric_limits.hpp%
-   include/cppad/core/atomic/atomic.omh
-%$$
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/arithmetic.hpp
+   include/cppad/core/standard_math.hpp
+   include/cppad/core/cond_exp.hpp
+   include/cppad/core/discrete/user.xrst
+   include/cppad/core/numeric_limits.hpp
+   include/cppad/core/atomic/atomic.xrst
+}
 
-$end
+{xrst_end ADValued}
 */
 
 // include MathOther.h after CondExp.h because some MathOther.h routines use

@@ -5,77 +5,80 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin azmul$$
-$spell
-   azmul
-   const
-   namespace
-   Vec
-$$
+{xrst_begin azmul}
+{xrst_spell
+   ieee
+}
 
-$section Absolute Zero Multiplication$$
+Absolute Zero Multiplication
+############################
 
-$head Syntax$$
-$icode%z% = azmul(%x%, %y%)%$$
+Syntax
+******
+*z* = ``azmul`` ( *x* , *y* )
 
-$head Purpose$$
+Purpose
+*******
 Evaluates multiplication with an absolute zero
 for any of the possible types listed below.
 The result is given by
-$latex \[
-z = \left\{ \begin{array}{ll}
-   0          & {\rm if} \; x = 0 \\
-   x \cdot y  & {\rm otherwise}
-\end{array} \right.
-\] $$
-Note if $icode x$$ is zero and $icode y$$ is infinity,
+
+.. math::
+
+   z = \left\{ \begin{array}{ll}
+      0          & {\rm if} \; x = 0 \\
+      x \cdot y  & {\rm otherwise}
+   \end{array} \right.
+
+Note if *x* is zero and *y* is infinity,
 ieee multiplication would result in not a number whereas
-$icode z$$ would be zero.
+*z* would be zero.
 
-$head Base$$
-If $icode Base$$ satisfies the
-$cref/base type requirements/base_require/$$
-and arguments $icode x$$, $icode y$$ have prototypes
-$codei%
-   const %Base%& %x%
-   const %Base%& %y%
-%$$
-then the result $icode z$$ has prototype
-$codei%
-   %Base% %z%
-%$$
+Base
+****
+If *Base* satisfies the
+:ref:`base type requirements<base_require-name>`
+and arguments *x* , *y* have prototypes
 
-$head AD<Base>$$
-If the arguments $icode x$$, $icode y$$ have prototype
-$codei%
-   const AD<%Base%>& %x%
-   const AD<%Base%>& %y%
-%$$
-then the result $icode z$$ has prototype
-$codei%
-   AD<%Base%> %z%
-%$$
+| |tab| ``const`` *Base* & *x*
+| |tab| ``const`` *Base* & *y*
 
-$head VecAD<Base>$$
-If the arguments $icode x$$, $icode y$$ have prototype
-$codei%
-   const VecAD<%Base%>::reference& %x%
-   const VecAD<%Base%>::reference& %y%
-%$$
-then the result $icode z$$ has prototype
-$codei%
-   AD<%Base%> %z%
-%$$
+then the result *z* has prototype
 
-$head Example$$
-$children%
+   *Base* *z*
+
+AD<Base>
+********
+If the arguments *x* , *y* have prototype
+
+| |tab| ``const AD<`` *Base* >& *x*
+| |tab| ``const AD<`` *Base* >& *y*
+
+then the result *z* has prototype
+
+   ``AD<`` *Base* > *z*
+
+VecAD<Base>
+***********
+If the arguments *x* , *y* have prototype
+
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *y*
+
+then the result *z* has prototype
+
+   ``AD<`` *Base* > *z*
+
+Example
+*******
+{xrst_toc_hidden
    example/general/azmul.cpp
-%$$
+}
 The file
-$cref azmul.cpp$$
+:ref:`azmul.cpp-name`
 is an examples and tests of this function.
 
-$end
+{xrst_end azmul}
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

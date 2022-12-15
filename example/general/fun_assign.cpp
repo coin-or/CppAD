@@ -4,14 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin fun_assign.cpp$$
+{xrst_begin fun_assign.cpp}
 
-$section ADFun Assignment: Example and Test$$
+ADFun Assignment: Example and Test
+##################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end fun_assign.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -6,91 +6,95 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin to_string$$
-$spell
-   cppad.hpp
+{xrst_begin to_string}
+{xrst_spell
    long long
-   std
-   const
    ostringstream
-$$
+   withing
+}
 
-$section Convert Certain Types to a String$$
+Convert Certain Types to a String
+#################################
 
-$head Syntax$$
-$codei%# include <cppad/utility/to_string.hpp>
-%$$
-$icode%s% = to_string(%value%)%$$.
+Syntax
+******
 
-$head See Also$$
-$cref base_to_string$$, $cref ad_to_string$$
+   # ``include <cppad/utility/to_string.hpp>``
 
-$head Purpose$$
-This routine is similar to the C++11 routine $code std::to_string$$
+*s* = ``to_string`` ( *value* ) .
+
+See Also
+********
+:ref:`base_to_string-name` , :ref:`ad_to_string-name`
+
+Purpose
+*******
+This routine is similar to the C++11 routine ``std::to_string``
 with the following differences:
-$list number$$
-It works with C++98.
-$lnext
-It has been extended to the fundamental floating point types.
-$lnext
-It has specifications for extending to an arbitrary type; see
-$cref base_to_string$$.
-$lnext
-If $code <cppad/cppad.hpp>$$ is included,
-and it has been extended to a $icode Base$$ type,
-it automatically extends to the
-$cref/AD types above Base/glossary/AD Type Above Base/$$.
-$lnext
-For integer types, conversion to a string is exact.
-For floating point types, conversion to a string yields a value
-that has relative error within machine epsilon.
-$lend
 
-$head value$$
+#. It works with C++98.
+#. It has been extended to the fundamental floating point types.
+#. It has specifications for extending to an arbitrary type; see
+   :ref:`base_to_string-name` .
+#. If ``<cppad/cppad.hpp>`` is included,
+   and it has been extended to a *Base* type,
+   it automatically extends to the
+   :ref:`AD types above Base<glossary@AD Type Above Base>` .
+#. For integer types, conversion to a string is exact.
+   For floating point types, conversion to a string yields a value
+   that has relative error within machine epsilon.
 
-$subhead Integer$$
-The argument $icode value$$ can have the following prototype
-$codei%
-   const %Integer%&  %value%
-%$$
-where $icode Integer$$ is any of the fundamental integer types; e.g.,
-$code short int$$ and $code unsigned long$$.
+value
+*****
+
+Integer
+=======
+The argument *value* can have the following prototype
+
+   ``const`` *Integer* & *value*
+
+where *Integer* is any of the fundamental integer types; e.g.,
+``short int`` and ``unsigned long`` .
 Note that if C++11 is supported by this compilation,
-$code unsigned long long$$ is also a fundamental integer type.
+``unsigned long long`` is also a fundamental integer type.
 
-$subhead Float$$
-The argument $icode value$$ can have the following prototype
-$codei%
-   const %Float%&  %value%
-%$$
-where $icode Float$$ is any of the fundamental floating point types; i.e.,
-$code float$$, $code double$$, and $code long double$$.
+Float
+=====
+The argument *value* can have the following prototype
 
-$head s$$
+   ``const`` *Float* & *value*
+
+where *Float* is any of the fundamental floating point types; i.e.,
+``float`` , ``double`` , and ``long double`` .
+
+s
+*
 The return value has prototype
-$codei%
-   std::string %s%
-%$$
-and contains a representation of the specified $icode value$$.
 
-$subhead Integer$$
-If $icode value$$ is an $codei Integer$$,
-the representation is equivalent to $codei%os% << %value%$$
-where $icode os$$ is an $code std::ostringstream$$.
+   ``std::string`` *s*
 
-$subhead Float$$
-If $icode value$$ is a $codei Float$$,
+and contains a representation of the specified *value* .
+
+Integer
+=======
+If *value* is an ``Integer`` ,
+the representation is equivalent to ``os`` << ``value``
+where *os* is an ``std::ostringstream`` .
+
+Float
+=====
+If *value* is a ``Float`` ,
 enough digits are used in the representation so that
 the result is accurate to withing round off error.
-
-$children%
+{xrst_toc_hidden
    example/utility/to_string.cpp
-%$$
-$head Example$$
-The file $cref to_string.cpp$$
+}
+Example
+*******
+The file :ref:`to_string.cpp-name`
 contains an example and test of this routine.
 
-$end
+{xrst_end to_string}
 */
 # include <limits>
 # include <cmath>

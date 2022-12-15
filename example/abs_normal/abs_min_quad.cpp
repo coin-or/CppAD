@@ -4,31 +4,40 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin abs_min_quad.cpp$$
+{xrst_begin abs_min_quad.cpp}
+{xrst_spell
+   minimizer
+}
 
-$section abs_min_quad: Example and Test$$
+abs_min_quad: Example and Test
+##############################
 
-$head Purpose$$
+Purpose
+*******
 The function
-$latex f : \B{R}^3 \rightarrow \B{R}$$ defined by
-$latex \[
-f( x_0, x_1  )
-=
-( x_0^2 + x_1^2 ) / 2 +  | x_0 - 5 | + | x_1 + 5 |
-\] $$
-For this case, the $cref abs_min_quad$$ object should be equal
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+
+   f( x_0, x_1  )
+   =
+   ( x_0^2 + x_1^2 ) / 2 +  | x_0 - 5 | + | x_1 + 5 |
+
+For this case, the :ref:`abs_min_quad-name` object should be equal
 to the function itself.
 In addition, the function is convex and
-$cref abs_min_quad$$ should find its global minimizer.
+:ref:`abs_min_quad-name` should find its global minimizer.
 The minimizer of this function is
-$latex x_0 = 1$$, $latex x_1 = -1$$.
+:math:`x_0 = 1`, :math:`x_1 = -1`.
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN C++%// END C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end abs_min_quad.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

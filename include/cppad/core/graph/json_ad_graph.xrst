@@ -1,0 +1,370 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin json_ad_graph}
+{xrst_spell
+   acyclic
+   np
+   nx
+   str
+   usages
+}
+
+Json Representation of an AD Graph
+##################################
+
+See Also
+********
+:ref:`cpp_ad_graph-title`.
+
+Node Indices
+************
+The nodes in an AD graph have the following order:
+::
+
+      p_0 , ... ,  p_{np-1} ,
+      x_0 , ... ,  x_{nx-1} ,
+      c_0 , ... ,  c_{nc-1} ,
+      r_0 , ... ,  r_{no-1}
+
+p
+=
+The sub-vector
+::
+
+      p_0, ... , p_{np-1}
+
+is the independent dynamic parameter vector;
+see :ref:`json_ad_graph@dynamic_ind_vec@n_dynamic_ind` .
+The node index corresponding to *p_0* is ``1`` .
+
+x
+=
+The sub-vector
+::
+
+      x_0, ... , x_{nx-1}
+
+is the independent variable vector;
+see :ref:`json_ad_graph@variable_ind_vec@n_variable_ind` .
+The node index corresponding to *x_0* is
+the index corresponding to *p_0* plus *np* .
+
+c
+=
+The sub-vector
+::
+
+      c_0, ... , c_{nc-1}
+
+is the constant parameter vector;
+see :ref:`json_ad_graph@constant_vec` .
+The node index corresponding to *c_0* is
+the index corresponding to *x_0* plus *nx* .
+
+r_i
+===
+For *i* =0,..., *no* ``-1``
+the sub-vector *r_i*
+is the result vector for the *i*-th operator usage;
+see :ref:`json_ad_graph@op_usage_vec` .
+The value *no* is the number of operator usages; see
+:ref:`json_ad_graph@op_usage_vec@n_usage` below.
+All of the arguments for an the *i*-th operator are nodes
+that come before the first element of *r_i* .
+The node index corresponding to the first element of *r_0* is
+the index corresponding to *c_0* plus *nc* .
+For *i*  > 0 ,
+The node index corresponding to the first element of *r_i* is
+the index corresponding to the first element of *r_* { *i-1* } plus
+the number of results for the *i-1*-th operator.
+
+Format
+******
+A complete description of the format for an AD graph is given below.
+For a general description of Json format see
+`Json data types and syntax <https://en.wikipedia.org/wiki/JSON#Data_types_and_syntax>`_.
+
+Token
+*****
+
+White Space
+===========
+Any sequence of white space, except within a string,
+terminates the current token and is otherwise ignored.
+
+Non-Negative Integer
+====================
+A non-negative integer is a non-empty sequence of the following
+characters: ``0123456789`` .
+
+Floating Point Number
+=====================
+A floating point number is a non-empty sequence of the following
+characters: ``0123456789+-eE.`` .
+Note that there can't be any white space between a leading plus
+or minus sign and the rest of the number.
+
+String
+======
+A string starts with the double quote character ``"``
+and includes all the characters until the next double quote.
+The value of a string is the sequence of characters between the
+double quotes.
+Currently there is no support using the double quote
+as part of the value of a string.
+
+Single Character
+================
+The following is a list of the single character tokens:
+
+.. list-table::
+
+   * - Token
+     - Usage
+   * - ``,``
+     - separates entries in a list
+   * - ``:``
+     - separates name from corresponding value
+   * - ``{``
+     - starts a list of name ``:`` value pairs
+   * - ``}``
+     - ends a list of name ``:`` value pairs
+   * - ``[``
+     - starts a list of values
+   * - ``]``
+     - ends a list of values
+
+op_define_vec
+*************
+This vector has the following Json format:
+
+   [ *n_define* , [ *first_op_define* , ..., *last_op_define*  ] ]
+
+where the non-negative integer *n_define*
+is the number of operator definitions in this vector.
+
+op_define
+=========
+The possible operator definitions *op_define* are listed in
+section :ref:`json_graph_op-name` .
+If an operator has a fixed number of arguments, one result, and
+only node indices for arguments, its definition has the form
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : *name* ,
+| |tab| ``"n_arg"`` : *n_arg*
+| }
+
+Otherwise the operator definition has the form
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : *name*
+| }
+
+For example, the following is the *op_define* corresponding to the
+:ref:`json_graph_op@Binary Operators@add` operator:
+
+| {
+| |tab| ``"op_code"`` : *op_code* ,
+| |tab| ``"name"`` : ``"add"`` ,
+| |tab| ``"n_arg"`` :        2
+| }
+
+op_code
+=======
+Note that every operator definition has a *op_code* value.
+These values must start at one and increment by one for each operator
+definition; i.e., the *op_code* for in *first_op_define* is
+``1`` , the value in the next definition is ``2`` , and so on.
+The order of the definitions determines the *op_code* values
+used to specify operators for this computational graph.
+
+n_arg
+=====
+This is the number of argument values for the operator; i.e.,
+the dimension of its domain space.
+If it is present in an operator definition,
+it is the same value for every usage of the operator.
+Otherwise it is specified by the operator usage.
+
+n_result
+========
+This is the number of results for the operator; i.e.,
+the dimension of its range space.
+If *n_arg* is present in an operator definition,
+*n_result* is one for every usage of the operator.
+Otherwise it is specified by the operator usage.
+
+op_usage
+********
+Each operation usage
+has the following information:
+
+n_arg In Definition
+===================
+If *n_arg* is present in an operator definition,
+it is not in a corresponding *op_usage* which as the form
+
+   [ *op_code* , *first_arg* , ..., *last_arg*  ]
+
+n_arg Not In Definition
+=======================
+If *n_arg* is not in an operator definition,
+it is in a corresponding *op_usage* .
+If there are no strings in a corresponding usage, it has the form
+
+   [ *op_code* , *n_result* , *n_arg* , [ *first_arg* , ..., *last_arg*  ] ]
+
+Strings In Usage
+================
+If *n_arg* is not in an operator definition,
+and there are strings in a corresponding usage,
+a corresponding usage has the form
+
+| |tab| [ *op_code* , *first_str* , ..., *last_str* , *n_result* , *n_arg* ,
+| |tab| |tab| [ *first_arg* , ..., *last_arg*  ]
+| |tab| ]
+
+where *first_str* ..., *last_str* ,
+are a fixed number of strings that are part of the corresponding operator.
+
+first_arg, ..., last_arg
+========================
+The values *first_arg* , ..., *last_arg* ,
+are the node indices corresponding to each of the arguments for this operator.
+They must be less than the node index corresponding to the first
+result for this operator; see
+:ref:`json_ad_graph@Node Indices@r_i` above.
+They specify which previous results (results before this operator in the graph)
+correspond to each of the arguments to this operator.
+As a consequence, there cannot be any cycles in the graph where
+the operators are represented by arcs from the argument to the result nodes;
+i.e., the graph is acyclic.
+
+dynamic_ind_vec
+***************
+This is the independent dynamic parameter vector
+(called *p* above); see
+:ref:`Independent@dynamic` .
+The function can depend on these parameters,
+but no derivatives are computed with respect to these parameters.
+
+n_dynamic_ind
+=============
+We use the non-negative integer *n_dynamic_ind*
+for the number of elements in this vector
+(called *np* above).
+
+variable_ind_vec
+****************
+This is the independent variable vector
+(called *x* above); see
+:ref:`Independent@x` .
+The function can depend on these variable and
+derivatives can be computed  with respect to these variables.
+
+n_variable_ind
+==============
+We use the non-negative integer *n_variable_ind*
+for the number of element in this vector
+(called *nx* above).
+
+constant_vec
+************
+This is the constant parameter vector (called *c* above).
+These parameters can be used to define the function and cannot change.
+The Json format for *constant_vec* is
+
+   [ *n_constant* , [ *first_constant* , ..., *last_constant*  ] ]
+
+Each of the elements of this vector,
+e.g., *first_constant* ,
+is a :ref:`json_ad_graph@Token@Floating Point Number`
+specifying the value for the corresponding node.
+
+n_constant
+==========
+The non-negative integer *n_constant*
+is the number of elements in this vector
+(called *nc* above).
+
+op_usage_vec
+************
+The Jason format for an *op_usage_vec* is
+
+   [ *n_usage* , [ *first_op_usage* , ..., *last_op_usage*  ] ]
+
+Each of the elements of this vector,
+e.g. *first_op_usage* ,
+is an :ref:`json_ad_graph@op_usage` .
+
+n_usage
+=======
+The non-negative integer *n_usage*
+is the number of operator usages (called *no* above).
+
+dependent_vec
+*************
+This is the vector of dependent variable node indices.
+This identifies which nodes in the graph correspond to dependent variables.
+The Json format for *dependent_vec* is
+
+   [ *n_dependent* , [ *first_dependent* , ..., *last_dependent*  ] ]
+
+Each of the elements of this vector,
+e.g. *first_dependent* ,
+is a :ref:`json_ad_graph@Token@Non-Negative Integer`
+corresponding to a node index in the graph.
+
+n_dependent
+===========
+The non-negative integer *n_dependent*
+is the number of elements in this vector.
+
+AD Graph
+********
+Each operator corresponds to a set of arcs from its argument nodes
+to its result nodes.
+The graph is acyclic; see
+:ref:`json_ad_graph@op_usage@first_arg, ..., last_arg` .
+
+function_name
+=============
+A *function_name* is a
+:ref:`json_ad_graph@Token@String` that is used to identify
+the function.
+
+function
+========
+The Json AD graph representation of a function is
+
+| {
+| |tab| ``"function_name"`` : *function_name* ,
+| |tab| ``"op_define_vec"`` : *op_define_vec* ,
+| |tab| ``"n_dynamic_ind"`` : *n_dynamic_ind* ,
+| |tab| ``"n_variable_ind"`` : *n_variable_ind* ,
+| |tab| ``"constant_vec"`` : *constant_vec* ,
+| |tab| ``"op_usage_vec"`` : *op_usage_vec* ,
+| |tab| ``"dependent_vec"`` : *dependent_vec*
+| }
+
+This represents a the :math:`y = f(x, p)` where
+:math:`p` is the dynamic parameter vector,
+:math:`x` is the independent variable vector, and
+:math:`y` is the dependent variable vector.
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/graph/json_graph_op.xrst
+   include/cppad/core/graph/from_json.hpp
+   include/cppad/core/graph/to_json.hpp
+   example/json/get_started.cpp
+   example/json/sparse.cpp
+}
+
+{xrst_end json_ad_graph}

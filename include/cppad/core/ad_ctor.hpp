@@ -8,67 +8,68 @@
 /*
 ------------------------------------------------------------------------------
 
-$begin ad_ctor$$
-$spell
-   cppad
-   ctor
+{xrst_begin ad_ctor}
+{xrst_spell
    initializes
-   Vec
-   const
-$$
+}
 
+AD Constructors
+###############
 
-$section AD Constructors $$
+Syntax
+******
 
-$head Syntax$$
-$codei%AD<%Base%> %ay%()
-%$$
-$codei%AD<%Base%> %ay%(%x%)
-%$$
+| ``AD<`` *Base* > *ay* ()
+| ``AD<`` *Base* > *ay* ( *x* )
 
-$head Purpose$$
-creates a new $codei%AD<%Base%>%$$ object $icode ay$$
+Purpose
+*******
+creates a new ``AD<`` *Base* > object *ay*
 and initializes it as a
-equal to $icode x$$.
+equal to *x* .
 
-$head x$$
+x
+*
 
-$subhead implicit$$
-There is an implicit constructor where $icode x$$ has prototype
-$codei%
-   const VecAD<%Base%>& %x%
-%$$
-There also is an implicit constructor where $icode x$$ has prototype
-$codei%
-   const %Base%& %x%
-%$$
-In this case, $icode ay$$ is a
-$cref/constant parameter/glossary/Parameter/Constant/$$
+implicit
+========
+There is an implicit constructor where *x* has prototype
 
-$subhead explicit$$
-There is an explicit constructor where $icode x$$ has prototype
-$codei%
-   const %Type%& %x%
-%$$
+   ``const VecAD<`` *Base* >& *x*
+
+There also is an implicit constructor where *x* has prototype
+
+   ``const`` *Base* & *x*
+
+In this case, *ay* is a
+:ref:`constant parameter<glossary@Parameter@Constant>`
+
+explicit
+========
+There is an explicit constructor where *x* has prototype
+
+   ``const`` *Type* & *x*
+
 for any type that has an explicit constructor of the form
-$icode%Base%(%x%)%$$.
-In this case, $icode ay$$ is a
-$cref/constant parameter/glossary/Parameter/Constant/$$
+*Base* ( *x* ) .
+In this case, *ay* is a
+:ref:`constant parameter<glossary@Parameter@Constant>`
 
-$head ay$$
-The target $icode ay$$ has prototype
-$codei%
-   AD<%Base%> %ay%
-%$$
+ay
+**
+The target *ay* has prototype
 
-$head Example$$
-$children%
+   ``AD<`` *Base* > *ay*
+
+Example
+*******
+{xrst_toc_hidden
    example/general/ad_ctor.cpp
-%$$
-The files $cref ad_ctor.cpp$$ contain examples and tests of these operations.
+}
+The files :ref:`ad_ctor.cpp-name` contain examples and tests of these operations.
 It test returns true if it succeeds and false otherwise.
 
-$end
+{xrst_end ad_ctor}
 ------------------------------------------------------------------------------
 */
 

@@ -6,58 +6,56 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin set_union$$
-$spell
-   set
-   const
-   std
-   cppad
-   hpp
-$$
+{xrst_begin set_union}
 
-$section Union of Standard Sets$$
+Union of Standard Sets
+######################
 
-$head Syntax$$
-$codei%# include <cppad/utility/set_union.hpp>
-%$$
-$icode%result% = set_union(%left%, %right%)%$$
+Syntax
+******
 
-$head Purpose$$
+   # ``include <cppad/utility/set_union.hpp>``
+
+*result* = ``set_union`` ( *left* , *right* )
+
+Purpose
+*******
 This is a simplified (and restricted) interface to
-the $code std::union$$ operation.
+the ``std::union`` operation.
 
-$head Element$$
+Element
+*******
 This is the type of the elements of the sets.
 
-$head left$$
+left
+****
 This argument has prototype
-$codei%
-   const std::set<%Element%>& %left%
-%$$
 
-$head right$$
+   ``const std::set<`` *Element* >& *left*
+
+right
+*****
 This argument has prototype
-$codei%
-   const std::set<%Element%>& %right%
-%$$
 
-$head result$$
+   ``const std::set<`` *Element* >& *right*
+
+result
+******
 The return value has prototype
-$codei%
-   std::set<%Element%>& %result%
-%$$
-It contains the union of $icode left$$ and $icode right$$.
+
+   ``std::set<`` *Element* >& *result*
+
+It contains the union of *left* and *right* .
 Note that C++11 detects that the return value is a temporary
 and uses it for the result instead of making a separate copy.
-
-$children%
+{xrst_toc_hidden
    example/utility/set_union.cpp
-%$$
-$head Example$$
-The file $cref set_union.cpp$$ contains an example and test of this
+}
+Example
+*******
+The file :ref:`set_union.cpp-name` contains an example and test of this
 
-
-$end
+{xrst_end set_union}
 */
 
 # include <set>

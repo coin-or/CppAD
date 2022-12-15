@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin Appendix}
+
+Appendix
+########
+
+Contents
+********
+{xrst_toc_table
+   xrst/appendix/faq.xrst
+   xrst/appendix/directory.xrst
+   xrst/appendix/glossary.xrst
+   xrst/appendix/bib.xrst
+   xrst/appendix/wish_list.xrst
+   xrst/appendix/whats_new/whats_new.xrst
+   xrst/appendix/deprecated/deprecated.xrst
+   test_more/compare_c/CMakeLists.txt
+   xrst/appendix/numeric_ad.xrst
+   xrst/appendix/addon.xrst
+   xrst/appendix/license.xrst
+}
+
+{xrst_end Appendix}

@@ -6,75 +6,75 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin new_dynamic$$
-$spell
-   const
-   Taylor
-   cpp
-   dyn
-   ind
-$$
+{xrst_begin new_dynamic}
 
-$section Change the Dynamic Parameters$$
+Change the Dynamic Parameters
+#############################
 
-$head Syntax$$
-$icode%f%.new_dynamic(%dynamic%)%$$
+Syntax
+******
+*f* . ``new_dynamic`` ( *dynamic* )
 
-$head Purpose$$
+Purpose
+*******
 Often one is only interested in computing derivatives with respect
 to a subset of arguments to a function.
 In this case, it is easier to make all the arguments to the function
-$cref/independent variables/glossary/Tape/Independent Variable/$$.
+:ref:`independent variables<glossary@Tape@Independent Variable>` .
 It is more efficient,
 will use less memory and be faster,
 if the only the argument were are computing derivatives with respect to
 are independent variables and the other arguments are
-$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
-The $code new_dynamic$$ method is used to change the value
-of the dynamic parameters in $icode f$$.
+:ref:`glossary@Parameter@Dynamic` parameters.
+The ``new_dynamic`` method is used to change the value
+of the dynamic parameters in *f* .
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
+f
+*
+The object *f* has prototype
 
-$head dynamic$$
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const`` .
+
+dynamic
+*******
 This argument has prototype
-$codei%
-   const %BaseVector%& %dynamic%
-%$$
-(see $icode BaseVector$$ below).
+
+   ``const`` *BaseVector* & *dynamic*
+
+(see *BaseVector* below).
 It specifies a new value for the independent
-$cref/dynamic/glossary/Parameter/Dynamic/$$ parameters.
+:ref:`glossary@Parameter@Dynamic` parameters.
 It size must be the same as the size of the independent
-$cref/dynamic/Independent/dynamic/$$ parameter vector
-in the call to $code Independent$$ that started
-the recording for $icode f$$; see
-$cref/size_dyn_ind/fun_property/size_dyn_ind/$$.
+:ref:`Independent@dynamic` parameter vector
+in the call to ``Independent`` that started
+the recording for *f* ; see
+:ref:`fun_property@size_dyn_ind` .
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Base$$.
+BaseVector
+**********
+The type *BaseVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
 
-$head Taylor Coefficients$$
+Taylor Coefficients
+*******************
 The Taylor coefficients computed by previous calls to
-$cref/f.Forward/Forward/$$ are lost after this operation; including the
+:ref:`f.Forward<Forward-name>` are lost after this operation; including the
 order zero coefficients (because they may depend on the dynamic parameters).
 In order words;
-$cref/f.size_order/size_order/$$ returns zero directly after
-$icode%f%.new_dynamic%$$ is called.
-
-$children%
+:ref:`f.size_order<size_order-name>` returns zero directly after
+*f* . ``new_dynamic`` is called.
+{xrst_toc_hidden
    example/general/new_dynamic.cpp
-%$$
-$head Example$$
-The file $cref new_dynamic.cpp$$
+}
+Example
+*******
+The file :ref:`new_dynamic.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end new_dynamic}
 */
 # include <cppad/local/sweep/dynamic.hpp>
 

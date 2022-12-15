@@ -3,31 +3,33 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sparsity_sub.cpp$$
-$spell
-   Jac
-   Jacobian
-   Hes
-$$
+{xrst_begin sparsity_sub.cpp}
 
-$section Sparsity Patterns For a Subset of Variables: Example and Test$$
+Sparsity Patterns For a Subset of Variables: Example and Test
+#############################################################
 
-$head See Also$$
-$cref sparse_sub_hes.cpp$$, $cref sub_sparse_hes.cpp$$.
+See Also
+********
+:ref:`sparse_sub_hes.cpp-name` , :ref:`sub_sparse_hes.cpp-name` .
 
-$head ForSparseJac$$
-The routine $cref ForSparseJac$$ is used to compute the
-sparsity for both the full Jacobian (see $icode s$$)
-and a subset of the Jacobian (see $icode s2$$).
+ForSparseJac
+************
+The routine :ref:`ForSparseJac-name` is used to compute the
+sparsity for both the full Jacobian (see *s* )
+and a subset of the Jacobian (see *s2* ).
 
-$head RevSparseHes$$
-The routine $cref RevSparseHes$$ is used to compute both
-sparsity for both the full Hessian (see $icode h$$)
-and a subset of the Hessian (see $icode h2$$).
+RevSparseHes
+************
+The routine :ref:`RevSparseHes-name` is used to compute both
+sparsity for both the full Hessian (see *h* )
+and a subset of the Hessian (see *h2* ).
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end sparsity_sub.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

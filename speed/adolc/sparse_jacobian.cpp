@@ -6,36 +6,20 @@
 # include <cppad/utility/vector.hpp>
 
 /*
-$begin adolc_sparse_jacobian.cpp$$
-$spell
-   const
-   sparsedrivers.cpp
-   colpack
-   boolsparsity
-   adouble
-   int int_n
-   cppad.hpp
-   onetape
-   typedef
-   alloc
-   jac
-   nnz
-   cind
-   bool
-   CppAD
-   adolc
-   sparse_jacobian
-$$
+{xrst_begin adolc_sparse_jacobian.cpp}
 
-$section Adolc Speed: Sparse Jacobian$$
+Adolc Speed: Sparse Jacobian
+############################
 
+Specifications
+**************
+See :ref:`link_sparse_jacobian-name` .
 
-$head Specifications$$
-See $cref link_sparse_jacobian$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -227,6 +211,8 @@ bool link_sparse_jacobian(
    //
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end adolc_sparse_jacobian.cpp}
 */

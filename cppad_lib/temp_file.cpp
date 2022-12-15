@@ -3,31 +3,35 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin temp_file$$
-$spell
+{xrst_begin temp_file}
+{xrst_spell
    mkstemp
-   CppAD
-$$
+}
 
-$section Create a New Empty Temporary File$$
+Create a New Empty Temporary File
+#################################
 
-$head Syntax$$
-$icode%file_name% = temp_file()
-%$$
+Syntax
+******
 
-$head file_name$$
+   *file_name* = ``temp_file`` ()
+
+file_name
+*********
 Is the name of a new temporary file.
-This file did not exist when $code temp_file$$ was called.
+This file did not exist when ``temp_file`` was called.
 It has been created and is empty upon return.
 
-$subhead Empty$$
-This routine failed if the return value $icode file_name$$ is empty.
+Empty
+=====
+This routine failed if the return value *file_name* is empty.
 
-$head Thread Safe$$
-This routine is thread safe when C++17 and $code mkstemp$$ are available
+Thread Safe
+***********
+This routine is thread safe when C++17 and ``mkstemp`` are available
 to CppAD.
 
-$end
+{xrst_end temp_file}
 */
 # include <vector>
 # include <stdio.h>

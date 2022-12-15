@@ -3,14 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin mul.cpp$$
+{xrst_begin mul.cpp}
 
-$section AD Binary Multiplication: Example and Test$$
+AD Binary Multiplication: Example and Test
+##########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end mul.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

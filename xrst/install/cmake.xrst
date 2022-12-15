@@ -1,0 +1,586 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin cmake}
+{xrst_spell
+   ansi
+   autotools
+   bitwise
+   cl
+   colons
+   cstdint
+   cxx
+   datadir
+   docdir
+   dylib
+   exe
+   github
+   gnu
+   gprof
+   grep
+   hsc
+   includedirs
+   libcppad
+   libdirs
+   linker
+   makefile
+   makefiles
+   mingw
+   mkdir
+   msys
+   operands
+   optionally
+   pacman
+   pkgconfig
+   postfix
+   testvector
+   txt
+   uint
+   usr
+   vcvarsall
+   wno
+   wshadow
+   xml
+   yyyy
+   yyyymmdd
+}
+
+Using CMake to Configure CppAD
+##############################
+
+The CMake Program
+*****************
+The cmake program enables one to create a single set of scripts,
+called ``CMakeLists.txt`` ,
+that can be used to test and install a program on Unix, Microsoft, or
+Apple operating systems; see
+`install cmake <http://www.cmake.org/cmake/help/install.html>`_ .
+
+Build Directory
+***************
+Create ``build`` , a subdirectory of the
+:ref:`download@Distribution Directory` ,
+change into the ``build`` .
+
+CMake Command
+*************
+
+Simple
+======
+The simplest version of the ``cmake`` command is
+
+   ``cmake ..``
+
+This assumes that you are starting in the ``build`` directory
+(so that ``..`` refers to the distribution directory).
+The command also assumes that ``cmake`` is in your execution
+path with version greater than or equal 2.8.
+If not, you can put the path to the version of ``cmake``
+in font the command.
+It is suggested that you should start with the simple version of the
+cmake command above and then add options one at a time.
+
+Warning
+=======
+Version 3.10.2 of cmake will generates the following warning if boost
+is not present your system:
+
+| ``CMake Warning at /usr/share/cmake-3.10/Modules/FindBoost.cmake:567`` ( ``message`` ):
+| |tab| ``Imported targets and dependency information not available for Boost version``
+| |tab| ( ``all versions older than 1.33`` )
+| |tab| ...
+
+This is not a problem because CppAD will automatically exclude the
+examples and tests that use boost.
+Newer version of cmake; e.g., 3.13.4, do not generate this warning
+(when boost is not present on your system).
+
+Options
+=======
+The full version of the command, with all its optional arguments is:
+
+| ``cmake``                                                                      \\
+| |tab| ``-D CMAKE_VERBOSE_MAKEFILE`` = *cmake_verbose_makefile*                        \\
+| |tab| ``-D CMAKE_BUILD_TYPE`` = *cmake_build_type*                                    \\
+| |tab| ``-G`` *generator*                                                            \\
+| |tab| \\
+| |tab| ``-D cppad_prefix`` = *cppad_prefix*                                            \\
+| |tab| ``-D cppad_postfix`` = *cppad_postfix*                                          \\
+| |tab| \\
+| |tab| ``-D cmake_install_includedirs`` = *cmake_install_includedirs*                  \\
+| |tab| ``-D cmake_install_libdirs`` = *cmake_install_libdirs*                          \\
+| |tab| \\
+| |tab| ``-D cmake_install_datadir`` = *cmake_install_datadir*                          \\
+| |tab| ``-D cmake_install_docdir`` = *cmake_install_docdir*                            \\
+| |tab| \\
+| |tab| ``-D cmake_defined_ok`` = *cmake_defined_ok*                                    \\
+| |tab| ``-D cmake_needs_dot_slash`` = *cmake_needs_dot_slash*                          \\
+| |tab| \\
+| |tab| ``-D include_adolc`` = *true_or_false*                                          \\
+| |tab| ``-D include_eigen`` = *true_or_false*                                          \\
+| |tab| ``-D include_ipopt`` = *true_or_false*                                          \\
+| |tab| ``-D include_cppadcg`` = *true_or_false*                                        \\
+| |tab| \\
+| |tab| ``-D eigen_prefix`` = *eigen_prefix*
+| |tab| ``-D colpack_prefix`` = *colpack_prefix*                                        \\
+| |tab| ``-D fadbad_prefix`` = *fadbad_prefix*                                          \\
+| |tab| ``-D sacado_prefix`` = *sacado_prefix*                                          \\
+| |tab| \\
+| |tab| ``-D cppad_cxx_flags`` = *cppad_cxx_flags*                                      \\
+| |tab| ``-D cppad_profile_flag`` = *cppad_profile_flag*                                \\
+| |tab| ``-D cppad_testvector`` = *cppad_testvector*                                    \\
+| |tab| ``-D cppad_max_num_threads`` = *cppad_max_num_threads*                          \\
+| |tab| ``-D cppad_tape_id_type`` = *cppad_tape_id_type*                                \\
+| |tab| ``-D cppad_tape_addr_type`` = *cppad_tape_addr_type*                            \\
+| |tab| ``-D cppad_debug_which`` = *cppad_debug_which*                                  \\
+| |tab| \\
+| |tab| ..
+
+msys2
+=====
+The `msys2 <https://www.msys2.org/>`_ system,
+with ``mingw-64`` and ``g++`` ,
+the following seems to work:
+Use ``pacman`` to install
+``make`` , ``gcc`` , and ``mingw-w64-x86_64-cmake`` .
+
+Visual Studio
+=============
+
+#. Launch the Visual Studio
+   `developer command prompt <https://docs.microsoft.com/en-us/dotnet/framework/tools/developer-command-prompt-for-vs>`_
+#. Use the command
+   ::
+
+      where cmake.exe
+
+   to see if ``cmake.exe`` comes with your version of Visual Studio.
+   If not, download and install the win64-x64 version of the
+   `cmake program <https://cmake.org/download/>`_.
+   Make sure you select the box that adds ``cmake`` to your execution path.
+#. In the command window, change into the directory where the cppad git
+   repository is located and run the following commands.
+   {xrst_literal
+      bin/build.bat
+   }
+
+Note that when using windows DLL's, CppAD builds a static version
+of ``cppad_lib`` . There are problems using a DLL for ``cppad_lib``
+because Windows makes separate copies of static class member functions,
+one for library and one for the rest of the program.
+
+autotools
+=========
+The autotools build with the Visual Studio compiler should work
+with the following configure and test commands
+::
+
+   mkdir build
+   cd build
+   ../configure CC=cl CXX=cl CXX_FLAGS="-DEBUG"
+   make test
+
+An optimized versions was tested using
+::
+
+   ../configure CXX=cl CC=cl CXX_FLAGS="-DNDEBUG -O2 -EHsc"
+   make test
+
+The commands above need to be run a Dos window,
+that has the ``vcvarsall.bat`` settings,
+extend path that includes the ``msys2`` bin directory,
+and was running the bash shell inside the Doc window.
+It is highly recommended that you use the ``cmake`` commands above,
+an not ``../configure`` , when building with Visual Studio.
+
+make check
+**********
+Important information about the CppAD configuration is output
+by this command. If you have the ``grep`` program,
+and store the output in ``cmake.log`` , you can get a list of
+all the test options with the command:
+::
+
+   grep 'make check' cmake.log
+
+cmake_verbose_makefile
+**********************
+This value should be either ``true`` or ``false`` .
+The default value, when it is not present, is ``NO`` .
+If it is ``true`` , then the output of the ``make`` commands
+will include all of the files and flags used to run the compiler
+and linker. This can be useful for seeing how to compile and link
+your own applications.
+
+cmake_build_type
+****************
+This value should be one of the valid CMake build types; e.g.,
+``Debug`` ,
+``Release`` ,
+``RelWithDebInfo`` ,
+``MinSizeRel`` .
+If this value is specified,
+:ref:`cmake@cppad_debug_which`
+must not be the empty string.
+
+cmake_needs_dot_slash
+*********************
+This value should be either ``true`` or ``false`` .
+The default value, when it is not present, is ``false`` .
+If you get an error saying that an executable program could not be found,
+try setting this to true.
+CMake gets confused on some systems and needs ``./`` in front
+of the name of the executable corresponding to a cmake
+``ADD_CUSTOM_COMMAND`` . For example, in the github actions version of
+`using msys2 in ci <https://www.msys2.org/docs/ci/>`_.
+
+generator
+*********
+The CMake program is capable of generating different kinds of files.
+Below is a table with a few of the possible files
+
+.. csv-table::
+   :widths: auto
+
+   *generator*,Description
+   ``"Unix Makefiles"``,make files for unix operating system
+   ``"NMake Makefiles"``,make files for Visual Studio
+
+Other generator choices are available; see the cmake
+`generators <http://www.cmake.org/cmake/help/cmake2.6docs.html#section_Generators>`_ documentation.
+
+cppad_prefix
+************
+This is the top level absolute path below which
+all of the CppAD files are installed by the command
+
+   ``make install``
+
+For example,
+if *cppad_prefix* is ``/usr`` ,
+*cmake_install_includedirs* is ``include`` , and
+*cppad_postfix* is not specified,
+the file ``cppad.hpp`` is installed in the location
+
+   / ``usr/include/cppad/cppad.hpp``
+
+The default value for *cppad_prefix* is the value of
+*CMAKE_INSTALL_PREFIX* ; see the cmake documentation.
+(Before 2019-10-02 the default value was ``/usr`` ; see
+the heading 10-02 on :ref:`whats_new_19<whats_new_19@mm-dd@10-02>` .)
+
+cppad_postfix
+*************
+This is the bottom level relative path below which
+all of the CppAD files are installed.
+For example,
+if *cppad_prefix* is ``/usr`` ,
+*cmake_install_includedirs* is ``include`` , and
+*cppad_postfix* is ``coin-or`` ,
+the file ``cppad.hpp`` is installed in the location
+
+   / ``usr/include/coin-or/cppad/cppad.hpp``
+
+The default value for *cppad_postfix* is empty; i.e,
+there is no bottom level relative directory for the installed files.
+
+cmake_install_includedirs
+*************************
+This is one directory, or a list of directories separated
+by spaces or by semi-colons.
+This first entry in the list is the middle level relative path below which
+the CppAD include files are installed.
+The entire list is used for searching for include files.
+For example,
+if *cppad_prefix* is ``/usr`` ,
+*cmake_install_includedirs* is ``include`` , and
+*cppad_postfix* is not specified,
+the file ``cppad.hpp`` is installed in the location
+
+   / ``usr/include/cppad/cppad.hpp``
+
+The default value for this directory list is ``include`` .
+
+cmake_install_libdirs
+*********************
+This is one directory, or a list of directories separated
+by spaces or by semi-colons.
+This first entry in the list is the middle level relative path below which
+the CppAD library files are installed.
+The entire list is used for searching for library files.
+The default value for this directory list is ``lib`` .
+
+cppad_lib
+=========
+As an example of where the CppAD library is installed,
+if *cppad_prefix* is ``/usr`` ,
+*cmake_install_libdirs* is ``lib`` ,
+*cppad_postfix* is not specified,
+the CppAD library is installed in
+
+   / ``usr/lib/libcppad_lib.`` *ext* . *major* . *release*
+
+Here *major* is the major library version number,
+*release* is the release number for this version,
+and *ext* is the extension for shared libraries on this system.
+If *yyyymmdd* is the CppAD :ref:`download@Version` number,
+the major CppAD library version number is
+
+   *major* = *dd* ``- 1`` + 31 * ( *mm* ``- 1`` + 12 * ( *yyyy* ``- 2019`` ) )
+
+If there is no :ref:`download@Release` for this version of CppAD,
+the CppAD library is installed in
+
+   / ``usr/lib/libcppad_lib.`` *ext* . *major*
+
+The Mac is special, *ext* is ``dylib`` and comes
+at the end of the file name for that system.
+
+cmake_install_datadir
+*********************
+This is the middle level relative path below which
+the CppAD data files are installed.
+For example,
+if *cppad_prefix* is ``/usr`` ,
+*cmake_install_datadir* is ``share`` , and
+*cppad_postfix* is not specified,
+the :ref:`pkgconfig-name` file ``cppad.pc`` is installed in the location
+
+   / ``usr/share/pkgconfig/cppad.pc``
+
+The default value for *cmake_install_datadir* is ``share`` .
+
+cmake_install_docdir
+********************
+This is the middle level relative path below which
+the CppAD documentation files are installed.
+For example,
+if *cppad_prefix* is ``/usr`` ,
+*cmake_install_docdir* is ``share/doc`` , and
+*cppad_postfix* is not specified,
+the file ``cppad.xml`` is installed in the location
+
+   / ``usr/share/doc/cppad/cppad.xml``
+
+There is no default value for *cmake_install_docdir* .
+If it is not specified, the documentation files are not installed.
+
+cmake_defined_ok
+****************
+This must be true when running cmake with a non-empty
+``CMakeCache.txt`` file.
+If it is false, some checks will be made to make sure
+certain variables are not defined twice.
+The default value for *cmake_defined_ok* is true.
+
+include_adolc
+*************
+The :ref:`adolc-name` examples
+will be compiled and tested if ``include_adolc=true``
+is in the command line.
+
+include_eigen
+*************
+The :ref:`eigen-name` examples
+will be compiled and tested if ``include_eigen=true``
+is on the command line.
+In addition, the :ref:`sparse2eigen-name` utility will be installed.
+
+include_ipopt
+*************
+The :ref:`ipopt-name` examples
+will be compiled and tested if ``include_ipopt=true``
+is on the command line.
+In addition, :ref:`ipopt_solve-name` and :ref:`cppad_ipopt_nlp-name`
+will be installed.
+
+include_cppadcg
+***************
+The :ref:`cppadcg-name` examples
+will be compiled and tested if ``include_cppadcg=true``
+is on the command line.
+**Warning** :
+Do not use this option when installing cppad because
+the cppadcg package depends on cppad and using this option
+makes cppad depend on cppadcg.
+This option, and the script :ref:`get_cppadcg.sh-name` are only intended
+for testing purposes.
+
+eigen_prefix
+************
+This specifies the :ref:`eigen@eigen_prefix` .
+It must not be set when *include_eigen* is true
+(because ``pkg-config`` will be used to determine this information).
+
+package_prefix
+**************
+Each of these packages do not have ``pkg-config`` files
+corresponding to optional CppAD examples.
+If a prefix listed below is on the command line,
+the corresponding examples will be compiled and run:
+
+.. csv-table::
+   :widths: auto
+
+   colpack_prefix,:ref:`colpack_prefix-title`
+   fadbad_prefix,:ref:`fadbad_prefix-title`
+   sacado_prefix,:ref:`sacado_prefix-title`
+
+cppad_cxx_flags
+***************
+This specifies the compiler flags
+that are used when compiling the CppAD examples, tests, and library.
+This flags are in addition to the flags automatically generated by
+cmake for debug and release build; i.e.,
+*CMAKE_CXX_FLAGS_DEBUG* and *CMAKE_CXX_FLAGS_RELEASE* .
+The default value for these flags is the empty string ``""`` .
+These flags must be valid for the C++ compiler
+on your system.
+For example, if you are using ``g++`` you could specify
+::
+
+   -D cppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++17 -Wshadow"
+
+C++17
+=====
+In order for the compiler to take advantage of features that are in C++17
+,but not in C++11, the *cppad_cxx_flags* must enable these features.
+
+debug and release
+=================
+The CppAD examples and tests decide which files to compile for debugging
+and which to compile for release. Hence debug and release flags should
+not be included in *cppad_cxx_flags* .
+See also the
+:ref:`preprocessor@Documented Here@CPPAD_DEBUG_AND_RELEASE`
+compiler flag (which should not be included in *cppad_cxx_flags* ).
+
+clang
+=====
+Clang is giving warnings for bitwise operations with logical operands.
+These operations are used by CppAD for speed because they do not require
+branching which can slow down some processors. You can suppress these
+warnings by including ``-Wno-bitwise-instead-of-logical``
+in *cppad_cxx_flags* .
+
+cppad_profile_flag
+******************
+This specifies an addition compiler and link flag that is used
+for :ref:`profiling<speed_main@package@profile>` the speed tests.
+A profile version of the speed test is only build when this argument
+is present.
+If this flag is specified, you can run the gnu profiler with the following
+command:
+
+| |tab| ``cd build/speed/profile``
+| |tab| ``make check_speed_profile``
+| |tab| ./ ``speed_profile`` *test seed option_list*
+| |tab| ``gprof -b speed_profile`` | ``sed -f gprof.sed``
+
+cppad_testvector
+****************
+See :ref:`cppad_testvector-title`.
+
+cppad_max_num_threads
+*********************
+The value *cppad_max_num_threads*
+must be greater than or equal to four; i.e.,
+*max_num_threads*  >= 4 .
+The current default value for *cppad_max_num_threads* is 48,
+but it may change in future versions of CppAD.
+The value *cppad_max_num_threads* in turn specifies
+the default value for the preprocessor symbol
+:ref:`multi_thread@CPPAD_MAX_NUM_THREADS` .
+
+cppad_tape_id_type
+******************
+The type *cppad_tape_id_type*
+is used for identifying different tapes.
+The valid values for this type are
+``unsigned char`` ,
+``unsigned short int`` ,
+``unsigned int`` , and
+``size_t`` .
+The smaller the value of ``sizeof`` ( *cppad_tape_id_type* ) ,
+the less memory is used.
+On the other hand, the value
+
+   ``std::numeric_limits<`` *cppad_tape_id_type* >:: ``max`` ()
+
+must be larger than the maximum number of tapes used by one thread times
+:ref:`multi_thread@CPPAD_MAX_NUM_THREADS` .
+
+cstdint
+=======
+If all of the following ``cstdint`` types are defined,
+they can also be used as the value of *cppad_tape_addr_type* :
+``uint8_t`` ,
+``uint16_t`` ,
+``uint32_t`` ,
+``uint64_t`` .
+
+cppad_tape_addr_type
+********************
+The type *cppad_tape_addr_type*
+is used for address in the AD recordings (tapes).
+The valid values for this argument are
+``unsigned char`` ,
+``unsigned short int`` ,
+``unsigned int`` ,
+``size_t`` .
+The smaller the value of ``sizeof`` ( *cppad_tape_addr_type* ) ,
+the less memory is used.
+On the other hand, the value
+
+   ``std::numeric_limits<`` *cppad_tape_addr_type* >:: ``max`` ()
+
+must be larger than any of the following:
+:ref:`fun_property@size_op` ,
+:ref:`fun_property@size_op_arg` ,
+:ref:`fun_property@size_par` ,
+:ref:`fun_property@size_text` ,
+:ref:`fun_property@size_VecAD` .
+
+cstdint
+=======
+If all of the following ``cstdint`` types are defined,
+they can also be used as the value of *cppad_tape_addr_type* :
+``uint8_t`` ,
+``uint16_t`` ,
+``uint32_t`` ,
+``uint64_t`` .
+
+cppad_debug_which
+*****************
+All of the CppAD examples and test can optionally be tested
+in debug or release mode (see exception below).
+This option controls which mode is chosen for the corresponding files.
+The value *cppad_debug_which* be one of the following:
+
+.. csv-table::
+   :widths: auto
+
+   *cppad_debug_which*,*CMAKE_BUILD_TYPE*
+   ``debug_all``,``Debug``
+   ``debug_none``,``Release``
+   ``debug_even``,not specified
+   ``debug_odd``,not specified
+   empty string,not changed
+
+If ``CMAKE_BUILD_TYPE`` is specified on the command line,
+then *cppad_debug_which* must be the empty string (its default value).
+{xrst_toc_hidden
+   bin/get_optional.sh
+   xrst/install/adolc.xrst
+   xrst/install/eigen.xrst
+   xrst/install/cppadcg.xrst
+   xrst/install/ipopt.xrst
+   xrst/install/fadbad_prefix.xrst
+   xrst/install/sacado_prefix.xrst
+   xrst/install/colpack_prefix.xrst
+   xrst/install/testvector.xrst
+}
+
+{xrst_end cmake}

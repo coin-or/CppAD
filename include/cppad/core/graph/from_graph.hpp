@@ -11,97 +11,102 @@
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
-$begin from_graph$$
-$spell
-   CppAD
-   ind
-   vec
-   arg
-   obj
-   op_enum
-   dyn2var
-$$
+{xrst_begin from_graph}
 
-$section ADFun Object Corresponding to a CppAD Graph$$
+ADFun Object Corresponding to a CppAD Graph
+###########################################
 
-$head Syntax$$
-$codei%
-   cpp_graph %graph_obj%
-   ADFun<%Base%> %fun%
-   %fun%.from_graph(%graph_obj%)
-   %fun%.from_graph(%graph_obj%, %dyn2var%, %var2dyn%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_ONE_ARGUMENT%// END_ONE_ARGUMENT%1
-%$$
-$srcthisfile%
-   0%// BEGIN_WITH_IS_DYNAMIC%// END_WITH_IS_DYNAMIC%1
-%$$
+| |tab| ``cpp_graph`` *graph_obj*
+| |tab| ``ADFun<`` *Base* > *fun*
+| |tab| *fun* . ``from_graph`` ( *graph_obj* )
+| |tab| *fun* . ``from_graph`` ( *graph_obj* , *dyn2var* , *var2dyn* )
 
-$head Base$$
-is the type corresponding to this $cref/ADFun/adfun/$$ object;
-i.e., its calculations are done using the type $icode Base$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ONE_ARGUMENT
+   // END_ONE_ARGUMENT
+}
+{xrst_literal
+   // BEGIN_WITH_IS_DYNAMIC
+   // END_WITH_IS_DYNAMIC
+}
 
-$head RecBase$$
-in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
 
-$head graph_obj$$
-is a $cref cpp_ad_graph$$ representation of this function.
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
 
-$head dyn2var$$
+graph_obj
+*********
+is a :ref:`cpp_ad_graph-name` representation of this function.
+
+dyn2var
+*******
 is a vector with size equal to the number of independent dynamic parameters
-in the graph; i.e., the size of $cref/p/cpp_ad_graph/Node Indices/p/$$.
+in the graph; i.e., the size of :ref:`cpp_ad_graph@Node Indices@p` .
 It specifies which independent dynamic parameters in the graph are
-independent variables in the function $icode fun$$.
+independent variables in the function *fun* .
 
-$head var2dyn$$
+var2dyn
+*******
 is a vector with size equal to the number of independent variables
-in the graph; i.e., the size of $cref/x/cpp_ad_graph/Node Indices/x/$$.
+in the graph; i.e., the size of :ref:`cpp_ad_graph@Node Indices@x` .
 It specifies which independent variables in the graph are
-independent dynamic parameters in the function $icode fun$$.
+independent dynamic parameters in the function *fun* .
 
-$head fun$$
-It $icode dyn2var$$ and $icode var2dyn$$ are not present,
-the independent dynamic parameters and independent variables in $icode fun$$
+fun
+***
+It *dyn2var* and *var2dyn* are not present,
+the independent dynamic parameters and independent variables in *fun*
 are the same as for the graph.
 Otherwise, they are described below.
 
-$subhead m_true, m_false$$
-Let $icode m_true$$ ($icode m_false$$) be the number of true (false)
-elements of $icode dyn2var$$.
+m_true, m_false
+===============
+Let *m_true* ( *m_false* ) be the number of true (false)
+elements of *dyn2var* .
 
-$subhead n_true, n_false$$
-Let $icode n_true$$ ($icode n_false$$) be the number of true (false)
-elements of $icode var2dyn$$.
+n_true, n_false
+===============
+Let *n_true* ( *n_false* ) be the number of true (false)
+elements of *var2dyn* .
 
-$subhead Independent Dynamic Parameters$$
-The first $icode m_false$$ independent dynamic parameters in $icode fun$$
-correspond to the false components of $icode dyn2var$$
+Independent Dynamic Parameters
+==============================
+The first *m_false* independent dynamic parameters in *fun*
+correspond to the false components of *dyn2var*
 and have the same order as in the graph.
-The next $icode n_true$$ independent dynamic parameters in $icode fun$$
-correspond to the true components of $icode var2dyn$$
-and have the same order as in the graph.
-
-$subhead Independent Variables$$
-The first $icode m_true$$ independent variables in $icode fun$$
-correspond to the true components of $icode dyn2var$$
-and have the same order as in the graph.
-The next $icode n_false$$ independent variables in $icode fun$$
-correspond to the false components of $icode var2dyn$$
+The next *n_true* independent dynamic parameters in *fun*
+correspond to the true components of *var2dyn*
 and have the same order as in the graph.
 
-$children%
+Independent Variables
+=====================
+The first *m_true* independent variables in *fun*
+correspond to the true components of *dyn2var*
+and have the same order as in the graph.
+The next *n_false* independent variables in *fun*
+correspond to the false components of *var2dyn*
+and have the same order as in the graph.
+{xrst_toc_hidden
    example/graph/switch_var_dyn.cpp
-%$$
-$head Examples$$
-The file $cref switch_var_dyn.cpp$$ contains an example and test
+}
+Examples
+********
+The file :ref:`switch_var_dyn.cpp-name` contains an example and test
 of this routine.
 For simpler examples, that do not change the dynamic parameters and variables;
-see $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
+see :ref:`graph_op_enum examples<graph_op_enum@Examples>` .
 
-$end
+{xrst_end from_graph}
 */
 // BEGIN_WITH_IS_DYNAMIC
 template <class Base, class RecBase>

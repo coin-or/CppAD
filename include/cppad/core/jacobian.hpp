@@ -6,98 +6,98 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin Jacobian$$
-$spell
-   jac
-   typename
-   Taylor
-   Jacobian
-   DetLu
-   const
-$$
+{xrst_begin Jacobian}
 
+Jacobian: Driver Routine
+########################
 
-$section Jacobian: Driver Routine$$
+Syntax
+******
+*jac* = *f* . ``Jacobian`` ( *x* )
 
-$head Syntax$$
-$icode%jac% = %f%.Jacobian(%x%)%$$
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+The syntax above sets *jac* to the
+Jacobian of *F* evaluated at *x* ; i.e.,
 
+.. math::
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-The syntax above sets $icode jac$$ to the
-Jacobian of $icode F$$ evaluated at $icode x$$; i.e.,
-$latex \[
    jac = F^{(1)} (x)
-\] $$
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
-(see $cref/Forward or Reverse/Jacobian/Forward or Reverse/$$ below).
+f
+*
+The object *f* has prototype
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Vector% &%x%
-%$$
-(see $cref/Vector/Jacobian/Vector/$$ below)
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const``
+(see :ref:`Jacobian@Forward or Reverse` below).
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *Vector* & *x*
+
+(see :ref:`Jacobian@Vector` below)
 and its size
-must be equal to $icode n$$, the dimension of the
-$cref/domain/fun_property/Domain/$$ space for $icode f$$.
+must be equal to *n* , the dimension of the
+:ref:`fun_property@Domain` space for *f* .
 It specifies
 that point at which to evaluate the Jacobian.
 
-$head jac$$
-The result $icode jac$$ has prototype
-$codei%
-   %Vector% %jac%
-%$$
-(see $cref/Vector/Jacobian/Vector/$$ below)
-and its size is $latex m * n$$; i.e., the product of the
-$cref/domain/fun_property/Domain/$$
+jac
+***
+The result *jac* has prototype
+
+   *Vector* *jac*
+
+(see :ref:`Jacobian@Vector` below)
+and its size is :math:`m * n`; i.e., the product of the
+:ref:`fun_property@Domain`
 and
-$cref/range/fun_property/Range/$$
-dimensions for $icode f$$.
-For $latex i = 0 , \ldots , m - 1 $$
-and $latex j = 0 , \ldots , n - 1$$
-$latex \[
+:ref:`fun_property@Range`
+dimensions for *f* .
+For :math:`i = 0 , \ldots , m - 1`
+and :math:`j = 0 , \ldots , n - 1`
+
+.. math::
+
    jac[ i * n + j ] = \D{ F_i }{ x_j } ( x )
-\] $$
 
-
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Base$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Forward or Reverse$$
+Forward or Reverse
+******************
 This will use order zero Forward mode and either
 order one Forward or order one Reverse to compute the Jacobian
 (depending on which it estimates will require less work).
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After a call to $code Jacobian$$,
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``Jacobian`` ,
 the zero order Taylor coefficients correspond to
-$icode%f%.Forward(0, %x%)%$$
+*f* . ``Forward`` (0, *x* )
 and the other coefficients are unspecified.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/jacobian.cpp
-%$$
+}
 The routine
-$cref/Jacobian/jacobian.cpp/$$ is both an example and test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
+:ref:`Jacobian<jacobian.cpp-name>` is both an example and test.
+It returns ``true`` , if it succeeds and ``false`` otherwise.
 
-$end
+{xrst_end Jacobian}
 -----------------------------------------------------------------------------
 */
 

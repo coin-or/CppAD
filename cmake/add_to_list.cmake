@@ -6,7 +6,7 @@
 # add_to_list(variable_list constant_value)
 #
 # variables_list: (in/out)
-# The variable containing the list of values. 
+# The variable containing the list of values.
 # The original list may be ""; i.e., the empty list.
 #
 # constant_value: (in)

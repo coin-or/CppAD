@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atanh.cpp$$
-$spell
-   tanh
-   atanh
-$$
+{xrst_begin atanh.cpp}
 
-$section The AD atanh Function: Example and Test$$
+The AD atanh Function: Example and Test
+#######################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end atanh.cpp}
 */
 // BEGIN C++
 

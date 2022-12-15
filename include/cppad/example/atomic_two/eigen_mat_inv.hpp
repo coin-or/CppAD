@@ -6,135 +6,167 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_eigen_mat_inv.hpp$$
-$spell
-   Eigen
-   Taylor
-   op
-$$
+{xrst_begin atomic_two_eigen_mat_inv.hpp}
+{xrst_spell
+   tr
+}
 
-$section atomic_two Eigen Matrix Inversion Class$$
+atomic_two Eigen Matrix Inversion Class
+#######################################
 
-$head Purpose$$
+Purpose
+*******
 Construct an atomic operation that computes the matrix inverse
-$latex R = A^{-1}$$
-for any positive integer $latex p$$
-and invertible matrix $latex A \in \B{R}^{p \times p}$$.
+:math:`R = A^{-1}`
+for any positive integer :math:`p`
+and invertible matrix :math:`A \in \B{R}^{p \times p}`.
 
-$head Matrix Dimensions$$
-This example puts the matrix dimension $latex p$$
+Matrix Dimensions
+*****************
+This example puts the matrix dimension :math:`p`
 in the atomic function arguments,
-instead of the $cref/constructor/atomic_two_ctor/$$,
+instead of the :ref:`constructor<atomic_two_ctor-name>` ,
 so it can be different for different calls to the atomic function.
 
-$head Theory$$
+Theory
+******
 
-$subhead Forward$$
+Forward
+=======
 The zero order forward mode Taylor coefficient is give by
-$latex \[
+
+.. math::
+
    R_0 = A_0^{-1}
-\]$$
-For $latex k = 1 , \ldots$$,
-the $th k$$ order Taylor coefficient of $latex A R$$ is given by
-$latex \[
+
+For :math:`k = 1 , \ldots`,
+the *k*-th order Taylor coefficient of :math:`A R` is given by
+
+.. math::
+
    0 = \sum_{\ell=0}^k A_\ell R_{k-\ell}
-\] $$
-Solving for $latex R_k$$ in terms of the coefficients
-for $latex A$$ and the lower order coefficients for $latex R$$ we have
-$latex \[
+
+Solving for :math:`R_k` in terms of the coefficients
+for :math:`A` and the lower order coefficients for :math:`R` we have
+
+.. math::
+
    R_k = - R_0 \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
-\] $$
-Furthermore, once we have $latex R_k$$ we can compute the sum using
-$latex \[
+
+Furthermore, once we have :math:`R_k` we can compute the sum using
+
+.. math::
+
    A_0 R_k = - \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
-\] $$
 
+Product of Three Matrices
+=========================
+Suppose :math:`\bar{E}` is the derivative of the
+scalar value function :math:`s(E)` with respect to :math:`E`; i.e.,
 
-$subhead Product of Three Matrices$$
-Suppose $latex \bar{E}$$ is the derivative of the
-scalar value function $latex s(E)$$ with respect to $latex E$$; i.e.,
-$latex \[
+.. math::
+
    \bar{E}_{i,j} = \frac{ \partial s } { \partial E_{i,j} }
-\] $$
-Also suppose that $latex t$$ is a scalar valued argument and
-$latex \[
-   E(t) = B(t) C(t) D(t)
-\] $$
-It follows that
-$latex \[
-   E'(t) = B'(t) C(t) D(t) + B(t) C'(t) D(t) +  B(t) C(t) D'(t)
-\] $$
 
-$latex \[
+Also suppose that :math:`t` is a scalar valued argument and
+
+.. math::
+
+   E(t) = B(t) C(t) D(t)
+
+It follows that
+
+.. math::
+
+   E'(t) = B'(t) C(t) D(t) + B(t) C'(t) D(t) +  B(t) C(t) D'(t)
+
+.. math::
+
    (s \circ E)'(t)
    =
    \R{tr} [ \bar{E}^\R{T} E'(t) ]
-\] $$
-$latex \[
+
+.. math::
+
    =
    \R{tr} [ \bar{E}^\R{T} B'(t) C(t) D(t) ] +
    \R{tr} [ \bar{E}^\R{T} B(t) C'(t) D(t) ] +
    \R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
-\] $$
-$latex \[
+
+.. math::
+
    =
    \R{tr} [ B(t) D(t) \bar{E}^\R{T} B'(t) ] +
    \R{tr} [ D(t) \bar{E}^\R{T} B(t) C'(t) ] +
    \R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
-\] $$
-$latex \[
+
+.. math::
+
    \bar{B} = \bar{E} (C D)^\R{T} \W{,}
    \bar{C} = \B{R}^\R{T} \bar{E} D^\R{T} \W{,}
    \bar{D} = (B C)^\R{T} \bar{E}
-\] $$
 
-$subhead Reverse$$
-For $latex k > 0$$, reverse mode
-eliminates $latex R_k$$ and expresses the function values
-$latex s$$ in terms of the coefficients of $latex A$$
-and the lower order coefficients of $latex R$$.
-The effect on $latex \bar{R}_0$$
-(of eliminating $latex R_k$$) is
-$latex \[
-\bar{R}_0
-= \bar{R}_0 - \bar{R}_k \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)^\R{T}
-= \bar{R}_0 + \bar{R}_k ( A_0 R_k )^\R{T}
-\] $$
-For $latex \ell = 1 , \ldots , k$$,
-the effect on $latex \bar{R}_{k-\ell}$$ and $latex A_\ell$$
-(of eliminating $latex R_k$$) is
-$latex \[
-\bar{A}_\ell = \bar{A}_\ell - R_0^\R{T} \bar{R}_k R_{k-\ell}^\R{T}
-\] $$
-$latex \[
-\bar{R}_{k-\ell} = \bar{R}_{k-\ell} - ( R_0 A_\ell )^\R{T} \bar{R}_k
-\] $$
+Reverse
+=======
+For :math:`k > 0`, reverse mode
+eliminates :math:`R_k` and expresses the function values
+:math:`s` in terms of the coefficients of :math:`A`
+and the lower order coefficients of :math:`R`.
+The effect on :math:`\bar{R}_0`
+(of eliminating :math:`R_k`) is
+
+.. math::
+
+   \bar{R}_0
+   = \bar{R}_0 - \bar{R}_k \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)^\R{T}
+   = \bar{R}_0 + \bar{R}_k ( A_0 R_k )^\R{T}
+
+For :math:`\ell = 1 , \ldots , k`,
+the effect on :math:`\bar{R}_{k-\ell}` and :math:`A_\ell`
+(of eliminating :math:`R_k`) is
+
+.. math::
+
+   \bar{A}_\ell = \bar{A}_\ell - R_0^\R{T} \bar{R}_k R_{k-\ell}^\R{T}
+
+.. math::
+
+   \bar{R}_{k-\ell} = \bar{R}_{k-\ell} - ( R_0 A_\ell )^\R{T} \bar{R}_k
+
 We note that
-$latex \[
+
+.. math::
+
    R_0 '(t) A_0 (t) + R_0 (t) A_0 '(t) = 0
-\] $$
-$latex \[
+
+.. math::
+
    R_0 '(t) = - R_0 (t) A_0 '(t) R_0 (t)
-\] $$
-The reverse mode formula that eliminates $latex R_0$$ is
-$latex \[
+
+The reverse mode formula that eliminates :math:`R_0` is
+
+.. math::
+
    \bar{A}_0
    = \bar{A}_0 - R_0^\R{T} \bar{R}_0 R_0^\R{T}
-\]$$
 
-$head Start Class Definition$$
-$srccode%cpp% */
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <Eigen/Core>
 # include <Eigen/LU>
 
+/* {xrst_code}
+{xrst_spell_on}
+Public
+******
 
-
-/* %$$
-$head Public$$
-
-$subhead Types$$
-$srccode%cpp% */
+Types
+=====
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 template <class Base>
@@ -151,18 +183,24 @@ public:
    // type of matrix during taping
    typedef Eigen::Matrix<
       ad_scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor > ad_matrix;
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // constructor
    atomic_eigen_mat_inv(void) : CppAD::atomic_base<Base>(
       "atom_eigen_mat_inv"                             ,
       CppAD::atomic_base<Base>::set_sparsity_enum
    )
    { }
-/* %$$
-$subhead op$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+op
+==
+{xrst_spell_off}
+{xrst_code cpp} */
    // use atomic operation to invert an AD matrix
    ad_matrix op(const ad_matrix& arg)
    {  size_t nr = size_t( arg.rows() );
@@ -188,11 +226,15 @@ $srccode%cpp% */
          result.data()[i] = packed_result[i];
       return result;
    }
-   /* %$$
-$head Private$$
+   /* {xrst_code}
+{xrst_spell_on}
+Private
+*******
 
-$subhead Variables$$
-$srccode%cpp% */
+Variables
+=========
+{xrst_spell_off}
+{xrst_code cpp} */
 private:
    // -------------------------------------------------------------
    // one forward mode vector of matrices for argument and result
@@ -200,9 +242,12 @@ private:
    // one reverse mode vector of matrices for argument and result
    CppAD::vector<matrix> r_arg_, r_result_;
    // -------------------------------------------------------------
-/* %$$
-$subhead forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    virtual bool forward(
       // lowest order Taylor coefficient we are evaluating
@@ -282,9 +327,12 @@ $srccode%cpp% */
          vy[i] = var;
       return true;
    }
-/* %$$
-$subhead reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse mode routine called by CppAD
    virtual bool reverse(
       // highest order Taylor coefficient that we are computing derivative of
@@ -372,14 +420,19 @@ $srccode%cpp% */
       //
       return true;
    }
-/* %$$
-$head End Class Definition$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+End Class Definition
+********************
+{xrst_spell_off}
+{xrst_code cpp} */
 }; // End of atomic_eigen_mat_inv class
 
 }  // END_EMPTY_NAMESPACE
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_two_eigen_mat_inv.hpp}
 */
 
 

@@ -4,19 +4,20 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin subgraph_hes2jac.cpp$$
-$spell
-   Hessian
-   Subgraphs
-   Jacobian
-$$
+{xrst_begin subgraph_hes2jac.cpp}
+{xrst_spell
+   subgraphs
+}
 
-$section Sparse Hessian Using Subgraphs and Jacobian: Example and Test$$
+Sparse Hessian Using Subgraphs and Jacobian: Example and Test
+#############################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end subgraph_hes2jac.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -1,0 +1,129 @@
+[project_name]
+data = 'cppad'
+
+[directory]
+project_directory = '.'
+rst_directory     = 'build/rst'
+html_directory    = 'build/html'
+tex_directory     = 'build/tex'
+
+[root_file]
+default = 'dev.xrst'
+
+[include_all]
+rst_epilog = ''
+rst_prolog = '''
+.. |space| unicode:: 0xA0
+.. |tab| replace:: |space| |space| |space|
+'''
+latex_macro = [
+   '\newcommand{\B}[1]{ {\bf #1} }' ,
+   '\newcommand{\R}[1]{ {\rm #1} }' ,
+   '\newcommand{\W}[1]{ \; #1 \; }'
+]
+
+[project_dictionary]
+data = [ '''
+   acos
+   acosh
+   addr
+   adolc
+   af
+   afun
+   alloc
+   allocator
+   arg
+   asin
+   asinh
+   atan
+   atanh
+   azmul
+   bool
+   boolean
+   cc
+   ccc
+   cd
+   checkpointing
+   chkpoint
+   cmake
+   colpack
+   compilers
+   config
+   const
+   cpp
+   cppad
+   cppadcg
+   ctor
+   cygwin
+   dd
+   determinant
+   dir
+   dvector
+   dyn
+   eigen
+   endif
+   enum
+   eps
+   eq
+   eqnarray
+   erf
+   exp
+   fabs
+   factorization
+   fadbad
+   gcc
+   gt
+   hes
+   hpp
+   ifndef
+   implementations
+   ind
+   ipopt
+   iterator
+   itr
+   jac
+   jit
+   json
+   lexer
+   ll
+   lt
+   microsoft
+   mm
+   mul
+   namespace
+   nan
+   nc
+   nlp
+   nowrap
+   obj
+   omp
+   op
+   openmp
+   operand
+   optimizer
+   pc
+   pkg
+   preprocessor
+   pthread
+   ptr
+   rc
+   rcv
+   recursion
+   rel
+   retape
+   runge
+   sacado
+   seq
+   setvec
+   sh
+   sinh
+   sizeof
+   sparsity
+   sqrt
+   std
+   subgraph
+   th
+   unix
+   var
+   vec
+''' ]

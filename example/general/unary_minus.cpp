@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin unary_minus.cpp$$
-$spell
-   Cpp
-   cstddef
-$$
+{xrst_begin unary_minus.cpp}
 
-$section AD Unary Minus Operator: Example and Test$$
+AD Unary Minus Operator: Example and Test
+#########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end unary_minus.cpp}
 */
 // BEGIN C++
 

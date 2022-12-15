@@ -5,102 +5,109 @@
 # Construct cppad.pc from cppad.pc.in; see
 # http://people.freedesktop.org/~dbn/pkg-config-guide.html
 # -----------------------------------------------------------------------------
-# $begin pkgconfig$$ $newlinech #$$
-# $spell
-#  CppAD
-#  config
-#  libdir
-#  pkgconfig
-#  datadir
-#  cppad
-#  builddir
-#  cmake
-#  cflags
-#  uninstalled
-#  includedir
-#  libdirs
-# $$
+# {xrst_begin pkgconfig} 
+# {xrst_spell
+#     builddir
+#     cflags
+#     datadir
+#     gnu
+#     includedir
+#     libdir
+#     libs
+#     pkgconfig
+#     uninstalled
+# }
+# {xrst_comment_ch #}
 #
-# $section CppAD pkg-config Files$$
+# CppAD pkg-config Files
+# ######################
 #
-# $head Purpose$$
-# The $code pkg-config$$ program helps with the used if installed libraries
+# Purpose
+# *******
+# The ``pkg-config`` program helps with the used if installed libraries
 # and include files; see its
-# $href%https://people.freedesktop.org/~dbn/pkg-config-guide.html%guide%$$
+# `guide <https://people.freedesktop.org/~dbn/pkg-config-guide.html>`_
 # for more information on writing an using pkg-config files.
 #
-# $head cppad.pc$$
+# cppad.pc
+# ********
 #
-# $subhead PKG_CONFIG_PATH$$
-# The $code cppad.pc$$ file is installed in the following two directories:
-# $codei%
-#  %prefix%/%libdir%/pkgconfig
-#  %prefix%/%datadir%/pkgconfig
-# %$$
-# where $icode prefix$$ is $cref/cppad_prefix/cmake/cppad_prefix/$$,
-# $icode libdir$$ is the first entry in
-# $cref/cmake_install_libdirs/cmake/cmake_install_libdirs/$$,
-# and # $icode datadir$$ is
-# $cref/cmake_install_datadir/cmake/cmake_install_datadir/$$.
-# In order to use $code pkg-config$$,
-# one of these directories must your $code PKG_CONFIG_PATH$$.
+# PKG_CONFIG_PATH
+# ===============
+# The ``cppad.pc`` file is installed in the following two directories:
 #
-# $subhead Compile Flags$$
+# | |tab| *prefix* / *libdir* / ``pkgconfig``
+# | |tab| *prefix* / *datadir* / ``pkgconfig``
+#
+# where *prefix* is :ref:`cmake@cppad_prefix` ,
+# *libdir* is the first entry in
+# :ref:`cmake@cmake_install_libdirs` ,
+# and # *datadir* is
+# :ref:`cmake@cmake_install_datadir` .
+# In order to use ``pkg-config`` ,
+# one of these directories must your ``PKG_CONFIG_PATH`` .
+#
+# Compile Flags
+# =============
 # The necessary flags for compiling code that includes CppAD can
 # be obtained with the command
-# $codep
+# ::
+#
 #     pkg-config --cflags cppad
-# $$
 #
-# $subhead Link Flags$$
+# Link Flags
+# ==========
 # The flags for linking can be obtains with the command
-# $codep
+# ::
+#
 #     pkg-config --libs cppad
-# $$
 #
-# $subhead Extra Definitions$$
-# The $code cppad.pc$$ file contains the text:
-# $codei%
-#  prefix=%prefix%
-#  exec_prefix=%exec_prefix%
-#  includedir=%includedir%
-#  libdir=%libdir%
-# %$$
-# where $icode prefix$$, $icode exec_prefix$$, $icode includedir$$, and
-# $icode libdir$$ are the
-# $href%
-#  https://www.gnu.org/prep/standards/html_node/Directory-Variables.html%
-#  gnu installation variables
-# %$$.
+# Extra Definitions
+# =================
+# The ``cppad.pc`` file contains the text:
 #
-# $head cppad-uninstalled.pc$$
+# | |tab| ``prefix`` = *prefix*
+# | |tab| ``exec_prefix`` = *exec_prefix*
+# | |tab| ``includedir`` = *includedir*
+# | |tab| ``libdir`` = *libdir*
 #
-# $subhead PKG_CONFIG_PATH$$
-# The $code cppad-uninstalled.pc$$ file is located in the following directory:
-# $codei%
-#  %builddir%/pkgconfig
-# %$$
-# where $icode builddir$$ is the directory where the $cref cmake$$ command
+# where *prefix* , *exec_prefix* , *includedir* , and
+# *libdir* are the
+# `gnu installation variables <https://www.gnu.org/prep/standards/html_node/Directory-Variables.html>`_.
+#
+# cppad-uninstalled.pc
+# ********************
+#
+# PKG_CONFIG_PATH
+# ===============
+# The ``cppad-uninstalled.pc`` file is located in the following directory:
+#
+#     *builddir* / ``pkgconfig``
+#
+# where *builddir* is the directory where the :ref:`cmake-name` command
 # is executed.
 #
-# $subhead Compile Flags$$
+# Compile Flags
+# =============
 # The necessary flags for compiling code that includes CppAD,
 # before CppAD is installed, can be obtained with the command
-# $codep
+# ::
+#
 #     pkg-config --cflags cppad-uninstalled
-# $$
 #
-# $subhead Link Flags$$
+# Link Flags
+# ==========
 # The flags for linking can be obtains with the command
-# $codep
+# ::
+#
 #     pkg-config --libs cppad-uninstalled
-# $$
 #
-# $subhead Extra Definitions$$
-# The $code cppad-uninstalled.pc$$ file has the same extra variables
-# as the $code cppad.pc$$ file.
+# Extra Definitions
+# =================
+# The ``cppad-uninstalled.pc`` file has the same extra variables
+# as the ``cppad.pc`` file.
 #
-# $end
+# {xrst_end pkgconfig}
 # ----------------------------------------------------------------------------
 #
 # The following variables are used by cppad.pc.in

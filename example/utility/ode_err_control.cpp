@@ -4,44 +4,51 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ode_err_control.cpp$$
-$spell
-$$
+{xrst_begin ode_err_control.cpp}
 
-$section OdeErrControl: Example and Test$$
-
+OdeErrControl: Example and Test
+###############################
 
 Define
-$latex X : \B{R} \rightarrow \B{R}^2$$ by
-$latex \[
-\begin{array}{rcl}
-   X_0 (0)       & = & 1  \\
-   X_1 (0)       & = & 0  \\
-   X_0^{(1)} (t) & = & - \alpha X_0 (t)  \\
-   X_1^{(1)} (t) & = &  1 / X_0 (t)
-\end{array}
-\] $$
+:math:`X : \B{R} \rightarrow \B{R}^2` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X_0 (0)       & = & 1  \\
+      X_1 (0)       & = & 0  \\
+      X_0^{(1)} (t) & = & - \alpha X_0 (t)  \\
+      X_1^{(1)} (t) & = &  1 / X_0 (t)
+   \end{eqnarray}
+
 It follows that
-$latex \[
-\begin{array}{rcl}
-X_0 (t) & = &  \exp ( - \alpha t )  \\
-X_1 (t) & = & [ \exp( \alpha t ) - 1 ] / \alpha
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   X_0 (t) & = &  \exp ( - \alpha t )  \\
+   X_1 (t) & = & [ \exp( \alpha t ) - 1 ] / \alpha
+   \end{eqnarray}
+
 This example tests OdeErrControl using the relations above.
 
-$head Nan$$
-Note that $latex X_0 (t) > 0$$ for all $latex t$$ and that the
-ODE goes through a singularity between $latex X_0 (t) > 0$$
-and $latex X_0 (t) < 0$$.
-If $latex X_0 (t) < 0$$,
-we return $code nan$$ in order to inform
-$code OdeErrControl$$ that its is taking to large a step.
+Nan
+***
+Note that :math:`X_0 (t) > 0` for all :math:`t` and that the
+ODE goes through a singularity between :math:`X_0 (t) > 0`
+and :math:`X_0 (t) < 0`.
+If :math:`X_0 (t) < 0`,
+we return ``nan`` in order to inform
+``OdeErrControl`` that its is taking to large a step.
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end ode_err_control.cpp}
 */
 // BEGIN C++
 

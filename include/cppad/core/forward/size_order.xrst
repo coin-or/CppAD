@@ -1,0 +1,93 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin size_order}
+
+Number Taylor Coefficient Orders Currently Stored
+#################################################
+
+Syntax
+******
+*s* = *f* . ``size_order`` ()
+
+See Also
+========
+:ref:`fun_property-name`
+
+Purpose
+*******
+Determine the number of Taylor coefficient orders, per variable,direction,
+currently calculated and stored in the ADFun object *f* .
+See the discussion under
+:ref:`size_order@Constructor` ,
+:ref:`size_order@Forward` , and
+:ref:`size_order@capacity_order`
+for a description of when this value can change.
+
+f
+*
+The object *f* has prototype
+
+   ``const ADFun<`` *Base* > *f*
+
+s
+*
+The result *s* has prototype
+
+   ``size_t`` *s*
+
+and is the number of Taylor coefficient orders,
+per variable,direction in the AD operation sequence,
+currently calculated and stored in the ADFun object *f* .
+
+Constructor
+***********
+Directly after the :ref:`fun_construct-name` syntax
+
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+the value of *s* returned by ``size_order`` is one.
+This is because
+there is an implicit call to ``Forward`` that computes
+the zero order Taylor coefficients during this constructor.
+
+Forward
+*******
+After a call to :ref:`Forward<forward_order-name>` with the syntax
+
+   *f* . ``Forward`` ( *q* , *x_q* )
+
+the value of *s* returned by ``size_order``
+would be :math:`q + 1`.
+The call to ``Forward`` above
+uses the lower order Taylor coefficients to compute and store
+the *q*-th order Taylor coefficients for all
+the variables in the operation sequence corresponding to *f* .
+Thus there are :math:`q + 1` (order zero through *q* )
+Taylor coefficients per variable,direction.
+(You can determine the number of variables in the operation sequence
+using the :ref:`fun_property@size_var` function.)
+
+capacity_order
+**************
+If the number of Taylor coefficient orders
+currently stored in *f* is less than or equal *c* ,
+a call to :ref:`capacity_order-name` with the syntax
+
+   *f* . ``capacity_order`` ( *c* )
+
+does not affect the value *s* returned by ``size_order`` .
+Otherwise,
+the value *s* returned by ``size_order``
+is equal to *c*
+(only Taylor coefficients of order zero through :math:`c-1`
+have been retained).
+
+Example
+*******
+The file
+:ref:`forward.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end size_order}

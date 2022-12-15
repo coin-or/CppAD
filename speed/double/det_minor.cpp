@@ -3,26 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin double_det_minor.cpp$$
-$spell
-   onetape
-   retape
-   bool
-   cppad
-   det
-   CppAD
-   hpp
-$$
+{xrst_begin double_det_minor.cpp}
 
-$section Double Speed: Determinant by Minor Expansion$$
+Double Speed: Determinant by Minor Expansion
+############################################
 
+Specifications
+**************
+See :ref:`link_det_minor-name` .
 
-$head Specifications$$
-See $cref link_det_minor$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -59,6 +53,8 @@ bool link_det_minor(
    }
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end double_det_minor.cpp}
 */

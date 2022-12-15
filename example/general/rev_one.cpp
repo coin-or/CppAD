@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin rev_one.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin rev_one.cpp}
 
-$section First Order Derivative Driver: Example and Test$$
+First Order Derivative Driver: Example and Test
+###############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end rev_one.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

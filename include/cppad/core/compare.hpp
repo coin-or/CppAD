@@ -7,108 +7,109 @@
 
 /*
 -------------------------------------------------------------------------------
-$begin Compare$$
-$spell
-   cos
-   Op
-   bool
-   const
-$$
+{xrst_begin Compare}
+{xrst_spell
+   operands
+}
 
+AD Binary Comparison Operators
+##############################
 
+Syntax
+******
 
-$section AD Binary Comparison Operators$$
+*b* = *x* *Op* *y*
 
-
-$head Syntax$$
-
-$icode%b% = %x% %Op% %y%$$
-
-
-$head Purpose$$
+Purpose
+*******
 Compares two operands where one of the operands is an
-$codei%AD<%Base%>%$$ object.
+``AD<`` *Base* > object.
 The comparison has the same interpretation as for
-the $icode Base$$ type.
+the *Base* type.
 
+Op
+**
+The operator *Op* is one of the following:
 
-$head Op$$
-The operator $icode Op$$ is one of the following:
-$table
-$bold Op$$ $pre $$  $cnext $bold Meaning$$                           $rnext
-$code <$$   $cnext is $icode x$$ less than $icode y$$              $rnext
-$code <=$$  $cnext is $icode x$$ less than or equal $icode y$$     $rnext
-$code >$$   $cnext is $icode x$$ greater than $icode y$$           $rnext
-$code >=$$  $cnext is $icode x$$ greater than or equal $icode y$$  $rnext
-$code ==$$  $cnext is $icode x$$ equal to $icode y$$               $rnext
-$code !=$$  $cnext is $icode x$$ not equal to $icode y$$
-$tend
+.. csv-table::
+   :widths: auto
 
-$head x$$
-The operand $icode x$$ has prototype
-$codei%
-   const %Type% &%x%
-%$$
-where $icode Type$$ is $codei%AD<%Base%>%$$, $icode Base$$, or $code int$$.
+   **Op**,**Meaning**
+   ``<``,is *x* less than *y*
+   ``<=``,is *x* less than or equal *y*
+   ``>``,is *x* greater than *y*
+   ``>=``,is *x* greater than or equal *y*
+   ``==``,is *x* equal to *y*
+   ``!=``,is *x* not equal to *y*
 
-$head y$$
-The operand $icode y$$ has prototype
-$codei%
-   const %Type% &%y%
-%$$
-where $icode Type$$ is $codei%AD<%Base%>%$$, $icode Base$$, or $code int$$.
+x
+*
+The operand *x* has prototype
 
-$head b$$
-The result $icode b$$ has type
-$codei%
-   bool %b%
-%$$
+   ``const`` *Type* & *x*
 
-$head Operation Sequence$$
-The result of this operation is a $code bool$$ value
-(not an $cref/AD of Base/glossary/AD of Base/$$ object).
+where *Type* is ``AD<`` *Base* > , *Base* , or ``int`` .
+
+y
+*
+The operand *y* has prototype
+
+   ``const`` *Type* & *y*
+
+where *Type* is ``AD<`` *Base* > , *Base* , or ``int`` .
+
+b
+*
+The result *b* has type
+
+   ``bool`` *b*
+
+Operation Sequence
+******************
+The result of this operation is a ``bool`` value
+(not an :ref:`glossary@AD of Base` object).
 Thus it will not be recorded as part of an
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
-$pre
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$$
 For example, suppose
-$icode x$$ and $icode y$$ are $codei%AD<%Base%>%$$ objects,
-the tape corresponding to $codei%AD<%Base%>%$$ is recording,
-$icode b$$ is true,
+*x* and *y* are ``AD<`` *Base* > objects,
+the tape corresponding to ``AD<`` *Base* > is recording,
+*b* is true,
 and the subsequent code is
-$codei%
-   if( %b% )
-      %y% = cos(%x%);
-   else
-      %y% = sin(%x%);
-%$$
-only the assignment $icode%y% = cos(%x%)%$$ is recorded on the tape
-(if $icode x$$ is a $cref/parameter/glossary/Parameter/$$,
+
+| |tab| ``if`` ( *b*  )
+| |tab| |tab| *y* = ``cos`` ( *x* );
+| |tab| ``else``
+| |tab| |tab| *y* = ``sin`` ( *x* );
+
+only the assignment *y* = ``cos`` ( *x* ) is recorded on the tape
+(if *x* is a :ref:`glossary@Parameter` ,
 nothing is recorded).
-The $cref CompareChange$$ function can yield
+The :ref:`CompareChange-name` function can yield
 some information about changes in comparison operation results.
-You can use $cref CondExp$$ to obtain comparison operations
+You can use :ref:`CondExp-name` to obtain comparison operations
 that depends on the
-$cref/independent variable/glossary/Tape/Independent Variable/$$
+:ref:`glossary@Tape@Independent Variable`
 values with out re-taping the AD sequence of operations.
 
-$head Assumptions$$
-If one of the $icode Op$$ operators listed above
-is used with an $codei%AD<%Base%>%$$ object,
+Assumptions
+***********
+If one of the *Op* operators listed above
+is used with an ``AD<`` *Base* > object,
 it is assumed that the same operator is supported by the base type
-$icode Base$$.
+*Base* .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/compare.cpp
-%$$
+}
 The file
-$cref compare.cpp$$
+:ref:`compare.cpp-name`
 contains an example and test of these operations.
 
-$end
+{xrst_end Compare}
 -------------------------------------------------------------------------------
 */
 //  BEGIN CppAD namespace

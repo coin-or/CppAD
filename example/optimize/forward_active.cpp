@@ -3,13 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin optimize_forward_active.cpp$$
+{xrst_begin optimize_forward_active.cpp}
 
-$section Optimize Forward Activity Analysis: Example and Test$$
+Optimize Forward Activity Analysis: Example and Test
+####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end optimize_forward_active.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

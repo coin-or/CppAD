@@ -6,18 +6,13 @@
 # include <cppad/utility/vector.hpp>
 
 /*
-$begin sacado_sparse_hessian.cpp$$
-$spell
-   boolsparsity
-   const
-   Sacado
-   bool
-   CppAD
-$$
+{xrst_begin sacado_sparse_hessian.cpp}
 
-$section Sacado Speed: Sparse Hessian$$
+Sacado Speed: Sparse Hessian
+############################
 
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // A sacado version of this test is not yet implemented
 extern bool link_sparse_hessian(
    size_t                            size      ,
@@ -31,6 +26,8 @@ extern bool link_sparse_hessian(
 {
    return false;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end sacado_sparse_hessian.cpp}
 */

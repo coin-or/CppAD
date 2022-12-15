@@ -6,179 +6,184 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin RevSparseHes$$
-$spell
-   std
-   VecAD
-   Jacobian
-   Jac
-   Hessian
-   Hes
-   const
-   Bool
-   Dep
-   proportional
-   var
-   cpp
-$$
+{xrst_begin RevSparseHes}
 
-$section Hessian Sparsity Pattern: Reverse Mode$$
+Hessian Sparsity Pattern: Reverse Mode
+######################################
 
-$head Syntax$$
-$icode%h% = %f%.RevSparseHes(%q%, %s%)
-%$$
-$icode%h% = %f%.RevSparseHes(%q%, %s%, %transpose%)%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-For a fixed matrix $latex R \in \B{R}^{n \times q}$$
-and a fixed vector $latex S \in \B{R}^{1 \times m}$$,
+   *h* = *f* . ``RevSparseHes`` ( *q* , *s* )
+
+*h* = *f* . ``RevSparseHes`` ( *q* , *s* , *transpose* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+For a fixed matrix :math:`R \in \B{R}^{n \times q}`
+and a fixed vector :math:`S \in \B{R}^{1 \times m}`,
 we define
-$latex \[
-\begin{array}{rcl}
-H(x)
-& = & \partial_x \left[ \partial_u S * F[ x + R * u ] \right]_{u=0}
-\\
-& = & R^\R{T} * (S * F)^{(2)} ( x )
-\\
-H(x)^\R{T}
-& = & (S * F)^{(2)} ( x ) * R
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   H(x)
+   & = & \partial_x \left[ \partial_u S * F[ x + R * u ] \right]_{u=0}
+   \\
+   & = & R^\R{T} * (S * F)^{(2)} ( x )
+   \\
+   H(x)^\R{T}
+   & = & (S * F)^{(2)} ( x ) * R
+   \end{eqnarray}
+
 Given a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex R$$ and the vector $latex S$$,
-$code RevSparseHes$$ returns a sparsity pattern for the $latex H(x)$$.
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`R` and the vector :math:`S`,
+``RevSparseHes`` returns a sparsity pattern for the :math:`H(x)`.
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   const ADFun<%Base%> %f%
-%$$
+f
+*
+The object *f* has prototype
 
-$head x$$
-If the operation sequence in $icode f$$ is
-$cref/independent/glossary/Operation/Independent/$$ of
-the independent variables in $latex x \in \B{R}^n$$,
+   ``const ADFun<`` *Base* > *f*
+
+x
+*
+If the operation sequence in *f* is
+:ref:`glossary@Operation@Independent` of
+the independent variables in :math:`x \in \B{R}^n`,
 the sparsity pattern is valid for all values of
-(even if it has $cref CondExp$$ or $cref VecAD$$ operations).
+(even if it has :ref:`CondExp-name` or :ref:`VecAD-name` operations).
 
-$head q$$
-The argument $icode q$$ has prototype
-$codei%
-   size_t %q%
-%$$
-It specifies the number of columns in $latex R \in \B{R}^{n \times q}$$
-and the number of rows in $latex H(x) \in \B{R}^{q \times n}$$.
-It must be the same value as in the previous $cref ForSparseJac$$ call
-$codei%
-   %f%.ForSparseJac(%q%, %r%, %r_transpose%)
-%$$
-Note that if $icode r_transpose$$ is true, $icode r$$ in the call above
-corresponding to $latex R^\R{T} \in \B{R}^{q \times n}$$
+q
+*
+The argument *q* has prototype
 
-$head transpose$$
-The argument $icode transpose$$ has prototype
-$codei%
-   bool %transpose%
-%$$
-The default value $code false$$ is used when $icode transpose$$ is not present.
+   ``size_t`` *q*
 
+It specifies the number of columns in :math:`R \in \B{R}^{n \times q}`
+and the number of rows in :math:`H(x) \in \B{R}^{q \times n}`.
+It must be the same value as in the previous :ref:`ForSparseJac-name` call
 
-$head r$$
-The matrix $latex R$$ is specified by the previous call
-$codei%
-   %f%.ForSparseJac(%q%, %r%, %transpose%)
-%$$
-see $cref/r/ForSparseJac/r/$$.
+   *f* . ``ForSparseJac`` ( *q* , *r* , *r_transpose* )
+
+Note that if *r_transpose* is true, *r* in the call above
+corresponding to :math:`R^\R{T} \in \B{R}^{q \times n}`
+
+transpose
+*********
+The argument *transpose* has prototype
+
+   ``bool`` *transpose*
+
+The default value ``false`` is used when *transpose* is not present.
+
+r
+*
+The matrix :math:`R` is specified by the previous call
+
+   *f* . ``ForSparseJac`` ( *q* , *r* , *transpose* )
+
+see :ref:`ForSparseJac@r` .
 The type of the elements of
-$cref/SetVector/RevSparseHes/SetVector/$$ must be the
-same as the type of the elements of $icode r$$.
+:ref:`RevSparseHes@SetVector` must be the
+same as the type of the elements of *r* .
 
-$head s$$
-The argument $icode s$$ has prototype
-$codei%
-   const %SetVector%& %s%
-%$$
-(see $cref/SetVector/RevSparseHes/SetVector/$$ below)
-If it has elements of type $code bool$$,
-its size is $latex m$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is one and all the elements of $icode%s%[0]%$$
-are between zero and $latex m - 1$$.
+s
+*
+The argument *s* has prototype
+
+   ``const`` *SetVector* & *s*
+
+(see :ref:`RevSparseHes@SetVector` below)
+If it has elements of type ``bool`` ,
+its size is :math:`m`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is one and all the elements of *s* [0]
+are between zero and :math:`m - 1`.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the vector $icode S$$.
+:ref:`glossary@Sparsity Pattern`
+for the vector *S* .
 
-$head h$$
-The result $icode h$$ has prototype
-$codei%
-   %SetVector%& %h%
-%$$
-(see $cref/SetVector/RevSparseHes/SetVector/$$ below).
+h
+*
+The result *h* has prototype
 
-$subhead transpose false$$
-If $icode h$$ has elements of type $code bool$$,
-its size is $latex q * n$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex q$$ and all the set elements are between
-zero and $icode%n%-1%$$ inclusive.
+   *SetVector* & *h*
+
+(see :ref:`RevSparseHes@SetVector` below).
+
+transpose false
+===============
+If *h* has elements of type ``bool`` ,
+its size is :math:`q * n`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`q` and all the set elements are between
+zero and *n* ``-1`` inclusive.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex H(x)$$.
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`H(x)`.
 
-$subhead transpose true$$
-If $icode h$$ has elements of type $code bool$$,
-its size is $latex n * q$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex n$$ and all the set elements are between
-zero and $icode%q%-1%$$ inclusive.
+transpose true
+==============
+If *h* has elements of type ``bool`` ,
+its size is :math:`n * q`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`n` and all the set elements are between
+zero and *q* ``-1`` inclusive.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex H(x)^\R{T}$$.
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`H(x)^\R{T}`.
 
-$head SetVector$$
-The type $icode SetVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$ or $code std::set<size_t>$$;
-see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+SetVector
+*********
+The type *SetVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` or ``std::set<size_t>`` ;
+see :ref:`glossary@Sparsity Pattern` for a discussion
 of the difference.
 The type of the elements of
-$cref/SetVector/RevSparseHes/SetVector/$$ must be the
-same as the type of the elements of $icode r$$.
+:ref:`RevSparseHes@SetVector` must be the
+same as the type of the elements of *r* .
 
-$head Entire Sparsity Pattern$$
-Suppose that $latex q = n$$ and
-$latex R \in \B{R}^{n \times n}$$ is the $latex n \times n$$ identity matrix.
-Further suppose that the $latex S$$ is the $th k$$
-$cref/elementary vector/glossary/Elementary Vector/$$; i.e.
-$latex \[
-S_j = \left\{ \begin{array}{ll}
-   1  & {\rm if} \; j = k
-   \\
-   0  & {\rm otherwise}
-\end{array} \right.
-\] $$
+Entire Sparsity Pattern
+***********************
+Suppose that :math:`q = n` and
+:math:`R \in \B{R}^{n \times n}` is the :math:`n \times n` identity matrix.
+Further suppose that the :math:`S` is the *k*-th
+:ref:`glossary@Elementary Vector` ; i.e.
+
+.. math::
+
+   S_j = \left\{ \begin{array}{ll}
+      1  & {\rm if} \; j = k
+      \\
+      0  & {\rm otherwise}
+   \end{array} \right.
+
 In this case,
-the corresponding value $icode h$$ is a
+the corresponding value *h* is a
 sparsity pattern for the Hessian matrix
-$latex F_k^{(2)} (x) \in \B{R}^{n \times n}$$.
+:math:`F_k^{(2)} (x) \in \B{R}^{n \times n}`.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/sparse/rev_sparse_hes.cpp
-   %example/sparse/sparsity_sub.cpp
-%$$
+   example/sparse/sparsity_sub.cpp
+}
 The file
-$cref rev_sparse_hes.cpp$$
+:ref:`rev_sparse_hes.cpp-name`
 contains an example and test of this operation.
 The file
-$cref/sparsity_sub.cpp/sparsity_sub.cpp/RevSparseHes/$$
-contains an example and test of using $code RevSparseHes$$
+:ref:`sparsity_sub.cpp<sparsity_sub.cpp@RevSparseHes>`
+contains an example and test of using ``RevSparseHes``
 to compute the sparsity pattern for a subset of the Hessian.
 
-$end
+{xrst_end RevSparseHes}
 -----------------------------------------------------------------------------
 */
 # include <algorithm>

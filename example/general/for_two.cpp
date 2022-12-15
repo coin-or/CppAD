@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin for_two.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin for_two.cpp}
 
-$section Subset of Second Order Partials: Example and Test$$
+Subset of Second Order Partials: Example and Test
+#################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end for_two.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

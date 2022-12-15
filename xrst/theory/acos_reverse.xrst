@@ -1,0 +1,155 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin acos_reverse}
+
+Inverse Cosine and Hyperbolic Cosine Reverse Mode Theory
+########################################################
+
+We use the reverse theory
+:ref:`standard math function<reverse_theory@Standard Math Functions>`
+definition for the functions :math:`H` and :math:`G`.
+In addition, we use the forward mode notation in
+:ref:`acos_forward-name` for
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      Q(t) & = & \mp ( X(t) * X(t) - 1 ) \\
+      B(t) & = & \sqrt{ Q(t) }
+   \end{eqnarray}
+
+We use :math:`q` and :math:`b`
+for the *p*-th order Taylor coefficient
+row vectors corresponding to these functions
+and replace :math:`z^{(j)}` by
+
+.. math::
+
+   ( z^{(j)} , b^{(j)} )
+
+in the definition for :math:`G` and :math:`H`.
+The zero order forward mode formulas for the
+:ref:`acos<acos_forward-name>`
+function are
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      q^{(0)}  & = & \mp ( x^{(0)} x^{(0)} - 1) \\
+      b^{(0)}  & = & \sqrt{ q^{(0)} }    \\
+      z^{(0)}  & = & F ( x^{(0)} )
+   \end{eqnarray}
+
+where :math:`F(x) = \R{acos} (x)` for :math:`-`
+and :math:`F(x) = \R{acosh} (x)` for :math:`+`.
+For orders :math:`j` greater than zero we have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   q^{(j)} & = &
+      \mp \sum_{k=0}^j x^{(k)} x^{(j-k)}
+   \\
+   b^{(j)} & = &
+      \frac{1}{j} \frac{1}{ b^{(0)} }
+      \left(
+         \frac{j}{2} q^{(j)}
+         - \sum_{k=1}^{j-1} k b^{(k)} b^{(j-k)}
+      \right)
+   \\
+   z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} }
+   \left(
+      \mp j x^{(j)}
+      - \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
+   \right)
+   \end{eqnarray}
+
+If :math:`j = 0`, we note that
+:math:`F^{(1)} ( x^{(0)} ) =  \mp 1 / b^{(0)}` and hence
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(j)} } & = &
+   \D{G}{ x^{(j)} }
+   + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
+   + \D{G}{ b^{(j)} } \D{ b^{(j)} }{ q^{(0)} } \D{ q^{(0)} }{ x^{(0)} }
+   \\
+   & = &
+   \D{G}{ x^{(j)} }
+   \mp \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
+   \mp \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
+   \end{eqnarray}
+
+If :math:`j > 0`, then for :math:`k = 1, \ldots , j-1`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ b^{(0)} } & = &
+   \D{G}{ b^{(0)} }
+   + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ b^{(0)} }
+   + \D{G}{ b^{(j)} } \D{ b^{(j)} }{ b^{(0)} }
+   \\
+   & = &
+   \D{G}{ b^{(0)} }
+   - \D{G}{ z^{(j)} } \frac{ z^{(j)} }{ b^{(0)} }
+   - \D{G}{ b^{(j)} } \frac{ b^{(j)} }{ b^{(0)} }
+   \\
+   \D{H}{ x^{(0)} } & = &
+   \D{G}{ x^{(0)} }
+   +
+   \D{G}{ b^{(j)} } \D{ b^{(j)} }{ q^{(j)} } \D{ q^{(j)} }{ x^{(0)} }
+   \\
+   & = &
+   \D{G}{ x^{(0)} }
+   \mp \D{G}{ b^{(j)} } \frac{ x^{(j)} }{ b^{(0)} }
+   \\
+   \D{H}{ x^{(j)} } & = &
+   \D{G}{ x^{(j)} }
+   + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
+   + \D{G}{ b^{(j)} } \D{ b^{(j)} }{ q^{(j)} } \D{ q^{(j)} }{ x^{(j)} }
+   \\
+   & = &
+   \D{G}{ x^{(j)} }
+   \mp \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
+   \mp \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
+   \\
+   \D{H}{ b^{(j - k)} } & = &
+   \D{G}{ b^{(j - k)} }
+   + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ b^{(j - k)} }
+   + \D{G}{ b^{(j)} } \D{ b^{(j)} }{ b^{(j - k)} }
+   \\
+   & = &
+   \D{G}{ b^{(j - k)} }
+   - \D{G}{ z^{(j)} } \frac{k z^{(k)} }{j b^{(0)} }
+   - \D{G}{ b^{(j)} } \frac{ b^{(k)} }{ b^{(0)} }
+   \\
+   \D{H}{ x^{(k)} } & = &
+   \D{G}{ x^{(k)} }
+   + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+   + \D{G}{ b^{(j)} } \D{ b^{(j)} }{ q^{(j)} } \D{ q^{(j)} }{ x^{(k)} }
+   \\
+   & = &
+   \D{G}{ x^{(k)} }
+   \mp \D{G}{ b^{(j)} } \frac{ x^{(j-k)} }{ b^{(0)} }
+   \\
+   \D{H}{ z^{(k)} } & = &
+   \D{G}{ z^{(k)} }
+   + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(k)} }
+   + \D{G}{ b^{(j)} } \D{ b^{(j)} }{ z^{(k)} }
+   \\
+   & = &
+   \D{G}{ z^{(k)} }
+   - \D{G}{ z^{(j)} } \frac{k b^{(j-k)} }{ j b^{(0)} }
+   \end{eqnarray}
+
+{xrst_end acos_reverse}

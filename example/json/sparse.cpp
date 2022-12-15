@@ -3,29 +3,33 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin json_sparse.cpp$$
-$spell
-   CppAD
-   Json
-$$
+{xrst_begin json_sparse.cpp}
 
-$section Json Representation of a Sparse Matrix: Example and Test$$
+Json Representation of a Sparse Matrix: Example and Test
+########################################################
 
-$head Discussion$$
+Discussion
+**********
 The example using a CppAD Json to represent the sparse matrix
-$latex \[
-\partial_x f(x, p) = \left( \begin{array}{ccc}
-   p_0 & 0    & 0 \\
-   0   & p_1  & 0 \\
-   0   & 0    & c_0
-\end{array} \right)
-\] $$
-where $latex c_0$$ is the constant 3.
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+.. math::
 
-$end
+   \partial_x f(x, p) = \left( \begin{array}{ccc}
+      p_0 & 0    & 0 \\
+      0   & p_1  & 0 \\
+      0   & 0    & c_0
+   \end{array} \right)
+
+where :math:`c_0` is the constant 3.
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end json_sparse.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

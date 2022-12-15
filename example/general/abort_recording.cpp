@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin abort_recording.cpp$$
-$spell
-$$
+{xrst_begin abort_recording.cpp}
 
-$section Abort Current Recording: Example and Test$$
+Abort Current Recording: Example and Test
+#########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end abort_recording.cpp}
 */
 // BEGIN C++
 

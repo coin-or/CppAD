@@ -3,64 +3,72 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_forward.cpp$$
-$spell
-   Jacobian
-$$
+{xrst_begin atomic_four_forward.cpp}
 
-$section Atomic Functions and Forward Mode: Example and Test$$
+Atomic Functions and Forward Mode: Example and Test
+###################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates forward mode derivative calculation
-using an $cref atomic_four$$ function.
+using an :ref:`atomic_four-name` function.
 
-$head Function$$
+Function
+********
 For this example, the atomic function
-$latex g : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
-$latex \[
-g(x) = \left( \begin{array}{c}
-   x_2 * x_2 \\
-   x_0 * x_1
-\end{array} \right)
-\] $$
+:math:`g : \B{R}^3 \rightarrow \B{R}^2` is defined by
 
-$head Jacobian$$
+.. math::
+
+   g(x) = \left( \begin{array}{c}
+      x_2 * x_2 \\
+      x_0 * x_1
+   \end{array} \right)
+
+Jacobian
+********
 The corresponding Jacobian is
-$latex \[
-g^{(1)} (x) = \left( \begin{array}{ccc}
-  0  &   0 & 2 x_2 \\
-x_1  & x_0 & 0
-\end{array} \right)
-\] $$
 
-$head Hessian$$
+.. math::
+
+   g^{(1)} (x) = \left( \begin{array}{ccc}
+     0  &   0 & 2 x_2 \\
+   x_1  & x_0 & 0
+   \end{array} \right)
+
+Hessian
+*******
 The Hessians of the component functions are
-$latex \[
-g_0^{(2)} ( x ) = \left( \begin{array}{ccc}
-   0 & 0 & 0  \\
-   0 & 0 & 0  \\
-   0 & 0 & 2
-\end{array} \right)
-\W{,}
-g_1^{(2)} ( x ) = \left( \begin{array}{ccc}
-   0 & 1 & 0 \\
-   1 & 0 & 0 \\
-   0 & 0 & 0
-\end{array} \right)
-\] $$
 
-$head Define Atomic Function$$
-$srcthisfile%0
-   %// BEGIN_DEFINE_ATOMIC_FUNCTION%// END_DEFINE_ATOMIC_FUNCTION%
-1%$$
+.. math::
 
-$head Use Atomic Function$$
-$srcthisfile%0
-   %// BEGIN_USE_ATOMIC_FUNCTION%// END_USE_ATOMIC_FUNCTION%
-1%$$
+   g_0^{(2)} ( x ) = \left( \begin{array}{ccc}
+      0 & 0 & 0  \\
+      0 & 0 & 0  \\
+      0 & 0 & 2
+   \end{array} \right)
+   \W{,}
+   g_1^{(2)} ( x ) = \left( \begin{array}{ccc}
+      0 & 1 & 0 \\
+      1 & 0 & 0 \\
+      0 & 0 & 0
+   \end{array} \right)
 
+Define Atomic Function
+**********************
+{xrst_literal
+   // BEGIN_DEFINE_ATOMIC_FUNCTION
+   // END_DEFINE_ATOMIC_FUNCTION
+}
 
-$end
+Use Atomic Function
+*******************
+{xrst_literal
+   // BEGIN_USE_ATOMIC_FUNCTION
+   // END_USE_ATOMIC_FUNCTION
+}
+
+{xrst_end atomic_four_forward.cpp}
 */
 # include <cppad/cppad.hpp>
 

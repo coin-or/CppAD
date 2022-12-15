@@ -5,26 +5,30 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector_jac_sparsity.hpp$$
-$spell
-   Jacobian
-   jac
-$$
+{xrst_begin atomic_four_vector_jac_sparsity.hpp}
 
-$section Atomic Vector Jacobian Sparsity Pattern: Example Implementation$$
+Atomic Vector Jacobian Sparsity Pattern: Example Implementation
+###############################################################
 
-$head Purpose$$
-The $code jac_sparsity$$ routine overrides the virtual functions
+Purpose
+*******
+The ``jac_sparsity`` routine overrides the virtual functions
 used by the atomic_four base class for Jacobian sparsity calculations; see
-$cref/jac_sparsity/atomic_four_jac_sparsity/$$.
+:ref:`jac_sparsity<atomic_four_jac_sparsity-name>` .
 
-$head Example$$
-The file $cref atomic_four_vector_jac_sparsity.cpp$$
+Example
+*******
+The file :ref:`atomic_four_vector_jac_sparsity.cpp-name`
 contains an example and test using this operator.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_jac_sparsity.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/vector/vector.hpp>

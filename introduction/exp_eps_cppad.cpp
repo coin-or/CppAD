@@ -3,66 +3,47 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin exp_eps_cppad$$
-$spell
-   Taylor
-   dy
-   coef
-   resize
-   cppad.hpp
-   cmath
-   fabs
-   bool
-   exp_eps_cppad
-   du
-   dv
-   dw
-   endl
-   hpp
-   http
-   org
-   std
-   www
-   CppAD
-   apx
-$$
+{xrst_begin exp_eps_cppad}
 
-$section exp_eps: CppAD Forward and Reverse Sweeps$$.
+exp_eps: CppAD Forward and Reverse Sweeps
+#########################################
 
-$head Purpose$$
+Purpose
+*******
 Use CppAD forward and reverse modes to compute the
-partial derivative with respect to $latex x$$,
-at the point $latex x = .5$$ and $latex \varepsilon = .2$$,
+partial derivative with respect to :math:`x`,
+at the point :math:`x = .5` and :math:`\varepsilon = .2`,
 of the function
-$codei%
-   exp_eps(%x%, %epsilon%)
-%$$
-as defined by the $cref exp_eps.hpp$$ include file.
 
-$head Exercises$$
-$list number$$
-Create and test a modified version of the routine below that computes
-the same order derivatives with respect to $latex x$$,
-at the point $latex x = .1$$ and $latex \varepsilon = .2$$,
-of the function
-$codei%
-   exp_eps(%x%, %epsilon%)
-%$$
-$lnext
-Create and test a modified version of the routine below that computes
-partial derivative with respect to $latex x$$,
-at the point $latex x = .1$$ and $latex \varepsilon = .2$$,
-of the function corresponding to the operation sequence
-for $latex x = .5$$ and $latex \varepsilon = .2$$.
-Hint: you could define a vector u with two components and use
-$codei%
-   %f%.Forward(0, %u%)
-%$$
-to run zero order forward mode at a point different
-form the point where the operation sequence corresponding to
-$icode f$$ was recorded.
-$lend
-$srccode%cpp% */
+   ``exp_eps`` ( *x* , *epsilon* )
+
+as defined by the :ref:`exp_eps.hpp-name` include file.
+
+Exercises
+*********
+
+#. Create and test a modified version of the routine below that computes
+   the same order derivatives with respect to :math:`x`,
+   at the point :math:`x = .1` and :math:`\varepsilon = .2`,
+   of the function
+
+      ``exp_eps`` ( *x* , *epsilon* )
+
+#. Create and test a modified version of the routine below that computes
+   partial derivative with respect to :math:`x`,
+   at the point :math:`x = .1` and :math:`\varepsilon = .2`,
+   of the function corresponding to the operation sequence
+   for :math:`x = .5` and :math:`\varepsilon = .2`.
+   Hint: you could define a vector u with two components and use
+
+      *f* . ``Forward`` (0, *u* )
+
+   to run zero order forward mode at a point different
+   form the point where the operation sequence corresponding to
+   *f* was recorded.
+
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/
 # include "exp_eps.hpp"      // our example exponential function approximation
 bool exp_eps_cppad(void)
@@ -133,6 +114,8 @@ bool exp_eps_cppad(void)
 
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end exp_eps_cppad}
 */

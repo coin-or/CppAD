@@ -4,23 +4,24 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin simple_ad_openmp.cpp$$
-$spell
-   openmp
-   CppAD
-$$
+{xrst_begin simple_ad_openmp.cpp}
 
-$section A Simple OpenMP AD: Example and Test$$
+A Simple OpenMP AD: Example and Test
+####################################
 
-
-$head Purpose$$
+Purpose
+*******
 This example demonstrates how CppAD can be used in a
 OpenMP multi-threading environment.
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end simple_ad_openmp.cpp}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

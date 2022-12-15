@@ -5,26 +5,34 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector_div_op.hpp$$
+{xrst_begin atomic_four_vector_div_op.hpp}
 
-$section Atomic Vector Divide Operator: Example Implementation$$
+Atomic Vector Divide Operator: Example Implementation
+#####################################################
 
-$head Forward Mode$$
+Forward Mode
+************
 see theory for forward mode
-$cref/division/forward_theory/Binary Operators/Division/$$.
+:ref:`forward_theory@Binary Operators@Division` .
 
-$head Reverse Mode$$
+Reverse Mode
+************
 see theory for reverse mode
-$cref/division/reverse_theory/Binary Operators/Division/$$.
+:ref:`reverse_theory@Binary Operators@Division` .
 
-$head Example$$
-The file $cref atomic_four_vector_div.cpp$$ contains an example
+Example
+*******
+The file :ref:`atomic_four_vector_div.cpp-name` contains an example
 and test for this operator.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end atomic_four_vector_div_op.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/vector/vector.hpp>

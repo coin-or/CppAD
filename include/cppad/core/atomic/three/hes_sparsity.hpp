@@ -5,90 +5,103 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_three_hes_sparsity$$
-$spell
-   Hessian
-   afun
-   hes
-$$
+{xrst_begin atomic_three_hes_sparsity}
 
-$section Atomic Function Hessian Sparsity Patterns$$
+Atomic Function Hessian Sparsity Patterns
+#########################################
 
-$head Syntax$$
-$icode%ok% = %afun%.hes_sparsity(
-   %parameter_x%, %type_x%, %select_x%, %select_y%, %pattern_out%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| *ok* = *afun* . ``hes_sparsity`` (
+| |tab| *parameter_x* , *type_x* , *select_x* , *select_y* , *pattern_out*
+| )
 
-$head Implementation$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Implementation
+**************
 This function must be defined if
-$cref/afun/atomic_three_ctor/atomic_user/afun/$$ is
-used to define an $cref ADFun$$ object $icode f$$,
-and Hessian sparsity patterns are computed for $icode f$$.
+:ref:`atomic_three_ctor@atomic_user@afun` is
+used to define an :ref:`ADFun-name` object *f* ,
+and Hessian sparsity patterns are computed for *f* .
 
-$head Base$$
-See $cref/Base/atomic_three_afun/Base/$$.
+Base
+****
+See :ref:`atomic_three_afun@Base` .
 
-$head parameter_x$$
-See $cref/parameter_x/atomic_three_define/parameter_x/$$.
+parameter_x
+***********
+See :ref:`atomic_three_define@parameter_x` .
 
-$head type_x$$
-See $cref/type_x/atomic_three_define/type_x/$$.
+type_x
+******
+See :ref:`atomic_three_define@type_x` .
 
-$head select_x$$
+select_x
+********
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
+atomic function; i.e. the size of *ax* .
 It specifies which domain components are included in
-the calculation of $icode pattern_out$$.
-If $icode%select_x%[%j%]%$$ is false, then there will be no indices
-$icode k$$ such that either of the following hold:
-$codei%
-   %pattern_out%.row()[%k%] == %j%
-   %pattern_out%.col()[%k%] == %j%
-%$$.
+the calculation of *pattern_out* .
+If *select_x* [ *j* ] is false, then there will be no indices
+*k* such that either of the following hold:
 
-$head select_y$$
+| |tab| *pattern_out* . ``row`` ()[ *k* ] == *j*
+| |tab| *pattern_out* . ``col`` ()[ *k* ] == *j*
+
+.
+
+select_y
+********
 This argument has size equal to the number of results to this
-atomic function; i.e. the size of $icode ay$$.
-It specifies which range component functions $latex g_i (x)$$ are included in
-of $icode pattern_out$$.
+atomic function; i.e. the size of *ay* .
+It specifies which range component functions :math:`g_i (x)` are included in
+of *pattern_out* .
 
-$head pattern_out$$
-This input value of $icode pattern_out$$ does not matter.
+pattern_out
+***********
+This input value of *pattern_out* does not matter.
 Upon return it is the union,
-with respect to $icode i$$ such that $icode%select_y%[%i%]%$$ is true,
-of the sparsity pattern for Hessian of $latex g_i (x)$$.
+with respect to *i* such that *select_y* [ *i* ] is true,
+of the sparsity pattern for Hessian of :math:`g_i (x)`.
 To be specific, there are non-negative indices
-$icode i$$, $icode r$$, $icode c$$, and $icode k$$ such that
-$codei%
-   %pattern_out%.row()[%k%] == %r%
-   %pattern_out%.col()[%k%] == %c%
-%$$
+*i* , *r* , *c* , and *k* such that
+
+| |tab| *pattern_out* . ``row`` ()[ *k* ] == *r*
+| |tab| *pattern_out* . ``col`` ()[ *k* ] == *c*
+
 if and only if
-$icode%select_y%[%i%]%$$ is true,
-$icode%select_x%[%r%]%$$ is true,
-$icode%select_x%[%c%]%$$ is true,
+*select_y* [ *i* ] is true,
+*select_x* [ *r* ] is true,
+*select_x* [ *c* ] is true,
 and
-$latex \[
+
+.. math::
+
    \partial_{x(r)} \partial_{x(c)} g_i(x)
-\] $$
+
 is possibly non-zero.
 Note that the sparsity pattern should be symmetric.
 
-$head ok$$
-If this calculation succeeded, $icode ok$$ is true.
+ok
+**
+If this calculation succeeded, *ok* is true.
 Otherwise it is false.
-
-$children%
+{xrst_toc_hidden
    example/atomic_three/hes_sparsity.cpp
-%$$
-$head Examples$$
-The file $cref atomic_three_hes_sparsity.cpp$$ contains an example and test
+}
+Examples
+********
+The file :ref:`atomic_three_hes_sparsity.cpp-name` contains an example and test
 that uses this routine.
-$end
+
+{xrst_end atomic_three_hes_sparsity}
 -----------------------------------------------------------------------------
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

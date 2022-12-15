@@ -4,64 +4,67 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin multi_chkpoint_two_algo$$
-$spell
-   chkpoint
-   au
-   const
-   ADvector
-   num
-   itr
-   algo
-$$
+{xrst_begin multi_chkpoint_two_algo}
+{xrst_spell
+   iterate
+}
 
-$section chkpoint_two Algorithm that Computes Square Root$$
+chkpoint_two Algorithm that Computes Square Root
+################################################
 
-$head Syntax$$
-$icode%checkpoint_algo%(%au%, %ay%)%$$
+Syntax
+******
+*checkpoint_algo* ( *au* , *ay* )
 
-$head Purpose$$
+Purpose
+*******
 This algorithm computes a square root using Newton's method.
 It is meant to be very inefficient in order to demonstrate timing results.
 
-$head au$$
+au
+**
 This argument has prototype
-$codei%
-   const %ADvector%& %au%
-%$$
-where $icode ADvector$$ is a
-$cref/simple vector class/SimpleVector/$$ with elements
-of type $code AD<double>$$.
-The size of $icode au$$ is three.
 
-$subhead y_initial$$
+   ``const`` *ADvector* & *au*
+
+where *ADvector* is a
+:ref:`simple vector class<SimpleVector-name>` with elements
+of type ``AD<double>`` .
+The size of *au* is three.
+
+y_initial
+=========
 We use the notation
-$codei%
-   %y_initial% = %au%[0]
-%$$
+
+   *y_initial* = *au* [0]
+
 for the initial value of the Newton iterate.
 
-$subhead y_squared$$
+y_squared
+=========
 We use the notation
-$codei%
-   %y_squared% = %au%[1]
-%$$
+
+   *y_squared* = *au* [1]
+
 for the value we are taking the square root of.
 
-$head ay$$
+ay
+**
 This argument has prototype
-$codei%
-   %ADvector%& %ay%
-%$$
-The size of $icode ay$$ is one and
-$icode%ay%[0]%$$ is the square root of $icode y_squared$$.
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN ALGO C++%// END ALGO C++%
-1%$$
+   *ADvector* & *ay*
 
-$end
+The size of *ay* is one and
+*ay* [0] is the square root of *y_squared* .
+
+Source
+******
+{xrst_literal
+   // BEGIN ALGO C++
+   // END ALGO C++
+}
+
+{xrst_end multi_chkpoint_two_algo}
 */
 // BEGIN ALGO C++
 // includes used by all source code in multi_chkpoint_two.cpp file
@@ -96,23 +99,24 @@ namespace {
 // END ALGO C++
 
 /*
-$begin multi_chkpoint_two_common$$
-$spell
-   chkpoint
-$$
+{xrst_begin multi_chkpoint_two_common}
 
-$section Multi-Threaded chkpoint_two Common Information$$
+Multi-Threaded chkpoint_two Common Information
+##############################################
 
-$head Purpose$$
+Purpose
+*******
 This source code defines the common variables that are used by
-the $codei%multi_chkpoint_two_%name%$$ functions.
+the ``multi_chkpoint_two_`` *name* functions.
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN COMMON C++%// END COMMON C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN COMMON C++
+   // END COMMON C++
+}
 
-$end
+{xrst_end multi_chkpoint_two_common}
 */
 // BEGIN COMMON C++
 namespace {
@@ -151,48 +155,50 @@ namespace {
 // END COMMON C++
 /*
 -------------------------------------------------------------------------------
-$begin multi_chkpoint_two_setup$$
-$spell
-   chkpoint
-   const
-   CppAD
-   bool
-$$
+{xrst_begin multi_chkpoint_two_setup}
 
-$section Multi-Threaded chkpoint_two Set Up$$.
+Multi-Threaded chkpoint_two Set Up
+##################################
 
-$head Syntax$$
-$icode%ok% = multi_chkpoint_two_setup(%y_squared%)%$$
+Syntax
+******
+*ok* = ``multi_chkpoint_two_setup`` ( *y_squared* )
 
-$head Purpose$$
+Purpose
+*******
 This routine splits up the computation into the individual threads.
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero
 and all the other threads are blocked (waiting).
 
-$head y_squared$$
+y_squared
+*********
 This argument has prototype
-$codei%
-   const vector<double>& %y_squared%
-%$$
+
+   ``const vector<double>&`` *y_squared*
+
 and its size is equal to the number of equations to solve.
 It is the values that we are computing the square root of.
 
-$head ok$$
+ok
+**
 This return value has prototype
-$codei%
-   bool %ok%
-%$$
+
+   ``bool`` *ok*
+
 If it is false,
-$code multi_chkpoint_two_setup$$ detected an error.
+``multi_chkpoint_two_setup`` detected an error.
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN SETUP C++%// END SETUP C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN SETUP C++
+   // END SETUP C++
+}
 
-$end
+{xrst_end multi_chkpoint_two_setup}
 */
 // BEGIN SETUP C++
 namespace {
@@ -255,22 +261,23 @@ bool multi_chkpoint_two_setup(const vector<double>& y_squared)
 // END SETUP C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_chkpoint_two_worker$$
-$spell
-   chkpoint
-$$
+{xrst_begin multi_chkpoint_two_worker}
 
-$section Multi-Threaded chkpoint_two Worker$$
+Multi-Threaded chkpoint_two Worker
+##################################
 
-$head Purpose$$
+Purpose
+*******
 This routine does the computation for one thread.
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN WORKER C++%// END WORKER C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN WORKER C++
+   // END WORKER C++
+}
 
-$end
+{xrst_end multi_chkpoint_two_worker}
 */
 // BEGIN WORKER C++
 namespace {
@@ -294,50 +301,53 @@ void multi_chkpoint_two_worker(void)
 // END WORKER C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_chkpoint_two_takedown$$
-$spell
-   chkpoint
-   CppAD
-   bool
-$$
+{xrst_begin multi_chkpoint_two_takedown}
 
-$section Multi-Threaded chkpoint_two Take Down$$
+Multi-Threaded chkpoint_two Take Down
+#####################################
 
-$head Syntax$$
-$icode%ok% = multi_chkpoint_two_takedown(%square_root%)%$$
+Syntax
+******
+*ok* = ``multi_chkpoint_two_takedown`` ( *square_root* )
 
-$head Purpose$$
+Purpose
+*******
 This routine gathers up the results for each thread and
-frees memory that was allocated by $cref multi_chkpoint_two_setup$$.
+frees memory that was allocated by :ref:`multi_chkpoint_two_setup-name` .
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero
 and all the other threads are blocked (waiting).
 
-$head square_root$$
+square_root
+***********
 This argument has prototype
-$codei%
-   vector<double>& %square_root%
-%$$
-The input value of $icode square_root$$ does not matter.
+
+   ``vector<double>&`` *square_root*
+
+The input value of *square_root* does not matter.
 Upon return,
 it has the same size and is the element by element square root of
-$cref/y_squared/multi_chkpoint_two_setup/y_squared/$$.
+:ref:`multi_chkpoint_two_setup@y_squared` .
 
-$head ok$$
+ok
+**
 This return value has prototype
-$codei%
-   bool %ok%
-%$$
+
+   ``bool`` *ok*
+
 If it is false,
-$code multi_chkpoint_two_takedown$$ detected an error.
+``multi_chkpoint_two_takedown`` detected an error.
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN TAKEDOWN C++
+   // END TAKEDOWN C++
+}
 
-$end
+{xrst_end multi_chkpoint_two_takedown}
 */
 // BEGIN TAKEDOWN C++
 namespace {
@@ -387,55 +397,57 @@ bool multi_chkpoint_two_takedown(vector<double>& square_root)
 }
 // END TAKEDOWN C++
 /*
-$begin multi_chkpoint_two_run$$
-$spell
-   chkpoint
-   const
-   CppAD
-   bool
-$$
+{xrst_begin multi_chkpoint_two_run}
 
-$section Run Multi-Threaded chkpoint_two Calculation$$
+Run Multi-Threaded chkpoint_two Calculation
+###########################################
 
-$head Syntax$$
-$icode%ok% = multi_chkpoint_two_run(%y_squared%, %square_root%)%$$
+Syntax
+******
+*ok* = ``multi_chkpoint_two_run`` ( *y_squared* , *square_root* )
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero
 and all the other threads are blocked (waiting).
 
-$head y_squared$$
+y_squared
+*********
 This argument has prototype
-$codei%
-   const vector<double>& %y_squared%
-%$$
+
+   ``const vector<double>&`` *y_squared*
+
 and its size is equal to the number of threads.
 It is the values that we are computing the square root of.
 
-$head square_root$$
+square_root
+***********
 This argument has prototype
-$codei%
-   vector<double>& %square_root%
-%$$
-The input value of $icode square_root$$ does not matter.
+
+   ``vector<double>&`` *square_root*
+
+The input value of *square_root* does not matter.
 Upon return,
 it has the same size and
-is the element by element square root of $icode y_squared$$.
+is the element by element square root of *y_squared* .
 
-$head ok$$
+ok
+**
 This return value has prototype
-$codei%
-   bool %ok%
-%$$
+
+   ``bool`` *ok*
+
 If it is false,
-$code multi_chkpoint_two_run$$ detected an error.
+``multi_chkpoint_two_run`` detected an error.
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN RUN C++%// END RUN C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN RUN C++
+   // END RUN C++
+}
 
-$end
+{xrst_end multi_chkpoint_two_run}
 ------------------------------------------------------------------------------
 */
 // BEGIN RUN C++
@@ -465,76 +477,76 @@ bool multi_chkpoint_two_run(
 // END RUN C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_chkpoint_two_time$$
-$spell
-   chkpoint
-   num
-   alloc
-   bool
-   CppAD
-$$
+{xrst_begin multi_chkpoint_two_time}
 
-$section Timing Test for Multi-Threaded chkpoint_two Calculation$$
+Timing Test for Multi-Threaded chkpoint_two Calculation
+#######################################################
 
-$head Syntax$$
-$icode%ok% = multi_chkpoint_two_time(
-   %time_out%, %test_time%, %num_threads%, %num_solve%
-)%$$
+Syntax
+******
 
+| *ok* = ``multi_chkpoint_two_time`` (
+| |tab| *time_out* , *test_time* , *num_threads* , *num_solve*
+| )
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero in sequential
-mode; i.e., not $cref/in_parallel/ta_in_parallel/$$.
+mode; i.e., not :ref:`in_parallel<ta_in_parallel-name>` .
 
-$head time_out$$
+time_out
+********
 This argument has prototype
-$codei%
-   double& %time_out%
-%$$
+
+   ``double&`` *time_out*
+
 Its input value of the argument does not matter.
 Upon return it is the number of wall clock seconds
-used by $cref multi_chkpoint_two_run$$.
+used by :ref:`multi_chkpoint_two_run-name` .
 
-$head test_time$$
+test_time
+*********
 This argument has prototype
-$codei%
-   double %test_time%
-%$$
+
+   ``double`` *test_time*
+
 and is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
 is reached.
-The reported $icode time_out$$ is the total wall clock time divided by the
+The reported *time_out* is the total wall clock time divided by the
 number of repeats.
 
-$head num_threads$$
+num_threads
+***********
 This argument has prototype
-$codei%
-   size_t %num_threads%
-%$$
+
+   ``size_t`` *num_threads*
+
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment and
-$codei%
-   1 == thread_alloc::num_threads()
-%$$
-If it is non-zero, the test is run with the multi-threading and
-$codei%
-   %num_threads% = thread_alloc::num_threads()
-%$$
 
-$head num_solve$$
+   1 == ``thread_alloc::num_threads`` ()
+
+If it is non-zero, the test is run with the multi-threading and
+
+   *num_threads* = ``thread_alloc::num_threads`` ()
+
+num_solve
+*********
 This specifies the number of square roots that will be solved for.
 
-$head ok$$
+ok
+**
 The return value has prototype
-$codei%
-   bool %ok%
-%$$
+
+   ``bool`` *ok*
+
 If it is true,
-$code harmonic_time$$ passed the correctness test and
-$code multi_chkpoint_two_time$$ did not detect an error.
+``harmonic_time`` passed the correctness test and
+``multi_chkpoint_two_time`` did not detect an error.
 Otherwise it is false.
 
-$end
+{xrst_end multi_chkpoint_two_time}
 */
 
 // BEGIN TIME C++

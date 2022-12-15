@@ -4,36 +4,46 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin abs_get_started.cpp$$
+{xrst_begin abs_get_started.cpp}
+{xrst_spell
+   rclrcl
+}
 
-$section abs_normal Getting Started: Example and Test$$
+abs_normal Getting Started: Example and Test
+############################################
 
-$head Purpose$$
-Creates an $cref/abs_normal/abs_normal_fun/$$
-representation $latex g$$ for the function
-$latex f : \B{R}^3 \rightarrow \B{R}$$ defined by
-$latex \[
+Purpose
+*******
+Creates an :ref:`abs_normal<abs_normal_fun-name>`
+representation :math:`g` for the function
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+
    f( x_0, x_1, x_2  ) = | x_0 + x_1 | + | x_1 + x_2 |
-\] $$
+
 The corresponding
-$cref/g/abs_normal_fun/g/$$ $latex : \B{R}^5 \rightarrow \B{R}^3$$ is
+:ref:`abs_normal_fun@g` :math:`: \B{R}^5 \rightarrow \B{R}^3` is
 given by
-$latex \[
-\begin{array}{rclrcl}
-   g_0 ( x_0, x_1, x_2, u_0, u_1 ) & = & u_0 + u_1 & = & y_0 (x, u)
-   \\
-   g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_0 + x_1 & = & z_0 (x, u)
-   \\
-   g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_1 + x_2 & = & z_1 (x, u)
-\end{array}
-\] $$
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN C++%// END C++%
-1%$$
+.. math::
 
-$end
+   \begin{array}{rclrcl}
+      g_0 ( x_0, x_1, x_2, u_0, u_1 ) & = & u_0 + u_1 & = & y_0 (x, u)
+      \\
+      g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_0 + x_1 & = & z_0 (x, u)
+      \\
+      g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_1 + x_2 & = & z_1 (x, u)
+   \end{array}
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abs_get_started.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

@@ -4,19 +4,21 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin general.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin general.cpp}
 
-$section CppAD Examples and Tests$$
+CppAD Examples and Tests
+########################
 
-$head Running Tests$$
-To build this program and run its correctness tests see $cref cmake_check$$.
+Running Tests
+*************
+To build this program and run its correctness tests see :ref:`cmake_check-name` .
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end general.cpp}
 */
 // BEGIN C++
 

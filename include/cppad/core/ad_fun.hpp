@@ -5,41 +5,30 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ADFun$$
-$spell
-   xk
-   Ind
-   bool
-   taylor_
-   sizeof
-   const
-   std
-   ind_taddr_
-   dep_taddr_
-$$
+{xrst_begin ADFun}
 
-$spell
-$$
+ADFun Objects
+#############
 
-$section ADFun Objects$$
-
-
-$head Purpose$$
-An AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$
-is stored in an $code ADFun$$ object by its $cref fun_construct$$.
-The $code ADFun$$ object can then be used to calculate function values,
+Purpose
+*******
+An AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>`
+is stored in an ``ADFun`` object by its :ref:`fun_construct-name` .
+The ``ADFun`` object can then be used to calculate function values,
 derivative values, and other values related to the corresponding function.
 
-$childtable%
-   include/cppad/core/ad_fun.omh%
-   include/cppad/core/optimize.hpp%
-   include/cppad/core/fun_check.hpp%
-   include/cppad/core/check_for_nan.hpp%
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/ad_fun.xrst
+   include/cppad/core/optimize.hpp
+   include/cppad/core/fun_check.hpp
+   include/cppad/core/check_for_nan.hpp
    include/cppad/core/to_csrc.hpp
-%$$
+}
 
-$end
+{xrst_end ADFun}
 */
 # include <cppad/core/graph/cpp_graph.hpp>
 # include <cppad/local/subgraph/info.hpp>

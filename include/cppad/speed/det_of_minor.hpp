@@ -5,200 +5,194 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin det_of_minor$$
-$spell
-   CppAD
-   hpp
-   std
-   Det
-   const
-   namespace
-   cppad
-$$
+{xrst_begin det_of_minor}
+{xrst_spell
+   factorial
+}
 
+Determinant of a Minor
+######################
 
-$section Determinant of a Minor$$
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/speed/det_of_minor.hpp>
-%$$
-$icode%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$
+   # ``include <cppad/speed/det_of_minor.hpp>``
 
+*d* = ``det_of_minor`` ( *a* , *m* , *n* , *r* , *c* )
 
-$head Inclusion$$
-The template function $code det_of_minor$$ is defined in the $code CppAD$$
+Inclusion
+*********
+The template function ``det_of_minor`` is defined in the ``CppAD``
 namespace by including
-the file $code cppad/speed/det_of_minor.hpp$$
+the file ``cppad/speed/det_of_minor.hpp``
 (relative to the CppAD distribution directory).
 
-$head Purpose$$
+Purpose
+*******
 This template function
-returns the determinant of a minor of the matrix $latex A$$
+returns the determinant of a minor of the matrix :math:`A`
 using expansion by minors.
-The elements of the $latex n \times n$$ minor $latex M$$
-of the matrix $latex A$$ are defined,
-for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
-$latex \[
-   M_{i,j} = A_{R(i), C(j)}
-\]$$
-where the functions
-$latex R(i)$$ is defined by the $cref/argument r/det_of_minor/r/$$ and
-$latex C(j)$$ is defined by the $cref/argument c/det_of_minor/c/$$.
-$pre
+The elements of the :math:`n \times n` minor :math:`M`
+of the matrix :math:`A` are defined,
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , n-1`, by
 
-$$
+.. math::
+
+   M_{i,j} = A_{R(i), C(j)}
+
+where the functions
+:math:`R(i)` is defined by the :ref:`argument r<det_of_minor@r>` and
+:math:`C(j)` is defined by the :ref:`argument c<det_of_minor@c>` .
+
 This template function
 is for example and testing purposes only.
 Expansion by minors is chosen as an example because it uses
 a lot of floating point operations yet does not require much source code
-(on the order of $icode m$$ factorial floating point operations and
+(on the order of *m* factorial floating point operations and
 about 70 lines of source code including comments).
 This is not an efficient method for computing a determinant;
 for example, using an LU factorization would be better.
 
-$head Determinant of A$$
+Determinant of A
+****************
 If the following conditions hold, the minor is the
-entire matrix $latex A$$ and hence $code det_of_minor$$
-will return the determinant of $latex A$$:
+entire matrix :math:`A` and hence ``det_of_minor``
+will return the determinant of :math:`A`:
 
-$list number$$
-$latex n = m$$.
-$lnext
-for $latex i = 0 , \ldots , m-1$$, $latex r[i] = i+1$$,
-and $latex r[m] = 0$$.
-$lnext
-for $latex j = 0 , \ldots , m-1$$, $latex c[j] = j+1$$,
-and $latex c[m] = 0$$.
-$lend
+#. :math:`n = m`.
+#. for :math:`i = 0 , \ldots , m-1`, :math:`r[i] = i+1`,
+   and :math:`r[m] = 0`.
+#. for :math:`j = 0 , \ldots , m-1`, :math:`c[j] = j+1`,
+   and :math:`c[m] = 0`.
 
-$head a$$
-The argument $icode a$$ has prototype
-$codei%
-   const std::vector<%Scalar%>& %a%
-%$$
-and is a vector with size $latex m * m$$
-(see description of $cref/Scalar/det_of_minor/Scalar/$$ below).
-The elements of the $latex m \times m$$ matrix $latex A$$ are defined,
-for $latex i = 0 , \ldots , m-1$$ and $latex j = 0 , \ldots , m-1$$, by
-$latex \[
+a
+*
+The argument *a* has prototype
+
+   ``const std::vector<`` *Scalar* >& *a*
+
+and is a vector with size :math:`m * m`
+(see description of :ref:`det_of_minor@Scalar` below).
+The elements of the :math:`m \times m` matrix :math:`A` are defined,
+for :math:`i = 0 , \ldots , m-1` and :math:`j = 0 , \ldots , m-1`, by
+
+.. math::
+
    A_{i,j} = a[ i * m + j]
-\] $$
 
-$head m$$
-The argument $icode m$$ has prototype
-$codei%
-   size_t %m%
-%$$
-and is the number of rows (and columns) in the square matrix $latex A$$.
+m
+*
+The argument *m* has prototype
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-   size_t %n%
-%$$
-and is the number of rows (and columns) in the square minor $latex M$$.
+   ``size_t`` *m*
 
-$head r$$
-The argument $icode r$$ has prototype
-$codei%
-   std::vector<size_t>& %r%
-%$$
-and is a vector with $latex m + 1$$ elements.
-This vector defines the function $latex R(i)$$
-which specifies the rows of the minor $latex M$$.
-To be specific, the function $latex R(i)$$
-for $latex i = 0, \ldots , n-1$$ is defined by
-$latex \[
-\begin{array}{rcl}
-   R(0)   & = & r[m]
-   \\
-   R(i+1) & = & r[ R(i) ]
-\end{array}
-\] $$
-All the elements of $icode r$$ must have value
-less than or equal $icode m$$.
-The elements of vector $icode r$$ are modified during the computation,
+and is the number of rows (and columns) in the square matrix :math:`A`.
+
+n
+*
+The argument *n* has prototype
+
+   ``size_t`` *n*
+
+and is the number of rows (and columns) in the square minor :math:`M`.
+
+r
+*
+The argument *r* has prototype
+
+   ``std::vector<size_t>&`` *r*
+
+and is a vector with :math:`m + 1` elements.
+This vector defines the function :math:`R(i)`
+which specifies the rows of the minor :math:`M`.
+To be specific, the function :math:`R(i)`
+for :math:`i = 0, \ldots , n-1` is defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      R(0)   & = & r[m]
+      \\
+      R(i+1) & = & r[ R(i) ]
+   \end{eqnarray}
+
+All the elements of *r* must have value
+less than or equal *m* .
+The elements of vector *r* are modified during the computation,
 and restored to their original value before the return from
-$code det_of_minor$$.
+``det_of_minor`` .
 
-$head c$$
-The argument $icode c$$ has prototype
-$codei%
-   std::vector<size_t>& %c%
-%$$
-and is a vector with $latex m + 1$$ elements
-This vector defines the function $latex C(i)$$
-which specifies the rows of the minor $latex M$$.
-To be specific, the function $latex C(i)$$
-for $latex j = 0, \ldots , n-1$$ is defined by
-$latex \[
-\begin{array}{rcl}
-   C(0)   & = & c[m]
-   \\
-   C(j+1) & = & c[ C(j) ]
-\end{array}
-\] $$
-All the elements of $icode c$$ must have value
-less than or equal $icode m$$.
-The elements of vector $icode c$$ are modified during the computation,
+c
+*
+The argument *c* has prototype
+
+   ``std::vector<size_t>&`` *c*
+
+and is a vector with :math:`m + 1` elements
+This vector defines the function :math:`C(i)`
+which specifies the rows of the minor :math:`M`.
+To be specific, the function :math:`C(i)`
+for :math:`j = 0, \ldots , n-1` is defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      C(0)   & = & c[m]
+      \\
+      C(j+1) & = & c[ C(j) ]
+   \end{eqnarray}
+
+All the elements of *c* must have value
+less than or equal *m* .
+The elements of vector *c* are modified during the computation,
 and restored to their original value before the return from
-$code det_of_minor$$.
+``det_of_minor`` .
 
-$head d$$
-The result $icode d$$ has prototype
-$codei%
-   %Scalar% %d%
-%$$
-and is equal to the determinant of the minor $latex M$$.
+d
+*
+The result *d* has prototype
 
-$head Scalar$$
-If $icode x$$ and $icode y$$ are objects of type $icode Scalar$$
-and $icode i$$ is an object of type $code int$$,
-the $icode Scalar$$ must support the following operations:
-$table
-$bold Syntax$$
-   $cnext $bold Description$$
-   $cnext $bold Result Type$$
-$rnext
-$icode%Scalar% %x%$$
-   $cnext default constructor for $icode Scalar$$ object.
-$rnext
-$icode%x% = %i%$$
-   $cnext set value of $icode x$$ to current value of $icode i$$
-$rnext
-$icode%x% = %y%$$
-   $cnext set value of $icode x$$ to current value of $icode y$$
-$rnext
-$icode%x% + %y%$$
-   $cnext value of $icode x$$ plus $icode y$$
-   $cnext $icode Scalar$$
-$rnext
-$icode%x% - %y%$$
-   $cnext value of $icode x$$ minus $icode y$$
-   $cnext $icode Scalar$$
-$rnext
-$icode%x% * %y%$$
-   $cnext value of $icode x$$ times value of $icode y$$
-   $cnext $icode Scalar$$
-$tend
+   *Scalar* *d*
 
-$children%
-   speed/example/det_of_minor.cpp%
-   omh/det_of_minor_hpp.omh
-%$$
+and is equal to the determinant of the minor :math:`M`.
 
-$head Example$$
+Scalar
+******
+If *x* and *y* are objects of type *Scalar*
+and *i* is an object of type ``int`` ,
+the *Scalar* must support the following operations:
+
+.. csv-table::
+   :widths: auto
+
+   **Syntax**,**Description**,**Result Type**
+   *Scalar* *x*,default constructor for *Scalar* object.
+   *x* = *i*,set value of *x* to current value of *i*
+   *x* = *y*,set value of *x* to current value of *y*
+   *x* + *y*,value of *x* plus *y*,*Scalar*
+   *x* ``-`` *y*,value of *x* minus *y*,*Scalar*
+   *x* * *y*,value of *x* times value of *y*,*Scalar*
+
+{xrst_toc_hidden
+   speed/example/det_of_minor.cpp
+   xrst/det_of_minor_hpp.xrst
+}
+
+Example
+*******
 The file
-$cref det_of_minor.cpp$$
-contains an example and test of $code det_of_minor.hpp$$.
+:ref:`det_of_minor.cpp-name`
+contains an example and test of ``det_of_minor.hpp`` .
 
-$head Source Code$$
+Source Code
+***********
 The file
-$cref det_of_minor.hpp$$
+:ref:`det_of_minor.hpp-name`
 contains the source for this template function.
 
-
-$end
+{xrst_end det_of_minor}
 ---------------------------------------------------------------------------
 */
 // BEGIN C++

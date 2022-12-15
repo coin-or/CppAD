@@ -4,15 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin num_limits.cpp$$
-$spell
-$$
+{xrst_begin num_limits.cpp}
 
-$section Numeric Limits: Example and Test$$
+Numeric Limits: Example and Test
+################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end num_limits.cpp}
 */
 // BEGIN C++
 

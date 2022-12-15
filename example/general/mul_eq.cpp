@@ -4,15 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin mul_eq.cpp$$
+{xrst_begin mul_eq.cpp}
 
-$section AD Compound Assignment Multiplication: Example and Test$$
+AD Compound Assignment Multiplication: Example and Test
+#######################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end mul_eq.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

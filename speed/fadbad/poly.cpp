@@ -3,39 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin fadbad_poly.cpp$$
-$spell
-   onetape
-   std
-   cppad
-   cpp
-   tadiff
-   std
-   ddp
-   Taylor
-   dz
-   eval
-   cppad
-   vector Vector
-   typedef
-   fadbad
-   Lu
-   CppAD
-   det
-   hpp
-   const
-   bool
-$$
+{xrst_begin fadbad_poly.cpp}
 
-$section Fadbad Speed: Second Derivative of a Polynomial$$
+Fadbad Speed: Second Derivative of a Polynomial
+###############################################
 
+Specifications
+**************
+See :ref:`link_poly-name` .
 
-$head Specifications$$
-See $cref link_poly$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/utility/vector.hpp>
 # include <cppad/utility/poly.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -95,6 +76,8 @@ bool link_poly(
    // ------------------------------------------------------
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fadbad_poly.cpp}
 */

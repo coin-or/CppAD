@@ -6,208 +6,217 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ForSparseJac$$
-$spell
-   std
-   var
-   Jacobian
-   Jac
-   const
-   Bool
-   proportional
-   VecAD
-   CondExpRel
-   optimizer
-   cpp
-$$
+{xrst_begin ForSparseJac}
 
-$section Jacobian Sparsity Pattern: Forward Mode$$
+Jacobian Sparsity Pattern: Forward Mode
+#######################################
 
-$head Syntax$$
-$icode%s% = %f%.ForSparseJac(%q%, %r%)
-%$$
-$icode%s% = %f%.ForSparseJac(%q%, %r%, %transpose%, %dependency%)%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-For a fixed $latex n \times q$$ matrix $latex R$$,
-the Jacobian of $latex F[ x + R * u ]$$
-with respect to $latex u$$ at $latex u = 0$$ is
-$latex \[
+   *s* = *f* . ``ForSparseJac`` ( *q* , *r* )
+
+*s* = *f* . ``ForSparseJac`` ( *q* , *r* , *transpose* , *dependency* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+For a fixed :math:`n \times q` matrix :math:`R`,
+the Jacobian of :math:`F[ x + R * u ]`
+with respect to :math:`u` at :math:`u = 0` is
+
+.. math::
+
    S(x) = F^{(1)} ( x ) * R
-\] $$
+
 Given a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for $latex R$$,
-$code ForSparseJac$$ returns a sparsity pattern for the $latex S(x)$$.
+:ref:`glossary@Sparsity Pattern`
+for :math:`R`,
+``ForSparseJac`` returns a sparsity pattern for the :math:`S(x)`.
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
-After a call to $code ForSparseJac$$, the sparsity pattern
+f
+*
+The object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const`` .
+After a call to ``ForSparseJac`` , the sparsity pattern
 for each of the variables in the operation sequence
-is held in $icode f$$ (for possible later use by $cref RevSparseHes$$).
-These sparsity patterns are stored with elements of type $code bool$$
-or elements of type $code std::set<size_t>$$
-(see $cref/SetVector/ForSparseJac/SetVector/$$ below).
+is held in *f* (for possible later use by :ref:`RevSparseHes-name` ).
+These sparsity patterns are stored with elements of type ``bool``
+or elements of type ``std::set<size_t>``
+(see :ref:`ForSparseJac@SetVector` below).
 
-$subhead size_forward_bool$$
-After $code ForSparseJac$$, if $icode k$$ is a $code size_t$$ object,
-$codei%
-   %k% = %f%.size_forward_bool()
-%$$
-sets $icode k$$ to the amount of memory (in unsigned character units)
-used to store the sparsity pattern with elements of type $code bool$$
-in the function object $icode f$$.
-If the sparsity patterns for the previous $code ForSparseJac$$ used
-elements of type $code bool$$,
-the return value for $code size_forward_bool$$ will be non-zero.
+size_forward_bool
+=================
+After ``ForSparseJac`` , if *k* is a ``size_t`` object,
+
+   *k* = *f* . ``size_forward_bool`` ()
+
+sets *k* to the amount of memory (in unsigned character units)
+used to store the sparsity pattern with elements of type ``bool``
+in the function object *f* .
+If the sparsity patterns for the previous ``ForSparseJac`` used
+elements of type ``bool`` ,
+the return value for ``size_forward_bool`` will be non-zero.
 Otherwise, its return value will be zero.
-This sparsity pattern is stored for use by $cref RevSparseHes$$ and
+This sparsity pattern is stored for use by :ref:`RevSparseHes-name` and
 when it is not longer needed, it can be deleted
 (and the corresponding memory freed) using
-$codei%
-   %f%.size_forward_bool(0)
-%$$
-After this call, $icode%f%.size_forward_bool()%$$ will return zero.
 
-$subhead size_forward_set$$
-After $code ForSparseJac$$, if $icode k$$ is a $code size_t$$ object,
-$codei%
-   %k% = %f%.size_forward_set()
-%$$
-sets $icode k$$ to the amount of memory (in unsigned character units)
+   *f* . ``size_forward_bool`` (0)
+
+After this call, *f* . ``size_forward_bool`` () will return zero.
+
+size_forward_set
+================
+After ``ForSparseJac`` , if *k* is a ``size_t`` object,
+
+   *k* = *f* . ``size_forward_set`` ()
+
+sets *k* to the amount of memory (in unsigned character units)
 used to store the
-$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
+:ref:`glossary@Sparsity Pattern@Vector of Sets`
 sparsity patterns.
-If the sparsity patterns for this operation use elements of type $code bool$$,
-the return value for $code size_forward_set$$ will be zero.
+If the sparsity patterns for this operation use elements of type ``bool`` ,
+the return value for ``size_forward_set`` will be zero.
 Otherwise, its return value will be non-zero.
-This sparsity pattern is stored for use by $cref RevSparseHes$$ and
+This sparsity pattern is stored for use by :ref:`RevSparseHes-name` and
 when it is not longer needed, it can be deleted
 (and the corresponding memory freed) using
-$codei%
-   %f%.size_forward_set(0)
-%$$
-After this call, $icode%f%.size_forward_set()%$$ will return zero.
 
-$head x$$
-If the operation sequence in $icode f$$ is
-$cref/independent/glossary/Operation/Independent/$$ of
-the independent variables in $latex x \in \B{R}^n$$,
+   *f* . ``size_forward_set`` (0)
+
+After this call, *f* . ``size_forward_set`` () will return zero.
+
+x
+*
+If the operation sequence in *f* is
+:ref:`glossary@Operation@Independent` of
+the independent variables in :math:`x \in \B{R}^n`,
 the sparsity pattern is valid for all values of
-(even if it has $cref CondExp$$ or $cref VecAD$$ operations).
+(even if it has :ref:`CondExp-name` or :ref:`VecAD-name` operations).
 
-$head q$$
-The argument $icode q$$ has prototype
-$codei%
-   size_t %q%
-%$$
+q
+*
+The argument *q* has prototype
+
+   ``size_t`` *q*
+
 It specifies the number of columns in
-$latex R \in \B{R}^{n \times q}$$ and the Jacobian
-$latex S(x) \in \B{R}^{m \times q}$$.
+:math:`R \in \B{R}^{n \times q}` and the Jacobian
+:math:`S(x) \in \B{R}^{m \times q}`.
 
-$head transpose$$
-The argument $icode transpose$$ has prototype
-$codei%
-   bool %transpose%
-%$$
-The default value $code false$$ is used when $icode transpose$$ is not present.
+transpose
+*********
+The argument *transpose* has prototype
 
-$head dependency$$
-The argument $icode dependency$$ has prototype
-$codei%
-   bool %dependency%
-%$$
-If $icode dependency$$ is true,
-the $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
+   ``bool`` *transpose*
+
+The default value ``false`` is used when *transpose* is not present.
+
+dependency
+**********
+The argument *dependency* has prototype
+
+   ``bool`` *dependency*
+
+If *dependency* is true,
+the :ref:`dependency.cpp@Dependency Pattern`
 (instead of sparsity pattern) is computed.
 
-$head r$$
-The argument $icode r$$ has prototype
-$codei%
-   const %SetVector%& %r%
-%$$
-see $cref/SetVector/ForSparseJac/SetVector/$$ below.
+r
+*
+The argument *r* has prototype
 
-$subhead transpose false$$
-If $icode r$$ has elements of type $code bool$$,
-its size is $latex n * q$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex n$$ and all the set elements must be between
-zero and $icode%q%-1%$$ inclusive.
+   ``const`` *SetVector* & *r*
+
+see :ref:`ForSparseJac@SetVector` below.
+
+transpose false
+===============
+If *r* has elements of type ``bool`` ,
+its size is :math:`n * q`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`n` and all the set elements must be between
+zero and *q* ``-1`` inclusive.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex R \in \B{R}^{n \times q}$$.
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`R \in \B{R}^{n \times q}`.
 
-$subhead transpose true$$
-If $icode r$$ has elements of type $code bool$$,
-its size is $latex q * n$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex q$$ and all the set elements must be between
-zero and $icode%n%-1%$$ inclusive.
+transpose true
+==============
+If *r* has elements of type ``bool`` ,
+its size is :math:`q * n`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`q` and all the set elements must be between
+zero and *n* ``-1`` inclusive.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex R^\R{T} \in \B{R}^{q \times n}$$.
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`R^\R{T} \in \B{R}^{q \times n}`.
 
-$head s$$
-The return value $icode s$$ has prototype
-$codei%
-   %SetVector% %s%
-%$$
-see $cref/SetVector/ForSparseJac/SetVector/$$ below.
+s
+*
+The return value *s* has prototype
 
-$subhead transpose false$$
-If $icode s$$ has elements of type $code bool$$,
-its size is $latex m * q$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex m$$ and all its set elements are between
-zero and $icode%q%-1%$$ inclusive.
+   *SetVector* *s*
+
+see :ref:`ForSparseJac@SetVector` below.
+
+transpose false
+===============
+If *s* has elements of type ``bool`` ,
+its size is :math:`m * q`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`m` and all its set elements are between
+zero and *q* ``-1`` inclusive.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex S(x) \in \B{R}^{m \times q}$$.
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`S(x) \in \B{R}^{m \times q}`.
 
-$subhead transpose true$$
-If $icode s$$ has elements of type $code bool$$,
-its size is $latex q * m$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex q$$ and all its set elements are between
-zero and $icode%m%-1%$$ inclusive.
+transpose true
+==============
+If *s* has elements of type ``bool`` ,
+its size is :math:`q * m`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`q` and all its set elements are between
+zero and *m* ``-1`` inclusive.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex S(x)^\R{T} \in \B{R}^{q \times m}$$.
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`S(x)^\R{T} \in \B{R}^{q \times m}`.
 
-$head SetVector$$
-The type $icode SetVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$ or $code std::set<size_t>$$;
-see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+SetVector
+*********
+The type *SetVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` or ``std::set<size_t>`` ;
+see :ref:`glossary@Sparsity Pattern` for a discussion
 of the difference.
 
-$head Entire Sparsity Pattern$$
-Suppose that $latex q = n$$ and
-$latex R$$ is the $latex n \times n$$ identity matrix.
+Entire Sparsity Pattern
+***********************
+Suppose that :math:`q = n` and
+:math:`R` is the :math:`n \times n` identity matrix.
 In this case,
-the corresponding value for $icode s$$ is a
-sparsity pattern for the Jacobian $latex S(x) = F^{(1)} ( x )$$.
+the corresponding value for *s* is a
+sparsity pattern for the Jacobian :math:`S(x) = F^{(1)} ( x )`.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/sparse/for_sparse_jac.cpp
-%$$
+}
 The file
-$cref for_sparse_jac.cpp$$
+:ref:`for_sparse_jac.cpp-name`
 contains an example and test of this operation.
 The file
-$cref/sparsity_sub.cpp/sparsity_sub.cpp/ForSparseJac/$$
-contains an example and test of using $code ForSparseJac$$
+:ref:`sparsity_sub.cpp<sparsity_sub.cpp@ForSparseJac>`
+contains an example and test of using ``ForSparseJac``
 to compute the sparsity pattern for a subset of the Jacobian.
 
-$end
+{xrst_end ForSparseJac}
 -----------------------------------------------------------------------------
 */
 

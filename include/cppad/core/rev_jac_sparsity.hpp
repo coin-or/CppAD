@@ -5,109 +5,116 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin rev_jac_sparsity$$
-$spell
-   Jacobian
-   jac
-   bool
-   const
-   rc
-   cpp
-$$
+{xrst_begin rev_jac_sparsity}
 
-$section Reverse Mode Jacobian Sparsity Patterns$$
+Reverse Mode Jacobian Sparsity Patterns
+#######################################
 
-$head Syntax$$
-$icode%f%.rev_jac_sparsity(
-   %pattern_in%, %transpose%, %dependency%, %internal_bool%, %pattern_out%
-)%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to
-the operation sequence stored in $icode f$$.
-Fix $latex R \in \B{R}^{\ell \times m}$$ and define the function
-$latex \[
+| *f* . ``rev_jac_sparsity`` (
+| |tab| *pattern_in* , *transpose* , *dependency* , *internal_bool* , *pattern_out*
+| )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to
+the operation sequence stored in *f* .
+Fix :math:`R \in \B{R}^{\ell \times m}` and define the function
+
+.. math::
+
    J(x) = R * F^{(1)} ( x )
-\] $$
-Given the $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$,
-$code rev_jac_sparsity$$ computes a sparsity pattern for $latex J(x)$$.
 
-$head x$$
-Note that the sparsity pattern $latex J(x)$$ corresponds to the
-operation sequence stored in $icode f$$ and does not depend on
-the argument $icode x$$.
+Given the :ref:`glossary@Sparsity Pattern` for :math:`R`,
+``rev_jac_sparsity`` computes a sparsity pattern for :math:`J(x)`.
+
+x
+*
+Note that the sparsity pattern :math:`J(x)` corresponds to the
+operation sequence stored in *f* and does not depend on
+the argument *x* .
 (The operation sequence may contain
-$cref CondExp$$ and  $cref VecAD$$ operations.)
+:ref:`CondExp-name` and  :ref:`VecAD-name` operations.)
 
-$head SizeVector$$
-The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
+f
+*
+The object *f* has prototype
 
-$head pattern_in$$
-The argument $icode pattern_in$$ has prototype
-$codei%
-   const sparse_rc<%SizeVector%>& %pattern_in%
-%$$
-see $cref sparse_rc$$.
-If $icode transpose$$ it is false (true),
-$icode pattern_in$$ is a sparsity pattern for $latex R$$ ($latex R^\R{T}$$).
+   ``ADFun<`` *Base* > *f*
 
-$head transpose$$
+pattern_in
+**********
+The argument *pattern_in* has prototype
+
+   ``const sparse_rc<`` *SizeVector* >& *pattern_in*
+
+see :ref:`sparse_rc-name` .
+If *transpose* it is false (true),
+*pattern_in* is a sparsity pattern for :math:`R` (:math:`R^\R{T}`).
+
+transpose
+*********
 This argument has prototype
-$codei%
-   bool %transpose%
-%$$
-See $cref/pattern_in/rev_jac_sparsity/pattern_in/$$ above and
-$cref/pattern_out/rev_jac_sparsity/pattern_out/$$ below.
 
-$head dependency$$
+   ``bool`` *transpose*
+
+See :ref:`rev_jac_sparsity@pattern_in` above and
+:ref:`rev_jac_sparsity@pattern_out` below.
+
+dependency
+**********
 This argument has prototype
-$codei%
-   bool %dependency%
-%$$
-see $cref/pattern_out/rev_jac_sparsity/pattern_out/$$ below.
 
-$head internal_bool$$
+   ``bool`` *dependency*
+
+see :ref:`rev_jac_sparsity@pattern_out` below.
+
+internal_bool
+*************
 If this is true, calculations are done with sets represented by a vector
 of boolean values. Otherwise, a vector of sets of integers is used.
 
-$head pattern_out$$
+pattern_out
+***********
 This argument has prototype
-$codei%
-   sparse_rc<%SizeVector%>& %pattern_out%
-%$$
-This input value of $icode pattern_out$$ does not matter.
-If $icode transpose$$ it is false (true),
-upon return $icode pattern_out$$ is a sparsity pattern for
-$latex J(x)$$ ($latex J(x)^\R{T}$$).
-If $icode dependency$$ is true, $icode pattern_out$$ is a
-$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
+
+   ``sparse_rc<`` *SizeVector* >& *pattern_out*
+
+This input value of *pattern_out* does not matter.
+If *transpose* it is false (true),
+upon return *pattern_out* is a sparsity pattern for
+:math:`J(x)` (:math:`J(x)^\R{T}`).
+If *dependency* is true, *pattern_out* is a
+:ref:`dependency.cpp@Dependency Pattern`
 instead of sparsity pattern.
 
-$head Sparsity for Entire Jacobian$$
+Sparsity for Entire Jacobian
+****************************
 Suppose that
-$latex R$$ is the $latex m \times m$$ identity matrix.
-In this case, $icode pattern_out$$ is a sparsity pattern for
-$latex F^{(1)} ( x )$$  ( $latex F^{(1)} (x)^\R{T}$$ )
-if $icode transpose$$ is false (true).
+:math:`R` is the :math:`m \times m` identity matrix.
+In this case, *pattern_out* is a sparsity pattern for
+:math:`F^{(1)} ( x )`  ( :math:`F^{(1)} (x)^\R{T}` )
+if *transpose* is false (true).
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/sparse/rev_jac_sparsity.cpp
-%$$
+}
 The file
-$cref rev_jac_sparsity.cpp$$
+:ref:`rev_jac_sparsity.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end rev_jac_sparsity}
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>

@@ -9,153 +9,173 @@
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
  ------------------------------------------------------------------------------
-$begin load_op_var$$
-$spell
-   pv
-   Vec
-   op
-   var
+{xrst_begin load_op_var}
+{xrst_spell
    isvar
-   ind
-   Taylor
-   arg
-   num
-   Addr
+   pv
    vecad
-$$
-$section Accessing an Element in a Variable VecAD Vector$$
+}
+Accessing an Element in a Variable VecAD Vector
+###############################################
 
-$head See Also$$
-$cref/op_code_var load/op_code_var/Load/$$.
+See Also
+********
+:ref:`op_code_var load<op_code_var@Load>` .
 
-$head Syntax$$
-$codei%forward_load_%I%_op_0(
-   %play%,
-   %i_z%,
-   %arg%,
-   %parameter%,
-   %cap_order%,
-   %taylor%,
-   %vec_ad2isvar%,
-   %vec_ad2index%,
-   %load_op2var%
-)
-%$$
-where the index type $icode I$$ is $code p$$ (for parameter)
-or $code v$$ (for variable).
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_FORWARD_LOAD_P_OP_0%// END_FORWARD_LOAD_P_OP_0%1
-%$$
-The prototype for $code forward_load_v_op_0$$ is the same
+| ``forward_load_`` *I* _ ``op_0`` (
+| |tab| *play* ,
+| |tab| *i_z* ,
+| |tab| *arg* ,
+| |tab| *parameter* ,
+| |tab| *cap_order* ,
+| |tab| *taylor* ,
+| |tab| *vec_ad2isvar* ,
+| |tab| *vec_ad2index* ,
+| |tab| *load_op2var*
+| )
+
+where the index type *I* is ``p`` (for parameter)
+or ``v`` (for variable).
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FORWARD_LOAD_P_OP_0
+   // END_FORWARD_LOAD_P_OP_0
+}
+The prototype for ``forward_load_v_op_0`` is the same
 except for the function name.
 
-$head Notation$$
+Notation
+********
 
-$subhead v$$
-We use $icode v$$ to denote the $cref VecAD$$ vector for this operation.
+v
+=
+We use *v* to denote the :ref:`VecAD-name` vector for this operation.
 
-$subhead x$$
-We use $icode x$$ to denote the $codei%AD%<%Base%>%$$
+x
+=
+We use *x* to denote the ``AD`` < ``Base`` >
 index for this operation.
 
-$subhead i_vec$$
-We use $icode i_vec$$ to denote the $code size_t$$ value
-corresponding to $icode x$$.
+i_vec
+=====
+We use *i_vec* to denote the ``size_t`` value
+corresponding to *x* .
 
-$subhead n_load$$
+n_load
+======
 This is the number of load instructions in this recording; i.e.,
-$icode%play%->num_var_load_rec()%$$.
+*play* ``->num_var_load_rec`` () .
 
-$subhead n_all$$
+n_all
+=====
 This is the number of values in the single array that includes
 all the vectors together with the size of each vector; i.e.,
-$icode%play%->num_var_vecad_ind_rec()%$$.
+*play* ``->num_var_vecad_ind_rec`` () .
 
-$head Addr$$
+Addr
+****
 Is the type used for address on this tape.
 
-$head Base$$
+Base
+****
 base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by this routine are done using type Base.
 
-$head play$$
+play
+****
 is the tape that this operation appears in.
 This is for error detection and not used when NDEBUG is defined.
 
-$head i_z$$
+i_z
+***
 is the AD variable index corresponding to the result of this load operation.
 
-$head arg$$
+arg
+***
 
-$subhead arg[0]$$
+arg[0]
+======
 is the offset of this VecAD vector relative to the beginning
-of the $icode vec_ad2isvar$$ and $icode vec_ad2index$$ arrays.
+of the *vec_ad2isvar* and *vec_ad2index* arrays.
 
-$subhead arg[1]$$
+arg[1]
+======
 If this is
-$code forward_load_p_op_0$$ ($code forward_load_v_op_0$$)
-$icode%arg%[%1%]%$$ is the parameter index (variable index)
-corresponding to $cref/i_vec/load_op_var/Notation/i_vec/$$.
+``forward_load_p_op_0`` (``forward_load_v_op_0`` )
+*arg* [1] is the parameter index (variable index)
+corresponding to :ref:`load_op_var@Notation@i_vec` .
 
-$subhead arg[2]$$
+arg[2]
+======
 Is the index of this VecAD load instruction in the
-$icode load_op2var$$ array.
+*load_op2var* array.
 
-$head parameter$$
+parameter
+*********
 This is the vector of parameters for this recording which has size
-$icode%play%->num_par_rec()%$$.
+*play* ``->num_par_rec`` () .
 
-$head cap_order$$
+cap_order
+*********
 number of columns in the matrix containing the Taylor coefficients.
 
-$head taylor$$
+taylor
+******
 Is the matrix of Taylor coefficients.
 
-$subhead Input$$
-In the $code forward_load_v_op_0$$ case,
-$codei%
-   size_t( %taylor%[ %arg%[1]% * %cap_order% + 0 ] )
-%$$
+Input
+=====
+In the ``forward_load_v_op_0`` case,
+
+   *size_t* ( ``taylor`` [ ``arg`` [1] * *cap_order*  + 0 ] )
+
 is the index in this VecAD vector.
 
-$subhead Output$$
-$icode%taylor%[ %i_z% * %cap_order% + 0 ]%$$
+Output
+======
+*taylor* [ *i_z* * *cap_order*  + 0 ]
 is set to the zero order Taylor coefficient for the result of this operator.
 
-$head vec_ad2isvar$$
-This vector has size $icode n_all$$.
-If $icode%vec_ad2isvar%[ %arg%[%0%] + %i_vec% ]%$$ is false (true),
+vec_ad2isvar
+************
+This vector has size *n_all* .
+If *vec_ad2isvar* [ *arg* [0] + *i_vec*  ] is false (true),
 the vector element is parameter (variable).
 
-$subhead i_pv$$
+i_pv
+====
 If this element is a parameter (variable),
-$codei%
-   %i_pv% = %vec_ad2index%[ %arg%[%0%] + %i_vec% ]
-%$$
+
+   *i_pv* = *vec_ad2index* [ *arg* [0] + *i_vec*  ]
+
 is the corresponding parameter (variable) index;
 
-$head vec_ad2index$$
-This array has size $icode n_all$$
-The value $icode%vec_ad2index%[ %arg%[0] - 1 ]%$$
+vec_ad2index
+************
+This array has size *n_all*
+The value *vec_ad2index* [ *arg* [0] ``- 1`` ]
 is the number of elements in the user vector containing this load.
-$icode%vec_ad2index%[%i_pv%]%$$ is the variable or
+*vec_ad2index* [ *i_pv* ] is the variable or
 parameter index for this element,
 
-$head load_op2var$$
-is a vector with size $icode n_load$$.
+load_op2var
+***********
+is a vector with size *n_load* .
 The input value of its elements does not matter.
 If the result of this load is a variable,
-$codei%
-   %load_op2var%[%arg%[2]] = %i_pv%
-%$$
-Otherwise,
-$codei%
-   %load_op2var%[%arg%[2]] = 0
-%$$
 
-$end
+   *load_op2var* [ *arg* [2]] = *i_pv*
+
+Otherwise,
+
+   *load_op2var* [ *arg* [2]] = 0
+
+{xrst_end load_op_var}
 */
 // BEGIN_FORWARD_LOAD_P_OP_0
 template <class Addr, class Base>

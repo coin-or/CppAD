@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_rcv.cpp$$
-$spell
-   rc
-   rcv
-$$
+{xrst_begin sparse_rcv.cpp}
 
-$section sparse_rcv: Example and Test$$
+sparse_rcv: Example and Test
+############################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sparse_rcv.cpp}
 */
 
 // BEGIN C++

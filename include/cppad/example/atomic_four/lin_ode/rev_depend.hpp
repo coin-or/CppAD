@@ -5,55 +5,61 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_rev_depend.hpp$$
-$spell
-   Jacobian
-   jac
-   vk
-   nnz
-$$
+{xrst_begin atomic_four_lin_ode_rev_depend.hpp}
+{xrst_spell
+   wk
+}
 
-$section
-Atomic Linear ODE Forward Type Calculation: Example Implementation$$
+Atomic Linear ODE Forward Type Calculation: Example Implementation
+##################################################################
 
-$head Purpose$$
-The $code rev_depend$$ routine overrides the virtual functions
+Purpose
+*******
+The ``rev_depend`` routine overrides the virtual functions
 used by the atomic_four base; see
-$cref/rev_depend/atomic_four_rev_depend/$$.
+:ref:`rev_depend<atomic_four_rev_depend-name>` .
 
-$head Notation$$
+Notation
+********
 We use the notation:
-$cref/call_id/atomic_four_lin_ode/call_id/$$
-$cref/r/atomic_four_lin_ode/r/$$
-$cref/pattern/atomic_four_lin_ode/pattern/$$
-$cref/transpose/atomic_four_lin_ode/transpose/$$
-$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
-$cref/row/atomic_four_lin_ode/pattern/row/$$,
-$cref/col/atomic_four_lin_ode/pattern/col/$$,
-$cref/x/atomic_four_lin_ode/x/$$,
-$cref/n/atomic_four_lin_ode/x/n/$$,
-$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
-$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
-$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
-$cref/m/atomic_four_lin_ode/y(x)/m/$$,
-$cref/vk(x)/atomic_four_lin_ode/vk(x)/$$,
+:ref:`atomic_four_lin_ode@call_id`
+:ref:`atomic_four_lin_ode@r`
+:ref:`atomic_four_lin_ode@pattern`
+:ref:`atomic_four_lin_ode@transpose`
+:ref:`atomic_four_lin_ode@pattern@nnz` ,
+:ref:`atomic_four_lin_ode@pattern@row` ,
+:ref:`atomic_four_lin_ode@pattern@col` ,
+:ref:`atomic_four_lin_ode@x` ,
+:ref:`atomic_four_lin_ode@x@n` ,
+:ref:`atomic_four_lin_ode@x@A(x)` ,
+:ref:`atomic_four_lin_ode@x@b(x)` ,
+:ref:`atomic_four_lin_ode@y(x)` ,
+:ref:`atomic_four_lin_ode@y(x)@m` ,
+:ref:`atomic_four_lin_ode@vk(x)` ,
 and the following additional notation:
 
-$subhead wk(x)$$
-Note that the factor $latex r / k$$,
-in the definition of $latex v^k (x)$$,
+wk(x)
+=====
+Note that the factor :math:`r / k`,
+in the definition of :math:`v^k (x)`,
 is constant (with respect to the variables).
 Hence it suffices to compute the dependency for
-$latex \[
-h (x) = \sum_{k=0}^4 w^k (x)
-\] $$
-where $latex w^0 (x) = b(x)$$ and for $latex k = 1, 2, \ldots$$,
-$latex w^k (x) = A(x) w^{k-1} (x)$$.
 
+.. math::
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+   h (x) = \sum_{k=0}^4 w^k (x)
+
+where :math:`w^0 (x) = b(x)` and for :math:`k = 1, 2, \ldots`,
+:math:`w^k (x) = A(x) w^{k-1} (x)`.
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_rev_depend.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>

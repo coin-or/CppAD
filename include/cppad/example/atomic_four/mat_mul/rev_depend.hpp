@@ -5,23 +5,24 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul_rev_depend.hpp$$
-$spell
-   Jacobian
-   jac
-$$
+{xrst_begin atomic_four_mat_mul_rev_depend.hpp}
 
-$section
 Atomic Matrix Multiply Reverse Dependency Analysis: Example Implementation
-$$
+##########################################################################
 
-$head Purpose$$
-The $code rev_depend$$ routine is used by $cref optimize$$
+Purpose
+*******
+The ``rev_depend`` routine is used by :ref:`optimize-name`
 to reduce the number of variables in the recording of a function.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_rev_depend.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>

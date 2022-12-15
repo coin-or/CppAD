@@ -8,196 +8,205 @@
 # define CPPAD_CORE_OPTIMIZE_PRINT_RESULT 0
 
 /*
-$begin optimize$$
-$spell
-   enum
-   jac
-   bool
-   Taylor
-   CppAD
-   cppad
-   std
-   const
+{xrst_begin optimize}
+{xrst_spell
    onetape
-   op
-   optimizer
-$$
+   substring
+}
 
-$section Optimize an ADFun Object Tape$$
+Optimize an ADFun Object Tape
+#############################
 
+Syntax
+******
 
-$head Syntax$$
-$icode%f%.optimize()
-%$$
-$icode%f%.optimize(%options%)
-%$$
-$icode%flag% = %f%.exceed_collision_limit()
-%$$
+| *f* . ``optimize`` ()
+| *f* . ``optimize`` ( *options* )
+| *flag* = *f* . ``exceed_collision_limit`` ()
 
-$head Purpose$$
-The operation sequence corresponding to an $cref ADFun$$ object can
+Purpose
+*******
+The operation sequence corresponding to an :ref:`ADFun-name` object can
 be very large and involve many operations; see the
-size functions in $cref fun_property$$.
-The $icode%f%.optimize%$$ procedure reduces the number of operations,
+size functions in :ref:`fun_property-name` .
+The *f* . ``optimize`` procedure reduces the number of operations,
 and thereby the time and the memory, required to
 compute function and derivative values.
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
+f
+*
+The object *f* has prototype
 
-$head options$$
+   ``ADFun<`` *Base* > *f*
+
+options
+*******
 This argument has prototype
-$codei%
-   const std::string& %options%
-%$$
-The default for $icode options$$ is the empty string.
+
+   ``const std::string&`` *options*
+
+The default for *options* is the empty string.
 If it is present, it must consist of one or more of the options below
 separated by a single space character.
 
-$subhead no_conditional_skip$$
-The $code optimize$$ function can create conditional skip operators
+no_conditional_skip
+===================
+The ``optimize`` function can create conditional skip operators
 to improve the speed of conditional expressions; see
-$cref/optimize/CondExp/Optimize/$$.
-If the sub-string $code no_conditional_skip$$ appears in $icode options$$,
+:ref:`CondExp@Optimize` .
+If the sub-string ``no_conditional_skip`` appears in *options* ,
 conditional skip operations are not be generated.
 This may make the optimize routine use significantly less memory
-and take less time to optimize $icode f$$.
+and take less time to optimize *f* .
 If conditional skip operations are generated,
 it may save a significant amount of time when
-using $icode f$$ for $cref forward$$ or $cref reverse$$ mode calculations;
-see $cref number_skip$$.
+using *f* for :ref:`forward-name` or :ref:`reverse-name` mode calculations;
+see :ref:`number_skip-name` .
 
-$subhead no_compare_op$$
-If the sub-string $code no_compare_op$$ appears in $icode options$$,
+no_compare_op
+=============
+If the sub-string ``no_compare_op`` appears in *options* ,
 comparison operators will be removed from the optimized function.
 These operators are necessary for the
-$cref compare_change$$ functions to be meaningful.
+:ref:`compare_change-name` functions to be meaningful.
 On the other hand, they are not necessary, and take extra time,
 when the compare_change functions are not used.
 
-$subhead no_print_for_op$$
-If the sub-string $code no_compare_op$$ appears in $icode options$$,
-$cref PrintFor$$ operations will be removed form the optimized function.
+no_print_for_op
+===============
+If the sub-string ``no_compare_op`` appears in *options* ,
+:ref:`PrintFor-name` operations will be removed form the optimized function.
 These operators are useful for reporting problems evaluating derivatives
 at independent variable values different from those used to record a function.
 
-$subhead no_cumulative_sum_op$$
+no_cumulative_sum_op
+====================
 If this sub-string appears,
 no cumulative sum operations will be generated during the optimization; see
-$cref optimize_cumulative_sum.cpp$$.
+:ref:`optimize_cumulative_sum.cpp-name` .
 
-$subhead collision_limit=value$$
+collision_limit=value
+=====================
 If this substring appears,
-where $icode value$$ is a sequence of decimal digits,
-the optimizer's hash code collision limit will be set to $icode value$$.
+where *value* is a sequence of decimal digits,
+the optimizer's hash code collision limit will be set to *value* .
 When the collision limit is reached, the expressions with that hash code
 are removed and a new lists of expressions with that has code is started.
-The larger $icode value$$, the more identical expressions the optimizer
+The larger *value* , the more identical expressions the optimizer
 can recognize, but the slower the optimizer may run.
-The default for $icode value$$ is $code 10$$.
+The default for *value* is ``10`` .
 
-$head Re-Optimize$$
+Re-Optimize
+***********
 Before 2019-06-28, optimizing twice was not supported and would fail
 if cumulative sum operators were present after the first optimization.
 This is now supported but it is not expected to have much benefit.
 If you find a case where it does have a benefit, please inform the CppAD
 developers of this.
 
-$head Efficiency$$
-If a $cref/zero order forward/forward_zero/$$ calculation is done during
-the construction of $icode f$$, it will require more memory
+Efficiency
+**********
+If a :ref:`zero order forward<forward_zero-name>` calculation is done during
+the construction of *f* , it will require more memory
 and time than required after the optimization procedure.
 In addition, it will need to be redone.
 For this reason, it is more efficient to use
-$codei%
-   ADFun<%Base%> %f%;
-   %f%.Dependent(%x%, %y%);
-   %f%.optimize();
-%$$
-instead of
-$codei%
-   ADFun<%Base%> %f%(%x%, %y%)
-   %f%.optimize();
-%$$
-See the discussion about
-$cref/sequence constructors/fun_construct/Sequence Constructor/$$.
 
-$head Taylor Coefficients$$
+| |tab| ``ADFun<`` *Base* > *f* ;
+| |tab| *f* . ``Dependent`` ( *x* , *y* );
+| |tab| *f* . ``optimize`` ();
+
+instead of
+
+| |tab| ``ADFun<`` *Base* > *f* ( *x* , *y* )
+| |tab| *f* . ``optimize`` ();
+
+See the discussion about
+:ref:`sequence constructors<fun_construct@Sequence Constructor>` .
+
+Taylor Coefficients
+*******************
 Any Taylor coefficients in the function object are lost; i.e.,
-$cref/f.size_order()/size_order/$$ after the optimization is zero.
+:ref:`f.size_order()<size_order-name>` after the optimization is zero.
 (See the discussion about efficiency above.)
 
-$head Speed Testing$$
-You can run the CppAD $cref/speed/speed_main/$$ tests and see
+Speed Testing
+*************
+You can run the CppAD :ref:`speed<speed_main-name>` tests and see
 the corresponding changes in number of variables and execution time.
 Note that there is an interaction between using
-$cref/optimize/speed_main/Global Options/optimize/$$ and
-$cref/onetape/speed_main/Global Options/onetape/$$.
-If $icode onetape$$ is true and $icode optimize$$ is true,
+:ref:`speed_main@Global Options@optimize` and
+:ref:`speed_main@Global Options@onetape` .
+If *onetape* is true and *optimize* is true,
 the optimized tape will be reused many times.
-If $icode onetape$$ is false and $icode optimize$$ is true,
+If *onetape* is false and *optimize* is true,
 the tape will be re-optimized for each test.
 
-$head Atomic Functions$$
-There are some subtitle issue with optimized $cref atomic$$ functions
-$latex v = g(u)$$:
+Atomic Functions
+****************
+There are some subtitle issue with optimized :ref:`atomic-name` functions
+:math:`v = g(u)`:
 
-$subhead rev_sparse_jac$$
-The $cref atomic_two_rev_sparse_jac$$ function is be used to determine
-which components of $icode u$$ affect the dependent variables of $icode f$$.
+rev_sparse_jac
+==============
+The :ref:`atomic_two_rev_sparse_jac-name` function is be used to determine
+which components of *u* affect the dependent variables of *f* .
 For each atomic operation, the current
-$cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ setting is used
-to determine if $code pack_sparsity_enum$$, $code bool_sparsity_enum$$,
-or $code set_sparsity_enum$$ is used to determine dependency relations
+:ref:`atomic_two_option@atomic_sparsity` setting is used
+to determine if ``pack_sparsity_enum`` , ``bool_sparsity_enum`` ,
+or ``set_sparsity_enum`` is used to determine dependency relations
 between argument and result variables.
 
-$subhead nan$$
-If $icode%u%[%i%]%$$ does not affect the value of
-the dependent variables for $icode f$$,
-the value of $icode%u%[%i%]%$$ is set to $cref nan$$.
+nan
+===
+If *u* [ *i* ] does not affect the value of
+the dependent variables for *f* ,
+the value of *u* [ *i* ] is set to :ref:`nan-name` .
 
-$head Checking Optimization$$
-If $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is not defined,
-and $cref/f.size_order()/size_order/$$ is greater than zero,
-a $cref forward_zero$$ calculation is done using the optimized version
-of $icode f$$ and the results are checked to see that they are
+Checking Optimization
+*********************
+If :ref:`Faq@Speed@NDEBUG` is not defined,
+and :ref:`f.size_order()<size_order-name>` is greater than zero,
+a :ref:`forward_zero-name` calculation is done using the optimized version
+of *f* and the results are checked to see that they are
 the same as before.
 If they are not the same, the
-$cref ErrorHandler$$ is called with a known error message
-related to $icode%f%.optimize()%$$.
+:ref:`ErrorHandler-name` is called with a known error message
+related to *f* . ``optimize`` () .
 
-$head exceed_collision_limit$$
-If the return value $icode flag$$ is true (false),
-the previous call to $icode%f%.optimize%$$ exceed the
-$cref/collision_limit/optimize/options/collision_limit=value/$$.
+exceed_collision_limit
+**********************
+If the return value *flag* is true (false),
+the previous call to *f* . ``optimize`` exceed the
+:ref:`collision_limit<optimize@options@collision_limit=value>` .
 
-$head Examples$$
-$comment childtable without Example instead of Contents for header$$
-$children%
+Examples
+********
+{xrst_comment childtable without Example instead of Contents for header}
+{xrst_toc_hidden
    example/optimize/optimize_twice.cpp
-   %example/optimize/forward_active.cpp
-   %example/optimize/reverse_active.cpp
-   %example/optimize/compare_op.cpp
-   %example/optimize/print_for.cpp
-   %example/optimize/conditional_skip.cpp
-   %example/optimize/nest_conditional.cpp
-   %example/optimize/cumulative_sum.cpp
-%$$
-$table
-$rref optimize_twice.cpp$$
-$rref optimize_forward_active.cpp$$
-$rref optimize_reverse_active.cpp$$
-$rref optimize_compare_op.cpp$$
-$rref optimize_print_for.cpp$$
-$rref optimize_conditional_skip.cpp$$
-$rref optimize_nest_conditional.cpp$$
-$rref optimize_cumulative_sum.cpp$$
-$tend
+   example/optimize/forward_active.cpp
+   example/optimize/reverse_active.cpp
+   example/optimize/compare_op.cpp
+   example/optimize/print_for.cpp
+   example/optimize/conditional_skip.cpp
+   example/optimize/nest_conditional.cpp
+   example/optimize/cumulative_sum.cpp
+}
 
-$end
+.. csv-table::
+   :widths: auto
+
+   optimize_twice.cpp,:ref:`optimize_twice.cpp-title`
+   optimize_forward_active.cpp,:ref:`optimize_forward_active.cpp-title`
+   optimize_reverse_active.cpp,:ref:`optimize_reverse_active.cpp-title`
+   optimize_compare_op.cpp,:ref:`optimize_compare_op.cpp-title`
+   optimize_print_for.cpp,:ref:`optimize_print_for.cpp-title`
+   optimize_conditional_skip.cpp,:ref:`optimize_conditional_skip.cpp-title`
+   optimize_nest_conditional.cpp,:ref:`optimize_nest_conditional.cpp-title`
+   optimize_cumulative_sum.cpp,:ref:`optimize_cumulative_sum.cpp-title`
+
+{xrst_end optimize}
 -----------------------------------------------------------------------------
 */
 # include <cppad/local/optimize/optimize_run.hpp>

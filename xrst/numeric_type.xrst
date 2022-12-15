@@ -1,0 +1,140 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+/*
+{xrst_begin NumericType}
+{xrst_spell
+   valarray
+}
+
+Definition of a Numeric Type
+############################
+
+Type Requirements
+*****************
+A *NumericType* is any type
+that satisfies the requirements below.
+The following is a list of some numeric types:
+``int`` , ``float`` , ``double`` ,
+``AD<double>`` , ``AD< AD<double> >`` .
+The routine :ref:`CheckNumericType-name` can be used to check
+that a type satisfies these conditions.
+
+Default Constructor
+*******************
+The syntax
+
+   *NumericType* *x* ;
+
+creates a *NumericType* object
+with an unspecified value.
+
+Constructor From Integer
+************************
+If *i* is an ``int`` ,
+the syntax
+
+   *NumericType* *x* ( *i* );
+
+creates a *NumericType* object with a value
+equal to *i* where *i* can be ``const`` .
+
+Copy Constructor
+****************
+If *x* is a *NumericType* object
+the syntax
+
+   *NumericType* *y* ( *x* );
+
+creates a *NumericType* object *y*
+with the same value as *x*
+where *x* can be ``const`` .
+
+Assignment
+**********
+If *x* and *y* are *NumericType* objects,
+the syntax
+
+   *x* = *y*
+
+sets the value of *x* equal to the value of *y*
+where *y* can be ``const`` .
+The expression corresponding to this operation is unspecified; i.e.,
+it could be ``void`` and hence
+
+   *x* = *y* = *z*
+
+may not be legal.
+
+Operators
+*********
+Suppose *x* , *y* and *z*
+*NumericType* objects where
+*x* and *y* may be ``const`` .
+In the result type column,
+*NumericType* can be replaced by any type that can
+be used just like a *NumericType* object.
+
+.. list-table::
+
+   * - **Operation**
+     - **Description**
+     - **Result Type**
+   * - + *x*
+     - unary plus
+     - *NumericType*
+   * - ``-`` *x*
+     - unary minus
+     - *NumericType*
+   * - *x* + *y*
+     - binary addition
+     - *NumericType*
+   * - *x* ``-`` *y*
+     - binary subtraction
+     - *NumericType*
+   * - *x* * *y*
+     - binary multiplication
+     - *NumericType*
+   * - *x* / *y*
+     - binary division
+     - *NumericType*
+   * - *z* += *y*
+     - compound assignment addition
+     - unspecified
+   * - *z* ``-`` = *y*
+     - compound assignment subtraction
+     - unspecified
+   * - *z* \\* = *y*
+     - compound assignment multiplication
+     - unspecified
+   * - *z* /= *y*
+     - compound assignment division
+     - unspecified
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/numeric_type.cpp
+}
+The file
+:ref:`numeric_type.cpp-name`
+contains an example and test of using numeric types.
+(It is easy to modify to test additional numeric types.)
+
+Exercise
+********
+
+#. List three operators that are not supported by every
+   numeric type but that are supported by the numeric types
+   ``int`` ,
+   ``float`` ,
+   ``double`` .
+
+#. Which of the following are numeric types:
+   ``std::complex<double>`` ,
+   ``std::valarray<double>`` ,
+   ``std::vector<double>`` ?
+
+{xrst_end NumericType}

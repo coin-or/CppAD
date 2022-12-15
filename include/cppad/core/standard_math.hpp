@@ -6,104 +6,115 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin unary_standard_math$$
-$spell
-   const
-   VecAD
-   fabs
-$$
+{xrst_begin unary_standard_math}
+{xrst_spell
+   expm
+   tanh
+}
 
-$section The Unary Standard Math Functions$$
+The Unary Standard Math Functions
+#################################
 
-$head Syntax$$
-$icode%y% = %fun%(%x%)%$$
+Syntax
+******
+*y* = *fun* ( *x* )
 
-$head Purpose$$
-Evaluates the standard math function $icode fun$$.
+Purpose
+*******
+Evaluates the standard math function *fun* .
 
-$head Possible Types$$
+Possible Types
+**************
 
-$subhead Base$$
-If $icode Base$$ satisfies the
-$cref/base type requirements/base_require/$$
-and argument $icode x$$ has prototype
-$codei%
-   const %Base%& %x%
-%$$
-then the result $icode y$$ has prototype
-$codei%
-   %Base% %y%
-%$$
+Base
+====
+If *Base* satisfies the
+:ref:`base type requirements<base_require-name>`
+and argument *x* has prototype
 
-$subhead AD<Base>$$
-If the argument $icode x$$ has prototype
-$codei%
-   const AD<%Base%>& %x%
-%$$
-then the result $icode y$$ has prototype
-$codei%
-   AD<%Base%> %y%
-%$$
+   ``const`` *Base* & *x*
 
-$subhead VecAD<Base>$$
-If the argument $icode x$$ has prototype
-$codei%
-   const VecAD<%Base%>::reference& %x%
-%$$
-then the result $icode y$$ has prototype
-$codei%
-   AD<%Base%> %y%
-%$$
+then the result *y* has prototype
 
-$children%include/cppad/core/std_math_11.hpp
-   %include/cppad/core/abs.hpp
-   %include/cppad/core/sign.hpp
-%$$
+   *Base* *y*
 
-$head fun$$
-The possible values for $icode fun$$ are
-$table
-$icode  fun$$ $pre  $$ $cnext Description        $rnext
-$rref abs$$
-$rref acos$$
-$rref acosh$$
-$rref asin$$
-$rref asinh$$
-$rref atan$$
-$rref atanh$$
-$rref cos$$
-$rref cosh$$
-$rref erf$$
-$rref exp$$
-$rref expm1$$
-$cref/fabs/abs/$$ $tref abs$$ $rnext
-$rref log10$$
-$rref log1p$$
-$rref log$$
-$rref sign$$
-$rref sin$$
-$rref sinh$$
-$rref sqrt$$
-$rref tan$$
-$rref tanh$$
-$tend
+AD<Base>
+========
+If the argument *x* has prototype
 
-$end
+   ``const AD<`` *Base* >& *x*
+
+then the result *y* has prototype
+
+   ``AD<`` *Base* > *y*
+
+VecAD<Base>
+===========
+If the argument *x* has prototype
+
+   ``const VecAD<`` *Base* >:: ``reference&`` *x*
+
+then the result *y* has prototype
+
+   ``AD<`` *Base* > *y*
+
+{xrst_toc_hidden
+   include/cppad/core/std_math_11.hpp
+   include/cppad/core/abs.hpp
+   include/cppad/core/sign.hpp
+}
+
+fun
+***
+The possible values for *fun* are
+
+.. csv-table::
+   :widths: auto
+
+   *fun*,Description
+   abs,:ref:`abs-title`
+   acos,:ref:`acos-title`
+   acosh,:ref:`acosh-title`
+   asin,:ref:`asin-title`
+   asinh,:ref:`asinh-title`
+   atan,:ref:`atan-title`
+   atanh,:ref:`atanh-title`
+   cos,:ref:`cos-title`
+   cosh,:ref:`cosh-title`
+   erf,:ref:`erf-title`
+   exp,:ref:`exp-title`
+   expm1,:ref:`expm1-title`
+   :ref:`fabs<abs-name>` :ref:`abs-title`
+   log10,:ref:`log10-title`
+   log1p,:ref:`log1p-title`
+   log,:ref:`log-title`
+   sign,:ref:`sign-title`
+   sin,:ref:`sin-title`
+   sinh,:ref:`sinh-title`
+   sqrt,:ref:`sqrt-title`
+   tan,:ref:`tan-title`
+   tanh,:ref:`tanh-title`
+
+{xrst_end unary_standard_math}
 */
 # include <cppad/core/abs.hpp>
 # include <cppad/core/sign.hpp>
 
 /*
-$begin binary_math$$
+{xrst_begin binary_math}
 
-$section The Binary Math Functions$$
+The Binary Math Functions
+#########################
 
-$childtable%include/cppad/core/atan2.hpp
-   %include/cppad/core/pow.hpp
-   %include/cppad/core/azmul.hpp
-%$$
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atan2.hpp
+   include/cppad/core/pow.hpp
+   include/cppad/core/azmul.hpp
+}
 
-$end
+{xrst_end binary_math}
 */
 # include <cppad/core/atan2.hpp>
 # include <cppad/core/pow.hpp>

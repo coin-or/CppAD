@@ -3,27 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin time_test.cpp$$
-$spell
-   cppad.hpp
-   Microsoft
-   namespace
-   std
-   const
-   cout
-   ctime
-   ifdef
-   const
-   endif
-   cpp
-$$
+{xrst_begin time_test.cpp}
 
+time_test: Example and test
+###########################
 
-$section time_test: Example and test$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end time_test.cpp}
 */
 // BEGIN C++
 # include <cppad/utility/time_test.hpp>

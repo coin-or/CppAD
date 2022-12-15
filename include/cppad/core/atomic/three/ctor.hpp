@@ -5,102 +5,100 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_three_ctor$$
-$spell
-   enum
-   sq
-   std
-   afun
-   arg
-   CppAD
-   bool
-   ctor
-   const
-   mat_mul_xam.cpp
-   hpp
-$$
+{xrst_begin atomic_three_ctor}
 
-$section Atomic Function Constructor$$
+Atomic Function Constructor
+###########################
 
-$head Syntax$$
-$codei%class %atomic_user% : public CppAD::atomic_three<%Base%> {
-public:
-   %atomic_user%(%ctor_arg_list%) : CppAD::atomic_three<%Base%>(%name%)
-   %...%
-};
-%$$
-$icode%atomic_user afun%(%ctor_arg_list%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| ``class`` *atomic_user* : ``public CppAD::atomic_three<`` *Base* > {
+| ``public:``
+| |tab| *atomic_user* ( *ctor_arg_list* ) : ``CppAD::atomic_three<`` *Base* >( *name* )
+| |tab| ...
+| };
+| *atomic_user afun* ( *ctor_arg_list* )
 
-$head atomic_user$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$subhead ctor_arg_list$$
-Is a list of arguments for the $icode atomic_user$$ constructor.
+atomic_user
+***********
 
-$subhead afun$$
-The object $icode afun$$ must stay in scope for as long
+ctor_arg_list
+=============
+Is a list of arguments for the *atomic_user* constructor.
+
+afun
+====
+The object *afun* must stay in scope for as long
 as the corresponding atomic function is used.
-This includes use by any $cref/ADFun<Base>/ADFun/$$ that
-has this $icode atomic_user$$ operation in its
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+This includes use by any :ref:`ADFun\<Base><ADFun-name>` that
+has this *atomic_user* operation in its
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$subhead Implementation$$
-The user defined $icode atomic_user$$ class is a publicly derived class of
-$codei%atomic_three<%Base%>%$$.
+Implementation
+==============
+The user defined *atomic_user* class is a publicly derived class of
+``atomic_three<`` *Base* > .
 It should be declared as follows:
-$codei%
-   class %atomic_user% : public CppAD::atomic_three<%Base%> {
-   public:
-      %atomic_user%(%ctor_arg_list%) : atomic_three<%Base%>(%name%)
-   %...%
-   };
-%$$
-where $icode ...$$
+
+| |tab| ``class`` *atomic_user* : ``public CppAD::atomic_three<`` *Base* > {
+| |tab| ``public:``
+| |tab| |tab| *atomic_user* ( *ctor_arg_list* ) : ``atomic_three<`` *Base* >( *name* )
+| |tab| ...
+| |tab| };
+
+where ...
 denotes the rest of the implementation of the derived class.
 This includes completing the constructor and
 all the virtual functions that have their
-$code atomic_three$$ implementations replaced by
-$icode atomic_user$$ implementations.
+``atomic_three`` implementations replaced by
+*atomic_user* implementations.
 
-$head atomic_three$$
+atomic_three
+************
 
-$subhead Restrictions$$
-The $code atomic_three$$ constructor and destructor cannot be called in
-$cref/parallel/ta_in_parallel/$$ mode.
+Restrictions
+============
+The ``atomic_three`` constructor and destructor cannot be called in
+:ref:`parallel<ta_in_parallel-name>` mode.
 
-$subhead Base$$
+Base
+====
 The template parameter determines the
-$cref/Base/atomic_three_afun/Base/$$
-type for this $codei%AD<%Base%>%$$ atomic operation.
+:ref:`atomic_three_afun@Base`
+type for this ``AD<`` *Base* > atomic operation.
 
-$subhead name$$
-This $code atomic_three$$ constructor argument has the following prototype
-$codei%
-   const std::string& %name%
-%$$
+name
+====
+This ``atomic_three`` constructor argument has the following prototype
+
+   ``const std::string&`` *name*
+
 It is the name for this atomic function and is used for error reporting.
-The suggested value for $icode name$$ is $icode afun$$ or $icode atomic_user$$,
+The suggested value for *name* is *afun* or *atomic_user* ,
 i.e., the name of the corresponding atomic object or class.
 
-$head Example$$
+Example
+*******
 
-$subhead Define Constructor$$
+Define Constructor
+==================
 The following is an example of a atomic function constructor definition:
-$cref%get_started.cpp%atomic_three_get_started.cpp%Constructor%$$.
+:ref:`get_started.cpp<atomic_three_get_started.cpp@Constructor>` .
 
-$subhead Use Constructor$$
+Use Constructor
+===============
 The following is an example using a atomic function constructor:
-$cref%get_started.cpp
-   %atomic_three_get_started.cpp
-   %Use Atomic Function%Constructor
-%$$.
+:ref:`get_started.cpp<atomic_three_get_started.cpp@Use Atomic Function@Constructor>` .
 
-$end
+{xrst_end atomic_three_ctor}
 -------------------------------------------------------------------------------
 */
 

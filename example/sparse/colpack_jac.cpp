@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin colpack_jac.cpp$$
-$spell
-   colpack_jac
-   jacobian
-$$
+{xrst_begin colpack_jac.cpp}
 
-$section ColPack: Sparse Jacobian Example and Test$$
+ColPack: Sparse Jacobian Example and Test
+#########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end colpack_jac.cpp}
 */
 // BEGIN C++
 

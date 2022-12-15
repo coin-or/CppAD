@@ -25,37 +25,40 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Type> class vector {
 // ==========================================================================
 /*
-$begin cppad_vector_member$$
-$spell
-   vec
-$$
+{xrst_begin cppad_vector_member}
 
-$section Vector Class: Member Data$$
+Vector Class: Member Data
+#########################
 
-$head Syntax$$
-$icode%vec%.capacity()
-%$$
-$icode%vec%.size()
-%$$
-$icode%vec%.data()
-%$$
+Syntax
+******
 
-$head Type$$
+| *vec* . ``capacity`` ()
+| *vec* . ``size`` ()
+| *vec* . ``data`` ()
+
+Type
+****
 is the type of the elements in the array.
 
-$head capacity_$$
-Number of $icode Type$$ elements in $code data_$$ that have been allocated
+capacity\_
+**********
+Number of *Type* elements in ``data_`` that have been allocated
 (and constructor has been called).
 
-$head length_$$
-Number of $icode Type$$ elements currently in this vector.
+length\_
+********
+Number of *Type* elements currently in this vector.
 
-$head data_$$
+data\_
+******
 Pointer to the first element of the vector
-(not defined and should not be used when $code capacity_$$ is  0).
+(not defined and should not be used when ``capacity_`` is  0).
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    size_t capacity_;
    size_t length_;
@@ -69,75 +72,90 @@ public:
    {  return data_; }
    Type* data(void) noexcept
    {  return data_; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_member}
 -----------------------------------------------------------------------------
-$begin cppad_vector_typedef$$
-$spell
-   const_iterator
-$$
+{xrst_begin cppad_vector_typedef}
 
-$section Vector Class: Type Definitions$$
+Vector Class: Type Definitions
+##############################
 
-$head value_type$$
+value_type
+**********
 type corresponding to an element of a vector.
 
-$head iterator$$
+iterator
+********
 type corresponding to an iterator for a vector.
 
-$head const_iterator$$
+const_iterator
+**************
 type corresponding to an iterator for a vector when
-the vector is $code const$$.
+the vector is ``const`` .
 
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    typedef Type                                         value_type;
    typedef local::utility::cppad_vector_itr<Type>       iterator;
    typedef local::utility::const_cppad_vector_itr<Type> const_iterator;
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_typedef}
 -----------------------------------------------------------------------------
-$begin cppad_vector_ctor$$
-$spell
-   vec
-$$
+{xrst_begin cppad_vector_ctor}
 
-$section Vector Class: Constructors and Destructor$$
+Vector Class: Constructors and Destructor
+#########################################
 
-$head Default$$
-$codei%vector<%Type%> %vec%
-%$$
+Default
+*******
+
+   ``vector<`` *Type* > *vec*
+
 creates an empty vector no elements and capacity zero.
 
-$head Sizing$$
-$codei%vector<%Type%> %vec%(%n%)
-%$$
-where $icode n$$ is a $code size_t$$ or $code int$$,
-creates the vector $icode vec$$ with $icode n$$ elements and capacity
-greater than or equal $icode n$$.
+Sizing
+******
 
-$head Copy$$
-$codei%vector<%Type%> %vec%(%other%)
-%$$
-where $icode other$$ is a $codei%vector<%Type%>%$$,
-creates the vector $icode vec$$
-with $icode%n% = %other%.size()%$$ elements and capacity
-greater than or equal $icode n$$.
+   ``vector<`` *Type* > *vec* ( *n* )
 
-$head Move Semantics$$
+where *n* is a ``size_t`` or ``int`` ,
+creates the vector *vec* with *n* elements and capacity
+greater than or equal *n* .
+
+Copy
+****
+
+   ``vector<`` *Type* > *vec* ( *other* )
+
+where *other* is a ``vector<`` *Type* > ,
+creates the vector *vec*
+with *n* = *other* . ``size`` () elements and capacity
+greater than or equal *n* .
+
+Move Semantics
+**************
 A move semantics version of the copy operator
-is implemented using $code swap$$.
+is implemented using ``swap`` .
 
-$head Destructor$$
-If $code capacity_$$ is non-zero, call the destructor
+Destructor
+**********
+If ``capacity_`` is non-zero, call the destructor
 for all the corresponding elements and then frees the corresponding memory.
 
-$head delete_data$$
+delete_data
+***********
 Call destructor and free all the allocated elements
-(there are $code capacity_$$ such elements).
+(there are ``capacity_`` such elements).
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    vector(void) noexcept
    : capacity_(0), length_(0), data_(nullptr)
@@ -165,47 +183,54 @@ public:
 private:
    void delete_data(Type* data_ptr)
    {  thread_alloc::delete_array(data_ptr); }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_ctor}
 -----------------------------------------------------------------------------
-$begin cppad_vector_size$$
-$spell
-   resize
-   vec
-$$
+{xrst_begin cppad_vector_size}
 
-$section Vector Class: Change Size$$
+Vector Class: Change Size
+#########################
 
-$head Syntax$$
-$icode%vec%.resize(%n%)
-%$$
-$icode%vec%.clear()%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_RESIZE%// END_RESIZE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_CLEAR%// END_CLEAR%1
-%$$
+   *vec* . ``resize`` ( *n* )
 
-$head n$$
+*vec* . ``clear`` ()
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_RESIZE
+   // END_RESIZE
+}
+{xrst_literal
+   // BEGIN_CLEAR
+   // END_CLEAR
+}
+
+n
+*
 is the number of elements in the new version of the vector.
 
-$head resize$$
-If $icode n$$ is less than or equal the input value of
-$icode%vec%.capacity_%$$,
-the only change is that $icode%vec%.length_%$$ is set to $icode n$$.
+resize
+******
+If *n* is less than or equal the input value of
+*vec* . ``capacity_`` ,
+the only change is that *vec* . ``length_`` is set to *n* .
 Otherwise, new memory is allocated for the vector and
-$icode%vec%.length_%$$ elements are copied from the old vector
+*vec* . ``length_`` elements are copied from the old vector
 to the new one. I you do not need the old elements, you can first resize
-to zero and then the $icode n$$ to avoid copying the elements.
+to zero and then the *n* to avoid copying the elements.
 
-$head clear$$
-The destructor is called for all the elements of $icode vec$$
-and then $icode%vec.length_%$$ and $icode%vec%.capacity_%$$ are set to zero.
+clear
+*****
+The destructor is called for all the elements of *vec*
+and then *vec.length_* and *vec* . ``capacity_`` are set to zero.
 
-$end
+{xrst_end cppad_vector_size}
 ------------------------------------------------------------------------------
 */
 // BEGIN_RESIZE
@@ -245,43 +270,48 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-$begin cppad_vector_assign$$
-$spell
-   resize
-   vec
-   cppad
-$$
+{xrst_begin cppad_vector_assign}
 
-$section Vector Class: Assignment Operators$$
+Vector Class: Assignment Operators
+##################################
 
-$head Syntax$$
-$icode%vec%.swap(%other%)
-%$$
-$icode%vec% = %other%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_SWAP%// END_SWAP%1
-%$$
-$srcthisfile%
-   0%// BEGIN_MOVE_ASSIGN%// END_MOVE_ASSIGN%1
-%$$
-$srcthisfile%
-   0%// BEGIN_ASSIGN%// END_ASSIGN%1
-%$$
+   *vec* . ``swap`` ( *other* )
 
-$head swap$$
-Swaps $code length_$$, $code capacity_$$ and $code data_$$
-between $icode vec$$ and $icode other$$.
+*vec* = *other*
 
-$head Assignment$$
-see $cref/user API assignment/CppAD_vector/Assignment/$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_SWAP
+   // END_SWAP
+}
+{xrst_literal
+   // BEGIN_MOVE_ASSIGN
+   // END_MOVE_ASSIGN
+}
+{xrst_literal
+   // BEGIN_ASSIGN
+   // END_ASSIGN
+}
 
-$head Move Semantics$$
+swap
+****
+Swaps ``length_`` , ``capacity_`` and ``data_``
+between *vec* and *other* .
+
+Assignment
+**********
+see :ref:`user API assignment<CppAD_vector@Assignment>`
+
+Move Semantics
+**************
 The move semantics version of the assignment operator
-is implemented using $code swap$$.
+is implemented using ``swap`` .
 
-$end
+{xrst_end cppad_vector_assign}
 -------------------------------------------------------------------------------
 */
 // BEGIN_SWAP
@@ -321,21 +351,21 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-$begin cppad_vector_subscript$$
-$spell
-   vec
-$$
+{xrst_begin cppad_vector_subscript}
 
-$section Vector Class: Subscript Operator$$
+Vector Class: Subscript Operator
+################################
 
-$head Syntax$$
-$icode%element% = %vec%[%i%]
-%$$
-$icode%vec%[%i%] = %element%
-%$$
+Syntax
+******
 
-$head Source$$
-$srccode%hpp% */
+| *element* = *vec* [ *i* ]
+| *vec* [ *i* ] = *element*
+
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
    const Type& operator[]( size_t i) const
    {  CPPAD_ASSERT_KNOWN( i < length_,
          "vector: index greater than or equal vector size"
@@ -352,28 +382,32 @@ $srccode%hpp% */
    {  return (*this)[size_t(i)]; }
    template <class Index> Type& operator[](Index i)
    {  return (*this)[size_t(i)]; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_subscript}
 -------------------------------------------------------------------------------
-$begin cppad_vector_push_back$$
-$spell
-   vec
-$$
+{xrst_begin cppad_vector_push_back}
 
-$section Vector Class: push_back$$
+Vector Class: push_back
+#######################
 
-$head Syntax$$
-$icode%vec%.push_back(%element%)%$$
+Syntax
+******
+*vec* . ``push_back`` ( *element* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PUSH_BACK%// END_PUSH_BACK%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PUSH_BACK
+   // END_PUSH_BACK
+}
 
-$head Documentation$$
-see $cref/use API push_back/cppad_vector_push_back/$$
+Documentation
+*************
+see :ref:`use API push_back<cppad_vector_push_back-name>`
 
-$end
+{xrst_end cppad_vector_push_back}
 */
 // BEGIN_PUSH_BACK
    void push_back(const Type& element)
@@ -401,26 +435,27 @@ $end
    }
 /* %$$
 -------------------------------------------------------------------------------
-$begin cppad_vector_push_vector$$
-$spell
-   vec
-$$
+{xrst_begin cppad_vector_push_vector}
 
-$section Vector Class: push_vector$$
+Vector Class: push_vector
+#########################
 
-$head Syntax$$
-$icode%vec%.push_vector(%other%)%$$
+Syntax
+******
+*vec* . ``push_vector`` ( *other* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PUSH_VECTOR%// END_PUSH_VECTOR%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PUSH_VECTOR
+   // END_PUSH_VECTOR
+}
 
+Documentation
+*************
+see :ref:`use API push_vector<cppad_vector_push_vector-name>`
 
-$head Documentation$$
-see $cref/use API push_vector/cppad_vector_push_vector/$$
-
-$end
+{xrst_end cppad_vector_push_vector}
 */
 // BEGIN_PUSH_VECTOR
    template <class Vector> void push_vector(const Vector& other)
@@ -455,22 +490,21 @@ $end
    }
 /*
 ------------------------------------------------------------------------------
-$begin cppad_vector_itr_fun$$
-$spell
-   vec
-   iterator
-$$
+{xrst_begin cppad_vector_itr_fun}
 
-$section Vector Class: Iterator Functions$$
+Vector Class: Iterator Functions
+################################
 
-$head Syntax$$
-$icode%os%vec%.begin()
-%$$
-$icode%os%vec%.end()
-%$$
+Syntax
+******
 
-$head Source$$
-$srccode%hpp% */
+| ``os`` *vec* . ``begin`` ()
+| *os* ``vec`` . *end* ()
+
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
    const_iterator begin(void) const noexcept
    {    return const_iterator(&data_, &length_, 0); }
    const_iterator end(void) const noexcept
@@ -486,8 +520,10 @@ $srccode%hpp% */
       difference_type index = static_cast<difference_type>(length_);
       return iterator(&data_, &length_, index);
    }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_itr_fun}
 */
 
 // =========================================================================
@@ -495,18 +531,19 @@ $end
 // =========================================================================
 
 /*
-$begin cppad_vector_output$$
-$spell
-   vec
-$$
+{xrst_begin cppad_vector_output}
 
-$section Vector Class: Output$$
+Vector Class: Output
+####################
 
-$head Syntax$$
-$icode%os% << vec%$$
+Syntax
+******
+*os* << ``vec``
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 template <class Type>
 std::ostream& operator << (std::ostream&  os , const CppAD::vector<Type>& vec )
 {  os << "{ ";
@@ -518,8 +555,10 @@ std::ostream& operator << (std::ostream&  os , const CppAD::vector<Type>& vec )
    os << " }";
    return os;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_output}
 */
 
 } // END_CPPAD_NAMESPACE

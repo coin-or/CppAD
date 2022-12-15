@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin fabs.cpp$$
-$spell
-   fabs
-   abs
-$$
+{xrst_begin fabs.cpp}
 
-$section AD Absolute Value Function: Example and Test$$
+AD Absolute Value Function: Example and Test
+############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end fabs.cpp}
 */
 // BEGIN C++
 

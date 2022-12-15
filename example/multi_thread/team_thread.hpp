@@ -5,124 +5,135 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin team_thread.hpp$$
-$spell
-   pthreads
-   const
-   cstddef
-   bool
-   pthread
+{xrst_begin team_thread.hpp}
+{xrst_spell
+   bthread
    initializes
-   hpp
-   num
-   CppAD
-   ta
-$$
-$section Specifications for A Team of AD Threads$$
+   pthreads
+   statically
+}
+Specifications for A Team of AD Threads
+#######################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%include "team_thread.hpp"
-%ok%   = team_create(%num_threads%)
-%ok%   = team_work(%worker%)
-%ok%   = team_destroy()
-%name% = team_name()
-%$$
+| ``include`` ``"team_thread.hpp"``
+| *ok* = ``team_create`` ( *num_threads* )
+| *ok* = ``team_work`` ( *worker* )
+| *ok* = ``team_destroy`` ()
+| *name* = ``team_name`` ()
 
-$head Purpose$$
+Purpose
+*******
 These routines start, use, and stop a team of threads that can
-be used with the CppAD type $code AD<double>$$.
+be used with the CppAD type ``AD<double>`` .
 For example,
 these could be OpenMP threads, pthreads, or Boost threads to name a few.
 
-$head Restrictions$$
+Restrictions
+************
 Calls to the routines
-$code team_create$$,
-$code team_work$$, and
-$code team_destroy$$, must all be done by the master thread; i.e.,
-$cref/thread_num/ta_thread_num/$$ must be zero.
+``team_create`` ,
+``team_work`` , and
+``team_destroy`` , must all be done by the master thread; i.e.,
+:ref:`thread_num<ta_thread_num-name>` must be zero.
 In addition, they must all be done in sequential execution mode; i.e.,
 when the master thread is the only thread that is running
-($cref/in_parallel/ta_in_parallel/$$ must be false).
+(:ref:`in_parallel<ta_in_parallel-name>` must be false).
 
-$head team_create$$
+team_create
+***********
 The argument
-$icode%num_threads% > 0%$$ has type $code size_t$$
+*num_threads*  > 0 has type ``size_t``
 and specifies the number of threads in this team.
-This initializes both $code AD<double>$$ and $code team_work$$
-to be used with $icode num_threads$$.
-If $icode%num_threads% > 1%$$,
-$icode%num_threads% - 1%$$ new threads are created
-and put in a waiting state until $code team_work$$ is called.
+This initializes both ``AD<double>`` and ``team_work``
+to be used with *num_threads* .
+If *num_threads*  > 1 ,
+*num_threads* ``- 1`` new threads are created
+and put in a waiting state until ``team_work`` is called.
 
-$head team_work$$
+team_work
+*********
 This routine may be called one or more times
-between the call to $code team_create$$ and $code team_destroy$$.
-The argument $icode worker$$ has type
-$codei%bool %worker%(void)%$$.
-Each call to $code team_work$$ runs $icode num_threads$$ versions
-of $icode worker$$ with the corresponding value of
-$cref/thread_num/ta_thread_num/$$
-between zero and $icode%num_threads% - 1%$$ and
+between the call to ``team_create`` and ``team_destroy`` .
+The argument *worker* has type
+``bool`` *worker* ( ``void`` ) .
+Each call to ``team_work`` runs *num_threads* versions
+of *worker* with the corresponding value of
+:ref:`thread_num<ta_thread_num-name>`
+between zero and *num_threads* ``- 1`` and
 different for each thread,
 
-$head team_destroy$$
+team_destroy
+************
 This routine terminates all the other threads except for
 thread number zero; i.e., it terminates the threads corresponding to
-$codei%
-   %thread_num% = 1 , ... , %num_threads%-1
-%$$
 
-$head team_name$$
+   *thread_num* = 1 , ... , *num_threads* ``-1``
+
+team_name
+*********
 This routines returns a name that identifies this thread_team.
 The return value has prototype
-$codei%
-   const char* %name%
-%$$
-and is a statically allocated $code '\0'$$ terminated C string.
 
-$head ok$$
-The return value $icode ok$$ has type $code bool$$.
-It is $code false$$ if an error is detected during the
+   ``const char`` * *name*
+
+and is a statically allocated ``'\0'`` terminated C string.
+
+ok
+**
+The return value *ok* has type ``bool`` .
+It is ``false`` if an error is detected during the
 corresponding call.
-Otherwise it is $code true$$.
-
-$children%
-   example/multi_thread/openmp/team_openmp.cpp%
-   example/multi_thread/bthread/team_bthread.cpp%
+Otherwise it is ``true`` .
+{xrst_toc_hidden
+   example/multi_thread/openmp/team_openmp.cpp
+   example/multi_thread/bthread/team_bthread.cpp
    example/multi_thread/pthread/team_pthread.cpp
-%$$
+}
 
-$head Example Use$$
+Example Use
+***********
 Example use of these specifications can be found in the file
-$cref team_example.cpp$$.
+:ref:`team_example.cpp-name` .
 
-$head Example Implementation$$
+Example Implementation
+**********************
 Example implementations of these specifications can be found in the files:
-$table
-$rref team_openmp.cpp$$
-$rref team_bthread.cpp$$
-$rref team_pthread.cpp$$
-$tend
 
-$head Speed Test of Implementation$$
+.. csv-table::
+   :widths: auto
+
+   team_openmp.cpp,:ref:`team_openmp.cpp-title`
+   team_bthread.cpp,:ref:`team_bthread.cpp-title`
+   team_pthread.cpp,:ref:`team_pthread.cpp-title`
+
+Speed Test of Implementation
+****************************
 Speed tests of using CppAD with the team implementations above
 can be found in:
-$table
-$rref harmonic.cpp$$
-$rref multi_newton.cpp$$
-$tend
 
-$head Source$$
-$srccode%cpp% */
+.. csv-table::
+   :widths: auto
+
+   harmonic.cpp,:ref:`harmonic.cpp-title`
+   multi_newton.cpp,:ref:`multi_newton.cpp-title`
+
+Source
+******
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cstddef> // for size_t
 
 extern bool team_create(size_t num_threads);
 extern bool team_work(void worker(void));
 extern bool team_destroy(void);
 extern const char* team_name(void);
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end team_thread.hpp}
 */
 
 # endif

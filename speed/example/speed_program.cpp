@@ -3,19 +3,15 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin speed_program.cpp$$
-$spell
-   speed_program.exe
-   cppad.hpp
-   std
-   cpp
-$$
+{xrst_begin speed_program.cpp}
 
+Example Use of SpeedTest
+########################
 
-$section Example Use of SpeedTest$$
-
-$head Program$$
-$srccode%cpp% */
+Program
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/utility/speed_test.hpp>
 
 // Some compilers have gotten smarter and do not calucate somthing that is not used
@@ -53,19 +49,21 @@ int main(void)
    return 0;
 }
 
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Output$$
+Output
+******
 Executing of the program above generated the following output
 (the rates will be different for each particular system):
-$codep
+::
+
    double: c[*] = a[*] + b[*]
    size = 20  rate = 7,157,515
    size = 40  rate = 3,887,214
    size = 60  rate = 2,685,214
    size = 80  rate = 2,032,124
    size = 100 rate = 1,657,828
-$$
 
-$end
+{xrst_end speed_program.cpp}
 */

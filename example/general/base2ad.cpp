@@ -4,38 +4,39 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin base2ad.cpp$$
-$spell
-   Taylor
-   Cpp
-   const
-   std
-   Adolc
-   adouble
-$$
+{xrst_begin base2ad.cpp}
+{xrst_spell
+   cccc
+}
 
-$section Taylor's Ode Solver: base2ad Example and Test$$
+Taylor's Ode Solver: base2ad Example and Test
+#############################################
 
-$head See Also$$
-$cref taylor_ode.cpp$$, $cref mul_level_ode.cpp$$
+See Also
+********
+:ref:`taylor_ode.cpp-name` , :ref:`mul_level_ode.cpp-name`
 
-$head Purpose$$
-This is a realistic example using $cref base2ad$$ to create
-an $codei%AD<%Base%>%$$ function from an $icode Base$$ function.
+Purpose
+*******
+This is a realistic example using :ref:`base2ad-name` to create
+an ``AD<`` *Base* > function from an *Base* function.
 The function represents an ordinary differential equation.
 It is differentiated with respect to
-its $cref/variables/glossary/Variable/$$.
-These derivatives are used by the $cref taylor_ode$$ method.
+its :ref:`variables<glossary@Variable>` .
+These derivatives are used by the :ref:`taylor_ode-name` method.
 This solution is then differentiated with respect to
-the functions $cref/dynamic parameters/glossary/Parameter/Dynamic/$$.
+the functions :ref:`dynamic parameters<glossary@Parameter@Dynamic>` .
 
-$head ODE$$
+ODE
+***
 For this example the function
-$latex y : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
-$latex y(0, x) = 0$$ and
-$latex \partial_t y(t, x) = g(y, x)$$ where
-$latex g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
-$latex \[
+:math:`y : \B{R} \times \B{R}^n \rightarrow \B{R}^n` is defined by
+:math:`y(0, x) = 0` and
+:math:`\partial_t y(t, x) = g(y, x)` where
+:math:`g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n` is defined by
+
+.. math::
+
    g(y, x) =
    \left( \begin{array}{c}
          x_0     \\
@@ -43,14 +44,16 @@ $latex \[
          \vdots  \\
          x_{n-1} y_{n-2}
    \end{array} \right)
-\] $$
 
-$head ODE Solution$$
+ODE Solution
+************
 The solution for this example can be calculated by
 starting with the first row and then using the solution
 for the first row to solve the second and so on.
 Doing this we obtain
-$latex \[
+
+.. math::
+
    y(t, x ) =
    \left( \begin{array}{c}
       x_0 t                  \\
@@ -58,34 +61,42 @@ $latex \[
       \vdots                 \\
       x_{n-1} x_{n-2} \ldots x_0 t^n / n !
    \end{array} \right)
-\] $$
 
-$head Derivative of ODE Solution$$
+Derivative of ODE Solution
+**************************
 Differentiating the solution above,
-with respect to the parameter vector $latex x$$,
+with respect to the parameter vector :math:`x`,
 we notice that
-$latex \[
-\partial_x y(t, x ) =
-\left( \begin{array}{cccc}
-y_0 (t,x) / x_0      & 0                   & \cdots & 0      \\
-y_1 (t,x) / x_0      & y_1 (t,x) / x_1     & 0      & \vdots \\
-\vdots               & \vdots              & \ddots & 0      \\
-y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
-\end{array} \right)
-\] $$
 
-$head Taylor's Method Using AD$$
-We define the function $latex z(t, x)$$ by the equation
-$latex \[
+.. math::
+
+   \partial_x y(t, x ) =
+   \left( \begin{array}{cccc}
+   y_0 (t,x) / x_0      & 0                   & \cdots & 0      \\
+   y_1 (t,x) / x_0      & y_1 (t,x) / x_1     & 0      & \vdots \\
+   \vdots               & \vdots              & \ddots & 0      \\
+   y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
+   \end{array} \right)
+
+Taylor's Method Using AD
+************************
+We define the function :math:`z(t, x)` by the equation
+
+.. math::
+
    z ( t , x ) = g[ y ( t , x ), x ]
-\] $$
-see $cref taylor_ode$$ for the method used to compute the
-Taylor coefficients w.r.t $latex t$$ of $latex y(t, x)$$.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+see :ref:`taylor_ode-name` for the method used to compute the
+Taylor coefficients w.r.t :math:`t` of :math:`y(t, x)`.
 
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end base2ad.cpp}
 --------------------------------------------------------------------------
 */
 // BEGIN C++

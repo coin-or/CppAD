@@ -5,270 +5,313 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin qp_interior$$
-$spell
-   hpp
-   const
-   col
+{xrst_begin qp_interior}
+{xrst_spell
+   maxitr
+   qp
+   rl
+   sout
    xout
    yout
-   sout
-   cols
-   prog
-   maxitr
-   xin
-   qp
-$$
+}
 
-$section Solve a Quadratic Program Using Interior Point Method$$
+Solve a Quadratic Program Using Interior Point Method
+#####################################################
 
-$head Syntax$$
-$icode%ok% = qp_interior(
-%level%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
+| *ok* = ``qp_interior`` (
+| *level* , *c* , *C* , *g* , *G* , *epsilon* , *maxitr* , *xin* , *xout* , *yout* , *sout*
+| )
 
-$head Source$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Source
+******
 This following is a link to the source code for this example:
-$cref/qp_interior.hpp/qp_interior.hpp/$$.
+:ref:`qp_interior.hpp-name` .
 
-$head Purpose$$
-This routine could be used to create a version of $cref abs_min_linear$$
+Purpose
+*******
+This routine could be used to create a version of :ref:`abs_min_linear-name`
 that solved Quadratic programs (instead of linear programs).
 
-$head Problem$$
+Problem
+*******
 We are given
-$latex C \in \B{R}^{m \times n}$$,
-$latex c \in \B{R}^m$$,
-$latex G \in \B{R}^{n \times n}$$,
-$latex g \in \B{R}^n$$,
-where $latex G$$ is positive semi-definite
-and $latex G + C^T C$$ is positive definite.
+:math:`C \in \B{R}^{m \times n}`,
+:math:`c \in \B{R}^m`,
+:math:`G \in \B{R}^{n \times n}`,
+:math:`g \in \B{R}^n`,
+where :math:`G` is positive semi-definite
+and :math:`G + C^T C` is positive definite.
 This routine solves the problem
-$latex \[
-\begin{array}{rl}
-\R{minimize} &
-\frac{1}{2} x^T G x + g^T x \; \R{w.r.t} \; x \in \B{R}^n
-\\
-\R{subject \; to} &
-C x + c \leq 0
-\end{array}
-\] $$
 
-$head Vector$$
-The type $icode Vector$$ is a
-simple vector with elements of type $code double$$.
+.. math::
 
-$head level$$
+   \begin{array}{rl}
+   \R{minimize} &
+   \frac{1}{2} x^T G x + g^T x \; \R{w.r.t} \; x \in \B{R}^n
+   \\
+   \R{subject \; to} &
+   C x + c \leq 0
+   \end{array}
+
+Vector
+******
+The type *Vector* is a
+simple vector with elements of type ``double`` .
+
+level
+*****
 This value is zero or one.
-If $icode%level% == 0%$$,
+If *level*  == 0 ,
 no tracing is printed.
-If $icode%level% == 1%$$,
-a trace of the $code qp_interior$$ optimization is printed.
+If *level*  == 1 ,
+a trace of the ``qp_interior`` optimization is printed.
 
-$head Lower c$$
-This is the vector $latex c$$ in the problem.
+Lower c
+*******
+This is the vector :math:`c` in the problem.
 
-$head Upper C$$
-This is a $cref/row-major/glossary/Row-major Representation/$$
-of the matrix $latex C$$ in the problem.
+Upper C
+*******
+This is a :ref:`row-major<glossary@Row-major Representation>`
+of the matrix :math:`C` in the problem.
 
-$head Lower g$$
-This is the vector $latex g$$ in the problem.
+Lower g
+*******
+This is the vector :math:`g` in the problem.
 
-$head Upper G$$
-This is a $cref/row-major/glossary/Row-major Representation/$$
-of the matrix $latex G$$ in the problem.
+Upper G
+*******
+This is a :ref:`row-major<glossary@Row-major Representation>`
+of the matrix :math:`G` in the problem.
 
-$head epsilon$$
+epsilon
+*******
 This argument is the convergence criteria;
-see $cref/KKT conditions/qp_interior/KKT Conditions/$$ below.
+see :ref:`qp_interior@KKT Conditions` below.
 It must be greater than zero.
 
-$head maxitr$$
+maxitr
+******
 This is the maximum number of newton iterations to try before giving up
 on convergence.
 
-$head xin$$
-This argument has size $icode n$$ and is the initial point for the algorithm.
+xin
+***
+This argument has size *n* and is the initial point for the algorithm.
 It must strictly satisfy the constraints; i.e.,
-$latex C x - c < 0$$  for $icode%x% = %xin%$$.
+:math:`C x - c < 0`  for *x* = *xin* .
 
-$head xout$$
-This argument has size is $icode n$$ and
+xout
+****
+This argument has size is *n* and
 the input value of its elements does no matter.
 Upon return it is the primal variables corresponding to the problem solution.
 
-$head yout$$
-This argument has size is $icode m$$ and
+yout
+****
+This argument has size is *m* and
 the input value of its elements does no matter.
-Upon return it the components of $icode yout$$ are all positive
+Upon return it the components of *yout* are all positive
 and it is the dual variables corresponding to the program solution.
 
-$head sout$$
-This argument has size is $icode m$$ and
+sout
+****
+This argument has size is *m* and
 the input value of its elements does no matter.
-Upon return it the components of $icode sout$$ are all positive
+Upon return it the components of *sout* are all positive
 and it is the slack variables corresponding to the program solution.
 
-$head ok$$
-If the return value $icode ok$$ is true, convergence is obtained; i.e.,
-$latex \[
+ok
+**
+If the return value *ok* is true, convergence is obtained; i.e.,
+
+.. math::
+
    | F_0 (xout , yout, sout) |_\infty \leq epsilon
-\] $$
-where $latex | v |_\infty$$ is the maximum absolute element
-for the vector $latex v$$ and $latex F_\mu (x, y, s)$$ is defined below.
 
+where :math:`| v |_\infty` is the maximum absolute element
+for the vector :math:`v` and :math:`F_\mu (x, y, s)` is defined below.
 
-$head KKT Conditions$$
-Give a vector $latex v \in \B{R}^m$$ we define
-$latex D(v) \in \B{R}^{m \times m}$$ as the corresponding diagonal matrix.
-We also define $latex 1_m \in \B{R}^m$$ as the vector of ones.
+KKT Conditions
+**************
+Give a vector :math:`v \in \B{R}^m` we define
+:math:`D(v) \in \B{R}^{m \times m}` as the corresponding diagonal matrix.
+We also define :math:`1_m \in \B{R}^m` as the vector of ones.
 We define
-$latex F_\mu : \B{R}^{n + m + m } \rightarrow \B{R}^{n + m + m}$$
+:math:`F_\mu : \B{R}^{n + m + m } \rightarrow \B{R}^{n + m + m}`
 by
-$latex \[
-F_\mu ( x , y , s )
-=
-\left(
-\begin{array}{c}
-g + G x + y^T C             \\
-C x + c + s                           \\
-D(s) D(y) 1_m - \mu 1_m
-\end{array}
-\right)
-\] $$
+
+.. math::
+
+   F_\mu ( x , y , s )
+   =
+   \left(
+   \begin{array}{c}
+   g + G x + y^T C             \\
+   C x + c + s                           \\
+   D(s) D(y) 1_m - \mu 1_m
+   \end{array}
+   \right)
+
 The KKT conditions for a solution of this problem is
-$latex 0 \leq y$$,
-$latex 0 \leq s$$, and
-$latex F_0 (x , y, s) = 0$$.
+:math:`0 \leq y`,
+:math:`0 \leq s`, and
+:math:`F_0 (x , y, s) = 0`.
 
-$head Newton Step$$
-The derivative of $latex F_\mu$$ is given by
-$latex \[
-F_\mu^{(1)} (x, y, s)  =
-\left( \begin{array}{ccc}
-G       & C^T  & 0_{n,m} \\
-C       & 0    & I_{m,m} \\
-0_{m,m} & D(s) & D(y)
-\end{array} \right)
-\] $$
+Newton Step
+***********
+The derivative of :math:`F_\mu` is given by
+
+.. math::
+
+   F_\mu^{(1)} (x, y, s)  =
+   \left( \begin{array}{ccc}
+   G       & C^T  & 0_{n,m} \\
+   C       & 0    & I_{m,m} \\
+   0_{m,m} & D(s) & D(y)
+   \end{array} \right)
+
 The Newton step solves the following equation for
-$latex \Delta x$$, $latex \Delta y$$, and $latex \Delta z$$
-$latex \[
-F_\mu^{(1)} (x, y, s)
-\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
-=
-- F_\mu (x, y, s)
-\] $$
+:math:`\Delta x`, :math:`\Delta y`, and :math:`\Delta z`
+
+.. math::
+
+   F_\mu^{(1)} (x, y, s)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   - F_\mu (x, y, s)
+
 To simplify notation, we define
-$latex \[
-\begin{array}{rcl}
-r_x (x, y, s) & = & g + G x + y^T C \\
-r_y (x, y, s) & = & C x + c + s          \\
-r_s (x, y, s) & = & D(s) D(y) 1_m - \mu 1_m
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   r_x (x, y, s) & = & g + G x + y^T C \\
+   r_y (x, y, s) & = & C x + c + s          \\
+   r_s (x, y, s) & = & D(s) D(y) 1_m - \mu 1_m
+   \end{eqnarray}
+
 It follows that
-$latex \[
-\left( \begin{array}{ccc}
-G       & C^T  & 0_{n,m} \\
-C       & 0    & I_{m,m} \\
-0_{m,m} & D(s) & D(y)
-\end{array} \right)
-\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
-=
--
-\left( \begin{array}{c}
-   r_x (x, y, s) \\
-   r_y (x, y, s) \\
-   r_s (x, y, s)
-\end{array} \right)
-\] $$
 
-$subhead Elementary Row Reduction$$
-Subtracting $latex D(y)$$ times the second row from the third row
+.. math::
+
+   \left( \begin{array}{ccc}
+   G       & C^T  & 0_{n,m} \\
+   C       & 0    & I_{m,m} \\
+   0_{m,m} & D(s) & D(y)
+   \end{array} \right)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   -
+   \left( \begin{array}{c}
+      r_x (x, y, s) \\
+      r_y (x, y, s) \\
+      r_s (x, y, s)
+   \end{array} \right)
+
+Elementary Row Reduction
+========================
+Subtracting :math:`D(y)` times the second row from the third row
 we obtain:
-$latex \[
-\left( \begin{array}{ccc}
-G        & C^T  & 0_{n,m} \\
-C        & 0    & I_{m,m} \\
-- D(y) C & D(s) & 0_{m,m}
-\end{array} \right)
-\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
-=
--
-\left( \begin{array}{c}
-   r_x (x, y, s) \\
-   r_y (x, y, s) \\
-   r_s (x, y, s) - D(y) r_y(x, y, s)
-\end{array} \right)
-\] $$
-Multiplying the third row by $latex D(s)^{-1}$$ we obtain:
-$latex \[
-\left( \begin{array}{ccc}
-G          & C^T     & 0_{n,m} \\
-C          & 0       & I_{m,m} \\
-- D(y/s) C & I_{m,m} & 0_{m,m}
-\end{array} \right)
-\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
-=
--
-\left( \begin{array}{c}
-   r_x (x, y, s) \\
-   r_y (x, y, s) \\
-   D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
-\end{array} \right)
-\] $$
-where $latex y/s$$ is the vector in $latex \B{R}^m$$ defined by
-$latex (y/s)_i = y_i / s_i$$.
-Subtracting $latex C^T$$ times the third row from the first row we obtain:
-$latex \[
-\left( \begin{array}{ccc}
-G + C^T D(y/s) C & 0_{n,m} & 0_{n,m} \\
-C                & 0       & I_{m,m} \\
-- D(y/s) C       & I_{m,m} & 0_{m,m}
-\end{array} \right)
-\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
-=
--
-\left( \begin{array}{c}
-   r_x (x, y, s)
-      - C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
-   r_y (x, y, s) \\
-   D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
-\end{array} \right)
-\] $$
 
-$head Solution$$
-It follows that $latex G + C^T D(y/s) C$$ is invertible and
-we can determine $latex \Delta x$$ by solving the equation
-$latex \[
-[ G + C^T D(y/s) C ] \Delta x
-=
-C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] - r_x (x, y, s)
-\] $$
-Given $latex \Delta x$$ we have that
-$latex \[
-\Delta s = - r_y (x, y, s) - C \Delta x
-\] $$
-$latex \[
-\Delta y =
-D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) C \Delta x ]
-\] $$
+.. math::
 
-$children%example/abs_normal/qp_interior.cpp
-   %example/abs_normal/qp_interior.omh
-%$$
-$head Example$$
-The file $cref qp_interior.cpp$$ contains an example and test of
-$code qp_interior$$.
+   \left( \begin{array}{ccc}
+   G        & C^T  & 0_{n,m} \\
+   C        & 0    & I_{m,m} \\
+   - D(y) C & D(s) & 0_{m,m}
+   \end{array} \right)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   -
+   \left( \begin{array}{c}
+      r_x (x, y, s) \\
+      r_y (x, y, s) \\
+      r_s (x, y, s) - D(y) r_y(x, y, s)
+   \end{array} \right)
 
-$end
+Multiplying the third row by :math:`D(s)^{-1}` we obtain:
+
+.. math::
+
+   \left( \begin{array}{ccc}
+   G          & C^T     & 0_{n,m} \\
+   C          & 0       & I_{m,m} \\
+   - D(y/s) C & I_{m,m} & 0_{m,m}
+   \end{array} \right)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   -
+   \left( \begin{array}{c}
+      r_x (x, y, s) \\
+      r_y (x, y, s) \\
+      D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+   \end{array} \right)
+
+where :math:`y/s` is the vector in :math:`\B{R}^m` defined by
+:math:`(y/s)_i = y_i / s_i`.
+Subtracting :math:`C^T` times the third row from the first row we obtain:
+
+.. math::
+
+   \left( \begin{array}{ccc}
+   G + C^T D(y/s) C & 0_{n,m} & 0_{n,m} \\
+   C                & 0       & I_{m,m} \\
+   - D(y/s) C       & I_{m,m} & 0_{m,m}
+   \end{array} \right)
+   \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+   =
+   -
+   \left( \begin{array}{c}
+      r_x (x, y, s)
+         - C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
+      r_y (x, y, s) \\
+      D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+   \end{array} \right)
+
+Solution
+********
+It follows that :math:`G + C^T D(y/s) C` is invertible and
+we can determine :math:`\Delta x` by solving the equation
+
+.. math::
+
+   [ G + C^T D(y/s) C ] \Delta x
+   =
+   C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] - r_x (x, y, s)
+
+Given :math:`\Delta x` we have that
+
+.. math::
+
+   \Delta s = - r_y (x, y, s) - C \Delta x
+
+.. math::
+
+   \Delta y =
+   D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) C \Delta x ]
+
+{xrst_toc_hidden
+   example/abs_normal/qp_interior.cpp
+   example/abs_normal/qp_interior.xrst
+}
+Example
+*******
+The file :ref:`qp_interior.cpp-name` contains an example and test of
+``qp_interior`` .
+
+{xrst_end qp_interior}
 -----------------------------------------------------------------------------
 */
 # include <cmath>

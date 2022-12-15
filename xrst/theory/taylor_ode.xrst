@@ -1,0 +1,60 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin taylor_ode}
+
+AD Theory for Solving ODE's Using Taylor's Method
+#################################################
+
+Problem
+*******
+We are given an initial value problem for
+:math:`y : \B{R} \rightarrow \B{R}^n`; i.e., we know
+:math:`y(0) \in \B{R}^n`
+and we know a function :math:`g : \B{R}^n \rightarrow \B{R}^n`
+such that :math:`y^1 (t) = g[ y(t) ]`
+where :math:`y^k (t)` is the *k*-th derivative of :math:`y(t)`.
+
+z(t)
+****
+We define the function
+:math:`z : \B{R} \rightarrow \B{R}^n` by
+:math:`z(t) = g[ y(t) ]`.
+Given the Taylor coefficients
+:math:`y^{(k)} (t)` for :math:`k = 0 , \ldots , p`, we can
+compute :math:`z^{(p)} (t)` using forward mode AD on the function
+:math:`g(y)`; see :ref:`forward_order-name` .
+It follows from :math:`y^1 (t) = z(t)` that
+:math:`y^{p+1} (t) = z^p (t)`
+
+.. math::
+
+   y^{(p+1)} (t) = z^{(p)} (t) / (k + 1)
+
+where :math:`y^{(k)} (t)` is the *k*-th order Taylor coefficient
+for :math:`y(t)`; i.e., :math:`y^k (t) / k !`.
+Starting with the known value :math:`y^{(0)} (t)`,
+this gives a prescription for computing :math:`y^{(k)} (t)` for
+any :math:`k`.
+
+Taylor's Method
+***************
+The *p*-th order Taylor method for approximates
+
+.. math::
+
+   y( t + \Delta t )
+   \approx
+   y^{(0)} (t) + y^{(1)} (t) \Delta t + \cdots + y^{(p)} (t)  \Delta t^p
+
+{xrst_toc_hidden
+   example/general/taylor_ode.cpp
+}
+Example
+*******
+The file :ref:`taylor_ode.cpp-name` contains an example and test
+of this method.
+
+{xrst_end taylor_ode}

@@ -3,20 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_jit_poly.cpp$$
-$spell
-   cppad_jit
-$$
+{xrst_begin cppad_jit_poly.cpp}
 
-$section cppad_jit Speed: Second Derivative of a Polynomial$$
+cppad_jit Speed: Second Derivative of a Polynomial
+##################################################
 
+Specifications
+**************
+:ref:`link_poly-name`
 
-$head Specifications$$
-$cref link_poly$$
-
-$head Implementation$$
+Implementation
+**************
 // a cppad_jit version of this test is not yet implemented
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <map>
 # include <cppad/utility/vector.hpp>
 
@@ -30,6 +30,8 @@ bool link_poly(
    CppAD::vector<double>     &z        ,  // polynomial argument value
    CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
 {  return false; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_jit_poly.cpp}
 */

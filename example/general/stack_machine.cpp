@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin stack_machine.cpp$$
-$spell
-$$
+{xrst_begin stack_machine.cpp}
 
-$section Example Differentiating a Stack Machine Interpreter$$
+Example Differentiating a Stack Machine Interpreter
+###################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end stack_machine.cpp}
 */
 // BEGIN C++
 

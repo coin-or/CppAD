@@ -4,24 +4,25 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin base2vec_ad.cpp$$
-$spell
-   Vec
-   af
-$$
+{xrst_begin base2vec_ad.cpp}
 
-$section Using base2ad and VecAD together: Example and Test$$
+Using base2ad and VecAD together: Example and Test
+##################################################
 
-$head Purpose$$
-This example demonstrate that $cref base2ad$$ does not convert
-$cref VecAD$$ operations as might be expected.
+Purpose
+*******
+This example demonstrate that :ref:`base2ad-name` does not convert
+:ref:`VecAD-name` operations as might be expected.
 To be specific, this indexing into a VecAD object gets fixed
-when zero order forward mode is run for a $code base2ad$$ result; e.g.
-$icode af$$ below.
+when zero order forward mode is run for a ``base2ad`` result; e.g.
+*af* below.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end base2vec_ad.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

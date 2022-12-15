@@ -3,29 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin double_ode.cpp$$
-$spell
-   onetape
-   Jacobian
-   CppAD
-   cppad
-   hpp
-   bool
-   cstring
-   retape
-   resize
-   endif
-$$
+{xrst_begin double_ode.cpp}
 
-$section Double Speed: Ode Solution$$
+Double Speed: Ode Solution
+##########################
 
+Specifications
+**************
+See :ref:`link_ode-name` .
 
-$head Specifications$$
-See $cref link_ode$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cstring>
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
@@ -66,6 +57,8 @@ bool link_ode(
       jacobian[i] = f[i];
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end double_ode.cpp}
 */

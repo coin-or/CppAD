@@ -3,39 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin adolc_poly.cpp$$
-$spell
-   alloc
-   onetape
-   coef
-   cppad
-   hos
-   Taylor
-   std
-   ddp
-   cppad
-   adouble
-   std
-   vector Vector
-   typedef
-   adolc
-   Lu
-   CppAD
-   det
-   hpp
-   const
-   bool
-$$
+{xrst_begin adolc_poly.cpp}
 
-$section Adolc Speed: Second Derivative of a Polynomial$$
+Adolc Speed: Second Derivative of a Polynomial
+##############################################
 
+Specifications
+**************
+See :ref:`link_poly-name` .
 
-$head Specifications$$
-See $cref link_poly$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -160,6 +141,8 @@ bool link_poly(
 
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end adolc_poly.cpp}
 */

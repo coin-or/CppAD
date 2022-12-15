@@ -5,221 +5,219 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin fun_construct$$
-$spell
-   alloc
-   num
-   Jac
-   bool
-   taylor
-   var
-   ADvector
-   const
-   Jacobian
-$$
+{xrst_begin fun_construct}
+{xrst_spell
+   of of
+}
 
-$spell
-$$
+Construct an ADFun Object and Stop Recording
+############################################
 
-$section Construct an ADFun Object and Stop Recording$$
+Syntax
+******
 
+| ``ADFun<`` *Base* > *f* ( *x* , *y* );
+| ``ADFun<`` *Base* > *f*
+| *f* . ``swap`` ( *g* )
+| ``f`` = ``g``
 
-$head Syntax$$
-$codei%ADFun<%Base%> %f%(%x%, %y%);
-%$$
-$codei%ADFun<%Base%> %f%
-%$$
-$icode%f%.swap(%g%)
-%$$
-$icode%f% = %g
-%$$
-
-$head Purpose$$
-The $codei%ADFun<%Base%>%$$ object $icode f$$
-stores an AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+Purpose
+*******
+The ``ADFun<`` *Base* > object *f*
+stores an AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 It can then be used to calculate derivatives of the corresponding
-$cref/AD function/glossary/AD Function/$$
-$latex \[
-   F : \B{R}^n \rightarrow \B{R}^m
-\] $$
-where $latex B$$ is the space corresponding to objects of type $icode Base$$.
+:ref:`glossary@AD Function`
 
-$head x$$
-If the argument $icode x$$ is present, it has prototype
-$codei%
-   const %ADVector% &%x%
-%$$
+.. math::
+
+   F : \B{R}^n \rightarrow \B{R}^m
+
+where :math:`B` is the space corresponding to objects of type *Base* .
+
+x
+*
+If the argument *x* is present, it has prototype
+
+   ``const`` *ADVector* & *x*
+
 It must be the vector argument in the previous call to
-$cref Independent$$.
+:ref:`Independent-name` .
 Neither its size, or any of its values, are allowed to change
 between calling
-$codei%
-   Independent(%x%)
-%$$
+
+   ``Independent`` ( *x* )
+
 and
-$codei%
-   ADFun<%Base%> %f%(%x%, %y%)
-%$$
 
-$head y$$
-If the argument $icode y$$ is present, it has prototype
-$codei%
-   const %ADVector% &%y%
-%$$
-The sequence of operations that map $icode x$$
-to $icode y$$ are stored in the ADFun object $icode f$$.
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
 
-$head ADVector$$
-The type $icode ADVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$codei%AD<%Base%>%$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+y
+*
+If the argument *y* is present, it has prototype
+
+   ``const`` *ADVector* & *y*
+
+The sequence of operations that map *x*
+to *y* are stored in the ADFun object *f* .
+
+ADVector
+********
+The type *ADVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``AD<`` *Base* > .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Default Constructor$$
+Default Constructor
+*******************
 The default constructor
-$codei%
-   ADFun<%Base%> %g%
-%$$
-creates an
-$codei%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
-$codei%
-   %g%.size_var()
-%$$
-returns the value zero (see $cref/size_var/fun_property/size_var/$$).
 
-$head Sequence Constructor$$
+   ``ADFun<`` *Base* > *g*
+
+creates an
+``AD<`` *Base* > object with no corresponding operation sequence; i.e.,
+
+   *g* . ``size_var`` ()
+
+returns the value zero (see :ref:`fun_property@size_var` ).
+
+Sequence Constructor
+********************
 The sequence constructor
-$codei%
-   ADFun<%Base%> %f%(%x%, %y%)
-%$$
-creates the $codei%AD<%Base%>%$$ object $icode f$$,
-stops the recording of AD of $icode Base$$ operations
+
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+creates the ``AD<`` *Base* > object *f* ,
+stops the recording of AD of *Base* operations
 corresponding to the call
-$codei%
-   Independent(%x%)
-%$$
-and stores the corresponding operation sequence in the object $icode f$$.
+
+   ``Independent`` ( *x* )
+
+and stores the corresponding operation sequence in the object *f* .
 It then stores the zero order Taylor coefficients
-(corresponding to the value of $icode x$$) in $icode f$$.
+(corresponding to the value of *x* ) in *f* .
 This is equivalent to the following steps using the default constructor:
 
-$list number$$
-Create $icode f$$ with the default constructor
-$codei%
-   ADFun<%Base%> %f%;
-%$$
-$lnext
-Stop the tape and storing the operation sequence using
-$codei%
-   %f%.Dependent(%x%, %y%);
-%$$
-(see $cref Dependent$$).
-$lnext
-Calculate the zero order Taylor coefficients for all
-the variables in the operation sequence using
-$codei%
-   %f%.Forward(%p%, %x_p%)
-%$$
-with $icode p$$ equal to zero and the elements of $icode x_p$$
-equal to the corresponding elements of $icode x$$
-(see $cref Forward$$).
-$lend
+#. Create *f* with the default constructor
 
-$head Copy Constructor$$
-It is an error to attempt to use the $codei%ADFun<%Base%>%$$ copy constructor;
+      ``ADFun<`` *Base* > *f* ;
+
+#. Stop the tape and storing the operation sequence using
+
+      *f* . ``Dependent`` ( *x* , *y* );
+
+   (see :ref:`Dependent-name` ).
+#. Calculate the zero order Taylor coefficients for all
+   the variables in the operation sequence using
+
+      *f* . ``Forward`` ( *p* , *x_p* )
+
+   with *p* equal to zero and the elements of *x_p*
+   equal to the corresponding elements of *x*
+   (see :ref:`Forward-name` ).
+
+Copy Constructor
+****************
+It is an error to attempt to use the ``ADFun<`` *Base* > copy constructor;
 i.e., the following syntax is not allowed:
-$codei%
-   ADFun<%Base%> %g%(%f%)
-%$$
-where $icode f$$ is an $codei%ADFun<%Base%>%$$ object.
-Use its $cref/default constructor/fun_construct/Default Constructor/$$ instead
+
+   ``ADFun<`` *Base* > *g* ( *f* )
+
+where *f* is an ``ADFun<`` *Base* > object.
+Use its :ref:`fun_construct@Default Constructor` instead
 and its assignment operator.
 
-$head swap$$
-The swap operation $icode%f%.swap(%g%)%$$ exchanges the contents of
-the two $codei%ADFun<%Base%>%$$ functions; i.e.,
-$icode f$$ ($icode g$$) before the swap is identical to
-$icode g$$ ($icode f$$) after the swap.
+swap
+****
+The swap operation *f* . ``swap`` ( *g* ) exchanges the contents of
+the two ``ADFun<`` *Base* > functions; i.e.,
+*f* ( *g* ) before the swap is identical to
+*g* ( *f* ) after the swap.
 
-$head Assignment Operator$$
-The $codei%ADFun<%Base%>%$$ assignment operation
-$codei%
-   %g% = %f%
-%$$
-makes a copy of the operation sequence currently stored in $icode f$$
-in the object $icode g$$.
-The object $icode f$$ is not affected by this operation and
-can be $code const$$.
-All of information (state) stored in $icode f$$ is copied to $icode g$$
-and any information originally in $icode g$$ is lost.
+Assignment Operator
+*******************
+The ``ADFun<`` *Base* > assignment operation
 
-$subhead Move Semantics$$
-In the special case where $icode f$$ is a temporary object
+   *g* = *f*
+
+makes a copy of the operation sequence currently stored in *f*
+in the object *g* .
+The object *f* is not affected by this operation and
+can be ``const`` .
+All of information (state) stored in *f* is copied to *g*
+and any information originally in *g* is lost.
+
+Move Semantics
+==============
+In the special case where *f* is a temporary object
 (and enough C++11 features are supported by the compiler)
 this assignment will use move semantics.
 This avoids the overhead of the copying all the information from
-$icode f$$ to $icode g$$.
+*f* to *g* .
 
-$subhead Taylor Coefficients$$
-The Taylor coefficient information currently stored in $icode f$$
-(computed by $cref/f.Forward/Forward/$$) is
-copied to $icode g$$.
+Taylor Coefficients
+===================
+The Taylor coefficient information currently stored in *f*
+(computed by :ref:`f.Forward<Forward-name>` ) is
+copied to *g* .
 Hence, directly after this operation
-$codei%
-   %g%.size_order() == %f%.size_order()
-%$$
 
-$subhead Sparsity Patterns$$
-The forward Jacobian sparsity pattern currently stored in $icode f$$
-(computed by $cref/f.ForSparseJac/ForSparseJac/$$) is
-copied to $icode g$$.
+   *g* . ``size_order`` () == *f* . ``size_order`` ()
+
+Sparsity Patterns
+=================
+The forward Jacobian sparsity pattern currently stored in *f*
+(computed by :ref:`f.ForSparseJac<ForSparseJac-name>` ) is
+copied to *g* .
 Hence, directly after this operation
-$codei%
-   %g%.size_forward_bool() == %f%.size_forward_bool()
-   %g%.size_forward_set()  == %f%.size_forward_set()
-%$$
 
-$head Parallel Mode$$
-The call to $code Independent$$,
+| |tab| *g* . ``size_forward_bool`` () == *f* . ``size_forward_bool`` ()
+| |tab| *g* . ``size_forward_set`` ()  == *f* . ``size_forward_set`` ()
+
+Parallel Mode
+*************
+The call to ``Independent`` ,
 and the corresponding call to
-$codei%
-   ADFun<%Base%> %f%( %x%, %y%)
-%$$
+
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
 or
-$codei%
-   %f%.Dependent( %x%, %y%)
-%$$
-or $cref abort_recording$$,
+
+   *f* . ``Dependent`` ( *x* , *y* )
+
+or :ref:`abort_recording-name` ,
 must be preformed by the same thread; i.e.,
-$cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
+:ref:`thread_alloc::thread_num<ta_thread_num-name>` must be the same.
 
-$head Example$$
+Example
+*******
 
-$subhead Sequence Constructor$$
+Sequence Constructor
+====================
 The file
-$cref independent.cpp$$
+:ref:`independent.cpp-name`
 contains an example and test of the sequence constructor.
 
-$subhead Default Constructor$$
+Default Constructor
+===================
 The files
-$cref fun_check.cpp$$
+:ref:`fun_check.cpp-name`
 and
-$cref hes_lagrangian.cpp$$
+:ref:`hes_lagrangian.cpp-name`
 contain an examples and tests using the default constructor.
 They return true if they succeed and false otherwise.
-
-$children%
+{xrst_toc_hidden
    example/general/fun_assign.cpp
-%$$
-$subhead Assignment Operator$$
+}
+Assignment Operator
+===================
 The file
-$cref fun_assign.cpp$$
-contains an example and test of the $codei%ADFun<%Base%>%$$
+:ref:`fun_assign.cpp-name`
+contains an example and test of the ``ADFun<`` *Base* >
 assignment operator.
 
-$end
+{xrst_end fun_construct}
 ----------------------------------------------------------------------------
 */
 

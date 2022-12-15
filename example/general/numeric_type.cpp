@@ -4,13 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin numeric_type.cpp$$
+{xrst_begin numeric_type.cpp}
 
-$section The NumericType: Example and Test$$
+The NumericType: Example and Test
+#################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end numeric_type.cpp}
 */
 // BEGIN C++
 

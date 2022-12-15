@@ -3,56 +3,65 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_ipopt.sh$$ $newlinech #$$
-# $spell
-#  tgz
-#  Ipopt
-#  CppAD
-#  Blas
-#  Lapack
-# $$
+# {xrst_begin get_ipopt.sh} 
+# {xrst_spell
+#     blas
+#     lapack
+# }
+# {xrst_comment_ch #}
 #
-# $section Download and Install Ipopt in Build Directory$$
+# Download and Install Ipopt in Build Directory
+# #############################################
 #
-# $head Syntax$$
-# $code bin/get_ipopt.sh$$
+# Syntax
+# ******
+# ``bin/get_ipopt.sh``
 #
-# $head Purpose$$
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
-# $href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$ in the
-# CppAD $code build$$ directory.
+# `Ipopt <http://www.coin-or.org/projects/Ipopt.xml>`_ in the
+# CppAD ``build`` directory.
 #
-# $head Requirements$$
+# Requirements
+# ************
 # This It is assumed that a copy of the Blas and Lapack is installed on
 # the system.
 #
-# $head Distribution Directory$$
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# $cref/distribution directory/download/Distribution Directory/$$.
+# :ref:`download@Distribution Directory` .
 #
-# $head Source Directory$$
+# Source Directory
+# ****************
 # The Ipopt source code is downloaded and compiled in the sub-directory
-# $codei%external/Ipopt-%version%$$ below the distribution directory.
+# ``external/Ipopt-`` *version* below the distribution directory.
 #
-# $head Prefix$$
-# The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional.sh$$ is used for this install.
+# Prefix
+# ******
+# The :ref:`get_optional.sh@prefix`
+# in the file ``bin/get_optional.sh`` is used for this install.
 #
-# $head Version$$
+# Version
+# *******
 # This will install the following version of Ipopt
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 version='3.13.2'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Configuration$$
+# Configuration
+# *************
 # If the file
-# $codei%
-#  external/ipopt-%version%.configured
-# %$$
+#
+#     ``external/ipopt-`` *version* . ``configured``
+#
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
 #
-# $end
+# {xrst_end get_ipopt.sh}
 # -----------------------------------------------------------------------------
 package='ipopt'
 if [ $0 != "bin/get_$package.sh" ]

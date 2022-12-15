@@ -2,32 +2,31 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin compare_c$$ $newlinech #$$
-# $spell
-#  det
-#  cpp
-# $$
+# {xrst_begin compare_c} 
+# {xrst_comment_ch #}
 #
-# $section Compare Speed of C and C++$$
-# $index compare, speed C and C++$$
-# $index speed, compare C and C++$$
-# $index C, compare speed with C++$$
-# $index C++, compare speed with C$$
+# Compare Speed of C and C++
+# ##########################
 #
-# $head Syntax$$
-# $codei%test_more/compare_c/det_by_minor_c
-# %$$
-# $codei test_more/compare_c/det_by_minor_cpp$$
+# Syntax
+# ******
 #
-# $head Purpose$$
+#     ``test_more/compare_c/det_by_minor_c``
+#
+# ``test_more/compare_c/det_by_minor_cpp``
+#
+# Purpose
+# *******
 # Compares the speed of the exact same source code compiled
 # using C versus C++.
 #
-# $childtable%
-#  test_more/compare_c/det_by_minor.c
-# %$$
+# Contents
+# ********
+# {xrst_toc_table
+#    test_more/compare_c/det_by_minor.c
+# }
 #
-# $end
+# {xrst_end compare_c}
 # -----------------------------------------------------------------------------
 #
 # use cppad_debug_which to determine build type

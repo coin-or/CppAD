@@ -4,14 +4,19 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_three_base2ad.cpp$$
+{xrst_begin atomic_three_base2ad.cpp}
 
-$section base2ad with Atomic Operations: Example and Test$$
+base2ad with Atomic Operations: Example and Test
+################################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end atomic_three_base2ad.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -5,101 +5,67 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin base_adolc.hpp$$
-$spell
-   stringstream
-   struct
-   string
-   setprecision
-   str
-   valgrind
-   azmul
-   expm1
-   atanh
-   acosh
-   asinh
-   erf
-   erfc
-   ifndef
-   define
-   endif
-   Rel
-   codassign
-   eps
-   std
-   abs_geq
-   fabs
-   cppad.hpp
-   undef
-   Lt
-   Le
-   Eq
-   Ge
-   Gt
-   namespace
-   cassert
-   condassign
-   hpp
-   bool
-   const
-   Adolc
+{xrst_begin base_adolc.hpp}
+{xrst_spell
    adouble
-   CondExpOp
-   inline
-   enum
-   CppAD
-   pow
-   acos
-   asin
-   atan
-   cos
-   cosh
-   exp
-   sqrt
    atrig
-$$
+   codassign
+   condassign
+   conditionals
+   erfc
+   expm
+   valgrind
+}
 
+Enable use of AD<Base> where Base is Adolc's adouble Type
+#########################################################
 
-$section Enable use of AD<Base> where Base is Adolc's adouble Type$$
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/example/base_adolc.hpp>
-%$$
-$children%
+   # ``include <cppad/example/base_adolc.hpp>``
+
+{xrst_toc_hidden
    example/general/mul_level_adolc.cpp
-%$$
+}
 
-$head Example$$
-The file $cref mul_level_adolc.cpp$$ contains an example use of
-Adolc's $code adouble$$ type for a CppAD $icode Base$$ type.
-The file $cref mul_level_adolc_ode.cpp$$ contains a more realistic
+Example
+*******
+The file :ref:`mul_level_adolc.cpp-name` contains an example use of
+Adolc's ``adouble`` type for a CppAD *Base* type.
+The file :ref:`mul_level_adolc_ode.cpp-name` contains a more realistic
 (and complex) example.
 
-$head Include Files$$
-This file $code base_adolc.hpp$$ requires $code adouble$$ to be defined.
-In addition, it is included before $code <cppad/cppad.hpp>$$,
+Include Files
+*************
+This file ``base_adolc.hpp`` requires ``adouble`` to be defined.
+In addition, it is included before ``<cppad/cppad.hpp>`` ,
 but it needs to include parts of CppAD that are used by this file.
 This is done with the following include commands:
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <adolc/adolc.h>
 # include <cppad/base_require.hpp>
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CondExpOp$$
-The type $code adouble$$ supports a conditional assignment function
+CondExpOp
+*********
+The type ``adouble`` supports a conditional assignment function
 with the syntax
-$codei%
-   condassign(%a%, %b%, %c%, %d%)
-%$$
+
+   ``condassign`` ( *a* , *b* , *c* , *d* )
+
 which evaluates to
-$codei%
-   %a% = (%b% > 0) ? %c% : %d%;
-%$$
+
+   *a* = ( *b* > 0) ? *c* : *d* ;
+
 This enables one to include conditionals in the recording of
-$code adouble$$ operations and later evaluation for different
+``adouble`` operations and later evaluation for different
 values of the independent variables
-(in the same spirit as the CppAD $cref CondExp$$ function).
-$srccode%cpp% */
+(in the same spirit as the CppAD :ref:`CondExp-name` function).
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline adouble CondExpOp(
       enum  CppAD::CompareOp     cop ,
@@ -141,21 +107,27 @@ namespace CppAD {
       return result;
    }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CondExpRel$$
-The $cref/CPPAD_COND_EXP_REL/base_cond_exp/CondExpRel/$$ macro invocation
-$srccode%cpp% */
+CondExpRel
+**********
+The :ref:`CPPAD_COND_EXP_REL<base_cond_exp@CondExpRel>` macro invocation
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_COND_EXP_REL(adouble)
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head EqualOpSeq$$
+EqualOpSeq
+**********
 The Adolc user interface does not specify a way to determine if
-two $code adouble$$ variables correspond to the same operations sequence.
-Make $code EqualOpSeq$$ an error if it gets used:
-$srccode%cpp% */
+two ``adouble`` variables correspond to the same operations sequence.
+Make ``EqualOpSeq`` an error if it gets used:
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool EqualOpSeq(const adouble &x, const adouble &y)
    {  CppAD::ErrorHandler::Call(
@@ -166,13 +138,16 @@ namespace CppAD {
       return false;
    }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Identical$$
+Identical
+*********
 The Adolc user interface does not specify a way to determine if an
-$code adouble$$ depends on the independent variables.
-To be safe (but slow) return $code false$$ in all the cases below.
-$srccode%cpp% */
+``adouble`` depends on the independent variables.
+To be safe (but slow) return ``false`` in all the cases below.
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool IdenticalCon(const adouble &x)
    {  return false; }
@@ -183,23 +158,32 @@ namespace CppAD {
    inline bool IdenticalEqualCon(const adouble &x, const adouble &y)
    {  return false; }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Integer$$
-$srccode%cpp% */
+Integer
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    inline int Integer(const adouble &x)
    {    return static_cast<int>( x.getValue() ); }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head azmul$$
-$srccode%cpp% */
+azmul
+*****
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_AZMUL( adouble )
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Ordered$$
-$srccode%cpp% */
+Ordered
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool GreaterThanZero(const adouble &x)
    {    return (x > 0); }
@@ -212,36 +196,39 @@ namespace CppAD {
    inline bool abs_geq(const adouble& x, const adouble& y)
    {  return fabs(x) >= fabs(y); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Unary Standard Math$$
-The following $cref/required/base_require/$$ functions
-are defined by the Adolc package for the $code adouble$$ base case:
-$pre
-$$
-$code acos$$,
-$code acosh$$,
-$code asin$$,
-$code asinh$$,
-$code atan$$,
-$code atanh$$,
-$code cos$$,
-$code cosh$$,
-$code erf$$,
-$code exp$$,
-$code fabs$$,
-$code log$$,
-$code sin$$,
-$code sinh$$,
-$code sqrt$$,
-$code tan$$.
+Unary Standard Math
+*******************
+The following :ref:`required<base_require-name>` functions
+are defined by the Adolc package for the ``adouble`` base case:
 
-$head erfc$$
-If you provide $code --enable-atrig-erf$$ on the configure command line,
+``acos`` ,
+``acosh`` ,
+``asin`` ,
+``asinh`` ,
+``atan`` ,
+``atanh`` ,
+``cos`` ,
+``cosh`` ,
+``erf`` ,
+``exp`` ,
+``fabs`` ,
+``log`` ,
+``sin`` ,
+``sinh`` ,
+``sqrt`` ,
+``tan`` .
+
+erfc
+****
+If you provide ``--enable-atrig-erf`` on the configure command line,
 the adolc package supports all the c++11 math functions except
-$code erfc$$, $code expm1$$, and $code log1p$$.
-For the reason, we make using $code erfc$$ an error:
-$srccode%cpp% */
+``erfc`` , ``expm1`` , and ``log1p`` .
+For the reason, we make using ``erfc`` an error:
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
 # define CPPAD_BASE_ADOLC_NO_SUPPORT(fun)                         \
    inline adouble fun(const adouble& x)                          \
@@ -256,13 +243,16 @@ namespace CppAD {
    CPPAD_BASE_ADOLC_NO_SUPPORT(log1p)
 # undef CPPAD_BASE_ADOLC_NO_SUPPORT
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head sign$$
-This $cref/required/base_require/$$ function is defined using the
-$code codassign$$ function so that its $code adouble$$ operation sequence
-does not depend on the value of $icode x$$.
-$srccode%cpp% */
+sign
+****
+This :ref:`required<base_require-name>` function is defined using the
+``codassign`` function so that its ``adouble`` operation sequence
+does not depend on the value of *x* .
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline adouble sign(const adouble& x)
    {  adouble s_plus, s_minus, half(.5);
@@ -274,35 +264,45 @@ namespace CppAD {
       return s_plus - s_minus;
    }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head abs$$
-This $cref/required/base_require/$$ function uses the adolc $code fabs$$
+abs
+***
+This :ref:`required<base_require-name>` function uses the adolc ``fabs``
 function:
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline adouble abs(const adouble& x)
    {  return fabs(x); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head pow$$
-This $cref/required/base_require/$$ function
-is defined by the Adolc package for the $code adouble$$ base case.
+pow
+***
+This :ref:`required<base_require-name>` function
+is defined by the Adolc package for the ``adouble`` base case.
 
-$head numeric_limits$$
-The following defines the CppAD $cref numeric_limits$$
-for the type $code adouble$$:
-$srccode%cpp% */
+numeric_limits
+**************
+The following defines the CppAD :ref:`numeric_limits-name`
+for the type ``adouble`` :
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_NUMERIC_LIMITS(double, adouble)
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head to_string$$
-The following defines the CppAD $cref to_string$$ function
-for the type $code adouble$$:
-$srccode%cpp% */
+to_string
+*********
+The following defines the CppAD :ref:`to_string-name` function
+for the type ``adouble`` :
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    template <> struct to_string_struct<adouble>
    {  std::string operator()(const adouble& x)
@@ -314,15 +314,18 @@ namespace CppAD {
       }
    };
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head hash_code$$
-It appears that an $code adouble$$ object can have fields
+hash_code
+*********
+It appears that an ``adouble`` object can have fields
 that are not initialized.
-This results in a $code valgrind$$ error when these fields are used by the
-$cref/default/base_hash/Default/$$ hashing function.
-For this reason, the $code adouble$$ class overrides the default definition.
-$srccode|cpp| */
+This results in a ``valgrind`` error when these fields are used by the
+:ref:`base_hash@Default` hashing function.
+For this reason, the ``adouble`` class overrides the default definition.
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline unsigned short hash_code(const adouble& x)
    {  unsigned short code = 0;
@@ -338,15 +341,15 @@ namespace CppAD {
       return code;
    }
 }
-/* |$$
+/* {xrst_code}
+{xrst_spell_on}
 Note that after the hash codes match, the
-$cref/Identical/base_adolc.hpp/Identical/$$ function will be used
+:ref:`base_adolc.hpp@Identical` function will be used
 to make sure two values are the same and one can replace the other.
-A more sophisticated implementation of the $code Identical$$ function
-would detect which $code adouble$$ values depend on the
-$code adouble$$ independent variables (and hence can change).
+A more sophisticated implementation of the ``Identical`` function
+would detect which ``adouble`` values depend on the
+``adouble`` independent variables (and hence can change).
 
-
-$end
+{xrst_end base_adolc.hpp}
 */
 # endif

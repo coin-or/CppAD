@@ -1,0 +1,489 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_22}
+{xrst_spell
+   an an
+   csrc
+   deprecate
+   dll
+   github
+   handeling
+   isinf
+   isnan
+   iterators
+   libs
+   nullptr
+   nx
+   posix
+   tc
+   tmpnam
+   txt
+   zdouble
+}
+
+Changes and Additions to CppAD During 2022
+##########################################
+
+mm-dd
+*****
+
+11-05
+=====
+Fix a conversion error during the tests by extending the zdouble
+:ref:`constructor<zdouble@Syntax@Constructor and Assignment>`
+to ``zdouble`` ( *i* ) where *i* is ``long`` .
+
+08-30
+=====
+The :ref:`optimize-name` operations was not handeling
+comparison operators that only had parameters,
+with at least one dynamic parameter.
+This has been fixed.
+
+07-16
+=====
+Add the option to configure eigen using
+:ref:`cmake@eigen_prefix` ,
+as well as with
+:ref:`cmake@include_eigen` .
+
+07-14
+=====
+
+#. There was a mistake in the implementation of the
+   :ref:`ad_ctor@x@explicit` ``AD<`` *Base* > constructor.
+   To be specific, the value was converted to ``double`` before being
+   converted to ``AD<`` *Base* > .
+   This has been fixed and the :ref:`ad_ctor-name` documentation has been
+   improved to note which result are always constant parameters.
+#. **API Change** :
+   It was necessary (due to the fix above) to add the
+   :ref:`int constructor<base_member@Constructors@int>` and
+   :ref:`double constructor<base_member@Constructors@double>` to the
+   :ref:`base_require-name` .
+   (Defining a base class is an advanced topic and only for experts).
+
+07-12
+=====
+The :ref:`cmake@CMake Command` was not properly determining
+when posix threads could be used (when using a C compiler other than gcc).
+This suppressed the running of the corresponding examples; e.g.,
+:ref:`a11c_pthread.cpp-name` .
+
+07-10
+=====
+
+#. Add the :ref:`cmake@cmake_needs_dot_slash` symbol
+   to the cmake command line.
+#. Change the test case in ``speed/example/speed_program.cpp`` because
+   some compilers have gotten smarter and do not calculate values
+   that are not used.
+   This lead to an the repeat count overflowing and then an infinite loop.
+   The :ref:`speed_test-name` and :ref:`speedtest-name` routines now check for
+   an overflow of the repeat counter and abort.
+#. Suppress the Microsoft compiler divide by zero warning, C4723.
+
+07-08
+=====
+Change `github actions <https://github.com/coin-or/CppAD/actions>`_:
+run on pushes to the master and stable branches, and
+run on all pull requests.
+
+07-05
+=====
+Merge in pull_155 branch.
+This enabled the use of binary operators with Eigen matrices of
+type ``AD<`` *Base* > and type *Base* ;
+see :ref:`ScalarBinaryOpTraits<cppad_eigen.hpp@Eigen ScalarBinaryOpTraits>`
+in ``cppad_eigen.hpp`` .
+
+06-23
+=====
+
+#. Change *x* to :ref:`to_csrc@u` in the ``to_csrc`` operation
+   and add specifications as the position of the independent dynamic
+   parameters and variables in *u* .
+#. Add the :ref:`jit_dynamic.cpp-name` and :ref:`jit_compile.cpp-name` examples.
+#. Remove some remaining uses of ``CPPAD_TEST_VECTOR`` .
+#. Deprecate use of the following symbols:
+   ``CPPAD_`` *package* ``VECTOR`` for *package* equal to
+   ``CPPAD`` , ``STD`` , ``BOOST`` , ``EIGEN`` .
+#. Add the :ref:`cmake@cmake_defined_ok` symbol
+   to the cmake command line.
+   This enables one to run cmake with a ``CMakeCache.txt`` file.
+
+06-22
+=====
+
+#. Modify the :ref:`cmake@CMake Command@msys2`
+   and :ref:`cmake@CMake Command@Visual Studio`
+   install suggestions.
+#. Split the JIT function type
+   *type* _ ``forward_zero`` into
+   ``jit_`` *type* for :ref:`to_csrc@JIT Functions` , and
+   ``atomic_`` *type* for :ref:`to_csrc@Atomic Callbacks` .
+#. Add the :ref:`jit_atomic.cpp-name` example.
+#. The ``CPPAD_TEST_VECTOR`` macro was removed
+   (it was deprecated on 2012-07-03).
+#. Remove the following symbols from the :ref:`testvector-name` documentation:
+   ``CPPAD_`` *package* ``VECTOR`` for *package* equal to
+   ``CPPAD`` , ``STD`` , ``BOOST`` , ``EIGEN`` .
+
+06-21
+=====
+Change the visual C++ JIT compile flag ``/Tc`` to the flag ``/TC`` ,
+so that the C source file need not follow directly after in the compile
+command. This fixed a test failure when using that compiler.
+
+06-20
+=====
+JIT C source code generation, compilation, and linking were added using
+the following new features, examples, and speed tests:
+
+.. csv-table::
+   :widths: auto
+
+   to_csrc,:ref:`to_csrc-title`
+   create_dll_lib,:ref:`create_dll_lib-title`
+   link_dll_lib,:ref:`link_dll_lib-title`
+   example_jit,:ref:`example_jit-title`
+   cppad_jit_det_minor.cpp,:ref:`cppad_jit_det_minor.cpp-title`
+
+The following improvements were made to existing features:
+
+#. Fix a clang++ compiler warning in the file check_for_nan.hpp.
+
+05-27
+=====
+Add the theory, but not implementation, for the atomic linear ODE
+second order reverse mode; see
+:ref:`atomic_four_lin_ode_reverse_2-name` .
+
+05-26
+=====
+
+#. The atomic linear ODE maximum :ref:`atomic_four_lin_ode@step` size
+   was not being enforced during the reverse mode
+   :ref:`atomic_four_lin_ode_reverse.hpp@Simpson's Rule`
+   integral approximation.
+   This has been fixed.
+#. Make :ref:`atomic_four_lin_ode_forward.hpp@extend_ode`
+   a separate function in the atomic linear ODE example.
+
+05-20
+=====
+Merge in the pull_144 branch.
+This fixed some problems with the windows visual studio build; see
+the corresponding pull request.
+
+05-19
+=====
+
+#. The atomic four ``base_lin_ode`` function was changed to
+   :ref:`base_solver<atomic_four_lin_ode_base_solver.hpp-name>` .
+   In addition, a maximum :ref:`atomic_four_lin_ode@step`
+   size was added to this atomic linear ODE solver.
+#. Fix setting of debug and release flags in
+   ``test_more/debug_rel/CMakeLists.txt`` .
+
+05-17
+=====
+The :ref:`atomic_four_lin_ode_rev_depend.hpp-name` example was added.
+In addition, remove the Under Construction headings from the
+:ref:`atomic_four_lin_ode-name` sections (it is ready for use).
+
+05-16
+=====
+
+#. The :ref:`atomic_four_hes_sparsity@ident_zero_x` argument
+   was added to the atomic four Hessian sparsity callback.
+   The previous version of this callback still works but is deprecated.
+#. Add :ref:`Var2Par-name` set in the ``cppad_eigen.hpp``
+   :ref:`cppad_eigen.hpp@std Definitions` of the AD versions of
+   ``isinf`` and ``isnan`` .
+#. Change the atomic four example Hessian sparsity callbacks to use the
+   :ref:`atomic_four_hes_sparsity@ident_zero_x` .
+   In the special case of :ref:`atomic_four_norm_sq.cpp-name` ,
+   do not include *ident_zero_x* and mention that this version
+   of the callback is deprecated.
+
+05-15
+=====
+
+#. Merge in the pull_140 branch.
+   This extended CppAD :ref:`base_limits-name` and :ref:`numeric_limits-name`
+   to include ``infinity()`` .
+   In addition,  ``cppad_eigen.hpp`` added ``isinf``
+   and ``isnan`` for AD types to the std namespace; see
+   :ref:`cppad_eigen.hpp@std Definitions` .
+
+#. Fix a long standing bug in the :ref:`for_hes_sparsity-name` routine.
+   For example,
+   the function called ``case_seven`` in
+   ``test_more/general/hes_sparsity.cpp/`` tests a case
+   where this bug occurred.
+
+#. Add the :ref:`atomic_four_lin_ode_hes_sparsity.hpp-name` example.
+
+05-13
+=====
+The :ref:`code_gen_fun examples<code_gen_fun@Examples>` were
+not being built even when
+:ref:`cmake@include_cppadcg`
+was specified on the cmake command line.
+This has been fixed.
+
+05-12
+=====
+The :ref:`cmake-name` script ``cmake/compile_source_test.cmake`` was not
+working properly on Darwin systems which resulted in the following warning:
+
+| |tab| ``warning:`` ``'tmpnam'`` ``is deprecated:`` ...
+| |tab| |tab| ``file_name`` = ``tmpnam`` ( ``nullptr`` );
+
+This has been fixed.
+
+05-11
+=====
+A mathematical :ref:`atomic_four_lin_ode_jac_sparsity.hpp@Theory`
+was added to the linear ODE Jacobian sparsity pattern example.
+In addition, the corresponding code was changed to match the theory.
+This may, or may not, have fixed some bugs in the previous version
+of this routine.
+
+05-10
+=====
+The :ref:`atomic_four_jac_sparsity@ident_zero_x` argument
+was added to the atomic four Jacobian sparsity callback.
+The previous version of this callback still works but is deprecated.
+
+05-09
+=====
+
+#. Add a theory section to the linear ODE
+   :ref:`for_type<atomic_four_lin_ode_for_type.hpp@Theory>` section.
+   In addition more the linear ODE theory for forward and reverse mode to the
+   corresponding
+   :ref:`forward<atomic_four_lin_ode_forward.hpp@Theory>` and
+   :ref:`reverse<atomic_four_lin_ode_reverse.hpp@First Order Theory>` sections.
+#. Back out an incorrect change on 04-15 to the meaning of
+   :ref:`atomic_four_jac_sparsity@select_x` and
+   :ref:`atomic_four_jac_sparsity@select_y` in the
+   atomic four Jacobian sparsity documentation.
+#. Add the specification that the atomic four
+   :ref:`atomic_four_call@for_type` callback
+   will be called once for each atomic function call and before any other
+   of the callbacks for the atomic function call.
+
+05-07
+=====
+Add the :ref:`base2vec_ad.cpp-name` example demonstrating that :ref:`base2ad-name`
+does not convert :ref:`VecAD-name` operations as might be expected.
+Add a link to this example in both the base2ad and VecAD documentation
+and a :ref:`base2ad wish_list<wish_list@base2ad>` item about this.
+
+05-06
+=====
+There was a bug in combining the :ref:`discrete-name` functions with the
+:ref:`base2ad-name` operation.
+To be specific, if a discrete function was used during the recording of
+*f* and *af* = *f* . ``base2ad`` () , the following assert
+would happen during forward mode calculations using the *af* function:
+
+| |tab| ``error from unknown source``
+| |tab| ``Error detected by false result for``
+| |tab| |tab| ``index < List`` (). ``size`` ()
+| |tab| ``at line 325 in the file``
+| |tab| ... ``discrete.hpp``
+
+This bug has been fixed.
+
+04-21
+=====
+
+#. Modify :ref:`atomic_four_lin_ode_set.hpp-name` and
+   :ref:`atomic_four_lin_ode_get.hpp-name` to re-use sparsity patterns
+   instead of creating a new one for every call.
+   This makes use of
+   :ref:`sparse_rc@set_row_major` to speed up checking
+   for equality of sparsity patterns.
+#. In the :ref:`atomic_four_lin_ode_implement-name` files, change ``assert`` to
+   :ref:`CPPAD_ASSERT_UNKNOWN<cppad_assert@Unknown>` .
+
+04-20
+=====
+Add the
+:ref:`sparse_rc@set_row_major` ,
+:ref:`sparse_rc@get_row_major` ,
+:ref:`sparse_rc@set_col_major` ,
+:ref:`sparse_rc@get_col_major` ,
+functions to the ``sparse_rc`` template class.
+
+04-19
+=====
+Change the ODE solver in :ref:`atomic_four_lin_ode-name` from
+:ref:`runge45-name` to :ref:`rosen34-name` .
+
+04-15
+=====
+
+#. Add :ref:`atomic_four_lin_ode-name` an example of making the solution
+   of an ODE an atomic operation.
+   As with the other atomic four examples, the ``AD<`` *Base* >
+   version of the derivative calculations a done using atomic operations.
+#. Add the :ref:`sparse_rc@other@Equality` operator
+   to the sparsity pattern template class.
+
+03-29
+=====
+Add the :ref:`atomic_four_lin_ode-name` example
+which is not yet complete.
+
+03-26
+=====
+Change ``y(nx)`` to ``y(ny)`` in
+:ref:`atomic_four_mat_mul_forward.cpp-name` .
+
+03-25
+=====
+
+#. Fix :ref:`atomic_four_mat_mul-name` by changing it's base class
+   from ``atomic_four<double>`` to ``atomic_four<`` *Base* > ;
+   see :ref:`atomic_four_mat_mul.hpp-name` .
+#. Remove under construction warning from :ref:`atomic_four_mat_mul-name` .
+#. Change ``atomic_vector`` to :ref:`atomic_four_vector-name` .
+
+03-24
+=====
+Fix :ref:`atomic_four_vector-name` by changing it's base class
+from ``atomic_four<double>`` to ``atomic_four<`` *Base* > .
+Make some other similar corrections in :ref:`atomic_four_vector.hpp-name` .
+
+03-23
+=====
+Improve error detection and message when both
+:ref:`cmake@cmake_build_type` and
+:ref:`cmake@cppad_debug_which` are chosen
+during the install procedure.
+
+02-21
+=====
+Extend the json graph representation to include
+:ref:`json_graph_op@Atomic Functions@Atomic Four` functions.
+For example, see :ref:`json_atom4_op.cpp-name` .
+
+02-19
+=====
+Extend the C++ graph representation to include atomic four
+:ref:`atomic functions<graph_op_enum@Atomic Function>` .
+For example, see :ref:`graph_atom4_op.cpp-name` .
+
+02-18
+=====
+Fixed the value of *after* [ *i* ] in the
+:ref:`cpp_ad_graph@operator_arg@print_graph_op` documentation.
+To be specific, ``- 2`` was changed to ``- 1`` .
+
+02-17
+=====
+Add ``identical_zero`` to the possible
+:ref:`atomic_four_for_type@ad_type` values in
+the atomic four ``for_type`` function.
+See :ref:`atomic_four_vector_for_type.hpp-name` ,
+:ref:`atomic_four_mat_mul_for_type.hpp-name` , and
+:ref:`atomic_four_mat_mul_identical_zero.cpp-name`
+for an examples using this feature.
+
+02-16
+=====
+Use the :ref:`atomic_four_norm_sq.cpp-name` overrides
+as examples for the virtual functions in the :ref:`atomic_four-name`
+base class.
+
+02-13
+=====
+
+#. The :ref:`atomic_four_mat_mul-name` example class was added.
+#. The :ref:`atomic_four_vector-name` include path has changed to
+
+      # ``include <cppad/example/atomic_four/vector.hpp>``
+
+02-12
+=====
+Add the :ref:`sparse_rc@push_back` and
+output stream (see :ref:`sparse_rc@os` ) operations
+to the ``sparse_rc`` template class.
+
+02-11
+=====
+The value of ``Libs:`` in the ``cppad.pc`` :ref:`pkgconfig-name` file
+was not being set correctly for some cases. This has been fixed.
+
+02-01
+=====
+Fix a possible integer overflow in the :ref:`to_string.cpp-name` example
+(might cause the test to fail).
+
+01-27
+=====
+Convert :ref:`atomic_four_forward.cpp-name` from an atomic_three
+to an atomic_four example.
+
+01-25
+=====
+Convert :ref:`atomic_four_dynamic.cpp-name` from an atomic_three
+to an atomic_four example.
+
+01-23
+=====
+
+#. Add :ref:`atomic_four-name` , a simpler interface to atomic functions.
+   This has the optional :ref:`atomic_four_call@call_id` argument
+   which can be used to attach extra information to an atomic function call.
+#. The :ref:`atomic_four_vector-name` is a good example that uses
+   *call_id* to specify which
+   element by element operator is being called; see
+   :ref:`call_id<atomic_four_vector@op>` .
+#. Remove element-by-element atomic operations from :ref:`wish_list-name`
+   (completed by the atomic_vector class).
+
+01-19
+=====
+Edit wish_list cppad_lib
+:ref:`wish_list@cppad_lib@Requirement` item.
+Add an :ref:`wish_list@Optimization@Atomic Functions`
+item to the optimization wish list.
+
+01-15
+=====
+
+#. Fix some conversion warnings generated by the clang compiler
+   for the :ref:`atomic_four_vector-name` example.
+#. Correct the order of p, q in function calls in
+   :ref:`atomic_four_vector_forward_op.hpp-name` .
+
+01-06
+=====
+
+#. Fix the ``[]`` operator using CppAD vector
+   :ref:`iterators<CppAD_vector@Iterators@operator[]>` .
+   In addition it was extended to include ``size_t`` indices.
+#. Add reverse mode to the :ref:`atomic_four_vector-name` ,  mul, div, operators
+   and fix some warning used ``size_t`` iterator indices.
+
+01-04
+=====
+
+#. Add the neg operator to :ref:`atomic_four_vector-name` .
+#. Add reverse mode to the atomic_vector,  add, sub, and neg operators.
+
+01-01
+=====
+The ``example/atomic_three/vector_op.cpp`` example
+(see :ref:`atomic_four_vector-name` ) was split into multiple files and moved into the
+``example/atomic_vector`` directory.
+
+{xrst_end whats_new_22}

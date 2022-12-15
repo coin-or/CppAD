@@ -3,23 +3,25 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin multi_newton_common$$
+{xrst_begin multi_newton_common}
 
-$section Common Variables use by Multi-Threaded Newton Method$$
+Common Variables use by Multi-Threaded Newton Method
+####################################################
 
-$head Purpose$$
+Purpose
+*******
 This source code defined the common
 include files, defines, and variables that are used by the
 multi-newton method.
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN COMMON C++%// END COMMON C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN COMMON C++
+   // END COMMON C++
+}
 
-
-
-$end
+{xrst_end multi_newton_common}
 */
 // BEGIN COMMON C++
 # include <cppad/cppad.hpp>
@@ -74,56 +76,65 @@ namespace {
 // END COMMON C++
 /*
 -------------------------------------------------------------------------------
-$begin multi_newton_setup$$
-
-$section Set Up Multi-Threaded Newton Method$$
-$spell
-   num
+{xrst_begin multi_newton_setup}
+{xrst_spell
    xlow
    xup
-   itr
-   xout
-$$
+}
 
+Set Up Multi-Threaded Newton Method
+###################################
 
-$head Syntax$$
-$icode%ok% = multi_newton_setup(
-   %num_sub%, %xlow%, %xup%, %epsilon%, %max_itr%, %num_threads%
-)%$$
+Syntax
+******
 
-$head Purpose$$
+| *ok* = ``multi_newton_setup`` (
+| |tab| *num_sub* , *xlow* , *xup* , *epsilon* , *max_itr* , *num_threads*
+| )
+
+Purpose
+*******
 These routine does the setup for splitting finding all the zeros in an
 interval into separate sub-intervals, one for each thread.
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero,
 and all the other threads are blocked (waiting).
 
-$head num_sub$$
-See $icode num_sub$$ in $cref/multi_newton_run/multi_newton_run/num_sub/$$.
+num_sub
+*******
+See *num_sub* in :ref:`multi_newton_run<multi_newton_run@num_sub>` .
 
-$head xlow$$
-See $icode xlow$$ in $cref/multi_newton_run/multi_newton_run/xlow/$$.
+xlow
+****
+See *xlow* in :ref:`multi_newton_run<multi_newton_run@xlow>` .
 
-$head xup$$
-See $icode xup$$ in $cref/multi_newton_run/multi_newton_run/xup/$$.
+xup
+***
+See *xup* in :ref:`multi_newton_run<multi_newton_run@xup>` .
 
-$head epsilon$$
-See $icode epsilon$$ in $cref/multi_newton_run/multi_newton_run/epsilon/$$.
+epsilon
+*******
+See *epsilon* in :ref:`multi_newton_run<multi_newton_run@epsilon>` .
 
-$head max_itr$$
-See $icode max_itr$$ in $cref/multi_newton_run/multi_newton_run/max_itr/$$.
+max_itr
+*******
+See *max_itr* in :ref:`multi_newton_run<multi_newton_run@max_itr>` .
 
-$head num_threads$$
-See $icode num_threads$$ in
-$cref/multi_newton_run/multi_newton_run/num_threads/$$.
+num_threads
+***********
+See *num_threads* in
+:ref:`multi_newton_run<multi_newton_run@num_threads>` .
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN SETUP C++%// END SETUP C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN SETUP C++
+   // END SETUP C++
+}
 
-$end
+{xrst_end multi_newton_setup}
 */
 // BEGIN SETUP C++
 namespace {
@@ -205,44 +216,48 @@ bool multi_newton_setup(
 // END SETUP C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_newton_worker$$
-$spell
-   num
+{xrst_begin multi_newton_worker}
+{xrst_spell
    xlow
    xup
-   xout
-$$
+}
 
-$section Do One Thread's Work for Multi-Threaded Newton Method$$
+Do One Thread's Work for Multi-Threaded Newton Method
+#####################################################
 
-$head Syntax$$
-$codei%multi_newton_worker()%$$
+Syntax
+******
+``multi_newton_worker`` ()
 
+Purpose
+*******
+This function finds all the zeros in the interval [ *low* , *up*  ] .
 
-$head Purpose$$
-This function finds all the zeros in the interval $codei%[ %low% , %up% ]%$$.
+low
+***
+This is the value of the :ref:`multi_newton_common-name` information
 
-$head low$$
-This is the value of the $cref multi_newton_common$$ information
-$codei%
-   %low% = work_all_[%thread_num%]->xlow
-%$$
+   *low* = ``work_all_`` [ *thread_num* ] ``->xlow``
 
-$head up$$
-This is the value of the $cref multi_newton_common$$ information
-$codei%
-   %up% = work_all_[%thread_num%]->xup
-%$$
+up
+**
+This is the value of the :ref:`multi_newton_common-name` information
 
-$head thread_num$$
+   *up* = ``work_all_`` [ *thread_num* ] ``->xup``
+
+thread_num
+**********
 This is the number for the current thread; see
-$cref/thread_num/ta_thread_num/$$.
+:ref:`thread_num<ta_thread_num-name>` .
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN WORKER C++%// END WORKER C++%
-1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN WORKER C++
+   // END WORKER C++
+}
+
+{xrst_end multi_newton_worker}
 */
 // BEGIN WORKER C++
 namespace {
@@ -332,34 +347,41 @@ void multi_newton_worker(void)
 // END WORKER C++
 /*
 -------------------------------------------------------------------------------
-$begin multi_newton_takedown$$
-$spell
+{xrst_begin multi_newton_takedown}
+{xrst_spell
    xout
-$$
+}
 
-$section Take Down Multi-threaded Newton Method$$
+Take Down Multi-threaded Newton Method
+######################################
 
-$head Syntax$$
-$icode%ok% = harmonic_takedown(%xout%)
-%$$
+Syntax
+******
 
-$head Purpose$$
+   *ok* = ``harmonic_takedown`` ( *xout* )
+
+Purpose
+*******
 This routine does the takedown for splitting the Newton method into
 sub-intervals.
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero,
 and all the other threads have completed their work and are blocked (waiting).
 
-$head xout$$
-See $cref/multi_newton_run/multi_newton_run/xout/$$.
+xout
+****
+See :ref:`multi_newton_run<multi_newton_run@xout>` .
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN TAKEDOWN C++
+   // END TAKEDOWN C++
+}
 
-$end
+{xrst_end multi_newton_takedown}
 */
 // BEGIN TAKEDOWN C++
 namespace {
@@ -431,146 +453,165 @@ bool multi_newton_takedown(vector<double>& xout)
 // END TAKEDOWN C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_newton_run$$
-$spell
-   CppAD
-   xout
-   num
-   xlow
-   xup
-   itr
-   bool
+{xrst_begin multi_newton_run}
+{xrst_spell
    df
-$$
+   xlow
+   xout
+   xup
+}
 
+A Multi-Threaded Newton's Method
+################################
 
-$section A Multi-Threaded Newton's Method$$
+Syntax
+******
 
-$head Syntax$$
-$icode%ok% = %multi_newton_run(%xout%,
-   %fun%, %num_sub%, %xlow%, %xup%, %epsilon%, %max_itr%, %num_threads%
-)%$$
+| ``ok`` = ``multi_newton_run`` ( *xout* ,
+| |tab| ``fun`` , ``num_sub`` , ``xlow`` , ``xup`` , ``epsilon`` , ``max_itr`` , ``num_threads``
+| )
 
-$head Purpose$$
-Multi-threaded determination of the argument values $latex x$$,
-in the interval $latex [a, b]$$ (where $latex a < b$$),
-such that $latex f(x) = 0$$.
+Purpose
+*******
+Multi-threaded determination of the argument values :math:`x`,
+in the interval :math:`[a, b]` (where :math:`a < b`),
+such that :math:`f(x) = 0`.
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero,
 and all the other threads are blocked (waiting).
 
-$head Method$$
-For $latex i = 0 , \ldots , n$$,
-we define the $th i$$ grid point $latex g_i$$ by
-$latex \[
+Method
+******
+For :math:`i = 0 , \ldots , n`,
+we define the *i*-th grid point :math:`g_i` by
+
+.. math::
+
    g_i = a \frac{n - i}{n} +  b \frac{i}{n}
-\] $$
-For $latex i = 0 , \ldots , n-1$$,
-we define the $th i$$ sub-interval of $latex [a, b]$$ by
-$latex \[
+
+For :math:`i = 0 , \ldots , n-1`,
+we define the *i*-th sub-interval of :math:`[a, b]` by
+
+.. math::
+
    I_i = [ g_i , g_{i+1} ]
-\] $$
+
 Newton's method is applied starting
-at the center of each of the sub-intervals $latex I_i$$ for
-$latex i = 0 , \ldots , n-1$$
+at the center of each of the sub-intervals :math:`I_i` for
+:math:`i = 0 , \ldots , n-1`
 and at most one zero is found for each sub-interval.
 
-$head ok$$
-The return value $icode ok$$ has prototype
-$codei%
-   bool %ok%
-%$$
+ok
+**
+The return value *ok* has prototype
+
+   ``bool`` *ok*
+
 If an error occurs, it is false, otherwise it is true.
 
-$head xout$$
-The argument $icode xout$$ has the prototype
-$codei%
-   vector<double>& %xout%
-%$$
-The input size and value of the elements of $icode xout$$ do not matter.
-Upon return from $code multi_newton$$,
-the size of $icode xout$$ is less than or equal
-the number of sub-intervals $latex n$$ and
-$latex \[
+xout
+****
+The argument *xout* has the prototype
+
+   ``vector<double>&`` *xout*
+
+The input size and value of the elements of *xout* do not matter.
+Upon return from ``multi_newton`` ,
+the size of *xout* is less than or equal
+the number of sub-intervals :math:`n` and
+
+.. math::
+
    | f( xout[i] ) | \leq epsilon
-\] $$
-for each valid index $codei%0% <= %i% < %xout%.size()%$$.
-Two $latex x$$ solutions are considered equal (and joined as one) if
+
+for each valid index 0 <= ``i`` < ``xout`` . *size* () .
+Two :math:`x` solutions are considered equal (and joined as one) if
 the absolute difference between the solutions is less than
-$latex (b - a) / n$$.
+:math:`(b - a) / n`.
 
-$head fun$$
-The argument $icode fun$$ has prototype
-$codei%
-   void %fun% (double %x%, double& %f%, double& %df%)
-%$$
-This function must evaluate $latex f(x)$$,
-and its derivative $latex f^{(1)} (x)$$,
+fun
+***
+The argument *fun* has prototype
+
+   ``void`` *fun* ( ``double`` *x* , ``double&`` *f* , ``double&`` *df* )
+
+This function must evaluate :math:`f(x)`,
+and its derivative :math:`f^{(1)} (x)`,
 using the syntax
-$codei%
-   %fun%(%x%, %f%, %df%)
-%$$
-where the arguments to $icode fun$$ have the prototypes
-$codei%
-   double    %x%
-   double&   %f%
-   double&   %df%
-%$$.
-The input values of $icode f$$ and $icode df$$ do not matter.
-Upon return they are $latex f(x)$$ and $latex f^{(1)} (x)$$ respectively.
 
-$head num_sub$$
-The argument $icode num_sub$$ has prototype
-$codei%
-   size_t %num_sub%
-%$$
-It specifies the number of sub-intervals; i.e., $latex n$$.
+   *fun* ( *x* , *f* , *df* )
 
-$head xlow$$
-The argument $icode xlow$$ has prototype
-$codei%
-   double %xlow%
-%$$
-It specifies the lower limit for the entire search interval; i.e., $latex a$$.
+where the arguments to *fun* have the prototypes
 
-$head xup$$
-The argument $icode xup$$ has prototype
-$codei%
-   double %xup%
-%$$
-It specifies the upper limit for the entire search interval; i.e., $latex b$$.
+| |tab| ``double`` *x*
+| |tab| ``double&`` *f*
+| |tab| ``double&`` *df*
 
-$head epsilon$$
-The argument $icode epsilon$$ has prototype
-$codei%
-   double %epsilon%
-%$$
+.
+The input values of *f* and *df* do not matter.
+Upon return they are :math:`f(x)` and :math:`f^{(1)} (x)` respectively.
+
+num_sub
+*******
+The argument *num_sub* has prototype
+
+   ``size_t`` *num_sub*
+
+It specifies the number of sub-intervals; i.e., :math:`n`.
+
+xlow
+****
+The argument *xlow* has prototype
+
+   ``double`` *xlow*
+
+It specifies the lower limit for the entire search interval; i.e., :math:`a`.
+
+xup
+***
+The argument *xup* has prototype
+
+   ``double`` *xup*
+
+It specifies the upper limit for the entire search interval; i.e., :math:`b`.
+
+epsilon
+*******
+The argument *epsilon* has prototype
+
+   ``double`` *epsilon*
+
 It specifies the convergence criteria for Newton's method in terms
 of how small the function value must be.
 
-$head max_itr$$
-The argument $icode max_itr$$ has prototype
-$codei%
-   size_t %max_itr%
-%$$
+max_itr
+*******
+The argument *max_itr* has prototype
+
+   ``size_t`` *max_itr*
+
 It specifies the maximum number of iterations of Newton's method to try
 before giving up on convergence (on each sub-interval).
 
-$head num_threads$$
+num_threads
+***********
 This argument has prototype
-$codei%
-   size_t %num_threads%
-%$$
+
+   ``size_t`` *num_threads*
+
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment.
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN SOLVE C++%// END SOLVE C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN SOLVE C++
+   // END SOLVE C++
+}
 
-$end
+{xrst_end multi_newton_run}
 ---------------------------------------------------------------------------
 */
 // BEGIN SOLVE C++
@@ -608,24 +649,21 @@ bool multi_newton_run(
 // END SOLVE C++
 /*
 -----------------------------------------------------------------------------
-$begin multi_newton_time$$
-$spell
-   num
-   Cpp
-   bool
-   alloc
-   openmp
-$$
+{xrst_begin multi_newton_time}
 .
 
-$section Timing Test of Multi-Threaded Newton Method$$
+Timing Test of Multi-Threaded Newton Method
+###########################################
 
-$head Syntax$$
-$icode%ok% = multi_newton_time(%time_out%, %test_time%, %num_threads%,
-   %num_zero%, %num_sub%, %num_sum%, %use_ad%
-)%$$
+Syntax
+******
 
-$head Purpose$$
+| *ok* = ``multi_newton_time`` ( *time_out* , *test_time* , *num_threads* ,
+| |tab| *num_zero* , *num_sub* , *num_sum* , *use_ad*
+| )
+
+Purpose
+*******
 Runs correctness and timing test for a multi-threaded Newton method.
 This test uses Newton's method to determine all the zeros of the sine
 function on an interval.
@@ -634,113 +672,125 @@ can be used to calculate the derivatives used by Newton's method.
 The calculation can be done in parallel on the different sub-intervals.
 In addition, the calculation can be done without multi-threading.
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero in sequential
-mode; i.e., not $cref/in_parallel/ta_in_parallel/$$.
+mode; i.e., not :ref:`in_parallel<ta_in_parallel-name>` .
 
-$head ok$$
+ok
+**
 This return value has prototype
-$codei%
-   bool %ok%
-%$$
+
+   ``bool`` *ok*
+
 If it is true,
-$code multi_newton_time$$ passed the correctness test.
+``multi_newton_time`` passed the correctness test.
 Otherwise it is false.
 
-$head time_out$$
+time_out
+********
 This argument has prototype
-$codei%
-   double& %time_out%
-%$$
+
+   ``double&`` *time_out*
+
 The input value of the argument does not matter.
 Upon return it is the number of wall clock seconds required for
 the multi-threaded Newton method can compute all the zeros.
 
-$head test_time$$
+test_time
+*********
 Is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
 is reached.
-The reported $icode time_out$$ is the total wall clock time divided by the
+The reported *time_out* is the total wall clock time divided by the
 number of repeats.
 
-$head num_threads$$
+num_threads
+***********
 This argument has prototype
-$codei%
-   size_t %num_threads%
-%$$
+
+   ``size_t`` *num_threads*
+
 It specifies the number of threads that
 are available for this test.
 If it is zero, the test is run without multi-threading and
-$codei%
-   1 == thread_alloc::num_threads()
-%$$
-when $code multi_newton_time$$ is called.
-If it is non-zero, the test is run with multi-threading and
-$codei%
-   %num_threads% == thread_alloc::num_threads()
-%$$
-when $code multi_newton_time$$ is called.
 
-$head num_zero$$
+   1 == ``thread_alloc::num_threads`` ()
+
+when ``multi_newton_time`` is called.
+If it is non-zero, the test is run with multi-threading and
+
+   *num_threads* == ``thread_alloc::num_threads`` ()
+
+when ``multi_newton_time`` is called.
+
+num_zero
+********
 This argument has prototype
-$codei%
-   size_t %num_zero%
-%$$
+
+   ``size_t`` *num_zero*
+
 and it must be greater than one.
 It specifies the actual number of zeros in the test function
-$latex \sin(x)$$.
-To be specific, $code multi_newton_time$$ will attempt to determine
-all of the values of $latex x$$ for which $latex \sin(x) = 0 $$ and
-$latex x$$ is in the interval
-$codei%
-   [ 0 , (%num_zero% - 1) * %pi% ]
-%$$.
+:math:`\sin(x)`.
+To be specific, ``multi_newton_time`` will attempt to determine
+all of the values of :math:`x` for which :math:`\sin(x) = 0` and
+:math:`x` is in the interval
 
-$head num_sub$$
+   [ 0 , ( *num_zero* ``- 1`` ) * *pi*  ]
+
+.
+
+num_sub
+*******
 This argument has prototype
-$codei%
-   size_t %num_sub%
-%$$
+
+   ``size_t`` *num_sub*
+
 It specifies the number of sub-intervals to divide the total interval into.
-It must be greater than $icode num_zero$$
+It must be greater than *num_zero*
 (so that the correctness test can check we have found all the zeros).
 
-$head num_sum$$
+num_sum
+*******
 This argument has prototype
-$codei%
-   size_t %num_sum%
-%$$
+
+   ``size_t`` *num_sum*
+
 and must be greater than zero.
 The actual function used by the Newton method is
-$latex \[
-   f(x) = \frac{1}{n} \sum_{i=1}^{n} \sin (x)
-\] $$
-where $latex n$$ is equal to $icode num_sum$$.
-Larger values of $icode num_sum$$ simulate a case where the
-evaluation of the function $latex f(x)$$ takes more time.
 
-$head use_ad$$
+.. math::
+
+   f(x) = \frac{1}{n} \sum_{i=1}^{n} \sin (x)
+
+where :math:`n` is equal to *num_sum* .
+Larger values of *num_sum* simulate a case where the
+evaluation of the function :math:`f(x)` takes more time.
+
+use_ad
+******
 This argument has prototype
-$codei%
-   bool %user_ad%
-%$$
-If $icode use_ad$$ is $code true$$,
+
+   ``bool`` *user_ad*
+
+If *use_ad* is ``true`` ,
 then derivatives will be computed using CppAD.
 Note that this derivative computation includes
 re-taping the function for each
-value of $latex x$$ (even though re-taping is not necessary).
-$pre
+value of :math:`x` (even though re-taping is not necessary).
 
-$$
-If $icode use_ad$$ is $code false$$,
+If *use_ad* is ``false`` ,
 derivatives will be computed using a hand coded routine.
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN TIME C++%// END TIME C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN TIME C++
+   // END TIME C++
+}
 
-$end
+{xrst_end multi_newton_time}
 */
 // BEGIN TIME C++
 

@@ -4,20 +4,21 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin complex_poly.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin complex_poly.cpp}
 
-$section Complex Polynomial: Example and Test$$
+Complex Polynomial: Example and Test
+####################################
 
+Poly
+****
+Select this link to view specifications for :ref:`Poly-name` :
 
-$head Poly$$
-Select this link to view specifications for $cref Poly$$:
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end complex_poly.cpp}
 */
 // BEGIN C++
 // Complex examples should supppress conversion warnings

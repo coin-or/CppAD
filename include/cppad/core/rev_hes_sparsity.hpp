@@ -5,113 +5,119 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin rev_hes_sparsity$$
-$spell
-   Jacobian
-   Hessian
-   jac
-   hes
-   bool
-   const
-   rc
-   cpp
-$$
+{xrst_begin rev_hes_sparsity}
 
-$section Reverse Mode Hessian Sparsity Patterns$$
+Reverse Mode Hessian Sparsity Patterns
+######################################
 
-$head Syntax$$
-$icode%f%.rev_hes_sparsity(
-   %select_range%, %transpose%, %internal_bool%, %pattern_out%
-)%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to
-the operation sequence stored in $icode f$$.
-Fix $latex R \in \B{R}^{n \times \ell}$$, $latex s \in \B{R}^m$$
+| *f* . ``rev_hes_sparsity`` (
+| |tab| *select_range* , *transpose* , *internal_bool* , *pattern_out*
+| )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to
+the operation sequence stored in *f* .
+Fix :math:`R \in \B{R}^{n \times \ell}`, :math:`s \in \B{R}^m`
 and define the function
-$latex \[
+
+.. math::
+
    H(x) = ( s^\R{T} F )^{(2)} ( x ) R
-\] $$
-Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$
-and for the vector $latex s$$,
-$code rev_hes_sparsity$$ computes a sparsity pattern for $latex H(x)$$.
 
-$head x$$
-Note that the sparsity pattern $latex H(x)$$ corresponds to the
-operation sequence stored in $icode f$$ and does not depend on
-the argument $icode x$$.
+Given a :ref:`glossary@Sparsity Pattern` for :math:`R`
+and for the vector :math:`s`,
+``rev_hes_sparsity`` computes a sparsity pattern for :math:`H(x)`.
 
-$head BoolVector$$
-The type $icode BoolVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$.
+x
+*
+Note that the sparsity pattern :math:`H(x)` corresponds to the
+operation sequence stored in *f* and does not depend on
+the argument *x* .
 
-$head SizeVector$$
-The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+BoolVector
+**********
+The type *BoolVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` .
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head R$$
-The sparsity pattern for the matrix $latex R$$ is specified by
-$cref/pattern_in/for_jac_sparsity/pattern_in/$$ in the previous call
-$codei%
-   %f%.for_jac_sparsity(
-      %pattern_in%, %transpose%, %dependency%, %internal_bool%, %pattern_out%
-)%$$
+f
+*
+The object *f* has prototype
 
-$head select_range$$
-The argument $icode select_range$$ has prototype
-$codei%
-   const %BoolVector%& %select_range%
-%$$
-It has size $latex m$$ and specifies which components of the vector
-$latex s$$ are non-zero; i.e., $icode%select_range%[%i%]%$$ is true
-if and only if $latex s_i$$ is possibly non-zero.
+   ``ADFun<`` *Base* > *f*
 
-$head transpose$$
+R
+*
+The sparsity pattern for the matrix :math:`R` is specified by
+:ref:`for_jac_sparsity@pattern_in` in the previous call
+
+| |tab| *f* . ``for_jac_sparsity`` (
+| |tab| |tab| *pattern_in* , *transpose* , *dependency* , *internal_bool* , *pattern_out*
+| )
+
+select_range
+************
+The argument *select_range* has prototype
+
+   ``const`` *BoolVector* & *select_range*
+
+It has size :math:`m` and specifies which components of the vector
+:math:`s` are non-zero; i.e., *select_range* [ *i* ] is true
+if and only if :math:`s_i` is possibly non-zero.
+
+transpose
+*********
 This argument has prototype
-$codei%
-   bool %transpose%
-%$$
-See $cref/pattern_out/rev_hes_sparsity/pattern_out/$$ below.
 
-$head internal_bool$$
+   ``bool`` *transpose*
+
+See :ref:`rev_hes_sparsity@pattern_out` below.
+
+internal_bool
+*************
 If this is true, calculations are done with sets represented by a vector
 of boolean values. Otherwise, a vector of sets of integers is used.
 This must be the same as in the previous call to
-$icode%f%.for_jac_sparsity%$$.
+*f* . ``for_jac_sparsity`` .
 
-$head pattern_out$$
+pattern_out
+***********
 This argument has prototype
-$codei%
-   sparse_rc<%SizeVector%>& %pattern_out%
-%$$
-This input value of $icode pattern_out$$ does not matter.
-If $icode transpose$$ it is false (true),
-upon return $icode pattern_out$$ is a sparsity pattern for
-$latex H(x)$$ ($latex H(x)^\R{T}$$).
 
-$head Sparsity for Entire Hessian$$
-Suppose that $latex R$$ is the $latex n \times n$$ identity matrix.
-In this case, $icode pattern_out$$ is a sparsity pattern for
-$latex (s^\R{T} F) F^{(2)} ( x )$$.
+   ``sparse_rc<`` *SizeVector* >& *pattern_out*
 
-$head Example$$
-$children%
+This input value of *pattern_out* does not matter.
+If *transpose* it is false (true),
+upon return *pattern_out* is a sparsity pattern for
+:math:`H(x)` (:math:`H(x)^\R{T}`).
+
+Sparsity for Entire Hessian
+***************************
+Suppose that :math:`R` is the :math:`n \times n` identity matrix.
+In this case, *pattern_out* is a sparsity pattern for
+:math:`(s^\R{T} F) F^{(2)} ( x )`.
+
+Example
+*******
+{xrst_toc_hidden
    example/sparse/rev_hes_sparsity.cpp
-%$$
+}
 The file
-$cref rev_hes_sparsity.cpp$$
+:ref:`rev_hes_sparsity.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end rev_hes_sparsity}
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>

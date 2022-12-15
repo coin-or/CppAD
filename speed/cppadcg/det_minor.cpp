@@ -3,33 +3,35 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppadcg_det_minor.cpp$$
-$spell
-   cppadcg
-   Jacobian
-   Cpp
-$$
+{xrst_begin cppadcg_det_minor.cpp}
 
-$section cppadcg Speed: Gradient of Determinant by Minor Expansion$$
+cppadcg Speed: Gradient of Determinant by Minor Expansion
+#########################################################
 
-$head Specifications$$
-See $cref link_det_minor$$.
+Specifications
+**************
+See :ref:`link_det_minor-name` .
 
-$head PASS_JACOBIAN_TO_CODE_GEN$$
+PASS_JACOBIAN_TO_CODE_GEN
+*************************
 If this is one, the Jacobian of the determinant is the function passed
-to CppADCodeGen.  In this case,  the $code code_gen_fun$$
-$cref/function/code_gen_fun/Syntax/function/$$ is used to calculate
+to CppADCodeGen.  In this case,  the ``code_gen_fun``
+:ref:`code_gen_fun@Syntax@function` is used to calculate
 the Jacobian of the determinant.
 Otherwise, this flag is zero and the determinant function is passed
-to CppADCodeGen. In this case, the $code code_gen_fun$$
-$cref/jacobian/code_gen_fun/Syntax/jacobian/$$ is used to calculate
+to CppADCodeGen. In this case, the ``code_gen_fun``
+:ref:`code_gen_fun@Syntax@jacobian` is used to calculate
 the Jacobian of the determinant.
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # define PASS_JACOBIAN_TO_CODE_GEN 1
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/utility/vector.hpp>
@@ -204,6 +206,8 @@ bool link_det_minor(
    }
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppadcg_det_minor.cpp}
 */

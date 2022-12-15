@@ -4,14 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin nan.cpp$$
+{xrst_begin nan.cpp}
 
-$section nan: Example and Test$$
+nan: Example and Test
+#####################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end nan.cpp}
 */
 
 // BEGIN C++

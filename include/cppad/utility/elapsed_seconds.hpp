@@ -6,36 +6,35 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin elapsed_seconds$$
-$spell
-   cppad.hpp
-   std::chrono
-$$
+{xrst_begin elapsed_seconds}
 
-$section Returns Elapsed Number of Seconds$$
+Returns Elapsed Number of Seconds
+#################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/elapsed_seconds.hpp>
-%$$
-$icode%s% = elapsed_seconds()%$$
+   # ``include <cppad/utility/elapsed_seconds.hpp>``
 
-$head Accuracy$$
-This routine uses $code std::chrono::steady_clock$$ to do its timing.
+*s* = ``elapsed_seconds`` ()
 
-$head s$$
-is a $code double$$ equal to the
-number of seconds since the first call to $code elapsed_seconds$$.
+Accuracy
+********
+This routine uses ``std::chrono::steady_clock`` to do its timing.
 
-$children%
+s
+*
+is a ``double`` equal to the
+number of seconds since the first call to ``elapsed_seconds`` .
+{xrst_toc_hidden
    speed/example/elapsed_seconds.cpp
-%$$
-$head Example$$
-The routine $cref elapsed_seconds.cpp$$ is
+}
+Example
+*******
+The routine :ref:`elapsed_seconds.cpp-name` is
 an example and test of this routine.
 
-
-$end
+{xrst_end elapsed_seconds}
 -----------------------------------------------------------------------
 */
 

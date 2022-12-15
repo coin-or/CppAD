@@ -5,116 +5,128 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin mat_sum_sq$$
-$spell
+{xrst_begin mat_sum_sq}
+{xrst_spell
    sq
-   namespace
-   const
-   CppAD
-   sq
-   cppad
-   hpp
-$$
+}
 
-$section Sum Elements of a Matrix Times Itself$$
+Sum Elements of a Matrix Times Itself
+#####################################
 
-$head Syntax$$
-$codei%# include <cppad/speed/mat_sum_sq.hpp>
-%$$
-$icode%mat_sum_sq(%n%, %x%, %y%, %z%)%$$
+Syntax
+******
 
-$head Purpose$$
+   # ``include <cppad/speed/mat_sum_sq.hpp>``
+
+*mat_sum_sq* ( ``n`` , ``x`` , ``y`` , ``z`` )
+
+Purpose
+*******
 This routine is intended for use with the matrix multiply speed tests;
 to be specific, it computes
-$latex \[
-\begin{array}{rcl}
-   y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
-   \\
-   z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
-\end{array}
-\] $$
-see $cref link_mat_mul$$.
 
-$head Inclusion$$
-The template function $code mat_sum_sq$$ is defined in the $code CppAD$$
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      y_{i,j} & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+      \\
+      z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
+   \end{eqnarray}
+
+see :ref:`link_mat_mul-name` .
+
+Inclusion
+*********
+The template function ``mat_sum_sq`` is defined in the ``CppAD``
 namespace by including
-the file $code cppad/speed/mat_sum_sq.hpp$$
+the file ``cppad/speed/mat_sum_sq.hpp``
 (relative to the CppAD distribution directory).
 
-$head n$$
+n
+*
 This argument has prototype
-$codei%
-   size_t %n%
-%$$
+
+   ``size_t`` *n*
+
 It specifies the size of the matrices.
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Vector% &%x%
-%$$
-and $icode%x%.size() == %n% * %n%$$.
-It contains the elements of $latex x$$ in row major order; i.e.,
-$latex \[
-   x_{i,j} = x [ i * n + j ]
-\] $$
+x
+*
+The argument *x* has prototype
 
-$head y$$
-The argument $icode y$$ has prototype
-$codei%
-   %Vector%& %y%
-%$$
-and $icode%y%.size() == %n% * %n%$$.
+   ``const`` *Vector* & *x*
+
+and *x* . ``size`` () == *n* * *n* .
+It contains the elements of :math:`x` in row major order; i.e.,
+
+.. math::
+
+   x_{i,j} = x [ i * n + j ]
+
+y
+*
+The argument *y* has prototype
+
+   *Vector* & *y*
+
+and *y* . ``size`` () == *n* * *n* .
 The input value of its elements does not matter.
 Upon return,
-$latex \[
-\begin{array}{rcl}
-   y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
-   \\
-   y[ i * n + j ] & = & y_{i,j}
-\end{array}
-\] $$
 
+.. math::
+   :nowrap:
 
-$head z$$
-The argument $icode d$$ has prototype
-$codei%
-   %Vector%& %z%
-%$$.
+   \begin{eqnarray}
+      y_{i,j}        & = & \sum_{k=0}^{n-1} x_{i,k} x_{k,j}
+      \\
+      y[ i * n + j ] & = & y_{i,j}
+   \end{eqnarray}
+
+z
+*
+The argument *d* has prototype
+
+   *Vector* & *z*
+
+.
 The input value of its element does not matter.
 Upon return
-$latex \[
-\begin{array}{rcl}
-   z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
-   \\
-   z[0] & = & z_0
-\end{array}
-\] $$
 
-$head Vector$$
-The type $icode Vector$$ is any
-$cref SimpleVector$$, or it can be a raw pointer to the vector elements.
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      z_0 & = & \sum_{i=0}^{n-1} \sum_{j=0}^n y_{i,j}
+      \\
+      z[0] & = & z_0
+   \end{eqnarray}
+
+Vector
+******
+The type *Vector* is any
+:ref:`SimpleVector-name` , or it can be a raw pointer to the vector elements.
 The element type must support
 addition, multiplication, and assignment to both its own type
 and to a double value.
+{xrst_toc_hidden
+   speed/example/mat_sum_sq.cpp
+   xrst/mat_sum_sq_hpp.xrst
+}
 
-$children%
-   speed/example/mat_sum_sq.cpp%
-   omh/mat_sum_sq_hpp.omh
-%$$
-
-
-$head Example$$
+Example
+*******
 The file
-$cref mat_sum_sq.cpp$$
-contains an example and test of $code mat_sum_sq.hpp$$.
+:ref:`mat_sum_sq.cpp-name`
+contains an example and test of ``mat_sum_sq.hpp`` .
 
-$head Source Code$$
+Source Code
+***********
 The file
-$cref mat_sum_sq.hpp$$
+:ref:`mat_sum_sq.hpp-name`
 contains the source for this template function.
 
-$end
+{xrst_end mat_sum_sq}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

@@ -6,15 +6,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul.hpp$$
-$spell
-$$
+{xrst_begin atomic_four_mat_mul.hpp}
 
-$section Atomic Matrix Multiply Class: Example Implementation$$
+Atomic Matrix Multiply Class: Example Implementation
+####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end atomic_four_mat_mul.hpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

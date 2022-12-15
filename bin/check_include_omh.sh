@@ -9,10 +9,10 @@ then
    exit 1
 fi
 # -----------------------------------------------------------------------------
-count=`git ls-files include/cppad | grep '/omh/.*\.hpp' | wc -l`
+count=`git ls-files include/cppad | grep '/xrst/.*\.hpp' | wc -l`
 if [ "$count" != '0' ]
 then
-   git ls-files include/cppad | grep '/omh/.*\.hpp'
+   git ls-files include/cppad | grep '/xrst/.*\.hpp'
    echo 'Cannot put *.hpp files below omh in include directory'
    echo 'because install of include directory will exclude them.'
    exit 1

@@ -5,15 +5,18 @@
 /*
 WARNING: This file is used an an example by fun_construct.
 
-$begin independent.cpp$$
+{xrst_begin independent.cpp}
 
-$comment ! NOTE the title states that this example is used two places !$$
-$section Independent and ADFun Constructor: Example and Test$$
+{xrst_comment ! NOTE the title states that this example is used two places !}
+Independent and ADFun Constructor: Example and Test
+###################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end independent.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

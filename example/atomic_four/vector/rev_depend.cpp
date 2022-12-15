@@ -3,20 +3,26 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector_rev_depend.cpp$$
+{xrst_begin atomic_four_vector_rev_depend.cpp}
 
-$section Example Optimizing Atomic Vector Usage$$
+Example Optimizing Atomic Vector Usage
+######################################
 
-$head f(u, v)$$
+f(u, v)
+*******
 For this example,
-$latex f : \B{R}^{3m} \rightarrow \B{R}$$
-is defined by $latex f(u, v, w) = - ( u_0 + v_0 ) * w_0$$.
-where $icode u$$, $icode v$$, and $icode w$$ are in $latex \B{R}^m$$.
+:math:`f : \B{R}^{3m} \rightarrow \B{R}`
+is defined by :math:`f(u, v, w) = - ( u_0 + v_0 ) * w_0`.
+where *u* , *v* , and *w* are in :math:`\B{R}^m`.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end atomic_four_vector_rev_depend.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

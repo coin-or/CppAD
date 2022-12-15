@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ad_in_c.cpp$$
-$spell
-   CppAD
-$$
+{xrst_begin ad_in_c.cpp}
 
-$section Example and Test Linking CppAD to Languages Other than C++$$
+Example and Test Linking CppAD to Languages Other than C++
+##########################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end ad_in_c.cpp}
 */
 // BEGIN C++
 # include <cstdio>

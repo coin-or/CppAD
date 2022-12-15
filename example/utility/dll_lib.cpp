@@ -4,23 +4,32 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin dll_lib.cpp$$
-$spell
+{xrst_begin dll_lib.cpp}
+{xrst_spell
    dll
-$$
+}
 
-$section dll_lib: Example and Test$$
+dll_lib: Example and Test
+#########################
 
-$head options$$
+options
+*******
 The following subsection of this example sets
-$cref/options/create_dll_lib/options/$$ that are different
+:ref:`create_dll_lib@options` that are different
 from the default options:
-$srcthisfile%0%// BEGIN_OPTIONS%// END_OPTIONS%1%$$
+{xrst_literal
+   // BEGIN_OPTIONS
+   // END_OPTIONS
+}
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end dll_lib.cpp}
 */
 // BEGIN C++
 # include <filesystem>

@@ -20,50 +20,56 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 class vectorBool {
 // ============================================================================
 /*
-$begin vector_bool_member$$
-$spell
-   Bool
-   vec
-$$
+{xrst_begin vector_bool_member}
 
-$section vectorBool: Member Data$$
+vectorBool: Member Data
+#######################
 
-$head Syntax$$
-$icode%vec%.unit_min()
-%$$
-$icode%vec%.bit_per_unit()
-%$$
+Syntax
+******
 
+| *vec* . ``unit_min`` ()
+| *vec* . ``bit_per_unit`` ()
 
-$head unit_t$$
+unit_t
+******
 Type used to pack multiple boolean (bit) values into one unit.
 Logical operations are preformed one unit at a time.
 
-$head bit_per_unit_$$
-number of bits packed into each unit value in $code data_$$.
+bit_per_unit\_
+**************
+number of bits packed into each unit value in ``data_`` .
 
-$head n_unit_$$
-Number of unit values in $code data_$$.
+n_unit\_
+********
+Number of unit values in ``data_`` .
 
-$head length_$$
+length\_
+********
 number of bits currently stored in this vector.
 
-$head data_$$
+data\_
+******
 pointer to where the bits are stored.
 
-$head unit_min$$
-minimum number of $code unit_t$$ values that can store $code length_$$ bits.
-Note that this is really a function of $code length_$$.
+unit_min
+********
+minimum number of ``unit_t`` values that can store ``length_`` bits.
+Note that this is really a function of ``length_`` .
 
-$head size$$
+size
+****
 is the number of boolean elements in the vector.
 
-$head capacity$$
+capacity
+********
 is the maximum number of boolean elements that will fit in the
-current allocation for $code data_$$.
+current allocation for ``data_`` .
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    typedef size_t unit_t;
    static const size_t bit_per_unit_ = std::numeric_limits<unit_t>::digits;
@@ -83,64 +89,72 @@ public:
    {  return length_; }
    size_t capacity(void) const
    {  return n_unit_ * bit_per_unit_; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end vector_bool_member}
 -------------------------------------------------------------------------------
-$begin vector_bool_typedef$$
-$spell
-   vec
-   Bool
-   const
-$$
+{xrst_begin vector_bool_typedef}
 
-$section vectorBool Type Definitions$$
+vectorBool Type Definitions
+###########################
 
-$head value_type$$
+value_type
+**********
 type corresponding to the elements of this vector
 (note that non-const elements actually use
-$cref/vectorBoolElement/vector_bool_element/$$).
+:ref:`vectorBoolElement<vector_bool_element-name>` ).
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    typedef bool value_type;
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end vector_bool_typedef}
 ----------------------------------------------------------------------------
-$begin vector_bool_ctor$$
-$spell
-   Bool
-   vec
-   alloc
-$$
-$section vectorBool: Constructors and Destructor$$
+{xrst_begin vector_bool_ctor}
+vectorBool: Constructors and Destructor
+#######################################
 
-$head Default$$
-$codei%vectorBool %vec%
-%$$
-creates an empty vector with no elements and $code n_unit_$$ zero.
+Default
+*******
 
-$head Sizing$$
-$codei%vectorBool %vec%(%n%)
-%$$
-where $icode n$$ is a $code size_t$$,
-creates the vector $icode vec$$ with $icode n$$ elements and $code n_unit_$$
-greater than or equal $code unit_min()$$.
+   ``vectorBool`` *vec*
 
-$head Copy$$
-$codei%vector<%Type%> %vec%(%other%)
-%$$
-where $icode other$$ is a $codei%vector<%Type%>%$$,
-creates the vector $icode vec$$
-with $icode%n% = %other%.size()%$$ elements and $code n_unit_$$
-greater than or equal $code unit_min()$$.
+creates an empty vector with no elements and ``n_unit_`` zero.
 
-$head Destructor$$
-If $code n_unit_$$ is non-zero, the memory corresponding to $code data_$$
+Sizing
+******
+
+   ``vectorBool`` *vec* ( *n* )
+
+where *n* is a ``size_t`` ,
+creates the vector *vec* with *n* elements and ``n_unit_``
+greater than or equal ``unit_min()`` .
+
+Copy
+****
+
+   ``vector<`` *Type* > *vec* ( *other* )
+
+where *other* is a ``vector<`` *Type* > ,
+creates the vector *vec*
+with *n* = *other* . ``size`` () elements and ``n_unit_``
+greater than or equal ``unit_min()`` .
+
+Destructor
+**********
+If ``n_unit_`` is non-zero, the memory corresponding to ``data_``
 is returned to thread_alloc.
 
-$head Source$$
-$srccode%hpp%:
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp}:
 */
    vectorBool(void) : n_unit_(0), length_(0), data_(nullptr)
    { }
@@ -161,46 +175,52 @@ $srccode%hpp%:
    {  swap(other); }
    ~vectorBool(void)
    {  clear(); }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end vector_bool_ctor}
 -----------------------------------------------------------------------------
-$begin vector_bool_size$$
-$spell
-   Bool
-   resize
-   vec
-$$
+{xrst_begin vector_bool_size}
 
-$section vectorBool: Change Size$$
+vectorBool: Change Size
+#######################
 
-$head Syntax$$
-$icode%vec%.resize(%n%)
-%$$
-$icode%vec%.clear()%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_RESIZE%// END_RESIZE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_CLEAR%// END_CLEAR%1
-%$$
+   *vec* . ``resize`` ( *n* )
 
-$head n$$
+*vec* . ``clear`` ()
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_RESIZE
+   // END_RESIZE
+}
+{xrst_literal
+   // BEGIN_CLEAR
+   // END_CLEAR
+}
+
+n
+*
 is the number of elements in the new version of the vector.
 
-$head resize$$
-If $icode n$$ is less than or equal the input value of
-$icode%vec%.n_unit_%$$ times $icode%vec%.bit_per_unit_%$$,
-the only change is that $icode%vec%.length_%$$ is set to $icode n$$.
+resize
+******
+If *n* is less than or equal the input value of
+*vec* . ``n_unit_`` times *vec* . ``bit_per_unit_`` ,
+the only change is that *vec* . ``length_`` is set to *n* .
 Otherwise the old elements are freed and a new vector is created
-with $icode%vec%.length_%$$ equal to $icode n$$.
+with *vec* . ``length_`` equal to *n* .
 
-$head clear$$
+clear
+*****
 the memory allocated for this vector is freed and
-$icode%vec.length_%$$ and $icode%vec%.n_unit_%$$ are set to zero.
+*vec.length_* and *vec* . ``n_unit_`` are set to zero.
 
-$end
+{xrst_end vector_bool_size}
 ------------------------------------------------------------------------------
 */
 // BEGIN_RESIZE
@@ -239,49 +259,54 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-$begin vector_bool_assign$$
-$spell
-   Bool
-   resize
-   vec
-$$
+{xrst_begin vector_bool_assign}
 
-$section vectorBool: Assignment Operators$$
+vectorBool: Assignment Operators
+################################
 
-$head Syntax$$
-$icode%vec%.swap(%other%)
-%$$
-$icode%vec% = %other%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_SWAP%// END_SWAP%1
-%$$
-$srcthisfile%
-   0%// BEGIN_ASSIGN%// END_ASSIGN%1
-%$$
-$srcthisfile%
-   0%// BEGIN_MOVE_SEMANTICS%// END_MOVE_SEMANTICS%1
-%$$
+   *vec* . ``swap`` ( *other* )
 
-$head swap$$
-Swaps $code n_unit_$$, $code length_$$ and $code data_$$
-between $icode vec$$ and $icode other$$.
+*vec* = *other*
 
-$head Assignment$$
-If the input value of $icode%vec%.length_%$$ is zero,
-$cref/resize/vector_bool_size/resize/$$ is used to change its size to
+Prototype
+*********
+{xrst_literal
+   // BEGIN_SWAP
+   // END_SWAP
+}
+{xrst_literal
+   // BEGIN_ASSIGN
+   // END_ASSIGN
+}
+{xrst_literal
+   // BEGIN_MOVE_SEMANTICS
+   // END_MOVE_SEMANTICS
+}
+
+swap
+****
+Swaps ``n_unit_`` , ``length_`` and ``data_``
+between *vec* and *other* .
+
+Assignment
+**********
+If the input value of *vec* . ``length_`` is zero,
+:ref:`vector_bool_size@resize` is used to change its size to
 be the same as other.
-The size of $icode vec$$ and $icode other$$ are then compared and if
+The size of *vec* and *other* are then compared and if
 different, an assert with a know cause is generated.
-The elements of $icode vec$$ are then individually assigned
-to have the value of the corresponding elements of $icode other$$.
+The elements of *vec* are then individually assigned
+to have the value of the corresponding elements of *other* .
 
-$head Move Semantics$$
+Move Semantics
+**************
 A move semantics version of the assignment operator, implemented using
-$code swap$$, is defined.
+``swap`` , is defined.
 
-$end
+{xrst_end vector_bool_assign}
 -------------------------------------------------------------------------------
 */
 // BEGIN_SWAP
@@ -324,32 +349,32 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin vector_bool_subscript$$
-$spell
-   vec
-   Bool
-   const
-$$
+{xrst_begin vector_bool_subscript}
 
-$section vectorBool: Subscript Operator$$
+vectorBool: Subscript Operator
+##############################
 
-$head Syntax$$
-$icode%target% = %vec%[%i%]
-%$$
-$icode%vec%[%i%] = %source%
-%$$
+Syntax
+******
 
-$head target$$
-In this syntax $icode vec$$ is $code const$$
-and the value $icode%vec%[%i%]%$$ is a $code bool$$.
+| *target* = *vec* [ *i* ]
+| *vec* [ *i* ] = *source*
 
-$head source$$
-In this syntax $icode vec$$ is not $code const$$
-and the value $icode%vec%[%i%]%$$ is a
-$cref/vectorBoolElement/vector_bool_element/$$.
+target
+******
+In this syntax *vec* is ``const``
+and the value *vec* [ *i* ] is a ``bool`` .
 
-$head Source Code$$
-$srccode%hpp% */
+source
+******
+In this syntax *vec* is not ``const``
+and the value *vec* [ *i* ] is a
+:ref:`vectorBoolElement<vector_bool_element-name>` .
+
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
    bool operator[](size_t i) const
    {  CPPAD_ASSERT_KNOWN( i < length_,
          "vectorBool: index greater than or equal vector size"
@@ -369,29 +394,32 @@ $srccode%hpp% */
       unit_t mask         = unit_t(1) << bit_index;
       return local::utility::vectorBoolElement(data_ + unit_index , mask);
    }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end vector_bool_subscript}
 -------------------------------------------------------------------------------
-$begin vector_bool_push_back$$
-$spell
-   Bool
-   vec
-$$
+{xrst_begin vector_bool_push_back}
 
-$section vectorBool: push_back$$
+vectorBool: push_back
+#####################
 
-$head Syntax$$
-$icode%vec%.push_back(%element%)%$$
+Syntax
+******
+*vec* . ``push_back`` ( *element* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PUSH_BACK%// END_PUSH_BACK%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PUSH_BACK
+   // END_PUSH_BACK
+}
 
-$head Documentation$$
-see $cref/use API push_back/cppad_vector_push_back/$$
+Documentation
+*************
+see :ref:`use API push_back<cppad_vector_push_back-name>`
 
-$end
+{xrst_end vector_bool_push_back}
 */
 // BEGIN_PUSH_BACK
    void push_back(bool element)
@@ -426,27 +454,27 @@ $end
    }
 /* %$$
 -------------------------------------------------------------------------------
-$begin vector_bool_push_vector$$
-$spell
-   Bool
-   vec
-$$
+{xrst_begin vector_bool_push_vector}
 
-$section vectorBool: push_vector$$
+vectorBool: push_vector
+#######################
 
-$head Syntax$$
-$icode%vec%.push_vector(%other%)%$$
+Syntax
+******
+*vec* . ``push_vector`` ( *other* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PUSH_VECTOR%// END_PUSH_VECTOR%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PUSH_VECTOR
+   // END_PUSH_VECTOR
+}
 
+Documentation
+*************
+see :ref:`use API push_vector<cppad_vector_push_vector-name>`
 
-$head Documentation$$
-see $cref/use API push_vector/cppad_vector_push_vector/$$
-
-$end
+{xrst_end vector_bool_push_vector}
 */
 // BEGIN_PUSH_VECTOR
    template <class Vector> void push_vector(const Vector& other)
@@ -487,26 +515,28 @@ $end
 };
 
 /*
-$begin vector_bool_output$$
-$spell
-   Bool
-   vec
-$$
+{xrst_begin vector_bool_output}
 
-$section vectorBool: Output$$
+vectorBool: Output
+##################
 
-$head Syntax$$
-$icode%os% << vec%$$
+Syntax
+******
+*os* << ``vec``
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 inline std::ostream& operator << (std::ostream&  os , const vectorBool& vec )
 {  for(size_t i = 0; i < vec.size(); ++i)
       os << vec[i];
    return os;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end vector_bool_output}
 */
 
 } // END_CPPAD_NAMESPACE

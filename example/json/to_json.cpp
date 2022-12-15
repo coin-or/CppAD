@@ -3,17 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin to_json.cpp$$
-$spell
-   Json
-$$
+{xrst_begin to_json.cpp}
 
-$section Convert an ADFun Object to a Json AD Graph: Example and Test$$
+Convert an ADFun Object to a Json AD Graph: Example and Test
+############################################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end to_json.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

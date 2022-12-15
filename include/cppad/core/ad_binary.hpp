@@ -7,125 +7,135 @@
 
 /*
 -------------------------------------------------------------------------------
-$begin ad_binary$$
-$spell
-   Op
-   VecAD
-   const
-$$
+{xrst_begin ad_binary}
 
-$section AD Binary Arithmetic Operators$$
+AD Binary Arithmetic Operators
+##############################
 
+Syntax
+******
+*z* = *x* *Op* *y*
 
-
-
-
-
-
-$head Syntax$$
-$icode%z% = %x% %Op% %y%$$
-
-$head Purpose$$
-Performs arithmetic operations where either $icode x$$ or $icode y$$
+Purpose
+*******
+Performs arithmetic operations where either *x* or *y*
 has type
-$codei%AD<%Base%>%$$ or
-$cref%VecAD<Base>::reference%VecAD%VecAD<Base>::reference%$$.
+``AD<`` *Base* > or
+:ref:`VecAD@VecAD\<Base>::reference` .
 
-$head Op$$
-The operator $icode Op$$ is one of the following
-$table
-$bold Op$$  $cnext $bold Meaning$$ $rnext
-$code +$$   $cnext $icode z$$ is $icode x$$ plus $icode y$$ $rnext
-$code -$$   $cnext $icode z$$ is $icode x$$ minus $icode y$$ $rnext
-$code *$$   $cnext $icode z$$ is $icode x$$ times $icode y$$ $rnext
-$code /$$   $cnext $icode z$$ is $icode x$$ divided by $icode y$$
-$tend
+Op
+**
+The operator *Op* is one of the following
 
-$head Base$$
-The type $icode Base$$ is determined by the operand that
-has type $codei%AD<%Base%>%$$ or $codei%VecAD<%Base%>::reference%$$.
+.. csv-table::
+   :widths: auto
 
-$head x$$
-The operand $icode x$$ has the following prototype
-$codei%
-   const %Type% &%x%
-%$$
-where $icode Type$$ is
-$codei%VecAD<%Base%>::reference%$$,
-$codei%AD<%Base%>%$$,
-$icode Base$$, or
-$code double$$.
+   **Op**,**Meaning**
+   ``+``,*z* is *x* plus *y*
+   ``-``,*z* is *x* minus *y*
+   ``*``,*z* is *x* times *y*
+   ``/``,*z* is *x* divided by *y*
 
-$head y$$
-The operand $icode y$$ has the following prototype
-$codei%
-   const %Type% &%y%
-%$$
-where $icode Type$$ is
-$codei%VecAD<%Base%>::reference%$$,
-$codei%AD<%Base%>%$$,
-$icode Base$$, or
-$code double$$.
+Base
+****
+The type *Base* is determined by the operand that
+has type ``AD<`` *Base* > or ``VecAD<`` *Base* >:: ``reference`` .
 
+x
+*
+The operand *x* has the following prototype
 
-$head z$$
-The result $icode z$$ has the following prototype
-$codei%
-   %Type% %z%
-%$$
-where $icode Type$$ is
-$codei%AD<%Base%>%$$.
+   ``const`` *Type* & *x*
 
-$head Operation Sequence$$
-This is an $cref/atomic_base/glossary/Operation/Atomic/$$
-$cref/AD of Base/glossary/AD of Base/$$ operation
+where *Type* is
+``VecAD<`` *Base* >:: ``reference`` ,
+``AD<`` *Base* > ,
+*Base* , or
+``double`` .
+
+y
+*
+The operand *y* has the following prototype
+
+   ``const`` *Type* & *y*
+
+where *Type* is
+``VecAD<`` *Base* >:: ``reference`` ,
+``AD<`` *Base* > ,
+*Base* , or
+``double`` .
+
+z
+*
+The result *z* has the following prototype
+
+   *Type* *z*
+
+where *Type* is
+``AD<`` *Base* > .
+
+Operation Sequence
+******************
+This is an :ref:`atomic_base<glossary@Operation@Atomic>`
+:ref:`glossary@AD of Base` operation
 and hence it is part of the current
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
-
-$children%
-   example/general/add.cpp%
-   example/general/sub.cpp%
-   example/general/mul.cpp%
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+{xrst_toc_hidden
+   example/general/add.cpp
+   example/general/sub.cpp
+   example/general/mul.cpp
    example/general/div.cpp
-%$$
+}
 
-$head Example$$
+Example
+*******
 The following files contain examples and tests of these functions.
 Each test returns true if it succeeds and false otherwise.
-$table
-$rref add.cpp$$
-$rref sub.cpp$$
-$rref mul.cpp$$
-$rref div.cpp$$
-$tend
 
-$head Derivative$$
-If $latex f$$ and $latex g$$ are
-$cref/Base functions/glossary/Base Function/$$
+.. csv-table::
+   :widths: auto
 
-$subhead Addition$$
-$latex \[
+   add.cpp,:ref:`add.cpp-title`
+   sub.cpp,:ref:`sub.cpp-title`
+   mul.cpp,:ref:`mul.cpp-title`
+   div.cpp,:ref:`div.cpp-title`
+
+Derivative
+**********
+If :math:`f` and :math:`g` are
+:ref:`Base functions<glossary@Base Function>`
+
+Addition
+========
+
+.. math::
+
    \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
-\] $$
 
-$subhead Subtraction$$
-$latex \[
+Subtraction
+===========
+
+.. math::
+
    \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
-\] $$
 
-$subhead Multiplication$$
-$latex \[
+Multiplication
+==============
+
+.. math::
+
    \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
-\] $$
 
-$subhead Division$$
-$latex \[
+Division
+========
+
+.. math::
+
    \D{[ f(x) / g(x) ]}{x} =
       [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
-\] $$
 
-$end
+{xrst_end ad_binary}
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/add.hpp>

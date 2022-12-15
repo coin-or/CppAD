@@ -6,188 +6,195 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_hes$$
-$spell
-   const
-   Taylor
-   rc
-   rcv
+{xrst_begin sparse_hes}
+{xrst_spell
    nr
-   nc
-   hes
-   std
-   cppad
-   colpack
-   cmake
-   Jacobian
-$$
+}
 
-$section Computing Sparse Hessians$$
+Computing Sparse Hessians
+#########################
 
-$head Syntax$$
-$icode%n_sweep% = %f%.sparse_hes(
-   %x%, %w%, %subset%, %pattern%, %coloring%, %work%
-)%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-function corresponding to $icode f$$.
-Here $icode n$$ is the $cref/domain/fun_property/Domain/$$ size,
-and $icode m$$ is the $cref/range/fun_property/Range/$$ size, or $icode f$$.
+| *n_sweep* = *f* . ``sparse_hes`` (
+| |tab| *x* , *w* , *subset* , *pattern* , *coloring* , *work*
+| )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+function corresponding to *f* .
+Here *n* is the :ref:`fun_property@Domain` size,
+and *m* is the :ref:`fun_property@Range` size, or *f* .
 The syntax above takes advantage of sparsity when computing the Hessian
-$latex \[
+
+.. math::
+
    H(x) = \dpow{2}{x} \sum_{i=0}^{m-1} w_i F_i (x)
-\] $$
+
 In the sparse case, this should be faster and take less memory than
-$cref Hessian$$.
-The matrix element $latex H_{i,j} (x)$$ is the second partial of
-$latex w^\R{T} F (x)$$ with respect to $latex x_i$$ and $latex x_j$$.
+:ref:`Hessian-name` .
+The matrix element :math:`H_{i,j} (x)` is the second partial of
+:math:`w^\R{T} F (x)` with respect to :math:`x_i` and :math:`x_j`.
 
-$head SizeVector$$
-The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head BaseVector$$
-The type $icode BaseVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+BaseVector
+**********
+The type *BaseVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head f$$
+f
+*
 This object has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the Taylor coefficients stored in $icode f$$ are affected
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the Taylor coefficients stored in *f* are affected
 by this operation; see
-$cref/uses forward/sparse_hes/Uses Forward/$$ below.
+:ref:`sparse_hes@Uses Forward` below.
 
-$head x$$
+x
+*
 This argument has prototype
-$codei%
-   const %BaseVector%& %x%
-%$$
-and its size is $icode n$$.
+
+   ``const`` *BaseVector* & *x*
+
+and its size is *n* .
 It specifies the point at which to evaluate the Hessian
-$latex H(x)$$.
+:math:`H(x)`.
 
-$head w$$
+w
+*
 This argument has prototype
-$codei%
-   const %BaseVector%& %w%
-%$$
-and its size is $icode m$$.
-It specifies the weight for each of the components of $latex F(x)$$;
-i.e. $latex w_i$$ is the weight for $latex F_i (x)$$.
 
-$head subset$$
+   ``const`` *BaseVector* & *w*
+
+and its size is *m* .
+It specifies the weight for each of the components of :math:`F(x)`;
+i.e. :math:`w_i` is the weight for :math:`F_i (x)`.
+
+subset
+******
 This argument has prototype
-$codei%
-   sparse_rcv<%SizeVector%, %BaseVector%>& %subset%
-%$$
-Its row size and column size is $icode n$$; i.e.,
-$icode%subset%.nr() == %n%$$ and $icode%subset%.nc() == %n%$$.
+
+   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *subset*
+
+Its row size and column size is *n* ; i.e.,
+*subset* . ``nr`` () == *n* and *subset* . ``nc`` () == *n* .
 It specifies which elements of the Hessian are computed.
-$list number$$
-The input value of its value vector
-$icode%subset%.val()%$$ does not matter.
-Upon return it contains the value of the corresponding elements
-of the Hessian.
-$lnext
-All of the row, column pairs in $icode subset$$ must also appear in
-$icode pattern$$; i.e., they must be possibly non-zero.
-$lnext
-The Hessian is symmetric, so one has a choice as to which off diagonal
-elements to put in $icode subset$$.
-It will probably be more efficient if one makes this choice so that
-the there are more entries in each non-zero column of $icode subset$$;
-see $cref/n_sweep/sparse_hes/n_sweep/$$ below.
-$lend
 
-$head pattern$$
+#. The input value of its value vector
+   *subset* . ``val`` () does not matter.
+   Upon return it contains the value of the corresponding elements
+   of the Hessian.
+#. All of the row, column pairs in *subset* must also appear in
+   *pattern* ; i.e., they must be possibly non-zero.
+#. The Hessian is symmetric, so one has a choice as to which off diagonal
+   elements to put in *subset* .
+   It will probably be more efficient if one makes this choice so that
+   the there are more entries in each non-zero column of *subset* ;
+   see :ref:`sparse_hes@n_sweep` below.
+
+pattern
+*******
 This argument has prototype
-$codei%
-   const sparse_rc<%SizeVector%>& %pattern%
-%$$
-Its row size and column size is $icode n$$; i.e.,
-$icode%pattern%.nr() == %n%$$ and $icode%pattern%.nc() == %n%$$.
-It is a sparsity pattern for the Hessian $latex H(x)$$.
-If the $th i$$ row ($th j$$ column) does not appear in $icode subset$$,
-the $th i$$ row ($th j$$ column) of $icode pattern$$ does not matter
+
+   ``const sparse_rc<`` *SizeVector* >& *pattern*
+
+Its row size and column size is *n* ; i.e.,
+*pattern* . ``nr`` () == *n* and *pattern* . ``nc`` () == *n* .
+It is a sparsity pattern for the Hessian :math:`H(x)`.
+If the *i*-th row (*j*-th column) does not appear in *subset* ,
+the *i*-th row (*j*-th column) of *pattern* does not matter
 and need not be computed.
 This argument is not used (and need not satisfy any conditions),
-when $cref/work/sparse_hes/work/$$ is non-empty.
+when :ref:`sparse_hes@work` is non-empty.
 
-$subhead subset$$
-If the $th i$$ row and $th i$$ column do not appear in $icode subset$$,
-the $th i$$ row and column of $icode pattern$$ do not matter.
-In this case the $th i-th$$ row and column may have no entries in
-$icode pattern$$ even though they are possibly non-zero in $latex H(x)$$.
+subset
+======
+If the *i*-th row and *i*-th column do not appear in *subset* ,
+the *i*-th row and column of *pattern* do not matter.
+In this case the *i-th*-th row and column may have no entries in
+*pattern* even though they are possibly non-zero in :math:`H(x)`.
 (This can be used to reduce the amount of computation required to find
-$icode pattern$$.)
+*pattern* .)
 
-$head coloring$$
+coloring
+********
 The coloring algorithm determines which rows and columns
 can be computed during the same sweep.
 This field has prototype
-$codei%
-   const std::string& %coloring%
-%$$
-This value only matters when work is empty; i.e.,
-after the $icode work$$ constructor or $icode%work%.clear()%$$.
 
-$subhead cppad.symmetric$$
+   ``const std::string&`` *coloring*
+
+This value only matters when work is empty; i.e.,
+after the *work* constructor or *work* . ``clear`` () .
+
+cppad.symmetric
+===============
 This coloring takes advantage of the fact that the Hessian matrix
 is symmetric when find a coloring that requires fewer
-$cref/sweeps/sparse_hes/n_sweep/$$.
+:ref:`sweeps<sparse_hes@n_sweep>` .
 
-$subhead cppad.general$$
+cppad.general
+=============
 This is the same as the sparse Jacobian
-$cref/cppad/sparse_jac/coloring/cppad/$$ method
+:ref:`sparse_jac@coloring@cppad` method
 which does not take advantage of symmetry.
 
-$subhead colpack.symmetric$$
-If $cref colpack_prefix$$ was specified on the
-$cref/cmake command/cmake/CMake Command/$$ line,
-you can set $icode coloring$$ to $code colpack.symmetric$$.
+colpack.symmetric
+=================
+If :ref:`colpack_prefix-name` was specified on the
+:ref:`cmake@CMake Command` line,
+you can set *coloring* to ``colpack.symmetric`` .
 This also takes advantage of the fact that the Hessian matrix is symmetric.
 
-$subhead colpack.general$$
-If $cref colpack_prefix$$ was specified on the
-$cref/cmake command/cmake/CMake Command/$$ line,
-you can set $icode coloring$$ to $code colpack.general$$.
+colpack.general
+===============
+If :ref:`colpack_prefix-name` was specified on the
+:ref:`cmake@CMake Command` line,
+you can set *coloring* to ``colpack.general`` .
 This is the same as the sparse Jacobian
-$cref/colpack/sparse_jac/coloring/colpack/$$ method
+:ref:`sparse_jac@coloring@colpack` method
 which does not take advantage of symmetry.
 
-$subhead colpack.star Deprecated 2017-06-01$$
-The $code colpack.star$$ method is deprecated.
-It is the same as the $code colpack.symmetric$$ method
+colpack.star Deprecated 2017-06-01
+==================================
+The ``colpack.star`` method is deprecated.
+It is the same as the ``colpack.symmetric`` method
 which should be used instead.
 
-
-$head work$$
+work
+****
 This argument has prototype
-$codei%
-   sparse_hes_work& %work%
-%$$
+
+   ``sparse_hes_work&`` *work*
+
 We refer to its initial value,
-and its value after $icode%work%.clear()%$$, as empty.
-If it is empty, information is stored in $icode work$$.
+and its value after *work* . ``clear`` () , as empty.
+If it is empty, information is stored in *work* .
 This can be used to reduce computation when
-a future call is for the same object $icode f$$,
+a future call is for the same object *f* ,
 and the same subset of the Hessian.
-In fact, it can be used with a different $icode f$$
-and a different $icode subset$$ provided that Hessian sparsity pattern
-for $icode f$$ and the sparsity pattern in $icode subset$$ are the same.
-If either of these values change, use $icode%work%.clear()%$$ to
+In fact, it can be used with a different *f*
+and a different *subset* provided that Hessian sparsity pattern
+for *f* and the sparsity pattern in *subset* are the same.
+If either of these values change, use *work* . ``clear`` () to
 empty this structure.
 
-$head n_sweep$$
-The return value $icode n_sweep$$ has prototype
-$codei%
-   size_t %n_sweep%
-%$$
+n_sweep
+*******
+The return value *n_sweep* has prototype
+
+   ``size_t`` *n_sweep*
+
 It is the number of first order forward sweeps
 used to compute the requested Hessian values.
 Each first forward sweep is followed by a second order reverse sweep
@@ -198,32 +205,35 @@ This is proportional to the total computational work,
 not counting the zero order forward sweep,
 or combining multiple columns and rows into a single sweep.
 
-$head Uses Forward$$
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After a call to $code sparse_hes$$
+Uses Forward
+************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``sparse_hes``
 the zero order coefficients correspond to
-$codei%
-   %f%.Forward(0, %x%)
-%$$
+
+   *f* . ``Forward`` (0, *x* )
+
 All the other forward mode coefficients are unspecified.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/sparse/sparse_hes.cpp
-%$$
-The files $cref sparse_hes.cpp$$
-is an example and test of $code sparse_hes$$.
-It returns $code true$$, if it succeeds, and $code false$$ otherwise.
+}
+The files :ref:`sparse_hes.cpp-name`
+is an example and test of ``sparse_hes`` .
+It returns ``true`` , if it succeeds, and ``false`` otherwise.
 
-$head Subset Hessian$$
+Subset Hessian
+**************
 The routine
-$cref sparse_sub_hes.cpp$$
+:ref:`sparse_sub_hes.cpp-name`
 is an example and test that compute a subset of a sparse Hessian.
-It returns $code true$$, for success, and $code false$$ otherwise.
+It returns ``true`` , for success, and ``false`` otherwise.
 
-$end
+{xrst_end sparse_hes}
 */
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/sparse/internal.hpp>

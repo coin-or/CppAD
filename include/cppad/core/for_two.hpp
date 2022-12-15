@@ -6,126 +6,133 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ForTwo$$
-$spell
+{xrst_begin ForTwo}
+{xrst_spell
    ddy
-   typename
-   Taylor
-   const
-$$
+}
 
+Forward Mode Second Partial Derivative Driver
+#############################################
 
+Syntax
+******
+*ddy* = *f* . ``ForTwo`` ( *x* , *j* , *k* )
 
-
-
-$section Forward Mode Second Partial Derivative Driver$$
-
-$head Syntax$$
-$icode%ddy% = %f%.ForTwo(%x%, %j%, %k%)%$$
-
-
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
 The syntax above sets
-$latex \[
+
+.. math::
+
    ddy [ i * p + \ell ]
    =
    \DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x)
-\] $$
-for $latex i = 0 , \ldots , m-1$$
-and $latex \ell = 0 , \ldots , p$$,
-where $latex p$$ is the size of the vectors $icode j$$ and $icode k$$.
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
-(see $cref/ForTwo Uses Forward/ForTwo/ForTwo Uses Forward/$$ below).
+for :math:`i = 0 , \ldots , m-1`
+and :math:`\ell = 0 , \ldots , p`,
+where :math:`p` is the size of the vectors *j* and *k* .
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %BaseVector% &%x%
-%$$
-(see $cref/BaseVector/ForTwo/BaseVector/$$ below)
+f
+*
+The object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const``
+(see :ref:`ForTwo@ForTwo Uses Forward` below).
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *BaseVector* & *x*
+
+(see :ref:`ForTwo@BaseVector` below)
 and its size
-must be equal to $icode n$$, the dimension of the
-$cref/domain/fun_property/Domain/$$ space for $icode f$$.
+must be equal to *n* , the dimension of the
+:ref:`fun_property@Domain` space for *f* .
 It specifies
 that point at which to evaluate the partial derivatives listed above.
 
-$head j$$
-The argument $icode j$$ has prototype
-$codei%
-   const %SizeVector_t% &%j%
-%$$
-(see $cref/SizeVector_t/ForTwo/SizeVector_t/$$ below)
-We use $icode p$$ to denote the size of the vector $icode j$$.
-All of the indices in $icode j$$
-must be less than $icode n$$; i.e.,
-for $latex \ell = 0 , \ldots , p-1$$, $latex j[ \ell ]  < n$$.
+j
+*
+The argument *j* has prototype
 
-$head k$$
-The argument $icode k$$ has prototype
-$codei%
-   const %SizeVector_t% &%k%
-%$$
-(see $cref/SizeVector_t/ForTwo/SizeVector_t/$$ below)
-and its size must be equal to $icode p$$,
-the size of the vector $icode j$$.
-All of the indices in $icode k$$
-must be less than $icode n$$; i.e.,
-for $latex \ell = 0 , \ldots , p-1$$, $latex k[ \ell ]  < n$$.
+   ``const`` *SizeVector_t* & *j*
 
-$head ddy$$
-The result $icode ddy$$ has prototype
-$codei%
-   %BaseVector% %ddy%
-%$$
-(see $cref/BaseVector/ForTwo/BaseVector/$$ below)
-and its size is $latex m * p$$.
+(see :ref:`ForTwo@SizeVector_t` below)
+We use *p* to denote the size of the vector *j* .
+All of the indices in *j*
+must be less than *n* ; i.e.,
+for :math:`\ell = 0 , \ldots , p-1`, :math:`j[ \ell ]  < n`.
+
+k
+*
+The argument *k* has prototype
+
+   ``const`` *SizeVector_t* & *k*
+
+(see :ref:`ForTwo@SizeVector_t` below)
+and its size must be equal to *p* ,
+the size of the vector *j* .
+All of the indices in *k*
+must be less than *n* ; i.e.,
+for :math:`\ell = 0 , \ldots , p-1`, :math:`k[ \ell ]  < n`.
+
+ddy
+***
+The result *ddy* has prototype
+
+   *BaseVector* *ddy*
+
+(see :ref:`ForTwo@BaseVector` below)
+and its size is :math:`m * p`.
 It contains the requested partial derivatives; to be specific,
-for $latex i = 0 , \ldots , m - 1 $$
-and $latex \ell = 0 , \ldots , p - 1$$
-$latex \[
+for :math:`i = 0 , \ldots , m - 1`
+and :math:`\ell = 0 , \ldots , p - 1`
+
+.. math::
+
    ddy [ i * p + \ell ]
    =
    \DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x)
-\] $$
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type Base/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+BaseVector
+**********
+The type *BaseVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type Base<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head SizeVector_t$$
-The type $icode SizeVector_t$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type size_t/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+SizeVector_t
+************
+The type *SizeVector_t* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type size_t<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head ForTwo Uses Forward$$
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After a call to $code ForTwo$$,
+ForTwo Uses Forward
+*******************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``ForTwo`` ,
 the zero order Taylor coefficients correspond to
-$icode%f%.Forward(0, %x%)%$$
+*f* . ``Forward`` (0, *x* )
 and the other coefficients are unspecified.
 
-$head Examples$$
-$children%
+Examples
+********
+{xrst_toc_hidden
    example/general/for_two.cpp
-%$$
+}
 The routine
-$cref/ForTwo/for_two.cpp/$$ is both an example and test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
+:ref:`ForTwo<for_two.cpp-name>` is both an example and test.
+It returns ``true`` , if it succeeds and ``false`` otherwise.
 
-$end
+{xrst_end ForTwo}
 -----------------------------------------------------------------------------
 */
 

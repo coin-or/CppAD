@@ -8,59 +8,67 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
-$begin recorder_cond_exp$$
-$spell
-   cond_exp
-   ptr
-$$
+{xrst_begin recorder_cond_exp}
 
-$section Record a Variable or Dynamic Parameter Conditional Expression$$
+Record a Variable or Dynamic Parameter Conditional Expression
+#############################################################
 
-$head Syntax$$
-$icode%rec%.cond_exp(
-   %tape_id%, %cop%, %result%, %left%, %right%, %if_true%, %if_false%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_COND_EXP%// END_COND_EXP%1
-%$$
+| *rec* . ``cond_exp`` (
+| |tab| *tape_id* , *cop* , *result* , *left* , *right* , *if_true* , *if_false*
+| )
 
-$head tape_id$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_COND_EXP
+   // END_COND_EXP
+}
+
+tape_id
+*******
 identifier for the tape that this operation is being recorded on.
 Passing tape_id avoids having to call tape_ptr() in case where
 left, right, if_true, and if_false are all be constant at this AD level
 (but left and right are not identically constant).
 
-$head cop$$
-Which $cref/comparison operator/base_cond_exp/CompareOp/$$;
+cop
+***
+Which :ref:`comparison operator<base_cond_exp@CompareOp>` ;
 i.e., <, <=, ==, >=, >, or !=.
 
-$head result$$
+result
+******
 is the result for this operation conditional expression.
-On input, $icode%result%.value_%$$ is the proper value and
+On input, *result* . ``value_`` is the proper value and
 the other fields do not matter.
 Upon return, the other fields have been set to their proper values.
 It is an error to call this routine when all the arguments are constants; i.e.,
 when the result is a constant.
 
-$head left$$
+left
+****
 value of the left operand in the comparison.
-If $icode%left%.tape_id_%$$ is not zero it must equal $icode tape_id$$.
+If *left* . ``tape_id_`` is not zero it must equal *tape_id* .
 
-$head right$$
+right
+*****
 value of the right operand in the comparison.
-If $icode%right%.tape_id_%$$ is not zero it must equal $icode tape_id$$.
+If *right* . ``tape_id_`` is not zero it must equal *tape_id* .
 
-$head if_true$$
+if_true
+*******
 value of the result if the comparison value is true.
-If $icode%if_true%.tape_id_%$$ is not zero it must equal $icode tape_id$$.
+If *if_true* . ``tape_id_`` is not zero it must equal *tape_id* .
 
-$head if_false$$
+if_false
+********
 value of the result if the comparison value is false.
-If $icode%if_false%.tape_id_%$$ is not zero it must equal $icode tape_id$$.
+If *if_false* . ``tape_id_`` is not zero it must equal *tape_id* .
 
-$end
+{xrst_end recorder_cond_exp}
 */
 // BEGIN_COND_EXP
 template <class Base>

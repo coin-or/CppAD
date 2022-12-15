@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed}
+
+Speed Test an Operator Overloading AD Package
+#############################################
+
+Purpose
+*******
+Cppad has a set of speed tests that are used to determine if
+changes improve its execution speed.
+These tests can also be used to compare the AD packages
+:ref:`Adolc<adolc@Adolc Home Page>` ,
+Cppad,
+:ref:`Fadbad<fadbad_prefix@Fadbad Home Page>` ,
+:ref:`Cppadcg<cppadcg@CppADCodeGen Home Page>` ,
+:ref:`Sacado<sacado_prefix@Sacado Home Page>` .
+
+debug_which
+***********
+Usually, one wants to compile the speed tests in release mode.
+This can be done by setting
+:ref:`cmake@cppad_debug_which` to ``debug_none``
+in the cmake command.
+Correctness tests are included for all the speed tests,
+so it is possible you will want to compile these tests for debugging; i.e.,
+set *cppad_debug_which* to ``debug_all`` .
+
+The sections below explain how you can run these tests on your computer.
+
+Contents
+********
+{xrst_toc_table
+   speed/main.cpp
+   speed/speed_utility.xrst
+   speed/double/speed_double.xrst
+   speed/adolc/speed_adolc.xrst
+   speed/cppad/speed_cppad.xrst
+   speed/fadbad/speed_fadbad.xrst
+   speed/cppad_jit/speed_cppad_jit.xrst
+   speed/cppadcg/speed_cppadcg.xrst
+   speed/sacado/speed_sacado.xrst
+   speed/xpackage/speed_xpackage.xrst
+}
+
+{xrst_end speed}

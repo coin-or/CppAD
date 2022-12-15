@@ -3,30 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sacado_mat_mul.cpp$$
-$spell
-   sq
-   onetape
-   typedef
-   ADvar
-   Gradcomp
-   Sacado
-   cppad.hpp
-   bool
-   mul
-   dz
-   CppAD
-$$
+{xrst_begin sacado_mat_mul.cpp}
 
-$section Sacado Speed: Matrix Multiplication$$
+Sacado Speed: Matrix Multiplication
+###################################
 
+Specifications
+**************
+See :ref:`link_mat_mul-name` .
 
-$head Specifications$$
-See $cref link_mat_mul$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -92,6 +82,8 @@ bool link_mat_mul(
    // ---------------------------------------------------------
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end sacado_mat_mul.cpp}
 */

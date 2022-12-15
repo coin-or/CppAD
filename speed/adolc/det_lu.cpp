@@ -3,33 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin adolc_det_lu.cpp$$
-$spell
-   onetape
-   thread_alloc
-   cppad
-   fos
-   adouble
-   CppAD
-   typedef
-   adolc
-   Lu
-   Adolc
-   det
-   hpp
-   const
-   bool
-   srand
-$$
+{xrst_begin adolc_det_lu.cpp}
 
-$section Adolc Speed: Gradient of Determinant Using Lu Factorization$$
+Adolc Speed: Gradient of Determinant Using Lu Factorization
+###########################################################
 
+Specifications
+**************
+See :ref:`link_det_lu-name` .
 
-$head Specifications$$
-See $cref link_det_lu$$.
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -127,6 +113,8 @@ bool link_det_lu(
 
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end adolc_det_lu.cpp}
 */

@@ -5,178 +5,206 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin abs_min_linear$$
-$spell
-   hpp
-   jac
-   Jacobian
+{xrst_begin abs_min_linear}
+{xrst_spell
+   affine
+   dbl
+   iterated
+   lll
    maxitr
-$$
-$section abs_normal: Minimize a Linear Abs-normal Approximation$$
+   minimizer
+}
+abs_normal: Minimize a Linear Abs-normal Approximation
+######################################################
 
-$head Syntax$$
-$icode%ok% = abs_min_linear(
-   %level%, %n%, %m%, %s%,
-   %g_hat%, %g_jac%, %bound%, %epsilon%, %maxitr%, %delta_x%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
+| *ok* = ``abs_min_linear`` (
+| |tab| *level* , *n* , *m* , *s* ,
+| |tab| *g_hat* , *g_jac* , *bound* , *epsilon* , *maxitr* , *delta_x*
+| )
 
-$head Source$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Source
+******
 This following is a link to the source code for this example:
-$cref/abs_min_linear.hpp/abs_min_linear.hpp/$$.
+:ref:`abs_min_linear.hpp-name` .
 
-$head Purpose$$
-We are given a point $latex \hat{x} \in \B{R}^n$$ and
-use the notation $latex \tilde{f} (x)$$ for the abs-normal
-$cref/approximation for f(x)
-   /abs_normal_fun
-   /Abs-normal Approximation
-   /Approximating f(x)
-/$$
-near $latex \hat{x}$$.
-We are also given a vector $latex b \in \B{R}_+^n$$.
+Purpose
+*******
+We are given a point :math:`\hat{x} \in \B{R}^n` and
+use the notation :math:`\tilde{f} (x)` for the abs-normal
+:ref:`approximation for f(x)<abs_normal_fun@Abs-normal Approximation@Approximating f(x)>`
+near :math:`\hat{x}`.
+We are also given a vector :math:`b \in \B{R}_+^n`.
 This routine solves the problem
-$latex \[
-\begin{array}{lll}
-\R{minimize} & \tilde{f}(x) & \R{w.r.t} \; x \in \B{R}^n
-\\
-\R{subject \; to} & | x_j - \hat{x}_j | \leq b_j & j = 0 , \ldots , n-1
-\end{array}
-\] $$
 
+.. math::
 
-$head DblVector$$
-is a $cref SimpleVector$$ class with elements of type $code double$$.
+   \begin{array}{lll}
+   \R{minimize} & \tilde{f}(x) & \R{w.r.t} \; x \in \B{R}^n
+   \\
+   \R{subject \; to} & | x_j - \hat{x}_j | \leq b_j & j = 0 , \ldots , n-1
+   \end{array}
 
-$head SizeVector$$
-is a $cref SimpleVector$$ class with elements of type $code size_t$$.
+DblVector
+*********
+is a :ref:`SimpleVector-name` class with elements of type ``double`` .
 
-$head f$$
-We use the notation $icode f$$ for the original function; see
-$cref/f/abs_normal_fun/f/$$.
+SizeVector
+**********
+is a :ref:`SimpleVector-name` class with elements of type ``size_t`` .
 
-$head level$$
+f
+*
+We use the notation *f* for the original function; see
+:ref:`abs_normal_fun@f` .
+
+level
+*****
 This value is less that or equal 4.
-If $icode%level% == 0%$$,
+If *level*  == 0 ,
 no tracing of the optimization is printed.
-If $icode%level% >= 1%$$,
-a trace of each iteration of $code abs_min_linear$$ is printed.
-If $icode%level% >= 2%$$,
-a trace of the $cref lp_box$$ sub-problem is printed.
-If $icode%level% >= 3%$$,
-a trace of the objective and primal variables $latex x$$ are printed
-at each $cref simplex_method$$ iteration.
-If $icode%level% == 4%$$,
+If *level*  >= 1 ,
+a trace of each iteration of ``abs_min_linear`` is printed.
+If *level*  >= 2 ,
+a trace of the :ref:`lp_box-name` sub-problem is printed.
+If *level*  >= 3 ,
+a trace of the objective and primal variables :math:`x` are printed
+at each :ref:`simplex_method-name` iteration.
+If *level*  == 4 ,
 the simplex tableau is printed at each simplex iteration.
 
-$head n$$
-This is the dimension of the domain space for $icode f$$; see
-$cref/n/abs_normal_fun/f/n/$$.
+n
+*
+This is the dimension of the domain space for *f* ; see
+:ref:`abs_normal_fun@f@n` .
 
-$head m$$
-This is the dimension of the range space for $icode f$$; see
-$cref/m/abs_normal_fun/f/m/$$. This must be one so that $latex f$$
+m
+*
+This is the dimension of the range space for *f* ; see
+:ref:`abs_normal_fun@f@m` . This must be one so that :math:`f`
 is an objective function.
 
-$head s$$
-This is the number of absolute value terms in $icode f$$; see
-$cref/s/abs_normal_fun/f/s/$$.
+s
+*
+This is the number of absolute value terms in *f* ; see
+:ref:`abs_normal_fun@f@s` .
 
-$head g$$
-We use the notation $icode g$$ for the abs-normal representation of $icode f$$;
-see $cref/g/abs_normal_fun/g/$$.
+g
+*
+We use the notation *g* for the abs-normal representation of *f* ;
+see :ref:`abs_normal_fun@g` .
 
-$head g_hat$$
-This vector has size $icode%m% + %s%$$ and is the value of
-$icode g(x, u)$$ at $latex x = \hat{x}$$ and $latex u = a( \hat{x} )$$.
+g_hat
+*****
+This vector has size *m* + *s* and is the value of
+*g* ( *x* , *u* ) at :math:`x = \hat{x}` and :math:`u = a( \hat{x} )`.
 
-$head g_jac$$
-This vector has size $codei%(%m% + %s%) * (%n% + %s%)%$$ and is the Jacobian of
-$latex g(x, u)$$ at $latex x = \hat{x}$$ and $latex u = a( \hat{x} )$$.
+g_jac
+*****
+This vector has size ( *m* + *s* ) * ( *n* + *s* ) and is the Jacobian of
+:math:`g(x, u)` at :math:`x = \hat{x}` and :math:`u = a( \hat{x} )`.
 
-$head bound$$
-This vector has size $icode n$$
-and we denote its value by $latex b \in \B{R}^n$$.
-The trust region is defined as the set of $latex x$$ such that
-$latex \[
+bound
+*****
+This vector has size *n*
+and we denote its value by :math:`b \in \B{R}^n`.
+The trust region is defined as the set of :math:`x` such that
+
+.. math::
+
    | x_j - \hat{x}_j | \leq b_j
-\]$$
-for $latex j = 0 , \ldots , n-1$$,
-where $latex x$$ is the point that we are approximating $latex f(x)$$.
 
+for :math:`j = 0 , \ldots , n-1`,
+where :math:`x` is the point that we are approximating :math:`f(x)`.
 
-$head epsilon$$
-The value $icode%epsilon%[0]%$$ is convergence criteria in terms
-of the infinity norm of the difference of $icode delta_x$$
+epsilon
+*******
+The value *epsilon* [0] is convergence criteria in terms
+of the infinity norm of the difference of *delta_x*
 between iterations.
-The value $icode%epsilon%[1]%$$ is convergence criteria in terms
-of the derivative of the objective; i.e., $latex \tilde{f}(x)$$.
+The value *epsilon* [1] is convergence criteria in terms
+of the derivative of the objective; i.e., :math:`\tilde{f}(x)`.
 
-$head maxitr$$
+maxitr
+******
 This is a vector with size 2.
-The value $icode%maxitr%[0]%$$ is the maximum number of
-$code abs_min_linear$$ iterations to try before giving up on convergence.
-The value $icode%maxitr%[1]%$$ is the maximum number of iterations in
-the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
+The value *maxitr* [0] is the maximum number of
+``abs_min_linear`` iterations to try before giving up on convergence.
+The value *maxitr* [1] is the maximum number of iterations in
+the :ref:`simplex_method<simplex_method@maxitr>` sub-problems.
 
-$head delta_x$$
-This vector $latex \Delta x$$ has size $icode n$$.
+delta_x
+*******
+This vector :math:`\Delta x` has size *n* .
 The input value of its elements does not matter.
 Upon return,
-the approximate minimizer of $latex \tilde{f}(x)$$
+the approximate minimizer of :math:`\tilde{f}(x)`
 with respect to the trust region
-is $latex x = \hat{x} + \Delta x$$.
+is :math:`x = \hat{x} + \Delta x`.
 
-$head Method$$
+Method
+******
 
-$subhead sigma$$
+sigma
+=====
 We use the notation
-$latex \[
+
+.. math::
+
    \sigma (x) = \R{sign} ( z[ x , a(x) ] )
-\] $$
+
 where
-$cref/a(x)/abs_normal_fun/a/a(x)/$$ and
-$cref/z(x, u)/abs_normal_fun/g/z(x, u)/$$
-are as defined in the abs-normal representation of $latex f(x)$$.
+:ref:`abs_normal_fun@a@a(x)` and
+:ref:`abs_normal_fun@g@z(x, u)`
+are as defined in the abs-normal representation of :math:`f(x)`.
 
-$subhead Cutting Planes$$
+Cutting Planes
+==============
 At each iteration,
-we are given affine functions $latex p_k (x)$$
-such that $latex p_k ( x_k ) = \tilde{f}( x_k )$$  and
-$latex p_k^{(1)} ( x_k )$$ is the derivative
-$latex \tilde{f}^{(1)} ( x_k )$$
-corresponding to $latex \sigma ( x_k )$$.
+we are given affine functions :math:`p_k (x)`
+such that :math:`p_k ( x_k ) = \tilde{f}( x_k )`  and
+:math:`p_k^{(1)} ( x_k )` is the derivative
+:math:`\tilde{f}^{(1)} ( x_k )`
+corresponding to :math:`\sigma ( x_k )`.
 
-$subhead Iteration$$
-At iteration $latex k$$, we solve the problem
-$latex \[
-\begin{array}{lll}
-\R{minimize}
-   & \max \{ p_k (x) \W{:} k = 0 , \ldots , K-1 \}
-   & \R{w.r.t} \; x
-\\
-\R{subject \; to} & - b \leq x \leq + b
-\end{array}
-\] $$
-The solution is the new point $latex x_K$$
+Iteration
+=========
+At iteration :math:`k`, we solve the problem
+
+.. math::
+
+   \begin{array}{lll}
+   \R{minimize}
+      & \max \{ p_k (x) \W{:} k = 0 , \ldots , K-1 \}
+      & \R{w.r.t} \; x
+   \\
+   \R{subject \; to} & - b \leq x \leq + b
+   \end{array}
+
+The solution is the new point :math:`x_K`
 at which the new affine approximation
-$latex p_K (x)$$ is constructed.
+:math:`p_K (x)` is constructed.
 This process is iterated until the difference
-$latex x_K - x_{K-1}$$ is small enough.
+:math:`x_K - x_{K-1}` is small enough.
+{xrst_toc_hidden
+   example/abs_normal/abs_min_linear.cpp
+   example/abs_normal/abs_min_linear.xrst
+}
+Example
+*******
+The file :ref:`abs_min_linear.cpp-name` contains an example and test of
+``abs_min_linear`` .
 
-
-$children%example/abs_normal/abs_min_linear.cpp
-   %example/abs_normal/abs_min_linear.omh
-%$$
-$head Example$$
-The file $cref abs_min_linear.cpp$$ contains an example and test of
-$code abs_min_linear$$.
-
-$end
+{xrst_end abs_min_linear}
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>

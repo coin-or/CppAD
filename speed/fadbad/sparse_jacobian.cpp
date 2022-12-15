@@ -6,18 +6,13 @@
 # include <cppad/utility/vector.hpp>
 
 /*
-$begin fadbad_sparse_jacobian.cpp$$
-$spell
-   const
-   bool
-   CppAD
-   fadbad
-   sparse_jacobian
-$$
+{xrst_begin fadbad_sparse_jacobian.cpp}
 
-$section Fadbad Speed: sparse_jacobian$$
+Fadbad Speed: sparse_jacobian
+#############################
 
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // A fadbad version of this test is not yet available
 bool link_sparse_jacobian(
    const std::string&               job      ,
@@ -32,6 +27,8 @@ bool link_sparse_jacobian(
 {
    return false;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fadbad_sparse_jacobian.cpp}
 */

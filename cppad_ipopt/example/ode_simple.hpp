@@ -5,20 +5,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ipopt_nlp_ode_simple.hpp$$
-$spell
-   cppad_ipopt_nlp
-   Nz
-   Ny
-   Na
-$$
+{xrst_begin ipopt_nlp_ode_simple.hpp}
 
-$section ODE Fitting Using Simple Representation$$
+ODE Fitting Using Simple Representation
+#######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end ipopt_nlp_ode_simple.hpp}
 */
 
 // BEGIN C++

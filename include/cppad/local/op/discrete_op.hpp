@@ -5,86 +5,101 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin discrete_op$$
-$spell
-   op
-   arg
-   taylor
+{xrst_begin discrete_op}
+{xrst_spell
    ataylor
-   az
    tpv
-   NumRes
-$$
+}
 
-$section Forward Mode Result for Discrete Functions$$
+Forward Mode Result for Discrete Functions
+##########################################
 
-$head Syntax$$
-$codei%forward_dis_op(
-   %p%, %q%, %r%, %i_z%, %arg%, %cap_order%, %taylor%
-)%$$
-$codei%forward_dis_op(
-   %p%, %q%, %r%, %i_z%, %arg%, %cap_order%, %ataylor%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+| ``forward_dis_op`` (
+| |tab| *p* , *q* , *r* , *i_z* , *arg* , *cap_order* , *taylor*
+| ) ``forward_dis_op`` (
+| |tab| *p* , *q* , *r* , *i_z* , *arg* , *cap_order* , *ataylor*
+| )
 
-$head Usage$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Usage
+*****
 The C++ source code corresponding to this operation is
-$codei%
-   %az% = %f%(%ax%)
-%$$
-where $icode f$$ is a piecewise constant function and it's derivative is
+
+   *az* = *f* ( *ax* )
+
+where *f* is a piecewise constant function and it's derivative is
 always calculated as zero.
 
-$head RecBase$$
+RecBase
+*******
 Is the Base type when this function was recorded; i.e.,
-$icode ax$$ and $icode az$$ have type $codei%AD<%RecBase%>%$$.
+*ax* and *az* have type ``AD<`` *RecBase* > .
 
-$head p$$
+p
+*
 is the lowest order Taylor coefficient that will be calculated.
 
-$head q$$
+q
+*
 is the highest order Taylor coefficient that will be calculated.
 
-$head r$$
+r
+*
 is the number of directions, for each order,
 that will be calculated (except for order zero which only has one direction).
 
-$head i_z$$
+i_z
+***
 variable index corresponding to the result for this operation;
-i.e. the row index in $icode taylor$$ or $icode ataylor$$ corresponding to
-$icode z$$.
+i.e. the row index in *taylor* or *ataylor* corresponding to
+*z* .
 
-$head arg$$
+arg
+***
 
-$subhead arg[0]$$
+arg[0]
+======
 is the index, in the order of the discrete functions defined by the user,
 for this discrete function.
 
-$subhead arg[1]$$
+arg[1]
+======
 variable index corresponding to the argument for this operator;
-i.e. the row index in $icode taylor$$ or $icode ataylor$$ corresponding to x.
+i.e. the row index in *taylor* or *ataylor* corresponding to x.
 
-$head cap_order$$
+cap_order
+*********
 maximum number of orders that will fit in the taylor array.
 
-$head tpv$$
+tpv
+***
 We use the notation
-$codei%
-   %tpv% = (%cap_order%-1) * %r% + 1
-%$$
+
+   *tpv* = ( *cap_order* ``-1`` ) * *r*  + 1
+
 which is the number of Taylor coefficients per variable
 
-$head taylor$$
-The type of this parameter is $icode RecBase$$.
+taylor
+******
+The type of this parameter is *RecBase* .
 
-$subhead Input$$
+Input
+=====
 The value taylor[ arg[1] * tpv + 0 ]
 is the zero order Taylor coefficient corresponding to x.
 
-$subhead Output$$
-If $icode p$$ is zero,
+Output
+======
+If *p* is zero,
 taylor[ i_z * tpv + 0 ]
 is the zero order Taylor coefficient corresponding to z.
 For k = max(p, 1), ... , q,
@@ -92,14 +107,16 @@ taylor[ i_z * tpv + (k-1)*r + 1 + ell ]
 is the k-th order Taylor coefficient corresponding to z
 (which is zero).
 
-$head ataylor$$
-The type of this parameter is $codei%AD<%RecBase%>%$$.
-Otherwise, it has the same description as $icode taylor$$.
+ataylor
+*******
+The type of this parameter is ``AD<`` *RecBase* > .
+Otherwise, it has the same description as *taylor* .
 
-$head Asserts$$
+Asserts
+*******
 NumArg(op) == 2, NumRes(op) == 1,  q < cap_order, 0 < r
 
-$end
+{xrst_end discrete_op}
 */
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 

@@ -3,25 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin double_det_lu.cpp$$
-$spell
-   onetape
-   bool
-   cppad
-   hpp
-   Lu
-   det
-   CppAD
-$$
+{xrst_begin double_det_lu.cpp}
 
-$section Double Speed: Determinant Using Lu Factorization$$
+Double Speed: Determinant Using Lu Factorization
+################################################
 
+Specifications
+**************
+See :ref:`link_det_lu-name` .
 
-$head Specifications$$
-See $cref link_det_lu$$.
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -54,6 +48,8 @@ bool link_det_lu(
    }
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end double_det_lu.cpp}
 */

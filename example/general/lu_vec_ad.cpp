@@ -4,131 +4,133 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin lu_vec_ad.cpp$$
-$spell
-   signdet
-   Lu
-   Vec
-   Rhs
+{xrst_begin lu_vec_ad.cpp}
+{xrst_spell
    logdet
-   Cpp
-$$
+   rhs
+   signdet
+}
 
+Lu Factor and Solve with Recorded Pivoting
+##########################################
 
-$section Lu Factor and Solve with Recorded Pivoting$$
+Syntax
+******
 
-$pre
-$$
+| ``int lu_vec_ad`` (
+| |tab| ``size_t`` *n* ,
+| |tab| ``size_t`` *m* ,
+| |tab| ``VecAD<`` *double* > & *Matrix* ,
+| |tab| ``VecAD<`` *double* > & *Rhs* ,
+| |tab| ``VecAD<`` *double* > & *Result* ,
+| |tab| *AD<* ``double`` > & ``logdet`` )
 
-$head Syntax$$
-$codei%int lu_vec_ad(
-   size_t %n%,
-   size_t %m%,
-   VecAD<%double%> &%Matrix%,
-   VecAD<%double%> &%Rhs%,
-   VecAD<%double%> &%Result%,
-   AD<%double%> &%logdet%)%$$
-
-
-$head Purpose$$
+Purpose
+*******
 Solves the linear equation
-$latex \[
+
+.. math::
+
    Matrix * Result = Rhs
-\] $$
-where $icode Matrix$$ is an $latex n \times n$$ matrix,
-$icode Rhs$$ is an $latex n x m$$ matrix, and
-$icode Result$$ is an $latex n x m$$ matrix.
-$pre
 
-$$
-The routine $cref LuSolve$$ uses an arbitrary vector type,
-instead of $cref VecAD$$,
+where *Matrix* is an :math:`n \times n` matrix,
+*Rhs* is an :math:`n x m` matrix, and
+*Result* is an :math:`n x m` matrix.
+
+The routine :ref:`LuSolve-name` uses an arbitrary vector type,
+instead of :ref:`VecAD-name` ,
 to hold its elements.
-The pivoting operations for a $code ADFun$$ object
-corresponding to an $code lu_vec_ad$$ solution
+The pivoting operations for a ``ADFun`` object
+corresponding to an ``lu_vec_ad`` solution
 will change to be optimal for the matrix being factored.
-$pre
 
-$$
 It is often the case that
-$code LuSolve$$ is faster than $code lu_vec_ad$$ when $code LuSolve$$
+``LuSolve`` is faster than ``lu_vec_ad`` when ``LuSolve``
 uses a simple vector class with
-$cref/elements of type double/SimpleVector/Elements of Specified Type/$$,
-but the corresponding $cref ADFun$$ objects have a fixed
+:ref:`elements of type double<SimpleVector@Elements of Specified Type>` ,
+but the corresponding :ref:`ADFun-name` objects have a fixed
 set of pivoting operations.
 
-$head Storage Convention$$
+Storage Convention
+******************
 The matrices stored in row major order.
-To be specific, if $latex A$$ contains the vector storage for an
-$latex n x m$$ matrix,
-$latex i$$ is between zero and $latex  n-1$$,
-and $latex j$$ is between zero and $latex m-1$$,
-$latex \[
+To be specific, if :math:`A` contains the vector storage for an
+:math:`n x m` matrix,
+:math:`i` is between zero and :math:`n-1`,
+and :math:`j` is between zero and :math:`m-1`,
+
+.. math::
 
    A_{i,j} = A[ i * m + j ]
-\] $$
-(The length of $latex A$$ must be equal to $latex  n * m $$.)
 
-$head n$$
+(The length of :math:`A` must be equal to :math:`n * m`.)
+
+n
+*
 is the number of rows in
-$icode Matrix$$,
-$icode Rhs$$,
-and $icode Result$$.
+*Matrix* ,
+*Rhs* ,
+and *Result* .
 
-$head m$$
+m
+*
 is the number of columns in
-$icode Rhs$$
-and $icode Result$$.
-It is ok for $icode m$$ to be zero which is reasonable when
-you are only interested in the determinant of $icode Matrix$$.
+*Rhs*
+and *Result* .
+It is ok for *m* to be zero which is reasonable when
+you are only interested in the determinant of *Matrix* .
 
-
-$head Matrix$$
+Matrix
+******
 On input, this is an
-$latex n \times n$$ matrix containing the variable coefficients for
+:math:`n \times n` matrix containing the variable coefficients for
 the equation we wish to solve.
-On output, the elements of $icode Matrix$$ have been overwritten
+On output, the elements of *Matrix* have been overwritten
 and are not specified.
 
-$head Rhs$$
+Rhs
+***
 On input, this is an
-$latex n \times m$$ matrix containing the right hand side
+:math:`n \times m` matrix containing the right hand side
 for the equation we wish to solve.
-On output, the elements of $icode Rhs$$ have been overwritten
+On output, the elements of *Rhs* have been overwritten
 and are not specified.
-If $icode m$$ is zero, $icode Rhs$$ is not used.
+If *m* is zero, *Rhs* is not used.
 
-$head Result$$
+Result
+******
 On input, this is an
-$latex n \times m$$ matrix and the value of its elements do not matter.
-On output, the elements of $icode Rhs$$ contain the solution
+:math:`n \times m` matrix and the value of its elements do not matter.
+On output, the elements of *Rhs* contain the solution
 of the equation we wish to solve
-(unless the value returned by $code lu_vec_ad$$ is equal to zero).
-If $icode m$$ is zero, $icode Result$$ is not used.
+(unless the value returned by ``lu_vec_ad`` is equal to zero).
+If *m* is zero, *Result* is not used.
 
-$head logdet$$
-On input, the value of $icode logdet$$ does not matter.
+logdet
+******
+On input, the value of *logdet* does not matter.
 On output, it has been set to the
-log of the determinant of $icode Matrix$$ (but not quite).
+log of the determinant of *Matrix* (but not quite).
 To be more specific,
-if $icode signdet$$ is the value returned by $code lu_vec_ad$$,
-the determinant of $icode Matrix$$ is given by the formula
-$latex \[
+if *signdet* is the value returned by ``lu_vec_ad`` ,
+the determinant of *Matrix* is given by the formula
+
+.. math::
+
    det = signdet \exp( logdet )
-\] $$
-This enables $code lu_vec_ad$$ to use logs of absolute values.
 
+This enables ``lu_vec_ad`` to use logs of absolute values.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/lu_vec_ad_ok.cpp
-%$$
+}
 The file
-$cref lu_vec_ad_ok.cpp$$
-contains an example and test of $code lu_vec_ad$$.
+:ref:`lu_vec_ad_ok.cpp-name`
+contains an example and test of ``lu_vec_ad`` .
 
-
-$end
+{xrst_end lu_vec_ad.cpp}
 ------------------------------------------------------------------------------
 */
 

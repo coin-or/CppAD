@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin eigen_det.cpp$$
-$spell
-   Eigen
-$$
+{xrst_begin eigen_det.cpp}
 
-$section Using Eigen To Compute Determinant: Example and Test$$
+Using Eigen To Compute Determinant: Example and Test
+####################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end eigen_det.cpp}
 */
 // BEGIN C++
 # include <cppad/example/cppad_eigen.hpp>

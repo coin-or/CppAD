@@ -4,32 +4,39 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_four_dynamic.cpp$$
+{xrst_begin atomic_four_dynamic.cpp}
 
-$section Atomic Functions with Dynamic Parameters: Example and Test$$
+Atomic Functions with Dynamic Parameters: Example and Test
+##########################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates using dynamic parameters with an
-$cref atomic_four$$ function.
+:ref:`atomic_four-name` function.
 
-$head Function$$
+Function
+********
 For this example, the atomic function
-$latex g : \B{R}^3 \rightarrow \B{R}^3$$ is defined by
-$latex g_0 (x) = x_0 * x_ 0$$,
-$latex g_1 (x) = x_0 * x_ 1$$,
-$latex g_2 (x) = x_1 * x_ 2$$.
+:math:`g : \B{R}^3 \rightarrow \B{R}^3` is defined by
+:math:`g_0 (x) = x_0 * x_ 0`,
+:math:`g_1 (x) = x_0 * x_ 1`,
+:math:`g_2 (x) = x_1 * x_ 2`.
 
-$head Define Atomic Function$$
-$srcthisfile%0
-   %// BEGIN_DEFINE_ATOMIC_FUNCTION%// END_DEFINE_ATOMIC_FUNCTION%
-1%$$
+Define Atomic Function
+**********************
+{xrst_literal
+   // BEGIN_DEFINE_ATOMIC_FUNCTION
+   // END_DEFINE_ATOMIC_FUNCTION
+}
 
-$head Use Atomic Function$$
-$srcthisfile%0
-   %// BEGIN_USE_ATOMIC_FUNCTION%// END_USE_ATOMIC_FUNCTION%
-1%$$
+Use Atomic Function
+*******************
+{xrst_literal
+   // BEGIN_USE_ATOMIC_FUNCTION
+   // END_USE_ATOMIC_FUNCTION
+}
 
-$end
+{xrst_end atomic_four_dynamic.cpp}
 */
 
 # include <cppad/cppad.hpp>

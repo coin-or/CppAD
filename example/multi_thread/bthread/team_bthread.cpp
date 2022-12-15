@@ -3,18 +3,18 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin team_bthread.cpp$$
-$spell
-   bthread
-$$
+{xrst_begin team_bthread.cpp}
 
+Boost Thread Implementation of a Team of AD Threads
+###################################################
+See :ref:`team_thread.hpp-name` for this routines specifications.
 
-$section Boost Thread Implementation of a Team of AD Threads$$
-See $cref team_thread.hpp$$ for this routines specifications.
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end team_bthread.cpp}
 */
 // BEGIN C++
 # include <boost/thread.hpp>

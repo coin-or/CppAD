@@ -6,31 +6,29 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin Convert$$
-$spell
-$$
+{xrst_begin Convert}
 
-
-$section Conversion and I/O of AD Objects$$
-
-$children%
-   include/cppad/core/value.hpp%
-   include/cppad/core/integer.hpp%
-   include/cppad/core/ad_to_string.hpp%
-   include/cppad/core/ad_io.hpp%
-   include/cppad/core/print_for.hpp%
+Conversion and I/O of AD Objects
+################################
+{xrst_toc_hidden
+   include/cppad/core/value.hpp
+   include/cppad/core/integer.hpp
+   include/cppad/core/ad_to_string.hpp
+   include/cppad/core/ad_io.hpp
+   include/cppad/core/print_for.hpp
    include/cppad/core/var2par.hpp
-%$$
-$table
-$rref Value$$
-$rref Integer$$
-$rref ad_output$$
-$rref PrintFor$$
-$rref Var2Par$$
-$tend
+}
 
+.. csv-table::
+   :widths: auto
 
-$end
+   Value,:ref:`Value-title`
+   Integer,:ref:`Integer-title`
+   ad_output,:ref:`ad_output-title`
+   PrintFor,:ref:`PrintFor-title`
+   Var2Par,:ref:`Var2Par-title`
+
+{xrst_end Convert}
 */
 
 # include <cppad/core/value.hpp>

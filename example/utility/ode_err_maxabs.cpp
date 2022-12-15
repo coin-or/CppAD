@@ -4,37 +4,45 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ode_err_maxabs.cpp$$
-$spell
-   Runge
-   Maxabs
-$$
+{xrst_begin ode_err_maxabs.cpp}
+{xrst_spell
+   maxabs
+}
 
-$section OdeErrControl: Example and Test Using Maxabs Argument$$
-
+OdeErrControl: Example and Test Using Maxabs Argument
+#####################################################
 
 Define
-$latex X : \B{R} \rightarrow \B{R}^2$$ by
-$latex \[
-\begin{array}{rcl}
-X_0 (t) & = &  - \exp ( - w_0 t )  \\
-X_1 (t) & = & \frac{w_0}{w_1 - w_0} [ \exp ( - w_0 t ) - \exp( - w_1 t )]
-\end{array}
-\] $$
-It follows that $latex X_0 (0) = 1$$, $latex X_1 (0) = 0$$ and
-$latex \[
-\begin{array}{rcl}
-   X_0^{(1)} (t) & = & - w_0 X_0 (t)  \\
-   X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t)
-\end{array}
-\] $$
-Note that $latex X_1 (0)$$ is zero an if $latex w_0 t$$ is large,
-$latex X_0 (t)$$ is near zero.
-This example tests OdeErrControl using the $icode maxabs$$ argument.
+:math:`X : \B{R} \rightarrow \B{R}^2` by
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+.. math::
+   :nowrap:
 
-$end
+   \begin{eqnarray}
+   X_0 (t) & = &  - \exp ( - w_0 t )  \\
+   X_1 (t) & = & \frac{w_0}{w_1 - w_0} [ \exp ( - w_0 t ) - \exp( - w_1 t )]
+   \end{eqnarray}
+
+It follows that :math:`X_0 (0) = 1`, :math:`X_1 (0) = 0` and
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X_0^{(1)} (t) & = & - w_0 X_0 (t)  \\
+      X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t)
+   \end{eqnarray}
+
+Note that :math:`X_1 (0)` is zero an if :math:`w_0 t` is large,
+:math:`X_0 (t)` is near zero.
+This example tests OdeErrControl using the *maxabs* argument.
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end ode_err_maxabs.cpp}
 */
 // BEGIN C++
 

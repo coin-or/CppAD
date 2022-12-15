@@ -3,23 +3,25 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin optimize_twice.cpp$$
-$spell
-   CppAD
-$$
+{xrst_begin optimize_twice.cpp}
 
-$section Optimizing Twice: Example and Test$$
+Optimizing Twice: Example and Test
+##################################
 
-$head Discussion$$
+Discussion
+**********
 Before 2019-06-28, optimizing twice was not supported and would fail
 if cumulative sum operators were present after the first optimization.
 This is now supported but it is not expected to have much benefit.
 If you find a case where it does have a benefit, please inform the CppAD
 developers of this.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end optimize_twice.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

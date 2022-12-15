@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin atomic_four}
+
+Atomic AD Functions: Fourth Generation
+######################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atomic/four/atomic.hpp
+   example/atomic_four/atomic_four.xrst
+}
+
+{xrst_end atomic_four}

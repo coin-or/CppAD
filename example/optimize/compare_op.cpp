@@ -3,16 +3,21 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin optimize_compare_op.cpp$$
+{xrst_begin optimize_compare_op.cpp}
 
-$section Optimize Comparison Operators: Example and Test$$
+Optimize Comparison Operators: Example and Test
+###############################################
 
-$head See Also$$
-$cref cond_exp.cpp$$
+See Also
+********
+:ref:`cond_exp.cpp-name`
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end optimize_compare_op.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

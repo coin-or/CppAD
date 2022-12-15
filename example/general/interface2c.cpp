@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin interface2c.cpp$$
-$spell
+{xrst_begin interface2c.cpp}
 
-$$
+Interfacing to C: Example and Test
+##################################
 
-$section Interfacing to C: Example and Test$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end interface2c.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>  // CppAD utilities

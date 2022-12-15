@@ -4,47 +4,55 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin rosen_34.cpp$$
-$spell
-   Rosen
-$$
+{xrst_begin rosen_34.cpp}
+{xrst_spell
+   rclr
+}
 
-$section rosen_34: Example and Test$$
-
+rosen_34: Example and Test
+##########################
 
 Define
-$latex X : \B{R} \rightarrow \B{R}^n$$ by
-$latex \[
+:math:`X : \B{R} \rightarrow \B{R}^n` by
+
+.. math::
+
    X_i (t) =  t^{i+1}
-\] $$
-for $latex i = 1 , \ldots , n-1$$.
+
+for :math:`i = 1 , \ldots , n-1`.
 It follows that
-$latex \[
-\begin{array}{rclr}
-X_i(0)     & = & 0                             & {\rm for \; all \;} i \\
-X_i ' (t)  & = & 1                             & {\rm if \;} i = 0      \\
-X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
-\end{array}
-\] $$
+
+.. math::
+
+   \begin{array}{rclr}
+   X_i(0)     & = & 0                             & {\rm for \; all \;} i \\
+   X_i ' (t)  & = & 1                             & {\rm if \;} i = 0      \\
+   X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
+   \end{array}
+
 The example tests Rosen34 using the relations above:
 
-$head Operation Sequence$$
-The $cref rosen34$$ method for solving ODE's requires the inversion
+Operation Sequence
+******************
+The :ref:`rosen34-name` method for solving ODE's requires the inversion
 of a system of linear equations.
 This indices used for pivoting may change with different values
-for $latex t$$ and $latex x$$.
+for :math:`t` and :math:`x`.
 This example checks the comparison operators.
 If some of the comparisons change,
 it makes a new recording of the function with the pivots for the current
-$latex t$$ and $latex x$$.
+:math:`t` and :math:`x`.
 Note that one could skip this step and always use the same pivot.
 This would not be as numerically stable,
 but it would still solve the equations
 (so long as none of the pivot elements are zero).
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end rosen_34.cpp}
 */
 // BEGIN C++
 

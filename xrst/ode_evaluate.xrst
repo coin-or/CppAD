@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin ode_evaluate.hpp}
+
+Source: ode_evaluate
+####################
+
+| # ``ifndef CPPAD_ODE_EVALUATE_HPP``
+| # ``define CPPAD_ODE_EVALUATE_HPP``
+
+{xrst_literal
+   include/cppad/speed/ode_evaluate.hpp
+   // BEGIN C++
+   // END C++
+}
+
+``# endif``
+
+{xrst_end ode_evaluate.hpp}

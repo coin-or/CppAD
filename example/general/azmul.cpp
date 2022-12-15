@@ -4,15 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin azmul.cpp$$
-$spell
-$$
+{xrst_begin azmul.cpp}
 
-$section AD Absolute Zero Multiplication: Example and Test$$
+AD Absolute Zero Multiplication: Example and Test
+#################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end azmul.cpp}
 */
 // BEGIN C++
 

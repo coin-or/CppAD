@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin det_by_minor.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin det_by_minor.cpp}
 
-$section Determinant Using Expansion by Minors: Example and Test$$
+Determinant Using Expansion by Minors: Example and Test
+#######################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end det_by_minor.cpp}
 */
 // BEGIN C++
 

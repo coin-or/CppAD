@@ -13,63 +13,66 @@
 namespace CppAD { namespace local { namespace optimize {
 
 /*!
-$begin optimize_get_cexp_info.hpp$$
-$spell
+{xrst_begin optimize_get_cexp_info.hpp}
+{xrst_spell
    cexp
-   itr
-   op
-   iterator
-   bool
-   Exp
    deallocate
-   Funap
-   Funav
-   Funrp
-   Funrv
-   num
-   var
-$$
+   funap
+   funav
+   funrp
+   funrv
+}
 
-$section Information for Each Conditional Expression$$
+Information for Each Conditional Expression
+###########################################
 
-$head Syntax$$
-$codei%get_cexp_info(
-   %play%,
-   %random_itr%,
-   %op_previous%,
-   %op_usage%,
-   %cexp2op%,
-   %cexp_set%,
-   %cexp_info%,
-   %skip_op_true%,
-   %skip_op_false%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| ``get_cexp_info`` (
+| |tab| *play* ,
+| |tab| *random_itr* ,
+| |tab| *op_previous* ,
+| |tab| *op_usage* ,
+| |tab| *cexp2op* ,
+| |tab| *cexp_set* ,
+| |tab| *cexp_info* ,
+| |tab| *skip_op_true* ,
+| |tab| *skip_op_false*
+| )
 
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head Restrictions$$
+Restrictions
+************
 Do not call this routine unless you are optimizing conditional expressions
 and there are conditional expressions in the operation sequence.
 
-$head Base$$
+Base
+****
 base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by this routine are done using type Base.
 
-$head play$$
+play
+****
 This is the old operation sequence.
 
-$head random_itr$$
+random_itr
+**********
 This is a random iterator for the old operation sequence.
 
-$head cexp2op$$
+cexp2op
+*******
 This is the number of conditional expressions in the operation sequence
 and must be non-zero.
 
-$head cexp_set$$
+cexp_set
+********
 This is a vector of sets, the i-th set, set[i],
 is a set of elements for the i-th operator.
 If e is an element of set[i], let j = e / 2 and k = e % 2.
@@ -78,7 +81,8 @@ the i-th operator can be skipped (is not used by any of the results).
 Note that j indexes the subset of operators that are conditional expressions
 in the old operation sequence.
 
-$head cexp_info$$
+cexp_info
+*********
 The input size of this vector must be zero.
 Upon return cexp_info has size equal to the number of conditional expressions
 in the operation sequence; i.e., the number of CExpOp operators.
@@ -90,33 +94,37 @@ Note that skip_op_true and skip_op_false could be part of this structure,
 but then we would allocate and deallocate two vectors for each conditional
 expression in the operation sequence.
 
-$head skip_op_true$$
+skip_op_true
+************
 This vector of sets is empty on input.
 Upon return, the j-th set is the operators that are not used when
 comparison result for cexp_info[j] is true.
 Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
 set and should be skipped when the corresponding AFunOp are skipped.
 
-$head skip_op_false$$
+skip_op_false
+*************
 This vector of sets is empty on input.
 Upon return, the j-th set is the operators that are not used when
 comparison result for cexp_info[j] is false.
 Note that FunapOp, FunavOp, FunrpOp, and FunrvOp, are not in this
 set and should be skipped when the corresponding AFunOp are skipped.
 
-$head op_previous$$
+op_previous
+***********
 This argument has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
 If op_previous[i] == 0, no replacement was found for the i-th operator.
 If op_previous[i] != 0, op_usage[ op_previous[i] ] == usage_t(yes_usage).
 
-$head op_usage$$
+op_usage
+********
 This argument has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
 The value op_usage[i] is the usage for
 the i-th operator in the operation sequence.
 
-$end
+{xrst_end optimize_get_cexp_info.hpp}
 */
 
 // BEGIN_PROTOTYPE

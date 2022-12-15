@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin eigen_array.cpp$$
-$spell
-   Eigen
-$$
+{xrst_begin eigen_array.cpp}
 
-$section Using Eigen Arrays: Example and Test$$
+Using Eigen Arrays: Example and Test
+####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end eigen_array.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

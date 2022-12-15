@@ -3,41 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sacado_poly.cpp$$
-$spell
-   onetape
-   cppad
-   cpp
-   tadiff
-   ddp
-   Taylor
-   dz
-   eval
-   cppad
-   vector Vector
-   typedef
-   sacado
-   Lu
-   CppAD
-   det
-   hpp
-   const
-   bool
-   Tay
-   resize
-   Coeff
-$$
+{xrst_begin sacado_poly.cpp}
 
-$section Sacado Speed: Second Derivative of a Polynomial$$
+Sacado Speed: Second Derivative of a Polynomial
+###############################################
 
+Specifications
+**************
+See :ref:`link_poly-name` .
 
-$head Specifications$$
-See $cref link_poly$$.
+Implementation
+**************
 
-$head Implementation$$
-
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -99,6 +78,8 @@ bool link_poly(
    // ------------------------------------------------------
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end sacado_poly.cpp}
 */

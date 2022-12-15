@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sign.cpp$$
-$spell
-$$
+{xrst_begin sign.cpp}
 
-$section Sign Function: Example and Test$$
+Sign Function: Example and Test
+###############################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sign.cpp}
 */
 // BEGIN C++
 

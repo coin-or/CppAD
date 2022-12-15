@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin ipopt}
+{xrst_spell
+   cflags
+}
+
+Including Ipopt Library Examples, Tests, and pkg-config
+#######################################################
+
+Examples and Tests
+******************
+If :ref:`cmake@include_ipopt`
+is on the cmake command line,
+you will be able to run the Ipopt examples and tests.
+
+include_ipopt
+*************
+If ``include_ipopt=true`` is on the cmake command line,
+then the pkg-config will find the
+necessary information to link in ipopt.
+The value of *PKG_CONFIG_PATH* must be such that the command
+
+   ``pkg-config ipopt --path --print-errors``
+
+finds the location of the file ``ipopt.pc`` .
+
+Deprecated Library
+******************
+If ``include_ipopt=true`` is on the cmake command line,
+the deprecated :ref:`cppad_ipopt_nlp-name`
+example and tests as well as installing the ``cppad_ipopt`` library
+during the ``make install`` step.
+
+get_ipopt
+*********
+If you are using Unix, you can download and install
+a copy of Ipopt using :ref:`get_ipopt.sh-name` .
+The corresponding install prefix is
+``build/prefix`` .
+
+Include Directories
+*******************
+It may be necessary to remove ``/coin-or`` from the end of the
+include directories reported by
+
+   ``pkg-config ipopt --cflags``
+
+{xrst_end ipopt}

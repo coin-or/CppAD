@@ -4,13 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin check_for_nan.cpp$$
+{xrst_begin check_for_nan.cpp}
 
-$section ADFun Checking For Nan: Example and Test$$
+ADFun Checking For Nan: Example and Test
+########################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end check_for_nan.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

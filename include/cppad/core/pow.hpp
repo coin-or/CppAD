@@ -6,97 +6,100 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin pow$$
-$spell
-   Vec
-   std
-   namespace
-   CppAD
-   const
-$$
+{xrst_begin pow}
+{xrst_spell
+   logarithms
+}
 
+The AD Power Function
+#####################
 
-$section The AD Power Function$$
+Syntax
+******
+*z* = ``pow`` ( *x* , *y* )
 
-$head Syntax$$
-$icode%z% = pow(%x%, %y%)%$$
+See Also
+********
+:ref:`pow_int-name`
 
-$head See Also$$
-$cref pow_int$$
-
-
-$head Purpose$$
+Purpose
+*******
 Determines the value of the power function which is defined by
-$latex \[
+
+.. math::
+
    {\rm pow} (x, y) = x^y
-\] $$
 
-$subhead If y is a Variable$$
-If $icode y$$ is a variable,
-the $code pow$$ function may use
+If y is a Variable
+==================
+If *y* is a variable,
+the ``pow`` function may use
 logarithms and exponentiation to compute derivatives.
-This will not work if $icode x$$ is less than or equal zero.
+This will not work if *x* is less than or equal zero.
 
-$subhead If y is a Parameter$$
-If $icode y$$ is a parameter, a different method is used to
-compute the derivatives; see $cref pow_forward$$.
-In the special case where $icode x$$ is zero,
+If y is a Parameter
+===================
+If *y* is a parameter, a different method is used to
+compute the derivatives; see :ref:`pow_forward-name` .
+In the special case where *x* is zero,
 zero is returned as the derivative.
-This is correct when $icode y$$ minus the order of the derivative
+This is correct when *y* minus the order of the derivative
 is greater than zero.
-If $icode y$$ minus the order of the derivative is zero,
-then $icode y$$ is an integer.
-If $icode y$$ minus the order of the derivative is less than zero,
+If *y* minus the order of the derivative is zero,
+then *y* is an integer.
+If *y* minus the order of the derivative is less than zero,
 the actual derivative is infinite.
 
-$subhead If y is an Integer$$
-If the value of $icode y$$ is an integer,
-the $cref pow_int$$ function can be used to compute this value
-using only multiplication (and division if $icode y$$ is negative).
-This will work even if $icode x$$ is less than or equal zero.
+If y is an Integer
+==================
+If the value of *y* is an integer,
+the :ref:`pow_int-name` function can be used to compute this value
+using only multiplication (and division if *y* is negative).
+This will work even if *x* is less than or equal zero.
 
+x
+*
+The argument *x* has one of the following prototypes
 
-$head x$$
-The argument $icode x$$ has one of the following prototypes
-$codei%
-   const %Base%&                    %x%
-   const AD<%Base%>&                %x%
-   const VecAD<%Base%>::reference&  %x%
-%$$
+| |tab| ``const`` *Base* & *x*
+| |tab| ``const AD<`` *Base* >& *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
 
-$head y$$
-The argument $icode y$$ has one of the following prototypes
-$codei%
-   const %Base%&                    %y%
-   const AD<%Base%>&                %y%
-   const VecAD<%Base%>::reference&  %y%
-%$$
+y
+*
+The argument *y* has one of the following prototypes
 
-$head z$$
-If both $icode x$$ and $icode y$$ are $icode Base$$ objects,
-the result $icode z$$ is also a $icode Base$$ object.
+| |tab| ``const`` *Base* & *y*
+| |tab| ``const AD<`` *Base* >& *y*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *y*
+
+z
+*
+If both *x* and *y* are *Base* objects,
+the result *z* is also a *Base* object.
 Otherwise, it has prototype
-$codei%
-   AD<%Base%> %z%
-%$$
 
-$head Operation Sequence$$
-This is an AD of $icode Base$$
-$cref/atomic operation/glossary/Operation/Atomic/$$
+   ``AD<`` *Base* > *z*
+
+Operation Sequence
+******************
+This is an AD of *Base*
+:ref:`atomic operation<glossary@Operation@Atomic>`
 and hence is part of the current
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/pow.cpp
-   %example/general/pow_nan.cpp
-%$$
+   example/general/pow_nan.cpp
+}
 The files
-$cref pow.cpp$$ and $cref pow_nan.cpp$$
+:ref:`pow.cpp-name` and :ref:`pow_nan.cpp-name`
 are examples tests of this function.
 
-$end
+{xrst_end pow}
 -------------------------------------------------------------------------------
 */
 

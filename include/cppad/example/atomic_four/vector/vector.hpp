@@ -6,12 +6,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector.hpp$$
+{xrst_begin atomic_four_vector.hpp}
 
-$section Atomic Vector Class: Example Implementation$$
+Atomic Vector Class: Example Implementation
+###########################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector.hpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

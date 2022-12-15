@@ -4,43 +4,51 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_eigen_cholesky.cpp$$
-$spell
-   Eigen
-   Cholesky
-$$
+{xrst_begin atomic_two_eigen_cholesky.cpp}
+{xrst_spell
+   chol
+   cholesky
+}
 
-$section  Atomic Eigen Cholesky Factorization: Example and Test$$
+Atomic Eigen Cholesky Factorization: Example and Test
+#####################################################
 
-$head Description$$
-The $cref ADFun$$ function object $icode f$$ for this example is
-$latex \[
-f(x)
-=
-\R{chol} \left( \begin{array}{cc}
-   x_0   & x_1 \\
-   x_1   & x_2
-\end{array} \right)
-=
-\frac{1}{ \sqrt{x_0} }
-\left( \begin{array}{cc}
-   x_0 & 0 \\
-   x_1 & \sqrt{ x_0 x_2 - x_1 x_1 }
-\end{array} \right)
-\] $$
+Description
+***********
+The :ref:`ADFun-name` function object *f* for this example is
+
+.. math::
+
+   f(x)
+   =
+   \R{chol} \left( \begin{array}{cc}
+      x_0   & x_1 \\
+      x_1   & x_2
+   \end{array} \right)
+   =
+   \frac{1}{ \sqrt{x_0} }
+   \left( \begin{array}{cc}
+      x_0 & 0 \\
+      x_1 & \sqrt{ x_0 x_2 - x_1 x_1 }
+   \end{array} \right)
+
 where the matrix is positive definite; i.e.,
-$latex x_0 > 0$$, $latex x_2 > 0$$ and
-$latex x_0 x_2 - x_1 x_1 > 0$$.
+:math:`x_0 > 0`, :math:`x_2 > 0` and
+:math:`x_0 x_2 - x_1 x_1 > 0`.
 
-$childtable%omh/theory/cholesky.omh
-   %include/cppad/example/atomic_two/eigen_cholesky.hpp
-%$$
+Contents
+********
+{xrst_toc_table
+   xrst/theory/cholesky.xrst
+   include/cppad/example/atomic_two/eigen_cholesky.hpp
+}
 
-$head Use Atomic Function$$
-$srccode%cpp% */
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/example/atomic_two/eigen_cholesky.hpp>
-
 
 bool eigen_cholesky(void)
 {
@@ -52,9 +60,12 @@ bool eigen_cholesky(void)
    scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
    using CppAD::NearEqual;
    //
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // -------------------------------------------------------------------
    // object that computes cholesky factor of a matrix
    atomic_eigen_cholesky<scalar> cholesky;
@@ -226,6 +237,8 @@ $srccode%cpp% */
    ok          &= NearEqual(d3w[2 * 3 + 2], 0.5 * f2_x2_x2_x2, eps, eps);
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_two_eigen_cholesky.cpp}
 */

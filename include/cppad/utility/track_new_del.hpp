@@ -5,218 +5,228 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin track_new_del$$
-$spell
-   cppad.hpp
-   Cpp
-   newptr
-   Vec
-   oldptr
-   newlen
+{xrst_begin track_new_del}
+{xrst_spell
    ncopy
-   const
-$$
+   newlen
+   newptr
+   oldptr
+}
 
-$section Routines That Track Use of New and Delete$$
+Routines That Track Use of New and Delete
+#########################################
 
-$head Deprecated 2007-07-23$$
+Deprecated 2007-07-23
+*********************
 All these routines have been deprecated.
-You should use the $cref thread_alloc$$ memory allocator instead
+You should use the :ref:`thread_alloc-name` memory allocator instead
 (which works better in both a single thread and
 properly in multi-threading environment).
 
-$head Syntax$$
-$codei%# include <cppad/utility/track_new_del.hpp>
-%$$
-$icode%newptr% = TrackNewVec(%file%, %line%, %newlen%, %oldptr%)
-%$$
-$codei%TrackDelVec(%file%, %line%, %oldptr%)
-%$$
-$icode%newptr% = TrackExtend(%file%, %line%, %newlen%, %ncopy%, %oldptr%)
-%$$
-$icode%count% = TrackCount(%file%, %line%)%$$
+Syntax
+******
 
+| # ``include <cppad/utility/track_new_del.hpp>``
+| *newptr* = ``TrackNewVec`` ( *file* , *line* , *newlen* , *oldptr* )
+| ``TrackDelVec`` ( *file* , *line* , *oldptr* )
+| *newptr* = ``TrackExtend`` ( *file* , *line* , *newlen* , *ncopy* , *oldptr* )
 
-$head Purpose$$
+*count* = ``TrackCount`` ( *file* , *line* )
+
+Purpose
+*******
 These routines
-aid in the use of $code new[]$$ and  $code delete[]$$
+aid in the use of ``new[]`` and  ``delete[]``
 during the execution of a C++ program.
 
-$head Include$$
-The file $code cppad/utility/track_new_del.hpp$$ is included by
-$code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/track_new_del.hpp`` is included by
+``cppad/cppad.hpp``
 but it can also be included separately with out the rest of the
 CppAD include files.
 
+file
+****
+The argument *file* has prototype
 
-$head file$$
-The argument $icode file$$ has prototype
-$codei%
-   const char *%file%
-%$$
+   ``const char`` * *file*
+
 It should be the source code file name
-where the call to $code TrackNew$$ is located.
+where the call to ``TrackNew`` is located.
 The best way to accomplish this is the use the preprocessor symbol
-$code __FILE__$$ for this argument.
+``__FILE__`` for this argument.
 
-$head line$$
-The argument $icode line$$ has prototype
-$codei%
-   int %line%
-%$$
+line
+****
+The argument *line* has prototype
+
+   ``int`` *line*
+
 It should be the source code file line number
-where the call to $code TrackNew$$ is located.
+where the call to ``TrackNew`` is located.
 The best way to accomplish this is the use the preprocessor symbol
-$code __LINE__$$ for this argument.
+``__LINE__`` for this argument.
 
-$head oldptr$$
-The argument $icode oldptr$$ has prototype
-$codei%
-   %Type% *%oldptr%
-%$$
-This argument is used to identify the type $icode Type$$.
+oldptr
+******
+The argument *oldptr* has prototype
 
-$head newlen$$
-The argument $icode newlen$$ has prototype
-$codei%
-   size_t %newlen%
-%$$
+   *Type* * *oldptr*
 
-$head head newptr$$
-The return value $icode newptr$$ has prototype
-$codei%
-   %Type% *%newptr%
-%$$
+This argument is used to identify the type *Type* .
+
+newlen
+******
+The argument *newlen* has prototype
+
+   ``size_t`` *newlen*
+
+head newptr
+***********
+The return value *newptr* has prototype
+
+   *Type* * *newptr*
+
 It points to the newly allocated vector of objects
 that were allocated using
-$codei%
-   new Type[%newlen%]
-%$$
 
-$head ncopy$$
-The argument $icode ncopy$$ has prototype
-$codei%
-   size_t %ncopy%
-%$$
+   ``new Type`` [ *newlen* ]
+
+ncopy
+*****
+The argument *ncopy* has prototype
+
+   ``size_t`` *ncopy*
+
 This specifies the number of elements that are copied from
 the old array to the new array.
-The value of $icode ncopy$$
-must be less than or equal $icode newlen$$.
+The value of *ncopy*
+must be less than or equal *newlen* .
 
-$head TrackNewVec$$
-If $code NDEBUG$$ is defined, this routine only sets
-$codei%
-   %newptr% = %Type% new[%newlen%]
-%$$
-The value of $icode oldptr$$ does not matter
-(except that it is used to identify $icode Type$$).
-If $code NDEBUG$$ is not defined, $code TrackNewVec$$ also
+TrackNewVec
+***********
+If ``NDEBUG`` is defined, this routine only sets
+
+   *newptr* = *Type* ``new`` [ *newlen* ]
+
+The value of *oldptr* does not matter
+(except that it is used to identify *Type* ).
+If ``NDEBUG`` is not defined, ``TrackNewVec`` also
 tracks the this memory allocation.
 In this case, if memory cannot be allocated
-$cref ErrorHandler$$ is used to generate a message
+:ref:`ErrorHandler-name` is used to generate a message
 stating that there was not sufficient memory.
 
-$subhead Macro$$
+Macro
+=====
 The preprocessor macro call
-$codei%
-   CPPAD_TRACK_NEW_VEC(%newlen%, %oldptr%)
-%$$
+
+   ``CPPAD_TRACK_NEW_VEC`` ( *newlen* , *oldptr* )
+
 expands to
-$codei%
-   CppAD::TrackNewVec(__FILE__, __LINE__, %newlen%, %oldptr%)
-%$$
 
-$subhead Previously Deprecated$$
-The preprocessor macro $code CppADTrackNewVec$$ is the
-same as $code CPPAD_TRACK_NEW_VEC$$ and was previously deprecated.
+   ``CppAD::TrackNewVec`` (__ ``FILE__`` , __ ``LINE__`` , *newlen* , *oldptr* )
 
-$head TrackDelVec$$
+Previously Deprecated
+=====================
+The preprocessor macro ``CppADTrackNewVec`` is the
+same as ``CPPAD_TRACK_NEW_VEC`` and was previously deprecated.
+
+TrackDelVec
+***********
 This routine is used to a vector of objects
-that have been allocated using $code TrackNew$$ or $code TrackExtend$$.
-If $code NDEBUG$$ is defined, this routine only frees memory with
-$codei%
-   delete [] %oldptr%
-%$$
-If $code NDEBUG$$ is not defined, $code TrackDelete$$ also checks that
-$icode oldptr$$ was allocated by $code TrackNew$$ or $code TrackExtend$$
+that have been allocated using ``TrackNew`` or ``TrackExtend`` .
+If ``NDEBUG`` is defined, this routine only frees memory with
+
+   ``delete`` [] *oldptr*
+
+If ``NDEBUG`` is not defined, ``TrackDelete`` also checks that
+*oldptr* was allocated by ``TrackNew`` or ``TrackExtend``
 and has not yet been freed.
 If this is not the case,
-$cref ErrorHandler$$ is used to generate an error message.
+:ref:`ErrorHandler-name` is used to generate an error message.
 
-$subhead Macro$$
+Macro
+=====
 The preprocessor macro call
-$codei%
-   CPPAD_TRACK_DEL_VEC(%oldptr%)
-%$$
+
+   ``CPPAD_TRACK_DEL_VEC`` ( *oldptr* )
+
 expands to
-$codei%
-   CppAD::TrackDelVec(__FILE__, __LINE__, %oldptr%)
-%$$
 
-$subhead Previously Deprecated$$
-The preprocessor macro $code CppADTrackDelVec$$ is the
-same as $code CPPAD_TRACK_DEL_VEC$$ was previously deprecated.
+   ``CppAD::TrackDelVec`` (__ ``FILE__`` , __ ``LINE__`` , *oldptr* )
 
-$head TrackExtend$$
+Previously Deprecated
+=====================
+The preprocessor macro ``CppADTrackDelVec`` is the
+same as ``CPPAD_TRACK_DEL_VEC`` was previously deprecated.
+
+TrackExtend
+***********
 This routine is used to
-allocate a new vector (using $code TrackNewVec$$),
-copy $icode ncopy$$ elements from the old vector to the new vector.
-If $icode ncopy$$ is greater than zero, $icode oldptr$$
-must have been allocated using $code TrackNewVec$$ or $code TrackExtend$$.
-In this case, the vector pointed to by $icode oldptr$$
-must be have at least $icode ncopy$$ elements
-and it will be deleted (using $code TrackDelVec$$).
-Note that the dependence of $code TrackExtend$$ on $code NDEBUG$$
-is indirectly through the routines $code TrackNewVec$$ and
-$code TrackDelVec$$.
+allocate a new vector (using ``TrackNewVec`` ),
+copy *ncopy* elements from the old vector to the new vector.
+If *ncopy* is greater than zero, *oldptr*
+must have been allocated using ``TrackNewVec`` or ``TrackExtend`` .
+In this case, the vector pointed to by *oldptr*
+must be have at least *ncopy* elements
+and it will be deleted (using ``TrackDelVec`` ).
+Note that the dependence of ``TrackExtend`` on ``NDEBUG``
+is indirectly through the routines ``TrackNewVec`` and
+``TrackDelVec`` .
 
-$subhead Macro$$
+Macro
+=====
 The preprocessor macro call
-$codei%
-   CPPAD_TRACK_EXTEND(%newlen%, %ncopy%, %oldptr%)
-%$$
+
+   ``CPPAD_TRACK_EXTEND`` ( *newlen* , *ncopy* , *oldptr* )
+
 expands to
-$codei%
-   CppAD::TrackExtend(__FILE__, __LINE__, %newlen%, %ncopy%, %oldptr%)
-%$$
 
-$subhead Previously Deprecated$$
-The preprocessor macro $code CppADTrackExtend$$ is the
-same as $code CPPAD_TRACK_EXTEND$$ and was previously deprecated.
+   ``CppAD::TrackExtend`` (__ ``FILE__`` , __ ``LINE__`` , *newlen* , *ncopy* , *oldptr* )
 
-$head TrackCount$$
-The return value $icode count$$ has prototype
-$codei%
-   size_t %count%
-%$$
-If $code NDEBUG$$ is defined, $icode count$$ will be zero.
+Previously Deprecated
+=====================
+The preprocessor macro ``CppADTrackExtend`` is the
+same as ``CPPAD_TRACK_EXTEND`` and was previously deprecated.
+
+TrackCount
+**********
+The return value *count* has prototype
+
+   ``size_t`` *count*
+
+If ``NDEBUG`` is defined, *count* will be zero.
 Otherwise, it will be
 the number of vectors that
 have been allocated
-(by $code TrackNewVec$$ or $code TrackExtend$$)
+(by ``TrackNewVec`` or ``TrackExtend`` )
 and not yet freed
-(by $code TrackDelete$$).
+(by ``TrackDelete`` ).
 
-$subhead Macro$$
+Macro
+=====
 The preprocessor macro call
-$codei%
-   CPPAD_TRACK_COUNT()
-%$$
+
+   ``CPPAD_TRACK_COUNT`` ()
+
 expands to
-$codei%
-   CppAD::TrackCount(__FILE__, __LINE__)
-%$$
 
-$subhead Previously Deprecated$$
-The preprocessor macro $code CppADTrackCount$$ is the
-same as $code CPPAD_TRACK_COUNT$$ and was previously deprecated.
+   ``CppAD::TrackCount`` (__ ``FILE__`` , __ ``LINE__`` )
 
-$head Multi-Threading$$
-These routines cannot be used $cref/in_parallel/ta_in_parallel/$$
+Previously Deprecated
+=====================
+The preprocessor macro ``CppADTrackCount`` is the
+same as ``CPPAD_TRACK_COUNT`` and was previously deprecated.
+
+Multi-Threading
+***************
+These routines cannot be used :ref:`in_parallel<ta_in_parallel-name>`
 execution mode.
-Use the $cref thread_alloc$$ routines instead.
+Use the :ref:`thread_alloc-name` routines instead.
 
-$end
+{xrst_end track_new_del}
 ------------------------------------------------------------------------------
 */
 # include <cppad/local/define.hpp>

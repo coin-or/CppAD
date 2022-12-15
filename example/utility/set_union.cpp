@@ -4,14 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin set_union.cpp$$
+{xrst_begin set_union.cpp}
 
-$section Set Union: Example and Test$$
+Set Union: Example and Test
+###########################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end set_union.cpp}
 */
 // BEGIN C++
 # include <cppad/utility/set_union.hpp>

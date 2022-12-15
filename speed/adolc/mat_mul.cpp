@@ -3,32 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin adolc_mat_mul.cpp$$
-$spell
-   sq
-   onetape
-   adouble
-   typedef
-   alloc
-   zos
-   fos
-   Adolc
-   cppad.hpp
-   bool
-   mul
-   dz
-   CppAD
-$$
+{xrst_begin adolc_mat_mul.cpp}
 
-$section Adolc Speed: Matrix Multiplication$$
+Adolc Speed: Matrix Multiplication
+##################################
 
+Specifications
+**************
+See :ref:`link_mat_mul-name` .
 
-$head Specifications$$
-See $cref link_mat_mul$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -154,7 +142,8 @@ bool link_mat_mul(
    return true;
 }
 
+/* {xrst_code}
+{xrst_spell_on}
 
-/* %$$
-$end
+{xrst_end adolc_mat_mul.cpp}
 */

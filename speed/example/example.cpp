@@ -4,21 +4,21 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin speed_example.cpp$$
-$spell
-$$
+{xrst_begin speed_example.cpp}
 
+Run the Speed Examples
+######################
 
+Running Tests
+*************
+To build this program and run its correctness tests see :ref:`cmake_check-name` .
 
-$section Run the Speed Examples$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$head Running Tests$$
-To build this program and run its correctness tests see $cref cmake_check$$.
-
-
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end speed_example.cpp}
 */
 // BEGIN C++
 

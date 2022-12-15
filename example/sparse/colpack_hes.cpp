@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin colpack_hes.cpp$$
-$spell
-   colpack_hes
-   jacobian
-$$
+{xrst_begin colpack_hes.cpp}
 
-$section ColPack: Sparse Hessian Example and Test$$
+ColPack: Sparse Hessian Example and Test
+########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end colpack_hes.cpp}
 */
 // BEGIN C++
 

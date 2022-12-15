@@ -18,54 +18,60 @@ extern bool link_det_minor(
 // END PROTOTYPE
 /*
 -------------------------------------------------------------------------------
-$begin link_det_minor$$
-$spell
-   det
-$$
+{xrst_begin link_det_minor}
 
+Speed Testing Gradient of Determinant by Minor Expansion
+########################################################
 
-$section Speed Testing Gradient of Determinant by Minor Expansion$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
-%$$
-
-$head Method$$
-The same template class $cref det_by_minor$$
+Method
+******
+The same template class :ref:`det_by_minor-name`
 is used by the different AD packages.
 
-$head job$$
-See the standard link specifications for $cref/job/link_routines/job/$$.
+job
+***
+See the standard link specifications for :ref:`link_routines@job` .
 
-$head size$$
-See the standard link specifications for $cref/size/link_routines/size/$$
-In addition, $icode size$$ is the number of rows and columns in
-$icode matrix$$.
+size
+****
+See the standard link specifications for :ref:`link_routines@size`
+In addition, *size* is the number of rows and columns in
+*matrix* .
 
-$head repeat$$
-See the standard link specifications for $cref/repeat/link_routines/repeat/$$.
+repeat
+******
+See the standard link specifications for :ref:`link_routines@repeat` .
 
-$head matrix$$
-The argument $icode matrix$$ is a vector with
-$icode%size%*%size%$$ elements.
+matrix
+******
+The argument *matrix* is a vector with
+*size* * *size* elements.
 The input value of its elements does not matter.
 The output value of its elements is the last matrix that the
 gradient (or determinant) is computed for.
 
-$head gradient$$
-The argument $icode gradient$$ is a vector with
-$icode%size%*%size%$$ elements.
+gradient
+********
+The argument *gradient* is a vector with
+*size* * *size* elements.
 The input value of its elements does not matter.
 The output value of its elements is the gradient of the
-determinant of $icode matrix$$ with respect to its elements.
+determinant of *matrix* with respect to its elements.
 
-$subhead double$$
-In the case where $icode package$$ is $code double$$,
-only the first element of $icode gradient$$ is used and it is actually
+double
+======
+In the case where *package* is ``double`` ,
+only the first element of *gradient* is used and it is actually
 the determinant value (the gradient value is not computed).
 
-$end
+{xrst_end link_det_minor}
 -----------------------------------------------------------------------------
 */
 // ---------------------------------------------------------------------------

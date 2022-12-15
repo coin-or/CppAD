@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_rc.cpp$$
-$spell
-   rc
-$$
+{xrst_begin sparse_rc.cpp}
 
-$section sparse_rc: Example and Test$$
+sparse_rc: Example and Test
+###########################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sparse_rc.cpp}
 */
 
 // BEGIN C++

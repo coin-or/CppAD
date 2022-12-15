@@ -6,138 +6,136 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ForSparseHes$$
-$spell
-   Andrea Walther
-   std
-   VecAD
-   Jacobian
-   Jac
-   Hessian
-   Hes
-   const
-   Bool
-   Dep
-   proportional
-   var
-   cpp
-$$
+{xrst_begin ForSparseHes}
 
-$section Hessian Sparsity Pattern: Forward Mode$$
+Hessian Sparsity Pattern: Forward Mode
+######################################
 
-$head Syntax$$
-$icode%h% = %f%.ForSparseHes(%r%, %s%)
-%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
+   *h* = *f* . ``ForSparseHes`` ( *r* , *s* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
 we define
-$latex \[
-\begin{array}{rcl}
-H(x)
-& = & \partial_x \left[ \partial_u S \cdot F[ x + R \cdot u ] \right]_{u=0}
-\\
-& = & R^\R{T} \cdot (S \cdot F)^{(2)} ( x ) \cdot R
-\end{array}
-\] $$
-Where $latex R \in \B{R}^{n \times n}$$ is a diagonal matrix
-and $latex S \in \B{R}^{1 \times m}$$ is a row vector.
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   H(x)
+   & = & \partial_x \left[ \partial_u S \cdot F[ x + R \cdot u ] \right]_{u=0}
+   \\
+   & = & R^\R{T} \cdot (S \cdot F)^{(2)} ( x ) \cdot R
+   \end{eqnarray}
+
+Where :math:`R \in \B{R}^{n \times n}` is a diagonal matrix
+and :math:`S \in \B{R}^{1 \times m}` is a row vector.
 Given a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the diagonal of $latex R$$ and the vector $latex S$$,
-$code ForSparseHes$$ returns a sparsity pattern for the $latex H(x)$$.
+:ref:`glossary@Sparsity Pattern`
+for the diagonal of :math:`R` and the vector :math:`S`,
+``ForSparseHes`` returns a sparsity pattern for the :math:`H(x)`.
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   const ADFun<%Base%> %f%
-%$$
+f
+*
+The object *f* has prototype
 
-$head x$$
-If the operation sequence in $icode f$$ is
-$cref/independent/glossary/Operation/Independent/$$ of
-the independent variables in $latex x \in \B{R}^n$$,
+   ``const ADFun<`` *Base* > *f*
+
+x
+*
+If the operation sequence in *f* is
+:ref:`glossary@Operation@Independent` of
+the independent variables in :math:`x \in \B{R}^n`,
 the sparsity pattern is valid for all values of
-(even if it has $cref CondExp$$ or $cref VecAD$$ operations).
+(even if it has :ref:`CondExp-name` or :ref:`VecAD-name` operations).
 
-$head r$$
-The argument $icode r$$ has prototype
-$codei%
-   const %SetVector%& %r%
-%$$
-(see $cref/SetVector/ForSparseHes/SetVector/$$ below)
-If it has elements of type $code bool$$,
-its size is $latex n$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is one and all the elements of $icode%s%[0]%$$
-are between zero and $latex n - 1$$.
+r
+*
+The argument *r* has prototype
+
+   ``const`` *SetVector* & *r*
+
+(see :ref:`ForSparseHes@SetVector` below)
+If it has elements of type ``bool`` ,
+its size is :math:`n`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is one and all the elements of *s* [0]
+are between zero and :math:`n - 1`.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the diagonal of $latex R$$.
+:ref:`glossary@Sparsity Pattern`
+for the diagonal of :math:`R`.
 The fewer non-zero elements in this sparsity pattern,
 the faster the calculation should be and the more sparse
-$latex H(x)$$ should be.
+:math:`H(x)` should be.
 
-$head s$$
-The argument $icode s$$ has prototype
-$codei%
-   const %SetVector%& %s%
-%$$
-(see $cref/SetVector/ForSparseHes/SetVector/$$ below)
-If it has elements of type $code bool$$,
-its size is $latex m$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is one and all the elements of $icode%s%[0]%$$
-are between zero and $latex m - 1$$.
+s
+*
+The argument *s* has prototype
+
+   ``const`` *SetVector* & *s*
+
+(see :ref:`ForSparseHes@SetVector` below)
+If it has elements of type ``bool`` ,
+its size is :math:`m`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is one and all the elements of *s* [0]
+are between zero and :math:`m - 1`.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the vector $icode S$$.
+:ref:`glossary@Sparsity Pattern`
+for the vector *S* .
 The fewer non-zero elements in this sparsity pattern,
 the faster the calculation should be and the more sparse
-$latex H(x)$$ should be.
+:math:`H(x)` should be.
 
-$head h$$
-The result $icode h$$ has prototype
-$codei%
-   %SetVector%& %h%
-%$$
-(see $cref/SetVector/ForSparseHes/SetVector/$$ below).
-If $icode h$$ has elements of type $code bool$$,
-its size is $latex n * n$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex n$$ and all the set elements are between
-zero and $icode%n%-1%$$ inclusive.
+h
+*
+The result *h* has prototype
+
+   *SetVector* & *h*
+
+(see :ref:`ForSparseHes@SetVector` below).
+If *h* has elements of type ``bool`` ,
+its size is :math:`n * n`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`n` and all the set elements are between
+zero and *n* ``-1`` inclusive.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex H(x)$$.
+:ref:`glossary@Sparsity Pattern`
+for the matrix :math:`H(x)`.
 
-$head SetVector$$
-The type $icode SetVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$ or $code std::set<size_t>$$;
-see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+SetVector
+*********
+The type *SetVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` or ``std::set<size_t>`` ;
+see :ref:`glossary@Sparsity Pattern` for a discussion
 of the difference.
 The type of the elements of
-$cref/SetVector/ForSparseHes/SetVector/$$ must be the
-same as the type of the elements of $icode r$$.
+:ref:`ForSparseHes@SetVector` must be the
+same as the type of the elements of *r* .
 
-$head Algorithm$$
+Algorithm
+*********
 See Algorithm II in
-$italic Computing sparse Hessians with automatic differentiation$$
+*Computing sparse Hessians with automatic differentiation*
 by Andrea Walther.
-Note that $icode s$$ provides the information so that
+Note that *s* provides the information so that
 'dead ends' are not included in the sparsity pattern.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/sparse/for_sparse_hes.cpp
-%$$
+}
 The file
-$cref for_sparse_hes.cpp$$
+:ref:`for_sparse_hes.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end ForSparseHes}
 -----------------------------------------------------------------------------
 */
 # include <algorithm>

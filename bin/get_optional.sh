@@ -3,74 +3,89 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $OMhelpKeyCharacter=@
-# @begin get_optional.sh@@ @newlinech #@@
-# @spell
-#  ls
-#  CppAD
-# @@
+# 
+# {xrst_begin get_optional.sh} 
+# {xrst_spell
+#     ls
+# }
+# {xrst_comment_ch #}
 #
-# @section Download and Install The CppAD Optional Packages@@
+# Download and Install The CppAD Optional Packages
+# ################################################
 #
-# @head Syntax@@
-# @code bin/get_optional.sh@@
+# Syntax
+# ******
+# ``bin/get_optional.sh``
 #
-# @head Purpose@@
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
 # all of the optional packages that can be used with CppAD.
 #
-# @head Distribution Directory@@
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# @cref/distribution directory/download/Distribution Directory/@@.
+# :ref:`download@Distribution Directory` .
 #
-# @head prefix@@
+# prefix
+# ******
 # This is the prefix for installing the optional packages.
-# It can be changed by editing its setting of @icode prefix@@ below
-# in the file @code bin/get_optional.sh@@.
+# It can be changed by editing its setting of *prefix* below
+# in the file ``bin/get_optional.sh`` .
 # Note that there can only be one setting that is not commented out with
-# a @code #@@ at the start of its line.
+# a  at the start of its line.
 #
-# @subhead Absolute Path@@
-# If the first character in the prefix is a @code /@@,
+# Absolute Path
+# =============
+# If the first character in the prefix is a ``/`` ,
 # it is an absolute path; e.g., the following setting:
-# @srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 # prefix="$HOME/prefix/cppad"
-# %@@
+# {xrst_code}
+# {xrst_spell_on}
 #
-# @subhead Relative Path@@
-# If the first character in the prefix is @bold not@@ a @code /@@,
+# Relative Path
+# =============
+# If the first character in the prefix is **not** a ``/`` ,
 # it is a path relative to the distribution directory;
 # e.g., the following setting:
-# @srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 prefix="build/prefix"
-# %@@
+# {xrst_code}
+# {xrst_spell_on}
 #
-# @subhead Configuration@@
-# If you do an install and then change the @icode prefix@@,
+# Configuration
+# =============
+# If you do an install and then change the *prefix* ,
 # you should delete all the files listed by the following command:
-# @codei%
-#  ls external/*.configured
-# %@@
 #
-# @head get_optional.log@@
+#     ``ls external/`` * . ``configured``
+#
+# get_optional.log
+# ****************
 # This file contains the standard out output for each of the optional scripts
 # in the order that they are executed.
 #
-# @head get_optional.err@@
+# get_optional.err
+# ****************
 # This file contains the standard error output for each of the optional scripts
 # in the order that they are executed.
 #
-# @childtable%
-#  bin/get_adolc.sh%
-#  bin/get_cppadcg.sh%
-#  bin/get_colpack.sh%
-#  bin/get_eigen.sh%
-#  bin/get_fadbad.sh%
-#  bin/get_ipopt.sh%
-#  bin/get_sacado.sh
-# %@@
+# Contents
+# ********
+# {xrst_toc_table
+#    bin/get_adolc.sh
+#    bin/get_cppadcg.sh
+#    bin/get_colpack.sh
+#    bin/get_eigen.sh
+#    bin/get_fadbad.sh
+#    bin/get_ipopt.sh
+#    bin/get_sacado.sh
+# }
 #
-# @end
+# {xrst_end get_optional.sh}
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/get_optional.sh" ]
 then

@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin hes_minor_det.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin hes_minor_det.cpp}
 
-$section Gradient of Determinant Using Expansion by Minors: Example and Test$$
+Gradient of Determinant Using Expansion by Minors: Example and Test
+###################################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end hes_minor_det.cpp}
 */
 // BEGIN C++
 // Complex examples should supppress conversion warnings

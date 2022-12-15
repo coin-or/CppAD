@@ -9,49 +9,47 @@
 # include <cppad/core/cppad_assert.hpp>
 /*
 ------------------------------------------------------------------------------
-$begin cppad_vector_itr_define$$
-$spell
-   Iterator
-   cppad
-   itr
+{xrst_begin cppad_vector_itr_define}
+{xrst_spell
    undef
-   const
-   endif
-   hpp
-$$
+}
 
-$section Vector Class Iterator Preprocessor Definitions$$
+Vector Class Iterator Preprocessor Definitions
+##############################################
 
-$head Syntax$$
-$codep
-# define CPPAD_CONST 0
-# include <cppad/local/utility/cppad_vector_itr.hpp>
-# undef CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
-# define CPPAD_CONST 1
-# include <cppad/local/utility/cppad_vector_itr.hpp>
-%$$
+Syntax
+******
+::
 
-$head Beginning of cppad_vector_itr.hpp$$
+   # define CPPAD_CONST 0
+   # include <cppad/local/utility/cppad_vector_itr.hpp>
+   # undef CPPAD_LOCAL_UTILITY_CPPAD_VECTOR_ITR_HPP
+   # define CPPAD_CONST 1
+   # include <cppad/local/utility/cppad_vector_itr.hpp>
+
+Beginning of cppad_vector_itr.hpp
+*********************************
 The following preprocessor definition appears at the beginning of
-$code cppad_vector_itr.hpp$$ and is used for the class definition in this file:
-$codep
-# if CPPAD_CONST
-# define CPPAD_VECTOR_ITR const_cppad_vector_itr
-# else
-# define CPPAD_VECTOR_ITR cppad_vector_itr
-# endif
-$$
+``cppad_vector_itr.hpp`` and is used for the class definition in this file:
+::
 
-$head End of cppad_vector_itr.hpp$$
+   # if CPPAD_CONST
+   # define CPPAD_VECTOR_ITR const_cppad_vector_itr
+   # else
+   # define CPPAD_VECTOR_ITR cppad_vector_itr
+   # endif
+
+End of cppad_vector_itr.hpp
+***************************
 The following preprocessor definition appears at the end of
-$code cppad_vector_itr.hpp$$ so that it can be included with a different
-value for $code CPPAD_CONST$$:
-$codep
-# undef CPPAD_CONST
-# undef CPPAD_VECTOR_ITR
-$$
+``cppad_vector_itr.hpp`` so that it can be included with a different
+value for ``CPPAD_CONST`` :
+::
 
-$end
+   # undef CPPAD_CONST
+   # undef CPPAD_VECTOR_ITR
+
+{xrst_end cppad_vector_itr_define}
 */
 # if CPPAD_CONST
 # define CPPAD_VECTOR_ITR const_cppad_vector_itr
@@ -71,14 +69,13 @@ template <class Type> class CPPAD_VECTOR_ITR {
 // ==========================================================================
 /*
 -----------------------------------------------------------------------------
-$begin cppad_vector_itr_traits$$
-$spell
-   Iterator
-$$
+{xrst_begin cppad_vector_itr_traits}
 
-$section Vector Class Iterator Traits and Friends$$
+Vector Class Iterator Traits and Friends
+########################################
 
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 # if ! CPPAD_CONST
    friend class const_cppad_vector_itr<Type>;
 # endif
@@ -88,74 +85,77 @@ public:
    typedef std::ptrdiff_t                     difference_type;
    typedef Type*                              pointer;
    typedef Type&                              reference;
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_itr_traits}
 -------------------------------------------------------------------------------
-$begin cppad_vector_itr_ctor$$
-$spell
-   Iterator
-   ptr
-   cppad
-   Namespace
-   CppAD
-   const
+{xrst_begin cppad_vector_itr_ctor}
+{xrst_spell
+   indirection
    iterators
-   itr
-$$
+}
 
-$section Vector Class Iterator Member Data and Constructors$$
+Vector Class Iterator Member Data and Constructors
+##################################################
 
-$head Constructors$$
+Constructors
+************
 
-$subhead Constant$$
-$codei%const_cppad_vector_itr %itr%()
-%$$
-$codei%const_cppad_vector_itr %itr%(%data%, %length%, %index%)
-%$$
-$codei%const_cppad_vector_itr %itr%(%other%)
-%$$
-$codei%const_cppad_vector_itr %itr%(%non_const_other%)
-%$$
+Constant
+========
 
-$subhead Not Constant$$
-$codei%cppad_vector_itr %itr%()
-%$$
-$codei%cppad_vector_itr %itr%(%data%, %length%, %index%)
-%$$
-$codei%cppad_vector_itr %itr%(%other%)
-%$$
+| ``const_cppad_vector_itr`` *itr* ()
+| ``const_cppad_vector_itr`` *itr* ( *data* , *length* , *index* )
+| ``const_cppad_vector_itr`` *itr* ( *other* )
+| ``const_cppad_vector_itr`` *itr* ( *non_const_other* )
 
-$head Namespace$$
-These definitions are in the $code CppAD::local::utility$$ namespace.
+Not Constant
+============
 
-$head Indirection$$
+| ``cppad_vector_itr`` *itr* ()
+| ``cppad_vector_itr`` *itr* ( *data* , *length* , *index* )
+| ``cppad_vector_itr`` *itr* ( *other* )
+
+Namespace
+*********
+These definitions are in the ``CppAD::local::utility`` namespace.
+
+Indirection
+***********
 We use an extra level of indirection in this routine so that
 the iterator has the same values as the vector even if the vector changes.
 
-$head data_$$
+data\_
+******
 is a pointer to a constant pointer to data for this vector
 (used by operations that are not supported by constant iterators).
 
-$head length_$$
+length\_
+********
 is a pointer to the length of the corresponding vector.
 
-$head index_$$
+index\_
+*******
 is the current vector index corresponding to this iterator.
 
-$head check_element$$
-generates an assert with a known cause when the $code index_$$
+check_element
+*************
+generates an assert with a known cause when the ``index_``
 does not correspond go a valid element and
-$code NDEBUG$$ is not defined.
+``NDEBUG`` is not defined.
 
-$head check_cop$$
-Generates an assert with a known cause when the $code data_$$
+check_cop
+*********
+Generates an assert with a known cause when the ``data_``
 for this vector is different from the other vector and
-$code NDEBUG$$ is not defined.
+``NDEBUG`` is not defined.
 This should be used by operators that compare iterators.
 
-
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
 # if CPPAD_CONST
    const Type* const* data_;
@@ -206,29 +206,28 @@ public:
    }
    CPPAD_VECTOR_ITR(const CPPAD_VECTOR_ITR& other) noexcept
    {  *this = other; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_itr_ctor}
 -------------------------------------------------------------------------------
-$begin cppad_vector_itr_inc$$
-$spell
-   Iterator
-   itr
-$$
+{xrst_begin cppad_vector_itr_inc}
 
-$section Vector Class Iterator Increment Operators$$
+Vector Class Iterator Increment Operators
+#########################################
 
-$head Syntax$$
-$codei%++%itr%
-%$$
-$codei%--%itr%
-%$$
-$icode%itr%++
-%$$
-$icode%itr%--
-%$$
+Syntax
+******
 
-$head Source$$
-$srccode%hpp% */
+| ++ *itr*
+| ``--`` *itr*
+| *itr* ++
+| *itr* ``--``
+
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    CPPAD_VECTOR_ITR& operator++(void) noexcept
    {  ++index_;
@@ -248,32 +247,34 @@ public:
       --index_;
       return ret;
    }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_itr_inc}
 -------------------------------------------------------------------------------
-$begin cppad_vector_itr_equal$$
-$spell
-   itr
-   Iterator
-$$
-
-$section Vector Class Iterator Equality Operators$$
-$spell
+{xrst_begin cppad_vector_itr_equal}
+{xrst_spell
    iterators
-$$
+}
 
-$head Syntax$$
-$icode%itr% == %other%
-%$$
-$icode%itr% != %other%
-%$$
+Vector Class Iterator Equality Operators
+########################################
 
-$head Restrictions$$
+Syntax
+******
+
+| *itr* == *other*
+| *itr* != *other*
+
+Restrictions
+************
 It is an error to compare iterators corresponding to different
-$code data_$$ vectors
+``data_`` vectors
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    bool operator==(const CPPAD_VECTOR_ITR& other) const CPPAD_NDEBUG_NOEXCEPT
    {  check_cop(other);
@@ -283,29 +284,28 @@ public:
    {  check_cop(other);
       return index_ != other.index_;
    }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_itr_equal}
 -------------------------------------------------------------------------------
-$begin cppad_vector_itr_element$$
-$spell
-   itr
-   Iterator
-$$
+{xrst_begin cppad_vector_itr_element}
 
-$section Vector Class Iterator Access Elements$$
+Vector Class Iterator Access Elements
+#####################################
 
-$head Syntax$$
-$icode%element% = *%itr%
-%$$
-$codei%*%itr% = %element%
-%$$
-$icode%element% = %itr%[%n%]
-%$$
-$icode%itr%[%n%] = %element%
-%$$
+Syntax
+******
 
-$head Source$$
-$srccode%hpp% */
+| *element* = * *itr*
+| * *itr* = *element*
+| *element* = *itr* [ *n* ]
+| *itr* [ *n* ] = *element*
+
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
 # if CPPAD_CONST
    const Type& operator*(void) const
@@ -330,54 +330,59 @@ public:
    {  return *( *this + difference_type(n) );
    }
 # endif
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_vector_itr_element}
 -------------------------------------------------------------------------------
-$begin cppad_vector_itr_random$$
-$spell
-   itr
-   Iterator
-   bool
+{xrst_begin cppad_vector_itr_random}
+{xrst_spell
    iterators
-$$
+}
 
-$section Vector Class Iterator Random Access$$
+Vector Class Iterator Random Access
+###################################
 
-$head Syntax$$
-$icode%itr% %+-% = %n%
-%$$
-$icode%itr% = %other% %+-% %n%
-%$$
-$icode%itr% = %n% %+-% %other%
-%$$
-$icode%n% = %itr% - %other%
-%$$
-$icode%b% = %itr% %cop% %other%
-%$$
+Syntax
+******
 
-$head Plus or Minus$$
-The notation $icode +-$$ above is either $code +$$ or $code -$$.
+| *itr* + *-* = *n*
+| *itr* = *other* + *-* *n*
+| *itr* = *n* + *-* *other*
+| *n* = *itr* ``-`` *other*
+| *b* = *itr* *cop* *other*
 
-$head cop$$
+Plus or Minus
+*************
+The notation + *-* above is either ``+`` or ``-`` .
+
+cop
+***
 is one of the following:
-$code <$$, $code <=$$,
-$code >$$, $code >=$$.
+``<`` , ``<=`` ,
+``>`` , ``>=`` .
 
-$head itr, other$$
+itr, other
+**********
 are iterators of the same type.
 
-$head n$$
-is a $code difference_type$$ object.
+n
+*
+is a ``difference_type`` object.
 
-$head b$$
-is a $code bool$$.
+b
+*
+is a ``bool`` .
 
-$head Restrictions$$
-It is an error to use a $icode cop$$ with iterators corresponding to different
-$code data_$$ vectors
+Restrictions
+************
+It is an error to use a *cop* with iterators corresponding to different
+``data_`` vectors
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    // sum and difference operators
    CPPAD_VECTOR_ITR& operator+=(difference_type n) noexcept
@@ -415,11 +420,14 @@ public:
    {  check_cop(other);
       return index_ >= other.index_;
    }
-/* %$$
-$srcthisfile%
-   0%// BEGIN_BINARY_OP%// END_BINARY_OP%1
-%$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+{xrst_literal
+   // BEGIN_BINARY_OP
+   // END_BINARY_OP
+}
+
+{xrst_end cppad_vector_itr_random}
 */
 // ==========================================================================
 }; // END_TEMPLATE_CLASS_CPPAD_VECTOR_ITR

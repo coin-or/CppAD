@@ -5,186 +5,191 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_two_rev_sparse_hes$$
-$spell
-   sq
-   mul.hpp
+{xrst_begin atomic_two_rev_sparse_hes}
+{xrst_spell
    vx
-   afun
-   Jacobian
-   jac
-   CppAD
-   std
-   bool
-   hes
-   const
-$$
+}
 
-$section Atomic Reverse Hessian Sparsity Patterns$$
+Atomic Reverse Hessian Sparsity Patterns
+########################################
 
-$head Syntax$$
-$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%, %x%)%$$
+Syntax
+******
+*ok* = *afun* . ``rev_sparse_hes`` ( *vx* , *s* , *t* , *q* , *r* , *u* , *v* , *x* )
 
-$head Deprecated 2016-06-27$$
-$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%)%$$
+Deprecated 2016-06-27
+*********************
+*ok* = *afun* . ``rev_sparse_hes`` ( *vx* , *s* , *t* , *q* , *r* , *u* , *v* )
 
-$head Purpose$$
-This function is used by $cref RevSparseHes$$ to compute
+Purpose
+*******
+This function is used by :ref:`RevSparseHes-name` to compute
 Hessian sparsity patterns.
-If you are using $cref RevSparseHes$$ to compute
+If you are using :ref:`RevSparseHes-name` to compute
 one of the versions of this
 virtual function muse be defined by the
-$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
-$pre
+:ref:`atomic_two_ctor@atomic_user` class.
 
-$$
 There is an unspecified scalar valued function
-$latex g : \B{R}^m \rightarrow \B{R}$$.
-Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
-$latex R \in \B{R}^{n \times q}$$,
-and information about the function $latex z = g(y)$$,
+:math:`g : \B{R}^m \rightarrow \B{R}`.
+Given a :ref:`glossary@Sparsity Pattern` for
+:math:`R \in \B{R}^{n \times q}`,
+and information about the function :math:`z = g(y)`,
 this routine computes the sparsity pattern for
-$latex \[
+
+.. math::
+
    V(x) = (g \circ f)^{(2)}( x ) R
-\] $$
 
-$head Implementation$$
-If you are using and $cref RevSparseHes$$,
+Implementation
+**************
+If you are using and :ref:`RevSparseHes-name` ,
 this virtual function must be defined by the
-$cref/atomic_user/atomic_two_ctor/atomic_user/$$ class.
+:ref:`atomic_two_ctor@atomic_user` class.
 
-$subhead vx$$
-The argument $icode vx$$ has prototype
-$codei%
-     const CppAD:vector<bool>& %vx%
-%$$
-$icode%vx%.size() == %n%$$, and
-for $latex j = 0 , \ldots , n-1$$,
-$icode%vx%[%j%]%$$ is true if and only if
-$icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
-or $cref/dynamic parameter/glossary/Parameter/Dynamic/$$
+vx
+==
+The argument *vx* has prototype
+
+   ``const CppAD:vector<bool>&`` *vx*
+
+*vx* . ``size`` () == *n* , and
+for :math:`j = 0 , \ldots , n-1`,
+*vx* [ *j* ] is true if and only if
+*ax* [ *j* ] is a :ref:`glossary@Variable`
+or :ref:`dynamic parameter<glossary@Parameter@Dynamic>`
 in the corresponding call to
-$codei%
-   %afun%(%ax%, %ay%)
-%$$
 
-$subhead s$$
-The argument $icode s$$ has prototype
-$codei%
-     const CppAD:vector<bool>& %s%
-%$$
-and its size is $icode m$$.
+   *afun* ( *ax* , *ay* )
+
+s
+=
+The argument *s* has prototype
+
+   ``const CppAD:vector<bool>&`` *s*
+
+and its size is *m* .
 It is a sparsity pattern for
-$latex S(x) = g^{(1)} [ f(x) ] \in \B{R}^{1 \times m}$$.
+:math:`S(x) = g^{(1)} [ f(x) ] \in \B{R}^{1 \times m}`.
 
-$subhead t$$
+t
+=
 This argument has prototype
-$codei%
-     CppAD:vector<bool>& %t%
-%$$
-and its size is $icode m$$.
+
+   ``CppAD:vector<bool>&`` *t*
+
+and its size is *m* .
 The input values of its elements
 are not specified (must not matter).
-Upon return, $icode t$$ is a
+Upon return, *t* is a
 sparsity pattern for
-$latex T(x) \in \B{R}^{1 \times n}$$ where
-$latex \[
+:math:`T(x) \in \B{R}^{1 \times n}` where
+
+.. math::
+
    T(x) = (g \circ f)^{(1)} (x) = S(x) * f^{(1)} (x)
-\]$$
 
-$subhead q$$
-The argument $icode q$$ has prototype
-$codei%
-   size_t %q%
-%$$
+q
+=
+The argument *q* has prototype
+
+   ``size_t`` *q*
+
 It specifies the number of columns in
-$latex R \in \B{R}^{n \times q}$$,
-$latex U(x) \in \B{R}^{m \times q}$$, and
-$latex V(x) \in \B{R}^{n \times q}$$.
+:math:`R \in \B{R}^{n \times q}`,
+:math:`U(x) \in \B{R}^{m \times q}`, and
+:math:`V(x) \in \B{R}^{n \times q}`.
 
-$subhead r$$
+r
+=
 This argument has prototype
-$codei%
-     const %atomic_sparsity%& %r%
-%$$
-and is a $cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
-$latex R \in \B{R}^{n \times q}$$.
 
-$head u$$
-This argument has prototype
-$codei%
-     const %atomic_sparsity%& %u%
-%$$
-and is a $cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
-$latex U(x) \in \B{R}^{m \times q}$$ which is defined by
-$latex \[
-\begin{array}{rcl}
-U(x)
-& = &
-\{ \partial_u \{ \partial_y g[ y + f^{(1)} (x) R u ] \}_{y=f(x)} \}_{u=0}
-\\
-& = &
-\partial_u \{ g^{(1)} [ f(x) + f^{(1)} (x) R u ] \}_{u=0}
-\\
-& = &
-g^{(2)} [ f(x) ] f^{(1)} (x) R
-\end{array}
-\] $$
+   ``const`` *atomic_sparsity* & *r*
 
-$subhead v$$
+and is a :ref:`atomic_two_option@atomic_sparsity` pattern for
+:math:`R \in \B{R}^{n \times q}`.
+
+u
+*
 This argument has prototype
-$codei%
-     %atomic_sparsity%& %v%
-%$$
+
+   ``const`` *atomic_sparsity* & *u*
+
+and is a :ref:`atomic_two_option@atomic_sparsity` pattern for
+:math:`U(x) \in \B{R}^{m \times q}` which is defined by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   U(x)
+   & = &
+   \{ \partial_u \{ \partial_y g[ y + f^{(1)} (x) R u ] \}_{y=f(x)} \}_{u=0}
+   \\
+   & = &
+   \partial_u \{ g^{(1)} [ f(x) + f^{(1)} (x) R u ] \}_{u=0}
+   \\
+   & = &
+   g^{(2)} [ f(x) ] f^{(1)} (x) R
+   \end{eqnarray}
+
+v
+=
+This argument has prototype
+
+   *atomic_sparsity* & *v*
+
 The input value of its elements
 are not specified (must not matter).
-Upon return, $icode v$$ is a
-$cref/atomic_sparsity/atomic_two_option/atomic_sparsity/$$ pattern for
-$latex V(x) \in \B{R}^{n \times q}$$ which is defined by
-$latex \[
-\begin{array}{rcl}
-V(x)
-& = &
-\partial_u [ \partial_x (g \circ f) ( x + R u )  ]_{u=0}
-\\
-& = &
-\partial_u [ (g \circ f)^{(1)}( x + R u )  ]_{u=0}
-\\
-& = &
-(g \circ f)^{(2)}( x ) R
-\\
-& = &
-f^{(1)} (x)^\R{T} g^{(2)} [ f(x) ] f^{(1)} (x)  R
-+
-\sum_{i=1}^m g_i^{(1)} [ f(x) ] \; f_i^{(2)} (x) R
-\\
-& = &
-f^{(1)} (x)^\R{T} U(x)
-+
-\sum_{i=1}^m S_i (x) \; f_i^{(2)} (x) R
-\end{array}
-\] $$
+Upon return, *v* is a
+:ref:`atomic_two_option@atomic_sparsity` pattern for
+:math:`V(x) \in \B{R}^{n \times q}` which is defined by
 
-$subhead x$$
-$index deprecated$$
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   V(x)
+   & = &
+   \partial_u [ \partial_x (g \circ f) ( x + R u )  ]_{u=0}
+   \\
+   & = &
+   \partial_u [ (g \circ f)^{(1)}( x + R u )  ]_{u=0}
+   \\
+   & = &
+   (g \circ f)^{(2)}( x ) R
+   \\
+   & = &
+   f^{(1)} (x)^\R{T} g^{(2)} [ f(x) ] f^{(1)} (x)  R
+   +
+   \sum_{i=1}^m g_i^{(1)} [ f(x) ] \; f_i^{(2)} (x) R
+   \\
+   & = &
+   f^{(1)} (x)^\R{T} U(x)
+   +
+   \sum_{i=1}^m S_i (x) \; f_i^{(2)} (x) R
+   \end{eqnarray}
+
+x
+=
 The argument has prototype
-$codei%
-   const CppAD::vector<%Base%>& %x%
-%$$
-and size is equal to the $icode n$$.
-This is the $cref Value$$ value corresponding to the parameters in the
-vector $cref/ax/atomic_two_afun/ax/$$ (when the atomic function was called).
+
+   ``const CppAD::vector<`` *Base* >& *x*
+
+and size is equal to the *n* .
+This is the :ref:`Value-name` value corresponding to the parameters in the
+vector :ref:`atomic_two_afun@ax` (when the atomic function was called).
 To be specific, if
-$codei%
-   if( Parameter(%ax%[%i%]) == true )
-      %x%[%i%] = Value( %ax%[%i%] );
-   else
-      %x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
-%$$
-The version of this function with out the $icode x$$ argument is deprecated;
+
+| |tab| ``if`` ( ``Parameter`` ( *ax* [ *i* ]) == ``true`` )
+| |tab| |tab| *x* [ *i* ] = ``Value`` ( *ax* [ *i* ] );
+| |tab| ``else``
+| |tab| |tab| *x* [ *i* ] = ``CppAD::numeric_limits<`` *Base* >:: ``quiet_NaN`` ();
+
+The version of this function with out the *x* argument is deprecated;
 i.e., you should include the argument even if you do not use it.
 
-$end
+{xrst_end atomic_two_rev_sparse_hes}
 -----------------------------------------------------------------------------
 */
 

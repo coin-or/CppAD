@@ -3,77 +3,92 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul_forward.cpp$$
-$spell
-   Jacobian
-$$
+{xrst_begin atomic_four_mat_mul_forward.cpp}
+{xrst_spell
+   cccccccc
+}
 
-$section Atomic Matrix Multiply Forward Mode: Example and Test$$
+Atomic Matrix Multiply Forward Mode: Example and Test
+#####################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates using forward mode with
-the $cref atomic_four_mat_mul$$ class.
+the :ref:`atomic_four_mat_mul-name` class.
 
-$head f(x)$$
-For this example, the function $latex f(x)$$ is
-$latex \[
-f(x) =
-\left( \begin{array}{cc}
-x_0 & x_1  \\
-x_2 & x_3  \\
-x_4 & x_5
-\end{array} \right)
-\left( \begin{array}{c}
-x_6  \\
-x_7
-\end{array} \right)
-=
-\left( \begin{array}{c}
-x_0 x_6 + x_1 x_7  \\
-x_2 x_6 + x_3 x_7  \\
-x_4 x_6 + x_5 x_7
-\end{array} \right)
-\] $$
+f(x)
+****
+For this example, the function :math:`f(x)` is
 
-$head Jacobian of f(x)$$
-The Jacobian of $latex f(x)$$ is
-$latex \[
-f^{(1)} (x) = \left( \begin{array}{cccccccc}
-x_6 & x_7 & 0   & 0    & 0    & 0   & x_0  & x_1 \\
-0   & 0   & x_6 & x_7  & 0    & 0   & x_2  & x_3 \\
-0   & 0   & 0   & 0    & x_6  & x_7 & x_4  & x_5
-\end{array} \right)
-\] $$
+.. math::
 
-$head g(x)$$
-We define the function $latex g(x) = f_1^{(1)} (x)^\R{T}$$; i.e.,
-$latex \[
-g(x) = ( 0,  0,  x_6,  x_7,  0,  0,  x_2,  x_3 )^\R{T}
-\] $$
+   f(x) =
+   \left( \begin{array}{cc}
+   x_0 & x_1  \\
+   x_2 & x_3  \\
+   x_4 & x_5
+   \end{array} \right)
+   \left( \begin{array}{c}
+   x_6  \\
+   x_7
+   \end{array} \right)
+   =
+   \left( \begin{array}{c}
+   x_0 x_6 + x_1 x_7  \\
+   x_2 x_6 + x_3 x_7  \\
+   x_4 x_6 + x_5 x_7
+   \end{array} \right)
 
-$head Hessian$$
-The Hessian of $latex f_1(x)$$ is the Jacobian
-of $latex g(x)$$; i.e.,
-$latex \[
-f_1^{(2)} (x)
-=
-g^{(1)} (x)
-=
-\left( \begin{array}{cccccccc}
-   0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
-   0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
-   0   & 0   & 0   & 0    & 0    & 0   & 1    & 0   \\
-   0   & 0   & 0   & 0    & 0    & 0   & 0    & 1   \\
-   0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
-   0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
-   0   & 0   & 1   & 0    & 0    & 0   & 0    & 0   \\
-   0   & 0   & 0   & 1    & 0    & 0   & 0    & 0   \\
-\end{array} \right)
-\] $$
+Jacobian of f(x)
+****************
+The Jacobian of :math:`f(x)` is
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+.. math::
+
+   f^{(1)} (x) = \left( \begin{array}{cccccccc}
+   x_6 & x_7 & 0   & 0    & 0    & 0   & x_0  & x_1 \\
+   0   & 0   & x_6 & x_7  & 0    & 0   & x_2  & x_3 \\
+   0   & 0   & 0   & 0    & x_6  & x_7 & x_4  & x_5
+   \end{array} \right)
+
+g(x)
+****
+We define the function :math:`g(x) = f_1^{(1)} (x)^\R{T}`; i.e.,
+
+.. math::
+
+   g(x) = ( 0,  0,  x_6,  x_7,  0,  0,  x_2,  x_3 )^\R{T}
+
+Hessian
+*******
+The Hessian of :math:`f_1(x)` is the Jacobian
+of :math:`g(x)`; i.e.,
+
+.. math::
+
+   f_1^{(2)} (x)
+   =
+   g^{(1)} (x)
+   =
+   \left( \begin{array}{cccccccc}
+      0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
+      0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
+      0   & 0   & 0   & 0    & 0    & 0   & 1    & 0   \\
+      0   & 0   & 0   & 0    & 0    & 0   & 0    & 1   \\
+      0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
+      0   & 0   & 0   & 0    & 0    & 0   & 0    & 0   \\
+      0   & 0   & 1   & 0    & 0    & 0   & 0    & 0   \\
+      0   & 0   & 0   & 1    & 0    & 0   & 0    & 0   \\
+   \end{array} \right)
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_forward.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

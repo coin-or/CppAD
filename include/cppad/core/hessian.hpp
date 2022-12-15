@@ -6,124 +6,128 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin Hessian$$
-$spell
-   hes
-   typename
-   Taylor
-   HesLuDet
-   const
-$$
+{xrst_begin Hessian}
 
+Hessian: Easy Driver
+####################
 
-$section Hessian: Easy Driver$$
+Syntax
+******
 
-$head Syntax$$
-$icode%hes% = %f%.Hessian(%x%, %w%)
-%$$
-$icode%hes% = %f%.Hessian(%x%, %l%)
-%$$
+| *hes* = *f* . ``Hessian`` ( *x* , *w* )
+| *hes* = *f* . ``Hessian`` ( *x* , *l* )
 
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+The syntax above sets *hes* to the Hessian
+The syntax above sets *h* to the Hessian
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-The syntax above sets $icode hes$$ to the Hessian
-The syntax above sets $icode h$$ to the Hessian
-$latex \[
+.. math::
+
    hes = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x)
-\] $$
-The routine $cref sparse_hessian$$ may be faster in the case
+
+The routine :ref:`sparse_hessian-name` may be faster in the case
 where the Hessian is sparse.
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
-(see $cref/Hessian Uses Forward/Hessian/Hessian Uses Forward/$$ below).
+f
+*
+The object *f* has prototype
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Vector% &%x%
-%$$
-(see $cref/Vector/Hessian/Vector/$$ below)
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const``
+(see :ref:`Hessian@Hessian Uses Forward` below).
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *Vector* & *x*
+
+(see :ref:`Hessian@Vector` below)
 and its size
-must be equal to $icode n$$, the dimension of the
-$cref/domain/fun_property/Domain/$$ space for $icode f$$.
+must be equal to *n* , the dimension of the
+:ref:`fun_property@Domain` space for *f* .
 It specifies
 that point at which to evaluate the Hessian.
 
-$head l$$
-If the argument $icode l$$ is present, it has prototype
-$codei%
-   size_t %l%
-%$$
-and is less than $icode m$$, the dimension of the
-$cref/range/fun_property/Range/$$ space for $icode f$$.
-It specifies the component of $icode F$$
+l
+*
+If the argument *l* is present, it has prototype
+
+   ``size_t`` *l*
+
+and is less than *m* , the dimension of the
+:ref:`fun_property@Range` space for *f* .
+It specifies the component of *F*
 for which we are evaluating the Hessian.
-To be specific, in the case where the argument $icode l$$ is present,
-$latex \[
+To be specific, in the case where the argument *l* is present,
+
+.. math::
+
    w_i = \left\{ \begin{array}{ll}
       1 & i = l \\
       0 & {\rm otherwise}
    \end{array} \right.
-\] $$
 
-$head w$$
-If the argument $icode w$$ is present, it has prototype
-$codei%
-   const %Vector% &%w%
-%$$
-and size $latex m$$.
-It specifies the value of $latex w_i$$ in the expression
-for $icode h$$.
+w
+*
+If the argument *w* is present, it has prototype
 
-$head hes$$
-The result $icode hes$$ has prototype
-$codei%
-   %Vector% %hes%
-%$$
-(see $cref/Vector/Hessian/Vector/$$ below)
-and its size is $latex n * n$$.
-For $latex j = 0 , \ldots , n - 1 $$
-and $latex \ell = 0 , \ldots , n - 1$$
-$latex \[
+   ``const`` *Vector* & *w*
+
+and size :math:`m`.
+It specifies the value of :math:`w_i` in the expression
+for *h* .
+
+hes
+***
+The result *hes* has prototype
+
+   *Vector* *hes*
+
+(see :ref:`Hessian@Vector` below)
+and its size is :math:`n * n`.
+For :math:`j = 0 , \ldots , n - 1`
+and :math:`\ell = 0 , \ldots , n - 1`
+
+.. math::
+
    hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )
-\] $$
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Base$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Hessian Uses Forward$$
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After a call to $code Hessian$$,
+Hessian Uses Forward
+********************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``Hessian`` ,
 the zero order Taylor coefficients correspond to
-$icode%f%.Forward(0, %x%)%$$
+*f* . ``Forward`` (0, *x* )
 and the other coefficients are unspecified.
 
-$head Example$$
-$children%
-   example/general/hessian.cpp%
+Example
+*******
+{xrst_toc_hidden
+   example/general/hessian.cpp
    example/general/hes_lagrangian.cpp
-%$$
+}
 The routines
-$cref hessian.cpp$$ and
-$cref hes_lagrangian.cpp$$
-are examples and tests of $code Hessian$$.
-They return $code true$$, if they succeed and $code false$$ otherwise.
+:ref:`hessian.cpp-name` and
+:ref:`hes_lagrangian.cpp-name`
+are examples and tests of ``Hessian`` .
+They return ``true`` , if they succeed and ``false`` otherwise.
 
-
-$end
+{xrst_end Hessian}
 -----------------------------------------------------------------------------
 */
 

@@ -17,84 +17,93 @@ extern bool link_ode(
 // END PROTOTYPE
 /*
 -------------------------------------------------------------------------------
-$begin link_ode$$
-$spell
-   Jacobian
+{xrst_begin link_ode}
+{xrst_spell
    fp
-   bool
-   CppAD
-$$
+}
 
+Speed Testing the Jacobian of Ode Solution
+##########################################
 
-$section Speed Testing the Jacobian of Ode Solution$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
-%$$
-
-$head Purpose$$
-Each $cref/package/speed_main/package/$$
+Purpose
+*******
+Each :ref:`speed_main@package`
 must define a version of this routine as specified below.
-This is used by the $cref speed_main$$ program
+This is used by the :ref:`speed_main-name` program
 to run the corresponding speed and correctness tests.
 
-$head Method$$
-The same template routine $cref ode_evaluate$$ is used
+Method
+******
+The same template routine :ref:`ode_evaluate-name` is used
 by th different AD packages.
 
-$head f$$
+f
+*
 The function
-$latex f : \B{R}^n \rightarrow \B{R}^n$$ that is defined and computed by
-evaluating $cref ode_evaluate$$ with a call of the form
-$codei%
-   ode_evaluate(%x%, %p%, %fp%)
-%$$
-with $icode p$$ equal to zero.
-Calls with the value $icode p$$ equal to one are used to check
+:math:`f : \B{R}^n \rightarrow \B{R}^n` that is defined and computed by
+evaluating :ref:`ode_evaluate-name` with a call of the form
+
+   ``ode_evaluate`` ( *x* , *p* , *fp* )
+
+with *p* equal to zero.
+Calls with the value *p* equal to one are used to check
 the derivative values.
 
-$head Return Value$$
+Return Value
+************
 If this speed test is not yet
-supported by a particular $icode package$$,
-the corresponding return value for $code link_ode$$
-should be $code false$$.
+supported by a particular *package* ,
+the corresponding return value for ``link_ode``
+should be ``false`` .
 
-$head size$$
-The argument $icode size$$
+size
+****
+The argument *size*
 is the number of variables in the ordinary differential equations
-which is also equal to $latex n$$.
+which is also equal to :math:`n`.
 
-$head repeat$$
-The argument $icode repeat$$ is the number of times the
+repeat
+******
+The argument *repeat* is the number of times the
 Jacobian is computed.
 
-$head x$$
-The argument $icode x$$ is a vector with $latex n$$ elements.
-The input value of the elements of $icode x$$ does not matter.
+x
+*
+The argument *x* is a vector with :math:`n` elements.
+The input value of the elements of *x* does not matter.
 On output, it has been set to the
 argument value for which the function,
 or its derivative, is being evaluated.
 The value of this vector must change with each repetition.
 
-$head jacobian$$
-The argument $icode jacobian$$ is a vector with $latex n^2$$ elements.
+jacobian
+********
+The argument *jacobian* is a vector with :math:`n^2` elements.
 The input value of its elements does not matter.
-The output value of its elements is the Jacobian of the function $latex f(x)$$
-that corresponds to output value of $icode x$$.
+The output value of its elements is the Jacobian of the function :math:`f(x)`
+that corresponds to output value of *x* .
 To be more specific, for
-$latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$,
-$latex \[
+:math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , n-1`,
+
+.. math::
+
    \D{f[i]}{x[j]} (x) = jacobian [ i \cdot n + j ]
-\] $$
 
-$subhead double$$
-In the case where $icode package$$ is $code double$$,
-only the first $latex n$$ element of $icode jacobian$$
+double
+======
+In the case where *package* is ``double`` ,
+only the first :math:`n` element of *jacobian*
 are modified and they are to the function value
-$latex f(x)$$ corresponding to the output value of $icode x$$.
+:math:`f(x)` corresponding to the output value of *x* .
 
-$end
+{xrst_end link_ode}
 -----------------------------------------------------------------------------
 */
 // ---------------------------------------------------------------------------

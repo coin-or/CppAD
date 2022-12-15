@@ -1,0 +1,88 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin sin_cos_reverse}
+
+Trigonometric and Hyperbolic Sine and Cosine Reverse Theory
+###########################################################
+
+We use the reverse theory
+:ref:`standard math function<reverse_theory@Standard Math Functions>`
+definition for the functions :math:`H` and :math:`G`.
+In addition,
+we use the following definitions for :math:`s` and :math:`c`
+and the integer :math:`\ell`
+
+.. csv-table::
+   :widths: auto
+
+   Coefficients,,:math:`s`,,:math:`c`,,:math:`\ell`
+   Trigonometric Case,,:math:`\sin [ X(t) ]`,,:math:`\cos [ X(t) ]`,,1
+   Hyperbolic Case,,:math:`\sinh [ X(t) ]`,,:math:`\cosh [ X(t) ]`,,-1
+
+We use the value
+
+.. math::
+
+   z^{(j)} = ( s^{(j)} , c^{(j)} )
+
+in the definition for :math:`G` and :math:`H`.
+The forward mode formulas for the
+:ref:`sine and cosine<sin_cos_forward-name>` functions are
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   s^{(j)}  & = & \frac{1 + \ell}{2} \sin ( x^{(0)} )
+              +   \frac{1 - \ell}{2} \sinh ( x^{(0)} )
+   \\
+   c^{(j)}  & = & \frac{1 + \ell}{2} \cos ( x^{(0)} )
+              +   \frac{1 - \ell}{2} \cosh ( x^{(0)} )
+   \end{eqnarray}
+
+for the case :math:`j = 0`, and for :math:`j > 0`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   s^{(j)} & = & \frac{1}{j}
+      \sum_{k=1}^{j} k x^{(k)} c^{(j-k)}  \\
+   c^{(j)} & = & \ell \frac{1}{j}
+      \sum_{k=1}^{j} k x^{(k)} s^{(j-k)}
+   \end{eqnarray}
+
+If :math:`j = 0`, we have the relation
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(j)} } & = &
+   \D{G}{ x^{(j)} }
+   + \D{G}{ s^{(j)} } c^{(0)}
+   + \ell \D{G}{ c^{(j)} } s^{(0)}
+   \end{eqnarray}
+
+If :math:`j > 0`, then for :math:`k = 1, \ldots , j-1`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(k)} } & = &
+   \D{G}{ x^{(k)} }
+   + \D{G}{ s^{(j)} } \frac{1}{j} k c^{(j-k)}
+   + \ell \D{G}{ c^{(j)} } \frac{1}{j} k s^{(j-k)}
+   \\
+   \D{H}{ s^{(j-k)} } & = &
+   \D{G}{ s^{(j-k)} } + \ell \D{G}{ c^{(j)} } k x^{(k)}
+   \\
+   \D{H}{ c^{(j-k)} } & = &
+   \D{G}{ c^{(j-k)} } + \D{G}{ s^{(j)} } k x^{(k)}
+   \end{eqnarray}
+
+{xrst_end sin_cos_reverse}

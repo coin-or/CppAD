@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin harmonic.cpp}
+
+Multi-Threading Harmonic Summation Example / Test
+#################################################
+
+Source File
+***********
+All of the routines below are located in the file
+::
+
+   example/multi_thread/harmonic.cpp
+
+Contents
+********
+{xrst_toc_table
+   example/multi_thread/harmonic.cpp
+}
+
+{xrst_end harmonic.cpp}

@@ -6,33 +6,37 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_eigen_cholesky.hpp$$
-$spell
-   Eigen
-   Taylor
-   Cholesky
-   op
-$$
+{xrst_begin atomic_two_eigen_cholesky.hpp}
+{xrst_spell
+   cholesky
+}
 
-$section atomic_two Eigen Cholesky Factorization Class$$
+atomic_two Eigen Cholesky Factorization Class
+#############################################
 
-$head Purpose$$
+Purpose
+*******
 Construct an atomic operation that computes a lower triangular matrix
-$latex L $$ such that $latex L L^\R{T} = A$$
-for any positive integer $latex p$$
-and symmetric positive definite matrix $latex A \in \B{R}^{p \times p}$$.
+:math:`L` such that :math:`L L^\R{T} = A`
+for any positive integer :math:`p`
+and symmetric positive definite matrix :math:`A \in \B{R}^{p \times p}`.
 
-$head Start Class Definition$$
-$srccode%cpp% */
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <Eigen/Dense>
 
+/* {xrst_code}
+{xrst_spell_on}
+Public
+******
 
-/* %$$
-$head Public$$
-
-$subhead Types$$
-$srccode%cpp% */
+Types
+=====
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 template <class Base>
@@ -53,18 +57,24 @@ public:
    //
    // lower triangular scalar matrix
    typedef Eigen::TriangularView<matrix, Eigen::Lower>             lower_view;
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // constructor
    atomic_eigen_cholesky(void) : CppAD::atomic_base<Base>(
       "atom_eigen_cholesky"                             ,
       CppAD::atomic_base<Base>::set_sparsity_enum
    )
    { }
-/* %$$
-$subhead op$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+op
+==
+{xrst_spell_off}
+{xrst_code cpp} */
    // use atomic operation to invert an AD matrix
    ad_matrix op(const ad_matrix& arg)
    {  size_t nr = size_t( arg.rows() );
@@ -98,11 +108,15 @@ $srccode%cpp% */
       }
       return result;
    }
-   /* %$$
-$head Private$$
+   /* {xrst_code}
+{xrst_spell_on}
+Private
+*******
 
-$subhead Variables$$
-$srccode%cpp% */
+Variables
+=========
+{xrst_spell_off}
+{xrst_code cpp} */
 private:
    // -------------------------------------------------------------
    // one forward mode vector of matrices for argument and result
@@ -110,9 +124,12 @@ private:
    // one reverse mode vector of matrices for argument and result
    CppAD::vector<matrix> r_arg_, r_result_;
    // -------------------------------------------------------------
-/* %$$
-$subhead forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    virtual bool forward(
       // lowest order Taylor coefficient we are evaluating
@@ -213,9 +230,12 @@ $srccode%cpp% */
       //
       return true;
    }
-/* %$$
-$subhead reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse mode routine called by CppAD
    virtual bool reverse(
       // highest order Taylor coefficient that we are computing derivative of
@@ -355,14 +375,19 @@ $srccode%cpp% */
       // -------------------------------------------------------------------
       return true;
    }
-/* %$$
-$head End Class Definition$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+End Class Definition
+********************
+{xrst_spell_off}
+{xrst_code cpp} */
 }; // End of atomic_eigen_cholesky class
 
 }  // END_EMPTY_NAMESPACE
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_two_eigen_cholesky.hpp}
 */
 
 

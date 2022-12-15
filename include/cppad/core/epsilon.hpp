@@ -7,39 +7,37 @@
 
 /*
 ------------------------------------------------------------------------------
-$begin epsilon$$
-$spell
-   std
-   eps
-   CppAD
-   namespace
-   const
-$$
+{xrst_begin epsilon}
 
-$section Machine Epsilon For AD Types$$
+Machine Epsilon For AD Types
+############################
 
-$head Deprecated 2012-06-17$$
+Deprecated 2012-06-17
+*********************
 This routine has been deprecated.
-You should use the $cref numeric_limits$$ $code epsilon$$ instead.
+You should use the :ref:`numeric_limits-name` ``epsilon`` instead.
 
-$head Syntax$$
-$icode%eps% = epsilon<%Float%>()%$$
+Syntax
+******
+*eps* = ``epsilon<`` *Float* >()
 
-$head Purpose$$
+Purpose
+*******
 Obtain the value of machine epsilon corresponding
-to the type $icode%Float%$$.
+to the type *Float* .
 
-$head Float$$
-this type can either be $codei%AD<%Base%>%$$,
-or it can be $icode Base$$ for any $codei%AD<%Base%>%$$ type.
+Float
+*****
+this type can either be ``AD<`` *Base* > ,
+or it can be *Base* for any ``AD<`` *Base* > type.
 
-$head eps$$
-The result $icode eps$$ has prototype
-$codei%
-   %Float% eps
-%$$
+eps
+***
+The result *eps* has prototype
 
-$end
+   *Float* ``eps``
+
+{xrst_end epsilon}
 ------------------------------------------------------------------------------
 */
 

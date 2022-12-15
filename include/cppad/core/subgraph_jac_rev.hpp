@@ -5,52 +5,49 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin subgraph_jac_rev$$
-$spell
-   Jacobians
-   Jacobian
-   Subgraphs
-   subgraph
-   jac
-   rcv
-   Taylor
-   rev
-   nr
-   nc
-   const
-   Bool
+{xrst_begin subgraph_jac_rev}
+{xrst_spell
    nnz
-$$
+   nr
+   subgraphs
+}
 
-$section Compute Sparse Jacobians Using Subgraphs$$
+Compute Sparse Jacobians Using Subgraphs
+########################################
 
-$head Syntax$$
-$icode%f%.subgraph_jac_rev(%x%, %subset%)
-%$$
-$icode%f%.subgraph_jac_rev(
-   %select_domain%, %select_range%, %x%, %matrix_out%
-)%$$
+Syntax
+******
 
-$head See Also$$
-$cref/clear_subgraph/subgraph_reverse/clear_subgraph/$$.
+| *f* . ``subgraph_jac_rev`` ( *x* , *subset* )
+| *f* . ``subgraph_jac_rev`` (
+| |tab| *select_domain* , *select_range* , *x* , *matrix_out*
+| )
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-function corresponding to $icode f$$.
-Here $icode n$$ is the $cref/domain/fun_property/Domain/$$ size,
-and $icode m$$ is the $cref/range/fun_property/Range/$$ size, or $icode f$$.
+See Also
+********
+:ref:`subgraph_reverse@clear_subgraph` .
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+function corresponding to *f* .
+Here *n* is the :ref:`fun_property@Domain` size,
+and *m* is the :ref:`fun_property@Range` size, or *f* .
 The syntax above takes advantage of sparsity when computing the Jacobian
-$latex \[
+
+.. math::
+
    J(x) = F^{(1)} (x)
-\] $$
+
 The  first syntax requires one to know what which elements of the Jacobian
 they want to compute.
 The second syntax computes the sparsity pattern and the value
 of the Jacobian at the same time.
 If one only wants the sparsity pattern,
-it should be faster to use $cref subgraph_sparsity$$.
+it should be faster to use :ref:`subgraph_sparsity-name` .
 
-$head Method$$
+Method
+******
 This routine uses a subgraph technique. To be specific,
 for each dependent variable,
 it creates a subgraph of the operation sequence
@@ -58,112 +55,122 @@ containing the variables that affect the dependent variable.
 This avoids the overhead of performing set operations
 that is inherent in other methods for computing sparsity patterns.
 
-$head BaseVector$$
-The type $icode BaseVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Base$$.
+BaseVector
+**********
+The type *BaseVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
 
-$head SizeVector$$
-The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head BoolVector$$
-The type $icode BoolVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$.
+BoolVector
+**********
+The type *BoolVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` .
 
-$head f$$
+f
+*
 This object has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the Taylor coefficients stored in $icode f$$ are affected
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the Taylor coefficients stored in *f* are affected
 by this operation; see
-$cref/uses forward/sparse_jac/Uses Forward/$$ below.
+:ref:`sparse_jac@Uses Forward` below.
 
-$head x$$
+x
+*
 This argument has prototype
-$codei%
-   const %BaseVector%& %x%
-%$$
-It is the value of $icode x$$ at which we are computing the Jacobian.
 
-$head Uses Forward$$
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After a call to $code sparse_jac_forward$$ or $code sparse_jac_rev$$,
+   ``const`` *BaseVector* & *x*
+
+It is the value of *x* at which we are computing the Jacobian.
+
+Uses Forward
+************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``sparse_jac_forward`` or ``sparse_jac_rev`` ,
 the zero order coefficients correspond to
-$codei%
-   %f%.Forward(0, %x%)
-%$$
+
+   *f* . ``Forward`` (0, *x* )
+
 All the other forward mode coefficients are unspecified.
 
-$head subset$$
+subset
+******
 This argument has prototype
-$codei%
-   sparse_rcv<%SizeVector%, %BaseVector%>& %subset%
-%$$
-Its row size is $icode%subset%.nr() == %m%$$,
-and its column size is $icode%subset%.nc() == %n%$$.
+
+   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *subset*
+
+Its row size is *subset* . ``nr`` () == *m* ,
+and its column size is *subset* . ``nc`` () == *n* .
 It specifies which elements of the Jacobian are computed.
 The input elements in its value vector
-$icode%subset%.val()%$$ do not matter.
+*subset* . ``val`` () do not matter.
 Upon return it contains the value of the corresponding elements
 of the Jacobian.
 
-$head select_domain$$
-The argument $icode select_domain$$ has prototype
-$codei%
-   const %BoolVector%& %select_domain%
-%$$
-It has size $latex n$$ and specifies which independent variables
+select_domain
+*************
+The argument *select_domain* has prototype
+
+   ``const`` *BoolVector* & *select_domain*
+
+It has size :math:`n` and specifies which independent variables
 to include.
 
-$head select_range$$
-The argument $icode select_range$$ has prototype
-$codei%
-   const %BoolVector%& %select_range%
-%$$
-It has size $latex m$$ and specifies which components of the range
+select_range
+************
+The argument *select_range* has prototype
+
+   ``const`` *BoolVector* & *select_range*
+
+It has size :math:`m` and specifies which components of the range
 to include in the calculation.
 A subgraph is built for each dependent variable and the selected set
 of independent variables.
 
-$head matrix_out$$
+matrix_out
+**********
 This argument has prototype
-$codei%
-   sparse_rcv<%SizeVector%, %BaseVector%>& %matrix_out%
-%$$
-This input value of $icode matrix_out$$ does not matter.
-Upon return $icode matrix_out$$ is
-$cref/sparse matrix/sparse_rcv/$$ representation of $latex F^{(1)} (x)$$.
-The matrix has $latex m$$ rows, $latex n$$ columns.
-If $icode%select_domain%[%j%]%$$ is true,
-$icode%select_range%[%i%]%$$ is true, and
-$latex F_i (x)$$ depends on $latex x_j$$,
-then the pair $latex (i, j)$$ is in $icode matrix_out$$.
-For each $icode%k% = 0 , %...%, %matrix_out%.nnz()%$$, let
-$codei%
-   %i% = %matrix_out%.row()[%k%]
-   %j% = %matrix_out%.col()[%k%]
-   %v% = %matrix_out%.val()[%k%]
-%$$
-It follows that the partial of $latex F_i (x)$$ with respect to
-$latex x_j$$ is equal to $latex v$$.
 
+   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *matrix_out*
 
-$head Example$$
-$children%
-   example/sparse/subgraph_jac_rev.cpp%
+This input value of *matrix_out* does not matter.
+Upon return *matrix_out* is
+:ref:`sparse matrix<sparse_rcv-name>` representation of :math:`F^{(1)} (x)`.
+The matrix has :math:`m` rows, :math:`n` columns.
+If *select_domain* [ *j* ] is true,
+*select_range* [ *i* ] is true, and
+:math:`F_i (x)` depends on :math:`x_j`,
+then the pair :math:`(i, j)` is in *matrix_out* .
+For each *k* = 0 , ..., *matrix_out* . ``nnz`` () , let
+
+| |tab| *i* = *matrix_out* . ``row`` ()[ *k* ]
+| |tab| *j* = *matrix_out* . ``col`` ()[ *k* ]
+| |tab| *v* = *matrix_out* . ``val`` ()[ *k* ]
+
+It follows that the partial of :math:`F_i (x)` with respect to
+:math:`x_j` is equal to :math:`v`.
+
+Example
+*******
+{xrst_toc_hidden
+   example/sparse/subgraph_jac_rev.cpp
    example/sparse/subgraph_hes2jac.cpp
-%$$
-The files $cref subgraph_jac_rev.cpp$$ and $cref subgraph_hes2jac.cpp$$
-are examples and tests using $code subgraph_jac_rev$$.
-They returns $code true$$ for success and $code false$$ for failure.
+}
+The files :ref:`subgraph_jac_rev.cpp-name` and :ref:`subgraph_hes2jac.cpp-name`
+are examples and tests using ``subgraph_jac_rev`` .
+They returns ``true`` for success and ``false`` for failure.
 
-$end
+{xrst_end subgraph_jac_rev}
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>

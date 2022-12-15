@@ -6,227 +6,234 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin LuSolve$$
-$spell
-   cppad.hpp
-   det
-   exp
-   Leq
-   typename
-   bool
-   const
-   namespace
-   std
-   Geq
-   Lu
-   CppAD
-   signdet
+{xrst_begin LuSolve}
+{xrst_spell
+   determinants
+   geq
+   leq
    logdet
-$$
+   signdet
+   specializations
+}
 
+Compute Determinant and Solve Linear Equations
+##############################################
 
-$section Compute Determinant and Solve Linear Equations$$
+Syntax
+******
 
-$pre
-$$
+   # ``include <cppad/utility/lu_solve.hpp>``
 
-$head Syntax$$
-$codei%# include <cppad/utility/lu_solve.hpp>
-%$$
-$icode%signdet% = LuSolve(%n%, %m%, %A%, %B%, %X%, %logdet%)%$$
+*signdet* = ``LuSolve`` ( *n* , *m* , *A* , *B* , *X* , *logdet* )
 
-
-$head Description$$
-Use an LU factorization of the matrix $icode A$$ to
+Description
+***********
+Use an LU factorization of the matrix *A* to
 compute its determinant
-and solve for $icode X$$ in the linear of equation
-$latex \[
+and solve for *X* in the linear of equation
+
+.. math::
+
    A * X = B
-\] $$
-where $icode A$$ is an
-$icode n$$ by $icode n$$ matrix,
-$icode X$$ is an
-$icode n$$ by $icode m$$ matrix, and
-$icode B$$ is an $latex n x m$$ matrix.
 
-$head Include$$
-The file $code cppad/utility/lu_solve.hpp$$
-is included by $code cppad/cppad.hpp$$
+where *A* is an
+*n* by *n* matrix,
+*X* is an
+*n* by *m* matrix, and
+*B* is an :math:`n x m` matrix.
+
+Include
+*******
+The file ``cppad/utility/lu_solve.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head Factor and Invert$$
+Factor and Invert
+*****************
 This routine is an easy to user interface to
-$cref LuFactor$$ and $cref LuInvert$$ for computing determinants and
+:ref:`LuFactor-name` and :ref:`LuInvert-name` for computing determinants and
 solutions of linear equations.
 These separate routines should be used if
-one right hand side $icode B$$
+one right hand side *B*
 depends on the solution corresponding to another
-right hand side (with the same value of $icode A$$).
-In this case only one call to $code LuFactor$$ is required
-but there will be multiple calls to $code LuInvert$$.
+right hand side (with the same value of *A* ).
+In this case only one call to ``LuFactor`` is required
+but there will be multiple calls to ``LuInvert`` .
 
-
-$head Matrix Storage$$
+Matrix Storage
+**************
 All matrices are stored in row major order.
-To be specific, if $latex Y$$ is a vector
-that contains a $latex p$$ by $latex q$$ matrix,
-the size of $latex Y$$ must be equal to $latex  p * q $$ and for
-$latex i = 0 , \ldots , p-1$$,
-$latex j = 0 , \ldots , q-1$$,
-$latex \[
-   Y_{i,j} = Y[ i * q + j ]
-\] $$
+To be specific, if :math:`Y` is a vector
+that contains a :math:`p` by :math:`q` matrix,
+the size of :math:`Y` must be equal to :math:`p * q` and for
+:math:`i = 0 , \ldots , p-1`,
+:math:`j = 0 , \ldots , q-1`,
 
-$head signdet$$
-The return value $icode signdet$$ is a $code int$$ value
-that specifies the sign factor for the determinant of $icode A$$.
-This determinant of $icode A$$ is zero if and only if $icode signdet$$
+.. math::
+
+   Y_{i,j} = Y[ i * q + j ]
+
+signdet
+*******
+The return value *signdet* is a ``int`` value
+that specifies the sign factor for the determinant of *A* .
+This determinant of *A* is zero if and only if *signdet*
 is zero.
 
-$head n$$
-The argument $icode n$$ has type $code size_t$$
+n
+*
+The argument *n* has type ``size_t``
 and specifies the number of rows in the matrices
-$icode A$$,
-$icode X$$,
-and $icode B$$.
-The number of columns in $icode A$$ is also equal to $icode n$$.
+*A* ,
+*X* ,
+and *B* .
+The number of columns in *A* is also equal to *n* .
 
-$head m$$
-The argument $icode m$$ has type $code size_t$$
+m
+*
+The argument *m* has type ``size_t``
 and specifies the number of columns in the matrices
-$icode X$$
-and $icode B$$.
-If $icode m$$ is zero,
-only the determinant of $icode A$$ is computed and
-the matrices $icode X$$ and $icode B$$ are not used.
+*X*
+and *B* .
+If *m* is zero,
+only the determinant of *A* is computed and
+the matrices *X* and *B* are not used.
 
-$head A$$
-The argument $icode A$$ has the prototype
-$codei%
-   const %FloatVector% &%A%
-%$$
-and the size of $icode A$$ must equal $latex n * n$$
-(see description of $cref/FloatVector/LuSolve/FloatVector/$$ below).
-This is the $latex n$$ by $icode n$$ matrix that
+A
+*
+The argument *A* has the prototype
+
+   ``const`` *FloatVector* & *A*
+
+and the size of *A* must equal :math:`n * n`
+(see description of :ref:`LuSolve@FloatVector` below).
+This is the :math:`n` by *n* matrix that
 we are computing the determinant of
 and that defines the linear equation.
 
-$head B$$
-The argument $icode B$$ has the prototype
-$codei%
-   const %FloatVector% &%B%
-%$$
-and the size of $icode B$$ must equal $latex n * m$$
-(see description of $cref/FloatVector/LuSolve/FloatVector/$$ below).
-This is the $latex n$$ by $icode m$$ matrix that
+B
+*
+The argument *B* has the prototype
+
+   ``const`` *FloatVector* & *B*
+
+and the size of *B* must equal :math:`n * m`
+(see description of :ref:`LuSolve@FloatVector` below).
+This is the :math:`n` by *m* matrix that
 defines the right hand side of the linear equations.
-If $icode m$$ is zero, $icode B$$ is not used.
+If *m* is zero, *B* is not used.
 
-$head X$$
-The argument $icode X$$ has the prototype
-$codei%
-   %FloatVector% &%X%
-%$$
-and the size of $icode X$$ must equal $latex n * m$$
-(see description of $cref/FloatVector/LuSolve/FloatVector/$$ below).
-The input value of $icode X$$ does not matter.
-On output, the elements of $icode X$$ contain the solution
+X
+*
+The argument *X* has the prototype
+
+   *FloatVector* & *X*
+
+and the size of *X* must equal :math:`n * m`
+(see description of :ref:`LuSolve@FloatVector` below).
+The input value of *X* does not matter.
+On output, the elements of *X* contain the solution
 of the equation we wish to solve
-(unless $icode signdet$$ is equal to zero).
-If $icode m$$ is zero, $icode X$$ is not used.
+(unless *signdet* is equal to zero).
+If *m* is zero, *X* is not used.
 
-$head logdet$$
-The argument $icode logdet$$ has prototype
-$codei%
-   %Float% &%logdet%
-%$$
-On input, the value of $icode logdet$$ does not matter.
+logdet
+******
+The argument *logdet* has prototype
+
+   *Float* & *logdet*
+
+On input, the value of *logdet* does not matter.
 On output, it has been set to the
-log of the determinant of $icode A$$
+log of the determinant of *A*
 (but not quite).
 To be more specific,
-the determinant of $icode A$$ is given by the formula
-$codei%
-   %det% = %signdet% * exp( %logdet% )
-%$$
-This enables $code LuSolve$$ to use logs of absolute values
-in the case where $icode Float$$ corresponds to a real number.
+the determinant of *A* is given by the formula
 
-$head Float$$
-The type $icode Float$$ must satisfy the conditions
-for a $cref NumericType$$ type.
-The routine $cref CheckNumericType$$ will generate an error message
+   *det* = *signdet* * ``exp`` ( *logdet*  )
+
+This enables ``LuSolve`` to use logs of absolute values
+in the case where *Float* corresponds to a real number.
+
+Float
+*****
+The type *Float* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
 if this is not the case.
 In addition, the following operations must be defined for any pair
-of $icode Float$$ objects $icode x$$ and $icode y$$:
+of *Float* objects *x* and *y* :
 
-$table
-$bold Operation$$ $cnext $bold Description$$  $rnext
-$codei%log(%x%)%$$ $cnext
-   returns the logarithm of $icode x$$ as a $icode Float$$ object
-$tend
+.. list-table::
 
-$head FloatVector$$
-The type $icode FloatVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type Float/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+   * - **Operation**
+     - **Description**
+   * - ``log`` ( *x* )
+     - returns the logarithm of *x* as a *Float* object
+
+FloatVector
+***********
+The type *FloatVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type Float<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head LeqZero$$
-Including the file $code lu_solve.hpp$$ defines the template function
-$codei%
-   template <class %Float%>
-   bool LeqZero<%Float%>(const %Float% &%x%)
-%$$
-in the $code CppAD$$ namespace.
-This function returns true if $icode x$$ is less than or equal to zero
-and false otherwise.
-It is used by $code LuSolve$$ to avoid taking the log of
-zero (or a negative number if $icode Float$$ corresponds to real numbers).
-This template function definition assumes that the operator
-$code <=$$ is defined for $icode Float$$ objects.
-If this operator is not defined for your use of $icode Float$$,
-you will need to specialize this template so that it works for your
-use of $code LuSolve$$.
-$pre
+LeqZero
+*******
+Including the file ``lu_solve.hpp`` defines the template function
 
-$$
-Complex numbers do not have the operation or $code <=$$ defined.
+| |tab| ``template <class`` *Float* >
+| |tab| ``bool LeqZero<`` *Float* >( ``const`` *Float* & *x* )
+
+in the ``CppAD`` namespace.
+This function returns true if *x* is less than or equal to zero
+and false otherwise.
+It is used by ``LuSolve`` to avoid taking the log of
+zero (or a negative number if *Float* corresponds to real numbers).
+This template function definition assumes that the operator
+``<=`` is defined for *Float* objects.
+If this operator is not defined for your use of *Float* ,
+you will need to specialize this template so that it works for your
+use of ``LuSolve`` .
+
+Complex numbers do not have the operation or ``<=`` defined.
 In addition, in the complex case,
 one can take the log of a negative number.
 The specializations
-$codei%
-   bool LeqZero< std::complex<float> > (const std::complex<float> &%x%)
-   bool LeqZero< std::complex<double> >(const std::complex<double> &%x%)
-%$$
-are defined by including $code lu_solve.hpp$$.
-These return true if $icode x$$ is zero and false otherwise.
 
-$head AbsGeq$$
-Including the file $code lu_solve.hpp$$ defines the template function
-$codei%
-   template <class %Float%>
-   bool AbsGeq<%Float%>(const %Float% &%x%, const %Float% &%y%)
-%$$
-If the type $icode Float$$ does not support the $code <=$$ operation
-and it is not $code std::complex<float>$$ or $code std::complex<double>$$,
-see the documentation for $code AbsGeq$$ in $cref/LuFactor/LuFactor/AbsGeq/$$.
+| |tab| ``bool LeqZero< std::complex<float> >`` ( ``const std::complex<float> &`` *x* )
+| |tab| ``bool LeqZero< std::complex<double> >`` ( ``const std::complex<double> &`` *x* )
 
-$children%
-   example/utility/lu_solve.cpp%
-   omh/lu_solve_hpp.omh
-%$$
-$head Example$$
+are defined by including ``lu_solve.hpp`` .
+These return true if *x* is zero and false otherwise.
+
+AbsGeq
+******
+Including the file ``lu_solve.hpp`` defines the template function
+
+| |tab| ``template <class`` *Float* >
+| |tab| ``bool AbsGeq<`` *Float* >( ``const`` *Float* & *x* , ``const`` *Float* & *y* )
+
+If the type *Float* does not support the ``<=`` operation
+and it is not ``std::complex<float>`` or ``std::complex<double>`` ,
+see the documentation for ``AbsGeq`` in :ref:`LuFactor<LuFactor@AbsGeq>` .
+{xrst_toc_hidden
+   example/utility/lu_solve.cpp
+   xrst/lu_solve_hpp.xrst
+}
+Example
+*******
 The file
-$cref lu_solve.cpp$$
+:ref:`lu_solve.cpp-name`
 contains an example and test of using this routine.
 
-$head Source$$
-The file $cref lu_solve.hpp$$ contains the
+Source
+******
+The file :ref:`lu_solve.hpp-name` contains the
 current source code that implements these specifications.
 
-$end
+{xrst_end LuSolve}
 --------------------------------------------------------------------------
 */
 // BEGIN C++

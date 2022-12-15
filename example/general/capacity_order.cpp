@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin capacity_order.cpp$$
-$spell
-   Taylor
-$$
+{xrst_begin capacity_order.cpp}
 
-$section Controlling Taylor Coefficient Memory Allocation: Example and Test$$
+Controlling Taylor Coefficient Memory Allocation: Example and Test
+##################################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end capacity_order.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

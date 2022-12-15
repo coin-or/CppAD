@@ -4,15 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin hes_times_dir.cpp$$
-$spell
-$$
+{xrst_begin hes_times_dir.cpp}
 
-$section Hessian Times Direction: Example and Test$$
+Hessian Times Direction: Example and Test
+#########################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end hes_times_dir.cpp}
 */
 // BEGIN C++
 // Example and test of computing the Hessian times a direction; i.e.,

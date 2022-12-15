@@ -6,17 +6,20 @@
 # include <cppad/utility/vector.hpp>
 
 /*
-$begin xpackage_sparse_hessian.cpp$$
-$spell
+{xrst_begin xpackage_sparse_hessian.cpp}
+{xrst_spell
    xpackage
-$$
+}
 
-$section Xpackage Speed: Sparse Hessian$$
+Xpackage Speed: Sparse Hessian
+##############################
 
-$head Specifications$$
-$cref link_sparse_hessian$$
+Specifications
+**************
+:ref:`link_sparse_hessian-name`
 
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // A xpackage version of this test is not yet available
 bool link_sparse_hessian(
    size_t                            size      ,
@@ -28,6 +31,8 @@ bool link_sparse_hessian(
    size_t&                           n_color
 )
 {  return false; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end xpackage_sparse_hessian.cpp}
 */

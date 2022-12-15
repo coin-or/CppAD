@@ -4,33 +4,40 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ode_gear.cpp$$
-$spell
-   Rosen
-$$
+{xrst_begin ode_gear.cpp}
+{xrst_spell
+   rclr
+}
 
-$section OdeGear: Example and Test$$
-
+OdeGear: Example and Test
+#########################
 
 Define
-$latex x : \B{R} \rightarrow \B{R}^n$$ by
-$latex \[
+:math:`x : \B{R} \rightarrow \B{R}^n` by
+
+.. math::
+
    x_i (t) =  t^{i+1}
-\] $$
-for $latex i = 1 , \ldots , n-1$$.
+
+for :math:`i = 1 , \ldots , n-1`.
 It follows that
-$latex \[
-\begin{array}{rclr}
-x_i(0)     & = & 0                             & {\rm for \; all \;} i \\
-x_i ' (t)  & = & 1                             & {\rm if \;} i = 0      \\
-x_i '(t)   & = & (i+1) t^i = (i+1) x_{i-1} (t) & {\rm if \;} i > 0
-\end{array}
-\] $$
+
+.. math::
+
+   \begin{array}{rclr}
+   x_i(0)     & = & 0                             & {\rm for \; all \;} i \\
+   x_i ' (t)  & = & 1                             & {\rm if \;} i = 0      \\
+   x_i '(t)   & = & (i+1) t^i = (i+1) x_{i-1} (t) & {\rm if \;} i > 0
+   \end{array}
+
 The example tests OdeGear using the relations above:
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ode_gear.cpp}
 */
 // BEGIN C++
 

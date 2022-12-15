@@ -400,93 +400,91 @@ private:
 // ============================================================================
 public:
 /*
-$begin ta_parallel_setup$$
-$spell
-   alloc
-   num
-   bool
-$$
-$section Setup thread_alloc For Use in Multi-Threading Environment$$
+{xrst_begin ta_parallel_setup}
+Setup thread_alloc For Use in Multi-Threading Environment
+#########################################################
 
+Syntax
+******
 
+   ``thread_alloc::parallel_setup`` ( *num_threads* , *in_parallel* , *thread_num* )
 
-
-$head Syntax$$
-$codei%thread_alloc::parallel_setup(%num_threads%, %in_parallel%, %thread_num%)
-%$$
-
-$head Purpose$$
+Purpose
+*******
 By default there is only one thread and all execution is in sequential mode,
 i.e., multiple threads are not sharing the same memory; i.e.
 not in parallel mode.
 
-$head Speed$$
-It should be faster, even when $icode num_thread$$ is equal to one,
-for $code thread_alloc$$ to hold onto memory.
+Speed
+*****
+It should be faster, even when *num_thread* is equal to one,
+for ``thread_alloc`` to hold onto memory.
 This can be accomplished using the function call
-$codei%
-   thread_alloc::hold_memory(true)
-%$$
-see $cref/hold_memory/ta_hold_memory/$$.
 
-$head num_threads$$
+   ``thread_alloc::hold_memory`` ( ``true`` )
+
+see :ref:`hold_memory<ta_hold_memory-name>` .
+
+num_threads
+***********
 This argument has prototype
-$codei%
-   size_t %num_threads%
-%$$
+
+   ``size_t`` *num_threads*
+
 and must be greater than zero.
 It specifies the number of threads that are sharing memory.
-The case $icode%num_threads% == 1%$$ is a special case that is
+The case *num_threads*  == 1 is a special case that is
 used to terminate a multi-threading environment.
 
-$head in_parallel$$
+in_parallel
+***********
 This function has prototype
-$codei%
-   bool %in_parallel%(void)
-%$$
-It must return $code true$$ if there is more than one thread
+
+   ``bool`` *in_parallel* ( ``void`` )
+
+It must return ``true`` if there is more than one thread
 currently executing.
 Otherwise it can return false.
-$pre
 
-$$
-In the special case where $icode%num_threads% == 1%$$,
-the routine $icode in_parallel$$ is not used.
+In the special case where *num_threads*  == 1 ,
+the routine *in_parallel* is not used.
 
-$head thread_num$$
+thread_num
+**********
 This function has prototype
-$codei%
-   size_t %thread_num%(void)
-%$$
+
+   ``size_t`` *thread_num* ( ``void`` )
+
 It must return a thread number that uniquely identifies the
 currently executing thread.
 Furthermore
-$codei%
-   0 <= %thread_num%() < %num_threads%
-%$$.
-In the special case where $icode%num_threads% == 1%$$,
-the routine $icode thread_num$$ is not used.
-$pre
 
-$$
+   0 <= *thread_num* () < *num_threads*
+
+.
+In the special case where *num_threads*  == 1 ,
+the routine *thread_num* is not used.
+
 Note that this function is called by other routines so,
 as soon as a new thread is executing,
-one must be certain that $icode thread_num()$$ will
+one must be certain that *thread_num* () will
 work for that thread.
 
-$head Restrictions$$
-The function $code parallel_setup$$ must be called before
-the program enters $cref/parallel/ta_in_parallel/$$ execution mode.
+Restrictions
+************
+The function ``parallel_setup`` must be called before
+the program enters :ref:`parallel<ta_in_parallel-name>` execution mode.
 In addition, this function cannot be called while in parallel mode.
 
-$head Example$$
+Example
+*******
 The files
-$cref simple_ad_openmp.cpp$$,
-$cref simple_ad_bthread.cpp$$, and
-$cref simple_ad_pthread.cpp$$,
+:ref:`simple_ad_openmp.cpp-name` ,
+:ref:`simple_ad_bthread.cpp-name` , and
+:ref:`simple_ad_pthread.cpp-name` ,
 contain examples and tests that use this function.
 
-$end
+{xrst_end ta_parallel_setup}
 */
    /*!
    Set thread_alloc up for parallel mode usage.
@@ -557,36 +555,34 @@ $end
       }
    }
 /*
-$begin ta_num_threads$$
-$spell
-   inv
-   CppAD
-   num
-   alloc
-$$
-$section Get Number of Threads$$
+{xrst_begin ta_num_threads}
+Get Number of Threads
+#####################
 
+Syntax
+******
+*number* = ``thread_alloc::num_threads`` ()
 
-$head Syntax$$
-$icode%number% = thread_alloc::num_threads()%$$
+Purpose
+*******
+Determine the number of threads as set during :ref:`parallel_setup<ta_parallel_setup-name>` .
 
-$head Purpose$$
-Determine the number of threads as set during $cref/parallel_setup/ta_parallel_setup/$$.
+number
+******
+The return value *number* has prototype
 
-$head number$$
-The return value $icode number$$ has prototype
-$codei%
-   size_t %number%
-%$$
+   ``size_t`` *number*
+
 and is equal to the value of
-$cref/num_threads/ta_parallel_setup/num_threads/$$
-in the previous call to $icode parallel_setup$$.
+:ref:`ta_parallel_setup@num_threads`
+in the previous call to *parallel_setup* .
 If there was no such previous call, the value one is returned.
 
-$head Example$$
-The example and test $cref thread_alloc.cpp$$ uses this routine.
+Example
+*******
+The example and test :ref:`thread_alloc.cpp-name` uses this routine.
 
-$end
+{xrst_end ta_num_threads}
 */
    /*!
    Get the current number of threads that thread_alloc can use.
@@ -594,36 +590,36 @@ $end
    static size_t num_threads(void)
    {  return set_get_num_threads(0); }
 /* -----------------------------------------------------------------------
-$begin ta_in_parallel$$
+{xrst_begin ta_in_parallel}
 
-$section Is The Current Execution in Parallel Mode$$
-$spell
-   thread_alloc
-   bool
-$$
+Is The Current Execution in Parallel Mode
+#########################################
 
+Syntax
+******
+*flag* = ``thread_alloc::in_parallel`` ()
 
-$head Syntax$$
-$icode%flag% = thread_alloc::in_parallel()%$$
-
-$head Purpose$$
-Some of the $cref thread_alloc$$ allocation routines have different
+Purpose
+*******
+Some of the :ref:`thread_alloc-name` allocation routines have different
 specifications for parallel (not sequential) execution mode.
 This routine enables you to determine if the current execution mode
 is sequential or parallel.
 
-$head flag$$
+flag
+****
 The return value has prototype
-$codei%
-   bool %flag%
-%$$
+
+   ``bool`` *flag*
+
 It is true if the current execution is in parallel mode
 (possibly multi-threaded) and false otherwise (sequential mode).
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_in_parallel}
 */
    /// Are we in a parallel execution state; i.e., is it possible that
    /// other threads are currently executing.
@@ -632,109 +628,106 @@ $end
       return CppAD::local::set_get_in_parallel(0);
    }
 /* -----------------------------------------------------------------------
-$begin ta_thread_num$$
-$spell
-   CppAD
-   num
-   thread_alloc
-   cppad.hpp
-$$
+{xrst_begin ta_thread_num}
 
-$section Get the Current Thread Number$$
+Get the Current Thread Number
+#############################
 
+Syntax
+******
+*thread* = ``thread_alloc::thread_num`` ()
 
-$head Syntax$$
-$icode%thread% = thread_alloc::thread_num()%$$
-
-$head Purpose$$
-Some of the $cref thread_alloc$$ allocation routines have a thread number.
+Purpose
+*******
+Some of the :ref:`thread_alloc-name` allocation routines have a thread number.
 This routine enables you to determine the current thread.
 
-$head thread$$
-The return value $icode thread$$ has prototype
-$codei%
-   size_t %thread%
-%$$
+thread
+******
+The return value *thread* has prototype
+
+   ``size_t`` *thread*
+
 and is the currently executing thread number.
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_thread_num}
 */
    /// Get current thread number
    static size_t thread_num(void)
    {  return set_get_thread_num(nullptr); }
 /* -----------------------------------------------------------------------
-$begin ta_get_memory$$
-$spell
-   std
-   num
-   ptr
-   thread_alloc
-$$
+{xrst_begin ta_get_memory}
 
-$section Get At Least A Specified Amount of Memory$$
+Get At Least A Specified Amount of Memory
+#########################################
 
+Syntax
+******
+*v_ptr* = ``thread_alloc::get_memory`` ( *min_bytes* , *cap_bytes* )
 
-$head Syntax$$
-$icode%v_ptr% = thread_alloc::get_memory(%min_bytes%, %cap_bytes%)%$$
+Purpose
+*******
+Use :ref:`thread_alloc-name` to obtain a minimum number of bytes of memory
+(for use by the :ref:`current thread<ta_thread_num-name>` ).
 
-$head Purpose$$
-Use $cref thread_alloc$$ to obtain a minimum number of bytes of memory
-(for use by the $cref/current thread/ta_thread_num/$$).
-
-$head min_bytes$$
+min_bytes
+*********
 This argument has prototype
-$codei%
-   size_t %min_bytes%
-%$$
+
+   ``size_t`` *min_bytes*
+
 It specifies the minimum number of bytes to allocate.
 This value must be less than
-$codep
-   std::numeric_limits<size_t>::max() / 2
-$$
+::
 
-$head cap_bytes$$
+   std::numeric_limits<size_t>::max() / 2
+
+cap_bytes
+*********
 This argument has prototype
-$codei%
-   size_t& %cap_bytes%
-%$$
+
+   ``size_t&`` *cap_bytes*
+
 It's input value does not matter.
 Upon return, it is the actual number of bytes (capacity)
 that have been allocated for use,
-$codei%
-   %min_bytes% <= %cap_bytes%
-%$$
 
-$head v_ptr$$
-The return value $icode v_ptr$$ has prototype
-$codei%
-   void* %v_ptr%
-%$$
-It is the location where the $icode cap_bytes$$ of memory
+   *min_bytes* <= *cap_bytes*
+
+v_ptr
+*****
+The return value *v_ptr* has prototype
+
+   ``void`` * *v_ptr*
+
+It is the location where the *cap_bytes* of memory
 that have been allocated for use begins.
 
-$head Allocation Speed$$
+Allocation Speed
+****************
 This allocation should be faster if the following conditions hold:
-$list number$$
-The memory allocated by a previous call to $code get_memory$$
-is currently available for use.
-$lnext
-The current $icode min_bytes$$ is between
-the previous $icode min_bytes$$ and previous $icode cap_bytes$$.
-$lend
 
-$head Alignment$$
+#. The memory allocated by a previous call to ``get_memory``
+   is currently available for use.
+#. The current *min_bytes* is between
+   the previous *min_bytes* and previous *cap_bytes* .
+
+Alignment
+*********
 We call a memory allocation aligned if the address is a multiple
-of the number of bytes in a $code size_t$$ value.
-If the system $code new$$ allocator is aligned, then $icode v_ptr$$
+of the number of bytes in a ``size_t`` value.
+If the system ``new`` allocator is aligned, then *v_ptr*
 pointer is also aligned.
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_get_memory}
 */
    /*!
    Use thread_alloc to get a specified amount of memory.
@@ -863,49 +856,51 @@ $end
    }
 
 /* -----------------------------------------------------------------------
-$begin ta_return_memory$$
-$spell
-   num
-   ptr
-   thread_alloc
-$$
+{xrst_begin ta_return_memory}
 
-$section Return Memory to thread_alloc$$
+Return Memory to thread_alloc
+#############################
 
+Syntax
+******
+``thread_alloc::return_memory`` ( *v_ptr* )
 
-$head Syntax$$
-$codei%thread_alloc::return_memory(%v_ptr%)%$$
-
-$head Purpose$$
-If $cref/hold_memory/ta_hold_memory/$$ is false,
+Purpose
+*******
+If :ref:`hold_memory<ta_hold_memory-name>` is false,
 the memory is returned to the system.
-Otherwise, the memory is retained by $cref thread_alloc$$ for quick future use
+Otherwise, the memory is retained by :ref:`thread_alloc-name` for quick future use
 by the thread that allocated to memory.
 
-$head v_ptr$$
+v_ptr
+*****
 This argument has prototype
-$codei%
-   void* %v_ptr%
-%$$.
+
+   ``void`` * *v_ptr*
+
+.
 It must be a pointer to memory that is currently in use; i.e.
 obtained by a previous call to
-$cref/get_memory/ta_get_memory/$$ and not yet returned.
+:ref:`get_memory<ta_get_memory-name>` and not yet returned.
 
-$head Thread$$
-Either the $cref/current thread/ta_thread_num/$$ must be the same as during
-the corresponding call to $cref/get_memory/ta_get_memory/$$,
+Thread
+******
+Either the :ref:`current thread<ta_thread_num-name>` must be the same as during
+the corresponding call to :ref:`get_memory<ta_get_memory-name>` ,
 or the current execution mode must be sequential
-(not $cref/parallel/ta_in_parallel/$$).
+(not :ref:`parallel<ta_in_parallel-name>` ).
 
-$head NDEBUG$$
-If $code NDEBUG$$ is defined, $icode v_ptr$$ is not checked (this is faster).
+NDEBUG
+******
+If ``NDEBUG`` is defined, *v_ptr* is not checked (this is faster).
 Otherwise, a list of in use pointers is searched to make sure
-that $icode v_ptr$$ is in the list.
+that *v_ptr* is in the list.
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_return_memory}
 */
    /*!
    Return memory that was obtained by get_memory.
@@ -994,47 +989,48 @@ $end
       inc_available(capacity, thread);
    }
 /* -----------------------------------------------------------------------
-$begin ta_free_available$$
-$spell
-   num
-   thread_alloc
-$$
-
-$section Free Memory Currently Available for Quick Use by a Thread$$
-$spell
+{xrst_begin ta_free_available}
+{xrst_spell
    inuse
-$$
+}
 
+Free Memory Currently Available for Quick Use by a Thread
+#########################################################
 
-$head Syntax$$
-$codei%thread_alloc::free_available(%thread%)%$$
+Syntax
+******
+``thread_alloc::free_available`` ( *thread* )
 
-$head Purpose$$
+Purpose
+*******
 Return to the system all the memory that is currently being
-$cref/held/ta_hold_memory/$$ for quick use by the specified thread.
+:ref:`held<ta_hold_memory-name>` for quick use by the specified thread.
 
-$subhead Extra Memory$$
-In the case where $icode%thread% > 0%$$,
+Extra Memory
+============
+In the case where *thread*  > 0 ,
 some extra memory is used to track allocations by the specified thread.
 If
-$codei%
-   thread_alloc::inuse(%thread%) == 0
-%$$
+
+   ``thread_alloc::inuse`` ( *thread* ) == 0
+
 the extra memory is also returned to the system.
 
-$head thread$$
+thread
+******
 This argument has prototype
-$codei%
-   size_t %thread%
-%$$
-Either $cref/thread_num/ta_thread_num/$$ must be the same as $icode thread$$,
+
+   ``size_t`` *thread*
+
+Either :ref:`thread_num<ta_thread_num-name>` must be the same as *thread* ,
 or the current execution mode must be sequential
-(not $cref/parallel/ta_in_parallel/$$).
+(not :ref:`parallel<ta_in_parallel-name>` ).
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_free_available}
 */
    /*!
    Return all the memory being held as available for a thread to the system.
@@ -1082,38 +1078,39 @@ $end
       }
    }
 /* -----------------------------------------------------------------------
-$begin ta_hold_memory$$
-$spell
-   alloc
-   num
-$$
+{xrst_begin ta_hold_memory}
 
-$section Control When Thread Alloc Retains Memory For Future Use$$
+Control When Thread Alloc Retains Memory For Future Use
+#######################################################
 
-$head Syntax$$
-$codei%thread_alloc::hold_memory(%value%)%$$
+Syntax
+******
+``thread_alloc::hold_memory`` ( *value* )
 
-$head Purpose$$
-It should be faster, even when $icode num_thread$$ is equal to one,
-for $code thread_alloc$$ to hold onto memory.
-Calling $icode hold_memory$$ with $icode value$$ equal to true,
-instructs $code thread_alloc$$ to hold onto memory,
-and put it in the $cref/available/ta_available/$$ pool,
-after each call to $cref/return_memory/ta_return_memory/$$.
+Purpose
+*******
+It should be faster, even when *num_thread* is equal to one,
+for ``thread_alloc`` to hold onto memory.
+Calling *hold_memory* with *value* equal to true,
+instructs ``thread_alloc`` to hold onto memory,
+and put it in the :ref:`available<ta_available-name>` pool,
+after each call to :ref:`return_memory<ta_return_memory-name>` .
 
-$head value$$
-If $icode value$$ is true,
-$code thread_alloc$$ with hold onto memory for future quick use.
-If it is false, future calls to $cref/return_memory/ta_return_memory/$$
+value
+*****
+If *value* is true,
+``thread_alloc`` with hold onto memory for future quick use.
+If it is false, future calls to :ref:`return_memory<ta_return_memory-name>`
 will return the corresponding memory to the system.
-By default (when $code hold_memory$$ has not been called)
-$code thread_alloc$$ does not hold onto memory.
+By default (when ``hold_memory`` has not been called)
+``thread_alloc`` does not hold onto memory.
 
-$head free_available$$
-Memory that is being held by $code thread_alloc$$ can be returned
-to the system using $cref/free_available/ta_free_available/$$.
+free_available
+**************
+Memory that is being held by ``thread_alloc`` can be returned
+to the system using :ref:`free_available<ta_free_available-name>` .
 
-$end
+{xrst_end ta_hold_memory}
 */
    /*!
    Change the thread_alloc hold memory setting.
@@ -1127,45 +1124,48 @@ $end
    }
 
 /* -----------------------------------------------------------------------
-$begin ta_inuse$$
-$spell
-   num
+{xrst_begin ta_inuse}
+{xrst_spell
    inuse
-   thread_alloc
-$$
+}
 
-$section Amount of Memory a Thread is Currently Using$$
+Amount of Memory a Thread is Currently Using
+############################################
 
+Syntax
+******
+*num_bytes* = ``thread_alloc::inuse`` ( *thread* )
 
-$head Syntax$$
-$icode%num_bytes% = thread_alloc::inuse(%thread%)%$$
-
-$head Purpose$$
-Memory being managed by $cref thread_alloc$$ has two states,
+Purpose
+*******
+Memory being managed by :ref:`thread_alloc-name` has two states,
 currently in use by the specified thread,
 and quickly available for future use by the specified thread.
 This function informs the program how much memory is in use.
 
-$head thread$$
+thread
+******
 This argument has prototype
-$codei%
-   size_t %thread%
-%$$
-Either $cref/thread_num/ta_thread_num/$$ must be the same as $icode thread$$,
-or the current execution mode must be sequential
-(not $cref/parallel/ta_in_parallel/$$).
 
-$head num_bytes$$
+   ``size_t`` *thread*
+
+Either :ref:`thread_num<ta_thread_num-name>` must be the same as *thread* ,
+or the current execution mode must be sequential
+(not :ref:`parallel<ta_in_parallel-name>` ).
+
+num_bytes
+*********
 The return value has prototype
-$codei%
-   size_t %num_bytes%
-%$$
+
+   ``size_t`` *num_bytes*
+
 It is the number of bytes currently in use by the specified thread.
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_inuse}
 */
    /*!
    Determine the amount of memory that is currently inuse.
@@ -1189,44 +1189,45 @@ $end
       return info->count_inuse_;
    }
 /* -----------------------------------------------------------------------
-$begin ta_available$$
-$spell
-   num
-   thread_alloc
-$$
+{xrst_begin ta_available}
 
-$section Amount of Memory Available for Quick Use by a Thread$$
+Amount of Memory Available for Quick Use by a Thread
+####################################################
 
+Syntax
+******
+*num_bytes* = ``thread_alloc::available`` ( *thread* )
 
-$head Syntax$$
-$icode%num_bytes% = thread_alloc::available(%thread%)%$$
-
-$head Purpose$$
-Memory being managed by $cref thread_alloc$$ has two states,
+Purpose
+*******
+Memory being managed by :ref:`thread_alloc-name` has two states,
 currently in use by the specified thread,
 and quickly available for future use by the specified thread.
 This function informs the program how much memory is available.
 
-$head thread$$
+thread
+******
 This argument has prototype
-$codei%
-   size_t %thread%
-%$$
-Either $cref/thread_num/ta_thread_num/$$ must be the same as $icode thread$$,
-or the current execution mode must be sequential
-(not $cref/parallel/ta_in_parallel/$$).
 
-$head num_bytes$$
+   ``size_t`` *thread*
+
+Either :ref:`thread_num<ta_thread_num-name>` must be the same as *thread* ,
+or the current execution mode must be sequential
+(not :ref:`parallel<ta_in_parallel-name>` ).
+
+num_bytes
+*********
 The return value has prototype
-$codei%
-   size_t %num_bytes%
-%$$
+
+   ``size_t`` *num_bytes*
+
 It is the number of bytes currently available for use by the specified thread.
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_available}
 */
    /*!
    Determine the amount of memory that is currently available for use.
@@ -1243,77 +1244,84 @@ $end
       return info->count_available_;
    }
 /* -----------------------------------------------------------------------
-$begin ta_create_array$$
-$spell
+{xrst_begin ta_create_array}
+{xrst_spell
    inuse
-   thread_alloc
-   sizeof
-$$
+}
 
-$section Allocate An Array and Call Default Constructor for its Elements$$
+Allocate An Array and Call Default Constructor for its Elements
+###############################################################
 
+Syntax
+******
+*array* = ``thread_alloc::create_array<`` *Type* >( *size_min* , *size_out* ) .
 
-$head Syntax$$
-$icode%array% = thread_alloc::create_array<%Type%>(%size_min%, %size_out%)%$$.
-
-$head Purpose$$
-Create a new raw array using $cref thread_alloc$$ memory allocator
+Purpose
+*******
+Create a new raw array using :ref:`thread_alloc-name` memory allocator
 (works well in a multi-threading environment)
 and call default constructor for each element.
 
-$head Type$$
+Type
+****
 The type of the elements of the array.
 
-$head size_min$$
+size_min
+********
 This argument has prototype
-$codei%
-   size_t %size_min%
-%$$
-This is the minimum number of elements that there can be
-in the resulting $icode array$$.
 
-$head size_out$$
+   ``size_t`` *size_min*
+
+This is the minimum number of elements that there can be
+in the resulting *array* .
+
+size_out
+********
 This argument has prototype
-$codei%
-   size_t& %size_out%
-%$$
+
+   ``size_t&`` *size_out*
+
 The input value of this argument does not matter.
 Upon return, it is the actual number of elements
-in $icode array$$
-($icode% size_min %<=% size_out%$$).
+in *array*
+( *size_min* <= *size_out* ).
 
-$head array$$
-The return value $icode array$$ has prototype
-$codei%
-   %Type%* %array%
-%$$
-It is array with $icode size_out$$ elements.
-The default constructor for $icode Type$$ is used to initialize the
-elements of $icode array$$.
-Note that $cref/delete_array/ta_delete_array/$$
+array
+*****
+The return value *array* has prototype
+
+   *Type* * *array*
+
+It is array with *size_out* elements.
+The default constructor for *Type* is used to initialize the
+elements of *array* .
+Note that :ref:`delete_array<ta_delete_array-name>`
 should be used to destroy the array when it is no longer needed.
 
-$head Delta$$
-The amount of memory $cref/inuse/ta_inuse/$$ by the current thread,
-will increase $icode delta$$ where
-$codei%
-   sizeof(%Type%) * (%size_out% + 1) > %delta% >= sizeof(%Type%) * %size_out%
-%$$
-The $cref/available/ta_available/$$ memory will decrease by $icode delta$$,
-(and the allocation will be faster)
-if a previous allocation with $icode size_min$$ between its current value
-and $icode size_out$$ is available.
+Delta
+*****
+The amount of memory :ref:`inuse<ta_inuse-name>` by the current thread,
+will increase *delta* where
 
-$head Alignment$$
+   ``sizeof`` ( *Type* ) * ( *size_out* + 1) > *delta* >= ``sizeof`` ( *Type* ) * *size_out*
+
+The :ref:`available<ta_available-name>` memory will decrease by *delta* ,
+(and the allocation will be faster)
+if a previous allocation with *size_min* between its current value
+and *size_out* is available.
+
+Alignment
+*********
 We call a memory allocation aligned if the address is a multiple
-of the number of bytes in a $code size_t$$ value.
-If the system $code new$$ allocator is aligned, then $icode array$$
+of the number of bytes in a ``size_t`` value.
+If the system ``new`` allocator is aligned, then *array*
 pointer is also aligned.
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_create_array}
 */
    /*!
    Use thread_alloc to allocate an array, then call default construtor
@@ -1360,53 +1368,58 @@ $end
       return array;
    }
 /* -----------------------------------------------------------------------
-$begin ta_delete_array$$
-$spell
-   inuse
-   thread_alloc
-   sizeof
+{xrst_begin ta_delete_array}
+{xrst_spell
    deallocate
-$$
+   inuse
+}
 
-$section Deallocate An Array and Call Destructor for its Elements$$
+Deallocate An Array and Call Destructor for its Elements
+########################################################
 
+Syntax
+******
+``thread_alloc::delete_array`` ( *array* ) .
 
-$head Syntax$$
-$codei%thread_alloc::delete_array(%array%)%$$.
-
-$head Purpose$$
+Purpose
+*******
 Returns memory corresponding to an array created by
-(create by $cref/create_array/ta_create_array/$$) to the
-$cref/available/ta_available/$$ memory pool for the current thread.
+(create by :ref:`create_array<ta_create_array-name>` ) to the
+:ref:`available<ta_available-name>` memory pool for the current thread.
 
-$head Type$$
+Type
+****
 The type of the elements of the array.
 
-$head array$$
-The argument $icode array$$ has prototype
-$codei%
-   %Type%* %array%
-%$$
-It is a value returned by $cref/create_array/ta_create_array/$$ and not yet deleted.
-The $icode Type$$ destructor is called for each element in the array.
+array
+*****
+The argument *array* has prototype
 
-$head Thread$$
-The $cref/current thread/ta_thread_num/$$ must be the
-same as when $cref/create_array/ta_create_array/$$ returned the value $icode array$$.
+   *Type* * *array*
+
+It is a value returned by :ref:`create_array<ta_create_array-name>` and not yet deleted.
+The *Type* destructor is called for each element in the array.
+
+Thread
+******
+The :ref:`current thread<ta_thread_num-name>` must be the
+same as when :ref:`create_array<ta_create_array-name>` returned the value *array* .
 There is an exception to this rule:
 when the current execution mode is sequential
-(not $cref/parallel/ta_in_parallel/$$) the current thread number does not matter.
+(not :ref:`parallel<ta_in_parallel-name>` ) the current thread number does not matter.
 
-$head Delta$$
-The amount of memory $cref/inuse/ta_inuse/$$ will decrease by $icode delta$$,
-and the $cref/available/ta_available/$$ memory will increase by $icode delta$$,
-where $cref/delta/ta_create_array/Delta/$$
-is the same as for the corresponding call to $code create_array$$.
+Delta
+*****
+The amount of memory :ref:`inuse<ta_inuse-name>` will decrease by *delta* ,
+and the :ref:`available<ta_available-name>` memory will increase by *delta* ,
+where :ref:`ta_create_array@Delta`
+is the same as for the corresponding call to ``create_array`` .
 
-$head Example$$
-$cref thread_alloc.cpp$$
+Example
+*******
+:ref:`thread_alloc.cpp-name`
 
-$end
+{xrst_end ta_delete_array}
 */
    /*!
    Return Memory Used for an Array to the Available Pool
@@ -1439,41 +1452,45 @@ $end
       thread_alloc::return_memory( reinterpret_cast<void*>(array) );
    }
 /* -----------------------------------------------------------------------
-$begin ta_free_all$$
-$spell
-   alloc
-   bool
+{xrst_begin ta_free_all}
+{xrst_spell
    inuse
-$$
+}
 
-$section Free All Memory That Was Allocated for Use by thread_alloc$$
+Free All Memory That Was Allocated for Use by thread_alloc
+##########################################################
 
+Syntax
+******
+*ok* = ``thread_alloc::free_all`` () .
 
-$head Syntax$$
-$icode%ok% = thread_alloc::free_all()%$$.
+Purpose
+*******
+Returns all memory that was used by ``thread_alloc`` to the system.
 
-$head Purpose$$
-Returns all memory that was used by $code thread_alloc$$ to the system.
+ok
+**
+The return value *ok* has prototype
 
-$head ok$$
-The return value $icode ok$$ has prototype
-$codei%
-   bool %ok%
-%$$
-Its value will be $code true$$ if all the memory can be freed.
-This requires that for all $icode thread$$ indices, there is no memory
-$cref/inuse/ta_inuse/$$; i.e.,
-$codei%
-   0 == thread_alloc::inuse(%thread%)
-%$$
+   ``bool`` *ok*
+
+Its value will be ``true`` if all the memory can be freed.
+This requires that for all *thread* indices, there is no memory
+:ref:`inuse<ta_inuse-name>` ; i.e.,
+
+   0 == ``thread_alloc::inuse`` ( *thread* )
+
 Otherwise, the return value will be false.
 
-$head Restrictions$$
+Restrictions
+************
 This function cannot be called while in parallel mode.
 
-$head Example$$
-$cref thread_alloc.cpp$$
-$end
+Example
+*******
+:ref:`thread_alloc.cpp-name`
+
+{xrst_end ta_free_all}
 */
    /*!
    Return to the system all thread_alloc memory that is not currently inuse.

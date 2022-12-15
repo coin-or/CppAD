@@ -16,76 +16,85 @@ extern bool link_mat_mul(
 // END PROTOTYPE
 /*
 -------------------------------------------------------------------------------
-$begin link_mat_mul$$
-$spell
-   mul
-   bool
-   CppAD
+{xrst_begin link_mat_mul}
+{xrst_spell
    dz
-$$
+}
 
+Speed Testing Derivative of Matrix Multiply
+###########################################
 
-$section Speed Testing Derivative of Matrix Multiply$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
-%$$
-
-
-$head Purpose$$
-Each $cref/package/speed_main/package/$$
+Purpose
+*******
+Each :ref:`speed_main@package`
 must define a version of this routine as specified below.
-This is used by the $cref speed_main$$ program
+This is used by the :ref:`speed_main-name` program
 to run the corresponding speed and correctness tests.
 
-$head Return Value$$
+Return Value
+************
 If this speed test is not yet
-supported by a particular $icode package$$,
-the corresponding return value for $code link_mat_mul$$
-should be $code false$$.
+supported by a particular *package* ,
+the corresponding return value for ``link_mat_mul``
+should be ``false`` .
 
-$head n$$
-The argument $icode n$$ is the number of rows and columns
-in the square matrix $icode x$$.
+n
+*
+The argument *n* is the number of rows and columns
+in the square matrix *x* .
 
-$head repeat$$
-The argument $icode repeat$$ is the number of different argument values
-that the derivative of $icode z$$ (or just the value of $icode z$$)
+repeat
+******
+The argument *repeat* is the number of different argument values
+that the derivative of *z* (or just the value of *z* )
 will be computed.
 
-$head x$$
-The argument $icode x$$ is a vector with
-$icode%x%.size() = %size% * %size%$$ elements.
+x
+*
+The argument *x* is a vector with
+*x* . ``size`` () = *size* * *size* elements.
 The input value of its elements does not matter.
 The output value of its elements is the last random matrix
-that is multiplied and then summed to form $icode z$$;
-$latex \[
-   x_{i,j} = x[ i * s + j ]
-\] $$
-where $icode%s% = %size%$$.
+that is multiplied and then summed to form *z* ;
 
-$head z$$
-The argument $icode z$$ is a vector with one element.
+.. math::
+
+   x_{i,j} = x[ i * s + j ]
+
+where *s* = *size* .
+
+z
+*
+The argument *z* is a vector with one element.
 The input value of the element does not matter.
 The output of its element the sum of the elements of
-$icode%y% = %x% * %x%$$; i.e.,
-$latex \[
-\begin{array}{rcl}
-   y_{i,j} & = & \sum_{k=0}^{s-1} x_{i,k} x_{k, j}
-   \\
-   z       & = & \sum_{i=0}^{s-1} \sum_{j=0}^{s-1} y_{i,j}
-\end{array}
-\] $$
+*y* = *x* * *x* ; i.e.,
 
-$head dz$$
-The argument $icode dz$$ is a vector with
-$icode%dz%.size() = %size% * %size%$$.
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      y_{i,j} & = & \sum_{k=0}^{s-1} x_{i,k} x_{k, j}
+      \\
+      z       & = & \sum_{i=0}^{s-1} \sum_{j=0}^{s-1} y_{i,j}
+   \end{eqnarray}
+
+dz
+**
+The argument *dz* is a vector with
+*dz* . ``size`` () = *size* * *size* .
 The input values of its elements do not matter.
 The output value of its elements form the
-derivative of $icode z$$ with respect to $icode x$$.
+derivative of *z* with respect to *x* .
 
-$end
+{xrst_end link_mat_mul}
 -----------------------------------------------------------------------------
 */
 // ---------------------------------------------------------------------------

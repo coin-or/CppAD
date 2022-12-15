@@ -5,17 +5,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul_base_mat_mul.hpp$$
-$spell
-$$
+{xrst_begin atomic_four_mat_mul_base_mat_mul.hpp}
 
-$section
 Atomic Multiply Base Matrices: Example Implementation
-$$
+#####################################################
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_base_mat_mul.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>

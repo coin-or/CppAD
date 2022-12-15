@@ -12,52 +12,51 @@
 
 /*
 ------------------------------------------------------------------------------
-$begin to_graph$$
-$spell
-   Json
-   cpp
-   ind
-   vec
-   arg
-   obj
-   op_enum
-$$
+{xrst_begin to_graph}
 
-$section Create a C++ AD Graph Corresponding to an ADFun Object$$
+Create a C++ AD Graph Corresponding to an ADFun Object
+######################################################
 
-$head Syntax$$
-$codei%
-   cpp_graph %graph_obj%
-   ADFun<%Base%> %fun%
-   %fun%.to_graph(%graph_obj%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| |tab| ``cpp_graph`` *graph_obj*
+| |tab| ``ADFun<`` *Base* > *fun*
+| |tab| *fun* . ``to_graph`` ( *graph_obj* )
 
-$head Base$$
-is the type corresponding to this $cref/ADFun/adfun/$$ object;
-i.e., its calculations are done using the type $icode Base$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head RecBase$$
-in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
 
-$head graph_obj$$
-This is a $code cpp_graph$$ object.
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
+
+graph_obj
+*********
+This is a ``cpp_graph`` object.
 The input value of the object does not matter.
-Upon return it is a $cref cpp_ad_graph$$ representation of this function.
+Upon return it is a :ref:`cpp_ad_graph-name` representation of this function.
 
-$head Restrictions$$
-The $code to_graph$$ routine is not yet implement for some
-possible $cref ADFun$$ operators; see
-$cref/missing operators/graph_op_enum/Missing Operators/$$.
+Restrictions
+************
+The ``to_graph`` routine is not yet implement for some
+possible :ref:`ADFun-name` operators; see
+:ref:`graph_op_enum@Missing Operators` .
 
-$head Examples$$
-See $cref/graph_op_enum examples/graph_op_enum/Examples/$$.
+Examples
+********
+See :ref:`graph_op_enum examples<graph_op_enum@Examples>` .
 
-$end
+{xrst_end to_graph}
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>

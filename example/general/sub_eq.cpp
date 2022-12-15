@@ -4,15 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sub_eq.cpp$$
+{xrst_begin sub_eq.cpp}
 
-$section AD Compound Assignment Subtraction: Example and Test$$
+AD Compound Assignment Subtraction: Example and Test
+####################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sub_eq.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

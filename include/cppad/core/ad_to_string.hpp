@@ -6,43 +6,45 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ad_to_string$$
-$spell
-   const
-   std
-$$
+{xrst_begin ad_to_string}
 
-$section Convert An AD or Base Type to String$$
+Convert An AD or Base Type to String
+####################################
 
-$head Syntax$$
-$icode%s% = to_string(%value%)%$$.
+Syntax
+******
+*s* = ``to_string`` ( *value* ) .
 
-$head See Also$$
-$cref to_string$$, $cref base_to_string$$
+See Also
+********
+:ref:`to_string-name` , :ref:`base_to_string-name`
 
-$head value$$
-The argument $icode value$$ has prototype
-$codei%
-   const AD<%Base%>& %value%
-   const %Base%&     %value%
-%$$
-where $icode Base$$ is a type that supports the
-$cref base_to_string$$ type requirement.
+value
+*****
+The argument *value* has prototype
 
-$head s$$
+| |tab| ``const AD<`` *Base* >& *value*
+| |tab| ``const`` *Base* & *value*
+
+where *Base* is a type that supports the
+:ref:`base_to_string-name` type requirement.
+
+s
+*
 The return value has prototype
-$codei%
-   std::string %s%
-%$$
-and contains a representation of the specified $icode value$$.
-If $icode value$$ is an AD type,
-the result has the same precision as for the $icode Base$$ type.
 
-$head Example$$
-The file $cref to_string.cpp$$
-includes an example and test of $code to_string$$ with AD types.
+   ``std::string`` *s*
 
-$end
+and contains a representation of the specified *value* .
+If *value* is an AD type,
+the result has the same precision as for the *Base* type.
+
+Example
+*******
+The file :ref:`to_string.cpp-name`
+includes an example and test of ``to_string`` with AD types.
+
+{xrst_end ad_to_string}
 */
 # include <cppad/utility/to_string.hpp>
 # include <cppad/core/ad.hpp>

@@ -5,39 +5,52 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul_get.hpp$$
-$spell
-   mul
-$$
+{xrst_begin atomic_four_mat_mul_get.hpp}
 
-$section atomic_mat_mul Get Routine: Example Implementation$$
+atomic_mat_mul Get Routine: Example Implementation
+##################################################
 
-$head Syntax$$
-$icode%%mat_mul%.get(%call_id%, %n_left%, %n_middle%, %n_right%)%$$
+Syntax
+******
+``mat_mul`` . *get* ( ``call_id`` , ``n_left`` , ``n_middle`` , ``n_right`` )
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Purpose$$
+Purpose
+*******
 Retrieves the dimension information for a an atomic operation that computes
-the matrix product $icode%R% = %A% * %B%$$.
+the matrix product *R* = *A* * *B* .
 
-$head call_id$$
+call_id
+*******
 This argument identifies the dimension information for this matrix product.
 
-$head n_left$$
-This result is the row dimension of the matrices $icode A$$ and $icode R$$.
+n_left
+******
+This result is the row dimension of the matrices *A* and *R* .
 
-$head n_middle$$
-This result is the column dimension of the matrix $icode A$$
-and row dimension of the matrix $icode B$$.
+n_middle
+********
+This result is the column dimension of the matrix *A*
+and row dimension of the matrix *B* .
 
-$head n_right$$
-This result is the column dimension of the matrices $icode B$$ and $icode R$$.
+n_right
+*******
+This result is the column dimension of the matrices *B* and *R* .
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_get.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>

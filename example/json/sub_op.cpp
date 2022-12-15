@@ -3,18 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin json_sub_op.cpp$$
-$spell
-   sub
-   Json
-$$
+{xrst_begin json_sub_op.cpp}
 
-$section Json sub Operator: Example and Test$$
+Json sub Operator: Example and Test
+###################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end json_sub_op.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

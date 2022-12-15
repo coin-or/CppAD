@@ -6,37 +6,40 @@
 # include <cppad/cppad.hpp>
 
 /*
-$begin change_param.cpp$$
-$spell
-   Jacobian
-$$
+{xrst_begin change_param.cpp}
 
-$section Computing a Jacobian With Constants that Change$$
+Computing a Jacobian With Constants that Change
+###############################################
 
-$head Purpose$$
+Purpose
+*******
 In this example we use two levels of taping so that a derivative
 can have constant parameters that can be changed. To be specific,
-we consider the function $latex f : \B{R}^2 \rightarrow \B{R}^2$$
-$latex \[
-f(x) = p \left( \begin{array}{c}
-   \sin( x_0 ) \\
-   \sin( x_1 )
-\end{array} \right)
-\]$$
-were $latex p \in \B{R}$$ is a parameter.
-The Jacobian of this function is
-$latex \[
-g(x,p) = p \left( \begin{array}{cc}
-   \cos( x_0 ) & 0 \\
-   0           & \cos( x_1 )
-\end{array} \right)
-\] $$
-In this example we use two levels of AD to avoid computing
-the partial of $latex f(x)$$ with respect to $latex p$$,
-but still allow for the evaluation of $latex g(x, p)$$
-at different values of $latex p$$.
+we consider the function :math:`f : \B{R}^2 \rightarrow \B{R}^2`
 
-$end
+.. math::
+
+   f(x) = p \left( \begin{array}{c}
+      \sin( x_0 ) \\
+      \sin( x_1 )
+   \end{array} \right)
+
+were :math:`p \in \B{R}` is a parameter.
+The Jacobian of this function is
+
+.. math::
+
+   g(x,p) = p \left( \begin{array}{cc}
+      \cos( x_0 ) & 0 \\
+      0           & \cos( x_1 )
+   \end{array} \right)
+
+In this example we use two levels of AD to avoid computing
+the partial of :math:`f(x)` with respect to :math:`p`,
+but still allow for the evaluation of :math:`g(x, p)`
+at different values of :math:`p`.
+
+{xrst_end change_param.cpp}
 
 */
 

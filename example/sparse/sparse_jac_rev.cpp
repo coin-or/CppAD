@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_jac_rev.cpp$$
-$spell
-   Cpp
-   Jacobian
-$$
+{xrst_begin sparse_jac_rev.cpp}
 
-$section Computing Sparse Jacobian Using Reverse Mode: Example and Test$$
+Computing Sparse Jacobian Using Reverse Mode: Example and Test
+##############################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end sparse_jac_rev.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

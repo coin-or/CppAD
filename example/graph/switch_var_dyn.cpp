@@ -3,40 +3,42 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin switch_var_dyn.cpp$$
-$spell
-   add
-   Json
-   dyn2var
-   cpp
-$$
+{xrst_begin switch_var_dyn.cpp}
 
-$section Switching Between Variables and Dynamic Parameters: Example and Test$$
+Switching Between Variables and Dynamic Parameters: Example and Test
+####################################################################
 
-$head Function$$
-For each $cref ADFun$$ object there is a corresponding function
-$latex f(x, p)$$ where
-$cref/x/independent/x/$$ is the vector of independent variables
-and $icode p$$ is the vector of
-independent $cref/dynamic/Independent/dynamic/$$ parameters.
+Function
+********
+For each :ref:`ADFun-name` object there is a corresponding function
+:math:`f(x, p)` where
+:ref:`independent@x` is the vector of independent variables
+and *p* is the vector of
+independent :ref:`Independent@dynamic` parameters.
 
-$head Convert a Function to a Graph$$
-The $cref to_graph$$ routine can be used to convert a $code ADFun$$
-to a graph representation; see $cref cpp_ad_graph$$.
+Convert a Function to a Graph
+*****************************
+The :ref:`to_graph-name` routine can be used to convert a ``ADFun``
+to a graph representation; see :ref:`cpp_ad_graph-name` .
 
-$head Convert a Graph to a Function$$
-The $cref from_graph$$ routine can be used to convert a graph back
+Convert a Graph to a Function
+*****************************
+The :ref:`from_graph-name` routine can be used to convert a graph back
 to a function. During this conversion, it is possible to change
 dynamic parameters to variables and variables to dynamic parameters;
-see $cref/dyn2var/from_graph/dyn2var/$$ and $icode var2dyn$$ in the
-$code from_graph$$ documentation.
+see :ref:`from_graph@dyn2var` and *var2dyn* in the
+``from_graph`` documentation.
 Note that many such conversions can be done
-using the same $code cpp_ad_graph$$ object.
+using the same ``cpp_ad_graph`` object.
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end switch_var_dyn.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -4,33 +4,19 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin print_for_cout.cpp$$
-$spell
-   const
-   var
-   av
-   num
-   inuse
-   bool
-   makefile
-   CppAD
-   cppad.hpp
-   std::cout
-   endl
-   namespace
-   newline
-   \nv
-   VecAD
-$$
+{xrst_begin print_for_cout.cpp}
 
-$section Printing During Forward Mode: Example and Test$$
+Printing During Forward Mode: Example and Test
+##############################################
 
+Running
+*******
+To build this program and run its correctness test see :ref:`cmake_check-name` .
 
-$head Running$$
-To build this program and run its correctness test see $cref cmake_check$$.
-
-$head Source Code$$
-$srccode%cpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 
 namespace {
@@ -107,16 +93,19 @@ int main(void)
 
    return 0;
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Output$$
+Output
+******
 Executing the program above generates the following output:
-$codep
+::
+
    v[0] = 0
    v[0] + x[0] = 2
    Test passes if two lines above repeat below:
    v[0] = 0
    v[0] + x[0] = 2
-$$
-$end
+
+{xrst_end print_for_cout.cpp}
 */

@@ -1,0 +1,90 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin tan_forward}
+
+Tangent and Hyperbolic Tangent Forward Taylor Polynomial Theory
+###############################################################
+
+Derivatives
+***********
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \tan^{(1)} ( u ) & = & [ \cos (u)^2 + \sin (u)^2  ] / \cos (u)^2
+   \\
+   & = & 1 + \tan (u)^2
+   \\
+   \tanh^{(1)} ( u ) & = & [ \cosh (u)^2 - \sinh (u)^2 ] / \cosh (u)^2
+   \\
+   & = & 1 - \tanh (u)^2
+   \end{eqnarray}
+
+If :math:`F(u)` is :math:`\tan (u)` or :math:`\tanh (u)`
+the corresponding derivative is given by
+
+.. math::
+
+   F^{(1)} (u) = 1 \pm F(u)^2
+
+Given :math:`X(t)`, we define the function :math:`Z(t) = F[ X(t) ]`.
+It follows that
+
+.. math::
+
+   Z^{(1)} (t) = F^{(1)} [ X(t) ] X^{(1)} (t) = [ 1 \pm Y(t) ] X^{(1)} (t)
+
+where we define the function :math:`Y(t) = Z(t)^2`.
+
+Taylor Coefficients Recursion
+*****************************
+Suppose that we are given the Taylor coefficients
+up to order :math:`j` for the function :math:`X(t)` and
+up to order :math:`j-1` for the functions :math:`Y(t)` and :math:`Z(t)`.
+We need a formula that computes the coefficient of order :math:`j`
+for :math:`Y(t)` and :math:`Z(t)`.
+Using the equation above for :math:`Z^{(1)} (t)`, we have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \sum_{k=1}^j k z^{(k)} t^{k-1}
+   & = &
+   \sum_{k=1}^j k x^{(k)} t^{k-1}
+   \pm
+   \left[ \sum_{k=0}^{j-1} y^{(k)} t^k        \right]
+   \left[ \sum_{k=1}^j k x^{(k)} t^{k-1}  \right]
+   +
+   o( t^{j-1} )
+   \end{eqnarray}
+
+Setting the coefficients of :math:`t^{j-1}` equal, we have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   j z^{(j)}
+   =
+   j x^{(j)}
+   \pm
+   \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+   \\
+   z^{(j)}
+   =
+   x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+   \end{eqnarray}
+
+Once we have computed :math:`z^{(j)}`,
+we can compute :math:`y^{(j)}` as follows:
+
+.. math::
+
+   y^{(j)} = \sum_{k=0}^j z^{(k)} z^{(j-k)}
+
+{xrst_end tan_forward}

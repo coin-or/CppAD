@@ -3,26 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin double_poly.cpp$$
-$spell
-   onetape
-   retape
-   bool
-   cppad
-   CppAD
-   hpp
-$$
+{xrst_begin double_poly.cpp}
 
-$section Double Speed: Evaluate a Polynomial$$
+Double Speed: Evaluate a Polynomial
+###################################
 
+Specifications
+**************
+See :ref:`link_poly-name` .
 
+Implementation
+**************
 
-$head Specifications$$
-See $cref link_poly$$.
-
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
@@ -52,6 +46,8 @@ bool link_poly(
    }
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end double_poly.cpp}
 */

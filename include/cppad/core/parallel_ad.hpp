@@ -5,56 +5,61 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin parallel_ad$$
-$spell
-   CppAD
-   num
-   std
-$$
+{xrst_begin parallel_ad}
+{xrst_spell
+   teardown
+}
 
-$section Enable AD Calculations During Parallel Mode$$
+Enable AD Calculations During Parallel Mode
+###########################################
 
-$head Syntax$$
-$codei%parallel_ad<%Base%>()%$$
+Syntax
+******
+``parallel_ad<`` *Base* >()
 
-$head Purpose$$
+Purpose
+*******
 The function
-$codei%parallel_ad<%Base%>()%$$
-must be called before any $codei%AD<%Base>%$$ objects are used
-in $cref/parallel/ta_in_parallel/$$ mode.
+``parallel_ad<`` *Base* >()
+must be called before any ``AD<`` *Base>* objects are used
+in :ref:`parallel<ta_in_parallel-name>` mode.
 In addition, if this routine is called after one is done using
 parallel mode, it will free extra memory used to keep track of
-the multiple $codei%AD<%Base%>%$$ tapes required for parallel execution.
+the multiple ``AD<`` *Base* > tapes required for parallel execution.
 
-$head Discussion$$
-By default, for each $codei%AD<%Base%>%$$ class there is only one
-tape that records $cref/AD of Base/glossary/AD of Base/$$ operations.
+Discussion
+**********
+By default, for each ``AD<`` *Base* > class there is only one
+tape that records :ref:`glossary@AD of Base` operations.
 This tape is a global variable and hence it cannot be used
 by multiple threads at the same time.
-The $cref/parallel_setup/ta_parallel_setup/$$ function informs CppAD of the
+The :ref:`parallel_setup<ta_parallel_setup-name>` function informs CppAD of the
 maximum number of threads that can be active in parallel mode.
 This routine does extra setup
-(and teardown) for the particular $icode Base$$ type.
+(and teardown) for the particular *Base* type.
 
-$head CheckSimpleVector$$
+CheckSimpleVector
+*****************
 This routine has the side effect of calling the routines
-$codei%
-   CheckSimpleVector< %Type%, CppAD::vector<%Type%> >()
-%$$
-where $icode Type$$ is $icode Base$$ and $codei%AD<%Base%>%$$.
 
-$head Example$$
+   ``CheckSimpleVector<`` *Type* , ``CppAD::vector<`` *Type* > >()
+
+where *Type* is *Base* and ``AD<`` *Base* > .
+
+Example
+*******
 The files
-$cref team_openmp.cpp$$,
-$cref team_bthread.cpp$$, and
-$cref team_pthread.cpp$$,
+:ref:`team_openmp.cpp-name` ,
+:ref:`team_bthread.cpp-name` , and
+:ref:`team_pthread.cpp-name` ,
 contain examples and tests that implement this function.
 
-$head Restriction$$
+Restriction
+***********
 This routine cannot be called in parallel mode or while
-there is a tape recording $codei%AD<%Base%>%$$ operations.
+there is a tape recording ``AD<`` *Base* > operations.
 
-$end
+{xrst_end parallel_ad}
 -----------------------------------------------------------------------------
 */
 

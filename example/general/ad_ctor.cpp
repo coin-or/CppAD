@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ad_ctor.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin ad_ctor.cpp}
 
-$section AD Constructors: Example and Test$$
+AD Constructors: Example and Test
+#################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+{xrst_end ad_ctor.cpp}
 */
 // BEGIN C++
 

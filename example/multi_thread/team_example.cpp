@@ -4,30 +4,38 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin team_example.cpp$$
-$spell
-   CppAD
-$$
+{xrst_begin team_example.cpp}
+{xrst_spell
+   bthread
+}
 
-$section Using a Team of AD Threads: Example and Test$$
+Using a Team of AD Threads: Example and Test
+############################################
 
-
-$head Purpose$$
+Purpose
+*******
 This example demonstrates how use a team of threads with CppAD.
 
-$head thread_team$$
+thread_team
+***********
 The following three implementations of the
-$cref team_thread.hpp$$ specifications are included:
-$table
-$rref team_openmp.cpp$$
-$rref team_bthread.cpp$$
-$rref team_pthread.cpp$$
-$tend
+:ref:`team_thread.hpp-name` specifications are included:
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+.. csv-table::
+   :widths: auto
 
-$end
+   team_openmp.cpp,:ref:`team_openmp.cpp-title`
+   team_bthread.cpp,:ref:`team_bthread.cpp-title`
+   team_pthread.cpp,:ref:`team_pthread.cpp-title`
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end team_example.cpp}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

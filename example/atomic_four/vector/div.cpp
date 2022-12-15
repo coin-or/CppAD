@@ -3,24 +3,31 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector_div.cpp$$
+{xrst_begin atomic_four_vector_div.cpp}
 
-$section Atomic Vector Division Example$$
+Atomic Vector Division Example
+##############################
 
-$head f(u, v, w)$$
+f(u, v, w)
+**********
 For this example,
-$latex f : \B{R}^{2m} \rightarrow \B{R}^m$$
-is defined by $latex f(u, v) = u * u / v$$.
-where $icode u$$ and $icode v$$ are in $latex \B{R}^m$$.
+:math:`f : \B{R}^{2m} \rightarrow \B{R}^m`
+is defined by :math:`f(u, v) = u * u / v`.
+where *u* and *v* are in :math:`\B{R}^m`.
 
-$head g(u, v)$$
-For this example $latex g : \B{R}^{2m} \rightarrow \B{R}^m$$
-is defined by $latex g_i (u, v) = \partial_{v[i]}  f_i (u, v)$$
+g(u, v)
+*******
+For this example :math:`g : \B{R}^{2m} \rightarrow \B{R}^m`
+is defined by :math:`g_i (u, v) = \partial_{v[i]}  f_i (u, v)`
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end atomic_four_vector_div.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

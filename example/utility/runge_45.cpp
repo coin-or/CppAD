@@ -4,43 +4,49 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin runge_45.cpp$$
-$spell
-   Runge
-$$
+{xrst_begin runge_45.cpp}
 
-$section Runge45: Example and Test$$
-
+Runge45: Example and Test
+#########################
 
 Define
-$latex X : \B{R} \times \B{R} \rightarrow \B{R}^n$$ by
-$latex \[
+:math:`X : \B{R} \times \B{R} \rightarrow \B{R}^n` by
+
+.. math::
+
    X_j (b, t) =  b \left( \sum_{k=0}^j t^k / k ! \right)
-\] $$
-for $latex j = 0 , \ldots , n-1$$.
+
+for :math:`j = 0 , \ldots , n-1`.
 It follows that
-$latex \[
-\begin{array}{rcl}
-X_j  (b, 0)   & = & b                                                     \\
-\partial_t X_j (b, t)   & = & b \left( \sum_{k=0}^{j-1} t^k / k ! \right) \\
-\partial_t X_j (b, t)   & = & \left\{ \begin{array}{ll}
-   0               & {\rm if} \; j = 0  \\
-   X_{j-1} (b, t)  & {\rm otherwise}
-\end{array} \right.
-\end{array}
-\] $$
-For a fixed $latex t_f$$,
-we can use $cref Runge45$$ to define
-$latex f : \B{R} \rightarrow \B{R}^n$$ as an approximation for
-$latex f(b) = X(b, t_f )$$.
-We can then compute $latex f^{(1)} (b)$$ which is an approximation for
-$latex \[
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   X_j  (b, 0)   & = & b                                                     \\
+   \partial_t X_j (b, t)   & = & b \left( \sum_{k=0}^{j-1} t^k / k ! \right) \\
+   \partial_t X_j (b, t)   & = & \left\{ \begin{array}{ll}
+      0               & {\rm if} \; j = 0  \\
+      X_{j-1} (b, t)  & {\rm otherwise}
+   \end{array} \right.
+   \end{eqnarray}
+
+For a fixed :math:`t_f`,
+we can use :ref:`Runge45-name` to define
+:math:`f : \B{R} \rightarrow \B{R}^n` as an approximation for
+:math:`f(b) = X(b, t_f )`.
+We can then compute :math:`f^{(1)} (b)` which is an approximation for
+
+.. math::
+
    \partial_b X(b, t_f ) =  \sum_{k=0}^j t_f^k / k !
-\] $$
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end runge_45.cpp}
 */
 // BEGIN C++
 

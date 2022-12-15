@@ -6,122 +6,126 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin PrintFor$$
-$spell
-   notpos
-   var
-   VecAD
-   std
+{xrst_begin PrintFor}
+{xrst_spell
    cout
-   const
-$$
+   notpos
+}
 
+Printing AD Values During Forward Mode
+######################################
 
-$section Printing AD Values During Forward Mode$$
+Syntax
+******
 
-$head Syntax$$
-$icode%f%.Forward(0, %x%)
-%$$
-$icode%f%.Forward(0, %x%, %s%)
-%$$
-$codei%PrintFor(%before%, %value%)
-%$$
-$codei%PrintFor(%notpos%, %before%, %value%, %after%)
-%$$
+| *f* . ``Forward`` (0, *x* )
+| *f* . ``Forward`` (0, *x* , *s* )
+| ``PrintFor`` ( *before* , *value* )
+| ``PrintFor`` ( *notpos* , *before* , *value* , *after* )
 
-$head See Also$$
-$cref ad_output$$
+See Also
+********
+:ref:`ad_output-name`
 
-$head Purpose$$
-The $cref/zero order forward/forward_zero/$$ mode command
-$codei%
-   %f%.Forward(0, %x%)
-%$$
+Purpose
+*******
+The :ref:`zero order forward<forward_zero-name>` mode command
+
+   *f* . ``Forward`` (0, *x* )
+
 sets the
-$cref/independent variable/glossary/Tape/Independent Variable/$$ vector
-equal to $icode x$$.
+:ref:`glossary@Tape@Independent Variable` vector
+equal to *x* .
 It then computes a value for all of the dependent variables in the
-$cref/operation sequence/glossary/Operation/Sequence/$$ corresponding
-to $icode f$$.
-Putting a $code PrintFor$$ in the operation sequence,
-prints $icode value$$, corresponding to $icode x$$,
+:ref:`operation sequence<glossary@Operation@Sequence>` corresponding
+to *f* .
+Putting a ``PrintFor`` in the operation sequence,
+prints *value* , corresponding to *x* ,
 to be printed during zero order forward operations.
 
-$head f.Forward(0, x)$$
-The objects $icode f$$, $icode x$$, and the purpose
-for this operation, are documented in $cref Forward$$.
+f.Forward(0, x)
+***************
+The objects *f* , *x* , and the purpose
+for this operation, are documented in :ref:`Forward-name` .
 
-$head notpos$$
-If present, the argument $icode notpos$$ has one of the following prototypes
-$codei%
-   const AD<%Base%>&               %notpos%
-   const VecAD<%Base%>::reference& %notpos%
-%$$
+notpos
+******
+If present, the argument *notpos* has one of the following prototypes
+
+| |tab| ``const AD<`` *Base* >& *notpos*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *notpos*
+
 In this case
-the text and $icode value$$ will be printed if and only if
-$icode notpos$$ is not positive (greater than zero) and a finite number.
+the text and *value* will be printed if and only if
+*notpos* is not positive (greater than zero) and a finite number.
 
-$head before$$
-The argument $icode before$$ has prototype
-$codei%
-   const char* %before%
-%$$
-This text is written to $code std::cout$$ before $icode value$$.
+before
+******
+The argument *before* has prototype
 
-$head value$$
-The argument $icode value$$ has one of the following prototypes
-$codei%
-   const AD<%Base%>&               %value%
-   const VecAD<%Base%>::reference& %value%
-%$$
-The $icode value$$, that corresponds to $icode x$$,
-is written to $code std::cout$$ during the execution of
-$codei%
-   %f%.Forward(0, %x%)
-%$$
-Note that $icode value$$ may be a
-$cref/variable/glossary/Variable/$$ or
-$cref/parameter/glossary/Parameter/$$.
+   ``const char`` * *before*
+
+This text is written to ``std::cout`` before *value* .
+
+value
+*****
+The argument *value* has one of the following prototypes
+
+| |tab| ``const AD<`` *Base* >& *value*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *value*
+
+The *value* , that corresponds to *x* ,
+is written to ``std::cout`` during the execution of
+
+   *f* . ``Forward`` (0, *x* )
+
+Note that *value* may be a
+:ref:`glossary@Variable` or
+:ref:`glossary@Parameter` .
 If a parameter is
-$cref/dynamic/glossary/Parameter/Dynamic/$$ its value
-will depend on the previous call to $cref new_dynamic$$.
+:ref:`glossary@Parameter@Dynamic` its value
+will depend on the previous call to :ref:`new_dynamic-name` .
 
-$head after$$
-The argument $icode after$$ has prototype
-$codei%
-   const char* %after%
-%$$
-This text is written to $code std::cout$$ after $icode value$$.
+after
+*****
+The argument *after* has prototype
 
-$head s$$
+   ``const char`` * *after*
+
+This text is written to ``std::cout`` after *value* .
+
+s
+*
 You can redirect this output to any standard output stream using the syntax
-$codei%
-   %f%.Forward(0, %x%, %s%)
-%$$
-see $cref/s/forward_zero/s/$$ in the zero order forward mode documentation.
 
-$head Discussion$$
+   *f* . ``Forward`` (0, *x* , *s* )
+
+see :ref:`forward_zero@s` in the zero order forward mode documentation.
+
+Discussion
+**********
 This is helpful for understanding why tape evaluations have trouble.
-For example, if one of the operations in $icode f$$ is
-$codei%log(%value%)%$$ and $icode%value% < 0%$$,
-the corresponding result will $cref nan$$.
+For example, if one of the operations in *f* is
+``log`` ( *value* ) and *value*  < 0 ,
+the corresponding result will :ref:`nan-name` .
 
-$head Example$$
-$children%
-   example/print_for/print_for.cpp%
+Example
+*******
+{xrst_toc_hidden
+   example/print_for/print_for.cpp
    example/general/print_for.cpp
-%$$
+}
 The program
-$cref print_for_cout.cpp$$
+:ref:`print_for_cout.cpp-name`
 is an example and test that prints to standard output.
 The output of this program
 states the conditions for passing and failing the test.
 The function
-$cref print_for_string.cpp$$
+:ref:`print_for_string.cpp-name`
 is an example and test that prints to an standard string stream.
 This function automatically check for correct output.
 
-$end
+{xrst_end PrintFor}
 ------------------------------------------------------------------------------
 */
 

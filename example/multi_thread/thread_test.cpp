@@ -4,209 +4,227 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin thread_test.cpp$$
-$spell
-   inv
-   mega
-   cpp
-   num
-   pthread
-   pthreads
-   openmp
+{xrst_begin thread_test.cpp}
+{xrst_spell
    bthread
-   chkpoint
-$$
+   preforms
+   pthreads
+}
 
+Run Multi-Threading Examples and Speed Tests
+############################################
 
-$section Run Multi-Threading Examples and Speed Tests$$
-
-$head Purpose$$
+Purpose
+*******
 Runs the CppAD multi-threading examples and timing tests:
 
-$head build$$
-We use $icode build$$ for the directory where you run the $cref cmake$$
+build
+*****
+We use *build* for the directory where you run the :ref:`cmake-name`
 command.
 
-$head threading$$
-If the $cref cmake$$ command output indicates that
-$code bthread$$, $code pthread$$, or $code openmp$$ is available,
-you can run the program below with $icode threading$$ equal to
-$code bthread$$, $code pthread$$, or $code openmp$$ respectively.
+threading
+*********
+If the :ref:`cmake-name` command output indicates that
+``bthread`` , ``pthread`` , or ``openmp`` is available,
+you can run the program below with *threading* equal to
+``bthread`` , ``pthread`` , or ``openmp`` respectively.
 
-$head program$$
-We use the notation $icode program$$ for
-$codei%
-     example_multi_thread_%threading%
-%$$
+program
+*******
+We use the notation *program* for
 
-$head Running Tests$$
+   ``example_multi_thread_`` *threading*
+
+Running Tests
+*************
 You can build this program and run the default version of its test
 parameters by executing the following commands:
-$codei%
-   cd %build%
-   make check_%program%
-%$$
+
+| |tab| ``cd`` *build*
+| |tab| ``make check_`` *program*
+
 After this operation, in the directory
-$codei%
-   %build%/example/multi_thread/%threading%
-%$$
+
+   *build* / ``example/multi_thread/`` *threading*
+
 you can execute the following commands:
-$codei%.
-./%program% a11c
-./%program% simple_ad
-./%program% team_example
-./%program% harmonic     %test_time% %max_threads% %mega_sum%
-./%program% atomic_two   %test_time% %max_threads% %num_solve%
-./%program% atomic_three %test_time% %max_threads% %num_solve%
-./%program% chkpoint_one %test_time% %max_threads% %num_solve%
-./%program% chkpoint_two %test_time% %max_threads% %num_solve%
-./%program% multi_newton %test_time% %max_threads% \
-   %num_zero% %num_sub% %num_sum% %use_ad%
-%$$
-We refer to the values $code a11c$$, ... , $code multi_newton$$
-as the $icode test_case$$ below.
 
-$children%
-   example/multi_thread/openmp/a11c_openmp.cpp%
-   example/multi_thread/bthread/a11c_bthread.cpp%
-   example/multi_thread/pthread/a11c_pthread.cpp%
+| .
+| ./ *program* ``a11c``
+| ./ *program* ``simple_ad``
+| ./ *program* ``team_example``
+| ./ *program* ``harmonic`` *test_time* *max_threads* *mega_sum*
+| ./ *program* ``atomic_two`` *test_time* *max_threads* *num_solve*
+| ./ *program* ``atomic_three`` *test_time* *max_threads* *num_solve*
+| ./ *program* ``chkpoint_one`` *test_time* *max_threads* *num_solve*
+| ./ *program* ``chkpoint_two`` *test_time* *max_threads* *num_solve*
+| ./ *program* ``multi_newton`` *test_time* *max_threads*  \\
+| |tab| *num_zero* *num_sub* *num_sum* *use_ad*
 
-   example/multi_thread/openmp/simple_ad_openmp.cpp%
-   example/multi_thread/bthread/simple_ad_bthread.cpp%
-   example/multi_thread/pthread/simple_ad_pthread.cpp%
-
-   example/multi_thread/team_example.cpp%
-   example/multi_thread/harmonic.omh%
-   example/multi_thread/multi_atomic_three.omh%
-   example/multi_thread/multi_chkpoint_two.omh%
-   example/multi_thread/multi_newton.omh%
-
+We refer to the values ``a11c`` , ... , ``multi_newton``
+as the *test_case* below.
+{xrst_toc_hidden
+   example/multi_thread/openmp/a11c_openmp.cpp
+   example/multi_thread/bthread/a11c_bthread.cpp
+   example/multi_thread/pthread/a11c_pthread.cpp
+   example/multi_thread/openmp/simple_ad_openmp.cpp
+   example/multi_thread/bthread/simple_ad_bthread.cpp
+   example/multi_thread/pthread/simple_ad_pthread.cpp
+   example/multi_thread/team_example.cpp
+   example/multi_thread/harmonic.xrst
+   example/multi_thread/multi_atomic_three.xrst
+   example/multi_thread/multi_chkpoint_two.xrst
+   example/multi_thread/multi_newton.xrst
    example/multi_thread/team_thread.hpp
-%$$
+}
 
-$head a11c$$
-The $icode test_case$$ $code a11c$$ runs the examples
-$cref a11c_openmp.cpp$$,
-$cref a11c_bthread.cpp$$, and
-$cref a11c_pthread.cpp$$.
+a11c
+****
+The *test_case* ``a11c`` runs the examples
+:ref:`a11c_openmp.cpp-name` ,
+:ref:`a11c_bthread.cpp-name` , and
+:ref:`a11c_pthread.cpp-name` .
 These cases demonstrate simple multi-threading,
 without algorithmic differentiation, using
 OpenMP, boost threads and pthreads respectively.
 
-$head simple_ad$$
-The $icode test_case$$ $code simple_ad$$ runs the examples
-$cref simple_ad_openmp.cpp$$,
-$cref simple_ad_bthread.cpp$$,
+simple_ad
+*********
+The *test_case* ``simple_ad`` runs the examples
+:ref:`simple_ad_openmp.cpp-name` ,
+:ref:`simple_ad_bthread.cpp-name` ,
 and
-$cref simple_ad_pthread.cpp$$.
+:ref:`simple_ad_pthread.cpp-name` .
 These cases demonstrate simple multi-threading,
 with algorithmic differentiation, using
 OpenMP, boost threads and pthreads respectively.
 
-$head team_example$$
-The $icode test_case$$ $code team_example$$ runs the
-$cref team_example.cpp$$ example.
+team_example
+************
+The *test_case* ``team_example`` runs the
+:ref:`team_example.cpp-name` example.
 This case demonstrates simple multi-threading with algorithmic differentiation
-and using a $cref/team of threads/team_thread.hpp/$$.
+and using a :ref:`team of threads<team_thread.hpp-name>` .
 
-$head test_time$$
-All of the other cases include the $icode test_time$$ argument.
+test_time
+*********
+All of the other cases include the *test_time* argument.
 This is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
 is reached.
 The reported time is the total wall clock time divided by the
 number of repeats.
 
-$subhead max_threads$$
-All of the other cases include the $icode max_threads$$ argument.
+max_threads
+===========
+All of the other cases include the *max_threads* argument.
 This is a non-negative integer specifying
 the maximum number of threads to use for the test.
 The specified test is run with the following number of threads:
-$codei%
-   %num_threads% = 0 , %...% , %max_threads%
-%$$
+
+   *num_threads* = 0 , ... , *max_threads*
+
 The value of zero corresponds to not using the multi-threading system.
 
-$comment ------------------------------------------------------------------- $$
+{xrst_comment -------------------------------------------------------------- }
 
-$head harmonic$$
-The $icode test_case$$ $code harmonic$$ runs the
-$cref harmonic_time$$ example.
+harmonic
+********
+The *test_case* ``harmonic`` runs the
+:ref:`harmonic_time-name` example.
 This is a timing test for a multi-threading
 example without algorithmic differentiation using a team of threads.
 
-$subhead mega_sum$$
-The command line argument $icode mega_sum$$
+mega_sum
+========
+The command line argument *mega_sum*
 is an integer greater than or equal one and has the same meaning as in
-$cref/harmonic_time/harmonic_time/mega_sum/$$.
+:ref:`harmonic_time<harmonic_time@mega_sum>` .
 
-$comment ------------------------------------------------------------------- $$
+{xrst_comment -------------------------------------------------------------- }
 
-$head Atomic and Checkpoint$$
-The $icode test_case$$ values
-$code atomic_two$$,
-$code atomic_three$$,
-$code chkpoint_one$$,
-$code chkpoint_two$$,
+Atomic and Checkpoint
+*********************
+The *test_case* values
+``atomic_two`` ,
+``atomic_three`` ,
+``chkpoint_one`` ,
+``chkpoint_two`` ,
 all run the same problem.
 These cases preforms a timing test for a multi-threading
 example without algorithmic differentiation using a team of threads.
-$table
-$icode test_case$$   $cnext Documentation                  $rnext
-$code atomic_two$$   $cnext $cref multi_atomic_two.cpp$$   $rnext
-$code atomic_three$$ $cnext $cref multi_atomic_three.cpp$$ $rnext
-$code chkpoint_one$$ $cnext $cref multi_chkpoint_one.cpp$$ $rnext
-$code chkpoint_two$$ $cnext $cref multi_chkpoint_two.cpp$$
-$tend
 
-$subhead num_solve$$
-The command line argument $icode num_solve$$
+.. csv-table::
+   :widths: auto
+
+   *test_case*,Documentation
+   ``atomic_two``,:ref:`multi_atomic_two.cpp-name`
+   ``atomic_three``,:ref:`multi_atomic_three.cpp-name`
+   ``chkpoint_one``,:ref:`multi_chkpoint_one.cpp-name`
+   ``chkpoint_two``,:ref:`multi_chkpoint_two.cpp-name`
+
+num_solve
+=========
+The command line argument *num_solve*
 is an integer specifying the number of solves; see
-$cref/num_solve/multi_atomic_two_time/num_solve/$$ in $code multi_atomic_two_time$$.
+:ref:`multi_atomic_two_time@num_solve` in ``multi_atomic_two_time`` .
 
-$comment ------------------------------------------------------------------- $$
+{xrst_comment -------------------------------------------------------------- }
 
-$head multi_newton$$
-The $icode test_case$$ $code multi_newton$$  runs the
-$cref multi_newton.cpp$$ example.
+multi_newton
+************
+The *test_case* ``multi_newton``  runs the
+:ref:`multi_newton.cpp-name` example.
 This preforms a timing test for a multi-threading
 example with algorithmic differentiation using a team of threads.
 
-$subhead num_zero$$
-The command line argument $icode num_zero$$
+num_zero
+========
+The command line argument *num_zero*
 is an integer greater than or equal two and has the same meaning as in
-$cref/multi_newton_time/multi_newton_time/num_zero/$$.
+:ref:`multi_newton_time<multi_newton_time@num_zero>` .
 
-$subhead num_sub$$
-The command line argument $icode num_sub$$
+num_sub
+=======
+The command line argument *num_sub*
 is an integer greater than or equal one and has the same meaning as in
-$cref/multi_newton_time/multi_newton_time/num_sub/$$.
+:ref:`multi_newton_time<multi_newton_time@num_sub>` .
 
-$subhead num_sum$$
-The command line argument $icode num_sum$$
+num_sum
+=======
+The command line argument *num_sum*
 is an integer greater than or equal one and has the same meaning as in
-$cref/multi_newton_time/multi_newton_time/num_sum/$$.
+:ref:`multi_newton_time<multi_newton_time@num_sum>` .
 
-$subhead use_ad$$
-The command line argument $icode use_ad$$ is either
-$code true$$ or $code false$$ and has the same meaning as in
-$cref/multi_newton_time/multi_newton_time/use_ad/$$.
+use_ad
+======
+The command line argument *use_ad* is either
+``true`` or ``false`` and has the same meaning as in
+:ref:`multi_newton_time<multi_newton_time@use_ad>` .
 
-$comment ------------------------------------------------------------------- $$
+{xrst_comment -------------------------------------------------------------- }
 
-$head Team Implementations$$
+Team Implementations
+********************
 The following routines are used to implement the specific threading
-systems through the common interface $cref team_thread.hpp$$:
-$table
-$rref team_openmp.cpp$$
-$rref team_bthread.cpp$$
-$rref team_pthread.cpp$$
-$tend
+systems through the common interface :ref:`team_thread.hpp-name` :
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+.. csv-table::
+   :widths: auto
 
-$end
+   team_openmp.cpp,:ref:`team_openmp.cpp-title`
+   team_bthread.cpp,:ref:`team_bthread.cpp-title`
+   team_pthread.cpp,:ref:`team_pthread.cpp-title`
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end thread_test.cpp}
 */
 // BEGIN C++
 

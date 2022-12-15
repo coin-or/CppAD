@@ -3,34 +3,35 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppadcg_sparse_jacobian.cpp$$
-$spell
-   cppadcg
-   jacobian
-   Cpp
-$$
+{xrst_begin cppadcg_sparse_jacobian.cpp}
 
-$section Cppadcg Speed: Sparse Jacobian$$
+Cppadcg Speed: Sparse Jacobian
+##############################
 
-$head Specifications$$
-See $cref link_sparse_jacobian$$.
+Specifications
+**************
+See :ref:`link_sparse_jacobian-name` .
 
-$head PASS_SPARSE_JACOBIAN_TO_CODE_GEN$$
+PASS_SPARSE_JACOBIAN_TO_CODE_GEN
+********************************
 If this is one, the sparse Jacobian is the is the function passed
-to CppADCodeGen, In this case, the $code code_gen_fun$$
-$cref/function/code_gen_fun/Syntax/function/$$ is used to calculate
+to CppADCodeGen, In this case, the ``code_gen_fun``
+:ref:`code_gen_fun@Syntax@function` is used to calculate
 the sparse Jacobian.
 Otherwise, this flag is zero and the original function passed
-to CppADCodeGen. In this case, the $code code_gen_fun$$
-$cref/sparse_jacobian/code_gen_fun/Syntax/sparse_jacobian/$$
+to CppADCodeGen. In this case, the ``code_gen_fun``
+:ref:`code_gen_fun@Syntax@sparse_jacobian`
 is used to calculate the sparse Jacobian.
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # define PASS_SPARSE_JACOBIAN_TO_CODE_GEN 1
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
@@ -340,6 +341,8 @@ bool link_sparse_jacobian(
    }
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppadcg_sparse_jacobian.cpp}
 */

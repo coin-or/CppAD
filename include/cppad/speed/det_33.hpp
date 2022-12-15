@@ -5,82 +5,84 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin det_33$$
-$spell
-   cppad
-   CppAD
-   det
-   namespace
-   const
-   bool
-   hpp
-$$
+{xrst_begin det_33}
 
-$section Check Determinant of 3 by 3 matrix$$
+Check Determinant of 3 by 3 matrix
+##################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/speed/det_33.hpp>
-%$$
-$icode%ok% = det_33(%x%, %d%)%$$
+   # ``include <cppad/speed/det_33.hpp>``
 
-$head Purpose$$
+*ok* = ``det_33`` ( *x* , *d* )
+
+Purpose
+*******
 This routine can be used to check a method for computing
 the determinant of a matrix.
 
-$head Inclusion$$
-The template function $code det_33$$ is defined in the $code CppAD$$
+Inclusion
+*********
+The template function ``det_33`` is defined in the ``CppAD``
 namespace by including
-the file $code cppad/speed/det_33.hpp$$
+the file ``cppad/speed/det_33.hpp``
 (relative to the CppAD distribution directory).
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Vector% &%x%
-%$$.
-It contains the elements of the matrix $latex X$$ in row major order; i.e.,
-$latex \[
+x
+*
+The argument *x* has prototype
+
+   ``const`` *Vector* & *x*
+
+.
+It contains the elements of the matrix :math:`X` in row major order; i.e.,
+
+.. math::
+
    X_{i,j} = x [ i * 3 + j ]
-\] $$
 
-$head d$$
-The argument $icode d$$ has prototype
-$codei%
-   const %Vector% &%d%
-%$$.
-It is tested to see if $icode%d%[0]%$$ it is equal to $latex \det ( X )$$.
+d
+*
+The argument *d* has prototype
 
-$head Vector$$
-If $icode y$$ is a $icode Vector$$ object,
+   ``const`` *Vector* & *d*
+
+.
+It is tested to see if *d* [0] it is equal to :math:`\det ( X )`.
+
+Vector
+******
+If *y* is a *Vector* object,
 it must support the syntax
-$codei%
-   %y%[%i%]
-%$$
-where $icode i$$ has type $code size_t$$ with value less than 9.
-This must return a $code double$$ value corresponding to the $th i$$
-element of the vector $icode y$$.
-This is the only requirement of the type $icode Vector$$.
-(Note that only the first element of the vector $icode d$$ is used.)
 
-$head ok$$
-The return value $icode ok$$ has prototype
-$codei%
-   bool %ok%
-%$$
-It is true, if the determinant $icode%d%[0]%$$
+   *y* [ *i* ]
+
+where *i* has type ``size_t`` with value less than 9.
+This must return a ``double`` value corresponding to the *i*-th
+element of the vector *y* .
+This is the only requirement of the type *Vector* .
+(Note that only the first element of the vector *d* is used.)
+
+ok
+**
+The return value *ok* has prototype
+
+   ``bool`` *ok*
+
+It is true, if the determinant *d* [0]
 passes the test and false otherwise.
+{xrst_toc_hidden
+   xrst/det_33_hpp.xrst
+}
 
-$children%
-   omh/det_33_hpp.omh
-%$$
-
-$head Source Code$$
+Source Code
+***********
 The file
-$cref det_33.hpp$$
+:ref:`det_33.hpp-name`
 contains the source code for this template function.
 
-$end
+{xrst_end det_33}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

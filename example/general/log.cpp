@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin log.cpp$$
-$spell
-   exp
-   log
-$$
+{xrst_begin log.cpp}
 
-$section The AD log Function: Example and Test$$
+The AD log Function: Example and Test
+#####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end log.cpp}
 */
 // BEGIN C++
 

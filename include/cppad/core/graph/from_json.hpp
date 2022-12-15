@@ -10,41 +10,44 @@
 # include <cppad/local/graph/json_parser.hpp>
 
 /*
-$begin from_json$$
-$spell
-   Json
-$$
+{xrst_begin from_json}
 
-$section ADFun Object Corresponding to a Json AD Graph$$
+ADFun Object Corresponding to a Json AD Graph
+#############################################
 
-$head Syntax$$
-$codei%
-   ADFun<%Base%> %fun%
-   %fun%.from_json(%json%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| |tab| ``ADFun<`` *Base* > *fun*
+| |tab| *fun* . ``from_json`` ( *json* )
 
-$head json$$
-is a $cref json_ad_graph$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head Base$$
-is the type corresponding to this $cref/ADFun/adfun/$$ object;
-i.e., its calculations are done using the type $icode Base$$.
+json
+****
+is a :ref:`json_ad_graph-name` .
 
-$head RecBase$$
-in the prototype above, $icode RecBase$$ is the same type as $icode Base$$.
+Base
+****
+is the type corresponding to this :ref:`adfun-name` object;
+i.e., its calculations are done using the type *Base* .
 
-$children%
+RecBase
+*******
+in the prototype above, *RecBase* is the same type as *Base* .
+{xrst_toc_hidden
    example/json/from_json.cpp
-%$$
-$head Example$$
-The file $cref from_json.cpp$$ is an example and test of this operation.
+}
+Example
+*******
+The file :ref:`from_json.cpp-name` is an example and test of this operation.
 
-$end
+{xrst_end from_json}
 */
 // BEGIN_PROTOTYPE
 template <class Base, class RecBase>

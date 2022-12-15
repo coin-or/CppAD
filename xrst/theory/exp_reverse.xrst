@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin exp_reverse}
+{xrst_spell
+   expm
+}
+
+Exponential Function Reverse Mode Theory
+########################################
+
+We use the reverse theory
+:ref:`standard math function<reverse_theory@Standard Math Functions>`
+definition for the functions :math:`H` and :math:`G`.
+The zero order forward mode formula for the
+:ref:`exponential<exp_forward-name>` is
+
+.. math::
+
+   z^{(0)}  =  F ( x^{(0)} )
+
+and for :math:`j > 0`,
+
+.. math::
+
+   z^{(j)}  = x^{(j)} d^{(0)}
+      + \frac{1}{j} \sum_{k=1}^{j} k x^{(k)} z^{(j-k)}
+
+where
+
+.. math::
+
+   d^{(0)} = \left\{ \begin{array}{ll}
+      0 & \R{if} \; F(x) = \R{exp}(x)
+      \\
+      1 & \R{if} \; F(x) = \R{expm1}(x)
+   \end{array} \right.
+
+For order :math:`j = 0, 1, \ldots` we note that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(j)} }
+   & = & \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
+   \\
+   & = & \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } ( d^{(0)} + z^{(0)} )
+   \end{eqnarray}
+
+If :math:`j > 0`, then for :math:`k = 1 , \ldots , j`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(k)} } & = &
+   \D{G}{ x^{(k)} }  + \D{G}{ z^{(j)} } \frac{1}{j}  k z^{(j-k)}
+   \\
+   \D{H}{ z^{(j-k)} } & = &
+   \D{G}{ z^{(j-k)} }  + \D{G}{ z^{(j)} } \frac{1}{j}  k x^{(k)}
+   \end{eqnarray}
+
+{xrst_end exp_reverse}

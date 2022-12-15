@@ -3,20 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_jit_det_minor.cpp$$
-$spell
-   cppad_jit
-   Jacobian
-   Cpp
-$$
+{xrst_begin cppad_jit_det_minor.cpp}
 
-$section cppad_jit Speed: Gradient of Determinant by Minor Expansion$$
+cppad_jit Speed: Gradient of Determinant by Minor Expansion
+###########################################################
 
-$head Specifications$$
-See $cref link_det_minor$$.
+Specifications
+**************
+See :ref:`link_det_minor-name` .
 
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <map>
 # include <cppad/cppad.hpp>
 # include <cppad/speed/det_by_minor.hpp>
@@ -269,6 +268,8 @@ bool link_det_minor(
    return true;
 }
 # endif // CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_jit_det_minor.cpp}
 */

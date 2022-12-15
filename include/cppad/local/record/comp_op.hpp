@@ -8,70 +8,78 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
-$begin recorder_put_comp_op$$
-$spell
-   rel
+{xrst_begin recorder_put_comp_op}
+{xrst_spell
    aleft
-   eq
-   le
-   lt
-   var
-   dyn
    taddr
-$$
+}
 
-$section Put Compare Operators in Recording$$
+Put Compare Operators in Recording
+##################################
 
-$head Syntax$$
-$icode%rec%.put_comp_%rel%( %aleft%, %aright%, %result%)
-%$$
+Syntax
+******
 
-$subhead rel$$
-The text $icode rel$$ in the function name above
-is $code eq$$ (for equals),
-$code le$$ (for less than or equal), or
-$code lt$$ (for less than).
+   *rec* . ``put_comp_`` *rel* ( *aleft* , *aright* , *result* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_COMP_EQ%// END_COMP_EQ%1
-%$$
-The other prototypes for the functions $code comp_le$$ and $code comp_lt$$
+rel
+===
+The text *rel* in the function name above
+is ``eq`` (for equals),
+``le`` (for less than or equal), or
+``lt`` (for less than).
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_COMP_EQ
+   // END_COMP_EQ
+}
+The other prototypes for the functions ``comp_le`` and ``comp_lt``
 are same except for the function name.
 
-$head var_left$$
+var_left
+********
 is true if the left operand is a variable.
 
-$head var_right$$
+var_right
+*********
 is true if the right operand is a variable.
 
-$head dyn_left$$
+dyn_left
+********
 is true if the left operand is a dynamic parameter.
 
-$head dyn_right$$
+dyn_right
+*********
 is true if the right operand is a dynamic parameter.
 
-$head aleft$$
+aleft
+*****
 is the compare operator left operand.
 
-$head aright$$
+aright
+******
 is the compare operator right operand.
 
-$head taddr_$$
-The values $icode%aleft.taddr_%$$ and $icode%aright%.taddr_%$$
+taddr\_
+*******
+The values *aleft.taddr_* and *aright* . ``taddr_``
 are the proper address for dynamic parameters and variables
 and does not matter for constants.
 
-$head value_$$
-The values $icode%aleft.value_%$$ and $icode%aright%.value_%$$
+value\_
+*******
+The values *aleft.value_* and *aright* . ``value_``
 are the proper address for constants and does not matter
 for variables and dynamic parameters.
 
-$head result$$
+result
+******
 This is the result for this comparison corresponding to this
 recording (sequence of operations).
 
-$end
+{xrst_end recorder_put_comp_op}
 */
 // BEGIN_COMP_EQ
 template <class Base>

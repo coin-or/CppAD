@@ -4,34 +4,37 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_three_tangent.cpp$$
-$spell
-   Tanh
-   bool
-   jac
-   hes
-$$
+{xrst_begin atomic_three_tangent.cpp}
+{xrst_spell
+   tanh
+}
 
-$section Tan and Tanh as User Atomic Operations: Example and Test$$
+Tan and Tanh as User Atomic Operations: Example and Test
+########################################################
 
-$head Discussion$$
-The code below uses the $cref tan_forward$$ and $cref tan_reverse$$
+Discussion
+**********
+The code below uses the :ref:`tan_forward-name` and :ref:`tan_reverse-name`
 to implement the tangent and hyperbolic tangent
 functions as atomic function operations.
-It also uses $code AD<float>$$,
-while most atomic examples use $code AD<double>$$.
+It also uses ``AD<float>`` ,
+while most atomic examples use ``AD<double>`` .
 
-
-$head Start Class Definition$$
-$srccode%cpp% */
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 namespace { // Begin empty namespace
 using CppAD::vector;
 //
 class atomic_tangent : public CppAD::atomic_three<float> {
-/* %$$
-$head Constructor $$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 private:
    const bool hyperbolic_; // is this hyperbolic tangent
 public:
@@ -41,9 +44,12 @@ public:
    hyperbolic_(hyperbolic)
    { }
 private:
-/* %$$
-$head for_type$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_type
+********
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate type_y
    bool for_type(
       const vector<float>&                parameter_x ,
@@ -58,9 +64,12 @@ $srccode%cpp% */
       type_y[1] = type_x[0];
       return true;
    }
-/* %$$
-$head forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    bool forward(
       const vector<float>&               parameter_x ,
@@ -112,9 +121,12 @@ $srccode%cpp% */
       // All orders are implemented and there are no possible errors
       return true;
    }
-/* %$$
-$head reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse mode routine called by CppAD
    bool reverse(
       const vector<float>&               parameter_x ,
@@ -171,9 +183,12 @@ $srccode%cpp% */
 
       return true;
    }
-/* %$$
-$head jac_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+jac_sparsity
+************
+{xrst_spell_off}
+{xrst_code cpp} */
    // Jacobian sparsity routine called by CppAD
    bool jac_sparsity(
       const vector<float>&                parameter_x ,
@@ -211,9 +226,12 @@ $srccode%cpp% */
 
       return true;
    }
-/* %$$
-$head hes_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+hes_sparsity
+************
+{xrst_spell_off}
+{xrst_code cpp} */
    // Hessian sparsity routine called by CppAD
    bool hes_sparsity(
       const vector<float>&                parameter_x ,
@@ -238,29 +256,41 @@ $srccode%cpp% */
 
       return true;
    }
-/* %$$
-$head End Class Definition$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+End Class Definition
+********************
+{xrst_spell_off}
+{xrst_code cpp} */
 }; // End of atomic_tangent class
 }  // End empty namespace
 
-/* %$$
-$head Use Atomic Function$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 bool tangent(void)
 {  bool ok = true;
    using CppAD::AD;
    using CppAD::NearEqual;
    float eps = 10.f * CppAD::numeric_limits<float>::epsilon();
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // --------------------------------------------------------------------
    // Creater a tan and tanh object
    atomic_tangent my_tan("my_tan", false), my_tanh("my_tanh", true);
-/* %$$
-$subhead Recording$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Recording
+=========
+{xrst_spell_off}
+{xrst_code cpp} */
    // domain space vector
    size_t n  = 1;
    float  x0 = 0.5;
@@ -295,9 +325,12 @@ $srccode%cpp% */
    // create f: x -> v and stop tape recording
    CppAD::ADFun<float> f;
    f.Dependent(ax, av);
-/* %$$
-$subhead forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // check function value
    float tan = std::tan(x0);
    ok &= NearEqual(av[0] , tan,  eps, eps);
@@ -340,9 +373,12 @@ $srccode%cpp% */
    ok   &= NearEqual(two * ddv[1], tanhpp, eps, eps);
    ok   &= NearEqual(two * ddv[2], 0.f, eps, eps);
 
-/* %$$
-$subhead reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // compute derivative of tan - tanh using reverse mode
    CppAD::vector<float> w(m), dw(n);
    w[0]  = 1.;
@@ -356,9 +392,12 @@ $srccode%cpp% */
    ddw   = f.Reverse(2, w);
    ok   &= NearEqual(ddw[0], w[0]*tanp  + w[1]*tanhp , eps, eps);
    ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
-/* %$$
-$subhead for_jac_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_jac_sparsity
+================
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode Jacobian sparstiy pattern
    CppAD::sparse_rc< CPPAD_TESTVECTOR(size_t) > pattern_in, pattern_out;
    pattern_in.resize(1, 1, 1);
@@ -375,9 +414,12 @@ $srccode%cpp% */
    ok &= pattern_out.col()[0] == 0;
    ok &= pattern_out.row()[1] == 1;
    ok &= pattern_out.col()[1] == 0;
-/* %$$
-$subhead rev_sparse_hes$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+rev_sparse_hes
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    // Hesian sparsity (using previous for_jac_sparsity call)
    CPPAD_TESTVECTOR(bool) select_y(m);
    select_y[0] = true;
@@ -389,9 +431,12 @@ $srccode%cpp% */
    ok &= pattern_out.nnz() == 1;
    ok &= pattern_out.row()[0] == 0;
    ok &= pattern_out.col()[0] == 0;
-/* %$$
-$subhead Large x Values$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Large x Values
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    // check tanh results for a large value of x
    x[0]  = std::numeric_limits<float>::max() / two;
    v     = f.Forward(0, x);
@@ -403,6 +448,8 @@ $srccode%cpp% */
 
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_three_tangent.cpp}
 */

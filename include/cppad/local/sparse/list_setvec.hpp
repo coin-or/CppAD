@@ -19,97 +19,113 @@ class list_setvec { // BEGIN_CLASS_LIST_SETVEC
 
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_member_data$$
-$spell
-   setvec
+{xrst_begin list_setvec_member_data}
+{xrst_spell
    struct
-$$
+}
 
-$section class list_setvec: Private Member Data$$
+class list_setvec: Private Member Data
+######################################
 
-$head pair_size_t$$
-This $code struct$$ is local to the $code list_setvec$$ class.
+pair_size_t
+***********
+This ``struct`` is local to the ``list_setvec`` class.
 It is the type used for each entry in a singly linked list
 and has the following fields:
 
-$subhead value$$
+value
+=====
 The is the value of an entry in the list
 (for sets, the first entry in the list is a reference count).
 
-$subhead next$$
-This is the index in $code data_$$ for the next entry in the list.
+next
+====
+This is the index in ``data_`` for the next entry in the list.
 If there are no more entries in the list, this value is zero; i.e.,
-$code data_[0]$$ is used to represent the end of a list.
+``data_[0]`` is used to represent the end of a list.
 
-$head end_$$
-The possible elements in each set are $code 0$$, $code 1$$, ...,
-$code end_-1$$
+end\_
+*****
+The possible elements in each set are ``0`` , ``1`` , ...,
+``end_-1``
 
-$head number_not_used_$$
-Number of elements of the $code data_$$ vector that are not being used.
+number_not_used\_
+*****************
+Number of elements of the ``data_`` vector that are not being used.
 
-$head data_not_used_$$
-Index in $code data_$$ for the start of the linked list of elements
+data_not_used\_
+***************
+Index in ``data_`` for the start of the linked list of elements
 that are not being used.
 
-$head data_$$
+data\_
+******
 The data for all the singly linked lists.
-If $icode%n_set% > 0%$$,
-$codei%data[0].value == end_%$$ and
-$codei%data[0].next == 0%$$.
+If *n_set*  > 0 ,
+``data`` [0]. ``value`` == ``end_`` and
+``data`` [0]. ``next`` == 0 .
 
-$head start_$$
+start\_
+*******
 The size of this vector is the number of set; i.e.,
-$cref/n_set/SetVector/Vector Operations/n_set/$$.
-The starting index for $th i$$ set is $codei%start_[%i%]%$$.
-If $codei%start_[%i%] == 0%$$, the i-th set has no elements.
+:ref:`SetVector@Vector Operations@n_set` .
+The starting index for *i*-th set is ``start_`` [ *i* ] .
+If ``start_`` [ *i* ] == 0 , the i-th set has no elements.
 Otherwise it is the index of the reference count for the list.
 
-$subhead Reference Count$$
-If $codei%start_[%i%] != 0%$$, $codei%data_[start_[%i%]].value%$$
-is the reference count for the $th i$$ list
+Reference Count
+===============
+If ``start_`` [ *i* ] != 0 , ``data_`` [ ``start_`` [ *i* ]]. ``value``
+is the reference count for the *i*-th list
 (not the value of an element in the list).
 The reference count must be greater than zero.
 
-$subhead First Element$$
-If $codei%start_[%i%] != 0%$$,
-$codei%
-   %first_index% = data_[start_[%i%]].next
-%$$
+First Element
+=============
+If ``start_`` [ *i* ] != 0 ,
+
+   *first_index* = ``data_`` [ ``start_`` [ *i* ]]. ``next``
+
 is the index of the first element in the list.
 This must be non-zero because the list is empty.
 
-$subhead Next Element$$
-Starting with $icode%index% = %first_index%$$,
-while $icode%index% != 0%$$,
+Next Element
+============
+Starting with *index* = *first_index* ,
+while *index*  != 0 ,
 The value of the corresponding element in the list is
-$codei%data_[%index%].value%$$ (which must be less than $code end_$$).
-The $icode index$$ for the next element of the list is
-$codei%data_[%index%].next%$$.
+``data_`` [ *index* ]. ``value`` (which must be less than ``end_`` ).
+The *index* for the next element of the list is
+``data_`` [ *index* ]. ``next`` .
 
-$subhead Last Element$$
-An index $icode last$$ corresponds to the last element of a list if
-$codei%data_[%last%].next == 0%$$.
-(Note that $code data_[0].value == end_$$).
+Last Element
+============
+An index *last* corresponds to the last element of a list if
+``data_`` [ *last* ]. ``next`` == 0 .
+(Note that ``data_[0].value == end_`` ).
 
-$head post_$$
+post\_
+******
 The size of this vector is the number of set; i.e.,
-$cref/n_set/SetVector/Vector Operations/n_set/$$.
-Starting with $icode%index% = post_[%i%]%$$,
-while $icode%index% != 0%$$,
-The value of the next element posted to the $th i$$ list is
-$codei%data_[%index%].value%$$ (which must be less than $code end_$$).
-The $icode index$$ for the next element posted to the $th i$$ list is
-$codei%data_[%index%].next%$$.
+:ref:`SetVector@Vector Operations@n_set` .
+Starting with *index* = ``post_`` [ *i* ] ,
+while *index*  != 0 ,
+The value of the next element posted to the *i*-th list is
+``data_`` [ *index* ]. ``value`` (which must be less than ``end_`` ).
+The *index* for the next element posted to the *i*-th list is
+``data_`` [ *index* ]. ``next`` .
 
-$head temporary_$$
+temporary\_
+***********
 A temporary vector, used by member functions, that keeps its capacity
 to avoid re-allocating memory.
 If a member function calls another,
-no conditions about $code temporary_$$ should be assumed during that call.
+no conditions about ``temporary_`` should be assumed during that call.
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    struct pair_size_t {size_t value; size_t next; };
    friend bool CppAD::local::is_pod<pair_size_t>(void);
@@ -122,36 +138,42 @@ private:
    pod_vector<size_t>      start_;
    pod_vector<size_t>      post_;
    pod_vector<size_t>      temporary_;
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_member_data}
 ------------------------------------------------------------------------------
-$begin list_setvec_reference_count$$
-$spell
-   vec
-   setvec
-   const
-$$
+{xrst_begin list_setvec_reference_count}
 
-$section class list_setvec private: Number of References to a Set$$
+class list_setvec private: Number of References to a Set
+########################################################
 
-$head Syntax$$
-$icode%count% = %vec%.reference_count(%i%)%$$
+Syntax
+******
+*count* = *vec* . ``reference_count`` ( *i* )
 
-$head vec$$
-Is a $code list_setvec$$ object and can be $code const$$.
+vec
+***
+Is a ``list_setvec`` object and can be ``const`` .
 
-$head i$$
+i
+*
 is the index of the set that we are retrieving the references for.
 
-$head count$$
+count
+*****
 is the reference count.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    size_t reference_count(size_t i) const
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_reference_count}
 */
    {  // start data index
       size_t start = start_[i];
@@ -163,50 +185,60 @@ $end
    }
 /*
 ------------------------------------------------------------------------------
-$begin list_setvec_drop$$
-$spell
-   setvec
-   vec
+{xrst_begin list_setvec_drop}
+{xrst_spell
    decremented
-$$
-$section class list_setvec private: Drop a Set No Longer Being Used$$
+}
+class list_setvec private: Drop a Set No Longer Being Used
+##########################################################
 
-$head Syntax$$
-$icode%not_used% = %vec%.drop(%i%)%$$
+Syntax
+******
+*not_used* = *vec* . ``drop`` ( *i* )
 
-$head i$$
+i
+*
 is the index of the set that is dropped.
 
-$head reference_count$$
+reference_count
+***************
 if the set is non-empty, the
-$cref/reference count/list_setvec_member_data/start_/Reference Count/$$
+:ref:`list_setvec_member_data@start_@Reference Count`
 is decremented.
 
-$head start_$$
-The value $codei%start_[%i%]%$$ is set to zero; i.e.,
-the $th i$$ set is empty after the call.
+start\_
+*******
+The value ``start_`` [ *i* ] is set to zero; i.e.,
+the *i*-th set is empty after the call.
 
-$head post_$$
-The value $codei%post_[%i%]%$$ is set to zero; i.e.,
+post\_
+******
+The value ``post_`` [ *i* ] is set to zero; i.e.,
 any postings to the list are also dropped.
 
-$head data_not_used_$$
-The elements of $code data_$$ were information for the $th i$$ set,
+data_not_used\_
+***************
+The elements of ``data_`` were information for the *i*-th set,
 and are no longer being used, are added to the linked list starting at
-$code data_not_used$$.
+``data_not_used`` .
 This includes both set elements and postings.
 
-$head not_used$$
-is the number of elements of $code data_$$ that were begin used for the
-$th i$$ set and are no longer being used; i.e., the number of elements
-moved to $code data_not_used$$.
+not_used
+********
+is the number of elements of ``data_`` that were begin used for the
+*i*-th set and are no longer being used; i.e., the number of elements
+moved to ``data_not_used`` .
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    size_t drop(size_t i)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_drop}
 */
    {  // inialize count of addition elements not being used.
       size_t number_drop = 0;
@@ -268,45 +300,53 @@ $end
    }
 /*
 ------------------------------------------------------------------------------
-$begin list_setvec_get_data_index$$
-$spell
+{xrst_begin list_setvec_get_data_index}
+{xrst_spell
    decremented
-   setvec
-   vec
-$$
+}
 
-$section class list_setvec private: Get a New List Pair$$
+class list_setvec private: Get a New List Pair
+##############################################
 
-$head Syntax$$
-$icode%index% = %vec%.get_data_index()%$$
+Syntax
+******
+*index* = *vec* . ``get_data_index`` ()
 
-$head vec$$
-Is a $code list_setvec$$ object.
+vec
+***
+Is a ``list_setvec`` object.
 
-$head data_not_used_$$
-If the input value of $code data_not_used_$$ is zero,
+data_not_used\_
+***************
+If the input value of ``data_not_used_`` is zero,
 it is not changed.
 Otherwise, the index for the element at the front of that list is returned.
 In this case,
-$code data_not_used$$ is advanced to the next element in that list.
+``data_not_used`` is advanced to the next element in that list.
 
-$head number_not_used_$$
-If the input value of $code data_not_used_$$ is zero,
-$code number_not_used_$$ is not changed.
+number_not_used\_
+*****************
+If the input value of ``data_not_used_`` is zero,
+``number_not_used_`` is not changed.
 Otherwise it is decremented by one.
 
-$head index$$
-If the input value of $code data_not_used_$$ is zero,
-the size of $code data_$$ is increased by one and index corresponding
-to the end of $code data_$$ is returned.
-Otherwise, the input value for $code data_not_used_$$ is returned.
+index
+*****
+If the input value of ``data_not_used_`` is zero,
+the size of ``data_`` is increased by one and index corresponding
+to the end of ``data_`` is returned.
+Otherwise, the input value for ``data_not_used_`` is returned.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    size_t get_data_index(void)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_get_data_index}
 */
    {  size_t index;
       if( data_not_used_ > 0 )
@@ -322,34 +362,37 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_check_data_structure$$
-$spell
-   setvec
-   vec
-   const
-$$
+{xrst_begin list_setvec_check_data_structure}
 
-$section class list_setvec private: Check Data Structure$$
+class list_setvec private: Check Data Structure
+###############################################
 
-$head Syntax$$
-$icode%vec%.check_data_structure()%$$
+Syntax
+******
+*vec* . ``check_data_structure`` ()
 
-$head vec$$
-Is a $code list_setvec$$ object that is effectively const.
+vec
+***
+Is a ``list_setvec`` object that is effectively const.
 It is not declared const because the data structure is modified and
 then restored.
 
-$head NDEBUG$$
-If $code NDEBUG$$ is defined, the routine does nothing.
+NDEBUG
+******
+If ``NDEBUG`` is defined, the routine does nothing.
 Otherwise, if an error is found in the data structure,
-a $code CPPAD_ASSERT_UNKNOWN$$ is generated.
+a ``CPPAD_ASSERT_UNKNOWN`` is generated.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    void check_data_structure(void)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_check_data_structure}
 */
 # ifdef NDEBUG
    {  return; }
@@ -444,147 +487,167 @@ $end
 # endif
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_vec_memory$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_vec_memory}
 
-$section class list_setvec: Approximate Memory Used by Vector$$
+class list_setvec: Approximate Memory Used by Vector
+####################################################
 
-$head Public$$
+Public
+******
 This function is declared public, but is not part of
-$cref SetVector$$ concept.
+:ref:`SetVector-name` concept.
 
-$head Implementation$$
-$srccode%hpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    size_t memory(void) const
    {  return data_.capacity() * sizeof(pair_size_t); }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_vec_memory}
 -------------------------------------------------------------------------------
-$begin list_setvec_vec_print$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_vec_print}
 
-$section class list_setvec: Print a Vector of Sets$$
+class list_setvec: Print a Vector of Sets
+#########################################
 
-
-$head Public$$
+Public
+******
 This function is declared public, but is not part of
-$cref SetVector$$ concept.
+:ref:`SetVector-name` concept.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void print(void) const;
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_vec_print}
 -------------------------------------------------------------------------------
-$begin list_setvec_iterators$$
-$spell
-   setvec
-   Iterators
+{xrst_begin list_setvec_iterators}
+{xrst_spell
+   iterators
    typedef
-   const_iterator
-$$
+}
 
-$section class list_setvec: Iterators$$
+class list_setvec: Iterators
+############################
 
-$head SetVector Concept$$
-$cref/const_iterator/SetVector/const_iterator/$$
+SetVector Concept
+*****************
+:ref:`SetVector@const_iterator`
 
-$head typedef$$
-$srccode%hpp% */
+typedef
+*******
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    friend class list_setvec_const_iterator;
    typedef list_setvec_const_iterator const_iterator;
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_iterators}
 -------------------------------------------------------------------------------
-$begin list_setvec_default_ctor$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_default_ctor}
 
-$section class list_setvec: Default Constructor$$
+class list_setvec: Default Constructor
+######################################
 
-$head SetVector Concept$$
-$cref/constructor/SetVector/Vector Operations/Constructor/$$
+SetVector Concept
+*****************
+:ref:`SetVector@Vector Operations@Constructor`
 
-$head size_t Members$$
-All of the $code size_t$$ member variables are initialized as zero.
+size_t Members
+**************
+All of the ``size_t`` member variables are initialized as zero.
 
-$head pod_vector Members$$
-All of the $code pod_vector$$ member variables are initialized
+pod_vector Members
+******************
+All of the ``pod_vector`` member variables are initialized
 using their default constructors.
 
-$head Implementation$$
-$srccode%hpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    list_setvec(void)
    : end_(0), number_not_used_(0), data_not_used_(0)
    { }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_default_ctor}
 -------------------------------------------------------------------------------
-$begin list_setvec_destructor$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_destructor}
 
-$section class list_setvec: Destructor$$
+class list_setvec: Destructor
+#############################
 
-$head Implementation$$
-If $code NDEBUG$$ is not defined,
-$cref/check data structure/list_setvec_check_data_structure/$$.
-$srccode%hpp% */
+Implementation
+**************
+If ``NDEBUG`` is not defined,
+:ref:`check data structure<list_setvec_check_data_structure-name>` .
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    ~list_setvec(void)
    {  check_data_structure(); }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_destructor}
 -------------------------------------------------------------------------------
-$begin list_setvec_copy_ctor$$
-$spell
-   setvec
-   CppAD
-$$
+{xrst_begin list_setvec_copy_ctor}
 
-$section class list_setvec: Copy Constructor$$
+class list_setvec: Copy Constructor
+###################################
 
-$head v$$
+v
+*
 The vector of sets that we are attempting to make a copy of.
 
-$head Implementation$$
-Using the copy constructor is probably due to a $code list_setvec$$
+Implementation
+**************
+Using the copy constructor is probably due to a ``list_setvec``
 being passed by value instead of by reference.
 This is a CppAD programing error (not CppAD user error).
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    list_setvec(const list_setvec& v)
    {  CPPAD_ASSERT_UNKNOWN(false); }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_copy_ctor}
 -------------------------------------------------------------------------------
-$begin list_setvec_vec_resize$$
-$spell
-   setvec
-   resize
-$$
+{xrst_begin list_setvec_vec_resize}
 
-$section class list_setvec: Vector resize$$
+class list_setvec: Vector resize
+################################
 
-$head SetVector Concept$$
-$cref/vector resize/SetVector/Vector Operations/resize/$$
+SetVector Concept
+*****************
+:ref:`vector resize<SetVector@Vector Operations@resize>`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void resize(size_t n_set, size_t end)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_vec_resize}
 */
    {  check_data_structure();
 
@@ -622,58 +685,67 @@ $end
    }
 /* %$$
 -------------------------------------------------------------------------------
-$begin list_setvec_vec_n_set$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_vec_n_set}
 
-$section class list_setvec: Number of Sets$$
+class list_setvec: Number of Sets
+#################################
 
-$head SetVector Concept$$
-$cref/n_set/SetVector/Vector Operations/n_set/$$
+SetVector Concept
+*****************
+:ref:`SetVector@Vector Operations@n_set`
 
-$head Implementation$$
-$srccode%hpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    size_t n_set(void) const
    {  return start_.size(); }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_vec_n_set}
 -------------------------------------------------------------------------------
-$begin list_setvec_vec_end$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_vec_end}
 
-$section class list_setvec: End Value$$
+class list_setvec: End Value
+############################
 
-$head SetVector Concept$$
-$cref/end/SetVector/Vector Operations/end/$$
+SetVector Concept
+*****************
+:ref:`SetVector@Vector Operations@end`
 
-$head Implementation$$
-$srccode%hpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    size_t end(void) const
    {  return end_; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_vec_end}
 -------------------------------------------------------------------------------
-$begin list_setvec_vec_assignment$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_vec_assignment}
 
-$section class list_setvec: Vector Assignment$$
+class list_setvec: Vector Assignment
+####################################
 
-$head SetVector Concept$$
-$cref/vector assignment/SetVector/Vector Operations/Assignment/$$
+SetVector Concept
+*****************
+:ref:`vector assignment<SetVector@Vector Operations@Assignment>`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void operator=(const list_setvec& other)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_vec_assignment}
 */
    {  end_             = other.end_;
       number_not_used_ = other.number_not_used_;
@@ -684,22 +756,25 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_vec_swap$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_vec_swap}
 
-$section class list_setvec: Vector Swap$$
+class list_setvec: Vector Swap
+##############################
 
-$head SetVector Concept$$
-$cref/vector swap/SetVector/Vector Operations/swap/$$
+SetVector Concept
+*****************
+:ref:`vector swap<SetVector@Vector Operations@swap>`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void swap(list_setvec& other)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_vec_swap}
 */
    {  // size_t objects
       std::swap(end_             , other.end_);
@@ -714,22 +789,25 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_number_elements$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_number_elements}
 
-$section class list_setvec: Number of Elements in a Set$$
+class list_setvec: Number of Elements in a Set
+##############################################
 
-$head SetVector Concept$$
-$cref/number_elements/SetVector/number_elements/$$
+SetVector Concept
+*****************
+:ref:`SetVector@number_elements`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    size_t number_elements(size_t i) const
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_number_elements}
 */
    {  CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
 
@@ -753,22 +831,25 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_add_element$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_add_element}
 
-$section class list_setvec: Add an Elements to a Set$$
+class list_setvec: Add an Elements to a Set
+###########################################
 
-$head SetVector Concept$$
-$cref/add_element/SetVector/add_element/$$
+SetVector Concept
+*****************
+:ref:`SetVector@add_element`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void add_element(size_t i, size_t element)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_add_element}
 */
    {  CPPAD_ASSERT_UNKNOWN( i   < start_.size() );
       CPPAD_ASSERT_UNKNOWN( element < end_ );
@@ -876,26 +957,30 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_post_element$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_post_element}
 
-$section class list_setvec: Post an Elements for Addition to a Set$$
+class list_setvec: Post an Elements for Addition to a Set
+#########################################################
 
-$head SetVector Concept$$
-$cref/post_element/SetVector/post_element/$$
+SetVector Concept
+*****************
+:ref:`SetVector@post_element`
 
-$head post_$$
+post\_
+******
 The element is added at the front of the linked list
-that starts at $code post_$$.
+that starts at ``post_`` .
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void post_element(size_t i, size_t element)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_post_element}
 */
    {  CPPAD_ASSERT_UNKNOWN( i < start_.size() );
       CPPAD_ASSERT_UNKNOWN( element < end_ );
@@ -911,27 +996,31 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_process_post$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_process_post}
 
-$section class list_setvec: Add Posted Elements to a Set$$
+class list_setvec: Add Posted Elements to a Set
+###############################################
 
-$head SetVector Concept$$
-$cref/process_post/SetVector/process_post/$$
+SetVector Concept
+*****************
+:ref:`SetVector@process_post`
 
-$head post_$$
-Upon call, $codei%post_[%i%]%$$ is the linked list of elements to
-be added to the $th i$$ set.
-Upon return, $codei%post_[%i%]%$$ is zero; i.e., the list is empty.
+post\_
+******
+Upon call, ``post_`` [ *i* ] is the linked list of elements to
+be added to the *i*-th set.
+Upon return, ``post_`` [ *i* ] is zero; i.e., the list is empty.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void process_post(size_t i)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_process_post}
 */
    {  // post
       size_t post = post_[i];
@@ -1047,22 +1136,25 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_is_element$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_is_element}
 
-$section class list_setvec: Is an Element in a Set$$
+class list_setvec: Is an Element in a Set
+#########################################
 
-$head SetVector Concept$$
-$cref/is_element/SetVector/is_element/$$
+SetVector Concept
+*****************
+:ref:`SetVector@is_element`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    bool is_element(size_t i, size_t element) const
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_is_element}
 */
    {  CPPAD_ASSERT_UNKNOWN( post_[i] == 0 );
       CPPAD_ASSERT_UNKNOWN( element < end_ );
@@ -1081,22 +1173,25 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_clear$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_clear}
 
-$section class list_setvec: Assign a Set to be Empty$$
+class list_setvec: Assign a Set to be Empty
+###########################################
 
-$head SetVector Concept$$
-$cref/clear/SetVector/clear/$$
+SetVector Concept
+*****************
+:ref:`SetVector@clear`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void clear(size_t target)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_clear}
 */
    {  CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 
@@ -1108,25 +1203,28 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_assignment$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_assignment}
 
-$section class list_setvec: Assign a Set To Equal Another Set$$
+class list_setvec: Assign a Set To Equal Another Set
+####################################################
 
-$head SetVector Concept$$
-$cref/assignment/SetVector/assignment/$$
+SetVector Concept
+*****************
+:ref:`SetVector@assignment`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void assignment(
       size_t               this_target  ,
       size_t               other_source ,
       const list_setvec&   other        )
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_assignment}
 */
    {  CPPAD_ASSERT_UNKNOWN( other.post_[ other_source ] == 0 );
       //
@@ -1186,26 +1284,29 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_binary_union$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_binary_union}
 
-$section class list_setvec: Assign a Set To Union of Two Sets$$
+class list_setvec: Assign a Set To Union of Two Sets
+####################################################
 
-$head SetVector Concept$$
-$cref/binary_union/SetVector/binary_union/$$
+SetVector Concept
+*****************
+:ref:`SetVector@binary_union`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void binary_union(
       size_t                  this_target  ,
       size_t                  this_left    ,
       size_t                  other_right  ,
       const list_setvec&      other        )
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_binary_union}
 */
    {  CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
       CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
@@ -1330,26 +1431,29 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_binary_intersection$$
-$spell
-   setvec
-$$
+{xrst_begin list_setvec_binary_intersection}
 
-$section class list_setvec: Assign a Set To Equal Another Set$$
+class list_setvec: Assign a Set To Equal Another Set
+####################################################
 
-$head SetVector Concept$$
-$cref/binary_intersection/SetVector/binary_intersection/$$
+SetVector Concept
+*****************
+:ref:`SetVector@binary_intersection`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    void binary_intersection(
       size_t                  this_target  ,
       size_t                  this_left    ,
       size_t                  other_right  ,
       const list_setvec&      other        )
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_binary_intersection}
 */
    {  CPPAD_ASSERT_UNKNOWN( post_[this_left] == 0 );
       CPPAD_ASSERT_UNKNOWN( other.post_[ other_right ] == 0 );
@@ -1465,59 +1569,66 @@ class list_setvec_const_iterator { // BEGIN_CLASS_LIST_SETVEC_CONST_ITERATOR
 // =========================================================================
 
 /*
-$begin list_setvec_const_iterator_member_data$$
-$spell
-   setvec
-   const_iterator
-$$
+{xrst_begin list_setvec_const_iterator_member_data}
 
-$section class list_setvec_const_iterator private: Member Data$$
+class list_setvec_const_iterator private: Member Data
+#####################################################
 
-$head pair_size_t$$
+pair_size_t
+***********
 This type is the same as
-$cref/list_setvec pair_size_t/list_setvec_member_data/pair_size_t/$$.
+:ref:`list_setvec pair_size_t<list_setvec_member_data@pair_size_t>` .
 
-$head end_$$
+end\_
+*****
 This is
-$cref/end_/list_setvec_member_data/end_/$$
-for the $code list_setvec$$ object this iterator refers to.
+:ref:`list_setvec_member_data@end_`
+for the ``list_setvec`` object this iterator refers to.
 
-$head data_$$
+data\_
+******
 This is
-$cref/data_/list_setvec_member_data/data_/$$
-for the $code list_setvec$$ object this iterator refers to.
+:ref:`list_setvec_member_data@data_`
+for the ``list_setvec`` object this iterator refers to.
 
-$head next_pair_$$
+next_pair\_
+***********
 Next element in the set that this iterator refers to.
-If $code next_pair_.value == end_$$ there are no more elements in the set.
+If ``next_pair_.value == end_`` there are no more elements in the set.
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    typedef list_setvec::pair_size_t pair_size_t;
    const size_t                     end_;
    const pod_vector<pair_size_t>&   data_;
    pair_size_t                      next_pair_;
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_const_iterator_member_data}
 -------------------------------------------------------------------------------
-$begin list_setvec_const_iterator_ctor$$
-$spell
-   setvec
-   const_iterator
-$$
+{xrst_begin list_setvec_const_iterator_ctor}
 
-$section class list_setvec_const_iterator: Constructor$$
+class list_setvec_const_iterator: Constructor
+#############################################
 
-$head SetVector Concept$$
-$cref/iterator constructor/SetVector/const_iterator/Constructor/$$
+SetVector Concept
+*****************
+:ref:`iterator constructor<SetVector@const_iterator@Constructor>`
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    list_setvec_const_iterator (const list_setvec& list, size_t i)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_const_iterator_ctor}
 */
    : end_ ( list.end_ ), data_( list.data_ )
    {  CPPAD_ASSERT_UNKNOWN( list.post_[i] == 0 );
@@ -1542,46 +1653,52 @@ $end
    }
 /*
 -------------------------------------------------------------------------------
-$begin list_setvec_const_iterator_dereference$$
-$spell
-   setvec
-   const_iterator
-   Dereference
-$$
+{xrst_begin list_setvec_const_iterator_dereference}
+{xrst_spell
+   dereference
+}
 
-$section class list_setvec_const_iterator: Dereference$$
+class list_setvec_const_iterator: Dereference
+#############################################
 
-$head SetVector Concept$$
-$cref/iterator deference/SetVector/const_iterator/Dereference/$$
+SetVector Concept
+*****************
+:ref:`iterator deference<SetVector@const_iterator@Dereference>`
 
-$head Implementation$$
-$srccode%hpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    size_t operator*(void)
    {  return next_pair_.value; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_const_iterator_dereference}
 -------------------------------------------------------------------------------
-$begin list_setvec_const_iterator_increment$$
-$spell
-   setvec
-   const_iterator
-$$
+{xrst_begin list_setvec_const_iterator_increment}
 
-$section class list_setvec_const_iterator: Increment$$
+class list_setvec_const_iterator: Increment
+###########################################
 
-$head SetVector Concept$$
-$cref/iterator increment/SetVector/const_iterator/Increment/$$
+SetVector Concept
+*****************
+:ref:`iterator increment<SetVector@const_iterator@Increment>`
 
-$head Implementation$$
-$srccode%hpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    list_setvec_const_iterator& operator++(void)
    {  next_pair_  = data_[next_pair_.next];
       return *this;
    }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end list_setvec_const_iterator_increment}
 */
 // ===========================================================================
 }; // END_CLASS_LIST_SETVEC_CONST_ITERATOR
@@ -1603,51 +1720,60 @@ inline void list_setvec::print(void) const
 }
 // ----------------------------------------------------------------------------
 /*
-$begin sparsity_user2internal_list_setvec$$
-$spell
-   setvec
-   std
-$$
+{xrst_begin sparsity_user2internal_list_setvec}
+{xrst_spell
+   msg
+}
 
-$section Copy A Vector of Standard Sets To A list_setvec Object$$
+Copy A Vector of Standard Sets To A list_setvec Object
+######################################################
 
-$head SetVector$$
-is a $cref/simple vector/SimpleVector/$$ type with elements of type
-$code std::set<size_t>$$.
+SetVector
+*********
+is a :ref:`simple vector<SimpleVector-name>` type with elements of type
+``std::set<size_t>`` .
 
-$head  internal$$
+internal
+********
 The input value of this object does not matter.
-Upon return it contains the same sparsity pattern as $icode user$$
+Upon return it contains the same sparsity pattern as *user*
 (or its transpose).
 
-$head user$$
-is the sparsity pattern we are copying to $icode internal$$.
+user
+****
+is the sparsity pattern we are copying to *internal* .
 
-$head  n_set$$
-is the number of sets in the output sparsity pattern $icode internal$$.
-If $icode transpose$$ is false, $icode n_set$$ is equal to
-$icode%user%.size()%$$.
+n_set
+*****
+is the number of sets in the output sparsity pattern *internal* .
+If *transpose* is false, *n_set* is equal to
+*user* . ``size`` () .
 
-$head end$$
-is the end value for the output sparsity pattern $icode internal$$.
-$code list_setvec$$ sparsity pattern $icode internal$$.
-If $icode transpose$$ is true, $icode end$$ is equal to
-$icode%user%.size()%$$.
+end
+***
+is the end value for the output sparsity pattern *internal* .
+``list_setvec`` sparsity pattern *internal* .
+If *transpose* is true, *end* is equal to
+*user* . ``size`` () .
 
-$head transpose$$
-If $icode transpose$$ is false,
-element $icode j$$ is in the $th i$$ $icode internal$$ set if
-$icode j$$ is in the $icode%user%[%i%]%$$.
+transpose
+*********
+If *transpose* is false,
+element *j* is in the *i*-th *internal* set if
+*j* is in the *user* [ *i* ] .
 Otherwise,
-element $icode j$$ is in the $th i$$ $icode internal$$ set if
-$icode i$$ is in the $icode%user%[%j%]%$$.
+element *j* is in the *i*-th *internal* set if
+*i* is in the *user* [ *j* ] .
 
-$head error_msg$$
-is the error message to display if some values in the $icode user$$
+error_msg
+*********
+is the error message to display if some values in the *user*
 sparsity pattern are not valid.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 template<class SetVector>
 void sparsity_user2internal(
    list_setvec&            internal  ,
@@ -1656,8 +1782,10 @@ void sparsity_user2internal(
    size_t                  end       ,
    bool                    transpose ,
    const char*             error_msg )
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end sparsity_user2internal_list_setvec}
 **/
 {
 # ifndef NDEBUG

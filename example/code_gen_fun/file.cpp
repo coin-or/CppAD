@@ -4,13 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin code_gen_fun_file.cpp$$
+{xrst_begin code_gen_fun_file.cpp}
 
-$section File Store and Retrieve a Code Gen Function: Example and Test$$
+File Store and Retrieve a Code Gen Function: Example and Test
+#############################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end code_gen_fun_file.cpp}
 */
 // BEGIN C++
 # include <cppad/example/code_gen_fun.hpp>

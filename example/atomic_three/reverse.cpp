@@ -3,70 +3,83 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_three_reverse.cpp$$
-$spell
-   Jacobian
-$$
+{xrst_begin atomic_three_reverse.cpp}
 
-$section Atomic Functions and Reverse Mode: Example and Test$$
+Atomic Functions and Reverse Mode: Example and Test
+###################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates reverse mode derivative calculation
-using an $cref atomic_three$$ function.
+using an :ref:`atomic_three-name` function.
 
-$head Function$$
+Function
+********
 For this example, the atomic function
-$latex g : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
-$latex \[
-g(x) = \left( \begin{array}{c}
-   x_2 * x_2 \\
-   x_0 * x_1
-\end{array} \right)
-\] $$
+:math:`g : \B{R}^3 \rightarrow \B{R}^2` is defined by
 
-$head Jacobian$$
+.. math::
+
+   g(x) = \left( \begin{array}{c}
+      x_2 * x_2 \\
+      x_0 * x_1
+   \end{array} \right)
+
+Jacobian
+********
 The corresponding Jacobian is
-$latex \[
-g^{(1)} (x) = \left( \begin{array}{ccc}
-  0  &   0 & 2 x_2 \\
-x_1  & x_0 & 0
-\end{array} \right)
-\] $$
 
-$head Hessian$$
+.. math::
+
+   g^{(1)} (x) = \left( \begin{array}{ccc}
+     0  &   0 & 2 x_2 \\
+   x_1  & x_0 & 0
+   \end{array} \right)
+
+Hessian
+*******
 The Hessians of the component functions are
-$latex \[
-g_0^{(2)} ( x ) = \left( \begin{array}{ccc}
-   0 & 0 & 0  \\
-   0 & 0 & 0  \\
-   0 & 0 & 2
-\end{array} \right)
-\W{,}
-g_1^{(2)} ( x ) = \left( \begin{array}{ccc}
-   0 & 1 & 0 \\
-   1 & 0 & 0 \\
-   0 & 0 & 0
-\end{array} \right)
-\] $$
 
-$head Start  Class Definition$$
-$srccode%cpp% */
+.. math::
+
+   g_0^{(2)} ( x ) = \left( \begin{array}{ccc}
+      0 & 0 & 0  \\
+      0 & 0 & 0  \\
+      0 & 0 & 2
+   \end{array} \right)
+   \W{,}
+   g_1^{(2)} ( x ) = \left( \begin{array}{ccc}
+      0 & 1 & 0 \\
+      1 & 0 & 0 \\
+      0 & 0 & 0
+   \end{array} \right)
+
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 namespace {          // isolate items below to this file
 using CppAD::vector; // abbreviate as vector
 //
 class atomic_reverse : public CppAD::atomic_three<double> {
-/* %$$
-$head Constructor $$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 public:
    atomic_reverse(const std::string& name) :
    CppAD::atomic_three<double>(name)
    { }
 private:
-/* %$$
-$head for_type$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_type
+********
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate type_y
    bool for_type(
       const vector<double>&               parameter_x ,
@@ -81,9 +94,12 @@ $srccode%cpp% */
       type_y[1] = std::max(type_x[0], type_x[1]);
       return true;
    }
-/* %$$
-$head forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    bool forward(
       const vector<double>&                   parameter_x ,
@@ -138,9 +154,12 @@ $srccode%cpp% */
       }
       return ok;
    }
-/* %$$
-$head reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse mode routine called by CppAD
    bool reverse(
       const vector<double>&               parameter_x ,
@@ -234,9 +253,12 @@ $srccode%cpp% */
    }
 };
 }  // End empty namespace
-/* %$$
-$head Use Atomic Function$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 bool reverse(void)
 {  bool ok = true;
    using CppAD::AD;
@@ -348,6 +370,8 @@ bool reverse(void)
    // --------------------------------------------------------------------
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_three_reverse.cpp}
 */

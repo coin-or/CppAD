@@ -4,20 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin fun_property.cpp$$
-$spell
-   op
-   arg
-   abs
-   var
-   VecAD
-$$
+{xrst_begin fun_property.cpp}
 
-$section ADFun Function Properties: Example and Test$$
+ADFun Function Properties: Example and Test
+###########################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end fun_property.cpp}
 */
 // BEGIN C++
 

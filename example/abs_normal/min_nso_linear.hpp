@@ -5,135 +5,159 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin min_nso_linear$$
-$spell
-   hpp
-   nso
-   jac
-   Jacobian
+{xrst_begin min_nso_linear}
+{xrst_spell
+   affine
+   approximations
+   dbl
    maxitr
-   smo
-$$
-$section Non-Smooth Optimization Using Abs-normal Linear Approximations$$
+   minimizer
+   nso
+}
+Non-Smooth Optimization Using Abs-normal Linear Approximations
+##############################################################
 
-$head Syntax$$
-$icode%ok% = min_nso_linear(
-   %level%, %g%, %a%, %epsilon%, %maxitr%, %b_in%, %x_in%, %x_out%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
+| *ok* = ``min_nso_linear`` (
+| |tab| *level* , *g* , *a* , *epsilon* , *maxitr* , *b_in* , *x_in* , *x_out*
+| )
 
-$head Source$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Source
+******
 This following is a link to the source code for this example:
-$cref/min_nso_linear.hpp/min_nso_linear.hpp/$$.
+:ref:`min_nso_linear.hpp-name` .
 
-$head Purpose$$
+Purpose
+*******
 Given a current that abs-normal representation
-$cref/g/abs_normal_fun/g/$$, $cref/a/abs_normal_fun/a/$$,
-for a function $latex f(x)$$,
-this routine minimizes $latex f(x)$$.
+:ref:`abs_normal_fun@g` , :ref:`abs_normal_fun@a` ,
+for a function :math:`f(x)`,
+this routine minimizes :math:`f(x)`.
 
-$head DblVector$$
-is a $cref SimpleVector$$ class with elements of type $code double$$.
+DblVector
+*********
+is a :ref:`SimpleVector-name` class with elements of type ``double`` .
 
-$head SizeVector$$
-is a $cref SimpleVector$$ class with elements of type $code size_t$$.
+SizeVector
+**********
+is a :ref:`SimpleVector-name` class with elements of type ``size_t`` .
 
-$head f$$
-We use the notation $icode f$$ for the original function; see
-$cref/f/abs_normal_fun/f/$$.
+f
+*
+We use the notation *f* for the original function; see
+:ref:`abs_normal_fun@f` .
 
-$subhead n$$
-We use $icode n$$ to denote the dimension of the domain for $icode f$$; i.e.,
-$icode%f%.Domain()%$$.
+n
+=
+We use *n* to denote the dimension of the domain for *f* ; i.e.,
+*f* . ``Domain`` () .
 
-$subhead m$$
-We use $icode m$$ to denote the dimension of the range for $icode f$$; i.e.,
-$icode%f%.Range()%$$.
+m
+=
+We use *m* to denote the dimension of the range for *f* ; i.e.,
+*f* . ``Range`` () .
 This must be equal to one.
 
-$subhead s$$
+s
+=
 We use
-$cref/s/abs_normal_fun/f/s/$$ to denote the number absolute terms in $icode f$$.
+:ref:`abs_normal_fun@f@s` to denote the number absolute terms in *f* .
 
-$head level$$
+level
+*****
 This value is less that or equal 5.
-If $icode%level% == 0%$$,
+If *level*  == 0 ,
 no tracing of the optimization is printed.
-If $icode%level% >= 1%$$,
-a trace of each iteration of $code min_nso_linear$$ is printed.
-If $icode%level% >= 2%$$,
-a trace of each iteration of the $code abs_min_linear$$ sub-problem is printed.
-If $icode%level% >= 3%$$,
-a trace of the $cref lp_box$$ sub-problem is printed.
-If $icode%level% >= 4%$$,
-a trace of the objective and primal variables $latex x$$ are printed
-at each $cref simplex_method$$ iteration.
-If $icode%level% == 5%$$,
+If *level*  >= 1 ,
+a trace of each iteration of ``min_nso_linear`` is printed.
+If *level*  >= 2 ,
+a trace of each iteration of the ``abs_min_linear`` sub-problem is printed.
+If *level*  >= 3 ,
+a trace of the :ref:`lp_box-name` sub-problem is printed.
+If *level*  >= 4 ,
+a trace of the objective and primal variables :math:`x` are printed
+at each :ref:`simplex_method-name` iteration.
+If *level*  == 5 ,
 the simplex tableau is printed at each simplex iteration.
 
-$head g$$
-This is the function $cref/g/abs_normal_fun/g/$$
-in the abs-normal representation of $icode f$$.
+g
+*
+This is the function :ref:`abs_normal_fun@g`
+in the abs-normal representation of *f* .
 
-$head a$$
-This is the function $cref/a/abs_normal_fun/a/$$
-in the abs-normal representation of $icode f$$.
+a
+*
+This is the function :ref:`abs_normal_fun@a`
+in the abs-normal representation of *f* .
 
-$head epsilon$$
+epsilon
+*******
 This is a vector with size 2.
-The value $icode%epsilon%[0]%$$ is convergence criteria in terms
-of the infinity norm of the difference of $icode x_out$$
+The value *epsilon* [0] is convergence criteria in terms
+of the infinity norm of the difference of *x_out*
 between iterations.
-The value $icode%epsilon%[1]%$$ is convergence criteria in terms
-of the derivative of $latex f(x)$$.
+The value *epsilon* [1] is convergence criteria in terms
+of the derivative of :math:`f(x)`.
 This derivative is actually the average of the directional derivative
 in the direction of the sub-problem minimizer.
 
-$head maxitr$$
+maxitr
+******
 This is a vector with size 3.
-The value $icode%maxitr%[0]%$$ is the maximum number of
-$code min_nso_linear$$ iterations to try before giving up on convergence.
-The value $icode%maxitr%[1]%$$ is the maximum number of iterations in the
-$code abs_min_linear$$ sub-problem.
-The value $icode%maxitr%[2]%$$ is the maximum number of iterations in
-the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
+The value *maxitr* [0] is the maximum number of
+``min_nso_linear`` iterations to try before giving up on convergence.
+The value *maxitr* [1] is the maximum number of iterations in the
+``abs_min_linear`` sub-problem.
+The value *maxitr* [2] is the maximum number of iterations in
+the :ref:`simplex_method<simplex_method@maxitr>` sub-problems.
 
-$head b_in$$
+b_in
+****
 This the initial bound on the trust region size.
-To be specific, if $latex b$$ is the current trust region size,
+To be specific, if :math:`b` is the current trust region size,
 at each iteration affine approximation is minimized with respect to
-$latex \Delta x$$ and subject to
-$latex \[
+:math:`\Delta x` and subject to
+
+.. math::
+
    -b \leq \Delta x_j \leq b
-\] $$
-for $icode%j% = 0 , %...%, %n%-1%$$.
-It must hold that $icode%b_in% > %epsilon%[0]%$$.
 
-$head x_in$$
-This vector $icode x_out$$ has size $icode n$$.
+for *j* = 0 , ..., *n* ``-1`` .
+It must hold that *b_in* > *epsilon* [0] .
+
+x_in
+****
+This vector *x_out* has size *n* .
 It is the starting point for the optimization procedure; i.e.,
-the $code min_nso_linear$$ iterations.
+the ``min_nso_linear`` iterations.
 
-$head x_out$$
-This vector $icode x_out$$ has size $icode n$$.
+x_out
+*****
+This vector *x_out* has size *n* .
 The input value of its elements does not matter.
 Upon return,
 it is the approximate minimizer
-of the abs-normal approximation for $latex f(x)$$ over the trust region
-is $latex x = \hat{x} + \Delta x$$.
+of the abs-normal approximation for :math:`f(x)` over the trust region
+is :math:`x = \hat{x} + \Delta x`.
+{xrst_toc_hidden
+   example/abs_normal/min_nso_linear.cpp
+   example/abs_normal/min_nso_linear.xrst
+}
+Example
+*******
+The file :ref:`min_nso_linear.cpp-name` contains an example and test of
+``min_nso_linear`` .
 
-$children%example/abs_normal/min_nso_linear.cpp
-   %example/abs_normal/min_nso_linear.omh
-%$$
-$head Example$$
-The file $cref min_nso_linear.cpp$$ contains an example and test of
-$code min_nso_linear$$.
-
-$end
+{xrst_end min_nso_linear}
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>

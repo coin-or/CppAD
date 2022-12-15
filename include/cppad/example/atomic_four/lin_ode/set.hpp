@@ -5,49 +5,65 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_set.hpp$$
-$spell
-   mul
-   lin
-   const
-$$
+{xrst_begin atomic_four_lin_ode_set.hpp}
+{xrst_spell
+   auxillary
+}
 
-$section atomic_lin_ode Set Routine: Example Implementation$$
+atomic_lin_ode Set Routine: Example Implementation
+##################################################
 
-$head Syntax$$
-$icode%call_id% = %lin_ode%.set(%r%, %step%, %pattern%, %transpose%)%$$
+Syntax
+******
+*call_id* = *lin_ode* . ``set`` ( *r* , *step* , *pattern* , *transpose* )
 
-$head Prototype$$
-$srcfile%include/cppad/example/atomic_four/lin_ode/lin_ode.hpp%
-   0%// BEGIN sparse_rc_type%// END sparse_rc_type%0
-%$$
-$srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
+Prototype
+*********
+{xrst_literal
+   include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
+   // BEGIN sparse_rc_type
+   // END sparse_rc_type
+}
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Purpose$$
+Purpose
+*******
 Stores the auxillary information for a an atomic operation that computes
 the solution of a linear ODE.
 
-$head r$$
+r
+*
 This argument is the final value for the variable that the ODE is with
 respect to.
 
-$head step$$
+step
+****
 This is a positive maximum step size to use when solving the ODE.
 
-$head pattern$$
+pattern
+*******
 This argument is a sparsity pattern.
-It would be $code const$$ except for the fact that
-$icode%pattern.set_row_major()%$$ is called so that checking for
+It would be ``const`` except for the fact that
+*pattern.set_row_major* () is called so that checking for
 equality is faster; see
-$cref/set_row_major/sparse_rc/set_row_major/$$.
+:ref:`sparse_rc@set_row_major` .
 
-$head transpose$$
+transpose
+*********
 If this argument is true (false) the sparsity pattern is for
-$latex A(x)\R{T}$$ ($latex A(x)$$).
+:math:`A(x)\R{T}` (:math:`A(x)`).
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_set.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>

@@ -4,17 +4,20 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin tanh.cpp$$
-$spell
+{xrst_begin tanh.cpp}
+{xrst_spell
    tanh
-$$
+}
 
-$section The AD tanh Function: Example and Test$$
+The AD tanh Function: Example and Test
+######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end tanh.cpp}
 */
 // BEGIN C++
 

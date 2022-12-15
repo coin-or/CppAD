@@ -4,28 +4,27 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_three_mat_mul.cpp$$
-$spell
-   mul
-   jac
-   hes
-$$
+{xrst_begin atomic_three_mat_mul.cpp}
 
-$section User Atomic Matrix Multiply: Example and Test$$
+User Atomic Matrix Multiply: Example and Test
+#############################################
 
-$head See Also$$
-$cref atomic_two_eigen_mat_mul.cpp$$
-
-$children%
+See Also
+********
+:ref:`atomic_two_eigen_mat_mul.cpp-name`
+{xrst_toc_hidden
    include/cppad/example/atomic_three/mat_mul.hpp
-%$$
+}
 
-$head Class Definition$$
-This example uses the file $cref atomic_three_mat_mul.hpp$$
-which defines matrix multiply as a $cref atomic_three$$ operation.
+Class Definition
+****************
+This example uses the file :ref:`atomic_three_mat_mul.hpp-name`
+which defines matrix multiply as a :ref:`atomic_three-name` operation.
 
-$head Use Atomic Function$$
-$srccode%cpp% */
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/example/atomic_three/mat_mul.hpp>
 
@@ -34,15 +33,21 @@ bool mat_mul(void)
    using CppAD::AD;
    using CppAD::vector;
    size_t i, j;
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // -------------------------------------------------------------------
    // object that multiplies  2 x 2  matrices
    atomic_mat_mul afun;
-/* %$$
-$subhead Recording$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Recording
+=========
+{xrst_spell_off}
+{xrst_code cpp} */
    // start recording with four independent varables
    size_t n = 4;
    vector<double> x(n);
@@ -90,9 +95,12 @@ $srccode%cpp% */
    // define the function g : x -> atom_y
    // g(x) = [ x0*x2 + x1*x3 , x0*7 + x1*8 , 5*x2  + 6*x3  , 5*7 + 6*8 ]^T
    CppAD::ADFun<double> g(ax, atom_y);
-/* %$$
-$subhead forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // Test zero order forward mode evaluation of g(x)
    size_t m = atom_y.size();
    vector<double> y(m);
@@ -137,9 +145,12 @@ $srccode%cpp% */
    ok &= ddy[1] == 0.;
    ok &= ddy[2] == 0.;
    ok &= ddy[3] == 0.;
-/* %$$
-$subhead reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // Test second order reverse mode
    CppAD::vector<double> w(m), dw(2 * n);
    for(i = 0; i < m; i++)
@@ -159,9 +170,12 @@ $srccode%cpp% */
    ok &= dw[1*2 + 1] == 4.;
    ok &= dw[2*2 + 1] == 1.;
    ok &= dw[3*2 + 1] == 2.;
-/* %$$
-$subhead jac_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+jac_sparsity
+============
+{xrst_spell_off}
+{xrst_code cpp} */
    // sparsity pattern for the Jacobian
    // g'(x) = [ x2, x3, x0, x1  ]
    //         [  7,  8,  0,  0  ]
@@ -212,9 +226,12 @@ $srccode%cpp% */
       ++k;
       ok &= pattern_out.nnz() == k;
    }
-/* %$$
-$subhead hes_sparsity$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+hes_sparsity
+============
+{xrst_spell_off}
+{xrst_code cpp} */
    /* Hessian sparsity pattern
    g_0^2 (x) = [ 0, 0, 1, 0 ] and for i > 0, g_i^2 = 0
             [ 0, 0, 0, 1 ]
@@ -259,6 +276,8 @@ $srccode%cpp% */
 
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_three_mat_mul.cpp}
 */

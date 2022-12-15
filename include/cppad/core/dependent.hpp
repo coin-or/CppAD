@@ -5,119 +5,122 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin Dependent$$
-$spell
-   alloc
-   num
-   taylor_
-   ADvector
-   const
-$$
+{xrst_begin Dependent}
 
-$spell
-$$
+Stop Recording and Store Operation Sequence
+###########################################
 
-$section Stop Recording and Store Operation Sequence$$
+Syntax
+******
+*f* . ``Dependent`` ( *x* , *y* )
 
-
-$head Syntax$$
-$icode%f%.Dependent(%x%, %y%)%$$
-
-$head Purpose$$
-Stop recording and the AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$
+Purpose
+*******
+Stop recording and the AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>`
 that started with the call
-$codei%
-   Independent(%x%)
-%$$
-and store the operation sequence in $icode f$$.
-The operation sequence defines an
-$cref/AD function/glossary/AD Function/$$
-$latex \[
-   F : \B{R}^n \rightarrow \B{R}^m
-\] $$
-where $latex B$$ is the space corresponding to objects of type $icode Base$$.
-The value $latex n$$ is the dimension of the
-$cref/domain/fun_property/Domain/$$ space for the operation sequence.
-The value $latex m$$ is the dimension of the
-$cref/range/fun_property/Range/$$ space for the operation sequence
-(which is determined by the size of $icode y$$).
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-The AD of $icode Base$$ operation sequence is stored in $icode f$$; i.e.,
-it becomes the operation sequence corresponding to $icode f$$.
-If a previous operation sequence was stored in $icode f$$,
+   ``Independent`` ( *x* )
+
+and store the operation sequence in *f* .
+The operation sequence defines an
+:ref:`glossary@AD Function`
+
+.. math::
+
+   F : \B{R}^n \rightarrow \B{R}^m
+
+where :math:`B` is the space corresponding to objects of type *Base* .
+The value :math:`n` is the dimension of the
+:ref:`fun_property@Domain` space for the operation sequence.
+The value :math:`m` is the dimension of the
+:ref:`fun_property@Range` space for the operation sequence
+(which is determined by the size of *y* ).
+
+f
+*
+The object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+The AD of *Base* operation sequence is stored in *f* ; i.e.,
+it becomes the operation sequence corresponding to *f* .
+If a previous operation sequence was stored in *f* ,
 it is deleted.
 
-$head x$$
-The argument $icode x$$
+x
+*
+The argument *x*
 must be the vector argument in a previous call to
-$cref Independent$$.
+:ref:`Independent-name` .
 Neither its size, or any of its values, are allowed to change
 between calling
-$codei%
-   Independent(%x%)
-%$$
+
+   ``Independent`` ( *x* )
+
 and
-$codei%
-   %f%.Dependent(%x%, %y%)
-%$$.
 
-$head y$$
-The vector $icode y$$ has prototype
-$codei%
-   const %ADvector% &%y%
-%$$
-(see $cref/ADvector/fun_construct/$$ below).
-The length of $icode y$$ must be greater than zero
-and is the dimension of the range space for $icode f$$.
+   *f* . ``Dependent`` ( *x* , *y* )
 
-$head ADvector$$
-The type $icode ADvector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$codei%AD<%Base%>%$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+.
+
+y
+*
+The vector *y* has prototype
+
+   ``const`` *ADvector* & *y*
+
+(see :ref:`ADvector<fun_construct-name>` below).
+The length of *y* must be greater than zero
+and is the dimension of the range space for *f* .
+
+ADvector
+********
+The type *ADvector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``AD<`` *Base* > .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Taping$$
+Taping
+******
 The tape,
-that was created when $codei%Independent(%x%)%$$ was called,
+that was created when ``Independent`` ( *x* ) was called,
 will stop recording.
 The AD operation sequence will be transferred from
-the tape to the object $icode f$$ and the tape will then be deleted.
+the tape to the object *f* and the tape will then be deleted.
 
-$head Forward$$
-No $cref Forward$$ calculation is preformed during this operation.
+Forward
+*******
+No :ref:`Forward-name` calculation is preformed during this operation.
 Thus, directly after this operation,
-$codei%
-   %f%.size_order()
-%$$
-is zero (see $cref size_order$$).
 
-$head Parallel Mode$$
-The call to $code Independent$$,
+   *f* . ``size_order`` ()
+
+is zero (see :ref:`size_order-name` ).
+
+Parallel Mode
+*************
+The call to ``Independent`` ,
 and the corresponding call to
-$codei%
-   ADFun<%Base%> %f%( %x%, %y%)
-%$$
-or
-$codei%
-   %f%.Dependent( %x%, %y%)
-%$$
-or $cref abort_recording$$,
-must be preformed by the same thread; i.e.,
-$cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
 
-$head Example$$
+   ``ADFun<`` *Base* > *f* ( *x* , *y* )
+
+or
+
+   *f* . ``Dependent`` ( *x* , *y* )
+
+or :ref:`abort_recording-name` ,
+must be preformed by the same thread; i.e.,
+:ref:`thread_alloc::thread_num<ta_thread_num-name>` must be the same.
+
+Example
+*******
 The file
-$cref fun_check.cpp$$
+:ref:`fun_check.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end Dependent}
 ----------------------------------------------------------------------------
 */
 

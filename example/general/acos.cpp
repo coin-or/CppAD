@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin acos.cpp$$
-$spell
-   cos
-   acos
-$$
+{xrst_begin acos.cpp}
 
-$section The AD acos Function: Example and Test$$
+The AD acos Function: Example and Test
+######################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end acos.cpp}
 */
 // BEGIN C++
 

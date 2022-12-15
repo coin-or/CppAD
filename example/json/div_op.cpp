@@ -3,18 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin json_div_op.cpp$$
-$spell
-   div
-   Json
-$$
+{xrst_begin json_div_op.cpp}
 
-$section Json div Operator: Example and Test$$
+Json div Operator: Example and Test
+###################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end json_div_op.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -1,0 +1,146 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin atomic_four_lin_ode_reverse_2}
+
+Atomic Linear ODE Second Order Reverse
+######################################
+
+x^1 Partial
+***********
+We need to compute
+
+.. math::
+
+   \R{partial\_x} [ j  * q + 1 ]
+   =
+   \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
+      ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1 )
+
+where :math:`q = 2` and :math:`j = 0 , \ldots , n-1`.
+Using the :ref:`reverse_identity-name` we have
+
+.. math::
+
+   \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^1
+   =
+   \partial y_i^0 ( x^0 ) / \partial x_j^0
+
+.. math::
+
+   \R{partial\_x} [ j  * q + 1 ]
+   =
+   \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 1]
+      ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
+
+which is the same as the first order
+:ref:`theory<atomic_four_lin_ode_reverse.hpp@First Order Theory>` with
+
+.. math::
+
+   w_i = \R{partial\_y} [ i * q + 1]
+
+x^0 Partial
+***********
+We also need to compute
+
+.. math::
+
+   \R{partial\_x} [ j  * q + 0 ]
+   =
+   \sum_{i=0}^{m-1} \R{partial\_y} [ i * q + 0]
+      ( \partial y_i^0 ( x^0 ) / \partial x_j^0 )
+   +
+   \R{partial\_y} [ i * q + 1]
+      ( \partial y_i^1 ( x^0 , x^1 ) / \partial x_j^0 )
+
+Note that we can solve for
+
+.. math::
+
+   y^1 ( x^0 , x^1 ) = z^1 ( r , x^0 , x^1 )
+
+using the following extended ODE; see
+:ref:`forward theory<atomic_four_lin_ode_forward.hpp@Theory>` .
+
+.. math::
+
+   \left[ \begin{array}{c}
+   z^0_t (t, x^0 ) \\
+   z^1_t (t, x^0 , x^1 )
+   \end{array} \right]
+   =
+   \left[ \begin{array}{cc}
+   A^0 & 0   \\
+   A^1 & A^0
+   \end{array} \right]
+   \left[ \begin{array}{c}
+   z^0 (t, x^0 ) \\
+   z^1 (t, x^0 , x^1 )
+   \end{array} \right]
+   \; , \;
+   \left[ \begin{array}{c}
+   z^0 (0, x^0 ) \\
+   z^1 (0, x^0 , x^1 )
+   \end{array} \right]
+   =
+   \left[ \begin{array}{c}
+   b^0 \\
+   b^1
+   \end{array} \right]
+
+Note that
+:math:`A^0`, :math:`b^0` are components of :math:`x^0`
+and
+:math:`A^1`, :math:`b^1` are components of :math:`x^1`.
+We use the following notation
+
+.. math::
+
+   \bar{x} = \left[ \begin{array}{c}
+      x^0 \\ x^1
+   \end{array} \right]
+   \W{,}
+   \bar{z}(t , \bar{x} ) = \left[ \begin{array}{c}
+      z^0 (t, x^0) \\ z^1 ( t, x^0 , x^1 )
+   \end{array} \right]
+   \W{,}
+   \bar{A} =
+   \left[ \begin{array}{cc}
+   A^0 & 0   \\
+   A^1 & A^0
+   \end{array} \right]
+   \W{,}
+   \bar{b} = \left[ \begin{array}{c}
+      b^0 \\ b^1
+   \end{array} \right]
+
+Using this notation we have
+
+.. math::
+
+   \bar{z}_t ( t , \bar{x} ) = \bar{A} \bar{z} (t, \bar{x} )
+   \W{,}
+   \bar{z} (0, \bar{x} ) = \bar{b}
+
+Define :math:`\bar{w} \in \B{R}^{m + m}` by
+
+.. math::
+
+   \bar{w}_i = \R{partial\_y}[ i * q + 0 ]
+   \W{,}
+   \bar{w}_{m + i} = \R{partial\_y}[ i * q + 1 ]
+
+For this case, we can compute
+
+.. math::
+
+   \partial_\bar{x} \bar{w}^\R{T} \bar{z}(r, \bar{x} )
+
+which is same as the first order case but with the extended variables
+and extended ODE.
+We will only use the components of
+:math:`\partial_\bar{x}` that correspond to partials w.r.t. :math:`x^0`.
+
+{xrst_end atomic_four_lin_ode_reverse_2}

@@ -4,41 +4,56 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sub_sparse_hes.cpp$$
+{xrst_begin sub_sparse_hes.cpp}
+{xrst_spell
+   nv
+}
 
-$section Computing Sparse Hessian for a Subset of Variables$$
+Computing Sparse Hessian for a Subset of Variables
+##################################################
 
-$head Purpose$$
+Purpose
+*******
 This example uses
-$cref/multiple levels of AD/mul_level/$$
+:ref:`multiple levels of AD<mul_level-name>`
 to compute the Hessian for a subset of the variables
 without having to compute the sparsity pattern for the entire function.
 
-$head See Also$$
-$cref sparse_sub_hes.cpp$$, $cref sparsity_sub.cpp$$,
+See Also
+********
+:ref:`sparse_sub_hes.cpp-name` , :ref:`sparsity_sub.cpp-name` ,
 
-$head Function$$
+Function
+********
 We consider the function
-$latex f : \B{R}^{nu} \times \B{R}^{nv}  \rightarrow \B{R}$$ defined by
-$latex \[
-f (u, v) =
-\left( \sum_{j=0}^{nu-1} u_j^3 \right)
-\left( \sum_{j=0}^{nv-1} v_j \right)
-\] $$
+:math:`f : \B{R}^{nu} \times \B{R}^{nv}  \rightarrow \B{R}` defined by
 
-$head Subset$$
+.. math::
+
+   f (u, v) =
+   \left( \sum_{j=0}^{nu-1} u_j^3 \right)
+   \left( \sum_{j=0}^{nv-1} v_j \right)
+
+Subset
+******
 Suppose that we are only interested computing the function
-$latex \[
+
+.. math::
+
    H(u, v) = \partial_u \partial_u f (u, v)
-\] $$
+
 where this Hessian is sparse.
 
-$head Example$$
+Example
+*******
 The following code shows one way to compute this subset of the
-Hessian of $latex f$$.
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Hessian of :math:`f`.
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end sub_sparse_hes.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

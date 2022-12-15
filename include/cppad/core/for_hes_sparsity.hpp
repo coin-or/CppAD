@@ -5,110 +5,114 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin for_hes_sparsity$$
-$spell
-   Andrea Walther
-   Jacobian
-   Hessian
-   jac
-   hes
-   bool
-   const
-   rc
-   cpp
-$$
+{xrst_begin for_hes_sparsity}
 
-$section Forward Mode Hessian Sparsity Patterns$$
+Forward Mode Hessian Sparsity Patterns
+######################################
 
-$head Syntax$$
-$icode%f%.for_hes_sparsity(
-   %select_domain%, %select_range%, %internal_bool%, %pattern_out%
-)%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to
-the operation sequence stored in $icode f$$.
-Fix a diagonal matrix $latex D \in \B{R}^{n \times n}$$,
-a vector $latex s \in \B{R}^m$$ and define the function
-$latex \[
+| *f* . ``for_hes_sparsity`` (
+| |tab| *select_domain* , *select_range* , *internal_bool* , *pattern_out*
+| )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to
+the operation sequence stored in *f* .
+Fix a diagonal matrix :math:`D \in \B{R}^{n \times n}`,
+a vector :math:`s \in \B{R}^m` and define the function
+
+.. math::
+
    H(x) = D ( s^\R{T} F )^{(2)} ( x ) D
-\] $$
-Given  the sparsity for $latex D$$ and $latex s$$,
-$code for_hes_sparsity$$ computes a sparsity pattern for $latex H(x)$$.
 
-$head x$$
-Note that the sparsity pattern $latex H(x)$$ corresponds to the
-operation sequence stored in $icode f$$ and does not depend on
-the argument $icode x$$.
+Given  the sparsity for :math:`D` and :math:`s`,
+``for_hes_sparsity`` computes a sparsity pattern for :math:`H(x)`.
 
-$head BoolVector$$
-The type $icode BoolVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$.
+x
+*
+Note that the sparsity pattern :math:`H(x)` corresponds to the
+operation sequence stored in *f* and does not depend on
+the argument *x* .
 
-$head SizeVector$$
-The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+BoolVector
+**********
+The type *BoolVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` .
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head select_domain$$
-The argument $icode select_domain$$ has prototype
-$codei%
-   const %BoolVector%& %select_domain%
-%$$
-It has size $latex n$$ and specifies which components of the diagonal of
-$latex D$$ are non-zero; i.e., $icode%select_domain%[%j%]%$$ is true
-if and only if $latex D_{j,j}$$ is possibly non-zero.
+f
+*
+The object *f* has prototype
 
+   ``ADFun<`` *Base* > *f*
 
-$head select_range$$
-The argument $icode select_range$$ has prototype
-$codei%
-   const %BoolVector%& %select_range%
-%$$
-It has size $latex m$$ and specifies which components of the vector
-$latex s$$ are non-zero; i.e., $icode%select_range%[%i%]%$$ is true
-if and only if $latex s_i$$ is possibly non-zero.
+select_domain
+*************
+The argument *select_domain* has prototype
 
-$head internal_bool$$
+   ``const`` *BoolVector* & *select_domain*
+
+It has size :math:`n` and specifies which components of the diagonal of
+:math:`D` are non-zero; i.e., *select_domain* [ *j* ] is true
+if and only if :math:`D_{j,j}` is possibly non-zero.
+
+select_range
+************
+The argument *select_range* has prototype
+
+   ``const`` *BoolVector* & *select_range*
+
+It has size :math:`m` and specifies which components of the vector
+:math:`s` are non-zero; i.e., *select_range* [ *i* ] is true
+if and only if :math:`s_i` is possibly non-zero.
+
+internal_bool
+*************
 If this is true, calculations are done with sets represented by a vector
 of boolean values. Otherwise, a vector of sets of integers is used.
 
-$head pattern_out$$
+pattern_out
+***********
 This argument has prototype
-$codei%
-   sparse_rc<%SizeVector%>& %pattern_out%
-%$$
-This input value of $icode pattern_out$$ does not matter.
-Upon return $icode pattern_out$$ is a sparsity pattern for $latex H(x)$$.
 
-$head Sparsity for Entire Hessian$$
-Suppose that $latex R$$ is the $latex n \times n$$ identity matrix.
-In this case, $icode pattern_out$$ is a sparsity pattern for
-$latex (s^\R{T} F) F^{(2)} ( x )$$.
+   ``sparse_rc<`` *SizeVector* >& *pattern_out*
 
-$head Algorithm$$
+This input value of *pattern_out* does not matter.
+Upon return *pattern_out* is a sparsity pattern for :math:`H(x)`.
+
+Sparsity for Entire Hessian
+***************************
+Suppose that :math:`R` is the :math:`n \times n` identity matrix.
+In this case, *pattern_out* is a sparsity pattern for
+:math:`(s^\R{T} F) F^{(2)} ( x )`.
+
+Algorithm
+*********
 See Algorithm II in
-$italic Computing sparse Hessians with automatic differentiation$$
+*Computing sparse Hessians with automatic differentiation*
 by Andrea Walther.
-Note that $icode s$$ provides the information so that
+Note that *s* provides the information so that
 'dead ends' are not included in the sparsity pattern.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/sparse/for_hes_sparsity.cpp
-%$$
-The file $cref for_hes_sparsity.cpp$$
+}
+The file :ref:`for_hes_sparsity.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end for_hes_sparsity}
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>

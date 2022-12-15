@@ -4,14 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin poly.cpp$$
+{xrst_begin poly.cpp}
 
-$section Polynomial Evaluation: Example and Test$$
+Polynomial Evaluation: Example and Test
+#######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end poly.cpp}
 */
 // BEGIN C++
 

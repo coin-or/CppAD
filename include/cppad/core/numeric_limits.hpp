@@ -7,146 +7,147 @@
 
 /*
 ------------------------------------------------------------------------------
-$begin numeric_limits$$
-$spell
-   std
-   eps
-   CppAD
-   namespace
-   const
-   inf
+{xrst_begin numeric_limits}
+{xrst_spell
    isnan
-$$
+   specializations
+}
 
-$section Numeric Limits For an AD and Base Types$$
+Numeric Limits For an AD and Base Types
+#######################################
 
-$head Syntax$$
-$icode%eps% = numeric_limits<%Float%>::epsilon()
-%$$
-$icode%min% = numeric_limits<%Float%>::min()
-%$$
-$icode%max% = numeric_limits<%Float%>::max()
-%$$
-$icode%nan% = numeric_limits<%Float%>::quiet_NaN()
-%$$
-$icode%inf% = numeric_limits<%Float%>::infinity()
-%$$
-$codei%numeric_limits<%Float%>::digits10%$$
+Syntax
+******
 
-$head CppAD::numeric_limits$$
+| *eps* = ``numeric_limits<`` *Float* >:: ``epsilon`` ()
+| *min* = ``numeric_limits<`` *Float* >:: ``min`` ()
+| *max* = ``numeric_limits<`` *Float* >:: ``max`` ()
+| *nan* = ``numeric_limits<`` *Float* >:: ``quiet_NaN`` ()
+| *inf* = ``numeric_limits<`` *Float* >:: ``infinity`` ()
+
+``numeric_limits<`` *Float* >:: ``digits10``
+
+CppAD::numeric_limits
+*********************
 These functions and have the prototype
-$codei%
-   static %Float% CppAD::numeric_limits<%Float%>::%fun%(%void%)
-%$$
-where $icode fun$$ is
-$code epsilon$$, $code min$$, $code max$$, $code quiet_NaN$$,
-and $code infinity$$.
-(Note that $code digits10$$ is member variable and not a function.)
 
-$head std::numeric_limits$$
-CppAD does not use a specialization of $code std::numeric_limits$$
+   ``static`` *Float* ``CppAD::numeric_limits<`` *Float* >:: *fun* ( *void* )
+
+where *fun* is
+``epsilon`` , ``min`` , ``max`` , ``quiet_NaN`` ,
+and ``infinity`` .
+(Note that ``digits10`` is member variable and not a function.)
+
+std::numeric_limits
+*******************
+CppAD does not use a specialization of ``std::numeric_limits``
 because this would be to restrictive.
 The C++ standard specifies that Non-fundamental standard
 types, such as
-$cref/std::complex<double>/base_complex.hpp/$$ shall not have specializations
-of $code std::numeric_limits$$; see Section 18.2 of
+:ref:`std::complex\<double><base_complex.hpp-name>` shall not have specializations
+of ``std::numeric_limits`` ; see Section 18.2 of
 ISO/IEC 14882:1998(E).
 In addition, since C++11, a only literal types can have a specialization
-of $code std::numeric_limits$$.
+of ``std::numeric_limits`` .
 
-$head Float$$
-These functions are defined for all $codei%AD<%Base%>%$$,
-and for all corresponding $icode Base$$ types;
-see $icode Base$$ type $cref base_limits$$.
+Float
+*****
+These functions are defined for all ``AD<`` *Base* > ,
+and for all corresponding *Base* types;
+see *Base* type :ref:`base_limits-name` .
 
-$head epsilon$$
-The result $icode eps$$ is equal to machine epsilon and has prototype
-$codei%
-   %Float% %eps%
-%$$
-The file $cref num_limits.cpp$$
-tests the value $icode eps$$ by checking that the following are true
-$codei%
-   1 != 1 + %eps%
-   1 == 1 + %eps% / 2
-%$$
+epsilon
+*******
+The result *eps* is equal to machine epsilon and has prototype
+
+   *Float* *eps*
+
+The file :ref:`num_limits.cpp-name`
+tests the value *eps* by checking that the following are true
+
+| |tab| 1 != 1 + *eps*
+| |tab| 1 == 1 + *eps*  / 2
+
 where all the values, and calculations, are done with the precision
-corresponding to $icode Float$$.
+corresponding to *Float* .
 
-$head min$$
-The result $icode min$$ is equal to
+min
+***
+The result *min* is equal to
 the minimum positive normalized value and has prototype
-$codei%
-   %Float% %min%
-%$$
-The file $cref num_limits.cpp$$
-tests the value $icode min$$ by checking that the following are true
-$codei%
-   abs( ((%min% / 100) * 100) / %min% - 1 ) > 3 * %eps%
-   abs( ((%min% * 100) / 100) / %min% - 1 ) < 3 * %eps%
-%$$
-where all the values, and calculations, are done with the precision
-corresponding to $icode Float$$.
 
-$head max$$
-The result $icode max$$ is equal to
+   *Float* *min*
+
+The file :ref:`num_limits.cpp-name`
+tests the value *min* by checking that the following are true
+
+| |tab| ``abs`` ( (( *min* / 100) * 100) / *min* ``- 1`` ) > 3 * *eps*
+| |tab| ``abs`` ( (( *min* * 100) / 100) / *min* ``- 1`` ) < 3 * *eps*
+
+where all the values, and calculations, are done with the precision
+corresponding to *Float* .
+
+max
+***
+The result *max* is equal to
 the maximum finite value and has prototype
-$codei%
-   %Float% %max%
-%$$
-The file $cref num_limits.cpp$$
-tests the value $icode max$$ by checking that the following are true
-$codei%
-   abs( ((%max% * 100) / 100) / %max% - 1 ) > 3 * %eps%
-   abs( ((%max% / 100) * 100) / %max% - 1 ) < 3 * %eps%
-%$$
+
+   *Float* *max*
+
+The file :ref:`num_limits.cpp-name`
+tests the value *max* by checking that the following are true
+
+| |tab| ``abs`` ( (( *max* * 100) / 100) / *max* ``- 1`` ) > 3 * *eps*
+| |tab| ``abs`` ( (( *max* / 100) * 100) / *max* ``- 1`` ) < 3 * *eps*
+
 where all the values, and calculations, are done with the precision
-corresponding to $icode Float$$.
+corresponding to *Float* .
 
-$head quiet_NaN$$
-The result $icode nan$$ is not a number and has prototype
-$codei%
-   %Float% %nan%
-%$$
-The file $cref num_limits.cpp$$
-tests the value $icode nan$$ by checking that the following is true
-$codei%
-   %nan% != %nan%
-%$$
+quiet_NaN
+*********
+The result *nan* is not a number and has prototype
 
-$head infinity$$
-The result $icode inf$$ is equal to the
+   *Float* *nan*
+
+The file :ref:`num_limits.cpp-name`
+tests the value *nan* by checking that the following is true
+
+   *nan* != *nan*
+
+infinity
+********
+The result *inf* is equal to the
 positive infinite value and has prototype
-$codei%
-   %Float% %inf%
-%$$
-The file $cref num_limits.cpp$$
-tests the value $icode inf$$ by checking that the following are true
-$codei%
-   %inf% + 100 == %inf%
-   isnan(%inf% - %inf%)
-%$$
 
-$head digits10$$
-The member variable $code digits10$$ has prototype
-$codei%
-   static const int numeric_limits<%Float%>::digits10
-%$$
+   *Float* *inf*
+
+The file :ref:`num_limits.cpp-name`
+tests the value *inf* by checking that the following are true
+
+| |tab| *inf* + 100 == *inf*
+| |tab| ``isnan`` ( *inf* ``-`` *inf* )
+
+digits10
+********
+The member variable ``digits10`` has prototype
+
+   ``static const int numeric_limits<`` *Float* >:: ``digits10``
+
 It is the number of decimal digits that can be represented by a
-$icode Float$$ value.  A number with this many decimal digits can be
-converted to $icode Float$$ and back to a string,
+*Float* value.  A number with this many decimal digits can be
+converted to *Float* and back to a string,
 without change due to rounding or overflow.
 
-
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/num_limits.cpp
-%$$
+}
 The file
-$cref num_limits.cpp$$
+:ref:`num_limits.cpp-name`
 contains an example and test of these functions.
 
-$end
+{xrst_end numeric_limits}
 ------------------------------------------------------------------------------
 */
 # include <iostream>

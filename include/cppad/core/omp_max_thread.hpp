@@ -5,60 +5,62 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin omp_max_thread$$
-$spell
-   alloc
-   num
-   omp
-   OpenMp
-   CppAD
-$$
+{xrst_begin omp_max_thread}
+{xrst_spell
+   mp
+}
 
-$section OpenMP Parallel Setup$$
+OpenMP Parallel Setup
+#####################
 
-$head Deprecated 2011-06-23$$
-Use $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
+Deprecated 2011-06-23
+*********************
+Use :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
 to set the number of threads.
 
-$head Syntax$$
-$codei%AD<%Base%>::omp_max_thread(%number%)
-%$$
+Syntax
+******
 
-$head Purpose$$
-By default, for each $codei%AD<%Base%>%$$ class there is only one
-tape that records $cref/AD of Base/glossary/AD of Base/$$ operations.
+   ``AD<`` *Base* >:: ``omp_max_thread`` ( *number* )
+
+Purpose
+*******
+By default, for each ``AD<`` *Base* > class there is only one
+tape that records :ref:`glossary@AD of Base` operations.
 This tape is a global variable and hence it cannot be used
 by multiple OpenMP threads at the same time.
-The $code omp_max_thread$$ function is used to set the
+The ``omp_max_thread`` function is used to set the
 maximum number of OpenMP threads that can be active.
 In this case, there is a different tape corresponding to each
-$codei%AD<%Base%>%$$ class and thread pair.
+``AD<`` *Base* > class and thread pair.
 
-$head number$$
-The argument $icode number$$ has prototype
-$codei%
-   size_t %number%
-%$$
+number
+******
+The argument *number* has prototype
+
+   ``size_t`` *number*
+
 It must be greater than zero and specifies the maximum number of
 OpenMp threads that will be active at one time.
 
-
-$head Independent$$
-Each call to $cref/Independent(x)/Independent/$$
-creates a new $cref/active/glossary/Tape/Active/$$ tape.
+Independent
+***********
+Each call to :ref:`Independent(x)<Independent-name>`
+creates a new :ref:`glossary@Tape@Active` tape.
 All of the operations with the corresponding variables
 must be preformed by the same OpenMP thread.
 This includes the corresponding call to
-$cref/f.Dependent(x,y)/Dependent/$$ or the
-$cref/ADFun f(x, y)/fun_construct/Sequence Constructor/$$
+:ref:`f.Dependent(x,y)<Dependent-name>` or the
+:ref:`ADFun f(x, y)<fun_construct@Sequence Constructor>`
 during which the tape stops recording and the variables
 become parameters.
 
-$head Restriction$$
+Restriction
+***********
 No tapes can be
-$cref/active/glossary/Tape/Active/$$ when this function is called.
+:ref:`glossary@Tape@Active` when this function is called.
 
-$end
+{xrst_end omp_max_thread}
 -----------------------------------------------------------------------------
 */
 

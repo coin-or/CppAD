@@ -3,20 +3,23 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin xpackage_mat_mul.cpp$$
-$spell
+{xrst_begin xpackage_mat_mul.cpp}
+{xrst_spell
    xpackage
-$$
+}
 
-$section Xpackage Speed: Matrix Multiplication$$
+Xpackage Speed: Matrix Multiplication
+#####################################
 
+Specifications
+**************
+:ref:`link_mat_mul-name`
 
-$head Specifications$$
-$cref link_mat_mul$$
-
-$head Implementation$$
+Implementation
+**************
 // a xpackage version of this test is not yet implemented
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <map>
 # include <cppad/utility/vector.hpp>
 
@@ -30,6 +33,8 @@ bool link_mat_mul(
    CppAD::vector<double>&           z        ,
    CppAD::vector<double>&           dz       )
 {  return false; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end xpackage_mat_mul.cpp}
 */

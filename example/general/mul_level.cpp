@@ -4,49 +4,61 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin mul_level.cpp$$
-$spell
-   Adolc
+{xrst_begin mul_level.cpp}
+{xrst_spell
    adouble
-   CppAD
-   abs
-$$
+   dx
+}
 
-$section Multiple Level of AD: Example and Test$$
+Multiple Level of AD: Example and Test
+######################################
 
-$head See Also$$
-$cref base2ad.cpp$$
+See Also
+********
+:ref:`base2ad.cpp-name`
 
-$head Purpose$$
-In this example, we use $code AD< AD<double> >$$ (level two taping),
-the compute values of the function $latex f : \B{R}^n \rightarrow \B{R}$$ where
-$latex \[
+Purpose
+*******
+In this example, we use ``AD< AD<double> >`` (level two taping),
+the compute values of the function :math:`f : \B{R}^n \rightarrow \B{R}` where
+
+.. math::
+
    f(x) = \frac{1}{2} \left( x_0^2 + \cdots + x_{n-1}^2 \right)
-\] $$
-We then use $code AD<double>$$ (level one taping) to compute
+
+We then use ``AD<double>`` (level one taping) to compute
 the directional derivative
-$latex \[
-f^{(1)} (x) * v  = x_0 v_0 + \cdots + x_{n-1} v_{n-1}
-\] $$.
-where $latex v \in \B{R}^n$$.
-We then use $code double$$ (no taping) to compute
-$latex \[
-\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = v
-\] $$
+
+.. math::
+
+   f^{(1)} (x) * v  = x_0 v_0 + \cdots + x_{n-1} v_{n-1}
+
+where :math:`v \in \B{R}^n`.
+We then use ``double`` (no taping) to compute
+
+.. math::
+
+   \frac{d}{dx} \left[ f^{(1)} (x) * v \right] = v
+
 This is only meant as an example of multiple levels of taping.
-The example $cref hes_times_dir.cpp$$ computes the same value more
+The example :ref:`hes_times_dir.cpp-name` computes the same value more
 efficiently by using the identity:
-$latex \[
+
+.. math::
+
    \frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v
-\] $$
-The example $cref mul_level_adolc.cpp$$ computes the same values using
-Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
 
+The example :ref:`mul_level_adolc.cpp-name` computes the same values using
+Adolc's type ``adouble`` and CppAD's type ``AD<adouble>`` .
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end mul_level.cpp}
 */
 // BEGIN C++
 

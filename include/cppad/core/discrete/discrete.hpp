@@ -13,65 +13,81 @@
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
  ------------------------------------------------------------------------------
-$begin discrete_create$$
-$spell
-$$
-$section Create a Discrete AD Function$$
+{xrst_begin discrete_create}
+Create a Discrete AD Function
+#############################
 
-$head Syntax$$
-$codei%CPPAD_DISCRETE_FUNCTION(%Base%, %name%)
-%$$
-$icode%name(%ax%, %ay%)
-%$$
+Syntax
+******
 
-$head Base$$
+| ``CPPAD_DISCRETE_FUNCTION`` ( *Base* , *name* )
+| ``name`` ( *ax* , *ay* )
+
+Base
+****
 is the base type for the discrete function.
 
-$head name$$
+name
+****
 is the name of the user defined function that corresponding to this operation.
 
-$head ax$$
-Is a $codei%AD<%Base%>%$$ corresponding to the argument for the function.
+ax
+**
+Is a ``AD<`` *Base* > corresponding to the argument for the function.
 
-$head ay$$
-Is a $codei%AD<%Base%>%$$ corresponding to the result for the function.
+ay
+**
+Is a ``AD<`` *Base* > corresponding to the result for the function.
 
-$head fun$$
-The local object $code fun$$ is a member of the $code discrete$$ class.
+fun
+***
+The local object ``fun`` is a member of the ``discrete`` class.
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
 # define CPPAD_DISCRETE_FUNCTION(Base, name)            \
 inline CppAD::AD<Base> name (const CppAD::AD<Base>& ax) \
 {    static CppAD::discrete<Base> fun(#name, name);     \
      return fun.ad(ax);                                 \
 }
 # define CppADCreateDiscrete CPPAD_DISCRETE_FUNCTION
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end discrete_create}
 -----------------------------------------------------------------------------
-$begin discrete_class$$
+{xrst_begin discrete_class}
 
-$section Declare discrete Class and Member Data$$
+Declare discrete Class and Member Data
+######################################
 
-$head parallel_ad$$
+parallel_ad
+***********
 is a friend of this class so it can call List to initialize
 its static data.
 
-$head Fun$$
-is the type for the user routine that computes $icode Base$$ function values.
+Fun
+***
+is the type for the user routine that computes *Base* function values.
 
-$head name_$$
+name\_
+******
 name of this user defined discrete function.
 
-$head f_$$
-user routine that computes $icode Base$$ function values.
+f\_
+***
+user routine that computes *Base* function values.
 
-$head index_$$
-index of this object in $cref discrete_list$$ for this $icode Base$$.
+index\_
+*******
+index of this object in :ref:`discrete_list-name` for this *Base* .
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
 template <class Base>
 class discrete {
 private:
@@ -80,100 +96,119 @@ private:
    const std::string    name_;
    const Fun            f_;
    const size_t         index_;
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end discrete_class}
 ------------------------------------------------------------------------------
-$begin discrete_list$$
-$spell
-   alloc
-   std
-   CppAD
-$$
-$section List of all objects in the discrete class$$
+{xrst_begin discrete_list}
+List of all objects in the discrete class
+#########################################
 
-$head Syntax$$
-$icode%list% = discrete<%Base%>::List()%$$
+Syntax
+******
+*list* = ``discrete<`` *Base* >:: ``List`` ()
 
-$head Base$$
-Is the $cref/Base/discrete_create/Base/$$
+Base
+****
+Is the :ref:`discrete_create@Base`
 type for this list of discrete functions.
 
-$head list$$
+list
+****
 is a reference to the list of all the
-$code discrete$$ object currently defined.
+``discrete`` object currently defined.
 
-$subhead std::vector$$
-We use $code std::vector$$ instead of $code CppAD::vector$$
-so it does not appear that there is a $cref memory_leak$$
+std::vector
+===========
+We use ``std::vector`` instead of ``CppAD::vector``
+so it does not appear that there is a :ref:`memory_leak-name`
 this list is not destroyed before
-$cref/thread_alloc::free_all/ta_free_all/$$ is called by testing routines.
+:ref:`thread_alloc::free_all<ta_free_all-name>` is called by testing routines.
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
    static std::vector<discrete *>& List(void)
    {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
       static std::vector<discrete *> list;
       return list;
    }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end discrete_list}
  ------------------------------------------------------------------------------
-$begin discrete_list_size$$
-$spell
-$$
-$section Size of the Discrete Function List$$
+{xrst_begin discrete_list_size}
+Size of the Discrete Function List
+##################################
 
-$head Syntax$$
-$icode%size% = discrete<%Base%>::list_size()%$$
+Syntax
+******
+*size* = ``discrete<`` *Base* >:: ``list_size`` ()
 
-$head Base$$
-Is the $cref/Base/discrete_create/Base/$$
+Base
+****
+Is the :ref:`discrete_create@Base`
 type for this list of discrete functions.
 
-$head size$$
-is the number of discrete functions for this $icode Base$$ type.
+size
+****
+is the number of discrete functions for this *Base* type.
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
    static size_t list_size(void)
    {  return List().size(); }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end discrete_list_size}
  ------------------------------------------------------------------------------
-$begin discrete_ctor$$
-$spell
-$$
-$section Constructor Called by each Use of CPPAD_DISCRETE_FUNCTION$$
+{xrst_begin discrete_ctor}
+Constructor Called by each Use of CPPAD_DISCRETE_FUNCTION
+#########################################################
 
-$head Syntax$$
-$codei%discrete<%Base%> %fun%(%name%, %f%)%$$
+Syntax
+******
+``discrete<`` *Base* > *fun* ( *name* , *f* )
 
-$head name$$
+name
+****
 is the name of this function.
 
-$head f$$
+f
+*
 user routine that implements this function for Base class.
 
-$head fun$$
-is the $code discrete$$ object created by this call to the constructor.
+fun
+***
+is the ``discrete`` object created by this call to the constructor.
 
-$subhead name_$$
-is set equal to $icode name$$.
+name\_
+======
+is set equal to *name* .
 
-$subhead f_$$
-is set equal to $icode f$$.
+f\_
+===
+is set equal to *f* .
 
-$subhead index_$$
-This object is put at the end of $cref discrete_list$$ and $code index_$$
+index\_
+=======
+This object is put at the end of :ref:`discrete_list-name` and ``index_``
 is set to the index of this object in the discrete list.
 
-$head Parallel$$
+Parallel
+********
 This constructor cannot be used in parallel mode because it changes
-the static object returned by $cref discrete_list$$.
+the static object returned by :ref:`discrete_list-name` .
 
-$end
+{xrst_end discrete_ctor}
 */
 public:
    discrete(const char* name, Fun f) :
@@ -189,25 +224,31 @@ public:
    }
 /*
  ------------------------------------------------------------------------------
-$begin discrete_ad$$
-$spell
-$$
-$section Implement AD Version of a Discrete Function$$
+{xrst_begin discrete_ad}
+Implement AD Version of a Discrete Function
+###########################################
 
-$head Syntax$$
-$icode%ay% = %fun%.ad(%ax)%$$
+Syntax
+******
+*ay* = *fun* . ``ad`` ( *ax* )
 
-$head ax$$
+ax
+**
 is the argument for the AD version of this function.
 
-$head ay$$
+ay
+**
 is the return value for the AD version of this function.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
    AD<Base> ad(const AD<Base> &ax) const
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end discrete_ad}
 */
    {
       CPPAD_ASSERT_KNOWN(
@@ -269,88 +310,110 @@ $end
    }
 /*
 ------------------------------------------------------------------------------
-$begin discrete_name$$
+{xrst_begin discrete_name}
 
-$section Name Corresponding to a discrete Function$$
+Name Corresponding to a discrete Function
+#########################################
 
-$head Syntax$$
-$codei%discrete<%Base%>::name(%index%)%$$
+Syntax
+******
+``discrete<`` *Base* >:: ``name`` ( *index* )
 
-$head Base$$
-Is the $cref/Base/discrete_create/Base/$$
+Base
+****
+Is the :ref:`discrete_create@Base`
 type for this list of discrete functions.
 
-$head index$$
+index
+*****
 Is the index, in the list, for this discrete function.
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
    static const char* name(size_t index)
    {  return List()[index]->name_.c_str(); }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end discrete_name}
 ------------------------------------------------------------------------------
-$begin discrete_eval$$
-$spell
-   eval
-$$
-$section Link From Forward Mode Sweep to Users Routine$$
+{xrst_begin discrete_eval}
+Link From Forward Mode Sweep to Users Routine
+#############################################
 
-$head Syntax$$
-$icode%y% = discrete<%Base%>::eval(%index%, %x%)%$$
+Syntax
+******
+*y* = ``discrete<`` *Base* >:: ``eval`` ( *index* , *x* )
 
-$head Base$$
-Is the $cref/Base/discrete_create/Base/$$
+Base
+****
+Is the :ref:`discrete_create@Base`
 type for this list of discrete functions.
 
-$head index$$
-index for this function in $cref discrete_list$$.
+index
+*****
+index for this function in :ref:`discrete_list-name` .
 
-$head x$$
-argument at which to evaluate $icode Base$$ version of this function.
+x
+*
+argument at which to evaluate *Base* version of this function.
 
-$head y$$
-result for the $icode Base$$ version of this function.
+y
+*
+result for the *Base* version of this function.
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
    static Base eval(size_t index, const Base& x)
    {  CPPAD_ASSERT_UNKNOWN(index < List().size() );
       return List()[index]->f_(x);
    }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end discrete_eval}
 ------------------------------------------------------------------------------
-$begin discrete_ad_eval$$
-$spell
-   eval
-$$
-$section Link From Forward Mode Sweep to AD Version of Discrete Function$$
+{xrst_begin discrete_ad_eval}
+Link From Forward Mode Sweep to AD Version of Discrete Function
+###############################################################
 
-$head Syntax$$
-$icode%ay% = discrete<%Base%>::eval(%index%, %ax%)%$$
+Syntax
+******
+*ay* = ``discrete<`` *Base* >:: ``eval`` ( *index* , *ax* )
 
-$head Base$$
-Is the $cref/Base/discrete_create/Base/$$
+Base
+****
+Is the :ref:`discrete_create@Base`
 type for this list of discrete functions.
 
-$head index$$
-index for this function in $cref discrete_list$$.
+index
+*****
+index for this function in :ref:`discrete_list-name` .
 
-$head ax$$
-argument at which to evaluate $codei%AD<%Base%>%$$ version of this function.
+ax
+**
+argument at which to evaluate ``AD<`` *Base* > version of this function.
 
-$head ay$$
-result for the $codei%AD<%Base%>%$$ version of this function.
+ay
+**
+result for the ``AD<`` *Base* > version of this function.
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
    static AD<Base> ad_eval(size_t index, const AD<Base>& ax)
    {  CPPAD_ASSERT_UNKNOWN(index < List().size() );
       return List()[index]->ad(ax);
    }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end discrete_ad_eval}
 */
 };
 

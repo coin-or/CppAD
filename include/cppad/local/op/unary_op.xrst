@@ -1,0 +1,399 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+/*
+{xrst_begin forward_unary_op}
+{xrst_spell
+   auxillary
+}
+
+Variable Forward Unary Operators
+################################
+
+Syntax
+******
+``forward_`` *name* _ ``op`` ( *p* , *q* , *i_z* , *i_x* , *cap_order* , *taylor* )
+
+Assumption
+**********
+The operator corresponding to *name* has one argument and one result.
+
+Notation
+********
+
+x
+=
+We use *x* to denote the argument of this unary operation.
+
+z
+=
+We use *z* to denote the primary result of this unary operation.
+If this operator has two results, ``NumRes`` ( *op* ) == 2 ,
+we call the other the auxillary result.
+
+Base
+****
+is the base type for the operator; i.e., this operation was recorded
+using ``AD<`` *Base* > and computations by this routine are done using
+type *Base* .
+
+p
+*
+This argument has type ``size_t`` and
+is lowest order of the Taylor coefficient that we are computing.
+
+q
+*
+The argument *q >* = *p* has type ``size_t`` and
+is highest order of the Taylor coefficient that we are computing.
+
+i_z
+***
+This argument has type ``size_t`` and
+is the variable index corresponding to the primary result for this operation;
+i.e. the row index in taylor corresponding to *z* .
+If this operator has an auxillary result, its variable index is
+*i_z* ``- 1`` .
+
+i_x
+***
+This argument has type ``size_t`` and
+is variable index corresponding to the argument for this operator;
+i.e. the row index in taylor corresponding to ``x`` .
+
+cap_order
+*********
+This argument has type ``size_t`` and
+is the maximum number of orders that will fit in *taylor* .
+
+taylor
+******
+This argument has type *Base* * .
+The Taylor coefficient corresponding to
+variable *i* and order *k* is
+
+   *taylor* [ *i* * *cap_order* + *k*  ]
+
+.
+
+Input
+=====
+
+#. The Taylor coefficients for variable *i_x* up to order *q* .
+#. The Taylor coefficients for variable *i_z* up to order *p* ``-1`` .
+#. If this operator has an auxillary result,
+   the Taylor coefficients for variable *i_z* ``-1``
+   up to order *p* ``-1`` .
+
+Output
+======
+The Taylor coefficients for variable *i_z* up to order *q* .
+
+{xrst_end forward_unary_op}
+------------------------------------------------------------------------------
+{xrst_begin forward_unary_op_dir}
+{xrst_spell
+   auxillary
+   tpv
+}
+
+Multiple Direction Forward Unary Operators
+##########################################
+
+Syntax
+******
+``forward_`` *name* _ ``op`` ( *q* , *r* , *i_z* , *i_x* , *cap_order* , *taylor* )
+
+Assumption
+**********
+The operator corresponding to *name* has one argument and one result.
+
+Notation
+********
+
+x
+=
+We use *x* to denote the argument of this unary operation.
+
+z
+=
+We use *z* to denote the primary result of this unary operation.
+If this operator has two results, ``NumRes`` ( *op* ) == 2 ,
+we call the other the auxillary result.
+
+Base
+****
+is the base type for the operator; i.e., this operation was recorded
+using ``AD<`` *Base* > and computations by this routine are done using
+type *Base* .
+
+q
+*
+This argument has type ``size_t`` and
+is the order of the Taylor coefficients that we are computing.
+Furthermore *q*  > 0 and *q* < *cap_order* .
+
+r
+*
+This argument has type ``size_t`` and
+is number of directions for Taylor coefficients that we are computing.
+
+i_z
+***
+This argument has type ``size_t`` and
+is the variable index corresponding to the primary result for this operation;
+i.e. the row index in taylor corresponding to *z* .
+If this operator has an auxillary result, its variable index is
+*i_z* ``- 1`` .
+
+i_x
+***
+This argument has type ``size_t`` and
+is variable index corresponding to the argument for this operator;
+i.e. the row index in taylor corresponding to ``x`` .
+
+cap_order
+*********
+This argument has type ``size_t`` and
+is the maximum number of orders that will fit in *taylor* .
+The zero order Taylor coefficient for a variable
+is the same for all directions.  We use the notation
+
+   *tpv* = ( *cap_order* ``- 1`` ) * ``r`` + 1
+
+which is the number of Taylor coefficients per variable.
+
+taylor
+******
+This argument has type *Base* * .
+The zero order Taylor coefficient for variable *i* is
+
+   *taylor* [ *i* * *tpv*  + 0 ]
+
+.
+For *k > 0* ,
+and *ell* = 0 , .. , *r-1* ,
+The Taylor coefficient for variable *i* ,
+order *k* , and direction *ell* is
+
+   *taylor* [ *i* * *tpv* + ( *k* ``- 1`` ) * *r* + *ell*  + 1 ]
+
+.
+
+Input
+*****
+
+#. The Taylor coefficients for variable *i_x* up to order *q*
+   and all *r* directions.
+#. The Taylor coefficients for variable *i_z* up to order *q-1*
+   and all *r* directions.
+#. If this operator has an auxillary result,
+   the Taylor coefficients for variable *i_z* ``-1``
+   up to order *q* ``-1`` .
+
+Output
+******
+The Taylor coefficients for variable *i_z* up to order *q*
+and all *r* directions.
+
+{xrst_end forward_unary_op_dir}
+-------------------------------------------------------------------------------
+/*
+{xrst_begin forward_unary_op_0}
+{xrst_spell
+   auxillary
+}
+
+Zero Order Forward Unary Operators
+##################################
+
+Syntax
+******
+``forward_`` *name* _ ``op_0`` ( *i_z* , *i_x* , *cap_order* , *taylor* )
+
+Assumption
+**********
+The operator corresponding to *name* has one argument and one result.
+
+Notation
+********
+
+x
+=
+We use *x* to denote the argument of this unary operation.
+
+z
+=
+We use *z* to denote the primary result of this unary operation.
+If this operator has two results, ``NumRes`` ( *op* ) == 2 ,
+we call the other the auxillary result.
+
+Base
+****
+is the base type for the operator; i.e., this operation was recorded
+using ``AD<`` *Base* > and computations by this routine are done using
+type *Base* .
+
+i_z
+***
+This argument has type ``size_t`` and
+is the variable index corresponding to the primary result for this operation;
+i.e. the row index in taylor corresponding to *z* .
+If this operator has an auxillary result, its variable index is
+*i_z* ``- 1`` .
+
+i_x
+***
+This argument has type ``size_t`` and
+is variable index corresponding to the argument for this operator;
+i.e. the row index in taylor corresponding to ``x`` .
+
+cap_order
+*********
+The argument *cap_order*  > 0 has type ``size_t`` and
+is the maximum number of orders that will fit in *taylor* .
+
+taylor
+******
+This argument has type *Base* * .
+The Taylor coefficient corresponding to
+variable *i* and order *k* is
+
+   *taylor* [ *i* * *cap_order* + *k*  ]
+
+.
+
+Input
+=====
+The zero order Taylor coefficients for variable *i_x* .
+
+Output
+======
+The zero order Taylor coefficients for variable *i_z* .
+If this operator has an auxillary result,
+the Taylor coefficient for variable *i_z* ``-1`` .
+
+{xrst_end forward_unary_op_0}
+------------------------------------------------------------------------------
+/*
+{xrst_begin reverse_unary_op}
+{xrst_spell
+   auxillary
+}
+
+Reverse Unary Operators
+#######################
+
+Syntax
+******
+
+| ``reverse_`` *name* _ ``op`` (
+| |tab| *d* , *i_z* , *i_x* , *cap_order* , *taylor* , *nc_partial* , *partial*
+| )
+
+Assumption
+**********
+The operator corresponding to *name* has one argument and one result.
+
+Notation
+********
+
+x
+=
+We use *x* to denote the argument of this unary operation.
+
+z
+=
+We use *z* to denote the primary result of this unary operation.
+If this operator has two results, ``NumRes`` ( *op* ) == 2 ,
+we call the other the auxillary result.
+
+G
+=
+We use :math:`G(z, x, w, \ldots )` to denote a scalar valued function of the
+variables up to variable index *i_z* .
+
+H
+=
+We use :math:`H(x, w, \ldots )` to denote the scalar valued function of the
+variables up to variable index *i_z* ``-1`` defined by
+
+.. math::
+
+   H(x, w, \ldots ) = G [ z(x), x, w, \ldots ) ]
+
+Base
+****
+is the base type for the operator; i.e., this operation was recorded
+using ``AD<`` *Base* > and computations by this routine are done using
+type *Base* .
+
+d
+*
+This argument has type ``size_t`` and
+is this highest order Taylor coefficient that we are computing
+partial derivatives with respect to.
+Furthermore *d* < *cap_order* and *d* < *nc_partial* .
+
+i_z
+***
+This argument has type ``size_t`` and
+is the variable index corresponding to the primary result for this operation;
+i.e. the row index in taylor corresponding to *z* .
+If this operator has an auxillary result, its variable index is
+*i_z* ``- 1`` .
+
+i_x
+***
+This argument has type ``size_t`` and
+is variable index corresponding to the argument for this operator;
+i.e. the row index in taylor corresponding to ``x`` .
+Furthermore *i_x* < *i_z* .
+
+cap_order
+*********
+This argument has type ``size_t`` and
+is the maximum number of orders that will fit in *taylor* .
+
+taylor
+******
+This argument has type ``const`` *Base* * .
+The Taylor coefficient corresponding to
+variable *i* and order *k* is
+
+   *taylor* [ *i* * *cap_order* + *k*  ]
+
+.
+
+nc_partial
+**********
+This argument has type ``size_t`` and
+is the number of columns in the partial array.
+
+partial
+*******
+This argument has type *Base* * .
+The partial derivative w.r.t. variable *i* and
+Taylor coefficient order *k* is
+
+   *partial* [ *i* * *nc_partial* + ``k`` ]
+
+for *k* = 0 , ..., *d* .
+
+Input
+=====
+For variable *i* = 0 ,..., *i_z* ,
+*partial* contains the
+partial derivatives of :math:`G(z, x, w, \ldots)`.
+
+Output
+======
+The array *partial* contains the
+partial derivatives of :math:`H(x, w, \ldots)`.
+The partial derivative for variable *i_z* is unspecified.
+If this operator has an auxillary result,
+The partial derivative for variable *i_z* ``- 1`` is unspecified.
+
+{xrst_end reverse_unary_op}
+------------------------------------------------------------------------------

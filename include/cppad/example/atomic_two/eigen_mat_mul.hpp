@@ -6,109 +6,128 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_eigen_mat_mul.hpp$$
-$spell
-   Eigen
-   Taylor
+{xrst_begin atomic_two_eigen_mat_mul.hpp}
+{xrst_spell
    nr
-   nc
-   op
-   jac
-   hes
-$$
+   tr
+}
 
-$section atomic_two Eigen Matrix Multiply Class$$
+atomic_two Eigen Matrix Multiply Class
+######################################
 
-$head See Also$$
-$cref atomic_three_mat_mul.hpp$$
+See Also
+********
+:ref:`atomic_three_mat_mul.hpp-name`
 
-$head Purpose$$
+Purpose
+*******
 Construct an atomic operation that computes the matrix product,
-$latex R = A \times \B{R}$$
-for any positive integers $latex r$$, $latex m$$, $latex c$$,
-and any $latex A \in \B{R}^{r \times m}$$,
-$latex B \in \B{R}^{m \times c}$$.
+:math:`R = A \times \B{R}`
+for any positive integers :math:`r`, :math:`m`, :math:`c`,
+and any :math:`A \in \B{R}^{r \times m}`,
+:math:`B \in \B{R}^{m \times c}`.
 
-$head Matrix Dimensions$$
+Matrix Dimensions
+*****************
 This example puts the matrix dimensions in the atomic function arguments,
-instead of the $cref/constructor/atomic_two_ctor/$$, so that they can
+instead of the :ref:`constructor<atomic_two_ctor-name>` , so that they can
 be different for different calls to the atomic function.
 These dimensions are:
-$table
-$icode nr_left$$
-   $cnext number of rows in the left matrix; i.e, $latex r$$ $rend
-$icode n_middle$$
-   $cnext rows in the left matrix and columns in right; i.e, $latex m$$ $rend
-$icode nc_right$$
-   $cnext number of columns in the right matrix; i.e., $latex c$$
-$tend
 
-$head Theory$$
+.. list-table::
 
-$subhead Forward$$
-For $latex k = 0 , \ldots $$, the $th k$$ order Taylor coefficient
-$latex R_k$$ is given by
-$latex \[
+   * - *nr_left*
+     - number of rows in the left matrix; i.e, :math:`r` $rend
+       *n_middle*
+     - rows in the left matrix and columns in right; i.e, :math:`m` $rend
+       *nc_right*
+     - number of columns in the right matrix; i.e., :math:`c`
+
+Theory
+******
+
+Forward
+=======
+For :math:`k = 0 , \ldots`, the *k*-th order Taylor coefficient
+:math:`R_k` is given by
+
+.. math::
+
    R_k = \sum_{\ell = 0}^{k} A_\ell B_{k-\ell}
-\] $$
 
-$subhead Product of Two Matrices$$
-Suppose $latex \bar{E}$$ is the derivative of the
-scalar value function $latex s(E)$$ with respect to $latex E$$; i.e.,
-$latex \[
+Product of Two Matrices
+=======================
+Suppose :math:`\bar{E}` is the derivative of the
+scalar value function :math:`s(E)` with respect to :math:`E`; i.e.,
+
+.. math::
+
    \bar{E}_{i,j} = \frac{ \partial s } { \partial E_{i,j} }
-\] $$
-Also suppose that $latex t$$ is a scalar valued argument and
-$latex \[
-   E(t) = C(t) D(t)
-\] $$
-It follows that
-$latex \[
-   E'(t) = C'(t) D(t) +  C(t) D'(t)
-\] $$
 
-$latex \[
+Also suppose that :math:`t` is a scalar valued argument and
+
+.. math::
+
+   E(t) = C(t) D(t)
+
+It follows that
+
+.. math::
+
+   E'(t) = C'(t) D(t) +  C(t) D'(t)
+
+.. math::
+
    (s \circ E)'(t)
    =
    \R{tr} [ \bar{E}^\R{T} E'(t) ]
-\] $$
-$latex \[
+
+.. math::
+
    =
    \R{tr} [ \bar{E}^\R{T} C'(t) D(t) ] +
    \R{tr} [ \bar{E}^\R{T} C(t) D'(t) ]
-\] $$
-$latex \[
+
+.. math::
+
    =
    \R{tr} [ D(t) \bar{E}^\R{T} C'(t) ] +
    \R{tr} [ \bar{E}^\R{T} C(t) D'(t) ]
-\] $$
-$latex \[
+
+.. math::
+
    \bar{C} = \bar{E} D^\R{T} \W{,}
    \bar{D} = C^\R{T} \bar{E}
-\] $$
 
-$subhead Reverse$$
-Reverse mode eliminates $latex R_k$$ as follows:
-for $latex \ell = 0, \ldots , k-1$$,
-$latex \[
-\bar{A}_\ell     = \bar{A}_\ell     + \bar{R}_k B_{k-\ell}^\R{T}
-\] $$
-$latex \[
-\bar{B}_{k-\ell} =  \bar{B}_{k-\ell} + A_\ell^\R{T} \bar{R}_k
-\] $$
+Reverse
+=======
+Reverse mode eliminates :math:`R_k` as follows:
+for :math:`\ell = 0, \ldots , k-1`,
 
+.. math::
 
-$head Start Class Definition$$
-$srccode%cpp% */
+   \bar{A}_\ell     = \bar{A}_\ell     + \bar{R}_k B_{k-\ell}^\R{T}
+
+.. math::
+
+   \bar{B}_{k-\ell} =  \bar{B}_{k-\ell} + A_\ell^\R{T} \bar{R}_k
+
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <Eigen/Core>
 
+/* {xrst_code}
+{xrst_spell_on}
+Public
+******
 
-/* %$$
-$head Public$$
-
-$subhead Types$$
-$srccode%cpp% */
+Types
+=====
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace { // BEGIN_EMPTY_NAMESPACE
 
 template <class Base>
@@ -125,18 +144,24 @@ public:
    // type of matrix during taping
    typedef Eigen::Matrix<
       ad_scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor > ad_matrix;
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // constructor
    atomic_eigen_mat_mul(void) : CppAD::atomic_base<Base>(
       "atom_eigen_mat_mul"                             ,
       CppAD::atomic_base<Base>::set_sparsity_enum
    )
    { }
-/* %$$
-$subhead op$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+op
+==
+{xrst_spell_off}
+{xrst_code cpp} */
    // use atomic operation to multiply two AD matrices
    ad_matrix op(
       const ad_matrix&              left    ,
@@ -178,11 +203,15 @@ $srccode%cpp% */
       //
       return result;
    }
-/* %$$
-$head Private$$
+/* {xrst_code}
+{xrst_spell_on}
+Private
+*******
 
-$subhead Variables$$
-$srccode%cpp% */
+Variables
+=========
+{xrst_spell_off}
+{xrst_code cpp} */
 private:
    // -------------------------------------------------------------
    // one forward mode vector of matrices for left, right, and result
@@ -190,9 +219,12 @@ private:
    // one reverse mode vector of matrices for left, right, and result
    CppAD::vector<matrix> r_left_, r_right_, r_result_;
    // -------------------------------------------------------------
-/* %$$
-$subhead forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    virtual bool forward(
       // lowest order Taylor coefficient we are evaluating
@@ -302,9 +334,12 @@ $srccode%cpp% */
       }
       return true;
    }
-/* %$$
-$subhead reverse$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+reverse
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse mode routine called by CppAD
    virtual bool reverse(
       // highest order Taylor coefficient that we are computing derivative of
@@ -411,9 +446,12 @@ $srccode%cpp% */
       //
       return true;
    }
-/* %$$
-$subhead for_sparse_jac$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_sparse_jac
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward Jacobian sparsity routine called by CppAD
    virtual bool for_sparse_jac(
       // number of columns in the matrix R
@@ -460,9 +498,12 @@ $srccode%cpp% */
       }
       return true;
    }
-/* %$$
-$subhead rev_sparse_jac$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+rev_sparse_jac
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse Jacobian sparsity routine called by CppAD
    virtual bool rev_sparse_jac(
       // number of columns in the matrix R^T
@@ -508,9 +549,12 @@ $srccode%cpp% */
       }
       return true;
    }
-/* %$$
-$subhead for_sparse_hes$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_sparse_hes
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    virtual bool for_sparse_hes(
       // which components of x are variables for this call
       const CppAD::vector<bool>&                   vx,
@@ -560,9 +604,12 @@ $srccode%cpp% */
       }
       return true;
    }
-/* %$$
-$subhead rev_sparse_hes$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+rev_sparse_hes
+==============
+{xrst_spell_off}
+{xrst_code cpp} */
    // reverse Hessian sparsity routine called by CppAD
    virtual bool rev_sparse_hes(
       // which components of x are variables for this call
@@ -637,14 +684,19 @@ $srccode%cpp% */
       }
       return true;
    }
-/* %$$
-$head End Class Definition$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+End Class Definition
+********************
+{xrst_spell_off}
+{xrst_code cpp} */
 }; // End of atomic_eigen_mat_mul class
 
 }  // END_EMPTY_NAMESPACE
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_two_eigen_mat_mul.hpp}
 */
 
 

@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin for_hes_sparsity.cpp$$
-$spell
-   Hessian
-   Cpp
-$$
+{xrst_begin for_hes_sparsity.cpp}
 
-$section Forward Mode Hessian Sparsity: Example and Test$$
+Forward Mode Hessian Sparsity: Example and Test
+###############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end for_hes_sparsity.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

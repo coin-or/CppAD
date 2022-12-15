@@ -6,92 +6,82 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin cppad_eigen.hpp$$
-$spell
-   impl
-   typename
-   Real Real
-   inline
-   neg
-   eps
-   atan
-   Num
-   acos
-   asin
-   CppAD
-   std::numeric
-   enum
-   Mul
-   Eigen
-   cppad.hpp
-   namespace
-   struct
-   typedef
-   const
-   imag
-   sqrt
-   exp
-   cos
+{xrst_begin cppad_eigen.hpp}
+{xrst_spell
    plugin
-   Op
-$$
-$section Enable Use of Eigen Linear Algebra Package with CppAD$$
+   scalars
+   specializations
+}
+Enable Use of Eigen Linear Algebra Package with CppAD
+#####################################################
 
-$head Syntax$$
-$codei%# include <cppad/example/cppad_eigen.hpp>
-%$$
-$children%
-   include/cppad/example/eigen_plugin.hpp%
-   example/general/eigen_array.cpp%
+Syntax
+******
+
+   # ``include <cppad/example/cppad_eigen.hpp>``
+
+{xrst_toc_hidden
+   include/cppad/example/eigen_plugin.hpp
+   example/general/eigen_array.cpp
    example/general/eigen_det.cpp
-%$$
+}
 
-$head Purpose$$
-Enables the use of the $cref eigen$$
-linear algebra package with the type $icode%AD<%Base%>%$$; see
-$href%
-   https://eigen.tuxfamily.org/dox/TopicCustomizing_CustomScalar.html%
-   custom scalar types
-%$$.
+Purpose
+*******
+Enables the use of the :ref:`eigen-name`
+linear algebra package with the type *AD<* ``Base`` > ; see
+`custom scalar types <https://eigen.tuxfamily.org/dox/TopicCustomizing_CustomScalar.html>`_.
 
-$head Example$$
-The files $cref eigen_array.cpp$$ and $cref eigen_det.cpp$$
+Example
+*******
+The files :ref:`eigen_array.cpp-name` and :ref:`eigen_det.cpp-name`
 contain an example and test of this include file.
 They return true if they succeed and false otherwise.
 
-$head CppAD Declarations$$
+CppAD Declarations
+******************
 First declare some items that are defined by cppad.hpp:
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    // AD<Base>
    template <class Base> class AD;
    // numeric_limits<Float>
    template <class Float>  class numeric_limits;
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head std Declarations$$
+std Declarations
+****************
 Next declare some template specializations in std namespace:
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace std {
    template <class Base> bool isinf(const CppAD::AD<Base> &x);
    template <class Base> bool isfinite(const CppAD::AD<Base> &x);
    template <class Base> bool isnan(const CppAD::AD<Base> &x);
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Include Eigen/Core$$
+Include Eigen/Core
+******************
 Next define the eigen plugin and then include Eigen/Core:
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 
 # define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
 # include <Eigen/Core>
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Eigen NumTraits$$
+Eigen NumTraits
+***************
 Eigen needs the following definitions, in the Eigen namespace,
-to work properly with $codei%AD<%Base%>%$$ scalars:
-$srccode%cpp% */
+to work properly with ``AD<`` *Base* > scalars:
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace Eigen {
    template <class Base> struct NumTraits< CppAD::AD<Base> >
    {  // type that corresponds to the real part of an AD<Base> value
@@ -151,10 +141,13 @@ namespace Eigen {
       {  return CppAD::numeric_limits< CppAD::AD<Base> >::infinity(); }
    };
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Eigen ScalarBinaryOpTraits$$
-$srccode%cpp% */
+Eigen ScalarBinaryOpTraits
+**************************
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace Eigen {
    // Inform Eigen that a binary operations between Base and AD<Base>
    // are allowed and thate the return type is AD<Base>
@@ -168,12 +161,15 @@ namespace Eigen {
       typedef CppAD::AD<Base> ReturnType;
    };
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CppAD Namespace$$
+CppAD Namespace
+***************
 Eigen needs the following definitions, in the CppAD namespace,
-to work properly with $codei%AD<%Base%>%$$ scalars:
-$srccode%cpp% */
+to work properly with ``AD<`` *Base* > scalars:
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
       // functions that return references
       template <class Base> const AD<Base>& conj(const AD<Base>& x)
@@ -187,14 +183,17 @@ namespace CppAD {
       template <class Base> AD<Base> abs2(const AD<Base>& x)
       {  return x * x; }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head eigen_vector$$
-The class $code CppAD::eigen_vector$$ is a wrapper for Eigen column vectors
-so that they are $cref/simple vectors/SimpleVector/$$.
-To be specific, it converts $code Eigen::Index$$ arguments and
-return values to $code size_t$$.
-$srccode%cpp% */
+eigen_vector
+************
+The class ``CppAD::eigen_vector`` is a wrapper for Eigen column vectors
+so that they are :ref:`simple vectors<SimpleVector-name>` .
+To be specific, it converts ``Eigen::Index`` arguments and
+return values to ``size_t`` .
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    template <class Scalar>
    class eigen_vector : public Eigen::Matrix<Scalar, Eigen::Dynamic, 1> {
@@ -220,18 +219,24 @@ namespace CppAD {
       {  base_class::resize( Eigen::Index(n) ); }
    };
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Include cppad.hpp$$
-$srccode%cpp% */
+Include cppad.hpp
+*****************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head std Definitions$$
+std Definitions
+***************
 The definitions below use cppad.hpp.
-Note that $cref Value$$ function can only be used with a
-$cref/constant parameter/glossary/Parameter/Constant/$$ argument.
-$srccode%cpp% */
+Note that :ref:`Value-name` function can only be used with a
+:ref:`constant parameter<glossary@Parameter@Constant>` argument.
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace std {
    template <class Base> bool isinf(const CppAD::AD<Base> &x)
    {  return isinf(CppAD::Value( CppAD::Var2Par(x) ) ); }
@@ -242,7 +247,9 @@ namespace std {
    template <class Base> bool isnan(const CppAD::AD<Base> &x)
    {  return isnan(CppAD::Value( CppAD::Var2Par(x) ) ); }
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_eigen.hpp}
 */
 # endif

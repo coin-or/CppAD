@@ -5,73 +5,85 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin chkpoint_two_ctor$$
-$spell
-   chkpoint
+{xrst_begin chkpoint_two_ctor}
+{xrst_spell
    chk
-   bool
-   hes
-$$
+   destructed
+}
 
-$section Checkpoint Function Constructor$$
+Checkpoint Function Constructor
+###############################
 
-$head Syntax$$
-$codei%chkpoint_two<%Base%> %chk_fun%( %fun%, %name%,
-   %internal_bool%, %use_hes_sparsity%, %use_base2ad%, %use_in_parallel%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| ``chkpoint_two<`` *Base* > *chk_fun* ( *fun* , *name* ,
+| |tab| *internal_bool* , *use_hes_sparsity* , *use_base2ad* , *use_in_parallel*
+| )
 
-$head Parallel$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Parallel
+********
 This constructor, and its corresponding destructor, must not be called in
-$cref/parallel/ta_in_parallel/$$ mode.
-The object $icode chk_fun$$ should not be destructed for as long as there is
-an $codei%ADFun<%Base%>%$$ object the has $icode chk_fun$$ in its recording.
+:ref:`parallel<ta_in_parallel-name>` mode.
+The object *chk_fun* should not be destructed for as long as there is
+an ``ADFun<`` *Base* > object the has *chk_fun* in its recording.
 
-$head Base$$
-The type $icode Base$$ specifies the base type for AD operations.
+Base
+****
+The type *Base* specifies the base type for AD operations.
 
-$head fun$$
-This specifies the function $latex g(x)$$.
-Note that $icode fun$$ may or may not have been
-$cref/optimized/optimize/$$ before calling the constructor.
-This will determine if the internal representation for $icode g(x)$$
+fun
+***
+This specifies the function :math:`g(x)`.
+Note that *fun* may or may not have been
+:ref:`optimized<optimize-name>` before calling the constructor.
+This will determine if the internal representation for *g* ( *x* )
 is optimized.
 
-$head name$$
+name
+****
 is the name used for reporting errors using this checkpoint function.
 
-$head internal_bool$$
+internal_bool
+*************
 If true, sparsity calculations are done with sets represented
 by vectors of boolean values.
 Otherwise, vectors of sets are used for sparsity patterns.
 
-$head use_hes_sparsity$$
+use_hes_sparsity
+****************
 If true, Hessian sparsity patterns can be calculated for
-$codei%ADFun<%Base%>%$$ objects that have uses of $icode chk_fun$$
+``ADFun<`` *Base* > objects that have uses of *chk_fun*
 in their recording.
 This requires some extra memory and extra computation during the constructor.
 
-$head use_base2ad$$
-If this is true, $icode chk_fun$$ can be used during the recording
-of $codei%ADFun<%Base%>%$$ objects that get converted to
-$codei%ADFun< AD<%Base%> >%$$ objects using $cref base2ad$$.
+use_base2ad
+***********
+If this is true, *chk_fun* can be used during the recording
+of ``ADFun<`` *Base* > objects that get converted to
+``ADFun< AD<`` *Base* > > objects using :ref:`base2ad-name` .
 This requires some extra memory and extra computation during the constructor.
 
-$head use_in_parallel$$
-If this is true, $icode chk_fun$$ can be used
-$cref/in_parallel/ta_parallel_setup/in_parallel/$$.
-This requires some extra memory for a constant copy of the $icode fun$$
+use_in_parallel
+***************
+If this is true, *chk_fun* can be used
+:ref:`ta_parallel_setup@in_parallel` .
+This requires some extra memory for a constant copy of the *fun*
 information and a separate copy (that changes) for each thread.
 
-$head chk_fun$$
-This is a checkpoint function representation of $latex g(x)$$
-that can be used during the recording of $codei%AD<%Base%>%$$ operations.
+chk_fun
+*******
+This is a checkpoint function representation of :math:`g(x)`
+that can be used during the recording of ``AD<`` *Base* > operations.
 
-$end
+{xrst_end chkpoint_two_ctor}
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

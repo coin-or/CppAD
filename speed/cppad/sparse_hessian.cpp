@@ -3,39 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_sparse_hessian.cpp$$
-$spell
-   ifdef
-   ifndef
-   colpack
-   boolsparsity
-   namespace
-   Jac
-   onetape
-   const
-   hes
-   CppAD
-   cppad
-   hpp
-   bool
-   typedef
-   endif
-   tmp
-   std
-   var
-   cout
-   endl
-$$
+{xrst_begin cppad_sparse_hessian.cpp}
 
-$section Cppad Speed: Sparse Hessian$$
+Cppad Speed: Sparse Hessian
+###########################
 
+Specifications
+**************
+See :ref:`link_sparse_hessian-name` .
 
-$head Specifications$$
-See $cref link_sparse_hessian$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
@@ -393,6 +374,8 @@ bool link_sparse_hessian(
    global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_sparse_hessian.cpp}
 */

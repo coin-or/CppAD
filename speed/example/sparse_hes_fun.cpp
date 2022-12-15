@@ -3,17 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sparse_hes_fun.cpp$$
-$spell
-   hes
-$$
+{xrst_begin sparse_hes_fun.cpp}
 
+sparse_hes_fun: Example and test
+################################
 
-$section sparse_hes_fun: Example and test$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sparse_hes_fun.cpp}
 */
 // BEGIN C++
 # include <cppad/speed/sparse_hes_fun.hpp>

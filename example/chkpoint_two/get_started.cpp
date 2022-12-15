@@ -4,63 +4,70 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin chkpoint_two_get_started.cpp$$
-$spell
-   checkpointing
-   Taylor
-$$
+{xrst_begin chkpoint_two_get_started.cpp}
 
-$section Get Started Checkpointing: Example and Test$$
+Get Started Checkpointing: Example and Test
+###########################################
 
-$head Purpose$$
+Purpose
+*******
 Break a large computation into pieces and only store values at the
 interface of the pieces.
 In actual applications, there may many uses of each function
 and many more functions.
 
-$head f$$
-The function $latex f : \B{R}^2 \rightarrow \B{R}^2$$
+f
+*
+The function :math:`f : \B{R}^2 \rightarrow \B{R}^2`
 is defined by
-$latex \[
+
+.. math::
+
    f(y) = \left( \begin{array}{c}
       y_0 + y_0 + y_0
       \\
       y_1 + y_1 + y_1
    \end{array} \right)
-\] $$
 
-
-$head g$$
-The function $latex g : \B{R}^2 \rightarrow \B{R}^2$$
+g
+*
+The function :math:`g : \B{R}^2 \rightarrow \B{R}^2`
 defined by
-$latex \[
+
+.. math::
+
    g(x) = \left( \begin{array}{c}
       x_0 \cdot x_0 \cdot x_0
       \\
       x_1 \cdot x_1 \cdot x_1
    \end{array} \right)
-\] $$
 
-$head f[g(x)]$$
-The function $latex f[g(x)]$$ is given by
-$latex \[
 f[g(x)]
-=
-f \left[ \begin{array}{c}
-   x_0^3 \\
-   x_1^3
-\end{array} \right]
-=
-\left[ \begin{array}{c}
-   3 x_0^3 \\
-   3 x_1^3
-\end{array} \right]
-\] $$
+*******
+The function :math:`f[g(x)]` is given by
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+.. math::
 
-$end
+   f[g(x)]
+   =
+   f \left[ \begin{array}{c}
+      x_0^3 \\
+      x_1^3
+   \end{array} \right]
+   =
+   \left[ \begin{array}{c}
+      3 x_0^3 \\
+      3 x_1^3
+   \end{array} \right]
+
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end chkpoint_two_get_started.cpp}
 */
 // BEGIN C++
 

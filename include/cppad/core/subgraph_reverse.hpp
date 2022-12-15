@@ -5,147 +5,157 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin subgraph_reverse$$
-$spell
-   resize
-   subgraph
-   Subgraphs
+{xrst_begin subgraph_reverse}
+{xrst_spell
    dw
-   Taylor
-   Bool
-   const
-$$
+   subgraphs
+}
 
-$section Reverse Mode Using Subgraphs$$
+Reverse Mode Using Subgraphs
+############################
 
-$head Syntax$$
-$icode%f%.subgraph_reverse(%select_domain%)
-%$$
-$icode%f%.subgraph_reverse(%q%, %ell%, %col%, %dw%)
-%$$
-$icode%f%.clear_subgraph()
-%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-Reverse mode computes the derivative of the $cref Forward$$ mode
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$
-with respect to the domain variable $latex x$$.
+| *f* . ``subgraph_reverse`` ( *select_domain* )
+| *f* . ``subgraph_reverse`` ( *q* , *ell* , *col* , *dw* )
+| *f* . ``clear_subgraph`` ()
 
-$head Notation$$
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+Reverse mode computes the derivative of the :ref:`Forward-name` mode
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>`
+with respect to the domain variable :math:`x`.
+
+Notation
+********
 We use the reverse mode
-$cref/notation/reverse_any/Notation/$$ with the following change:
+:ref:`reverse_any@Notation` with the following change:
 the vector
-$cref/w^(k)/reverse_any/Notation/w^(k)/$$ is defined
-$latex \[
-w_i^{(k)} = \left\{ \begin{array}{ll}
-   1 & {\rm if} \; k = q-1 \; \R{and} \; i = \ell
-   \\
-   0       & {\rm otherwise}
-\end{array} \right.
-\] $$
+:ref:`reverse_any@Notation@w^(k)` is defined
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Base$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+.. math::
+
+   w_i^{(k)} = \left\{ \begin{array}{ll}
+      1 & {\rm if} \; k = q-1 \; \R{and} \; i = \ell
+      \\
+      0       & {\rm otherwise}
+   \end{array} \right.
+
+BaseVector
+**********
+The type *BaseVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head BoolVector$$
-The type $icode BoolVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$.
+BoolVector
+**********
+The type *BoolVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` .
 
-$head SizeVector$$
-The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head select_domain$$
-The argument $icode select_domain$$ has prototype
-$codei%
-   const %BoolVector%& %select_domain%
-%$$
-It has size $latex n$$ and specifies which independent variables
-to include in future $code subgraph_reverse$$ calculations.
-If $icode%select_domain%[%j%]%$$ is false,
-it is assumed that $latex u^{(k)}_j = 0$$ for $latex k > 0$$; i.e.,
-the $th j$$ component of the Taylor coefficient for $latex x$$,
+select_domain
+*************
+The argument *select_domain* has prototype
+
+   ``const`` *BoolVector* & *select_domain*
+
+It has size :math:`n` and specifies which independent variables
+to include in future ``subgraph_reverse`` calculations.
+If *select_domain* [ *j* ] is false,
+it is assumed that :math:`u^{(k)}_j = 0` for :math:`k > 0`; i.e.,
+the *j*-th component of the Taylor coefficient for :math:`x`,
 with order greater that zero, are zero; see
-$cref/u^(k)/reverse_any/Notation/u^(k)/$$.
+:ref:`reverse_any@Notation@u^(k)` .
 
-$head q$$
-The argument $icode q$$ has prototype
-$codei%
-   size_t %q%
-%$$
+q
+*
+The argument *q* has prototype
+
+   ``size_t`` *q*
+
 and specifies the number of Taylor coefficient orders to be differentiated.
 
-$head ell$$
-The argument $icode ell$$ has prototype
-$codei%
-   size_t %ell%
-%$$
+ell
+***
+The argument *ell* has prototype
+
+   ``size_t`` *ell*
+
 and specifies the dependent variable index that we are computing
-the derivatives for; i.e. $latex \ell$$.
+the derivatives for; i.e. :math:`\ell`.
 This index can only be used once per, and after, a call that selects
-the independent variables using $icode select_domain$$.
+the independent variables using *select_domain* .
 
-$head col$$
-This argument $icode col$$ has prototype
-$codei%
-   %SizeVector% %col%
-%$$
+col
+***
+This argument *col* has prototype
+
+   *SizeVector* *col*
+
 The input size and value of its elements do not matter.
-The $icode%col%.resize%$$ member function is used to change its size
+The *col* . ``resize`` member function is used to change its size
 to the number the number of possible non-zero derivative components.
-For each $icode c$$,
-$codei%
-   %select_domain%[ %col%[%c%] ] == true
-   %col%[%c%+1] >= %col%[%c%]
-%$$
-and the derivative with respect to the $th j$$ independent
-variable is possibly non-zero where
-$icode%j% = %col%[%c%]%$$.
+For each *c* ,
 
-$head dw$$
-The argument $icode dw$$ has prototype
-$codei%
-   %Vector% %dw%
-%$$
+| |tab| *select_domain* [ *col* [ *c* ] ] == ``true``
+| |tab| *col* [ *c* +1] >= *col* [ *c* ]
+
+and the derivative with respect to the *j*-th independent
+variable is possibly non-zero where
+*j* = *col* [ *c* ] .
+
+dw
+**
+The argument *dw* has prototype
+
+   *Vector* *dw*
+
 Its input size and value does not matter.
 Upon return,
-it is a vector with size $latex n \times q$$.
-For $latex c = 0 , \ldots , %col%.size()-1$$,
-and $latex k = 0, \ldots , q-1$$,
-$latex \[
-   dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
-\] $$
-is the derivative of the specified Taylor coefficients w.r.t the $th j$$
-independent variable where $icode%j% = %col%[%c%]%$$.
-Note that this corresponds to the $cref reverse_any$$ convention when
-$cref/w/reverse_any/w/$$ has size $icode%m% * %q%$$.
+it is a vector with size :math:`n \times q`.
+For :math:`c = 0 , \ldots , %col%.size()-1`,
+and :math:`k = 0, \ldots , q-1`,
 
-$head clear_subgraph$$
+.. math::
+
+   dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
+
+is the derivative of the specified Taylor coefficients w.r.t the *j*-th
+independent variable where *j* = *col* [ *c* ] .
+Note that this corresponds to the :ref:`reverse_any-name` convention when
+:ref:`reverse_any@w` has size *m* * *q* .
+
+clear_subgraph
+**************
 Calling this routine will free memory that holds
 information between calls to subgraph calculations so that
 it does not need to be recalculated.
-(This memory is automatically freed when $icode f$$ is deleted.)
+(This memory is automatically freed when *f* is deleted.)
 You cannot free this memory between calls that select the domain
 and corresponding calls that compute reverse mode derivatives.
-Some of this information is also used by $cref subgraph_sparsity$$.
+Some of this information is also used by :ref:`subgraph_sparsity-name` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/sparse/subgraph_reverse.cpp
-%$$
+}
 The file
-$cref subgraph_reverse.cpp$$
+:ref:`subgraph_reverse.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end subgraph_reverse}
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

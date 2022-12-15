@@ -3,7 +3,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# Use this shell script when a new test is added to initially create 
+# Use this shell script when a new test is added to initially create
 # the source code files */test_name.cpp which return false (for not available).
 #
 echo "Change this script so that it automates the omhelp commands"

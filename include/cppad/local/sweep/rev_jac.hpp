@@ -13,99 +13,107 @@
 # define CPPAD_REV_JAC_TRACE 0
 
 /*
-$begin local_sweep_rev_jac$$
-$spell
-   Jacobian
-   jac
-   Jacobian
+{xrst_begin local_sweep_rev_jac}
+{xrst_spell
    numvar
-   var
-   Addr
-   CondExpRel
-   optimizer
-   num
-   setvec
-$$
+}
 
-$section Reverse Mode Jacobian Sparsity Patterns$$
+Reverse Mode Jacobian Sparsity Patterns
+#######################################
 
-$head Syntax$$
-$codei%local::sweep::rev_jac(
-   %play%              ,
-   %dependency%        ,
-   %n%                 ,
-   %numvar%            ,
-   %var_sparsity%      ,
-   %not_used_rec_base
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| ``local::sweep::rev_jac`` (
+| |tab| *play*               ,
+| |tab| *dependency*         ,
+| |tab| *n*                  ,
+| |tab| *numvar*             ,
+| |tab| *var_sparsity*       ,
+| |tab| ``not_used_rec_base``
+| )
 
-$head Addr$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Addr
+****
 Is the type used to record address on this tape
 This is allows for smaller tapes when address are smaller.
 
-$head Base$$
-this operation sequence was recorded using $codei%AD<%Base%>%$$.
+Base
+****
+this operation sequence was recorded using ``AD<`` *Base* > .
 
-$head Vector_set$$
+Vector_set
+**********
 is the type used for vectors of sets. It can be either
-$code sparse::pack_setvec$$ or $code sparse::list_setvec$$.
-$comment 2DO: in previous line change code to cref$$
+``sparse::pack_setvec`` or ``sparse::list_setvec`` .
+{xrst_comment 2DO: in previous line change code to cref}
 
-$head RecBase$$
+RecBase
+*******
 Is the base type when this function was recorded.
-This is different from $icode Base$$ if
-this function object was created by $cref base2ad$$.
+This is different from *Base* if
+this function object was created by :ref:`base2ad-name` .
 
-$head play$$
+play
+****
 The information stored in play
 is a recording of the operations corresponding to a function
-$latex F : \B{R}^n \rightarrow \B{R}^m$$
-where $icode m$$ is the number of dependent variables.
+:math:`F : \B{R}^n \rightarrow \B{R}^m`
+where *m* is the number of dependent variables.
 
-$head dependency$$
+dependency
+**********
 Are we computing dependency relations, or only concerned with
 possibly non-zero derivatives. For example,
 are the derivatives with respect to
-$icode left$$ and $icode right$$ of the expression below
+*left* and *right* of the expression below
 considered to be non-zero:
-$codei%
-   CondExpRel(%left%, %right%, %if_true%, %if_false%)
-%$$
+
+   ``CondExpRel`` ( *left* , *right* , *if_true* , *if_false* )
+
 This is used by the optimizer to obtain the correct dependency relations.
 
-$head n$$
+n
+*
 is the number of independent variables in the tape.
 
-$head numvar$$
+numvar
+******
 is the total number of variables in the tape; i.e.,
-$icode%play%->num_var_rec()%$$.
+*play* ``->num_var_rec`` () .
 This is also the number of rows in all the sparsity patterns.
 
-$head var_sparsity$$
+var_sparsity
+************
 
-$subhead On Input$$
-For $icode%i% = 0 , ... , %numvar%-1%$$,
-if $icode i$$ corresponds to a dependent variables,
-the set with index $icode i$$ is an input.
-Otherwise the set with index $icode i$$ is empty.
+On Input
+========
+For *i* = 0 , ... , *numvar* ``-1`` ,
+if *i* corresponds to a dependent variables,
+the set with index *i* is an input.
+Otherwise the set with index *i* is empty.
 
-$subhead On Output$$
-For $icode%i% = 0 , ... , %numvar%-1%$$,
-the sparsity pattern for the variable with index $icode%j%-1%$$
-is given by the set with index $icode j$$ in $icode var_sparsity$$.
+On Output
+=========
+For *i* = 0 , ... , *numvar* ``-1`` ,
+the sparsity pattern for the variable with index *j* ``-1``
+is given by the set with index *j* in *var_sparsity* .
 Note that one dependent variable may depend on the value of another,
 in which case its output sparsity pattern may be different than its
 input pattern.
 
-$head not_used_rec_base$$
-Specifies $icode RecBase$$ for this call.
+not_used_rec_base
+*****************
+Specifies *RecBase* for this call.
 
-$end
+{xrst_end local_sweep_rev_jac}
 */
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE

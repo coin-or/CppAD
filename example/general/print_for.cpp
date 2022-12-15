@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin print_for_string.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin print_for_string.cpp}
 
-$section Print During Zero Order Forward Mode: Example and Test$$
+Print During Zero Order Forward Mode: Example and Test
+######################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end print_for_string.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -60,7 +60,7 @@ cp speed/fadbad/speed_fadbad.omh $file
 git add $file
 echo_eval sed -i $file -f speed_package.$$
 # --------------------------------------------------------
-# speed/speed.omh
+# speed/speed.xrst
 cat << EOF > speed_package.$$
 s|\$cref/Fadbad/fadbad_prefix/Fadbad Home Page/\$\$,|&\\
 \$cref/$Package/${package}_prefix/$Package Home Page/\$\$,|
@@ -133,7 +133,7 @@ b end
 s|^\$rref fadbad_prefix\$\\\$|&\\
 \$rref ${package}_prefix\$\$|
 s|^   omh/install/fadbad_prefix.omh%|&\\
-   omh/install/${package}_prefix.omh%|
+   xrst/install/${package}_prefix.omh%|
 s|\$spell|&\\
    $package|
 #

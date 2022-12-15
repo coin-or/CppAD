@@ -8,84 +8,96 @@
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin atomic_four_for_hes_sparsity$$
-$spell
-   ident
+{xrst_begin atomic_four_for_hes_sparsity}
+{xrst_spell
    np
    numvar
-   num_var
-   Jacobian
-   jac
-   hes
-$$
+}
 
-$section Link from Forward Hessian Sparsity Sweep to atomic_four Callback$$
+Link from Forward Hessian Sparsity Sweep to atomic_four Callback
+################################################################
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_FOR_HES_SPARSITY%// END_FOR_HES_SPARSITY%1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FOR_HES_SPARSITY
+   // END_FOR_HES_SPARSITY
+}
 
-$head InternalSparsity$$
+InternalSparsity
+****************
 Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
-$head call_id [in]$$
-see $cref/call_id/atomic_four_call/call_id/$$.
+call_id [in]
+************
+see :ref:`atomic_four_call@call_id` .
 
-$head ident_zero_x$$
+ident_zero_x
+************
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
-If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+atomic function; i.e. the size of *ax* .
+If *ident_zero_x* [ *j* ] is true, the argument *ax* [ *j* ]
 is a constant parameter that is identically zero.
 
-$head x_index$$
+x_index
+*******
 is the variable index, on the tape, for the arguments to this function.
 This size of x_index is n, the number of arguments to this function.
 The index zero is used for parameters.
 
-$head y_index$$
+y_index
+*******
 is the variable index, on the tape, for the results for this function.
 This size of y_index is m, the number of results for this function.
 The index zero is used for parameters.
 
-$head np1$$
-is the number of components of x plus one; i.e. $icode%n% + 1%$$.
+np1
+***
+is the number of components of x plus one; i.e. *n*  + 1 .
 
-$head numvar$$
+numvar
+******
 is the total number of variables in the tape; i.e.,
-$icode%play%->num_var_rec()%$$.
+*play* ``->num_var_rec`` () .
 
-$head for_sparsity$$
-The sparsity patterns with index zero and index $icode np1$$ are empty
+for_sparsity
+************
+The sparsity patterns with index zero and index *np1* are empty
 (because they correspond to parameters).
 
-$subhead On Input$$
+On Input
+========
 On input, for j = 0, ... , n-1,
-the forward Jacobian sparsity for the $th j$$ argument to the atomic function
-is the sparsity pattern with index $icode%np1% + %x_index[j]%$$.
-In addition, the sparsity pattern with index $th j+1$$ contains
-the non-zero cross partial indices where $th j+1$$ is the other index.
+the forward Jacobian sparsity for the *j*-th argument to the atomic function
+is the sparsity pattern with index *np1* + *x_index* [ *j* ] .
+In addition, the sparsity pattern with index *j+1*-th contains
+the non-zero cross partial indices where *j+1*-th is the other index.
 This Hessian does not include the atomic operation.
 
-$subhead On Output$$
+On Output
+=========
 On output, for i = 0, ... , m-1,
-the forward Jacobian sparsity for the $th i$$ result of the atomic function
-is the sparsity pattern with index $icode%np1% + %y_index[i]%$$.
-In addition, the sparsity pattern with index $th j+1$$ contains
-the non-zero cross partial indices where $th j+1$$ is the other index.
+the forward Jacobian sparsity for the *i*-th result of the atomic function
+is the sparsity pattern with index *np1* + *y_index* [ *i* ] .
+In addition, the sparsity pattern with index *j+1*-th contains
+the non-zero cross partial indices where *j+1*-th is the other index.
 This Hessian includes the atomic operation.
 
-$head rev_jac_pattern$$
+rev_jac_pattern
+***************
 On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
 is the reverse Jacobian sparsity for the i-th result to this atomic function.
 This shows which components of the result affect the function we are
 computing the Hessian of.
 
-$head hes_sparsity_for$$
+hes_sparsity_for
+****************
 This is the sparsity pattern for the Hessian. On input, the non-linear
 terms in the atomic function have not been included. Upon return, they
 have been included.
 
-$end
+{xrst_end atomic_four_for_hes_sparsity}
 */
 // BEGIN_FOR_HES_SPARSITY
 template <class Base>
@@ -201,48 +213,53 @@ bool atomic_four<Base>::for_hes_sparsity(
    return ok;
 }
 /*
-$begin atomic_four_rev_hes_sparsity$$
-$spell
-   ident
-   np
-   Jacobian
-   hes
-   jac
-$$
+{xrst_begin atomic_four_rev_hes_sparsity}
 
-$section Link from Reverse Hessian Sparsity Sweep to atomic_four Callback$$
+Link from Reverse Hessian Sparsity Sweep to atomic_four Callback
+################################################################
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_REV_HES_SPARSITY%// END_REV_HES_SPARSITY%1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_REV_HES_SPARSITY
+   // END_REV_HES_SPARSITY
+}
 
-$head InternalSparsity$$
+InternalSparsity
+****************
 Is the used internally for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
-$head call_id [in]$$
-see $cref/call_id/atomic_four_call/call_id/$$.
+call_id [in]
+************
+see :ref:`atomic_four_call@call_id` .
 
-$head ident_zero_x$$
+ident_zero_x
+************
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
-If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+atomic function; i.e. the size of *ax* .
+If *ident_zero_x* [ *j* ] is true, the argument *ax* [ *j* ]
 is a constant parameter that is identically zero.
 
-$head x_index$$
+x_index
+*******
 is the variable index, on the tape, for the arguments to this function.
 This size of x_index is n, the number of arguments to this function.
 The index zero is used for parameters.
 
-$head y_index$$
+y_index
+*******
 is the variable index, on the tape, for the results for this function.
 This size of y_index is m, the number of results for this function.
 The index zero is used for parameters.
 
-$head for_jac_pattern$$
+for_jac_pattern
+***************
 On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 is the forward Jacobian pattern for the j-th argument to this atomic function.
 
-$head rev_jac_flag$$
+rev_jac_flag
+************
 On input, for i = 0, ... , m-1, rev_jac_flag[ y_index[i] ] is true
 if the function we are computing the Hessian of has possibly non-zero Jacobian
 w.r.t variable y_index[i].
@@ -251,12 +268,13 @@ if the variable with index x_index[j] has possible non-zero Jacobian
 with respect to one of the true y_index[i] cases.
 Otherwise, rev_jac_flag [ x_index[j] ] is not changed.
 
-$head hes_sparsity_rev$$
+hes_sparsity_rev
+****************
 Is the reverse mode sparsity pattern for the Hessian. On input, the non-linear
 terms in the atomic function have not been included. Upon return, they
 have been included.
 
-$end
+{xrst_end atomic_four_rev_hes_sparsity}
 */
 // BEGIN_REV_HES_SPARSITY
 template <class Base>

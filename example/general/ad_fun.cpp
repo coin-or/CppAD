@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ad_fun.cpp$$
-$spell
-$$
+{xrst_begin ad_fun.cpp}
 
-$section Creating Your Own Interface to an ADFun Object$$
+Creating Your Own Interface to an ADFun Object
+##############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end ad_fun.cpp}
 */
 // BEGIN C++
 

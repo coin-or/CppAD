@@ -19,42 +19,42 @@ extern bool link_sparse_hessian(
 // END PROTOTYPE
 /*
 -------------------------------------------------------------------------------
-$begin link_sparse_hessian$$
-$spell
-   const
-   bool
-   CppAD
-   cppad
-   colpack
-   namespace
-$$
+{xrst_begin link_sparse_hessian}
 
+Link to Speed Test Sparse Hessian
+#################################
 
-$section Link to Speed Test Sparse Hessian$$
+Syntax
+******
 
-$head Syntax$$
-$icode%ok% = link_sparse_hessian(
-      %size%, %repeat%, %row%, %col%, %x%, %hessian%, %n_color%
-)%$$
+| *ok* = ``link_sparse_hessian`` (
+| |tab| |tab| *size* , *repeat* , *row* , *col* , *x* , *hessian* , *n_color*
+| )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Namespace$$
-The function $code link_sparse_hessian$$ is in the global namespace,
-not the $code CppAD$$ namespace.
+Namespace
+*********
+The function ``link_sparse_hessian`` is in the global namespace,
+not the ``CppAD`` namespace.
 
-$head Method$$
-Given a row index vector $latex row$$
-and a second column vector $latex col$$,
+Method
+******
+Given a row index vector :math:`row`
+and a second column vector :math:`col`,
 the corresponding function
-$latex f : \B{R}^n \rightarrow \B{R} $$
-is defined by $cref sparse_hes_fun$$.
+:math:`f : \B{R}^n \rightarrow \B{R}`
+is defined by :ref:`sparse_hes_fun-name` .
 The non-zero entries in the Hessian of this function have
 one of the following forms:
-$latex \[
+
+.. math::
+
    \DD{f}{x[row[k]]}{x[row[k]]}
    \; , \;
    \DD{f}{x[row[k]]}{x[col[k]]}
@@ -62,91 +62,101 @@ $latex \[
    \DD{f}{x[col[k]]}{x[row[k]]}
    \; , \;
    \DD{f}{x[col[k]]}{x[col[k]]}
-\] $$
-for some $latex k $$ between zero and $latex K-1 $$.
+
+for some :math:`k` between zero and :math:`K-1`.
 All the other terms of the Hessian are zero.
 
-$head Sparsity Pattern$$
-The combination of $icode row$$ and $icode col$$ determine
+Sparsity Pattern
+****************
+The combination of *row* and *col* determine
 the sparsity pattern for the Hessian that is computed.
 The calculation of this sparsity pattern,
 if necessary to compute the Hessian,
 is intended to be part of the timing for this test.
 
-$head size$$
-The argument $icode size$$, referred to as $latex n$$ below,
-is the dimension of the domain space for $latex f(x)$$.
+size
+****
+The argument *size* , referred to as :math:`n` below,
+is the dimension of the domain space for :math:`f(x)`.
 
-$head repeat$$
-The argument $icode repeat$$ is the number of times
+repeat
+******
+The argument *repeat* is the number of times
 to repeat the test
-(with a different value for $icode x$$ corresponding to
+(with a different value for *x* corresponding to
 each repetition).
 
-$head x$$
-The size of $icode x$$ is $latex n$$; i.e., $icode%x%.size() == %size%$$.
-The input value of the elements of $icode x$$ does not matter.
+x
+*
+The size of *x* is :math:`n`; i.e., *x* . ``size`` () == *size* .
+The input value of the elements of *x* does not matter.
 On output, it has been set to the
 argument value for which the function,
 or its derivative, is being evaluated.
 The value of this vector need not change with each repetition.
 
-$head row$$
-The size of the vector $icode row$$ defines the value $latex K$$.
+row
+***
+The size of the vector *row* defines the value :math:`K`.
 The input value of its elements does not matter.
 On output,
-all the elements of $icode row$$ are between zero and $latex n-1$$.
+all the elements of *row* are between zero and :math:`n-1`.
 
-$head col$$
-The argument $icode col$$ is a vector with size $latex K$$.
+col
+***
+The argument *col* is a vector with size :math:`K`.
 The input value of its elements does not matter.
 On output,
-all the elements of $icode col$$ are between zero and $latex n-1$$.
+all the elements of *col* are between zero and :math:`n-1`.
 
-$head Row Major$$
-The indices $icode row$$ and $icode col$$ are in row major order; i.e.,
-for each $icode%k% < %row%.size()-2%$$
-$codei%
-   %row%[%k%] <= %row%[%k%+1]
-%$$
-and if $icode%row%[%k%] == %row%[%k%+1]%$$ then
-$codei%
-   %col%[%k%] < %col%[%k%+1]
-%$$
+Row Major
+*********
+The indices *row* and *col* are in row major order; i.e.,
+for each *k* < *row* . ``size`` () ``-2``
 
-$head Lower Triangular$$
+   *row* [ *k* ] <= *row* [ *k* +1]
+
+and if *row* [ *k* ] == *row* [ *k* +1] then
+
+   *col* [ *k* ] < *col* [ *k* +1]
+
+Lower Triangular
+****************
 Only the lower triangle of the Hessian is included.
-$codei%
-   %col%[%k%] <= %row%[%k%]
-%$$.
 
+   *col* [ *k* ] <= *row* [ *k* ]
 
-$head hessian$$
-The size of $icode hessian$$ is $icode K$$.
+.
+
+hessian
+*******
+The size of *hessian* is *K* .
 The input value of its elements does not matter.
-The output value of its elements is the Hessian of the function $latex f(x)$$.
+The output value of its elements is the Hessian of the function :math:`f(x)`.
 To be more specific, for
-$latex k = 0 , \ldots , K-1$$,
-$latex \[
+:math:`k = 0 , \ldots , K-1`,
+
+.. math::
+
    \DD{f}{ x[ \R{row}[k] ] }{ x[ \R{col}[k] ]} = \R{hessian} [k]
-\] $$
 
-$head n_color$$
-The input value of $icode n_color$$ does not matter. On output,
-it is the value $cref/n_sweep/sparse_hessian/n_sweep/$$ corresponding
-to the evaluation of $icode hessian$$.
+n_color
+*******
+The input value of *n_color* does not matter. On output,
+it is the value :ref:`sparse_hessian@n_sweep` corresponding
+to the evaluation of *hessian* .
 This is also the number of colors corresponding to the
-$cref/coloring method/sparse_hessian/work/color_method/$$,
-which can be set to $cref/colpack/speed_main/Sparsity Options/colpack/$$,
-and is otherwise $code cppad$$.
+:ref:`coloring method<sparse_hessian@work@color_method>` ,
+which can be set to :ref:`speed_main@Sparsity Options@colpack` ,
+and is otherwise ``cppad`` .
 
+double
+======
+In the case where *package* is ``double`` ,
+only the first element of *hessian* is used and it is actually
+the value of :math:`f(x)` (derivatives are not computed).
 
-$subhead double$$
-In the case where $icode package$$ is $code double$$,
-only the first element of $icode hessian$$ is used and it is actually
-the value of $latex f(x)$$ (derivatives are not computed).
-
-$end
+{xrst_end link_sparse_hessian}
 -----------------------------------------------------------------------------
 */
 

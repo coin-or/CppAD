@@ -5,24 +5,25 @@
 
 /*
 
-$begin ipopt_solve_retape.cpp$$
-$spell
-   Retaping
-   retape
-   cppad_nlp
-   IpoptDir
-   CppAD
-$$
+{xrst_begin ipopt_solve_retape.cpp}
+{xrst_spell
+   retaping
+}
 
-$section Nonlinear Programming Retaping: Example and Test$$
+Nonlinear Programming Retaping: Example and Test
+################################################
 
-$head Purpose$$
-This example program demonstrates a case were the $code ipopt::solve$$
-argument $cref/retape/ipopt_solve/options/Retape/$$ should be true.
+Purpose
+*******
+This example program demonstrates a case were the ``ipopt::solve``
+argument :ref:`ipopt_solve@options@Retape` should be true.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ipopt_solve_retape.cpp}
 */
 // BEGIN C++
 # include <cppad/ipopt/solve.hpp>

@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_hes.cpp$$
-$spell
-   Cpp
-   Hessian
-$$
+{xrst_begin sparse_hes.cpp}
 
-$section Computing Sparse Hessian: Example and Test$$
+Computing Sparse Hessian: Example and Test
+##########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sparse_hes.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

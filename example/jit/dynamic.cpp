@@ -4,17 +4,19 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin jit_dynamic.cpp$$
-$spell
-   csrc
-$$
+{xrst_begin jit_dynamic.cpp}
 
-$section JIT With Dynamic Parameters: Example and Test$$
+JIT With Dynamic Parameters: Example and Test
+#############################################
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end jit_dynamic.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

@@ -3,21 +3,23 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin xpackage_det_lu.cpp$$
-$spell
+{xrst_begin xpackage_det_lu.cpp}
+{xrst_spell
    xpackage
-   Lu
-$$
+}
 
-$section Xpackage Speed: Gradient of Determinant Using Lu Factorization$$
+Xpackage Speed: Gradient of Determinant Using Lu Factorization
+##############################################################
 
+Specifications
+**************
+:ref:`link_det_lu-name`
 
-$head Specifications$$
-$cref link_det_lu$$
-
-$head Implementation$$
+Implementation
+**************
 A xpackage version of this test is not yet implemented
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <map>
 # include <cppad/utility/vector.hpp>
 
@@ -30,6 +32,8 @@ bool link_det_lu(
    CppAD::vector<double>     &matrix   ,
    CppAD::vector<double>     &gradient )
 {  return false; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end xpackage_det_lu.cpp}
 */

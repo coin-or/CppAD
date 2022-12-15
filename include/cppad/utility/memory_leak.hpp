@@ -5,101 +5,108 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin memory_leak$$
-$spell
-   cppad
-   num
-   alloc
-   hpp
-   bool
+{xrst_begin memory_leak}
+{xrst_spell
    inuse
-$$
+   statics
+}
 
-$section Memory Leak Detection$$
+Memory Leak Detection
+#####################
 
-$head Deprecated 2012-04-06$$
+Deprecated 2012-04-06
+*********************
 This routine has been deprecated.
-You should instead use the routine $cref ta_free_all$$.
+You should instead use the routine :ref:`ta_free_all-name` .
 
-$head Syntax$$
-$codei%# include <cppad/utility/memory_leak.hpp>
-%$$
-$icode%flag% = %memory_leak()
-%$$
-$icode%flag% = %memory_leak%(%add_static%)%$$
+Syntax
+******
 
-$head Purpose$$
+| # ``include <cppad/utility/memory_leak.hpp>``
+| ``flag`` = ``memory_leak`` ()
+
+*flag* = *memory_leak* ( *add_static* )
+
+Purpose
+*******
 This routine checks that the are no memory leaks
-caused by improper use of $cref thread_alloc$$ memory allocator.
-The deprecated memory allocator $cref track_new_del$$ is also checked.
-Memory errors in the deprecated $cref omp_alloc$$ allocator are
-reported as being in $code thread_alloc$$.
+caused by improper use of :ref:`thread_alloc-name` memory allocator.
+The deprecated memory allocator :ref:`track_new_del-name` is also checked.
+Memory errors in the deprecated :ref:`omp_alloc-name` allocator are
+reported as being in ``thread_alloc`` .
 
-$head thread$$
-It is assumed that $cref/in_parallel()/ta_in_parallel/$$ is false
-and $cref/thread_num/ta_thread_num/$$ is zero when
-$code memory_leak$$ is called.
+thread
+******
+It is assumed that :ref:`in_parallel()<ta_in_parallel-name>` is false
+and :ref:`thread_num<ta_thread_num-name>` is zero when
+``memory_leak`` is called.
 
-$head add_static$$
+add_static
+**********
 This argument has prototype
-$codei%
-   size_t %add_static%
-%$$
+
+   ``size_t`` *add_static*
+
 and its default value is zero.
 Static variables hold onto memory forever.
-If the argument $icode add_static$$ is present (and non-zero),
-$code memory_leak$$ adds this amount of memory to the
-$cref/inuse/ta_inuse/$$ sum that corresponds to
+If the argument *add_static* is present (and non-zero),
+``memory_leak`` adds this amount of memory to the
+:ref:`inuse<ta_inuse-name>` sum that corresponds to
 static variables in the program.
-A call with $icode add_static$$ should be make after
+A call with *add_static* should be make after
 a routine that has static variables which
-use $cref/get_memory/ta_get_memory/$$ to allocate memory.
-The value of $icode add_static$$ should be the difference of
-$codei%
-   thread_alloc::inuse(0)
-%$$
+use :ref:`get_memory<ta_get_memory-name>` to allocate memory.
+The value of *add_static* should be the difference of
+
+   ``thread_alloc::inuse`` (0)
+
 before and after the call.
 Since multiple statics may be allocated in different places in the program,
 it is expected that there will be multiple calls
 that use this option.
 
-$head flag$$
-The return value $icode flag$$ has prototype
-$codei%
-   bool %flag%
-%$$
-If $icode add_static$$ is non-zero,
-the return value for $code memory_leak$$ is false.
-Otherwise, the return value for $code memory_leak$$ should be false
+flag
+****
+The return value *flag* has prototype
+
+   ``bool`` *flag*
+
+If *add_static* is non-zero,
+the return value for ``memory_leak`` is false.
+Otherwise, the return value for ``memory_leak`` should be false
 (indicating that the only allocated memory corresponds to static variables).
 
-$head inuse$$
-It is assumed that, when $code memory_leak$$ is called,
+inuse
+*****
+It is assumed that, when ``memory_leak`` is called,
 there should not be any memory
-$cref/inuse/ta_inuse/$$ or $cref omp_inuse$$ for any thread
+:ref:`inuse<ta_inuse-name>` or :ref:`omp_inuse-name` for any thread
 (except for inuse memory corresponding to static variables).
-If there is, a message is printed and $code memory_leak$$ returns false.
+If there is, a message is printed and ``memory_leak`` returns false.
 
-$head available$$
-It is assumed that, when $code memory_leak$$ is called,
+available
+*********
+It is assumed that, when ``memory_leak`` is called,
 there should not be any memory
-$cref/available/ta_available/$$ or $cref omp_available$$ for any thread;
+:ref:`available<ta_available-name>` or :ref:`omp_available-name` for any thread;
 i.e., it all has been returned to the system.
 If there is memory still available for any thread,
-$code memory_leak$$ returns false.
+``memory_leak`` returns false.
 
-$head TRACK_COUNT$$
-It is assumed that, when $code memory_leak$$ is called,
-$cref/TrackCount/track_new_del/TrackCount/$$ will return a zero value.
+TRACK_COUNT
+***********
+It is assumed that, when ``memory_leak`` is called,
+:ref:`track_new_del@TrackCount` will return a zero value.
 If it returns a non-zero value,
-$code memory_leak$$ returns false.
+``memory_leak`` returns false.
 
-$head Error Message$$
-If this is the first call to $code memory_leak$$, no message is printed.
+Error Message
+*************
+If this is the first call to ``memory_leak`` , no message is printed.
 Otherwise, if it returns true, an error message is printed
 to standard output describing the memory leak that was detected.
 
-$end
+{xrst_end memory_leak}
 */
 # include <iostream>
 # include <cppad/local/define.hpp>

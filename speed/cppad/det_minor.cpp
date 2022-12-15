@@ -3,27 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_det_minor.cpp$$
-$spell
-   onetape
-   typedef
-   cppad
-   CppAD
-   det
-   hpp
-   const
-   bool
-   std
-$$
+{xrst_begin cppad_det_minor.cpp}
 
-$section Cppad Speed: Gradient of Determinant by Minor Expansion$$
+Cppad Speed: Gradient of Determinant by Minor Expansion
+#######################################################
 
+Specifications
+**************
+See :ref:`link_det_minor-name` .
 
-$head Specifications$$
-See $cref link_det_minor$$.
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -162,6 +154,8 @@ bool link_det_minor(
    global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_det_minor.cpp}
 */

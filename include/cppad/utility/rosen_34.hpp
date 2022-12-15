@@ -6,268 +6,284 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin Rosen34$$
-$spell
-   cppad.hpp
-   bool
-   xf
-   templated
-   const
-   Rosenbrock
-   CppAD
-   xi
-   ti
-   tf
-   Karp
-   Rosen
-   Shampine
-   ind
+{xrst_begin Rosen34}
+{xrst_spell
    dep
-$$
+   rd
+   rosenbrock
+   test test
+   tf
+   xf
+}
 
+A 3rd and 4th Order Rosenbrock ODE Solver
+#########################################
 
-$section A 3rd and 4th Order Rosenbrock ODE Solver$$
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/rosen_34.hpp>
-%$$
-$icode%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%)
-%$$
-$icode%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%, %e%)
-%$$
+| # ``include <cppad/utility/rosen_34.hpp>``
+| *xf* = ``Rosen34`` ( *F* , *M* , *ti* , *tf* , *xi* )
+| *xf* = ``Rosen34`` ( *F* , *M* , *ti* , *tf* , *xi* , *e* )
 
-
-$head Description$$
+Description
+***********
 This is an embedded 3rd and 4th order Rosenbrock ODE solver
-(see Section 16.6 of $cref/Numerical Recipes/Bib/Numerical Recipes/$$
+(see Section 16.6 of :ref:`Bib@Numerical Recipes`
 for a description of Rosenbrock ODE solvers).
 In particular, we use the formulas taken from page 100 of
-$cref/Shampine, L.F./Bib/Shampine, L.F./$$
+:ref:`Bib@Shampine, L.F.`
 (except that the fraction 98/108 has been correction to be 97/108).
-$pre
 
-$$
-We use $latex n$$ for the size of the vector $icode xi$$.
-Let $latex \B{R}$$ denote the real numbers
-and let $latex F : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ be a smooth function.
-The return value $icode xf$$ contains a 5th order
-approximation for the value $latex X(tf)$$ where
-$latex X : [ti , tf] \rightarrow \B{R}^n$$ is defined by
+We use :math:`n` for the size of the vector *xi* .
+Let :math:`\B{R}` denote the real numbers
+and let :math:`F : \B{R} \times \B{R}^n \rightarrow \B{R}^n` be a smooth function.
+The return value *xf* contains a 5th order
+approximation for the value :math:`X(tf)` where
+:math:`X : [ti , tf] \rightarrow \B{R}^n` is defined by
 the following initial value problem:
-$latex \[
-\begin{array}{rcl}
-   X(ti)  & = & xi    \\
-   X'(t)  & = & F[t , X(t)]
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X(ti)  & = & xi    \\
+      X'(t)  & = & F[t , X(t)]
+   \end{eqnarray}
+
 If your set of  ordinary differential equations are not stiff
-an explicit method may be better (perhaps $cref Runge45$$.)
+an explicit method may be better (perhaps :ref:`Runge45-name` .)
 
-$head Include$$
-The file $code cppad/utility/rosen_34.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/rosen_34.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head xf$$
-The return value $icode xf$$ has the prototype
-$codei%
-   %Vector% %xf%
-%$$
-and the size of $icode xf$$ is equal to $icode n$$
-(see description of $cref/Vector/Rosen34/Vector/$$ below).
-$latex \[
+xf
+**
+The return value *xf* has the prototype
+
+   *Vector* *xf*
+
+and the size of *xf* is equal to *n*
+(see description of :ref:`Rosen34@Vector` below).
+
+.. math::
+
    X(tf) = xf + O( h^5 )
-\] $$
-where $latex h = (tf - ti) / M$$ is the step size.
-If $icode xf$$ contains not a number $cref nan$$,
-see the discussion of $cref/f/Rosen34/Fun/Nan/$$.
 
-$head Fun$$
-The class $icode Fun$$
-and the object $icode F$$ satisfy the prototype
-$codei%
-   %Fun% &%F%
-%$$
+where :math:`h = (tf - ti) / M` is the step size.
+If *xf* contains not a number :ref:`nan-name` ,
+see the discussion of :ref:`f<Rosen34@Fun@Nan>` .
+
+Fun
+***
+The class *Fun*
+and the object *F* satisfy the prototype
+
+   *Fun* & *F*
+
 This must support the following set of calls
-$codei%
-   %F%.Ode(%t%, %x%, %f%)
-   %F%.Ode_ind(%t%, %x%, %f_t%)
-   %F%.Ode_dep(%t%, %x%, %f_x%)
-%$$
 
-$subhead t$$
+| |tab| *F* . ``Ode`` ( *t* , *x* , *f* )
+| |tab| *F* . ``Ode_ind`` ( *t* , *x* , *f_t* )
+| |tab| *F* . ``Ode_dep`` ( *t* , *x* , *f_x* )
+
+t
+=
 In all three cases,
-the argument $icode t$$ has prototype
-$codei%
-   const %Scalar% &%t%
-%$$
-(see description of $cref/Scalar/Rosen34/Scalar/$$ below).
+the argument *t* has prototype
 
-$subhead x$$
+   ``const`` *Scalar* & *t*
+
+(see description of :ref:`Rosen34@Scalar` below).
+
+x
+=
 In all three cases,
-the argument $icode x$$ has prototype
-$codei%
-   const %Vector% &%x%
-%$$
-and has size $icode n$$
-(see description of $cref/Vector/Rosen34/Vector/$$ below).
+the argument *x* has prototype
 
-$subhead f$$
-The argument $icode f$$ to $icode%F%.Ode%$$ has prototype
-$codei%
-   %Vector% &%f%
-%$$
-On input and output, $icode f$$ is a vector of size $icode n$$
-and the input values of the elements of $icode f$$ do not matter.
+   ``const`` *Vector* & *x*
+
+and has size *n*
+(see description of :ref:`Rosen34@Vector` below).
+
+f
+=
+The argument *f* to *F* . ``Ode`` has prototype
+
+   *Vector* & *f*
+
+On input and output, *f* is a vector of size *n*
+and the input values of the elements of *f* do not matter.
 On output,
-$icode f$$ is set equal to $latex F(t, x)$$
-(see $icode F(t, x)$$ in $cref/Description/Rosen34/Description/$$).
+*f* is set equal to :math:`F(t, x)`
+(see *F* ( *t* , *x* ) in :ref:`Rosen34@Description` ).
 
-$subhead f_t$$
-The argument $icode f_t$$ to $icode%F%.Ode_ind%$$ has prototype
-$codei%
-   %Vector% &%f_t%
-%$$
-On input and output, $icode f_t$$ is a vector of size $icode n$$
-and the input values of the elements of $icode f_t$$ do not matter.
-On output, the $th i$$ element of
-$icode f_t$$ is set equal to $latex \partial_t F_i (t, x)$$
-(see $icode F(t, x)$$ in $cref/Description/Rosen34/Description/$$).
+f_t
+===
+The argument *f_t* to *F* . ``Ode_ind`` has prototype
 
-$subhead f_x$$
-The argument $icode f_x$$ to $icode%F%.Ode_dep%$$ has prototype
-$codei%
-   %Vector% &%f_x%
-%$$
-On input and output, $icode f_x$$ is a vector of size $icode%n%*%n%$$
-and the input values of the elements of $icode f_x$$ do not matter.
-On output, the [$icode%i%*%n%+%j%$$] element of
-$icode f_x$$ is set equal to $latex \partial_{x(j)} F_i (t, x)$$
-(see $icode F(t, x)$$ in $cref/Description/Rosen34/Description/$$).
+   *Vector* & *f_t*
 
-$subhead Nan$$
-If any of the elements of $icode f$$, $icode f_t$$, or $icode f_x$$
-have the value not a number $code nan$$,
-the routine $code Rosen34$$ returns with all the
-elements of $icode xf$$ and $icode e$$ equal to $code nan$$.
+On input and output, *f_t* is a vector of size *n*
+and the input values of the elements of *f_t* do not matter.
+On output, the *i*-th element of
+*f_t* is set equal to :math:`\partial_t F_i (t, x)`
+(see *F* ( *t* , *x* ) in :ref:`Rosen34@Description` ).
 
-$subhead Warning$$
-The arguments $icode f$$, $icode f_t$$, and $icode f_x$$
+f_x
+===
+The argument *f_x* to *F* . ``Ode_dep`` has prototype
+
+   *Vector* & *f_x*
+
+On input and output, *f_x* is a vector of size *n* * *n*
+and the input values of the elements of *f_x* do not matter.
+On output, the [ *i* * *n* + *j* ] element of
+*f_x* is set equal to :math:`\partial_{x(j)} F_i (t, x)`
+(see *F* ( *t* , *x* ) in :ref:`Rosen34@Description` ).
+
+Nan
+===
+If any of the elements of *f* , *f_t* , or *f_x*
+have the value not a number ``nan`` ,
+the routine ``Rosen34`` returns with all the
+elements of *xf* and *e* equal to ``nan`` .
+
+Warning
+=======
+The arguments *f* , *f_t* , and *f_x*
 must have a call by reference in their prototypes; i.e.,
-do not forget the $code &$$ in the prototype for
-$icode f$$, $icode f_t$$ and $icode f_x$$.
+do not forget the ``&`` in the prototype for
+*f* , *f_t* and *f_x* .
 
-$subhead Optimization$$
+Optimization
+============
 Every call of the form
-$codei%
-   %F%.Ode_ind(%t%, %x%, %f_t%)
-%$$
-is directly followed by a call of the form
-$codei%
-   %F%.Ode_dep(%t%, %x%, %f_x%)
-%$$
-where the arguments $icode t$$ and $icode x$$ have not changed between calls.
-In many cases it is faster to compute the values of $icode f_t$$
-and $icode f_x$$ together and then pass them back one at a time.
 
-$head M$$
-The argument $icode M$$ has prototype
-$codei%
-   size_t %M%
-%$$
+   *F* . ``Ode_ind`` ( *t* , *x* , *f_t* )
+
+is directly followed by a call of the form
+
+   *F* . ``Ode_dep`` ( *t* , *x* , *f_x* )
+
+where the arguments *t* and *x* have not changed between calls.
+In many cases it is faster to compute the values of *f_t*
+and *f_x* together and then pass them back one at a time.
+
+M
+*
+The argument *M* has prototype
+
+   ``size_t`` *M*
+
 It specifies the number of steps
 to use when solving the differential equation.
 This must be greater than or equal one.
-The step size is given by $latex h = (tf - ti) / M$$, thus
-the larger $icode M$$, the more accurate the
-return value $icode xf$$ is as an approximation
-for $latex X(tf)$$.
+The step size is given by :math:`h = (tf - ti) / M`, thus
+the larger *M* , the more accurate the
+return value *xf* is as an approximation
+for :math:`X(tf)`.
 
-$head ti$$
-The argument $icode ti$$ has prototype
-$codei%
-   const %Scalar% &%ti%
-%$$
-(see description of $cref/Scalar/Rosen34/Scalar/$$ below).
-It specifies the initial time for $icode t$$ in the
+ti
+**
+The argument *ti* has prototype
+
+   ``const`` *Scalar* & *ti*
+
+(see description of :ref:`Rosen34@Scalar` below).
+It specifies the initial time for *t* in the
 differential equation; i.e.,
-the time corresponding to the value $icode xi$$.
+the time corresponding to the value *xi* .
 
-$head tf$$
-The argument $icode tf$$ has prototype
-$codei%
-   const %Scalar% &%tf%
-%$$
-It specifies the final time for $icode t$$ in the
+tf
+**
+The argument *tf* has prototype
+
+   ``const`` *Scalar* & *tf*
+
+It specifies the final time for *t* in the
 differential equation; i.e.,
-the time corresponding to the value $icode xf$$.
+the time corresponding to the value *xf* .
 
-$head xi$$
-The argument $icode xi$$ has the prototype
-$codei%
-   const %Vector% &%xi%
-%$$
-and the size of $icode xi$$ is equal to $icode n$$.
-It specifies the value of $latex X(ti)$$
+xi
+**
+The argument *xi* has the prototype
 
-$head e$$
-The argument $icode e$$ is optional and has the prototype
-$codei%
-   %Vector% &%e%
-%$$
-If $icode e$$ is present,
-the size of $icode e$$ must be equal to $icode n$$.
-The input value of the elements of $icode e$$ does not matter.
+   ``const`` *Vector* & *xi*
+
+and the size of *xi* is equal to *n* .
+It specifies the value of :math:`X(ti)`
+
+e
+*
+The argument *e* is optional and has the prototype
+
+   *Vector* & *e*
+
+If *e* is present,
+the size of *e* must be equal to *n* .
+The input value of the elements of *e* does not matter.
 On output
 it contains an element by element
-estimated bound for the absolute value of the error in $icode xf$$
-$latex \[
-   e = O( h^4 )
-\] $$
-where $latex h = (tf - ti) / M$$ is the step size.
+estimated bound for the absolute value of the error in *xf*
 
-$head Scalar$$
-The type $icode Scalar$$ must satisfy the conditions
-for a $cref NumericType$$ type.
-The routine $cref CheckNumericType$$ will generate an error message
+.. math::
+
+   e = O( h^4 )
+
+where :math:`h = (tf - ti) / M` is the step size.
+
+Scalar
+******
+The type *Scalar* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
 if this is not the case.
 In addition, the following operations must be defined for
-$icode Scalar$$ objects $icode a$$ and $icode b$$:
+*Scalar* objects *a* and *b* :
 
-$table
-$bold Operation$$ $cnext $bold Description$$  $rnext
-$icode%a% < %b%$$ $cnext
-   less than operator (returns a $code bool$$ object)
-$tend
+.. list-table::
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type Scalar/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+   * - **Operation**
+     - **Description**
+   * - *a* < *b*
+     - less than operator (returns a ``bool`` object)
+
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type Scalar<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Parallel Mode$$
+Parallel Mode
+*************
 For each set of types
-$cref/Scalar/Rosen34/Scalar/$$,
-$cref/Vector/Rosen34/Vector/$$, and
-$cref/Fun/Rosen34/Fun/$$,
-the first call to $code Rosen34$$
-must not be $cref/parallel/ta_in_parallel/$$ execution mode.
+:ref:`Rosen34@Scalar` ,
+:ref:`Rosen34@Vector` , and
+:ref:`Rosen34@Fun` ,
+the first call to ``Rosen34``
+must not be :ref:`parallel<ta_in_parallel-name>` execution mode.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/utility/rosen_34.cpp
-%$$
+}
 The file
-$cref rosen_34.cpp$$
+:ref:`rosen_34.cpp-name`
 contains an example and test a test of using this routine.
 
-$head Source Code$$
+Source Code
+***********
 The source code for this routine is in the file
-$code cppad/rosen_34.hpp$$.
+``cppad/rosen_34.hpp`` .
 
-$end
+{xrst_end Rosen34}
 --------------------------------------------------------------------------
 */
 

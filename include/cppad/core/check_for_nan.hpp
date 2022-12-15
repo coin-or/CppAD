@@ -5,122 +5,128 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin check_for_nan$$
-$spell
-   std
-   vec
-   Cpp
-   const
-   bool
+{xrst_begin check_for_nan}
+{xrst_spell
    newline
-$$
-$section Check an ADFun Object For Nan Results$$
+}
+Check an ADFun Object For Nan Results
+#####################################
 
-$head Syntax$$
-$icode%f%.check_for_nan(%b%)
-%$$
-$icode%b% = %f%.check_for_nan()
-%$$
-$codei%get_check_for_nan(%vec%, %file%)
-%$$
+Syntax
+******
 
-$head Debugging$$
-If $code NDEBUG$$ is not defined, and
-the result of a $cref/forward/forward_order/$$ or $cref/reverse/reverse_any/$$
-calculation contains a  $cref nan$$,
+| *f* . ``check_for_nan`` ( *b* )
+| *b* = *f* . ``check_for_nan`` ()
+| ``get_check_for_nan`` ( *vec* , *file* )
+
+Debugging
+*********
+If ``NDEBUG`` is not defined, and
+the result of a :ref:`forward<forward_order-name>` or :ref:`reverse<reverse_any-name>`
+calculation contains a  :ref:`nan-name` ,
 CppAD can halt with an error message.
 
-$head f$$
-For the syntax where $icode b$$ is an argument,
-$icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-(see $codei%ADFun<%Base%>%$$ $cref/constructor/fun_construct/$$).
-For the syntax where $icode b$$ is the result,
-$icode f$$ has prototype
-$codei%
-   const ADFun<%Base%> %f%
-%$$
+f
+*
+For the syntax where *b* is an argument,
+*f* has prototype
 
-$head b$$
+   ``ADFun<`` *Base* > *f*
+
+(see ``ADFun<`` *Base* > :ref:`constructor<fun_construct-name>` ).
+For the syntax where *b* is the result,
+*f* has prototype
+
+   ``const ADFun<`` *Base* > *f*
+
+b
+*
 This argument or result has prototype
-$codei%
-   bool %b%
-%$$
-If $icode b$$ is true (false),
-future calls to $icode%f%.Forward%$$ will (will not) check for $code nan$$.
 
-$head Default$$
-The value for this setting after construction of $icode f$$ is true.
+   ``bool`` *b*
+
+If *b* is true (false),
+future calls to *f* . ``Forward`` will (will not) check for ``nan`` .
+
+Default
+*******
+The value for this setting after construction of *f* is true.
 The value of this setting is not affected by calling
-$cref Dependent$$ for this function object.
+:ref:`Dependent-name` for this function object.
 
-$head Error Message$$
+Error Message
+*************
 If this error is detected during zero order forward mode,
-the values of the independent variables that resulted in the $code nan$$
+the values of the independent variables that resulted in the ``nan``
 are written to a temporary binary file.
 This is so that you can run the original source code with those values
-to see what is causing the $code nan$$.
+to see what is causing the ``nan`` .
 
-$subhead vector_size$$
+vector_size
+===========
 The error message with contain the text
-$codei%vector_size = %vector_size%$$ followed the newline character
-$code '\n'$$.
-The value of $icode vector_size$$ is the number of elements
+``vector_size`` = *vector_size* followed the newline character
+``'\n'`` .
+The value of *vector_size* is the number of elements
 in the independent vector.
 
-$subhead file_name$$
+file_name
+=========
 The error message with contain the text
-$codei%file_name = %file_name%$$ followed the newline character
-$code '\n'$$.
-The value of $icode file_name$$ is the name of the temporary file
+``file_name`` = *file_name* followed the newline character
+``'\n'`` .
+The value of *file_name* is the name of the temporary file
 that contains the dependent variable values.
 
-$subhead index$$
+index
+=====
 The error message will contain the text
-$codei%index = %index%$$ followed by the newline character $code '\n'$$.
-The value of $icode index$$ is the lowest dependent variable index
-that has the value $code nan$$.
+``index`` = *index* followed by the newline character ``'\n'`` .
+The value of *index* is the lowest dependent variable index
+that has the value ``nan`` .
 
-$head get_check_for_nan$$
+get_check_for_nan
+*****************
 This routine can be used to get the independent variable
-values that result in a $code nan$$.
+values that result in a ``nan`` .
 
-$subhead vec$$
+vec
+===
 This argument has prototype
-$codei%
-   CppAD::vector<%Base%>& %vec%
-%$$
+
+   ``CppAD::vector<`` *Base* >& *vec*
+
 It size must be equal to the corresponding value of
-$cref/vector_size/check_for_nan/Error Message/vector_size/$$
+:ref:`check_for_nan@Error Message@vector_size`
 in the corresponding error message.
 The input value of its elements does not matter.
 Upon return, it will contain the values for the independent variables,
-in the corresponding call to $cref Independent$$,
-that resulted in the $code nan$$.
-(Note that the call to $code Independent$$ uses an vector with elements
-of type $codei%AD<%Base%>%$$ and $icode vec$$ has elements of type
-$icode Base$$.)
+in the corresponding call to :ref:`Independent-name` ,
+that resulted in the ``nan`` .
+(Note that the call to ``Independent`` uses an vector with elements
+of type ``AD<`` *Base* > and *vec* has elements of type
+*Base* .)
 
-$subhead file$$
+file
+====
 This argument has prototype
-$codei%
-   const std::string& %file%
-%$$
+
+   ``const std::string&`` *file*
+
 It must be the value of
-$cref/file_name/check_for_nan/Error Message/file_name/$$
+:ref:`check_for_nan@Error Message@file_name`
 in the corresponding error message.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/check_for_nan.cpp
-%$$
+}
 The file
-$cref check_for_nan.cpp$$
+:ref:`check_for_nan.cpp-name`
 contains an example and test of these operations.
 
-$end
+{xrst_end check_for_nan}
 */
 
 # include <fstream>

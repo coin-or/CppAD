@@ -1,0 +1,407 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin CppAD_vector}
+{xrst_spell
+   citr
+   cout
+   debugger
+   dereference
+   endl
+   iterators
+   ostream
+   rvalues
+   temporaries
+   typename
+}
+
+The CppAD::vector Template Class
+################################
+
+Syntax
+******
+
+| # ``include <cppad/utility/vector.hpp>``
+| # ``include <cppad/utility/vector_bool.hpp>``
+| ``CppAD::vector<`` *Scalar* > *vec* , *other*
+
+Description
+***********
+The include file ``cppad/vector.hpp`` defines the
+vector template class ``CppAD::vector`` .
+This is a :ref:`SimpleVector-name` template class and in addition
+it has the features listed below.
+The purposes for this template vector class are as follows:
+
+#. If ``NDEBUG`` is not defined, it checks for all
+   memory accesses to make sure the corresponding index is valid.
+   This includes when using its
+   :ref:`CppAD_vector@Iterators`
+#. It has a simple set of private member variables that make it
+   easy to understand when viewing its values in a C++ debugger.
+#. It uses the :ref:`thread_alloc-name` memory allocator which makes it fast
+   in a multi-threading environment; see
+   :ref:`CppAD_vector@Memory and Parallel Mode` .
+#. The operations it has are like the corresponding ``std::vector``
+   operation so it is easy to use.
+
+Include
+*******
+The files
+``cppad/utility/vector.hpp`` and ``cppad/utility/vector_bool.hpp`` are
+included by ``cppad/cppad.hpp`` .
+They can also be included separately with out the rest of the
+CppAD include files.
+
+Deprecated 2019-08-19
+=====================
+The file ``cppad/utility/vector.hpp``
+includes the ``cppad/utility/vector_bool.hpp``
+because they used to be one file.
+If you want :ref:`CppAD_vector@vectorBool` ,
+and not the rest of CppAD, you should include
+``cppad/utility/vector_bool.hpp`` .
+
+Integer Size
+************
+The size *n* in the constructor syntax below can be an
+``int`` (all simple vectors support ``size_t`` ):
+
+   ``CppAD::vector<`` *Scalar* > *vec* ( *n* )
+
+capacity
+********
+If *cap* is a ``size_t`` object,
+
+   *cap* = *vec* . ``capacity`` ()
+
+set *cap* to the number of *Scalar* objects that
+could fit in the memory currently allocated for *vec* .
+Note that
+
+   *vec* . ``size`` () <= *vec* . ``capacity`` ()
+
+swap
+****
+
+   *vec* . ``swap`` ( *other* )
+
+exchanges the contents of *vec* and *other* .
+For example :ref:`vec.data()<CppAD_vector@data>` after the ``swap``
+is equal to *other* . ``data`` () before ``swap`` .
+
+Assignment
+**********
+
+   *vec* = *other*
+
+has all the properties listed for a
+:ref:`simple vector assignment<SimpleVector@Assignment>`
+plus the following:
+
+Check Size
+==========
+It is no longer necessary for *vec* to have the
+same size as *other* .
+This makes ``CppAD::vector`` more like ``std::vector`` .
+
+Return Reference
+================
+A reference to the vector *vec* is returned.
+An example use of this reference is in multiple assignments of the form
+
+   *vec* = *other* = *another*
+
+where *another* is a ``CppAD::vector<`` *Scalar* > object.
+
+Move Semantics
+==============
+If the C++ compiler supports move semantic rvalues using the ``&&``
+syntax, then it will be used during the vector assignment statement.
+This means that return values and other temporaries are not be copied,
+but rather pointers are transferred.
+
+Element Access
+**************
+If *i* has type ``size_t`` ,
+
+   *vec* [ *i* ]
+
+has all the properties listed for a
+:ref:`simple vector element access<SimpleVector@Element Access>`
+plus the following:
+
+i
+=
+This operation is defined for any *i*
+that has a conversion to ``size_t`` .
+The object *vec* [ *i* ] has type *Scalar*
+(is not possibly a different type that can be converted to *Scalar* ).
+
+Error Checking
+==============
+If *i* is not less than the size of the *vec* ,
+and ``NDEBUUG`` is not defined,
+``CppAD::vector`` will use
+:ref:`ErrorHandler-name`
+to generate an appropriate error report.
+
+push_back
+*********
+If *vec* has size *n* and
+*scalar* has type *Scalar* ,
+
+   *vec* . ``push_back`` ( *scalar* )
+
+extends the vector so that its new size is *n* +1
+and *vec* [ *n* ] is equal to *s*
+(equal in the sense of the *Scalar* assignment operator).
+
+push_vector
+***********
+If *vec* has size *n* and
+*simple_vec* is a :ref:`simple vector<SimpleVector-name>`
+with elements of type *Scalar* and size *m* ,
+
+   *vec* . ``push_vector`` ( *simple_vec* )
+
+extends the vector *vec* so that its new size is *n* + *m*
+and *vec* [ *n* + *i* ] is equal to *simple_vec* [ *i* ]
+for *i* = 1 , ... , *m-1*
+(equal in the sense of the *Scalar* assignment operator).
+
+Output
+******
+If *os* is an ``std::ostream`` , the operation
+
+   *os* << *vec*
+
+will output *vec* to the standard output stream *os* .
+The elements of *vec* are enclosed at the beginning by a
+``{`` character,
+they are separated by ``,`` characters,
+and they are enclosed at the end by ``}`` character.
+It is assumed by this operation that if *scalar*
+is an object with type *Scalar* ,
+
+   *os* << *scalar*
+
+will output the value *scalar* to *os* .
+
+resize
+******
+If *n* is a ``size_t`` ,
+
+   *vec* . ``resize`` ( *n* )
+
+sets the size of *vec* equal to *n* .
+
+data
+====
+The elements in *vec* before the resize operation are preserved.
+
+memory
+======
+If before the resize, *n* <= *vec* . ``capacity`` () ,
+no memory is freed or allocated and
+the capacity of *vec* does not change.
+Otherwise, new memory is allocated and the elements before the resize
+are copied to the new memory.
+If you do not need to the elements previously in the vector,
+you can resize to zero and then to the new size to avoid the copy.
+
+clear
+*****
+
+   *vec* . ``clear`` ()
+
+frees all memory allocated for *vec*
+and both its size and capacity are set to zero.
+This can be useful when using very large vectors
+and when checking for memory leaks (and there are global vectors)
+see the :ref:`memory<CppAD_vector@Memory and Parallel Mode>` discussion.
+
+data
+****
+
+   *vec* . ``data`` ()
+
+returns a pointer to a *Scalar* object such that for
+0 <= *i* < *vec* . ``size`` () ,
+*vec* [ *i* ] and *vec* . ``data`` ()[ *i* ]
+are the same *Scalar* object.
+If *vec* is ``const`` , the pointer is ``const`` .
+If *vec* . ``capacity`` () is zero, the value of the pointer is not defined.
+The pointer may no longer be valid after the following operations on
+*vec* :
+its destructor,
+``clear`` ,
+``resize`` ,
+``push_back`` ,
+``push_vector`` ,
+assignment to another vector when original size of *vec* is zero.
+
+Iterators
+*********
+
+Syntax
+======
+
+| ``typename CppAD::vector<`` *Scalar* >:: ``iterator`` *itr*
+| ``typename CppAD::vector<`` *Scalar* >:: ``const_iterator`` *citr*
+| *vec* . ``begin`` ()
+| *vec* . ``end`` ()
+
+itr
+===
+is a random access iterator type for non ``const`` objects.
+
+citr
+====
+is a random access iterator type for a ``const`` objects.
+An ``iterator`` can be converted to a ``const_iterator`` ,
+but not the other way around.
+
+begin
+=====
+is an iterator corresponding to the first element of the vector.
+It is a ``const_iterator`` (``iterator`` )
+depending on if *vec* is ``const`` (not ``const`` )
+
+end
+===
+is an iterator corresponding to just beyond the last element of the vector.
+It is a ``const_iterator`` (``iterator`` )
+depending on if *vec* is ``const`` (not ``const`` )
+
+operator[]
+==========
+The syntax *itr* [ *i* ]
+and *citr* [ *i* ] is extended
+(from a normal random access iterator) to include the case where
+*i* is ``size_t`` object.
+
+Error Checking
+==============
+Each element access (dereference of the iterator)
+does an error check similar to the element access
+:ref:`CppAD_vector@Element Access@Error Checking` above.
+The error handler will also be called,
+if ``NDEBUG`` is not defined and
+a comparison operator (e.g. ``>`` ) is used between
+two iterators that correspond to different vectors.
+
+vectorBool
+**********
+The file ``<cppad/utility/vector_bool.hpp>`` defines the class
+``CppAD::vectorBool`` .
+This has the same specifications as ``CppAD::vector<bool>``
+with the following exceptions:
+
+Memory
+======
+The class ``vectorBool`` conserves on memory,
+on the other hand, ``CppAD::vector<bool>`` is expected to be faster
+than ``vectorBool`` .
+
+bit_per_unit
+============
+The static function call
+
+   *size* = ``vectorBool::bit_per_unit`` ()
+
+returns the ``size_t`` value *s*
+which is equal to the number of boolean values (bits) that are
+packed into one operation unit.
+Bits are accessed using a mask with the size of an operation unit.
+
+data
+====
+The :ref:`CppAD_vector@data` function is not supported by
+``vectorBool`` .
+
+Iterators
+=========
+The :ref:`CppAD_vector@Iterators` are not supported by
+``vectorBool`` .
+
+Output
+======
+The ``CppAD::vectorBool`` output operator
+prints each boolean value as
+a ``0`` for false,
+a ``1`` for true,
+and does not print any other output; i.e.,
+the vector is written a long sequence of zeros and ones with no
+surrounding ``{`` , ``}`` and with no separating commas or spaces.
+
+Element Type
+============
+If *vec_bool* has type ``vectorBool``
+and *i* has type ``size_t`` ,
+the element access value *vec_bool* [ *i* ] has an unspecified type,
+referred to here as *element_t* , that supports the following
+operations:
+
+#. *element_t* can be converted to ``bool`` ; e.g.
+   the following syntax is supported:
+
+      ``static_cast<bool>`` ( *vec_bool* [ *i* ] )
+
+#. *element_t* supports the assignment operator ``=`` where the
+   right hand side is a ``bool`` or an *element_t* object; e.g.,
+   if *flag* has type ``bool`` , the following syntax is supported:
+
+      *vec_bool* [ *i* ] = *flag*
+
+#. The result of an assignment to an *element_t*
+   also has type *element_t* .
+   For example, if *other_flag* has type ``bool`` ,
+   the following syntax is supported:
+
+      *other_flag* = *vec_bool* [ *i* ] = *flag*
+
+Memory and Parallel Mode
+************************
+These vectors use the multi-threaded fast memory allocator
+:ref:`thread_alloc-name` :
+
+#. The :ref:`hold_memory<ta_hold_memory-name>` routine can be used
+   to make memory allocation faster.
+#. The routine :ref:`parallel_setup<ta_parallel_setup-name>` must
+   be called before these vectors can be used
+   :ref:`in parallel<ta_in_parallel-name>` .
+#. Using these vectors affects the amount of memory
+   :ref:`in_use<ta_inuse-name>` and :ref:`available<ta_available-name>` .
+#. Calling :ref:`CppAD_vector@clear` ,
+   makes the corresponding memory available (though ``thread_alloc`` )
+   to the current thread.
+#. Available memory
+   can then be completely freed using :ref:`free_available<ta_free_available-name>` .
+
+Example
+*******
+{xrst_toc_hidden
+   example/utility/cppad_vector.cpp
+   example/utility/vector_bool.cpp
+}
+The files
+:ref:`cppad_vector.cpp-name` and
+:ref:`vector_bool.cpp-name` each
+contain an example and test of this template class.
+They return true if they succeed and false otherwise.
+
+Exercise
+********
+Create and run a program that contains the following code:
+::
+
+   CppAD::vector<double> x(3);
+   size_t i;
+   for(i = 0; i < 3; i++)
+   x[i] = 4. - i;
+   std::cout << "x = " << x << std::endl;
+
+{xrst_end CppAD_vector}

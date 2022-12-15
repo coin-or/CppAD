@@ -1,0 +1,113 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin pow_reverse}
+
+Power Function Reverse Mode Theory
+##################################
+
+We use the reverse theory
+:ref:`standard math function<reverse_theory@Standard Math Functions>`
+definition for the functions :math:`H` and :math:`G`.
+The zero order forward mode formula for the
+:ref:`power<pow_forward-name>` function is
+
+.. math::
+
+   z^{(0)}  =  F ( x^{(0)} )
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(0)} }
+   & = & \D{G}{ x^{(0)} }  + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
+   \\
+   \D{ z^{(0)} }{ x^{(0)} } & = & y [ x^{(0)} ]^{y - 1}  = y z^{(0)} / x{(0)}
+   \end{eqnarray}
+
+All the equations below apply to the case where :math:`j > 0`.
+For this case, the equation for :math:`z^{(j)}` is
+
+.. math::
+
+   z^{(j)}
+   =
+   \left. \left(
+      y z^{(0)} x^{(j)}
+      +
+      \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
+   \right) \right/ x^{(0)}
+
+x^j
+***
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(j)} }
+   & = & \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
+   \\
+   \D{ z^{(j)} }{ x^{(j)} } & = & y z^{(0)} / x^{(0)}
+   \end{eqnarray}
+
+x^k
+***
+For :math:`k = 1 , \ldots , j-1`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(k)} }
+   & = & \D{G}{ x^{(k)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+   \\
+   \D{ z^{(j)} }{ x^{(k)} } & = &
+   \frac{1}{j} ( k y - (j-k) ) z^{(j-k)} / x^{(0)}
+   \end{eqnarray}
+
+z^k
+***
+For :math:`k = 1 , \ldots , j-1`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ z^{(k)} }
+   & = & \D{G}{ z^{(k)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(k)} }
+   \\
+   \D{ z^{(j)} }{ z^{(k)} } & = &
+   \frac{1}{j} ( (j-k) y - k ) x^{(j-k)} / x^{(0)}
+   \end{eqnarray}
+
+x^0
+***
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(0)} }
+   & = & \D{G}{ x^{(0)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
+   \\
+   \D{ z^{(j)} }{ x^{(0)} } & = & - z^{(j)} / x^{(0)}
+   \end{eqnarray}
+
+z^0
+***
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ z^{(0)} }
+   & = & \D{G}{ z^{(0)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(0)} }
+   \\
+   \D{ z^{(j)} }{ z^{(0)} } & = &  y x^{(j)} / x^{(0)}
+   \end{eqnarray}
+
+{xrst_end pow_reverse}

@@ -5,19 +5,17 @@
 /*
 ! WARNING: This file is used as an example by fun_construct and Dependent
 
-$begin fun_check.cpp$$
-$spell
-   abs
-$$
+{xrst_begin fun_check.cpp}
 
-$section ADFun Check and Re-Tape: Example and Test$$
+ADFun Check and Re-Tape: Example and Test
+#########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-
-
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end fun_check.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -4,19 +4,21 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin hes_lagrangian.cpp$$
-$spell
-   Cpp
-   HesLagrangian
-$$
+{xrst_begin hes_lagrangian.cpp}
+{xrst_spell
+   lagrangian
+}
 
-$comment ! NOTE the title states that this example is used two places !$$
-$section Hessian of Lagrangian and ADFun Default Constructor: Example and Test$$
+{xrst_comment ! NOTE the title states that this example is used two places !}
+Hessian of Lagrangian and ADFun Default Constructor: Example and Test
+#####################################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end hes_lagrangian.cpp}
 */
 // BEGIN C++
 

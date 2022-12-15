@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atan.cpp$$
-$spell
-   tan
-   atan
-$$
+{xrst_begin atan.cpp}
 
-$section The AD atan Function: Example and Test$$
+The AD atan Function: Example and Test
+######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end atan.cpp}
 */
 // BEGIN C++
 

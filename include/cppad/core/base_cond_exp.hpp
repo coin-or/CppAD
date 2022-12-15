@@ -6,139 +6,124 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin base_cond_exp$$
-$spell
-   alloc
-   Rel
-   hpp
-   enum
-   namespace
-   Op
-   Lt
-   Le
-   Eq
-   Ge
-   Gt
-   Ne
-   cond
-   exp
-   const
-   adolc
-   CppAD
-   inline
-$$
+{xrst_begin base_cond_exp}
 
-$section Base Type Requirements for Conditional Expressions$$
+Base Type Requirements for Conditional Expressions
+##################################################
 
-$head Purpose$$
+Purpose
+*******
 These definitions are required by the user's code to support the
-$codei%AD<%Base%>%$$ type for $cref CondExp$$ operations:
+``AD<`` *Base* > type for :ref:`CondExp-name` operations:
 
-$head CompareOp$$
-The following $code enum$$ type is used in the specifications below:
-$codep
-namespace CppAD {
+CompareOp
+*********
+The following ``enum`` type is used in the specifications below:
+::
+
+   namespace CppAD {
    // The conditional expression operator enum type
    enum CompareOp
    {  CompareLt, // less than
-      CompareLe, // less than or equal
-      CompareEq, // equal
-      CompareGe, // greater than or equal
-      CompareGt, // greater than
-      CompareNe  // not equal
+   CompareLe, // less than or equal
+   CompareEq, // equal
+   CompareGe, // greater than or equal
+   CompareGt, // greater than
+   CompareNe  // not equal
    };
-}
-$$
+   }
 
-$head CondExpTemplate$$
-The type $icode Base$$ must support the syntax
-$codei%
-   %result% = CppAD::CondExpOp(
-      %cop%, %left%, %right%, %exp_if_true%, %exp_if_false%
-   )
-%$$
-which computes implements the corresponding $cref CondExp$$
+CondExpTemplate
+***************
+The type *Base* must support the syntax
+
+| |tab| *result* = ``CppAD::CondExpOp`` (
+| |tab| |tab| *cop* , *left* , *right* , *exp_if_true* , *exp_if_false*
+| |tab| )
+
+which computes implements the corresponding :ref:`CondExp-name`
 function when the result has prototype
-$codei%
-   %Base% %result%
-%$$
-The argument $icode cop$$ has prototype
-$codei%
-   enum CppAD::CompareOp %cop%
-%$$
+
+   *Base* *result*
+
+The argument *cop* has prototype
+
+   ``enum CppAD::CompareOp`` *cop*
+
 The other arguments have the prototype
-$codei%
-   const %Base%&  %left%
-   const %Base%&  %right%
-   const %Base%&  %exp_if_true%
-   const %Base%&  %exp_if_false%
-%$$
 
-$subhead Ordered Type$$
-If $icode Base$$ is a relatively simple type
+| |tab| ``const`` *Base* & *left*
+| |tab| ``const`` *Base* & *right*
+| |tab| ``const`` *Base* & *exp_if_true*
+| |tab| ``const`` *Base* & *exp_if_false*
+
+Ordered Type
+============
+If *Base* is a relatively simple type
 that supports
-$code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators
-its $code CondExpOp$$ function can be defined by
-$codei%
-namespace CppAD {
-   inline %Base% CondExpOp(
-   enum CppAD::CompareOp  %cop%            ,
-   const %Base%           &%left%          ,
-   const %Base%           &%right%         ,
-   const %Base%           &%exp_if_true%   ,
-   const %Base%           &%exp_if_false%  )
-   {  return CondExpTemplate(
-         cop, left, right, trueCase, falseCase);
-   }
-}
-%$$
+``<`` , ``<=`` , ``==`` , ``>=`` , and ``>`` operators
+its ``CondExpOp`` function can be defined by
+
+| ``namespace CppAD`` {
+| |tab| ``inline`` *Base* ``CondExpOp`` (
+| |tab| ``enum CppAD::CompareOp`` *cop*             ,
+| |tab| ``const`` *Base* & *left*           ,
+| |tab| ``const`` *Base* & *right*          ,
+| |tab| ``const`` *Base* & *exp_if_true*    ,
+| |tab| ``const`` *Base* & *exp_if_false*   )
+| |tab| { ``return CondExpTemplate`` (
+| |tab| |tab| |tab| ``cop`` , ``left`` , ``right`` , ``trueCase`` , ``falseCase`` );
+| |tab| }
+| }
+
 For example, see
-$cref/double CondExpOp/base_alloc.hpp/CondExpOp/$$.
-For an example of and implementation of $code CondExpOp$$ with
-a more involved $icode Base$$ type see
-$cref/adolc CondExpOp/base_adolc.hpp/CondExpOp/$$.
+:ref:`double CondExpOp<base_alloc.hpp@CondExpOp>` .
+For an example of and implementation of ``CondExpOp`` with
+a more involved *Base* type see
+:ref:`adolc CondExpOp<base_adolc.hpp@CondExpOp>` .
 
+Not Ordered
+===========
+If the type *Base* does not support ordering,
+the ``CondExpOp`` function does not make sense.
+In this case one might (but need not) define ``CondExpOp`` as follows:
 
-$subhead Not Ordered$$
-If the type $icode Base$$ does not support ordering,
-the $code CondExpOp$$ function does not make sense.
-In this case one might (but need not) define $code CondExpOp$$ as follows:
-$codei%
-namespace CppAD {
-   inline %Base% CondExpOp(
-   enum CompareOp %cop%           ,
-   const %Base%   &%left%         ,
-   const %Base%   &%right%        ,
-   const %Base%   &%exp_if_true%  ,
-   const %Base%   &%exp_if_false% )
-   {  // attempt to use CondExp with a %Base% argument
-      assert(0);
-      return %Base%(0);
-   }
-}
-%$$
+| ``namespace CppAD`` {
+| |tab| ``inline`` *Base* ``CondExpOp`` (
+| |tab| ``enum CompareOp`` *cop*            ,
+| |tab| ``const`` *Base* & *left*          ,
+| |tab| ``const`` *Base* & *right*         ,
+| |tab| ``const`` *Base* & *exp_if_true*   ,
+| |tab| ``const`` *Base* & *exp_if_false*  )
+| |tab| {  // ``attempt to use CondExp with a`` *Base* ``argument``
+| |tab| |tab| ``assert`` (0);
+| |tab| |tab| ``return`` *Base* (0);
+| |tab| }
+| }
+
 For example, see
-$cref/complex CondExpOp/base_complex.hpp/CondExpOp/$$.
+:ref:`complex CondExpOp<base_complex.hpp@CondExpOp>` .
 
-$head CondExpRel$$
+CondExpRel
+**********
 The macro invocation
-$codei%
-   CPPAD_COND_EXP_REL(%Base%)
-%$$
-uses $code CondExpOp$$ above to define the following functions
-$codei%
-   CondExpLt(%left%, %right%, %exp_if_true%, %exp_if_false%)
-   CondExpLe(%left%, %right%, %exp_if_true%, %exp_if_false%)
-   CondExpEq(%left%, %right%, %exp_if_true%, %exp_if_false%)
-   CondExpGe(%left%, %right%, %exp_if_true%, %exp_if_false%)
-   CondExpGt(%left%, %right%, %exp_if_true%, %exp_if_false%)
-%$$
-where the arguments have type $icode Base$$.
+
+   ``CPPAD_COND_EXP_REL`` ( *Base* )
+
+uses ``CondExpOp`` above to define the following functions
+
+| |tab| ``CondExpLt`` ( *left* , *right* , *exp_if_true* , *exp_if_false* )
+| |tab| ``CondExpLe`` ( *left* , *right* , *exp_if_true* , *exp_if_false* )
+| |tab| ``CondExpEq`` ( *left* , *right* , *exp_if_true* , *exp_if_false* )
+| |tab| ``CondExpGe`` ( *left* , *right* , *exp_if_true* , *exp_if_false* )
+| |tab| ``CondExpGt`` ( *left* , *right* , *exp_if_true* , *exp_if_false* )
+
+where the arguments have type *Base* .
 This should be done inside of the CppAD namespace.
 For example, see
-$cref/base_alloc/base_alloc.hpp/CondExpRel/$$.
+:ref:`base_alloc<base_alloc.hpp@CondExpRel>` .
 
-$end
+{xrst_end base_cond_exp}
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

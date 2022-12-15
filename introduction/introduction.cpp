@@ -4,23 +4,23 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin exp_apx.cpp$$
-$spell
-   Cpp
-   exp_eps
-   apx
-$$
+{xrst_begin exp_apx.cpp}
 
-$section Correctness Tests For Exponential Approximation in Introduction$$
+Correctness Tests For Exponential Approximation in Introduction
+###############################################################
 
+Running Tests
+*************
+To build this program and run its correctness tests see :ref:`cmake_check-name` .
 
-$head Running Tests$$
-To build this program and run its correctness tests see $cref cmake_check$$.
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end exp_apx.cpp}
 */
 // BEGIN C++
 

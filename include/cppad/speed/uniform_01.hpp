@@ -5,77 +5,82 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin uniform_01$$
-$spell
-   CppAD
-   namespace
-   cppad
-   hpp
-$$
+{xrst_begin uniform_01}
+{xrst_spell
+   variate
+}
 
-$section Simulate a [0,1] Uniform Random Variate$$
+Simulate a [0,1] Uniform Random Variate
+#######################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/speed/uniform_01.hpp>
-%$$
-$codei%uniform_01(%seed%)
-%$$
-$codei%uniform_01(%n%, %x%)%$$
+| # ``include <cppad/speed/uniform_01.hpp>``
+| ``uniform_01`` ( *seed* )
 
-$head Purpose$$
+``uniform_01`` ( *n* , *x* )
+
+Purpose
+*******
 This routine is used to create random values for speed testing purposes.
 
-$head Inclusion$$
-The template function $code uniform_01$$ is defined in the $code CppAD$$
+Inclusion
+*********
+The template function ``uniform_01`` is defined in the ``CppAD``
 namespace by including
-the file $code cppad/speed/uniform_01.hpp$$
+the file ``cppad/speed/uniform_01.hpp``
 (relative to the CppAD distribution directory).
 
-$head seed$$
-The argument $icode seed$$ has prototype
-$codei%
-   size_t %seed%
-%$$
+seed
+****
+The argument *seed* has prototype
+
+   ``size_t`` *seed*
+
 It specifies a seed
 for the uniform random number generator.
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-   size_t %n%
-%$$
-It specifies the number of elements in the random vector $icode x$$.
+n
+*
+The argument *n* has prototype
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   %Vector% &%x%
-%$$.
-The input value of the elements of $icode x$$ does not matter.
-Upon return, the elements of $icode x$$ are set to values
+   ``size_t`` *n*
+
+It specifies the number of elements in the random vector *x* .
+
+x
+*
+The argument *x* has prototype
+
+   *Vector* & *x*
+
+.
+The input value of the elements of *x* does not matter.
+Upon return, the elements of *x* are set to values
 randomly sampled over the interval [0,1].
 
-$head Vector$$
-If $icode y$$ is a $code double$$ value,
-the object $icode x$$ must support the syntax
-$codei%
-   %x%[%i%] = %y%
-%$$
-where $icode i$$ has type $code size_t$$ with value less than
-or equal $latex n-1$$.
-This is the only requirement of the type $icode Vector$$.
+Vector
+******
+If *y* is a ``double`` value,
+the object *x* must support the syntax
 
-$children%
-   omh/uniform_01_hpp.omh
-%$$
+   *x* [ *i* ] = *y*
 
-$head Source Code$$
+where *i* has type ``size_t`` with value less than
+or equal :math:`n-1`.
+This is the only requirement of the type *Vector* .
+{xrst_toc_hidden
+   xrst/uniform_01_hpp.xrst
+}
+
+Source Code
+***********
 The file
-$cref uniform_01.hpp$$
+:ref:`uniform_01.hpp-name`
 constraints the source code for this template function.
 
-$end
+{xrst_end uniform_01}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

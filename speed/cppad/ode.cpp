@@ -3,33 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_ode.cpp$$
-$spell
-   jacobian jacobian
-   endif
-   var
-   Jacobian
-   std
-   cout
-   endl
-   CppAD
-   cppad
-   hpp
-   bool
-   onetape
-   typedef
-   cassert
-$$
+{xrst_begin cppad_ode.cpp}
 
-$section Cppad Speed: Gradient of Ode Solution$$
+Cppad Speed: Gradient of Ode Solution
+#####################################
 
+Specifications
+**************
+See :ref:`link_ode-name` .
 
-$head Specifications$$
-See $cref link_ode$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -144,6 +131,8 @@ bool link_ode(
    global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_ode.cpp}
 */

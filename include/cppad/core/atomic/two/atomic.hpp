@@ -5,128 +5,140 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_two$$
-$spell
-   ctor
-   afun
-   arg
-   vx
-   vy
-   tx
-   ty
+{xrst_begin atomic_two}
+{xrst_spell
    px
    py
-   jac
-   hes
-   CppAD
-   checkpointing
-$$
+   tx
+   vx
+}
 
-$section Defining Atomic Functions: Second Generation$$
+Defining Atomic Functions: Second Generation
+############################################
 
-$head Deprecated 2019-01-01$$
-Using the $code atomic_base$$ class has been deprecated.
-Use $cref atomic_three$$ instead.
+Deprecated 2019-01-01
+*********************
+Using the ``atomic_base`` class has been deprecated.
+Use :ref:`atomic_three-name` instead.
 
+Syntax
+******
 
-$head Syntax$$
+| *atomic_user* *afun* ( *ctor_arg_list* )
+| *afun* ( *ax* , *ay* )
+| *ok* = *afun* . ``forward`` ( *p* , *q* , *vx* , *vy* , *tx* , *ty* )
+| *ok* = *afun* . ``reverse`` ( *q* , *tx* , *ty* , *px* , *py* )
+| *ok* = *afun* . ``for_sparse_jac`` ( *q* , *r* , *s* , *x* )
+| *ok* = *afun* . ``rev_sparse_jac`` ( *q* , *r* , *s* , *x* )
+| *ok* = *afun* . ``for_sparse_hes`` ( *vx* , *r* , *s* , *h* , *x* )
+| *ok* = *afun* . ``rev_sparse_hes`` ( *vx* , *s* , *t* , *q* , *r* , *u* , *v* , *x* )
+| *atomic_base<* ``Base`` >:: *clear* ()
 
-$codei%
-%atomic_user% %afun%(%ctor_arg_list%)
-%afun%(%ax%, %ay%)
-%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %tx%, %ty%)
-%ok% = %afun%.reverse(%q%, %tx%, %ty%, %px%, %py%)
-%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%, %x%)
-%ok% = %afun%.rev_sparse_jac(%q%, %r%, %s%, %x%)
-%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%, %x%)
-%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%, %x%)
-atomic_base<%Base%>::clear()%$$
+See Also
+********
+:ref:`checkpoint<chkpoint_one-name>`
 
-$head See Also$$
-$cref/checkpoint/chkpoint_one/$$
+Purpose
+*******
 
-$head Purpose$$
-
-$subhead Speed$$
+Speed
+=====
 In some cases, the user knows how to compute derivatives of a function
-$latex \[
+
+.. math::
+
    y = f(x) \; {\rm where} \; f : \B{R}^n \rightarrow \B{R}^m
-\] $$
-more efficiently than by coding it using $codei%AD<%Base%>%$$
-$cref/atomic_base/glossary/Operation/Atomic/$$ operations
+
+more efficiently than by coding it using ``AD<`` *Base* >
+:ref:`atomic_base<glossary@Operation@Atomic>` operations
 and letting CppAD do the rest.
-In this case $codei%atomic_base%<%Base%>%$$ can use
-the user code for $latex f(x)$$, and its derivatives,
-as $codei%AD<%Base%>%$$ atomic operations.
+In this case ``atomic_base`` < ``Base`` > can use
+the user code for :math:`f(x)`, and its derivatives,
+as ``AD<`` *Base* > atomic operations.
 
-$subhead Reduce Memory$$
-If the function $latex f(x)$$ is used often,
-using an atomic version of $latex f(x)$$ remove the need for repeated
-copies of the corresponding $codei%AD<%Base%>%$$ operations.
+Reduce Memory
+=============
+If the function :math:`f(x)` is used often,
+using an atomic version of :math:`f(x)` remove the need for repeated
+copies of the corresponding ``AD<`` *Base* > operations.
 
-$head Virtual Functions$$
+Virtual Functions
+*****************
 User defined derivatives are implemented by defining the
-following virtual functions in the $icode atomic_base$$ class:
-$cref/forward/atomic_two_forward/$$,
-$cref/reverse/atomic_two_reverse/$$,
-$cref/for_sparse_jac/atomic_two_for_sparse_jac/$$,
-$cref/rev_sparse_jac/atomic_two_rev_sparse_jac/$$, and
-$cref/rev_sparse_hes/atomic_two_rev_sparse_hes/$$.
+following virtual functions in the *atomic_base* class:
+:ref:`forward<atomic_two_forward-name>` ,
+:ref:`reverse<atomic_two_reverse-name>` ,
+:ref:`for_sparse_jac<atomic_two_for_sparse_jac-name>` ,
+:ref:`rev_sparse_jac<atomic_two_rev_sparse_jac-name>` , and
+:ref:`rev_sparse_hes<atomic_two_rev_sparse_hes-name>` .
 These virtual functions have a default implementation
-that returns $icode%ok% == false%$$.
-The $code forward$$ function,
-for the case $icode%q% == 0%$$, must be implemented.
+that returns *ok* == ``false`` .
+The ``forward`` function,
+for the case *q*  == 0 , must be implemented.
 Otherwise, only those functions
 required by the your calculations need to be implemented.
 For example,
-$icode forward$$ for the case $icode%q% == 2%$$ can just return
-$icode%ok% == false%$$ unless you require
+*forward* for the case *q*  == 2 can just return
+*ok* == ``false`` unless you require
 forward mode calculation of second derivatives.
 
-$head Examples$$
-See $cref atomic_two_example$$.
+Examples
+********
+See :ref:`atomic_two_example-name` .
 
-$childtable%
-   include/cppad/core/atomic/two/ctor.hpp%
-   include/cppad/core/atomic/two/option.hpp%
-   include/cppad/core/atomic/two/afun.hpp%
-   include/cppad/core/atomic/two/forward.hpp%
-   include/cppad/core/atomic/two/reverse.hpp%
-   include/cppad/core/atomic/two/for_sparse_jac.hpp%
-   include/cppad/core/atomic/two/rev_sparse_jac.hpp%
-   include/cppad/core/atomic/two/for_sparse_hes.hpp%
-   include/cppad/core/atomic/two/rev_sparse_hes.hpp%
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atomic/two/ctor.hpp
+   include/cppad/core/atomic/two/option.hpp
+   include/cppad/core/atomic/two/afun.hpp
+   include/cppad/core/atomic/two/forward.hpp
+   include/cppad/core/atomic/two/reverse.hpp
+   include/cppad/core/atomic/two/for_sparse_jac.hpp
+   include/cppad/core/atomic/two/rev_sparse_jac.hpp
+   include/cppad/core/atomic/two/for_sparse_hes.hpp
+   include/cppad/core/atomic/two/rev_sparse_hes.hpp
    include/cppad/core/atomic/two/clear.hpp
-%$$
+}
 
-$end
+{xrst_end atomic_two}
 -------------------------------------------------------------------------------
-$begin atomic_two_example$$
+{xrst_begin atomic_two_example}
+{xrst_spell
+   scalars
+}
 
-$section Example Defining Atomic Functions: Second Generation$$
+Example Defining Atomic Functions: Second Generation
+####################################################
 
-$head Getting Started$$
+Getting Started
+***************
 that shows the minimal amount of information required to create
 a user defined atomic operation.
 
-$head Scalar Function$$
+Scalar Function
+***************
 where the user provides the code for computing derivatives.
 This example is simple because the domain and range are scalars.
 
-$head Vector Range$$
+Vector Range
+************
 where the user provides the code for computing derivatives.
 This example is more complex because the range has two components.
 
-$head Hessian Sparsity Patterns$$
+Hessian Sparsity Patterns
+*************************
 where the user provides the code for computing Hessian sparsity patterns.
 
-$childtable%
-   example/atomic_two/eigen_mat_mul.cpp%
-   example/atomic_two/eigen_mat_inv.cpp%
+Contents
+********
+{xrst_toc_table
+   example/atomic_two/eigen_mat_mul.cpp
+   example/atomic_two/eigen_mat_inv.cpp
    example/atomic_two/eigen_cholesky.cpp
-%$$
+}
 
-$end
+{xrst_end atomic_two_example}
 -------------------------------------------------------------------------------
 */
 

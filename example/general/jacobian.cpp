@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin jacobian.cpp$$
-$spell
-   Cpp
-   Jacobian
-$$
+{xrst_begin jacobian.cpp}
 
-$section Jacobian: Example and Test$$
+Jacobian: Example and Test
+##########################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end jacobian.cpp}
 */
 // BEGIN C++
 

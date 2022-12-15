@@ -40,50 +40,52 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-$begin cpp_graph_ctor$$
-$spell
-   obj
-   cpp
-   ind
-   vec
-   arg
-$$
+{xrst_begin cpp_graph_ctor}
 
-$section C++ AD Graph Constructor$$
+C++ AD Graph Constructor
+########################
 
-$head Syntax$$
-$codei%cpp_graph %graph_obj%
-%$$
-$icode%graph_obj%.initialize()
-%$$
+Syntax
+******
 
-$head function_name$$
-$cref/function_name/cpp_ad_graph/function_name/$$
+| ``cpp_graph`` *graph_obj*
+| *graph_obj* . ``initialize`` ()
+
+function_name
+*************
+:ref:`cpp_ad_graph@function_name`
 is initialized to the empty string.
 
-$head n_dynamic_ind$$
-$cref/n_dynamic_ind/cpp_ad_graph/n_dynamic_ind/$$ is initialized as zero.
+n_dynamic_ind
+*************
+:ref:`cpp_ad_graph@n_dynamic_ind` is initialized as zero.
 
-$head n_variable_ind$$
-$cref/n_variable_ind/cpp_ad_graph/n_variable_ind/$$ is initialized as zero.
+n_variable_ind
+**************
+:ref:`cpp_ad_graph@n_variable_ind` is initialized as zero.
 
-$head constant_vec$$
-$cref/constant_vec/cpp_ad_graph/constant_vec/$$ is initialized as empty.
+constant_vec
+************
+:ref:`cpp_ad_graph@constant_vec` is initialized as empty.
 
-$head operator_vec$$
-$cref/operator_vec/cpp_ad_graph/operator_vec/$$ is initialized as empty.
+operator_vec
+************
+:ref:`cpp_ad_graph@operator_vec` is initialized as empty.
 
-$head operator_arg$$
-$cref/operator_arg/cpp_ad_graph/operator_arg/$$ is initialized as empty.
+operator_arg
+************
+:ref:`cpp_ad_graph@operator_arg` is initialized as empty.
 
-$head dependent_vec$$
-$cref/dependent_vec/cpp_ad_graph/dependent_vec/$$ is initialized as empty.
+dependent_vec
+*************
+:ref:`cpp_ad_graph@dependent_vec` is initialized as empty.
 
-$head Parallel Mode$$
-The first use of the $code cpp_graph$$ constructor
-cannot be in $cref/parallel/ta_in_parallel/$$ execution mode.
+Parallel Mode
+*************
+The first use of the ``cpp_graph`` constructor
+cannot be in :ref:`parallel<ta_in_parallel-name>` execution mode.
 
-$end
+{xrst_end cpp_graph_ctor}
 --------------------------------------------------------------------------------
 */
 public:
@@ -113,53 +115,51 @@ public:
    }
 /*
 ---------------------------------------------------------------------------------
-$begin cpp_graph_scalar$$
-$spell
-   obj
-   cpp
-   ind
-   std
-   const
-$$
+{xrst_begin cpp_graph_scalar}
 
-$section C++ AD Graph Scalar Values$$
+C++ AD Graph Scalar Values
+##########################
 
-$head Syntax$$
+Syntax
+******
 
-$subhead Get$$
-$icode%function_name% = %graph_obj%.function_name_get()
-%$$
-$icode%n_dynamic_ind% = %graph_obj%.n_dynamic_ind_get()
-%$$
-$icode%n_variable_ind% = %graph_obj%.n_variable_ind_get()
-%$$
+Get
+===
 
-$subhead Set$$
-$icode%graph_obj%.function_name_set(%function_name%)
-%$$
-$icode%graph_obj%.n_dynamic_ind_set(%n_dynamic_ind%)
-%$$
-$icode%graph_obj%.n_variable_ind_set(%n_variable_ind%)
-%$$
+| *function_name* = *graph_obj* . ``function_name_get`` ()
+| *n_dynamic_ind* = *graph_obj* . ``n_dynamic_ind_get`` ()
+| *n_variable_ind* = *graph_obj* . ``n_variable_ind_get`` ()
 
-$head Set$$
+Set
+===
+
+| *graph_obj* . ``function_name_set`` ( *function_name* )
+| *graph_obj* . ``n_dynamic_ind_set`` ( *n_dynamic_ind* )
+| *graph_obj* . ``n_variable_ind_set`` ( *n_variable_ind* )
+
+Set
+***
 The argument for all the set operations is const.
 
-$head graph_obj$$
-is an $code cpp_graph$$ object.
+graph_obj
+*********
+is an ``cpp_graph`` object.
 It is const for all the get functions.
 
-$head function_name$$
-is a $code std::string&$$ specifying the name of the function
+function_name
+*************
+is a ``std::string&`` specifying the name of the function
 for this graph.
 
-$head n_dynamic_ind$$
-is a $code size_t$$ specifying the number of independent dynamic parameters.
+n_dynamic_ind
+*************
+is a ``size_t`` specifying the number of independent dynamic parameters.
 
-$head n_variable_ind$$
-is a $code size_t$$ specifying the number of independent variables.
+n_variable_ind
+**************
+is a ``size_t`` specifying the number of independent variables.
 
-$end
+{xrst_end cpp_graph_scalar}
 */
    // function_name
    const std::string& function_name_get(void) const
@@ -180,155 +180,142 @@ $end
    {  n_variable_ind_ = n_variable_ind; }
 /*
 ---------------------------------------------------------------------------------
-$begin cpp_graph_vector$$
-$spell
-   obj
-   cpp
-   ind
-   std
-   const
-   vec
-   arg
-   op_enum
-$$
+{xrst_begin cpp_graph_vector}
 
-$section C++ AD Graph Vector Values$$
+C++ AD Graph Vector Values
+##########################
 
-$head Syntax$$
+Syntax
+******
 
-$subhead Size$$
-$icode%size% = %graph_obj%.discrete_name_vec_size()
-%$$
-$icode%size% = %graph_obj%.atomic_name_vec_size()
-%$$
-$icode%size% = %graph_obj%.print_text_vec_size()
-%$$
-$icode%size% = %graph_obj%.constant_vec_size()
-%$$
-$icode%size% = %graph_obj%.operator_vec_size()
-%$$
-$icode%size% = %graph_obj%.operator_arg_size()
-%$$
-$icode%size% = %graph_obj%.dependent_vec_size()
-%$$
+Size
+====
 
-$subhead Get$$
-$icode%discrete_name% = %graph_obj%.discrete_name_vec_get(%index%)
-%$$
-$icode%atomic_name%   = %graph_obj%.atomic_name_vec_get(%index%)
-%$$
-$icode%print_text%    = %graph_obj%.print_text_vec_get(%index%)
-%$$
-$icode%constant%      = %graph_obj%.constant_vec_get(%index%)
-%$$
-$icode%op_enum%       = %graph_obj%.operator_vec_get(%index%)
-%$$
-$icode%argument%      = %graph_obj%.operator_arg_get(%index%)
-%$$
-$icode%node_index%    = %graph_obj%.dependent_vec_get(%index%)
-%$$
+| *size* = *graph_obj* . ``discrete_name_vec_size`` ()
+| *size* = *graph_obj* . ``atomic_name_vec_size`` ()
+| *size* = *graph_obj* . ``print_text_vec_size`` ()
+| *size* = *graph_obj* . ``constant_vec_size`` ()
+| *size* = *graph_obj* . ``operator_vec_size`` ()
+| *size* = *graph_obj* . ``operator_arg_size`` ()
+| *size* = *graph_obj* . ``dependent_vec_size`` ()
 
-$subhead Push Back$$
-$icode%graph_obj%.discrete_name_vec_push_back(%discrete_name%)
-%$$
-$icode%graph_obj%.atomic_name_vec_push_back(%atomic_name%)
-%$$
-$icode%graph_obj%.print_text_vec_push_back(%print_text%)
-%$$
-$icode%graph_obj%.constant_vec_push_back(%constant%)
-%$$
-$icode%graph_obj%.operator_vec_push_back(%op_enum%)
-%$$
-$icode%graph_obj%.operator_arg_push_back(%argument%)
-%$$
-$icode%graph_obj%.dependent_vec_push_back(%node_index%)
-%$$
+Get
+===
 
-$subhead Find$$
-$icode%discrete_index% = %graph_obj%.discrete_name_vec_find(%discrete_name%)
-%$$
-$icode%atomic_index%   = %graph_obj%.atomic_name_vec_find(%atomic_name%)
-%$$
-$icode%print_index%    = %graph_obj%.print_text_vec_find(%print_text%)
-%$$
+| *discrete_name* = *graph_obj* . ``discrete_name_vec_get`` ( *index* )
+| *atomic_name* = *graph_obj* . ``atomic_name_vec_get`` ( *index* )
+| *print_text* = *graph_obj* . ``print_text_vec_get`` ( *index* )
+| *constant* = *graph_obj* . ``constant_vec_get`` ( *index* )
+| *op_enum* = *graph_obj* . ``operator_vec_get`` ( *index* )
+| *argument* = *graph_obj* . ``operator_arg_get`` ( *index* )
+| *node_index* = *graph_obj* . ``dependent_vec_get`` ( *index* )
 
-$head Arguments$$
+Push Back
+=========
+
+| *graph_obj* . ``discrete_name_vec_push_back`` ( *discrete_name* )
+| *graph_obj* . ``atomic_name_vec_push_back`` ( *atomic_name* )
+| *graph_obj* . ``print_text_vec_push_back`` ( *print_text* )
+| *graph_obj* . ``constant_vec_push_back`` ( *constant* )
+| *graph_obj* . ``operator_vec_push_back`` ( *op_enum* )
+| *graph_obj* . ``operator_arg_push_back`` ( *argument* )
+| *graph_obj* . ``dependent_vec_push_back`` ( *node_index* )
+
+Find
+====
+
+| *discrete_index* = *graph_obj* . ``discrete_name_vec_find`` ( *discrete_name* )
+| *atomic_index* = *graph_obj* . ``atomic_name_vec_find`` ( *atomic_name* )
+| *print_index* = *graph_obj* . ``print_text_vec_find`` ( *print_text* )
+
+Arguments
+*********
 All of the member function arguments are either call by value or const.
 
-$head size$$
-is a $code size_t$$ value equal to the current size of the specified vector.
+size
+****
+is a ``size_t`` value equal to the current size of the specified vector.
 
-$head index$$
-is a $code size_t$$ value that must be less than the current size
+index
+*****
+is a ``size_t`` value that must be less than the current size
 of the specified vector.
 
-$head push_back$$
+push_back
+*********
 The arguments for all the push_back functions are const.
 The size of the specified vector before a push_back,
 is the index in the vector corresponding to the argument value.
 The size of the vector after the push_back is the size before plus one.
 
-$head graph_obj$$
-is an $code cpp_graph$$ object.
+graph_obj
+*********
+is an ``cpp_graph`` object.
 It is const for the size, get, and find functions and
 not const for the push_back functions.
 
-$head discrete_name$$
-is a $code std::string$$ equal to the name of a $cref discrete$$ function.
+discrete_name
+*************
+is a ``std::string`` equal to the name of a :ref:`discrete-name` function.
 
-$head atomic_name$$
-is a $code std::string$$ equal to the name of an $cref atomic_three$$ function.
+atomic_name
+***********
+is a ``std::string`` equal to the name of an :ref:`atomic_three-name` function.
 
-$head print_text$$
-is a $code std::string$$ equal to the text to be printed.
+print_text
+**********
+is a ``std::string`` equal to the text to be printed.
 
-$head constant$$
-is a $code double$$ equal to the constant with the corresponding
-index in $code constant_vec$$.
+constant
+********
+is a ``double`` equal to the constant with the corresponding
+index in ``constant_vec`` .
 
-$head op_enum$$
-is the $cref graph_op_enum$$ for corresponding operator.
+op_enum
+*******
+is the :ref:`graph_op_enum-name` for corresponding operator.
 
-$head argument$$
-is the $code size_t$$ value for corresponding operator argument.
+argument
+********
+is the ``size_t`` value for corresponding operator argument.
 
-$head node_index$$
+node_index
+**********
 is the node index for the corresponding dependent variable with
 the corresponding index in
-$cref/dependent_vec/cpp_ad_graph/dependent_vec/$$.
+:ref:`cpp_ad_graph@dependent_vec` .
 
-$head discrete_index$$
+discrete_index
+**************
 is the index such that
-$codei%
-   %discrete_name% == %graph_obj%.discrete_name_vec_get(%discrete_index%)
-%$$
-If there is no such index,
-$codei%
-   %discrete_index% == %graph_obj%.discrete_name_vec_size()
-%$$
 
-$head atomic_index$$
+   *discrete_name* == *graph_obj* . ``discrete_name_vec_get`` ( *discrete_index* )
+
+If there is no such index,
+
+   *discrete_index* == *graph_obj* . ``discrete_name_vec_size`` ()
+
+atomic_index
+************
 is the index such that
-$codei%
-   %atomic_name% == %graph_obj%.atomic_name_vec_get(%atomic_index%)
-%$$
-If there is no such index,
-$codei%
-   %atomic_index% == %graph_obj%.atomic_name_vec_size()
-%$$
 
-$head print_index$$
+   *atomic_name* == *graph_obj* . ``atomic_name_vec_get`` ( *atomic_index* )
+
+If there is no such index,
+
+   *atomic_index* == *graph_obj* . ``atomic_name_vec_size`` ()
+
+print_index
+***********
 is the index such that
-$codei%
-   %print_text% == %graph_obj%.print_text_vec_get(%print_index%)
-%$$
+
+   *print_text* == *graph_obj* . ``print_text_vec_get`` ( *print_index* )
+
 If there is no such index,
-$codei%
-   %print_index% == %graph_obj%.print_text_vec_size()
-%$$
 
+   *print_index* == *graph_obj* . ``print_text_vec_size`` ()
 
-$end
+{xrst_end cpp_graph_vector}
 */
    // discrete_name_vec
    const std::string& discrete_name_vec_get(size_t index) const
@@ -404,38 +391,40 @@ $end
    void dependent_vec_push_back(const size_t node_index)
    {  dependent_vec_.push_back(node_index); }
 /*
-$begin cpp_graph_print$$
-$spell
-   obj
-   const
-   std::ostream
-   cpp
-$$
+{xrst_begin cpp_graph_print}
+{xrst_spell
+   ostream
+}
 
-$section Print A C++ AD Graph$$
+Print A C++ AD Graph
+####################
 
-$head Syntax$$
-$icode%graph_obj%.print(%os%)
-%$$
+Syntax
+******
 
-$head graph_obj$$
-is an const $code cpp_graph$$ object.
+   *graph_obj* . ``print`` ( *os* )
 
-$head os$$
-Is the $code std::ostream$$ where the graph is printed.
+graph_obj
+*********
+is an const ``cpp_graph`` object.
 
-$head Discussion$$
-This function is included to help with using the $code cpp_graph$$ class.
+os
+**
+Is the ``std::ostream`` where the graph is printed.
+
+Discussion
+**********
+This function is included to help with using the ``cpp_graph`` class.
 The formatting of it's output is not part of the API; i.e.,
 it may change in the future.
-
-$children%
+{xrst_toc_hidden
    example/graph/print_graph.cpp
-%$$
-$head Example$$
-The file $cref print_graph.cpp$$ contains an example and test of this operation.
+}
+Example
+*******
+The file :ref:`print_graph.cpp-name` contains an example and test of this operation.
 
-$end
+{xrst_end cpp_graph_print}
 */
    void print(std::ostream& os) const
    {  using std::setw;

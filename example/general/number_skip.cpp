@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin number_skip.cpp$$
-$spell
-   Taylor
-$$
+{xrst_begin number_skip.cpp}
 
-$section Number of Variables That Can be Skipped: Example and Test$$
+Number of Variables That Can be Skipped: Example and Test
+#########################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end number_skip.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin optimize_print_for.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin optimize_print_for.cpp}
 
-$section Optimize Print Forward Operators: Example and Test$$
+Optimize Print Forward Operators: Example and Test
+##################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end optimize_print_for.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

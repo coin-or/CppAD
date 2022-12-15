@@ -6,65 +6,67 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin unary_minus$$
-$spell
-   Vec
-   const
-   inline
-$$
+{xrst_begin unary_minus}
 
+AD Unary Minus Operator
+#######################
 
-$section AD Unary Minus Operator$$
+Syntax
+******
 
-$head Syntax$$
+*y* = ``-`` *x*
 
-$icode%y% = - %x%$$
+Purpose
+*******
+Computes the negative of *x* .
 
-
-$head Purpose$$
-Computes the negative of $icode x$$.
-
-$head Base$$
+Base
+****
 The operation in the syntax above must be supported for the case where
-the operand is a $code const$$ $icode Base$$ object.
+the operand is a ``const`` *Base* object.
 
-$head x$$
-The operand $icode x$$ has one of the following prototypes
-$codei%
-   const AD<%Base%>               &%x%
-   const VecAD<%Base%>::reference &%x%
-%$$
+x
+*
+The operand *x* has one of the following prototypes
 
-$head y$$
-The result $icode y$$ has type
-$codei%
-   AD<%Base%> %y%
-%$$
-It is equal to the negative of the operand $icode x$$.
+| |tab| ``const AD<`` *Base* >               & *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference &`` *x*
 
-$head Operation Sequence$$
-This is an AD of $icode Base$$
-$cref/atomic operation/glossary/Operation/Atomic/$$
+y
+*
+The result *y* has type
+
+   ``AD<`` *Base* > *y*
+
+It is equal to the negative of the operand *x* .
+
+Operation Sequence
+******************
+This is an AD of *Base*
+:ref:`atomic operation<glossary@Operation@Atomic>`
 and hence is part of the current
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Derivative$$
-If $latex f$$ is a
-$cref/Base function/glossary/Base Function/$$,
-$latex \[
+Derivative
+**********
+If :math:`f` is a
+:ref:`glossary@Base Function` ,
+
+.. math::
+
    \D{[ - f(x) ]}{x} = - \D{f(x)}{x}
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/unary_minus.cpp
-%$$
+}
 The file
-$cref unary_minus.cpp$$
+:ref:`unary_minus.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end unary_minus}
 -------------------------------------------------------------------------------
 */
 

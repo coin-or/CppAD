@@ -4,21 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin rev_sparse_hes.cpp$$
-$spell
-   Hessian
-   Jac
-   Hes
-   Dep
-   Cpp
-$$
+{xrst_begin rev_sparse_hes.cpp}
 
-$section Reverse Mode Hessian Sparsity: Example and Test$$
+Reverse Mode Hessian Sparsity: Example and Test
+###############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end rev_sparse_hes.cpp}
 */
 // BEGIN C++
 

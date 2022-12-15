@@ -3,34 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_sparse_jacobian.cpp$$
-$spell
-   const
-   colpack
-   boolsparsity
-   namespace
-   onetape
-   work work
-   jac
-   CppAD
-   cppad
-   hpp
-   bool
-   typedef
-   endif
-   std
-   Jacobian
-$$
+{xrst_begin cppad_sparse_jacobian.cpp}
 
-$section Cppad Speed: Sparse Jacobian$$
+Cppad Speed: Sparse Jacobian
+############################
 
+Specifications
+**************
+See :ref:`link_sparse_jacobian-name` .
 
-$head Specifications$$
-See $cref link_sparse_jacobian$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
@@ -50,7 +36,6 @@ namespace {
    typedef vector<a_double>                      a_vector;
    typedef CppAD::sparse_rc<s_vector>            sparsity;
    typedef CppAD::sparse_rcv<s_vector, d_vector> sparse_matrix;
-
 
    void calc_sparsity(
       CppAD::sparse_rc<s_vector>& pattern ,
@@ -309,6 +294,8 @@ bool link_sparse_jacobian(
    global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_sparse_jacobian.cpp}
 */

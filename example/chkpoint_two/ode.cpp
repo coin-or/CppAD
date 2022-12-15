@@ -4,54 +4,65 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin chkpoint_two_ode.cpp$$
-$spell
-   Checkpointing
-   Runge-Kutta
-$$
+{xrst_begin chkpoint_two_ode.cpp}
+{xrst_spell
+   kutta
+}
 
-$section Checkpointing an ODE Solver: Example and Test$$
+Checkpointing an ODE Solver: Example and Test
+#############################################
 
-$head Purpose$$
-In this example we $cref/checkpoint/chkpoint_two/$$ one step of an ODE solver.
+Purpose
+*******
+In this example we :ref:`checkpoint<chkpoint_two-name>` one step of an ODE solver.
 
-$head Problem$$
-We consider the initial value problem with parameter $latex x$$ defined by,
-$latex z(0, x) = z_0 (x)$$,
-$latex \[
+Problem
+*******
+We consider the initial value problem with parameter :math:`x` defined by,
+:math:`z(0, x) = z_0 (x)`,
+
+.. math::
+
    \partial_t z(t, x ) = h [ x , z(t, x) ]
-\]$$
-Note that if $latex t$$ needs to be in the equation, one can define
-the first component of $latex z(t, x)$$ to be equal to $latex t$$.
 
-$head ODE Solver$$
+Note that if :math:`t` needs to be in the equation, one can define
+the first component of :math:`z(t, x)` to be equal to :math:`t`.
+
+ODE Solver
+**********
 For this example, we consider the Fourth order Runge-Kutta ODE solver.
-Given an approximation solution at time $latex t_k$$ denoted by
-$latex \tilde{z}_k (x)$$, and $latex \Delta t = t_{k+1} - t_k$$,
-it defines the approximation solution $latex \tilde{z}_{k+1} (x)$$
-at time $latex t_{k+1}$$ by
-$latex \[
-\begin{array}{rcl}
-h_1 & =  & h [ x , \tilde{z}_k (x) ]
-\\
-h_2 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_1 / 2 ]
-\\
-h_3 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_2 / 2 ]
-\\
-h_4 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_3 ]
-\\
-\tilde{z}_{k+1} (x) & = &
-   \tilde{z}_k (x) + \Delta t \; ( h_1 +  2 h_2 + 2 h_3 + h_4 ) / 6
-\end{array}
-\] $$
-If $latex \tilde{z}_k (x) = z_k (x)$$,
-$latex \tilde{z}_{k+1} (x) = z_{k+1} (x) + O( \Delta t^5 )$$.
+Given an approximation solution at time :math:`t_k` denoted by
+:math:`\tilde{z}_k (x)`, and :math:`\Delta t = t_{k+1} - t_k`,
+it defines the approximation solution :math:`\tilde{z}_{k+1} (x)`
+at time :math:`t_{k+1}` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   h_1 & =  & h [ x , \tilde{z}_k (x) ]
+   \\
+   h_2 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_1 / 2 ]
+   \\
+   h_3 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_2 / 2 ]
+   \\
+   h_4 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_3 ]
+   \\
+   \tilde{z}_{k+1} (x) & = &
+      \tilde{z}_k (x) + \Delta t \; ( h_1 +  2 h_2 + 2 h_3 + h_4 ) / 6
+   \end{eqnarray}
+
+If :math:`\tilde{z}_k (x) = z_k (x)`,
+:math:`\tilde{z}_{k+1} (x) = z_{k+1} (x) + O( \Delta t^5 )`.
 Other ODE solvers can use a similar method to the one used below.
 
-$head ODE$$
+ODE
+***
 For this example the ODE is defined by
-$latex z(0, x) = 0$$ and
-$latex \[
+:math:`z(0, x) = 0` and
+
+.. math::
+
    h[ x, z(t, x) ] =
    \left( \begin{array}{c}
          x_0                     \\
@@ -66,16 +77,18 @@ $latex \[
          \vdots                      \\
          \partial_t z_{n-1} (t , x)
    \end{array} \right)
-\] $$
 
-$head Solution$$
+Solution
+********
 The solution of the ODE for this example,
 which is used to check the results,
 can be calculated by
 starting with the first row and then using the solution
 for the first row to solve the second and so on.
 Doing this we obtain
-$latex \[
+
+.. math::
+
    z(t, x) =
    \left( \begin{array}{c}
       x_0 t                  \\
@@ -83,13 +96,15 @@ $latex \[
       \vdots                 \\
       x_{n-1} x_{n-2} \ldots x_0 t^n / n !
    \end{array} \right)
-\] $$
 
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end chkpoint_two_ode.cpp}
 */
 // BEGIN C++
 

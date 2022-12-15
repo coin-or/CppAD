@@ -3,40 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_poly.cpp$$
-$spell
-   onetape
-   coef
-   ddp
-   ADScalar
-   dz
-   ddz
-   Taylor
-   vector Vector
-   typedef
-   cppad
-   Lu
-   CppAD
-   det
-   hpp
-   const
-   CPPAD_TESTVECTOR
-   bool
-   var
-   std
-   cout
-   endl
-$$
+{xrst_begin cppad_poly.cpp}
 
-$section Cppad Speed: Second Derivative of a Polynomial$$
+Cppad Speed: Second Derivative of a Polynomial
+##############################################
 
+Specifications
+**************
+See :ref:`link_poly-name` .
 
-$head Specifications$$
-See $cref link_poly$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
@@ -181,6 +161,8 @@ bool link_poly(
    global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_poly.cpp}
 */

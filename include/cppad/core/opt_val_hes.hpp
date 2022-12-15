@@ -5,222 +5,232 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin opt_val_hes$$
-$spell
-   hes
-   sy
-   Jacobian
-   hes
+{xrst_begin opt_val_hes}
+{xrst_spell
    signdet
-   jac
-   Bradley
-   const
-   CppAD
-$$
+   yy
+}
 
+Jacobian and Hessian of Optimal Values
+######################################
 
+Syntax
+******
+*signdet* = ``opt_val_hes`` ( *x* , *y* , *fun* , *jac* , *hes* )
 
-$section Jacobian and Hessian of Optimal Values$$
+See Also
+********
+:ref:`BenderQuad-name`
 
-$head Syntax$$
-$icode%signdet% = opt_val_hes(%x%, %y%, %fun%, %jac%, %hes%)%$$
-
-$head See Also$$
-$cref BenderQuad$$
-
-$head Reference$$
+Reference
+*********
 Algorithmic differentiation of implicit functions and optimal values,
 Bradley M. Bell and James V. Burke, Advances in Automatic Differentiation,
 2008, Springer.
 
-$head Purpose$$
+Purpose
+*******
 We are given a function
-$latex S : \B{R}^n \times \B{R}^m \rightarrow \B{R}^\ell$$
-and we define $latex F : \B{R}^n \times \B{R}^m \rightarrow \B{R}$$
-and $latex V : \B{R}^n \rightarrow \B{R} $$ by
-$latex \[
-\begin{array}{rcl}
-   F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y)
-   \\
-   V(x)    & = & F [ x , Y(x) ]
-   \\
-   0       & = & \partial_y F [x , Y(x) ]
-\end{array}
-\] $$
+:math:`S : \B{R}^n \times \B{R}^m \rightarrow \B{R}^\ell`
+and we define :math:`F : \B{R}^n \times \B{R}^m \rightarrow \B{R}`
+and :math:`V : \B{R}^n \rightarrow \B{R}` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y)
+      \\
+      V(x)    & = & F [ x , Y(x) ]
+      \\
+      0       & = & \partial_y F [x , Y(x) ]
+   \end{eqnarray}
+
 We wish to compute the Jacobian
-and possibly also the Hessian, of $latex V (x)$$.
+and possibly also the Hessian, of :math:`V (x)`.
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a
-$cref SimpleVector$$ class.
-We use $icode Base$$ to refer to the type of the elements of
-$icode BaseVector$$; i.e.,
-$codei%
-   %BaseVector%::value_type
-%$$
+BaseVector
+**********
+The type *BaseVector* must be a
+:ref:`SimpleVector-name` class.
+We use *Base* to refer to the type of the elements of
+*BaseVector* ; i.e.,
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %BaseVector%& %x%
-%$$
-and its size must be equal to $icode n$$.
+   *BaseVector* :: ``value_type``
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *BaseVector* & *x*
+
+and its size must be equal to *n* .
 It specifies the point at which we evaluating
-the Jacobian $latex V^{(1)} (x)$$
-(and possibly the Hessian $latex V^{(2)} (x)$$).
+the Jacobian :math:`V^{(1)} (x)`
+(and possibly the Hessian :math:`V^{(2)} (x)`).
 
+y
+*
+The argument *y* has prototype
 
-$head y$$
-The argument $icode y$$ has prototype
-$codei%
-   const %BaseVector%& %y%
-%$$
-and its size must be equal to $icode m$$.
-It must be equal to $latex Y(x)$$; i.e.,
+   ``const`` *BaseVector* & *y*
+
+and its size must be equal to *m* .
+It must be equal to :math:`Y(x)`; i.e.,
 it must solve the implicit equation
-$latex \[
-   0 = \partial_y F ( x , y)
-\] $$
 
-$head Fun$$
-The argument $icode fun$$ is an object of type $icode Fun$$
+.. math::
+
+   0 = \partial_y F ( x , y)
+
+Fun
+***
+The argument *fun* is an object of type *Fun*
 which must support the member functions listed below.
-CppAD will may be recording operations of the type $codei%AD<%Base%>%$$
+CppAD will may be recording operations of the type ``AD<`` *Base* >
 when these member functions are called.
 These member functions must not stop such a recording; e.g.,
-they must not call $cref/AD<Base>::abort_recording/abort_recording/$$.
+they must not call :ref:`AD\<Base>::abort_recording<abort_recording-name>` .
 
-$subhead Fun::ad_vector$$
-The type $icode%Fun%::ad_vector%$$ must be a
-$cref SimpleVector$$ class with elements of type $codei%AD<%Base%>%$$; i.e.
-$codei%
-   %Fun%::ad_vector::value_type
-%$$
-is equal to $codei%AD<%Base%>%$$.
+Fun::ad_vector
+==============
+The type *Fun* :: ``ad_vector`` must be a
+:ref:`SimpleVector-name` class with elements of type ``AD<`` *Base* > ; i.e.
 
-$subhead fun.ell$$
-The type $icode Fun$$ must support the syntax
-$codei%
-   %ell% = %fun%.ell()
-%$$
-where $icode ell$$ has prototype
-$codei%
-   size_t %ell%
-%$$
-and is the value of $latex \ell$$; i.e.,
+   *Fun* :: ``ad_vector::value_type``
+
+is equal to ``AD<`` *Base* > .
+
+fun.ell
+=======
+The type *Fun* must support the syntax
+
+   *ell* = *fun* . ``ell`` ()
+
+where *ell* has prototype
+
+   ``size_t`` *ell*
+
+and is the value of :math:`\ell`; i.e.,
 the number of terms in the summation.
-$pre
 
-$$
-One can choose $icode ell$$ equal to one, and have
-$latex S(x,y)$$ the same as $latex F(x, y)$$.
-Each of the functions $latex S_k (x , y)$$,
-(in the summation defining $latex F(x, y)$$)
+One can choose *ell* equal to one, and have
+:math:`S(x,y)` the same as :math:`F(x, y)`.
+Each of the functions :math:`S_k (x , y)`,
+(in the summation defining :math:`F(x, y)`)
 is differentiated separately using AD.
-For very large problems, breaking $latex F(x, y)$$ into the sum
+For very large problems, breaking :math:`F(x, y)` into the sum
 of separate simpler functions may reduce the amount of memory necessary for
 algorithmic differentiation and there by speed up the process.
 
-$subhead fun.s$$
-The type $icode Fun$$ must support the syntax
-$codei%
-   %s_k% = %fun%.s(%k%, %x%, %y%)
-%$$
-The $icode%fun%.s%$$ argument $icode k$$ has prototype
-$codei%
-   size_t %k%
-%$$
-and is between zero and $icode%ell% - 1%$$.
-The argument $icode x$$ to $icode%fun%.s%$$ has prototype
-$codei%
-   const %Fun%::ad_vector& %x%
-%$$
-and its size must be equal to $icode n$$.
-The argument $icode y$$ to $icode%fun%.s%$$ has prototype
-$codei%
-   const %Fun%::ad_vector& %y%
-%$$
-and its size must be equal to $icode m$$.
-The $icode%fun%.s%$$ result $icode s_k$$ has prototype
-$codei%
-   AD<%Base%> %s_k%
-%$$
-and its value must be given by $latex s_k = S_k ( x , y )$$.
+fun.s
+=====
+The type *Fun* must support the syntax
 
-$subhead fun.sy$$
-The type $icode Fun$$ must support the syntax
-$codei%
-   %sy_k% = %fun%.sy(%k%, %x%, %y%)
-%$$
-The  argument $icode k$$ to $icode%fun%.sy%$$ has prototype
-$codei%
-   size_t %k%
-%$$
-The  argument $icode x$$ to $icode%fun%.sy%$$ has prototype
-$codei%
-   const %Fun%::ad_vector& %x%
-%$$
-and its size must be equal to $icode n$$.
-The  argument $icode y$$ to $icode%fun%.sy%$$ has prototype
-$codei%
-   const %Fun%::ad_vector& %y%
-%$$
-and its size must be equal to $icode m$$.
-The $icode%fun%.sy%$$ result $icode sy_k$$ has prototype
-$codei%
-   %Fun%::ad_vector %sy_k%
-%$$
-its size must be equal to $icode m$$,
-and its value must be given by $latex sy_k = \partial_y S_k ( x , y )$$.
+   *s_k* = *fun* . ``s`` ( *k* , *x* , *y* )
 
-$head jac$$
-The argument $icode jac$$ has prototype
-$codei%
-   %BaseVector%& %jac%
-%$$
-and has size $icode n$$ or zero.
+The *fun* . ``s`` argument *k* has prototype
+
+   ``size_t`` *k*
+
+and is between zero and *ell* ``- 1`` .
+The argument *x* to *fun* . ``s`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *x*
+
+and its size must be equal to *n* .
+The argument *y* to *fun* . ``s`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *y*
+
+and its size must be equal to *m* .
+The *fun* . ``s`` result *s_k* has prototype
+
+   ``AD<`` *Base* > *s_k*
+
+and its value must be given by :math:`s_k = S_k ( x , y )`.
+
+fun.sy
+======
+The type *Fun* must support the syntax
+
+   *sy_k* = *fun* . ``sy`` ( *k* , *x* , *y* )
+
+The  argument *k* to *fun* . ``sy`` has prototype
+
+   ``size_t`` *k*
+
+The  argument *x* to *fun* . ``sy`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *x*
+
+and its size must be equal to *n* .
+The  argument *y* to *fun* . ``sy`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *y*
+
+and its size must be equal to *m* .
+The *fun* . ``sy`` result *sy_k* has prototype
+
+   *Fun* :: ``ad_vector`` *sy_k*
+
+its size must be equal to *m* ,
+and its value must be given by :math:`sy_k = \partial_y S_k ( x , y )`.
+
+jac
+***
+The argument *jac* has prototype
+
+   *BaseVector* & *jac*
+
+and has size *n* or zero.
 The input values of its elements do not matter.
 If it has size zero, it is not affected. Otherwise, on output
-it contains the Jacobian of $latex V (x)$$; i.e.,
-for $latex j = 0 , \ldots , n-1$$,
-$latex \[
+it contains the Jacobian of :math:`V (x)`; i.e.,
+for :math:`j = 0 , \ldots , n-1`,
+
+.. math::
+
    jac[ j ] = V^{(1)} (x)_j
-\] $$
-where $icode x$$ is the first argument to $code opt_val_hes$$.
 
-$head hes$$
-The argument $icode hes$$ has prototype
-$codei%
-   %BaseVector%& %hes%
-%$$
-and has size $icode%n% * %n%$$ or zero.
+where *x* is the first argument to ``opt_val_hes`` .
+
+hes
+***
+The argument *hes* has prototype
+
+   *BaseVector* & *hes*
+
+and has size *n* * *n* or zero.
 The input values of its elements do not matter.
 If it has size zero, it is not affected. Otherwise, on output
-it contains the Hessian of $latex V (x)$$; i.e.,
-for $latex i = 0 , \ldots , n-1$$, and
-$latex j = 0 , \ldots , n-1$$,
-$latex \[
+it contains the Hessian of :math:`V (x)`; i.e.,
+for :math:`i = 0 , \ldots , n-1`, and
+:math:`j = 0 , \ldots , n-1`,
+
+.. math::
+
    hes[ i * n + j ] = V^{(2)} (x)_{i,j}
-\] $$
 
-
-$head signdet$$
-If $icode%hes%$$ has size zero, $icode signdet$$ is not defined.
+signdet
+*******
+If *hes* has size zero, *signdet* is not defined.
 Otherwise
-the return value $icode signdet$$ is the sign of the determinant for
-$latex \partial_{yy}^2 F(x , y) $$.
+the return value *signdet* is the sign of the determinant for
+:math:`\partial_{yy}^2 F(x , y)`.
 If it is zero, then the matrix is singular and
-the Hessian is not computed ($icode hes$$ is not changed).
+the Hessian is not computed ( *hes* is not changed).
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/opt_val_hes.cpp
-%$$
+}
 The file
-$cref opt_val_hes.cpp$$
+:ref:`opt_val_hes.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end opt_val_hes}
 -----------------------------------------------------------------------------
 */
 

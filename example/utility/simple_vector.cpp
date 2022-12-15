@@ -3,17 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin simple_vector.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin simple_vector.cpp}
 
-$section Simple Vector Template Class: Example and Test$$
+Simple Vector Template Class: Example and Test
+##############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end simple_vector.cpp}
 --------------------------------------------------------------------------
 */
 // BEGIN C++

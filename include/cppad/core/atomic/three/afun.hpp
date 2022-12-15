@@ -5,72 +5,73 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_three_afun$$
+{xrst_begin atomic_three_afun}
 
-$spell
-   sq
-   mul
-   afun
-   const
-   CppAD
-   mat_mul.cpp
-$$
+Using AD Version of an Atomic Function
+######################################
 
-$section Using AD Version of an Atomic Function$$
+Syntax
+******
+*afun* ( *ax* , *ay* )
 
-$head Syntax$$
-$icode%afun%(%ax%, %ay%)%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
-
-$head Purpose$$
-Given $icode ax$$, this call computes the corresponding value of $icode ay$$.
-If $codei%AD<%Base%>%$$ operations are being recorded,
+Purpose
+*******
+Given *ax* , this call computes the corresponding value of *ay* .
+If ``AD<`` *Base* > operations are being recorded,
 it enters the computation as an atomic operation in the recording;
-see $cref/start recording/Independent/Start Recording/$$.
+see :ref:`Independent@Start Recording` .
 
-$head Base$$
-This is the $icode Base$$ type of the elements of $icode ax$$ and $icode ay$$
-in the call to the $icode afun$$ atomic operation.
-To be specific, the elements of $icode ax$$ and $icode ay$$ have type
-$codei%AD%<%Base%>%$$.
+Base
+****
+This is the *Base* type of the elements of *ax* and *ay*
+in the call to the *afun* atomic operation.
+To be specific, the elements of *ax* and *ay* have type
+``AD`` < ``Base`` > .
 
-$head ADVector$$
-The type $icode ADVector$$ must be a
-$cref/simple vector class/SimpleVector/$$ with elements of type
-$codei%AD<%Base%>%$$.
+ADVector
+********
+The type *ADVector* must be a
+:ref:`simple vector class<SimpleVector-name>` with elements of type
+``AD<`` *Base* > .
 
-$head afun$$
-is a $cref/atomic_user/atomic_three_ctor/atomic_user/$$ object
-and this $icode afun$$ function call is implemented by the
-$cref/atomic_three/atomic_three_ctor/atomic_three/$$ class.
+afun
+****
+is a :ref:`atomic_three_ctor@atomic_user` object
+and this *afun* function call is implemented by the
+:ref:`atomic_three_ctor@atomic_three` class.
 
-$head ax$$
+ax
+**
 This argument has prototype
-$codei%
-   const %ADVector%& %ax%
-%$$
-and size must be equal to $icode n$$.
-It specifies vector $latex x \in \B{R}^n$$
-at which an $codei%AD<%Base%>%$$ version of
-$latex y = g(x)$$ is to be evaluated; see
-$cref/Base/atomic_three_ctor/atomic_three/Base/$$.
 
-$head ay$$
+   ``const`` *ADVector* & *ax*
+
+and size must be equal to *n* .
+It specifies vector :math:`x \in \B{R}^n`
+at which an ``AD<`` *Base* > version of
+:math:`y = g(x)` is to be evaluated; see
+:ref:`atomic_three_ctor@atomic_three@Base` .
+
+ay
+**
 This argument has prototype
-$codei%
-   %ADVector%& %ay%
-%$$
-and size must be equal to $icode m$$.
+
+   *ADVector* & *ay*
+
+and size must be equal to *m* .
 The input values of its elements
 are not specified (must not matter).
-Upon return, it is an $codei%AD<%Base%>%$$ version of
-$latex y = g(x)$$.
+Upon return, it is an ``AD<`` *Base* > version of
+:math:`y = g(x)`.
 
-$end
+{xrst_end atomic_three_afun}
 -----------------------------------------------------------------------------
 */
 

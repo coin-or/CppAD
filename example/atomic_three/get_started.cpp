@@ -4,24 +4,31 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_three_get_started.cpp$$
+{xrst_begin atomic_three_get_started.cpp}
 
-$section Getting Started with Atomic Functions: Example and Test$$
+Getting Started with Atomic Functions: Example and Test
+#######################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates the minimal amount of information
-necessary for a $cref atomic_three$$ function.
+necessary for a :ref:`atomic_three-name` function.
 
-$head Start Class Definition$$
-$srccode%cpp% */
+Start Class Definition
+**********************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>  // CppAD include file
 namespace {                  // start empty namespace
 using CppAD::vector;         // abbreviate CppAD::vector using vector
 // start definition of atomic derived class using atomic_three interface
 class atomic_get_started : public CppAD::atomic_three<double> {
-/* %$$
-$head Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 public:
    // can use const char* name when calling this constructor
    atomic_get_started(const std::string& name) : // can have more arguments
@@ -29,9 +36,12 @@ public:
    { }
 
 private:
-/* %$$
-$head for_type$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+for_type
+********
+{xrst_spell_off}
+{xrst_code cpp} */
    // calculate type_y
    bool for_type(
       const vector<double>&               parameter_x ,
@@ -45,9 +55,12 @@ $srccode%cpp% */
       type_y[0] = type_x[0];
       return true;
    }
-/* %$$
-$head forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
    // forward mode routine called by CppAD
    bool forward(
       const vector<double>&               parameter_x  ,
@@ -78,28 +91,40 @@ $srccode%cpp% */
       //
       return ok;
    }
-/* %$$
-$head End Class Definition$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+End Class Definition
+********************
+{xrst_spell_off}
+{xrst_code cpp} */
 }; // End of atomic_get_started class
 }  // End empty namespace
 
-/* %$$
-$head Use Atomic Function$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 bool get_started(void)
 {  bool ok = true;
    using CppAD::AD;
    using CppAD::NearEqual;
    double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // Create the atomic get_started object corresponding to g(x)
    atomic_get_started afun("atomic_get_started");
-/* %$$
-$subhead Recording$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Recording
+=========
+{xrst_spell_off}
+{xrst_code cpp} */
    // Create the function f(x) which is eqaul to g(x) for this example.
    //
    // domain space vector
@@ -126,9 +151,12 @@ $srccode%cpp% */
    // create f: x -> y and stop tape recording
    CppAD::ADFun<double> f;
    f.Dependent (ax, ay);  // f(x) = x
-/* %$$
-$subhead forward$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+forward
+=======
+{xrst_spell_off}
+{xrst_code cpp} */
    // check function value
    double check = x0;
    ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
@@ -141,11 +169,16 @@ $srccode%cpp% */
    y_q    = f.Forward(q, x_q);
    ok    &= NearEqual(y_q[0] , check,  eps, eps);
 
-/* %$$
-$subhead Return Test Result$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Return Test Result
+==================
+{xrst_spell_off}
+{xrst_code cpp} */
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_three_get_started.cpp}
 */

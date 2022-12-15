@@ -5,175 +5,174 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin exp_eps$$
-$spell
-   cppad-%yyyymmdd%
-   hpp
-   Apx
-   cpp
-   const
-   exp_eps
-   bool
-$$
+{xrst_begin exp_eps}
+{xrst_spell
+   apx
+   yyyymmdd
+}
 
-$section An Epsilon Accurate Exponential Approximation$$
+An Epsilon Accurate Exponential Approximation
+#############################################
 
+Syntax
+******
+# ``include`` ``"exp_eps.hpp"``
 
-$head Syntax$$
-$codei%# include "exp_eps.hpp"%$$
-$pre
-$$
-$icode%y% = exp_eps(%x%, %epsilon%)%$$
+*y* = ``exp_eps`` ( *x* , *epsilon* )
 
-
-$head Purpose$$
+Purpose
+*******
 This is a an example algorithm that is used to demonstrate
 how Algorithmic Differentiation works with loops and
 boolean decision variables
-(see $cref exp_2$$ for a simpler example).
+(see :ref:`exp_2-name` for a simpler example).
 
-$head Mathematical Function$$
+Mathematical Function
+*********************
 The exponential function can be defined by
-$latex \[
+
+.. math::
+
    \exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
-\] $$
-We define $latex k ( x, \varepsilon )  $$ as the smallest
-non-negative integer such that $latex \varepsilon \geq x^k / k !$$; i.e.,
-$latex \[
-k( x, \varepsilon ) =
-   \min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
-\] $$
+
+We define :math:`k ( x, \varepsilon )` as the smallest
+non-negative integer such that :math:`\varepsilon \geq x^k / k !`; i.e.,
+
+.. math::
+
+   k( x, \varepsilon ) =
+      \min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
+
 The mathematical form for our approximation of the exponential function is
-$latex \[
-\begin{array}{rcl}
-{\rm exp\_eps} (x , \varepsilon ) & = & \left\{
-\begin{array}{ll}
-\frac{1}{ {\rm exp\_eps} (-x , \varepsilon ) }
-   & {\rm if} \; x < 0
-\\
-1 + x^1 / 1 ! + \cdots + x^{k( x, \varepsilon)} / k( x, \varepsilon ) !
-   & {\rm otherwise}
-\end{array}
-\right.
-\end{array}
-\] $$
 
+.. math::
+   :nowrap:
 
-$head include$$
+   \begin{eqnarray}
+   {\rm exp\_eps} (x , \varepsilon ) & = & \left\{
+   \begin{array}{ll}
+   \frac{1}{ {\rm exp\_eps} (-x , \varepsilon ) }
+      & {\rm if} \; x < 0
+   \\
+   1 + x^1 / 1 ! + \cdots + x^{k( x, \varepsilon)} / k( x, \varepsilon ) !
+      & {\rm otherwise}
+   \end{array}
+   \right.
+   \end{eqnarray}
+
+include
+*******
 The include command in the syntax is relative to
-$codei%
-   cppad-%yyyymmdd%/introduction/exp_apx
-%$$
-where $codei%cppad-%yyyymmdd%$$ is the distribution directory
+
+   ``cppad-`` *yyyymmdd* / ``introduction/exp_apx``
+
+where ``cppad-`` *yyyymmdd* is the distribution directory
 created during the beginning steps of the
-$cref%installation%Install%$$ of CppAD.
+:ref:`installation<Install-name>` of CppAD.
 
+x
+*
+The argument *x* has prototype
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Type% &%x%
-%$$
-(see $icode Type$$ below).
+   ``const`` *Type* & *x*
+
+(see *Type* below).
 It specifies the point at which to evaluate the
 approximation for the exponential function.
 
-$head epsilon$$
-The argument $icode epsilon$$ has prototype
-$codei%
-   const %Type% &%epsilon%
-%$$
+epsilon
+*******
+The argument *epsilon* has prototype
+
+   ``const`` *Type* & *epsilon*
+
 It specifies the accuracy with which
 to approximate the exponential function value; i.e.,
-it is the value of $latex \varepsilon$$ in the
+it is the value of :math:`\varepsilon` in the
 exponential function approximation defined above.
 
-$head y$$
-The result $icode y$$ has prototype
-$codei%
-   %Type% %y%
-%$$
+y
+*
+The result *y* has prototype
+
+   *Type* *y*
+
 It is the value of the exponential function
 approximation defined above.
 
-$head Type$$
-If $icode u$$ and $icode v$$ are $icode Type$$ objects and $icode i$$
-is an $code int$$:
+Type
+****
+If *u* and *v* are *Type* objects and *i*
+is an ``int`` :
 
-$table
-$bold Operation$$  $cnext $bold Result Type$$ $cnext $bold Description$$
-$rnext
-$icode%Type%(%i%)%$$
-   $cnext $icode Type$$
-   $cnext object with value equal to $icode i$$
-$rnext
-$icode%Type u %=% v%$$
-   $cnext $icode Type$$
-   $cnext construct $icode u$$ with value equal to $icode v$$
-$rnext
-$icode%u% > %v%$$
-   $cnext $code bool$$
-   $cnext true,
-   if $icode u$$ greater than $icode v$$, an false otherwise
-$rnext
-$icode%u% = %v%$$
-   $cnext $icode Type$$
-   $cnext new $icode u$$ (and result) is value of $icode v$$
-$rnext
-$icode%u% * %v%$$
-   $cnext $icode Type$$
-   $cnext result is value of $latex u * v$$
-$rnext
-$icode%u% / %v%$$
-   $cnext $icode Type$$
-   $cnext result is value of $latex u / v$$
-$rnext
-$icode%u% + %v%$$
-   $cnext $icode Type$$
-   $cnext result is value of $latex u + v$$
-$rnext
-$codei%-%u%$$
-   $cnext $icode Type$$
-   $cnext result is value of $latex - u$$
-$tend
+.. list-table::
 
-$children%
-   introduction/exp_eps.omh%
+   * - **Operation**
+     - **Result Type**
+     - **Description**
+   * - *Type* ( *i* )
+     - *Type*
+     - object with value equal to *i*
+   * - *Type u* = *v*
+     - *Type*
+     - construct *u* with value equal to *v*
+   * - *u* > *v*
+     - ``bool``
+     - true,
+       if *u* greater than *v* , an false otherwise
+   * - *u* = *v*
+     - *Type*
+     - new *u* (and result) is value of *v*
+   * - *u* * *v*
+     - *Type*
+     - result is value of :math:`u * v`
+   * - *u* / *v*
+     - *Type*
+     - result is value of :math:`u / v`
+   * - *u* + *v*
+     - *Type*
+     - result is value of :math:`u + v`
+   * - ``-`` *u*
+     - *Type*
+     - result is value of :math:`- u`
+
+{xrst_toc_hidden
+   introduction/exp_eps.xrst
    introduction/exp_eps_cppad.cpp
-%$$
+}
 
-$head Implementation$$
-The file $cref exp_eps.hpp$$
+Implementation
+**************
+The file :ref:`exp_eps.hpp-name`
 contains a C++ implementation of this function.
 
-$head Test$$
-The file $cref exp_eps.cpp$$
+Test
+****
+The file :ref:`exp_eps.cpp-name`
 contains a test of this implementation.
 
-$head Exercises$$
-$list number$$
-Using the definition of $latex k( x, \varepsilon )$$ above,
-what is the value of
-$latex k(.5, 1)$$, $latex k(.5, .1)$$, and $latex k(.5, .01)$$ ?
-$lnext
-Suppose that we make the following call to $code exp_eps$$:
-$codep
-   double x       = 1.;
-   double epsilon = .01;
-   double y = exp_eps(x, epsilon);
-$$
-What is the value assigned to
-$code k$$, $code temp$$, $code term$$, and $code sum$$
-the first time through the $code while$$ loop in $cref exp_eps.hpp$$ ?
-$lnext
-Continuing the previous exercise,
-what is the value assigned to
-$code k$$, $code temp$$, $code term$$, and $code sum$$
-the second time through the $code while$$ loop in $cref exp_eps.hpp$$ ?
-$lend
+Exercises
+*********
 
+#. Using the definition of :math:`k( x, \varepsilon )` above,
+   what is the value of
+   :math:`k(.5, 1)`, :math:`k(.5, .1)`, and :math:`k(.5, .01)` ?
+#. Suppose that we make the following call to ``exp_eps`` :
+   ::
 
-$end
+      double x       = 1.;
+      double epsilon = .01;
+      double y = exp_eps(x, epsilon);
+
+   What is the value assigned to
+   ``k`` , ``temp`` , ``term`` , and ``sum``
+   the first time through the ``while`` loop in :ref:`exp_eps.hpp-name` ?
+#. Continuing the previous exercise,
+   what is the value assigned to
+   ``k`` , ``temp`` , ``term`` , and ``sum``
+   the second time through the ``while`` loop in :ref:`exp_eps.hpp-name` ?
+
+{xrst_end exp_eps}
 -----------------------------------------------------------------------------
 */
 // BEGIN C++

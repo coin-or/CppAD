@@ -4,88 +4,77 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin conj_grad.cpp$$
-$spell
-   checkpointing
-   goto
-$$
+{xrst_begin conj_grad.cpp}
+{xrst_spell
+   iterate
+}
 
-$section Differentiate Conjugate Gradient Algorithm: Example and Test$$
+Differentiate Conjugate Gradient Algorithm: Example and Test
+############################################################
 
-
-$head Purpose$$
+Purpose
+*******
 The conjugate gradient algorithm is sparse linear solver and
 a good example where checkpointing can be applied (for each iteration).
 This example is a preliminary version of a new library routine
 for the conjugate gradient algorithm.
 
-$head Algorithm$$
-Given a positive definite matrix $latex A \in \B{R}^{n \times n}$$,
-a vector $latex b \in \B{R}^n$$,
-and tolerance $latex \varepsilon$$,
-the conjugate gradient algorithm finds an $latex x \in \B{R}^n$$
-such that $latex \| A x - b \|^2 / n \leq \varepsilon^2$$
+Algorithm
+*********
+Given a positive definite matrix :math:`A \in \B{R}^{n \times n}`,
+a vector :math:`b \in \B{R}^n`,
+and tolerance :math:`\varepsilon`,
+the conjugate gradient algorithm finds an :math:`x \in \B{R}^n`
+such that :math:`\| A x - b \|^2 / n \leq \varepsilon^2`
 (or it terminates at a specified maximum number of iterations).
 
-$list number$$
-Input:
-$pre
-$$
-The matrix $latex A \in \B{R}^{n \times n}$$,
-the vector $latex b \in \B{R}^n$$,
-a tolerance $latex \varepsilon \geq 0$$,
-a maximum number of iterations $latex m$$,
-and the initial approximate solution $latex x^0 \in \B{R}^n$$
-(can use zero for $latex x^0$$).
+#. Input:
 
-$lnext
-Initialize:
-$pre
-$$
-$latex g^0 = A * x^0 - b$$,
-$latex d^0 = - g^0$$,
-$latex s_0 = ( g^0 )^\R{T} g^0$$,
-$latex k = 0$$.
+   The matrix :math:`A \in \B{R}^{n \times n}`,
+   the vector :math:`b \in \B{R}^n`,
+   a tolerance :math:`\varepsilon \geq 0`,
+   a maximum number of iterations :math:`m`,
+   and the initial approximate solution :math:`x^0 \in \B{R}^n`
+   (can use zero for :math:`x^0`).
 
-$lnext
-Convergence Check:
-$pre
-$$
-if $latex k = m$$ or $latex \sqrt{ s_k / n } < \varepsilon $$,
-return $latex k$$ as the number of iterations and $latex x^k$$
-as the approximate solution.
+#. Initialize:
 
-$lnext
-Next $latex x$$:
-$pre
-$$
-$latex \mu_{k+1} = s_k / [ ( d^k )^\R{T} A d^k ]$$,
-$latex x^{k+1} = x^k + \mu_{k+1} d^k$$.
+   :math:`g^0 = A * x^0 - b`,
+   :math:`d^0 = - g^0`,
+   :math:`s_0 = ( g^0 )^\R{T} g^0`,
+   :math:`k = 0`.
 
-$lnext
-Next $latex g$$:
-$pre
-$$
-$latex g^{k+1} = g^k + \mu_{k+1} A d^k$$,
-$latex s_{k+1} = ( g^{k+1} )^\R{T} g^{k+1}$$.
+#. Convergence Check:
 
-$lnext
-Next $latex d$$:
-$pre
-$$
-$latex d^{k+1} = - g^k + ( s_{k+1} / s_k ) d^k$$.
+   if :math:`k = m` or :math:`\sqrt{ s_k / n } < \varepsilon`,
+   return :math:`k` as the number of iterations and :math:`x^k`
+   as the approximate solution.
 
-$lnext
-Iterate:
-$pre
-$$
-$latex k = k + 1$$,
-goto Convergence Check.
-$lend
+#. Next :math:`x`:
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+   :math:`\mu_{k+1} = s_k / [ ( d^k )^\R{T} A d^k ]`,
+   :math:`x^{k+1} = x^k + \mu_{k+1} d^k`.
 
-$end
+#. Next :math:`g`:
+
+   :math:`g^{k+1} = g^k + \mu_{k+1} A d^k`,
+   :math:`s_{k+1} = ( g^{k+1} )^\R{T} g^{k+1}`.
+
+#. Next :math:`d`:
+
+   :math:`d^{k+1} = - g^k + ( s_{k+1} / s_k ) d^k`.
+
+#. Iterate:
+
+   :math:`k = k + 1`,
+   goto Convergence Check.
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end conj_grad.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

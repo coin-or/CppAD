@@ -1,0 +1,172 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin reverse_identity}
+{xrst_spell
+   cm
+   differentiable
+   rclr
+}
+
+An Important Reverse Mode Identity
+##################################
+The theorem and the proof below is a restatement
+of the results on page 236 of
+:ref:`Bib@Evaluating Derivatives` .
+
+Notation
+********
+Given a function :math:`f(u, v)` where :math:`u \in \B{R}^n`
+we use the notation
+
+.. math::
+
+   \D{f}{u} (u, v) = \left[ \D{f}{u_1} (u, v) , \cdots , \D{f}{u_n} (u, v) \right]
+
+Reverse Sweep
+*************
+When using :ref:`reverse mode<reverse_any-name>`
+we are given a function :math:`F : \B{R}^n \rightarrow \B{R}^m`,
+a matrix of Taylor coefficients :math:`x \in \B{R}^{n \times p}`,
+and a weight vector :math:`w \in \B{R}^m`.
+We define the functions :math:`X : \B{R} \times \B{R}^{n \times p} \rightarrow \B{R}^n`,
+:math:`W : \B{R} \times \B{R}^{n \times p} \rightarrow \B{R}`, and
+:math:`W_j : \B{R}^{n \times p} \rightarrow \B{R}` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X(t , x) & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
+      \\
+      W(t, x)   & = &  w_0 F_0 [X(t, x)] + \cdots + w_{m-1} F_{m-1} [X(t, x)]
+      \\
+      W_j (x)   & = & \frac{1}{j!} \Dpow{j}{t} W(0, x)
+   \end{eqnarray}
+
+where :math:`x^{(j)}` is the *j*-th column of :math:`x \in \B{R}^{n \times p}`.
+The theorem below implies that
+
+.. math::
+
+   \D{ W_j }{ x^{(i)} } (x) = \D{ W_{j-i} }{ x^{(0)} } (x)
+
+A :ref:`general reverse sweep<reverse_any-name>` calculates the values
+
+.. math::
+
+   \D{ W_{p-1} }{ x^{(i)} } (x)  \hspace{1cm} (i = 0 , \ldots , p-1)
+
+But the return values for a reverse sweep are specified
+in terms of the more useful values
+
+.. math::
+
+   \D{ W_j }{ x^{(0)} } (x)  \hspace{1cm} (j = 0 , \ldots , p-1)
+
+Theorem
+*******
+Suppose that :math:`F : \B{R}^n \rightarrow \B{R}^m` is a :math:`p` times
+continuously differentiable function.
+Define the functions
+:math:`Z : \B{R} \times \B{R}^{n \times p} \rightarrow \B{R}^n`,
+:math:`Y : \B{R} \times \B{R}^{n \times p }\rightarrow \B{R}^m`,
+and
+:math:`y^{(j)} : \B{R}^{n \times p }\rightarrow \B{R}^m` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      Z(t, x)  & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
+      \\
+      Y(t, x)  & = & F [ Z(t, x) ]
+      \\
+      y^{(j)} (x) & = & \frac{1}{j !} \Dpow{j}{t} Y(0, x)
+   \end{eqnarray}
+
+where :math:`x^{(j)}` denotes the *j*-th column of
+:math:`x \in \B{R}^{n \times p}`.
+It follows that
+for all :math:`i, j` such that :math:`i \leq j < p`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{ y^{(j)} }{ x^{(i)} } (x) & = & \D{ y^{(j-i)} }{ x^{(0)} } (x)
+   \end{eqnarray}
+
+Proof
+*****
+If follows from the definitions that
+
+.. math::
+
+   \begin{array}{rclr}
+   \D{ y^{(j)} }{ x^{(i)} } (x)
+   & = &
+   \frac{1}{j ! } \D{ }{ x^{(i)} }
+      \left[ \Dpow{j}{t} (F \circ  Z) (t, x)  \right]_{t=0}
+   \\
+   & = &
+   \frac{1}{j ! } \left[ \Dpow{j}{t}
+      \D{ }{ x^{(i)} } (F \circ  Z) (t, x)
+   \right]_{t=0}
+   \\
+   & = &
+   \frac{1}{j ! } \left\{
+      \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
+   \right\}_{t=0}
+   \end{array}
+
+For :math:`k > i`, the *k*-th
+partial of :math:`t^i` with respect to :math:`t` is zero.
+Thus, the partial with respect to :math:`t` is given by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
+   & = &
+   \sum_{k=0}^i
+   \left( \begin{array}{c} j \\ k \end{array} \right)
+   \frac{ i ! }{ (i - k) ! } t^{i-k} \;
+   \Dpow{j-k}{t} ( F^{(1)} \circ Z ) (t, x)
+   \\
+   \left\{
+      \Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
+   \right\}_{t=0}
+   & = &
+   \left( \begin{array}{c} j \\ i \end{array} \right)
+   i ! \Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
+   \\
+   & = &
+   \frac{ j ! }{ (j - i) ! }
+   \Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
+   \\
+   \D{ y^{(j)} }{ x^{(i)} } (x)
+   & = &
+   \frac{ 1 }{ (j - i) ! }
+   \Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
+   \end{eqnarray}
+
+Applying this formula to the case where :math:`j`
+is replaced by :math:`j - i` and :math:`i` is replaced by zero,
+we obtain
+
+.. math::
+
+   \D{ y^{(j-i)} }{ x^{(0)} } (x)
+   =
+   \frac{ 1 }{ (j - i) ! }
+   \Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
+   =
+   \D{ y^{(j)} }{ x^{(i)} } (x)
+
+which completes the proof
+
+{xrst_end reverse_identity}

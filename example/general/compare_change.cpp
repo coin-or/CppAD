@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin compare_change.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin compare_change.cpp}
 
-$section CompareChange and Re-Tape: Example and Test$$
+CompareChange and Re-Tape: Example and Test
+###########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end compare_change.cpp}
 */
 // BEGIN C++
 

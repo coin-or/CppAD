@@ -3,92 +3,111 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul_sparsity.cpp$$
-$spell
-   Jacobian
-$$
+{xrst_begin atomic_four_mat_mul_sparsity.cpp}
+{xrst_spell
+   cccccccc
+   cccccccccc
+   rvec
+}
 
-$section Atomic Matrix Multiply Sparsity Patterns: Example and Test$$
+Atomic Matrix Multiply Sparsity Patterns: Example and Test
+##########################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates computing sparsity patterns with
-the $cref atomic_four_mat_mul$$ class.
+the :ref:`atomic_four_mat_mul-name` class.
 
-$head f(x)$$
-For a matrix $latex A$$ we define the function $latex \R{rvec} ( A )$$
-to be the elements of $latex A$$ in row major order.
-For this example, the function $latex f(x)$$ is
-$latex \[
-f(x) =
-\R{rvec} \left[
-\left( \begin{array}{cc}
-x_0 & x_1  \\
-x_2 & x_3  \\
-\end{array} \right)
-\left( \begin{array}{cc}
-x_4 & x_5  \\
-x_6 & x_7
-\end{array} \right)
-\right]
-=
-\R{rvec}
-\left( \begin{array}{cc}
-x_0 x_4 + x_1 x_6 & x_0 x_5 + x_1 x_7  \\
-x_2 x_4 + x_3 x_6 & x_2 x_5 + x_3 x_7  \\
-\end{array} \right)
-\] $$
-$latex \[
 f(x)
-=
-\left( \begin{array}{c}
-x_0 x_4 + x_1 x_6 \\
-x_0 x_5 + x_1 x_7 \\
-x_2 x_4 + x_3 x_6 \\
-x_2 x_5 + x_3 x_7
-\end{array} \right)
-\] $$
+****
+For a matrix :math:`A` we define the function :math:`\R{rvec} ( A )`
+to be the elements of :math:`A` in row major order.
+For this example, the function :math:`f(x)` is
 
-$head Jacobian of f(x)$$
-The Jacobian of $latex f(x)$$ is
-$latex \[
-f^{(1)} (x) = \left( \begin{array}{cccccccc}
-% 0   1     2     3      4      5     6      7
-x_4 & x_6 & 0   & 0    & x_0  & 0   & x_1  & 0   \\ % 0
-x_5 & x_7 & 0   & 0    & 0    & x_0 & 0    & x_1 \\ % 1
-0   & 0   & x_4 & x_6  & x_2  & 0   & x_3  & 0   \\ % 2
-0   & 0   & x_5 & x_7  & 0    & x_2 & 0    & x_3 \\ % 3
-\end{array} \right)
-\] $$
+.. math::
 
-$head Hessian$$
-The function $latex f_2 (x)$$ is
-$latex \[
+   f(x) =
+   \R{rvec} \left[
+   \left( \begin{array}{cc}
+   x_0 & x_1  \\
+   x_2 & x_3  \\
+   \end{array} \right)
+   \left( \begin{array}{cc}
+   x_4 & x_5  \\
+   x_6 & x_7
+   \end{array} \right)
+   \right]
+   =
+   \R{rvec}
+   \left( \begin{array}{cc}
+   x_0 x_4 + x_1 x_6 & x_0 x_5 + x_1 x_7  \\
+   x_2 x_4 + x_3 x_6 & x_2 x_5 + x_3 x_7  \\
+   \end{array} \right)
+
+.. math::
+
+   f(x)
+   =
+   \left( \begin{array}{c}
+   x_0 x_4 + x_1 x_6 \\
+   x_0 x_5 + x_1 x_7 \\
+   x_2 x_4 + x_3 x_6 \\
+   x_2 x_5 + x_3 x_7
+   \end{array} \right)
+
+Jacobian of f(x)
+****************
+The Jacobian of :math:`f(x)` is
+
+.. math::
+
+   f^{(1)} (x) = \left( \begin{array}{cccccccc}
+   % 0   1     2     3      4      5     6      7
+   x_4 & x_6 & 0   & 0    & x_0  & 0   & x_1  & 0   \\ % 0
+   x_5 & x_7 & 0   & 0    & 0    & x_0 & 0    & x_1 \\ % 1
+   0   & 0   & x_4 & x_6  & x_2  & 0   & x_3  & 0   \\ % 2
+   0   & 0   & x_5 & x_7  & 0    & x_2 & 0    & x_3 \\ % 3
+   \end{array} \right)
+
+Hessian
+*******
+The function :math:`f_2 (x)` is
+
+.. math::
+
    f_2 (x) = x_2 x_4 + x_3 x_6
-\] $$
-The Hessian of $latex f_2(x)$$ is
-$latex \[
-f_2^{(2)} (x)
-=
-\left( \begin{array}{cccccccccc}
-         & 0    & 1    & 2    & 3    & 4    & 5    & 6    & 7    \\
-         & -    & -    & -    & -    & -    & -    & -    & -    \\
-   0 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    \\
-   1 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    \\
-   2 \; |  & 0    & 0    & 0    & 0    & 1    & 0    & 0    & 0    \\
-   3 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 1    & 0    \\
-   4 \; |  & 0    & 0    & 1    & 0    & 0    & 0    & 0    & 0    \\
-   5 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    \\
-   6 \; |  & 0    & 0    & 0    & 1    & 0    & 0    & 0    & 0    \\
-   7 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    \\
-\end{array} \right)
-\] $$
+
+The Hessian of :math:`f_2(x)` is
+
+.. math::
+
+   f_2^{(2)} (x)
+   =
+   \left( \begin{array}{cccccccccc}
+            & 0    & 1    & 2    & 3    & 4    & 5    & 6    & 7    \\
+            & -    & -    & -    & -    & -    & -    & -    & -    \\
+      0 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    \\
+      1 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    \\
+      2 \; |  & 0    & 0    & 0    & 0    & 1    & 0    & 0    & 0    \\
+      3 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 1    & 0    \\
+      4 \; |  & 0    & 0    & 1    & 0    & 0    & 0    & 0    & 0    \\
+      5 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    \\
+      6 \; |  & 0    & 0    & 0    & 1    & 0    & 0    & 0    & 0    \\
+      7 \; |  & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    \\
+   \end{array} \right)
+
 where the first row is the column index,
 and the first column is the row index,
 for the corresponding matrix entries above.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_sparsity.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

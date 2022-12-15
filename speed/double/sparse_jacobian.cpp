@@ -3,33 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin double_sparse_jacobian.cpp$$
-$spell
-   const
-   onetape
-   boolsparsity
-   yp
-   jac
-   Jacobian
-   fp
-   bool
-   cppad
-   hpp
-   CppAD
-   cmath
-   exp
-   std
-$$
+{xrst_begin double_sparse_jacobian.cpp}
 
-$section Double Speed: Sparse Jacobian$$
+Double Speed: Sparse Jacobian
+#############################
 
+Specifications
+**************
+See :ref:`link_sparse_jacobian-name` .
 
-$head Specifications$$
-See $cref link_sparse_jacobian$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
@@ -72,6 +59,8 @@ bool link_sparse_jacobian(
 
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end double_sparse_jacobian.cpp}
 */

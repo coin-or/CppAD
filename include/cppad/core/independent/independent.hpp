@@ -9,44 +9,52 @@
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*
-$begin independent_all$$
-$spell
-   op
-$$
+{xrst_begin independent_all}
 
-$section Independent: All Arguments Present$$
+Independent: All Arguments Present
+##################################
 
-$head Purpose$$
-This implements $cref Independent$$ with all the possible arguments present.
+Purpose
+*******
+This implements :ref:`Independent-name` with all the possible arguments present.
 
-$head Syntax$$
-$codei%Independent(%x%, %abort_op_index%, %record_compare%, %dynamic%)%$$
+Syntax
+******
+``Independent`` ( *x* , *abort_op_index* , *record_compare* , *dynamic* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_ALL_ARGUMENT%// END_ALL_ARGUMENT%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ALL_ARGUMENT
+   // END_ALL_ARGUMENT
+}
 
-$head Base$$
+Base
+****
 The base type the recording started by this operation.
 
-$head ADVector$$
-is simple vector type with elements of type $codei%AD<%Base%>%$$.
+ADVector
+********
+is simple vector type with elements of type ``AD<`` *Base* > .
 
-$head x$$
+x
+*
 is the vector of the independent variables.
 
-$head abort_op_index$$
+abort_op_index
+**************
 operator index at which execution will be aborted (during  the recording
 of operations). The value zero corresponds to not aborting (will not match).
 
-$head record_compare$$
+record_compare
+**************
 should comparison operators be recorded.
 
-$head dynamic$$
+dynamic
+*******
 is the independent dynamic parameter vector.
 
-$end
+{xrst_end independent_all}
 */
 // BEGIN_ALL_ARGUMENT
 template <class ADVector>
@@ -73,42 +81,49 @@ void Independent(
 }
 /*
 ----------------------------------------------------------------------------
-$begin independent_x_abort_record$$
-$spell
-   op
-$$
+{xrst_begin independent_x_abort_record}
 
-$section Independent: Default For dynamic$$
+Independent: Default For dynamic
+################################
 
-$head Purpose$$
-This implements $cref Independent$$ using
+Purpose
+*******
+This implements :ref:`Independent-name` using
 the default for the dynamic argument.
 
-$head Syntax$$
-$codei%Independent(%x%, %abort_op_index%, %record_compare%)%$$
+Syntax
+******
+``Independent`` ( *x* , *abort_op_index* , *record_compare* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_THREE_ARGUMENT%// END_THREE_ARGUMENT%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_THREE_ARGUMENT
+   // END_THREE_ARGUMENT
+}
 
-$head Base$$
+Base
+****
 The base type the recording started by this operation.
 
-$head ADVector$$
-is simple vector type with elements of type $codei%AD<%Base%>%$$.
+ADVector
+********
+is simple vector type with elements of type ``AD<`` *Base* > .
 
-$head x$$
+x
+*
 is the vector of the independent variables.
 
-$head abort_op_index$$
+abort_op_index
+**************
 operator index at which execution will be aborted (during  the recording
 of operations). The value zero corresponds to not aborting (will not match).
 
-$head record_compare$$
+record_compare
+**************
 should comparison operators be recorded.
 
-$end
+{xrst_end independent_x_abort_record}
 */
 // BEGIN_THREE_ARGUMENT
 template <class ADVector>
@@ -119,39 +134,45 @@ void Independent(ADVector &x, size_t abort_op_index, bool record_compare)
 }
 /*
 ------------------------------------------------------------------------------
-$begin independent_x_abort_op_index$$
-$spell
-   op
-$$
+{xrst_begin independent_x_abort_op_index}
 
-$section Independent: Default For record_compare, dynamic$$
+Independent: Default For record_compare, dynamic
+################################################
 
-$head Purpose$$
-This implements $cref Independent$$ using
+Purpose
+*******
+This implements :ref:`Independent-name` using
 the default for the record_compare and dynamic arguments.
 
-$head Syntax$$
-$codei%Independent(%x%, %abort_op_index%)%$$
+Syntax
+******
+``Independent`` ( *x* , *abort_op_index* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_X_ABORT_OP_INDEX%// END_X_ABORT_OP_INDEX%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_X_ABORT_OP_INDEX
+   // END_X_ABORT_OP_INDEX
+}
 
-$head Base$$
+Base
+****
 The base type the recording started by this operation.
 
-$head ADVector$$
-is simple vector type with elements of type $codei%AD<%Base%>%$$.
+ADVector
+********
+is simple vector type with elements of type ``AD<`` *Base* > .
 
-$head x$$
+x
+*
 is the vector of the independent variables.
 
-$head abort_op_index$$
+abort_op_index
+**************
 operator index at which execution will be aborted (during  the recording
 of operations). The value zero corresponds to not aborting (will not match).
 
-$end
+{xrst_end independent_x_abort_op_index}
 */
 // BEGIN_X_ABORT_OP_INDEX
 template <class ADVector>
@@ -163,38 +184,44 @@ void Independent(ADVector &x, size_t abort_op_index)
 }
 /*
 ------------------------------------------------------------------------------
-$begin independent_x_dynamic$$
-$spell
-   op
-$$
+{xrst_begin independent_x_dynamic}
 
-$section Independent: Default For abort_op_index, record_compare$$
+Independent: Default For abort_op_index, record_compare
+#######################################################
 
-$head Purpose$$
-This implements $cref Independent$$ using
+Purpose
+*******
+This implements :ref:`Independent-name` using
 the default for the abort_op_index and record_compare.
 
-$head Syntax$$
-$codei%Independent(%x%, %dynamic%)%$$
+Syntax
+******
+``Independent`` ( *x* , *dynamic* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_X_DYNAMIC%// END_X_DYNAMIC%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_X_DYNAMIC
+   // END_X_DYNAMIC
+}
 
-$head Base$$
+Base
+****
 The base type the recording started by this operation.
 
-$head ADVector$$
-is simple vector type with elements of type $codei%AD<%Base%>%$$.
+ADVector
+********
+is simple vector type with elements of type ``AD<`` *Base* > .
 
-$head x$$
+x
+*
 is the vector of the independent variables.
 
-$head dynamic$$
+dynamic
+*******
 is the independent dynamic parameter vector.
 
-$end
+{xrst_end independent_x_dynamic}
 */
 // BEGIN_X_DYNAMIC
 template <class ADVector>
@@ -206,35 +233,40 @@ void Independent(ADVector& x, ADVector& dynamic)
 }
 /*
 ------------------------------------------------------------------------------
-$begin independent_x$$
-$spell
-   op
-$$
+{xrst_begin independent_x}
 
-$section Independent: Default For abort_op_index, record_compare, dynamic$$
+Independent: Default For abort_op_index, record_compare, dynamic
+################################################################
 
-$head Purpose$$
-This implements $cref Independent$$ using
+Purpose
+*******
+This implements :ref:`Independent-name` using
 the default for the abort_op_index, record_compare and dynamic arguments.
 
-$head Syntax$$
-$codei%Independent(%x%)%$$
+Syntax
+******
+``Independent`` ( *x* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_ONE_ARGUMENT%// END_ONE_ARGUMENT%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ONE_ARGUMENT
+   // END_ONE_ARGUMENT
+}
 
-$head Base$$
+Base
+****
 The base type the recording started by this operation.
 
-$head ADVector$$
-is simple vector type with elements of type $codei%AD<%Base%>%$$.
+ADVector
+********
+is simple vector type with elements of type ``AD<`` *Base* > .
 
-$head x$$
+x
+*
 is the vector of the independent variables.
 
-$end
+{xrst_end independent_x}
 */
 // BEGIN_ONE_ARGUMENT
 template <class ADVector>

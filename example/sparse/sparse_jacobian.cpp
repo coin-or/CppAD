@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_jacobian.cpp$$
-$spell
-   Cpp
-   Jacobian
-$$
+{xrst_begin sparse_jacobian.cpp}
 
-$section Sparse Jacobian: Example and Test$$
+Sparse Jacobian: Example and Test
+#################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end sparse_jacobian.cpp}
 */
 // BEGIN C++
 

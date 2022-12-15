@@ -5,175 +5,198 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin qp_box$$
-$spell
-   hpp
-   const
-   col
-   xout
-   yout
-   sout
-   cols
-   prog
+{xrst_begin qp_box}
+{xrst_spell
    maxitr
-   xin
    qp
-$$
-$section abs_normal: Solve a Quadratic Program With Box Constraints$$
+   rl
+   xout
+}
+abs_normal: Solve a Quadratic Program With Box Constraints
+##########################################################
 
-$head Syntax$$
-$icode%ok% = qp_box(
-   %level%, %a%, %b%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
+| *ok* = ``qp_box`` (
+| |tab| *level* , *a* , *b* , *c* , *C* , *g* , *G* , *epsilon* , *maxitr* , *xin* , *xout*
+| )
 
-$head Source$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Source
+******
 This following is a link to the source code for this example:
-$cref/qp_box.hpp/qp_box.hpp/$$.
+:ref:`qp_box.hpp-name` .
 
-$head Purpose$$
-This routine could be used to create a version of $cref abs_min_linear$$
+Purpose
+*******
+This routine could be used to create a version of :ref:`abs_min_linear-name`
 that solved quadratic programs (instead of linear programs).
 
-$head Problem$$
+Problem
+*******
 We are given
-$latex a \in \B{R}^n$$,
-$latex b \in \B{R}^n$$,
-$latex c \in \B{R}^m$$,
-$latex C \in \B{R}^{m \times n}$$,
-$latex g \in \B{R}^n$$,
-$latex G \in \B{R}^{n \times n}$$,
-where $latex G$$ is positive semi-definite.
+:math:`a \in \B{R}^n`,
+:math:`b \in \B{R}^n`,
+:math:`c \in \B{R}^m`,
+:math:`C \in \B{R}^{m \times n}`,
+:math:`g \in \B{R}^n`,
+:math:`G \in \B{R}^{n \times n}`,
+where :math:`G` is positive semi-definite.
 This routine solves the problem
-$latex \[
-\begin{array}{rl}
-\R{minimize} &
-\frac{1}{2} x^T G x + g^T x \; \R{w.r.t} \; x \in \B{R}^n
-\\
-\R{subject \; to} & C x + c \leq 0 \; \R{and} \; a \leq x \leq b
-\end{array}
-\] $$
-The matrix $latex G + C^T C$$ must be positive definite on components
-of the vector $latex x$$ where the lower limit minus infinity
-and the upper limit is plus infinity; see $icode a$$ and $icode b$$ below.
 
-$head Vector$$
-The type $icode Vector$$ is a
-simple vector with elements of type $code double$$.
+.. math::
 
-$head level$$
+   \begin{array}{rl}
+   \R{minimize} &
+   \frac{1}{2} x^T G x + g^T x \; \R{w.r.t} \; x \in \B{R}^n
+   \\
+   \R{subject \; to} & C x + c \leq 0 \; \R{and} \; a \leq x \leq b
+   \end{array}
+
+The matrix :math:`G + C^T C` must be positive definite on components
+of the vector :math:`x` where the lower limit minus infinity
+and the upper limit is plus infinity; see *a* and *b* below.
+
+Vector
+******
+The type *Vector* is a
+simple vector with elements of type ``double`` .
+
+level
+*****
 This value is less that or equal two.
-If $icode%level% == 0%$$,
+If *level*  == 0 ,
 no tracing is printed.
-If $icode%level% >= 1%$$,
-a trace of the $code qp_box$$ operations is printed.
-If $icode%level% == 2%$$,
-a trace of the $cref qp_interior$$ sub-problem is printed.
+If *level*  >= 1 ,
+a trace of the ``qp_box`` operations is printed.
+If *level*  == 2 ,
+a trace of the :ref:`qp_interior-name` sub-problem is printed.
 
-$head a$$
-This is the vector of lower limits for $latex x$$ in the problem.
-If $icode%a%[%j%]%$$ is minus infinity, there is no lower limit
-for $latex x_j$$.
+a
+*
+This is the vector of lower limits for :math:`x` in the problem.
+If *a* [ *j* ] is minus infinity, there is no lower limit
+for :math:`x_j`.
 
-$head b$$
-This is the vector of upper limits for $latex x$$ in the problem.
-If $icode%a%[%j%]%$$ is plus infinity, there is no upper limit
-for $latex x_j$$.
+b
+*
+This is the vector of upper limits for :math:`x` in the problem.
+If *a* [ *j* ] is plus infinity, there is no upper limit
+for :math:`x_j`.
 
-$head Lower c$$
-This is the value of the inequality constraint function at $latex x = 0$$.
+Lower c
+*******
+This is the value of the inequality constraint function at :math:`x = 0`.
 
-$head Upper C$$
-This is a $cref/row-major/glossary/Row-major Representation/$$ representation
-of thee the inequality constraint matrix $latex C$$.
+Upper C
+*******
+This is a :ref:`row-major<glossary@Row-major Representation>` representation
+of thee the inequality constraint matrix :math:`C`.
 
-$head Lower g$$
+Lower g
+*******
 This is the gradient of the objective function.
 
-$head Upper G$$
+Upper G
+*******
 This is a row-major representation of the Hessian of the objective function.
-For $latex j = 0 , \ldots , n-1$$,
-$latex - \infty < a_j$$ or
-$latex b_j < + \infty$$ or
-$latex G_{j,j} > 0.0$$.
+For :math:`j = 0 , \ldots , n-1`,
+:math:`- \infty < a_j` or
+:math:`b_j < + \infty` or
+:math:`G_{j,j} > 0.0`.
 
-$head epsilon$$
+epsilon
+*******
 This argument is the convergence criteria;
-see $cref/KKT conditions/qp_box/KKT Conditions/$$ below.
+see :ref:`qp_box@KKT Conditions` below.
 It must be greater than zero.
 
-$head maxitr$$
+maxitr
+******
 This is the maximum number of
-$cref qp_interior$$ iterations to try before giving up
+:ref:`qp_interior-name` iterations to try before giving up
 on convergence.
 
-$head xin$$
-This argument has size $icode n$$ and is the initial point for the algorithm.
+xin
+***
+This argument has size *n* and is the initial point for the algorithm.
 It must strictly satisfy the constraints; i.e.,
-$codei%
-   %a% < %xin%,  %xin% < %b%,  %C% * %xin% - %c% < 0
-%$$
 
-$head xout$$
-This argument has size is $icode n$$ and
+   *a* < *xin* , *xin* < *b* , *C* * *xin* ``-`` *c*  < 0
+
+xout
+****
+This argument has size is *n* and
 the input value of its elements does no matter.
 Upon return it is the primal variables
-$latex x$$ corresponding to the problem solution.
+:math:`x` corresponding to the problem solution.
 
-$head ok$$
-If the return value $icode ok$$ is true, convergence is obtained; i.e.,
-$latex \[
+ok
+**
+If the return value *ok* is true, convergence is obtained; i.e.,
+
+.. math::
+
    | F ( x , y_a, s_a, y_b, s_b, y_c, s_c ) |_\infty < \varepsilon
-\] $$
-where $latex |v|_\infty$$ is the infinity norm of the vector $latex v$$,
-$latex \varepsilon$$ is $icode epsilon$$,
-$latex x$$ is equal to $icode xout$$,
-$latex y_a, s_a \in \B{R}_+^n$$,
-$latex y_b, s_b \in \B{R}_+^n$$ and
-$latex y_c, s_c \in \B{R}_+^m$$.
 
-$head KKT Conditions$$
-Give a vector $latex v \in \B{R}^m$$ we define
-$latex D(v) \in \B{R}^{m \times m}$$ as the corresponding diagonal matrix.
-We also define $latex 1_m \in \B{R}^m$$ as the vector of ones.
+where :math:`|v|_\infty` is the infinity norm of the vector :math:`v`,
+:math:`\varepsilon` is *epsilon* ,
+:math:`x` is equal to *xout* ,
+:math:`y_a, s_a \in \B{R}_+^n`,
+:math:`y_b, s_b \in \B{R}_+^n` and
+:math:`y_c, s_c \in \B{R}_+^m`.
+
+KKT Conditions
+**************
+Give a vector :math:`v \in \B{R}^m` we define
+:math:`D(v) \in \B{R}^{m \times m}` as the corresponding diagonal matrix.
+We also define :math:`1_m \in \B{R}^m` as the vector of ones.
 We define
-$latex \[
-F ( x , y_a, s_a, y_b, s_b, y_c, s_c )
-=
-\left(
-\begin{array}{c}
-g + G x - y_a + y_b + y_c^T C         \\
-a + s_a - x                           \\
-x + s_b - b                           \\
-C x + c + s_c                         \\
-D(s_a) D(y_a) 1_m                     \\
-D(s_b) D(y_b) 1_m                     \\
-D(s_c) D(y_c) 1_m
-\end{array}
-\right)
-\] $$
+
+.. math::
+
+   F ( x , y_a, s_a, y_b, s_b, y_c, s_c )
+   =
+   \left(
+   \begin{array}{c}
+   g + G x - y_a + y_b + y_c^T C         \\
+   a + s_a - x                           \\
+   x + s_b - b                           \\
+   C x + c + s_c                         \\
+   D(s_a) D(y_a) 1_m                     \\
+   D(s_b) D(y_b) 1_m                     \\
+   D(s_c) D(y_c) 1_m
+   \end{array}
+   \right)
+
 where
-$latex x \in \B{R}^n$$,
-$latex y_a, s_a \in \B{R}_+^n$$,
-$latex y_b, s_b \in \B{R}_+^n$$ and
-$latex y_c, s_c \in \B{R}_+^m$$.
+:math:`x \in \B{R}^n`,
+:math:`y_a, s_a \in \B{R}_+^n`,
+:math:`y_b, s_b \in \B{R}_+^n` and
+:math:`y_c, s_c \in \B{R}_+^m`.
 The KKT conditions for a solution of this problem is
-$latex \[
+
+.. math::
+
    F ( x , y_a, s_a, y_b, s_b, y_c, s_c ) = 0
-\] $$
 
-$children%example/abs_normal/qp_box.cpp
-   %example/abs_normal/qp_box.omh
-%$$
-$head Example$$
-The file $cref qp_box.cpp$$ contains an example and test of
-$code qp_box$$.
+{xrst_toc_hidden
+   example/abs_normal/qp_box.cpp
+   example/abs_normal/qp_box.xrst
+}
+Example
+*******
+The file :ref:`qp_box.cpp-name` contains an example and test of
+``qp_box`` .
 
-$end
+{xrst_end qp_box}
 -----------------------------------------------------------------------------
 */
 # include "qp_interior.hpp"

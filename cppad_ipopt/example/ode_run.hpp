@@ -6,16 +6,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ipopt_nlp_ode_run.hpp$$
-$spell
-   Ipopt
-$$
+{xrst_begin ipopt_nlp_ode_run.hpp}
 
-$section Driver for Running the Ipopt ODE Example$$
+Driver for Running the Ipopt ODE Example
+########################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ipopt_nlp_ode_run.hpp}
 */
 
 // BEGIN C++

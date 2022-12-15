@@ -3,66 +3,74 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_cppadcg.sh$$ $newlinech #$$
-# $spell
-#  gz
-#  CppAD
-#  cppadcg
-#  Eigen
-#  doxygen
-#  html
-# $$
+# {xrst_begin get_cppadcg.sh} 
+# {xrst_spell
+#     doxygen
+# }
+# {xrst_comment_ch #}
 #
-# $section Download and Install CppADCodeGen in Build Directory$$
+# Download and Install CppADCodeGen in Build Directory
+# ####################################################
 #
-# $head Syntax$$
-# $code bin/get_cppadcg.sh$$
+# Syntax
+# ******
+# ``bin/get_cppadcg.sh``
 #
-# $head Purpose$$
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
-# $href%https://github.com/joaoleal/CppADCodeGen%cppadcg%$$
-# in the CppAD $code build$$ directory.
+# `cppadcg <https://github.com/joaoleal/CppADCodeGen>`_
+# in the CppAD ``build`` directory.
 #
-# $head Requirements$$
-# You must first use $cref get_eigen.sh$$ to download and install Eigen.
+# Requirements
+# ************
+# You must first use :ref:`get_eigen.sh-name` to download and install Eigen.
 #
-# $head Distribution Directory$$
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# $cref/distribution directory/download/Distribution Directory/$$.
+# :ref:`download@Distribution Directory` .
 #
-# $head Source Directory$$
+# Source Directory
+# ****************
 # The Cppadcg source code is downloaded into the sub-directory
-# $code external/cppadcg.git$$ below the distribution directory.
+# ``external/cppadcg.git`` below the distribution directory.
 #
-# $head Prefix$$
-# The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional.sh$$ is used for this install.
+# Prefix
+# ******
+# The :ref:`get_optional.sh@prefix`
+# in the file ``bin/get_optional.sh`` is used for this install.
 #
-# $head Git Hash$$
+# Git Hash
+# ********
 # This will install the commit of Cppadcg with the following git hash
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 git_hash='b5307ad'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 # The date corresponding to this commit was 20201009.
 #
-# $head Configuration$$
+# Configuration
+# *************
 # If the file
-# $codei%
-#  external/cppadcg-%git_hash%.configured
-# %$$
+#
+#     ``external/cppadcg-`` *git_hash* . ``configured``
+#
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
 #
-# $head Documentation$$
-# If you change the setting for $code CREATE_DOXYGEN_DOC$$ to $code ON$$,
+# Documentation
+# *************
+# If you change the setting for ``CREATE_DOXYGEN_DOC`` to ``ON`` ,
 # the doxygen documentation for CppADCodeGen will be installed in the directory
-# $codei%
-#  %prefix%/share/doc/cppadcg/html
-# %$$
-# where $icode prefix$$ has the value specified in the
-# $cref/get_optional.sh/get_optional.sh/prefix/$$ file.
 #
-# $end
+#     *prefix* / ``share/doc/cppadcg/html``
+#
+# where *prefix* has the value specified in the
+# :ref:`get_optional.sh<get_optional.sh@prefix>` file.
+#
+# {xrst_end get_cppadcg.sh}
 # -----------------------------------------------------------------------------
 package='cppadcg'
 if [ $0 != "bin/get_$package.sh" ]

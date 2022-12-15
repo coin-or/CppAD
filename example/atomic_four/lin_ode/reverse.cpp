@@ -3,73 +3,89 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_reverse.cpp$$
-$spell
-$$
+{xrst_begin atomic_four_lin_ode_reverse.cpp}
+{xrst_spell
+   cccc
+}
 
-$section Atomic Linear ODE Reverse Mode: Example and Test$$
+Atomic Linear ODE Reverse Mode: Example and Test
+################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates using reverse mode with
-the $cref atomic_four_lin_ode$$ class.
+the :ref:`atomic_four_lin_ode-name` class.
 
-$head f(u)$$
-For this example, the function $latex f(u) = z(r, u)$$ where
-$latex z(t, u)$$ solves the following ODE
-$latex \[
-z_t (t, u) =
-\left( \begin{array}{cccc}
-0   & 0  & 0    & 0   \\
-u_4 & 0  & 0    & 0   \\
-0   & u_5 & 0   & 0   \\
-0   & 0   & u_6 & 0   \\
-\end{array} \right)
-z(t, u)
-\W{,}
-z(0, u) =
-\left( \begin{array}{c}
-u_0 \\
-u_1 \\
-u_2 \\
-u_3 \\
-\end{array} \right)
-\] $$
+f(u)
+****
+For this example, the function :math:`f(u) = z(r, u)` where
+:math:`z(t, u)` solves the following ODE
 
-$head Solution$$
+.. math::
+
+   z_t (t, u) =
+   \left( \begin{array}{cccc}
+   0   & 0  & 0    & 0   \\
+   u_4 & 0  & 0    & 0   \\
+   0   & u_5 & 0   & 0   \\
+   0   & 0   & u_6 & 0   \\
+   \end{array} \right)
+   z(t, u)
+   \W{,}
+   z(0, u) =
+   \left( \begin{array}{c}
+   u_0 \\
+   u_1 \\
+   u_2 \\
+   u_3 \\
+   \end{array} \right)
+
+Solution
+********
 The actual solution to this ODE is
-$latex \[
-z(t, u) =
-\left( \begin{array}{l}
-u_0  \\
-u_1 + u_4 u_0 t \\
-u_2 + u_5 u_1 t + u_5 u_4 u_0 t^2 / 2  \\
-u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
-\end{array} \right)
-\] $$
 
-$head g(u)$$
-$latex \[
-   z_2 (t, u) = u_2 + u_5 u_1 t + u_5 u_4 u_0 t^2 / 2
-\] $$
-Fix $latex r$$ and define $latex g(u) = [ \partial_u z(r, u) ]^\R{T}$$.
-It follows that
-$latex \[
+.. math::
+
+   z(t, u) =
+   \left( \begin{array}{l}
+   u_0  \\
+   u_1 + u_4 u_0 t \\
+   u_2 + u_5 u_1 t + u_5 u_4 u_0 t^2 / 2  \\
+   u_3 + u_6 u_2 t + u_6 u_5 u_1 t^2 / 2 + u_6 u_5 u_4 u_0 t^3 / 6
+   \end{array} \right)
+
 g(u)
-=
-\left( \begin{array}{c}
-u_5 u_4 r^2 / 2 \\
-u_5 r \\
-1 \\
-0 \\
-u_5 u_0 r^2 / 2 \\
-u_t r + u_4 u_0 r^2 / 2 \\
-0
-\end{array} \right)
-\] $$
+****
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+.. math::
+
+   z_2 (t, u) = u_2 + u_5 u_1 t + u_5 u_4 u_0 t^2 / 2
+
+Fix :math:`r` and define :math:`g(u) = [ \partial_u z(r, u) ]^\R{T}`.
+It follows that
+
+.. math::
+
+   g(u)
+   =
+   \left( \begin{array}{c}
+   u_5 u_4 r^2 / 2 \\
+   u_5 r \\
+   1 \\
+   0 \\
+   u_5 u_0 r^2 / 2 \\
+   u_t r + u_4 u_0 r^2 / 2 \\
+   0
+   \end{array} \right)
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_reverse.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

@@ -4,23 +4,27 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_sub_hes.cpp$$
-$spell
-$$
+{xrst_begin sparse_sub_hes.cpp}
 
-$section Subset of a Sparse Hessian: Example and Test$$
+Subset of a Sparse Hessian: Example and Test
+############################################
 
-$head Purpose$$
+Purpose
+*******
 This example uses a
-$cref/column subset/sparse_hessian/p/Column Subset/$$ of the sparsity pattern
+:ref:`sparse_hessian@p@Column Subset` of the sparsity pattern
 to compute a subset of the Hessian.
 
-$head See Also$$
-$cref sub_sparse_hes.cpp$$
+See Also
+********
+:ref:`sub_sparse_hes.cpp-name`
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end sparse_sub_hes.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

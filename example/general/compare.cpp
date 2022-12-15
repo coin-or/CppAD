@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin compare.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin compare.cpp}
 
-$section AD Binary Comparison Operators: Example and Test$$
+AD Binary Comparison Operators: Example and Test
+################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end compare.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

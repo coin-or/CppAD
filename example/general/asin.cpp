@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin asin.cpp$$
-$spell
-   sin
-   asin
-$$
+{xrst_begin asin.cpp}
 
-$section The AD asin Function: Example and Test$$
+The AD asin Function: Example and Test
+######################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end asin.cpp}
 */
 // BEGIN C++
 

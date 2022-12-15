@@ -3,33 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin adolc_det_minor.cpp$$
-$spell
-   onetape
-   cppad
-   zos
-   fos
-   adouble
-   CppAD
-   typedef
-   adolc
-   Lu
-   Adolc
-   det
-   hpp
-   const
-   bool
-   srand
-$$
+{xrst_begin adolc_det_minor.cpp}
 
-$section Adolc Speed: Gradient of Determinant by Minor Expansion$$
+Adolc Speed: Gradient of Determinant by Minor Expansion
+#######################################################
 
+Specifications
+**************
+See :ref:`link_det_minor-name` .
 
-$head Specifications$$
-See $cref link_det_minor$$.
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -161,6 +147,8 @@ bool link_det_minor(
    // --------------------------------------------------------------------
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end adolc_det_minor.cpp}
 */

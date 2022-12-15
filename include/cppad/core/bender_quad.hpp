@@ -5,285 +5,305 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin BenderQuad$$
-$spell
-   cppad.hpp
-   BAvector
+{xrst_begin BenderQuad}
+{xrst_spell
+   avector
    gx
    gxx
-   CppAD
-   Fy
-   dy
-   Jacobian
-   ADvector
-   const
-   dg
-   ddg
-$$
+}
 
+Computing Jacobian and Hessian of Bender's Reduced Objective
+############################################################
 
-$section Computing Jacobian and Hessian of Bender's Reduced Objective$$
+Syntax
+******
 
-$head Syntax$$
-$codei%
-# include <cppad/cppad.hpp>
-BenderQuad(%x%, %y%, %fun%, %g%, %gx%, %gxx%)%$$
+| # ``include <cppad/cppad.hpp>``
+| *BenderQuad* ( ``x`` , ``y`` , ``fun`` , ``g`` , ``gx`` , ``gxx`` )
 
-$head See Also$$
-$cref opt_val_hes$$
+See Also
+********
+:ref:`opt_val_hes-name`
 
-$head Problem$$
-The type $cref/ADvector/BenderQuad/ADvector/$$ cannot be determined
+Problem
+*******
+The type :ref:`BenderQuad@ADvector` cannot be determined
 form the arguments above
-(currently the type $icode ADvector$$ must be
-$codei%CPPAD_TESTVECTOR(%Base%)%$$.)
-This will be corrected in the future by requiring $icode Fun$$
-to define $icode%Fun%::vector_type%$$ which will specify the
-type $icode ADvector$$.
+(currently the type *ADvector* must be
+``CPPAD_TESTVECTOR`` ( *Base* ) .)
+This will be corrected in the future by requiring *Fun*
+to define *Fun* :: ``vector_type`` which will specify the
+type *ADvector* .
 
-$head Purpose$$
+Purpose
+*******
 We are given the optimization problem
-$latex \[
-\begin{array}{rcl}
-{\rm minimize} & F(x, y) & {\rm w.r.t.} \; (x, y) \in \B{R}^n \times \B{R}^m
-\end{array}
-\] $$
-that is convex with respect to $latex y$$.
-In addition, we are given a set of equations $latex H(x, y)$$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   {\rm minimize} & F(x, y) & {\rm w.r.t.} \; (x, y) \in \B{R}^n \times \B{R}^m
+   \end{eqnarray}
+
+that is convex with respect to :math:`y`.
+In addition, we are given a set of equations :math:`H(x, y)`
 such that
-$latex \[
+
+.. math::
+
    H[ x , Y(x) ] = 0 \;\; \Rightarrow \;\; F_y [ x , Y(x) ] = 0
-\] $$
-(In fact, it is often the case that $latex H(x, y) = F_y (x, y)$$.)
+
+(In fact, it is often the case that :math:`H(x, y) = F_y (x, y)`.)
 Furthermore, it is easy to calculate a Newton step for these equations; i.e.,
-$latex \[
+
+.. math::
+
    dy = - [ \partial_y H(x, y)]^{-1} H(x, y)
-\] $$
+
 The purpose of this routine is to compute the
 value, Jacobian, and Hessian of the reduced objective function
-$latex \[
+
+.. math::
+
    G(x) = F[ x , Y(x) ]
-\] $$
+
 Note that if only the value and Jacobian are needed, they can be
 computed more quickly using the relations
-$latex \[
-   G^{(1)} (x) = \partial_x F [x, Y(x) ]
-\] $$
 
-$head x$$
-The $code BenderQuad$$ argument $icode x$$ has prototype
-$codei%
-   const %BAvector% &%x%
-%$$
-(see $cref/BAvector/BenderQuad/BAvector/$$ below)
-and its size must be equal to $icode n$$.
+.. math::
+
+   G^{(1)} (x) = \partial_x F [x, Y(x) ]
+
+x
+*
+The ``BenderQuad`` argument *x* has prototype
+
+   ``const`` *BAvector* & *x*
+
+(see :ref:`BenderQuad@BAvector` below)
+and its size must be equal to *n* .
 It specifies the point at which we evaluating
 the reduced objective function and its derivatives.
 
+y
+*
+The ``BenderQuad`` argument *y* has prototype
 
-$head y$$
-The $code BenderQuad$$ argument $icode y$$ has prototype
-$codei%
-   const %BAvector% &%y%
-%$$
-and its size must be equal to $icode m$$.
-It must be equal to $latex Y(x)$$; i.e.,
-it must solve the problem in $latex y$$ for this given value of $latex x$$
-$latex \[
-\begin{array}{rcl}
-   {\rm minimize} & F(x, y) & {\rm w.r.t.} \; y \in \B{R}^m
-\end{array}
-\] $$
+   ``const`` *BAvector* & *y*
 
-$head fun$$
-The $code BenderQuad$$ object $icode fun$$
+and its size must be equal to *m* .
+It must be equal to :math:`Y(x)`; i.e.,
+it must solve the problem in :math:`y` for this given value of :math:`x`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      {\rm minimize} & F(x, y) & {\rm w.r.t.} \; y \in \B{R}^m
+   \end{eqnarray}
+
+fun
+***
+The ``BenderQuad`` object *fun*
 must support the member functions listed below.
-The $codei%AD<%Base%>%$$ arguments will be variables for
-a tape created by a call to $cref Independent$$ from $code BenderQuad$$
+The ``AD<`` *Base* > arguments will be variables for
+a tape created by a call to :ref:`Independent-name` from ``BenderQuad``
 (hence they can not be combined with variables corresponding to a
 different tape).
 
-$subhead fun.f$$
-The $code BenderQuad$$ argument $icode fun$$ supports the syntax
-$codei%
-   %f% = %fun%.f(%x%, %y%)
-%$$
-The $icode%fun%.f%$$ argument $icode x$$ has prototype
-$codei%
-   const %ADvector% &%x%
-%$$
-(see $cref/ADvector/BenderQuad/ADvector/$$ below)
-and its size must be equal to $icode n$$.
-The $icode%fun%.f%$$ argument $icode y$$ has prototype
-$codei%
-   const %ADvector% &%y%
-%$$
-and its size must be equal to $icode m$$.
-The $icode%fun%.f%$$ result $icode f$$ has prototype
-$codei%
-   %ADvector% %f%
-%$$
+fun.f
+=====
+The ``BenderQuad`` argument *fun* supports the syntax
+
+   *f* = *fun* . ``f`` ( *x* , *y* )
+
+The *fun* . ``f`` argument *x* has prototype
+
+   ``const`` *ADvector* & *x*
+
+(see :ref:`BenderQuad@ADvector` below)
+and its size must be equal to *n* .
+The *fun* . ``f`` argument *y* has prototype
+
+   ``const`` *ADvector* & *y*
+
+and its size must be equal to *m* .
+The *fun* . ``f`` result *f* has prototype
+
+   *ADvector* *f*
+
 and its size must be equal to one.
-The value of $icode f$$ is
-$latex \[
+The value of *f* is
+
+.. math::
+
    f = F(x, y)
-\] $$.
 
-$subhead fun.h$$
-The $code BenderQuad$$ argument $icode fun$$ supports the syntax
-$codei%
-   %h% = %fun%.h(%x%, %y%)
-%$$
-The $icode%fun%.h%$$ argument $icode x$$ has prototype
-$codei%
-   const %ADvector% &%x%
-%$$
-and its size must be equal to $icode n$$.
-The $icode%fun%.h%$$ argument $icode y$$ has prototype
-$codei%
-   const %BAvector% &%y%
-%$$
-and its size must be equal to $icode m$$.
-The $icode%fun%.h%$$ result $icode h$$ has prototype
-$codei%
-   %ADvector% %h%
-%$$
-and its size must be equal to $icode m$$.
-The value of $icode h$$ is
-$latex \[
+fun.h
+=====
+The ``BenderQuad`` argument *fun* supports the syntax
+
+   *h* = *fun* . ``h`` ( *x* , *y* )
+
+The *fun* . ``h`` argument *x* has prototype
+
+   ``const`` *ADvector* & *x*
+
+and its size must be equal to *n* .
+The *fun* . ``h`` argument *y* has prototype
+
+   ``const`` *BAvector* & *y*
+
+and its size must be equal to *m* .
+The *fun* . ``h`` result *h* has prototype
+
+   *ADvector* *h*
+
+and its size must be equal to *m* .
+The value of *h* is
+
+.. math::
+
    h = H(x, y)
-\] $$.
 
-$subhead fun.dy$$
-The $code BenderQuad$$ argument $icode fun$$ supports the syntax
-$codei%
-   %dy% = %fun%.dy(%x%, %y%, %h%)
+fun.dy
+======
+The ``BenderQuad`` argument *fun* supports the syntax
 
-%x%
-%$$
-The $icode%fun%.dy%$$ argument $icode x$$ has prototype
-$codei%
-   const %BAvector% &%x%
-%$$
-and its size must be equal to $icode n$$.
-Its value will be exactly equal to the $code BenderQuad$$ argument
-$icode x$$ and values depending on it can be stored as private objects
-in $icode f$$ and need not be recalculated.
-$codei%
+| |tab| *dy* = *fun* . ``dy`` ( *x* , *y* , *h* )
+| 
+| *x*
 
-%y%
-%$$
-The $icode%fun%.dy%$$ argument $icode y$$ has prototype
-$codei%
-   const %BAvector% &%y%
-%$$
-and its size must be equal to $icode m$$.
-Its value will be exactly equal to the $code BenderQuad$$ argument
-$icode y$$ and values depending on it can be stored as private objects
-in $icode f$$ and need not be recalculated.
-$codei%
+The *fun* . ``dy`` argument *x* has prototype
 
-%h%
-%$$
-The $icode%fun%.dy%$$ argument $icode h$$ has prototype
-$codei%
-   const %ADvector% &%h%
-%$$
-and its size must be equal to $icode m$$.
-$codei%
+   ``const`` *BAvector* & *x*
 
-%dy%
-%$$
-The $icode%fun%.dy%$$ result $icode dy$$ has prototype
-$codei%
-   %ADvector% %dy%
-%$$
-and its size must be equal to $icode m$$.
-The return value $icode dy$$ is given by
-$latex \[
+and its size must be equal to *n* .
+Its value will be exactly equal to the ``BenderQuad`` argument
+*x* and values depending on it can be stored as private objects
+in *f* and need not be recalculated.
+
+   *y*
+
+The *fun* . ``dy`` argument *y* has prototype
+
+   ``const`` *BAvector* & *y*
+
+and its size must be equal to *m* .
+Its value will be exactly equal to the ``BenderQuad`` argument
+*y* and values depending on it can be stored as private objects
+in *f* and need not be recalculated.
+
+   *h*
+
+The *fun* . ``dy`` argument *h* has prototype
+
+   ``const`` *ADvector* & *h*
+
+and its size must be equal to *m* .
+
+   *dy*
+
+The *fun* . ``dy`` result *dy* has prototype
+
+   *ADvector* *dy*
+
+and its size must be equal to *m* .
+The return value *dy* is given by
+
+.. math::
+
    dy = - [ \partial_y H (x , y) ]^{-1} h
-\] $$
-Note that if $icode h$$ is equal to $latex H(x, y)$$,
-$latex dy$$ is the Newton step for finding a zero
-of $latex H(x, y)$$ with respect to $latex y$$;
-i.e.,
-$latex y + dy$$ is an approximate solution for the equation
-$latex H (x, y + dy) = 0$$.
 
-$head g$$
-The argument $icode g$$ has prototype
-$codei%
-   %BAvector% &%g%
-%$$
+Note that if *h* is equal to :math:`H(x, y)`,
+:math:`dy` is the Newton step for finding a zero
+of :math:`H(x, y)` with respect to :math:`y`;
+i.e.,
+:math:`y + dy` is an approximate solution for the equation
+:math:`H (x, y + dy) = 0`.
+
+g
+*
+The argument *g* has prototype
+
+   *BAvector* & *g*
+
 and has size one.
 The input value of its element does not matter.
 On output,
-it contains the value of $latex G (x)$$; i.e.,
-$latex \[
+it contains the value of :math:`G (x)`; i.e.,
+
+.. math::
+
    g[0] = G (x)
-\] $$
 
-$head gx$$
-The argument $icode gx$$ has prototype
-$codei%
-   %BAvector% &%gx%
-%$$
-and has size $latex n $$.
+gx
+**
+The argument *gx* has prototype
+
+   *BAvector* & *gx*
+
+and has size :math:`n`.
 The input values of its elements do not matter.
 On output,
-it contains the Jacobian of $latex G (x)$$; i.e.,
-for $latex j = 0 , \ldots , n-1$$,
-$latex \[
+it contains the Jacobian of :math:`G (x)`; i.e.,
+for :math:`j = 0 , \ldots , n-1`,
+
+.. math::
+
    gx[ j ] = G^{(1)} (x)_j
-\] $$
 
-$head gxx$$
-The argument $icode gx$$ has prototype
-$codei%
-   %BAvector% &%gxx%
-%$$
-and has size $latex n \times n$$.
+gxx
+***
+The argument *gx* has prototype
+
+   *BAvector* & *gxx*
+
+and has size :math:`n \times n`.
 The input values of its elements do not matter.
 On output,
-it contains the Hessian of $latex G (x)$$; i.e.,
-for $latex i = 0 , \ldots , n-1$$, and
-$latex j = 0 , \ldots , n-1$$,
-$latex \[
+it contains the Hessian of :math:`G (x)`; i.e.,
+for :math:`i = 0 , \ldots , n-1`, and
+:math:`j = 0 , \ldots , n-1`,
+
+.. math::
+
    gxx[ i * n + j ] = G^{(2)} (x)_{i,j}
-\] $$
 
-$head BAvector$$
-The type $icode BAvector$$ must be a
-$cref SimpleVector$$ class.
-We use $icode Base$$ to refer to the type of the elements of
-$icode BAvector$$; i.e.,
-$codei%
-   %BAvector%::value_type
-%$$
+BAvector
+********
+The type *BAvector* must be a
+:ref:`SimpleVector-name` class.
+We use *Base* to refer to the type of the elements of
+*BAvector* ; i.e.,
 
-$head ADvector$$
-The type $icode ADvector$$ must be a
-$cref SimpleVector$$ class with elements of type
-$codei%AD<%Base%>%$$; i.e.,
-$codei%
-   %ADvector%::value_type
-%$$
+   *BAvector* :: ``value_type``
+
+ADvector
+********
+The type *ADvector* must be a
+:ref:`SimpleVector-name` class with elements of type
+``AD<`` *Base* > ; i.e.,
+
+   *ADvector* :: ``value_type``
+
 must be the same type as
-$codei%
-   AD< %BAvector%::value_type >
-%$$.
 
+   ``AD<`` *BAvector* :: ``value_type >``
 
-$head Example$$
-$children%
+.
+
+Example
+*******
+{xrst_toc_hidden
    example/general/bender_quad.cpp
-%$$
+}
 The file
-$cref bender_quad.cpp$$
+:ref:`bender_quad.cpp-name`
 contains an example and test of this operation.
 
-
-$end
+{xrst_end BenderQuad}
 -----------------------------------------------------------------------------
 */
 

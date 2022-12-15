@@ -12,73 +12,80 @@ Define the CppAD error checking macros (all of which begin with CPPAD_ASSERT_)
 
 /*
 -------------------------------------------------------------------------------
-$begin cppad_assert$$
-$spell
-   CppAD
-   exp
-   const
-   bool
-$$
+{xrst_begin cppad_assert}
+{xrst_spell
+   macros
+   msg
+}
 
+CppAD Assertions During Execution
+#################################
 
-$section CppAD Assertions During Execution$$
+Syntax
+******
 
-$head Syntax$$
-$codei%CPPAD_ASSERT_KNOWN(%exp%, %msg%)
-%$$
-$codei%CPPAD_ASSERT_UNKNOWN(%exp%)%$$
+   ``CPPAD_ASSERT_KNOWN`` ( *exp* , *msg* )
 
+``CPPAD_ASSERT_UNKNOWN`` ( *exp* )
 
-$head Purpose$$
+Purpose
+*******
 These CppAD macros are used to detect and report errors.
 They are documented here because they correspond to the C++
 source code that the error is reported at.
 
-$head NDEBUG$$
+NDEBUG
+******
 If the preprocessor symbol
-$cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined,
+:ref:`Faq@Speed@NDEBUG` is defined,
 these macros do nothing; i.e., they are optimized out.
 
-$head Restriction$$
+Restriction
+***********
 The CppAD user should not uses these macros.
-You can however write your own macros that do not begin with $code CPPAD$$
-and that call the $cref/CppAD error handler/ErrorHandler/$$.
+You can however write your own macros that do not begin with ``CPPAD``
+and that call the :ref:`CppAD error handler<ErrorHandler-name>` .
 
-$head Known$$
-The $code CPPAD_ASSERT_KNOWN$$ macro is used to check for an error
+Known
+*****
+The ``CPPAD_ASSERT_KNOWN`` macro is used to check for an error
 with a known cause.
 For example, many CppAD routines uses these macros
 to make sure their arguments conform to their specifications.
 
-$head Unknown$$
-The $code CPPAD_ASSERT_UNKNOWN$$ macro is used to check that the
+Unknown
+*******
+The ``CPPAD_ASSERT_UNKNOWN`` macro is used to check that the
 CppAD internal data structures conform as expected.
 If this is not the case, CppAD does not know why the error has
 occurred; for example, the user may have written past the end
 of an allocated array.
 
-$head Exp$$
-The argument $icode exp$$ is a C++ source code expression
-that results in a $code bool$$ value that should be true.
+Exp
+***
+The argument *exp* is a C++ source code expression
+that results in a ``bool`` value that should be true.
 If it is false, an error has occurred.
 This expression may be execute any number of times
 (including zero times) so it must have not side effects.
 
-$head Msg$$
-The argument $icode msg$$ has prototype
-$codei%
-   const char *%msg%
-%$$
-and contains a $code '\0'$$ terminated character string.
-This string is a description of the error
-corresponding to $icode exp$$ being false.
+Msg
+***
+The argument *msg* has prototype
 
-$head Error Handler$$
+   ``const char`` * *msg*
+
+and contains a ``'\0'`` terminated character string.
+This string is a description of the error
+corresponding to *exp* being false.
+
+Error Handler
+*************
 These macros use the
-$cref/CppAD error handler/ErrorHandler/$$ to report errors.
+:ref:`CppAD error handler<ErrorHandler-name>` to report errors.
 This error handler can be replaced by the user.
 
-$end
+{xrst_end cppad_assert}
 ------------------------------------------------------------------------------
 */
 

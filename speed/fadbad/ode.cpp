@@ -3,36 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin fadbad_ode.cpp$$
-$spell
-   fadiff
-   cassert
-   namespace
-   fabs
-   const
-   std
-   typedef
-   diff
-   Jacobian
-   cstring
-   cppad
-   hpp
-   onetape
-   Fadbad
-   bool
-   CppAD
-$$
+{xrst_begin fadbad_ode.cpp}
 
-$section Fadbad Speed: Ode$$
+Fadbad Speed: Ode
+#################
 
+Specifications
+**************
+See :ref:`link_ode-name` .
 
+Implementation
+**************
 
-$head Specifications$$
-See $cref link_ode$$.
-
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -101,6 +85,8 @@ bool link_ode(
    }
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fadbad_ode.cpp}
 */

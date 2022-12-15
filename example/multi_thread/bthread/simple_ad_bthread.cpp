@@ -4,23 +4,24 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin simple_ad_bthread.cpp$$
-$spell
-   bthread
-   CppAD
-$$
+{xrst_begin simple_ad_bthread.cpp}
 
-$section A Simple Boost Threading AD: Example and Test$$
+A Simple Boost Threading AD: Example and Test
+#############################################
 
-
-$head Purpose$$
+Purpose
+*******
 This example demonstrates how CppAD can be used in a
 boost multi-threading environment.
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end simple_ad_bthread.cpp}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++

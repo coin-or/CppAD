@@ -18,63 +18,68 @@ extern bool link_det_lu(
 // END PROTOTYPE
 /*
 -------------------------------------------------------------------------------
-$begin link_det_lu$$
-$spell
-   det_lu
-   bool
-   CppAD
-$$
+{xrst_begin link_det_lu}
 
+Speed Testing Gradient of Determinant Using Lu Factorization
+############################################################
 
-$section Speed Testing Gradient of Determinant Using Lu Factorization$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%0
-%$$
-
-$head Purpose$$
-Each $cref/package/speed_main/package/$$
+Purpose
+*******
+Each :ref:`speed_main@package`
 must define a version of this routine as specified below.
-This is used by the $cref speed_main$$ program
+This is used by the :ref:`speed_main-name` program
 to run the corresponding speed and correctness tests.
 
-$head Method$$
-The same template routine $cref det_by_lu$$ is used
+Method
+******
+The same template routine :ref:`det_by_lu-name` is used
 by the different AD packages.
 
-$head Return Value$$
+Return Value
+************
 If this speed test is not yet
-supported by a particular $icode package$$,
-the corresponding return value for $code link_det_lu$$
-should be $code false$$.
+supported by a particular *package* ,
+the corresponding return value for ``link_det_lu``
+should be ``false`` .
 
-$head size$$
-The argument $icode size$$
+size
+****
+The argument *size*
 is the number of rows and columns in the matrix.
 
-$head repeat$$
-The argument $icode repeat$$ is the number of different matrices
+repeat
+******
+The argument *repeat* is the number of different matrices
 that the gradient (or determinant) is computed for.
 
-$head matrix$$
-The argument $icode matrix$$ is a vector with $icode%size%*%size%$$ elements.
+matrix
+******
+The argument *matrix* is a vector with *size* * *size* elements.
 The input value of its elements does not matter.
 The output value of its elements is the last matrix that the
 gradient (or determinant) is computed for.
 
-$head gradient$$
-The argument $icode gradient$$ is a vector with $icode%size%*%size%$$ elements.
+gradient
+********
+The argument *gradient* is a vector with *size* * *size* elements.
 The input value of its elements does not matter.
 The output value of its elements is the gradient of the
-determinant of $icode matrix$$ with respect to its elements.
+determinant of *matrix* with respect to its elements.
 
-$subhead double$$
-In the case where $icode package$$ is $code double$$,
-only the first element of $icode gradient$$ is used and it is actually
+double
+======
+In the case where *package* is ``double`` ,
+only the first element of *gradient* is used and it is actually
 the determinant value (the gradient value is not computed).
 
-$end
+{xrst_end link_det_lu}
 -----------------------------------------------------------------------------
 */
 // ---------------------------------------------------------------------------

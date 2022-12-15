@@ -7,83 +7,83 @@
 /*
 ---------------------------------------------------------------------------
 
-$begin con_dyn_var$$
-$spell
-   VecAD
-   const
-   bool
-$$
+{xrst_begin con_dyn_var}
 
-$section Constant, Dynamic, Parameter, and Variable$$
+Constant, Dynamic, Parameter, and Variable
+##########################################
 
-$head Syntax$$
-$icode%b% = Constant(%x%)
-%$$
-$icode%b% = Dynamic(%x%)
-%$$
-$icode%b% = Parameter(%x%)
-%$$
-$icode%b% = Variable(%x%)
-%$$
+Syntax
+******
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const AD<%Base%>    &%x%
-   const VecAD<%Base%> &%x%
-%$$
+| *b* = ``Constant`` ( *x* )
+| *b* = ``Dynamic`` ( *x* )
+| *b* = ``Parameter`` ( *x* )
+| *b* = ``Variable`` ( *x* )
 
-$head b$$
-The return value $icode b$$ has prototype
-$codei%
-   bool %b%
-%$$
+x
+*
+The argument *x* has prototype
 
-$head Constant$$
-The return value for $code Constant$$ is true
-is true if and only if $icode x$$ is
-a $cref/constant/glossary/Parameter/Constant/$$ parameter.
-A $cref/VecAD<Base>/VecAD/$$ object is a constant parameter
+| |tab| ``const AD<`` *Base* >    & *x*
+| |tab| ``const VecAD<`` *Base* > & *x*
+
+b
+*
+The return value *b* has prototype
+
+   ``bool`` *b*
+
+Constant
+********
+The return value for ``Constant`` is true
+is true if and only if *x* is
+a :ref:`glossary@Parameter@Constant` parameter.
+A :ref:`VecAD\<Base><VecAD-name>` object is a constant parameter
 if no element of the vector depends on the independent variables.
 
-$head Dynamic$$
-The return value for $code Dynamic$$ is true
-is true if and only if $icode x$$ is
-a $cref/dynamic/glossary/Parameter/Dynamic/$$ parameter.
-No element of a $cref/VecAD<Base>/VecAD/$$ object
+Dynamic
+*******
+The return value for ``Dynamic`` is true
+is true if and only if *x* is
+a :ref:`glossary@Parameter@Dynamic` parameter.
+No element of a :ref:`VecAD\<Base><VecAD-name>` object
 can depend on the dynamic parameters and this function returns false
 for these objects.
 
-$head Parameter$$
-The return value for $code Parameter$$ is true
-is true if and only if $icode x$$ is
-a $cref/parameter/glossary/Parameter/$$.
-A $cref/VecAD<Base>/VecAD/$$ object is a parameter
+Parameter
+*********
+The return value for ``Parameter`` is true
+is true if and only if *x* is
+a :ref:`glossary@Parameter` .
+A :ref:`VecAD\<Base><VecAD-name>` object is a parameter
 if no element of the vector depends on the independent variables.
 
-$head Variable$$
-The return value for $code Variable$$ is true
-is true if and only if $icode x$$ is
-a $cref/variable/glossary/Variable/$$.
-A $cref/VecAD<Base>/VecAD/$$ object is a variable
+Variable
+********
+The return value for ``Variable`` is true
+is true if and only if *x* is
+a :ref:`glossary@Variable` .
+A :ref:`VecAD\<Base><VecAD-name>` object is a variable
 if any element of the vector depends on the independent variables.
 
-$head Operation Sequence$$
+Operation Sequence
+******************
 The result of this operation is not an
-$cref/AD of Base/glossary/AD of Base/$$ object.
+:ref:`glossary@AD of Base` object.
 Thus it will not be recorded as part of an
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/con_dyn_var.cpp
-%$$
+}
 The file
-$cref con_dyn_var.cpp$$
+:ref:`con_dyn_var.cpp-name`
 contains an example and test of these functions.
 
-$end
+{xrst_end con_dyn_var}
 -----------------------------------------------------------------------------
 */
 

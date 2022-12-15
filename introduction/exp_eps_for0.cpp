@@ -3,20 +3,13 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin exp_eps_for0.cpp$$
-$spell
-   std
-   exp_eps_seq
-   cmath
-   bool
-   fabs
-$$
+{xrst_begin exp_eps_for0.cpp}
 
+exp_eps: Verify Zero Order Forward Sweep
+########################################
 
-$section exp_eps: Verify Zero Order Forward Sweep$$
-
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cmath>                // for fabs function
 bool exp_eps_for0(double *v0)    // double v0[8]
 {  bool  ok = true;
@@ -49,6 +42,8 @@ bool exp_eps_for0(void)
 {  double v0[8];
    return exp_eps_for0(v0);
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end exp_eps_for0.cpp}
 */

@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin unary_plus.cpp$$
-$spell
-   Cpp
-   cstddef
-$$
+{xrst_begin unary_plus.cpp}
 
-$section AD Unary Plus Operator: Example and Test$$
+AD Unary Plus Operator: Example and Test
+########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end unary_plus.cpp}
 */
 // BEGIN C++
 

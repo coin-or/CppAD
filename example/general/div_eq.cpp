@@ -4,15 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin div_eq.cpp$$
+{xrst_begin div_eq.cpp}
 
-$section AD Compound Assignment Division: Example and Test$$
+AD Compound Assignment Division: Example and Test
+#################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end div_eq.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

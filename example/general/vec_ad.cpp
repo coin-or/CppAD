@@ -4,19 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin vec_ad.cpp$$
-$spell
-   Vec
-   Cpp
-   cstddef
-$$
+{xrst_begin vec_ad.cpp}
 
-$section AD Vectors that Record Index Operations: Example and Test$$
+AD Vectors that Record Index Operations: Example and Test
+#########################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end vec_ad.cpp}
 */
 // BEGIN C++
 

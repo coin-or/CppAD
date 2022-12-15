@@ -5,33 +5,33 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin subgraph_sparsity$$
-$spell
-   const
-   subgraph
+{xrst_begin subgraph_sparsity}
+{xrst_spell
    subgraphs
-   rc
-   Jacobian
-   bool
-$$
+}
 
-$section Subgraph Dependency Sparsity Patterns$$
+Subgraph Dependency Sparsity Patterns
+#####################################
 
-$head Syntax$$
-$icode%f%.subgraph_sparsity(
-   %select_domain%, %select_range%, %transpose%, %pattern_out%
-)%$$
+Syntax
+******
 
-$head See Also$$
-$cref/clear_subgraph/subgraph_reverse/clear_subgraph/$$.
+| *f* . ``subgraph_sparsity`` (
+| |tab| *select_domain* , *select_range* , *transpose* , *pattern_out*
+| )
 
-$head Notation$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to
-the operation sequence stored in $icode f$$.
+See Also
+********
+:ref:`subgraph_reverse@clear_subgraph` .
 
+Notation
+********
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to
+the operation sequence stored in *f* .
 
-$head Method$$
+Method
+******
 This routine uses a subgraph technique. To be specific,
 for each dependent variable,
 it creates a subgraph of the operation sequence
@@ -39,91 +39,101 @@ containing the variables that affect the dependent variable.
 This avoids the overhead of performing set operations
 that is inherent in other methods for computing sparsity patterns.
 
-$head Atomic Function$$
+Atomic Function
+***************
 The sparsity calculation for
-$cref/atomic functions/atomic_two_afun/$$ in the $icode f$$ operation sequence
+:ref:`atomic functions<atomic_two_afun-name>` in the *f* operation sequence
 are not efficient. To be specific, each atomic function is treated as if
 all of its outputs depend on all of its inputs.
 This may be improved upon in the future; see the
-$cref/subgraph sparsity/wish_list/Subgraph/Sparsity/$$
+:ref:`subgraph sparsity<wish_list@Subgraph@Sparsity>`
 wish list item.
 
-$head BoolVector$$
-The type $icode BoolVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$.
+BoolVector
+**********
+The type *BoolVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` .
 
-$head SizeVector$$
-The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
+f
+*
+The object *f* has prototype
 
-$head select_domain$$
-The argument $icode select_domain$$ has prototype
-$codei%
-   const %BoolVector%& %select_domain%
-%$$
-It has size $latex n$$ and specifies which independent variables
+   ``ADFun<`` *Base* > *f*
+
+select_domain
+*************
+The argument *select_domain* has prototype
+
+   ``const`` *BoolVector* & *select_domain*
+
+It has size :math:`n` and specifies which independent variables
 to include in the calculation.
 If not all the independent variables are included in the calculation,
 a forward pass on the operation sequence is used to determine which
 nodes may be in the subgraphs.
 
-$head select_range$$
-The argument $icode select_range$$ has prototype
-$codei%
-   const %BoolVector%& %select_range%
-%$$
-It has size $latex m$$ and specifies which components of the range
+select_range
+************
+The argument *select_range* has prototype
+
+   ``const`` *BoolVector* & *select_range*
+
+It has size :math:`m` and specifies which components of the range
 to include in the calculation.
 A subgraph is built for each dependent variable
 and the selected set of independent variables.
 
-$head transpose$$
+transpose
+*********
 This argument has prototype
-$codei%
-   bool %transpose%
-%$$
-If $icode transpose$$ it is false (true),
-upon return $icode pattern_out$$ is a sparsity pattern for
-$latex J(x)$$ ($latex J(x)^\R{T}$$) defined below.
 
-$head pattern_out$$
+   ``bool`` *transpose*
+
+If *transpose* it is false (true),
+upon return *pattern_out* is a sparsity pattern for
+:math:`J(x)` (:math:`J(x)^\R{T}`) defined below.
+
+pattern_out
+***********
 This argument has prototype
-$codei%
-   sparse_rc<%SizeVector%>& %pattern_out%
-%$$
-This input value of $icode pattern_out$$ does not matter.
-Upon return $icode pattern_out$$ is a
-$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
-for $latex F(x)$$.
-The pattern has $latex m$$ rows, $latex n$$ columns.
-If $icode%select_domain%[%j%]%$$ is true,
-$icode%select_range%[%i%]%$$ is true, and
-$latex F_i (x)$$ depends on $latex x_j$$,
-then the pair $latex (i, j)$$ is in $icode pattern_out$$.
+
+   ``sparse_rc<`` *SizeVector* >& *pattern_out*
+
+This input value of *pattern_out* does not matter.
+Upon return *pattern_out* is a
+:ref:`dependency.cpp@Dependency Pattern`
+for :math:`F(x)`.
+The pattern has :math:`m` rows, :math:`n` columns.
+If *select_domain* [ *j* ] is true,
+*select_range* [ *i* ] is true, and
+:math:`F_i (x)` depends on :math:`x_j`,
+then the pair :math:`(i, j)` is in *pattern_out* .
 Not that this is also a sparsity pattern for the Jacobian
-$latex \[
-   J(x) = R F^{(1)} (x) D
-\] $$
-where $latex D$$ ($latex R$$) is the diagonal matrix corresponding
-to $icode select_domain$$ ($icode select_range$$).
 
-$head Example$$
-$children%
+.. math::
+
+   J(x) = R F^{(1)} (x) D
+
+where :math:`D` (:math:`R`) is the diagonal matrix corresponding
+to *select_domain* ( *select_range* ).
+
+Example
+*******
+{xrst_toc_hidden
    example/sparse/subgraph_sparsity.cpp
-%$$
+}
 The file
-$cref subgraph_sparsity.cpp$$
+:ref:`subgraph_sparsity.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end subgraph_sparsity}
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/ad_fun.hpp>

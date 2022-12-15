@@ -3,33 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sacado_det_lu.cpp$$
-$spell
-   onetape
-   cppad
-   Lu
-   det
-   badiff.hpp
-   const
-   CppAD
-   typedef
-   diff
-   bool
-   srand
-   Sacado
-   ADvar
-   Tay
-   Gradcomp
-$$
+{xrst_begin sacado_det_lu.cpp}
 
-$section Sacado Speed: Gradient of Determinant Using Lu Factorization$$
+Sacado Speed: Gradient of Determinant Using Lu Factorization
+############################################################
 
+Specifications
+**************
+See :ref:`link_det_lu-name` .
 
-$head Specifications$$
-See $cref link_det_lu$$.
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -89,6 +75,8 @@ bool link_det_lu(
    // ---------------------------------------------------------
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end sacado_det_lu.cpp}
 */

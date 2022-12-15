@@ -7,63 +7,67 @@
 
 /*
 -------------------------------------------------------------------------------
-$begin abs$$
-$spell
-   fabs
-   Vec
-   std
+{xrst_begin abs}
+{xrst_spell
+   differentiable
    faq
-   Taylor
-   Cpp
-   namespace
-   const
-   abs
-$$
+   rl
+}
 
-$section AD Absolute Value Functions: abs, fabs$$
+AD Absolute Value Functions: abs, fabs
+######################################
 
-$head Syntax$$
-$icode%y% = abs(%x%)
-%$$
-$icode%y% = fabs(%x%)%$$
+Syntax
+******
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+   *y* = ``abs`` ( *x* )
+
+*y* = ``fabs`` ( *x* )
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-In the case where $icode x$$ is an AD type,
-this is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+In the case where *x* is an AD type,
+this is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Complex Types$$
-The functions $code abs$$ and $icode fabs$$
+Complex Types
+*************
+The functions ``abs`` and *fabs*
 are not defined for the base types
-$code std::complex<float>$$ or $code std::complex<double>$$
-because the complex $code abs$$ function is not complex differentiable
-(see $cref/complex types faq/Faq/Complex Types/$$).
+``std::complex<float>`` or ``std::complex<double>``
+because the complex ``abs`` function is not complex differentiable
+(see :ref:`complex types faq<Faq@Complex Types>` ).
 
-$head Derivative$$
-CppAD defines the derivative of the $code abs$$ function is
-the $cref sign$$ function; i.e.,
-$latex \[
-{\rm abs}^{(1)} ( x ) = {\rm sign} (x ) =
-\left\{ \begin{array}{rl}
-   +1 & {\rm if} \; x > 0 \\
-   0  & {\rm if} \; x = 0 \\
-   -1 & {\rm if} \; x < 0
-\end{array} \right.
-\] $$
-The result for $icode%x% == 0%$$ used to be a directional derivative.
+Derivative
+**********
+CppAD defines the derivative of the ``abs`` function is
+the :ref:`sign-name` function; i.e.,
 
-$head Example$$
-$children%
+.. math::
+
+   {\rm abs}^{(1)} ( x ) = {\rm sign} (x ) =
+   \left\{ \begin{array}{rl}
+      +1 & {\rm if} \; x > 0 \\
+      0  & {\rm if} \; x = 0 \\
+      -1 & {\rm if} \; x < 0
+   \end{array} \right.
+
+The result for *x*  == 0 used to be a directional derivative.
+
+Example
+*******
+{xrst_toc_hidden
    example/general/fabs.cpp
-%$$
+}
 The file
-$cref fabs.cpp$$
+:ref:`fabs.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end abs}
 -------------------------------------------------------------------------------
 */
 

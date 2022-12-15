@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin sqrt_reverse}
+
+Square Root Function Reverse Mode Theory
+########################################
+
+We use the reverse theory
+:ref:`standard math function<reverse_theory@Standard Math Functions>`
+definition for the functions :math:`H` and :math:`G`.
+
+The forward mode formulas for the
+:ref:`square root<sqrt_forward-name>`
+function are
+
+.. math::
+
+   z^{(j)}  =  \sqrt { x^{(0)} }
+
+for the case :math:`j = 0`, and for :math:`j > 0`,
+
+.. math::
+
+   z^{(j)}  =  \frac{1}{j} \frac{1}{ z^{(0)} }
+   \left(
+      \frac{j}{2} x^{(j) }
+      - \sum_{\ell=1}^{j-1} \ell z^{(\ell)} z^{(j-\ell)}
+   \right)
+
+If :math:`j = 0`, we have the relation
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(j)} } & = &
+   \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
+   \\
+   & = &
+   \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{2 z^{(0)} }
+   \end{eqnarray}
+
+If :math:`j > 0`, then for :math:`k = 1, \ldots , j-1`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ z^{(0)} } & = &
+   \D{G}{ z^{(0)} }  + \D{G} { z^{(j)} } \D{ z^{(j)} }{ z^{(0)} }
+   \\
+   & = &
+   \D{G}{ z^{(0)} }  -
+   \D{G}{ z^{(j)} }  \frac{ z^{(j)} }{ z^{(0)} }
+   \\
+   \D{H}{ x^{(j)} } & = &
+   \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
+   \\
+   & = &
+   \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{ 2 z^{(0)} }
+   \\
+   \D{H}{ z^{(k)} } & = &
+   \D{G}{ z^{(k)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(k)} }
+   \\
+   & = &
+   \D{G}{ z^{(k)} }  - \D{G}{ z^{(j)} } \frac{ z^{(j-k)} }{ z^{(0)} }
+   \end{eqnarray}
+
+{xrst_end sqrt_reverse}

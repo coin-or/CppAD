@@ -3,27 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin double_sparse_hessian.cpp$$
-$spell
-   onetape
-   boolsparsity
-   const
-   hes
-   bool
-   cppad
-   hpp
-   CppAD
-$$
+{xrst_begin double_sparse_hessian.cpp}
 
-$section Double Speed: Sparse Hessian$$
+Double Speed: Sparse Hessian
+############################
 
+Specifications
+**************
+See :ref:`link_sparse_hessian-name` .
 
-$head Specifications$$
-See $cref link_sparse_hessian$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
@@ -65,6 +58,8 @@ bool link_sparse_hessian(
 
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end double_sparse_hessian.cpp}
 */

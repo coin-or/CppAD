@@ -3,13 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ipopt_ode_speed.cpp$$
+{xrst_begin ipopt_ode_speed.cpp}
 
-$section Speed Test for Both Simple and Fast Representations$$
+Speed Test for Both Simple and Fast Representations
+###################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ipopt_ode_speed.cpp}
 */
 
 // BEGIN C++

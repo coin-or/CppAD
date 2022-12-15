@@ -4,19 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin lu_ratio.cpp$$
-$spell
-   Geq
-   Cpp
-   Lu
-$$
+{xrst_begin lu_ratio.cpp}
 
-$section LuRatio: Example and Test$$
+LuRatio: Example and Test
+#########################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end lu_ratio.cpp}
 */
 
 // BEGIN C++

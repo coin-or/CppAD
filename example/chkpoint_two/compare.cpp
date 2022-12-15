@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin chkpoint_two_compare.cpp$$
-$spell
-   checkpointing
-   Taylor
-$$
+{xrst_begin chkpoint_two_compare.cpp}
 
-$section Compare With and Without Checkpointing: Example and Test$$
+Compare With and Without Checkpointing: Example and Test
+########################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end chkpoint_two_compare.cpp}
 */
 // BEGIN C++
 

@@ -6,18 +6,20 @@
 # include <cppad/utility/vector.hpp>
 
 /*
-$begin xpackage_sparse_jacobian.cpp$$
-$spell
+{xrst_begin xpackage_sparse_jacobian.cpp}
+{xrst_spell
    xpackage
-   jacobian
-$$
+}
 
-$section Xpackage Speed: sparse_jacobian$$
+Xpackage Speed: sparse_jacobian
+###############################
 
-$head Specifications$$
-$cref link_sparse_jacobian$$
+Specifications
+**************
+:ref:`link_sparse_jacobian-name`
 
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // A xpackage version of this test is not yet available
 bool link_sparse_jacobian(
    const std::string&               job      ,
@@ -32,6 +34,8 @@ bool link_sparse_jacobian(
 {
    return false;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end xpackage_sparse_jacobian.cpp}
 */

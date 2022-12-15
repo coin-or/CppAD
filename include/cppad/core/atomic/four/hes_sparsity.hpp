@@ -6,111 +6,128 @@
 // ----------------------------------------------------------------------------
 # include <cppad/core/atomic/four/devel/hes_sparsity.hpp>
 /*
-$begin atomic_four_hes_sparsity$$
-$spell
-   Hessian
-   afun
-   hes
-   ident
-$$
+{xrst_begin atomic_four_hes_sparsity}
 
-$section Atomic Function Hessian Sparsity Patterns$$
+Atomic Function Hessian Sparsity Patterns
+#########################################
 
-$head Syntax$$
+Syntax
+******
 
-$subhead Preferred$$
-$icode%ok% = %afun%.hes_sparsity( %call_id%,
-   %ident_zero_x%, %select_x%, %select_y%, %pattern_out%
-)%$$
+Preferred
+=========
 
-$subhead Deprecated 2022-05-16$$
-$icode%ok% = %afun%.hes_sparsity( %call_id%,
-   %select_x%, %select_y%, %pattern_out%
-)%$$
+| *ok* = *afun* . ``hes_sparsity`` ( *call_id* ,
+| |tab| *ident_zero_x* , *select_x* , *select_y* , *pattern_out*
+| )
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+Deprecated 2022-05-16
+=====================
 
-$head Implementation$$
+| *ok* = *afun* . ``hes_sparsity`` ( *call_id* ,
+| |tab| *select_x* , *select_y* , *pattern_out*
+| )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Implementation
+**************
 This function must be defined if
-$cref/afun/atomic_four_ctor/atomic_user/afun/$$ is
-used to define an $cref ADFun$$ object $icode f$$,
-and Hessian sparsity patterns are computed for $icode f$$.
+:ref:`atomic_four_ctor@atomic_user@afun` is
+used to define an :ref:`ADFun-name` object *f* ,
+and Hessian sparsity patterns are computed for *f* .
 
-$head Base$$
-See $cref/Base/atomic_four_call/Base/$$.
+Base
+****
+See :ref:`atomic_four_call@Base` .
 
-$head vector$$
-is the $cref CppAD_vector$$ template class.
+vector
+******
+is the :ref:`CppAD_vector-name` template class.
 
-$head call_id$$
-See $cref/call_id/atomic_four_call/call_id/$$.
+call_id
+*******
+See :ref:`atomic_four_call@call_id` .
 
-$head ident_zero_x$$
+ident_zero_x
+************
 This can sometimes be used to create more efficient sparsity patterns.
 If you do not see a way to do this, you can just ignore it.
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
-If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+atomic function; i.e. the size of *ax* .
+If *ident_zero_x* [ *j* ] is true, the argument *ax* [ *j* ]
 is a constant parameter that is identically zero.
 An identically zero value times any other value can be treated
 as being identically zero.
 
-$head select_x$$
+select_x
+********
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
+atomic function; i.e. the size of *ax* .
 It specifies which domain components are included in
-the calculation of $icode pattern_out$$.
-If $icode%select_x%[%j%]%$$ is false, then there will be no indices
-$icode k$$ such that either of the following hold:
-$codei%
-   %pattern_out%.row()[%k%] == %j%
-   %pattern_out%.col()[%k%] == %j%
-%$$.
+the calculation of *pattern_out* .
+If *select_x* [ *j* ] is false, then there will be no indices
+*k* such that either of the following hold:
 
-$head select_y$$
+| |tab| *pattern_out* . ``row`` ()[ *k* ] == *j*
+| |tab| *pattern_out* . ``col`` ()[ *k* ] == *j*
+
+.
+
+select_y
+********
 This argument has size equal to the number of results to this
-atomic function; i.e. the size of $icode ay$$.
-It specifies which range component functions $latex g_i (x)$$ are included in
-of $icode pattern_out$$.
+atomic function; i.e. the size of *ay* .
+It specifies which range component functions :math:`g_i (x)` are included in
+of *pattern_out* .
 
-$head pattern_out$$
-This input value of $icode pattern_out$$ does not matter.
+pattern_out
+***********
+This input value of *pattern_out* does not matter.
 Upon return it is the union,
-with respect to $icode i$$ such that $icode%select_y%[%i%]%$$ is true,
-of the sparsity pattern for Hessian of $latex g_i (x)$$.
+with respect to *i* such that *select_y* [ *i* ] is true,
+of the sparsity pattern for Hessian of :math:`g_i (x)`.
 To be specific, there are non-negative indices
-$icode r$$, $icode c$$, and $icode k$$ such that
-$codei%
-   %pattern_out%.row()[%k%] == %r%
-   %pattern_out%.col()[%k%] == %c%
-%$$
+*r* , *c* , and *k* such that
+
+| |tab| *pattern_out* . ``row`` ()[ *k* ] == *r*
+| |tab| *pattern_out* . ``col`` ()[ *k* ] == *c*
+
 if and only if
-there exists an index $icode i$$ such that,
-$icode%select_y%[%i%]%$$ is true,
-$icode%select_x%[%r%]%$$ is true,
-$icode%select_x%[%c%]%$$ is true,
+there exists an index *i* such that,
+*select_y* [ *i* ] is true,
+*select_x* [ *r* ] is true,
+*select_x* [ *c* ] is true,
 and
-$latex \[
+
+.. math::
+
    \partial_{x(r)} \partial_{x(c)} g_i(x)
-\] $$
+
 is possibly non-zero.
 Note that the sparsity pattern should be symmetric.
 
-$head ok$$
-If this calculation succeeded, $icode ok$$ is true.
+ok
+**
+If this calculation succeeded, *ok* is true.
 Otherwise it is false.
 
-$head Example$$
-The following is an example $code hes_sparsity$$ definition taken from
-$cref atomic_four_norm_sq.cpp$$:
-$srcfile%
-   example/atomic_four/norm_sq.cpp%
-   0%// BEGIN HES_SPARSITY%// END HES_SPARSITY%0
-%$$
+Example
+*******
+The following is an example ``hes_sparsity`` definition taken from
+:ref:`atomic_four_norm_sq.cpp-name` :
+{xrst_literal
+   example/atomic_four/norm_sq.cpp
+   // BEGIN HES_SPARSITY
+   // END HES_SPARSITY
+}
 
-$end
+{xrst_end atomic_four_hes_sparsity}
 -----------------------------------------------------------------------------
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

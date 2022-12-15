@@ -4,114 +4,120 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin rev_checkpoint.cpp$$
-$spell
-   Checkpointing
-   Taylor
-$$
+{xrst_begin rev_checkpoint.cpp}
 
-$section Reverse Mode General Case (Checkpointing): Example and Test$$
+Reverse Mode General Case (Checkpointing): Example and Test
+###########################################################
 
-$head See Also$$
-$cref/checkpoint/chkpoint_one/$$
+See Also
+********
+:ref:`checkpoint<chkpoint_one-name>`
 
-$head Purpose$$
+Purpose
+*******
 Break a large computation into pieces and only store values at the
-interface of the pieces (this is much easier to do using $cref/checkpoint/chkpoint_one/$$).
+interface of the pieces (this is much easier to do using :ref:`checkpoint<chkpoint_one-name>` ).
 In actual applications, there may be many functions, but
 for this example there are only two.
 The functions
-$latex F : \B{R}^2 \rightarrow \B{R}^2$$
+:math:`F : \B{R}^2 \rightarrow \B{R}^2`
 and
-$latex G : \B{R}^2 \rightarrow \B{R}^2$$
+:math:`G : \B{R}^2 \rightarrow \B{R}^2`
 defined by
-$latex \[
+
+.. math::
+
    F(x) = \left( \begin{array}{c} x_0 x_1   \\ x_1 - x_0 \end{array} \right)
    \; , \;
    G(y) = \left( \begin{array}{c} y_0 - y_1 \\ y_1  y_0   \end{array} \right)
-\] $$
 
-$head Processing Steps$$
+Processing Steps
+****************
 We apply reverse mode to compute the derivative of
-$latex H : \B{R}^2 \rightarrow \B{R}$$
+:math:`H : \B{R}^2 \rightarrow \B{R}`
 is defined by
-$latex \[
-\begin{array}{rcl}
-   H(x)
-   & = & G_0 [ F(x) ] + G_1 [ F(x)  ]
-   \\
-   & = & x_0 x_1 - ( x_1 - x_0 ) + x_0 x_1 ( x_1 - x_0 )
-   \\
-   & = & x_0 x_1 ( 1 - x_0 + x_1 ) - x_1 + x_0
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      H(x)
+      & = & G_0 [ F(x) ] + G_1 [ F(x)  ]
+      \\
+      & = & x_0 x_1 - ( x_1 - x_0 ) + x_0 x_1 ( x_1 - x_0 )
+      \\
+      & = & x_0 x_1 ( 1 - x_0 + x_1 ) - x_1 + x_0
+   \end{eqnarray}
+
 Given the zero and first order Taylor coefficients
-$latex x^{(0)} $$ and $latex x^{(1)}$$,
-we use $latex X(t)$$, $latex Y(t)$$ and $latex Z(t)$$
+:math:`x^{(0)}` and :math:`x^{(1)}`,
+we use :math:`X(t)`, :math:`Y(t)` and :math:`Z(t)`
 for the corresponding functions; i.e.,
-$latex \[
-\begin{array}{rcl}
-   X(t) & = & x^{(0)} + x^{(1)} t
-   \\
-   Y(t) & = & F[X(t)] = y^{(0)} + y^{(1)} t  + O(t^2)
-   \\
-   Z(t) & = & G \{ F [ X(t) ] \} = z^{(0)} + z^{(1)} t  + O(t^2)
-   \\
-   h^{(0)} & = & z^{(0)}_0 + z^{(0)}_1
-   \\
-   h^{(1)} & = & z^{(1)}_0 + z^{(1)}_1
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X(t) & = & x^{(0)} + x^{(1)} t
+      \\
+      Y(t) & = & F[X(t)] = y^{(0)} + y^{(1)} t  + O(t^2)
+      \\
+      Z(t) & = & G \{ F [ X(t) ] \} = z^{(0)} + z^{(1)} t  + O(t^2)
+      \\
+      h^{(0)} & = & z^{(0)}_0 + z^{(0)}_1
+      \\
+      h^{(1)} & = & z^{(1)}_0 + z^{(1)}_1
+   \end{eqnarray}
+
 Here are the processing steps:
 
-$list number$$
-Use forward mode on $latex F(x)$$ to compute
-$latex y^{(0)}$$ and $latex y^{(1)}$$.
-$lnext
-Free some, or all, of the memory corresponding to $latex F(x)$$.
-$lnext
-Use forward mode on $latex G(y)$$ to compute
-$latex z^{(0)}$$ and $latex z^{(1)}$$
-$lnext
-Use reverse mode on $latex G(y)$$ to compute the derivative of
-$latex h^{(1)}$$ with respect to
-$latex y^{(0)}$$ and $latex y^{(1)}$$.
-$lnext
-Free all the memory corresponding to $latex G(y)$$.
-$lnext
-Use reverse mode on $latex F(x)$$ to compute the derivative of
-$latex h^{(1)}$$ with respect to
-$latex x^{(0)}$$ and $latex x^{(1)}$$.
-$lend
+#. Use forward mode on :math:`F(x)` to compute
+   :math:`y^{(0)}` and :math:`y^{(1)}`.
+#. Free some, or all, of the memory corresponding to :math:`F(x)`.
+#. Use forward mode on :math:`G(y)` to compute
+   :math:`z^{(0)}` and :math:`z^{(1)}`
+#. Use reverse mode on :math:`G(y)` to compute the derivative of
+   :math:`h^{(1)}` with respect to
+   :math:`y^{(0)}` and :math:`y^{(1)}`.
+#. Free all the memory corresponding to :math:`G(y)`.
+#. Use reverse mode on :math:`F(x)` to compute the derivative of
+   :math:`h^{(1)}` with respect to
+   :math:`x^{(0)}` and :math:`x^{(1)}`.
+
 This uses the following relations:
-$latex \[
-\begin{array}{rcl}
-   \partial_{x(0)} h^{(1)} [ x^{(0)} , x^{(1)} ]
-   & = &
-   \partial_{y(0)} h^{(1)} [ y^{(0)} , y^{(1)} ]
-   \partial_{x(0)} y^{(0)} [ x^{(0)} , x^{(1)} ]
-   \\
-   & + &
-   \partial_{y(1)} h^{(1)} [ y^{(0)} , y^{(1)} ]
-   \partial_{x(0)} y^{(1)} [ x^{(0)} , x^{(1)} ]
-   \\
-   \partial_{x(1)} h^{(1)} [ x^{(0)} , x^{(1)} ]
-   & = &
-   \partial_{y(0)} h^{(1)} [ y^{(0)} , y^{(1)} ]
-   \partial_{x(1)} y^{(0)} [ x^{(0)} , x^{(1)} ]
-   \\
-   & + &
-   \partial_{y(1)} h^{(1)} [ y^{(0)} , y^{(1)} ]
-   \partial_{x(1)} y^{(1)} [ x^{(0)} , x^{(1)} ]
-\end{array}
-\] $$
-where $latex \partial_{x(0)}$$ denotes the partial with respect
-to $latex x^{(0)}$$.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+.. math::
+   :nowrap:
 
+   \begin{eqnarray}
+      \partial_{x(0)} h^{(1)} [ x^{(0)} , x^{(1)} ]
+      & = &
+      \partial_{y(0)} h^{(1)} [ y^{(0)} , y^{(1)} ]
+      \partial_{x(0)} y^{(0)} [ x^{(0)} , x^{(1)} ]
+      \\
+      & + &
+      \partial_{y(1)} h^{(1)} [ y^{(0)} , y^{(1)} ]
+      \partial_{x(0)} y^{(1)} [ x^{(0)} , x^{(1)} ]
+      \\
+      \partial_{x(1)} h^{(1)} [ x^{(0)} , x^{(1)} ]
+      & = &
+      \partial_{y(0)} h^{(1)} [ y^{(0)} , y^{(1)} ]
+      \partial_{x(1)} y^{(0)} [ x^{(0)} , x^{(1)} ]
+      \\
+      & + &
+      \partial_{y(1)} h^{(1)} [ y^{(0)} , y^{(1)} ]
+      \partial_{x(1)} y^{(1)} [ x^{(0)} , x^{(1)} ]
+   \end{eqnarray}
 
-$end
+where :math:`\partial_{x(0)}` denotes the partial with respect
+to :math:`x^{(0)}`.
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end rev_checkpoint.cpp}
 */
 // BEGIN C++
 

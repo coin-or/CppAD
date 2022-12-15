@@ -1,0 +1,762 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_19}
+{xrst_spell
+   autotools
+   bthread
+   cholesky
+   conditionally
+   deprecate
+   entires
+   lepp
+   mmdd
+   omhelp
+   simplification
+   subgraphs
+   uninitialized
+   usr
+   yy
+}
+
+Changes and Additions to CppAD During 2019
+##########################################
+
+mm-dd
+*****
+
+12-27
+=====
+
+#. Add the :ref:`graph_op_enum@Print`
+   operator to the :ref:`cpp_ad_graph-name` and :ref:`json_ad_graph-name` ; see
+   :ref:`graph_print_op.cpp-name` , :ref:`json_print_op.cpp-name` .
+#. Improve the error messaging when a Json
+   :ref:`json_ad_graph@op_define_vec@op_code` in the
+   operator definition section does not start with one
+   and increment by one between definitions.
+
+12-25
+=====
+
+#. Change *pos* to :ref:`PrintFor@notpos`
+   in the ``PrintFor`` documentation because the text is printed
+   when it is not positive.
+#. Add C++ graph member functions that :ref:`cpp_graph_vector@Syntax@Find`
+   the index for an atomic or discrete function.
+
+12-24
+=====
+
+#. Add the :ref:`discrete function<json_graph_op@Discrete Functions>`
+   operator to the :ref:`json_ad_graph-name` .
+#. Fix bug when using a dynamic parameter for
+   :ref:`PrintFor@notpos` or :ref:`PrintFor@value`
+   in the ``PrintFor`` routine.
+
+12-23
+=====
+Add the :ref:`graph_op_enum@Discrete Function`
+operator to the :ref:`cpp_ad_graph-name` ; see
+:ref:`graph_discrete_op.cpp-name` .
+
+12-21
+=====
+Add an
+:ref:`wish_list@Abs-normal@Atomic Functions` item
+to the wish list for abs-normal functions.
+
+12-20
+=====
+Add a
+:ref:`wish_list@Dynamic Parameters` item and a
+:ref:`wish_list@Graph Operators` item to the wish list.
+
+12-18
+=====
+
+#. The :ref:`graph_atom_op.cpp-name` *Base* type was changed from
+   ``double`` to ``float`` .
+#. Fix a bug in
+   :ref:`from_graph-name` , :ref:`from_json-name` , :ref:`to_graph-name` , and :ref:`to_json-name`
+   when the :ref:`from_json@Base` type is not ``double`` .
+
+12-16
+=====
+Add more description in the comments for the
+:ref:`graph_op_enum values<graph_op_enum@Enum Values>` .
+
+12-15
+=====
+
+#. Added a list of the possible :ref:`ADFun-name` operators
+   that are :ref:`missing<graph_op_enum@Missing Operators>`
+   (not yet implemented) by :ref:`to_graph-name` and :ref:`to_json-name` .
+#. Absolute zero multiplication
+   :ref:`json_graph_op@Binary Operators@azmul`
+   was as added to the :ref:`json_ad_graph-name` and
+   :ref:`cpp_ad_graph-name` as ``pow_graph_op`` .
+   Functions that contain the this operator
+   can be converted to and from ``cpp_graph`` objects; e.g.,
+   see :ref:`graph_azmul_op.cpp-name` .
+   They can also be converted to and from strings containing
+   :ref:`json_ad_graph-name` representations; e.g.,
+   see :ref:`json_azmul_op.cpp-name` .
+#. Improve the
+   :ref:`graph_op_enum examples<graph_op_enum@Examples>` by removing
+   some type definitions and using statements.
+   In addition, use :ref:`cppad_testvector-name` to demonstrate that
+   any :ref:`simplevector-name` type can be used.
+
+12-14
+=====
+The power operators was added to the :ref:`json_ad_graph-name` as
+:ref:`json_graph_op@Binary Operators@pow` and to the
+:ref:`cpp_ad_graph-name` as ``pow_graph_op`` ; see
+:ref:`graph_op_enum@Enum Values` .
+Functions that contain the :ref:`pow-name` operators
+can be converted to and from ``cpp_graph`` objects; e.g.,
+see :ref:`graph_pow_op.cpp-name` .
+They can also be converted to and from strings containing
+:ref:`json_ad_graph-name` representations; e.g.,
+see :ref:`json_pow_op.cpp-name` .
+
+12-13
+=====
+Add :ref:`switch_var_dyn.cpp-name` , an example that
+switches between variables and dynamic parameters.
+
+12-12
+=====
+Add a version of the ``from_graph`` routine that
+can convert dynamic parameters to variables and vice versa; see
+:ref:`from_graph@dyn2var` and *var2dyn* in the
+``from_graph`` documentation.
+
+12-09
+=====
+Add the ``Independent`` ( *x* , *dynamic* ) syntax
+to the :ref:`Independent-name` function and changes some of the
+:ref:`new_dynamic-name` example to use this syntax.
+
+12-08
+=====
+Add wish list item for converting dynamic parameters to variables
+and vice versa. This has since been completed;
+see :ref:`whats_new_19@mm-dd@12-12` above.
+
+11-15
+=====
+Fix clang 9.0.0 mistaken uninitialized warning in
+:ref:`a11c_openmp.cpp-name` .
+
+11-10
+=====
+Change *n_independent* to *n_variable_ind* in
+:ref:`json_ad_graph<json_ad_graph@variable_ind_vec@n_variable_ind>` and
+:ref:`cpp_ad_graph<cpp_ad_graph@n_variable_ind>` .
+In addition, the under construction warning was removed from
+:ref:`json_ad_graph-name` and :ref:`cpp_ad_graph-name` .
+
+11-09
+=====
+The C++ data structure for an AD graph :ref:`cpp_ad_graph@cpp_graph`
+was add the user API for CppAD.
+
+11-05
+=====
+More work on reducing the amount of memory used by the
+:ref:`from_json-name` and :ref:`to_json-name` operations.
+
+10-28
+=====
+More work on reducing the amount of memory used by the
+:ref:`from_json-name` and :ref:`to_json-name` operations.
+
+10-27
+=====
+
+#. Working on reducing the amount of memory used by the
+   :ref:`from_json-name` and :ref:`to_json-name` operations.
+#. Improve sparse jacobian error messaging when coloring is
+   :ref:`sparse_jac@coloring@cppad` and
+   :ref:`sparse_jac@subset`
+   has elements that are not in the sparsity
+   :ref:`sparse_jac@pattern` .
+
+10-22
+=====
+A left (right) bracket was added to the beginning of (end of) the
+:ref:`json_ad_graph@constant_vec` ,
+:ref:`json_ad_graph@op_usage_vec` ,
+:ref:`json_ad_graph@dependent_vec` values
+in a Json AD graph (to properly conform to Json format).
+
+10-21
+=====
+Move the Json AD graph discussion of
+:ref:`json_ad_graph@Node Indices`
+under one heading and include
+a diagram of all the nodes.
+
+10-17
+=====
+Include conversion from function to graph (:ref:`to_json-name` )
+and back to function (:ref:`from_json-name` )
+in the :ref:`json operator<json_graph_op-name>` examples.
+
+10-02
+=====
+The default value for :ref:`cmake@cppad_prefix`
+was changed from ``/usr`` to the value of the cmake variable
+`CMAKE_INSTALL_PREFIX <https://cmake.org/cmake/help/v3.0/variable/CMAKE_INSTALL_PREFIX.html>`_.
+
+09-30
+=====
+Use a newer version of the program that generates the documentation
+``omhelp`` .
+The search utility now shows the title and section tag in separate
+areas and hides the other keywords.
+Hitting return or double clicking in the title area,
+in addition to choosing the ``Goto`` button, will go to
+the selected section.
+
+09-24
+=====
+Discussion of a :ref:`cmake@CMake Command@Warning`
+about boost as added to cmake command documentation.
+
+09-23
+=====
+The ``cppad_deprecated`` option has been completely removed from the
+cmake command :ref:`cmake@CMake Command@Options` documentation.
+
+09-18
+=====
+Merge in changes from json branch which implement the
+:ref:`json_graph_op@Compare Operators` .
+
+09-17
+=====
+The autotools install was installing * . ``hpp.in``
+instead of the corresponding * . ``hpp`` file.
+This has been fixed.
+
+09-14
+=====
+Fix autotools install so files get installed to
+*prefix* / ``include/cppad`` instead of
+*prefix* / ``include/include/cppad`` .
+Also fix the autotools ``make test`` .
+
+09-12
+=====
+Bring :ref:`autotools-name` build and test up to date
+(this was deprecated at end of 2012 and support for this will eventually stop).
+
+09-10
+=====
+The old Json unary operator examples were converted to be just
+tests and a single :ref:`json_unary_op.cpp-name` example was left
+in its place.
+
+09-09
+=====
+The Json graph
+:ref:`json_graph_op@Conditional Expressions`
+were added.
+
+08-29
+=====
+
+#. Extend :ref:`to_json-name` to handle
+   :ref:`json_graph_op@Atomic Functions` .
+   This should have been included with the atomic function change
+   on :ref:`whats_new_19@mm-dd@08-17` .
+#. Simplify the :ref:`json_atom_op.cpp-name` and add a call
+   to :ref:`to_json-name` to this example.
+#. The ``string_vec`` field was removed from the definition of an
+   Json AD graph :ref:`json_ad_graph@AD Graph@function` .
+   The corresponding operators will have strings in their
+   :ref:`op_usage<json_ad_graph@op_usage@Strings In Usage>` .
+
+#. The vector branch was merged into the master.
+   This brought in the changes below
+
+#. 08-25:
+   Change :ref:`cppad_vector.cpp-name` example to use same names as
+   in :ref:`CppAD_vector-name` documentation.
+
+#. 08-23:
+   The :ref:`CppAD_vector-name` documentation page was edited (improved).
+
+#. 08-22:
+   :ref:`CppAD_vector@Iterators` were added
+   to the CppAD vector class.
+
+08-26
+=====
+The Json graph
+:ref:`json_graph_op@Unary Operators` were added.
+
+08-19
+=====
+The CppAD vector
+:ref:`CppAD_vector@Include` discussion was edited.
+In addition, the class :ref:`CppAD_vector@vectorBool`
+is now available as a separate include file.
+
+08-17
+=====
+
+#. Add a the Json addition example :ref:`json_add_op.cpp-name` .
+#. Add the :ref:`atomic function<json_graph_op@Atomic Functions>`
+   operator which enables
+   one to call atomic functions as part of a Json AD graph; see the
+   :ref:`json_atom_op.cpp-name` example.
+
+08-16
+=====
+Add the case where :ref:`atomic_three_forward@need_y` is equal to
+``constant_enum`` during ``atomic_three`` forward mode.
+This only needs to be implemented when by :ref:`from_json-name` is used
+with the atomic function.
+
+08-13
+=====
+Fix a bug in the calculation of
+Hessian :ref:`sparsity patterns<sparsity_pattern-name>`
+when using :ref:`chkpoint_two-name` function.
+
+08-12
+=====
+
+#. Fix an assert error for the
+   :ref:`json_graph_op@sum` operator
+   in :ref:`from_json-name` .
+#. Improve the documentation for mixing debug and release versions
+   of CppAD in the same program; see
+   :ref:`preprocessor@Documented Here@CPPAD_DEBUG_AND_RELEASE` .
+
+08-10
+=====
+
+#. Remove under construction heading from the examples
+   :ref:`json_mul_op.cpp-name` , :ref:`json_sub_op.cpp-name` , :ref:`json_sum_op.cpp-name`
+   (they have been working for a while now).
+#. Add the Json :ref:`json_graph_op@Binary Operators@div` operator.
+
+08-09
+=====
+
+#. Add :ref:`json_ad_graph@AD Graph@function_name`
+   to the Json graph representation of a function.
+#. Use the function name for reporting errors in a Json graph.
+
+08-08
+=====
+
+#. Move the example include files
+   ``eigen_cholesky.hpp`` ,
+   ``eigen_mat_inv.hpp`` ,
+   ``eigen_mat_mul.hpp``
+   from the ``include/cppad/example`` directory
+   to the ``include/cppad/example/atomic_two`` directory.
+#. Move the example include file
+   ``mat_mul.hpp``
+   from the ``include/cppad/example`` directory
+   to the ``include/cppad/example/atomic_three`` directory.
+#. Improve the :ref:`atomic_three_define@Syntax` ,
+   and :ref:`atomic_three_define@parameter_x` discussion,
+   in the documentation for the ``atomic_three`` functions.
+   Furthermore, add an extra discussion of the parameters
+   to the documentation for *taylor_x* in the
+   :ref:`forward<atomic_three_forward@taylor_x@parameters>` and
+   :ref:`reverse<atomic_three_forward@taylor_x@parameters>` callback functions.
+#. Change Json *string_vec*
+   from first to second line below:
+
+   | |tab| [ *n_string* , [ *first_string* , ..., *last_string*  ] ]
+   | |tab| *n_string* , [ *first_string* , ..., *last_string*  ]
+
+   ( *string_vec* was removed on :ref:`whats_new_19@mm-dd@08-29` ).
+#. Change Json :ref:`json_ad_graph@constant_vec`
+   from first to second line below:
+
+   | |tab| [ *n_constant* , [ *first_constant* , ..., *last_constant*  ] ]
+   | |tab| *n_constant* , [ *first_constant* , ..., *last_constant*  ]
+
+#. Change Json :ref:`json_ad_graph@op_usage_vec`
+   from first to second line below:
+
+   | |tab| [ *n_op_usage* , [ *first_op_usage* , ..., *last_op_usage*  ] ]
+   | |tab| *n_op_usage* , [ *first_op_usage* , ..., *last_op_usage*  ]
+
+#. Change Json :ref:`json_ad_graph@dependent_vec`
+   from first to second line below:
+
+   | |tab| [ *n_dependent* , [ *first_dependent* , ..., *last_dependent*  ] ]
+   | |tab| *n_dependent* , [ *first_dependent* , ..., *last_dependent*  ]
+
+08-06
+=====
+
+#. Fix a bug in ``chkpoint_two`` when
+   :ref:`chkpoint_two_ctor@use_in_parallel` is true.
+#. Add the :ref:`multi_atomic_three.cpp-name` and :ref:`multi_chkpoint_two.cpp-name`
+   examples.
+#. Deprecate the :ref:`multi_atomic_two.cpp-name` and :ref:`multi_chkpoint_one.cpp-name`
+   examples
+
+07-31
+=====
+Add an example representation of a sparse matrix using the an
+:ref:`json_ad_graph-name` ; see :ref:`json_sparse.cpp-name` .
+
+07-30
+=====
+
+#. Add the json subtraction operator
+   :ref:`json_graph_op@Binary Operators@sub` .
+#. Fix :ref:`from_json-name` addition and multiply operations
+   where the first argument is a variable and second argument is a parameter.
+#. Add simple examples for the json operators that have been implemented; e.g.,
+   :ref:`json_sum_op.cpp-name` .
+#. Fix :ref:`to_json-name` when a cumulative summation has
+   subtraction terms in its summation.
+
+07-29
+=====
+Add the :ref:`json_sum_op.cpp-name` example and fix a bug in
+:ref:`from_json-name` that was demonstrated by this example.
+To be specific, the json :ref:`json_graph_op@sum` operator
+did not work when all its result was a
+:ref:`dynamic parameter<glossary@Parameter@Dynamic>` .
+
+07-25
+=====
+Fix the warning (on some systems) that
+:ref:`rev_jac_sparsity-name` shadows a member of
+``CppAD::atomic_three<Base>`` .
+
+07-19
+=====
+The ``cppad_lib`` dynamic link library version number used to be
+*yy* . *mmdd* where the major version number *yy*
+was the year minus 2000 and the minor version number *mmdd*
+was the month and day.
+The value *mmdd* was to large for a Mac system minor version number.
+See :ref:`cmake@cmake_install_libdirs@cppad_lib` for the new
+library version number system.
+
+07-18
+=====
+Change some assignment operators to equality operators in a few asserts
+(``=`` to ``==`` in the files
+``optimize_run.hpp`` and ``player.hpp`` ).
+These were not bugs because the corresponding variable
+was being set to the value it should have been.
+
+07-05
+=====
+
+#. The :ref:`json_ad_graph@op_usage_vec@n_usage` value generated by
+   :ref:`to_json-name` was not correct. This has been fixed.
+#. All the operators that were implemented so far were included in the
+   :ref:`json_ad_graph@op_define_vec` section generated by
+   ``to_json`` .
+   Now only operators that are used are included.
+   This makes it easier for humans to understand simple example graphs
+   (especially as the number of implemented operators increases).
+#. There was a bug in :ref:`from_json-name` when one
+   of the operations was a dynamic parameter and the other was a constant.
+   This has been fixed.
+#. All of the addition and multiplication operators
+   (including cumulative sum operators) have been implemented and tested..
+
+07-04
+=====
+
+#. Improve the :ref:`from_json-name` error messages by including the
+   previous two lines of Json in error message.
+#. Working on a :ref:`to_json-name` example that outputs graph
+   for the derivative of a function.
+
+07-03
+=====
+The format of a Json computational graph was changed to include
+a section at the top that defines the mapping
+between integer codes in the graph and corresponding operators,
+see the heading :ref:`json_ad_graph@op_define_vec` .
+This is now separate from
+:ref:`json_ad_graph@op_usage_vec` which is the part
+of the graph that is expect to be very large and is now less verbose.
+
+06-29
+=====
+It used to be the case that optimized functions with cumulative
+summation operators could not be optimized.
+This has been fixed and it is now acceptable to
+:ref:`optimize@Re-Optimize` an ``ADFun`` object.
+
+06-19
+=====
+
+#. Some work was done to improve the speed of sparsity calculations
+   when using the internal representation for a
+   :ref:`glossary@Sparsity Pattern@Boolean Vector` .
+#. An extra pair of braces was expected in each
+   :ref:`json_ad_graph@op_usage` of an :ref:`json_ad_graph-name` .
+   This has been fixed.
+
+06-18
+=====
+There are some problems using as Windows DLL for the ``cppad_lib``
+library. These problems have been circumvented (for the time being) by using
+as static library for Windows systems.
+
+06-17
+=====
+A new feature that constructs a ``ADFun`` object
+from a Json representation of a computational graph was added; see
+:ref:`json_ad_graph-name` and :ref:`from_json-name` .
+This requires linking the ``cppad_lib`` library.
+It is a Minimal Viable Product and is intended for testing.
+As of yet, only has the addition and multiplication operators are
+implemented.
+
+06-10
+=====
+Some work was done to improve the speed of sparsity calculations
+when using the internal representation for a
+:ref:`glossary@Sparsity Pattern@Vector of Sets` .
+This also reduced the time required by the
+:ref:`optimize-name` operation for some cases.
+
+06-02
+=====
+The version number in the title of the top level for the
+:ref:`CppAD-name` documentation was not being updated.
+This started on ``20190521`` and has been fixed.
+
+05-31
+=====
+Add the :ref:`swap<CppAD_vector-name>` operation to the
+``CppAD::vector`` template class and
+:ref:`CppAD_vector@vectorBool` class.
+In addition, change :ref:`cppad_vector.cpp-name` example
+so it focuses on operations that are not in
+:ref:`SimpleVector-name` .
+
+05-28
+=====
+There was a bug in optimizing conditional expressions; i.e.,
+optimizing without the option
+:ref:`optimize@options@no_conditional_skip` .
+This was a rare case that involving sets of conditional expressions
+and conditionally skipping a specific operator.
+The bug was reproduced in a regression test and is fixed.
+
+05-22
+=====
+
+#. Some speed improvements were made to the
+   :ref:`for_hes_sparsity-name` algorithm.
+   To be specific the forward Jacobian and Hessian patterns
+   are computed during the same pass and using the same structure.
+   This avoids an extra pass on the operation sequence.
+   In addition, when :ref:`for_hes_sparsity@internal_bool`
+   is false, it enables smart points to the forward Jacobian and Hessian
+   to share the same underlying sets of integers (when they are equal).
+#. Some minor improvements and updating was done for the
+   :ref:`directory-name` and :ref:`glossary-name` sections.
+
+05-21
+=====
+Simplify the example computation of Hessian using subgraphs
+:ref:`subgraph_hes2jac.cpp-name` .
+This simplification was a change from using
+:ref:`multiple levels of AD<mul_level-name>` to using :ref:`base2ad-name` .
+
+05-07
+=====
+There was a bug in the checking for correctness of the
+:ref:`adolc_sparse_hessian.cpp-name` results.
+This was due to the fact that the sparsity patterns for ADOL-C
+may have more entires that CppAD knows are zero.
+
+04-01
+=====
+Add the optional
+:ref:`time_test@repeat_out` argument to the
+``time_test`` function.
+
+03-27
+=====
+Improve the speed of sparse Hessian calculations that
+:ref:`sparse_hes@coloring@colpack.symmetric`
+coloring method by directly accessing the coloring determined by Colpack.
+
+03-19
+=====
+There was a bug in :ref:`f.Reverse(q, w)<reverse_any-name>` when *f*
+contained the  :ref:`pow(x,y)<pow-name>` function and *x*  == 0 .
+To be specific, it was not reporting zero instead of ``nan``
+for the derivative. This has been partially, but not completely fixed.
+See the :ref:`wish_list@Reverse Mode` in the wish list.
+
+03-13
+=====
+Fix a bug in :ref:`f.subgraph_jac_rev(x, subset)<subgraph_jac_rev-name>` .
+This bug appeared in a test that only returned the upper triangle
+of a symmetric matrix (the lower triangle worked).
+
+02-26
+=====
+There was a problem linking the boost multi-threading library
+on some systems that caused the corresponding check to be skipped.
+This has been fixed. To be specific,
+::
+
+   make check_example_multi_thread_bthread: available
+
+was not in the :ref:`cmake@CMake Command` output.
+This has been fixed.
+
+02-23
+=====
+The return value *n_sweep* was changed to
+:ref:`sparse_jac@n_color` because it is not the number
+of sweeps when :ref:`sparse_jac@group_max` is not equal to one.
+This change was also made for the
+:ref:`speed tests<speed_main@Speed Results@n_color>` .
+
+02-22
+=====
+Add row major order specifications to the speed test routines
+:ref:`link_sparse_jacobian<link_sparse_jacobian@Row Major>` and
+:ref:`link_sparse_hessian<link_sparse_hessian@Row Major>` .
+This reduced the overhead (increased the speed) for the
+:ref:`adolc_sparse_jacobian.cpp-name` and
+:ref:`adolc_sparse_hessian.cpp-name` test cases.
+
+02-20
+=====
+
+#. Fix bug below in the new release
+   `20190200.1 <https://github.com/coin-or/CppAD/archive/20190200.1.tar.gz>`_.
+#. There was a problem locating the boost multi-threading library.
+   To be specific, the
+   :ref:`cmake@CMake Command` would report
+
+      ``Could not find boost multi-threading library``
+
+   but it would still try to use the library.
+   This was because a file name with a ``-`` in it was
+   also being used for a cmake variable name.
+   This has been fixed.
+
+02-06
+=====
+Improve the discussion of the purpose of for the different
+:ref:`subgraph<subgraph_jac_rev@Purpose>` options which computing
+sparse Jacobians.
+
+02-01
+=====
+
+#. A stable release for 2019 is now available on the
+   `release <https://github.com/coin-or/CppAD/releases>`_ page.
+#. The :ref:`download-name` page was edited to include better discussion
+   of the license and documentation.
+
+01-18
+=====
+The documentation for :ref:`atomic_three-name` ,
+and its subsections, was improved.
+
+01-17
+=====
+The arguments
+:ref:`atomic_three_define@parameter_x` and
+:ref:`atomic_three_define@type_x` were included
+for all the ``atomic_three`` virtual functions.
+
+01-16
+=====
+More improvements, and bug fixes, in the optimization of :ref:`atomic-name`
+operations.
+This results in a reduction in the number of parameters
+:ref:`fun_property@size_par`
+and the number of variables
+:ref:`fun_property@size_var` .
+
+01-15
+=====
+Fix a bug in the optimization of :ref:`atomic_three-name`
+operations with :ref:`Independent@dynamic` parameters.
+
+01-14
+=====
+
+#. The :ref:`rev_depend<atomic_three_rev_depend-name>` call back function
+   was added to ``atomic_three`` class.
+   This enables one to :ref:`optimize-name` functions that use
+   ``atomic_three`` operations; see
+   the :ref:`rev_depend.cpp<atomic_three_rev_depend.cpp-name>` example.
+#. The ability to :ref:`optimize-name` functions was extended to
+   :ref:`chkpoint_two-name` operations; e.g., a call to optimize was added
+   at the end of the
+   :ref:`get_started.cpp<chkpoint_two_get_started.cpp-name>` example.
+#. The :ref:`chkpoint_one-name` class was deprecated,
+   use :ref:`chkpoint_two-name` instead.
+
+01-06
+=====
+One of the two atomic matrix multiply examples was converted
+from using :ref:`atomic_two-name` to :ref:`atomic_three_mat_mul.cpp-name` .
+This conversion made it clear that the *type_x* argument
+needed to be included in the
+:ref:`jac_sparsity<atomic_three_jac_sparsity@type_x>` and
+:ref:`hes_sparsity<atomic_three_hes_sparsity@type_x>` functions.
+
+01-05
+=====
+Merge in the ``atomic branch`` .
+This completed :ref:`wish_list-name` item for the new atomic function API;
+see :ref:`atomic_three-name` .
+This is an improvement over the :ref:`atomic_two-name` interface,
+which used the ``atomic_base`` class and has been deprecated.
+In addition the following changes were included:
+
+#. Move the checkpoint examples below the
+   :ref:`checkpoint<chkpoint_one-name>` documentation.
+#. A phantom parameter, at index zero, was added; see
+   :ref:`fun_property@size_par` .
+#. There appears to have been a bug in ``put_con_par`` (not tested for)
+   whereby a constant parameter might match a dynamic parameter
+   (and get changed). This has been fixed.
+#. There was a mistake in the ``check_variable_dag`` routine whereby
+   the operator ``LeppOp`` checked a parameter index as if it were
+   a variable index. This has been fixed.
+
+01-11
+=====
+Merge in the ``chkpoint`` branch.
+
+#. This created the :ref:`chkpoint_two-name` class as a replacement
+   for the :ref:`chkpoint_one-name` class.
+   This new checkpoint class takes advantage
+   of :ref:`dynamic parameters<glossary@Parameter@Dynamic>`
+   and can be used with :ref:`base2ad-name` .
+#. While creating the ``chkpoint_two`` class,
+   a problem was discovered in the :ref:`atomic_three-name` class.
+   To be specific, it does not yet work with :ref:`optimize-name` .
+   A reverse dependency analysis is the proper way to fix this.
+   The ``atomic_three`` ``type`` member function does a forward
+   :ref:`atomic_three_for_type@Dependency Analysis`
+   and so its name was changed from ``type`` to ``for_type`` .
+
+{xrst_end whats_new_19}

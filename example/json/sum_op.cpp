@@ -3,18 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin json_sum_op.cpp$$
-$spell
-   sum
-   Json
-$$
+{xrst_begin json_sum_op.cpp}
 
-$section Json sum Operator: Example and Test$$
+Json sum Operator: Example and Test
+###################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end json_sum_op.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

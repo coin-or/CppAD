@@ -4,45 +4,47 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin atomic_two_eigen_mat_mul.cpp$$
-$spell
-   mul
-   Eigen
-$$
+{xrst_begin atomic_two_eigen_mat_mul.cpp}
 
-$section  Atomic Eigen Matrix Multiply: Example and Test$$
+Atomic Eigen Matrix Multiply: Example and Test
+##############################################
 
-$head Description$$
-The $cref ADFun$$ function object $icode f$$ for this example is
-$latex \[
-f(x) =
-\left( \begin{array}{cc}
-   0   & 0 \\
-   1   & 2 \\
-   x_0 & x_1
-\end{array} \right)
-\left( \begin{array}{c}
-   x_0 \\
-   x_1
-\end{array} \right)
-=
-\left( \begin{array}{c}
-   0 \\
-   x_0 + 2 x_1 \\
-   x_0 x_0 + x_1 x_1 )
-\end{array} \right)
-\] $$
+Description
+***********
+The :ref:`ADFun-name` function object *f* for this example is
 
-$children%
+.. math::
+
+   f(x) =
+   \left( \begin{array}{cc}
+      0   & 0 \\
+      1   & 2 \\
+      x_0 & x_1
+   \end{array} \right)
+   \left( \begin{array}{c}
+      x_0 \\
+      x_1
+   \end{array} \right)
+   =
+   \left( \begin{array}{c}
+      0 \\
+      x_0 + 2 x_1 \\
+      x_0 x_0 + x_1 x_1 )
+   \end{array} \right)
+
+{xrst_toc_hidden
    include/cppad/example/atomic_two/eigen_mat_mul.hpp
-%$$
+}
 
-$head Class Definition$$
-This example uses the file $cref atomic_two_eigen_mat_mul.hpp$$
-which defines matrix multiply as a $cref atomic_two$$ operation.
+Class Definition
+****************
+This example uses the file :ref:`atomic_two_eigen_mat_mul.hpp-name`
+which defines matrix multiply as a :ref:`atomic_two-name` operation.
 
-$head Use Atomic Function$$
-$srccode%cpp% */
+Use Atomic Function
+*******************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/example/atomic_two/eigen_mat_mul.hpp>
 
@@ -56,9 +58,12 @@ bool eigen_mat_mul(void)
    scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
    using CppAD::NearEqual;
    //
-/* %$$
-$subhead Constructor$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+Constructor
+===========
+{xrst_spell_off}
+{xrst_code cpp} */
    // -------------------------------------------------------------------
    // object that multiplies arbitrary matrices
    atomic_eigen_mat_mul<scalar> mat_mul;
@@ -218,6 +223,8 @@ $srccode%cpp% */
    // -------------------------------------------------------------------
    return ok;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end atomic_two_eigen_mat_mul.cpp}
 */

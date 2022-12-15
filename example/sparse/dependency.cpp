@@ -4,46 +4,54 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin dependency.cpp$$
-$spell
-   CppAD
-   Jac
-$$
+{xrst_begin dependency.cpp}
+{xrst_spell
+   rl
+}
 
-$section Computing Dependency: Example and Test$$
+Computing Dependency: Example and Test
+######################################
 
-$head Discussion$$
+Discussion
+**********
 The partial of an dependent variable with respect to an independent variable
 might always be zero even though the dependent variable depends on the
 value of the dependent variable. Consider the following case
-$latex \[
-f(x) = {\rm sign} (x) =
-\left\{ \begin{array}{rl}
-   +1 & {\rm if} \; x > 0 \\
-   0  & {\rm if} \; x = 0 \\
-   -1 & {\rm if} \; x < 0
-\end{array} \right.
-\] $$
-In this case the value of $latex f(x)$$ depends on the value of $latex x$$
-but CppAD always returns zero for the derivative of the $cref sign$$ function.
 
-$head Dependency Pattern$$
-If the $th i$$ dependent variables depends on the
-value of the $th j$$ independent variable,
+.. math::
+
+   f(x) = {\rm sign} (x) =
+   \left\{ \begin{array}{rl}
+      +1 & {\rm if} \; x > 0 \\
+      0  & {\rm if} \; x = 0 \\
+      -1 & {\rm if} \; x < 0
+   \end{array} \right.
+
+In this case the value of :math:`f(x)` depends on the value of :math:`x`
+but CppAD always returns zero for the derivative of the :ref:`sign-name` function.
+
+Dependency Pattern
+******************
+If the *i*-th dependent variables depends on the
+value of the *j*-th independent variable,
 the corresponding entry in the dependency pattern is non-zero (true).
 Otherwise it is zero (false).
-CppAD uses $cref/sparsity patterns/glossary/Sparsity Pattern/$$
+CppAD uses :ref:`sparsity patterns<glossary@Sparsity Pattern>`
 to represent dependency patterns.
 
-$head Computation$$
-The $icode dependency$$ argument to
-$cref/for_jac_sparsity/for_jac_sparsity/dependency/$$ and
-$cref/RevSparseJac/RevSparseJac/dependency/$$ is a flag that signals
+Computation
+***********
+The *dependency* argument to
+:ref:`for_jac_sparsity<for_jac_sparsity@dependency>` and
+:ref:`RevSparseJac<RevSparseJac@dependency>` is a flag that signals
 that the dependency pattern (instead of the sparsity pattern) is computed.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end dependency.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

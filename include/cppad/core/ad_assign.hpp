@@ -8,48 +8,48 @@
 /*
 ------------------------------------------------------------------------------
 
-$begin ad_assign$$
-$spell
-   Vec
-   const
-$$
+{xrst_begin ad_assign}
 
+AD Assignment Operator
+######################
 
-$section AD Assignment Operator$$
+Syntax
+******
+*y* = *x*
 
-$head Syntax$$
-$icode%y% = %x%$$
-
-$head Purpose$$
-Assigns the value in $icode x$$ to the object $icode y$$.
+Purpose
+*******
+Assigns the value in *x* to the object *y* .
 In either case,
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Type% &%x%
-%$$
-where $icode Type$$ is
-$codei%VecAD<%Base%>::reference%$$,
-$codei%AD<%Base%>%$$,
-$icode Base$$,
+x
+*
+The argument *x* has prototype
+
+   ``const`` *Type* & *x*
+
+where *Type* is
+``VecAD<`` *Base* >:: ``reference`` ,
+``AD<`` *Base* > ,
+*Base* ,
 or any type that has an implicit constructor of the form
-$icode%Base%(%x%)%$$.
+*Base* ( *x* ) .
 
-$head y$$
-The target $icode y$$ has prototype
-$codei%
-   AD<%Base%> %y%
-%$$
+y
+*
+The target *y* has prototype
 
-$head Example$$
-$children%
+   ``AD<`` *Base* > *y*
+
+Example
+*******
+{xrst_toc_hidden
    example/general/ad_assign.cpp
-%$$
-The file $cref ad_assign.cpp$$ contain examples and tests of these operations.
+}
+The file :ref:`ad_assign.cpp-name` contain examples and tests of these operations.
 It test returns true if it succeeds and false otherwise.
 
-$end
+{xrst_end ad_assign}
 ------------------------------------------------------------------------------
 */
 

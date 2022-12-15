@@ -5,113 +5,127 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_for_type.hpp$$
-$spell
-   Jacobian
-   jac
-   vk
-   nnz
-$$
+{xrst_begin atomic_four_lin_ode_for_type.hpp}
 
-$section
-Atomic Linear ODE Forward Type Calculation: Example Implementation$$
+Atomic Linear ODE Forward Type Calculation: Example Implementation
+##################################################################
 
-$head Purpose$$
-The $code for_type$$ routine overrides the virtual functions
+Purpose
+*******
+The ``for_type`` routine overrides the virtual functions
 used by the atomic_four base; see
-$cref/for_type/atomic_four_for_type/$$.
+:ref:`for_type<atomic_four_for_type-name>` .
 
-
-$head Notation$$
+Notation
+********
 We use the notation:
-$cref/call_id/atomic_four_lin_ode/call_id/$$
-$cref/r/atomic_four_lin_ode/r/$$
-$cref/pattern/atomic_four_lin_ode/pattern/$$
-$cref/transpose/atomic_four_lin_ode/transpose/$$
-$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
-$cref/row/atomic_four_lin_ode/pattern/row/$$,
-$cref/col/atomic_four_lin_ode/pattern/col/$$,
-$cref/x/atomic_four_lin_ode/x/$$,
-$cref/n/atomic_four_lin_ode/x/n/$$,
-$cref/A(x)/atomic_four_lin_ode/x/A(x)/$$,
-$cref/b(x)/atomic_four_lin_ode/x/b(x)/$$,
-$cref/y(x)/atomic_four_lin_ode/y(x)/$$,
-$cref/m/atomic_four_lin_ode/y(x)/m/$$,
-$cref/vk(x)/atomic_four_lin_ode/vk(x)/$$,
+:ref:`atomic_four_lin_ode@call_id`
+:ref:`atomic_four_lin_ode@r`
+:ref:`atomic_four_lin_ode@pattern`
+:ref:`atomic_four_lin_ode@transpose`
+:ref:`atomic_four_lin_ode@pattern@nnz` ,
+:ref:`atomic_four_lin_ode@pattern@row` ,
+:ref:`atomic_four_lin_ode@pattern@col` ,
+:ref:`atomic_four_lin_ode@x` ,
+:ref:`atomic_four_lin_ode@x@n` ,
+:ref:`atomic_four_lin_ode@x@A(x)` ,
+:ref:`atomic_four_lin_ode@x@b(x)` ,
+:ref:`atomic_four_lin_ode@y(x)` ,
+:ref:`atomic_four_lin_ode@y(x)@m` ,
+:ref:`atomic_four_lin_ode@vk(x)` ,
 and the following additional notation:
 
-$subhead T(s)$$
-We use $latex \R{T} ( s )$$ to denote the ad_type of a scalar value $latex s$$.
+T(s)
+====
+We use :math:`\R{T} ( s )` to denote the ad_type of a scalar value :math:`s`.
 There are four possible
-$cref/ad_types/atomic_four_for_type/ad_type/$$:
+:ref:`ad_types<atomic_four_for_type@ad_type>` :
 identical_zero, constant, dynamic, and variable in that order.
 
-$head Theory$$
+Theory
+******
 This routine must calculate the following value for
-$latex i = 0, \ldots, m-1$$; see $cref/m/atomic_four_lin_ode/y(x)/m/$$:
-$latex \[
+:math:`i = 0, \ldots, m-1`; see :ref:`atomic_four_lin_ode@y(x)@m` :
+
+.. math::
+
    \R{T} [ y_i (x) ] = \max_k \R{T} [  v_i^k (x) ]
-\] $$
-The type $latex \R{T} [ v_i^0 (x) ] = \R{T}[ b_i (x) ]$$.
-This is easy to calculate given the type of the components of $icode x$$;
-see $cref/b(x)/atomic_four_lin_ode/x/b(x)/$$.
-Furthermore, for $latex k > 0$$
-$latex \[
-v_i^k (x)
-=
-\frac{r}{k} \sum_{j=0}^{m-1} A_{i,j} (x) v_j^{k-1} (x)
-\] $$
-$latex \[
-\R{T} [ v_i^k (x) ]
-=
-\max_j \R{T} [ A_{i,j} (x) v_j^{k-1} (x) ]
-\]
-$$
-$latex \[
-\R{T} [ A_{i,j} (x) v_j^k (x) ]
-=
-\left\{ \begin{array}{ll}
-   \R{identical\_zero} &
-   \R{if} A_{i,j} (x) \W{\R{or}} v_j^{k-1} (x) \W{\R{is}} \R{identical\_zero}
-   \\
-   \max\{ \R{T} [ A_{i,j} (x) ] \W{,} \R{T} [ v_j^{k-1} (x) ] \} &
-   \R{otherwise}
-\end{array} \right.
-\] $$
-If $latex A_{i,j} (x)$$ is not in the sparsity
-$cref/pattern/atomic_four_lin_ode/pattern/$$, it is identically zero.
+
+The type :math:`\R{T} [ v_i^0 (x) ] = \R{T}[ b_i (x) ]`.
+This is easy to calculate given the type of the components of *x* ;
+see :ref:`atomic_four_lin_ode@x@b(x)` .
+Furthermore, for :math:`k > 0`
+
+.. math::
+
+   v_i^k (x)
+   =
+   \frac{r}{k} \sum_{j=0}^{m-1} A_{i,j} (x) v_j^{k-1} (x)
+
+.. math::
+
+   \R{T} [ v_i^k (x) ]
+   =
+   \max_j \R{T} [ A_{i,j} (x) v_j^{k-1} (x) ]
+
+.. math::
+
+   \R{T} [ A_{i,j} (x) v_j^k (x) ]
+   =
+   \left\{ \begin{array}{ll}
+      \R{identical\_zero} &
+      \R{if} A_{i,j} (x) \W{\R{or}} v_j^{k-1} (x) \W{\R{is}} \R{identical\_zero}
+      \\
+      \max\{ \R{T} [ A_{i,j} (x) ] \W{,} \R{T} [ v_j^{k-1} (x) ] \} &
+      \R{otherwise}
+   \end{array} \right.
+
+If :math:`A_{i,j} (x)` is not in the sparsity
+:ref:`atomic_four_lin_ode@pattern` , it is identically zero.
 Furthermore we are allowing for the case where
-$latex A_{i,j} (x)$$ is in the pattern and it is identically zero; i.e.,
+:math:`A_{i,j} (x)` is in the pattern and it is identically zero; i.e.,
 the sparsity pattern is not efficient as it could be.
-The type $latex \R{T} [ A_{i,j} (x) ]$$ for components in the sparsity pattern
-is easy to calculate given the type of the components of $icode x$$;
-see $cref/A(x)/atomic_four_lin_ode/x/A(x)/$$.
-Suppose $latex \ell$$ is such that for all $latex i$$
-$latex \[
+The type :math:`\R{T} [ A_{i,j} (x) ]` for components in the sparsity pattern
+is easy to calculate given the type of the components of *x* ;
+see :ref:`atomic_four_lin_ode@x@A(x)` .
+Suppose :math:`\ell` is such that for all :math:`i`
+
+.. math::
+
    \R{T} [ v_i^\ell (x) ] \leq \max_{k < \ell} \R{T} [ v_i^k (x) ]
-\] $$
+
 It follows that
-$latex \[
+
+.. math::
+
    \R{T} [ v_j^{\ell+1} (x) ]  = \max_j \R{T} [ A_{i,j} (x) v_j^\ell (x) ]
-\] $$
-$latex \[
+
+.. math::
+
    \R{T} [ v_j^{\ell+1} (x) ]
    \leq
    \max_{k < \ell} \max_j \R{T} [ A_{i,j} (x) v_j^k (x) ]
-\] $$
-$latex \[
+
+.. math::
+
    \R{T} [ v_j^{\ell+1} (x) ]
    \leq
    \max_{k < \ell} \R{T} [ v_i^k (x) ]
-\] $$
-From this it is clear that
-$latex \[
-   \R{T} [ y_i (x) ] = \max_{k < \ell} \R{T} [  v_i^k (x) ]
-\] $$
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+From this it is clear that
+
+.. math::
+
+   \R{T} [ y_i (x) ] = \max_{k < \ell} \R{T} [  v_i^k (x) ]
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_for_type.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>

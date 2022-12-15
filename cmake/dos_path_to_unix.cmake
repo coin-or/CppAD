@@ -10,7 +10,7 @@
 #
 # unix_path: (out)
 # is the variable where the result of the conversion is placed.
-# 
+#
 MACRO(dos_path_to_unix dos_path unix_path)
    STRING(REGEX REPLACE "[\\]" "/" ${unix_path} "${dos_path}" )
 ENDMACRO(dos_path_to_unix dos_path unix_path)

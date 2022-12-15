@@ -1,0 +1,457 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_16}
+{xrst_spell
+   adouble
+   autotools
+   makefile
+   mingw
+   preforms
+   uninitialized
+   valgrind
+   wmisleading
+   xam
+}
+
+Changes and Additions to CppAD During 2016
+##########################################
+
+mm-dd
+*****
+
+12-23
+=====
+Added a way for the user to determine what tests options are available; see
+:ref:`cmake@make check` .
+
+12-20
+=====
+Change the optimize :ref:`optimize@Examples` to use
+:ref:`NearEqual-name` for floating point tests (instead of exactly equal).
+There were some other exactly equal floating point tests that were
+failing on a ``mingw`` system. Theses have also been fixed.
+
+12-18
+=====
+Add the :ref:`optimize@options@no_print_for_op` to the
+optimize routine.
+
+12-13
+=====
+
+#. Fix a bug in :ref:`ForSparseHes-name` . To be more specific,
+   there was a bug in handling the cumulative summations operator in this
+   routine. This could only come up when used
+   an :ref:`optimized<optimize-name>` :ref:`ForSparseHes@f` ,
+#. Add the
+   :ref:`nest_conditional.cpp<optimize_nest_conditional.cpp-name>` example.
+
+12-11
+=====
+Improve the :ref:`optimize-name` documentation.
+This includes making examples that demonstrate
+specific aspects of the optimization; see
+:ref:`forward_active.cpp<optimize_forward_active.cpp-name>` ,
+:ref:`reverse_active.cpp<optimize_reverse_active.cpp-name>` ,
+:ref:`compare_op.cpp<optimize_compare_op.cpp-name>` ,
+:ref:`conditional_skip.cpp<optimize_conditional_skip.cpp-name>` ,
+:ref:`cumulative_sum.cpp<optimize_cumulative_sum.cpp-name>` .
+
+12-09
+=====
+The :ref:`optimize@options` argument was added to the
+optimize routine.
+
+11-18
+=====
+Move classes and functions that are part of the user API from the
+``cppad/local`` directory to the ``cppad/core`` directory.
+The remaining symbols, in the ``cppad/local`` directory, are now
+in the ``CppAD::local`` namespace.
+Note that a class in the ``CppAD`` name space, may have a member
+function that is not part of the user API.
+
+11-14
+=====
+Increase the speed of the ``sparse_pack`` class.
+This improves the speed for
+:ref:`vector of boolean<glossary@Sparsity Pattern@Boolean Vector>`
+sparsity pattern calculations.
+
+11-13
+=====
+Merged in the ``sparse`` branch which has ``const_iterator`` ,
+instead of ``next_element`` for the
+``sparse_list`` and ``sparse_pack`` classes.
+These classes are not part of the CppAD API and hence their specifications
+can change (as in this case).
+They can be used to get more efficient representations of
+:ref:`sparsity patterns<glossary@Sparsity Pattern>` .
+
+10-27
+=====
+The optional :ref:`chkpoint_one@optimize` option
+was added to the checkpoint functions.
+
+10-12
+=====
+
+#. Change :ref:`elapsed_seconds-name` to use
+   ``std::chrono::steady_clock`` instead of
+   ``std::chrono::high_resolution_clock`` .
+#. The test for C++11 features was failing on a Mac system
+   because the elapsed time was returning as zero (between two events).
+   This test has been made more robust by add a one millisecond sleep
+   between the two clock accesses.
+
+09-29
+=====
+The multiple directions version of
+:ref:`forward<forward_dir-name>` was missing :ref:`erf-name` function
+in the case where C++ 2011 was supported; see
+`issue 16 <https://github.com/coin-or/CppAD/issues/16>`_.
+This has been fixed.
+
+09-27
+=====
+Change the implementation of :ref:`atomic_two_eigen_cholesky.hpp-name` so that
+the computation of :math:`M_k` exactly agrees with the corresponding
+:ref:`theory<cholesky_theory-name>` .
+
+09-26
+=====
+
+#. A possible bug in the :ref:`optimize-name` command was fixed.
+   To be specific, a warning of the form
+   indentations;
+
+      ``warning: this`` ``'if'`` ``clause does not guard...`` [ ``-Wmisleading-indentation`` ]
+
+   using the gcc-6.2.1 compiler, was fixed and it may have fixed a bug.
+#. There was a problem with the
+   :ref:`sacado<speed_sacado-name>` where the symbol
+   ``HAS_C99_TR1_CMATH`` was being defined twice.
+   This has been fixed by leaving it up to the sacado install to determine
+   if this symbol should be defined.
+
+09-16
+=====
+Fix a problem using the
+:ref:`speed_main@Sparsity Options@colpack` option to the
+``speed_cppad`` program.
+(There was a problem whereby the ``speed_cppad``
+program did not properly detect when ``colpack`` was available.)
+
+09-13
+=====
+Test third order and fix
+bug in :ref:`atomic_two_eigen_cholesky.hpp-name` for orders greater
+than or equal to three.
+
+08-30
+=====
+Add the :ref:`atomic_two_eigen_cholesky.cpp-name` example.
+
+08-25
+=====
+
+#. Fix some missing include files in
+   ``optimize.hpp`` and ``set_union.hpp``
+   (when compiling with MS Visual Studio 2015).
+#. Fix a warning in ``atanh.hpp``
+   (when compiling with MS Visual Studio 14).
+#. Fix a typo in the
+   :ref:`atomic_two_eigen_mat_inv.hpp@Theory@Reverse` section of the
+   ``eigen_mat_inv.hpp`` example.
+
+07-17
+=====
+Add documentation for only needing to compute a
+:ref:`sparse_hessian@p@Column Subset` of the sparsity
+pattern when computing a subset of a sparse Hessians.
+In addition, improve the corresponding example
+:ref:`sparse_sub_hes.cpp-name` .
+
+07-14
+=====
+Correct title in :ref:`ForSparseHes-name` (change Reverse to Forward).
+
+06-30
+=====
+Change the ``atomic_two_mat_mul.cpp`` example so that on atomic object
+works for matrices of any size.
+(This has since been changed to the :ref:`atomic_three_mat_mul.cpp-name` example.)
+
+06-29
+=====
+Change the :ref:`atomic_two-name` examples so they do no longer use the
+deprecated interfaces to
+``for_sparse_jac`` , ``rev_sparse_jac`` ,
+``for_sparse_hes`` , and ``rev_sparse_hes`` .
+
+06-27
+=====
+
+#. Improve the :ref:`atomic_two_eigen_mat_mul.hpp-name` and
+   :ref:`atomic_two_eigen_mat_inv.hpp-name` examples.
+   Most importantly, one atomic object now works for matrices of any size.
+#. Add the vector *x* ,
+   that contains the parameters in an atomic function call
+   to the user following atomic functions:
+   :ref:`for_sparse_jac<atomic_two_rev_sparse_jac@Implementation@x>` ,
+   :ref:`rev_sparse_jac<atomic_two_rev_sparse_jac@Implementation@x>` ,
+   :ref:`for_sparse_hes<atomic_two_rev_sparse_jac@Implementation@x>` ,
+   :ref:`rev_sparse_hes<atomic_two_rev_sparse_jac@Implementation@x>` .
+   This enables one to pass parameter information to these functions; e.g.,
+   the dimensions of matrices that the function operates on.
+
+06-25
+=====
+Add more entries to the optimization
+:ref:`wish_list<wish_list@Optimization>` .
+
+06-10
+=====
+Add a :ref:`wish_list@check_finite` wish list item.
+
+05-05
+=====
+
+#. Add documentation for redirecting output using:ref:`PrintFor@s`
+   in the ``PrintFor`` function.
+#. Change distributed version to build examples as debug instead
+   of release version.
+   (Was changed to release version while checking for compiler warnings;
+   see ``04-17`` below).
+
+04-17
+=====
+Fix all some compiler warnings that occurred when compiling the
+:ref:`examples<Example-name>` with
+:ref:`faq@Speed@NDEBUG` defined.
+
+03-27
+=====
+
+#. Fix a bug in the calculation of the :ref:`atomic_two_eigen_mat_inv.hpp-name`
+   :ref:`atomic_two_eigen_mat_inv.hpp@Private@reverse` example.
+#. Use a very simple method (that over estimates variables) for calculating
+   :ref:`atomic_two_forward@vy` in the :ref:`atomic_two_eigen_mat_inv.hpp-name`
+   :ref:`atomic_two_eigen_mat_inv.hpp@Private@forward` example.
+
+03-26
+=====
+
+#. Implement and test the :ref:`atomic_two_eigen_mat_inv.cpp-name`
+   :ref:`atomic_two_eigen_mat_inv.hpp@Private@reverse` is implemented.
+#. Fix a bug in the calculation of
+   :ref:`atomic_two_forward@vy` in the :ref:`atomic_two_eigen_mat_inv.hpp-name`
+   :ref:`atomic_two_eigen_mat_inv.hpp@Private@forward` example.
+
+03-25
+=====
+
+#. Start construction of the :ref:`atomic_two_eigen_mat_inv.cpp-name` example,
+   currently only
+   :ref:`atomic_two_eigen_mat_inv.hpp@Private@forward` is implemented
+   and tested.
+#. More improvements to :ref:`atomic_two_eigen_mat_mul.cpp-name` example.
+
+03-24
+=====
+
+#. Fix build of ``example/atomic.cpp`` when
+   :ref:`eigen-name` is not available
+   (bug introduced when :ref:`atomic_two_eigen_mat_mul.cpp-name` was added).
+#. Extend :ref:`atomic_two_eigen_mat_mul.cpp-name` example to include
+   :ref:`atomic_two_eigen_mat_mul.hpp@Private@for_sparse_jac` ,
+   :ref:`atomic_two_eigen_mat_mul.hpp@Private@rev_sparse_jac` ,
+   :ref:`atomic_two_eigen_mat_mul.hpp@Private@for_sparse_hes` ,
+   :ref:`atomic_two_eigen_mat_mul.hpp@Private@rev_sparse_hes` .
+#. Fix a bug in the :ref:`ForSparseHes-name` routine.
+#. Edit :ref:`atomic_two_rev_sparse_hes-name` documentation.
+
+03-23
+=====
+
+#. Fix bug in autotools file ``example/atomic/makefile.am``
+   (introduced on 03-22).
+#. Improve the :ref:`atomic_two_eigen_mat_mul.cpp-name` example
+   and extend it to include reverse mode.
+
+03-22
+=====
+
+#. Start construction of the :ref:`atomic_two_eigen_mat_mul.cpp-name` example.
+#. change ``atomic_ode.cpp`` to ``chkpoint_one_ode.cpp`` and
+   ``atomic_extended_ode.cpp`` to ``chkpoint_one_extended_ode.cpp`` .
+
+03-21
+=====
+Change the :ref:`atomic_three_mat_mul.hpp-name` class name from ``mat_mul``
+to ``atomic_mat_mul`` . This example use of the name ``mat_mul``
+in the ``atomic_two_mat_mul.cpp`` example / test.
+(This has since been changed to the :ref:`atomic_three_mat_mul.cpp-name` example.)
+
+03-20
+=====
+
+#. Include the sub-directory name to the include guards
+   in * . ``hpp`` files. For example,
+   ::
+
+      # ifndef CPPAD_UTILITY_VECTOR_HPP
+      # define CPPAD_UTILITY_VECTOR_HPP
+
+   appears in the file ``cppad/utility/vector.hpp`` . This makes it
+   easier to avoid conflicts when choosing :ref:`addon-name` names.
+#. Add the :ref:`set_union-name` utility and use it to simplify the
+   :ref:`atomic-name` examples that use
+   :ref:`glossary@Sparsity Pattern@Vector of Sets`
+   sparsity patterns.
+
+03-19
+=====
+
+#. Move ``atomic_two_mat_mul.cpp`` to ``atomic_mat_mul_xam.cpp``
+   (moved back on :ref:`whats_new_16@mm-dd@03-21` .
+#. Move ``atomic_matrix_mul.hpp`` to :ref:`atomic_three_mat_mul.hpp-name` .
+
+03-17
+=====
+Add the
+``atomic_ode.cpp`` and ``atomic_extended_ode.cpp`` examples.
+
+03-12
+=====
+
+#. Move the example ``reverse_any.cpp`` to :ref:`rev_checkpoint.cpp-name` .
+#. Add the ``chkpoint_one_mul_level.cpp`` example.
+
+03-05
+=====
+The following atomic function examples were added
+These examples are for a specific atomic operation.
+In addition, the domain and range dimensions for these examples
+are not one and not equal to each other:
+``atomic_two_forward.cpp`` ,
+``atomic_two_reverse.cpp`` ,
+``atomic_two_for_sparse_jac.cpp`` ,
+``atomic_two_rev_sparse_jac.cpp`` ,
+``atomic_two_for_sparse_hes.cpp`` ,
+``atomic_two_rev_sparse_hes.cpp`` .
+
+03-01
+=====
+
+#. Improve documentation of implementation requirements for the atomic
+   :ref:`rev_sparse_jac<atomic_two_rev_sparse_jac@Implementation>` .
+#. Make some corrections to the :ref:`atomic_two_for_sparse_hes-name` documentation.
+   and fix a bug in how CppAD used these functions.
+
+02-29
+=====
+
+#. Merged sparse into master branch. This makes the
+   :ref:`ForSparseHes-name` routine available for use.
+#. Changed the
+   :ref:`speed_main@Global Options`
+   in the speed test main program to use one global variable with prototype
+   {xrst_spell_off}
+   {xrst_code cpp}
+      extern std::map<std::string, bool> global_option;
+   {xrst_code}
+   {xrst_spell_on}
+
+02-28
+=====
+Fix a mistake in the old atomic
+``example/sparsity/sparsity.cpp`` example.
+This example has since been changed to
+``atomic_two_set_sparsity.cpp`` .
+
+02-27
+=====
+The ``--with-sparse_set`` and ``--with-sparse_set`` options
+were removed from the :ref:`autotools-name` install procedure.
+
+02-26
+=====
+The condition that the operation sequence in *f* is
+:ref:`glossary@Operation@Independent` of
+the independent variables was added to the statement about
+the validity of the sparsity patterns; see *x* in
+:ref:`ForSparseJac<ForSparseJac@x>` ,
+:ref:`RevSparseJac<RevSparseJac@x>` , and
+:ref:`RevSparseHes<RevSparseHes@x>` .
+
+02-25
+=====
+The :ref:`cmake-name` command line argument ``cppad_sparse_list``
+has been removed (because it is so much better than the other option).
+
+02-23
+=====
+A new version of the
+``cppad_sparse_list`` class (not part of user API) uses
+reference counters to reduce the number of copies of sets that are equal.
+This improved the speed of sparsity pattern computations that use
+the :ref:`glossary@Sparsity Pattern@Vector of Sets`
+representation.
+For example, the results for the
+:ref:`cppad_sparse_hessian.cpp-name` test compare as follows:
+::
+
+   sparse_hessian_size     = [  100,    400,   900,  1600, 2500 ]
+   sparse_hessian_rate_old = [ 1480, 265.21, 93.33, 41.93, 0.86 ]
+   sparse_hessian_rate_new = [ 1328, 241.61, 92.99, 40.51, 3.80 ]
+
+Note that the improvement is only for large problems. In fact,
+for large problems, preliminary testing indicates that
+the new vector of sets representation preforms better than
+the :ref:`vector of boolean<glossary@Sparsity Pattern@Boolean Vector>`
+representation.
+
+01-21
+=====
+Fix a ``valgrind`` warning about use of uninitialized memory
+in the test ``test_more/chkpoint_one.cpp`` (the problem was in the test).
+
+01-20
+=====
+
+#. Fix a ``valgrind`` warning about use of uninitialized memory
+   when using the :ref:`adouble<base_adolc.hpp-name>` base type.
+   This required an optional :ref:`base_hash-name` function and the special
+   :ref:`adouble hash_code<base_adolc.hpp@hash_code>` implementation.
+#. The ``adouble`` :ref:`to_string-name` functions
+   required a special implementation; see
+   :ref:`adouble to_string<base_adolc.hpp@to_string>` .
+#. Add the :ref:`base_alloc.hpp@to_string` and
+   :ref:`base_alloc.hpp@hash_code` examples
+   to the ``base_alloc.hpp`` example.
+
+01-18
+=====
+
+#. Fix ambiguity between ``CppAD::sin`` and ``std::sin`` ,
+   and other standard math functions,
+   when using
+   ::
+
+      using namespace std;
+      using namespace CppAD;
+
+   This is OK for simple programs, but not generally recommended.
+   See ``double`` version of base class definitions for
+   :ref:`base_double.hpp@Unary Standard Math`
+   for more details.
+#. Change Eigen array example
+   :ref:`eigen_array.cpp-name`
+   to use member function version of ``sin`` function
+   (as per Eigen's array class documentation).
+
+{xrst_end whats_new_16}

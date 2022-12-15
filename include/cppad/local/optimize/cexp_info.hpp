@@ -8,77 +8,84 @@
 # include <cppad/utility/vector.hpp>
 
 /*!
-$begin optimize_cexp_info$$
-$spell
-   struct
+{xrst_begin optimize_cexp_info}
+{xrst_spell
    cexp
-   op
-   Funap
-   Funav
-   Funrp
-   Funrv
    cskip
-   arg
-$$
+   struct
+}
 
-$section Optimization Information About Conditional Expressions$$
+Optimization Information About Conditional Expressions
+######################################################
 
-$head struct_cexp_info$$
+struct_cexp_info
+****************
 information about a conditional expression
 in the old operation sequence (before optimization).
-$srcthisfile%
-   0%// BEGIN_STRUCT_CEXP_INFO%// END_STRUCT_CEXP_INFO%1
-%$$
+{xrst_literal
+   // BEGIN_STRUCT_CEXP_INFO
+   // END_STRUCT_CEXP_INFO
+}
 
-$subhead i_op$$
+i_op
+====
 is the operator index for this conditional expression.
 
-$subhead left$$
+left
+====
 is the variable or parameter index (depending on flag)
 for left operand in the comparison.
 
-$subhead right$$
+right
+=====
 is the variable or parameter index (depending on flag)
 for right operand in the comparison.
 
-$subhead max_left_right$$
+max_left_right
+==============
 is the maximum of the left and right variable indices.
 This is a variable index, so parameters correspond to index zero.
 
-$subhead cop$$
+cop
+===
 is the comparison operator for this conditional expression.
 
-$subhead flag$$
-$list number$$
-(flag & 1) is true if and only if left is a variable
-$lnext
-(flag & 2) is true if and only if right is a variable
-$lend
+flag
+====
 
-$head struct_cskip_new$$
+#. (flag & 1) is true if and only if left is a variable
+#. (flag & 2) is true if and only if right is a variable
+
+struct_cskip_new
+****************
 information about a conditional expression
 in thew new operation sequence (after optimization).
-$srcthisfile%
-   0%// BEGIN_STRUCT_CSKIP_NEW%// END_STRUCT_CSKIP_NEW%1
-%$$
+{xrst_literal
+   // BEGIN_STRUCT_CSKIP_NEW
+   // END_STRUCT_CSKIP_NEW
+}
 
-$subhead left$$
+left
+====
 is the variable or parameter index (depending on flag)
 for left operand in the comparison.
 
-$subhead right$$
+right
+=====
 is the variable or parameter index (depending on flag)
 for right operand in the comparison.
 
-$subhead max_left_right$$
+max_left_right
+==============
 is the maximum of the left and right variable indices.
 This is a variable index, so parameters correspond to index zero.
 
-$subhead i_arg$$
+i_arg
+=====
 index where this conditional skips arguments start
 (in the vector or arguments for all operators).
 
-$end
+{xrst_end optimize_cexp_info}
 */
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

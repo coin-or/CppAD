@@ -3,58 +3,65 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_adolc.sh$$ $newlinech #$$
-# $dollar @$$
-# $spell
-#  tgz
-#  Adolc
-#  gz
-#  CppAD
-#  Nov
-# $$
+# {xrst_begin get_adolc.sh} 
+# {xrst_spell
+#     nov
+# }
+# {xrst_comment_ch #}
 #
-# $section Download and Install Adolc in Build Directory$$
+# Download and Install Adolc in Build Directory
+# #############################################
 #
-# $head Syntax$$
-# $code bin/get_adolc.sh$$
+# Syntax
+# ******
+# ``bin/get_adolc.sh``
 #
-# $head Purpose$$
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
-# $cref/Adolc/adolc/Adolc Home Page/$$
-# in the CppAD $code build$$ directory.
+# :ref:`Adolc<adolc@Adolc Home Page>`
+# in the CppAD ``build`` directory.
 #
-# $head Requirements$$
-# You must first use $cref get_colpack.sh$$ to download and install
+# Requirements
+# ************
+# You must first use :ref:`get_colpack.sh-name` to download and install
 # the ColPack coloring algorithms (used for sparse matrix derivatives).
 #
-# $head Distribution Directory$$
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# $cref/distribution directory/download/Distribution Directory/$$.
+# :ref:`download@Distribution Directory` .
 #
-# $head Source Directory$$
+# Source Directory
+# ****************
 # The Adolc source code is downloaded into the sub-directory
-# $code external/adolc.git$$ below the distribution directory.
+# ``external/adolc.git`` below the distribution directory.
 #
-# $head Prefix$$
-# The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional.sh$$ is used for this install.
+# Prefix
+# ******
+# The :ref:`get_optional.sh@prefix`
+# in the file ``bin/get_optional.sh`` is used for this install.
 #
-# $head Version$$
+# Version
+# *******
 # This will install the following version of Adolc
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 version='e1fe476'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 # This corresponds to the git master on Nov 13, 2020.
 #
-# $head Configuration$$
+# Configuration
+# *************
 # If the file
-# $codei%
-#  external/adolc-%version%.configured
-# %$$
+#
+#     ``external/adolc-`` *version* . ``configured``
+#
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
 #
-# $end
+# {xrst_end get_adolc.sh}
 # -----------------------------------------------------------------------------
 package='adolc'
 if [ $0 != "bin/get_$package.sh" ]

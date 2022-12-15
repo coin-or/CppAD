@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin colpack_prefix}
+
+Enabling Colpack Sparsity Calculations
+######################################
+
+Colpack Home Page
+*****************
+https://github.com/CSCsw/ColPack
+
+Purpose
+*******
+If you specify a *colpack_prefix* on the
+:ref:`cmake@CMake Command` line,
+the CppAD :ref:`sparse_jacobian-name` and :ref:`sparse_hessian-name`
+calculations can use this package.
+
+colpack_prefix
+**************
+If Colpack is installed on your system, you can
+specify a value for its install *colpack_prefix* on the
+:ref:`cmake-name` command line.
+The value of *colpack_prefix* must be such that,
+for one of the directories *dir* in
+:ref:`cmake@cmake_install_includedirs` ,
+
+   *colpack_prefix* / *dir* / ``ColPack/ColPackHeaders.h``
+
+is a valid way to reference to the include file ``ColPackHeaders.h`` .
+
+cppad_lib
+*********
+The Colpack header files has a
+
+   ``using namespace std``
+
+at the global level.
+For this reason, CppAD does not include these files.
+It is therefore necessary to link the object library ``cppad_lib``
+when using Colpack.
+{xrst_toc_hidden
+   example/sparse/colpack_jac.cpp
+   example/sparse/colpack_jacobian.cpp
+   example/sparse/colpack_hes.cpp
+   example/sparse/colpack_hessian.cpp
+}
+Example
+*******
+The file :ref:`colpack_jac.cpp-name` (:ref:`colpack_hes.cpp-name` )
+contains an example and test of using Colpack to compute the coloring for
+sparse Jacobians (Hessians).
+
+get_colpack
+***********
+If you are using Unix, you can download and install
+a copy of Colpack using :ref:`get_colpack.sh-name` .
+The corresponding *colpack_prefix* would be
+``build/prefix`` .
+
+{xrst_end colpack_prefix}

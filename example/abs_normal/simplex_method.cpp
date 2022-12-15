@@ -3,62 +3,73 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin simplex_method.cpp$$
-$spell
-   qp
-$$
+{xrst_begin simplex_method.cpp}
+{xrst_spell
+   rlr
+}
 
-$section abs_normal simplex_method: Example and Test$$
+abs_normal simplex_method: Example and Test
+###########################################
 
-$head Problem$$
+Problem
+*******
 Our original problem is
-$latex \[
+
+.. math::
+
    \R{minimize} \; | u - 1| \; \R{w.r.t} \; u \in \B{R}
-\] $$
+
 We reformulate this as the following problem
-$latex \[
-\begin{array}{rlr}
-   \R{minimize}      & v             & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
-   \R{subject \; to} &  u - 1 \leq v \\
-                      &  1 - u \leq v
-\end{array}
-\] $$
-We know that the value of $latex v$$ at the solution is greater than
+
+.. math::
+
+   \begin{array}{rlr}
+      \R{minimize}      & v             & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
+      \R{subject \; to} &  u - 1 \leq v \\
+                         &  1 - u \leq v
+   \end{array}
+
+We know that the value of :math:`v` at the solution is greater than
 or equal zero. Hence we can reformulate this problem as
-$latex \[
-\begin{array}{rlr}
-\R{minimize}      & v             & \R{w.r.t} \; ( u_- , u_+ , v) \in \B{R}_+^3 \\
-\R{subject \; to} & u_+ - u_- - 1  \leq v \\
-                  &  1 - u_+ + u_- \leq v
-\end{array}
-\] $$
+
+.. math::
+
+   \begin{array}{rlr}
+   \R{minimize}      & v             & \R{w.r.t} \; ( u_- , u_+ , v) \in \B{R}_+^3 \\
+   \R{subject \; to} & u_+ - u_- - 1  \leq v \\
+                     &  1 - u_+ + u_- \leq v
+   \end{array}
+
 This is equivalent to
-$latex \[
-\begin{array}{rlr}
-   \R{minimize}
-   & (0, 0, 1) \cdot ( u_+, u_- , v)^T  & \R{w.r.t} \; (u,v) \in \B{R}_+^3 \\
-\R{subject \; to}
-   &
-   \left( \begin{array}{ccc}
-      +1 & -1 & -1 \\
-      -1 & +1 & +1
-   \end{array} \right)
-   \left( \begin{array}{c} u_+ \\ u_- \\ v \end{array} \right)
-   +
-   \left( \begin{array}{c} -1 \\ 1 \end{array} \right)
-   \leq
-   0
-\end{array}
-\] $$
-which is in the form expected by $cref simplex_method$$.
 
+.. math::
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN C++%// END C++%
-1%$$
+   \begin{array}{rlr}
+      \R{minimize}
+      & (0, 0, 1) \cdot ( u_+, u_- , v)^T  & \R{w.r.t} \; (u,v) \in \B{R}_+^3 \\
+   \R{subject \; to}
+      &
+      \left( \begin{array}{ccc}
+         +1 & -1 & -1 \\
+         -1 & +1 & +1
+      \end{array} \right)
+      \left( \begin{array}{c} u_+ \\ u_- \\ v \end{array} \right)
+      +
+      \left( \begin{array}{c} -1 \\ 1 \end{array} \right)
+      \leq
+      0
+   \end{array}
 
-$end
+which is in the form expected by :ref:`simplex_method-name` .
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end simplex_method.cpp}
 */
 // BEGIN C++
 # include <limits>

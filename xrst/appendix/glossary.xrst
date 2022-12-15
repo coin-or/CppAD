@@ -1,0 +1,288 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin glossary}
+{xrst_spell
+   differentiable
+   is is
+}
+
+Glossary
+########
+
+AD Function
+***********
+Given an :ref:`ADFun-name` object *f*
+there is a corresponding
+AD of *Base* :ref:`operation sequence<glossary@Operation@Sequence>` .
+This operation sequence
+defines a function
+:math:`F : \B{R}^n \rightarrow \B{R}^m`
+where :math:`\B{R}` is the space corresponding to objects of type
+*Base* (usually the real numbers),
+*n* is the size of the :ref:`fun_property@Domain` space, and
+*m* is the size of the :ref:`fun_property@Range` space.
+We refer to :math:`F` as the AD function corresponding to
+the operation sequence stored in the object *f* .
+(See the :ref:`FunCheck discussion<FunCheck@Discussion>` for
+possible differences between :math:`F(x)` and the algorithm that defined
+the operation sequence.)
+
+AD of Base
+**********
+An object is called an AD of *Base* object its type is
+either ``AD<`` *Base* >
+(see the default and copy :ref:`constructors<ad_ctor-name>`
+or ``VecAD<`` *Base* >:: ``reference`` (see :ref:`VecAD-name` )
+for some *Base* type.
+
+AD Type Above Base
+******************
+If *Base* is a type,
+an AD type above *Base*
+is the following sequence of types:
+
+   ``AD<`` *Base* > , ``AD< AD<`` *Base* > > , ``AD< AD< AD<`` *Base* > > > , ...
+
+Base Function
+*************
+A function :math:`f : \B{R} \rightarrow \B{R}`
+is referred to as a *Base* function,
+if *Base* is a C++ type that represent elements of
+the domain and range space of *f* .
+
+Base Type
+*********
+If *x* is an ``AD<`` *Base* > object,
+*Base* is referred to as the base type for *x* .
+
+Elementary Vector
+*****************
+The *j*-th elementary vector :math:`e^j \in \B{R}^m` is defined by
+
+.. math::
+
+   e_i^j = \left\{ \begin{array}{ll}
+      1 & {\rm if} \; i = j \\
+      0 & {\rm otherwise}
+   \end{array} \right.
+
+Operation
+*********
+
+Atomic
+======
+An atomic *Type* operation is an operation that
+has a *Type* result and is not made up of other
+more basic operations.
+
+Sequence
+========
+A sequence of atomic *Type* operations
+is called a *Type* operation sequence.
+A sequence of atomic :ref:`glossary@AD of Base` operations
+is referred to as an AD of *Base* operation sequence.
+The abbreviated notation operation sequence is often used
+when it is not necessary to specify the type.
+
+Dependent
+=========
+Suppose that *x* and *y* are *Type* objects and
+the result of
+
+   *x* < *y*
+
+has type ``bool`` (where *Type* is not the same as ``bool`` ).
+If one executes the following code
+
+| |tab| ``if`` ( *x* < *y*  )
+| |tab| |tab| *y* = ``cos`` ( *x* );
+| |tab| ``else``
+| |tab| |tab| *y* = ``sin`` ( *x* );
+
+the choice above depends on the value of *x* and *y*
+and the two choices result in a different *Type* operation sequence.
+In this case, we say that the *Type* operation sequence depends
+on *x* and *y* .
+
+Independent
+===========
+Suppose that *i* and *n* are ``size_t`` objects,
+and *x* [ *i* ] , *y* are *Type* objects,
+where *Type* is different from ``size_t`` .
+The *Type* sequence of operations corresponding to
+
+| |tab| *y* = *Type* (0);
+| |tab| ``for`` ( *i* = 0; *i* < *n* ; *i* ++)
+| |tab| |tab| *y* += *x* [ *i* ];
+
+does not depend on the value of *x* or *y* .
+In this case, we say that the *Type* operation sequence
+is independent of *y* and the elements of *x* .
+
+Parameter
+*********
+
+Constant
+========
+An ``AD<`` *Base* > object *u* is a constant parameter if
+its value does not depend on the value of
+the :ref:`Independent-name` variable vector
+or the :ref:`Independent@dynamic` parameter vector
+for an :ref:`active tape<glossary@Tape@Active>` .
+If *u* is a constant parameter,
+:ref:`Constant(u)<con_dyn_var@Constant>` returns true,
+:ref:`Parameter(u)<con_dyn_var@Parameter>` returns true,
+:ref:`Dynamic(u)<con_dyn_var@Dynamic>` returns false, and
+:ref:`Variable(u)<con_dyn_var@Variable>` returns false.
+
+Dynamic
+=======
+An ``AD<`` *Base* > object *u* is a dynamic parameter if
+its value does not depend on the value of
+the :ref:`Independent-name` variable vector, but its value does depend
+on the :ref:`Independent@dynamic` parameter vector,
+for an :ref:`active tape<glossary@Tape@Active>` .
+If *u* is a dynamic parameter, the function
+:ref:`Dynamic(u)<con_dyn_var@Dynamic>` returns true
+:ref:`Parameter(u)<con_dyn_var@Parameter>` returns true,
+:ref:`Constant(u)<con_dyn_var@Constant>` returns false, and
+:ref:`Variable(u)<con_dyn_var@Variable>` returns false.
+
+Row-major Representation
+************************
+A :ref:`SimpleVector-name` *v* is a row-major representation of a matrix
+:math:`M \in \B{R}^{m \times n}` if *v* . ``size`` () == *m* * *n* and
+for :math:`i = 0 , \ldots , m-1`, :math:`j = 0 , \ldots , n-1`
+
+.. math::
+
+   M_{i,j} = v[ i \times n + j ]
+
+Sparsity Pattern
+****************
+Suppose that :math:`A \in \B{R}^{m \times n}` is a sparse matrix.
+CppAD has several ways to specify the elements of :math:`A`
+that are possible non-zero.
+
+Row and Column Index Vectors
+============================
+A pair of non-negative integer vectors :math:`r`, :math:`c`
+are a sparsity pattern for :math:`A`
+if for every non-zero element :math:`A_{i,j}`,
+there is a :math:`k` such that :math:`i = r_k` and :math:`j = c_k`.
+Furthermore, for every :math:`\ell \neq k`,
+either :math:`r_\ell \neq r_k` or :math:`c_\ell \neq c_k`.
+
+Boolean Vector
+==============
+A boolean vector :math:`b`, of length :math:`m \times n`,
+is a sparsity pattern for :math:`A`
+if for every non-zero element :math:`A_{i,j}`,
+:math:`b_{i \times n + j}` is true.
+
+Vector of Sets
+==============
+A vector of sets :math:`s` of positive integers, of length :math:`m`,
+is a sparsity pattern for :math:`A`
+if for every non-zero element :math:`A_{i,j}`, :math:`j \in s_i`.
+
+Tape
+****
+
+Active
+======
+A new tape is created and becomes active
+after each call of the form (see :ref:`Independent-name` )
+
+   ``Independent`` ( *x* )
+
+All operations that depend on the elements of *x* are
+recorded on this active tape.
+
+Inactive
+========
+The :ref:`operation sequence<glossary@Operation@Sequence>`
+stored in a tape can be transferred to a function object using the syntax
+
+| |tab| ``ADFun<`` *Base* > *f* ( *x* , *y* )
+| |tab| *f* . ``Dependent`` ( *x* , *y* )
+
+see :ref:`fun_construct-name` .
+After such a transfer, the tape becomes inactive.
+The tape becomes inactive, without storing the operation sequence,
+after a call to :ref:`abort_recording-name` .
+
+Independent Variable
+====================
+While the tape is active, we refer to the elements of *x*
+as the independent variables for the tape.
+When the tape becomes inactive,
+the corresponding objects become
+:ref:`constants<glossary@Parameter@Constant>` .
+
+Variables
+=========
+While the tape is active, we use the term variables for any scalar
+whose value depends on the independent variables for the tape.
+When the tape becomes inactive,
+the corresponding objects become
+:ref:`constants<glossary@Parameter@Constant>` .
+
+Taylor Coefficient
+******************
+Suppose :math:`X : \B{R} \rightarrow \B{R}^n` is a
+is :math:`p` times continuously differentiable function
+in some neighborhood of zero.
+For :math:`k = 0 , \ldots , p`,
+we use the column vector :math:`x^{(k)} \in \B{R}^n` for the *k*-th order
+Taylor coefficient corresponding to :math:`X`
+which is defined by
+
+.. math::
+
+   x^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0)
+
+It follows that
+
+.. math::
+
+   X(t) = x^{(0)} + x^{(1)} t + \cdots + x^{(p)} t^p  + R(t)
+
+where the remainder :math:`R(t)` divided by :math:`t^p`
+converges to zero and :math:`t` goes to zero.
+
+Variable
+********
+An ``AD<`` *Base* > object *u* is a variable if
+its value depends on an independent variable vector for
+a currently :ref:`active tape<glossary@Tape@Active>` .
+If *u* is a variable,
+:ref:`Variable(u)<con_dyn_var@Variable>` returns true,
+:ref:`Constant(u)<con_dyn_var@Constant>` returns false,
+:ref:`Dynamic(u)<con_dyn_var@Dynamic>` returns false, and
+:ref:`Parameter(u)<con_dyn_var@Parameter>` returns false.
+For example,
+directly after the code sequence
+
+| |tab| ``Independent`` ( *x* );
+| |tab| ``AD<double>`` *u* = *x* [0];
+
+the ``AD<double>`` object *u* is currently a variable.
+Directly after the code sequence
+
+| |tab| ``Independent`` ( *x* );
+| |tab| ``AD<double>`` *u* = *x* [0];
+| |tab| *u*  = 5;
+
+*u*  is currently a
+:ref:`glossary@Parameter@Constant` parameter,
+not a dynamic parameter or a variable.
+
+Note that we often drop the word currently and
+just refer to an ``AD<`` *Base* > object as a variable
+or parameter.
+
+{xrst_end glossary}

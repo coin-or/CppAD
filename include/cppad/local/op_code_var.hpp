@@ -18,70 +18,66 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
-$begin op_code_var$$
-$spell
-   ind
-   pos
-   Pri
-   Ldp
-   Ldv
-   Vec
-   Stpp
-   Stvp
-   Stpv
-   Stvv
+{xrst_begin op_code_var}
+{xrst_spell
+   addpv
+   funap
+   funav
+   funrp
+   funrv
    initializes
-   Cond
-   Rel
-   Namespace
-   CppAD
-   Op
+   ldp
+   ldv
    opcode
-   enum
-   arg
-   addr
+   powpv
+   powvv
    pv
+   stpp
+   stpv
+   stvp
+   stvv
    vp
    vv
-   AAddpv
-   exp
-   Funap
-   Funav
-   Funrp
-   Funrv
-   Powpv
-   Powvv
-$$
+}
 
-$section Variable Op Codes$$
+Variable Op Codes
+#################
 
-$head Namespace$$
-All of these definitions are in the $code CppAD::local$$ namespace.
+Namespace
+*********
+All of these definitions are in the ``CppAD::local`` namespace.
 
-$head opcode_t$$
+opcode_t
+********
 This type is used to save space when storing operator enum type in vectors.
-$srccode%hpp% */
+{xrst_spell_off}
+{xrst_code hpp} */
 typedef CPPAD_VEC_ENUM_TYPE opcode_t;
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head OpCode$$
-This enum type is used to distinguish different $codei%AD<%Base%>%$$
+OpCode
+******
+This enum type is used to distinguish different ``AD<`` *Base* >
 atomic operations.
-Each value in the enum type ends with the characters $code Op$$.
-Ignoring the $code Op$$ at the end,
+Each value in the enum type ends with the characters ``Op`` .
+Ignoring the ``Op`` at the end,
 the operators appear in alphabetical order.
 
-$head arg[i]$$
-We use the notation $icode%arg[%i%]%$$ below
-for the $th i$$ operator argument which is a position integer
-represented using the type $code addr_t$$.
+arg[i]
+******
+We use the notation *arg* [ ``i`` ] below
+for the *i*-th operator argument which is a position integer
+represented using the type ``addr_t`` .
 
-$head Unary$$
+Unary
+*****
 An operator commented as unary below
 has one argument (arg[0]) and it is a variable index.
 All of these operators have one result variable.
 
-$head Binary And Compare$$
+Binary And Compare
+******************
 An operator commented as binary or compare below
 has two arguments.
 If it is a compare operator it has no result variables
@@ -89,64 +85,76 @@ If it is a compare operator it has no result variables
 Otherwise, it has one result variable.
 These operators use the following convention for the operator ending
 and the left argument (arg[0]) and right argument (arg[1]):
-$table
-$icode Ending$$ $pre  $$ $cnext $icode Left$$ $cnext  $icode Right$$ $rnext
-$code pvOp$$ $cnext    parameter index  $cnext   variable index   $rnext
-$code vpOp$$ $cnext    variable index   $cnext   parameter index  $rnext
-$code vvOp$$ $cnext    variable index   $cnext   variable index
-$tend
-For example, $code AddpvOp$$ represents the addition operator where the left
+
+.. csv-table::
+   :widths: auto
+
+   *Ending*,*Left*,*Right*
+   ``pvOp``,parameter index,variable index
+   ``vpOp``,variable index,parameter index
+   ``vvOp``,variable index,variable index
+
+For example, ``AddpvOp`` represents the addition operator where the left
 operand is a parameter and the right operand is a variable.
 
-$subhead Pow$$
-The binary $codei%pow(%x%, %y%)%$$ operators PowpvOp, PowvvOp are
+Pow
+===
+The binary ``pow`` ( *x* , *y* ) operators PowpvOp, PowvvOp are
 special because they have three variable results instead of one.
 To be specific, they compute
-$codei%log(%x%)%$$,
-$codei%log(%x%) * %y%$$,
-$codei%exp( log(%x%) * %y%)%$$
+``log`` ( *x* ) ,
+``log`` ( *x* ) * *y* ,
+``exp`` ( ``log`` ( *x* ) * *y* )
 
-$comment ------------------------------------------------------------------ $$
-$head AFunOp$$
+{xrst_comment ------------------------------------------------------------- }
+AFunOp
+******
 This operator appears at the start and end of every atomic function call.
 This operator has no results variables.
 
-$subhead arg[0]$$
-This is the $cref atomic_index$$ for this function.
+arg[0]
+======
+This is the :ref:`atomic_index-name` for this function.
 
-$subhead arg[1]$$
-This is the $cref/call_id/atomic_four_call/call_id/$$ information.
-It is also he $cref/id/atomic_one/id/$$
+arg[1]
+======
+This is the :ref:`atomic_four_call@call_id` information.
+It is also he :ref:`atomic_one@id`
 for atomic one functions which have been deprecated.
 
-$subhead arg[2]$$
+arg[2]
+======
 is the number of arguments to this atomic function.
-We use the notation $icode%n% = %arg%[2]%$$ below.
+We use the notation *n* = *arg* [2] below.
 
-$subhead arg[3]$$
+arg[3]
+======
 is the number of results for this atomic function.
-We use the notation $icode%m% = %arg%[3]%$$ below.
+We use the notation *m* = *arg* [3] below.
 
-$subhead Arguments$$
-There are $icode n$$ operators after the first $code AFunOp$$,
+Arguments
+=========
+There are *n* operators after the first ``AFunOp`` ,
 one for each argument.
-If the $th j$$ argument is a parameter (variable)
-the corresponding operator is $code FunapOp$$ ( $code FunavOp$$ ), and
+If the *j*-th argument is a parameter (variable)
+the corresponding operator is ``FunapOp`` ( ``FunavOp`` ), and
 the corresponding operator argument is a parameter index (variable index).
 These operators have no result variables.
 
-$subhead Results$$
-There are $icode m$$ operators after the last argument operator
+Results
+=======
+There are *m* operators after the last argument operator
 one for each result.
-If the $th i$$ result is a parameter (variable)
-the corresponding operator is $code FunrpOp$$ ( $code FunrvOp$$ ).
+If the *i*-th result is a parameter (variable)
+the corresponding operator is ``FunrpOp`` ( ``FunrvOp`` ).
 In the parameter case, there is one argument and it is the parameter index,
 and not result variables.
 In the variable case, there are no arguments and one result variable.
 The index for the new variable with the next possible index.
 
-$comment ------------------------------------------------------------------ $$
-$head BeginOp$$
+{xrst_comment ------------------------------------------------------------- }
+BeginOp
+*******
 This operator marks the start of the tape.
 It has one parameter index argument that is nan and corresponds
 to parameter index zero.
@@ -154,247 +162,301 @@ It also has one variable result that has index zero which is used to
 indicate that a value is not a variable.
 for indicate an parameter.
 
-$comment ------------------------------------------------------------------ $$
-$head CExpOp$$
-This is a $cref/conditional expression/condexp/$$; i.e., the corresponding
+{xrst_comment ------------------------------------------------------------- }
+CExpOp
+******
+This is a :ref:`conditional expression<condexp-name>` ; i.e., the corresponding
 source code is
-$codei%
-   %result% = CondExp%Rel%(%left%, %right%, %if_true%, %if_false%
-%$$
+
+   *result* = ``CondExp`` *Rel* ( *left* , *right* , *if_true* , *if_false*
+
 This operator has one variable result.
 
-$subhead arg[0]$$
-This is a $cref/CompareOp/base_cond_exp/CompareOp/$$ value corresponding
-to $cref/Rel/condexp/Rel/$$ above.  ($icode%Rel% = Ne%$$ is not possible).
+arg[0]
+======
+This is a :ref:`base_cond_exp@CompareOp` value corresponding
+to :ref:`condexp@Rel` above.  ( *Rel* = ``Ne`` is not possible).
 
-$subhead arg[1]$$
+arg[1]
+======
 The first four bits of this integer are used as flags; see below.
 
-$subhead arg[2]$$
+arg[2]
+======
 If arg[1] & 1 is true (false),
-this is the variable index (parameter index) corresponding to $icode left$$.
+this is the variable index (parameter index) corresponding to *left* .
 
-$subhead arg[3]$$
+arg[3]
+======
 If arg[1] & 2 is true (false),
-this is the variable index (parameter index) corresponding to $icode right$$.
+this is the variable index (parameter index) corresponding to *right* .
 
-$subhead arg[4]$$
+arg[4]
+======
 If arg[1] & 4 is true (false),
-this is the variable index (parameter index) corresponding to $icode if_true$$.
+this is the variable index (parameter index) corresponding to *if_true* .
 
-$subhead arg[5]$$
+arg[5]
+======
 If arg[1] & 8 is true (false),
-this is the variable index (parameter index) corresponding to $icode if_false$$.
+this is the variable index (parameter index) corresponding to *if_false* .
 
-$comment ------------------------------------------------------------------ $$
-$head CSkipOp$$
+{xrst_comment ------------------------------------------------------------- }
+CSkipOp
+*******
 The conditional skip operator (used to skip operations that depend on false
 branches to conditional expressions).
 This operator has not result variables.
 
-$subhead arg[0]$$
-This is a $cref/CompareOp/base_cond_exp/CompareOp/$$ value corresponding
+arg[0]
+======
+This is a :ref:`base_cond_exp@CompareOp` value corresponding
 to this conditional skip.
 
-$subhead arg[1]$$
+arg[1]
+======
 The first two bits of this integer are used as flags; see below.
 
-$subhead arg[2]$$
+arg[2]
+======
 If arg[1] & 1 is true (false),
-this is the variable index (parameter index) corresponding to $icode left$$.
+this is the variable index (parameter index) corresponding to *left* .
 
-$subhead arg[3]$$
+arg[3]
+======
 If arg[1] & 2 is true (false),
-this is the variable index (parameter index) corresponding to $icode right$$.
+this is the variable index (parameter index) corresponding to *right* .
 
-$subhead arg[4]$$
+arg[4]
+======
 is the number of operations to skip if the comparison is true.
-We use the notation $icode%n% = %arg%[4]%$$ below.
+We use the notation *n* = *arg* [4] below.
 
-$subhead arg[5]$$
+arg[5]
+======
 is the number of operations to skip if the comparison is false.
-We use the notation $icode%m% = %arg%[5]%$$ below.
+We use the notation *m* = *arg* [5] below.
 
-$subhead arg[6+i]$$
-For $icode%i% = 0, %...%, %n%-1%$$, this is the index
+arg[6+i]
+========
+For *i* = 0, ..., *n* ``-1`` , this is the index
 of an operator that can be skipped if the comparison is true.
 
-$subhead arg[6+n+i]$$
-For $icode%i% = 0, %...%, %m%-1%$$, this is the index
+arg[6+n+i]
+==========
+For *i* = 0, ..., *m* ``-1`` , this is the index
 of an operator that can be skipped if the comparison is false.
 
-$subhead arg[6+n+m]$$
-The is the total number operators that might be skipped; i.e., $icode%n%+%m%$$.
+arg[6+n+m]
+==========
+The is the total number operators that might be skipped; i.e., *n* + *m* .
 
-$comment ------------------------------------------------------------------ $$
-$head CSumOp$$
+{xrst_comment ------------------------------------------------------------- }
+CSumOp
+******
 Is a cumulative summation operator
 which has one result variable.
 
-$subhead arg[0]$$
+arg[0]
+======
 is the index of the parameter that initializes the summation.
 
-$subhead arg[1]$$
+arg[1]
+======
 argument index that flags the end of the addition variables,
-we use the notation $icode%k% = %arg%[1]%$$ below.
+we use the notation *k* = *arg* [1] below.
 
-$subhead arg[2]$$
+arg[2]
+======
 argument index that flags the end of the subtraction variables,
-we use the notation $icode%ell% = %arg%[2]%$$ below.
+we use the notation *ell* = *arg* [2] below.
 
-$subhead arg[3]$$
+arg[3]
+======
 argument index that flags the end of the addition dynamic parameters,
-we use the notation $icode%m% = %arg%[3]%$$ below.
+we use the notation *m* = *arg* [3] below.
 
-$subhead arg[4]$$
+arg[4]
+======
 argument index that flags the end of the subtraction dynamic parameters,
-we use the notation $icode%n% = %arg%[4]%$$ below.
+we use the notation *n* = *arg* [4] below.
 
-$subhead arg[5+i]$$
-for $icode%i% = 0, %...%, %k%-6%$$,
-this is the index of the $th i$$ variable to be added in the summation.
+arg[5+i]
+========
+for *i* = 0, ..., *k* ``-6`` ,
+this is the index of the *i*-th variable to be added in the summation.
 
-$subhead arg[k+i]$$
-for $icode%i% = 0, %...%, %ell%-%k%-1%$$,
-this is the index of the $th i$$ variable to be subtracted in the summation.
+arg[k+i]
+========
+for *i* = 0, ..., *ell* ``-`` *k* ``-1`` ,
+this is the index of the *i*-th variable to be subtracted in the summation.
 
-$subhead arg[ell+i]$$
-for $icode%i% = 0, %...%, %m%-%ell%-1%$$, this is the index of the
-$th i$$ dynamic parameter to be added in the summation.
+arg[ell+i]
+==========
+for *i* = 0, ..., *m* ``-`` *ell* ``-1`` , this is the index of the
+*i*-th dynamic parameter to be added in the summation.
 
-$subhead arg[m+i]$$
-for $icode%i% = 0, %...%, %n%-%m%-1%$$, this is the index of the
-$th i$$ dynamic parameter to be subtracted in the summation.
+arg[m+i]
+========
+for *i* = 0, ..., *n* ``-`` *m* ``-1`` , this is the index of the
+*i*-th dynamic parameter to be subtracted in the summation.
 
-$subhead arg[n]$$
-This is equal to $icode n$$.
-Note that there are $icode%n%+1%$$ arguments to this operator
+arg[n]
+======
+This is equal to *n* .
+Note that there are *n* +1 arguments to this operator
 and having this value at the end enable reverse model to know how far
 to back up to get to the start of this operation.
 
-$comment ------------------------------------------------------------------ $$
-$head DisOp$$
-Call to a user defined $cref discrete$$ function.
+{xrst_comment ------------------------------------------------------------- }
+DisOp
+*****
+Call to a user defined :ref:`discrete-name` function.
 This operator has one result variable.
 
-$subhead arg[0]$$
+arg[0]
+======
 is the index, in the order of the functions defined by the user,
 for this discrete function.
 
-$subhead arg[1]$$
+arg[1]
+======
 variable index corresponding to the argument for this function call.
 
-$comment ------------------------------------------------------------------ $$
-$head Load$$
+{xrst_comment ------------------------------------------------------------- }
+Load
+****
 The load operators create a new variable corresponding to
-$icode%vec%[%ind%]%$$ where $icode vec$$ is a $cref VecAD$$ vector
-and $icode ind$$ is an $codei%AD<%Base%>%$$.
-For these operators either $icode vec$$ or $icode ind$$ is a variable
+*vec* [ *ind* ] where *vec* is a :ref:`VecAD-name` vector
+and *ind* is an ``AD<`` *Base* > .
+For these operators either *vec* or *ind* is a variable
 and there is one variable result.
 
-$subhead LdpOp$$
-This load is used for an index $icode ind$$ that is a parameter.
+LdpOp
+=====
+This load is used for an index *ind* that is a parameter.
 
-$subhead LdvOp$$
-This load is used for an index $icode ind$$ that is a variable.
+LdvOp
+=====
+This load is used for an index *ind* that is a variable.
 
-$subhead arg[0]$$
+arg[0]
+======
 is the offset of this VecAD vector
 relative to the beginning of the single array
 that contains all VecAD elements for all the VecAD vectors.
 This corresponds to the first element of this vector and not its size
 (which comes just before the first element).
 
-$subhead arg[1]$$
+arg[1]
+======
 is the index in this VecAD vector for this load operation.
-For the $code LdpOp$$ ($code LdvOp$$) operator this is the
-parameter index (variable index) corresponding to $icode ind$$.
+For the ``LdpOp`` (``LdvOp`` ) operator this is the
+parameter index (variable index) corresponding to *ind* .
 
-$subhead arg[2]$$
+arg[2]
+======
 is the index of this VecAD load operation in the set of all
 the load operations in this recording.
 This includes both dynamic parameter and variable loads.
 It is used to map load operations to corresponding
 dynamic parameters and variables.
 
-$comment ------------------------------------------------------------------ $$
-$head Store$$
+{xrst_comment ------------------------------------------------------------- }
+Store
+*****
 The store operators store information corresponding to
-$icode%vec%[%ind%]% = %right%$$ where $icode vec$$ is a $cref VecAD$$ vector
-and $icode ind$$ is an $codei%AD<%Base%>%$$.
-For these operators either $icode vec$$, $icode ind$$, or $icode right$$
+*vec* [ *ind* ] = ``right`` where *vec* is a :ref:`VecAD-name` vector
+and *ind* is an ``AD<`` *Base* > .
+For these operators either *vec* , *ind* , or *right*
 is a variable and there is no result.
 
-$subhead StppOp$$
-This store is used when $icode ind$$ and $icode right$$ are parameters.
+StppOp
+======
+This store is used when *ind* and *right* are parameters.
 
-$subhead StpvOp$$
-This store is used when $icode ind$$ is a parameter
-and $icode right$$ is a variable.
+StpvOp
+======
+This store is used when *ind* is a parameter
+and *right* is a variable.
 
-$subhead StvpOp$$
-This store is used when $icode ind$$ is a variable
-and $icode right$$ is a parameter.
+StvpOp
+======
+This store is used when *ind* is a variable
+and *right* is a parameter.
 
-$subhead StvvOp$$
-This store is used when $icode index$$ and $icode right$$ are variables.
+StvvOp
+======
+This store is used when *index* and *right* are variables.
 
-$subhead arg[0]$$
+arg[0]
+======
 is the offset of this VecAD vector
 relative to the beginning of the single array
 that contains all VecAD elements for all the VecAD vectors.
 This corresponds to the first element of this vector and not its size
 (which comes just before the first element).
 
-$subhead arg[1]$$
+arg[1]
+======
 is the index in this VecAD vector for this store operation.
-For the $code StppOp$$ and $code StpvOp$$ cases
-this is the parameter index corresponding to $icode ind$$.
-For the $code StvpOp$$ and $code StvvOp$$ cases,
-this is the variable index corresponding to $icode ind$$.
+For the ``StppOp`` and ``StpvOp`` cases
+this is the parameter index corresponding to *ind* .
+For the ``StvpOp`` and ``StvvOp`` cases,
+this is the variable index corresponding to *ind* .
 
-$subhead arg[2]$$
-For the $code StppOp$$ and $code StvpOp$$ cases,
-this is the parameter index corresponding to $icode right$$.
-For the $code StpvOp$$ and $code StvvOp$$ cases,
-this is the variable index corresponding to $icode right$$.
+arg[2]
+======
+For the ``StppOp`` and ``StvpOp`` cases,
+this is the parameter index corresponding to *right* .
+For the ``StpvOp`` and ``StvvOp`` cases,
+this is the variable index corresponding to *right* .
 
-$comment ------------------------------------------------------------------ $$
-$head ParOp$$
+{xrst_comment ------------------------------------------------------------- }
+ParOp
+*****
 This operator has one result that is equal to a parameter
 (not that all the derivatives for this result will be zero).
 
-$subhead arg[0]$$
+arg[0]
+======
 Is the index of the parameter that determines the value of the variable.
 
-$comment ------------------------------------------------------------------ $$
-$head PriOp$$
-This operator implements the $cref PrintFor$$ command
-$codei%
-   PrintFor(%pos%, %before%, %value%, %after%)
-%$$
+{xrst_comment ------------------------------------------------------------- }
+PriOp
+*****
+This operator implements the :ref:`PrintFor-name` command
 
-$subhead arg[0]$$
+   ``PrintFor`` ( *pos* , *before* , *value* , *after* )
+
+arg[0]
+======
 The first two bits of this integer are used as flags; see below.
 
-$subhead arg[1]$$
+arg[1]
+======
 If arg[1] & 1 is true (false),
-this is the variable index (parameter index) corresponding to $icode pos$$.
+this is the variable index (parameter index) corresponding to *pos* .
 
-$subhead arg[2]$$
-is the text index corresponding to $icode before$$.
+arg[2]
+======
+is the text index corresponding to *before* .
 
-$subhead arg[3]$$
+arg[3]
+======
 If arg[1] & 2 is true (false),
-this is the variable index (parameter index) corresponding to $icode value$$.
+this is the variable index (parameter index) corresponding to *value* .
 
-$subhead arg[4]$$
-is the text index corresponding to $icode after$$.
+arg[4]
+======
+is the text index corresponding to *after* .
 
-$comment ------------------------------------------------------------------ $$
+{xrst_comment ------------------------------------------------------------- }
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 // BEGIN_SORT_THIS_LINE_PLUS_2
 enum OpCode {
    AFunOp,   // see its heading above
@@ -472,8 +534,10 @@ enum OpCode {
    NumberOp  // number of operator codes (not an operator)
 };
 // END_SORT_THIS_LINE_MINUS_3
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end op_code_var}
 */
 // Note that bin/check_op_code.sh assumes the pattern NumberOp occurs
 // at the end of this list and only at the end of this list.

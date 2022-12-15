@@ -3,31 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin fadbad_det_minor.cpp$$
-$spell
-   onetape
-   cppad
-   std
-   Fadbad
-   det
-   badiff.hpp
-   const
-   CppAD
-   typedef
-   diff
-   bool
-   srand
-$$
+{xrst_begin fadbad_det_minor.cpp}
 
-$section Fadbad Speed: Gradient of Determinant by Minor Expansion$$
+Fadbad Speed: Gradient of Determinant by Minor Expansion
+########################################################
 
+Specifications
+**************
+See :ref:`link_det_minor-name` .
 
-$head Specifications$$
-See $cref link_det_minor$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -97,6 +86,8 @@ bool link_det_minor(
    // ---------------------------------------------------------
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fadbad_det_minor.cpp}
 */

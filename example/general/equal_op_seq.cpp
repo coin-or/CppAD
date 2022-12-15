@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin equal_op_seq.cpp$$
-$spell
-   Op
-$$
+{xrst_begin equal_op_seq.cpp}
 
-$section EqualOpSeq: Example and Test$$
+EqualOpSeq: Example and Test
+############################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end equal_op_seq.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

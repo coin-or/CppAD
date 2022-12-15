@@ -5,87 +5,103 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin simplex_method$$
-$spell
-   hpp
+{xrst_begin simplex_method}
+{xrst_spell
    maxitr
+   rl
    xout
-$$
+}
 
-$section abs_normal: Solve a Linear Program Using Simplex Method$$
+abs_normal: Solve a Linear Program Using Simplex Method
+#######################################################
 
-$head Syntax$$
-$icode%ok% = simplex_method(%level%, %b%, %A%, %c%, %maxitr%, %xout%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
+   *ok* = ``simplex_method`` ( *level* , *b* , *A* , *c* , *maxitr* , *xout* )
 
-$head Source$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+Source
+******
 This following is a link to the source code for this example:
-$cref/simplex_method.hpp/simplex_method.hpp/$$.
+:ref:`simplex_method.hpp-name` .
 
-$head Problem$$
+Problem
+*******
 We are given
-$latex A \in \B{R}^{m \times n}$$,
-$latex b \in \B{R}^m$$,
-$latex c \in \B{R}^n$$.
+:math:`A \in \B{R}^{m \times n}`,
+:math:`b \in \B{R}^m`,
+:math:`c \in \B{R}^n`.
 This routine solves the problem
-$latex \[
-\begin{array}{rl}
-\R{minimize} &
-g^T x \; \R{w.r.t} \; x \in \B{R}_+^n
-\\
-\R{subject \; to} & A x + b \leq 0
-\end{array}
-\] $$
 
-$head Vector$$
-The type $icode Vector$$ is a
-simple vector with elements of type $code double$$.
+.. math::
 
-$head level$$
+   \begin{array}{rl}
+   \R{minimize} &
+   g^T x \; \R{w.r.t} \; x \in \B{R}_+^n
+   \\
+   \R{subject \; to} & A x + b \leq 0
+   \end{array}
+
+Vector
+******
+The type *Vector* is a
+simple vector with elements of type ``double`` .
+
+level
+*****
 This value is less than or equal two.
-If $icode%level% == 0%$$,
+If *level*  == 0 ,
 no tracing is printed.
-If $icode%level% >= 1%$$,
-a trace $latex x$$ and the corresponding objective $latex z$$
+If *level*  >= 1 ,
+a trace :math:`x` and the corresponding objective :math:`z`
 is printed at each iteration.
-If $icode%level% == 2%$$,
+If *level*  == 2 ,
 a trace of the simplex Tableau is printed at each iteration.
 
-$head A$$
-This is a $cref/row-major/glossary/Row-major Representation/$$ representation
-of the matrix $latex A$$ in the problem.
+A
+*
+This is a :ref:`row-major<glossary@Row-major Representation>` representation
+of the matrix :math:`A` in the problem.
 
-$head b$$
-This is the vector $latex b$$ in the problem.
+b
+*
+This is the vector :math:`b` in the problem.
 
-$head c$$
-This is the vector $latex c$$ in the problem.
+c
+*
+This is the vector :math:`c` in the problem.
 
-$head maxitr$$
+maxitr
+******
 This is the maximum number of simplex iterations to try before giving up
 on convergence.
 
-$head xout$$
-This argument has size is $icode n$$ and
+xout
+****
+This argument has size is *n* and
 the input value of its elements does no matter.
 Upon return it is the primal variables corresponding to the problem solution.
 
-$head ok$$
-If the return value $icode ok$$ is true, a solution has been found.
+ok
+**
+If the return value *ok* is true, a solution has been found.
+{xrst_toc_hidden
+   example/abs_normal/simplex_method.cpp
+   example/abs_normal/simplex_method.xrst
+}
+Example
+*******
+The file :ref:`simplex_method.cpp-name` contains an example and test of
+``simplex_method`` .
 
-$children%example/abs_normal/simplex_method.cpp
-   %example/abs_normal/simplex_method.omh
-%$$
-$head Example$$
-The file $cref simplex_method.cpp$$ contains an example and test of
-$code simplex_method$$.
-
-$end
+{xrst_end simplex_method}
 -----------------------------------------------------------------------------
 */
 # include <cmath>

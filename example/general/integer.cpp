@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin integer.cpp$$
-$spell
-   Cpp
-   cstddef
-$$
+{xrst_begin integer.cpp}
 
-$section Convert From AD to Integer: Example and Test$$
+Convert From AD to Integer: Example and Test
+############################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end integer.cpp}
 */
 // BEGIN C++
 

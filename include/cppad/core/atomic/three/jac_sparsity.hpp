@@ -5,104 +5,116 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_three_jac_sparsity$$
-$spell
-   Jacobian
-   afun
-   jac
-$$
+{xrst_begin atomic_three_jac_sparsity}
 
-$section Atomic Function Jacobian Sparsity Patterns$$
+Atomic Function Jacobian Sparsity Patterns
+##########################################
 
-$head Syntax$$
-$icode%ok% = %afun%.jac_sparsity(
-   %parameter_x%, %type_x%, %dependency%, %select_x%, %select_y%, %pattern_out%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| *ok* = *afun* . ``jac_sparsity`` (
+| |tab| *parameter_x* , *type_x* , *dependency* , *select_x* , *select_y* , *pattern_out*
+| )
 
-$head Implementation$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Implementation
+**************
 This function must be defined if
-$cref/afun/atomic_three_ctor/atomic_user/afun/$$ is
-used to define an $cref ADFun$$ object $icode f$$,
-and Jacobian sparsity patterns are computed for $icode f$$.
+:ref:`atomic_three_ctor@atomic_user@afun` is
+used to define an :ref:`ADFun-name` object *f* ,
+and Jacobian sparsity patterns are computed for *f* .
 (Computing Hessian sparsity patterns and optimizing
 requires Jacobian sparsity patterns.)
 
-$head Base$$
-See $cref/Base/atomic_three_afun/Base/$$.
+Base
+****
+See :ref:`atomic_three_afun@Base` .
 
-$head parameter_x$$
-See $cref/parameter_x/atomic_three_define/parameter_x/$$.
+parameter_x
+***********
+See :ref:`atomic_three_define@parameter_x` .
 
-$head type_x$$
-See $cref/type_x/atomic_three_define/type_x/$$.
+type_x
+******
+See :ref:`atomic_three_define@type_x` .
 
-$head dependency$$
-If $icode dependency$$ is true,
-then $icode pattern_out$$ is a
-$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
+dependency
+**********
+If *dependency* is true,
+then *pattern_out* is a
+:ref:`dependency.cpp@Dependency Pattern`
 for this atomic function.
 Otherwise it is a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$ for the
+:ref:`glossary@Sparsity Pattern` for the
 derivative of the atomic function.
 
-$head select_x$$
+select_x
+********
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
+atomic function; i.e. the size of *ax* .
 It specifies which domain components are included in
-the calculation of $icode pattern_out$$.
-If $icode%select_x%[%j%]%$$ is false, then there will be no indices
-$icode k$$ such that
-$codei%
-   %pattern_out%.col()[%k%] == %j%
-%$$.
+the calculation of *pattern_out* .
+If *select_x* [ *j* ] is false, then there will be no indices
+*k* such that
 
-$head select_y$$
+   *pattern_out* . ``col`` ()[ *k* ] == *j*
+
+.
+
+select_y
+********
 This argument has size equal to the number of results to this
-atomic function; i.e. the size of $icode ay$$.
+atomic function; i.e. the size of *ay* .
 It specifies which range components are included in
-the calculation of $icode pattern_out$$.
-If $icode%select_y%[%i%]%$$ is false, then there will be no indices
-$icode k$$ such that
-$codei%
-   %pattern_out%.row()[%k%] == %i%
-%$$.
+the calculation of *pattern_out* .
+If *select_y* [ *i* ] is false, then there will be no indices
+*k* such that
 
-$head pattern_out$$
-This input value of $icode pattern_out$$ does not matter.
+   *pattern_out* . ``row`` ()[ *k* ] == *i*
+
+.
+
+pattern_out
+***********
+This input value of *pattern_out* does not matter.
 Upon return it is a
-dependency or sparsity pattern for the Jacobian of $latex g(x)$$,
+dependency or sparsity pattern for the Jacobian of :math:`g(x)`,
 the function corresponding to
-$cref/afun/atomic_three_ctor/atomic_user/afun/$$;
-$icode dependency$$ above.
+:ref:`atomic_three_ctor@atomic_user@afun` ;
+*dependency* above.
 To be specific, there are non-negative indices
-$icode i$$, $icode j$$, $icode k$$ such that
-$codei%
-   %pattern_out%.row()[%k%] == %i%
-   %pattern_out%.col()[%k%] == %j%
-%$$
+*i* , *j* , *k* such that
+
+| |tab| *pattern_out* . ``row`` ()[ *k* ] == *i*
+| |tab| *pattern_out* . ``col`` ()[ *k* ] == *j*
+
 if and only if
-$icode%select_x%[%j%]%$$ is true,
-$icode%select_y%[%j%]%$$ is true,
-and $latex g_i(x)$$ depends on the value of $latex x_j$$
-(and the partial of $latex g_i(x)$$ with respect to
-$latex x_j$$ is possibly non-zero).
+*select_x* [ *j* ] is true,
+*select_y* [ *j* ] is true,
+and :math:`g_i(x)` depends on the value of :math:`x_j`
+(and the partial of :math:`g_i(x)` with respect to
+:math:`x_j` is possibly non-zero).
 
-$head ok$$
-If this calculation succeeded, $icode ok$$ is true.
+ok
+**
+If this calculation succeeded, *ok* is true.
 Otherwise it is false.
-
-
-$children%
+{xrst_toc_hidden
    example/atomic_three/jac_sparsity.cpp
-%$$
-$head Examples$$
-The file $cref atomic_three_jac_sparsity.cpp$$ contains an example and test
+}
+Examples
+********
+The file :ref:`atomic_three_jac_sparsity.cpp-name` contains an example and test
 that uses this routine.
-$end
+
+{xrst_end atomic_three_jac_sparsity}
 -----------------------------------------------------------------------------
 */
 

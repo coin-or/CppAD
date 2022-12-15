@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin log10.cpp$$
-$spell
-   log
-$$
+{xrst_begin log10.cpp}
 
-$section The AD log10 Function: Example and Test$$
+The AD log10 Function: Example and Test
+#######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end log10.cpp}
 */
 // BEGIN C++
 

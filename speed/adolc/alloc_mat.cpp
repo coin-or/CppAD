@@ -3,41 +3,42 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin adolc_alloc_mat$$
-$spell
-   adolc
-   alloc
-$$
+{xrst_begin adolc_alloc_mat}
 
-$section Adolc Test Utility: Allocate and Free Memory For a Matrix$$
+Adolc Test Utility: Allocate and Free Memory For a Matrix
+#########################################################
 
-$head Syntax$$
-$codei%mat% = adolc_alloc_mat(%m%, %n%)
-%$$
-$codei%adolc_free_mat(%mat%)
-%$$
+Syntax
+******
 
-$head Purpose$$
-Use the $cref thread_alloc$$ memory allocator to allocate and free
+| *mat* = ``adolc_alloc_mat`` ( *m* , *n* )
+| *adolc_free_mat* ( ``mat`` )
+
+Purpose
+*******
+Use the :ref:`thread_alloc-name` memory allocator to allocate and free
 memory that can be used as a matrix with the Adolc package.
 
-$head m$$
+m
+*
 Is the number of rows in the matrix.
 
-$head n$$
+n
+*
 Is the number of columns in the matrix.
 
-$head mat$$
+mat
+***
 Is the matrix.
 To be specific,
-between a call to $code adolc_alloc_mat$$,
-and the corresponding call to $code adolc_free_mat$$,
-for $icode%i% = 0 , %...% , %m%-1%$$
-and $icode%j% = 0 , %...% , %n%-1%$$,
-$icode%mat%[%i%][%j%]%$$ is the element in row $icode i$$
-and column $icode j$$.
+between a call to ``adolc_alloc_mat`` ,
+and the corresponding call to ``adolc_free_mat`` ,
+for *i* = 0 , ... , *m* ``-1``
+and *j* = 0 , ... , *n* ``-1`` ,
+*mat* [ *i* ][ *j* ] is the element in row *i*
+and column *j* .
 
-$end
+{xrst_end adolc_alloc_mat}
 */
 # include <cppad/utility/thread_alloc.hpp>
 

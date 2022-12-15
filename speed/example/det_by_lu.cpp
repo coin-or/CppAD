@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin det_by_lu.cpp$$
-$spell
-   Cpp
-   Lu
-$$
+{xrst_begin det_by_lu.cpp}
 
-$section Determinant Using Lu Factorization: Example and Test$$
+Determinant Using Lu Factorization: Example and Test
+####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end det_by_lu.cpp}
 */
 // BEGIN C++
 

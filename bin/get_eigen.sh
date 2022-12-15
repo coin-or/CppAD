@@ -2,50 +2,56 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_eigen.sh$$ $newlinech #$$
-# $spell
-#  gz
-#  Eigen
-#  CppAD
-# $$
+# {xrst_begin get_eigen.sh} 
+# {xrst_comment_ch #}
 #
-# $section Download and Install Eigen in Build Directory$$
+# Download and Install Eigen in Build Directory
+# #############################################
 #
-# $head Syntax$$
-# $code bin/get_eigen.sh$$
+# Syntax
+# ******
+# ``bin/get_eigen.sh``
 #
-# $head Purpose$$
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
-# $cref/Eigen/eigen/Eigen Home Page/$$
-# in the CppAD $code build$$ directory.
+# :ref:`Eigen<eigen@Eigen Home Page>`
+# in the CppAD ``build`` directory.
 #
-# $head Distribution Directory$$
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# $cref/distribution directory/download/Distribution Directory/$$.
+# :ref:`download@Distribution Directory` .
 #
-# $head Source Directory$$
+# Source Directory
+# ****************
 # The Eigen source code is downloaded into the sub-directory
-# $code external/eigen.git$$ below the distribution directory.
+# ``external/eigen.git`` below the distribution directory.
 #
-# $head Prefix$$
-# The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional.sh$$ is used for this install.
+# Prefix
+# ******
+# The :ref:`get_optional.sh@prefix`
+# in the file ``bin/get_optional.sh`` is used for this install.
 #
-# $head Version$$
+# Version
+# *******
 # This will install the following version of Eigen
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 version='3.3.7'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Configuration$$
+# Configuration
+# *************
 # If the file
-# $codei%
-#  external/eigen-%version%.configured
-# %$$
+#
+#     ``external/eigen-`` *version* . ``configured``
+#
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
 #
-# $end
+# {xrst_end get_eigen.sh}
 # -----------------------------------------------------------------------------
 package='eigen'
 if [ $0 != "bin/get_$package.sh" ]

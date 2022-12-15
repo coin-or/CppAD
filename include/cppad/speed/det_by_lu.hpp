@@ -5,112 +5,105 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin det_by_lu$$
-$spell
-   CppAD
-   cppad
-   lu
-   hpp
-   typedef
-   const
-   hpp
-   Det
-   CPPAD_TESTVECTOR
-   namespace
-$$
+{xrst_begin det_by_lu}
 
-$section Determinant Using Expansion by Lu Factorization$$
+Determinant Using Expansion by Lu Factorization
+###############################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/speed/det_by_lu.hpp>
-%$$
-$codei%det_by_lu<%Scalar%> %det%(%n%)
-%$$
-$icode%d% = %det%(%a%)
-%$$
+| # ``include <cppad/speed/det_by_lu.hpp>``
+| ``det_by_lu<`` *Scalar* > *det* ( *n* )
+| *d* = *det* ( *a* )
 
-$head Inclusion$$
-The template class $code det_by_lu$$ is defined in the $code CppAD$$
+Inclusion
+*********
+The template class ``det_by_lu`` is defined in the ``CppAD``
 namespace by including
-the file $code cppad/speed/det_by_lu.hpp$$
+the file ``cppad/speed/det_by_lu.hpp``
 (relative to the CppAD distribution directory).
 
-$head Constructor$$
+Constructor
+***********
 The syntax
-$codei%
-   det_by_lu<%Scalar%> %det%(%n%)
-%$$
-constructs the object $icode det$$ which can be used for
-evaluating the determinant of $icode n$$ by $icode n$$ matrices
+
+   ``det_by_lu<`` *Scalar* > *det* ( *n* )
+
+constructs the object *det* which can be used for
+evaluating the determinant of *n* by *n* matrices
 using LU factorization.
 
-$head Scalar$$
-The type $icode Scalar$$ can be any
-$cref NumericType$$
+Scalar
+******
+The type *Scalar* can be any
+:ref:`NumericType-name`
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-   size_t %n%
-%$$
+n
+*
+The argument *n* has prototype
 
-$head det$$
+   ``size_t`` *n*
+
+det
+***
 The syntax
-$codei%
-   %d% = %det%(%a%)
-%$$
-returns the determinant of the matrix $latex A$$ using LU factorization.
 
-$subhead a$$
-The argument $icode a$$ has prototype
-$codei%
-   const %Vector% &%a%
-%$$
-It must be a $icode Vector$$ with length $latex n * n$$ and with
-It must be a $icode Vector$$ with length $latex n * n$$ and with
-elements of type $icode Scalar$$.
-The elements of the $latex n \times n$$ matrix $latex A$$ are defined,
-for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
-$latex \[
+   *d* = *det* ( *a* )
+
+returns the determinant of the matrix :math:`A` using LU factorization.
+
+a
+=
+The argument *a* has prototype
+
+   ``const`` *Vector* & *a*
+
+It must be a *Vector* with length :math:`n * n` and with
+It must be a *Vector* with length :math:`n * n` and with
+elements of type *Scalar* .
+The elements of the :math:`n \times n` matrix :math:`A` are defined,
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , n-1`, by
+
+.. math::
+
    A_{i,j} = a[ i * m + j]
-\] $$
 
-$subhead d$$
-The return value $icode d$$ has prototype
-$codei%
-   %Scalar% %d%
-%$$
+d
+=
+The return value *d* has prototype
 
-$head Vector$$
-If $icode y$$ is a $icode Vector$$ object,
+   *Scalar* *d*
+
+Vector
+******
+If *y* is a *Vector* object,
 it must support the syntax
-$codei%
-   %y%[%i%]
-%$$
-where $icode i$$ has type $code size_t$$ with value less than $latex n * n$$.
-This must return a $icode Scalar$$ value corresponding to the $th i$$
-element of the vector $icode y$$.
-This is the only requirement of the type $icode Vector$$.
 
-$children%
-   speed/example/det_by_lu.cpp%
-   omh/det_by_lu_hpp.omh
-%$$
+   *y* [ *i* ]
 
+where *i* has type ``size_t`` with value less than :math:`n * n`.
+This must return a *Scalar* value corresponding to the *i*-th
+element of the vector *y* .
+This is the only requirement of the type *Vector* .
+{xrst_toc_hidden
+   speed/example/det_by_lu.cpp
+   xrst/det_by_lu_hpp.xrst
+}
 
-$head Example$$
+Example
+*******
 The file
-$cref det_by_lu.cpp$$
-contains an example and test of $code det_by_lu.hpp$$.
+:ref:`det_by_lu.cpp-name`
+contains an example and test of ``det_by_lu.hpp`` .
 
-$head Source Code$$
+Source Code
+***********
 The file
-$cref det_by_lu.hpp$$
+:ref:`det_by_lu.hpp-name`
 contains the source for this template function.
 
-
-$end
+{xrst_end det_by_lu}
 ---------------------------------------------------------------------------
 */
 // BEGIN C++

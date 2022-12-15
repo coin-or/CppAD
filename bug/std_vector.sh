@@ -5,7 +5,7 @@
 # ----------------------------------------------------------------------------
 # Using g++ 4.8.1 results in the following error message:
 #
-# std_vector.cpp:8:7: error: no match for ‘operator|=’ (operand types are 
+# std_vector.cpp:8:7: error: no match for ‘operator|=’ (operand types are
 # ‘std::vector<bool>::reference {aka std::_Bit_reference}’ and ‘bool’)
 #  y[1] |= true;
 #     ^

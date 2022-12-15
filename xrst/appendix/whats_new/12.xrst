@@ -1,0 +1,972 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_12}
+{xrst_spell
+   datadir
+   debian
+   deprecate
+   doxygen
+   dw
+   eigenvector
+   fcur
+   helgrind
+   includedir
+   inorder
+   libdir
+   linker
+   lpthread
+   lteuchos
+   makefile
+   pkgconfig
+   plugin
+   posix
+   src
+   statics
+   stdbool
+   taddr
+   trilinos
+   txt
+   ubuntu
+   uninitialised
+   valgrind
+   yyyymmdd
+}
+
+CppAD Changes and Additions During 2012
+#######################################
+
+mm-dd
+*****
+
+12-30
+=====
+
+#. Merge changes in ``branches/ipopt_solve`` to ``trunk`` ,
+   delete that branch, and
+   advance version number to ``cppad-20121230`` .
+#. Remove ``cppad/configure.hpp`` from repository because
+   it is built by the configuration process
+   (even for MS Visual Studio, now that we are using :ref:`cmake-name` ).
+#. Add the ``AD<`` *Base* > input stream operator :ref:`>><ad_input-name>` .
+
+12-29
+=====
+In ``branches/ipopt_solve`` :
+
+#. Complete implementation of sparse Jacobian and Hessian calculations
+   and add options that allow to user to choose between forward and reverse
+   sparse Jacobians.
+#. The :ref:`ipopt_solve-name` routine seems to be faster and simpler
+   than :ref:`cppad_ipopt_nlp-name` .
+   More speed comparisons would be good to have.
+#. All of the :ref:`ADFun Drivers<Drivers-name>`
+   have added specifications for the zero order Taylor coefficients
+   after the routine is called.
+   For example, see
+   :ref:`Hessian@Hessian Uses Forward` .
+
+12-28
+=====
+In ``branches/ipopt_solve`` :
+
+#. Add the :ref:`ipopt_solve_retape.cpp-name` and :ref:`ipopt_solve_ode_inverse.cpp-name`
+   examples.
+#. Use ``ipopt::solve`` :ref:`ipopt_solve@options`
+   argument (and not a file) for all the Ipopt options.
+   As well as allowing for adding ``ipopt::solve`` special options; e.g.,
+   :ref:`ipopt_solve@options@Retape` .
+
+12-27
+=====
+In ``branches/ipopt_solve`` :
+Change documentation section names that begin with ``cppad_ipopt``
+to begin with :ref:`ipopt_nlp<cppad_ipopt_nlp-name>`
+to distinguish them from :ref:`CppAD::ipopt::solve<ipopt_solve-name>` .
+
+12-26
+=====
+In ``branches/ipopt_solve`` :
+
+#. Convert documentation most all documentation references from
+   the deprecated :ref:`autotools-name` instructions to the new :ref:`cmake-name`
+   instructions.
+#. Include the :ref:`Introduction-name` programs in the
+   :ref:`cmake_check-name` built using :ref:`cmake-name` .
+#. Deprecate :ref:`cppad_ipopt_nlp-name` and replace it by :ref:`ipopt_solve-name`
+   which is easier to use.
+   This is a first version of ``ipopt_solve`` and its speed
+   and memory use needs to be improved.
+
+12-23
+=====
+Copy development ``trunk`` to ``branches/ipopt_solve`` .
+
+12-22
+=====
+Define a doxygen module (group) for each file that has doxygen documentation.
+
+12-20
+=====
+
+#. The :ref:`install instructions<install@Instructions>`
+   were installing ``cppad/CMakeLists.txt`` and ``cppad/configure.hpp.in``
+   in the ``cppad`` include directory.
+   This has been fixed so that only * . ``h`` and * . ``hpp`` files
+   get installed in the ``cppad`` include directory.
+#. Advance the version number to ``cppad-20121220`` .
+
+12-19
+=====
+The files ``<stdbool.h>`` and ``<sys/time.h>``
+do not exist for all C compilers,
+and this caused a problem when using the Windows compiler.
+This has been fixed by defining the type bool inside the
+``compare_c/det_by_minor.c`` source code.
+
+12-17
+=====
+There was a mistake in a check for a valid op code in the
+file ``hash_code.hpp`` .
+This mistake could generate a C++ assertion with an unknown error source.
+It has been fixed.
+
+12-15
+=====
+
+#. Advance version number from ``20121120`` to ``20121215`` .
+   Note that the CppAD version number no longer automatically advances with the
+   date and is rather chosen to advance to the current date.
+#. The :ref:`cmake-name` installation was putting the ``cppad.pc``
+   :ref:`pkgconfig-name` file in
+
+      ``cppad_prefix`` / *cmake_install_datadir* / ``cppad.pc``
+
+   This has been fixed and is now
+
+      ``cppad_prefix`` / *cmake_install_datadir* / ``pkgconfig/cppad.pc``
+
+#. The :ref:`pkgconfig-name` documentation has been improved.
+#. The command for running the
+   :ref:`adolc examples<adolc@Examples>` and
+   :ref:`eigen examples<eigen@Examples>`
+   was fixed
+   (changed from ``make check`` to ``make check_example`` ).
+
+12-14
+=====
+
+#. Fix the old :ref:`autotools-name` so that it works with the
+   new ``cppad.pc`` .
+#. Fix the old installation
+   :ref:`autotools@--with-Documentation` option
+   (it was attempting to copy from the wrong directory).
+
+12-13
+=====
+
+#. Include documentation for :ref:`ipopt-name`
+#. Fix the ``cppad.pc`` :ref:`pkgconfig-name` file
+   so that it includes the necessary libraries and include files
+   when :ref:`cmake@include_ipopt` is specified; see
+   :ref:`pkgconfig-name` .
+
+11-28
+=====
+Update the :ref:`wish_list-name` :
+
+#. Remove Microsoft compiler warning item that has been fixed.
+#. Remove faster sparse set operations item that was completed using
+   ``cppad_sparse_list`` (not part of user API).
+#. Remove :ref:`cmake-name` items that have been completed.
+#. Remove :ref:`CondExp-name` items related to using
+   ``AD< std::complex<double> >`` types because it is better to use
+   ``std::complex< AD<double> >`` .
+#. Remove :ref:`thread_alloc-name` memory chunk item that has been completed.
+#. Remove :ref:`VecAD-name` item about slicing from floating point type to ``int``
+   (not important).
+#. Change an Ipopt item to a :ref:`cppad_ipopt_nlp-name`
+   (which was removed because ``cppad_ipopt_nlp`` is now deprecated).
+   Add new ``cppad_ipopt_sum`` item to the wish list.
+   (This has been removed because :ref:`checkpointing<chkpoint_one-name>`
+   can now be used for this purpose.)
+#. Add new ``atomic_one`` :ref:`wish_list-name` item (since removed).
+
+11-21
+=====
+
+#. Fix the
+   :ref:`download@Version` number in link to the
+   current download files.
+#. Change the
+   ``subversion`` download instructions to use
+   the ``export`` instead of ``checkout`` command.
+   This avoids downloading the source code control files.
+
+11-20
+=====
+
+#. The ``cmake`` variables
+   ``cmake_install_includedir`` and
+   ``cmake_install_libdir``
+   were changed to
+   :ref:`cmake@cmake_install_includedirs` and
+   :ref:`cmake@cmake_install_libdirs`
+   to signify the fact that they can now be a list of directories.
+#. Advance version number to ``cppad-20121120`` .
+
+11-17
+=====
+
+#. Finish documenting the new :ref:`cmake-name` configuration instructions
+   and deprecate the old :ref:`unix<autotools-name>` instructions.
+#. Change the specifications for
+   :ref:`multi_thread@CPPAD_MAX_NUM_THREADS`
+   to allow for a value of one.
+   This enables one to have more tapes during a program execution.
+#. Include the :ref:`C versus C++<compare_c-name>` speed comparison
+   in the :ref:`cmake-name` build.
+
+11-16
+=====
+Fix a warning that occurred in :ref:`Rosen34-name`
+when it was compiled with the preprocessor symbol ``NDEBUG`` defined.
+
+11-14
+=====
+Advanced the CppAD version to ``cppad-20121114`` .
+
+#. Started documenting the
+   :ref:`cmake-name` configuration procedure during installation.
+   This included factoring out the
+   :ref:`download-name` procedure as a separate section
+   so that the same download instruction also apply to the
+   :ref:`unix<autotools-name>` install procedure.
+
+#. Changed
+   :ref:`example/compare_change.cpp<compare_change.cpp-name>`
+   to just return true when ``NDEBUG`` is defined.
+   This enabled all the tests in the
+   ``example`` directory to be compiled
+   with ``NDEBUG`` is defined and to pass.
+
+#. In the case where ``NDEBUG`` is defined,
+   removed detection of ``nan`` during forward mode from
+   ``test_more/forward.cpp%`` .
+   This enables all the tests in the
+   ``test_more`` directory to be compiled
+   with ``NDEBUG`` is defined and to pass.
+
+#. Started a wish list for CppAD's use of :ref:`cmake-name` .
+   The wish list items were completed and removed.
+
+11-09
+=====
+The :ref:`team_pthread.cpp-name` was failing to link on Ubuntu 12.04
+because the libraries were not at the end of the link line.
+This has been  fixed.
+
+11-06
+=====
+
+#. Remove some remaining references to the old licenses CPL-1.0 and GPL-2.0;
+   see :ref:`whats_new_12@mm-dd@10-24` .
+#. Remove out of date Microsoft project files from the distribution.
+   The build system is being converted to use
+   `cmake <http://www.cmake.org>`_ which builds these files automatically
+   and thereby keeps them up to date.
+   This feature is not yet documented, but one can inspect the file
+   ``bin/run_cmake.sh`` to see how to use ``cmake`` with CppAD.
+
+11-04
+=====
+Add missing return value to the example ``base_alloc``
+:ref:`base_alloc.hpp@CondExpOp` function.
+This has been fixed and the comments for this example have been improved.
+
+10-31
+=====
+The CppAD :ref:`profiling<autotools@Profiling CppAD>` was not compiling
+the ``speed/src/\*.cpp`` files with the profiling flag.
+This has been changes
+(only for the profiling speed test).
+
+10-30
+=====
+The :ref:`autotools@fadbad_dir` directory install instructions
+were changed.
+To be specific, ``FADBAD++`` was changed to ``include/FADBAD++`` .
+This makes it more like the other optional packages.
+
+10-25
+=====
+The test :ref:`runge45_1.cpp-name` was failing when using gcc-4.5.2.
+This has been fixed by properly defining ``fabs`` ( *x* ) where
+*x* is a double (without the ``std`` in front).
+
+10-24
+=====
+Change the CppAD licenses from CPL-1.0 and GPL-2.0 to
+EPL-1.0 and GPL-3.0.
+
+10-12
+=====
+
+#. Change all the multiple levels of AD examples to
+   start with :ref:`mul_level-name` .
+   To be specific, move
+   ``taylor_ode.cpp`` to :ref:`mul_level_ode.cpp-name` and
+   ``taylor_ode_adolc.cpp`` to :ref:`mul_level_adolc_ode.cpp-name` .
+#. Add :ref:`taylor_ode.cpp-name` as a example of Taylor's method for solving ODEs,
+   (:ref:`mul_level_ode.cpp-name` is an application of this method
+   to multi-level AD.)
+
+10-04
+=====
+
+#. Change :ref:`speed_main-name` so that it outputs small rates (less than 1000)
+   with two decimal points of precision (instead of as integers).
+   In addition, flush result for each size when it finishes to give user
+   more feedback about how things are progressing.
+#. Add the optional :ref:`time_test@test_size` argument
+   to the ``time_test`` routine.
+
+10-03
+=====
+Change the ``hold_memory`` speed to option to just
+:ref:`speed_main@Global Options@memory` .
+In addition, in the speed test output, include all of the options
+that are present in the output variable name;
+see :ref:`speed_main@Speed Results` .
+
+10-02
+=====
+Fix another problem with Debian's ``/bin/sh`` shell executing
+``example/multi_thread/test.sh`` ; see :ref:`whats_new_12@mm-dd@03-17`
+
+09-24
+=====
+Improve documentation for the
+:ref:`atomic_one-name`
+:ref:`atomic_one@rev_hes_sparse`
+argument
+:ref:`atomic_one@rev_hes_sparse@v` .
+In addition,
+add sparsity calculations to the old_reciprocal.cpp example.
+
+09-11
+=====
+Add ``user_simple.cpp`` ,
+a simpler :ref:`atomic_one-name` example.
+
+08-05
+=====
+
+#. A new type was added for the internal representation of
+   :ref:`glossary@Sparsity Pattern@Vector of Sets`
+   sparsity patterns; see the configure
+   ``--with-sparse_option`` (since removed).
+#. A new speed test, :ref:`compare_c-name` , compares the speed of the same
+   source code compiled with C and C++.
+
+07-30
+=====
+
+#. The :ref:`CppAD_vector@clear` function was added to
+   ``CppAD::vector`` .
+#. Warning !!:
+   The ``CppAD::vector`` :ref:`CppAD_vector@resize` specifications
+   were changed so that *x* . ``resize`` (0) no longer frees
+   the corresponding memory (use *x* . ``clear`` () instead).
+#. Fix a bug in error checking during :ref:`optimize-name` procedure
+   had the following ``valgrind`` symptom during the
+   ``optimize.cpp`` example:
+   ::
+
+      ==6344== Conditional jump or move depends on uninitialised value(s)
+
+#. Fix mistake in old_tan.cpp where ``w[2] = 0``
+   was missing before the call
+   ::
+
+      dw    = F.Reverse(1, w);
+
+07-08
+=====
+
+#. Improve the documentation for :ref:`pow-name` and :ref:`pow_int-name` .
+#. Change all the example section names to be same as corresponding file names;
+   e.g. change ``vectorBool.cpp`` to :ref:`vector_bool.cpp-name`
+   for the example ``example/utility/vector_bool.cpp`` .
+
+07-07
+=====
+Add the ``CPPAD_TAPE_ID_TYPE`` argument to the
+:ref:`autotools@Configure` command line.
+
+07-05
+=====
+Deprecate ``CPPAD_TEST_VECTOR`` and use
+:ref:`CPPAD_TESTVECTOR<testvector-name>` in its place.
+This fixes a problem introduced by changes on 07-03 whereby code that
+used ``CPPAD_TEST_VECTOR`` would no longer work.
+
+07-04
+=====
+
+#. Replace the requirement that the :ref:`SimpleVector-name`
+   :ref:`SimpleVector@size` function return a ``size_t`` value to
+   the requirement that it can be converted to a ``size_t`` value.
+#. The :ref:`--with-eigenvector<autotools@Configure>` option was
+   added to the ``configure`` command line.
+
+07-03
+=====
+Fix bug in :ref:`atomic_one-name` functions identification of variables
+that caused old_tan.cpp to fail with error message
+::
+
+   Error detected by false result for
+   y_taddr > 0
+   at line 262 in the file cppad/local/dependent.hpp
+
+07-02
+=====
+Add  ``eigen_plugin.hpp`` so that
+an Eigen vector can be used as a
+:ref:`SimpleVector-name` .
+This has since been removed; see
+:ref:`2017-05-11<whats_new_17@mm-dd@05-12>` .
+
+07-01
+=====
+
+#. Change :ref:`cppad_eigen.hpp-name`
+   to match new specifications and example in eigen help files on
+   `customizing and extending eigen. <http://eigen.tuxfamily.org/dox/TopicCustomizingEigen.html>`_
+#. Fix bug whereby a newly constructed :ref:`VecAD-name` object was a
+   :ref:`con_dyn_var@Variable` (instead of a parameter) directly after construction
+   (when no previous :ref:`ADFun<fun_construct-name>` object had been created).
+#. Change a ``ok != a == 0.`` to ``ok &= a == 0.`` in
+   the example :ref:`ad_ctor.cpp-name` .
+#. Add the :ref:`eigen_array.cpp-name` example.
+
+06-17
+=====
+
+#. Move :ref:`epsilon-name` to :ref:`numeric_limits-name`
+   and add the functions ``min`` and ``max``
+   in *CppAD::numeric_limits<* ``Type`` > .
+#. Convert use of the deprecated :ref:`epsilon-name` in examples
+   to use of ``numeric_limits`` :ref:`numeric_limits@epsilon` .
+#. Complete :ref:`cppad_eigen.hpp-name` interface to
+   ``lowest`` and ``highest`` functions for
+   all non-complex AD types.
+
+06-16
+=====
+Add the example :ref:`eigen_det.cpp-name` that uses the
+`Eigen <http://eigen.tuxfamily.org>`_
+linear algebra package.
+
+06-15
+=====
+Include the :ref:`base_adolc.hpp-name` as
+``<cppad/example/base_adolc.hpp>`` under the
+:ref:`autotools@prefix_dir` directory.
+
+06-12
+=====
+Increase the size and of the
+:ref:`sparse Jacobian speed tests<link_sparse_jacobian-name>` .
+
+06-10
+=====
+
+#. Add the :ref:`hold_memory<speed_main@Global Options@memory>` option
+   to the speed test main program.
+   This was changed to just ``memory`` ; see
+   :ref:`whats_new_12@mm-dd@10-03` .
+#. In :ref:`cppad_sparse_jacobian.cpp-name` ,
+   change ``USE_BOOL_SPARSITY`` from true to false.
+   In addition, change the number of non-zeros per row from about approximately
+   three to approximately ten.
+
+06-09
+=====
+Change :ref:`adolc_sparse_jacobian.cpp-name` to use the sparse adolc
+Jacobian (instead of the full Jacobian) driver.
+This was also done for :ref:`adolc_sparse_hessian.cpp-name` ,
+but there is a problem with the test that is being investigated.
+
+06-08
+=====
+Implement the matrix multiply speed test :ref:`link_mat_mul-name` for all packages
+(there is a problem with the :ref:`fadbad_mat_mul.cpp-name`
+implementation and it is being looked into).
+
+06-07
+=====
+Make all the speed tests implementations (for the specific packages)
+uniform by having a Specification and Implementation heading and similar
+indexing. For example, see
+:ref:`adolc_det_minor.cpp-name` ,
+:ref:`cppad_det_minor.cpp-name` ,
+:ref:`double_det_minor.cpp-name` ,
+:ref:`fadbad_det_minor.cpp-name` , and
+:ref:`sacado_det_minor.cpp-name` .
+
+06-05
+=====
+Add the :ref:`sacado_ode.cpp-name` speed test.
+
+06-04
+=====
+
+#. The specifications for :ref:`Runge45-name` where changes so that
+   it uses the ``fabs`` function instead of the ``<`` operation.
+   This enabled the a more precise statement about its
+   :ref:`Runge45@Operation Sequence` .
+#. The ``fabs`` function as added to the CppAD standard math library
+   (see :ref:`abs-name` )
+   and the :ref:`base type requirements<base_std_math-name>` .
+   This enables one to write code that works with ``AD<double>`` as
+   well as ``double`` without having to define ``abs`` for
+   ``double`` arguments
+   (and similarly for ``float`` ).
+#. Add the :ref:`adolc_ode.cpp-name` and :ref:`fadbad_ode.cpp-name` speed tests
+   (and edit the :ref:`cppad_ode.cpp-name` test).
+
+06-03
+=====
+
+#. The ``CppAD::vector`` class was extended to allow assignment
+   with the target of size zero and the source of non-zero size;
+   see :ref:`CppAD_vector@Assignment@Check Size` .
+#. A memory leak and a bug in ``cppad_mat_mul.cpp`` were fixed
+   (the bug was related to the change to ``CppAD::vector`` above).
+
+06-02
+=====
+
+#. Remove the deprecated symbol
+   ``CppADvector`` from the
+   :ref:`det_by_lu-name` speed test source code :ref:`det_by_lu.hpp-name` .
+#. Include :ref:`memory_leak-name` in the list of
+   :ref:`deprecated-name` features.
+#. Change the :ref:`ode_evaluate-name` speed test utility so that its
+   :ref:`operation sequence<glossary@Operation@Sequence>`
+   does not depend on the repetition; see
+   :ref:`ode_evaluate@p@p == 0` in its documentation.
+#. Use same argument for taping and derivative evaluation when
+   ``retape`` speed test option is true.
+#. Implement the *retape* == ``false`` option
+   in :ref:`cppad_ode.cpp-name` .
+#. Have
+   :ref:`cppad_det_lu.cpp-name` ,
+   :ref:`cppad_det_minor.cpp-name` ,
+   and :ref:`cppad_poly.cpp-name` ,
+   return false when one of the specified options is not supported.
+   Do the same for
+   *package* _ *test* . ``cpp`` for *package* equal to
+   ``adolc`` , ``fadbad`` , and ``sacado`` and
+   for *test* equal to
+   ``det_lu`` , ``det_minor`` , ``poly`` .
+
+06-01
+=====
+Change
+:ref:`cppad_sparse_hessian.cpp-name` and
+:ref:`cppad_sparse_jacobian.cpp-name`
+to use
+the *row* , *col* interface to :ref:`sparse_hessian-name` .
+In addition, implement the speed test
+``retape`` speed test option for these tests.
+
+05-31
+=====
+Add the ``cppad_print_optimize`` routine to so that the corresponding
+code does not need to be reproduced for all the
+:ref:`speed_cppad-name` tests.
+In addition, during CppAD speed tests,
+print out the optimization results for each test size.
+
+05-30
+=====
+Change specifications for
+:ref:`link_sparse_hessian-name` so that the row and column indices are
+inputs (instead of being chosen randomly by the test for each repetition).
+This enables use of the
+``retape`` speed test option
+during sparse Hessian speed tests.
+
+05-29
+=====
+Add :ref:`index_sort-name` to the general purpose template :ref:`utilities<utility-name>`
+so that it can be used by the implementations of
+:ref:`link_sparse_jacobian-name` and :ref:`link_sparse_hessian-name` .
+
+05-27
+=====
+Split the sparse Jacobian and Hessian test function the separate function
+:ref:`sparse_jac_fun-name` and :ref:`sparse_hes_fun-name`
+(do not use sparse Hessian for both).
+In addition, change row and column indices from *i*
+and *j* to *row* and *col* .
+
+05-24
+=====
+Merged in changes from ``branches/sparse`` :
+
+#. A new interface was added to
+   :ref:`sparse_jacobian-name` and :ref:`sparse_hessian-name` .
+   This interface
+   returns a sparse representation of the corresponding matrices
+   using row and column index vectors.
+#. The examples
+   :ref:`sparse_jacobian.cpp-name` and
+   :ref:`sparse_hessian.cpp-name`  were improved
+   and extended to include the new interface.
+#. The definition of an
+   :ref:`glossary@AD Function` was improved
+   to include definition of the corresponding *n* and *m* .
+
+04-19
+=====
+The :ref:`autotools@boost_dir`
+configure command line value has been changed to be the corresponding
+prefix during the installation of boost.
+To be specific, it used to be that
+``boost_dir`` / *boost* was the boost include directory,
+now ``boost_dir`` / *include* is the boost include directory.
+This make it the same as the other directory arguments on the configure
+command line.
+In addition, it fixes some bugs in the detection of the boost
+multi-threading library.
+
+04-18
+=====
+Add documentation and testing for not using :ref:`free_all<ta_free_all-name>` and
+:ref:`atomic_one clear<atomic_one@clear>` while in
+:ref:`parallel<ta_in_parallel-name>` mode.
+
+04-17
+=====
+Fix bug when using :ref:`atomic_one-name` functions with
+:ref:`multi_threading<multi_thread-name>` .
+
+04-10
+=====
+Add control of the
+:ref:`autotools@max_num_threads` argument
+to the unix
+:ref:`autotools@Configure` command.
+
+04-06
+=====
+
+#. A change was made to the way that the tapes were managed to reduce
+   false sharing during :ref:`multi-threading<multi_thread-name>` .
+   Because of this change, it is now suggest that the user call
+   :ref:`parallel_ad-name` after the multi-threading section of the program.
+#. The routine :ref:`ta_free_all-name` was created to make it easier
+   to manage memory and the routine :ref:`memory_leak-name`
+   was deprecated.
+#. Add the ``-lteuchos`` flag to the link line for the
+   :ref:`speed_sacado-name` tests.
+   (This was not necessary for ``trilinos-10.8.3``
+   but is necessary for ``trilinos-10.10.1`` )
+
+04-05
+=====
+The restriction was added that
+:ref:`parallel_ad-name` cannot be called while a tape is being recorded.
+This was necessary inorder to initialize some new statics in the tape.
+
+04-01
+=====
+Fixed a race condition when using CppAD with
+:ref:`multi-threading<multi_thread-name>` .
+This has been fixed and the error message below no longer occurs.
+Suppose that you ran the CppAD
+:ref:`autotools@Configure` command in the ``work``
+directory.
+If you then edited the file ``work/multi_thread/makefile``
+and changed
+::
+
+   # AM_CXXFLAGS     = -g $(CXX_FLAGS)
+   AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
+
+to
+::
+
+   AM_CXXFLAGS     = -g $(CXX_FLAGS)
+   # AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
+
+and then executed the commands
+::
+
+   make clean
+   make pthread_test
+   valgrind --tool=helgrind ./pthread_test simple_ad
+
+The following error message would result:
+
+| |tab| ... ``snip ...``
+| ==7041== ``Possible data race during write of size 4 at 0x8077460 by thread`` #1
+| ==7041== ``at 0x804FE23: CppAD::AD<double>::tape_new`` () ( ``tape_link.hpp:221`` )
+| ... ``snip ...``
+
+03-27
+=====
+Reduce the amount of memory allocation and copying of information during
+a :ref:`Dependent-name` operation or an ``ADFun``
+:ref:`fun_construct@Sequence Constructor` .
+
+03-26
+=====
+Calling ``taylor_capacity`` , with to with capacity equal to zero,
+was not
+:ref:`capacity_order@c@Freeing Memory` .
+This has been fixed.
+
+03-23
+=====
+
+#. Improve, the multi-threading examples
+   :ref:`simple_ad_openmp.cpp-name` ,
+   :ref:`simple_ad_bthread.cpp-name` , and
+   :ref:`simple_ad_pthread.cpp-name` .
+   This includes separating generic code that can be used for all applications
+   from problem specific code.
+#. Add initialization of statics in
+   :ref:`parallel_ad@CheckSimpleVector`
+   during ``parallel_ad`` call.
+   These statics are required to use
+   :ref:`CppAD::vector<CppAD_vector-name>` .
+#. Add a debugging check to make sure :ref:`CheckSimpleVector-name`
+   is initialized in sequential mode.
+
+03-21
+=====
+Fix an incorrect error check in ``thread_alloc``
+that did not allow :ref:`ta_return_memory-name`
+to return memory in sequential execution mode that was allocated by a
+different thread during parallel execution.
+
+03-17
+=====
+Debian recently converted the default shell corresponding to
+``/bin/sh`` to  ``dash``
+(which caused ``example/multi_thread/test.sh`` to fail).
+This has been fixed.
+In general, Debian's policy is that ``bin/sh`` will be a
+`Posix Shell <http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html>`_.
+
+03-11
+=====
+There was a bug in :ref:`thread_alloc-name` where extra memory was held
+onto even if :ref:`hold_memory<ta_hold_memory-name>` was never called
+and only one thread was used by the program.  This caused
+
+   ``valgrind --leak-check`` = ``full --show-reachable`` = ``yes``
+
+to generate an error message.
+If :ref:`multiple threads<multi_thread-name>` are used,
+one should free this
+:ref:`ta_free_available@Purpose@Extra Memory`
+for threads other than thread zero.
+If ``hold_memory`` is used,
+one should call :ref:`free_available<ta_free_available-name>` for all threads.
+
+03-03
+=====
+
+#. Add the examples
+   :ref:`simple_ad_openmp.cpp-name` ,
+   :ref:`simple_ad_bthread.cpp-name`
+   and :ref:`simple_ad_pthread.cpp-name` .
+#. Fix bug in finding boost multi-threading library
+   (due to fact that :ref:`autotools@boost_dir`
+   is not the prefix during the boost installation).
+
+03-02
+=====
+
+#. Change the name ``simple_ad.cpp`` to :ref:`team_example.cpp-name`
+#. The multi-threading ``team_example.cpp`` example was changed to use
+   :math:`f(x) = \sqrt{ x^2 }` instead of the function
+   :math:`{\rm atan2} [ \sin(x) , \cos (x) ]`
+   (both functions should behave like the identity function :math:`f(x) = x`).
+   This enabled the removal of ``example/multi_thread/arc_tan.cpp`` .
+#. In :ref:`team_example.cpp-name` check that all of the threads
+   pass their individual test; i.e. ``work_all_`` [ *thread_num* ]. *ok*
+   is true for all *thread_num* .
+
+02-11
+=====
+
+#. The requirements in
+   :ref:`base_member-name` were missing from the :ref:`base_require-name` documentation.
+   In addition,
+   the :ref:`base_require.cpp-name` example has been added.
+
+The specifications for :ref:`memory_leak-name` where changes so that
+calling routine specifies the amount of static memory to add.
+In addition,
+it is now possible to call
+``memory_leak`` when :ref:`num_threads<ta_num_threads-name>`
+is greater than one
+(still can't be in parallel mode).
+
+02-10
+=====
+
+#. Add the missing Base class requirements in
+   the entire :ref:`base_member-name` section
+   and under the :ref:`base_require@Output Operator`
+   in the :ref:`base_require-name` section.
+#. Add the :ref:`base_alloc.hpp-name` example.
+
+02-09
+=====
+
+#. Add the *set_static* to :ref:`memory_leak-name` .
+   This is necessary for testing base types that allocate memory
+   for each element.
+#. Fix memory allocation bug in ``cppad/local/pod_vector.hpp``
+   when each element of the :ref:`Base<base_require-name>` type allocated memory.
+
+01-30
+=====
+Make another attempt to fix linking with boost threads where the wrong
+version of the library is in the system include directory; i.e.,
+to have :ref:`autotools@boost_dir` override the default
+library.
+
+01-27
+=====
+There were some problems with
+:ref:`configure's<autotools@Configure>` automatic detection of
+the boost multi-threading library.
+These have been fixed.
+
+01-24
+=====
+It used to be that :ref:`thread_alloc-name` did not hold onto memory
+when *num_threads* was one in the previous call to
+:ref:`parallel_setup<ta_parallel_setup-name>` .
+Holding onto memory is now controlled by the separate routine
+:ref:`hold_memory<ta_hold_memory-name>` .
+This give the user more control over the memory allocator
+and the ability to obtain a speed up even
+when there is only one thread.
+To convert old code to the new interface, after each call to
+
+   ``thread_alloc::parallel_setup`` ( *num_threads* , *in_parallel* , *thread_num* );
+
+put the following call
+
+   ``thread_alloc::hold_memory`` ( *num_threads*  > 1);
+
+01-23
+=====
+Change variable notation and use :ref:`optimize-name` in
+:ref:`mul_level.cpp-name` .
+
+01-20
+=====
+
+#. Add the example :ref:`change_param.cpp-name`
+   which shows how to compute derivatives of functions that have
+   parameters that change, but derivatives are not computed
+   with respect to these parameters.
+#. The documentation for machine :ref:`epsilon-name`
+   has been improved.
+   (The fact that it can be used for *Base* types was missing.)
+
+01-19
+=====
+
+#. In cases where ``test.sh`` is trivial,
+   put its operations in corresponding makefile.
+#. Fix problem compiling ``cppad/speed/sparse_evaluate.hpp``
+   under gcc on Fedora 17.
+#. Run ``example/multi_thread/test.sh`` from source directory
+   (no need to copy to build directory).
+
+01-16
+=====
+The test program ``example/multi_thread/test.sh`` failed if the
+:ref:`autotools@openmp_flags` not present in the
+``configure`` command.
+This has been fixed.
+In addition, this ``test.sh`` has been made faster by cycling through
+the available threading systems instead of doing every system for every
+test.
+
+01-15
+=====
+Fix ``make test`` so it works when
+:ref:`autotools@Configure` is run in the distribution directory
+``cppad-`` *yyyymmdd*
+(not just when it is run in a different directory).
+
+01-12
+=====
+The ``-lpthread`` library was missing from the
+:ref:`multi_thread-name` test program linker command.
+This has been fixed.
+
+01-07
+=====
+
+#. A duplicated code block beginning with
+   ::
+
+      if( fabs( fcur ) <= epsilon_ )
+
+   was removed from the routine ``multi_newton_worker`` .
+
+#. The distance between solutions that are joined to one solution
+   has been corrected from :math:`(b - a) / (2 n )` to
+   :math:`(b - a) / n`; see
+   :ref:`multi_newton_run@xout` .
+   The correction was in the file :ref:`multi_newton.cpp-name` where
+   ``sub_length_ / 2`` was change to ``sub_length_`` .
+
+01-02
+=====
+
+#. The :ref:`thread_alloc-name` memory allocator was changed to avoid
+   certain false sharing situations
+   (cases where two different thread were changing and using memory
+   that is on the same page of cache).
+   On one tests machine, the execution time for the 32 thread case for the test
+   ::
+
+      ./openmp_test multi_newton 1 32 1000 4800 10 true
+
+   improved from  0.0302 seconds to 0.0135 seconds.
+
+#. There was a problem with the correctness test section of the
+   :ref:`multi_newton_time-name` test.
+   The convergence criteria, and correctness criteria,
+   needed to be scaled by the largest argument values.
+   This was a problem with over a hundred zeros were included in the test
+   (and the largest argument value was :math:`100 \pi` or more).
+
+#. There was a problem with the way that
+   :ref:`multi_newton_takedown-name`
+   joined two solutions into one.
+   It is possible that one of the solutions that needs to be joined is on
+   the  boundary and very close to a solution in the next (or previous interval)
+   that is not on the  boundary. In this case,
+   the one with the smaller function value is chosen.
+
+for the previous
+
+{xrst_end whats_new_12}

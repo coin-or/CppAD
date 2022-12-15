@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin erf.cpp$$
-$spell
-   tan
-   erf
-$$
+{xrst_begin erf.cpp}
 
-$section The AD erf Function: Example and Test$$
+The AD erf Function: Example and Test
+#####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end erf.cpp}
 */
 // BEGIN C++
 

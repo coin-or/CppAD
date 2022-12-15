@@ -206,74 +206,86 @@ void rev_hes_nl_unary_op(
 }
 // ---------------------------------------------------------------------------
 /*
-$begin for_hes_nl_unary_op$$
-$spell
-   hes
+{xrst_begin for_hes_nl_unary_op}
+{xrst_spell
    nl
-   op
    np
    numvar
-   Jacobian
-$$
+}
 
-$section Forward Hessian Sparsity for Non-linear Unary Operators$$
+Forward Hessian Sparsity for Non-linear Unary Operators
+#######################################################
 
-$head Syntax$$
-$codei%local::for_hes_nl_unary_op(
-   %np1%, %numvar%, %i_v%, %for_sparsity%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_for_hes_nl_unary_op%// END_for_hes_nl_unary_op%1
-%$$
+| ``local::for_hes_nl_unary_op`` (
+| |tab| *np1* , *numvar* , *i_v* , *for_sparsity*
+| )
 
-$head C++ Source$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_for_hes_nl_unary_op
+   // END_for_hes_nl_unary_op
+}
+
+C++ Source
+**********
 The C++ source code corresponding to this operation is
-$codei%
-      %w% = %fun%( %v% )
-%$$
-where $icode fun$$ is a non-linear function.
 
-$head np1$$
+   *w* = *fun* ( *v*  )
+
+where *fun* is a non-linear function.
+
+np1
+***
 This is the number of independent variables plus one;
-i.e. size of $icode x$$ plus one.
+i.e. size of *x* plus one.
 
-$head numvar$$
+numvar
+******
 This is the total number of variables in the tape.
 
-$head i_w$$
-is the index of the variable corresponding to the result $icode w$$.
+i_w
+***
+is the index of the variable corresponding to the result *w* .
 
-$head i_v$$
-is the index of the variable corresponding to the argument $icode v$$.
+i_v
+***
+is the index of the variable corresponding to the argument *v* .
 
-$head for_sparsity$$
-We have the conditions $icode%np1% = %for_sparsity%.end()%$$
-and $icode%for_sparsity%.n_set() = %np1% + %numvar%$$.
+for_sparsity
+************
+We have the conditions *np1* = *for_sparsity* . ``end`` ()
+and *for_sparsity* . ``n_set`` () = *np1* + *numvar* .
 
-$subhead Input Jacobian Sparsity$$
-For $icode%i%= 0, ..., %i_w%-1%$$,
-the $icode%np1%+%i%$$ row of $icode for_sparsity$$ is the Jacobian sparsity
-for the $th i$$ variable. These values do not change.
-Note that $icode%i%=0%$$ corresponds to a parameter and
+Input Jacobian Sparsity
+=======================
+For *i* = 0, ..., *i_w* ``-1`` ,
+the *np1* + *i* row of *for_sparsity* is the Jacobian sparsity
+for the *i*-th variable. These values do not change.
+Note that *i* =0 corresponds to a parameter and
 the corresponding Jacobian sparsity is empty.
 
-$subhead Input Hessian Sparsity$$
-For $icode%j%=1, ..., %n%$$,
-the $th j$$ row of $icode for_sparsity$$ is the Hessian sparsity
-before including the function $latex w(x)$$.
+Input Hessian Sparsity
+======================
+For *j* =1, ..., *n* ,
+the *j*-th row of *for_sparsity* is the Hessian sparsity
+before including the function :math:`w(x)`.
 
-$subhead Output Jacobian Sparsity$$
-the $icode i_w$$ row of $icode for_sparsity$$ is the Jacobian sparsity
-for the variable $icode w$$.
+Output Jacobian Sparsity
+========================
+the *i_w* row of *for_sparsity* is the Jacobian sparsity
+for the variable *w* .
 
-$subhead Output Hessian Sparsity$$
-For $icode%j%=1, ..., %n%$$,
-the $th j$$ row of $icode for_sparsity$$ is the Hessian sparsity
-after including the function $latex w(x)$$.
+Output Hessian Sparsity
+=======================
+For *j* =1, ..., *n* ,
+the *j*-th row of *for_sparsity* is the Hessian sparsity
+after including the function :math:`w(x)`.
 
-$end
+{xrst_end for_hes_nl_unary_op}
 */
 // BEGIN_for_hes_nl_unary_op
 template <class Vector_set>

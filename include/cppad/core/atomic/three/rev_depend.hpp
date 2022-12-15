@@ -5,82 +5,93 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_three_rev_depend$$
-$spell
-   afun
-   enum
-   cpp
-   taylor.hpp
-$$
+{xrst_begin atomic_three_rev_depend}
 
-$section Atomic Function Reverse Dependency Calculation$$
+Atomic Function Reverse Dependency Calculation
+##############################################
 
-$head Syntax$$
-$icode%ok% = %afun%.rev_depend(
-   %parameter_x%, %type_x%, %depend_x%, %depend_y%
-)%$$
+Syntax
+******
 
-$subhead Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| *ok* = *afun* . ``rev_depend`` (
+| |tab| *parameter_x* , *type_x* , *depend_x* , *depend_y*
+| )
 
-$head Dependency Analysis$$
+Prototype
+=========
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Dependency Analysis
+*******************
 This calculation is sometimes referred to as a reverse dependency analysis.
 
-$head Implementation$$
+Implementation
+**************
 This function must be defined if
-$cref/afun/atomic_three_ctor/atomic_user/afun/$$ is
-used to define an $cref ADFun$$ object $icode f$$,
-and $cref/f.optimize()/optimize/$$ is used.
+:ref:`atomic_three_ctor@atomic_user@afun` is
+used to define an :ref:`ADFun-name` object *f* ,
+and :ref:`f.optimize()<optimize-name>` is used.
 
-$head Base$$
-See $cref/Base/atomic_three_afun/Base/$$.
+Base
+****
+See :ref:`atomic_three_afun@Base` .
 
-$head parameter_x$$
-See $cref/parameter_x/atomic_three_define/parameter_x/$$.
+parameter_x
+***********
+See :ref:`atomic_three_define@parameter_x` .
 
-$head type_x$$
-See $cref/type_x/atomic_three_define/type_x/$$.
+type_x
+******
+See :ref:`atomic_three_define@type_x` .
 
-$head depend_x$$
+depend_x
+********
 This vector has size equal to the number of arguments for this atomic function;
-i.e. $icode%n%=%ax%.size()%$$.
-The input values of the elements of $icode depend_x$$
+i.e. *n* = *ax* . ``size`` () .
+The input values of the elements of *depend_x*
 are not specified (must not matter).
-Upon return, for $latex j = 0 , \ldots , n-1$$,
-$icode%depend_x%[%j%]%$$ is true if the values of interest depend
-on the value of $cref/ax[j]/atomic_three_afun/ax/$$ in the corresponding
-$icode%afun%(%ax%, %ay%)%$$ call.
+Upon return, for :math:`j = 0 , \ldots , n-1`,
+*depend_x* [ *j* ] is true if the values of interest depend
+on the value of :ref:`ax[j]<atomic_three_afun@ax>` in the corresponding
+*afun* ( *ax* , *ay* ) call.
 
-$subhead Optimize$$
+Optimize
+========
 Parameters and variables,
 that the values of interest do not depend on,
-may get removed by $cref/optimization/optimize/$$.
-The corresponding values in $cref/parameter_x/atomic_three_define/parameter_x/$$,
-and $cref/taylor_x/atomic_three_forward/taylor_x/$$
+may get removed by :ref:`optimization<optimize-name>` .
+The corresponding values in :ref:`atomic_three_define@parameter_x` ,
+and :ref:`atomic_three_forward@taylor_x`
 (after optimization has removed them) are not specified.
 
-$head depend_y$$
+depend_y
+********
 This vector has size equal to the number of results for this atomic function;
-i.e. $icode%m%=%ay%.size()%$$.
-For $latex i = 0 , \ldots , m-1$$,
-$icode%depend_y%[%i%]%$$ is true if the values of interest depend
-on the value of $cref/ay[i]/atomic_three_afun/ay/$$ in the corresponding
-$icode%afun%(%ax%, %ay%)%$$ call.
+i.e. *m* = *ay* . ``size`` () .
+For :math:`i = 0 , \ldots , m-1`,
+*depend_y* [ *i* ] is true if the values of interest depend
+on the value of :ref:`ay[i]<atomic_three_afun@ay>` in the corresponding
+*afun* ( *ax* , *ay* ) call.
 
-$head ok$$
-If this calculation succeeded, $icode ok$$ is true.
+ok
+**
+If this calculation succeeded, *ok* is true.
 Otherwise, it is false.
 
-$childtable%
+Contents
+********
+{xrst_toc_table
    example/atomic_three/rev_depend.cpp
-%$$
-$head Example$$
-The following is an example of a atomic function $code rev_depend$$ definition:
-$cref atomic_three_rev_depend.cpp$$.
+}
+Example
+*******
+The following is an example of a atomic function ``rev_depend`` definition:
+:ref:`atomic_three_rev_depend.cpp-name` .
 
-
-$end
+{xrst_end atomic_three_rev_depend}
 -----------------------------------------------------------------------------
 */
 

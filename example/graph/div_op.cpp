@@ -3,17 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin graph_div_op.cpp$$
-$spell
-   div
-$$
+{xrst_begin graph_div_op.cpp}
 
-$section C++ AD Graph div Operator: Example and Test$$
+C++ AD Graph div Operator: Example and Test
+###########################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end graph_div_op.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

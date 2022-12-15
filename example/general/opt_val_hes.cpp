@@ -4,57 +4,65 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin opt_val_hes.cpp$$
-$spell
-   hes
-$$
+{xrst_begin opt_val_hes.cpp}
 
-$section opt_val_hes: Example and Test$$
+opt_val_hes: Example and Test
+#############################
 
+Fix :math:`z \in \B{R}^\ell` and define the functions
+:math:`S_k : \B{R} \times \B{R} \rightarrow \B{R}^\ell` by and
+:math:`F : \B{R} \times \B{R} \rightarrow \B{R}` by
 
-Fix $latex z \in \B{R}^\ell$$ and define the functions
-$latex S_k : \B{R} \times \B{R} \rightarrow \B{R}^\ell$$ by and
-$latex F : \B{R} \times \B{R} \rightarrow \B{R}$$ by
-$latex \[
-\begin{array}{rcl}
-S_k (x, y) & = & \frac{1}{2} [ y * \sin ( x * t_k ) - z_k ]^2
-\\
-F(x, y)    & = &  \sum_{k=0}^{\ell-1} S_k (x, y)
-\end{array}
-\] $$
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   S_k (x, y) & = & \frac{1}{2} [ y * \sin ( x * t_k ) - z_k ]^2
+   \\
+   F(x, y)    & = &  \sum_{k=0}^{\ell-1} S_k (x, y)
+   \end{eqnarray}
+
 It follows that
-$latex \[
-\begin{array}{rcl}
-\partial_y F(x, y)
-& = &
-\sum_{k=0}^{\ell-1} [ y * \sin ( x * t_k ) - z_k ] \sin( x * t_k )
-\\
-\partial_y \partial_y F(x, y)
-& = &
-\sum_{k=0}^{\ell-1} \sin ( x t_k )^2
-\end{array}
-\] $$
-Furthermore if we define $latex Y(x)$$
-as solving the equation $latex \partial F[ x, Y(x) ] = 0 $$ we have
-$latex \[
-\begin{array}{rcl}
-0 & = &
-\sum_{k=0}^{\ell-1} [ Y(x) * \sin ( x * t_k ) - z_k ] \sin( x * t_k )
-\\
-Y(x) \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
-- \sum_{k=0}^{\ell-1} \sin ( x * t_k ) z_k
-\\
-Y(x) & = & \frac{
-   \sum_{k=0}^{\ell-1} \sin( x * t_k ) z_k
-   }{
-   \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \partial_y F(x, y)
+   & = &
+   \sum_{k=0}^{\ell-1} [ y * \sin ( x * t_k ) - z_k ] \sin( x * t_k )
+   \\
+   \partial_y \partial_y F(x, y)
+   & = &
+   \sum_{k=0}^{\ell-1} \sin ( x t_k )^2
+   \end{eqnarray}
+
+Furthermore if we define :math:`Y(x)`
+as solving the equation :math:`\partial F[ x, Y(x) ] = 0` we have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   0 & = &
+   \sum_{k=0}^{\ell-1} [ Y(x) * \sin ( x * t_k ) - z_k ] \sin( x * t_k )
+   \\
+   Y(x) \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
+   - \sum_{k=0}^{\ell-1} \sin ( x * t_k ) z_k
+   \\
+   Y(x) & = & \frac{
+      \sum_{k=0}^{\ell-1} \sin( x * t_k ) z_k
+      }{
+      \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
+   }
+   \end{eqnarray}
+
+{xrst_literal
+   // BEGIN C++
+   // END C++
 }
-\end{array}
-\] $$
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end opt_val_hes.cpp}
 */
 // BEGIN C++
 

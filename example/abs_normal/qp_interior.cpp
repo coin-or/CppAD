@@ -3,50 +3,60 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin qp_interior.cpp$$
-$spell
+{xrst_begin qp_interior.cpp}
+{xrst_spell
    qp
-$$
+   rlr
+}
 
-$section abs_normal qp_interior: Example and Test$$
+abs_normal qp_interior: Example and Test
+########################################
 
-$head Problem$$
+Problem
+*******
 Our original problem is
-$latex \[
+
+.. math::
+
    \R{minimize} \; | u - 1| \; \R{w.r.t} \; u \in \B{R}
-\] $$
+
 We reformulate this as the following problem
-$latex \[
-\begin{array}{rlr}
-   \R{minimize}      & v             & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
-   \R{subject \; to} &  u - 1 \leq v \\
-                      &  1 - u \leq v
-\end{array}
-\] $$
+
+.. math::
+
+   \begin{array}{rlr}
+      \R{minimize}      & v             & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
+      \R{subject \; to} &  u - 1 \leq v \\
+                         &  1 - u \leq v
+   \end{array}
+
 This is equivalent to
-$latex \[
-\begin{array}{rlr}
-   \R{minimize}
-   & (0, 1) \cdot (u, v)^T  & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
-   \R{subject \; to}
-   &
-   \left( \begin{array}{cc} 1 & -1 \\ -1 & -1 \end{array} \right)
-   \left( \begin{array}{c} u \\ v \end{array} \right)
-   +
-   \left( \begin{array}{c} -1 \\ 1 \end{array} \right)
-   \leq
-   0
-\end{array}
-\] $$
-which is in the form expected by $cref qp_interior$$.
 
+.. math::
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN C++%// END C++%
-1%$$
+   \begin{array}{rlr}
+      \R{minimize}
+      & (0, 1) \cdot (u, v)^T  & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
+      \R{subject \; to}
+      &
+      \left( \begin{array}{cc} 1 & -1 \\ -1 & -1 \end{array} \right)
+      \left( \begin{array}{c} u \\ v \end{array} \right)
+      +
+      \left( \begin{array}{c} -1 \\ 1 \end{array} \right)
+      \leq
+      0
+   \end{array}
 
-$end
+which is in the form expected by :ref:`qp_interior-name` .
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end qp_interior.cpp}
 */
 // BEGIN C++
 # include <limits>

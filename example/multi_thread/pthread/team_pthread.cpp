@@ -3,31 +3,36 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin team_pthread.cpp$$
-$spell
-   Cygwin
-   pthread
-$$
+{xrst_begin team_pthread.cpp}
+{xrst_spell
+   destructors
+}
 
+Pthread Implementation of a Team of AD Threads
+##############################################
+See :ref:`team_thread.hpp-name` for this routines specifications.
 
-$section Pthread Implementation of a Team of AD Threads$$
-See $cref team_thread.hpp$$ for this routines specifications.
+Bug in Cygwin
+*************
 
-$head Bug in Cygwin$$
-
-There is a bug in $code pthread_exit$$,
+There is a bug in ``pthread_exit`` ,
 using cygwin 5.1 and g++ version 4.3.4,
-whereby calling $code pthread_exit$$ is not the same as returning from
+whereby calling ``pthread_exit`` is not the same as returning from
 the corresponding routine.
 To be specific, destructors for the vectors are not called
 and a memory leaks result.
 Set the following preprocessor symbol to 1 to demonstrate this bug:
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # define DEMONSTRATE_BUG_IN_CYGWIN 0
-/* %$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+/* {xrst_code}
+{xrst_spell_on}
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end team_pthread.cpp}
 */
 // BEGIN C++
 # include <pthread.h>

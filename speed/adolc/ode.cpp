@@ -3,30 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin adolc_ode.cpp$$
-$spell
-   typedef
-   adouble
-   jacobian jacobian
-   jac_ptr
-   alloc
-   cppad.hpp
-   Jacobian
-   Adolc
-   bool
-   CppAD
-   onetape
-$$
+{xrst_begin adolc_ode.cpp}
 
-$section Adolc Speed: Ode$$
+Adolc Speed: Ode
+################
 
+Specifications
+**************
+See :ref:`link_ode-name` .
 
-$head Specifications$$
-See $cref link_ode$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -147,6 +137,8 @@ bool link_ode(
 
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end adolc_ode.cpp}
 */

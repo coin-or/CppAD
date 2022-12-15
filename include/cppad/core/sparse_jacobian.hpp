@@ -11,258 +11,263 @@
 # define CPPAD_SPARSE_JACOBIAN_MAX_MULTIPLE_DIRECTION 64
 
 /*
-$begin sparse_jacobian$$
-$spell
-   cppad
-   colpack
-   cmake
+{xrst_begin sparse_jacobian}
+{xrst_spell
    recomputed
    valarray
-   std
-   CppAD
-   Bool
-   jac
-   Jacobian
-   Jacobians
-   const
-   Taylor
-$$
+}
 
-$section Sparse Jacobian$$
+Sparse Jacobian
+###############
 
-$head Syntax$$
-$icode%jac% = %f%.SparseJacobian(%x%)
-%jac% = %f%.SparseJacobian(%x%, %p%)
-%n_sweep% = %f%.SparseJacobianForward(%x%, %p%, %row%, %col%, %jac%, %work%)
-%n_sweep% = %f%.SparseJacobianReverse(%x%, %p%, %row%, %col%, %jac%, %work%)
-%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex n$$ for the $cref/domain/fun_property/Domain/$$ size,
-and $latex m$$ for the $cref/range/fun_property/Range/$$ size of $icode f$$.
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ do denote the
-$cref/AD function/glossary/AD Function/$$
-corresponding to $icode f$$.
-The syntax above sets $icode jac$$ to the Jacobian
-$latex \[
+| *jac* = *f* . ``SparseJacobian`` ( *x* )
+| *jac* = *f* . ``SparseJacobian`` ( *x* , *p* )
+| *n_sweep* = *f* . ``SparseJacobianForward`` ( *x* , *p* , *row* , *col* , *jac* , *work* )
+| *n_sweep* = *f* . ``SparseJacobianReverse`` ( *x* , *p* , *row* , *col* , *jac* , *work* )
+
+Purpose
+*******
+We use :math:`n` for the :ref:`fun_property@Domain` size,
+and :math:`m` for the :ref:`fun_property@Range` size of *f* .
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` do denote the
+:ref:`glossary@AD Function`
+corresponding to *f* .
+The syntax above sets *jac* to the Jacobian
+
+.. math::
+
    jac = F^{(1)} (x)
-\] $$
+
 This routine takes advantage of the sparsity of the Jacobian
 in order to reduce the amount of computation necessary.
-If $icode row$$ and $icode col$$ are present, it also takes
+If *row* and *col* are present, it also takes
 advantage of the reduced set of elements of the Jacobian that
 need to be computed.
-One can use speed tests (e.g. $cref speed_test$$)
+One can use speed tests (e.g. :ref:`speed_test-name` )
 to verify that results are computed faster
-than when using the routine $cref Jacobian$$.
+than when using the routine :ref:`Jacobian-name` .
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
-(see $cref/Uses Forward/sparse_jacobian/Uses Forward/$$ below).
+f
+*
+The object *f* has prototype
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %BaseVector%& %x%
-%$$
-(see $cref/BaseVector/sparse_jacobian/BaseVector/$$ below)
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const``
+(see :ref:`sparse_jacobian@Uses Forward` below).
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *BaseVector* & *x*
+
+(see :ref:`sparse_jacobian@BaseVector` below)
 and its size
-must be equal to $icode n$$, the dimension of the
-$cref/domain/fun_property/Domain/$$ space for $icode f$$.
+must be equal to *n* , the dimension of the
+:ref:`fun_property@Domain` space for *f* .
 It specifies
 that point at which to evaluate the Jacobian.
 
-$head p$$
-The argument $icode p$$ is optional and has prototype
-$codei%
-   const %SetVector%& %p%
-%$$
-(see $cref/SetVector/sparse_jacobian/SetVector/$$ below).
-If it has elements of type $code bool$$,
-its size is $latex m * n$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex m$$ and all its set elements are between
-zero and $latex n - 1$$.
+p
+*
+The argument *p* is optional and has prototype
+
+   ``const`` *SetVector* & *p*
+
+(see :ref:`sparse_jacobian@SetVector` below).
+If it has elements of type ``bool`` ,
+its size is :math:`m * n`.
+If it has elements of type ``std::set<size_t>`` ,
+its size is :math:`m` and all its set elements are between
+zero and :math:`n - 1`.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the Jacobian $latex F^{(1)} (x)$$.
-$pre
+:ref:`glossary@Sparsity Pattern`
+for the Jacobian :math:`F^{(1)} (x)`.
 
-$$
 If this sparsity pattern does not change between calls to
-$codei SparseJacobian$$, it should be faster to calculate $icode p$$ once
-(using $cref ForSparseJac$$ or $cref RevSparseJac$$)
-and then pass $icode p$$ to $codei SparseJacobian$$.
-Furthermore, if you specify $icode work$$ in the calling sequence,
+``SparseJacobian`` , it should be faster to calculate *p* once
+(using :ref:`ForSparseJac-name` or :ref:`RevSparseJac-name` )
+and then pass *p* to ``SparseJacobian`` .
+Furthermore, if you specify *work* in the calling sequence,
 it is not necessary to keep the sparsity pattern; see the heading
-$cref/p/sparse_jacobian/work/p/$$ under the $icode work$$ description.
-$pre
+:ref:`sparse_jacobian@work@p` under the *work* description.
 
-$$
 In addition,
-if you specify $icode p$$, CppAD will use the same
+if you specify *p* , CppAD will use the same
 type of sparsity representation
-(vectors of $code bool$$ or vectors of $code std::set<size_t>$$)
+(vectors of ``bool`` or vectors of ``std::set<size_t>`` )
 for its internal calculations.
 Otherwise, the representation
 for the internal calculations is unspecified.
 
-$head row, col$$
-The arguments $icode row$$ and $icode col$$ are optional and have prototype
-$codei%
-   const %SizeVector%& %row%
-   const %SizeVector%& %col%
-%$$
-(see $cref/SizeVector/sparse_jacobian/SizeVector/$$ below).
-They specify which rows and columns of $latex F^{(1)} (x)$$ are
+row, col
+********
+The arguments *row* and *col* are optional and have prototype
+
+| |tab| ``const`` *SizeVector* & *row*
+| |tab| ``const`` *SizeVector* & *col*
+
+(see :ref:`sparse_jacobian@SizeVector` below).
+They specify which rows and columns of :math:`F^{(1)} (x)` are
 computes and in what order.
-Not all the non-zero entries in $latex F^{(1)} (x)$$ need be computed,
-but all the entries specified by $icode row$$ and $icode col$$
+Not all the non-zero entries in :math:`F^{(1)} (x)` need be computed,
+but all the entries specified by *row* and *col*
 must be possibly non-zero in the sparsity pattern.
-We use $latex K$$ to denote the value $icode%jac%.size()%$$
-which must also equal the size of $icode row$$ and $icode col$$.
+We use :math:`K` to denote the value *jac* . ``size`` ()
+which must also equal the size of *row* and *col* .
 Furthermore,
-for $latex k = 0 , \ldots , K-1$$, it must hold that
-$latex row[k] < m$$ and $latex col[k] < n$$.
+for :math:`k = 0 , \ldots , K-1`, it must hold that
+:math:`row[k] < m` and :math:`col[k] < n`.
 
-$head jac$$
-The result $icode jac$$ has prototype
-$codei%
-   %BaseVector%& %jac%
-%$$
-In the case where the arguments $icode row$$ and $icode col$$ are not present,
-the size of $icode jac$$ is $latex m * n$$ and
-for $latex i = 0 , \ldots , m-1$$,
-$latex j = 0 , \ldots , n-1$$,
-$latex \[
+jac
+***
+The result *jac* has prototype
+
+   *BaseVector* & *jac*
+
+In the case where the arguments *row* and *col* are not present,
+the size of *jac* is :math:`m * n` and
+for :math:`i = 0 , \ldots , m-1`,
+:math:`j = 0 , \ldots , n-1`,
+
+.. math::
+
    jac [ i * n + j ] = \D{ F_i }{ x_j } (x)
-\] $$
-$pre
 
-$$
-In the case where the arguments $icode row$$ and $icode col$$ are present,
-we use $latex K$$ to denote the size of $icode jac$$.
+In the case where the arguments *row* and *col* are present,
+we use :math:`K` to denote the size of *jac* .
 The input value of its elements does not matter.
-Upon return, for $latex k = 0 , \ldots , K - 1$$,
-$latex \[
+Upon return, for :math:`k = 0 , \ldots , K - 1`,
+
+.. math::
+
    jac [ k ] = \D{ F_i }{ x_j } (x)
    \; , \;
    \; {\rm where} \;
    i = row[k]
    \; {\rm and } \;
    j = col[k]
-\] $$
 
-$head work$$
+work
+****
 If this argument is present, it has prototype
-$codei%
-   sparse_jacobian_work& %work%
-%$$
+
+   ``sparse_jacobian_work&`` *work*
+
 This object can only be used with the routines
-$code SparseJacobianForward$$ and $code SparseJacobianReverse$$.
-During its the first use, information is stored in $icode work$$.
+``SparseJacobianForward`` and ``SparseJacobianReverse`` .
+During its the first use, information is stored in *work* .
 This is used to reduce the work done by future calls to the same mode
 (forward or reverse),
-the same $icode f$$, $icode p$$, $icode row$$, and $icode col$$.
+the same *f* , *p* , *row* , and *col* .
 If a future call is for a different mode,
 or any of these values have changed,
-you must first call $icode%work%.clear()%$$
+you must first call *work* . ``clear`` ()
 to inform CppAD that this information needs to be recomputed.
 
-$subhead color_method$$
+color_method
+============
 The coloring algorithm determines which columns (forward mode)
 or rows (reverse mode) can be computed during the same sweep.
 This field has prototype
-$codei%
-   std::string %work%.color_method
-%$$
-and its default value (after a constructor or $code clear()$$)
-is $code "cppad"$$.
-If $cref colpack_prefix$$ is specified on the
-$cref/cmake command/cmake/CMake Command/$$ line,
-you can set this method to $code "colpack"$$.
-This value only matters on the first call to $code sparse_jacobian$$
-that follows the $icode work$$ constructor or a call to
-$icode%work%.clear()%$$.
 
-$subhead p$$
-If $icode work$$ is present, and it is not the first call after
+   ``std::string`` *work* . ``color_method``
+
+and its default value (after a constructor or ``clear()`` )
+is ``"cppad"`` .
+If :ref:`colpack_prefix-name` is specified on the
+:ref:`cmake@CMake Command` line,
+you can set this method to ``"colpack"`` .
+This value only matters on the first call to ``sparse_jacobian``
+that follows the *work* constructor or a call to
+*work* . ``clear`` () .
+
+p
+=
+If *work* is present, and it is not the first call after
 its construction or a clear,
-the sparsity pattern $icode p$$ is not used.
+the sparsity pattern *p* is not used.
 This enables one to free the sparsity pattern
 and still compute corresponding sparse Jacobians.
 
-$head n_sweep$$
-The return value $icode n_sweep$$ has prototype
-$codei%
-   size_t %n_sweep%
-%$$
-If $code SparseJacobianForward$$ ($code SparseJacobianReverse$$) is used,
-$icode n_sweep$$ is the number of first order forward (reverse) sweeps
+n_sweep
+*******
+The return value *n_sweep* has prototype
+
+   ``size_t`` *n_sweep*
+
+If ``SparseJacobianForward`` (``SparseJacobianReverse`` ) is used,
+*n_sweep* is the number of first order forward (reverse) sweeps
 used to compute the requested Jacobian values.
 (This is also the number of colors determined by the coloring method
 mentioned above).
-This is proportional to the total work that $code SparseJacobian$$ does,
+This is proportional to the total work that ``SparseJacobian`` does,
 not counting the zero order forward sweep,
 or the work to combine multiple columns (rows) into a single sweep.
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Base$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+BaseVector
+**********
+The type *BaseVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head SetVector$$
-The type $icode SetVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code bool$$ or $code std::set<size_t>$$;
-see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+SetVector
+*********
+The type *SetVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``bool`` or ``std::set<size_t>`` ;
+see :ref:`glossary@Sparsity Pattern` for a discussion
 of the difference.
-The routine $cref CheckSimpleVector$$ will generate an error message
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$subhead Restrictions$$
-If $icode SetVector$$ has elements of $code std::set<size_t>$$,
-then $icode%p%[%i%]%$$ must return a reference (not a copy) to the
+Restrictions
+============
+If *SetVector* has elements of ``std::set<size_t>`` ,
+then *p* [ *i* ] must return a reference (not a copy) to the
 corresponding set.
 According to section 26.3.2.3 of the 1998 C++ standard,
-$code std::valarray< std::set<size_t> >$$ does not satisfy
+``std::valarray< std::set<size_t> >`` does not satisfy
 this condition.
 
-$head SizeVector$$
-The type $icode SizeVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+SizeVector
+**********
+The type *SizeVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Uses Forward$$
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
+Uses Forward
+************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
 After a call to any of the sparse Jacobian routines,
 the zero order Taylor coefficients correspond to
-$icode%f%.Forward(0, %x%)%$$
+*f* . ``Forward`` (0, *x* )
 and the other coefficients are unspecified.
 
-After $code SparseJacobian$$,
-the previous calls to $cref Forward$$ are undefined.
+After ``SparseJacobian`` ,
+the previous calls to :ref:`Forward-name` are undefined.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/sparse/sparse_jacobian.cpp
-%$$
+}
 The routine
-$cref sparse_jacobian.cpp$$
-is examples and tests of $code sparse_jacobian$$.
-It return $code true$$, if it succeeds and $code false$$ otherwise.
+:ref:`sparse_jacobian.cpp-name`
+is examples and tests of ``sparse_jacobian`` .
+It return ``true`` , if it succeeds and ``false`` otherwise.
 
-$end
+{xrst_end sparse_jacobian}
 ==============================================================================
 */
 # include <cppad/local/std_set.hpp>

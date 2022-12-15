@@ -8,101 +8,110 @@
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
 /*
-$begin optimize_match_op$$
-
-$section Search for a Previous Operator that Matches Current Operator$$
-$spell
-   op
-   itr
-   bool
-   addr
-   erf
+{xrst_begin optimize_match_op}
+{xrst_spell
    erfc
-   iterator
-$$
+}
 
-$head Syntax$$
-$codei%exceed_collision_limit% = match_op(
-   %collision_limit%,
-   %random_itr%,
-   %op_previous%,
-   %current%,
-   %hash_tape_op%,
-   %work_bool%,
-   %work_addr_t%
-)%$$
+Search for a Previous Operator that Matches Current Operator
+############################################################
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+Syntax
+******
 
-$head Operator Arguments$$
+| *exceed_collision_limit* = ``match_op`` (
+| |tab| ``collision_limit`` ,
+| |tab| ``random_itr`` ,
+| |tab| ``op_previous`` ,
+| |tab| ``current`` ,
+| |tab| ``hash_tape_op`` ,
+| |tab| ``work_bool`` ,
+| |tab| ``work_addr_t``
+| )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Operator Arguments
+******************
 If an argument for the current operator is a variable,
 and the argument has previous match,
 the previous match for the argument is used when checking for a match
 for the current operator.
 
-$head collision_limit$$
+collision_limit
+***************
 is the maximum number of collisions (matches) allowed for one
 expression hash code value.
 
-$head random_itr$$
+random_itr
+**********
 is a random iterator for the old operation sequence.
 
-$head op_previous$$
+op_previous
+***********
 Mapping from operator index to previous operator that can replace this one.
 The input value of
-$codei%
-   %previous% = %op_previous%[%current%]
-%$$
-is assumed to be zero.  If a match if found, the output value of
-$icode previous$$ is set to the matching operator index,
-otherwise it is left as is.  Note that $icode%previous% < %current%$$
-and $icode%op_previous[%previous%]%$$ is zero.
 
-$head current$$
+   *previous* = *op_previous* [ *current* ]
+
+is assumed to be zero.  If a match if found, the output value of
+*previous* is set to the matching operator index,
+otherwise it is left as is.  Note that *previous* < *current*
+and *op_previous* [ ``previous`` ] is zero.
+
+current
+*******
 is the index of the current operator which cannot be any of the
 operators in the list below:
-$srcthisfile%
-   0%// BEGIN_INVALID_OP%// END_INVALID_OP%1
-%$$
-After this initialization, the value of $icode current$$
+{xrst_literal
+   // BEGIN_INVALID_OP
+   // END_INVALID_OP
+}
+After this initialization, the value of *current*
 increases with each call to match_op.
 
-$subhead erf$$
-The operators $code ErfOp$$ and $code ErfcOp$$ have
+erf
+===
+The operators ``ErfOp`` and ``ErfcOp`` have
 three arguments, but only one true argument (the others are always the same).
 
-
-$head hash_table_op$$
+hash_table_op
+*************
 is assumed to be initialized as a vector of empty sets before the
 first call to match_op (for a pass of the operation sequence).
-$codei%
-   %hash_table_op%.n_set() == CPPAD_HASH_TABLE_SIZE
-   %hash_table_op%.end()   == %op_previous%.size()
-%$$
-If $icode i_op$$ is an element of the j-th set,
-then the operation $icode%op_previous%[%i_op%]%$$ has hash code j,
+
+| |tab| *hash_table_op* . ``n_set`` () == ``CPPAD_HASH_TABLE_SIZE``
+| |tab| *hash_table_op* . ``end`` ()   == *op_previous* . ``size`` ()
+
+If *i_op* is an element of the j-th set,
+then the operation *op_previous* [ *i_op* ] has hash code j,
 and does not match any other element of the j-th set.
 An entry to j-th set for the current operator is added each time
 match_op is called and a match for the current operator is not found.
 
-$head work_bool$$
+work_bool
+*********
 work space that is used by match_op between calls to increase speed.
 Should be empty on first call for this forward pass of the operation
 sequence and not modified until forward pass is done
 
-$head work_addr_t$$
+work_addr_t
+***********
 work space that is used by match_op between calls to increase speed.
 Should be empty on first call for this forward pass of the operation
 sequence and not modified until forward pass is done
 
-$head exceed_collision_limit$$
-If the $icode collision_limit$$ is exceeded (is not exceeded),
+exceed_collision_limit
+**********************
+If the *collision_limit* is exceeded (is not exceeded),
 the return value is true (false).
 
-$end
+{xrst_end optimize_match_op}
 */
 // BEGIN_PROTOTYPE
 template <class Addr>

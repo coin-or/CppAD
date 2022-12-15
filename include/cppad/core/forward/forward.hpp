@@ -14,75 +14,82 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*
 --------------------------------------- ---------------------------------------
-$begin devel_forward_order$$
-$spell
-   yq
+{xrst_begin devel_forward_order}
+{xrst_spell
    xq
-   Taylor
-   num_var
-   PriOp
-   dyn_ind
-$$
+   yq
+}
 
-$section Multiple orders, one direction, forward mode Taylor coefficients$$
+Multiple orders, one direction, forward mode Taylor coefficients
+################################################################
 
-$head Syntax$$
-$icode%yq% = %f%.Forward(%q%, %xq%, %s% )
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_FORWARD_ORDER%// END_FORWARD_ORDER%1
-%$$
+   *yq* = *f* . ``Forward`` ( *q* , *xq* , *s*  )
 
-$head Base$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FORWARD_ORDER
+   // END_FORWARD_ORDER
+}
+
+Base
+****
 The type used during the forward mode computations; i.e., the corresponding
 recording of operations used the type AD<Base>.
 
-$head BaseVector$$
+BaseVector
+**********
 is a Simple Vector class with elements of type Base.
 
-$head q$$
+q
+*
 is the highest order for this forward mode computation; i.e.,
-after this calculation there will be $icode%q%+1%$$
+after this calculation there will be *q* +1
 Taylor coefficients per variable.
 
-$head xq$$
+xq
+**
 contains Taylor coefficients for the independent variables.
-The size of $icode xq$$ must either be $icode n$$ or $icode (q+1)*n$$,
-We define $icode p = q + 1 - xq.size()/n$$.
-For $icode j = 0 , ... , n-1$$,
-$icode k = 0, ... , q$$,
-$icode xq[ (q+1)*j + k - p ]$$
+The size of *xq* must either be *n* or ( *q* +1)* *n* ,
+We define *p* = *q* + 1 *- xq.size* ()/ *n* .
+For *j* = 0 , ... , *n-1* ,
+*k* = 0, ... , *q* ,
+*xq* [ ( *q* +1)* *j* + *k - p* ]
 is the k-th order coefficient for the j-th independent variable.
 
-$head s$$
+s
+*
 Is the stream where output corresponding to PriOp operations will written.
 
-$head yq$$
+yq
+**
 contains Taylor coefficients for the dependent variables.
-The size of the return value $icode yq$$
-has size $icode m*(q+1-p)$$.
-For $icode i = 0, ... , m-1$$,
-$icode k = p, ..., q$$,
-$icode yq[(q+1-p)*i + (k-p)]$$
+The size of the return value *yq*
+has size *m* * ( *q* +1 *-p* ) .
+For *i* = 0, ... , *m-1* ,
+*k* = *p* , ..., *q* ,
+*yq* [( *q* +1 *-p* )* *i* + ( *k-p* )]
 is the k-th order coefficient for the i-th dependent variable.
 
-$head taylor_$$
-The Taylor coefficients up to order $icode p-1$$ are inputs
-and the coefficients from order $icode p$$ through $icode q$$ are outputs.
-Let $icode N = num_var_tape_$$, and
-$icode C = cap_order_taylor_$$.
+taylor\_
+********
+The Taylor coefficients up to order *p-1* are inputs
+and the coefficients from order *p* through *q* are outputs.
+Let *N* = *num_var_tape_* , and
+*C* = *cap_order_taylor_* .
 Note that for
-$icode i = 1 , ..., N-1$$,
-$icode k = 0 , ..., q$$,
-$icode taylor_[ C*i + k ]$$
+*i* = 1 , ..., *N-1* ,
+*k* = 0 , ..., *q* ,
+*taylor_* [ *C* * *i* + *k* ]
 is the k-th order coefficient,
 for the i-th variable on the tape.
 (The first independent variable has index one on the tape
 and there is no variable with index zero.)
 
-$end
+{xrst_end devel_forward_order}
 */
 // BEGIN_FORWARD_ORDER
 template <class Base, class RecBase>
@@ -285,83 +292,92 @@ BaseVector ADFun<Base,RecBase>::Forward(
 }
 /*
 --------------------------------------- ---------------------------------------
-$begin devel_forward_dir$$
-$spell
-   yq
+{xrst_begin devel_forward_dir}
+{xrst_spell
    xq
-   Taylor
-   num_var
-$$
+   yq
+}
 
-$section One order, multiple directions, forward mode Taylor coefficients$$
+One order, multiple directions, forward mode Taylor coefficients
+################################################################
 
-$head Syntax$$
-$icode%yq% = %f%.Forward(%q%, %r%, %xq%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_FORWARD_DIR%// END_FORWARD_DIR%1
-%$$
+   *yq* = *f* . ``Forward`` ( *q* , *r* , *xq* )
 
-$head Base$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FORWARD_DIR
+   // END_FORWARD_DIR
+}
+
+Base
+****
 The type used during the forward mode computations; i.e., the corresponding
 recording of operations used the type AD<Base>.
 
-$head BaseVector$$
+BaseVector
+**********
 is a Simple Vector class with elements of type Base.
 
-$head q$$
+q
+*
 is the order for this forward mode computation,
-$icode q > 0$$.
-There must be at least $icode q$$ Taylor coefficients
+*q > 0* .
+There must be at least *q* Taylor coefficients
 per variable before this call.
-After this call there will be $icode q+1$$
+After this call there will be *q* +1
 Taylor coefficients per variable.
 
-$head r$$
+r
+*
 is the number of directions for this calculation.
-If $icode q != 1$$, r must be the same as in the previous
+If *q* != 1 , r must be the same as in the previous
 call to Forward where q was equal to one.
 
-$head xq$$
+xq
+**
 contains Taylor coefficients for the independent variables.
-The size of xq must either be $icode r*n$$,
-For $icode j = 0 , ... , n-1$$,
-$icode ell = 0, ... , r-1$$,
-$icode xq[ ( r*j + ell ]$$
+The size of xq must either be *r* * *n* ,
+For *j* = 0 , ... , *n-1* ,
+*ell* = 0, ... , *r-1* ,
+*xq* [ ( *r* * *j* + *ell* ]
 is the q-th order coefficient for the j-th independent variable
 and the ell-th direction.
 
-$head yq$$
+yq
+**
 contains Taylor coefficients for the dependent variables.
-The size of $icode y$$ is $icode r*m$$.
-For $icode i = 0, ... , m-1$$,
-$icode ell = 0, ... , r-1$$,
-$icode yq[ r*i + ell ]$$
+The size of *y* is *r* * *m* .
+For *i* = 0, ... , *m-1* ,
+*ell* = 0, ... , *r-1* ,
+*yq* [ *r* * *i* + *ell* ]
 is the q-th order coefficient for the i-th dependent variable
 and the ell-th direction.
 
-$head taylor_$$
-The Taylor coefficients up to order $icode q-1$$ are inputs
+taylor\_
+********
+The Taylor coefficients up to order *q-1* are inputs
 and the coefficients of order q are outputs.
-Let $icode N = num_var_tape_$$, and
-$icode C = cap_order_taylor_$$.
+Let *N* = *num_var_tape_* , and
+*C* = *cap_order_taylor_* .
 Note that for
-$icode i = 1 , ..., N-1$$,
-$icode taylor_[ (C-1)*r*i + i + 0 ]$$
+*i* = 1 , ..., *N-1* ,
+*taylor_* [ ( *C-1* )* *r* * *i* + *i* + 0 ]
 is the zero order coefficient,
 for the i-th variable, and all directions.
-For $icode i = 1 , ..., N-1$$,
-$icode k = 1 , ..., q$$,
-$icode ell = 0 , ..., r-1$$,
-$icode taylor_[ (C-1)*r*i + i + (k-1)*r + ell + 1 ]$$
+For *i* = 1 , ..., *N-1* ,
+*k* = 1 , ..., *q* ,
+*ell* = 0 , ..., *r-1* ,
+*taylor_* [ ( *C-1* )* *r* * *i* + *i* + ( *k-1* )* *r* + *ell* + 1 ]
 is the k-th order coefficient,
 for the i-th variable, and ell-th direction.
 (The first independent variable has index one on the tape
 and there is no variable with index zero.)
 
-$end
+{xrst_end devel_forward_dir}
 */
 // BEGIN_FORWARD_DIR
 template <class Base, class RecBase>

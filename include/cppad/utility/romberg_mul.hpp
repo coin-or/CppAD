@@ -5,152 +5,162 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin RombergMul$$
-$spell
-   cppad.hpp
-   bool
-   const
-   Cpp
-   RombergMulMul
-$$
+{xrst_begin RombergMul}
+{xrst_spell
+   romberg
+   test test
+}
 
-$section Multi-dimensional Romberg Integration$$
+Multi-dimensional Romberg Integration
+#####################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/romberg_mul.hpp>
-%$$
-$codei%RombergMul<%Fun%, %SizeVector%, %FloatVector%, %m%> %R%$$
-$pre
-$$
-$icode%r% = %R%(%F%, %a%, %b%, %n%, %p%, %e%)%$$
+   # ``include <cppad/utility/romberg_mul.hpp>``
 
+``RombergMul<`` *Fun* , *SizeVector* , *FloatVector* , *m* > *R*
 
-$head Description$$
+*r* = *R* ( *F* , *a* , *b* , *n* , *p* , *e* )
+
+Description
+***********
 Returns the Romberg integration estimate
-$latex r$$ for the multi-dimensional integral
-$latex \[
-r =
-\int_{a[0]}^{b[0]} \cdots \int_{a[m-1]}^{b[m-1]}
-\; F(x) \;
-{\bf d} x_0 \cdots {\bf d} x_{m-1}
-\; + \;
-\sum_{i=0}^{m-1}
-O \left[ ( b[i] - a[i] ) / 2^{n[i]-1} \right]^{2(p[i]+1)}
-\] $$
+:math:`r` for the multi-dimensional integral
 
-$head Include$$
-The file $code cppad/utility/romberg_mul.hpp$$
-is included by $code cppad/cppad.hpp$$
+.. math::
+
+   r =
+   \int_{a[0]}^{b[0]} \cdots \int_{a[m-1]}^{b[m-1]}
+   \; F(x) \;
+   {\bf d} x_0 \cdots {\bf d} x_{m-1}
+   \; + \;
+   \sum_{i=0}^{m-1}
+   O \left[ ( b[i] - a[i] ) / 2^{n[i]-1} \right]^{2(p[i]+1)}
+
+Include
+*******
+The file ``cppad/utility/romberg_mul.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head m$$
-The template parameter $icode m$$ must be convertible to a $code size_t$$
+m
+*
+The template parameter *m* must be convertible to a ``size_t``
 object with a value that can be determined at compile time; for example
-$code 2$$.
+``2`` .
 It determines the dimension of the domain space for the integration.
 
-$head r$$
-The return value $icode r$$ has prototype
-$codei%
-   %Float% %r%
-%$$
-It is the estimate computed by $code RombergMul$$ for the integral above
-(see description of $cref/Float/RombergMul/Float/$$ below).
+r
+*
+The return value *r* has prototype
 
-$head F$$
-The object $icode F$$ has the prototype
-$codei%
-   %Fun% &%F%
-%$$
+   *Float* *r*
+
+It is the estimate computed by ``RombergMul`` for the integral above
+(see description of :ref:`RombergMul@Float` below).
+
+F
+*
+The object *F* has the prototype
+
+   *Fun* & *F*
+
 It must support the operation
-$codei%
-   %F%(%x%)
-%$$
-The argument $icode x$$ to $icode F$$ has prototype
-$codei%
-   const %Float% &%x%
-%$$
-The return value of $icode F$$ is a $icode Float$$ object
 
-$head a$$
-The argument $icode a$$ has prototype
-$codei%
-   const %FloatVector% &%a%
-%$$
+   *F* ( *x* )
+
+The argument *x* to *F* has prototype
+
+   ``const`` *Float* & *x*
+
+The return value of *F* is a *Float* object
+
+a
+*
+The argument *a* has prototype
+
+   ``const`` *FloatVector* & *a*
+
 It specifies the lower limit for the integration
-(see description of $cref/FloatVector/RombergMul/FloatVector/$$ below).
+(see description of :ref:`RombergMul@FloatVector` below).
 
-$head b$$
-The argument $icode b$$ has prototype
-$codei%
-   const %FloatVector% &%b%
-%$$
+b
+*
+The argument *b* has prototype
+
+   ``const`` *FloatVector* & *b*
+
 It specifies the upper limit for the integration.
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-   const %SizeVector% &%n%
-%$$
-A total number of $latex 2^{n[i]-1} + 1$$
-evaluations of $icode%F%(%x%)%$$ are used to estimate the integral
-with respect to $latex {\bf d} x_i$$.
+n
+*
+The argument *n* has prototype
 
-$head p$$
-The argument $icode p$$ has prototype
-$codei%
-   const %SizeVector% &%p%
-%$$
-For $latex i = 0 , \ldots , m-1$$,
-$latex n[i]$$ determines the accuracy order in the
+   ``const`` *SizeVector* & *n*
+
+A total number of :math:`2^{n[i]-1} + 1`
+evaluations of *F* ( *x* ) are used to estimate the integral
+with respect to :math:`{\bf d} x_i`.
+
+p
+*
+The argument *p* has prototype
+
+   ``const`` *SizeVector* & *p*
+
+For :math:`i = 0 , \ldots , m-1`,
+:math:`n[i]` determines the accuracy order in the
 approximation for the integral
-that is returned by $code RombergMul$$.
-The values in $icode p$$ must be less than or equal $icode n$$; i.e.,
-$icode%p%[%i%] <= %n%[%i%]%$$.
+that is returned by ``RombergMul`` .
+The values in *p* must be less than or equal *n* ; i.e.,
+*p* [ *i* ] <= *n* [ *i* ] .
 
-$head e$$
-The argument $icode e$$ has prototype
-$codei%
-   %Float% &%e%
-%$$
-The input value of $icode e$$ does not matter
+e
+*
+The argument *e* has prototype
+
+   *Float* & *e*
+
+The input value of *e* does not matter
 and its output value is an approximation for the absolute error in
 the integral estimate.
 
-$head Float$$
-The type $icode Float$$ is defined as the type of the elements of
-$cref/FloatVector/RombergMul/FloatVector/$$.
-The type $icode Float$$ must satisfy the conditions
-for a $cref NumericType$$ type.
-The routine $cref CheckNumericType$$ will generate an error message
+Float
+*****
+The type *Float* is defined as the type of the elements of
+:ref:`RombergMul@FloatVector` .
+The type *Float* must satisfy the conditions
+for a :ref:`NumericType-name` type.
+The routine :ref:`CheckNumericType-name` will generate an error message
 if this is not the case.
-In addition, if $icode x$$ and $icode y$$ are $icode Float$$ objects,
-$codei%
-   %x% < %y%
-%$$
-returns the $code bool$$ value true if $icode x$$ is less than
-$icode y$$ and false otherwise.
+In addition, if *x* and *y* are *Float* objects,
 
-$head FloatVector$$
-The type $icode FloatVector$$ must be a $cref SimpleVector$$ class.
-The routine $cref CheckSimpleVector$$ will generate an error message
+   *x* < *y*
+
+returns the ``bool`` value true if *x* is less than
+*y* and false otherwise.
+
+FloatVector
+***********
+The type *FloatVector* must be a :ref:`SimpleVector-name` class.
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
-
-
-$children%
+{xrst_toc_hidden
    example/utility/romberg_mul.cpp
-%$$
-$head Example$$
-The file $cref romberg_mul.cpp$$
+}
+Example
+*******
+The file :ref:`romberg_mul.cpp-name`
 contains an example and test a test of using this routine.
 
-$head Source Code$$
+Source Code
+***********
 The source code for this routine is in the file
-$code cppad/romberg_mul.hpp$$.
+``cppad/romberg_mul.hpp`` .
 
-$end
+{xrst_end RombergMul}
 */
 
 # include <cppad/utility/romberg_one.hpp>

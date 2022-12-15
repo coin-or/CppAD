@@ -12,87 +12,95 @@ Second generation checkpoint functions.
 */
 
 /*
-$begin chkpoint_two$$
-$spell
-   CppAD
+{xrst_begin chkpoint_two}
+{xrst_spell
    chk
-   chkpoint
-   hpp
-   cppad
-   bool
-   hes
-$$
+}
 
-$section Checkpoint Functions: Second Generation$$
+Checkpoint Functions: Second Generation
+#######################################
 
-$head Syntax$$
+Syntax
+******
 
-$subhead Constructor$$
-$codei%chkpoint_two<%Base%> %chk_fun%( %fun%, %name%,
-   %internal_bool%, %use_hes_sparsity%, %use_base2ad%, %use_in_parallel%
-)%$$
+Constructor
+===========
 
-$subhead Use Checkpoint Function$$
-$codei% %chk_fun%(%ax%, %ay%)%$$
+| ``chkpoint_two<`` *Base* > *chk_fun* ( *fun* , *name* ,
+| |tab| *internal_bool* , *use_hes_sparsity* , *use_base2ad* , *use_in_parallel*
+| )
 
-$subhead new_dynamic$$
-$icode%chk_fun%.new_dynamic(%dynamic%)%$$
+Use Checkpoint Function
+=======================
+*chk_fun* ( *ax* , *ay* )
 
-$head Reduce Memory$$
+new_dynamic
+===========
+*chk_fun* . ``new_dynamic`` ( *dynamic* )
+
+Reduce Memory
+*************
 You can reduce the size of the tape and memory required for AD
 using a checkpoint representation of a function
-$latex g : \B{R}^n \rightarrow \B{R}^m$$.
+:math:`g : \B{R}^n \rightarrow \B{R}^m`.
 
-$head Faster Recording$$
-It may also reduce the time to make a recording if the same $latex g(x)$$
+Faster Recording
+****************
+It may also reduce the time to make a recording if the same :math:`g(x)`
 is used many times (with different values) during the
-recording of an $codei%ADFun<%Base%>%$$ object.
+recording of an ``ADFun<`` *Base* > object.
 
-$head Repeating Forward$$
-Normally, CppAD stores $cref forward$$ mode results,
-until they freed using $cref capacity_order$$,
-or the corresponding $cref ADFun$$ object is deleted.
-This is not true for $code chkpoint_two$$ functions
+Repeating Forward
+*****************
+Normally, CppAD stores :ref:`forward-name` mode results,
+until they freed using :ref:`capacity_order-name` ,
+or the corresponding :ref:`ADFun-name` object is deleted.
+This is not true for ``chkpoint_two`` functions
 because the same checkpoint function may be used repeatedly
 with different arguments during a single forward mode operation.
-Thus, forward mode results are computed for each use of $icode chk_fun$$
+Thus, forward mode results are computed for each use of *chk_fun*
 in a forward mode sweep.
 
-$head Operation Sequence$$
-The $cref/operation sequence/glossary/Operation/Sequence/$$
-representing $latex g(x)$$ is fixed; i.e.,
-it cannot depend on the value of $latex x$$.
+Operation Sequence
+******************
+The :ref:`operation sequence<glossary@Operation@Sequence>`
+representing :math:`g(x)` is fixed; i.e.,
+it cannot depend on the value of :math:`x`.
 
-$head atomic_three$$
-The $code chkpoint_two$$ class is derived from $code atomic_three$$,
+atomic_three
+************
+The ``chkpoint_two`` class is derived from ``atomic_three`` ,
 hence some of its error message will refer to atomic operations.
-The $code chkpoint_two$$ class implements all the
-$cref/virtual functions/atomic_three_define/Virtual Functions/$$
+The ``chkpoint_two`` class implements all the
+:ref:`atomic_three_define@Virtual Functions`
 and hence its source code,
-$codei%
-   include/cppad/core/chkpoint_two/chkpoint_two.hpp
-%$$
-provides an example for $cref atomic_three$$ operations.
-The difference is that $code chkpoint_two.hpp$$ uses AD
+
+   ``include/cppad/core/chkpoint_two/chkpoint_two.hpp``
+
+provides an example for :ref:`atomic_three-name` operations.
+The difference is that ``chkpoint_two.hpp`` uses AD
 instead of user provided derivatives.
 
-$head Base$$
-The type $icode Base$$ specifies the base type for AD operations;
-i.e., $icode chk_fun$$ can be used during the recording of
-$codei%AD<%Base%>%$$ operations.
+Base
+****
+The type *Base* specifies the base type for AD operations;
+i.e., *chk_fun* can be used during the recording of
+``AD<`` *Base* > operations.
 
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/chkpoint_two/ctor.hpp
+   include/cppad/core/chkpoint_two/chk_fun.xrst
+   include/cppad/core/chkpoint_two/dynamic.hpp
+   example/chkpoint_two/get_started.cpp
+   example/chkpoint_two/compare.cpp
+   example/chkpoint_two/base2ad.cpp
+   example/chkpoint_two/dynamic.cpp
+   example/chkpoint_two/ode.cpp
+}
 
-$childtable%include/cppad/core/chkpoint_two/ctor.hpp
-   %include/cppad/core/chkpoint_two/chk_fun.omh
-   %include/cppad/core/chkpoint_two/dynamic.hpp
-   %example/chkpoint_two/get_started.cpp
-   %example/chkpoint_two/compare.cpp
-   %example/chkpoint_two/base2ad.cpp
-   %example/chkpoint_two/dynamic.cpp
-   %example/chkpoint_two/ode.cpp
-%$$
-
-$end
+{xrst_end chkpoint_two}
 */
 
 template <class Base>

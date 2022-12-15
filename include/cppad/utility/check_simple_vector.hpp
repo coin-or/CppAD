@@ -5,87 +5,90 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin CheckSimpleVector$$
-$spell
-   alloc
-   const
-   cppad.hpp
-   CppAD
-$$
+{xrst_begin CheckSimpleVector}
+{xrst_spell
+   preforms
+}
 
-$section Check Simple Vector Concept$$
+Check Simple Vector Concept
+###########################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/check_simple_vector.hpp>
-%$$
-$codei%CheckSimpleVector<%Scalar%, %Vector%>()%$$
-$pre
-$$
-$codei%CheckSimpleVector<%Scalar%, %Vector%>(%x%, %y%)%$$
+   # ``include <cppad/utility/check_simple_vector.hpp>``
 
+``CheckSimpleVector<`` *Scalar* , *Vector* >()
 
-$head Purpose$$
+``CheckSimpleVector<`` *Scalar* , *Vector* >( *x* , *y* )
+
+Purpose
+*******
 Preforms compile and run time checks that the type specified
-by $icode Vector$$ satisfies all the requirements for
-a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Scalar$$.
+by *Vector* satisfies all the requirements for
+a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Scalar* .
 If a requirement is not satisfied,
 a an error message makes it clear what condition is not satisfied.
 
-$head x, y$$
-If the arguments $icode x$$ and $icode y$$ are present,
+x, y
+****
+If the arguments *x* and *y* are present,
 they have prototype
-$codei%
-   const %Scalar%& %x%
-   const %Scalar%& %y%
-%$$
+
+| |tab| ``const`` *Scalar* & *x*
+| |tab| ``const`` *Scalar* & *y*
+
 In addition, the check
-$codei%
-   %x% == %x%
-%$$
-will return the boolean value $code true$$, and
-$codei%
-   %x% == %y%
-%$$
-will return $code false$$.
 
-$head Restrictions$$
-If the arguments $icode x$$ and $icode y$$ are not present,
-the following extra assumption is made by $code CheckSimpleVector$$:
-If $icode x$$ is a $icode Scalar$$ object
-$codei%
-   %x% = 0
-   %y% = 1
-%$$
-assigns values to the objects $icode x$$ and $icode y$$.
+   *x* == *x*
+
+will return the boolean value ``true`` , and
+
+   *x* == *y*
+
+will return ``false`` .
+
+Restrictions
+************
+If the arguments *x* and *y* are not present,
+the following extra assumption is made by ``CheckSimpleVector`` :
+If *x* is a *Scalar* object
+
+| |tab| *x*  = 0
+| |tab| *y*  = 1
+
+assigns values to the objects *x* and *y* .
 In addition,
-$icode%x% == %x%$$ would return the boolean value $code true$$ and
-$icode%x% == %y%$$ would return $code false$$.
+*x* == *x* would return the boolean value ``true`` and
+*x* == *y* would return ``false`` .
 
-$head Include$$
-The file $code cppad/utility/check_simple_vector.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/check_simple_vector.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest
 if the CppAD include files.
 
-$head Parallel Mode$$
-The routine $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
+Parallel Mode
+*************
+The routine :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
 must be called before it
-can be used in $cref/parallel/ta_in_parallel/$$ mode.
+can be used in :ref:`parallel<ta_in_parallel-name>` mode.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/utility/check_simple_vector.cpp
-%$$
-The file $cref check_simple_vector.cpp$$
-contains an example and test of this function where $icode S$$
-is the same as $icode T$$.
+}
+The file :ref:`check_simple_vector.cpp-name`
+contains an example and test of this function where *S*
+is the same as *T* .
 The comments in this example suggest a way to change the example
-so $icode S$$ is not the same as $icode T$$.
+so *S* is not the same as *T* .
 
-$end
+{xrst_end CheckSimpleVector}
 ---------------------------------------------------------------------------
 */
 

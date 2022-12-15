@@ -8,72 +8,85 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
-$begin recorder_put_dyn_atomic$$
-$spell
-   ptr
-   dyn
-   enum
+{xrst_begin recorder_put_dyn_atomic}
+{xrst_spell
    taddr
-$$
+}
 
-$section Put a Dynamic Parameter Atomic Call Operator in Recording$$
+Put a Dynamic Parameter Atomic Call Operator in Recording
+#########################################################
 
-$head Syntax$$
-$icode%rec%.put_dyn_atomic(
-   %tape_id%, %atomic_index%, %call_id%, %type_x%, %type_y%, %ax%, %ay%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PUT_DYN_ATOMIC%// END_PROTOTYPE%1
-%$$
+| *rec* . ``put_dyn_atomic`` (
+| |tab| *tape_id* , *atomic_index* , *call_id* , *type_x* , *type_y* , *ax* , *ay*
+| )
 
-$head tape_id$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PUT_DYN_ATOMIC
+   // END_PROTOTYPE
+}
+
+tape_id
+*******
 identifies the tape that this recording corresponds to.
 This is zero if and only if there is no tape for this recording; i.e.
-$codei%AD<%Base%>.tape_ptr()%$$ is null.
+``AD<`` *Base* >. ``tape_ptr`` () is null.
 
-$head atomic_index$$
-is the $cref atomic_index$$ for this atomic function.
+atomic_index
+************
+is the :ref:`atomic_index-name` for this atomic function.
 
-$head call_id$$
-is the $cref/call_id/atomic_four_call/call_id/$$ for this atomic function.
+call_id
+*******
+is the :ref:`atomic_four_call@call_id` for this atomic function.
 
-$head type_x$$
-is the $cref ad_type_enum$$ for each of the atomic function arguments.
+type_x
+******
+is the :ref:`ad_type_enum-name` for each of the atomic function arguments.
 
-$head type_y$$
-is the $code ad_type_enum$$ for each of the atomic function results.
+type_y
+******
+is the ``ad_type_enum`` for each of the atomic function results.
 
-$head ax$$
+ax
+**
 is the atomic function argument vector for this call.
 
-$subhead value_$$
-The value $icode%ax%[%j%].value_%$$ is the proper value for
+value\_
+=======
+The value *ax* [ *j* ]. ``value_`` is the proper value for
 parameters and does not matter for variables.
 
-$subhead taddr_$$
-The value $icode%ax%[%j%].taddr_%$$ is the proper address for
+taddr\_
+=======
+The value *ax* [ *j* ]. ``taddr_`` is the proper address for
 dynamic parameters and does not matter for constants or variables.
 
-$head ay$$
+ay
+**
 is the atomic function result vector for this call.
 
-$subhead Input$$
-On input, $icode%ay%[%j%].value_%$$ has the proper value for parameters
+Input
+=====
+On input, *ay* [ *j* ]. ``value_`` has the proper value for parameters
 (result for the atomic function).
 
-$subhead Output$$
-Upon return, if the $th i$$ result is a dynamic parameter,
-$codei%
-   %ay%[%i%].ad_type_ = dynamic_enum
-   %ay%[%i%].tape_id_ = %tape_id%
-   %ay%[%i%].taddr_   = %p_index%
-%$$
-where $icode p_index$$ is the index of this dynamic parameter
+Output
+======
+Upon return, if the *i*-th result is a dynamic parameter,
+
+| |tab| *ay* [ *i* ]. ``ad_type_`` = ``dynamic_enum``
+| |tab| *ay* [ *i* ]. ``tape_id_`` = *tape_id*
+| |tab| *ay* [ *i* ]. ``taddr_`` = *p_index*
+
+where *p_index* is the index of this dynamic parameter
 in the vector of all parameters.
 
-$end
+{xrst_end recorder_put_dyn_atomic}
 */
 
 // BEGIN_PUT_DYN_ATOMIC

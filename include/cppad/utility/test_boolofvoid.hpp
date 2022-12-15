@@ -5,79 +5,81 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin test_boolofvoid$$
-$spell
+{xrst_begin test_boolofvoid}
+{xrst_spell
    boolofvoid
-   const
-   std
-   bool
-   ipopt
-   cpp
-   cppad
-   hpp
-$$
+}
 
-$section Object that Runs a Group of Tests$$
+Object that Runs a Group of Tests
+#################################
 
-$head Syntax$$
-$codei%# include <cppad/utility/test_boolofvoid.hpp>
-%$$
-$codei%test_boolofvoid %Run%(%group%, %width%)
-%$$
-$icode%Run%(%test%, %name%)
-%$$
-$icode%ok% = %Run%.summary(%memory_ok%)%$$
+Syntax
+******
 
-$head Purpose$$
-The object $icode Run$$ is used to run a group of tests functions
+| # ``include <cppad/utility/test_boolofvoid.hpp>``
+| ``test_boolofvoid`` *Run* ( *group* , *width* )
+| *Run* ( *test* , *name* )
+
+*ok* = *Run* . ``summary`` ( *memory_ok* )
+
+Purpose
+*******
+The object *Run* is used to run a group of tests functions
 and report the results on standard output.
 
-$head group$$
+group
+*****
 The argument has prototype
-$codei%
-   const std::string& %group%
-%$$
+
+   ``const std::string&`` *group*
+
 It is the name for this group of tests.
 
-$head width$$
+width
+*****
 The argument has prototype
-$codei%
-   size_t %width%
-%$$
+
+   ``size_t`` *width*
+
 It is the number of columns used to display the name of each test.
 It must be greater than the maximum number of characters in a test name.
 
-$head test$$
+test
+****
 The argument has prototype
-$codei%
-   bool %test%(void)
-%$$
+
+   ``bool`` *test* ( ``void`` )
+
 It is a function that returns true (when the test passes) and false
 otherwise.
 
-$head name$$
+name
+****
 The argument has prototype
-$codei%
-   const std::string& %name%
-%$$
-It is the name for the corresponding $icode test$$.
 
-$head memory_ok$$
+   ``const std::string&`` *name*
+
+It is the name for the corresponding *test* .
+
+memory_ok
+*********
 The argument has prototype
-$codei%
-   bool %memory_ok%
-%$$
+
+   ``bool`` *memory_ok*
+
 It is false if a memory leak is detected (and true otherwise).
 
-$head ok$$
+ok
+**
 This is true if all of the tests pass (including the memory leak test),
 otherwise it is false.
 
-$head Example$$
+Example
+*******
 See any of the main programs in the example directory; e.g.,
-$code example/ipopt_solve.cpp$$.
+``example/ipopt_solve.cpp`` .
 
-$end
+{xrst_end test_boolofvoid}
 */
 
 # include <cppad/core/cppad_assert.hpp>

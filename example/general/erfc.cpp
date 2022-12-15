@@ -4,18 +4,20 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin erfc.cpp$$
-$spell
-   tan
+{xrst_begin erfc.cpp}
+{xrst_spell
    erfc
-$$
+}
 
-$section The AD erfc Function: Example and Test$$
+The AD erfc Function: Example and Test
+######################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end erfc.cpp}
 */
 // BEGIN C++
 

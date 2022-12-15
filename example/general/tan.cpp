@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin tan.cpp$$
-$spell
-   tan
-   tan
-$$
+{xrst_begin tan.cpp}
 
-$section The AD tan Function: Example and Test$$
+The AD tan Function: Example and Test
+#####################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end tan.cpp}
 */
 // BEGIN C++
 

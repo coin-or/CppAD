@@ -5,54 +5,62 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin link_dll_lib$$
-$spell
+{xrst_begin link_dll_lib}
+{xrst_spell
    dll
-   cppad
-   hpp
-   ptr
-$$
+   linker
+   msg
+}
 
-$section Link a Dynamic Link Library$$
+Link a Dynamic Link Library
+###########################
 
-$head Syntax$$
-$codei%# include <cppad/utility/link_dll_lib.hpp>
-%$$
-$codei%link_dll_lib %dll_linker%(%dll_file%, %err_msg%)
-%$$
-$icode%fun_ptr% = %dll_linker%(%function_name%, %err_msg%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+| # ``include <cppad/utility/link_dll_lib.hpp>``
+| ``link_dll_lib`` *dll_linker* ( *dll_file* , *err_msg* )
+| *fun_ptr* = *dll_linker* ( *function_name* , *err_msg* )
 
-$head dll_linker$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+dll_linker
+**********
 Is the dynamic link object that holds an in memory version of the library,
-It must not be deleted for as long as any $icode fun_ptr$$ return
+It must not be deleted for as long as any *fun_ptr* return
 values is used.
 
-$head err_msg$$
-If $icode err_msg$$ is non-empty, it contains an error message
+err_msg
+*******
+If *err_msg* is non-empty, it contains an error message
 for the corresponding operation.
 
-$head dll_file$$
+dll_file
+********
 Is the file containing the dynamic link library.
 
-$head function_name$$
+function_name
+*************
 Is the name of an external entry point in the dll.
 
-$head fun_ptr$$
-Is a $code void*$$ version of a pointer the function corresponding to
-$icode function_name$$.
-
-$children%
+fun_ptr
+*******
+Is a ``void*`` version of a pointer the function corresponding to
+*function_name* .
+{xrst_toc_hidden
    example/utility/dll_lib.cpp
-%$$
-$head Example$$
-The file $cref dll_lib.cpp$$ contains an example and test of
-$code link_dll_lib$$.
+}
+Example
+*******
+The file :ref:`dll_lib.cpp-name` contains an example and test of
+``link_dll_lib`` .
 
-$end
+{xrst_end link_dll_lib}
 */
 
 # include <string>

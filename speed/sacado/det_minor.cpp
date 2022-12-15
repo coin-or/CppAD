@@ -3,31 +3,20 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sacado_det_minor.cpp$$
-$spell
-   onetape
-   cppad
-   det
-   const
-   CppAD
-   typedef
-   diff
-   bool
-   srand
-   Sacado.hpp
-   ADvar
-   Gradcomp
-$$
+{xrst_begin sacado_det_minor.cpp}
 
-$section Sacado Speed: Gradient of Determinant by Minor Expansion$$
+Sacado Speed: Gradient of Determinant by Minor Expansion
+########################################################
 
+Specifications
+**************
+See :ref:`link_det_minor-name` .
 
-$head Specifications$$
-See $cref link_det_minor$$.
+Implementation
+**************
 
-$head Implementation$$
-
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 // suppress conversion warnings before other includes
 # include <cppad/wno_conversion.hpp>
 //
@@ -96,6 +85,8 @@ bool link_det_minor(
    // ---------------------------------------------------------
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end sacado_det_minor.cpp}
 */

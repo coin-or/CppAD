@@ -5,262 +5,315 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin abs_normal_fun$$
-$spell
-   const
-$$
+{xrst_begin abs_normal_fun}
+{xrst_spell
+   affine
+   approximations
+}
 
+Create An Abs-normal Representation of a Function
+#################################################
 
-$section Create An Abs-normal Representation of a Function$$
+Syntax
+******
+*f* . ``abs_normal_fun`` ( *g* , *a* )
 
-$head Syntax$$
-$icode%f%.abs_normal_fun(%g%, %a%)%$$
+f
+*
+The object *f* has prototype
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   const ADFun<%Base%>& %f%
-%$$
-It represents a function $latex f : \B{R}^n \rightarrow \B{R}^m$$.
+   ``const ADFun<`` *Base* >& *f*
+
+It represents a function :math:`f : \B{R}^n \rightarrow \B{R}^m`.
 We assume that the only non-smooth terms in the representation are
-absolute value functions and use $latex s \in \B{Z}_+$$
+absolute value functions and use :math:`s \in \B{Z}_+`
 to represent the number of these terms.
 
-$subhead n$$
-We use $icode n$$ to denote the dimension of the domain space for $icode f$$.
+n
+=
+We use *n* to denote the dimension of the domain space for *f* .
 
-$subhead m$$
-We use $icode m$$ to denote the dimension of the range space for $icode f$$.
+m
+=
+We use *m* to denote the dimension of the range space for *f* .
 
-$subhead s$$
-We use $icode s$$ to denote the number of absolute value terms in $icode f$$.
+s
+=
+We use *s* to denote the number of absolute value terms in *f* .
 
+a
+*
+The object *a* has prototype
 
-$head a$$
-The object $icode a$$ has prototype
-$codei%
-   ADFun<%Base%> %a%
-%$$
-The initial function representation in $icode a$$ is lost.
+   ``ADFun<`` *Base* > *a*
+
+The initial function representation in *a* is lost.
 Upon return it represents the result of the absolute terms
-$latex a : \B{R}^n \rightarrow \B{R}^s$$; see $latex a(x)$$ defined below.
-Note that $icode a$$ is constructed by copying $icode f$$
+:math:`a : \B{R}^n \rightarrow \B{R}^s`; see :math:`a(x)` defined below.
+Note that *a* is constructed by copying *f*
 and then changing the dependent variables. There may
 be many calculations in this representation that are not necessary
 and can be removed using
-$codei%
-   %a%.optimize()
-%$$
-This optimization is not done automatically by $code abs_normal_fun$$
+
+   *a* . ``optimize`` ()
+
+This optimization is not done automatically by ``abs_normal_fun``
 because it may take a significant amount of time.
 
-$subhead zeta$$
-Let $latex \zeta_0 ( x )$$
-denote the argument for the first absolute value term in $latex f(x)$$,
-$latex \zeta_1 ( x , |\zeta_0 (x)| )$$ for the second term, and so on.
+zeta
+====
+Let :math:`\zeta_0 ( x )`
+denote the argument for the first absolute value term in :math:`f(x)`,
+:math:`\zeta_1 ( x , |\zeta_0 (x)| )` for the second term, and so on.
 
-$subhead a(x)$$
-For $latex i = 0 , \ldots , {s-1}$$ define
-$latex \[
-a_i (x)
-=
-| \zeta_i ( x , a_0 (x) , \ldots , a_{i-1} (x ) ) |
-\] $$
-This defines $latex a : \B{R}^n \rightarrow \B{R}^s$$.
+a(x)
+====
+For :math:`i = 0 , \ldots , {s-1}` define
 
-$head g$$
-The object $icode g$$ has prototype
-$codei%
-   ADFun<%Base%> %g%
-%$$
-The initial function representation in $icode g$$ is lost.
+.. math::
+
+   a_i (x)
+   =
+   | \zeta_i ( x , a_0 (x) , \ldots , a_{i-1} (x ) ) |
+
+This defines :math:`a : \B{R}^n \rightarrow \B{R}^s`.
+
+g
+*
+The object *g* has prototype
+
+   ``ADFun<`` *Base* > *g*
+
+The initial function representation in *g* is lost.
 Upon return it represents the smooth function
-$latex g : \B{R}^{n + s} \rightarrow  \B{R}^{m + s}$$ is defined by
-$latex \[
-g( x , u )
-=
-\left[ \begin{array}{c} y(x, u) \\ z(x, u) \end{array} \right]
-\] $$
-were $latex y(x, u)$$ and $latex z(x, u)$$ are defined below.
+:math:`g : \B{R}^{n + s} \rightarrow  \B{R}^{m + s}` is defined by
 
-$subhead z(x, u)$$
+.. math::
+
+   g( x , u )
+   =
+   \left[ \begin{array}{c} y(x, u) \\ z(x, u) \end{array} \right]
+
+were :math:`y(x, u)` and :math:`z(x, u)` are defined below.
+
+z(x, u)
+=======
 Define the smooth function
-$latex z : \B{R}^{n + s} \rightarrow  \B{R}^s$$ by
-$latex \[
-z_i ( x , u ) = \zeta_i ( x , u_0 , \ldots , u_{i-1} )
-\] $$
-Note that the partial of $latex z_i$$ with respect to $latex u_j$$ is zero
-for $latex j \geq i$$.
+:math:`z : \B{R}^{n + s} \rightarrow  \B{R}^s` by
 
-$subhead y(x, u)$$
+.. math::
+
+   z_i ( x , u ) = \zeta_i ( x , u_0 , \ldots , u_{i-1} )
+
+Note that the partial of :math:`z_i` with respect to :math:`u_j` is zero
+for :math:`j \geq i`.
+
+y(x, u)
+=======
 There is a smooth function
-$latex y : \B{R}^{n + s} \rightarrow  \B{R}^m$$
-such that $latex y( x , u ) = f(x)$$ whenever $latex u = a(x)$$.
+:math:`y : \B{R}^{n + s} \rightarrow  \B{R}^m`
+such that :math:`y( x , u ) = f(x)` whenever :math:`u = a(x)`.
 
-$head Affine Approximation$$
+Affine Approximation
+********************
 We define the affine approximations
-$latex \[
-\begin{array}{rcl}
-y[ \hat{x} ]( x , u )
-& = &
-y ( \hat{x}, a( \hat{x} ) )
-   + \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-   + \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
-\\
-z[ \hat{x} ]( x , u )
-& = &
-z ( \hat{x}, a( \hat{x} ) )
-   + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-   + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   y[ \hat{x} ]( x , u )
+   & = &
+   y ( \hat{x}, a( \hat{x} ) )
+      + \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+      + \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+   \\
+   z[ \hat{x} ]( x , u )
+   & = &
+   z ( \hat{x}, a( \hat{x} ) )
+      + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+      + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+   \end{eqnarray}
+
 It follows that
-$latex \[
-\begin{array}{rcl}
-y( x , u )
-& = &
-y[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
-\\
-z( x , u )
-& = &
-z[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
-\end{array}
-\] $$
 
-$head Abs-normal Approximation$$
+.. math::
+   :nowrap:
 
-$subhead Approximating a(x)$$
-The function $latex a(x)$$ is not smooth, but it is equal to
-$latex | z(x, u) |$$ when $latex u = a(x)$$.
+   \begin{eqnarray}
+   y( x , u )
+   & = &
+   y[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
+   \\
+   z( x , u )
+   & = &
+   z[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
+   \end{eqnarray}
+
+Abs-normal Approximation
+************************
+
+Approximating a(x)
+==================
+The function :math:`a(x)` is not smooth, but it is equal to
+:math:`| z(x, u) |` when :math:`u = a(x)`.
 Furthermore
-$latex \[
-z[ \hat{x} ]( x , u )
-=
-z ( \hat{x}, a( \hat{x} ) )
-   + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-   + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
-\] $$
-The partial of $latex z_i$$ with respect to $latex u_j$$ is zero
-for $latex j \geq i$$. It follows that
-$latex \[
-z_i [ \hat{x} ]( x , u )
-=
-z_i ( \hat{x}, a( \hat{x} ) )
-   + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-   + \sum_{j < i} \partial_{u(j)}
-      z_i ( \hat{x}, a( \hat{x} ) ) ( u_j - a_j ( \hat{x} ) )
-\] $$
-Considering the case $latex i = 0$$ we define
-$latex \[
-a_0 [ \hat{x} ]( x )
-=
-| z_0 [ \hat{x} ]( x , u ) |
-=
-\left|
-   z_0 ( \hat{x}, a( \hat{x} ) )
-   + \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-\right|
-\] $$
-It follows that
-$latex \[
-   a_0 (x) = a_0 [ \hat{x} ]( x ) + o ( x - \hat{x} )
-\] $$
-In general, we define $latex a_i [ \hat{x} ]$$ using
-$latex a_j [ \hat{x} ]$$ for $latex j < i$$ as follows:
-$latex \[
-a_i [ \hat{x} ]( x )
-=
-\left |
+
+.. math::
+
+   z[ \hat{x} ]( x , u )
+   =
+   z ( \hat{x}, a( \hat{x} ) )
+      + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+      + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+
+The partial of :math:`z_i` with respect to :math:`u_j` is zero
+for :math:`j \geq i`. It follows that
+
+.. math::
+
+   z_i [ \hat{x} ]( x , u )
+   =
    z_i ( \hat{x}, a( \hat{x} ) )
-   + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-   + \sum_{j < i} \partial_{u(j)}
-      z_i ( \hat{x}, a( \hat{x} ) )
-         ( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
-\right|
-\] $$
+      + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+      + \sum_{j < i} \partial_{u(j)}
+         z_i ( \hat{x}, a( \hat{x} ) ) ( u_j - a_j ( \hat{x} ) )
+
+Considering the case :math:`i = 0` we define
+
+.. math::
+
+   a_0 [ \hat{x} ]( x )
+   =
+   | z_0 [ \hat{x} ]( x , u ) |
+   =
+   \left|
+      z_0 ( \hat{x}, a( \hat{x} ) )
+      + \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   \right|
+
 It follows that
-$latex \[
+
+.. math::
+
+   a_0 (x) = a_0 [ \hat{x} ]( x ) + o ( x - \hat{x} )
+
+In general, we define :math:`a_i [ \hat{x} ]` using
+:math:`a_j [ \hat{x} ]` for :math:`j < i` as follows:
+
+.. math::
+
+   a_i [ \hat{x} ]( x )
+   =
+   \left |
+      z_i ( \hat{x}, a( \hat{x} ) )
+      + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+      + \sum_{j < i} \partial_{u(j)}
+         z_i ( \hat{x}, a( \hat{x} ) )
+            ( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
+   \right|
+
+It follows that
+
+.. math::
+
    a (x) = a[ \hat{x} ]( x ) + o ( x - \hat{x} )
-\] $$
-Note that in the case where $latex z(x, u)$$ and $latex y(x, u)$$ are
+
+Note that in the case where :math:`z(x, u)` and :math:`y(x, u)` are
 affine,
-$latex \[
+
+.. math::
+
    a[ \hat{x} ]( x ) = a( x )
-\] $$
 
+Approximating f(x)
+==================
 
-$subhead Approximating f(x)$$
-$latex \[
-f(x)
-=
-y ( x , a(x ) )
-=
-y [ \hat{x} ] ( x , a[ \hat{x} ] ( x ) )
-+ o( x - \hat{x} )
-\] $$
+.. math::
 
-$head Correspondence to Literature$$
+   f(x)
+   =
+   y ( x , a(x ) )
+   =
+   y [ \hat{x} ] ( x , a[ \hat{x} ] ( x ) )
+   + o( x - \hat{x} )
+
+Correspondence to Literature
+****************************
 Using the notation
-$latex Z = \partial_x z(\hat{x}, \hat{u})$$,
-$latex L = \partial_u z(\hat{x}, \hat{u})$$,
-$latex J = \partial_x y(\hat{x}, \hat{u})$$,
-$latex Y = \partial_u y(\hat{x}, \hat{u})$$,
-the approximation for $latex z$$ and $latex y$$ are
-$latex \[
-\begin{array}{rcl}
-z[ \hat{x} ]( x , u )
-& = &
-z ( \hat{x}, a( \hat{x} ) ) + Z ( x - \hat{x} ) + L ( u - a( \hat{x} ) )
-\\
-y[ \hat{x} ]( x , u )
-& = &
-y ( \hat{x}, a( \hat{x} ) ) + J ( x - \hat{x} ) + Y ( u - a( \hat{x} ) )
-\end{array}
-\] $$
-Moving the terms with $latex \hat{x}$$ together, we have
-$latex \[
-\begin{array}{rcl}
-z[ \hat{x} ]( x , u )
-& = &
-z ( \hat{x}, a( \hat{x} ) ) - Z \hat{x} - L a( \hat{x} )  + Z x + L u
-\\
-y[ \hat{x} ]( x , u )
-& = &
-y ( \hat{x}, a( \hat{x} ) ) - J \hat{x} - Y a( \hat{x} )  + J x + Y u
-\end{array}
-\] $$
+:math:`Z = \partial_x z(\hat{x}, \hat{u})`,
+:math:`L = \partial_u z(\hat{x}, \hat{u})`,
+:math:`J = \partial_x y(\hat{x}, \hat{u})`,
+:math:`Y = \partial_u y(\hat{x}, \hat{u})`,
+the approximation for :math:`z` and :math:`y` are
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z[ \hat{x} ]( x , u )
+   & = &
+   z ( \hat{x}, a( \hat{x} ) ) + Z ( x - \hat{x} ) + L ( u - a( \hat{x} ) )
+   \\
+   y[ \hat{x} ]( x , u )
+   & = &
+   y ( \hat{x}, a( \hat{x} ) ) + J ( x - \hat{x} ) + Y ( u - a( \hat{x} ) )
+   \end{eqnarray}
+
+Moving the terms with :math:`\hat{x}` together, we have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z[ \hat{x} ]( x , u )
+   & = &
+   z ( \hat{x}, a( \hat{x} ) ) - Z \hat{x} - L a( \hat{x} )  + Z x + L u
+   \\
+   y[ \hat{x} ]( x , u )
+   & = &
+   y ( \hat{x}, a( \hat{x} ) ) - J \hat{x} - Y a( \hat{x} )  + J x + Y u
+   \end{eqnarray}
+
 Using the notation
-$latex c = z ( \hat{x}, \hat{u} ) - Z \hat{x} - L \hat{u}$$,
-$latex b = y ( \hat{x}, \hat{u} ) - J \hat{x} - Y \hat{u}$$,
+:math:`c = z ( \hat{x}, \hat{u} ) - Z \hat{x} - L \hat{u}`,
+:math:`b = y ( \hat{x}, \hat{u} ) - J \hat{x} - Y \hat{u}`,
 we have
-$latex \[
-\begin{array}{rcl}
-z[ \hat{x} ]( x , u ) & = & c + Z x + L u
-\\
-y[ \hat{x} ]( x , u ) & = & b + J x + Y u
-\end{array}
-\] $$
-Considering the affine case, where the approximations are exact,
-and choosing $latex u = a(x) = |z(x, u)|$$, we obtain
-$latex \[
-\begin{array}{rcl}
-z( x , a(x ) ) & = & c + Z x + L |z( x , a(x ) )|
-\\
-y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
-\end{array}
-\] $$
-This is Equation (2) of the
-$cref/reference/example_abs_normal/Reference/$$.
 
-$children%example/abs_normal/abs_normal.omh
-%$$
-$head Example$$
-The file $cref abs_get_started.cpp$$ contains
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z[ \hat{x} ]( x , u ) & = & c + Z x + L u
+   \\
+   y[ \hat{x} ]( x , u ) & = & b + J x + Y u
+   \end{eqnarray}
+
+Considering the affine case, where the approximations are exact,
+and choosing :math:`u = a(x) = |z(x, u)|`, we obtain
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z( x , a(x ) ) & = & c + Z x + L |z( x , a(x ) )|
+   \\
+   y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
+   \end{eqnarray}
+
+This is Equation (2) of the
+:ref:`example_abs_normal@Reference` .
+{xrst_toc_hidden
+   example/abs_normal/abs_normal.xrst
+}
+Example
+*******
+The file :ref:`abs_get_started.cpp-name` contains
 an example and test using this operation.
-The section $cref example_abs_normal$$
+The section :ref:`example_abs_normal-name`
 has a links to all the abs normal examples.
 
-$end
+{xrst_end abs_normal_fun}
 -------------------------------------------------------------------------------
 */
 /*!

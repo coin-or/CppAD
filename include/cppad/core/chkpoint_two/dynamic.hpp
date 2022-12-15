@@ -5,53 +5,60 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin chkpoint_two_dynamic$$
-$spell
+{xrst_begin chkpoint_two_dynamic}
+{xrst_spell
    chk
-   chkpoint
-   dyn_ind
-$$
+}
 
-$section Dynamic Parameters in Checkpoint Functions$$
+Dynamic Parameters in Checkpoint Functions
+##########################################
 
-$head Syntax$$
-$icode%chk_fun%.new_dynamic(%dynamic%)%$$
+Syntax
+******
+*chk_fun* . ``new_dynamic`` ( *dynamic* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head chk_fun$$
+chk_fun
+*******
 This object must have been created using the
-$cref/chkpoint_two/chkpoint_two_ctor/chk_fun/$$ constructor.
+:ref:`chkpoint_two<chkpoint_two_ctor@chk_fun>` constructor.
 
-$subhead Base$$
-This is the $cref/Base/chkpoint_two_ctor/Base/$$ type
-in the $icode chk_fun$$ constructor.
+Base
+====
+This is the :ref:`chkpoint_two_ctor@Base` type
+in the *chk_fun* constructor.
 
-$subhead fun$$
-This is the function $cref/fun/chkpoint_two_ctor/fun/$$
-in the $icode chk_fun$$ constructor.
+fun
+===
+This is the function :ref:`chkpoint_two_ctor@fun`
+in the *chk_fun* constructor.
 
-$head BaseVector$$
-This must be a $cref SimpleVector$$ with elements of type $icode Base$$.
+BaseVector
+**********
+This must be a :ref:`SimpleVector-name` with elements of type *Base* .
 
-$head dynamic$$
+dynamic
+*******
 This is a vector with new values for the dynamic parameters
-in the function $icode fun$$.
+in the function *fun* .
 Is size must be equal to
-$cref/fun.size_dyn_ind()/fun_property/size_dyn_par/$$.
-This only affects the copy of $icode fun$$ used by $icode chk_fun$$.
+:ref:`fun.size_dyn_ind()<fun_property@size_dyn_par>` .
+This only affects the copy of *fun* used by *chk_fun* .
 
-$head Multi-Threading$$
-If one is using $cref/in_parallel/ta_in_parallel/$$,
-there is a separate copy of $icode fun$$ for each thread.
+Multi-Threading
+***************
+If one is using :ref:`in_parallel<ta_in_parallel-name>` ,
+there is a separate copy of *fun* for each thread.
 In this case, only the dynamic parameters in the copy for the current
-$cref/thread number/ta_thread_num/$$ are changed.
+:ref:`thread number<ta_thread_num-name>` are changed.
 
-
-$end
+{xrst_end chkpoint_two_dynamic}
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

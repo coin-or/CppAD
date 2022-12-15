@@ -4,29 +4,35 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin abs_eval.cpp$$
-$spell
-   eval
-$$
+{xrst_begin abs_eval.cpp}
+{xrst_spell
+   affine
+}
 
-$section abs_eval: Example and Test$$
+abs_eval: Example and Test
+##########################
 
-$head Purpose$$
+Purpose
+*******
 The function
-$latex f : \B{R}^3 \rightarrow \B{R}$$ defined by
-$latex \[
+:math:`f : \B{R}^3 \rightarrow \B{R}` defined by
+
+.. math::
+
    f( x_0, x_1, x_2  ) = | x_0 + x_1 | + | x_1 + x_2 |
-\] $$
+
 is affine, except for its absolute value terms.
 For this case, the abs_normal approximation should be equal
 to the function itself.
 
-$head Source$$
-$srcthisfile%
-   0%// BEGIN C++%// END C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end abs_eval.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

@@ -6,658 +6,717 @@
 // ----------------------------------------------------------------------------
 /*
 -------------------------------------------------------------------------------
-$begin acos$$
-$spell
-   acos
-$$
+{xrst_begin acos}
 
-$section Inverse Cosine Function: acos$$
+Inverse Cosine Function: acos
+#############################
 
-$head Syntax$$
-$icode%y% = acos(%x%)%$$
+Syntax
+******
+*y* = ``acos`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{acos}^{(1)} (x) = - (1 - x * x)^{-1/2}
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/acos.cpp
-%$$
+}
 The file
-$cref acos.cpp$$
+:ref:`acos.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end acos}
 -------------------------------------------------------------------------------
-$begin acosh$$
-$spell
-   acosh
-   const
-   Vec
-   std
-   cmath
-   CppAD
-$$
-$section The Inverse Hyperbolic Cosine Function: acosh$$
+{xrst_begin acosh}
+The Inverse Hyperbolic Cosine Function: acosh
+#############################################
 
-$head Syntax$$
-$icode%y% = acosh(%x%)%$$
+Syntax
+******
+*y* = ``acosh`` ( *x* )
 
-$head Description$$
+Description
+***********
 The inverse hyperbolic cosine function is defined by
-$icode%x% == cosh(%y%)%$$.
+*x* == ``cosh`` ( *y* ) .
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/acosh.cpp
-%$$
+}
 The file
-$cref acosh.cpp$$
+:ref:`acosh.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end acosh}
 -------------------------------------------------------------------------------
-$begin asin$$
-$spell
-   asin
-$$
+{xrst_begin asin}
 
-$section Inverse Sine Function: asin$$
+Inverse Sine Function: asin
+###########################
 
-$head Syntax$$
-$icode%y% = asin(%x%)%$$
+Syntax
+******
+*y* = ``asin`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{asin}^{(1)} (x) = (1 - x * x)^{-1/2}
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/asin.cpp
-%$$
+}
 The file
-$cref asin.cpp$$
+:ref:`asin.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end asin}
 -------------------------------------------------------------------------------
-$begin asinh$$
-$spell
-   asinh
-   const
-   Vec
-   std
-   cmath
-   CppAD
-$$
-$section The Inverse Hyperbolic Sine Function: asinh$$
+{xrst_begin asinh}
+The Inverse Hyperbolic Sine Function: asinh
+###########################################
 
-$head Syntax$$
-$icode%y% = asinh(%x%)%$$
+Syntax
+******
+*y* = ``asinh`` ( *x* )
 
-$head Description$$
+Description
+***********
 The inverse hyperbolic sine function is defined by
-$icode%x% == sinh(%y%)%$$.
+*x* == ``sinh`` ( *y* ) .
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/asinh.cpp
-%$$
+}
 The file
-$cref asinh.cpp$$
+:ref:`asinh.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end asinh}
 -------------------------------------------------------------------------------
-$begin atan$$
-$spell
-   atan
-$$
+{xrst_begin atan}
 
-$section Inverse Tangent Function: atan$$
+Inverse Tangent Function: atan
+##############################
 
-$head Syntax$$
-$icode%y% = atan(%x%)%$$
+Syntax
+******
+*y* = ``atan`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{atan}^{(1)} (x) = \frac{1}{1 + x^2}
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/atan.cpp
-%$$
+}
 The file
-$cref atan.cpp$$
+:ref:`atan.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end atan}
 -------------------------------------------------------------------------------
-$begin atanh$$
-$spell
-   atanh
-   const
-   Vec
-   std
-   cmath
-   CppAD
+{xrst_begin atanh}
+{xrst_spell
    tanh
-$$
-$section The Inverse Hyperbolic Tangent Function: atanh$$
+}
+The Inverse Hyperbolic Tangent Function: atanh
+##############################################
 
-$head Syntax$$
-$icode%y% = atanh(%x%)%$$
+Syntax
+******
+*y* = ``atanh`` ( *x* )
 
-$head Description$$
+Description
+***********
 The inverse hyperbolic tangent function is defined by
-$icode%x% == tanh(%y%)%$$.
+*x* == ``tanh`` ( *y* ) .
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/atanh.cpp
-%$$
+}
 The file
-$cref atanh.cpp$$
+:ref:`atanh.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end atanh}
 -------------------------------------------------------------------------------
-$begin cos$$
-$spell
-   cos
-$$
+{xrst_begin cos}
 
-$section The Cosine Function: cos$$
+The Cosine Function: cos
+########################
 
-$head Syntax$$
-$icode%y% = cos(%x%)%$$
+Syntax
+******
+*y* = ``cos`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{cos}^{(1)} (x) = - \sin(x)
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/cos.cpp
-%$$
+}
 The file
-$cref cos.cpp$$
+:ref:`cos.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end cos}
 -------------------------------------------------------------------------------
-$begin cosh$$
-$spell
-   cosh
-$$
+{xrst_begin cosh}
 
-$section The Hyperbolic Cosine Function: cosh$$
+The Hyperbolic Cosine Function: cosh
+####################################
 
-$head Syntax$$
-$icode%y% = cosh(%x%)%$$
+Syntax
+******
+*y* = ``cosh`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{cosh}^{(1)} (x) = \sinh(x)
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/cosh.cpp
-%$$
+}
 The file
-$cref cosh.cpp$$
+:ref:`cosh.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end cosh}
 -------------------------------------------------------------------------------
-$begin erf$$
-$spell
-   erf
-   const
-   Vec
-   std
-   cmath
-   CppAD
-   Vedder
-$$
-$section The Error Function$$
+{xrst_begin erf}
+The Error Function
+##################
 
-$head Syntax$$
-$icode%y% = erf(%x%)%$$
+Syntax
+******
+*y* = ``erf`` ( *x* )
 
-$head Description$$
+Description
+***********
 Returns the value of the error function which is defined by
-$latex \[
-{\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
-\] $$
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+.. math::
+
+   {\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/erf.cpp
-%$$
+}
 The file
-$cref erf.cpp$$
+:ref:`erf.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end erf}
 -------------------------------------------------------------------------------
-$begin erfc$$
-$spell
-   erf
+{xrst_begin erfc}
+{xrst_spell
    erfc
-   Vec
-   CppAD
-$$
-$section The Complementary Error Function: erfc$$
+}
+The Complementary Error Function: erfc
+######################################
 
-$head Syntax$$
-$icode%y% = erfc(%x%)%$$
+Syntax
+******
+*y* = ``erfc`` ( *x* )
 
-$head Description$$
+Description
+***********
 Returns the value of the complementary error function which is defined by
-$icode%y% == 1 - erf(%x%)%$$.
+*y* == 1 ``- erf`` ( *x* ) .
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/erfc.cpp
-%$$
+}
 The file
-$cref erfc.cpp$$
+:ref:`erfc.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end erfc}
 -------------------------------------------------------------------------------
-$begin exp$$
-$spell
-   exp
-$$
+{xrst_begin exp}
 
-$section The Exponential Function: exp$$
+The Exponential Function: exp
+#############################
 
-$head Syntax$$
-$icode%y% = exp(%x%)%$$
+Syntax
+******
+*y* = ``exp`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{exp}^{(1)} (x) = \exp(x)
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/exp.cpp
-%$$
+}
 The file
-$cref exp.cpp$$
+:ref:`exp.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end exp}
 -------------------------------------------------------------------------------
-$begin expm1$$
-$spell
-   exp
-   expm1
-   CppAD
-$$
-$section The Exponential Function Minus One: expm1$$
+{xrst_begin expm1}
+{xrst_spell
+   expm
+}
+The Exponential Function Minus One: expm1
+#########################################
 
-$head Syntax$$
-$icode%y% = expm1(%x%)%$$
+Syntax
+******
+*y* = ``expm1`` ( *x* )
 
-$head Description$$
+Description
+***********
 Returns the value of the exponential function minus one which is defined
-by $icode%y% == exp(%x%) - 1%$$.
+by *y* == ``exp`` ( *x* ) ``- 1`` .
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/expm1.cpp
-%$$
+}
 The file
-$cref expm1.cpp$$
+:ref:`expm1.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end expm1}
 -------------------------------------------------------------------------------
-$begin log$$
-$spell
-$$
+{xrst_begin log}
 
-$section The Exponential Function: log$$
+The Exponential Function: log
+#############################
 
-$head Syntax$$
-$icode%y% = log(%x%)%$$
+Syntax
+******
+*y* = ``log`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{log}^{(1)} (x) = \frac{1}{x}
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/log.cpp
-%$$
+}
 The file
-$cref log.cpp$$
+:ref:`log.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end log}
 -------------------------------------------------------------------------------
-$begin log1p$$
-$spell
-   CppAD
-$$
+{xrst_begin log1p}
 
-$section The Logarithm of One Plus Argument: log1p$$
+The Logarithm of One Plus Argument: log1p
+#########################################
 
-$head Syntax$$
-$icode%y% = log1p(%x%)%$$
+Syntax
+******
+*y* = ``log1p`` ( *x* )
 
-$head Description$$
+Description
+***********
 Returns the value of the logarithm of one plus argument which is defined
-by $icode%y% == log(1 + %x%)%$$.
+by *y* == ``log`` (1 + *x* ) .
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/log1p.cpp
-%$$
+}
 The file
-$cref log1p.cpp$$
+:ref:`log1p.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end log1p}
 -------------------------------------------------------------------------------
-$begin log10$$
-$spell
-   CppAD
-$$
+{xrst_begin log10}
 
-$section The Base 10 Logarithm Function: log10$$
+The Base 10 Logarithm Function: log10
+#####################################
 
-$head Syntax$$
-$icode%y% = log10(%x%)%$$
+Syntax
+******
+*y* = ``log10`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Method$$
+Method
+******
 CppAD uses the representation
-$latex \[
+
+.. math::
+
    {\rm log10} (x) = \log(x) / \log(10)
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/log10.cpp
-%$$
+}
 The file
-$cref log10.cpp$$
+:ref:`log10.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end log10}
 -------------------------------------------------------------------------------
-$begin sin$$
-$spell
-   sin
-$$
+{xrst_begin sin}
 
-$section The Sine Function: sin$$
+The Sine Function: sin
+######################
 
-$head Syntax$$
-$icode%y% = sin(%x%)%$$
+Syntax
+******
+*y* = ``sin`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{sin}^{(1)} (x) = \cos(x)
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/sin.cpp
-%$$
+}
 The file
-$cref sin.cpp$$
+:ref:`sin.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end sin}
 -------------------------------------------------------------------------------
-$begin sinh$$
-$spell
-   sinh
-$$
+{xrst_begin sinh}
 
-$section The Hyperbolic Sine Function: sinh$$
+The Hyperbolic Sine Function: sinh
+##################################
 
-$head Syntax$$
-$icode%y% = sinh(%x%)%$$
+Syntax
+******
+*y* = ``sinh`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{sinh}^{(1)} (x) = \cosh(x)
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/sinh.cpp
-%$$
+}
 The file
-$cref sinh.cpp$$
+:ref:`sinh.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end sinh}
 -------------------------------------------------------------------------------
-$begin sqrt$$
-$spell
-   sqrt
-$$
+{xrst_begin sqrt}
 
-$section The Square Root Function: sqrt$$
+The Square Root Function: sqrt
+##############################
 
-$head Syntax$$
-$icode%y% = sqrt(%x%)%$$
+Syntax
+******
+*y* = ``sqrt`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{sqrt}^{(1)} (x) = \frac{1}{2 \R{sqrt} (x) }
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/sqrt.cpp
-%$$
+}
 The file
-$cref sqrt.cpp$$
+:ref:`sqrt.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end sqrt}
 -------------------------------------------------------------------------------
-$begin tan$$
-$spell
-   tan
-$$
+{xrst_begin tan}
 
-$section The Tangent Function: tan$$
+The Tangent Function: tan
+#########################
 
-$head Syntax$$
-$icode%y% = tan(%x%)%$$
+Syntax
+******
+*y* = ``tan`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{tan}^{(1)} (x) = 1 + \tan (x)^2
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/tan.cpp
-%$$
+}
 The file
-$cref tan.cpp$$
+:ref:`tan.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end tan}
 -------------------------------------------------------------------------------
-$begin tanh$$
-$spell
+{xrst_begin tanh}
+{xrst_spell
    tanh
-$$
+}
 
-$section The Hyperbolic Tangent Function: tanh$$
+The Hyperbolic Tangent Function: tanh
+#####################################
 
-$head Syntax$$
-$icode%y% = tanh(%x%)%$$
+Syntax
+******
+*y* = ``tanh`` ( *x* )
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-$latex \[
+Derivative
+**********
+
+.. math::
+
    \R{tanh}^{(1)} (x) = 1 - \tanh (x)^2
-\] $$
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/tanh.cpp
-%$$
+}
 The file
-$cref tanh.cpp$$
+:ref:`tanh.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end tanh}
 -------------------------------------------------------------------------------
 */
 

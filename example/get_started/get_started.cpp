@@ -4,77 +4,78 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin get_started.cpp$$
-$spell
-   cppad.hpp
-   http://www.coin-or.org/CppAD/
-   namespace
-   iostream
-   const
-   std
-   Jacobian
-   jac
-   endl
-   cout
-   cmake
-$$
+{xrst_begin get_started.cpp}
 
-$section Getting Started Using CppAD to Compute Derivatives$$
+Getting Started Using CppAD to Compute Derivatives
+##################################################
 
-$head Purpose$$
+Purpose
+*******
 Demonstrate the use of CppAD by computing the derivative
 of a simple example function.
 
-$head Function$$
-The example function $latex f : \B{R} \rightarrow \B{R}$$ is defined by
-$latex \[
+Function
+********
+The example function :math:`f : \B{R} \rightarrow \B{R}` is defined by
+
+.. math::
+
    f(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}
-\] $$
-where $icode a$$ is a fixed vector of length $icode k$$.
 
-$head Derivative$$
-The derivative of $latex f(x)$$ is given by
-$latex \[
+where *a* is a fixed vector of length *k* .
+
+Derivative
+**********
+The derivative of :math:`f(x)` is given by
+
+.. math::
+
    f' (x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2}
-\] $$
 
-$head Value$$
+Value
+*****
 For the particular case in this example,
-$latex k$$ is equal to 5,
-$latex a = (1, 1, 1, 1, 1)$$, and
-$latex x = 3$$.
+:math:`k` is equal to 5,
+:math:`a = (1, 1, 1, 1, 1)`, and
+:math:`x = 3`.
 If follows that
-$latex \[
+
+.. math::
+
    f' ( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142
-\] $$
 
-$head Include File$$
+Include File
+************
 The following command, in the program below, includes the CppAD package:
-$codei%
-   # include <cppad/cppad.hpp>
-%$$
 
-$head Poly$$
-The routine $code Poly$$, defined below, evaluates a polynomial.
+   # ``include <cppad/cppad.hpp>``
+
+Poly
+****
+The routine ``Poly`` , defined below, evaluates a polynomial.
 A general purpose polynomial evaluation routine is documented and
-distributed with CppAD; see $cref Poly$$.
+distributed with CppAD; see :ref:`Poly-name` .
 
-$head CppAD Namespace$$
+CppAD Namespace
+***************
 All of the functions and objects defined by CppAD are in the
-$code CppAD$$ namespace. In the example below,
-$codei%
-   using CppAD::AD;
-%$$
-enables one to abbreviate $code CppAD::AD$$ using just $code AD$$.
+``CppAD`` namespace. In the example below,
 
-$head CppAD Preprocessor Symbols$$
-All the $cref preprocessor$$ symbols defined by CppAD begin with
-$code CPPAD_$$ (some deprecated symbols begin with $code CppAD_$$).
-The preprocessor symbol $cref/CPPAD_TESTVECTOR/testvector/$$
+   ``using CppAD::AD`` ;
+
+enables one to abbreviate ``CppAD::AD`` using just ``AD`` .
+
+CppAD Preprocessor Symbols
+**************************
+All the :ref:`preprocessor-name` symbols defined by CppAD begin with
+``CPPAD_`` (some deprecated symbols begin with ``CppAD_`` ).
+The preprocessor symbol :ref:`CPPAD_TESTVECTOR<testvector-name>`
 is used in the example below.
 
-$head Program$$
-$srccode%cpp% */
+Program
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <iostream>        // standard input/output
 # include <vector>          // standard vector
 # include <cppad/cppad.hpp> // the CppAD package
@@ -137,35 +138,36 @@ int main(void)
 
    return error_code;
 }
-/* %$$
-$head Output$$
+/* {xrst_code}
+{xrst_spell_on}
+Output
+******
 Executing the program above will generate the following output:
-$codep
-   f'(3) computed by CppAD = 142
-$$
+::
 
-$head Running$$
-After you configure your system using the $cref cmake$$ command,
+   f'(3) computed by CppAD = 142
+
+Running
+*******
+After you configure your system using the :ref:`cmake-name` command,
 you compile and run this example by executing the command
-$codei%
-   make check_example_get_started
-%$$
+
+   ``make check_example_get_started``
+
 in the build directory; i.e., the directory where the cmake command
 was executed.
 
-$head Exercises$$
+Exercises
+*********
 Modify the program above to accomplish the following tasks
 using CppAD:
-$list number$$
-Compute and print the derivative of $latex f(x) = 1 + x + x^2 + x^3 + x^4$$
-at the point $latex x = 2$$.
-$lnext
-Compute and print the derivative of $latex f(x) = 1 + x + x^2 / 2$$
-at the point $latex x = .5$$.
-$lnext
-Compute and print the derivative of $latex f(x) = \exp (x) - 1 - x - x^2 / 2$$
-at the point $latex x = .5$$.
-$lend
 
-$end
+#. Compute and print the derivative of :math:`f(x) = 1 + x + x^2 + x^3 + x^4`
+   at the point :math:`x = 2`.
+#. Compute and print the derivative of :math:`f(x) = 1 + x + x^2 / 2`
+   at the point :math:`x = .5`.
+#. Compute and print the derivative of :math:`f(x) = \exp (x) - 1 - x - x^2 / 2`
+   at the point :math:`x = .5`.
+
+{xrst_end get_started.cpp}
 */

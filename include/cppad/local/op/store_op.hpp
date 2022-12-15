@@ -7,123 +7,139 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
-$begin store_op_var$$
-$spell
+{xrst_begin store_op_var}
+{xrst_spell
+   isvar
    pv
    vp
    vv
-   Vec
-   op
-   var
-   isvar
-   ind
-   Taylor
-   arg
-   num
-   Addr
-$$
-$section Changing an Element in a Variable VecAD Vector$$
+}
+Changing an Element in a Variable VecAD Vector
+##############################################
 
-$head See Also$$
-$cref/op_code_var store/op_code_var/Store/$$.
+See Also
+********
+:ref:`op_code_var store<op_code_var@Store>` .
 
-$head Syntax$$
-$codei%forward_store_%IV%_op_0(
-   %i_z%,
-   %arg%,
-   %num_par%,
-   %parameter%,
-   %cap_order%,
-   %taylor%,
-   %vec_ad2isvar%,
-   %vec_ad2index%
-)
-%$$
-where the index type $icode I$$ and the value being stored type $icode V$$
-are $code p$$ (for parameter) or $code v$$ (for variable).
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_FORWARD_STORE_PP_OP_0%// END_FORWARD_STORE_PP_OP_0%1
-%$$
+| ``forward_store_`` *IV* _ ``op_0`` (
+| |tab| *i_z* ,
+| |tab| *arg* ,
+| |tab| *num_par* ,
+| |tab| *parameter* ,
+| |tab| *cap_order* ,
+| |tab| *taylor* ,
+| |tab| *vec_ad2isvar* ,
+| |tab| *vec_ad2index*
+| )
+
+where the index type *I* and the value being stored type *V*
+are ``p`` (for parameter) or ``v`` (for variable).
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_FORWARD_STORE_PP_OP_0
+   // END_FORWARD_STORE_PP_OP_0
+}
 The prototype for
-$code forward_store_pv_op_0$$,
-$code forward_store_vp_op_0$$, and
-$code forward_store_vv_op_0$$,
+``forward_store_pv_op_0`` ,
+``forward_store_vp_op_0`` , and
+``forward_store_vv_op_0`` ,
 are the same except for the function name.
 
-$head Notation$$
+Notation
+********
 
-$subhead v$$
-We use $icode v$$ to denote the $cref VecAD$$ vector for this operation.
+v
+=
+We use *v* to denote the :ref:`VecAD-name` vector for this operation.
 
-$subhead x$$
-We use $icode x$$ to denote the $codei%AD%<%Base%>%$$
+x
+=
+We use *x* to denote the ``AD`` < ``Base`` >
 index for this operation.
 
-$subhead i_vec$$
-We use $icode i_vec$$ to denote the $code size_t$$ value
-corresponding to $icode x$$.
+i_vec
+=====
+We use *i_vec* to denote the ``size_t`` value
+corresponding to *x* .
 
-$subhead n_load$$
+n_load
+======
 This is the number of load instructions in this recording.
 
-$subhead n_all$$
+n_all
+=====
 This is the number of values in the single array that includes
 all the vectors together with the size of each vector.
 
-$head Base$$
+Base
+****
 base type for the operator; i.e., this operation was recorded
 using AD<Base> and computations by this routine are done using type Base.
 
-$head i_z$$
+i_z
+***
 is the AD variable index corresponding to the result of this load operation.
 
-$head arg$$
+arg
+***
 
-$subhead arg[0]$$
+arg[0]
+======
 is the offset of this VecAD vector relative to the beginning
-of the $icode vec_ad2isvar$$ and $icode vec_ad2index$$ arrays.
+of the *vec_ad2isvar* and *vec_ad2index* arrays.
 
-$subhead arg[1]$$
+arg[1]
+======
 If this is
-$code forward_load_p_op_0$$ ($code forward_load_v_op_0$$)
-$icode%arg%[%1%]%$$ is the parameter index (variable index)
-corresponding to $cref/i_vec/load_op_var/Notation/i_vec/$$.
+``forward_load_p_op_0`` (``forward_load_v_op_0`` )
+*arg* [1] is the parameter index (variable index)
+corresponding to :ref:`load_op_var@Notation@i_vec` .
 
-$subhead arg[2]$$
+arg[2]
+======
 Is the index of this VecAD load instruction in the
-$icode load_op2var$$ array.
+*load_op2var* array.
 
-$head num_par$$
+num_par
+*******
 is the number of parameters in this recording.
 
-$head parameter$$
+parameter
+*********
 This is the vector of parameters for this recording which has size
-$icode num_par$$.
+*num_par* .
 
-$head cap_order$$
+cap_order
+*********
 number of columns in the matrix containing the Taylor coefficients.
 
-$head taylor$$
+taylor
+******
 Is the matrix of Taylor coefficients for all the variables.
 
-$head vec_ad2isvar$$
-This vector has size $icode n_all$$ and
+vec_ad2isvar
+************
+This vector has size *n_all* and
 the input values of its elements does not matter.
 If the value being stored is a parameter (variable),
-$icode%vec_ad2isvar%[ %arg%[0] + %i_vec% ]%$$
+*vec_ad2isvar* [ *arg* [0] + *i_vec*  ]
 is set to false (true).
 
-$head vec_ad2index$$
-This array has size $icode n_all$$
+vec_ad2index
+************
+This array has size *n_all*
 and the input value of its elements does not matter.
 If the value being stored is a parameter (variable),
-$icode%vec_ad2index%[ %arg%[0] + %i_vec% ]%$$
+*vec_ad2index* [ *arg* [0] + *i_vec*  ]
 is set to the parameter (variable) index
 corresponding to the value being stored.
 
-$end
+{xrst_end store_op_var}
 */
 // BEGIN_FORWARD_STORE_PP_OP_0
 template <class Base>

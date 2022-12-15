@@ -8,50 +8,23 @@
 # include <limits>
 
 /*
-$begin base_double.hpp$$
-$spell
+{xrst_begin base_double.hpp}
+{xrst_spell
+   invocations
    namespaces
-   cppad
-   hpp
-   azmul
-   expm1
-   atanh
-   acosh
-   asinh
-   erf
-   erfc
-   endif
-   abs_geq
-   acos
-   asin
-   atan
-   cos
-   sqrt
-   tanh
-   std
-   fabs
-   bool
-   Lt Le Eq Ge Gt
-   Rel
-   CppAD
-   CondExpOp
-   namespace
-   inline
-   enum
-   const
-   exp
-   const
-$$
+}
 
+Enable use of AD<Base> where Base is double
+###########################################
 
-$section Enable use of AD<Base> where Base is double$$
-
-$head CondExpOp$$
-The type $code double$$ is a relatively simple type that supports
-$code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators; see
-$cref/ordered type/base_cond_exp/CondExpTemplate/Ordered Type/$$.
-Hence its $code CondExpOp$$ function is defined by
-$srccode%cpp% */
+CondExpOp
+*********
+The type ``double`` is a relatively simple type that supports
+``<`` , ``<=`` , ``==`` , ``>=`` , and ``>`` operators; see
+:ref:`base_cond_exp@CondExpTemplate@Ordered Type` .
+Hence its ``CondExpOp`` function is defined by
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline double CondExpOp(
       enum CompareOp     cop          ,
@@ -62,32 +35,41 @@ namespace CppAD {
    {  return CondExpTemplate(cop, left, right, exp_if_true, exp_if_false);
    }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head CondExpRel$$
-The $cref/CPPAD_COND_EXP_REL/base_cond_exp/CondExpRel/$$ macro invocation
-$srccode%cpp% */
+CondExpRel
+**********
+The :ref:`CPPAD_COND_EXP_REL<base_cond_exp@CondExpRel>` macro invocation
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_COND_EXP_REL(double)
 }
-/* %$$
-uses $code CondExpOp$$ above to
-define $codei%CondExp%Rel%$$ for $code double$$ arguments
-and $icode%Rel%$$ equal to
-$code Lt$$, $code Le$$, $code Eq$$, $code Ge$$, and $code Gt$$.
+/* {xrst_code}
+{xrst_spell_on}
+uses ``CondExpOp`` above to
+define ``CondExp`` *Rel* for ``double`` arguments
+and *Rel* equal to
+``Lt`` , ``Le`` , ``Eq`` , ``Ge`` , and ``Gt`` .
 
-$head EqualOpSeq$$
-The type $code double$$ is simple (in this respect) and so we define
-$srccode%cpp% */
+EqualOpSeq
+**********
+The type ``double`` is simple (in this respect) and so we define
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool EqualOpSeq(const double& x, const double& y)
    {  return x == y; }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Identical$$
-The type $code double$$ is simple (in this respect) and so we define
-$srccode%cpp% */
+Identical
+*********
+The type ``double`` is simple (in this respect) and so we define
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool IdenticalCon(const double& x)
    {  return true; }
@@ -98,26 +80,35 @@ namespace CppAD {
    inline bool IdenticalEqualCon(const double& x, const double& y)
    {  return (x == y); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Integer$$
-$srccode%cpp% */
+Integer
+*******
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline int Integer(const double& x)
    {  return static_cast<int>(x); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head azmul$$
-$srccode%cpp% */
+azmul
+*****
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_AZMUL( double )
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Ordered$$
-The $code double$$ type supports ordered comparisons
-$srccode%cpp% */
+Ordered
+*******
+The ``double`` type supports ordered comparisons
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline bool GreaterThanZero(const double& x)
    {  return x > 0.; }
@@ -130,16 +121,19 @@ namespace CppAD {
    inline bool abs_geq(const double& x, const double& y)
    {  return std::fabs(x) >= std::fabs(y); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head Unary Standard Math$$
-The following macro invocations import the $code double$$ versions of
-the unary standard math functions into the $code CppAD$$ namespace.
+Unary Standard Math
+*******************
+The following macro invocations import the ``double`` versions of
+the unary standard math functions into the ``CppAD`` namespace.
 Importing avoids ambiguity errors when using both the
-$code CppAD$$ and $code std$$ namespaces.
-Note this also defines the $cref/float/base_float.hpp/Unary Standard Math/$$
+``CppAD`` and ``std`` namespaces.
+Note this also defines the :ref:`float<base_float.hpp@Unary Standard Math>`
 versions of these functions.
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    using std::acos;
    using std::asin;
@@ -163,20 +157,25 @@ namespace CppAD {
    using std::expm1;
    using std::log1p;
 }
-/* %$$
-The absolute value function is special because its $code std$$ name is
-$code fabs$$
-$srccode%cpp% */
+/* {xrst_code}
+{xrst_spell_on}
+The absolute value function is special because its ``std`` name is
+``fabs``
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline double abs(const double& x)
    {  return std::fabs(x); }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head sign$$
-The following defines the $code CppAD::sign$$ function that
-is required to use $code AD<double>$$:
-$srccode%cpp% */
+sign
+****
+The following defines the ``CppAD::sign`` function that
+is required to use ``AD<double>`` :
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    inline double sign(const double& x)
    {  if( x > 0. )
@@ -186,37 +185,45 @@ namespace CppAD {
       return -1.;
    }
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head pow$$
-The following defines a $code CppAD::pow$$ function that
-is required to use $code AD<double>$$.
+pow
+***
+The following defines a ``CppAD::pow`` function that
+is required to use ``AD<double>`` .
 As with the unary standard math functions,
-this has the exact same signature as $code std::pow$$,
+this has the exact same signature as ``std::pow`` ,
 so use it instead of defining another function.
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    using std::pow;
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head numeric_limits$$
-The following defines the CppAD $cref numeric_limits$$
-for the type $code double$$:
-$srccode%cpp% */
+numeric_limits
+**************
+The following defines the CppAD :ref:`numeric_limits-name`
+for the type ``double`` :
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace CppAD {
    CPPAD_NUMERIC_LIMITS(double, double)
 }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head to_string$$
-There is no need to define $code to_string$$ for $code double$$
-because it is defined by including $code cppad/utility/to_string.hpp$$;
-see $cref to_string$$.
-See $cref/base_complex.hpp/base_complex.hpp/to_string/$$ for an example where
-it is necessary to define $code to_string$$ for a $icode Base$$ type.
+to_string
+*********
+There is no need to define ``to_string`` for ``double``
+because it is defined by including ``cppad/utility/to_string.hpp`` ;
+see :ref:`to_string-name` .
+See :ref:`base_complex.hpp<base_complex.hpp@to_string>` for an example where
+it is necessary to define ``to_string`` for a *Base* type.
 
-$end
+{xrst_end base_double.hpp}
 */
 
 # endif

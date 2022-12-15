@@ -3,19 +3,23 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin xpackage_ode.cpp$$
-$spell
+{xrst_begin xpackage_ode.cpp}
+{xrst_spell
    xpackage
-$$
+}
 
-$section Xpackage Speed: Ode$$
+Xpackage Speed: Ode
+###################
 
-$head Specifications$$
-$cref link_ode$$
+Specifications
+**************
+:ref:`link_ode-name`
 
-$head Implementation$$
+Implementation
+**************
 // a xpackage version of this test is not yet implemented
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <map>
 # include <cppad/utility/vector.hpp>
 
@@ -28,6 +32,8 @@ bool link_ode(
    CppAD::vector<double>      &x         ,
    CppAD::vector<double>      &jacobian  )
 {  return false; }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end xpackage_ode.cpp}
 */

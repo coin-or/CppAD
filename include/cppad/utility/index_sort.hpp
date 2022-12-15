@@ -6,66 +6,66 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin index_sort$$
-$spell
-   cppad.hpp
-   ind
-   const
-$$
+{xrst_begin index_sort}
 
-$section Returns Indices that Sort a Vector$$
+Returns Indices that Sort a Vector
+##################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/index_sort.hpp>
-%$$
-$codei%index_sort(%keys%, %ind%)%$$
+   # ``include <cppad/utility/index_sort.hpp>``
 
-$head keys$$
-The argument $icode keys$$ has prototype
-$codei%
-   const %KeyVector%& %keys%
-%$$
-where $icode KeyVector$$ is
-a $cref SimpleVector$$ class with elements that support the $code <$$
+``index_sort`` ( *keys* , *ind* )
+
+keys
+****
+The argument *keys* has prototype
+
+   ``const`` *KeyVector* & *keys*
+
+where *KeyVector* is
+a :ref:`SimpleVector-name` class with elements that support the ``<``
 operation.
 
-$head ind$$
-The argument $icode ind$$ has prototype
-$codei%
-   %SizeVector%& %ind%
-%$$
-where $icode SizeVector$$ is
-a $cref SimpleVector$$ class with elements of type $code size_t$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+ind
+***
+The argument *ind* has prototype
+
+   *SizeVector* & *ind*
+
+where *SizeVector* is
+a :ref:`SimpleVector-name` class with elements of type ``size_t`` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$subhead Input$$
-The size of $icode ind$$ must be the same as the size of $icode keys$$
+Input
+=====
+The size of *ind* must be the same as the size of *keys*
 and the value of its input elements does not matter.
 
-$subhead Return$$
-Upon return, $icode ind$$ is a permutation of the set of indices
-that yields increasing order for $icode keys$$.
-In other words, for all $icode%i% != %j%$$,
-$codei%
-   %ind%[%i%] != %ind%[%j%]
-%$$
-and for $icode%i% = 0 , %...% , %size%-2%$$,
-$codei%
-   ( %keys%[ %ind%[%i%+1] ] < %keys%[ %ind%[%i%] ] ) == false
-%$$
+Return
+======
+Upon return, *ind* is a permutation of the set of indices
+that yields increasing order for *keys* .
+In other words, for all *i* != *j* ,
 
+   *ind* [ *i* ] != *ind* [ *j* ]
 
-$head Example$$
-$children%
+and for *i* = 0 , ... , *size* ``-2`` ,
+
+   ( *keys* [ *ind* [ *i* +1] ] < *keys* [ *ind* [ *i* ] ] ) == ``false``
+
+Example
+*******
+{xrst_toc_hidden
    example/utility/index_sort.cpp
-%$$
-The file $cref index_sort.cpp$$ contains an example
+}
+The file :ref:`index_sort.cpp-name` contains an example
 and test of this routine.
 It return true if it succeeds and false otherwise.
 
-$end
+{xrst_end index_sort}
 */
 # include <algorithm>
 # include <cppad/utility/thread_alloc.hpp>

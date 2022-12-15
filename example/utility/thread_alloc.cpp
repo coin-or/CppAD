@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin thread_alloc.cpp$$
-$spell
-   pthread
-   openmp
-$$
+{xrst_begin thread_alloc.cpp}
 
-$section Fast Multi-Threading Memory Allocator: Example and Test$$
+Fast Multi-Threading Memory Allocator: Example and Test
+#######################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end thread_alloc.cpp}
 */
 // BEGIN C++
 # include <cppad/utility/thread_alloc.hpp>

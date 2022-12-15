@@ -4,13 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin to_string.cpp$$
+{xrst_begin to_string.cpp}
 
-$section to_string: Example and Test$$
+to_string: Example and Test
+###########################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end to_string.cpp}
 */
 // BEGIN C++
 

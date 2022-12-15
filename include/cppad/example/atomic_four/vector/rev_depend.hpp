@@ -5,26 +5,30 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector_rev_depend.hpp$$
-$spell
-   Jacobian
-   jac
-$$
+{xrst_begin atomic_four_vector_rev_depend.hpp}
 
-$section Atomic Vector Forward Type Calculation: Example Implementation$$
+Atomic Vector Forward Type Calculation: Example Implementation
+##############################################################
 
-$head Purpose$$
-The $code rev_depend$$ routine overrides the virtual functions
+Purpose
+*******
+The ``rev_depend`` routine overrides the virtual functions
 used by the atomic_four base class for Jacobian sparsity calculations; see
-$cref/rev_depend/atomic_four_rev_depend/$$.
+:ref:`rev_depend<atomic_four_rev_depend-name>` .
 
-$head Example$$
-The file $cref atomic_four_vector_rev_depend.cpp$$
+Example
+*******
+The file :ref:`atomic_four_vector_rev_depend.cpp-name`
 contains an example and test that uses this member function.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_rev_depend.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/vector/vector.hpp>

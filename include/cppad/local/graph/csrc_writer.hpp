@@ -10,20 +10,22 @@
 # include <cppad/local/graph/cpp_graph_op.hpp>
 
 /*
-$begin csrc_writer$$
-$spell
-   CppAD
-   obj
+{xrst_begin csrc_writer}
+{xrst_spell
    csrc
-$$
+}
 
-$section Prototype for csrc_writer$$
+Prototype for csrc_writer
+#########################
 
-$head Syntax$$
-$codei%csrc_writer( %csrc%, %graph_obj%, %type% )%$$
+Syntax
+******
+``csrc_writer`` ( *csrc* , *graph_obj* , *type*  )
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 namespace CppAD { namespace local { namespace graph {
    CPPAD_LIB_EXPORT void csrc_writer(
       std::ostream&       os          ,
@@ -31,12 +33,14 @@ namespace CppAD { namespace local { namespace graph {
       const std::string&  type
    );
 } } }
-/* %$$
+/* {xrst_code}
+{xrst_spell_on}
 
-$head See$$
-$cref cpp_csrc_writer$$
+See
+***
+:ref:`cpp_csrc_writer-name`
 
-$end
+{xrst_end csrc_writer}
 */
 
 

@@ -10,41 +10,42 @@
 // BEGIN_CPPAD_LOCAL_UTILITY_NAMESPACE
 namespace CppAD { namespace local { namespace utility {
 /*
-$begin vector_bool_element$$
-$spell
-   Bool
-$$
+{xrst_begin vector_bool_element}
 
-$section vectorBoolElement Class$$
+vectorBoolElement Class
+#######################
 
-$head Syntax$$
-$codei%local::utility::vectorBoolElement %element%(%unit%, %mask%)
-%$$
-$codei%local::utility::vectorBoolElement %element%(%other%)
-%$$
-$icode%value% = %element%
-%$$
-$icode%element% = %value%
-%$$
-$icode%element% = %element%
-%$$
+Syntax
+******
 
-$head unit_t$$
+| ``local::utility::vectorBoolElement`` *element* ( *unit* , *mask* )
+| ``local::utility::vectorBoolElement`` *element* ( *other* )
+| *value* = *element*
+| *element* = *value*
+| *element* = *element*
+
+unit_t
+******
 Type used to pack multiple boolean (bit) values into one unit.
 Logical operations are preformed one unit at a time.
 
-$head unit_$$
+unit\_
+******
 pointer to the unit that holds the value for this element.
 
-$head mask_$$
+mask\_
+******
 mask for the bit corresponding to this element; i.e., all the bits
 are zero except for bit that corresponds to this element which is one.
 
-$head value$$
-is a $code bool$$.
+value
+*****
+is a ``bool`` .
 
-$head Source$$
-$srccode%hpp% */
+Source
+******
+{xrst_spell_off}
+{xrst_code hpp} */
 class vectorBoolElement {
 private:
    typedef size_t unit_t;
@@ -70,8 +71,10 @@ public:
       return *this;
    }
 };
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end vector_bool_element}
 */
 } } } // END_CPPAD_LOCAL_UTILITY_NAMESPACE
 # endif

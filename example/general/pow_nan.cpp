@@ -4,32 +4,37 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin pow_nan.cpp$$
-$spell
-$$
+{xrst_begin pow_nan.cpp}
 
-$section pow: Nan in Result of Pow Function: Example and Test$$
+pow: Nan in Result of Pow Function: Example and Test
+####################################################
 
-$head Purpose$$
-The $cref%pow(x, y)%pow%$$ function will work when $latex x < 0$$ and
-$latex y$$  is a parameter. It will often generate nan or infinity when
-$latex x < 0$$ and one tries to compute a derivatives
-(even if $latex y$$ is a positive integer).
-This is because the derivative of the log is $latex 1 / x$$
+Purpose
+*******
+The :ref:`pow(x, y)<pow-name>` function will work when :math:`x < 0` and
+:math:`y`  is a parameter. It will often generate nan or infinity when
+:math:`x < 0` and one tries to compute a derivatives
+(even if :math:`y` is a positive integer).
+This is because the derivative of the log is :math:`1 / x`
 and the power function uses the representation
-$latex \[
+
+.. math::
+
    \R{pow}(x, y) = \exp [ y \cdot \log(x) ]
-\] $$
 
-$head Problem$$
-There is a problem with this representation when $latex y$$ is a parameter
-and $latex x = 0$$. For example,
-when $latex x = 0$$ and $latex y = 1$$, it returns zero for the derivative,
-but the actual derivative w.r.t $latex x$$ is one.
+Problem
+*******
+There is a problem with this representation when :math:`y` is a parameter
+and :math:`x = 0`. For example,
+when :math:`x = 0` and :math:`y = 1`, it returns zero for the derivative,
+but the actual derivative w.r.t :math:`x` is one.
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end pow_nan.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

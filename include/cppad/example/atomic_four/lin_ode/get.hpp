@@ -5,47 +5,65 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_get.hpp$$
-$spell
-   mul
-   lin
-$$
+{xrst_begin atomic_four_lin_ode_get.hpp}
+{xrst_spell
+   auxillary
+}
 
-$section atomic_lin_ode Get Routine: Example Implementation$$
+atomic_lin_ode Get Routine: Example Implementation
+##################################################
 
-$head Syntax$$
-$icode%lin_ode%.get(%call_id%, %r%, %step%, %pattern%, %transpose%)%$$
+Syntax
+******
+*lin_ode* . ``get`` ( *call_id* , *r* , *step* , *pattern* , *transpose* )
 
-$head Prototype$$
-$srcfile%include/cppad/example/atomic_four/lin_ode/lin_ode.hpp%
-   0%// BEGIN sparse_rc_type%// END sparse_rc_type%0
-%$$
-$srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
+Prototype
+*********
+{xrst_literal
+   include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
+   // BEGIN sparse_rc_type
+   // END sparse_rc_type
+}
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Purpose$$
+Purpose
+*******
 Retrieves the auxillary information for a an atomic operation that computes
 the solution of a linear ODE.
 
-$head call_id$$
+call_id
+*******
 This input argument identifies the auxillary information for this ODE.
 
-$head r$$
+r
+*
 This output argument is the final value for the variable that the ODE is with
 respect to.
 
-$head step$$
+step
+****
 This is a positive maximum step size to use when solving the ODE.
 
-$head pattern$$
+pattern
+*******
 This output argument is a sparsity pattern.
 
-$head transpose$$
+transpose
+*********
 If this output argument is true (false) the sparsity pattern is for
-$latex A(x)^\R{T}$$ ($latex A(x)$$).
+:math:`A(x)^\R{T}` (:math:`A(x)`).
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_get.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>

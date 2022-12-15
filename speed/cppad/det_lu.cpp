@@ -3,33 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cppad_det_lu.cpp$$
-$spell
-   onetape
-   bool
-   CppAD
-   vector Vector
-   typedef
-   Lu
-   cppad
-   det
-   hpp
-   const
-   srand
-   var
-   std
-   cout
-   endl
-$$
+{xrst_begin cppad_det_lu.cpp}
 
-$section Cppad Speed: Gradient of Determinant Using Lu Factorization$$
+Cppad Speed: Gradient of Determinant Using Lu Factorization
+###########################################################
 
+Specifications
+**************
+See :ref:`link_det_lu-name` .
 
-$head Specifications$$
-See $cref link_det_lu$$.
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/cppad.hpp>
@@ -113,6 +99,8 @@ bool link_det_lu(
    global_cppad_thread_alloc_inuse = CppAD::thread_alloc::inuse(thread);
    return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppad_det_lu.cpp}
 */

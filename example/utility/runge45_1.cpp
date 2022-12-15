@@ -4,33 +4,40 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin runge45_1.cpp$$
-$spell
-   Runge
-$$
+{xrst_begin runge45_1.cpp}
+{xrst_spell
+   rclr
+}
 
-$section Runge45: Example and Test$$
-
+Runge45: Example and Test
+#########################
 
 Define
-$latex X : \B{R} \rightarrow \B{R}^n$$ by
-$latex \[
+:math:`X : \B{R} \rightarrow \B{R}^n` by
+
+.. math::
+
    X_i (t) =  t^{i+1}
-\] $$
-for $latex i = 1 , \ldots , n-1$$.
+
+for :math:`i = 1 , \ldots , n-1`.
 It follows that
-$latex \[
-\begin{array}{rclr}
-X_i(0)       & = & 0                           & {\rm for \; all \;} i \\
-X_i ' (t)  & = & 1                             & {\rm if \;} i = 0      \\
-X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
-\end{array}
-\] $$
+
+.. math::
+
+   \begin{array}{rclr}
+   X_i(0)       & = & 0                           & {\rm for \; all \;} i \\
+   X_i ' (t)  & = & 1                             & {\rm if \;} i = 0      \\
+   X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
+   \end{array}
+
 The example tests Runge45 using the relations above:
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end runge45_1.cpp}
 */
 // BEGIN C++
 

@@ -3,51 +3,56 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_colpack.sh$$ $newlinech #$$
-# $spell
-#  colpack
-#  gz
-#  Col
-#  CppAD
-# $$
+# {xrst_begin get_colpack.sh} 
+# {xrst_comment_ch #}
 #
-# $section Download and Install ColPack in Build Directory$$
+# Download and Install ColPack in Build Directory
+# ###############################################
 #
-# $head Syntax$$
-# $code bin/get_colpack.sh$$
+# Syntax
+# ******
+# ``bin/get_colpack.sh``
 #
-# $head Purpose$$
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
-# $cref/Colpack/colpack_prefix/Colpack Home Page/$$
-# in the CppAD $code build$$ directory.
+# :ref:`Colpack<colpack_prefix@Colpack Home Page>`
+# in the CppAD ``build`` directory.
 #
-# $head Distribution Directory$$
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# $cref/distribution directory/download/Distribution Directory/$$.
+# :ref:`download@Distribution Directory` .
 #
-# $head Source Directory$$
+# Source Directory
+# ****************
 # The ColPack source code is downloaded into the sub-directory
-# $code external/colpack.git$$ below the distribution directory.
+# ``external/colpack.git`` below the distribution directory.
 #
-# $head Prefix$$
-# The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional.sh$$ is used for this install.
+# Prefix
+# ******
+# The :ref:`get_optional.sh@prefix`
+# in the file ``bin/get_optional.sh`` is used for this install.
 #
-# $head Version$$
+# Version
+# *******
 # This will install the following version of ColPack
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 version='1.0.10'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Configuration$$
+# Configuration
+# *************
 # If the file
-# $codei%
-#  external/colpack-%version%.configured
-# %$$
+#
+#     ``external/colpack-`` *version* . ``configured``
+#
 # exists, the configuration will be skipped.
 # Delete this file if you want to re-run the configuration.
 #
-# $end
+# {xrst_end get_colpack.sh}
 # -----------------------------------------------------------------------------
 package='colpack'
 if [ $0 != "bin/get_$package.sh" ]

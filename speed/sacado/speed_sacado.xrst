@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed_sacado}
+
+Speed Test Derivatives Using Sacado
+###################################
+
+Purpose
+*******
+CppAD has a set of speed tests that are used to compare
+Sacado with other AD packages.
+This section links to the source code the Sacado speed tests
+(any suggestions to make the Sacado results faster are welcome).
+
+sacado_prefix
+*************
+To run these tests,
+you must include the :ref:`sacado_prefix-name`
+in you :ref:`cmake@CMake Command` .
+
+Running Tests
+*************
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+:ref:`cmake@Build Directory` :
+
+| |tab| ``cd speed/sacado``
+| |tab| ``make check_speed_sacado VERBOSE`` =1
+
+You can then run the corresponding speed tests
+with the following command
+
+   ./ ``speed_sacado speed`` *seed*
+
+where *seed* is a positive integer.
+See :ref:`speed_main-name` for more options.
+
+Contents
+********
+{xrst_toc_list
+   speed/sacado/det_minor.cpp
+   speed/sacado/det_lu.cpp
+   speed/sacado/mat_mul.cpp
+   speed/sacado/ode.cpp
+   speed/sacado/poly.cpp
+   speed/sacado/sparse_hessian.cpp
+   speed/sacado/sparse_jacobian.cpp
+}
+
+{xrst_end speed_sacado}

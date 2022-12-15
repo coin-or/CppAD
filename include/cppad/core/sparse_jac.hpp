@@ -6,202 +6,211 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sparse_jac$$
-$spell
-   Jacobian
-   Jacobians
-   const
-   jac
-   Taylor
-   rc
-   rcv
+{xrst_begin sparse_jac}
+{xrst_spell
    nr
-   nc
-   std
-   Cppad
-   Colpack
-   cmake
-$$
+}
 
-$section Computing Sparse Jacobians$$
+Computing Sparse Jacobians
+##########################
 
-$head Syntax$$
-$icode%n_color% = %f%.sparse_jac_for(
-   %group_max%, %x%, %subset%, %pattern%, %coloring%, %work%
-)
-%$$
-$icode%n_color% = %f%.sparse_jac_rev(
-   %x%, %subset%, %pattern%, %coloring%, %work%
-)%$$
+Syntax
+******
 
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-function corresponding to $icode f$$.
-Here $icode n$$ is the $cref/domain/fun_property/Domain/$$ size,
-and $icode m$$ is the $cref/range/fun_property/Range/$$ size, or $icode f$$.
+| *n_color* = *f* . ``sparse_jac_for`` (
+| |tab| *group_max* , *x* , *subset* , *pattern* , *coloring* , *work*
+| )
+| *n_color* = *f* . ``sparse_jac_rev`` (
+| |tab| *x* , *subset* , *pattern* , *coloring* , *work*
+| )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+function corresponding to *f* .
+Here *n* is the :ref:`fun_property@Domain` size,
+and *m* is the :ref:`fun_property@Range` size, or *f* .
 The syntax above takes advantage of sparsity when computing the Jacobian
-$latex \[
+
+.. math::
+
    J(x) = F^{(1)} (x)
-\] $$
+
 In the sparse case, this should be faster and take less memory than
-$cref Jacobian$$.
-We use the notation $latex J_{i,j} (x)$$ to denote the partial of
-$latex F_i (x)$$ with respect to $latex x_j$$.
+:ref:`Jacobian-name` .
+We use the notation :math:`J_{i,j} (x)` to denote the partial of
+:math:`F_i (x)` with respect to :math:`x_j`.
 
-$head SizeVector$$
-The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+SizeVector
+**********
+The type *SizeVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head BaseVector$$
-The type $icode BaseVector$$ is a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$code size_t$$.
+BaseVector
+**********
+The type *BaseVector* is a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+``size_t`` .
 
-$head sparse_jac_for$$
-This function uses first order forward mode sweeps $cref forward_one$$
+sparse_jac_for
+**************
+This function uses first order forward mode sweeps :ref:`forward_one-name`
 to compute multiple columns of the Jacobian at the same time.
 
-$head sparse_jac_rev$$
-This uses function first order reverse mode sweeps $cref reverse_one$$
+sparse_jac_rev
+**************
+This uses function first order reverse mode sweeps :ref:`reverse_one-name`
 to compute multiple rows of the Jacobian at the same time.
 
-$head f$$
+f
+*
 This object has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the Taylor coefficients stored in $icode f$$ are affected
-by this operation; see
-$cref/uses forward/sparse_jac/Uses Forward/$$ below.
 
-$head group_max$$
+   ``ADFun<`` *Base* > *f*
+
+Note that the Taylor coefficients stored in *f* are affected
+by this operation; see
+:ref:`sparse_jac@Uses Forward` below.
+
+group_max
+*********
 This argument has prototype
-$codei%
-   size_t %group_max%
-%$$
+
+   ``size_t`` *group_max*
+
 and must be greater than zero.
 It specifies the maximum number of colors to group during
 a single forward sweep.
 If a single color is in a group,
 a single direction for of first order forward mode
-$cref forward_one$$ is used for each color.
+:ref:`forward_one-name` is used for each color.
 If multiple colors are in a group,
 the multiple direction for of first order forward mode
-$cref forward_dir$$ is used with one direction for each color.
+:ref:`forward_dir-name` is used with one direction for each color.
 This uses separate memory for each direction (more memory),
 but my be significantly faster.
 
-$head x$$
+x
+*
 This argument has prototype
-$codei%
-   const %BaseVector%& %x%
-%$$
-and its size is $icode n$$.
-It specifies the point at which to evaluate the Jacobian
-$latex J(x)$$.
 
-$head subset$$
+   ``const`` *BaseVector* & *x*
+
+and its size is *n* .
+It specifies the point at which to evaluate the Jacobian
+:math:`J(x)`.
+
+subset
+******
 This argument has prototype
-$codei%
-   sparse_rcv<%SizeVector%, %BaseVector%>& %subset%
-%$$
-Its row size is $icode%subset%.nr() == %m%$$,
-and its column size is $icode%subset%.nc() == %n%$$.
+
+   ``sparse_rcv<`` *SizeVector* , *BaseVector* >& *subset*
+
+Its row size is *subset* . ``nr`` () == *m* ,
+and its column size is *subset* . ``nc`` () == *n* .
 It specifies which elements of the Jacobian are computed.
 The input value of its value vector
-$icode%subset%.val()%$$ does not matter.
+*subset* . ``val`` () does not matter.
 Upon return it contains the value of the corresponding elements
 of the Jacobian.
-All of the row, column pairs in $icode subset$$ must also appear in
-$icode pattern$$; i.e., they must be possibly non-zero.
+All of the row, column pairs in *subset* must also appear in
+*pattern* ; i.e., they must be possibly non-zero.
 
-$head pattern$$
+pattern
+*******
 This argument has prototype
-$codei%
-   const sparse_rc<%SizeVector%>& %pattern%
-%$$
-Its row size is $icode%pattern%.nr() == %m%$$,
-and its column size is $icode%pattern%.nc() == %n%$$.
-It is a sparsity pattern for the Jacobian $latex J(x)$$.
-This argument is not used (and need not satisfy any conditions),
-when $cref/work/sparse_jac/work/$$ is non-empty.
 
-$head coloring$$
+   ``const sparse_rc<`` *SizeVector* >& *pattern*
+
+Its row size is *pattern* . ``nr`` () == *m* ,
+and its column size is *pattern* . ``nc`` () == *n* .
+It is a sparsity pattern for the Jacobian :math:`J(x)`.
+This argument is not used (and need not satisfy any conditions),
+when :ref:`sparse_jac@work` is non-empty.
+
+coloring
+********
 The coloring algorithm determines which rows (reverse) or columns (forward)
 can be computed during the same sweep.
 This field has prototype
-$codei%
-   const std::string& %coloring%
-%$$
-This value only matters when work is empty; i.e.,
-after the $icode work$$ constructor or $icode%work%.clear()%$$.
 
-$subhead cppad$$
+   ``const std::string&`` *coloring*
+
+This value only matters when work is empty; i.e.,
+after the *work* constructor or *work* . ``clear`` () .
+
+cppad
+=====
 This uses a general purpose coloring algorithm written for Cppad.
 
-$subhead colpack$$
-If $cref colpack_prefix$$ is specified on the
-$cref/cmake command/cmake/CMake Command/$$ line,
-you can set $icode coloring$$ to $code colpack$$.
+colpack
+=======
+If :ref:`colpack_prefix-name` is specified on the
+:ref:`cmake@CMake Command` line,
+you can set *coloring* to ``colpack`` .
 This uses a general purpose coloring algorithm that is part of Colpack.
 
-$head work$$
+work
+****
 This argument has prototype
-$codei%
-   sparse_jac_work& %work%
-%$$
+
+   ``sparse_jac_work&`` *work*
+
 We refer to its initial value,
-and its value after $icode%work%.clear()%$$, as empty.
-If it is empty, information is stored in $icode work$$.
+and its value after *work* . ``clear`` () , as empty.
+If it is empty, information is stored in *work* .
 This can be used to reduce computation when
-a future call is for the same object $icode f$$,
-the same member function $code sparse_jac_for$$ or $code sparse_jac_rev$$,
+a future call is for the same object *f* ,
+the same member function ``sparse_jac_for`` or ``sparse_jac_rev`` ,
 and the same subset of the Jacobian.
-In fact, it can be used with a different $icode f$$
-and a different $icode subset$$ provided that Jacobian sparsity pattern
-for $icode f$$ and the sparsity pattern in $icode subset$$ are the same.
-If any of these values change, use $icode%work%.clear()%$$ to
+In fact, it can be used with a different *f*
+and a different *subset* provided that Jacobian sparsity pattern
+for *f* and the sparsity pattern in *subset* are the same.
+If any of these values change, use *work* . ``clear`` () to
 empty this structure.
 
-$head n_color$$
-The return value $icode n_color$$ has prototype
-$codei%
-   size_t %n_color%
-%$$
-If $code sparse_jac_for$$ ($code sparse_jac_rev$$) is used,
-$icode n_color$$ is the number of first order forward directions
+n_color
+*******
+The return value *n_color* has prototype
+
+   ``size_t`` *n_color*
+
+If ``sparse_jac_for`` (``sparse_jac_rev`` ) is used,
+*n_color* is the number of first order forward directions
 used to compute the requested Jacobian values.
 It is also the number of colors determined by the coloring method
 mentioned above.
 This is proportional to the total computational work,
 not counting the zero order forward sweep,
 or combining multiple columns (rows) into a single sweep.
-Note that if $icode%group_max% == 1%$$,
-or if we are using $code sparse_jac_rev$$,
-$icode n_color$$ is equal to the number of sweeps.
+Note that if *group_max*  == 1 ,
+or if we are using ``sparse_jac_rev`` ,
+*n_color* is equal to the number of sweeps.
 
-$head Uses Forward$$
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After a call to $code sparse_jac_forward$$ or $code sparse_jac_rev$$,
+Uses Forward
+************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``sparse_jac_forward`` or ``sparse_jac_rev`` ,
 the zero order coefficients correspond to
-$codei%
-   %f%.Forward(0, %x%)
-%$$
+
+   *f* . ``Forward`` (0, *x* )
+
 All the other forward mode coefficients are unspecified.
 
-$head Example$$
-$children%
-   example/sparse/sparse_jac_for.cpp%
+Example
+*******
+{xrst_toc_hidden
+   example/sparse/sparse_jac_for.cpp
    example/sparse/sparse_jac_rev.cpp
-%$$
-The files $cref sparse_jac_for.cpp$$ and $cref sparse_jac_rev.cpp$$
-are examples and tests of $code sparse_jac_for$$ and $code sparse_jac_rev$$.
-They return $code true$$, if they succeed, and $code false$$ otherwise.
+}
+The files :ref:`sparse_jac_for.cpp-name` and :ref:`sparse_jac_rev.cpp-name`
+are examples and tests of ``sparse_jac_for`` and ``sparse_jac_rev`` .
+They return ``true`` , if they succeed, and ``false`` otherwise.
 
-$end
+{xrst_end sparse_jac}
 */
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/sparse/internal.hpp>

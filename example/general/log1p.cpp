@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin log1p.cpp$$
-$spell
-   expm1
-   log1p
-$$
+{xrst_begin log1p.cpp}
 
-$section The AD log1p Function: Example and Test$$
+The AD log1p Function: Example and Test
+#######################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end log1p.cpp}
 */
 // BEGIN C++
 

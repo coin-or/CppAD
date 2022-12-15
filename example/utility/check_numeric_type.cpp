@@ -4,13 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin check_numeric_type.cpp$$
+{xrst_begin check_numeric_type.cpp}
 
-$section The CheckNumericType Function: Example and Test$$
+The CheckNumericType Function: Example and Test
+###############################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end check_numeric_type.cpp}
 */
 // BEGIN C++
 

@@ -5,57 +5,68 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_reverse.hpp$$
-$spell
-   lin
-   Simpson
+{xrst_begin atomic_four_lin_ode_reverse.hpp}
+{xrst_spell
+   lagrangian
+   lll
    nnz
-$$
+}
 
-$section
 Atomic Linear ODE Reverse Mode: Example Implementation
-$$
+######################################################
 
-$head Purpose$$
-The $code reverse$$ routine overrides the virtual functions
+Purpose
+*******
+The ``reverse`` routine overrides the virtual functions
 used by the atomic_four base; see
-$cref/reverse/atomic_four_reverse/$$.
+:ref:`reverse<atomic_four_reverse-name>` .
 
-$head First Order Theory$$
-We are given a vector $latex w \in \B{R}^m$$ and need to compute
-$latex \[
+First Order Theory
+******************
+We are given a vector :math:`w \in \B{R}^m` and need to compute
+
+.. math::
+
    \partial_x w^\R{T} z(r, x)
-\] $$
-see the definition of $cref/z(t, x)/atomic_four_lin_ode/z(t, x)/$$.
+
+see the definition of :ref:`atomic_four_lin_ode@z(t, x)` .
 Consider the Lagrangian corresponding to
-$latex w^\R{T} z(r, x)$$ as the objective and the ODE as the constraint:
-$latex \[
+:math:`w^\R{T} z(r, x)` as the objective and the ODE as the constraint:
+
+.. math::
+
    L(x, \lambda)
    =
    w^\R{T} z(r, x) +
       \int_0^r \lambda(t, x)^\R{T}
          [ A(x) z(t, x) - z_t (t, x) ] \R{d} t
-\] $$
-where $latex \lambda : \R{R} \times \B{R}^n \rightarrow \B{R}^m$$
+
+where :math:`\lambda : \R{R} \times \B{R}^n \rightarrow \B{R}^m`
 is a smooth function.
-If $latex z(t, x)$$ satisfies its ODE, then
-$latex \[
+If :math:`z(t, x)` satisfies its ODE, then
+
+.. math::
+
    \partial_x w^\R{T} z(r, x)
    =
    \partial_x L(x, \lambda)
-\] $$
-We use the following integration by parts to replace the $latex z_t (t, x)$$
-term in the integral defining $latex L(x, \lambda)$$:
-$latex \[
+
+We use the following integration by parts to replace the :math:`z_t (t, x)`
+term in the integral defining :math:`L(x, \lambda)`:
+
+.. math::
+
    - \int_0^r \lambda(t, x)^\R{T} z_t (t, x) \R{d} t
    =
    - \left. \lambda(t, x)^\R{T} z(t, x) \right|_0^r
    +
    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
-\] $$
-Adding the condition $latex \lambda(r, x) = w$$,
-and noting that $latex z(0, x) = b(x)$$, we have
-$latex \[
+
+Adding the condition :math:`\lambda(r, x) = w`,
+and noting that :math:`z(0, x) = b(x)`, we have
+
+.. math::
+
    L(x, \lambda)
    =
    \lambda(0, x)^\R{T} z(0, x)
@@ -63,71 +74,87 @@ $latex \[
    \int_0^r \lambda_t (t, x)^\R{T} z(t, x) \R{d} t
    +
    \int_0^r \lambda(t, x)^\R{T} A(x) z(t, x) \R{d} t
-\] $$
-$latex \[
+
+.. math::
+
    L(x, \lambda)
    =
    \lambda(0, x)^\R{T} b (x)
    +
    \int_0^r [ \lambda_t (t, x)^\R{T} + \lambda(t, x)^\R{T} A(x) ]
       z(t, x) \R{d} t
-\] $$
-$latex \[
+
+.. math::
+
    L(x, \lambda)
    =
    \lambda(0, x)^\R{T} b (x)
    +
    \int_0^r z(t, x)^\R{T}
       [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
-\] $$
+
 The partial derivative
-of $latex L(x, \lambda)$$ with respect to $latex b_j$$,
-(not including the dependence of $latex \lambda(t, x)$$ on $latex x$$)
+of :math:`L(x, \lambda)` with respect to :math:`b_j`,
+(not including the dependence of :math:`\lambda(t, x)` on :math:`x`)
 is :
-$latex \[
+
+.. math::
+
    \partial_{b(j)} L(x, \lambda)
    =
    \lambda_j (0, x)
-\]$$
+
 The partial derivative
-of $latex L(x, \lambda)$$ with respect to $latex A_{i,j}$$
-(not including The dependence of $latex \lambda(t, x)$$ on $latex x$$)
+of :math:`L(x, \lambda)` with respect to :math:`A_{i,j}`
+(not including The dependence of :math:`\lambda(t, x)` on :math:`x`)
 is :
-$latex \[
+
+.. math::
+
    \partial_{A(i,j)} L(x, \lambda)
    =
    \int_0^r \partial_{A(i,j)} z(t, x)^\R{T}
       [ \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x) ] \R{d} t
    +
    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
-\] $$
-If $latex \lambda(t, x)$$ satisfies the ODE
-$latex \[
+
+If :math:`\lambda(t, x)` satisfies the ODE
+
+.. math::
+
    0 = \lambda_t (t, x) + A(x)^\R{T} \lambda(t, x)
-\] $$
-The partial derivative with respect to $latex A_{i,j}$$ is
-$latex \[
+
+The partial derivative with respect to :math:`A_{i,j}` is
+
+.. math::
+
    \partial_{A(i,j)} L(x, \lambda)
    =
    \int_0^r z_j (t, x) \lambda_i (t, x) \R{d} t
-\] $$
+
 In summary, we can compute
 an approximate solution for the initial value ODE:
-$latex \[
+
+.. math::
+
    z_t (t, x) = A(x) z(t, x) \W{,} z(0, x) = b(x)
-\] $$
+
 and approximate solution for the final value ODE:
-$latex \[
+
+.. math::
+
    \lambda_t (t, x) = - A(x)^\R{T} \lambda(t, x)
    \W{,}
    \lambda(r, x) = w
-\] $$
+
 Using the notation
-$cref/nnz/atomic_four_lin_ode/pattern/nnz/$$,
-$cref/row/atomic_four_lin_ode/pattern/row/$$, and
-$cref/col/atomic_four_lin_ode/pattern/col/$$,
+:ref:`atomic_four_lin_ode@pattern@nnz` ,
+:ref:`atomic_four_lin_ode@pattern@row` , and
+:ref:`atomic_four_lin_ode@pattern@col` ,
 We can compute an approximation for
-$latex \[
+
+.. math::
+
    \partial_{x(k)} w^\R{T} z(r, x)
    =
    \left\{ \begin{array}{lll}
@@ -140,25 +167,32 @@ $latex \[
    & \R{otherwise}
    %
    \end{array} \right.
-\] $$
 
-$children%
-   include/cppad/example/atomic_four/lin_ode/reverse_2.omh
-%$$
-$head Second Order Theory$$
-$cref atomic_four_lin_ode_reverse_2$$.
+{xrst_toc_hidden
+   include/cppad/example/atomic_four/lin_ode/reverse_2.xrst
+}
+Second Order Theory
+*******************
+:ref:`atomic_four_lin_ode_reverse_2-name` .
 
-$head Simpson's Rule$$
+Simpson's Rule
+**************
 This example uses Simpson's rule to approximate the integral
-$latex \[
+
+.. math::
+
    \int_0^r \lambda_i (t, x) z_j (t, x) \R{d} t
-\] $$
+
 Any other approximation for this integral can be used.
 
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+{xrst_end atomic_four_lin_ode_reverse.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/lin_ode/lin_ode.hpp>

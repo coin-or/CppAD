@@ -3,29 +3,29 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin harmonic_common$$
-$spell
-   inv
-   num
-$$
+{xrst_begin harmonic_common}
 
-$section Common Variables Used by Multi-threading Sum of 1/i$$
+Common Variables Used by Multi-threading Sum of 1/i
+###################################################
 
-$head Purpose$$
+Purpose
+*******
 This source code defines the common
 include files, defines, and variables that are used by
 the summation that defines the harmonic series
-$latex \[
+
+.. math::
+
    1 + 1/2 + 1/3 + ... + 1/n
-\] $$
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN COMMON C++%// END COMMON C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN COMMON C++
+   // END COMMON C++
+}
 
-
-$end
+{xrst_end harmonic_common}
 */
 // BEGIN COMMON C++
 
@@ -68,43 +68,48 @@ namespace {
 // END COMMON C++
 /*
 ------------------------------------------------------------------------------
-$begin harmonic_setup$$
-$spell
-   inv
-   num
-$$
+{xrst_begin harmonic_setup}
 
-$section Set Up Multi-threading Sum of 1/i$$
+Set Up Multi-threading Sum of 1/i
+#################################
 
-$head Syntax$$
-$icode%ok% = harmonic_setup(%num_sum%)
-%$$
+Syntax
+******
 
-$head Purpose$$
+   *ok* = ``harmonic_setup`` ( *num_sum* )
+
+Purpose
+*******
 This routine does the setup for splitting
 the summation that defines the harmonic series
-$latex \[
+
+.. math::
+
    1 + 1/2 + 1/3 + ... + 1/n
-\] $$
+
 into separate parts for each thread.
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero,
 and all the other threads are blocked (waiting).
 
-$head num_sum$$
-The argument $icode num_sum$$ has prototype
-$codei%
-   size_t %num_sum%
-%$$
-It specifies the value of $latex n$$ in the summation.
+num_sum
+*******
+The argument *num_sum* has prototype
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN SETUP C++%// END SETUP C++%
-1%$$
+   ``size_t`` *num_sum*
 
-$end
+It specifies the value of :math:`n` in the summation.
+
+Source
+******
+{xrst_literal
+   // BEGIN SETUP C++
+   // END SETUP C++
+}
+
+{xrst_end harmonic_setup}
 */
 // BEGIN SETUP C++
 namespace {
@@ -139,48 +144,48 @@ bool harmonic_setup(size_t num_sum)
 // END SETUP C++
 /*
 -------------------------------------------------------------------------------
-$begin harmonic_worker$$
-$spell
-   inv
-   num
-$$
+{xrst_begin harmonic_worker}
 
-$section Do One Thread's Work for Sum of 1/i$$
+Do One Thread's Work for Sum of 1/i
+###################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%harmonic_worker()
-%$$
+   ``harmonic_worker`` ()
 
-$head Purpose$$
+Purpose
+*******
 This routines computes the sum
 the summation that defines the harmonic series
-$codei%
-   1/%start% + 1/(%start%+1) + ... + 1/(%end%-1)
-%$$
 
-$head start$$
-This is the value of the $cref harmonic_common$$ information
-$codei%
-   %start% = work_all_[%thread_num%]->start
-%$$
+   1/ *start* + 1/( *start* +1) + ... + 1/( *end* ``-1`` )
 
-$head end$$
-This is the value of the $cref harmonic_common$$ information
-$codei%
-   %end% = work_all_[%thread_num%]->end
-%$$
+start
+*****
+This is the value of the :ref:`harmonic_common-name` information
 
-$head thread_num$$
+   *start* = ``work_all_`` [ *thread_num* ] ``->start``
+
+end
+***
+This is the value of the :ref:`harmonic_common-name` information
+
+   *end* = ``work_all_`` [ *thread_num* ] ``->end``
+
+thread_num
+**********
 This is the number for the current thread; see
-$cref/thread_num/ta_thread_num/$$.
+:ref:`thread_num<ta_thread_num-name>` .
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN WORKER C++%// END WORKER C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN WORKER C++
+   // END WORKER C++
+}
 
-$end
+{xrst_end harmonic_worker}
 */
 // BEGIN WORKER C++
 namespace {
@@ -207,44 +212,49 @@ void harmonic_worker(void)
 // END WORKER C++
 /*
 -------------------------------------------------------------------------------
-$begin harmonic_takedown$$
-$spell
-   inv
-   num
-$$
+{xrst_begin harmonic_takedown}
 
-$section Take Down Multi-threading Sum of 1/i$$
+Take Down Multi-threading Sum of 1/i
+####################################
 
-$head Syntax$$
-$icode%ok% = harmonic_takedown(%sum%)
-%$$
+Syntax
+******
 
-$head Purpose$$
+   *ok* = ``harmonic_takedown`` ( *sum* )
+
+Purpose
+*******
 This routine does the takedown for splitting
 the summation that defines the harmonic series
-$latex \[
-   s = 1 + 1/2 + 1/3 + ... + 1/n
-\] $$
-into separate parts for each thread; see $cref harmonic_setup$$.
 
-$head Thread$$
+.. math::
+
+   s = 1 + 1/2 + 1/3 + ... + 1/n
+
+into separate parts for each thread; see :ref:`harmonic_setup-name` .
+
+Thread
+******
 It is assumed that this function is called by thread zero,
 and all the other threads have completed their work and are blocked (waiting).
 
-$head sum$$
+sum
+***
 This argument has prototype
-$codei%
-   double& %sum%
-%$$
+
+   ``double&`` *sum*
+
 The input value of the argument does not matter.
-Upon return it is the value of the summation; i.e. $latex s$$.
+Upon return it is the value of the summation; i.e. :math:`s`.
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN TAKEDOWN C++%// END TAKEDOWN C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN TAKEDOWN C++
+   // END TAKEDOWN C++
+}
 
-$end
+{xrst_end harmonic_takedown}
 */
 // BEGIN TAKEDOWN C++
 namespace {
@@ -281,57 +291,61 @@ bool harmonic_takedown(double& sum)
 // END TAKEDOWN C++
 /*
 ------------------------------------------------------------------------------
-$begin harmonic_sum$$
-$spell
-   inv
-   num
-   bool
-$$
+{xrst_begin harmonic_sum}
 
+Multi-Threaded Implementation of Summation of 1/i
+#################################################
 
-$section Multi-Threaded Implementation of Summation of 1/i$$
+Syntax
+******
+*ok* = ``harmonic_sum`` ( *sum* , *num_sum* )
 
-$head Syntax$$
-$icode%ok% = harmonic_sum(%sum%, %num_sum%)%$$
-
-$head Purpose$$
+Purpose
+*******
 Multi-threaded computation of the summation that defines the harmonic series
-$latex \[
-   s = 1 + 1/2 + 1/3 + ... + 1/n
-\] $$
 
-$head Thread$$
+.. math::
+
+   s = 1 + 1/2 + 1/3 + ... + 1/n
+
+Thread
+******
 It is assumed that this function is called by thread zero,
 and all the other threads are blocked (waiting).
 
-$head ok$$
+ok
+**
 This return value has prototype
-$codei%
-   bool %ok%
-%$$
-If this return value is false, an error occurred during $code harmonic$$.
 
-$head sum$$
+   ``bool`` *ok*
+
+If this return value is false, an error occurred during ``harmonic`` .
+
+sum
+***
 This argument has prototype
-$codei%
-   double& %sum%
-%$$
+
+   ``double&`` *sum*
+
 The input value of the argument does not matter.
-Upon return it is the value of the summation; i.e. $latex s$$.
+Upon return it is the value of the summation; i.e. :math:`s`.
 
-$head num_sum$$
+num_sum
+*******
 This argument has prototype
-$codei%
-   size_t %num_sum%
-%$$
-It specifies the number of terms in the summation; i.e. $latex n$$.
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN SUM C++%// END SUM C++%
-1%$$
+   ``size_t`` *num_sum*
 
-$end
+It specifies the number of terms in the summation; i.e. :math:`n`.
+
+Source
+******
+{xrst_literal
+   // BEGIN SUM C++
+   // END SUM C++
+}
+
+{xrst_end harmonic_sum}
 */
 // BEGIN SUM C++
 namespace {
@@ -358,95 +372,96 @@ bool harmonic_sum(double& sum, size_t num_sum)
 // END SUM C++
 /*
 -------------------------------------------------------------------------------
-$begin harmonic_time$$
-$spell
-   openmp
-   pthreads
-   alloc
-   num
-   bool
-   mega
-   inv
-   CppAD
-   parallelize
-$$
+{xrst_begin harmonic_time}
 
+Timing Test of Multi-Threaded Summation of 1/i
+##############################################
 
-$section Timing Test of Multi-Threaded Summation of 1/i$$
+Syntax
+******
 
-$head Syntax$$
-$icode%ok% = harmonic_time(
-   %time_out%, %test_time%, %num_threads%, %mega_sum%
-)%$$
+| *ok* = ``harmonic_time`` (
+| |tab| *time_out* , *test_time* , *num_threads* , *mega_sum*
+| )
 
-$head Purpose$$
+Purpose
+*******
 Runs a correctness and timing test for a multi-threaded
 computation of the summation that defines the harmonic series
-$latex \[
+
+.. math::
+
    1 + 1/2 + 1/3 + ... + 1/n
-\] $$
 
-$head Thread$$
+Thread
+******
 It is assumed that this function is called by thread zero in sequential
-mode; i.e., not $cref/in_parallel/ta_in_parallel/$$.
+mode; i.e., not :ref:`in_parallel<ta_in_parallel-name>` .
 
-$head ok$$
+ok
+**
 This return value has prototype
-$codei%
-   bool %ok%
-%$$
+
+   ``bool`` *ok*
+
 If it is true,
-$code harmonic_time$$ passed the correctness test.
+``harmonic_time`` passed the correctness test.
 Otherwise it is false.
 
-$head time_out$$
+time_out
+********
 This argument has prototype
-$codei%
-   double& %time_out%
-%$$
+
+   ``double&`` *time_out*
+
 The input value of the argument does not matter.
 Upon return it is the number of wall clock seconds required for
 to compute the summation.
 
-$head test_time$$
+test_time
+*********
 Is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
 is reached.
-The reported $icode time_out$$ is the total wall clock time divided by the
+The reported *time_out* is the total wall clock time divided by the
 number of repeats.
 
-$head num_threads$$
+num_threads
+***********
 This argument has prototype
-$codei%
-   size_t %num_threads%
-%$$
+
+   ``size_t`` *num_threads*
+
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment and
-$codei%
-   1 == thread_alloc::num_threads()
-%$$
-when $code harmonic_time$$ is called.
+
+   1 == ``thread_alloc::num_threads`` ()
+
+when ``harmonic_time`` is called.
 If it is non-zero, the test is run with the multi-threading and
-$codei%
-   %num_threads% = thread_alloc::num_threads()
-%$$
-when $code harmonic_time$$ is called.
 
-$head mega_sum$$
+   *num_threads* = ``thread_alloc::num_threads`` ()
+
+when ``harmonic_time`` is called.
+
+mega_sum
+********
 This argument has prototype
-$codei%
-   size_t& %mega_sum%
-%$$
+
+   ``size_t&`` *mega_sum*
+
 and is greater than zero.
-The value $latex n$$ in the summation
-is equal to $latex 10^6$$ times $icode mega_sum$$.
+The value :math:`n` in the summation
+is equal to :math:`10^6` times *mega_sum* .
 
-$head Source$$
-$srcthisfile%0
-   %// BEGIN TIME C++%// END TIME C++%
-1%$$
+Source
+******
+{xrst_literal
+   // BEGIN TIME C++
+   // END TIME C++
+}
 
-$end
+{xrst_end harmonic_time}
 */
 // BEGIN TIME C++
 # include <cstring>

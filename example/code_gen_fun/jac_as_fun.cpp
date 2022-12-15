@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin code_gen_fun_jac_as_fun.cpp$$
-$spell
-   jacobian
-$$
+{xrst_begin code_gen_fun_jac_as_fun.cpp}
 
-$section Pass Jacobian as Code Gen Function: Example and Test$$
+Pass Jacobian as Code Gen Function: Example and Test
+####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end code_gen_fun_jac_as_fun.cpp}
 */
 // BEGIN C++
 # include <cppad/example/code_gen_fun.hpp>

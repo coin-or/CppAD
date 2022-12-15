@@ -6,53 +6,63 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin sign$$
-$spell
-   CppAD
-   Dirac
-$$
-$section The Sign: sign$$
+{xrst_begin sign}
+{xrst_spell
+   dirac
+   rl
+}
+The Sign: sign
+##############
 
-$head Syntax$$
-$icode%y% = sign(%x%)%$$
+Syntax
+******
+*y* = ``sign`` ( *x* )
 
-$head Description$$
-Evaluates the $code sign$$ function which is defined by
-$latex \[
-{\rm sign} (x) =
-\left\{ \begin{array}{rl}
-   +1 & {\rm if} \; x > 0 \\
-   0  & {\rm if} \; x = 0 \\
-   -1 & {\rm if} \; x < 0
-\end{array} \right.
-\] $$
+Description
+***********
+Evaluates the ``sign`` function which is defined by
 
-$head x, y$$
-See the $cref/possible types/unary_standard_math/Possible Types/$$
+.. math::
+
+   {\rm sign} (x) =
+   \left\{ \begin{array}{rl}
+      +1 & {\rm if} \; x > 0 \\
+      0  & {\rm if} \; x = 0 \\
+      -1 & {\rm if} \; x < 0
+   \end{array} \right.
+
+x, y
+****
+See the :ref:`unary_standard_math@Possible Types`
 for a unary standard math function.
 
-$head Atomic$$
-This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+Atomic
+******
+This is an :ref:`atomic operation<glossary@Operation@Atomic>` .
 
-$head Derivative$$
-CppAD computes the derivative of the $code sign$$ function as zero for all
-argument values $icode x$$.
+Derivative
+**********
+CppAD computes the derivative of the ``sign`` function as zero for all
+argument values *x* .
 The correct mathematical derivative is different and
 is given by
-$latex \[
-   {\rm sign}^{(1)} (x) =  2 \delta (x)
-\] $$
-where $latex \delta (x)$$ is the Dirac Delta function.
 
-$head Example$$
-$children%
+.. math::
+
+   {\rm sign}^{(1)} (x) =  2 \delta (x)
+
+where :math:`\delta (x)` is the Dirac Delta function.
+
+Example
+*******
+{xrst_toc_hidden
    example/general/sign.cpp
-%$$
+}
 The file
-$cref sign.cpp$$
+:ref:`sign.cpp-name`
 contains an example and test of this function.
 
-$end
+{xrst_end sign}
 -------------------------------------------------------------------------------
 */
 

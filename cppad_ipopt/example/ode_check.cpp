@@ -3,13 +3,17 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ipopt_nlp_ode_check.cpp$$
+{xrst_begin ipopt_nlp_ode_check.cpp}
 
-$section Correctness Check for Both Simple and Fast Representations$$
+Correctness Check for Both Simple and Fast Representations
+##########################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ipopt_nlp_ode_check.cpp}
 */
 // BEGIN C++
 # include "ode_run.hpp"

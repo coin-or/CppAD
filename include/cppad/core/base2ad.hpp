@@ -5,63 +5,62 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin base2ad$$
-$spell
-   af
-   Taylor
-   Vec
-$$
+{xrst_begin base2ad}
 
-$spell
-$$
+Create an AD<Base> Function From a Base Function
+################################################
 
-$section Create an AD<Base> Function From a Base Function$$
+Syntax
+******
+*af* = *f* . ``base2ad`` ()
 
-$head Syntax$$
-$icode%af% = %f%.base2ad()%$$
+See Also
+********
+:ref:`mul_level-name`
 
-$head See Also$$
-$cref mul_level$$
-
-$head Base$$
-This is the base type used to recorded the operation sequence in $icode f$$
-and $icode af$$; i.e., the type $codei%AD<%Base%>%$$ was used to record
+Base
+****
+This is the base type used to recorded the operation sequence in *f*
+and *af* ; i.e., the type ``AD<`` *Base* > was used to record
 the operation sequence.
 
-$head f$$
+f
+*
 This object has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-It does it's derivative calculations using the type $icode Base$$.
 
-$head af$$
+   ``ADFun<`` *Base* > *f*
+
+It does it's derivative calculations using the type *Base* .
+
+af
+**
 This object has prototype
-$codei%
-   ADFun< AD<%Base%> , %Base% > %af%
-%$$
-It has the same operation sequence as $icode f$$,
+
+   ``ADFun< AD<`` *Base* > , *Base* > *af*
+
+It has the same operation sequence as *f* ,
 but it does it's derivative calculations using the type
-$codei%AD<%Base>%$$.
+``AD<`` *Base>* .
 This enables one to record new functions that are defined
-using derivatives of the function $icode f$$.
-Initially, there are no Taylor coefficients stored in $icode af$$ and
-$cref%af.size_order()%size_order%$$ is zero.
-
-$children%
-   example/general/base2ad.cpp%
+using derivatives of the function *f* .
+Initially, there are no Taylor coefficients stored in *af* and
+:ref:`af.size_order()<size_order-name>` is zero.
+{xrst_toc_hidden
+   example/general/base2ad.cpp
    example/general/base2vec_ad.cpp
-%$$
-$head Example$$
-The file $cref base2ad.cpp$$
+}
+Example
+*******
+The file :ref:`base2ad.cpp-name`
 contains an example and test of this operation.
 
-$head VecAD$$
-Forward mode on a $code base2ad$$ function does not preserve
-$cref VecAD$$ operations (which might be expected); see the
-$cref base2vec_ad.cpp$$ example.
+VecAD
+*****
+Forward mode on a ``base2ad`` function does not preserve
+:ref:`VecAD-name` operations (which might be expected); see the
+:ref:`base2vec_ad.cpp-name` example.
 
-$end
+{xrst_end base2ad}
 ----------------------------------------------------------------------------
 */
 

@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed_fadbad}
+
+Speed Test Derivatives Using Fadbad
+###################################
+
+Purpose
+*******
+CppAD has a set of speed tests that are used to compare
+Fadbad with other AD packages.
+This section links to the source code the Fadbad speed tests
+(any suggestions to make the Fadbad results faster are welcome).
+
+fadbad_prefix
+*************
+To run these tests,
+you must include the :ref:`fadbad_prefix-name`
+in you :ref:`cmake@CMake Command` .
+
+Running Tests
+*************
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+:ref:`cmake@Build Directory` :
+
+| |tab| ``cd speed/fadbad``
+| |tab| ``make check_speed_fadbad VERBOSE`` =1
+
+You can then run the corresponding speed tests
+with the following command
+
+   ./ ``speed_fadbad speed`` *seed*
+
+where *seed* is a positive integer.
+See :ref:`speed_main-name` for more options.
+
+Contents
+********
+{xrst_toc_list
+   speed/fadbad/det_minor.cpp
+   speed/fadbad/det_lu.cpp
+   speed/fadbad/mat_mul.cpp
+   speed/fadbad/ode.cpp
+   speed/fadbad/poly.cpp
+   speed/fadbad/sparse_hessian.cpp
+   speed/fadbad/sparse_jacobian.cpp
+}
+
+{xrst_end speed_fadbad}

@@ -3,54 +3,66 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_lin_ode_rev_depend.cpp$$
-$spell
-$$
+{xrst_begin atomic_four_lin_ode_rev_depend.cpp}
+{xrst_spell
+   cccc
+}
 
-$section Atomic Linear ODE Reverse Dependency Analysis: Example and Test$$
+Atomic Linear ODE Reverse Dependency Analysis: Example and Test
+###############################################################
 
-$head Purpose$$
+Purpose
+*******
 This example demonstrates calculating reverse dependency with
-the $cref atomic_four_lin_ode$$ class; see
-$cref atomic_four_lin_ode_rev_depend.hpp$$.
+the :ref:`atomic_four_lin_ode-name` class; see
+:ref:`atomic_four_lin_ode_rev_depend.hpp-name` .
 
-$head f(x)$$
-For this example, the function $latex f(x) = z_2 (r, u)$$ where
-$latex z(t, u)$$ solves the following ODE
-$latex \[
-z_t (t, x) =
-\left( \begin{array}{cccc}
-0   & 0  & 0    & 0   \\
-x_0 & 0  & 0    & 0   \\
-0   & x_1 & 0   & 0   \\
-0   & 0   & x_2 & 0   \\
-\end{array} \right)
-z(t, u)
-\W{,}
-z(0, u) =
-\left( \begin{array}{c}
-x_3 \\
-x_4 \\
-x_5 \\
-x_6 \\
-\end{array} \right)
-\] $$
+f(x)
+****
+For this example, the function :math:`f(x) = z_2 (r, u)` where
+:math:`z(t, u)` solves the following ODE
 
-$head Solution$$
+.. math::
+
+   z_t (t, x) =
+   \left( \begin{array}{cccc}
+   0   & 0  & 0    & 0   \\
+   x_0 & 0  & 0    & 0   \\
+   0   & x_1 & 0   & 0   \\
+   0   & 0   & x_2 & 0   \\
+   \end{array} \right)
+   z(t, u)
+   \W{,}
+   z(0, u) =
+   \left( \begin{array}{c}
+   x_3 \\
+   x_4 \\
+   x_5 \\
+   x_6 \\
+   \end{array} \right)
+
+Solution
+********
 The actual solution to this ODE is
-$latex \[
-z(t, x) =
-\left( \begin{array}{l}
-x_3  \\
-x_4 + x_0 x_3 t \\
-x_5 + x_1 x_4 t + x_1 x_0 x_3 t^2 / 2  \\
-x_6 + x_2 x_5 t + x_2 x_1 x_4 t^2 / 2 + x_2 x_1 x_0 x_3 t^3 / 6
-\end{array} \right)
-\] $$
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+.. math::
+
+   z(t, x) =
+   \left( \begin{array}{l}
+   x_3  \\
+   x_4 + x_0 x_3 t \\
+   x_5 + x_1 x_4 t + x_1 x_0 x_3 t^2 / 2  \\
+   x_6 + x_2 x_5 t + x_2 x_1 x_4 t^2 / 2 + x_2 x_1 x_0 x_3 t^3 / 6
+   \end{array} \right)
+
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_lin_ode_rev_depend.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

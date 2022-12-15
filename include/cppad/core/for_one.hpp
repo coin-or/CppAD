@@ -6,107 +6,108 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ForOne$$
-$spell
+{xrst_begin ForOne}
+
+First Order Partial Derivative: Driver Routine
+##############################################
+
+Syntax
+******
+*dy* = *f* . ``ForOne`` ( *x* , *j* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+The syntax above sets *dy* to the
+partial of :math:`F` with respect to :math:`x_j`; i.e.,
+
+.. math::
+
    dy
-   typename
-   Taylor
-   const
-$$
+   = \D{F}{ x_j } (x)
+   = \left[
+      \D{ F_0 }{ x_j } (x) , \cdots , \D{ F_{m-1} }{ x_j } (x)
+   \right]
 
+f
+*
+The object *f* has prototype
 
+   ``ADFun<`` *Base* > *f*
 
+Note that the :ref:`ADFun-name` object *f* is not ``const``
+(see :ref:`ForOne@ForOne Uses Forward` below).
 
-$section First Order Partial Derivative: Driver Routine$$
+x
+*
+The argument *x* has prototype
 
-$head Syntax$$
-$icode%dy% = %f%.ForOne(%x%, %j%)%$$
+   ``const`` *Vector* & *x*
 
-
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-The syntax above sets $icode dy$$ to the
-partial of $latex F$$ with respect to $latex x_j$$; i.e.,
-$latex \[
-dy
-= \D{F}{ x_j } (x)
-= \left[
-   \D{ F_0 }{ x_j } (x) , \cdots , \D{ F_{m-1} }{ x_j } (x)
-\right]
-\] $$
-
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
-(see $cref/ForOne Uses Forward/ForOne/ForOne Uses Forward/$$ below).
-
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %Vector% &%x%
-%$$
-(see $cref/Vector/ForOne/Vector/$$ below)
+(see :ref:`ForOne@Vector` below)
 and its size
-must be equal to $icode n$$, the dimension of the
-$cref/domain/fun_property/Domain/$$ space for $icode f$$.
+must be equal to *n* , the dimension of the
+:ref:`fun_property@Domain` space for *f* .
 It specifies
 that point at which to evaluate the partial derivative.
 
-$head j$$
-The argument $icode j$$ has prototype
-$codei%
-   size_t %j%
-%$$
-an is less than $icode n$$,
-$cref/domain/fun_property/Domain/$$ space for $icode f$$.
-It specifies the component of $icode F$$
+j
+*
+The argument *j* has prototype
+
+   ``size_t`` *j*
+
+an is less than *n* ,
+:ref:`fun_property@Domain` space for *f* .
+It specifies the component of *F*
 for which we are computing the partial derivative.
 
-$head dy$$
-The result $icode dy$$ has prototype
-$codei%
-   %Vector% %dy%
-%$$
-(see $cref/Vector/ForOne/Vector/$$ below)
-and its size is $latex m$$, the dimension of the
-$cref/range/fun_property/Range/$$ space for $icode f$$.
-The value of $icode dy$$ is the partial of $latex F$$ with respect to
-$latex x_j$$ evaluated at $icode x$$; i.e.,
-for $latex i = 0 , \ldots , m - 1$$
-$latex \[
+dy
+**
+The result *dy* has prototype
+
+   *Vector* *dy*
+
+(see :ref:`ForOne@Vector` below)
+and its size is :math:`m`, the dimension of the
+:ref:`fun_property@Range` space for *f* .
+The value of *dy* is the partial of :math:`F` with respect to
+:math:`x_j` evaluated at *x* ; i.e.,
+for :math:`i = 0 , \ldots , m - 1`
+
+.. math::
+
    dy[i] = \D{ F_i }{ x_j } ( x )
-\] $$
 
-
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Base$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head ForOne Uses Forward$$
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After a call to $code ForOne$$,
+ForOne Uses Forward
+*******************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``ForOne`` ,
 the zero order Taylor coefficients correspond to
-$icode%f%.Forward(0,%x%)%$$
+*f* . ``Forward`` (0, *x* )
 and the other coefficients are unspecified.
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/for_one.cpp
-%$$
+}
 The routine
-$cref/ForOne/for_one.cpp/$$ is both an example and test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
+:ref:`ForOne<for_one.cpp-name>` is both an example and test.
+It returns ``true`` , if it succeeds and ``false`` otherwise.
 
-$end
+{xrst_end ForOne}
 -----------------------------------------------------------------------------
 */
 

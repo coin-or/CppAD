@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin error_handler.cpp$$
-$spell
-   CppAD
-$$
+{xrst_begin error_handler.cpp}
 
-$section Replacing The CppAD Error Handler: Example and Test$$
+Replacing The CppAD Error Handler: Example and Test
+###################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end error_handler.cpp}
 */
 // BEGIN C++
 

@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin pow_int.cpp$$
-$spell
-   tan
-   atan
-$$
+{xrst_begin pow_int.cpp}
 
-$section The Pow Integer Exponent: Example and Test$$
+The Pow Integer Exponent: Example and Test
+##########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end pow_int.cpp}
 */
 // BEGIN C++
 

@@ -5,50 +5,57 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin abs_print_mat$$
-$spell
+{xrst_begin abs_print_mat}
+{xrst_spell
+   cout
    nr
-   nc
-   std::cout
-$$
-$section abs_normal: Print a Vector or Matrix$$
+}
+abs_normal: Print a Vector or Matrix
+####################################
 
-$head Syntax$$
-$codei%abs_print_mat(%name%, %nr%, %nc%, %mat%)%$$
+Syntax
+******
+``abs_print_mat`` ( *name* , *nr* , *nc* , *mat* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%
-1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-
-$head Purpose$$
-This routine is used by the $cref/abs_normal/example_abs_normal/$$ examples to print
+Purpose
+*******
+This routine is used by the :ref:`abs_normal<example_abs_normal-name>` examples to print
 vectors and matrices.
 A new-line is printed at the end of this output.
 
-$head name$$
+name
+****
 This is a name that is printed before the vector or matrix.
 
-$head nr$$
-This is the number of rows in the matrix. Use $icode%nr% = 1%$$ for
+nr
+**
+This is the number of rows in the matrix. Use *nr*  = 1 for
 row vectors.
 
-$head nc$$
-This is the number of columns in the matrix. Use $icode%nc% = 1%$$ for
+nc
+**
+This is the number of columns in the matrix. Use *nc*  = 1 for
 column vectors.
 
-$head mat$$
+mat
+***
 This is a
-$cref/row-major/glossary/Row-major Representation/$$ representation
-of the matrix (hence a $cref SimpleVector$$).
+:ref:`row-major<glossary@Row-major Representation>` representation
+of the matrix (hence a :ref:`SimpleVector-name` ).
 The syntax
-$codei%
-   std::cout << %mat%[%i%]%
-%$$
-must output the $th i$$ element of the simple vector $icode mat$$.
 
-$end
+   *std::cout <<* ``mat`` [ ``i`` ]
+
+must output the *i*-th element of the simple vector *mat* .
+
+{xrst_end abs_print_mat}
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>

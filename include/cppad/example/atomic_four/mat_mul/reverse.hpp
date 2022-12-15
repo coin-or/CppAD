@@ -5,28 +5,29 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul_reverse.hpp$$
-$spell
-   Jacobian
-   jac
-   mul
-$$
+{xrst_begin atomic_four_mat_mul_reverse.hpp}
 
-$section
 Atomic Matrix Multiply Reverse Mode: Example Implementation
-$$
+###########################################################
 
-$head Purpose$$
-The $code reverse$$ routine overrides the virtual functions
+Purpose
+*******
+The ``reverse`` routine overrides the virtual functions
 used by the atomic_four base; see
-$cref/reverse/atomic_four_reverse/$$.
+:ref:`reverse<atomic_four_reverse-name>` .
 
-$head Theory$$
-See mat_mul $cref/reverse/atomic_four_mat_mul/Theory/Reverse/$$ theory.
+Theory
+******
+See mat_mul :ref:`atomic_four_mat_mul@Theory@Reverse` theory.
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_reverse.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>

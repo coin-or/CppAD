@@ -4,16 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin forward_dir.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin forward_dir.cpp}
 
-$section Forward Mode: Example and Test of Multiple Directions$$
+Forward Mode: Example and Test of Multiple Directions
+#####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end forward_dir.cpp}
 */
 // BEGIN C++
 # include <limits>

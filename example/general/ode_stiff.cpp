@@ -4,37 +4,43 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin ode_stiff.cpp$$
-$spell
-   Rosen
-$$
+{xrst_begin ode_stiff.cpp}
 
-$section A Stiff Ode: Example and Test$$
-
+A Stiff Ode: Example and Test
+#############################
 
 Define
-$latex x : \B{R} \rightarrow \B{R}^2$$ by
-$latex \[
-\begin{array}{rcl}
-   x_0 (0)        & = & 1 \\
-   x_1 (0)        & = & 0 \\
-   x_0^\prime (t) & = & - a_0 x_0 (t) \\
-   x_1^\prime (t) & = & + a_0 x_0 (t) - a_1 x_1 (t)
-\end{array}
-\] $$
-If $latex a_0 \gg a_1 > 0$$, this is a stiff Ode and
+:math:`x : \B{R} \rightarrow \B{R}^2` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      x_0 (0)        & = & 1 \\
+      x_1 (0)        & = & 0 \\
+      x_0^\prime (t) & = & - a_0 x_0 (t) \\
+      x_1^\prime (t) & = & + a_0 x_0 (t) - a_1 x_1 (t)
+   \end{eqnarray}
+
+If :math:`a_0 \gg a_1 > 0`, this is a stiff Ode and
 the analytic solution is
-$latex \[
-\begin{array}{rcl}
-x_0 (t)    & = & \exp( - a_0 t ) \\
-x_1 (t)    & = & a_0 [ \exp( - a_1 t ) - \exp( - a_0 t ) ] / ( a_0 - a_1 )
-\end{array}
-\] $$
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   x_0 (t)    & = & \exp( - a_0 t ) \\
+   x_1 (t)    & = & a_0 [ \exp( - a_1 t ) - \exp( - a_0 t ) ] / ( a_0 - a_1 )
+   \end{eqnarray}
+
 The example tests Rosen34 using the relations above:
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end ode_stiff.cpp}
 */
 // BEGIN C++
 

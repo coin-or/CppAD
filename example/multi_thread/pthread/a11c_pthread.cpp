@@ -4,22 +4,26 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin a11c_pthread.cpp$$
-$spell
-   pthread
+{xrst_begin a11c_pthread.cpp}
+{xrst_spell
    pthreads
-   CppAD
-   const
-$$
+}
 
-$section A Simple Parallel Pthread Example and Test$$
+A Simple Parallel Pthread Example and Test
+##########################################
 
-$head Purpose$$
+Purpose
+*******
 This example just demonstrates pthreads and does not use CppAD at all.
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end a11c_pthread.cpp}
 ----------------------------------------------------------------------------
 */
 // BEGIN C++

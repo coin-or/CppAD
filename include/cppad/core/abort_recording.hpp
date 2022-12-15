@@ -5,36 +5,36 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin abort_recording$$
-$spell
-$$
+{xrst_begin abort_recording}
 
-$section Abort Recording of an Operation Sequence$$
+Abort Recording of an Operation Sequence
+########################################
 
+Syntax
+******
+``AD<`` *Base* >:: ``abort_recording`` ()
 
-$head Syntax$$
-$codei%AD<%Base%>::abort_recording()%$$
-
-$head Purpose$$
+Purpose
+*******
 Sometimes it is necessary to abort the recording of an operation sequence
 that started with a call of the form
-$codei%
-   Independent(%x%)
-%$$
-If such a recording is currently in progress,
-$code abort_recording$$ will stop the recording and delete the
-corresponding information.
-Otherwise, $code abort_recording$$ has no effect.
 
-$children%
+   ``Independent`` ( *x* )
+
+If such a recording is currently in progress,
+``abort_recording`` will stop the recording and delete the
+corresponding information.
+Otherwise, ``abort_recording`` has no effect.
+{xrst_toc_hidden
    example/general/abort_recording.cpp
-%$$
-$head Example$$
+}
+Example
+*******
 The file
-$cref abort_recording.cpp$$
+:ref:`abort_recording.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end abort_recording}
 ----------------------------------------------------------------------------
 */
 

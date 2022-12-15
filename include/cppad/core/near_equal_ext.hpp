@@ -5,115 +5,114 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin near_equal_ext$$
-$spell
-   cout
-   endl
-   Microsoft
-   std
-   Cpp
-   namespace
-   const
-   bool
-$$
+{xrst_begin near_equal_ext}
 
-$section Compare AD and Base Objects for Nearly Equal$$
+Compare AD and Base Objects for Nearly Equal
+############################################
 
+Syntax
+******
+*b* = ``NearEqual`` ( *x* , *y* , *r* , *a* )
 
-$head Syntax$$
-$icode%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
-
-
-$head Purpose$$
-The routine $cref NearEqual$$ determines if two objects of
+Purpose
+*******
+The routine :ref:`NearEqual-name` determines if two objects of
 the same type are nearly.
 This routine is extended to the case where one object can have type
-$icode Type$$ while the other can have type
-$codei%AD<%Type%>%$$ or
-$codei%AD< std::complex<%Type%> >%$$.
+*Type* while the other can have type
+``AD<`` *Type* > or
+``AD< std::complex<`` *Type* > > .
 
-$head x$$
-The arguments $icode x$$
+x
+*
+The arguments *x*
 has one of the following possible prototypes:
-$codei%
-   const %Type%                     &%x%
-   const AD<%Type%>                 &%x%
-   const AD< std::complex<%Type%> > &%x%
-%$$
 
-$head y$$
-The arguments $icode y$$
+| |tab| ``const`` *Type* & *x*
+| |tab| ``const AD<`` *Type* >                 & *x*
+| |tab| ``const AD< std::complex<`` *Type* > > & *x*
+
+y
+*
+The arguments *y*
 has one of the following possible prototypes:
-$codei%
-   const %Type%                     &%y%
-   const AD<%Type%>                 &%y%
-   const AD< std::complex<%Type%> > &%x%
-%$$
 
+| |tab| ``const`` *Type* & *y*
+| |tab| ``const AD<`` *Type* >                 & *y*
+| |tab| ``const AD< std::complex<`` *Type* > > & *x*
 
-$head r$$
-The relative error criteria $icode r$$ has prototype
-$codei%
-   const %Type% &%r%
-%$$
+r
+*
+The relative error criteria *r* has prototype
+
+   ``const`` *Type* & *r*
+
 It must be greater than or equal to zero.
 The relative error condition is defined as:
-$latex \[
-   \frac{ | x - y | } { |x| + |y| } \leq r
-\] $$
 
-$head a$$
-The absolute error criteria $icode a$$ has prototype
-$codei%
-   const %Type% &%a%
-%$$
+.. math::
+
+   \frac{ | x - y | } { |x| + |y| } \leq r
+
+a
+*
+The absolute error criteria *a* has prototype
+
+   ``const`` *Type* & *a*
+
 It must be greater than or equal to zero.
 The absolute error condition is defined as:
-$latex \[
-   | x - y | \leq a
-\] $$
 
-$head b$$
-The return value $icode b$$ has prototype
-$codei%
-   bool %b%
-%$$
-If either $icode x$$ or $icode y$$ is infinite or not a number,
+.. math::
+
+   | x - y | \leq a
+
+b
+*
+The return value *b* has prototype
+
+   ``bool`` *b*
+
+If either *x* or *y* is infinite or not a number,
 the return value is false.
 Otherwise, if either the relative or absolute error
 condition (defined above) is satisfied, the return value is true.
 Otherwise, the return value is false.
 
-$head Type$$
-The type $icode Type$$ must be a
-$cref NumericType$$.
-The routine $cref CheckNumericType$$ will generate
+Type
+****
+The type *Type* must be a
+:ref:`NumericType-name` .
+The routine :ref:`CheckNumericType-name` will generate
 an error message if this is not the case.
-If $icode a$$ and $icode b$$ have type $icode Type$$,
+If *a* and *b* have type *Type* ,
 the following operation must be defined
-$table
-$bold Operation$$     $cnext
-   $bold Description$$ $rnext
-$icode%a% <= %b%$$  $cnext
-   less that or equal operator (returns a $code bool$$ object)
-$tend
 
-$head Operation Sequence$$
+.. list-table::
+
+   * - **Operation**
+     - **Description**
+   * - *a* <= *b*
+     - less that or equal operator (returns a ``bool`` object)
+
+Operation Sequence
+******************
 The result of this operation is not an
-$cref/AD of Base/glossary/AD of Base/$$ object.
+:ref:`glossary@AD of Base` object.
 Thus it will not be recorded as part of an
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Example$$
-$children%
+Example
+*******
+{xrst_toc_hidden
    example/general/near_equal_ext.cpp
-%$$
-The file $cref near_equal_ext.cpp$$ contains an example
-and test of this extension of $cref NearEqual$$.
+}
+The file :ref:`near_equal_ext.cpp-name` contains an example
+and test of this extension of :ref:`NearEqual-name` .
 It return true if it succeeds and false otherwise.
 
-$end
+{xrst_end near_equal_ext}
 
 */
 // BEGIN CppAD namespace

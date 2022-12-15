@@ -6,127 +6,134 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin RevTwo$$
-$spell
+{xrst_begin RevTwo}
+{xrst_spell
    ddw
-   typename
-   Taylor
-   const
-$$
+}
 
+Reverse Mode Second Partial Derivative Driver
+#############################################
 
+Syntax
+******
+*ddw* = *f* . ``RevTwo`` ( *x* , *i* , *j* )
 
-
-
-$section Reverse Mode Second Partial Derivative Driver$$
-
-$head Syntax$$
-$icode%ddw% = %f%.RevTwo(%x%, %i%, %j%)%$$
-
-
-$head Purpose$$
-We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
-$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
 The syntax above sets
-$latex \[
+
+.. math::
+
    ddw [ k * p + \ell ]
    =
    \DD{ F_{i[ \ell ]} }{ x_{j[ \ell ]} }{ x_k } (x)
-\] $$
-for $latex k = 0 , \ldots , n-1$$
-and $latex \ell = 0 , \ldots , p$$,
-where $latex p$$ is the size of the vectors $icode i$$ and $icode j$$.
 
-$head f$$
-The object $icode f$$ has prototype
-$codei%
-   ADFun<%Base%> %f%
-%$$
-Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
-(see $cref/RevTwo Uses Forward/RevTwo/RevTwo Uses Forward/$$ below).
+for :math:`k = 0 , \ldots , n-1`
+and :math:`\ell = 0 , \ldots , p`,
+where :math:`p` is the size of the vectors *i* and *j* .
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-   const %BaseVector% &%x%
-%$$
-(see $cref/BaseVector/RevTwo/BaseVector/$$ below)
+f
+*
+The object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const``
+(see :ref:`RevTwo@RevTwo Uses Forward` below).
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *BaseVector* & *x*
+
+(see :ref:`RevTwo@BaseVector` below)
 and its size
-must be equal to $icode n$$, the dimension of the
-$cref/domain/fun_property/Domain/$$ space for $icode f$$.
+must be equal to *n* , the dimension of the
+:ref:`fun_property@Domain` space for *f* .
 It specifies
 that point at which to evaluate the partial derivatives listed above.
 
-$head i$$
-The argument $icode i$$ has prototype
-$codei%
-   const %SizeVector_t% &%i%
-%$$
-(see $cref/SizeVector_t/RevTwo/SizeVector_t/$$ below)
-We use $icode p$$ to denote the size of the vector $icode i$$.
-All of the indices in $icode i$$
-must be less than $icode m$$, the dimension of the
-$cref/range/fun_property/Range/$$ space for $icode f$$; i.e.,
-for $latex \ell = 0 , \ldots , p-1$$, $latex i[ \ell ]  < m$$.
+i
+*
+The argument *i* has prototype
 
-$head j$$
-The argument $icode j$$ has prototype
-$codei%
-   const %SizeVector_t% &%j%
-%$$
-(see $cref/SizeVector_t/RevTwo/SizeVector_t/$$ below)
-and its size must be equal to $icode p$$,
-the size of the vector $icode i$$.
-All of the indices in $icode j$$
-must be less than $icode n$$; i.e.,
-for $latex \ell = 0 , \ldots , p-1$$, $latex j[ \ell ]  < n$$.
+   ``const`` *SizeVector_t* & *i*
 
-$head ddw$$
-The result $icode ddw$$ has prototype
-$codei%
-   %BaseVector% %ddw%
-%$$
-(see $cref/BaseVector/RevTwo/BaseVector/$$ below)
-and its size is $latex n * p$$.
+(see :ref:`RevTwo@SizeVector_t` below)
+We use *p* to denote the size of the vector *i* .
+All of the indices in *i*
+must be less than *m* , the dimension of the
+:ref:`fun_property@Range` space for *f* ; i.e.,
+for :math:`\ell = 0 , \ldots , p-1`, :math:`i[ \ell ]  < m`.
+
+j
+*
+The argument *j* has prototype
+
+   ``const`` *SizeVector_t* & *j*
+
+(see :ref:`RevTwo@SizeVector_t` below)
+and its size must be equal to *p* ,
+the size of the vector *i* .
+All of the indices in *j*
+must be less than *n* ; i.e.,
+for :math:`\ell = 0 , \ldots , p-1`, :math:`j[ \ell ]  < n`.
+
+ddw
+***
+The result *ddw* has prototype
+
+   *BaseVector* *ddw*
+
+(see :ref:`RevTwo@BaseVector` below)
+and its size is :math:`n * p`.
 It contains the requested partial derivatives; to be specific,
-for $latex k = 0 , \ldots , n - 1 $$
-and $latex \ell = 0 , \ldots , p - 1$$
-$latex \[
+for :math:`k = 0 , \ldots , n - 1`
+and :math:`\ell = 0 , \ldots , p - 1`
+
+.. math::
+
    ddw [ k * p + \ell ]
    =
    \DD{ F_{i[ \ell ]} }{ x_{j[ \ell ]} }{ x_k } (x)
-\] $$
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type Base/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+BaseVector
+**********
+The type *BaseVector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type Base<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head SizeVector_t$$
-The type $icode SizeVector_t$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type size_t/SimpleVector/Elements of Specified Type/$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+SizeVector_t
+************
+The type *SizeVector_t* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type size_t<SimpleVector@Elements of Specified Type>` .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head RevTwo Uses Forward$$
-After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding
-$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After a call to $code RevTwo$$,
+RevTwo Uses Forward
+*******************
+After each call to :ref:`Forward-name` ,
+the object *f* contains the corresponding
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+After a call to ``RevTwo`` ,
 the zero order Taylor coefficients correspond to
-$icode%f%.Forward(0, %x%)%$$
+*f* . ``Forward`` (0, *x* )
 and the other coefficients are unspecified.
 
-$head Examples$$
-$children%
+Examples
+********
+{xrst_toc_hidden
    example/general/rev_two.cpp
-%$$
+}
 The routine
-$cref/RevTwo/rev_two.cpp/$$ is both an example and test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
+:ref:`RevTwo<rev_two.cpp-name>` is both an example and test.
+It returns ``true`` , if it succeeds and ``false`` otherwise.
 
-$end
+{xrst_end RevTwo}
 -----------------------------------------------------------------------------
 */
 

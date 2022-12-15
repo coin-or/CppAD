@@ -4,19 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin lu_factor.cpp$$
-$spell
-   Geq
-   Cpp
-   Lu
-$$
+{xrst_begin lu_factor.cpp}
 
-$section LuFactor: Example and Test$$
+LuFactor: Example and Test
+##########################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end lu_factor.cpp}
 */
 
 // BEGIN C++

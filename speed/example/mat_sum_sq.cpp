@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin mat_sum_sq.cpp$$
-$spell
-   sq
-$$
+{xrst_begin mat_sum_sq.cpp}
 
-$section Sum of the Elements of the Square of a Matrix: Example and Test$$
+Sum of the Elements of the Square of a Matrix: Example and Test
+###############################################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end mat_sum_sq.cpp}
 */
 // BEGIN C++
 # include <vector>

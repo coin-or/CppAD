@@ -8,124 +8,136 @@
 # include <cppad/local/play/atom_op_info.hpp>
 
 /*
-$begin local_sweep_for_hes$$
-$spell
-   hes
+{xrst_begin local_sweep_for_hes}
+{xrst_spell
    numvar
-   jac
-   Jacobian
-   num_var
-   Addr
-   InvOp
-   setvec
-$$
+}
 
-$section Forward Mode Hessian Sparsity Patterns$$
+Forward Mode Hessian Sparsity Patterns
+######################################
 
-$head Syntax$$
-$codei%local::sweep::for_hes(
-   %play%              ,
-   %n%                 ,
-   %numvar%            ,
-   %select_domain%     ,
-   %rev_jac_sparse%    ,
-   %for_hes_sparse%    ,
-   %not_used_rec_base
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%1
-%$$
+| ``local::sweep::for_hes`` (
+| |tab| *play*               ,
+| |tab| *n*                  ,
+| |tab| *numvar*             ,
+| |tab| *select_domain*      ,
+| |tab| *rev_jac_sparse*     ,
+| |tab| *for_hes_sparse*     ,
+| |tab| ``not_used_rec_base``
+| )
 
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head Purpose$$
+Purpose
+*******
 Given the forward Jacobian sparsity pattern for all the variables,
 and the reverse Jacobian sparsity pattern for the dependent variables,
-$code for_hes$$ computes the Hessian sparsity pattern for all the independent
+``for_hes`` computes the Hessian sparsity pattern for all the independent
 variables.
 
-$head Tracing$$
+Tracing
+*******
 This value is either zero or one.  Zero is the normal operational value.
 If it is one, a trace of Jacobian and Hessian sparsity result for every
-operation for every $code for_hes$$ sweep is printed.
+operation for every ``for_hes`` sweep is printed.
 The sparsity patterns are printed as binary numbers with 1 (0) meaning that
 the corresponding index is (is not) in the set.
-$codep */
+{xrst_code hpp} */
 # define CPPAD_FOR_HES_TRACE 0
-/* $$
+/* {xrst_code}
 
-$head Addr$$
+Addr
+****
 Is the type used to record address on this tape
 This is allows for smaller tapes when address are smaller.
 
-$head Base$$
-The operation sequence in $icode play$$ was recorded using
-$codei%AD<%Base%>%$$.
+Base
+****
+The operation sequence in *play* was recorded using
+``AD<`` *Base* > .
 
-$head RecBase$$
+RecBase
+*******
 Is the base type when this function was recorded.
-This is different from $icode Base$$ if
-this function object was created by $cref base2ad$$.
+This is different from *Base* if
+this function object was created by :ref:`base2ad-name` .
 
-$head SetVector$$
-This is a $cref SetVector$$ type.
+SetVector
+*********
+This is a :ref:`SetVector-name` type.
 
-$head play$$
+play
+****
 The information stored in play
 is a recording of the operations corresponding to a function
-$latex F : \B{R}^n \rightarrow \B{R}^m$$
-where $icode m$$ is the number of dependent variables.
+:math:`F : \B{R}^n \rightarrow \B{R}^m`
+where *m* is the number of dependent variables.
 
-$head n$$
+n
+*
 is the number of independent variables in the tape.
 
-$head numvar$$
+numvar
+******
 is the total number of variables in the tape; i.e.,
-$icode%play%->num_var_rec()%$$.
+*play* ``->num_var_rec`` () .
 This is also the number of sets in all the sparsity patterns.
 
-$head select_domain$$
-is a vector with size $icode n$$ that specifies
+select_domain
+*************
+is a vector with size *n* that specifies
 which components of the domain to include in the Hessian sparsity pattern.
-For $icode%j%= 0, ..., %n%-1%$$, the $th j$$ independent variable
-will be included if and only if $icode%select_domain%[%j%]%$$ is true.
+For *j* = 0, ..., *n* ``-1`` , the *j*-th independent variable
+will be included if and only if *select_domain* [ *j* ] is true.
 This assumes that the order of the independent variables is the same
 as the order of the InvOp operators.
 
-$head rev_jac_sparse$$
-Is a sparsity pattern with size $icode numvar$$ by one.
-For $icode%i%=1, %...%, %numvar%-1%$$,
+rev_jac_sparse
+**************
+Is a sparsity pattern with size *numvar* by one.
+For *i* =1, ..., *numvar* ``-1`` ,
 the if the function we are computing the Hessian for has a non-zero
-derivative w.r.t. variable with index $icode i$$,
-the set with index $icode i$$ has the element zero.
+derivative w.r.t. variable with index *i* ,
+the set with index *i* has the element zero.
 Otherwise it has no elements.
 
-$head for_hes_sparse$$
-Is a sparsity pattern with size $icode%n%+1+%numvar%$$ by $icode%n%+1%$$.
+for_hes_sparse
+**************
+Is a sparsity pattern with size *n* +1+ *numvar* by *n* +1 .
 The set with index zero and the element zero are not used.
-The sets with index greater than $icode n$$
+The sets with index greater than *n*
 are used for forward Jacobian sparsity.
-The forward Hessian sparsity pattern for the variable with index $icode i$$
-corresponds to the set with index $icode i$$ in $icode for_hes_sparse$$.
-The number of sets in this sparsity pattern is $icode%n%+1%$$ and the set
+The forward Hessian sparsity pattern for the variable with index *i*
+corresponds to the set with index *i* in *for_hes_sparse* .
+The number of sets in this sparsity pattern is *n* +1 and the set
 with index zero is not used.
 
-$subhead On Input$$
-For $icode%j%=1, %...%, %n%$$,
+On Input
+========
+For *j* =1, ..., *n* ,
 the forward Hessian sparsity pattern for the variable with index
-$icode i$$ is empty.
+*i* is empty.
 
-$subhead On Output$$
-For $icode%j%=1, %...%, %n%$$,
+On Output
+=========
+For *j* =1, ..., *n* ,
 the forward Hessian sparsity pattern for the independent dependent variable
-with index $icode%j%-1%$$ is given by the set with index $icode j$$
-in $icode for_hes_sparse$$.
+with index *j* ``-1`` is given by the set with index *j*
+in *for_hes_sparse* .
 
-$head not_used_rec_base$$
-This argument is only used to specify the type $icode RecBase$$ for this call.
+not_used_rec_base
+*****************
+This argument is only used to specify the type *RecBase* for this call.
 
-$end
+{xrst_end local_sweep_for_hes}
 */
 
 // BEGIN_CPPAD_LOCAL_SWEEP_NAMESPACE

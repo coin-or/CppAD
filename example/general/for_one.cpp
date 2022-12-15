@@ -4,17 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin for_one.cpp$$
-$spell
-   Cpp
-$$
+{xrst_begin for_one.cpp}
 
+First Order Partial Driver: Example and Test
+############################################
 
-$section First Order Partial Driver: Example and Test$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end for_one.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

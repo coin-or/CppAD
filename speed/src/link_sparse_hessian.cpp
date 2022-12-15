@@ -16,44 +16,51 @@ using CppAD::vector;
 
 /*
 ------------------------------------------------------------------------------
-$begin sparse_hessian_choose_row_col$$
-$spell
-   Namespace
-$$
+{xrst_begin sparse_hessian_choose_row_col}
 
-$section Randomly choose Hessian row and column indices$$
+Randomly choose Hessian row and column indices
+##############################################
 
-$head Namespace$$
+Namespace
+*********
 This function is in the empty namespace; i.e., it is only accessed
 by functions in this file.
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_choose_row_col%// END_choose_row_col%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_choose_row_col
+   // END_choose_row_col
+}
 
-$head n$$
+n
+*
 is number of rows and columns in the Hessian.
 
-$head row$$
+row
+***
 The input size and elements of row do not matter.
 Upon return it is the chosen row indices.
 
-$head col$$
+col
+***
 The input size and elements of col do not matter.
 Upon return it is the chosen column indices.
 
-$head Order$$
+Order
+*****
 The return row and column values are in row major order.
 
-$head Diagonal$$
-The diagonal is included in the result; i.e., for each $icode i$$
-between zero and $icode%n%-1%$$, there is a $icode k$$ such that
-$codei%
-   %row%[%k%] == %col%[%k%] == %i%
-%$$.
+Diagonal
+********
+The diagonal is included in the result; i.e., for each *i*
+between zero and *n* ``-1`` , there is a *k* such that
 
-$end
+   *row* [ *k* ] == *col* [ *k* ] == *i*
+
+.
+
+{xrst_end sparse_hessian_choose_row_col}
 */
 // BEGIN_choose_row_col
 void choose_row_col(
@@ -106,31 +113,32 @@ void choose_row_col(
 } // END_EMPTY_NAMESPACE
 /*
 ------------------------------------------------------------------------------
-$begin info_sparse_hessian$$
-$spell
-   Namespace
-   CppAD
-$$
+{xrst_begin info_sparse_hessian}
 
-$section Sparse Hessian Speed Test Information$$
+Sparse Hessian Speed Test Information
+#####################################
 
-$head Namespace$$
+Namespace
+*********
 This function is in the global namespace, not the CppAD namespace.
 
-$head Syntax$$
-$codei%info_spares_hessian(%size%, %n_color%)%$$
+Syntax
+******
+``info_spares_hessian`` ( *size* , *n_color* )
 
-$head size$$
-This $code size_t$$ value is equal to
-$cref/size/speed_time_callback/size/$$
-in the corresponding call to $code time_sparse_hessian_callback$$.
+size
+****
+This ``size_t`` value is equal to
+:ref:`speed_time_callback@size`
+in the corresponding call to ``time_sparse_hessian_callback`` .
 
-$head n_color$$
-The input value of this $icode size_t$$ does not matter.
-Upon return, it is the value $cref/n_color/link_sparse_hessian/n_color/$$
-returned by the corresponding call to $code link_sparse_hessian$$.
+n_color
+*******
+The input value of this *size_t* does not matter.
+Upon return, it is the value :ref:`link_sparse_hessian@n_color`
+returned by the corresponding call to ``link_sparse_hessian`` .
 
-$end
+{xrst_end info_sparse_hessian}
 */
 void info_sparse_hessian(size_t size, size_t& n_color)
 {  size_t n      = size;

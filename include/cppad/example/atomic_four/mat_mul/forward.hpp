@@ -5,24 +5,25 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_mat_mul_forward.hpp$$
-$spell
-   Jacobian
-   jac
-$$
+{xrst_begin atomic_four_mat_mul_forward.hpp}
 
-$section
 Atomic Matrix Multiply Forward Mode: Example Implementation
-$$
+###########################################################
 
-$head Purpose$$
-The $code forward$$ routine overrides the virtual functions
+Purpose
+*******
+The ``forward`` routine overrides the virtual functions
 used by the atomic_four base; see
-$cref/forward/atomic_four_forward/$$.
+:ref:`forward<atomic_four_forward-name>` .
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_mat_mul_forward.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/mat_mul/mat_mul.hpp>

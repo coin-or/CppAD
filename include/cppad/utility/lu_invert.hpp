@@ -6,147 +6,149 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin LuInvert$$
-$spell
-   cppad.hpp
-   Lu
-   Cpp
+{xrst_begin LuInvert}
+{xrst_spell
    jp
-   ip
-   const
-   namespace
-   typename
-   etmp
-$$
+   permuted
+}
 
+Invert an LU Factored Equation
+##############################
 
-$section Invert an LU Factored Equation$$
+Syntax
+******
 
-$pre
-$$
+   # ``include <cppad/utility/lu_invert.hpp>``
 
-$head Syntax$$
-$codei%# include <cppad/utility/lu_invert.hpp>
-%$$
-$codei%LuInvert(%ip%, %jp%, %LU%, %X%)%$$
+``LuInvert`` ( *ip* , *jp* , *LU* , *X* )
 
+Description
+***********
+Solves the matrix equation *A* * *X* = *B*
+using an LU factorization computed by :ref:`LuFactor-name` .
 
-$head Description$$
-Solves the matrix equation $icode%A% * %X% = %B%$$
-using an LU factorization computed by $cref LuFactor$$.
-
-$head Include$$
-The file $code cppad/utility/lu_invert.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/lu_invert.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head Matrix Storage$$
+Matrix Storage
+**************
 All matrices are stored in row major order.
-To be specific, if $latex Y$$ is a vector
-that contains a $latex p$$ by $latex q$$ matrix,
-the size of $latex Y$$ must be equal to $latex  p * q $$ and for
-$latex i = 0 , \ldots , p-1$$,
-$latex j = 0 , \ldots , q-1$$,
-$latex \[
-   Y_{i,j} = Y[ i * q + j ]
-\] $$
+To be specific, if :math:`Y` is a vector
+that contains a :math:`p` by :math:`q` matrix,
+the size of :math:`Y` must be equal to :math:`p * q` and for
+:math:`i = 0 , \ldots , p-1`,
+:math:`j = 0 , \ldots , q-1`,
 
-$head ip$$
-The argument $icode ip$$ has prototype
-$codei%
-   const %SizeVector% &%ip%
-%$$
-(see description for $icode SizeVector$$ in
-$cref/LuFactor/LuFactor/SizeVector/$$ specifications).
-The size of $icode ip$$ is referred to as $icode n$$ in the
+.. math::
+
+   Y_{i,j} = Y[ i * q + j ]
+
+ip
+**
+The argument *ip* has prototype
+
+   ``const`` *SizeVector* & *ip*
+
+(see description for *SizeVector* in
+:ref:`LuFactor<LuFactor@SizeVector>` specifications).
+The size of *ip* is referred to as *n* in the
 specifications below.
-The elements of $icode ip$$ determine
+The elements of *ip* determine
 the order of the rows in the permuted matrix.
 
-$head jp$$
-The argument $icode jp$$ has prototype
-$codei%
-   const %SizeVector% &%jp%
-%$$
-(see description for $icode SizeVector$$ in
-$cref/LuFactor/LuFactor/SizeVector/$$ specifications).
-The size of $icode jp$$ must be equal to $icode n$$.
-The elements of $icode jp$$ determine
+jp
+**
+The argument *jp* has prototype
+
+   ``const`` *SizeVector* & *jp*
+
+(see description for *SizeVector* in
+:ref:`LuFactor<LuFactor@SizeVector>` specifications).
+The size of *jp* must be equal to *n* .
+The elements of *jp* determine
 the order of the columns in the permuted matrix.
 
-$head LU$$
-The argument $icode LU$$ has the prototype
-$codei%
-   const %FloatVector% &%LU%
-%$$
-and the size of $icode LU$$ must equal $latex n * n$$
-(see description for $icode FloatVector$$ in
-$cref/LuFactor/LuFactor/FloatVector/$$ specifications).
+LU
+**
+The argument *LU* has the prototype
 
-$subhead L$$
-We define the lower triangular matrix $icode L$$ in terms of $icode LU$$.
-The matrix $icode L$$ is zero above the diagonal
+   ``const`` *FloatVector* & *LU*
+
+and the size of *LU* must equal :math:`n * n`
+(see description for *FloatVector* in
+:ref:`LuFactor<LuFactor@FloatVector>` specifications).
+
+L
+=
+We define the lower triangular matrix *L* in terms of *LU* .
+The matrix *L* is zero above the diagonal
 and the rest of the elements are defined by
-$codei%
-   %L%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
-for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , i$$.
 
-$subhead U$$
-We define the upper triangular matrix $icode U$$ in terms of $icode LU$$.
-The matrix $icode U$$ is zero below the diagonal,
+   *L* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , i`.
+
+U
+=
+We define the upper triangular matrix *U* in terms of *LU* .
+The matrix *U* is zero below the diagonal,
 one on the diagonal,
 and the rest of the elements are defined by
-$codei%
-   %U%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
-for $latex i = 0 , \ldots , n-2$$ and $latex j = i+1 , \ldots , n-1$$.
 
-$subhead P$$
-We define the permuted matrix $icode P$$ in terms of
-the matrix $icode L$$ and the matrix $icode U$$
-by $icode%P% = %L% * %U%$$.
+   *U* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
 
-$subhead A$$
-The matrix $icode A$$,
+for :math:`i = 0 , \ldots , n-2` and :math:`j = i+1 , \ldots , n-1`.
+
+P
+=
+We define the permuted matrix *P* in terms of
+the matrix *L* and the matrix *U*
+by *P* = *L* * *U* .
+
+A
+=
+The matrix *A* ,
 which defines the linear equations that we are solving, is given by
-$codei%
-   %P%(%i%, %j%) = %A%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
+
+   *P* ( *i* , *j* ) = *A* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
 (Hence
-$icode LU$$ contains a permuted factorization of the matrix $icode A$$.)
+*LU* contains a permuted factorization of the matrix *A* .)
 
+X
+*
+The argument *X* has prototype
 
-$head X$$
-The argument $icode X$$ has prototype
-$codei%
-   %FloatVector% &%X%
-%$$
-(see description for $icode FloatVector$$ in
-$cref/LuFactor/LuFactor/FloatVector/$$ specifications).
-The matrix $icode X$$
-must have the same number of rows as the matrix $icode A$$.
-The input value of $icode X$$ is the matrix $icode B$$ and the
-output value solves the matrix equation $icode%A% * %X% = %B%$$.
+   *FloatVector* & *X*
 
-
-$children%
-   example/utility/lu_invert.cpp%
-   omh/lu_invert_hpp.omh
-%$$
-$head Example$$
-The file $cref lu_solve.hpp$$ is a good example usage of
-$code LuFactor$$ with $code LuInvert$$.
+(see description for *FloatVector* in
+:ref:`LuFactor<LuFactor@FloatVector>` specifications).
+The matrix *X*
+must have the same number of rows as the matrix *A* .
+The input value of *X* is the matrix *B* and the
+output value solves the matrix equation *A* * *X* = *B* .
+{xrst_toc_hidden
+   example/utility/lu_invert.cpp
+   xrst/lu_invert_hpp.xrst
+}
+Example
+*******
+The file :ref:`lu_solve.hpp-name` is a good example usage of
+``LuFactor`` with ``LuInvert`` .
 The file
-$cref lu_invert.cpp$$
-contains an example and test of using $code LuInvert$$ by itself.
+:ref:`lu_invert.cpp-name`
+contains an example and test of using ``LuInvert`` by itself.
 
-$head Source$$
-The file $cref lu_invert.hpp$$ contains the
+Source
+******
+The file :ref:`lu_invert.hpp-name` contains the
 current source code that implements these specifications.
 
-$end
+{xrst_end LuInvert}
 --------------------------------------------------------------------------
 */
 // BEGIN C++

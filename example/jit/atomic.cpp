@@ -3,17 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin jit_atomic.cpp$$
-$spell
-   CppAD
-$$
+{xrst_begin jit_atomic.cpp}
 
-$section Atomic Callbacks in JIT Function: Example and Test$$
+Atomic Callbacks in JIT Function: Example and Test
+##################################################
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end jit_atomic.cpp}
 -------------------------------------------------------------------------------
 */
 // BEGIN C++

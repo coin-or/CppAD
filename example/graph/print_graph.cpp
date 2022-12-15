@@ -3,17 +3,19 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin print_graph.cpp$$
-$spell
-   Json
-$$
+{xrst_begin print_graph.cpp}
 
-$section Print a C++ AD Graph: Example and Test$$
+Print a C++ AD Graph: Example and Test
+######################################
 
-$head Source Code$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+Source Code
+***********
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end print_graph.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

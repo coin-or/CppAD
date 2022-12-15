@@ -5,22 +5,29 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin atomic_four_vector_forward_op.hpp$$
+{xrst_begin atomic_four_vector_forward_op.hpp}
 
-$section Atomic Vector Forward Mode: Example Implementation$$
+Atomic Vector Forward Mode: Example Implementation
+##################################################
 
-$head Purpose$$
-The $code forward$$ routine overrides the virtual functions
+Purpose
+*******
+The ``forward`` routine overrides the virtual functions
 used by the atomic_four base class for forward mode calculations; see
-$cref/forward/atomic_four_forward/$$.
+:ref:`forward<atomic_four_forward-name>` .
 It determines which operator is specified for this call and transfers
 the call to the operator's implementation.
-There are two versions of the $code forward$$ routine, one for $icode Base$$
-and one for $code AD<Base>$$.
+There are two versions of the ``forward`` routine, one for *Base*
+and one for ``AD<Base>`` .
 
-$head Source$$
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+Source
+******
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end atomic_four_vector_forward_op.hpp}
 */
 // BEGIN C++
 # include <cppad/example/atomic_four/vector/vector.hpp>

@@ -4,32 +4,35 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin reverse_three.cpp$$
-$spell
-   Taylor
-   Cpp
-$$
+{xrst_begin reverse_three.cpp}
 
-$section Third Order Reverse Mode: Example and Test$$
+Third Order Reverse Mode: Example and Test
+##########################################
 
+Taylor Coefficients
+*******************
 
-$head Taylor Coefficients$$
-$latex \[
-\begin{array}{rcl}
-   X(t) & = & x^{(0)} + x^{(1)} t + x^{(2)} t^2
-   \\
-   X^{(1)} (t) & = &  x^{(1)} + 2 x^{(2)} t
-   \\
-   X^{(2)} (t) & = &   2 x^{(2)}
-\end{array}
-\] $$
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      X(t) & = & x^{(0)} + x^{(1)} t + x^{(2)} t^2
+      \\
+      X^{(1)} (t) & = &  x^{(1)} + 2 x^{(2)} t
+      \\
+      X^{(2)} (t) & = &   2 x^{(2)}
+   \end{eqnarray}
+
 Thus, we need to be careful to properly account for the fact that
-$latex X^{(2)} (0) = 2 x^{(2)}$$
-(and similarly $latex Y^{(2)} (0) = 2 y^{(2)}$$).
+:math:`X^{(2)} (0) = 2 x^{(2)}`
+(and similarly :math:`Y^{(2)} (0) = 2 y^{(2)}`).
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end reverse_three.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

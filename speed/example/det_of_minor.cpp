@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin det_of_minor.cpp$$
-$spell
-   det
-   Cpp
-$$
+{xrst_begin det_of_minor.cpp}
 
-$section Determinant of a Minor: Example and Test$$
+Determinant of a Minor: Example and Test
+########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end det_of_minor.cpp}
 */
 // BEGIN C++
 # include <vector>

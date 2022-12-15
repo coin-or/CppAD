@@ -4,18 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin vector_bool.cpp$$
-$spell
-   Cpp
-   bool
-$$
+{xrst_begin vector_bool.cpp}
 
-$section CppAD::vectorBool Class: Example and Test$$
+CppAD::vectorBool Class: Example and Test
+#########################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end vector_bool.cpp}
 */
 // BEGIN C++
 

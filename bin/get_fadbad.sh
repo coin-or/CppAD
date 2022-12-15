@@ -3,41 +3,47 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_fadbad.sh$$ $newlinech #$$
-# $spell
-#  Fadbad
-#  CppAD
-# $$
+# {xrst_begin get_fadbad.sh} 
+# {xrst_comment_ch #}
 #
-# $section Download and Install Fadbad in Build Directory$$
+# Download and Install Fadbad in Build Directory
+# ##############################################
 #
-# $head Syntax$$
-# $code bin/get_fadbad.sh$$
+# Syntax
+# ******
+# ``bin/get_fadbad.sh``
 #
-# $head Purpose$$
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
-# $cref/Fadbad/fadbad_prefix/Fadbad Home Page/$$
-# in the CppAD $code build$$ directory.
+# :ref:`Fadbad<fadbad_prefix@Fadbad Home Page>`
+# in the CppAD ``build`` directory.
 #
-# $head Distribution Directory$$
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# $cref/distribution directory/download/Distribution Directory/$$.
+# :ref:`download@Distribution Directory` .
 #
-# $head Source Directory$$
+# Source Directory
+# ****************
 # The Fadbad source code is downloaded into the sub-directory
-# $code external/FADBAD++$$ below the distribution directory.
+# ``external/FADBAD++`` below the distribution directory.
 #
-# $head Prefix$$
-# The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional.sh$$ is used for this install.
+# Prefix
+# ******
+# The :ref:`get_optional.sh@prefix`
+# in the file ``bin/get_optional.sh`` is used for this install.
 #
-# $head Version$$
+# Version
+# *******
 # This will install the following version of Fadbad
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 version='2.1'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $end
+# {xrst_end get_fadbad.sh}
 # -----------------------------------------------------------------------------
 package='fadbad'
 if [ $0 != "bin/get_$package.sh" ]

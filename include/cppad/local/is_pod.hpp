@@ -5,38 +5,38 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin is_pod$$
-$spell
+{xrst_begin is_pod}
+{xrst_spell
    nullptr
-   CppAD
-   namespace
-   bool
-   inline
-$$
+}
 
-$section The is_pod Template Function$$
+The is_pod Template Function
+############################
 
-$head Default Definition$$
+Default Definition
+******************
 The default template definition is that
-$codei%
-   is_pod<%Type%>()
-%$$
+
+   ``is_pod<`` *Type* >()
+
 is false for all types.
 
-$head Fundamental Types$$
-This file specializes $codei%is_pod<%Type%>%$$ to be true where $icode Type$$
+Fundamental Types
+*****************
+This file specializes ``is_pod<`` *Type* > to be true where *Type*
 is any of the c++11 fundamental types that hold data; i.e.,
-$code void$$ and $code nullptr_t$$ are excluded.
+``void`` and ``nullptr_t`` are excluded.
 
-$head Other Type$$
-You can inform CppAD that a particular $icode Type$$ is plain old data by
+Other Type
+**********
+You can inform CppAD that a particular *Type* is plain old data by
 defining
-$codei%
-   namespace CppAD { namespace local {
-      template <> inline bool is_pod<%Type%>(void) { return true; }
-   } }
-%$$
-$end
+
+| |tab| ``namespace CppAD`` { ``namespace local`` {
+| |tab| |tab| ``template <> inline bool is_pod<`` *Type* >( ``void`` ) { ``return true`` ; }
+| |tab| } }
+
+{xrst_end is_pod}
 */
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
    //

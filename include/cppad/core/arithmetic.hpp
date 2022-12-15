@@ -7,24 +7,21 @@
 
 /*
 -------------------------------------------------------------------------------
-$begin Arithmetic$$
-$spell
-   Op
-   const
-$$
+{xrst_begin Arithmetic}
 
+AD Arithmetic Operators and Compound Assignments
+################################################
 
-
-$section AD Arithmetic Operators and Compound Assignments$$
-
-$childtable%
-   include/cppad/core/unary_plus.hpp%
-   include/cppad/core/unary_minus.hpp%
-   include/cppad/core/ad_binary.hpp%
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/unary_plus.hpp
+   include/cppad/core/unary_minus.hpp
+   include/cppad/core/ad_binary.hpp
    include/cppad/core/compound_assign.hpp
-%$$
+}
 
-$end
+{xrst_end Arithmetic}
 -------------------------------------------------------------------------------
 */
 # include <cppad/core/unary_plus.hpp>

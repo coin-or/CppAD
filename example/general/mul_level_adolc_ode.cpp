@@ -4,44 +4,41 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin mul_level_adolc_ode.cpp$$
-$spell
-   hpp
-   Taylor
-   Cpp
-   const
-   std
-   AdolcDir
+{xrst_begin mul_level_adolc_ode.cpp}
+{xrst_spell
    adouble
-   Vec
-   ipopt
-   cmake
-$$
+   cccc
+}
 
-$section Taylor's Ode Solver: A Multi-Level Adolc Example and Test$$
+Taylor's Ode Solver: A Multi-Level Adolc Example and Test
+#########################################################
 
-$head See Also$$
-$cref taylor_ode.cpp$$, $cref mul_level_ode.cpp$$
+See Also
+********
+:ref:`taylor_ode.cpp-name` , :ref:`mul_level_ode.cpp-name`
 
-$head Purpose$$
+Purpose
+*******
 This is a realistic example using
-two levels of AD; see $cref mul_level$$.
-The first level uses Adolc's $code adouble$$ type
+two levels of AD; see :ref:`mul_level-name` .
+The first level uses Adolc's ``adouble`` type
 to tape the solution of an ordinary differential equation.
 This solution is then differentiated with respect to a parameter vector.
-The second level uses CppAD's type $code AD<adouble>$$
+The second level uses CppAD's type ``AD<adouble>``
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
 
-
-$head ODE$$
+ODE
+***
 For this example the function
-$latex y : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
-$latex y(0, x) = 0$$ and
-$latex \partial_t y(t, x) = g(y, x)$$ where
-$latex g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ is defined by
-$latex \[
+:math:`y : \B{R} \times \B{R}^n \rightarrow \B{R}^n` is defined by
+:math:`y(0, x) = 0` and
+:math:`\partial_t y(t, x) = g(y, x)` where
+:math:`g : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n` is defined by
+
+.. math::
+
    g(y, x) =
    \left( \begin{array}{c}
          x_0     \\
@@ -49,14 +46,16 @@ $latex \[
          \vdots  \\
          x_{n-1} y_{n-2}
    \end{array} \right)
-\] $$
 
-$head ODE Solution$$
+ODE Solution
+************
 The solution for this example can be calculated by
 starting with the first row and then using the solution
 for the first row to solve the second and so on.
 Doing this we obtain
-$latex \[
+
+.. math::
+
    y(t, x ) =
    \left( \begin{array}{c}
       x_0 t                  \\
@@ -64,52 +63,63 @@ $latex \[
       \vdots                 \\
       x_{n-1} x_{n-2} \ldots x_0 t^n / n !
    \end{array} \right)
-\] $$
 
-$head Derivative of ODE Solution$$
+Derivative of ODE Solution
+**************************
 Differentiating the solution above,
-with respect to the parameter vector $latex x$$,
+with respect to the parameter vector :math:`x`,
 we notice that
-$latex \[
-\partial_x y(t, x ) =
-\left( \begin{array}{cccc}
-y_0 (t,x) / x_0      & 0                   & \cdots & 0      \\
-y_1 (t,x) / x_0      & y_1 (t,x) / x_1     & 0      & \vdots \\
-\vdots               & \vdots              & \ddots & 0      \\
-y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
-\end{array} \right)
-\] $$
 
-$head Taylor's Method Using AD$$
-We define the function $latex z(t, x)$$ by the equation
-$latex \[
+.. math::
+
+   \partial_x y(t, x ) =
+   \left( \begin{array}{cccc}
+   y_0 (t,x) / x_0      & 0                   & \cdots & 0      \\
+   y_1 (t,x) / x_0      & y_1 (t,x) / x_1     & 0      & \vdots \\
+   \vdots               & \vdots              & \ddots & 0      \\
+   y_{n-1} (t,x) / x_0  & y_{n-1} (t,x) / x_1 & \cdots & y_{n-1} (t,x) / x_{n-1}
+   \end{array} \right)
+
+Taylor's Method Using AD
+************************
+We define the function :math:`z(t, x)` by the equation
+
+.. math::
+
    z ( t , x ) = g[ y ( t , x ) ] = h [ x , y( t , x ) ]
-\] $$
-see $cref taylor_ode$$ for the method used to compute the
-Taylor coefficients w.r.t $latex t$$ of $latex y(t, x)$$.
 
-$head base_adolc.hpp$$
-The file $cref base_adolc.hpp$$ is implements the
-$cref/Base type requirements/base_require/$$ where $icode Base$$
-is $code adolc$$.
+see :ref:`taylor_ode-name` for the method used to compute the
+Taylor coefficients w.r.t :math:`t` of :math:`y(t, x)`.
 
-$head Memory Management$$
+base_adolc.hpp
+**************
+The file :ref:`base_adolc.hpp-name` is implements the
+:ref:`Base type requirements<base_require-name>` where *Base*
+is ``adolc`` .
+
+Memory Management
+*****************
 Adolc uses raw memory arrays that depend on the number of
 dependent and independent variables.
-The $cref thread_alloc$$ memory management utilities
-$cref/create_array/ta_create_array/$$ and
-$cref/delete_array/ta_delete_array/$$
+The :ref:`thread_alloc-name` memory management utilities
+:ref:`create_array<ta_create_array-name>` and
+:ref:`delete_array<ta_delete_array-name>`
 are used to manage this memory allocation.
 
-$head Configuration Requirement$$
+Configuration Requirement
+*************************
 This example will be compiled and tested provided
-$cref/include_ipopt/cmake/include_ipopt/$$ is on the cmake command line.
+:ref:`cmake@include_ipopt` is on the cmake command line.
 
-$head Source$$
+Source
+******
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end mul_level_adolc_ode.cpp}
 --------------------------------------------------------------------------
 */
 // BEGIN C++
