@@ -120,7 +120,6 @@ Deprecated
    * - :ref:`CPPAD_TRACK_DEL_VEC<track_new_del@TrackDelVec@Macro>`
    * - :ref:`CPPAD_TRACK_EXTEND<track_new_del@TrackExtend@Macro>`
    * - :ref:`CPPAD_TRACK_COUNT<track_new_del@TrackCount@Macro>`
-   * - :ref:`CPPAD_USER_ATOMIC<atomic_one-name>`
    * - :ref:`CppADTrackNewVec<track_new_del@TrackNewVec@Previously Deprecated>`
    * - :ref:`CppADTrackDelVec<track_new_del@TrackDelVec@Previously Deprecated>`
    * - :ref:`CppADTrackExtend<track_new_del@TrackExtend@Previously Deprecated>`
