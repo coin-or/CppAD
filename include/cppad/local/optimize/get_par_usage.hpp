@@ -14,7 +14,7 @@ Create operator information tables
 namespace CppAD { namespace local { namespace optimize {
 
 /*!
-{xrst_begin optimize_get_par_usage}
+{xrst_begin optimize_get_par_usage dev}
 {xrst_spell
    vecad
 }

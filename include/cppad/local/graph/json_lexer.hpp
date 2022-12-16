@@ -17,7 +17,7 @@ class json_lexer {
 
 /*
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_member_data}
+{xrst_begin json_lexer_member_data dev}
 {xrst_spell
    parsed
 }
@@ -96,7 +96,7 @@ public:
 
 {xrst_end json_lexer_member_data}
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_report_error}
+{xrst_begin json_lexer_report_error dev}
 
 json lexer: Report an Error
 ###########################
@@ -134,7 +134,7 @@ public:
 
 {xrst_end json_lexer_report_error}
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_next_index}
+{xrst_begin json_lexer_next_index dev}
 
 json lexer: Advance Index by One
 ################################
@@ -176,7 +176,7 @@ private:
 
 {xrst_end json_lexer_next_index}
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_skip_white_space}
+{xrst_begin json_lexer_skip_white_space dev}
 
 json lexer: Skip White Space That Separates Tokens
 ##################################################
@@ -207,7 +207,7 @@ private:
 
 {xrst_end json_lexer_skip_white_space}
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_constructor}
+{xrst_begin json_lexer_constructor dev}
 
 json lexer: Constructor
 #######################
@@ -241,7 +241,7 @@ public:
 
 {xrst_end json_lexer_constructor}
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_check_next_char}
+{xrst_begin json_lexer_check_next_char dev}
 {xrst_spell
    ch
 }
@@ -285,7 +285,7 @@ public:
 
 {xrst_end json_lexer_check_next_char}
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_check_next_string}
+{xrst_begin json_lexer_check_next_string dev}
 
 Get and Check Next Single Character Token
 #########################################
@@ -324,7 +324,7 @@ public:
 
 {xrst_end json_lexer_check_next_string}
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_next_non_neg_int}
+{xrst_begin json_lexer_next_non_neg_int dev}
 
 Get Next Non-Negative Integer
 #############################
@@ -364,7 +364,7 @@ public:
 
 {xrst_end json_lexer_next_non_neg_int}
 -------------------------------------------------------------------------------
-{xrst_begin json_lexer_next_float}
+{xrst_begin json_lexer_next_float dev}
 
 Get Next Floating Point Number
 ##############################

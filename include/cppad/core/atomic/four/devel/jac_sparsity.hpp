@@ -9,7 +9,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin atomic_four_for_jac_sparsity}
+{xrst_begin atomic_four_for_jac_sparsity dev}
 
 Link from Forward Jacobian Sparsity Sweep to atomic_four Callback
 #################################################################
@@ -138,7 +138,7 @@ bool atomic_four<Base>::for_jac_sparsity(
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin atomic_four_rev_jac_sparsity}
+{xrst_begin atomic_four_rev_jac_sparsity dev}
 
 Link from Reverse Jacobian Sparsity Sweep to atomic_four Callback
 #################################################################

@@ -6,7 +6,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin ipopt_nlp_ode_run.hpp}
+{xrst_begin ipopt_nlp_ode_run.hpp dev}
 
 Driver for Running the Ipopt ODE Example
 ########################################

@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*!
-{xrst_begin atomic_index}
+{xrst_begin atomic_index dev}
 
 Store and Retrieve Atomic Function Information by Index
 #######################################################

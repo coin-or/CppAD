@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 /*
-{xrst_begin forward_unary_op}
+{xrst_begin forward_unary_op dev}
 {xrst_spell
    auxillary
 }
@@ -92,7 +92,7 @@ The Taylor coefficients for variable *i_z* up to order *q* .
 
 {xrst_end forward_unary_op}
 ------------------------------------------------------------------------------
-{xrst_begin forward_unary_op_dir}
+{xrst_begin forward_unary_op_dir dev}
 {xrst_spell
    auxillary
    tpv
@@ -200,7 +200,7 @@ and all *r* directions.
 {xrst_end forward_unary_op_dir}
 -------------------------------------------------------------------------------
 /*
-{xrst_begin forward_unary_op_0}
+{xrst_begin forward_unary_op_0 dev}
 {xrst_spell
    auxillary
 }
@@ -277,7 +277,7 @@ the Taylor coefficient for variable *i_z* ``-1`` .
 {xrst_end forward_unary_op_0}
 ------------------------------------------------------------------------------
 /*
-{xrst_begin reverse_unary_op}
+{xrst_begin reverse_unary_op dev}
 {xrst_spell
    auxillary
 }

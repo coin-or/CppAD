@@ -20,7 +20,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 class vectorBool {
 // ============================================================================
 /*
-{xrst_begin vector_bool_member}
+{xrst_begin vector_bool_member dev}
 
 vectorBool: Member Data
 #######################
@@ -94,7 +94,7 @@ public:
 
 {xrst_end vector_bool_member}
 -------------------------------------------------------------------------------
-{xrst_begin vector_bool_typedef}
+{xrst_begin vector_bool_typedef dev}
 
 vectorBool Type Definitions
 ###########################
@@ -116,7 +116,7 @@ public:
 
 {xrst_end vector_bool_typedef}
 ----------------------------------------------------------------------------
-{xrst_begin vector_bool_ctor}
+{xrst_begin vector_bool_ctor dev}
 vectorBool: Constructors and Destructor
 #######################################
 
@@ -180,7 +180,7 @@ Source
 
 {xrst_end vector_bool_ctor}
 -----------------------------------------------------------------------------
-{xrst_begin vector_bool_size}
+{xrst_begin vector_bool_size dev}
 
 vectorBool: Change Size
 #######################
@@ -259,7 +259,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin vector_bool_assign}
+{xrst_begin vector_bool_assign dev}
 
 vectorBool: Assignment Operators
 ################################
@@ -349,7 +349,7 @@ A move semantics version of the assignment operator, implemented using
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin vector_bool_subscript}
+{xrst_begin vector_bool_subscript dev}
 
 vectorBool: Subscript Operator
 ##############################
@@ -399,7 +399,7 @@ Source Code
 
 {xrst_end vector_bool_subscript}
 -------------------------------------------------------------------------------
-{xrst_begin vector_bool_push_back}
+{xrst_begin vector_bool_push_back dev}
 
 vectorBool: push_back
 #####################
@@ -454,7 +454,7 @@ see :ref:`use API push_back<cppad_vector_push_back-name>`
    }
 /* %$$
 -------------------------------------------------------------------------------
-{xrst_begin vector_bool_push_vector}
+{xrst_begin vector_bool_push_vector dev}
 
 vectorBool: push_vector
 #######################
@@ -515,7 +515,7 @@ see :ref:`use API push_vector<cppad_vector_push_vector-name>`
 };
 
 /*
-{xrst_begin vector_bool_output}
+{xrst_begin vector_bool_output dev}
 
 vectorBool: Output
 ##################

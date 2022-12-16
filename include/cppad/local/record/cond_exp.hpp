@@ -8,7 +8,7 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
-{xrst_begin recorder_cond_exp}
+{xrst_begin recorder_cond_exp dev}
 
 Record a Variable or Dynamic Parameter Conditional Expression
 #############################################################

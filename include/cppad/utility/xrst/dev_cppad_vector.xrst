@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin dev_cppad_vector}
+{xrst_begin dev_cppad_vector dev}
 
 The CppAD Vector Template Class Developer Documentation
 #######################################################

@@ -9,7 +9,7 @@
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*
-{xrst_begin independent_all}
+{xrst_begin independent_all dev}
 
 Independent: All Arguments Present
 ##################################
@@ -81,7 +81,7 @@ void Independent(
 }
 /*
 ----------------------------------------------------------------------------
-{xrst_begin independent_x_abort_record}
+{xrst_begin independent_x_abort_record dev}
 
 Independent: Default For dynamic
 ################################
@@ -134,7 +134,7 @@ void Independent(ADVector &x, size_t abort_op_index, bool record_compare)
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin independent_x_abort_op_index}
+{xrst_begin independent_x_abort_op_index dev}
 
 Independent: Default For record_compare, dynamic
 ################################################
@@ -184,7 +184,7 @@ void Independent(ADVector &x, size_t abort_op_index)
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin independent_x_dynamic}
+{xrst_begin independent_x_dynamic dev}
 
 Independent: Default For abort_op_index, record_compare
 #######################################################
@@ -233,7 +233,7 @@ void Independent(ADVector& x, ADVector& dynamic)
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin independent_x}
+{xrst_begin independent_x dev}
 
 Independent: Default For abort_op_index, record_compare, dynamic
 ################################################################

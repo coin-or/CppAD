@@ -13,7 +13,7 @@
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*
  ------------------------------------------------------------------------------
-{xrst_begin discrete_create}
+{xrst_begin discrete_create dev}
 Create a Discrete AD Function
 #############################
 
@@ -58,7 +58,7 @@ inline CppAD::AD<Base> name (const CppAD::AD<Base>& ax) \
 
 {xrst_end discrete_create}
 -----------------------------------------------------------------------------
-{xrst_begin discrete_class}
+{xrst_begin discrete_class dev}
 
 Declare discrete Class and Member Data
 ######################################
@@ -101,7 +101,7 @@ private:
 
 {xrst_end discrete_class}
 ------------------------------------------------------------------------------
-{xrst_begin discrete_list}
+{xrst_begin discrete_list dev}
 List of all objects in the discrete class
 #########################################
 
@@ -141,7 +141,7 @@ private:
 
 {xrst_end discrete_list}
  ------------------------------------------------------------------------------
-{xrst_begin discrete_list_size}
+{xrst_begin discrete_list_size dev}
 Size of the Discrete Function List
 ##################################
 
@@ -170,7 +170,7 @@ public:
 
 {xrst_end discrete_list_size}
  ------------------------------------------------------------------------------
-{xrst_begin discrete_ctor}
+{xrst_begin discrete_ctor dev}
 Constructor Called by each Use of CPPAD_DISCRETE_FUNCTION
 #########################################################
 
@@ -224,7 +224,7 @@ public:
    }
 /*
  ------------------------------------------------------------------------------
-{xrst_begin discrete_ad}
+{xrst_begin discrete_ad dev}
 Implement AD Version of a Discrete Function
 ###########################################
 
@@ -310,7 +310,7 @@ Prototype
    }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin discrete_name}
+{xrst_begin discrete_name dev}
 
 Name Corresponding to a discrete Function
 #########################################
@@ -339,7 +339,7 @@ Source Code
 
 {xrst_end discrete_name}
 ------------------------------------------------------------------------------
-{xrst_begin discrete_eval}
+{xrst_begin discrete_eval dev}
 Link From Forward Mode Sweep to Users Routine
 #############################################
 
@@ -377,7 +377,7 @@ Source Code
 
 {xrst_end discrete_eval}
 ------------------------------------------------------------------------------
-{xrst_begin discrete_ad_eval}
+{xrst_begin discrete_ad_eval dev}
 Link From Forward Mode Sweep to AD Version of Discrete Function
 ###############################################################
 

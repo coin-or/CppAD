@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin cpp_csrc_writer}
+{xrst_begin cpp_csrc_writer dev}
 {xrst_spell
    csrc
 }

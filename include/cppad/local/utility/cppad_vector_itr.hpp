@@ -9,7 +9,7 @@
 # include <cppad/core/cppad_assert.hpp>
 /*
 ------------------------------------------------------------------------------
-{xrst_begin cppad_vector_itr_define}
+{xrst_begin cppad_vector_itr_define dev}
 {xrst_spell
    undef
 }
@@ -69,7 +69,7 @@ template <class Type> class CPPAD_VECTOR_ITR {
 // ==========================================================================
 /*
 -----------------------------------------------------------------------------
-{xrst_begin cppad_vector_itr_traits}
+{xrst_begin cppad_vector_itr_traits dev}
 
 Vector Class Iterator Traits and Friends
 ########################################
@@ -90,7 +90,7 @@ public:
 
 {xrst_end cppad_vector_itr_traits}
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_itr_ctor}
+{xrst_begin cppad_vector_itr_ctor dev}
 {xrst_spell
    indirection
    iterators
@@ -211,7 +211,7 @@ public:
 
 {xrst_end cppad_vector_itr_ctor}
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_itr_inc}
+{xrst_begin cppad_vector_itr_inc dev}
 
 Vector Class Iterator Increment Operators
 #########################################
@@ -252,7 +252,7 @@ public:
 
 {xrst_end cppad_vector_itr_inc}
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_itr_equal}
+{xrst_begin cppad_vector_itr_equal dev}
 {xrst_spell
    iterators
 }
@@ -289,7 +289,7 @@ public:
 
 {xrst_end cppad_vector_itr_equal}
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_itr_element}
+{xrst_begin cppad_vector_itr_element dev}
 
 Vector Class Iterator Access Elements
 #####################################
@@ -335,7 +335,7 @@ public:
 
 {xrst_end cppad_vector_itr_element}
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_itr_random}
+{xrst_begin cppad_vector_itr_random dev}
 {xrst_spell
    iterators
 }

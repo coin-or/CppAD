@@ -361,7 +361,7 @@ void rev_hes_pow_op(
 }
 // ---------------------------------------------------------------------------
 /*
-{xrst_begin sparse_for_hes_nl_binary_op}
+{xrst_begin sparse_for_hes_nl_binary_op dev}
 {xrst_spell
    np
    numvar

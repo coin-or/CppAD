@@ -17,7 +17,7 @@ class pack_setvec_const_iterator;
 class pack_setvec {
 // ============================================================================
 /*
-{xrst_begin pack_setvec_member_data}
+{xrst_begin pack_setvec_member_data dev}
 
 class pack_setvec: Private Member Data
 ######################################
@@ -75,7 +75,7 @@ private:
 
 {xrst_end pack_setvec_member_data}
 -----------------------------------------------------------------------------
-{xrst_begin pack_setvec_vec_memory}
+{xrst_begin pack_setvec_vec_memory dev}
 
 class pack_setvec: Approximate Memory Used by Vector
 ####################################################
@@ -97,7 +97,7 @@ public:
 
 {xrst_end pack_setvec_vec_memory}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_vec_print}
+{xrst_begin pack_setvec_vec_print dev}
 
 class pack_setvec: Print a Vector of Sets
 #########################################
@@ -118,7 +118,7 @@ public:
 
 {xrst_end pack_setvec_vec_print}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_iterators}
+{xrst_begin pack_setvec_iterators dev}
 {xrst_spell
    iterators
    typedef
@@ -144,7 +144,7 @@ public:
 
 {xrst_end pack_setvec_iterators}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_default_ctor}
+{xrst_begin pack_setvec_default_ctor dev}
 
 class pack_setvec: Default Constructor
 ######################################
@@ -184,7 +184,7 @@ public:
 
 {xrst_end pack_setvec_default_ctor}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_destructor}
+{xrst_begin pack_setvec_destructor dev}
 
 class pack_setvec: Destructor
 #############################
@@ -201,7 +201,7 @@ public:
 
 {xrst_end pack_setvec_destructor}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_copy_ctor}
+{xrst_begin pack_setvec_copy_ctor dev}
 
 class pack_setvec: Copy Constructor
 ###################################
@@ -226,7 +226,7 @@ public:
 
 {xrst_end pack_setvec_copy_ctor}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_vec_resize}
+{xrst_begin pack_setvec_vec_resize dev}
 
 class pack_setvec: Vector resize
 ################################
@@ -265,7 +265,7 @@ public:
    }
 /* %$$
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_vec_n_set}
+{xrst_begin pack_setvec_vec_n_set dev}
 
 class pack_setvec: Number of Sets
 #################################
@@ -286,7 +286,7 @@ public:
 
 {xrst_end pack_setvec_vec_n_set}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_vec_end}
+{xrst_begin pack_setvec_vec_end dev}
 
 class pack_setvec: End Value
 ############################
@@ -307,7 +307,7 @@ public:
 
 {xrst_end pack_setvec_vec_end}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_vec_assignment}
+{xrst_begin pack_setvec_vec_assignment dev}
 
 class pack_setvec: Vector Assignment
 ####################################
@@ -337,7 +337,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_vec_swap}
+{xrst_begin pack_setvec_vec_swap dev}
 
 class pack_setvec: Vector Swap
 ##############################
@@ -370,7 +370,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_number_elements}
+{xrst_begin pack_setvec_number_elements dev}
 
 class pack_setvec: Number of Elements in a Set
 ##############################################
@@ -432,7 +432,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_add_element}
+{xrst_begin pack_setvec_add_element dev}
 
 class pack_setvec: Add an Elements to a Set
 ###########################################
@@ -465,7 +465,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_post_element}
+{xrst_begin pack_setvec_post_element dev}
 
 class pack_setvec: Add an Elements to a Set
 ###########################################
@@ -488,7 +488,7 @@ public:
 */
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_process_post}
+{xrst_begin pack_setvec_process_post dev}
 
 class pack_setvec: Add Posted Elements to a Set
 ###############################################
@@ -509,7 +509,7 @@ public:
 
 {xrst_end pack_setvec_process_post}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_is_element}
+{xrst_begin pack_setvec_is_element dev}
 
 class pack_setvec: Is an Element in a Set
 #########################################
@@ -541,7 +541,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_clear}
+{xrst_begin pack_setvec_clear dev}
 
 class pack_setvec: Assign a Set to be Empty
 ###########################################
@@ -570,7 +570,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_assignment}
+{xrst_begin pack_setvec_assignment dev}
 
 class pack_setvec: Assign a Set To Equal Another Set
 ####################################################
@@ -605,7 +605,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_binary_union}
+{xrst_begin pack_setvec_binary_union dev}
 
 class pack_setvec: Assign a Set To Equal Union of Two Sets
 ##########################################################
@@ -644,7 +644,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_binary_intersection}
+{xrst_begin pack_setvec_binary_intersection dev}
 
 class pack_setvec: Assign a Set To Intersection of Two Sets
 ###########################################################
@@ -691,7 +691,7 @@ class pack_setvec_const_iterator { // BEGIN_CLASS_PACK_SETVEC_CONST_ITERATOR
 // =========================================================================
 
 /*
-{xrst_begin pack_setvec_const_iterator_member_data}
+{xrst_begin pack_setvec_const_iterator_member_data dev}
 
 class pack_setvec_const_iterator private: Member Data
 #####################################################
@@ -755,7 +755,7 @@ public:
 
 {xrst_end pack_setvec_const_iterator_member_data}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_const_iterator_ctor}
+{xrst_begin pack_setvec_const_iterator_ctor dev}
 
 class pack_setvec_const_iterator: Constructor
 #############################################
@@ -795,7 +795,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_const_iterator_dereference}
+{xrst_begin pack_setvec_const_iterator_dereference dev}
 {xrst_spell
    dereference
 }
@@ -818,7 +818,7 @@ Implementation
 
 {xrst_end pack_setvec_const_iterator_dereference}
 -------------------------------------------------------------------------------
-{xrst_begin pack_setvec_const_iterator_increment}
+{xrst_begin pack_setvec_const_iterator_increment dev}
 
 class pack_setvec_const_iterator: Increment
 ###########################################
@@ -900,7 +900,7 @@ inline void pack_setvec::print(void) const
 
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin sparsity_user2internal_pack_setvec}
+{xrst_begin sparsity_user2internal_pack_setvec dev}
 {xrst_spell
    msg
 }

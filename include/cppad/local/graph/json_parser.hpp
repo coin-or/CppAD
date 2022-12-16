@@ -12,7 +12,7 @@
 # include <cppad/core/graph/cpp_graph.hpp>
 
 /*
-{xrst_begin json_parser}
+{xrst_begin json_parser dev}
 {xrst_spell
    parser
 }

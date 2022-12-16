@@ -7,7 +7,7 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
-{xrst_begin store_op_var}
+{xrst_begin store_op_var dev}
 {xrst_spell
    isvar
    pv

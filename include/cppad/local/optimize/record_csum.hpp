@@ -9,7 +9,7 @@
 namespace CppAD { namespace local { namespace optimize  {
 
 /*!
-{xrst_begin optimize_record_csum}
+{xrst_begin optimize_record_csum dev}
 {xrst_spell
    addpv
    addvv

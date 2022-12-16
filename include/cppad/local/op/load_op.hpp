@@ -9,7 +9,7 @@
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
  ------------------------------------------------------------------------------
-{xrst_begin load_op_var}
+{xrst_begin load_op_var dev}
 {xrst_spell
    isvar
    pv

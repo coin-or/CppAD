@@ -8,7 +8,7 @@
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
 /*
-{xrst_begin optimize_match_op}
+{xrst_begin optimize_match_op dev}
 {xrst_spell
    erfc
 }

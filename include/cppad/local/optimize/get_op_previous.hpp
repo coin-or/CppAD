@@ -10,7 +10,7 @@
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
 /*
-{xrst_begin optimize_get_op_previous}
+{xrst_begin optimize_get_op_previous dev}
 {xrst_spell
    cexp
 }

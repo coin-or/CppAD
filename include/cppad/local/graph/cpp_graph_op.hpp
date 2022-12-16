@@ -15,7 +15,7 @@
 
 namespace CppAD { namespace local { namespace graph {
 /*
-{xrst_begin cpp_graph_op}
+{xrst_begin cpp_graph_op dev}
 
 C++ AD Graph Operators
 ######################

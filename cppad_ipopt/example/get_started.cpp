@@ -5,7 +5,7 @@
 
 /*
 
-{xrst_begin ipopt_nlp_get_started.cpp}
+{xrst_begin ipopt_nlp_get_started.cpp dev}
 {xrst_spell
    lc
 }

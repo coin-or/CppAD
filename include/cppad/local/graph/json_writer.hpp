@@ -10,7 +10,7 @@
 # include <cppad/local/graph/cpp_graph_op.hpp>
 
 /*
-{xrst_begin json_writer}
+{xrst_begin json_writer dev}
 
 Json AD Graph Writer
 ####################

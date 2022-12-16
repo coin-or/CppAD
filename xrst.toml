@@ -8,7 +8,8 @@ html_directory    = 'build/html'
 tex_directory     = 'build/tex'
 
 [root_file]
-default = 'dev.xrst'
+default = 'doc.xrst'
+dev     = 'xrst/devel/devel.xrst'
 
 [include_all]
 rst_epilog = ''

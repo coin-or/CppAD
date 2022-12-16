@@ -18,7 +18,7 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
-{xrst_begin op_code_var}
+{xrst_begin op_code_var dev}
 {xrst_spell
    addpv
    funap

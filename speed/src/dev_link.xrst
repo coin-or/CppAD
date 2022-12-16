@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin speed_available}
+{xrst_begin speed_available dev}
 {xrst_spell
    src
 }
@@ -41,7 +41,7 @@ This function is implemented in the file
 
 {xrst_end speed_available}
 ------------------------------------------------------------------------------
-{xrst_begin speed_correct}
+{xrst_begin speed_correct dev}
 {xrst_spell
    src
 }
@@ -85,7 +85,7 @@ This function is implemented in the file
 
 {xrst_end speed_correct}
 ------------------------------------------------------------------------------
-{xrst_begin speed_time}
+{xrst_begin speed_time dev}
 {xrst_spell
    src
 }
@@ -136,7 +136,7 @@ This function is implemented in the file
 
 {xrst_end speed_time}
 ------------------------------------------------------------------------------
-{xrst_begin speed_time_callback}
+{xrst_begin speed_time_callback dev}
 
 Timing Callback Functions
 #########################

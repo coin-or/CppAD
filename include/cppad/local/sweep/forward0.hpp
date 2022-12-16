@@ -17,7 +17,7 @@ Compute zero order forward mode Taylor coefficients.
 
 /*
  ------------------------------------------------------------------------------
-{xrst_begin sweep_forward0}
+{xrst_begin sweep_forward0 dev}
 {xrst_spell
    cskip
    numvar

@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin is_pod}
+{xrst_begin is_pod dev}
 {xrst_spell
    nullptr
 }

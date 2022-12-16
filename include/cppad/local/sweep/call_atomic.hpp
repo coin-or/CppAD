@@ -15,7 +15,7 @@ namespace CppAD { namespace local { namespace sweep {
 
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_forward_callback}
+{xrst_begin atomic_forward_callback dev}
 
 Forward Mode Callback to Atomic Functions
 #########################################
@@ -173,7 +173,7 @@ void call_atomic_forward(
 }
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_reverse_callback}
+{xrst_begin atomic_reverse_callback dev}
 
 Reverse Mode callback to Atomic Functions
 #########################################
@@ -331,7 +331,7 @@ void call_atomic_reverse(
 }
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_for_jac_sparsity_callback}
+{xrst_begin atomic_for_jac_sparsity_callback dev}
 
 Forward Jacobian Sparsity Callback to Atomic Functions
 ######################################################
@@ -496,7 +496,7 @@ void call_atomic_for_jac_sparsity(
 }
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_rev_jac_sparsity_callback}
+{xrst_begin atomic_rev_jac_sparsity_callback dev}
 
 Reverse Jacobian sparsity Callback to Atomic Functions
 ######################################################
@@ -658,7 +658,7 @@ void call_atomic_rev_jac_sparsity(
 }
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_for_hes_sparsity_callback}
+{xrst_begin atomic_for_hes_sparsity_callback dev}
 {xrst_spell
    np
    numvar
@@ -909,7 +909,7 @@ void call_atomic_for_hes_sparsity(
 }
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_rev_hes_sparsity_callback}
+{xrst_begin atomic_rev_hes_sparsity_callback dev}
 
 Reverse Hessian Sparsity Callback to Atomic Functions
 #####################################################
@@ -1114,7 +1114,7 @@ void call_atomic_rev_hes_sparsity(
 }
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin atomic_rev_depend_callback}
+{xrst_begin atomic_rev_depend_callback dev}
 
 Reverse Dependency Callback to Atomic Functions
 ###############################################

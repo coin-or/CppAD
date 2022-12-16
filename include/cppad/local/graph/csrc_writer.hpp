@@ -10,7 +10,7 @@
 # include <cppad/local/graph/cpp_graph_op.hpp>
 
 /*
-{xrst_begin csrc_writer}
+{xrst_begin csrc_writer dev}
 {xrst_spell
    csrc
 }

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin ipopt_nlp_ode_check.cpp}
+{xrst_begin ipopt_nlp_ode_check.cpp dev}
 
 Correctness Check for Both Simple and Fast Representations
 ##########################################################

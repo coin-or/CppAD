@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin ipopt_nlp_ode_fast.hpp}
+{xrst_begin ipopt_nlp_ode_fast.hpp dev}
 
 ODE Fitting Using Fast Representation
 #####################################

@@ -19,7 +19,7 @@ class list_setvec { // BEGIN_CLASS_LIST_SETVEC
 
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_member_data}
+{xrst_begin list_setvec_member_data dev}
 {xrst_spell
    struct
 }
@@ -143,7 +143,7 @@ private:
 
 {xrst_end list_setvec_member_data}
 ------------------------------------------------------------------------------
-{xrst_begin list_setvec_reference_count}
+{xrst_begin list_setvec_reference_count dev}
 
 class list_setvec private: Number of References to a Set
 ########################################################
@@ -185,7 +185,7 @@ private:
    }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin list_setvec_drop}
+{xrst_begin list_setvec_drop dev}
 {xrst_spell
    decremented
 }
@@ -300,7 +300,7 @@ private:
    }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin list_setvec_get_data_index}
+{xrst_begin list_setvec_get_data_index dev}
 {xrst_spell
    decremented
 }
@@ -362,7 +362,7 @@ private:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_check_data_structure}
+{xrst_begin list_setvec_check_data_structure dev}
 
 class list_setvec private: Check Data Structure
 ###############################################
@@ -487,7 +487,7 @@ private:
 # endif
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_vec_memory}
+{xrst_begin list_setvec_vec_memory dev}
 
 class list_setvec: Approximate Memory Used by Vector
 ####################################################
@@ -509,7 +509,7 @@ public:
 
 {xrst_end list_setvec_vec_memory}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_vec_print}
+{xrst_begin list_setvec_vec_print dev}
 
 class list_setvec: Print a Vector of Sets
 #########################################
@@ -530,7 +530,7 @@ public:
 
 {xrst_end list_setvec_vec_print}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_iterators}
+{xrst_begin list_setvec_iterators dev}
 {xrst_spell
    iterators
    typedef
@@ -555,7 +555,7 @@ public:
 
 {xrst_end list_setvec_iterators}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_default_ctor}
+{xrst_begin list_setvec_default_ctor dev}
 
 class list_setvec: Default Constructor
 ######################################
@@ -586,7 +586,7 @@ public:
 
 {xrst_end list_setvec_default_ctor}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_destructor}
+{xrst_begin list_setvec_destructor dev}
 
 class list_setvec: Destructor
 #############################
@@ -605,7 +605,7 @@ public:
 
 {xrst_end list_setvec_destructor}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_copy_ctor}
+{xrst_begin list_setvec_copy_ctor dev}
 
 class list_setvec: Copy Constructor
 ###################################
@@ -629,7 +629,7 @@ public:
 
 {xrst_end list_setvec_copy_ctor}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_vec_resize}
+{xrst_begin list_setvec_vec_resize dev}
 
 class list_setvec: Vector resize
 ################################
@@ -685,7 +685,7 @@ public:
    }
 /* %$$
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_vec_n_set}
+{xrst_begin list_setvec_vec_n_set dev}
 
 class list_setvec: Number of Sets
 #################################
@@ -706,7 +706,7 @@ public:
 
 {xrst_end list_setvec_vec_n_set}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_vec_end}
+{xrst_begin list_setvec_vec_end dev}
 
 class list_setvec: End Value
 ############################
@@ -727,7 +727,7 @@ public:
 
 {xrst_end list_setvec_vec_end}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_vec_assignment}
+{xrst_begin list_setvec_vec_assignment dev}
 
 class list_setvec: Vector Assignment
 ####################################
@@ -756,7 +756,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_vec_swap}
+{xrst_begin list_setvec_vec_swap dev}
 
 class list_setvec: Vector Swap
 ##############################
@@ -789,7 +789,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_number_elements}
+{xrst_begin list_setvec_number_elements dev}
 
 class list_setvec: Number of Elements in a Set
 ##############################################
@@ -831,7 +831,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_add_element}
+{xrst_begin list_setvec_add_element dev}
 
 class list_setvec: Add an Elements to a Set
 ###########################################
@@ -957,7 +957,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_post_element}
+{xrst_begin list_setvec_post_element dev}
 
 class list_setvec: Post an Elements for Addition to a Set
 #########################################################
@@ -996,7 +996,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_process_post}
+{xrst_begin list_setvec_process_post dev}
 
 class list_setvec: Add Posted Elements to a Set
 ###############################################
@@ -1136,7 +1136,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_is_element}
+{xrst_begin list_setvec_is_element dev}
 
 class list_setvec: Is an Element in a Set
 #########################################
@@ -1173,7 +1173,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_clear}
+{xrst_begin list_setvec_clear dev}
 
 class list_setvec: Assign a Set to be Empty
 ###########################################
@@ -1203,7 +1203,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_assignment}
+{xrst_begin list_setvec_assignment dev}
 
 class list_setvec: Assign a Set To Equal Another Set
 ####################################################
@@ -1284,7 +1284,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_binary_union}
+{xrst_begin list_setvec_binary_union dev}
 
 class list_setvec: Assign a Set To Union of Two Sets
 ####################################################
@@ -1431,7 +1431,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_binary_intersection}
+{xrst_begin list_setvec_binary_intersection dev}
 
 class list_setvec: Assign a Set To Equal Another Set
 ####################################################
@@ -1569,7 +1569,7 @@ class list_setvec_const_iterator { // BEGIN_CLASS_LIST_SETVEC_CONST_ITERATOR
 // =========================================================================
 
 /*
-{xrst_begin list_setvec_const_iterator_member_data}
+{xrst_begin list_setvec_const_iterator_member_data dev}
 
 class list_setvec_const_iterator private: Member Data
 #####################################################
@@ -1610,7 +1610,7 @@ private:
 
 {xrst_end list_setvec_const_iterator_member_data}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_const_iterator_ctor}
+{xrst_begin list_setvec_const_iterator_ctor dev}
 
 class list_setvec_const_iterator: Constructor
 #############################################
@@ -1653,7 +1653,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_const_iterator_dereference}
+{xrst_begin list_setvec_const_iterator_dereference dev}
 {xrst_spell
    dereference
 }
@@ -1677,7 +1677,7 @@ public:
 
 {xrst_end list_setvec_const_iterator_dereference}
 -------------------------------------------------------------------------------
-{xrst_begin list_setvec_const_iterator_increment}
+{xrst_begin list_setvec_const_iterator_increment dev}
 
 class list_setvec_const_iterator: Increment
 ###########################################
@@ -1720,7 +1720,7 @@ inline void list_setvec::print(void) const
 }
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin sparsity_user2internal_list_setvec}
+{xrst_begin sparsity_user2internal_list_setvec dev}
 {xrst_spell
    msg
 }

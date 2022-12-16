@@ -7,7 +7,7 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
-{xrst_begin op_code_dyn}
+{xrst_begin op_code_dyn dev}
 {xrst_spell
    zmul
 }
@@ -210,7 +210,7 @@ enum op_code_dyn {
 // END_SORT_THIS_LINE_MINUS_4
 
 /*
-{xrst_begin num_arg_dyn}
+{xrst_begin num_arg_dyn dev}
 
 Number of Arguments to a Dynamic Parameter Operator
 ###################################################
@@ -309,7 +309,7 @@ inline size_t num_arg_dyn(op_code_dyn op)
 }
 
 /*
-{xrst_begin op_name_dyn}
+{xrst_begin op_name_dyn dev}
 
 Number of Arguments to a Dynamic Parameter Operator
 ###################################################
@@ -399,7 +399,7 @@ inline const char* op_name_dyn(op_code_dyn op)
 }
 
 /*
-{xrst_begin num_non_par_arg_dyn}
+{xrst_begin num_non_par_arg_dyn dev}
 
 Number Non-Parameter Arguments to a Dynamic Parameters Operator
 ###############################################################

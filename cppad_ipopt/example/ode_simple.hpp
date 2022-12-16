@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin ipopt_nlp_ode_simple.hpp}
+{xrst_begin ipopt_nlp_ode_simple.hpp dev}
 
 ODE Fitting Using Simple Representation
 #######################################

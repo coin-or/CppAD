@@ -8,7 +8,7 @@
 # include <cppad/local/play/atom_op_info.hpp>
 
 /*
-{xrst_begin local_sweep_for_hes}
+{xrst_begin local_sweep_for_hes dev}
 {xrst_spell
    numvar
 }

@@ -14,7 +14,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*
 --------------------------------------- ---------------------------------------
-{xrst_begin devel_forward_order}
+{xrst_begin devel_forward_order dev}
 {xrst_spell
    xq
    yq
@@ -292,7 +292,7 @@ BaseVector ADFun<Base,RecBase>::Forward(
 }
 /*
 --------------------------------------- ---------------------------------------
-{xrst_begin devel_forward_dir}
+{xrst_begin devel_forward_dir dev}
 {xrst_spell
    xq
    yq

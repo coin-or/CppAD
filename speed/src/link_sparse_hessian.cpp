@@ -16,7 +16,7 @@ using CppAD::vector;
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin sparse_hessian_choose_row_col}
+{xrst_begin sparse_hessian_choose_row_col dev}
 
 Randomly choose Hessian row and column indices
 ##############################################
@@ -113,7 +113,7 @@ void choose_row_col(
 } // END_EMPTY_NAMESPACE
 /*
 ------------------------------------------------------------------------------
-{xrst_begin info_sparse_hessian}
+{xrst_begin info_sparse_hessian dev}
 
 Sparse Hessian Speed Test Information
 #####################################

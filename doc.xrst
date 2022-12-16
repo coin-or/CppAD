@@ -3,25 +3,18 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin CppAD}
-
-{xrst_comment --------------------------------------------------------------
-default values for all the CppAD user documentation
+{xrst_spell
+   github
+   appveyor
+   autodiff
+   templated
+   posix
 }
-
-:math:`\newcommand{\W}[1]{ \; #1 \; }`
-:math:`\newcommand{\R}[1]{ {\rm #1} }`
-:math:`\newcommand{\B}[1]{ {\bf #1} }`
-:math:`\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }`
-:math:`\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }`
-:math:`\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }`
-:math:`\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }`
-
-{xrst_comment -------------------------------------------------------------- }
 
 cppad-20221104: C++ Algorithmic Differentiation Package User Documentation
 ##########################################################################
 
- |coin.png| 
+.. image:: {xrst_dir coin.png}
 
 .. list-table::
 
@@ -227,6 +220,5 @@ Contents
    xrst/appendix/appendix.xrst
 }
 
-.. |coin.png| image:: ../coin.png
 
 {xrst_end CppAD}

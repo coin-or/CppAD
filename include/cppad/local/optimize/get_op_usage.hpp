@@ -34,7 +34,7 @@ inline bool op_add_or_sub(
 }
 
 /*!
-{xrst_begin optimize_op_inc_arg_usage}
+{xrst_begin optimize_op_inc_arg_usage dev}
 {xrst_spell
    cexp
    csum
@@ -140,7 +140,7 @@ void op_inc_arg_usage(
 }
 
 /*!
-{xrst_begin optimize_get_op_usage}
+{xrst_begin optimize_get_op_usage dev}
 {xrst_spell
    cexp
    dep

@@ -10,7 +10,7 @@
 // BEGIN_CPPAD_LOCAL_UTILITY_NAMESPACE
 namespace CppAD { namespace local { namespace utility {
 /*
-{xrst_begin vector_bool_element}
+{xrst_begin vector_bool_element dev}
 
 vectorBoolElement Class
 #######################

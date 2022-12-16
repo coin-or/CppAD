@@ -8,7 +8,7 @@
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
 /*
  ------------------------------------------------------------------------------
-{xrst_begin vec_ad_comp_assign}
+{xrst_begin vec_ad_comp_assign dev}
 VecAD: Prints Error Message If A Compound Assignment Is Used
 ############################################################
 
@@ -70,7 +70,7 @@ VecAD_reference& operator cop (int right)                           \
 
 {xrst_end vec_ad_comp_assign}
 ------------------------------------------------------------------------------
-{xrst_begin vec_ad_reference}
+{xrst_begin vec_ad_reference dev}
 VecAD Element Reference Class
 #############################
 
@@ -264,7 +264,7 @@ public:
 };
 // ---------------------------------------------------------------------------
 /*!
-{xrst_begin vec_ad_class}
+{xrst_begin vec_ad_class dev}
 {xrst_spell
    taddr
 }

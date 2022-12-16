@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin temp_file}
+{xrst_begin temp_file dev}
 {xrst_spell
    mkstemp
 }

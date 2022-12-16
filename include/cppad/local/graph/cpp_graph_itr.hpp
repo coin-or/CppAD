@@ -12,7 +12,7 @@ namespace CppAD { namespace local { namespace graph {
 
 class cpp_graph_itr {
 /*
-{xrst_begin cpp_graph_itr_data}
+{xrst_begin cpp_graph_itr_data dev}
 
 C++ AD Graph Iterator Private Member Data
 #########################################
@@ -39,7 +39,7 @@ private:
 
 {xrst_end cpp_graph_itr_data}
 ------------------------------------------------------------------------------
-{xrst_begin cpp_graph_itr_set_value}
+{xrst_begin cpp_graph_itr_set_value dev}
 {xrst_spell
    str
 }
@@ -261,7 +261,7 @@ Prototype
 }
 /* %$$
 -------------------------------------------------------------------------------
-{xrst_begin cpp_graph_itr_types}
+{xrst_begin cpp_graph_itr_types dev}
 
 C++ AD Graph Iterator Types
 ###########################
@@ -282,7 +282,7 @@ public:
 
 {xrst_end cpp_graph_itr_types}
 ------------------------------------------------------------------------------
-{xrst_begin cpp_graph_itr_ctor}
+{xrst_begin cpp_graph_itr_ctor dev}
 
 C++ AD Graph Iterator Constructors
 ##################################
@@ -352,7 +352,7 @@ or equal to the size of *operator_vec*
    }
 /* %$$
 ------------------------------------------------------------------------------
-{xrst_begin cpp_graph_itr_input}
+{xrst_begin cpp_graph_itr_input dev}
 
 C++ AD Graph Iterator Input Operations
 ######################################

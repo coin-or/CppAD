@@ -20,7 +20,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
    static CppAD::vector<size_t> callback_col_;
 /*
 ------------------------------------------------------------------------------
-{xrst_begin sparse_jacobian_choose_row_col}
+{xrst_begin sparse_jacobian_choose_row_col dev}
 Randomly Choose Row and Column Indices for Sparse Jacobian
 ##########################################################
 
@@ -126,7 +126,7 @@ void choose_row_col(
 } // END_EMPTY_NAMESPACE
 /*
 ------------------------------------------------------------------------------
-{xrst_begin info_sparse_jacobian}
+{xrst_begin info_sparse_jacobian dev}
 
 Sparse Jacobian Speed Test Information
 ######################################

@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin ipopt_nlp_ode_problem}
+{xrst_begin ipopt_nlp_ode_problem dev}
 {xrst_spell
    iterative
    nz
@@ -284,7 +284,7 @@ source code that defines the example values and functions defined above.
 
 {xrst_end ipopt_nlp_ode_problem}
 -----------------------------------------------------------------------------
-{xrst_begin ipopt_nlp_ode_simple}
+{xrst_begin ipopt_nlp_ode_simple dev}
 {xrst_spell
    fg
    nz
@@ -366,7 +366,7 @@ objective and constraints.
 
 {xrst_end ipopt_nlp_ode_simple}
 -----------------------------------------------------------------------------
-{xrst_begin ipopt_nlp_ode_fast}
+{xrst_begin ipopt_nlp_ode_fast dev}
 {xrst_spell
    fg
    nz

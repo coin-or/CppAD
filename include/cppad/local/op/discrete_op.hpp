@@ -5,7 +5,7 @@
 // SPDX-FileContributor: 2003-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin discrete_op}
+{xrst_begin discrete_op dev}
 {xrst_spell
    ataylor
    tpv

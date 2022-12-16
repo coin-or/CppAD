@@ -8,7 +8,7 @@
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*
-{xrst_begin recorder_put_var_atomic}
+{xrst_begin recorder_put_var_atomic dev}
 {xrst_spell
    taddr
 }

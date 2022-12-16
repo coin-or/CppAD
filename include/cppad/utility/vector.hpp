@@ -25,7 +25,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Type> class vector {
 // ==========================================================================
 /*
-{xrst_begin cppad_vector_member}
+{xrst_begin cppad_vector_member dev}
 
 Vector Class: Member Data
 #########################
@@ -77,7 +77,7 @@ public:
 
 {xrst_end cppad_vector_member}
 -----------------------------------------------------------------------------
-{xrst_begin cppad_vector_typedef}
+{xrst_begin cppad_vector_typedef dev}
 
 Vector Class: Type Definitions
 ##############################
@@ -106,7 +106,7 @@ public:
 
 {xrst_end cppad_vector_typedef}
 -----------------------------------------------------------------------------
-{xrst_begin cppad_vector_ctor}
+{xrst_begin cppad_vector_ctor dev}
 
 Vector Class: Constructors and Destructor
 #########################################
@@ -188,7 +188,7 @@ private:
 
 {xrst_end cppad_vector_ctor}
 -----------------------------------------------------------------------------
-{xrst_begin cppad_vector_size}
+{xrst_begin cppad_vector_size dev}
 
 Vector Class: Change Size
 #########################
@@ -270,7 +270,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_assign}
+{xrst_begin cppad_vector_assign dev}
 
 Vector Class: Assignment Operators
 ##################################
@@ -351,7 +351,7 @@ public:
    }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_subscript}
+{xrst_begin cppad_vector_subscript dev}
 
 Vector Class: Subscript Operator
 ################################
@@ -387,7 +387,7 @@ Source
 
 {xrst_end cppad_vector_subscript}
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_push_back}
+{xrst_begin cppad_vector_push_back dev}
 
 Vector Class: push_back
 #######################
@@ -435,7 +435,7 @@ see :ref:`use API push_back<cppad_vector_push_back-name>`
    }
 /* %$$
 -------------------------------------------------------------------------------
-{xrst_begin cppad_vector_push_vector}
+{xrst_begin cppad_vector_push_vector dev}
 
 Vector Class: push_vector
 #########################
@@ -490,7 +490,7 @@ see :ref:`use API push_vector<cppad_vector_push_vector-name>`
    }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin cppad_vector_itr_fun}
+{xrst_begin cppad_vector_itr_fun dev}
 
 Vector Class: Iterator Functions
 ################################
@@ -531,7 +531,7 @@ Source
 // =========================================================================
 
 /*
-{xrst_begin cppad_vector_output}
+{xrst_begin cppad_vector_output dev}
 
 Vector Class: Output
 ####################

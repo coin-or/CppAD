@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2003-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 /*
-{xrst_begin forward_binary_op}
+{xrst_begin forward_binary_op dev}
 {xrst_spell
    subvp
 }
@@ -127,7 +127,7 @@ The Taylor coefficients for variable *i_z* up to order *q* .
 
 {xrst_end forward_binary_op}
 ------------------------------------------------------------------------------
-{xrst_begin forward_binary_op_dir}
+{xrst_begin forward_binary_op_dir dev}
 {xrst_spell
    tpv
 }
@@ -263,7 +263,7 @@ and all *r* directions.
 {xrst_end forward_binary_op_dir}
 -------------------------------------------------------------------------------
 /*
-{xrst_begin forward_binary_op_0}
+{xrst_begin forward_binary_op_0 dev}
 
 Zero Order Forward Binary Operators
 ###################################
@@ -366,7 +366,7 @@ The zero order Taylor coefficients for variable *i_z* .
 {xrst_end forward_binary_op_0}
 ------------------------------------------------------------------------------
 /*
-{xrst_begin reverse_binary_op}
+{xrst_begin reverse_binary_op dev}
 
 Reverse Binary Operators
 ########################

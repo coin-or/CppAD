@@ -13,7 +13,7 @@
 # define CPPAD_REV_JAC_TRACE 0
 
 /*
-{xrst_begin local_sweep_rev_jac}
+{xrst_begin local_sweep_rev_jac dev}
 {xrst_spell
    numvar
 }
