@@ -1,14 +1,7 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 // system include files used for I/O
 # include <iostream>
@@ -29,21 +22,21 @@ extern bool retape(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "example/ipopt_solve";
-    size_t      width = 20;
-    CppAD::test_boolofvoid Run(group, width);
+{  std::string group = "example/ipopt_solve";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
 
-    // This line is used by test_one.sh
+   // This line is used by test_one.sh
 
-    // external compiled tests
-    Run( get_started,         "get_started"  );
-    Run( ode_inverse,         "ode_inverse"  );
-    Run( retape,              "retape"       );
-    //
-    // check for memory leak
-    bool memory_ok = CppAD::thread_alloc::free_all();
-    // print summary at end
-    bool ok = Run.summary(memory_ok);
-    //
-    return static_cast<int>( ! ok );
+   // external compiled tests
+   Run( get_started,         "get_started"  );
+   Run( ode_inverse,         "ode_inverse"  );
+   Run( retape,              "retape"       );
+   //
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   // print summary at end
+   bool ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
 }

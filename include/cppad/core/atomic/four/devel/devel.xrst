@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin atomic_four_devel dev}
+
+atomic_four Developer Documentation
+###################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atomic/four/devel/jac_sparsity.hpp
+   include/cppad/core/atomic/four/devel/hes_sparsity.hpp
+}
+
+{xrst_end atomic_four_devel}

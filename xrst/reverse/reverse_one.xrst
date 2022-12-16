@@ -1,0 +1,103 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin reverse_one}
+{xrst_spell
+   dw
+}
+
+First Order Reverse Mode
+########################
+
+Syntax
+******
+*dw* = *f* . ``Reverse`` (1, *w* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+The function :math:`W : \B{R}^n \rightarrow \B{R}` is defined by
+
+.. math::
+
+   W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
+
+The result of this operation is the derivative
+:math:`dw = W^{(1)} (x)`; i.e.,
+
+.. math::
+
+   dw = w_0 * F_0^{(1)} ( x ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (x)
+
+Note that if :math:`w` is the *i*-th
+:ref:`glossary@Elementary Vector` ,
+:math:`dw = F_i^{(1)} (x)`.
+
+f
+*
+The object *f* has prototype
+
+   ``const ADFun<`` *Base* > *f*
+
+Before this call to ``Reverse`` , the value returned by
+
+   *f* . ``size_order`` ()
+
+must be greater than or equal one (see :ref:`size_order-name` ).
+
+x
+*
+The vector *x* in expression for *dw* above
+corresponds to the previous call to :ref:`forward_zero-name`
+using this ADFun object *f* ; i.e.,
+
+   *f* . ``Forward`` (0, *x* )
+
+If there is no previous call with the first argument zero,
+the value of the :ref:`Independent-name` variables
+during the recording of the AD sequence of operations is used
+for *x* .
+
+w
+*
+The argument *w* has prototype
+
+   ``const`` *Vector* & *w*
+
+(see :ref:`reverse_one@Vector` below)
+and its size
+must be equal to *m* , the dimension of the
+:ref:`fun_property@Range` space for *f* .
+
+dw
+**
+The result *dw* has prototype
+
+   *Vector* *dw*
+
+(see :ref:`reverse_one@Vector` below)
+and its value is the derivative :math:`W^{(1)} (x)`.
+The size of *dw*
+is equal to *n* , the dimension of the
+:ref:`fun_property@Domain` space for *f* .
+
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+Example
+*******
+{xrst_toc_hidden
+   example/general/reverse_one.cpp
+}
+The file
+:ref:`reverse_one.cpp-name`
+contains an example and test of this operation.
+
+{xrst_end reverse_one}

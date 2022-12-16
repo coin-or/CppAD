@@ -8,44 +8,44 @@ start_dir=`pwd`
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 name='highlight'
 if [ "$0" != "bin/get_$name.sh" ]
 then
-    echo "get_$name.sh should be in the ./bin directory and executed using"
-    echo "bin/get_$name.sh"
-    exit 1
+   echo "get_$name.sh should be in the ./bin directory and executed using"
+   echo "bin/get_$name.sh"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 # n_proc
 if which nproc >& /dev/null
 then
-    n_job=$(nproc)
+   n_job=$(nproc)
 else
-    n_job=$(sysctl -n hw.ncpu)
+   n_job=$(sysctl -n hw.ncpu)
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
 then
-    mkdir build
+   mkdir build
 fi
 cd build
 # -----------------------------------------------------------------------------
 dir=`echo $tarball | sed -e 's|\.tar||' -e 's|\.gz||'`
 if [ ! -e $dir ]
 then
-    echo_eval wget "$web_page/$tarball"
-    echo_eval tar -xzf $tarball
-    rm $tarball
+   echo_eval wget "$web_page/$tarball"
+   echo_eval tar -xzf $tarball
+   rm $tarball
 fi
 # -----------------------------------------------------------------------------
 echo_eval cd $dir
 if [ ! -e build ]
 then
-    mkdir build
+   mkdir build
 fi
 echo_eval cd build
 #

@@ -1,15 +1,8 @@
 #! /bin/bash -e
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 # Bradley M. Bell has given permission to use this script to generate
 # a distribution of CppAD that has "GNU General Public License Version 3"
 # in place of "Eclipse Public License Version 1.0.". Other's are free to
@@ -17,29 +10,29 @@
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/package.sh" ]
 then
-    echo "bin/package.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/package.sh: must be executed from its parent directory"
+   exit 1
 fi
 include_doc='yes'
 if [ "$1" != '' ]
 then
-    if [ "$1" == '--no_doc' ]
-    then
-        include_doc='no'
-    else
-        echo 'usage: bin/package.sh [--no_doc]'
-        exit 1
-    fi
+   if [ "$1" == '--no_doc' ]
+   then
+      include_doc='no'
+   else
+      echo 'usage: bin/package.sh [--no_doc]'
+      exit 1
+   fi
 fi
 if [ "$include_doc" == 'yes' ]
 then
-    if ! git show-ref origin/gh-pages >& /dev/null
-    then
-        echo 'bin/package.sh: git cannot find origin/gh-pages branch'
-        echo 'use the following command to fetch it:'
-        echo '    git fetch origin gh-pages'
-        exit 1
-    fi
+   if ! git show-ref origin/gh-pages >& /dev/null
+   then
+      echo 'bin/package.sh: git cannot find origin/gh-pages branch'
+      echo 'use the following command to fetch it:'
+      echo '    git fetch origin gh-pages'
+      exit 1
+   fi
 fi
 echo_eval() {
      echo $*
@@ -48,13 +41,13 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 src_dir=`pwd`
 version=`sed -n -e '/^SET( *cppad_version *"[0-9.]*"/p' CMakeLists.txt | \
-    sed -e 's|.*"\([^"]*\)".*|\1|'`
+   sed -e 's|.*"\([^"]*\)".*|\1|'`
 date=`echo $version | sed -e 's|\.[0-9]*$||'`
 # -----------------------------------------------------------------------------
-# doc
-if [ -e 'doc' ]
+# html
+if [ -e 'html' ]
 then
-    echo_eval rm -r doc
+   echo_eval rm -r html
 fi
 cat << EOF > $src_dir/package.$$
 /^commit/! b end
@@ -71,26 +64,29 @@ EOF
 # -----------------------------------------------------------------------------
 if [ "$include_doc" == 'yes' ]
 then
-    #
-    # use gh-pages if they exist for this version
-    git_hash=`git log origin/gh-pages | sed -n -f $src_dir/package.$$ | head -1`
-    if [ "$git_hash" != '' ]
-    then
-        echo 'create ./doc'
-        mkdir doc
-        list=`git ls-tree --name-only $git_hash:doc`
-        for file in $list
-        do
-            git show $git_hash:doc/$file > doc/$file
-        done
-    elif which run_omhelp.sh > /dev/null
-    then
-        # omhelp is available, so build documentation for this version
-        echo_eval run_omhelp.sh doc
-    else
+   #
+   # use gh-pages if they exist for this version
+   git_hash=`git log origin/gh-pages | sed -n -f $src_dir/package.$$ | head -1`
+   if [ "$git_hash" != '' ]
+   then
+      echo 'create ./html'
+      mkdir html
+      list=`git ls-tree --name-only $git_hash:html`
+      for file in $list
+      do
+         git show $git_hash:html/$file > html/$file
+      done
+   elif which xrst > /dev/null
+   then
+      # xrst is available, so build documentation for this version
+      echo_eval xrst \
+         --local_toc \
+         --html_theme sphinx_rtd_theme \
+         --group_list default
+   else
 cat << EOF
 Cannot find gh-pages documentation for this version: $version
-and cannot find run_omhelp.sh on this system.
+and cannot find xrst on this system.
 
 If you wish to skip the documentation for this system use
 bin/package.sh --no_doc. Otherwise, use the following steps:
@@ -107,9 +103,9 @@ recent version of bin/package.sh
 
 5. Re-run  bin/package.sh"
 EOF
-        rm package.$$
-        exit 1
-    fi
+      rm package.$$
+      exit 1
+   fi
 fi
 # -----------------------------------------------------------------------------
 # change_list
@@ -133,7 +129,7 @@ rm $src_dir/package.$$
 # clean up old results
 if [ ! -e 'build' ]
 then
-    echo_eval mkdir build
+   echo_eval mkdir build
 fi
 echo_eval rm -rf build/cppad-*
 echo_eval mkdir build/cppad-$version
@@ -148,7 +144,7 @@ tar -xzf tar.tgz
 rm tar.tgz
 if [ "$include_doc" == 'yes' ]
 then
-    cp -r ../../doc doc
+   cp -r ../html html
 fi
 cd ..
 tar --create cppad-$version --gzip --file=cppad-$version.tgz

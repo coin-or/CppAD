@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new}
+
+Changes and Additions to CppAD
+##############################
+
+Introduction
+************
+The sections listed below contain a list of the changes to CppAD
+in reverse order by date.
+The purpose of these sections is to
+assist you in learning about changes between various versions of CppAD.
+{xrst_toc_hidden
+   xrst/appendix/whats_new/22.xrst
+   xrst/appendix/whats_new/21.xrst
+   xrst/appendix/whats_new/20.xrst
+   xrst/appendix/whats_new/19.xrst
+   xrst/appendix/whats_new/18.xrst
+   xrst/appendix/whats_new/17.xrst
+   xrst/appendix/whats_new/16.xrst
+   xrst/appendix/whats_new/15.xrst
+   xrst/appendix/whats_new/14.xrst
+   xrst/appendix/whats_new/13.xrst
+   xrst/appendix/whats_new/12.xrst
+   xrst/appendix/whats_new/11.xrst
+   xrst/appendix/whats_new/10.xrst
+   xrst/appendix/whats_new/09.xrst
+   xrst/appendix/whats_new/08.xrst
+   xrst/appendix/whats_new/07.xrst
+   xrst/appendix/whats_new/06.xrst
+   xrst/appendix/whats_new/05.xrst
+   xrst/appendix/whats_new/04.xrst
+   xrst/appendix/whats_new/03.xrst
+}
+
+This Year
+*********
+:ref:`2022<whats_new_22-name>`
+
+Previous Years
+**************
+:ref:`2021<whats_new_21-name>` ,
+:ref:`2020<whats_new_20-name>` ,
+:ref:`2019<whats_new_19-name>` ,
+:ref:`2018<whats_new_18-name>` ,
+:ref:`2017<whats_new_17-name>` ,
+:ref:`2016<whats_new_16-name>` ,
+:ref:`2015<whats_new_15-name>` ,
+:ref:`2014<whats_new_14-name>` ,
+:ref:`2013<whats_new_13-name>` ,
+:ref:`2012<whats_new_12-name>` ,
+:ref:`2011<whats_new_11-name>` ,
+:ref:`2010<whats_new_10-name>` ,
+:ref:`2009<whats_new_09-name>` ,
+:ref:`2008<whats_new_08-name>` ,
+:ref:`2007<whats_new_07-name>` ,
+:ref:`2006<whats_new_06-name>` ,
+:ref:`2005<whats_new_05-name>` ,
+:ref:`2004<whats_new_04-name>` ,
+:ref:`2003<whats_new_03-name>` .
+
+{xrst_end whats_new}

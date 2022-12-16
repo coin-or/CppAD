@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin dev_vec_ad dev}
+
+Developer Documentation for VecAD Operations
+############################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/vec_ad/vec_ad.hpp
+   include/cppad/local/op/load_op.hpp
+   include/cppad/local/op/store_op.hpp
+}
+
+{xrst_end dev_vec_ad}

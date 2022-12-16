@@ -1,0 +1,122 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin tan_reverse}
+
+Tangent and Hyperbolic Tangent Reverse Mode Theory
+##################################################
+
+Notation
+********
+We use the reverse theory
+:ref:`standard math function<reverse_theory@Standard Math Functions>`
+definition for the functions :math:`H` and :math:`G`.
+In addition, we use the forward mode notation in :ref:`tan_forward-name` for
+:math:`X(t)`, :math:`Y(t)` and :math:`Z(t)`.
+
+Eliminating Y(t)
+****************
+For :math:`j > 0`, the forward mode coefficients are given by
+
+.. math::
+
+   y^{(j-1)} = \sum_{k=0}^{j-1} z^{(k)} z^{(j-k-1)}
+
+Fix :math:`j > 0` and suppose that :math:`H` is the same as :math:`G`
+except that :math:`y^{(j-1)}` is replaced as a function of the Taylor
+coefficients for :math:`Z(t)`.
+To be specific, for :math:`k = 0 , \ldots , j-1`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ z^{(k)} }
+   & = &
+   \D{G}{ z^{(k)} } + \D{G}{ y^{(j-1)} } \D{ y^{(j-1)} }{ z^{(k)} }
+   \\
+   & = &
+   \D{G}{ z^{(k)} } + \D{G}{ y^{(j-1)} } 2 z^{(j-k-1)}
+   \end{eqnarray}
+
+Positive Orders Z(t)
+********************
+For order :math:`j > 0`,
+suppose that :math:`H` is the same as :math:`G` except that
+:math:`z^{(j)}` is expressed as a function of
+the coefficients for :math:`X(t)`, and the
+lower order Taylor coefficients for :math:`Y(t)`, :math:`Z(t)`.
+
+.. math::
+
+   z^{(j)}
+   =
+   x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+
+For :math:`k = 1 , \ldots , j`,
+the partial of :math:`H` with respect to :math:`x^{(k)}` is given by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(k)} } & = &
+   \D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+   \\
+   & = &
+   \D{G}{ x^{(k)} } +
+   \D{G}{ z^{(j)} }
+   \left[ \delta ( j - k ) \pm \frac{k}{j} y^{(j-k)} \right]
+   \end{eqnarray}
+
+where :math:`\delta ( j - k )` is one if :math:`j = k` and zero
+otherwise.
+For :math:`k = 1 , \ldots ,  j`
+The partial of :math:`H` with respect to :math:`y^{j-k}`,
+is given by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ y^{(j-k)} } & = &
+   \D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(j-k)} }
+   \\
+   & = &
+   \D{G}{ y^{(j-k)} } \pm \D{G}{ z^{(j)} }\frac{k}{j} x^{k}
+   \end{eqnarray}
+
+Order Zero Z(t)
+***************
+The order zero coefficients for the tangent and hyperbolic tangent are
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z^{(0)} & = & \left\{
+      \begin{array}{c} \tan ( x^{(0)} ) \\ \tanh (  x^{(0)} ) \end{array}
+   \right.
+   \end{eqnarray}
+
+Suppose that :math:`H` is the same as :math:`G` except that
+:math:`z^{(0)}` is expressed as a function of the Taylor coefficients
+for :math:`X(t)`.
+In this case,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \D{H}{ x^{(0)} }
+   & = &
+   \D{G}{ x^{(0)} }
+   + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
+   \\
+   & = &
+   \D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } ( 1 \pm y^{(0)} )
+   \end{eqnarray}
+
+{xrst_end tan_reverse}

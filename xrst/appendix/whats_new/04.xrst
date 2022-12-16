@@ -1,0 +1,964 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_04}
+{xrst_spell
+   aclocal
+   autoconf
+   automake
+   automates
+   dep
+   deps
+   determinants
+   dodds
+   dsp
+   executables
+   factorial
+   faq
+   filename
+   gnu
+   hess
+   italic
+   macros
+   makefile
+   nmake
+   operands
+   subheadings
+   ublas
+   usr
+   yy
+}
+
+Changes and Additions to CppAD During 2004
+##########################################
+
+mm-dd
+*****
+
+12-11
+=====
+The documentation for the CppAD error macros was improved.
+The package title in :ref:`cppad-name` was changed.
+The documentation for :ref:`CppAD::vector<CppAD_vector-name>`
+was improved and the corresponding source code
+``cppad/vector.hpp`` was included.
+
+12-09
+=====
+The :ref:`LuSolve-name` and ``OdeRunge`` source code
+was modified to make the more in line with the introduction
+to C++ AD book
+(``OdeRunge`` has been replaced by :ref:`Runge45-name` ).
+In addition, the examples ``OdeRunge.cpp`` and
+:ref:`lu_solve.cpp-name` were modified to make the simpler.
+(The more complex version of ``OdeRunge.cpp``
+was moved to the ``TestMore`` directory.)
+
+12-03
+=====
+The :ref:`Poly-name` documentation and source code were modified to
+make them more in line with the introduction to C++ AD book.
+
+11-17
+=====
+Changing to Autoconf and Automake on
+:ref:`whats_new_04@mm-dd@08-24` mistakenly forgot
+the ``-Wall`` compiler switch (all warnings).
+This has been added and the corresponding warnings
+have been fixed.
+
+11-16
+=====
+The 11-15 Debug version would not compile under Visual C++ version 7.0
+because a declaration of ``LessThanOrZero`` was missing.
+This has been fixed.
+
+11-15
+=====
+The :ref:`ForOne-name` and :ref:`RevOne-name`
+easy to use  :ref:`Drivers-name` were added.
+
+11-14
+=====
+The notation in the :ref:`ADFun-name` sections was changed
+to make the :ref:`Forward-name` and :ref:`Reverse-name` routines
+easier to use.
+
+11-13
+=====
+The Taylor coefficient vector and matrix notation was folded into
+just :ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+
+11-12
+=====
+If ``NDEBUG`` is not defined during compile time,
+all ``AD<`` *Base* >
+:ref:`comparison<Compare-name>` operations are checked during
+:ref:`zero order<forward_zero-name>` forward mode calculations.
+The
+:ref:`CompareChange-name` function
+returns the number of comparison operations that have changed.
+
+11-10
+=====
+The :ref:`get_started.cpp-name` example was changed to use the
+:ref:`Jacobian-name` driver.
+In addition, more index entries,
+that point to the :ref:`easy to use drivers<Drivers-name>` ,
+were added.
+
+11-04
+=====
+The Microsoft Visual Studio
+project file ``example/Example.dsp/`` was missing some
+new examples that needed to be linked in
+the install windows procedure.
+This has been fixed.
+
+11-02
+=====
+The :ref:`unix installation<autotools-name>` required the user
+to touch the files to get the dates in proper order.
+This is no longer necessary.
+
+11-01
+=====
+Some of the dependency directories and files, for example
+``PrintFor/.deps`` and
+``PrintFor/.deps/PrintFor.Po`` had an extra ``?``
+at the end of their names.
+This seems to have been fixed by using a newer version of the autoconf
+and automake tools.
+
+10-29
+=====
+Add the example and test :ref:`simple_vector.cpp-name`
+to the :ref:`SimpleVector-name` documentation.
+
+The specifications for
+:ref:`preprocessor symbols<preprocessor-name>`
+state that all the CppAD preprocessor symbols
+begin with ``CppAD``
+(so they do not conflict with other packages).
+Some preprocessor symbols in the file ``cppad/config.h`` did
+began with ``WITH_`` .
+This has been fixed.
+
+10-28
+=====
+The examples
+:ref:`hes_lu_det.cpp-name` ,
+:ref:`hes_minor_det.cpp-name` ,
+:ref:`jac_lu_det.cpp-name` ,
+and
+:ref:`jac_minor_det.cpp-name` used the negative of a ``size_t`` value.
+The value has been changed to an ``int`` .
+
+The :ref:`CppAD::vector<CppAD_vector-name>` template class
+was converted into a library routine so it can be used
+separately from the rest of CppAD.
+
+10-27
+=====
+The :ref:`PrintFor-name` example was moved to its own directory
+because the conversion from VC 6.0 to VC 7.0 projects
+did not work when there were multiple executables in one project file.
+The :ref:`install-name` instructions were modified to reflect this change.
+
+10-21
+=====
+One declaration (for the :ref:`Value-name` function) was missing
+from the file ``cppad/local/Declare.h`` .
+This has been added and CppAD should now compile and run
+under both Microsoft VC 6.0 and 7.0.
+
+10-19
+=====
+The current version of CppAD has a problem compiling under Microsoft
+Visual C++ version 7.0 (it compiles and works under version 6.0).
+The problem appears to be due to a closer agreement between VC 7.0 and the
+C++ standard for declaring templates functions as friends.
+Some friend declarations were removed and others were made more specific
+in order to migrate the a version that will compile and run using VC 7.0.
+
+10-16
+=====
+The example :ref:`compare.cpp-name` displayed the text from
+:ref:`bool_fun.cpp-name` by mistake.
+This has been fixed.
+
+The :ref:`Compare-name` operators have been extended to work with
+``int`` operands.
+
+10-06
+=====
+The test
+``TapeDetLu`` was added to ``speed_cppad/DetLuSpeed.cpp``
+and
+``TapeDetMinor`` was added to ``speed_cppad/DetMinorSpeed.cpp`` .
+These tests just tape the calculations without computing any derivatives.
+Using this, and the other tests, one can to separate the taping time
+from the derivative calculation time.
+
+The
+windows installation steps
+do not build a ``config.h`` file.
+Hence a default ``config.h`` file was added to the
+distribution for use with Microsoft Visual Studio.
+
+The ``Distribute`` section of the
+developer documentation was brought up to date.
+
+Links to the ADOLC and FADBAD download pages were added
+to the :ref:`unix installation<autotools-name>` instructions.
+
+09-29
+=====
+The include files for the :ref:`utilities<utility-name>` are now included
+by the root file ``cppad/cppad.hpp`` .
+They can still be included individually with out the rest of
+the CppAD package.
+
+09-26
+=====
+The routine ``OdeRunge`` was modified
+so that it will now integrate functions of a complex arguments.
+This was done by removing
+all uses of greater than and less than comparisons were removed.
+(``OdeRunge`` has been replaced by :ref:`Runge45-name` ).
+
+The changes on :ref:`whats_new_04@mm-dd@09-21` did not fix all
+the file date and time problems; i.e., automake was still running
+in response to the :ref:`unix installation<autotools-name>`
+``make`` command.
+
+09-23
+=====
+There was a reference to *B* that should have been *X*
+in the description of the
+:ref:`LuSolve@X` argument of ``LuSolve`` .
+This has been fixed.
+
+09-21
+=====
+The :ref:`CondExp-name` function has been modified so that it works properly
+for ``AD< AD<`` *Base* > > types; i.e.,
+it now works for multiple levels of taping.
+
+The date of the files ``aclocal.m4`` and ``config.h.in``
+were later than the date of top level ``Makefile.am`` .
+This caused the ``make`` command during the
+:ref:`unix installation<autotools-name>`
+to try to run ``autoconf``
+and this did not work on systems with very old versions of ``autoconf`` .
+This has been fixed.
+
+09-13
+=====
+The examples that are specific to an operation were moved
+to be below that operation in the documentation tree.
+For example
+:ref:`add.cpp-name` is below :ref:`ad_binary-name`
+in the documentation tree.
+
+09-10
+=====
+The version released on 04-09-09 did not have the
+new file ``PrintFor.h`` in ``cppad/local`` .
+This has been fixed.
+
+The *Base* type requirements were simplified.
+
+The :ref:`Unix installation<autotools-name>` instructions
+were modified so just one make command was executed at the top level.
+This was necessary because the order of the makes is now important
+(as previously suggested, the makes did not work properly).
+
+09-09
+=====
+The :ref:`PrintFor-name` function was added so that
+users can debug the computation of function values
+at arguments that are different from those used when taping.
+
+09-07
+=====
+In the :ref:`Unix installation<autotools-name>` instructions
+place ``./`` in front of current directory program names; for example,
+``./GetStarted`` instead of ``GetStarted``
+(because some unix systems do not have the current directory
+in the default executable path).
+
+09-04
+=====
+A library containing the
+:ref:`SpeedTest-name` and :ref:`NearEqual-name` object files
+was added to the distribution.
+
+All of the include files of the form
+< ``cppad/library/`` *name* . ``h>`` were moved to
+< ``cppad/`` *name* . ``h>`` .
+
+09-02
+=====
+Some more messages were added to the output of ``configure``
+during the :ref:`Unix installation<autotools-name>` .
+
+The suggested compression program during
+Windows installation
+was changed from
+`7-zip <http://www.7-zip.org>`_
+to
+`WinZip <http://www.winzip.com>`_.
+
+08-27
+=====
+The error messages printed by the default version of
+the CppAD error macros had ``YY-MM-DD`` in place of the
+date for the current version.
+This has been fixed.
+
+All the correctness tests are now compiled with the ``-g``
+command line option
+(the speed tests are still compiled with ``-O2 -DNDEBUG`` ).
+
+The :ref:`installation instructions<Install-name>` for
+Unix and Windows were split into separate pages.
+
+08-25
+=====
+The :ref:`installation<Install-name>` now automates the replacement
+of :ref:`CppAD::vector<CppAD_vector-name>` by
+either the ``std::vector``
+or ``boost::numeric::ublas::vector`` .
+
+08-24
+=====
+This date marks the first release that uses
+the Gnu tools Autoconf and Automake.
+This automates the building of the make files for the
+:ref:`installation<Install-name>` and is the standard
+way to distribute open source software.
+This caused some organizational changes,
+for example, the :ref:`GetStarted<get_started.cpp-name>` example now
+has its own directory and
+the distribution directory is named
+
+   ``cppad-`` *yy* ``-`` *mm* ``-`` *dd*
+
+where *yy* ``-`` *mm* ``-`` *dd* is the year, month and date
+of the distribution.
+(Note the distribution directory is different from the directory
+where CppAD is finally installed.)
+
+08-12
+=====
+Move ``OdeExplicit`` into the ``cppad/library/`` directory.
+In addition, change it so that the vector type was a template argument; i.e.,
+works for any type of vector (not just ``CppADvector`` ).
+
+07-31
+=====
+Move :ref:`LuSolve-name` into the ``cppad/library/`` directory.
+In addition, change it so that the vector type was a template argument; i.e.,
+works for any type of vector (not just ``CppADvector`` ).
+
+07-08
+=====
+The file ``cppad/example/NearEqual.h`` has been moved
+to ``cppad/example/NearEqualExt.h`` because it contains
+extensions of the :ref:`NearEqual-name` routine to ``AD`` types.
+
+07-07
+=====
+The ``double`` and ``std::complex<double>``
+cases for the :ref:`NearEqual-name` routine arguments
+has been moved to the general purpose :ref:`utilities<utility-name>` .
+
+07-03
+=====
+The CppAD error macros names
+``CppADExternalAssert`` and ``CppADInternalAssert``
+were changed to
+``CppADUsageError`` and ``CppADUnknownError`` .
+The :ref:`SpeedTest-name` routine was changed to use ``CppADUsageError``
+instead of a C assert.
+
+07-02
+=====
+The :ref:`SpeedTest-name` output was improved so that the columns of
+values line up. Previously, this was not the case when
+the number of digits in the size changed.
+
+06-29
+=====
+Added code to trap and report memory allocation errors during
+``new`` operations.
+
+06-25
+=====
+A discussion of the order dependence of the
+:ref:`assignment<ad_assign-name>` operator
+and the
+:ref:`independent function<Independent-name>`
+was added to the
+:ref:`Faq<Faq@Assignment and Independent>` .
+In addition,
+a similar discussion
+was added to the documentation for the
+:ref:`Independent-name` function.
+
+The definition of a
+:ref:`glossary@Parameter`
+and
+:ref:`glossary@Variable`
+were changed to reflect that fact that
+these are time dependent (current) properties
+of an ``AD<`` *Base* > object.
+
+06-12
+=====
+All of the
+:ref:`arithmetic operators<Arithmetic-name>`
+(except for the unary operators)
+can now accept ``int`` arguments.
+The documentation for these arguments has been changed to reflect this.
+In addition,
+the corresponding test cases have been changed to test this and to
+test high order derivative cases.
+The old versions of these tests were moved into the
+``cppad/Test`` directory.
+
+06-04
+=====
+The :ref:`atan2-name` function was added.
+
+06-03
+=====
+The ``asin`` and ``acos``
+:ref:`unary_standard_math-name` functions were added.
+
+There was a bug the reverse mode theory and calculation of
+derivatives of :ref:`sqrt-name` for fourth and higher orders.
+This has been fixed.
+In addition,
+the following examples have been changed
+so that they test derivative up to fifth order:
+:ref:`asin<Asin.cpp-name>` ,
+:ref:`atan<atan.cpp-name>` ,
+:ref:`cos<cos.cpp-name>` ,
+:ref:`exp<exp.cpp-name>` ,
+:ref:`log<log.cpp-name>` ,
+:ref:`sin<sin.cpp-name>` ,
+:ref:`sqrt<sqrt.cpp-name>` .
+
+06-01
+=====
+There was a bug in the :ref:`atan-name` function
+:ref:`forward mode<Forward-name>` calculations for Taylor coefficient
+orders greater than two.
+This has been fixed.
+
+05-30
+=====
+The :ref:`sin<sin.cpp-name>` and :ref:`cos<cos.cpp-name>` examples were
+changed so that they tested higher order derivatives.
+
+05-29
+=====
+The forward mode recursion formulas for each of the
+:ref:`standard math functions<forward_theory@Standard Math Functions@Cases that Apply Recursion Above>`
+has been split into separate sections.
+
+A roman (instead of italic) font was used for the name of
+for the name of each of the standard math functions
+in the assumption statements below the section
+for the standard math functions.
+For example, :math:`\sin(x)` instead of :math:`sin(x)`.
+
+05-26
+=====
+In the documentation for :ref:`Poly-name` ,
+the reference to ``example/Poly.h``
+was corrected to ``cppad/library/Poly.h`` .
+
+In the documentation for :ref:`SpeedTest-name` ,
+the reference to ``Lib/SpeedTest.h``
+was corrected to ``cppad/library/SpeedTest.h`` .
+In addition, the example case was corrected.
+
+In :ref:`Reverse-name` , the definition for :math:`U(t, u)` had
+:math:`t^p-1` where it should have had :math:`t^{p-1}`.
+This has been fixed.
+
+05-25
+=====
+The special case where the second argument to the :ref:`pow-name` function is an
+``int`` has been added.
+
+05-14
+=====
+Change all of the include syntax
+
+   # ``include`` " *filename* "
+
+to the syntax
+
+   # ``include <`` *filename* >
+
+so that examples and other use better reflect how one would use CppAD after
+it was installed in a standard include directory; for example
+``/usr/local/include/cppad`` .
+
+The user documentation was moved from the directory
+``cppad/User`` to the directory ``cppad/Doc`` .
+
+The directory ``cppad/Lib`` was moved to ``cppad/library``
+to reflect that fact that it is not what one expects in a standard
+``lib`` directory or a standard ``include`` directory.
+
+05-12
+=====
+The string ``YY-MM-DD`` in the preprocessor symbol ``CppADVersion``
+was not being replaced by the current date during distribution.
+This resulted in the ``CppADExternalAssert`` macro printing
+``YY-MM-DD`` where is should have printed the date of distribution.
+This has been fixed.
+
+All of the include commands of the form
+
+| |tab| # ``include`` " ``include/`` *name* . ``h`` "
+| |tab| # ``include`` " ``lib/`` *name* . ``h`` "
+
+have been changed to the form
+
+| |tab| # ``include`` " ``cppad/include/`` *name* . ``h`` "
+| |tab| # ``include`` " ``cppad/lib/`` *name* . ``h`` "
+
+This will avoid mistakenly loading a file from another package
+that is in the set of directories being searched by the compiler.
+It is therefore necessary to specify that the directory above the
+``CppAD`` directory be searched by the compiler.
+For example,
+if ``CppAD`` is in ``/usr/local/cppad`` ,
+you must specify that ``/usr/local`` be searched by the compiler.
+Note that if ``/usr/local/cppad/`` is no longer searched,
+you will have to change
+::
+
+   # include "cppad.hpp"
+
+to
+::
+
+   # include "cppad/cppad.hpp"
+
+.
+
+The window ``nmake`` file ``Speed/Speed.mak`` was out of date.
+This has been fixed.
+
+05-09
+=====
+Move :ref:`Poly-name` and :ref:`SpeedTest-name` into the
+``cppad/Lib`` directory and the ``CppAD`` namespace.
+
+05-07
+=====
+The :ref:`divide operator tests<div.cpp-name>` were extended to
+include a second order derivative calculation using reverse mode.
+
+The :ref:`Poly-name` routine was modified to be more efficient in the
+derivative case. In addition, it was changed to use an arbitrary
+vector for the coefficients (not just a ``CppADvector`` ).
+
+05-04
+=====
+A reloading of the data base
+caused the files ``include/atan.h`` and ``include/cos.h`` to be
+mistakenly started with lower case letters.
+These have been moved to ``include/Atan.h`` and ``include/Cos.h``
+respectively.
+
+05-03
+=====
+The :ref:`Reverse-name` mode calculations for
+:ref:`conditional expressions<CondExp-name>` were mistakenly left out.
+This has been fixed.
+
+04-29
+=====
+The unary functions, such as :ref:`sin-name` and :ref:`cos-name` ,
+were not defined for elements of an :ref:`VecAD-name` vector.
+This has been fixed.
+
+04-28
+=====
+The operator :ref:`\<\<<CppAD_vector@Output>` was added to the
+default ``test_vector`` template class.
+
+A FADBAD correctness and speed comparison with CppAD
+was added.
+
+04-25
+=====
+Factor out common sub-expressions in order to make
+:ref:`lu_vec_ad.cpp-name` faster.
+
+Convert description
+from C++ Automatic Differentiation to C++ Algorithmic Differentiation.
+
+04-24
+=====
+The :ref:`VecAD-name` element class is no longer
+a derived class of the :ref:`AD-name` class.
+This enabled a decrease in tape memory
+and an increase in the speed for :ref:`VecAD-name` operations.
+
+The :ref:`log10-name` function was added.
+
+04-22
+=====
+Add :ref:`CondExp-name` and use it to speed up :ref:`lu_vec_ad.cpp-name` .
+
+04-21
+=====
+Use :ref:`abs-name` to speed up :ref:`lu_vec_ad.cpp-name` .
+
+04-20
+=====
+The :ref:`absolute value<abs-name>` function was added.
+
+The value *n* for
+``OdeExplicit`` and ``OdeImplicit``
+is deduced from the argument *x0* and is not passed
+as a separate argument.
+This documentation has been fixed to this effect.
+
+04-19
+=====
+The :ref:`+=<compound_assign-name>` operator did not function correctly
+when the left hand operand was a
+:ref:`glossary@Parameter`
+and the right hand operand was a variable
+(found by `Mike Dodds <mailto:magister@u.washington.edu>`_).
+This has been fixed.
+
+04-09
+=====
+Adding special operators for using parameters to index ``VecAD`` objects
+increased the speed and reduced the memory requirements (by about 20%) for
+the :ref:`VecAD-name` case in the ``speed_cppad/LuSolveSpeed.cpp/`` test.
+
+The :ref:`VecAD-name` objects are not being handled correctly by the
+:ref:`Reverse-name` function.
+The ``VecAD`` test was extended to demonstrate the problem
+and the problem was fixed
+(it is now part of ``TestMore/VecAD`` ).
+
+04-08
+=====
+The example :ref:`lu_vec_ad_ok.cpp-name`
+uses :ref:`VecAD-name` to executes different pivoting operations
+during the solution of linear equations with out having to retape.
+
+The speed test ``speed_cppad/LuSolveSpeed.cpp/`` has been added.
+It shows that the initial implementation of :ref:`VecAD-name` is slow
+(and uses a lot of memory.)
+In fact,
+it is faster to use :ref:`LuSolve-name` and retape for each set of equations
+than it is to use :ref:`lu_vec_ad.cpp-name` and not have to retape.
+This test will help us improve the speed of :ref:`lu_vec_ad.cpp-name` .
+
+04-07
+=====
+There were bugs in the assignment to :ref:`VecAD-name` elements
+during taping that have been fixed.
+In addition, an example of tapping the pivoting operations in
+an :ref:`Lu factorization<lu_vec_ad.cpp-name>` has been added.
+
+04-03
+=====
+Added ``size_t`` indexing to the :ref:`VecAD-name` class.
+
+Fixed a bug connected to the :ref:`VecAD-name` class and erasing the tape.
+
+04-02
+=====
+Some memory savings is done with regard to equal parameter values
+being stored in the tape. There was a bug in this logic when parameter
+in an ``AD< AD<`` *Base* > > class had values that were variables in the
+``AD<`` *Base* > class.
+This has been fixed.
+
+04-01
+=====
+The name of the class that tapes indexing operations
+was changed from ``ADVec`` to :ref:`VecAD-name` .
+This class was extended so that
+the value of elements in these vectors can be variables
+(need not be :ref:`parameters<glossary@Parameter>` ).
+
+03-30
+=====
+Do some simple searching of the parameter table during taping
+avoid multiple copies of parameters on tape (use less tape memory).
+
+03-28
+=====
+The version :ref:`ADVec<VecAD-name>` ,
+a vector class that tapes indexing operations,
+is now available.
+It is currently restricted by the fact that all the
+values in the vector must be
+:ref:`parameters<Glossary@Parameter>` .
+
+03-25
+=====
+The internal taping structure has been changed to have variable length
+instructions.
+This is to save memory on the tape.
+In addition, it may help in the implementation of the
+vector class that tracks indexing.
+(A now functioning version of this class is described in
+:ref:`VecAD-name` .)
+
+03-18
+=====
+A change was made to the way parameter values are stored on the tape.
+This resulted in a significant savings in the amount of memory required.
+
+03-17
+=====
+Change the return type for :ref:`SpeedTest-name` from ``const char *``
+to ``std::string`` .
+The memory required for the largest test cases was added to the
+:ref:`speed_cppad-name` tests output.
+
+03-15
+=====
+The comparison between ADOLC and CppAD for
+the ``DetLuADOLC.cpp/`` example was returning an error
+(because it was checking for exact equality of calculated derivatives
+instead of nearly equal).
+This has been fixed.
+
+03-12
+=====
+The user defined unary functions were removed and
+the user defined :ref:`discrete functions<Discrete-name>` were
+added.
+These discrete functions add the capability of conditional expressions
+(alternate calculations)
+being included in an :ref:`ADFun-name` object.
+
+03-11
+=====
+The classes :ref:`det_by_minor-name` and :ref:`det_by_lu-name` were added
+and used these to simplify the
+examples that compute determinants.
+
+03-09
+=====
+The routines ``Grad`` and ``Hess`` have been removed.
+You should use :ref:`Jacobian-name` and :ref:`Hessian-name` instead.
+
+03-07
+=====
+The driver routines :ref:`Hessian-name` and :ref:`RevTwo-name` has been added.
+These to compute specialized subsets of the second order partials.
+
+Documentation errors in :ref:`ForTwo-name` and :ref:`Reverse-name` were fixed.
+The :ref:`example-name` documentation was reorganized.
+
+03-06
+=====
+The driver :ref:`ForTwo-name` has been added.
+It uses forward mode to compute a subset of the second order partials.
+
+Split all of the "example" and "test" index entries that come from
+``include/cppad/example/`` * . ``cpp``
+into sorted subheadings.
+
+03-05
+=====
+The ``Grad`` routine,
+which only computed first derivatives of scalar valued functions,
+has been replaced by the :ref:`Jacobian-name` routine which
+computes the derivative of vector valued functions.
+
+03-04
+=====
+The bug reported on :ref:`whats_new_04@mm-dd@02-17` was present in all
+the operators. These have all been fixed and tests for all the operators
+have been added to the ``cppad/Test`` directory.
+
+The :ref:`f.Parameter()<fun_property@Parameter>` function was added so that
+one can count how many components of the range space depend
+on the value of the domain space components.
+This helps when deciding whether to use forward or reverse mode.
+
+03-03
+=====
+Special operators were added to distinguish the cases where
+one of the operands is a
+:ref:`glossary@Parameter` .
+This reduced the amount of branching that is necessary
+when executing :ref:`Forward-name` and :ref:`Reverse-name` calculations.
+
+The :ref:`Independent-name` and :ref:`fun_property@Parameter` functions
+were moved below :ref:`ADFun-name` in the documentation.
+
+03-01
+=====
+The DetLuADOLC.cpp, DetLu case was added to the ADOLC
+comparison tests.
+
+02-29
+=====
+Under certain optimization flag values,
+and on certain systems,
+an error was reported by the
+ADOLC correctness comparison.
+It turned out that CppAD was not initializing a particular index
+when debugging was turned off. This has been fixed.
+
+02-28
+=====
+A set of routines for comparing CppAD with
+ADOLC has been added to the distribution.
+In addition, documentation for compiling and linking the
+:ref:`Examples<example-name>` and :ref:`Speed Tests<speed_cppad-name>`
+has been added.
+
+02-21
+=====
+If you use the user defined unary atomic functions
+there is a restriction on the order of the derivatives that can be calculated.
+This restriction was documented in the user defined unary function
+:ref:`Forward-name`
+and :ref:`Reverse-name` .
+(These unary functions were removed on :ref:`whats_new_04@mm-dd@03-12` .)
+
+02-20
+=====
+A user interface to arbitrary order
+:ref:`reverse mode<Reverse-name>` calculations was implemented.
+In addition, the :ref:`ADFun-name` member functions
+``Rev`` and ``RevTwo`` were removed
+because it is easier to use the uniform syntax below:
+
+.. list-table::
+
+   * - **Old Syntax**
+     - **Uniform Syntax**
+   * - *r1* = *f* . ``Rev`` ( *v* )
+     - *r1* = *f* . ``Reverse`` (1, *v* )
+   * - *q1* = *f* . ``RevTwo`` ( *v* )
+     - *r2* = *f* . ``Reverse`` (2, *v* )
+   * - 
+     - *q1* [ *i* ] == *r2* [2 * *i*  + 1]
+
+The :ref:`Theory-name` section has been completely changed so that
+it corresponds to the arbitrary order calculations.
+(Some of this change was made when the arbitrary forward mode
+interface was added on
+:ref:`04-02-15<whats_new_04@mm-dd@02-15>` .
+
+The directory ``cppad/Test`` has been added.
+It contains tests cases that are not intended as examples.
+
+02-17
+=====
+There was a bug in the way CppAD handled the parameters zero and one
+when they were variables on a lower level tape; i.e. x might be a
+parameter on an ``AD< AD<`` *Base* > > tape and a its value
+might be a variable on the
+``AD<`` *Base* > tape.
+This bug in the multiply and divide routines has been fixed.
+
+There was a bug that is some cases reported a divide by zero error
+when the numerator was zero. This has been fixed.
+
+02-16
+=====
+A bug in :ref:`Forward-name` prevented the calculation of derivatives
+with higher order than two.
+In addition, this checking for user errors in the use of ``Forward``
+was also faulty.
+This has been fixed.
+
+The Microsoft project file ``example\Example.dsp``
+was out of date. This has been fixed.
+
+The example that :ref:`tapes derivative calculations<mul_level-name>`
+has been changed to an application of
+:ref:`Taylor's method<mul_level_ode.cpp-name>` for solving ordinary differential
+equations.
+
+02-15
+=====
+A user interface to arbitrary order
+:ref:`forward mode<Forward-name>` calculations was implemented.
+In addition, the :ref:`ADFun-name` member functions
+``Arg`` , ``For`` and ``ForTwo`` were removed
+because it is easier to use the uniform syntax below:
+
+.. list-table::
+
+   * - **Old Syntax**
+     - **Uniform Syntax**
+   * - *v0* = *f* . ``Arg`` ( *u0* )
+     - *v0* = *f* . ``Forward`` (0, *u0* )
+   * - *v1* = *f* . ``For`` ( *u1* )
+     - *v1* = *f* . ``Forward`` (1, *u1* )
+   * - *v2* = *f* . ``For`` ( *u2* )
+     - *v2* = *f* . ``Forward`` (1, *u2* )
+
+02-12
+=====
+All of the derivative calculations are now done using arbitrary
+order Taylor arithmetic routines.
+The :ref:`Theory-name` section was changed to document this method
+of calculation.
+
+02-01
+=====
+The definition of a
+:ref:`glossary@Taylor Coefficient`
+was changed to include the factorial factor.
+This change was also made to the output specifications for the
+``FunForTwo`` routine.
+
+01-29
+=====
+There were some bugs in the ``FunArg`` function
+that were fixed.
+
+#. If one of the dependent variables was a
+   :ref:`glossary@Parameter`
+   ``FunArg`` did not set it's value properly.
+   (All its derivatives are zero and this was handled properly.)
+#. The user defined unary functions were not
+   computed correctly.
+
+The specifications for the usage and unknown CppAD error macros
+were modified so that they could be used with out side effects.
+
+01-28
+=====
+Some corrections and improvements were made to the documentation including:
+``CppADvector`` was placed before its use,
+a reference to ``Ode_ind`` and ``Ode_dep`` was fixed in
+``OdeImplicit`` .
+
+01-22
+=====
+The specifications for the routine ``FunForTwo``
+was changed to use
+:ref:`Taylor coefficients<glossary@Taylor Coefficient>` .
+This makes the interface to CppAD closer to the interface for
+`ADOLC <https://projects.coin-or.org/ADOL-C>`_.
+
+{xrst_end whats_new_04}

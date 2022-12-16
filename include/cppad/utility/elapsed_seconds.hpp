@@ -1,48 +1,40 @@
 # ifndef CPPAD_UTILITY_ELAPSED_SECONDS_HPP
 # define CPPAD_UTILITY_ELAPSED_SECONDS_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin elapsed_seconds$$
-$spell
-    cppad.hpp
-    std::chrono
-$$
+{xrst_begin elapsed_seconds}
 
-$section Returns Elapsed Number of Seconds$$
+Returns Elapsed Number of Seconds
+#################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/elapsed_seconds.hpp>
-%$$
-$icode%s% = elapsed_seconds()%$$
+   # ``include <cppad/utility/elapsed_seconds.hpp>``
 
-$head Accuracy$$
-This routine uses $code std::chrono::steady_clock$$ to do its timing.
+*s* = ``elapsed_seconds`` ()
 
-$head s$$
-is a $code double$$ equal to the
-number of seconds since the first call to $code elapsed_seconds$$.
+Accuracy
+********
+This routine uses ``std::chrono::steady_clock`` to do its timing.
 
-$children%
-    speed/example/elapsed_seconds.cpp
-%$$
-$head Example$$
-The routine $cref elapsed_seconds.cpp$$ is
+s
+*
+is a ``double`` equal to the
+number of seconds since the first call to ``elapsed_seconds`` .
+{xrst_toc_hidden
+   speed/example/elapsed_seconds.cpp
+}
+Example
+*******
+The routine :ref:`elapsed_seconds.cpp-name` is
 an example and test of this routine.
 
-
-$end
+{xrst_end elapsed_seconds}
 -----------------------------------------------------------------------
 */
 
@@ -60,18 +52,18 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 inline double elapsed_seconds(void)
 // --------------------------------------------------------------------------
-{   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-    static bool first_ = true;
-    static std::chrono::time_point<std::chrono::steady_clock> start_;
-    if( first_ )
-    {   start_ = std::chrono::steady_clock::now();
-        first_ = false;
-        return 0.0;
-    }
-    std::chrono::time_point<std::chrono::steady_clock> now;
-    now   = std::chrono::steady_clock::now();
-    std::chrono::duration<double> difference = now - start_;
-    return difference.count();
+{  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+   static bool first_ = true;
+   static std::chrono::time_point<std::chrono::steady_clock> start_;
+   if( first_ )
+   {  start_ = std::chrono::steady_clock::now();
+      first_ = false;
+      return 0.0;
+   }
+   std::chrono::time_point<std::chrono::steady_clock> now;
+   now   = std::chrono::steady_clock::now();
+   std::chrono::duration<double> difference = now - start_;
+   return difference.count();
 }
 // --------------------------------------------------------------------------
 } // END_CPPAD_NAMESPACE

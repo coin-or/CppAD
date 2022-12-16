@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin devel dev}
+
+Developer Documentation
+#######################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/configure.hpp.in
+   include/cppad/core/ad_type.hpp
+   include/cppad/core/independent/devel.xrst
+   include/cppad/core/discrete/devel.xrst
+   include/cppad/core/forward/devel.xrst
+   include/cppad/local/sweep/dev_sweep.xrst
+   include/cppad/local/sparse/dev_sparse.xrst
+   include/cppad/local/graph/dev_graph.xrst
+   include/cppad/local/optimize/optimize_run.hpp
+   speed/dev_speed.xrst
+   xrst/devel/dynamic.xrst
+   include/cppad/local/atomic_index.hpp
+   include/cppad/local/record/recorder.xrst
+   include/cppad/utility/xrst/dev_utility.xrst
+   include/cppad/local/op_code_var.hpp
+   xrst/devel/vec_ad.xrst
+   include/cppad/local/is_pod.hpp
+   include/cppad/local/op/unary_op.xrst
+   include/cppad/local/op/binary_op.xrst
+   include/cppad/local/op/discrete_op.hpp
+   include/cppad/core/atomic/four/devel/devel.xrst
+   cppad_lib/temp_file.cpp
+   cppad_ipopt/example/ode1.xrst
+}
+
+{xrst_end devel}

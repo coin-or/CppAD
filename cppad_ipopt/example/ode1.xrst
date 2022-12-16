@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin ipopt_nlp_ode dev}
+
+Example Simultaneous Solution of Forward and Inverse Problem
+############################################################
+
+Contents
+********
+{xrst_toc_list
+   cppad_ipopt/example/get_started.cpp
+   cppad_ipopt/example/ode2.xrst
+   cppad_ipopt/example/ode_run.hpp
+   cppad_ipopt/example/ode_check.cpp
+   cppad_ipopt/speed/ode_speed.cpp
+}
+
+{xrst_end ipopt_nlp_ode}

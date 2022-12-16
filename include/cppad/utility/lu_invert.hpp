@@ -1,159 +1,154 @@
 # ifndef CPPAD_UTILITY_LU_INVERT_HPP
 # define CPPAD_UTILITY_LU_INVERT_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin LuInvert$$
-$spell
-    cppad.hpp
-    Lu
-    Cpp
-    jp
-    ip
-    const
-    namespace
-    typename
-    etmp
-$$
+{xrst_begin LuInvert}
+{xrst_spell
+   jp
+   permuted
+}
 
+Invert an LU Factored Equation
+##############################
 
-$section Invert an LU Factored Equation$$
+Syntax
+******
 
-$pre
-$$
+   # ``include <cppad/utility/lu_invert.hpp>``
 
-$head Syntax$$
-$codei%# include <cppad/utility/lu_invert.hpp>
-%$$
-$codei%LuInvert(%ip%, %jp%, %LU%, %X%)%$$
+``LuInvert`` ( *ip* , *jp* , *LU* , *X* )
 
+Description
+***********
+Solves the matrix equation *A* * *X* = *B*
+using an LU factorization computed by :ref:`LuFactor-name` .
 
-$head Description$$
-Solves the matrix equation $icode%A% * %X% = %B%$$
-using an LU factorization computed by $cref LuFactor$$.
-
-$head Include$$
-The file $code cppad/utility/lu_invert.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/lu_invert.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$head Matrix Storage$$
+Matrix Storage
+**************
 All matrices are stored in row major order.
-To be specific, if $latex Y$$ is a vector
-that contains a $latex p$$ by $latex q$$ matrix,
-the size of $latex Y$$ must be equal to $latex  p * q $$ and for
-$latex i = 0 , \ldots , p-1$$,
-$latex j = 0 , \ldots , q-1$$,
-$latex \[
-    Y_{i,j} = Y[ i * q + j ]
-\] $$
+To be specific, if :math:`Y` is a vector
+that contains a :math:`p` by :math:`q` matrix,
+the size of :math:`Y` must be equal to :math:`p * q` and for
+:math:`i = 0 , \ldots , p-1`,
+:math:`j = 0 , \ldots , q-1`,
 
-$head ip$$
-The argument $icode ip$$ has prototype
-$codei%
-    const %SizeVector% &%ip%
-%$$
-(see description for $icode SizeVector$$ in
-$cref/LuFactor/LuFactor/SizeVector/$$ specifications).
-The size of $icode ip$$ is referred to as $icode n$$ in the
+.. math::
+
+   Y_{i,j} = Y[ i * q + j ]
+
+ip
+**
+The argument *ip* has prototype
+
+   ``const`` *SizeVector* & *ip*
+
+(see description for *SizeVector* in
+:ref:`LuFactor<LuFactor@SizeVector>` specifications).
+The size of *ip* is referred to as *n* in the
 specifications below.
-The elements of $icode ip$$ determine
+The elements of *ip* determine
 the order of the rows in the permuted matrix.
 
-$head jp$$
-The argument $icode jp$$ has prototype
-$codei%
-    const %SizeVector% &%jp%
-%$$
-(see description for $icode SizeVector$$ in
-$cref/LuFactor/LuFactor/SizeVector/$$ specifications).
-The size of $icode jp$$ must be equal to $icode n$$.
-The elements of $icode jp$$ determine
+jp
+**
+The argument *jp* has prototype
+
+   ``const`` *SizeVector* & *jp*
+
+(see description for *SizeVector* in
+:ref:`LuFactor<LuFactor@SizeVector>` specifications).
+The size of *jp* must be equal to *n* .
+The elements of *jp* determine
 the order of the columns in the permuted matrix.
 
-$head LU$$
-The argument $icode LU$$ has the prototype
-$codei%
-    const %FloatVector% &%LU%
-%$$
-and the size of $icode LU$$ must equal $latex n * n$$
-(see description for $icode FloatVector$$ in
-$cref/LuFactor/LuFactor/FloatVector/$$ specifications).
+LU
+**
+The argument *LU* has the prototype
 
-$subhead L$$
-We define the lower triangular matrix $icode L$$ in terms of $icode LU$$.
-The matrix $icode L$$ is zero above the diagonal
+   ``const`` *FloatVector* & *LU*
+
+and the size of *LU* must equal :math:`n * n`
+(see description for *FloatVector* in
+:ref:`LuFactor<LuFactor@FloatVector>` specifications).
+
+L
+=
+We define the lower triangular matrix *L* in terms of *LU* .
+The matrix *L* is zero above the diagonal
 and the rest of the elements are defined by
-$codei%
-    %L%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
-for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , i$$.
 
-$subhead U$$
-We define the upper triangular matrix $icode U$$ in terms of $icode LU$$.
-The matrix $icode U$$ is zero below the diagonal,
+   *L* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , i`.
+
+U
+=
+We define the upper triangular matrix *U* in terms of *LU* .
+The matrix *U* is zero below the diagonal,
 one on the diagonal,
 and the rest of the elements are defined by
-$codei%
-    %U%(%i%, %j%) = %LU%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
-for $latex i = 0 , \ldots , n-2$$ and $latex j = i+1 , \ldots , n-1$$.
 
-$subhead P$$
-We define the permuted matrix $icode P$$ in terms of
-the matrix $icode L$$ and the matrix $icode U$$
-by $icode%P% = %L% * %U%$$.
+   *U* ( *i* , *j* ) = *LU* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
 
-$subhead A$$
-The matrix $icode A$$,
+for :math:`i = 0 , \ldots , n-2` and :math:`j = i+1 , \ldots , n-1`.
+
+P
+=
+We define the permuted matrix *P* in terms of
+the matrix *L* and the matrix *U*
+by *P* = *L* * *U* .
+
+A
+=
+The matrix *A* ,
 which defines the linear equations that we are solving, is given by
-$codei%
-    %P%(%i%, %j%) = %A%[ %ip%[%i%] * %n% + %jp%[%j%] ]
-%$$
+
+   *P* ( *i* , *j* ) = *A* [ *ip* [ *i* ] * *n* + *jp* [ *j* ] ]
+
 (Hence
-$icode LU$$ contains a permuted factorization of the matrix $icode A$$.)
+*LU* contains a permuted factorization of the matrix *A* .)
 
+X
+*
+The argument *X* has prototype
 
-$head X$$
-The argument $icode X$$ has prototype
-$codei%
-    %FloatVector% &%X%
-%$$
-(see description for $icode FloatVector$$ in
-$cref/LuFactor/LuFactor/FloatVector/$$ specifications).
-The matrix $icode X$$
-must have the same number of rows as the matrix $icode A$$.
-The input value of $icode X$$ is the matrix $icode B$$ and the
-output value solves the matrix equation $icode%A% * %X% = %B%$$.
+   *FloatVector* & *X*
 
-
-$children%
-    example/utility/lu_invert.cpp%
-    omh/lu_invert_hpp.omh
-%$$
-$head Example$$
-The file $cref lu_solve.hpp$$ is a good example usage of
-$code LuFactor$$ with $code LuInvert$$.
+(see description for *FloatVector* in
+:ref:`LuFactor<LuFactor@FloatVector>` specifications).
+The matrix *X*
+must have the same number of rows as the matrix *A* .
+The input value of *X* is the matrix *B* and the
+output value solves the matrix equation *A* * *X* = *B* .
+{xrst_toc_hidden
+   example/utility/lu_invert.cpp
+   xrst/lu_invert_hpp.xrst
+}
+Example
+*******
+The file :ref:`lu_solve.hpp-name` is a good example usage of
+``LuFactor`` with ``LuInvert`` .
 The file
-$cref lu_invert.cpp$$
-contains an example and test of using $code LuInvert$$ by itself.
+:ref:`lu_invert.cpp-name`
+contains an example and test of using ``LuInvert`` by itself.
 
-$head Source$$
-The file $cref lu_invert.hpp$$ contains the
+Source
+******
+The file :ref:`lu_invert.hpp-name` contains the
 current source code that implements these specifications.
 
-$end
+{xrst_end LuInvert}
 --------------------------------------------------------------------------
 */
 // BEGIN C++
@@ -166,72 +161,72 @@ namespace CppAD { // BEGIN CppAD namespace
 // LuInvert
 template <class SizeVector, class FloatVector>
 void LuInvert(
-    const SizeVector  &ip,
-    const SizeVector  &jp,
-    const FloatVector &LU,
-    FloatVector       &B )
-{   size_t k; // column index in X
-    size_t p; // index along diagonal in LU
-    size_t i; // row index in LU and X
+   const SizeVector  &ip,
+   const SizeVector  &jp,
+   const FloatVector &LU,
+   FloatVector       &B )
+{  size_t k; // column index in X
+   size_t p; // index along diagonal in LU
+   size_t i; // row index in LU and X
 
-    typedef typename FloatVector::value_type Float;
+   typedef typename FloatVector::value_type Float;
 
-    // check numeric type specifications
-    CheckNumericType<Float>();
+   // check numeric type specifications
+   CheckNumericType<Float>();
 
-    // check simple vector class specifications
-    CheckSimpleVector<Float, FloatVector>();
-    CheckSimpleVector<size_t, SizeVector>();
+   // check simple vector class specifications
+   CheckSimpleVector<Float, FloatVector>();
+   CheckSimpleVector<size_t, SizeVector>();
 
-    Float etmp;
+   Float etmp;
 
-    size_t n = ip.size();
-    CPPAD_ASSERT_KNOWN(
-        size_t(jp.size()) == n,
-        "Error in LuInvert: jp must have size equal to n * n"
-    );
-    CPPAD_ASSERT_KNOWN(
-        size_t(LU.size()) == n * n,
-        "Error in LuInvert: Lu must have size equal to n * m"
-    );
-    size_t m = size_t(B.size()) / n;
-    CPPAD_ASSERT_KNOWN(
-        size_t(B.size()) == n * m,
-        "Error in LuSolve: B must have size equal to a multiple of n"
-    );
+   size_t n = ip.size();
+   CPPAD_ASSERT_KNOWN(
+      size_t(jp.size()) == n,
+      "Error in LuInvert: jp must have size equal to n * n"
+   );
+   CPPAD_ASSERT_KNOWN(
+      size_t(LU.size()) == n * n,
+      "Error in LuInvert: Lu must have size equal to n * m"
+   );
+   size_t m = size_t(B.size()) / n;
+   CPPAD_ASSERT_KNOWN(
+      size_t(B.size()) == n * m,
+      "Error in LuSolve: B must have size equal to a multiple of n"
+   );
 
-    // temporary storage for reordered solution
-    FloatVector x(n);
+   // temporary storage for reordered solution
+   FloatVector x(n);
 
-    // loop over equations
-    for(k = 0; k < m; k++)
-    {   // invert the equation c = L * b
-        for(p = 0; p < n; p++)
-        {   // solve for c[p]
-            etmp = B[ ip[p] * m + k ] / LU[ ip[p] * n + jp[p] ];
-            B[ ip[p] * m + k ] = etmp;
-            // subtract off effect on other variables
-            for(i = p+1; i < n; i++)
-                B[ ip[i] * m + k ] -=
-                    etmp * LU[ ip[i] * n + jp[p] ];
-        }
+   // loop over equations
+   for(k = 0; k < m; k++)
+   {  // invert the equation c = L * b
+      for(p = 0; p < n; p++)
+      {  // solve for c[p]
+         etmp = B[ ip[p] * m + k ] / LU[ ip[p] * n + jp[p] ];
+         B[ ip[p] * m + k ] = etmp;
+         // subtract off effect on other variables
+         for(i = p+1; i < n; i++)
+            B[ ip[i] * m + k ] -=
+               etmp * LU[ ip[i] * n + jp[p] ];
+      }
 
-        // invert the equation x = U * c
-        p = n;
-        while( p > 0 )
-        {   --p;
-            etmp       = B[ ip[p] * m + k ];
-            x[ jp[p] ] = etmp;
-            for(i = 0; i < p; i++ )
-                B[ ip[i] * m + k ] -=
-                    etmp * LU[ ip[i] * n + jp[p] ];
-        }
+      // invert the equation x = U * c
+      p = n;
+      while( p > 0 )
+      {  --p;
+         etmp       = B[ ip[p] * m + k ];
+         x[ jp[p] ] = etmp;
+         for(i = 0; i < p; i++ )
+            B[ ip[i] * m + k ] -=
+               etmp * LU[ ip[i] * n + jp[p] ];
+      }
 
-        // copy reordered solution into B
-        for(i = 0; i < n; i++)
-            B[i * m + k] = x[i];
-    }
-    return;
+      // copy reordered solution into B
+      for(i = 0; i < n; i++)
+         B[i * m + k] = x[i];
+   }
+   return;
 }
 } // END CppAD namespace
 // END C++

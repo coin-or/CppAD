@@ -1,62 +1,54 @@
 # ifndef CPPAD_CORE_BASE_TO_STRING_HPP
 # define CPPAD_CORE_BASE_TO_STRING_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin base_to_string$$
-$spell
-    std
-    namespace
-    CppAD
-    struct
-    const
-    stringstream
-    setprecision
-    str
-$$
+{xrst_begin base_to_string}
+{xrst_spell
+   struct
+}
 
-$section Extending to_string To Another Floating Point Type$$
+Extending to_string To Another Floating Point Type
+##################################################
 
-$head Base Requirement$$
-If the function $cref to_string$$ is used by an
-$cref/AD type above Base/glossary/AD Type Above Base/$$,
+Base Requirement
+****************
+If the function :ref:`to_string-name` is used by an
+:ref:`glossary@AD Type Above Base` ,
 A specialization for the template structure
-$code CppAD::to_string_struct$$ must be defined.
+``CppAD::to_string_struct`` must be defined.
 
-$head CPPAD_TO_STRING$$
-For most $icode Base$$ types,
+CPPAD_TO_STRING
+***************
+For most *Base* types,
 the following can be used to define the specialization:
-$codei%
-    namespace CppAD {
-        CPPAD_TO_STRING(%Base%)
-    }
-%$$
-Note that the $code CPPAD_TO_STRING$$ macro assumes that the
-$cref base_limits$$ and $cref base_std_math$$ have already been defined
+
+| |tab| ``namespace CppAD`` {
+| |tab| |tab| ``CPPAD_TO_STRING`` ( *Base* )
+| |tab| }
+
+Note that the ``CPPAD_TO_STRING`` macro assumes that the
+:ref:`base_limits-name` and :ref:`base_std_math-name` have already been defined
 for this type.
 This macro is defined as follows:
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # define CPPAD_TO_STRING(Base) \
 template <> struct to_string_struct<Base>\
-{   std::string operator()(const Base& value) \
-    {   std::stringstream os;\
-        int n_digits = 1 + CppAD::numeric_limits<Base>::digits10; \
-        os << std::setprecision(n_digits);\
-        os << value;\
-        return os.str();\
-    }\
+{  std::string operator()(const Base& value) \
+   {  std::stringstream os;\
+      int n_digits = 1 + CppAD::numeric_limits<Base>::digits10; \
+      os << std::setprecision(n_digits);\
+      os << value;\
+      return os.str();\
+   }\
 };
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end base_to_string}
 ------------------------------------------------------------------------------
 */
 // make sure to_string has been included

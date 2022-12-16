@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed_cppad_jit}
+
+Speed Test Derivatives Using cppad_jit
+######################################
+
+Purpose
+*******
+CppAD has a set of speed tests that are used to compare
+cppad_jit with other AD packages.
+This section links to the source code the cppad_jit speed tests
+(any suggestions to make the cppad_jit results faster are welcome).
+
+Running Tests
+*************
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+:ref:`cmake@Build Directory` :
+
+| |tab| ``cd speed/cppad_jit``
+| |tab| ``make check_speed_cppad_jit VERBOSE`` =1
+
+You can then run the corresponding speed tests
+with the following command
+
+   ./ ``speed_cppad_jit speed`` *seed*
+
+where *seed* is a positive integer.
+See :ref:`speed_main-name` for more options.
+
+Contents
+********
+{xrst_toc_list
+   speed/cppad_jit/det_minor.cpp
+   speed/cppad_jit/det_lu.cpp
+   speed/cppad_jit/mat_mul.cpp
+   speed/cppad_jit/ode.cpp
+   speed/cppad_jit/poly.cpp
+   speed/cppad_jit/sparse_hessian.cpp
+   speed/cppad_jit/sparse_jacobian.cpp
+}
+
+{xrst_end speed_cppad_jit}

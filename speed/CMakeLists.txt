@@ -1,14 +1,7 @@
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 
 # Initialize list of tests as empty
 SET(check_speed_depends "")
@@ -23,20 +16,20 @@ ADD_SUBDIRECTORY(double)
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(xpackage)
 IF ( cppad_profile_flag )
-    ADD_SUBDIRECTORY(profile)
+   ADD_SUBDIRECTORY(profile)
 ENDIF ( cppad_profile_flag )
 #
 IF( cppad_has_adolc )
-    ADD_SUBDIRECTORY(adolc)
+   ADD_SUBDIRECTORY(adolc)
 ENDIF( cppad_has_adolc )
 IF( cppad_has_fadbad )
-    ADD_SUBDIRECTORY(fadbad)
+   ADD_SUBDIRECTORY(fadbad)
 ENDIF( cppad_has_fadbad )
 IF( cppad_has_cppadcg )
-    ADD_SUBDIRECTORY(cppadcg)
+   ADD_SUBDIRECTORY(cppadcg)
 ENDIF( cppad_has_cppadcg )
 IF( cppad_has_sacado )
-    ADD_SUBDIRECTORY(sacado)
+   ADD_SUBDIRECTORY(sacado)
 ENDIF( cppad_has_sacado )
 
 # check_speed

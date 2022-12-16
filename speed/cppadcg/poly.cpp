@@ -1,29 +1,22 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin cppadcg_poly.cpp$$
-$spell
-    cppadcg
-$$
+{xrst_begin cppadcg_poly.cpp}
 
-$section Cppadcg Speed: Second Derivative of a Polynomial$$
+Cppadcg Speed: Second Derivative of a Polynomial
+################################################
 
+Specifications
+**************
+:ref:`link_poly-name`
 
-$head Specifications$$
-$cref link_poly$$
-
-$head Implementation$$
+Implementation
+**************
 // a cppadcg version of this test is not yet implemented
-$srccode%cpp% */
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <map>
 # include <cppad/utility/vector.hpp>
 
@@ -31,12 +24,14 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_poly(
-    size_t                     size     ,
-    size_t                     repeat   ,
-    CppAD::vector<double>     &a        ,  // coefficients of polynomial
-    CppAD::vector<double>     &z        ,  // polynomial argument value
-    CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
-{   return false; }
-/* %$$
-$end
+   size_t                     size     ,
+   size_t                     repeat   ,
+   CppAD::vector<double>     &a        ,  // coefficients of polynomial
+   CppAD::vector<double>     &z        ,  // polynomial argument value
+   CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
+{  return false; }
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end cppadcg_poly.cpp}
 */

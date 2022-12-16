@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin atomic_four_vector_implement}
+
+Implementing Atomic Vector Operations
+#####################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/example/atomic_four/vector/vector.hpp
+   include/cppad/example/atomic_four/vector/forward_op.hpp
+   include/cppad/example/atomic_four/vector/reverse_op.hpp
+   include/cppad/example/atomic_four/vector/jac_sparsity.hpp
+   include/cppad/example/atomic_four/vector/hes_sparsity.hpp
+   include/cppad/example/atomic_four/vector/for_type.hpp
+   include/cppad/example/atomic_four/vector/rev_depend.hpp
+   include/cppad/example/atomic_four/vector/add_op.hpp
+   include/cppad/example/atomic_four/vector/sub_op.hpp
+   include/cppad/example/atomic_four/vector/mul_op.hpp
+   include/cppad/example/atomic_four/vector/div_op.hpp
+   include/cppad/example/atomic_four/vector/neg_op.hpp
+}
+
+{xrst_end atomic_four_vector_implement}

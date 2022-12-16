@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin thread_alloc}
+
+A Fast Multi-Threading Memory Allocator
+#######################################
+
+Syntax
+******
+``# include <cppad/thread_alloc.hpp>``
+
+Purpose
+*******
+The C++ ``new`` and ``delete`` operators are thread safe,
+but this means that a thread may have to wait for a lock on these operations.
+Once memory is obtained for a thread, the ``thread_alloc`` memory
+allocator keeps that memory :ref:`available<ta_available-name>` for the thread so that
+it can be re-used without waiting for a lock.
+All the CppAD memory allocations use this utility.
+The :ref:`free_available<ta_free_available-name>` function should be used to return memory
+to the system (once it is no longer required by a thread).
+
+Include
+*******
+The routines in sections below are defined by ``cppad/thread_alloc.hpp`` .
+This file is included by
+``cppad/cppad.hpp`` , but it can also be included separately with out
+the rest of the ``CppAD`` .
+
+Contents
+********
+{xrst_toc_table
+   example/utility/thread_alloc.cpp
+   include/cppad/utility/thread_alloc.hpp
+}
+
+{xrst_end thread_alloc}
+*/

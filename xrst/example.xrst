@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin Example}
+
+Examples
+########
+
+Introduction
+************
+This section organizes the information related to the CppAD examples.
+Each CppAD operation has its own specific example,
+for example :ref:`add.cpp-name` is an example for
+:ref:`addition<ad_binary-name>` .
+Some of the examples are of a more general nature
+(not connected of a specific feature of CppAD).
+In addition, there are some utility functions that are used
+by the examples.
+
+get_started
+***********
+The :ref:`get_started.cpp-name` example is a good place to start using CppAD.
+
+Running Examples
+****************
+The
+:ref:`installation instructions<Install-name>`
+show how the examples can be run on your system.
+
+The CppAD Test Vector Template Class
+************************************
+Many of the examples use the ``CPPAD_TESTVECTOR`` preprocessor symbol
+( see :ref:`testvector-name` )
+to determine which :ref:`SimpleVector-name` template class is used with
+the examples.
+
+Contents
+********
+{xrst_toc_table
+   example/get_started/get_started.cpp
+   xrst/example_list.xrst
+   include/cppad/core/testvector.hpp
+   include/cppad/wno_conversion.hpp
+}
+
+{xrst_end Example}

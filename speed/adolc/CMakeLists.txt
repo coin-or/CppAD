@@ -1,14 +1,7 @@
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 # Build the speed/adolc directory tests
 # Inherit build type from ../CMakeList.txt
 
@@ -28,13 +21,13 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 SET(source_list ../main.cpp alloc_mat.cpp
-    det_lu.cpp
-    det_minor.cpp
-    mat_mul.cpp
-    ode.cpp
-    poly.cpp
-    sparse_hessian.cpp
-    sparse_jacobian.cpp
+   det_lu.cpp
+   det_minor.cpp
+   mat_mul.cpp
+   ode.cpp
+   poly.cpp
+   sparse_hessian.cpp
+   sparse_jacobian.cpp
 )
 set_compile_flags( speed_adolc "${cppad_debug_which}" "${source_list}" )
 #
@@ -42,10 +35,10 @@ ADD_EXECUTABLE( speed_adolc EXCLUDE_FROM_ALL ${source_list} )
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_adolc
-    speed_src
-    ${cppad_lib}
-    adolc
-    ${colpack_libs}
+   speed_src
+   ${cppad_lib}
+   adolc
+   ${colpack_libs}
 )
 
 # check_speed_adolc

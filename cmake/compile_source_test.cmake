@@ -1,14 +1,7 @@
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 # compile_source_test(defined_ok source variable)
 #
 # defined_ok (in)
@@ -29,33 +22,33 @@
 # documentation.
 #
 MACRO(compile_source_test defined_ok source variable)
-    #
-    #
-    # check that variable is not yet defined
-    IF( NOT ${defined_ok} )
-        IF( DEFINED ${variable} )
-            MESSAGE(FATAL_ERROR
-                "compile_source_test: ${variable} is defined before expected"
-            )
-        ENDIF( DEFINED ${variable} )
-    ENDIF( NOT ${defined_ok} )
-    #
-    # check that source code compiles
-    CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
-    #
-    # change result varialbe to 0 (1) for fail (succeed).
-    IF( ${variable} )
-        SET(${variable} 1)
-    ELSE( ${variable} )
-        SET(${variable} 0)
-    ENDIF( ${variable} )
-    #
-    # check that varialbe is defined
-    IF( NOT DEFINED ${variable} )
-        MESSAGE(FATAL_ERROR
-            "compile_source_test: error in CMake script."
-        )
-    ENDIF( NOT DEFINED ${variable} )
-    #
-    MESSAGE(STATUS "${variable} = ${${variable}}" )
+   #
+   #
+   # check that variable is not yet defined
+   IF( NOT ${defined_ok} )
+      IF( DEFINED ${variable} )
+         MESSAGE(FATAL_ERROR
+            "compile_source_test: ${variable} is defined before expected"
+         )
+      ENDIF( DEFINED ${variable} )
+   ENDIF( NOT ${defined_ok} )
+   #
+   # check that source code compiles
+   CHECK_CXX_SOURCE_COMPILES("${source}" ${variable} )
+   #
+   # change result varialbe to 0 (1) for fail (succeed).
+   IF( ${variable} )
+      SET(${variable} 1)
+   ELSE( ${variable} )
+      SET(${variable} 0)
+   ENDIF( ${variable} )
+   #
+   # check that varialbe is defined
+   IF( NOT DEFINED ${variable} )
+      MESSAGE(FATAL_ERROR
+         "compile_source_test: error in CMake script."
+      )
+   ENDIF( NOT DEFINED ${variable} )
+   #
+   MESSAGE(STATUS "${variable} = ${${variable}}" )
 ENDMACRO( compile_source_test )

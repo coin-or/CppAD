@@ -1,36 +1,21 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin double_mat_mul.cpp$$
-$spell
-    onetape
-    CppAD
-    cppad
-    mul_mat
-    hpp
-    sq
-    bool
-    dz
-    typedef
-$$
+{xrst_begin double_mat_mul.cpp}
 
-$section Double Speed: Matrix Multiplication$$
+Double Speed: Matrix Multiplication
+###################################
 
+Specifications
+**************
+See :ref:`link_mat_mul-name` .
 
-$head Specifications$$
-See $cref link_mat_mul$$.
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -40,29 +25,31 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_mat_mul(
-    size_t                           size     ,
-    size_t                           repeat   ,
-    CppAD::vector<double>&           x        ,
-    CppAD::vector<double>&           z        ,
-    CppAD::vector<double>&           dz
+   size_t                           size     ,
+   size_t                           repeat   ,
+   CppAD::vector<double>&           x        ,
+   CppAD::vector<double>&           z        ,
+   CppAD::vector<double>&           dz
 )
 {
-    if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
-        return false;
-    // -----------------------------------------------------
-    size_t n = size * size; // number of independent variables
-    CppAD::vector<double> y(n);
+   if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
+      return false;
+   // -----------------------------------------------------
+   size_t n = size * size; // number of independent variables
+   CppAD::vector<double> y(n);
 
-    while(repeat--)
-    {   // get the next matrix
-        CppAD::uniform_01(n, x);
+   while(repeat--)
+   {  // get the next matrix
+      CppAD::uniform_01(n, x);
 
-        // do computation
-        mat_sum_sq(size, x, y, z);
+      // do computation
+      mat_sum_sq(size, x, y, z);
 
-    }
-    return true;
+   }
+   return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end double_mat_mul.cpp}
 */

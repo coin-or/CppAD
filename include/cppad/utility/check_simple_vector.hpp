@@ -1,98 +1,94 @@
 # ifndef CPPAD_UTILITY_CHECK_SIMPLE_VECTOR_HPP
 # define CPPAD_UTILITY_CHECK_SIMPLE_VECTOR_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin CheckSimpleVector$$
-$spell
-    alloc
-    const
-    cppad.hpp
-    CppAD
-$$
+{xrst_begin CheckSimpleVector}
+{xrst_spell
+   preforms
+}
 
-$section Check Simple Vector Concept$$
+Check Simple Vector Concept
+###########################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/check_simple_vector.hpp>
-%$$
-$codei%CheckSimpleVector<%Scalar%, %Vector%>()%$$
-$pre
-$$
-$codei%CheckSimpleVector<%Scalar%, %Vector%>(%x%, %y%)%$$
+   # ``include <cppad/utility/check_simple_vector.hpp>``
 
+``CheckSimpleVector<`` *Scalar* , *Vector* >()
 
-$head Purpose$$
+``CheckSimpleVector<`` *Scalar* , *Vector* >( *x* , *y* )
+
+Purpose
+*******
 Preforms compile and run time checks that the type specified
-by $icode Vector$$ satisfies all the requirements for
-a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Scalar$$.
+by *Vector* satisfies all the requirements for
+a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Scalar* .
 If a requirement is not satisfied,
 a an error message makes it clear what condition is not satisfied.
 
-$head x, y$$
-If the arguments $icode x$$ and $icode y$$ are present,
+x, y
+****
+If the arguments *x* and *y* are present,
 they have prototype
-$codei%
-    const %Scalar%& %x%
-    const %Scalar%& %y%
-%$$
+
+| |tab| ``const`` *Scalar* & *x*
+| |tab| ``const`` *Scalar* & *y*
+
 In addition, the check
-$codei%
-    %x% == %x%
-%$$
-will return the boolean value $code true$$, and
-$codei%
-    %x% == %y%
-%$$
-will return $code false$$.
 
-$head Restrictions$$
-If the arguments $icode x$$ and $icode y$$ are not present,
-the following extra assumption is made by $code CheckSimpleVector$$:
-If $icode x$$ is a $icode Scalar$$ object
-$codei%
-    %x% = 0
-    %y% = 1
-%$$
-assigns values to the objects $icode x$$ and $icode y$$.
+   *x* == *x*
+
+will return the boolean value ``true`` , and
+
+   *x* == *y*
+
+will return ``false`` .
+
+Restrictions
+************
+If the arguments *x* and *y* are not present,
+the following extra assumption is made by ``CheckSimpleVector`` :
+If *x* is a *Scalar* object
+
+| |tab| *x*  = 0
+| |tab| *y*  = 1
+
+assigns values to the objects *x* and *y* .
 In addition,
-$icode%x% == %x%$$ would return the boolean value $code true$$ and
-$icode%x% == %y%$$ would return $code false$$.
+*x* == *x* would return the boolean value ``true`` and
+*x* == *y* would return ``false`` .
 
-$head Include$$
-The file $code cppad/utility/check_simple_vector.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/check_simple_vector.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest
 if the CppAD include files.
 
-$head Parallel Mode$$
-The routine $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
+Parallel Mode
+*************
+The routine :ref:`thread_alloc::parallel_setup<ta_parallel_setup-name>`
 must be called before it
-can be used in $cref/parallel/ta_in_parallel/$$ mode.
+can be used in :ref:`parallel<ta_in_parallel-name>` mode.
 
-$head Example$$
-$children%
-    example/utility/check_simple_vector.cpp
-%$$
-The file $cref check_simple_vector.cpp$$
-contains an example and test of this function where $icode S$$
-is the same as $icode T$$.
+Example
+*******
+{xrst_toc_hidden
+   example/utility/check_simple_vector.cpp
+}
+The file :ref:`check_simple_vector.cpp-name`
+contains an example and test of this function where *S*
+is the same as *T* .
 The comments in this example suggest a way to change the example
-so $icode S$$ is not the same as $icode T$$.
+so *S* is not the same as *T* .
 
-$end
+{xrst_end CheckSimpleVector}
 ---------------------------------------------------------------------------
 */
 
@@ -104,93 +100,93 @@ $end
 namespace CppAD {
 
 # ifdef NDEBUG
-    template <class Scalar, class Vector>
-    inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
-    { }
-    template <class Scalar, class Vector>
-    inline void CheckSimpleVector(void)
-    { }
+   template <class Scalar, class Vector>
+   inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
+   { }
+   template <class Scalar, class Vector>
+   inline void CheckSimpleVector(void)
+   { }
 # else
-    template <class S, class T>
-    struct ok_if_S_same_as_T { };
+   template <class S, class T>
+   struct ok_if_S_same_as_T { };
 
-    template <class T>
-    struct ok_if_S_same_as_T<T,T> { T value; };
+   template <class T>
+   struct ok_if_S_same_as_T<T,T> { T value; };
 
-    template <class Scalar, class Vector>
-    void CheckSimpleVector(const Scalar& x, const Scalar& y)
-    {   CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-        static size_t count;
-        if( count > 0  )
-            return;
-        count++;
+   template <class Scalar, class Vector>
+   void CheckSimpleVector(const Scalar& x, const Scalar& y)
+   {  CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+      static size_t count;
+      if( count > 0  )
+         return;
+      count++;
 
-        // value_type must be type of elements of Vector
-        typedef typename Vector::value_type value_type;
+      // value_type must be type of elements of Vector
+      typedef typename Vector::value_type value_type;
 
-        // check that elements of Vector have type Scalar
-        struct ok_if_S_same_as_T<Scalar, value_type> x_copy;
-        x_copy.value = x;
+      // check that elements of Vector have type Scalar
+      struct ok_if_S_same_as_T<Scalar, value_type> x_copy;
+      x_copy.value = x;
 
-        // check default constructor
-        Vector d;
+      // check default constructor
+      Vector d;
 
-        // size member function
-        CPPAD_ASSERT_KNOWN(
-            d.size() == 0,
-            "default construtor result does not have size zero"
-        );
+      // size member function
+      CPPAD_ASSERT_KNOWN(
+         d.size() == 0,
+         "default construtor result does not have size zero"
+      );
 
-        // resize to same size as other vectors in test
-        d.resize(1);
+      // resize to same size as other vectors in test
+      d.resize(1);
 
-        // check sizing constructor
-        Vector s(1);
+      // check sizing constructor
+      Vector s(1);
 
-        // check element assignment
-        s[0] = y;
-        CPPAD_ASSERT_KNOWN(
-            s[0] == y,
-            "element assignment failed"
-        );
+      // check element assignment
+      s[0] = y;
+      CPPAD_ASSERT_KNOWN(
+         s[0] == y,
+         "element assignment failed"
+      );
 
-        // check copy constructor
-        s[0] = x_copy.value;
-        const Vector c(s);
-        s[0] = y;
-        CPPAD_ASSERT_KNOWN(
-            c[0] == x,
-            "copy constructor is shallow"
-        );
+      // check copy constructor
+      s[0] = x_copy.value;
+      const Vector c(s);
+      s[0] = y;
+      CPPAD_ASSERT_KNOWN(
+         c[0] == x,
+         "copy constructor is shallow"
+      );
 
-        // vector assignment operator
-        d[0] = x;
-        s    = d;
-        s[0] = y;
-        CPPAD_ASSERT_KNOWN(
-            d[0] == x,
-            "assignment operator is shallow"
-        );
+      // vector assignment operator
+      d[0] = x;
+      s    = d;
+      s[0] = y;
+      CPPAD_ASSERT_KNOWN(
+         d[0] == x,
+         "assignment operator is shallow"
+      );
 
-        // element access, right side const
-        // element assignment, left side not const
-        d[0] = c[0];
-        CPPAD_ASSERT_KNOWN(
-            d[0] == x,
-            "element assignment from const failed"
-        );
-    }
-    template <class Scalar, class Vector>
-    void CheckSimpleVector(void)
-    {   Scalar x;
-        Scalar y;
+      // element access, right side const
+      // element assignment, left side not const
+      d[0] = c[0];
+      CPPAD_ASSERT_KNOWN(
+         d[0] == x,
+         "element assignment from const failed"
+      );
+   }
+   template <class Scalar, class Vector>
+   void CheckSimpleVector(void)
+   {  Scalar x;
+      Scalar y;
 
-        // use assignment and not constructor
-        x = 0;
-        y = 1;
+      // use assignment and not constructor
+      x = 0;
+      y = 1;
 
-        CheckSimpleVector<Scalar, Vector>(x, y);
-    }
+      CheckSimpleVector<Scalar, Vector>(x, y);
+   }
 
 # endif
 

@@ -1,0 +1,190 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin record_adfun}
+
+Create an ADFun Object by Recording an Operation Sequence
+#########################################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/independent/user.xrst
+   include/cppad/core/fun_construct.hpp
+   include/cppad/core/dependent.hpp
+   include/cppad/core/abort_recording.hpp
+   include/cppad/core/fun_property.xrst
+   include/cppad/core/function_name.xrst
+}
+
+{xrst_end record_adfun}
+-------------------------------------------------------------------------------
+{xrst_begin other_adfun}
+
+Other Ways to Create an ADFun Object
+####################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/base2ad.hpp
+   include/cppad/core/graph/json_ad_graph.xrst
+   include/cppad/core/graph/cpp_ad_graph.xrst
+   include/cppad/core/abs_normal_fun.hpp
+}
+
+See Also
+********
+
+.. csv-table::
+   :widths: auto
+
+   switch_var_dyn.cpp,:ref:`switch_var_dyn.cpp-title`
+
+{xrst_end other_adfun}
+-------------------------------------------------------------------------------
+{xrst_begin drivers}
+
+First and Second Order Derivatives: Easy Drivers
+################################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/jacobian.hpp
+   include/cppad/core/hessian.hpp
+   include/cppad/core/for_one.hpp
+   include/cppad/core/rev_one.hpp
+   include/cppad/core/for_two.hpp
+   include/cppad/core/rev_two.hpp
+}
+
+{xrst_end drivers}
+-------------------------------------------------------------------------------
+{xrst_begin Forward}
+
+Forward Mode
+############
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/new_dynamic.hpp
+   include/cppad/core/forward/forward_zero.xrst
+   include/cppad/core/forward/forward_one.xrst
+   include/cppad/core/forward/forward_two.xrst
+   include/cppad/core/forward/forward_order.xrst
+   include/cppad/core/forward/forward_dir.xrst
+   include/cppad/core/forward/size_order.xrst
+   include/cppad/core/forward/compare_change.xrst
+   include/cppad/core/capacity_order.hpp
+   include/cppad/core/num_skip.hpp
+}
+
+{xrst_end Forward}
+-------------------------------------------------------------------------------
+{xrst_begin Reverse}
+{xrst_spell
+   xq
+}
+
+Reverse Mode
+############
+
+Multiple Directions
+*******************
+Reverse mode after :ref:`Forward(q, r, xq)<forward_dir-name>`
+with number of directions *r*  != 1 is not yet supported.
+There is one exception, :ref:`reverse_one-name` is allowed
+because there is only one zero order forward direction.
+After such an operation, only the zero order forward
+results are retained (the higher order forward results are lost).
+
+Contents
+********
+{xrst_toc_table
+   xrst/reverse/reverse_one.xrst
+   xrst/reverse/reverse_two.xrst
+   xrst/reverse/reverse_any.xrst
+   include/cppad/core/subgraph_reverse.hpp
+}
+
+{xrst_end Reverse}
+-------------------------------------------------------------------------------
+{xrst_begin sparsity_pattern}
+
+Calculating Sparsity Patterns
+#############################
+{xrst_toc_hidden
+   include/cppad/core/for_jac_sparsity.hpp
+   include/cppad/core/rev_jac_sparsity.hpp
+   include/cppad/core/for_hes_sparsity.hpp
+   include/cppad/core/rev_hes_sparsity.hpp
+   include/cppad/core/subgraph_sparsity.hpp
+   example/sparse/dependency.cpp
+   example/sparse/rc_sparsity.cpp
+   include/cppad/core/for_sparse_jac.hpp
+   include/cppad/core/rev_sparse_jac.hpp
+   include/cppad/core/rev_sparse_hes.hpp
+   include/cppad/core/for_sparse_hes.hpp
+}
+
+Preferred Sparsity Pattern Calculations
+***************************************
+
+.. csv-table::
+   :widths: auto
+
+   for_jac_sparsity,:ref:`for_jac_sparsity-title`
+   rev_jac_sparsity,:ref:`rev_jac_sparsity-title`
+   for_hes_sparsity,:ref:`for_hes_sparsity-title`
+   rev_hes_sparsity,:ref:`rev_hes_sparsity-title`
+   subgraph_sparsity,:ref:`subgraph_sparsity-title`
+
+Old Sparsity Pattern Calculations
+*********************************
+
+.. csv-table::
+   :widths: auto
+
+   ForSparseJac,:ref:`ForSparseJac-title`
+   RevSparseJac,:ref:`RevSparseJac-title`
+   ForSparseHes,:ref:`ForSparseHes-title`
+   RevSparseHes,:ref:`RevSparseHes-title`
+
+{xrst_end sparsity_pattern}
+-------------------------------------------------------------------------------
+{xrst_begin sparse_derivative}
+
+Calculating Sparse Derivatives
+##############################
+{xrst_toc_hidden
+   include/cppad/core/sparse_jac.hpp
+   include/cppad/core/sparse_jacobian.hpp
+   include/cppad/core/sparse_hes.hpp
+   include/cppad/core/sparse_hessian.hpp
+   include/cppad/core/subgraph_jac_rev.hpp
+}
+
+Preferred Sparsity Patterns
+***************************
+
+.. csv-table::
+   :widths: auto
+
+   sparse_jac,:ref:`sparse_jac-title`
+   sparse_hes,:ref:`sparse_hes-title`
+   subgraph_jac_rev,:ref:`subgraph_jac_rev-title`
+
+Old Sparsity Patterns
+*********************
+
+.. csv-table::
+   :widths: auto
+
+   sparse_jacobian,:ref:`sparse_jacobian-title`
+   sparse_hessian,:ref:`sparse_hessian-title`
+
+{xrst_end sparse_derivative}
+-------------------------------------------------------------------------------

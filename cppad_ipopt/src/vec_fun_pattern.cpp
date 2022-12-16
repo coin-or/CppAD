@@ -1,14 +1,7 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 # include "cppad_ipopt_nlp.hpp"
 # include "vec_fun_pattern.hpp"
 // ---------------------------------------------------------------------------
@@ -56,8 +49,8 @@ is a CppAD function object correspopnding to the function
 \f$ r_k : {\bf R}^{q[k]} \rightarrow {\bf R}^{p[k]} \f$.
 The following non-constant member functions will be called:
 \verbatim
-    r_fun[k].ForSparseJac(q[k], pattern_domain)
-    r_fun[k].RevSparseHes(p[k], pattern_range)
+   r_fun[k].ForSparseJac(q[k], pattern_domain)
+   r_fun[k].RevSparseHes(p[k], pattern_range)
 \endverbatim
 The following const member functions <tt>r_fun[k].Range()</tt>
 and <tt>r_fun[k].Domain()</tt> may also be called.
@@ -78,65 +71,65 @@ and the value of its elements does not matter.
 On output it is a CppAD sparsity pattern for the Hessian of
 \f$ R : {\bf R}^{q[k]} \rightarrow {\bf R} \f$ which is defined by
 \f[
-    R(u) = \sum_{i=0}^{p[k]-1} r_k (u)_i
+   R(u) = \sum_{i=0}^{p[k]-1} r_k (u)_i
 \f]
 */
 void vec_fun_pattern(
-    size_t                                          K              ,
-    const CppAD::vector<size_t>&                    p              ,
-    const CppAD::vector<size_t>&                    q              ,
-    const CppAD::vectorBool&                        retape         ,
-    CppAD::vector< CppAD::ADFun<Ipopt::Number> >&   r_fun          ,
-    CppAD::vector<CppAD::vectorBool>&               pattern_jac_r  ,
-    CppAD::vector<CppAD::vectorBool>&               pattern_hes_r  )
-{   // check some assumptions
-    CPPAD_ASSERT_UNKNOWN( K == p.size() );
-    CPPAD_ASSERT_UNKNOWN( K == q.size() );
-    CPPAD_ASSERT_UNKNOWN( K == retape.size() );
-    CPPAD_ASSERT_UNKNOWN( K == r_fun.size() );
-    CPPAD_ASSERT_UNKNOWN( K == pattern_jac_r.size() );
-    CPPAD_ASSERT_UNKNOWN( K == pattern_hes_r.size() );
+   size_t                                          K              ,
+   const CppAD::vector<size_t>&                    p              ,
+   const CppAD::vector<size_t>&                    q              ,
+   const CppAD::vectorBool&                        retape         ,
+   CppAD::vector< CppAD::ADFun<Ipopt::Number> >&   r_fun          ,
+   CppAD::vector<CppAD::vectorBool>&               pattern_jac_r  ,
+   CppAD::vector<CppAD::vectorBool>&               pattern_hes_r  )
+{  // check some assumptions
+   CPPAD_ASSERT_UNKNOWN( K == p.size() );
+   CPPAD_ASSERT_UNKNOWN( K == q.size() );
+   CPPAD_ASSERT_UNKNOWN( K == retape.size() );
+   CPPAD_ASSERT_UNKNOWN( K == r_fun.size() );
+   CPPAD_ASSERT_UNKNOWN( K == pattern_jac_r.size() );
+   CPPAD_ASSERT_UNKNOWN( K == pattern_hes_r.size() );
 
-    using CppAD::vectorBool;
-    size_t i, j, k;
+   using CppAD::vectorBool;
+   size_t i, j, k;
 
-    for(k = 0; k < K; k++)
-    {   // check some k specific assumptions
-        CPPAD_ASSERT_UNKNOWN( pattern_jac_r[k].size() == p[k] * q[k] );
-        CPPAD_ASSERT_UNKNOWN( pattern_hes_r[k].size() == q[k] * q[k] );
+   for(k = 0; k < K; k++)
+   {  // check some k specific assumptions
+      CPPAD_ASSERT_UNKNOWN( pattern_jac_r[k].size() == p[k] * q[k] );
+      CPPAD_ASSERT_UNKNOWN( pattern_hes_r[k].size() == q[k] * q[k] );
 
-        if( retape[k] )
-        {   for(i = 0; i < p[k]; i++)
-            {   for(j = 0; j < q[k]; j++)
-                    pattern_jac_r[k][i*q[k] + j] = true;
-            }
-            for(i = 0; i < q[k]; i++)
-            {   for(j = 0; j < q[k]; j++)
-                    pattern_hes_r[k][i*q[k] + j] = true;
-            }
-        }
-        else
-        {   // check assumptions about r_k
-            CPPAD_ASSERT_UNKNOWN( r_fun[k].Range() == p[k] );
-            CPPAD_ASSERT_UNKNOWN( r_fun[k].Domain() == q[k] );
+      if( retape[k] )
+      {  for(i = 0; i < p[k]; i++)
+         {  for(j = 0; j < q[k]; j++)
+               pattern_jac_r[k][i*q[k] + j] = true;
+         }
+         for(i = 0; i < q[k]; i++)
+         {  for(j = 0; j < q[k]; j++)
+               pattern_hes_r[k][i*q[k] + j] = true;
+         }
+      }
+      else
+      {  // check assumptions about r_k
+         CPPAD_ASSERT_UNKNOWN( r_fun[k].Range() == p[k] );
+         CPPAD_ASSERT_UNKNOWN( r_fun[k].Domain() == q[k] );
 
-            // pattern for the identity matrix
-            CppAD::vectorBool pattern_domain(q[k] * q[k]);
-            for(i = 0; i < q[k]; i++)
-            {   for(j = 0; j < q[k]; j++)
-                    pattern_domain[i*q[k] + j] = (i == j);
-            }
-            // use forward mode to compute Jacobian sparsity
-            pattern_jac_r[k] =
-                r_fun[k].ForSparseJac(q[k], pattern_domain);
-            // user reverse mode to compute Hessian sparsity
-            CppAD::vectorBool pattern_ones(p[k]);
-            for(i = 0; i < p[k]; i++)
-                pattern_ones[i] = true;
-            pattern_hes_r[k] =
-                r_fun[k].RevSparseHes(q[k], pattern_ones);
-        }
-    }
+         // pattern for the identity matrix
+         CppAD::vectorBool pattern_domain(q[k] * q[k]);
+         for(i = 0; i < q[k]; i++)
+         {  for(j = 0; j < q[k]; j++)
+               pattern_domain[i*q[k] + j] = (i == j);
+         }
+         // use forward mode to compute Jacobian sparsity
+         pattern_jac_r[k] =
+            r_fun[k].ForSparseJac(q[k], pattern_domain);
+         // user reverse mode to compute Hessian sparsity
+         CppAD::vectorBool pattern_ones(p[k]);
+         for(i = 0; i < p[k]; i++)
+            pattern_ones[i] = true;
+         pattern_hes_r[k] =
+            r_fun[k].RevSparseHes(q[k], pattern_ones);
+      }
+   }
 }
 // ---------------------------------------------------------------------------
 } // end namespace cppad_ipopt

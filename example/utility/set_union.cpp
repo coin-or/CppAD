@@ -1,53 +1,49 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin set_union.cpp$$
+{xrst_begin set_union.cpp}
 
-$section Set Union: Example and Test$$
+Set Union: Example and Test
+###########################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end set_union.cpp}
 */
 // BEGIN C++
 # include <cppad/utility/set_union.hpp>
 
 bool set_union(void)
-{   bool ok = true;
+{  bool ok = true;
 
-    // create empty sets
-    std::set<size_t> left, right, result;
+   // create empty sets
+   std::set<size_t> left, right, result;
 
-    // set left = {1, 2}
-    left.insert(1);
-    left.insert(2);
+   // set left = {1, 2}
+   left.insert(1);
+   left.insert(2);
 
-    // set right = {2, 3}
-    right.insert(2);
-    right.insert(3);
+   // set right = {2, 3}
+   right.insert(2);
+   right.insert(3);
 
-    // set result = {1, 2} U {2, 3}
-    result = CppAD::set_union(left, right);
+   // set result = {1, 2} U {2, 3}
+   result = CppAD::set_union(left, right);
 
-    // expected result
-    size_t check_vec[] = {1, 2, 3};
-    std::set<size_t> check_set(check_vec, check_vec + 3);
+   // expected result
+   size_t check_vec[] = {1, 2, 3};
+   std::set<size_t> check_set(check_vec, check_vec + 3);
 
-    // check result
-    ok &= result == check_set;
+   // check result
+   ok &= result == check_set;
 
-    return ok;
+   return ok;
 }
 
 // END C++

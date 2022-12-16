@@ -1,0 +1,877 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin whats_new_07}
+{xrst_spell
+   adouble
+   apposed
+   apx
+   autoconf
+   automake
+   deprecate
+   determinants
+   differentiable
+   executables
+   expansions
+   gettimeofday
+   ginac
+   isnan
+   kipp
+   macros
+   makefile
+   makefiles
+   omh
+   operands
+   postfix
+   preforming
+   rpm
+   tarballs
+   tgz
+   threadprivate
+   transposes
+   valgrind
+   vcproj
+   yyyymmdd
+}
+
+Changes and Additions to CppAD During 2007
+##########################################
+
+mm-dd
+*****
+
+12-29
+=====
+License conversions missed the copyright message at the top
+in the following special cases:
+``makefile.am`` , ``makefile.in`` , and
+``omh/appendix/license.omh`` .
+
+12-25
+=====
+The :ref:`install-name` instructions have been improved.
+
+12-21
+=====
+The :ref:`autotools@--with-Documentation`
+option on the ``configure`` command line caused an error on some
+systems because it attempted to copy to many files.
+This has been fixed by copying the directory instead of the individual files.
+
+12-08
+=====
+By mistake, the documentation :ref:`License-name` statement
+for the GPL distribution was the same as for the CPL distribution.
+This has been fixed.
+
+12-05
+=====
+Change the name of the spec file from
+``cppad-`` *yyyymmdd* . ``spec`` to ``cppad.spec`` .
+
+12-04
+=====
+Add the capability for the RPM spec file to use a different
+prefix directory.
+
+12-03
+=====
+This is the first version with the rpm spec file
+``cppad.spec`` .
+
+12-02
+=====
+Add the ``DESTDIR`` = *directory* option on the
+:ref:`autotools@make install` command line.
+
+11-29
+=====
+The :ref:`unary_standard_math-name` function ``sqrt`` did not link properly
+when *Base* was ``AD<double>`` .
+This has been fixed.
+
+11-23
+=====
+The routines ``nan`` and ``isnan`` were failing
+for some systems because they use ``nan`` and or ``isnan``
+as preprocessor symbols.
+This has been fixed; see :ref:`nan@Include@Macros` .
+In addition, the example and test :ref:`nan.cpp-name` has been added.
+
+11-18
+=====
+Speed tests for ``tape_values`` branch were not better than trunk,
+so the good parts of that branch (but not all) were merged into the trunk.
+
+The interface specifications for
+:ref:`base type requirements<base_require-name>` have been changed so that
+CppAD would compile with ``gcc 4.1.1``
+(which requires more definitions before use in template functions).
+This changed of requirements is demonstrated by the
+:ref:`base_complex.hpp-name` and :ref:`base_adolc.hpp-name` examples.
+
+The problem with newer C++ compilers requiring more definitions before use
+also required the user to know about ``float`` and ``double``
+definitions for the standard math
+functions in the CppAD namespace;
+see :ref:`base_std_math-name` .
+
+The ``example/test_one.sh`` and ``test_more/test_one.sh``
+scripts were modified so that one only need specify the test file name
+(does not also need the test routine name). Some of the test routine
+declarations were changed from *name* () to
+*name* ( ``void`` ) to make this possible.
+
+The program ``test_more/test_more`` was changed to always
+report the memory leak test results (same as ``example/example`` ).
+
+The :ref:`PrintFor-name` function was putting an unused variable in the tape.
+This has been fixed.
+
+11-06
+=====
+Added the ``-DRAD_EQ_ALIAS`` compiler flag to the
+:ref:`Sacado speed tests<speed_sacado-name>` .
+In addition, compiler flag documentation was included for
+Sacado and all the other speed tests.
+
+11-05
+=====
+MS project files have been added for running the
+:ref:`cppad<speed_cppad-name>` and
+:ref:`double<speed_double-name>`
+speed tests.
+
+11-04
+=====
+The ``cppad/config.h`` file was not compatible with the
+Windows install procedure and
+the Windows project's could not find a certain include file.
+This has been fixed.
+
+The :ref:`unix install<autotools-name>` procedure has been modified
+so that the one configure flag
+``--with-Speed``
+builds all the possible executables related to the speed testing.
+
+11-03
+=====
+Improve the :ref:`speed_main-name` documentation and output
+(as well as the title for other sections under :ref:`speed-name` ).
+
+The subversion copy of the :ref:`autotools@Configure` script
+was not executable.
+This has been fixed.
+
+11-02
+=====
+The instructions for downloading the current version using
+``subversion`` have changed.
+The user should now directly edit the file
+::
+
+   trunk/configure
+
+in order to set the correct date for the installation
+and to build the corresponding documentation.
+
+The :ref:`speed-name` section has been slightly reorganized
+(the main program and utilities have been separated).
+
+Add :ref:`speed_double-name` for testing the speed of evaluating
+functions in ``double`` as apposed to gradients using AD types.
+
+11-01
+=====
+The instructions for downloading the current version using subversion
+have changed.
+The user must now execute the command
+::
+
+   ./build.sh version
+
+in order to set the correct version number for her (or his) installation.
+
+Add the return status for all the correctness tests
+to the documentation; see ``make test`` .
+
+10-30
+=====
+The download instructions did not update current version number
+and this broke the links to the current tarballs.
+This has been fixed.
+
+The documentation for :ref:`det_by_minor-name` and :ref:`det_by_lu-name`
+has been improved.
+The order of the elements in :ref:`det_of_minor-name` has been
+corrected (they were transposed but this did not really matter
+because determinants of transposes are equal).
+
+The makefiles in the distribution have been changed so that
+one can run configure from a directory other than the distribution directory.
+
+10-27
+=====
+A ``subversion`` method
+for downloading CppAD has been added.
+
+The installation was broken on some systems because the
+:ref:`autotools@Configure` command tried to run
+the ``autoconf`` and ``automake`` programs.
+This has been fixed by adding
+``AM_MAINTAINER_MODE`` to the ``autoconf`` input file.
+
+Extend the
+``subversion``
+methods to include a full installation and old versions.
+
+10-23
+=====
+The :ref:`autotools@cxx_flags` environment variable
+has been changed from ``CPP_ERROR_WARN`` to ``CXX_FLAGS`` .
+
+The command ``configure --help`` now prints a description
+of the environment variables
+``ADOLC_DIR`` ,
+``FADBAD_DIR`` ,
+``SACADO_DIR`` ,
+``BOOST_DIR`` ,
+and
+``CXX_FLAGS`` .
+In addition, if the environment variables
+``POSTFIX_DIR`` or ``CPP_ERROR_WARN`` are used,
+an message is printed saying that are not longer valid.
+
+10-22
+=====
+The correctness checks and speed test wrappers were moved
+from the individual package directories to :ref:`speed_main-name` .
+This way they do not have to be reproduced for each package.
+This makes it easier to add a new package,
+but it requires the prototype for
+``compute_`` *test_name* to be the same for all packages.
+
+The `Sacado <http://trilinos.sandia.gov/packages/sacado/>`_
+package was added to the list of :ref:`speed-name` tests.
+In addition, the discussion about how to run each of the
+speed tests was corrected to include the *seed* argument.
+
+The *postfix_dir* option
+was removed on :ref:`2006-12-05<whats_new_06@mm-dd@12-05>` but
+it was not removed from the
+:ref:`autotools@Configure`
+documentation.
+This has been fixed.
+
+The routine :ref:`CheckSimpleVector-name` was changed.
+It used to require conversion of the form
+
+   *Scalar* ( *i* )
+
+where *i* was ``0`` or ``1`` .
+This does not work with when *Scalar* is
+``Sacado::Tay::Taylor<double>`` .
+This requirement has been changed
+(see :ref:`CheckSimpleVector@Restrictions` )
+to support of
+
+   *x* = *i*
+
+where *x* has type *Scalar*
+and *i* has type ``int`` .
+
+Fix include directives in :ref:`speed_fadbad-name` programs
+``det_lu`` , ``det_minor`` , and ``poly`` ,
+to use ``FADBAD++`` instead of ``Fadbad++`` directory.
+
+Add ``ADOLC_DIR`` , ``FADBAD_DIR`` , ``SACADO_DIR`` ,
+and ``BOOST_DIR``
+to the :ref:`autotools@Configure` help string.
+
+10-16
+=====
+Add *seed* argument and
+improve :ref:`speed_main-name` documentation.
+
+10-13
+=====
+Fix the title in :ref:`adolc_det_lu.cpp-name` .
+Add the package name to each test case result printed by
+:ref:`speed_main-name` .
+
+10-05
+=====
+Added and example using complex calculations for a
+function that is not complex differentiable ``not_complex_ad.cpp`` .
+(This example has been removed; see :ref:`complex FAQ<Faq@Complex Types>` .)
+
+10-02
+=====
+Extend the :ref:`pow-name` function to work for any case where one argument
+is ``AD<`` *Base* > and the other is ``double``
+(as do the binary operators).
+
+09-06
+=====
+If the :ref:`method.step<OdeErrControl@Method@step>` function returned
+``nan`` (not a number),
+it was possible for :ref:`OdeErrControl-name` to drop into an infinite loop.
+This has been fixed.
+
+08-09
+=====
+Let user detect and handel the case where an ODE initial vector *xi*
+contains  not a number ``nan``
+(see :ref:`Runge45-name` , :ref:`Rosen34-name` , and :ref:`OdeErrControl-name` ).
+
+Use the ``||`` operation instead of ``|``
+operator in the ``nan`` function
+(The Ginac library seems to use an alias for the type ``bool`` and
+does not have ``|`` defined for this alias).
+
+The file ``test_more/ode_err_control.cpp`` was using the
+wrong include file name since the change on 08/07.
+This has been fixed.
+
+08-07
+=====
+Sometimes an ODE solver takes to large a step and this results
+in invalid values for the variables being integrated.
+The ODE solvers :ref:`Runge45-name` and :ref:`Rosen34-name` have been
+modified to abort
+and return :ref:`nan-name` when it is returned by the differential
+equation evaluation.
+The solver :ref:`OdeErrControl-name` have been modified to try smaller steps
+when this happens.
+
+Fix an :ref:`fun_construct@Sequence Constructor`
+referenced to ``Dependent`` in documentation
+(was using the :ref:`fun_deprecated-name` one argument syntax).
+
+Add comment about mixing debug and non-debug versions of
+CppAD in :ref:`track_new_del@TrackDelVec` error message.
+
+07-30
+=====
+``CppADCreateBinaryBool`` and ``CppADCreateUnaryBool``
+have been replaced by ``CPPAD_BOOL_BINARY`` and
+``CPPAD_BOOL_UNARY`` respectively.
+In addition, the :ref:`wish_list-name` item for conversion
+of all preprocessor macros to upper case been completed and removed.
+
+07-29
+=====
+The preprocessor macros
+``CppADUsageError`` and ``CppADUnknownError``
+have been replaced by ``CPPAD_ASSERT_KNOWN`` and
+``CPPAD_ASSERT_UNKNOWN`` respectively.
+The meaning for these macros
+has been included in the :ref:`cppad_assert-name` section.
+In addition, the *known* argument to :ref:`ErrorHandler-name`
+was wrong for the unknown case.
+
+The :ref:`wish_list-name` item
+for conversion of all preprocessor macros to upper case
+has been changes (to an item that was previous missing).
+
+07-28
+=====
+The preprocessor macro ``CPPAD_DISCRETE_FUNCTIOIN`` was defined
+as a replacement for ``CppADCreateDiscrete``
+which has been deprecated.
+
+07-26
+=====
+Merge in changes made in ``branches/test_vector`` .
+
+#. 07-26:
+   Change all occurrences of ``CppADvector`` ,
+   in the files ``test_more/`` * . ``cpp`` and ``speed/`` * /* . ``cpp`` ,
+   where changed to ``CPPAD_TEST_VECTOR`` .
+   All occurrences of the ``CppADvector`` in the documentation
+   were edited to reflect that fact that it has been deprecated.
+   The documentation index and search for
+   deprecated items has been improved.
+
+#. 07-25:
+   Deprecate the preprocessor symbol ``CppADvector``
+   and start changing it to
+   ``CPPAD_TEST_VECTOR`` .
+
+   Change all occurrences of ``CppADvector`` ,
+   in the ``example/`` * . ``cpp`` files,
+   to ``CPPAD_TEST_VECTOR`` .
+
+07-23
+=====
+The :ref:`track_new_del-name` macros
+``CppADTrackNewVec`` ,
+``CppADTrackDelVec`` , and
+``CppADTrackExtend`` have been deprecated.
+The new macros names to use are
+``CPPAD_TRACK_NEW_VEC`` ,
+``CPPAD_TRACK_DEL_VEC`` , and
+``CPPAD_TRACK_EXTEND`` respectively.
+This item has been removed from the
+software guidelines section of the wish list.
+
+The member variable entry in the software guideline
+wish list item has be brought up to date.
+
+07-22
+=====
+Minor improvements to the :ref:`mul_level_adolc_ode.cpp-name` example.
+
+07-21
+=====
+
+#. The ``openmp/run.sh`` example programs
+   ``example_a11c.cpp`` ,
+   ``openmp_newton_example.cpp`` , and
+   ``sum_i_inv.cpp``
+   have been changed so that they run on more systems
+   (are C++ standard compliant).
+#. :ref:`base_require-name` :
+   The ``IdenticalEqual`` function,
+   in the :ref:`base_require-name` specification,
+   was changed to ``IdenticalEqualCon``
+   (note the :ref:`base_require@API Warning` in the
+   *Base* requirement specifications).
+#. Implementation of the :ref:`base requirements<base_require-name>` for complex types
+   were moved into the :ref:`base_complex.hpp-name` example.
+
+07-20
+=====
+The download for CppAD was still broken.
+It turned out that the copyright message was missing from the file
+:ref:`base_adolc.hpp-name` and this stopped the creation of the download files.
+This has been fixed.
+In addition, the automated testing procedure has been modified so
+that missing copyright messages and test program failures will
+be more obvious in the test log.
+
+07-19
+=====
+The download for CppAD has been broken since the example
+``mul_level_adolc_ode.cpp`` was added because the
+``example/example`` program was failing.
+This has been fixed.
+
+07-18
+=====
+A realistic example using Adolc with CppAD
+:ref:`mul_level_adolc_ode.cpp-name` was added.
+The documentation for :ref:`track_new_del-name` was improved.
+
+07-14
+=====
+Add a discussion at the beginning of
+:ref:`mul_level_ode.cpp-name` example
+(and improve the notation used in the example).
+
+07-13
+=====
+Separate the include file
+:ref:`base_adolc.hpp-name`
+from the :ref:`mul_level_adolc.cpp-name` example
+so that it can be used by other examples.
+
+06-22
+=====
+Add :ref:`mul_level_adolc.cpp-name` , an example that demonstrates using
+``adouble`` and for the :ref:`Base<base_require-name>` type.
+
+The :ref:`get_started.cpp-name`
+example did not build when
+the ``--with-Introduction`` and
+``BOOST_DIR`` options were included on the
+:ref:`autotools@Configure` command line.
+In fact, some of the :ref:`speed-name` tests also had compilation errors
+when ``BOOST_DIR`` was include in the configure command.
+This has been fixed.
+
+There was a namespace reference missing in the files
+that could have caused compilation errors in the files
+``speed/cppad/det_minor.cpp`` and
+``speed/cppad/det_lu.cpp`` .
+This has been fixed.
+
+06-20
+=====
+The MS project
+``test_more/test_more.vcproj`` would not build because
+the file ``test_more/fun_check.cpp`` was missing;
+this has been fixed.
+In addition,
+fix warnings generated by the MS compiler when compiling the
+``test_more/test_more.cpp`` file.
+
+Add a section defining the :ref:`Base type requirements<base_require-name>` .
+Remove the *Base* type restrictions from the :ref:`Faq-name` .
+Make all the prototype for the default Base types agree with
+the specifications in the Base type requirements.
+
+Fix the description of the ``tan`` function in
+:ref:`unary_standard_math-name` .
+
+06-14
+=====
+The routine :ref:`Rosen34-name` ( :ref:`Runge45-name` ) had a division
+of a ``size_t`` ( ``int`` ) by a *Scalar* ,
+where *Scalar* was any :ref:`NumericType-name` .
+Such an operation may not be valid for a particular numeric type.
+This has been fixed by explicitly converting the
+``size_t`` to an ``int`` ,
+then converting the ``int`` to a *Scalar* ,
+and then preforming the division.
+(The conversion of an ``int`` to any numeric type must be valid.)
+
+05-26
+=====
+If the *Base* type is not ``double`` ,
+the :ref:`compound assignment<compound_assign-name>` operators did not
+always allow for ``double`` operands. For example,
+if *x* had type ``AD< AD<double> >``
+
+   *x*  += .5;
+
+would slice the value ``.5`` to an ``int``
+and then convert it to an ``AD< AD<double> >`` .
+This has been fixed.
+
+This slicing has also been fixed in the
+:ref:`assignment<ad_assign-name>` operation.
+In addition, the assignment and copy operations
+have been grouped together in the documentation; see :ref:`ad_ctor-name` and :ref:`ad_assign-name` .
+
+05-25
+=====
+Document usage of ``double`` with
+binary arithmetic operators,
+and combine all those operators into one section (:ref:`ad_binary-name` ).
+
+The documentation for all the :ref:`compound assignment<compound_assign-name>`
+operators has been grouped together.
+In addition, a
+compound assignment wish list item has been added
+(it was completed and removed with the
+:ref:`whats_new_07@mm-dd@05-26` update.)
+
+05-24
+=====
+Suppose that *op* is a binary operation and we have
+
+   *left* *op* *right*
+
+where one of the operands was ``AD< AD<double> >`` and
+the other operand was ``double`` .
+There was a bug in this case that caused the ``double``
+operand to be converted to ``int`` before
+being converted to ``AD< AD<double> >`` .
+This has been fixed.
+
+05-22
+=====
+The Microsoft
+examples and testing
+project file ``example/example.vcproj``
+was missing a reference to the
+source code file ``example/reverse_two.cpp`` .
+This has been fixed.
+
+05-08
+=====
+Reverse mode does not work with the
+:ref:`pow-name` function when the base is less than or equal zero
+and the exponent is an integer.
+For this reason, the :ref:`pow_int-name` function
+is no longer deprecated (and is used by CppAD when the exponent
+has type ``int`` ).
+
+05-05
+=====
+Third and fourth order derivatives were included in the
+routine ``test_more/sqrt.cpp`` that tests square roots.
+
+The return value descriptions were improved for the introduction
+examples:
+:ref:`exp_2_for1<exp_2_for1@Return Value>` ,
+:ref:`exp_2_for2<exp_2_for2@Return Value>` ,
+:ref:`exp_eps_for1<exp_eps_for1@Return Value>` , and
+:ref:`exp_eps_for2<exp_eps_for2@Return Value>` .
+
+The summation index in :ref:`sqrt_reverse-name` was changed from
+:math:`k` to :math:`\ell` to make partial differentiation
+with respect to :math:`z^{(k)}` easier to understand.
+In addition, a sign error was corrected near the end of
+:ref:`sqrt_reverse-name` .
+
+The dimension for the notation :math:`X` in
+:ref:`reverse_identity-name` was corrected.
+
+The word mega was added to the spelling exception list for
+``openmp/run.sh`` .
+
+04-19
+=====
+Improve connection from :ref:`reverse_identity-name` theorem
+to :ref:`reverse_any-name` calculations.
+
+Improve the ``openmp/run.sh`` script.
+It now runs all the test cases at once in addition
+to including multiple number of thread cases for each test.
+
+Add the ``sum_i_inv_time.cpp`` OpenMP example case.
+
+There was a typo in the
+:ref:`forward_order@Second Order` discussion
+(found by Kipp Martin).
+It has been fixed.
+
+04-17
+=====
+Add a paragraph to :ref:`reverse_identity-name` explaining
+how it relates to :ref:`reverse_any-name` calculations.
+Add description of
+:ref:`first<reverse_any@First Order>` and
+:ref:`reverse_any@Second Order`
+results in :ref:`reverse_any-name` .
+
+04-14
+=====
+Simplify the :ref:`Reverse-name` mode documentation by creating
+a separate :ref:`reverse_two-name` section for second order reverse,
+making major changes to the description in :ref:`reverse_any-name` ,
+and creating a third order example :ref:`rev_checkpoint.cpp-name` for
+reverse mode calculations.
+
+Improve the :ref:`reverse_identity-name` proof.
+
+04-11
+=====
+Merge in changes made in ``branches/intro`` .
+
+#. 04-11:
+   Add :ref:`exp_eps_rev2-name` and its verification routine
+   :ref:`exp_eps_rev2.cpp-name` .
+
+#. 04-10:
+   Finished off :ref:`exp_2_rev2-name` and
+   added :ref:`exp_2_rev2.cpp-name` which verifies its calculations.
+   Added second order calculations to :ref:`exp_2_cppad-name` .
+   Added :ref:`exp_eps_for2-name` and its verification routine.
+
+#. 04-07:
+   Added a preliminary version of :ref:`exp_2_rev2-name`
+   (does not yet have verification or exercises).
+
+#. 04-06:
+   Fixed a problem with the Microsoft Visual Studio project file
+   ``introduction/exp_apx/exp_apx.vcproj``
+   (it did not track the file name changes of the form
+   ``exp_apx/exp_2_for`` to ``exp_apx/exp_2_for1``
+   on 04-05).
+
+   Added :ref:`exp_2_for2-name` to introduction.
+
+#. 04-05:
+   Use order expansions in introduction; e.g., the
+   :ref:`exp_2_for2@Second Order Expansion`
+   for the :ref:`exp_2-name` example.
+
+03-31
+=====
+Merge in changes made in ``branches/intro``
+and remove the corresponding Introduction item from the wish list:
+
+#. 03-31:
+   Create the a simpler exponential approximation in the :ref:`introduction-name`
+   called :ref:`exp_2-name` which has a different program
+   variable for each variable in the operation sequence.
+
+   Simplify the :ref:`exp_eps-name` approximation using the
+   :math:`v_1 , \ldots , v_7` notation so that variables directly
+   correspond to index in operation sequence (as with the :ref:`exp_2-name`
+   example).
+
+#. 03-30:
+   The Microsoft project file ``introduction/exp_apx/exp_apx.vcproj``
+   was referencing ``exp_apx_ad.cpp`` which no longer exists.
+   It has been changed to reference ``exp_apx_cppad.cpp``
+   which is the new name for that file.
+
+03-29
+=====
+Fixed entries in this file where the year was mistakenly used for the month.
+To be more specific, 07 ``-`` *dd* was changed to 03 ``-`` *dd*
+for some of the entries directly below.
+
+Corrected some places where ``CppAD`` was used in stead of ``Adolc``
+in the :ref:`adolc_poly.cpp-name` documentation.
+
+Added an Introduction and
+:ref:`wish_list@Tracing` entry to the wish list.
+(The Introduction item was completed on :ref:`whats_new_07@mm-dd@03-31` .)
+
+03-20
+=====
+Example A.1.1c, ``example_a11c.cpp`` ,
+from the OpenMP 2.5 standards document,
+was added to the tests that can be run using ``openmp/run.sh`` .
+
+03-15
+=====
+Included the changes from openmp branch
+so that so CppAD does not use the OpenMP ``threadprivate`` command
+(some systems do not support this command).
+
+#. 03-15:
+   Add command line arguments to ``openmp_newton_example.cpp`` , and
+   modified ``openmp/run.sh`` to allow for more flexible testing.
+
+#. 03-14:
+   Fixed some Microsoft compiler warnings by explicitly converting from
+   ``size_t`` to ``int`` .
+
+   In the Microsoft compiler case, the ``cppad/config.h`` file had
+   the wrong setting of ``GETTIMEOFDAY`` .
+   The setting is now overridden (and always false) when the
+   ``_MSC_VER`` preprocessor symbol is defined.
+
+   Some minor changes were made in an effort to speed up the multi-threading case.
+
+#. 03-13:
+   Started a new openmp branch and created a version of CppAD
+   that does not use the OpenMP ``threadprivate`` command
+   (not supported on some systems).
+
+03-09
+=====
+Included the changes from openmp branch
+so that OpenMP can be used with CppAD,
+see :ref:`omp_max_thread-name` .
+The changes below
+were made in the openmp branch and transferred to the trunk on 03-09.
+
+#. 03-28:
+   The conditional include commands were missing on some include files;
+   for example
+   ::
+
+      # ifndef CPPAD_BENDER_QUAD_HPP
+      # define CPPAD_BENDER_QUAD_HPP
+
+   was missing at the beginning of the :ref:`BenderQuad-name` include file.
+   This has been fixed.
+
+   The ``speed_test`` routines :ref:`speed_test@Timing` was
+   changed to use ``gettimeofday`` if it is available.
+   (``gettimeofday`` measures wall clock time
+   which is better in a multi-threading environment).
+
+   Added the user multi-threading interface
+   :ref:`omp_max_thread-name` along with its examples
+   which are distributed in the directory ``openmp`` .
+
+   The ``speed/`` * . ``hpp`` files have been moved to
+   ``include/cppad/speed/`` * . ``hpp`` and the corresponding wish list
+   item has been removed.
+
+   The multiple tapes with the same base type wish list item
+   have been removed (it's purpose was multi-threading which
+   has been implemented).
+
+#. 02-27:
+   The :ref:`speed-name` include files are currently being distributed
+   above the ``cppad`` include directory.
+   A fix this wish list item has been added.
+
+   Multiple active tapes required a lot of multi-threading access
+   management for the tapes. This was made simpler (and faster)
+   by having at most one tape per thread.
+
+#. 02-22:
+   The include command in the :ref:`speed_test-name` documentation was
+   ::
+
+      # include <speed/speed_test.hpp>
+
+   but it should have been
+   ::
+
+      # include <cppad/speed_test.hpp>
+
+   This has been fixed.
+
+#. 02-17:
+   An entry about optimizing the operation
+   sequence in an :ref:`ADFun<fun_construct-name>` object was added to the
+   :ref:`wish_list-name` .
+
+   Change the argument syntax for :ref:`Dependent-name` and deprecate the
+   :ref:`old Dependent syntax<fun_deprecated@Dependent>` .
+
+#. 02-16:
+   Added ``VecAD<`` *Base* > as a valid argument type for the
+   :ref:`con_dyn_var@Parameter`
+   and :ref:`con_dyn_var@Variable` functions.
+   In addition, :ref:`VecAD@Base Indexing`
+   is was extended to be allowed during taping so long as the
+   VecAD object is a parameter.
+
+#. 02-15:
+   Fixed the ``example/test_one.sh`` script
+   (it was using its old name ``one_test`` ).
+
+02-06
+=====
+The :ref:`BenderQuad-name` documentation was improved by adding the fact
+that the *x* and *y* arguments to the ``f`` . *dy*
+member function are equal to the *x* and *y* arguments
+to ``BenderQuad`` . Hence values depending on them can be stored
+as private objects in *f* and need not be recalculated.
+
+02-04
+=====
+The method for distributing the documentation needed to be
+changed in the top level ``makefile.am`` in order to
+be compatible with automake version 1.10.
+
+02-03
+=====
+The change on :ref:`whats_new_07@mm-dd@02-01` had a new, saved as a static
+pointer, with no corresponding delete.
+This was not a bug, but it has been changed to avoid
+an error message when using CppAD with
+`valgrind <http://valgrind.org/>`_.
+
+The change to the ``pow`` function on
+:ref:`06-12-10<whats_new_06@mm-dd@12-10>` did not include the
+necessary changes to the sparsity calculations.
+This has been fixed.
+
+02-02
+=====
+Fix minor errors and improve
+:ref:`profiling<autotools@Profiling CppAD>` documentation.
+Also change the problem sizes used for the :ref:`speed-name` tests.
+
+02-01
+=====
+There seems to be a bug in the cygwin version of g++ version 3.4.4
+with the -O2 flag whereby some static variables in static member functions
+sometimes do not get constructed before being used. This has been
+avoided by using a static pointer and the new operator in cppad/local/ad.hpp.
+
+01-29
+=====
+The copyright message was missing from some of the distribution files
+for some new files added on :ref:`06-12-15<whats_new_06@mm-dd@12-15>` .
+This resulted in the
+tarballs * . ``tgz`` and * . ``zip``
+not existing for a period of time.
+The automated tests have been extended so that this should not happen again.
+
+{xrst_end whats_new_07}

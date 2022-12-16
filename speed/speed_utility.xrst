@@ -1,0 +1,81 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed_utility}
+{xrst_spell
+   sq
+}
+
+Speed Testing Utilities
+#######################
+{xrst_toc_hidden
+   include/cppad/speed/det_by_lu.hpp
+   include/cppad/speed/det_of_minor.hpp
+   include/cppad/speed/det_by_minor.hpp
+   include/cppad/speed/det_33.hpp
+   include/cppad/speed/det_grad_33.hpp
+   include/cppad/speed/mat_sum_sq.hpp
+   include/cppad/speed/ode_evaluate.hpp
+   include/cppad/speed/sparse_jac_fun.hpp
+   include/cppad/speed/sparse_hes_fun.hpp
+   include/cppad/speed/uniform_01.hpp
+}
+
+Speed Main Program
+******************
+
+.. csv-table::
+   :widths: auto
+
+   speed_main,:ref:`speed_main-title`
+
+Speed Utility Routines
+**********************
+
+.. csv-table::
+   :widths: auto
+
+   det_by_lu,:ref:`det_by_lu-title`
+   det_by_minor,:ref:`det_by_minor-title`
+   det_of_minor,:ref:`det_of_minor-title`
+   det_33,:ref:`det_33-title`
+   det_grad_33,:ref:`det_grad_33-title`
+   mat_sum_sq,:ref:`mat_sum_sq-title`
+   ode_evaluate,:ref:`ode_evaluate-title`
+   sparse_jac_fun,:ref:`sparse_jac_fun-title`
+   sparse_hes_fun,:ref:`sparse_hes_fun-title`
+   uniform_01,:ref:`uniform_01-title`
+
+Library Routines
+****************
+
+.. csv-table::
+   :widths: auto
+
+   LuFactor,:ref:`LuFactor-title`
+   LuInvert,:ref:`LuInvert-title`
+   LuSolve,:ref:`LuSolve-title`
+   Poly,:ref:`Poly-title`
+
+Source Code
+***********
+
+.. csv-table::
+   :widths: auto
+
+   det_by_lu.hpp,:ref:`det_by_lu.hpp-title`
+   det_by_minor.hpp,:ref:`det_by_minor.hpp-title`
+   det_grad_33.hpp,:ref:`det_grad_33.hpp-title`
+   det_of_minor.hpp,:ref:`det_of_minor.hpp-title`
+   lu_factor.hpp,:ref:`lu_factor.hpp-title`
+   lu_invert.hpp,:ref:`lu_invert.hpp-title`
+   lu_solve.hpp,:ref:`lu_solve.hpp-title`
+   mat_sum_sq.hpp,:ref:`mat_sum_sq.hpp-title`
+   poly.hpp,:ref:`poly.hpp-title`
+   sparse_jac_fun.hpp,:ref:`sparse_jac_fun.hpp-title`
+   sparse_hes_fun.hpp,:ref:`sparse_hes_fun.hpp-title`
+   uniform_01.hpp,:ref:`uniform_01.hpp-title`
+
+{xrst_end speed_utility}

@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin atomic_four_example}
+
+Examples Defining Atomic Functions: Fourth Generation
+#####################################################
+
+Contents
+********
+{xrst_toc_table
+   example/atomic_four/get_started.cpp
+   example/atomic_four/norm_sq.cpp
+   example/atomic_four/forward.cpp
+   example/atomic_four/dynamic.cpp
+   include/cppad/example/atomic_four/vector/vector.xrst
+   include/cppad/example/atomic_four/mat_mul/mat_mul.xrst
+   include/cppad/example/atomic_four/lin_ode/lin_ode.xrst
+}
+
+{xrst_end atomic_four_example}

@@ -1,28 +1,20 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin elapsed_seconds.cpp$$
-$spell
-    Cpp
-    Lu
-$$
+{xrst_begin elapsed_seconds.cpp}
 
-$section Elapsed Seconds: Example and Test$$
+Elapsed Seconds: Example and Test
+#################################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end elapsed_seconds.cpp}
 */
 // BEGIN C++
 # include <cppad/utility/elapsed_seconds.hpp>
@@ -34,23 +26,23 @@ $end
 # define CPPAD_DEBUG_ELAPSED_SECONDS 0
 
 bool elapsed_seconds(void)
-{   bool ok = true;
+{  bool ok = true;
 
-    double max_diff = 0.;
-    double s0 = CppAD::elapsed_seconds();
-    double s1 = CppAD::elapsed_seconds();
-    double s2 = CppAD::elapsed_seconds();
-    while(s2 - s0 < 1.)
-    {   max_diff = std::max(s2 - s1, max_diff);
-        s1 = s2;
-        s2 = CppAD::elapsed_seconds();
+   double max_diff = 0.;
+   double s0 = CppAD::elapsed_seconds();
+   double s1 = CppAD::elapsed_seconds();
+   double s2 = CppAD::elapsed_seconds();
+   while(s2 - s0 < 1.)
+   {  max_diff = std::max(s2 - s1, max_diff);
+      s1 = s2;
+      s2 = CppAD::elapsed_seconds();
 
-    }
+   }
 # if CPPAD_DEBUG_ELAPSED_SECONDS
-    std::cout << "max_diff = " << max_diff << std::endl;
+   std::cout << "max_diff = " << max_diff << std::endl;
 # endif
-    ok &= 0. < max_diff && max_diff < .04;
-    return ok;
+   ok &= 0. < max_diff && max_diff < .04;
+   return ok;
 }
 
 // END C++

@@ -1,233 +1,236 @@
 # ifndef CPPAD_CORE_OPT_VAL_HES_HPP
 # define CPPAD_CORE_OPT_VAL_HES_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin opt_val_hes$$
-$spell
-    hes
-    sy
-    Jacobian
-    hes
-    signdet
-    jac
-    Bradley
-    const
-    CppAD
-$$
+{xrst_begin opt_val_hes}
+{xrst_spell
+   signdet
+   yy
+}
 
+Jacobian and Hessian of Optimal Values
+######################################
 
+Syntax
+******
+*signdet* = ``opt_val_hes`` ( *x* , *y* , *fun* , *jac* , *hes* )
 
-$section Jacobian and Hessian of Optimal Values$$
+See Also
+********
+:ref:`BenderQuad-name`
 
-$head Syntax$$
-$icode%signdet% = opt_val_hes(%x%, %y%, %fun%, %jac%, %hes%)%$$
-
-$head See Also$$
-$cref BenderQuad$$
-
-$head Reference$$
+Reference
+*********
 Algorithmic differentiation of implicit functions and optimal values,
 Bradley M. Bell and James V. Burke, Advances in Automatic Differentiation,
 2008, Springer.
 
-$head Purpose$$
+Purpose
+*******
 We are given a function
-$latex S : \B{R}^n \times \B{R}^m \rightarrow \B{R}^\ell$$
-and we define $latex F : \B{R}^n \times \B{R}^m \rightarrow \B{R}$$
-and $latex V : \B{R}^n \rightarrow \B{R} $$ by
-$latex \[
-\begin{array}{rcl}
-    F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y)
-    \\
-    V(x)    & = & F [ x , Y(x) ]
-    \\
-    0       & = & \partial_y F [x , Y(x) ]
-\end{array}
-\] $$
+:math:`S : \B{R}^n \times \B{R}^m \rightarrow \B{R}^\ell`
+and we define :math:`F : \B{R}^n \times \B{R}^m \rightarrow \B{R}`
+and :math:`V : \B{R}^n \rightarrow \B{R}` by
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y)
+      \\
+      V(x)    & = & F [ x , Y(x) ]
+      \\
+      0       & = & \partial_y F [x , Y(x) ]
+   \end{eqnarray}
+
 We wish to compute the Jacobian
-and possibly also the Hessian, of $latex V (x)$$.
+and possibly also the Hessian, of :math:`V (x)`.
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a
-$cref SimpleVector$$ class.
-We use $icode Base$$ to refer to the type of the elements of
-$icode BaseVector$$; i.e.,
-$codei%
-    %BaseVector%::value_type
-%$$
+BaseVector
+**********
+The type *BaseVector* must be a
+:ref:`SimpleVector-name` class.
+We use *Base* to refer to the type of the elements of
+*BaseVector* ; i.e.,
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-    const %BaseVector%& %x%
-%$$
-and its size must be equal to $icode n$$.
+   *BaseVector* :: ``value_type``
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *BaseVector* & *x*
+
+and its size must be equal to *n* .
 It specifies the point at which we evaluating
-the Jacobian $latex V^{(1)} (x)$$
-(and possibly the Hessian $latex V^{(2)} (x)$$).
+the Jacobian :math:`V^{(1)} (x)`
+(and possibly the Hessian :math:`V^{(2)} (x)`).
 
+y
+*
+The argument *y* has prototype
 
-$head y$$
-The argument $icode y$$ has prototype
-$codei%
-    const %BaseVector%& %y%
-%$$
-and its size must be equal to $icode m$$.
-It must be equal to $latex Y(x)$$; i.e.,
+   ``const`` *BaseVector* & *y*
+
+and its size must be equal to *m* .
+It must be equal to :math:`Y(x)`; i.e.,
 it must solve the implicit equation
-$latex \[
-    0 = \partial_y F ( x , y)
-\] $$
 
-$head Fun$$
-The argument $icode fun$$ is an object of type $icode Fun$$
+.. math::
+
+   0 = \partial_y F ( x , y)
+
+Fun
+***
+The argument *fun* is an object of type *Fun*
 which must support the member functions listed below.
-CppAD will may be recording operations of the type $codei%AD<%Base%>%$$
+CppAD will may be recording operations of the type ``AD<`` *Base* >
 when these member functions are called.
 These member functions must not stop such a recording; e.g.,
-they must not call $cref/AD<Base>::abort_recording/abort_recording/$$.
+they must not call :ref:`AD\<Base>::abort_recording<abort_recording-name>` .
 
-$subhead Fun::ad_vector$$
-The type $icode%Fun%::ad_vector%$$ must be a
-$cref SimpleVector$$ class with elements of type $codei%AD<%Base%>%$$; i.e.
-$codei%
-    %Fun%::ad_vector::value_type
-%$$
-is equal to $codei%AD<%Base%>%$$.
+Fun::ad_vector
+==============
+The type *Fun* :: ``ad_vector`` must be a
+:ref:`SimpleVector-name` class with elements of type ``AD<`` *Base* > ; i.e.
 
-$subhead fun.ell$$
-The type $icode Fun$$ must support the syntax
-$codei%
-    %ell% = %fun%.ell()
-%$$
-where $icode ell$$ has prototype
-$codei%
-    size_t %ell%
-%$$
-and is the value of $latex \ell$$; i.e.,
+   *Fun* :: ``ad_vector::value_type``
+
+is equal to ``AD<`` *Base* > .
+
+fun.ell
+=======
+The type *Fun* must support the syntax
+
+   *ell* = *fun* . ``ell`` ()
+
+where *ell* has prototype
+
+   ``size_t`` *ell*
+
+and is the value of :math:`\ell`; i.e.,
 the number of terms in the summation.
-$pre
 
-$$
-One can choose $icode ell$$ equal to one, and have
-$latex S(x,y)$$ the same as $latex F(x, y)$$.
-Each of the functions $latex S_k (x , y)$$,
-(in the summation defining $latex F(x, y)$$)
+One can choose *ell* equal to one, and have
+:math:`S(x,y)` the same as :math:`F(x, y)`.
+Each of the functions :math:`S_k (x , y)`,
+(in the summation defining :math:`F(x, y)`)
 is differentiated separately using AD.
-For very large problems, breaking $latex F(x, y)$$ into the sum
+For very large problems, breaking :math:`F(x, y)` into the sum
 of separate simpler functions may reduce the amount of memory necessary for
 algorithmic differentiation and there by speed up the process.
 
-$subhead fun.s$$
-The type $icode Fun$$ must support the syntax
-$codei%
-    %s_k% = %fun%.s(%k%, %x%, %y%)
-%$$
-The $icode%fun%.s%$$ argument $icode k$$ has prototype
-$codei%
-    size_t %k%
-%$$
-and is between zero and $icode%ell% - 1%$$.
-The argument $icode x$$ to $icode%fun%.s%$$ has prototype
-$codei%
-    const %Fun%::ad_vector& %x%
-%$$
-and its size must be equal to $icode n$$.
-The argument $icode y$$ to $icode%fun%.s%$$ has prototype
-$codei%
-    const %Fun%::ad_vector& %y%
-%$$
-and its size must be equal to $icode m$$.
-The $icode%fun%.s%$$ result $icode s_k$$ has prototype
-$codei%
-    AD<%Base%> %s_k%
-%$$
-and its value must be given by $latex s_k = S_k ( x , y )$$.
+fun.s
+=====
+The type *Fun* must support the syntax
 
-$subhead fun.sy$$
-The type $icode Fun$$ must support the syntax
-$codei%
-    %sy_k% = %fun%.sy(%k%, %x%, %y%)
-%$$
-The  argument $icode k$$ to $icode%fun%.sy%$$ has prototype
-$codei%
-    size_t %k%
-%$$
-The  argument $icode x$$ to $icode%fun%.sy%$$ has prototype
-$codei%
-    const %Fun%::ad_vector& %x%
-%$$
-and its size must be equal to $icode n$$.
-The  argument $icode y$$ to $icode%fun%.sy%$$ has prototype
-$codei%
-    const %Fun%::ad_vector& %y%
-%$$
-and its size must be equal to $icode m$$.
-The $icode%fun%.sy%$$ result $icode sy_k$$ has prototype
-$codei%
-    %Fun%::ad_vector %sy_k%
-%$$
-its size must be equal to $icode m$$,
-and its value must be given by $latex sy_k = \partial_y S_k ( x , y )$$.
+   *s_k* = *fun* . ``s`` ( *k* , *x* , *y* )
 
-$head jac$$
-The argument $icode jac$$ has prototype
-$codei%
-    %BaseVector%& %jac%
-%$$
-and has size $icode n$$ or zero.
+The *fun* . ``s`` argument *k* has prototype
+
+   ``size_t`` *k*
+
+and is between zero and *ell* ``- 1`` .
+The argument *x* to *fun* . ``s`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *x*
+
+and its size must be equal to *n* .
+The argument *y* to *fun* . ``s`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *y*
+
+and its size must be equal to *m* .
+The *fun* . ``s`` result *s_k* has prototype
+
+   ``AD<`` *Base* > *s_k*
+
+and its value must be given by :math:`s_k = S_k ( x , y )`.
+
+fun.sy
+======
+The type *Fun* must support the syntax
+
+   *sy_k* = *fun* . ``sy`` ( *k* , *x* , *y* )
+
+The  argument *k* to *fun* . ``sy`` has prototype
+
+   ``size_t`` *k*
+
+The  argument *x* to *fun* . ``sy`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *x*
+
+and its size must be equal to *n* .
+The  argument *y* to *fun* . ``sy`` has prototype
+
+   ``const`` *Fun* :: ``ad_vector&`` *y*
+
+and its size must be equal to *m* .
+The *fun* . ``sy`` result *sy_k* has prototype
+
+   *Fun* :: ``ad_vector`` *sy_k*
+
+its size must be equal to *m* ,
+and its value must be given by :math:`sy_k = \partial_y S_k ( x , y )`.
+
+jac
+***
+The argument *jac* has prototype
+
+   *BaseVector* & *jac*
+
+and has size *n* or zero.
 The input values of its elements do not matter.
 If it has size zero, it is not affected. Otherwise, on output
-it contains the Jacobian of $latex V (x)$$; i.e.,
-for $latex j = 0 , \ldots , n-1$$,
-$latex \[
-    jac[ j ] = V^{(1)} (x)_j
-\] $$
-where $icode x$$ is the first argument to $code opt_val_hes$$.
+it contains the Jacobian of :math:`V (x)`; i.e.,
+for :math:`j = 0 , \ldots , n-1`,
 
-$head hes$$
-The argument $icode hes$$ has prototype
-$codei%
-    %BaseVector%& %hes%
-%$$
-and has size $icode%n% * %n%$$ or zero.
+.. math::
+
+   jac[ j ] = V^{(1)} (x)_j
+
+where *x* is the first argument to ``opt_val_hes`` .
+
+hes
+***
+The argument *hes* has prototype
+
+   *BaseVector* & *hes*
+
+and has size *n* * *n* or zero.
 The input values of its elements do not matter.
 If it has size zero, it is not affected. Otherwise, on output
-it contains the Hessian of $latex V (x)$$; i.e.,
-for $latex i = 0 , \ldots , n-1$$, and
-$latex j = 0 , \ldots , n-1$$,
-$latex \[
-    hes[ i * n + j ] = V^{(2)} (x)_{i,j}
-\] $$
+it contains the Hessian of :math:`V (x)`; i.e.,
+for :math:`i = 0 , \ldots , n-1`, and
+:math:`j = 0 , \ldots , n-1`,
 
+.. math::
 
-$head signdet$$
-If $icode%hes%$$ has size zero, $icode signdet$$ is not defined.
+   hes[ i * n + j ] = V^{(2)} (x)_{i,j}
+
+signdet
+*******
+If *hes* has size zero, *signdet* is not defined.
 Otherwise
-the return value $icode signdet$$ is the sign of the determinant for
-$latex \partial_{yy}^2 F(x , y) $$.
+the return value *signdet* is the sign of the determinant for
+:math:`\partial_{yy}^2 F(x , y)`.
 If it is zero, then the matrix is singular and
-the Hessian is not computed ($icode hes$$ is not changed).
+the Hessian is not computed ( *hes* is not changed).
 
-$head Example$$
-$children%
-    example/general/opt_val_hes.cpp
-%$$
+Example
+*******
+{xrst_toc_hidden
+   example/general/opt_val_hes.cpp
+}
 The file
-$cref opt_val_hes.cpp$$
+:ref:`opt_val_hes.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end opt_val_hes}
 -----------------------------------------------------------------------------
 */
 
@@ -246,11 +249,11 @@ and we define \f$ F : {\rm R}^n \times {\rm R}^m \rightarrow {\rm R} \f$
 and \f$ V : {\rm R}^n \rightarrow {\rm R}  \f$ by
 \f[
 \begin{array}{rcl}
-    F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y)
-    \\
-    V(x)    & = & F [ x , Y(x) ]
-    \\
-    0       & = & \partial_y F [x , Y(x) ]
+   F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y)
+   \\
+   V(x)    & = & F [ x , Y(x) ]
+   \\
+   0       & = & \partial_y F [x , Y(x) ]
 \end{array}
 \f]
 We wish to compute the Jacobian
@@ -274,7 +277,7 @@ is a vector with size m.
 It must be equal to \f$ Y(x) \f$; i.e.,
 it must solve the implicit equation
 \f[
-    0 = \partial_y F ( x , y)
+   0 = \partial_y F ( x , y)
 \f]
 
 \param fun
@@ -294,7 +297,7 @@ is equal to  AD<Base>.
 \par fun.ell
 the type Fun must support the syntax
 \verbatim
-    ell = fun.ell()
+   ell = fun.ell()
 \endverbatim
 where ell is a size_t value that is set to \f$ \ell \f$; i.e.,
 the number of terms in the summation.
@@ -302,7 +305,7 @@ the number of terms in the summation.
 \par fun.s
 The type Fun must support the syntax
 \verbatim
-    s_k = fun.s(k, x, y)
+   s_k = fun.s(k, x, y)
 \endverbatim
 The argument k has prototype <tt>size_t k</tt>.
 The argument x has prototype <tt>const Fun::ad_vector& x</tt>
@@ -315,7 +318,7 @@ and its value must be given by \f$ s_k = S_k ( x , y ) \f$.
 \par fun.sy
 The type Fun must support the syntax
 \verbatim
-    sy_k = fun.sy(k, x, y)
+   sy_k = fun.sy(k, x, y)
 \endverbatim
 The argument k has prototype <tt>size_t k</tt>.
 The argument x has prototype <tt>const Fun::ad_vector& x</tt>
@@ -333,7 +336,7 @@ If it has size zero, it is not affected. Otherwise, on output
 it contains the Jacobian of \f$ V (x) \f$; i.e.,
 for \f$ j = 0 , \ldots , n-1 \f$,
 \f[
-    jac[ j ] = V^{(1)} (x)_j
+   jac[ j ] = V^{(1)} (x)_j
 \f] $$
 where x is the first argument to opt_val_hes.
 
@@ -345,7 +348,7 @@ it contains the Hessian of \f$ V (x) \f$; i.e.,
 for \f$ i = 0 , \ldots , n-1 \f$, and
 \f$ j = 0 , \ldots , n-1 \f$,
 \f[
-    hes[ i * n + j ] = V^{(2)} (x)_{i,j}
+   hes[ i * n + j ] = V^{(2)} (x)_{i,j}
 \f]
 
 \return
@@ -360,161 +363,161 @@ to its specified value.
 
 template <class BaseVector, class Fun>
 int opt_val_hes(
-    const BaseVector&   x     ,
-    const BaseVector&   y     ,
-    Fun                 fun   ,
-    BaseVector&         jac   ,
-    BaseVector&         hes   )
-{   // determine the base type
-    typedef typename BaseVector::value_type Base;
+   const BaseVector&   x     ,
+   const BaseVector&   y     ,
+   Fun                 fun   ,
+   BaseVector&         jac   ,
+   BaseVector&         hes   )
+{  // determine the base type
+   typedef typename BaseVector::value_type Base;
 
-    // check that BaseVector is a SimpleVector class with Base elements
-    CheckSimpleVector<Base, BaseVector>();
+   // check that BaseVector is a SimpleVector class with Base elements
+   CheckSimpleVector<Base, BaseVector>();
 
-    // determine the AD vector type
-    typedef typename Fun::ad_vector ad_vector;
+   // determine the AD vector type
+   typedef typename Fun::ad_vector ad_vector;
 
-    // check that ad_vector is a SimpleVector class with AD<Base> elements
-    CheckSimpleVector< AD<Base> , ad_vector >();
+   // check that ad_vector is a SimpleVector class with AD<Base> elements
+   CheckSimpleVector< AD<Base> , ad_vector >();
 
-    // size of the x and y spaces
-    size_t n = size_t(x.size());
-    size_t m = size_t(y.size());
+   // size of the x and y spaces
+   size_t n = size_t(x.size());
+   size_t m = size_t(y.size());
 
-    // number of terms in the summation
-    size_t ell = fun.ell();
+   // number of terms in the summation
+   size_t ell = fun.ell();
 
-    // check size of return values
-    CPPAD_ASSERT_KNOWN(
-        size_t(jac.size()) == n || jac.size() == 0,
-        "opt_val_hes: size of the vector jac is not equal to n or zero"
-    );
-    CPPAD_ASSERT_KNOWN(
-        size_t(hes.size()) == n * n || hes.size() == 0,
-        "opt_val_hes: size of the vector hes is not equal to n * n or zero"
-    );
+   // check size of return values
+   CPPAD_ASSERT_KNOWN(
+      size_t(jac.size()) == n || jac.size() == 0,
+      "opt_val_hes: size of the vector jac is not equal to n or zero"
+   );
+   CPPAD_ASSERT_KNOWN(
+      size_t(hes.size()) == n * n || hes.size() == 0,
+      "opt_val_hes: size of the vector hes is not equal to n * n or zero"
+   );
 
-    // some temporary indices
-    size_t i, j, k;
+   // some temporary indices
+   size_t i, j, k;
 
-    // AD version of S_k(x, y)
-    ad_vector s_k(1);
+   // AD version of S_k(x, y)
+   ad_vector s_k(1);
 
-    // ADFun version of S_k(x, y)
-    ADFun<Base> S_k;
+   // ADFun version of S_k(x, y)
+   ADFun<Base> S_k;
 
-    // AD version of x
-    ad_vector a_x(n);
+   // AD version of x
+   ad_vector a_x(n);
 
-    // AD version of y
-    ad_vector a_y(n);
+   // AD version of y
+   ad_vector a_y(n);
 
-    if( jac.size() > 0  )
-    {   // this is the easy part, computing the V^{(1)} (x) which is equal
-        // to \partial_x F (x, y) (see Thoerem 2 of the reference).
+   if( jac.size() > 0  )
+   {  // this is the easy part, computing the V^{(1)} (x) which is equal
+      // to \partial_x F (x, y) (see Thoerem 2 of the reference).
 
-        // copy x and y to AD version
-        for(j = 0; j < n; j++)
-            a_x[j] = x[j];
-        for(j = 0; j < m; j++)
-            a_y[j] = y[j];
+      // copy x and y to AD version
+      for(j = 0; j < n; j++)
+         a_x[j] = x[j];
+      for(j = 0; j < m; j++)
+         a_y[j] = y[j];
 
-        // initialize summation
-        for(j = 0; j < n; j++)
-            jac[j] = Base(0.);
+      // initialize summation
+      for(j = 0; j < n; j++)
+         jac[j] = Base(0.);
 
-        // add in \partial_x S_k (x, y)
-        for(k = 0; k < ell; k++)
-        {   // start recording
-            Independent(a_x);
-            // record
-            s_k[0] = fun.s(k, a_x, a_y);
-            // stop recording and store in S_k
-            S_k.Dependent(a_x, s_k);
-            // compute partial of S_k with respect to x
-            BaseVector jac_k = S_k.Jacobian(x);
-            // add \partial_x S_k (x, y) to jac
-            for(j = 0; j < n; j++)
-                jac[j] += jac_k[j];
-        }
-    }
-    // check if we are done
-    if( hes.size() == 0 )
-        return 0;
+      // add in \partial_x S_k (x, y)
+      for(k = 0; k < ell; k++)
+      {  // start recording
+         Independent(a_x);
+         // record
+         s_k[0] = fun.s(k, a_x, a_y);
+         // stop recording and store in S_k
+         S_k.Dependent(a_x, s_k);
+         // compute partial of S_k with respect to x
+         BaseVector jac_k = S_k.Jacobian(x);
+         // add \partial_x S_k (x, y) to jac
+         for(j = 0; j < n; j++)
+            jac[j] += jac_k[j];
+      }
+   }
+   // check if we are done
+   if( hes.size() == 0 )
+      return 0;
 
-    /*
-    In this case, we need to compute the Hessian. Using Theorem 1 of the
-    reference:
-        Y^{(1)}(x) = - F_yy (x, y)^{-1} F_yx (x, y)
-    Using Theorem 2 of the reference:
-        V^{(2)}(x) = F_xx (x, y) + F_xy (x, y)  Y^{(1)}(x)
-    */
-    // Base and AD version of xy
-    BaseVector xy(n + m);
-    ad_vector a_xy(n + m);
-    for(j = 0; j < n; j++)
-        a_xy[j] = xy[j] = x[j];
-    for(j = 0; j < m; j++)
-        a_xy[n+j] = xy[n+j] = y[j];
+   /*
+   In this case, we need to compute the Hessian. Using Theorem 1 of the
+   reference:
+      Y^{(1)}(x) = - F_yy (x, y)^{-1} F_yx (x, y)
+   Using Theorem 2 of the reference:
+      V^{(2)}(x) = F_xx (x, y) + F_xy (x, y)  Y^{(1)}(x)
+   */
+   // Base and AD version of xy
+   BaseVector xy(n + m);
+   ad_vector a_xy(n + m);
+   for(j = 0; j < n; j++)
+      a_xy[j] = xy[j] = x[j];
+   for(j = 0; j < m; j++)
+      a_xy[n+j] = xy[n+j] = y[j];
 
-    // Initialization summation for Hessian of F
-    size_t nm_sq = (n + m) * (n + m);
-    BaseVector F_hes(nm_sq);
-    for(j = 0; j < nm_sq; j++)
-        F_hes[j] = Base(0.);
-    BaseVector hes_k(nm_sq);
+   // Initialization summation for Hessian of F
+   size_t nm_sq = (n + m) * (n + m);
+   BaseVector F_hes(nm_sq);
+   for(j = 0; j < nm_sq; j++)
+      F_hes[j] = Base(0.);
+   BaseVector hes_k(nm_sq);
 
-    // add in Hessian of S_k to hes
-    for(k = 0; k < ell; k++)
-    {   // start recording
-        Independent(a_xy);
-        // split out x
-        for(j = 0; j < n; j++)
-            a_x[j] = a_xy[j];
-        // split out y
-        for(j = 0; j < m; j++)
-            a_y[j] = a_xy[n+j];
-        // record
-        s_k[0] = fun.s(k, a_x, a_y);
-        // stop recording and store in S_k
-        S_k.Dependent(a_xy, s_k);
-        // when computing the Hessian it pays to optimize the tape
-        S_k.optimize();
-        // compute Hessian of S_k
-        hes_k = S_k.Hessian(xy, 0);
-        // add \partial_x S_k (x, y) to jac
-        for(j = 0; j < nm_sq; j++)
-            F_hes[j] += hes_k[j];
-    }
-    // Extract F_yx
-    BaseVector F_yx(m * n);
-    for(i = 0; i < m; i++)
-    {   for(j = 0; j < n; j++)
-            F_yx[i * n + j] = F_hes[ (i+n)*(n+m) + j ];
-    }
-    // Extract F_yy
-    BaseVector F_yy(n * m);
-    for(i = 0; i < m; i++)
-    {   for(j = 0; j < m; j++)
-            F_yy[i * m + j] = F_hes[ (i+n)*(n+m) + j + n ];
-    }
+   // add in Hessian of S_k to hes
+   for(k = 0; k < ell; k++)
+   {  // start recording
+      Independent(a_xy);
+      // split out x
+      for(j = 0; j < n; j++)
+         a_x[j] = a_xy[j];
+      // split out y
+      for(j = 0; j < m; j++)
+         a_y[j] = a_xy[n+j];
+      // record
+      s_k[0] = fun.s(k, a_x, a_y);
+      // stop recording and store in S_k
+      S_k.Dependent(a_xy, s_k);
+      // when computing the Hessian it pays to optimize the tape
+      S_k.optimize();
+      // compute Hessian of S_k
+      hes_k = S_k.Hessian(xy, 0);
+      // add \partial_x S_k (x, y) to jac
+      for(j = 0; j < nm_sq; j++)
+         F_hes[j] += hes_k[j];
+   }
+   // Extract F_yx
+   BaseVector F_yx(m * n);
+   for(i = 0; i < m; i++)
+   {  for(j = 0; j < n; j++)
+         F_yx[i * n + j] = F_hes[ (i+n)*(n+m) + j ];
+   }
+   // Extract F_yy
+   BaseVector F_yy(n * m);
+   for(i = 0; i < m; i++)
+   {  for(j = 0; j < m; j++)
+         F_yy[i * m + j] = F_hes[ (i+n)*(n+m) + j + n ];
+   }
 
-    // compute - Y^{(1)}(x) = F_yy (x, y)^{-1} F_yx (x, y)
-    BaseVector neg_Y_x(m * n);
-    Base logdet;
-    int signdet = CppAD::LuSolve(m, n, F_yy, F_yx, neg_Y_x, logdet);
-    if( signdet == 0 )
-        return signdet;
+   // compute - Y^{(1)}(x) = F_yy (x, y)^{-1} F_yx (x, y)
+   BaseVector neg_Y_x(m * n);
+   Base logdet;
+   int signdet = CppAD::LuSolve(m, n, F_yy, F_yx, neg_Y_x, logdet);
+   if( signdet == 0 )
+      return signdet;
 
-    // compute hes = F_xx (x, y) + F_xy (x, y)  Y^{(1)}(x)
-    for(i = 0; i < n; i++)
-    {   for(j = 0; j < n; j++)
-        {   hes[i * n + j] = F_hes[ i*(n+m) + j ];
-            for(k = 0; k < m; k++)
-                hes[i*n+j] -= F_hes[i*(n+m) + k+n] * neg_Y_x[k*n+j];
-        }
-    }
-    return signdet;
+   // compute hes = F_xx (x, y) + F_xy (x, y)  Y^{(1)}(x)
+   for(i = 0; i < n; i++)
+   {  for(j = 0; j < n; j++)
+      {  hes[i * n + j] = F_hes[ i*(n+m) + j ];
+         for(k = 0; k < m; k++)
+            hes[i*n+j] -= F_hes[i*(n+m) + k+n] * neg_Y_x[k*n+j];
+      }
+   }
+   return signdet;
 }
 
 } // END_CPPAD_NAMESPACE

@@ -1,15 +1,8 @@
 #! /bin/bash -e
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 #! /bin/bash -e
 echo 'This script does not work properly on el6; see'
 echo 'https://bugzilla.redhat.com/show_bug.cgi?id=896116'
@@ -17,22 +10,22 @@ echo
 #
 if [ -e build ]
 then
-    rm -r build
+   rm -r build
 fi
 mkdir build
 cd    build
 cat << EOF > hello_one.cpp
 # include <iostream>
 int main(void)
-{   std::cout << "hello_one" << std::endl << std::endl;
-    return 0;
+{  std::cout << "hello_one" << std::endl << std::endl;
+   return 0;
 }
 EOF
 cat << EOF > hello_two.cpp
 # include <iostream>
 int main(void)
-{   std::cout << "hello_two" << std::endl << std::endl;
-    return 0;
+{  std::cout << "hello_two" << std::endl << std::endl;
+   return 0;
 }
 EOF
 cat << EOF > CMakeLists.txt

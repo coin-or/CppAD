@@ -329,17 +329,10 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 #
 @CppAD_POSTFIX_TRUE@postfix_dir = $(POSTFIX_DIR)
 #
@@ -460,6 +453,50 @@ nobase_myinclude_HEADERS = \
 	cppad/core/graph/from_graph.hpp \
 	cppad/core/graph/from_json.hpp \
 	cppad/core/graph/graph_op_enum.hpp \
+	cppad/core/graph/to_graph.hpp \
+	cppad/core/graph/to_json.hpp \
+	cppad/core/hash_code.hpp \
+	cppad/core/hessian.hpp \
+	cppad/core/identical.hpp \
+	cppad/core/independent/independent.hpp \
+	cppad/core/integer.hpp \
+	cppad/core/jacobian.hpp \
+	cppad/core/lu_ratio.hpp \
+	cppad/core/mul.hpp \
+	cppad/core/mul_eq.hpp \
+	cppad/core/near_equal_ext.hpp \
+	cppad/core/new_dynamic.hpp \
+	cppad/core/num_skip.hpp \
+	cppad/core/numeric_limits.hpp \
+	cppad/core/omp_max_thread.hpp \
+	cppad/core/opt_val_hes.hpp \
+	cppad/core/optimize.hpp \
+	cppad/core/ordered.hpp \
+	cppad/core/parallel_ad.hpp \
+	cppad/core/pow.hpp \
+	cppad/core/print_for.hpp \
+	cppad/core/rev_hes_sparsity.hpp \
+	cppad/core/rev_jac_sparsity.hpp \
+	cppad/core/rev_one.hpp \
+	cppad/core/rev_sparse_hes.hpp \
+	cppad/core/rev_sparse_jac.hpp \
+	cppad/core/rev_two.hpp \
+	cppad/core/reverse.hpp \
+	cppad/core/sign.hpp \
+	cppad/core/sparse.hpp \
+	cppad/core/sparse_hes.hpp \
+	cppad/core/sparse_hessian.hpp \
+	cppad/core/sparse_jac.hpp \
+	cppad/core/sparse_jacobian.hpp \
+	cppad/core/standard_math.hpp \
+	cppad/core/std_math_11.hpp \
+	cppad/core/sub.hpp \
+	cppad/core/sub_eq.hpp \
+	cppad/core/subgraph_jac_rev.hpp \
+	cppad/core/subgraph_reverse.hpp \
+	cppad/core/subgraph_sparsity.hpp \
+	cppad/core/tape_link.hpp \
+	cppad/core/testvector.hpp \
 	cppad/core/to_csrc.hpp
 
 all: all-am
@@ -723,50 +760,6 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 
 .PRECIOUS: makefile
 
-	cppad/core/graph/to_graph.hpp \
-	cppad/core/graph/to_json.hpp \
-	cppad/core/hash_code.hpp \
-	cppad/core/hessian.hpp \
-	cppad/core/identical.hpp \
-	cppad/core/independent/independent.hpp \
-	cppad/core/integer.hpp \
-	cppad/core/jacobian.hpp \
-	cppad/core/lu_ratio.hpp \
-	cppad/core/mul.hpp \
-	cppad/core/mul_eq.hpp \
-	cppad/core/near_equal_ext.hpp \
-	cppad/core/new_dynamic.hpp \
-	cppad/core/num_skip.hpp \
-	cppad/core/numeric_limits.hpp \
-	cppad/core/omp_max_thread.hpp \
-	cppad/core/opt_val_hes.hpp \
-	cppad/core/optimize.hpp \
-	cppad/core/ordered.hpp \
-	cppad/core/parallel_ad.hpp \
-	cppad/core/pow.hpp \
-	cppad/core/print_for.hpp \
-	cppad/core/rev_hes_sparsity.hpp \
-	cppad/core/rev_jac_sparsity.hpp \
-	cppad/core/rev_one.hpp \
-	cppad/core/rev_sparse_hes.hpp \
-	cppad/core/rev_sparse_jac.hpp \
-	cppad/core/rev_two.hpp \
-	cppad/core/reverse.hpp \
-	cppad/core/sign.hpp \
-	cppad/core/sparse.hpp \
-	cppad/core/sparse_hes.hpp \
-	cppad/core/sparse_hessian.hpp \
-	cppad/core/sparse_jac.hpp \
-	cppad/core/sparse_jacobian.hpp \
-	cppad/core/standard_math.hpp \
-	cppad/core/std_math_11.hpp \
-	cppad/core/sub.hpp \
-	cppad/core/sub_eq.hpp \
-	cppad/core/subgraph_jac_rev.hpp \
-	cppad/core/subgraph_reverse.hpp \
-	cppad/core/subgraph_sparsity.hpp \
-	cppad/core/tape_link.hpp \
-	cppad/core/testvector.hpp \
 	cppad/core/unary_minus.hpp \
 	cppad/core/unary_plus.hpp \
 	cppad/core/undef.hpp \

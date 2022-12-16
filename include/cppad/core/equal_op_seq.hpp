@@ -1,117 +1,104 @@
 # ifndef CPPAD_CORE_EQUAL_OP_SEQ_HPP
 # define CPPAD_CORE_EQUAL_OP_SEQ_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
 ------------------------------------------------------------------------------
-$begin EqualOpSeq$$
-$spell
-    Op
-    const
-    bool
-$$
+{xrst_begin EqualOpSeq}
 
+Check if Two Value are Identically Equal
+########################################
 
-$section Check if Two Value are Identically Equal$$
+Syntax
+******
+*b* = ``EqualOpSeq`` ( *x* , *y* )
 
-$head Syntax$$
-$icode%b% = EqualOpSeq(%x%, %y%)%$$
-
-$head Purpose$$
-Determine if two $icode x$$ and $icode y$$ are identically equal; i.e.,
-not only is $icode%x% == %y%$$ true, but
-if they are $cref/variables/glossary/Variable/$$,
+Purpose
+*******
+Determine if two *x* and *y* are identically equal; i.e.,
+not only is *x* == *y* true, but
+if they are :ref:`variables<glossary@Variable>` ,
 they correspond have the same
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Motivation$$
+Motivation
+**********
 Sometimes it is useful to cache information
 and only recalculate when a function's arguments change.
 In the case of AD variables,
 it may be important not only when the argument values are equal,
 but when they are related to the
-$cref/independent variables/glossary/Tape/Independent Variable/$$
+:ref:`independent variables<glossary@Tape@Independent Variable>`
 by the same operation sequence.
 After the assignment
-$codei%
-    %y% = %x%
-%$$
+
+   *y* = *x*
+
 these two AD objects would not only have equal values,
 but would also correspond to the same operation sequence.
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-    const AD<%Base%> &%x%
-%$$
+x
+*
+The argument *x* has prototype
 
-$head y$$
-The argument $icode y$$ has prototype
-$codei%
-    const AD<%Base%> &%y%
-%$$
+   ``const AD<`` *Base* > & *x*
 
-$head b$$
-The result $icode b$$ has prototype
-$codei%
-    bool %b%
-%$$
+y
+*
+The argument *y* has prototype
+
+   ``const AD<`` *Base* > & *y*
+
+b
+*
+The result *b* has prototype
+
+   ``bool`` *b*
+
 The result is true if and only if one of the following cases holds:
 
-$list number$$
-Both $icode x$$ and $icode y$$ are variables
-and correspond to the same operation sequence.
-$lnext
-Both $icode x$$ and $icode y$$ are parameters,
-$icode Base$$ is an AD type,
-and $codei%EqualOpSeq( Value(%x%) , Value(%y%) )%$$ is true.
-$lnext
-Both $icode x$$ and $icode y$$ are parameters,
-$icode Base$$ is not an AD type,
-and $icode%x% == %y%%$$ is true.
-$lend
+#. Both *x* and *y* are variables
+   and correspond to the same operation sequence.
+#. Both *x* and *y* are parameters,
+   *Base* is an AD type,
+   and ``EqualOpSeq`` ( ``Value`` ( *x* ) , ``Value`` ( *y* ) ) is true.
+#. Both *x* and *y* are parameters,
+   *Base* is not an AD type,
+   and *x* == *y* is true.
 
-
-$head Example$$
-$children%
-    example/general/equal_op_seq.cpp
-%$$
+Example
+*******
+{xrst_toc_hidden
+   example/general/equal_op_seq.cpp
+}
 The file
-$cref equal_op_seq.cpp$$
-contains an example and test of $code EqualOpSeq$$.
+:ref:`equal_op_seq.cpp-name`
+contains an example and test of ``EqualOpSeq`` .
 
-
-$end
+{xrst_end EqualOpSeq}
 ------------------------------------------------------------------------------
 */
 
 
 namespace CppAD {
-    template <class Base>
-    CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-    bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
-    {
-        if( Parameter(x) )
-        {   if( Parameter(y) )
-                return EqualOpSeq(x.value_, y.value_);
-            else
-                return false;
-        }
-        else if( Parameter(y) )
+   template <class Base>
+   CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+   bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
+   {
+      if( Parameter(x) )
+      {  if( Parameter(y) )
+            return EqualOpSeq(x.value_, y.value_);
+         else
             return false;
+      }
+      else if( Parameter(y) )
+         return false;
 
-        return (x.taddr_ == y.taddr_);
-    }
+      return (x.taddr_ == y.taddr_);
+   }
 
 }
 

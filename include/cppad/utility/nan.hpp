@@ -1,146 +1,151 @@
 # ifndef CPPAD_UTILITY_NAN_HPP
 # define CPPAD_UTILITY_NAN_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin nan$$
-$spell
-    hasnan
-    cppad
-    hpp
-    CppAD
-    isnan
-    bool
-    const
-$$
+{xrst_begin nan}
+{xrst_spell
+   hasnan
+   isnan
+   macros
+}
 
-$section Obtain Nan or Determine if a Value is Nan$$
+Obtain Nan or Determine if a Value is Nan
+#########################################
 
-$head Syntax$$
-$codei%# include <cppad/utility/nan.hpp>
-%$$
-$icode%b% = isnan(%s%)
-%$$
-$icode%b% = hasnan(%v%)%$$
+Syntax
+******
 
-$head Purpose$$
-It obtain and check for the value not a number $code nan$$.
-The IEEE standard specifies that a floating point value $icode a$$
-is $code nan$$ if and only if the following returns true
-$codei%
-    %a% != %a%
-%$$
+| # ``include <cppad/utility/nan.hpp>``
+| *b* = ``isnan`` ( *s* )
 
-$head Include$$
-The file $code cppad/utility/nan.hpp$$
-is included by $code cppad/cppad.hpp$$
+*b* = ``hasnan`` ( *v* )
+
+Purpose
+*******
+It obtain and check for the value not a number ``nan`` .
+The IEEE standard specifies that a floating point value *a*
+is ``nan`` if and only if the following returns true
+
+   *a* != *a*
+
+Include
+*******
+The file ``cppad/utility/nan.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 
-$subhead Macros$$
-Some C++ compilers use preprocessor symbols called $code nan$$
-and $code isnan$$.
+Macros
+======
+Some C++ compilers use preprocessor symbols called ``nan``
+and ``isnan`` .
 These preprocessor symbols will no longer be defined after
 this file is included.
 
-$head isnan$$
-This routine determines if a scalar value is $code nan$$.
+isnan
+*****
+This routine determines if a scalar value is ``nan`` .
 
-$subhead s$$
-The argument $icode s$$ has prototype
-$codei%
-    const %Scalar% %s%
-%$$
+s
+=
+The argument *s* has prototype
 
-$subhead b$$
-The return value $icode b$$ has prototype
-$codei%
-    bool %b%
-%$$
-It is true if the value $icode s$$ is $code nan$$.
+   ``const`` *Scalar* *s*
 
-$head hasnan$$
+b
+=
+The return value *b* has prototype
+
+   ``bool`` *b*
+
+It is true if the value *s* is ``nan`` .
+
+hasnan
+******
 This routine determines if a
-$cref SimpleVector$$ has an element that is $code nan$$.
+:ref:`SimpleVector-name` has an element that is ``nan`` .
 
-$subhead v$$
-The argument $icode v$$ has prototype
-$codei%
-    const %Vector% &%v%
-%$$
-(see $cref/Vector/nan/Vector/$$ for the definition of $icode Vector$$).
+v
+=
+The argument *v* has prototype
 
-$subhead b$$
-The return value $icode b$$ has prototype
-$codei%
-    bool %b%
-%$$
-It is true if the vector $icode v$$ has a $code nan$$.
+   ``const`` *Vector* & *v*
 
+(see :ref:`nan@Vector` for the definition of *Vector* ).
 
-$head nan(zero)$$
+b
+=
+The return value *b* has prototype
 
-$subhead Deprecated 2015-10-04$$
+   ``bool`` *b*
+
+It is true if the vector *v* has a ``nan`` .
+
+nan(zero)
+*********
+
+Deprecated 2015-10-04
+=====================
 This routine has been deprecated, use CppAD numeric limits
-$cref/quiet_NaN/numeric_limits/quiet_NaN/$$ in its place.
+:ref:`numeric_limits@quiet_NaN` in its place.
 
-$subhead Syntax$$
-$icode%s% = nan(%z%)
-%$$
+Syntax
+======
 
-$subhead z$$
-The argument $icode z$$ has prototype
-$codei%
-    const %Scalar% &%z%
-%$$
+   *s* = ``nan`` ( *z* )
+
+z
+=
+The argument *z* has prototype
+
+   ``const`` *Scalar* & *z*
+
 and its value is zero
-(see $cref/Scalar/nan/Scalar/$$ for the definition of $icode Scalar$$).
+(see :ref:`nan@Scalar` for the definition of *Scalar* ).
 
-$subhead s$$
-The return value $icode s$$ has prototype
-$codei%
-    %Scalar% %s%
-%$$
-It is the value $code nan$$ for this floating point type.
+s
+=
+The return value *s* has prototype
 
-$head Scalar$$
-The type $icode Scalar$$ must support the following operations;
-$table
-$bold Operation$$ $cnext $bold Description$$  $rnext
-$icode%a% / %b%$$ $cnext
-    division operator (returns a $icode Scalar$$ object)
-$rnext
-$icode%a% == %b%$$ $cnext
-    equality operator (returns a $code bool$$ object)
-$rnext
-$icode%a% != %b%$$ $cnext
-    not equality operator (returns a $code bool$$ object)
-$tend
-Note that the division operator will be used with $icode a$$ and $icode b$$
-equal to zero. For some types (e.g. $code int$$) this may generate
+   *Scalar* *s*
+
+It is the value ``nan`` for this floating point type.
+
+Scalar
+******
+The type *Scalar* must support the following operations;
+
+.. list-table::
+
+   * - **Operation**
+     - **Description**
+   * - *a* / *b*
+     - division operator (returns a *Scalar* object)
+   * - *a* == *b*
+     - equality operator (returns a ``bool`` object)
+   * - *a* != *b*
+     - not equality operator (returns a ``bool`` object)
+
+Note that the division operator will be used with *a* and *b*
+equal to zero. For some types (e.g. ``int`` ) this may generate
 an exception. No attempt is made to catch any such exception.
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
-elements of type $icode Scalar$$.
-
-$children%
-    example/utility/nan.cpp
-%$$
-$head Example$$
-The file $cref nan.cpp$$
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+elements of type *Scalar* .
+{xrst_toc_hidden
+   example/utility/nan.cpp
+}
+Example
+*******
+The file :ref:`nan.cpp-name`
 contains an example and test of this routine.
 
-$end
+{xrst_end nan}
 */
 
 # include <cstddef>
@@ -167,25 +172,25 @@ namespace CppAD { // BEGIN CppAD namespace
 
 template <class Scalar>
 bool isnan(const Scalar &s)
-{   return (s != s);
+{  return (s != s);
 }
 
 template <class Vector>
 bool hasnan(const Vector &v)
 {
-    bool found_nan;
-    size_t i;
-    i   = v.size();
-    found_nan = false;
-    // on MS Visual Studio 2012, CppAD required in front of isnan ?
-    while(i--)
-        found_nan |= CppAD::isnan(v[i]);
-    return found_nan;
+   bool found_nan;
+   size_t i;
+   i   = v.size();
+   found_nan = false;
+   // on MS Visual Studio 2012, CppAD required in front of isnan ?
+   while(i--)
+      found_nan |= CppAD::isnan(v[i]);
+   return found_nan;
 }
 
 template <class Scalar>
 Scalar nan(const Scalar &zero)
-{   return zero / zero;
+{  return zero / zero;
 }
 
 } // End CppAD namespace

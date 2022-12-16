@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin omp_alloc}
+
+A Quick OpenMP Memory Allocator Used by CppAD
+#############################################
+
+Syntax
+******
+``# include <cppad/omp_alloc.hpp>``
+
+Purpose
+*******
+The C++ ``new`` and ``delete`` operators are thread safe,
+but this means that a thread may have to wait for a lock on these operations.
+Once memory is obtained for a thread, the ``omp_alloc`` memory
+allocator keeps that memory :ref:`omp_available-name` for the thread so that
+it can be re-used without waiting for a lock.
+All the CppAD memory allocations use this utility.
+The :ref:`omp_free_available-name` function should be used to return memory
+to the system (once it is no longer required by a thread).
+
+Include
+*******
+The routines in sections below are defined by ``cppad/omp_alloc.hpp`` .
+This file is included by
+``cppad/cppad.hpp`` , but it can also be included separately with out
+the rest of the ``CppAD`` .
+
+Deprecated 2011-08-23
+*********************
+Use :ref:`thread_alloc-name` instead.
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/utility/omp_alloc.hpp
+}
+
+{xrst_end omp_alloc}
+*/

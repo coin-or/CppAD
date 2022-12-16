@@ -1,142 +1,143 @@
 # ifndef CPPAD_UTILITY_POLY_HPP
 # define CPPAD_UTILITY_POLY_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin Poly$$
-$spell
-    cppad.hpp
-    CppAD
-    namespace
-    cstddef
-    ifndef
-    endif
-    deg
-    const
-    std
-    da
-$$
+{xrst_begin Poly}
+{xrst_spell
+   commutative
+}
 
+Evaluate a Polynomial or its Derivative
+#######################################
 
-$section Evaluate a Polynomial or its Derivative$$
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/poly.hpp>
-%$$
-$icode%p% = Poly(%k%, %a%, %z%)%$$
+   # ``include <cppad/utility/poly.hpp>``
 
+*p* = ``Poly`` ( *k* , *a* , *z* )
 
-$head Description$$
-Computes the $th k$$ derivative of the polynomial
-$latex \[
-    P(z) = a_0 + a_1 z^1 + \cdots + a_d z^d
-\] $$
-If $icode k$$ is equal to zero, the return value is $latex P(z)$$.
+Description
+***********
+Computes the *k*-th derivative of the polynomial
 
-$head Include$$
-The file $code cppad/utility/poly.hpp$$
-is included by $code cppad/cppad.hpp$$
+.. math::
+
+   P(z) = a_0 + a_1 z^1 + \cdots + a_d z^d
+
+If *k* is equal to zero, the return value is :math:`P(z)`.
+
+Include
+*******
+The file ``cppad/utility/poly.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 Including this file defines
-$code Poly$$ within the $code CppAD$$ namespace.
+``Poly`` within the ``CppAD`` namespace.
 
-$head k$$
-The argument $icode k$$ has prototype
-$codei%
-    size_t %k%
-%$$
+k
+*
+The argument *k* has prototype
+
+   ``size_t`` *k*
+
 It specifies the order of the derivative to calculate.
 
-$head a$$
-The argument $icode a$$ has prototype
-$codei%
-    const %Vector% &%a%
-%$$
-(see $cref/Vector/Poly/Vector/$$ below).
-It specifies the vector corresponding to the polynomial $latex P(z)$$.
+a
+*
+The argument *a* has prototype
 
-$head z$$
-The argument $icode z$$ has prototype
-$codei%
-    const %Type% &%z%
-%$$
-(see $icode Type$$ below).
+   ``const`` *Vector* & *a*
+
+(see :ref:`Poly@Vector` below).
+It specifies the vector corresponding to the polynomial :math:`P(z)`.
+
+z
+*
+The argument *z* has prototype
+
+   ``const`` *Type* & *z*
+
+(see *Type* below).
 It specifies the point at which to evaluate the polynomial
 
-$head p$$
-The result $icode p$$  has prototype
-$codei%
-    %Type% %p%
-%$$
-(see $cref/Type/Poly/Type/$$ below)
-and it is equal to the $th k$$ derivative of $latex P(z)$$; i.e.,
-$latex \[
-p = \frac{k !}{0 !} a_k
-  + \frac{(k+1) !}{1 !} a_{k+1} z^1
-  + \ldots
-  + \frac{d !}{(d - k) !} a_d z^{d - k}
-\]
-$$
-If $latex k > d$$, $icode%p% = %Type%(0)%$$.
+p
+*
+The result *p*  has prototype
 
-$head Type$$
-The type $icode Type$$ is determined by the argument $icode z$$.
+   *Type* *p*
+
+(see :ref:`Poly@Type` below)
+and it is equal to the *k*-th derivative of :math:`P(z)`; i.e.,
+
+.. math::
+
+   p = \frac{k !}{0 !} a_k
+     + \frac{(k+1) !}{1 !} a_{k+1} z^1
+     + \ldots
+     + \frac{d !}{(d - k) !} a_d z^{d - k}
+
+If :math:`k > d`, *p* = *Type* (0) .
+
+Type
+****
+The type *Type* is determined by the argument *z* .
 It is assumed that
-multiplication and addition of $icode Type$$ objects
+multiplication and addition of *Type* objects
 are commutative.
 
-$subhead Operations$$
+Operations
+==========
 The following operations must be supported where
-$icode x$$ and $icode y$$ are objects of type $icode Type$$
-and $icode i$$ is an $code int$$:
-$table
-$icode%x%  = %i%$$   $cnext assignment     $rnext
-$icode%x%  = %y%$$   $cnext assignment     $rnext
-$icode%x% *= %y%$$   $cnext multiplication compound assignment $rnext
-$icode%x% += %y%$$   $cnext addition compound assignment
+*x* and *y* are objects of type *Type*
+and *i* is an ``int`` :
 
-$tend
+.. list-table::
 
+   * - *x* = *i*
+     - assignment
+   * - *x* = *y*
+     - assignment
+   * - *x* \\* = *y*
+     - multiplication compound assignment
+   * - *x* += *y*
+     - addition compound assignment
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$icode Type$$.
-The routine $cref CheckSimpleVector$$ will generate an error message
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Type* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
 if this is not the case.
 
-$head Operation Sequence$$
-The $icode Type$$ operation sequence used to calculate $icode p$$ is
-$cref/independent/glossary/Operation/Independent/$$
-of $icode z$$ and the elements of $icode a$$
-(it does depend on the size of the vector $icode a$$).
+Operation Sequence
+******************
+The *Type* operation sequence used to calculate *p* is
+:ref:`glossary@Operation@Independent`
+of *z* and the elements of *a*
+(it does depend on the size of the vector *a* ).
+{xrst_toc_hidden
+   example/utility/poly.cpp
+   xrst/poly_hpp.xrst
+}
 
-
-$children%
-    example/utility/poly.cpp%
-    omh/poly_hpp.omh
-%$$
-
-$head Example$$
+Example
+*******
 The file
-$cref poly.cpp$$
+:ref:`poly.cpp-name`
 contains an example and test of this routine.
 
-$head Source$$
-The file $cref poly.hpp$$ contains the
+Source
+******
+The file :ref:`poly.hpp-name` contains the
 current source code that implements these specifications.
 
-$end
+{xrst_end Poly}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++
@@ -147,45 +148,45 @@ namespace CppAD {    // BEGIN CppAD namespace
 
 template <class Type, class Vector>
 Type Poly(size_t k, const Vector &a, const Type &z)
-{   size_t i;
-    size_t d = a.size() - 1;
+{  size_t i;
+   size_t d = a.size() - 1;
 
-    Type tmp;
+   Type tmp;
 
-    // check Vector is Simple Vector class with Type elements
-    CheckSimpleVector<Type, Vector>();
+   // check Vector is Simple Vector class with Type elements
+   CheckSimpleVector<Type, Vector>();
 
-    // case where derivative order greater than degree of polynomial
-    if( k > d )
-    {   tmp = 0;
-        return tmp;
-    }
-    // case where we are evaluating a derivative
-    if( k > 0 )
-    {   // initialize factor as (k-1) !
-        size_t factor = 1;
-        for(i = 2; i < k; i++)
-            factor *= i;
+   // case where derivative order greater than degree of polynomial
+   if( k > d )
+   {  tmp = 0;
+      return tmp;
+   }
+   // case where we are evaluating a derivative
+   if( k > 0 )
+   {  // initialize factor as (k-1) !
+      size_t factor = 1;
+      for(i = 2; i < k; i++)
+         factor *= i;
 
-        // set b to coefficient vector corresponding to derivative
-        Vector b(d - k + 1);
-        for(i = k; i <= d; i++)
-        {   factor   *= i;
-            tmp       = double( factor );
-            b[i - k]  = a[i] * tmp;
-            factor   /= (i - k + 1);
-        }
-        // value of derivative polynomial
-        return Poly(0, b, z);
-    }
-    // case where we are evaluating the original polynomial
-    Type sum = a[d];
-    i        = d;
-    while(i > 0)
-    {   sum *= z;
-        sum += a[--i];
-    }
-    return sum;
+      // set b to coefficient vector corresponding to derivative
+      Vector b(d - k + 1);
+      for(i = k; i <= d; i++)
+      {  factor   *= i;
+         tmp       = double( factor );
+         b[i - k]  = a[i] * tmp;
+         factor   /= (i - k + 1);
+      }
+      // value of derivative polynomial
+      return Poly(0, b, z);
+   }
+   // case where we are evaluating the original polynomial
+   Type sum = a[d];
+   i        = d;
+   while(i > 0)
+   {  sum *= z;
+      sum += a[--i];
+   }
+   return sum;
 }
 } // END CppAD namespace
 // END C++

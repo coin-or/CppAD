@@ -1,0 +1,60 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin sqrt_forward}
+
+Square Root Function Forward Mode Theory
+########################################
+
+If :math:`F(x) = \sqrt{x}`
+
+.. math::
+
+   F(x) * F^{(1)} (x) - 0 * F (x)  = 1/2
+
+and in the
+:ref:`standard math function differential equation<forward_theory@Standard Math Functions@Differential Equation>` ,
+:math:`A(x) = 0`,
+:math:`B(x) = F(x)`,
+and :math:`D(x) = 1/2`.
+We use :math:`a`, :math:`b`, :math:`d`,
+and :math:`z` to denote the
+Taylor coefficients for
+:math:`A [ X (t) ]`,
+:math:`B [ X (t) ]`,
+:math:`D [ X (t) ]`,
+and :math:`F [ X(t) ]` respectively.
+It now follows from the general
+:ref:`forward_theory@Standard Math Functions@Taylor Coefficients Recursion Formula`
+that for :math:`j = 0 , 1, \ldots`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z^{(0)} & = & \sqrt { x^{(0)} }
+   \\
+   e^{(j)}
+   & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
+   \\
+   & = & \left\{ \begin{array}{ll}
+      1/2 & {\rm if} \; j = 0 \\
+      0   & {\rm otherwise}
+   \end{array} \right.
+   \\
+   z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+      - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \right)
+   \\
+   & = & \frac{1}{j+1} \frac{1}{ z^{(0)} }
+   \left(
+      \frac{j+1}{2} x^{(j+1) }
+      - \sum_{k=1}^j k z^{(k)} z^{(j+1-k)}
+   \right)
+   \end{eqnarray}
+
+{xrst_end sqrt_forward}

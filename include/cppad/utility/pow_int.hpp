@@ -1,139 +1,129 @@
 # ifndef CPPAD_UTILITY_POW_INT_HPP
 # define CPPAD_UTILITY_POW_INT_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
 -------------------------------------------------------------------------------
-$begin pow_int$$
-$spell
-    cppad.hpp
-    CppAD
-    namespace
-    const
-$$
+{xrst_begin pow_int}
+{xrst_spell
+   logarithms
+}
 
+The Integer Power Function
+##########################
 
-$section The Integer Power Function$$
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/utility/pow_int.hpp>
-%$$
-$icode%z% = pow(%x%, %y%)%$$
+   # ``include <cppad/utility/pow_int.hpp>``
 
-$head See Also$$
-$cref pow$$
+*z* = ``pow`` ( *x* , *y* )
 
-$head Purpose$$
+See Also
+********
+:ref:`pow-name`
+
+Purpose
+*******
 Determines the value of the power function
-$latex \[
-    {\rm pow} (x, y) = x^y
-\] $$
-for integer exponents $icode n$$
+
+.. math::
+
+   {\rm pow} (x, y) = x^y
+
+for integer exponents *n*
 using multiplication and possibly division to compute the value.
-The other CppAD $cref pow$$ function may use logarithms and exponentiation
+The other CppAD :ref:`pow-name` function may use logarithms and exponentiation
 to compute derivatives of the same value
-(which will not work if $icode x$$ is less than or equal zero).
+(which will not work if *x* is less than or equal zero).
 
-$head Include$$
-The file $code cppad/utility/pow_int.hpp$$
-is included by $code cppad/cppad.hpp$$
+Include
+*******
+The file ``cppad/utility/pow_int.hpp``
+is included by ``cppad/cppad.hpp``
 but it can also be included separately with out the rest of
-the $code CppAD$$ routines.
+the ``CppAD`` routines.
 Including this file defines
-this version of the $code pow$$ within the $code CppAD$$ namespace.
+this version of the ``pow`` within the ``CppAD`` namespace.
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-    const %Type%& %x%
-%$$
+x
+*
+The argument *x* has prototype
 
-$head y$$
-The argument $icode y$$ has prototype
-$codei%
-    const int& %y%
-%$$
+   ``const`` *Type* & *x*
 
-$head z$$
-The result $icode z$$ has prototype
-$codei%
-    %Type% %z%
-%$$
+y
+*
+The argument *y* has prototype
 
-$head Type$$
-The type $icode Type$$ must support the following operations
-where $icode a$$ and $icode b$$ are $icode Type$$ objects
-and $icode i$$ is an $code int$$:
-$table
-$bold Operation$$  $pre  $$
-    $cnext $bold Description$$
-    $cnext $bold Result Type$$
-$rnext
-$icode%Type% %a%(%i%)%$$
-    $cnext construction of a $icode Type$$ object from an $code int$$
-    $cnext $icode Type$$
-$rnext
-$icode%a% * %b%$$
-    $cnext binary multiplication of $icode Type$$ objects
-    $cnext $icode Type$$
-$rnext
-$icode%a% / %b%$$
-    $cnext binary division of $icode Type$$ objects
-    $cnext $icode Type$$
-$tend
+   ``const int&`` *y*
 
-$head Operation Sequence$$
-The $icode Type$$ operation sequence used to calculate $icode z$$ is
-$cref/independent/glossary/Operation/Independent/$$
-of $icode x$$.
+z
+*
+The result *z* has prototype
 
-$head Example$$
-$children%
-    example/utility/pow_int.cpp
-%$$
-The file $cref pow_int.cpp$$
+   *Type* *z*
+
+Type
+****
+The type *Type* must support the following operations
+where *a* and *b* are *Type* objects
+and *i* is an ``int`` :
+
+.. csv-table::
+   :widths: auto
+
+   **Operation**,**Description**,**Result Type**
+   *Type* *a* ( *i* ),construction of a *Type* object from an ``int``,*Type*
+   *a* * *b*,binary multiplication of *Type* objects,*Type*
+   *a* / *b*,binary division of *Type* objects,*Type*
+
+Operation Sequence
+******************
+The *Type* operation sequence used to calculate *z* is
+:ref:`glossary@Operation@Independent`
+of *x* .
+
+Example
+*******
+{xrst_toc_hidden
+   example/utility/pow_int.cpp
+}
+The file :ref:`pow_int.cpp-name`
 is an example and test of this function.
 
-
-$end
+{xrst_end pow_int}
 -------------------------------------------------------------------------------
 */
 
 namespace CppAD {
 
-    template <class Type>
-    inline Type pow (const Type& x, const int& n)
-    {
-        Type p(1);
-        int n2 = n / 2;
+   template <class Type>
+   inline Type pow (const Type& x, const int& n)
+   {
+      Type p(1);
+      int n2 = n / 2;
 
-        if( n == 0 )
-            return p;
-        if( n < 0 )
-            return p / pow(x, -n);
-        if( n == 1 )
-            return x;
+      if( n == 0 )
+         return p;
+      if( n < 0 )
+         return p / pow(x, -n);
+      if( n == 1 )
+         return x;
 
-        // p = (x^2)^(n/2)
-        p = pow( x * x , n2 );
+      // p = (x^2)^(n/2)
+      p = pow( x * x , n2 );
 
-        // n is even case
-        if( n % 2 == 0 )
-            return p;
+      // n is even case
+      if( n % 2 == 0 )
+         return p;
 
-        // n is odd case
-        return p * x;
-    }
+      // n is odd case
+      return p * x;
+   }
 
 }
 

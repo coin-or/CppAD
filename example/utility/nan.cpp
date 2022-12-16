@@ -1,24 +1,20 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin nan.cpp$$
+{xrst_begin nan.cpp}
 
-$section nan: Example and Test$$
+nan: Example and Test
+#####################
 
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-
-$end
+{xrst_end nan.cpp}
 */
 
 // BEGIN C++
@@ -27,30 +23,30 @@ $end
 # include <limits>
 
 bool nan(void)
-{   bool ok = true;
+{  bool ok = true;
 
-    // get a nan
-    double double_zero = 0.;
-    double double_nan = std::numeric_limits<double>::quiet_NaN();
+   // get a nan
+   double double_zero = 0.;
+   double double_nan = std::numeric_limits<double>::quiet_NaN();
 
-    // create a simple vector with no nans
-    std::vector<double> v(2);
-    v[0] = double_zero;
-    v[1] = double_zero;
+   // create a simple vector with no nans
+   std::vector<double> v(2);
+   v[0] = double_zero;
+   v[1] = double_zero;
 
-    // check that zero is not nan
-    ok &= ! CppAD::isnan(double_zero);
-    ok &= ! CppAD::hasnan(v);
+   // check that zero is not nan
+   ok &= ! CppAD::isnan(double_zero);
+   ok &= ! CppAD::hasnan(v);
 
-    // check that nan is a nan
-    v[1] = double_nan;
-    ok &= CppAD::isnan(double_nan);
-    ok &= CppAD::hasnan(v);
+   // check that nan is a nan
+   v[1] = double_nan;
+   ok &= CppAD::isnan(double_nan);
+   ok &= CppAD::hasnan(v);
 
-    // check that nan is not equal to itself
-    ok &= (double_nan != double_nan);
+   // check that nan is not equal to itself
+   ok &= (double_nan != double_nan);
 
-    return ok;
+   return ok;
 }
 
 // END C++

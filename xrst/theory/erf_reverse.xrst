@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin erf_reverse}
+
+Error Function Reverse Mode Theory
+##################################
+
+Notation
+********
+We use the reverse theory
+:ref:`standard math function<reverse_theory@Standard Math Functions>`
+definition for the functions :math:`H` and :math:`G`.
+
+Positive Orders Z(t)
+********************
+For order :math:`j > 0`,
+suppose that :math:`H` is the same as :math:`G`.
+
+.. math::
+
+   z^{(j)}
+   =
+   \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+
+For :math:`k = 1 , \ldots , j`,
+the partial of :math:`H` with respect to :math:`x^{(k)}` is given by
+
+.. math::
+
+   \D{H}{ x^{(k)} }
+   =
+   \D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+   =
+   \D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \frac{k}{j} y^{(j-k)}
+
+For :math:`k = 1 , \ldots ,  j`
+The partial of :math:`H` with respect to :math:`y^{j-k}`,
+is given by
+
+.. math::
+
+   \D{H}{ y^{(j-k)} }
+   =
+   \D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(j-k)} }
+   =
+   \D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \frac{k}{j} x^{k}
+
+Order Zero Z(t)
+***************
+The :math:`z^{(0)}` coefficient
+is expressed as a function of the Taylor coefficients
+for :math:`X(t)` and :math:`Y(t)` as follows:
+In this case,
+
+.. math::
+
+   \D{H}{ x^{(0)} }
+   =
+   \D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
+   =
+   \D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } y^{(0)}
+
+{xrst_end erf_reverse}

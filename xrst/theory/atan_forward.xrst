@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin atan_forward}
+
+Inverse Tangent and Hyperbolic Tangent Forward Mode Theory
+##########################################################
+
+Derivatives
+***********
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \R{atan}^{(1)} (x)  & = & 1 / ( 1 + x * x )
+   \\
+   \R{atanh}^{(1)} (x) & = & 1 / ( 1 - x * x )
+   \end{eqnarray}
+
+If :math:`F(x)` is :math:`\R{atan} (x)` or :math:`\R{atanh} (x)`,
+the corresponding derivative satisfies the equation
+
+.. math::
+
+   (1 \pm x * x ) * F^{(1)} (x) - 0 * F (x)  = 1
+
+and in the
+:ref:`standard math function differential equation<forward_theory@Standard Math Functions@Differential Equation>` ,
+:math:`A(x) = 0`,
+:math:`B(x) = 1 \pm x * x`,
+and :math:`D(x) = 1`.
+We use :math:`a`, :math:`b`, :math:`d` and :math:`z` to denote the
+Taylor coefficients for
+:math:`A [ X (t) ]`,
+:math:`B [ X (t) ]`,
+:math:`D [ X (t) ]`,
+and :math:`F [ X(t) ]` respectively.
+
+Taylor Coefficients Recursion
+*****************************
+For :math:`j = 0 , 1, \ldots`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z^{(0)} & = & F( x^{(0)} )
+   \\
+   b^{(j)}
+   & = &  \left\{ \begin{array}{ll}
+      1 \pm x^{(0)} * x^{(0)}            & {\rm if} \; j = 0 \\
+      \pm \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
+   \end{array} \right.
+   \\
+   e^{(j)}
+   & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
+   \\
+   & = & \left\{ \begin{array}{ll}
+      1 & {\rm if} \; j = 0 \\
+      0 & {\rm otherwise}
+   \end{array} \right.
+   \\
+   z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+      - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+   \right)
+   \\
+   z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      (j+1) x^{(j+1)}
+      - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \right)
+   \end{eqnarray}
+
+{xrst_end atan_forward}

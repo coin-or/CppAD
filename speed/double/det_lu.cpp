@@ -1,34 +1,21 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin double_det_lu.cpp$$
-$spell
-    onetape
-    bool
-    cppad
-    hpp
-    Lu
-    det
-    CppAD
-$$
+{xrst_begin double_det_lu.cpp}
 
-$section Double Speed: Determinant Using Lu Factorization$$
+Double Speed: Determinant Using Lu Factorization
+################################################
 
+Specifications
+**************
+See :ref:`link_det_lu-name` .
 
-$head Specifications$$
-See $cref link_det_lu$$.
-
-$head Implementation$$
-$srccode%cpp% */
+Implementation
+**************
+{xrst_spell_off}
+{xrst_code cpp} */
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -38,29 +25,31 @@ $srccode%cpp% */
 extern std::map<std::string, bool> global_option;
 
 bool link_det_lu(
-    size_t                           size     ,
-    size_t                           repeat   ,
-    CppAD::vector<double>           &matrix   ,
-    CppAD::vector<double>           &det      )
+   size_t                           size     ,
+   size_t                           repeat   ,
+   CppAD::vector<double>           &matrix   ,
+   CppAD::vector<double>           &det      )
 {
-    if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
-        return false;
-    // -----------------------------------------------------
-    // setup
-    CppAD::det_by_lu<double>  Det(size);
-    size_t n = size * size; // number of independent variables
+   if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
+      return false;
+   // -----------------------------------------------------
+   // setup
+   CppAD::det_by_lu<double>  Det(size);
+   size_t n = size * size; // number of independent variables
 
-    // ------------------------------------------------------
+   // ------------------------------------------------------
 
-    while(repeat--)
-    {   // get the next matrix
-        CppAD::uniform_01(n, matrix);
+   while(repeat--)
+   {  // get the next matrix
+      CppAD::uniform_01(n, matrix);
 
-        // computation of the determinant
-        det[0] = Det(matrix);
-    }
-    return true;
+      // computation of the determinant
+      det[0] = Det(matrix);
+   }
+   return true;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end double_det_lu.cpp}
 */

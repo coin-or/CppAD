@@ -1,121 +1,110 @@
 # ifndef CPPAD_SPEED_DET_BY_MINOR_HPP
 # define CPPAD_SPEED_DET_BY_MINOR_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin det_by_minor$$
-$spell
-    CppAD
-    cppad
-    typedef
-    const
-    hpp
-    Det
-    namespace
-$$
+{xrst_begin det_by_minor}
 
-$section Determinant Using Expansion by Minors$$
+Determinant Using Expansion by Minors
+#####################################
 
+Syntax
+******
 
+| # ``include <cppad/speed/det_by_minor.hpp>``
+| ``det_by_minor<`` *Scalar* > *det* ( *n* )
+| *d* = *det* ( *a* )
 
-$head Syntax$$
-$codei%# include <cppad/speed/det_by_minor.hpp>
-%$$
-$codei%det_by_minor<%Scalar%> %det%(%n%)
-%$$
-$icode%d% = %det%(%a%)
-%$$
-
-$head Inclusion$$
-The template class $code det_by_minor$$ is defined in the $code CppAD$$
+Inclusion
+*********
+The template class ``det_by_minor`` is defined in the ``CppAD``
 namespace by including
-the file $code cppad/speed/det_by_minor.hpp$$
+the file ``cppad/speed/det_by_minor.hpp``
 (relative to the CppAD distribution directory).
 
-$head Constructor$$
+Constructor
+***********
 The syntax
-$codei%
-    det_by_minor<%Scalar%> %det%(%n%)
-%$$
-constructs the object $icode det$$ which can be used for
-evaluating the determinant of $icode n$$ by $icode n$$ matrices
+
+   ``det_by_minor<`` *Scalar* > *det* ( *n* )
+
+constructs the object *det* which can be used for
+evaluating the determinant of *n* by *n* matrices
 using expansion by minors.
 
-$head Scalar$$
-The type $icode Scalar$$ must satisfy the same conditions
-as in the function $cref/det_of_minor/det_of_minor/Scalar/$$.
+Scalar
+******
+The type *Scalar* must satisfy the same conditions
+as in the function :ref:`det_of_minor<det_of_minor@Scalar>` .
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-    size_t %n%
-%$$
+n
+*
+The argument *n* has prototype
 
-$head det$$
+   ``size_t`` *n*
+
+det
+***
 The syntax
-$codei%
-    %d% = %det%(%a%)
-%$$
-returns the determinant of the matrix $icode A$$ using expansion by minors.
 
-$subhead a$$
-The argument $icode a$$ has prototype
-$codei%
-    const %Vector% &%a%
-%$$
-It must be a $icode Vector$$ with length $latex n * n$$ and with
-elements of type $icode Scalar$$.
-The elements of the $latex n \times n$$ matrix $latex A$$ are defined,
-for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
-$latex \[
-    A_{i,j} = a[ i * m + j]
-\] $$
+   *d* = *det* ( *a* )
 
-$subhead d$$
-The return value $icode d$$ has prototype
-$codei%
-    %Scalar% %d%
-%$$
-It is equal to the determinant of $latex A$$.
+returns the determinant of the matrix *A* using expansion by minors.
 
-$head Vector$$
-If $icode y$$ is a $icode Vector$$ object,
+a
+=
+The argument *a* has prototype
+
+   ``const`` *Vector* & *a*
+
+It must be a *Vector* with length :math:`n * n` and with
+elements of type *Scalar* .
+The elements of the :math:`n \times n` matrix :math:`A` are defined,
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , n-1`, by
+
+.. math::
+
+   A_{i,j} = a[ i * m + j]
+
+d
+=
+The return value *d* has prototype
+
+   *Scalar* *d*
+
+It is equal to the determinant of :math:`A`.
+
+Vector
+******
+If *y* is a *Vector* object,
 it must support the syntax
-$codei%
-    %y%[%i%]
-%$$
-where $icode i$$ has type $code size_t$$ with value less than $latex n * n$$.
-This must return a $icode Scalar$$ value corresponding to the $th i$$
-element of the vector $icode y$$.
-This is the only requirement of the type $icode Vector$$.
 
-$children%
-    speed/example/det_by_minor.cpp%
-    omh/det_by_minor_hpp.omh
-%$$
+   *y* [ *i* ]
 
+where *i* has type ``size_t`` with value less than :math:`n * n`.
+This must return a *Scalar* value corresponding to the *i*-th
+element of the vector *y* .
+This is the only requirement of the type *Vector* .
+{xrst_toc_hidden
+   speed/example/det_by_minor.cpp
+   xrst/det_by_minor_hpp.xrst
+}
 
-$head Example$$
+Example
+*******
 The file
-$cref det_by_minor.cpp$$
-contains an example and test of $code det_by_minor.hpp$$.
+:ref:`det_by_minor.cpp-name`
+contains an example and test of ``det_by_minor.hpp`` .
 
-$head Source Code$$
+Source Code
+***********
 The file
-$cref det_by_minor.hpp$$
+:ref:`det_by_minor.hpp-name`
 contains the source for this template function.
 
-
-$end
+{xrst_end det_by_minor}
 ---------------------------------------------------------------------------
 */
 // BEGIN C++
@@ -128,35 +117,35 @@ namespace CppAD {
 template <class Scalar>
 class det_by_minor {
 private:
-    size_t              m_;
+   size_t              m_;
 
-    // made mutable because modified and then restored
-    mutable std::vector<size_t> r_;
-    mutable std::vector<size_t> c_;
+   // made mutable because modified and then restored
+   mutable std::vector<size_t> r_;
+   mutable std::vector<size_t> c_;
 
-    // make mutable because its value does not matter
-    mutable std::vector<Scalar> a_;
+   // make mutable because its value does not matter
+   mutable std::vector<Scalar> a_;
 public:
-    det_by_minor(size_t m) : m_(m) , r_(m + 1) , c_(m + 1), a_(m * m)
-    {
-        size_t i;
+   det_by_minor(size_t m) : m_(m) , r_(m + 1) , c_(m + 1), a_(m * m)
+   {
+      size_t i;
 
-        // values for r and c that correspond to entire matrix
-        for(i = 0; i < m; i++)
-        {   r_[i] = i+1;
-            c_[i] = i+1;
-        }
-        r_[m] = 0;
-        c_[m] = 0;
-    }
+      // values for r and c that correspond to entire matrix
+      for(i = 0; i < m; i++)
+      {  r_[i] = i+1;
+         c_[i] = i+1;
+      }
+      r_[m] = 0;
+      c_[m] = 0;
+   }
 
-    template <class Vector>
-    Scalar operator()(const Vector &x) const
-    {   size_t i = m_ * m_;
-        while(i--)
-            a_[i] = x[i];
-        return det_of_minor(a_, m_, m_, r_, c_);
-    }
+   template <class Vector>
+   Scalar operator()(const Vector &x) const
+   {  size_t i = m_ * m_;
+      while(i--)
+         a_[i] = x[i];
+      return det_of_minor(a_, m_, m_, r_, c_);
+   }
 
 };
 

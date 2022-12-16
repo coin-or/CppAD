@@ -1,154 +1,153 @@
 # ifndef CPPAD_CORE_AD_IO_HPP
 # define CPPAD_CORE_AD_IO_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-19 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin ad_input$$
-$spell
-    VecAD
-    std
-    istream
-    const
-$$
+{xrst_begin ad_input}
+{xrst_spell
+   istream
+}
 
+AD Input Stream Operator
+########################
 
-$section AD Input Stream Operator$$
+Syntax
+******
+*is* >> *x*
 
-$head Syntax$$
-$icode%is% >> %x%$$
+Purpose
+*******
+Sets *x* to a :ref:`glossary@Parameter`
+with value *b* corresponding to
 
-$head Purpose$$
-Sets $icode x$$ to a $cref/parameter/glossary/Parameter/$$
-with value $icode b$$ corresponding to
-$codei%
-    %is% >> %b%
-%$$
-where $icode b$$ is a $icode Base$$ object.
-It is assumed that this $icode Base$$ input operation returns
-a reference to $icode is$$.
+   *is* >> *b*
 
-$head is$$
-The operand $icode is$$ has prototype
-$codei%
-    std::istream& %is%
-%$$
+where *b* is a *Base* object.
+It is assumed that this *Base* input operation returns
+a reference to *is* .
 
-$head x$$
-The operand $icode x$$ has one of the following prototypes
-$codei%
-    AD<%Base%>&               %x%
-%$$
+is
+**
+The operand *is* has prototype
 
-$head Result$$
-The result of this operation can be used as a reference to $icode is$$.
-For example, if the operand $icode y$$ has prototype
-$codei%
-    AD<%Base%> %y%
-%$$
+   ``std::istream&`` *is*
+
+x
+*
+The operand *x* has one of the following prototypes
+
+   ``AD<`` *Base* >& *x*
+
+Result
+******
+The result of this operation can be used as a reference to *is* .
+For example, if the operand *y* has prototype
+
+   ``AD<`` *Base* > *y*
+
 then the syntax
-$codei%
-    %is% >> %x% >> %y%
-%$$
-will first read the $icode Base$$ value of $icode x$$ from $icode is$$,
-and then read the $icode Base$$ value to $icode y$$.
 
-$head Operation Sequence$$
+   *is* >> *x* >> *y*
+
+will first read the *Base* value of *x* from *is* ,
+and then read the *Base* value to *y* .
+
+Operation Sequence
+******************
 The result of this operation is not an
-$cref/AD of Base/glossary/AD of Base/$$ object.
+:ref:`glossary@AD of Base` object.
 Thus it will not be recorded as part of an
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Example$$
-$children%
-    example/general/ad_input.cpp
-%$$
+Example
+*******
+{xrst_toc_hidden
+   example/general/ad_input.cpp
+}
 The file
-$cref ad_input.cpp$$
+:ref:`ad_input.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end ad_input}
 ------------------------------------------------------------------------------
-$begin ad_output$$
-$spell
-    VecAD
-    std
-    ostream
-    const
-$$
+{xrst_begin ad_output}
+{xrst_spell
+   ostream
+}
 
+AD Output Stream Operator
+#########################
 
-$section AD Output Stream Operator$$
+Syntax
+******
+*os* << *x*
 
-$head Syntax$$
-$icode%os% << %x%$$
+See Also
+********
+:ref:`PrintFor-name`
 
-$head See Also$$
-$cref PrintFor$$
+Purpose
+*******
+Writes the *Base* value, corresponding to *x* ,
+to the output stream *os* .
 
-$head Purpose$$
-Writes the $icode Base$$ value, corresponding to $icode x$$,
-to the output stream $icode os$$.
+Assumption
+**********
+If *b* is a *Base* object,
 
-$head Assumption$$
-If $icode b$$ is a $icode Base$$ object,
-$codei%
-    %os% << %b%
-%$$
-returns a reference to $icode os$$.
+   *os* << *b*
 
-$head os$$
-The operand $icode os$$ has prototype
-$codei%
-    std::ostream& %os%
-%$$
+returns a reference to *os* .
 
-$head x$$
-The operand $icode x$$ has one of the following prototypes
-$codei%
-    const AD<%Base%>&               %x%
-    const VecAD<%Base%>::reference& %x%
-%$$
+os
+**
+The operand *os* has prototype
 
-$head Result$$
-The result of this operation can be used as a reference to $icode os$$.
-For example, if the operand $icode y$$ has prototype
-$codei%
-    AD<%Base%> %y%
-%$$
+   ``std::ostream&`` *os*
+
+x
+*
+The operand *x* has one of the following prototypes
+
+| |tab| ``const AD<`` *Base* >& *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference&`` *x*
+
+Result
+******
+The result of this operation can be used as a reference to *os* .
+For example, if the operand *y* has prototype
+
+   ``AD<`` *Base* > *y*
+
 then the syntax
-$codei%
-    %os% << %x% << %y%
-%$$
-will output the value corresponding to $icode x$$
-followed by the value corresponding to $icode y$$.
 
-$head Operation Sequence$$
+   *os* << *x* << *y*
+
+will output the value corresponding to *x*
+followed by the value corresponding to *y* .
+
+Operation Sequence
+******************
 The result of this operation is not an
-$cref/AD of Base/glossary/AD of Base/$$ object.
+:ref:`glossary@AD of Base` object.
 Thus it will not be recorded as part of an
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Example$$
-$children%
-    example/general/ad_output.cpp
-%$$
+Example
+*******
+{xrst_toc_hidden
+   example/general/ad_output.cpp
+}
 The file
-$cref ad_output.cpp$$
+:ref:`ad_output.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end ad_output}
 ------------------------------------------------------------------------------
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -174,10 +173,10 @@ and x.tape_is_ is zero; i.e., x is a parameter.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::istream& operator >> (std::istream& is, AD<Base>& x)
-{   // like assignment to a base type value
-    x.tape_id_ = 0;
-    CPPAD_ASSERT_UNKNOWN( Parameter(x) );
-    return (is >> x.value_);
+{  // like assignment to a base type value
+   x.tape_id_ = 0;
+   CPPAD_ASSERT_UNKNOWN( Parameter(x) );
+   return (is >> x.value_);
 }
 // ---------------------------------------------------------------------------
 /*!
@@ -196,7 +195,7 @@ This is equivalent to writing x.value_ to the output stream.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::ostream& operator << (std::ostream &os, const AD<Base> &x)
-{   return (os << x.value_); }
+{  return (os << x.value_); }
 // ---------------------------------------------------------------------------
 /*!
 Write a VecAD_reference<Base> object to an output stream.
@@ -214,7 +213,7 @@ This is equivalent to writing the corresponing Base value to the stream.
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::ostream& operator << (std::ostream &os, const VecAD_reference<Base> &x)
-{   return (os << x.ADBase()); }
+{  return (os << x.ADBase()); }
 
 } // END_CPPAD_NAMESPACE
 # endif

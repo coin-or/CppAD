@@ -1,260 +1,296 @@
 # ifndef CPPAD_CORE_ATOMIC_THREE_FORWARD_HPP
 # define CPPAD_CORE_ATOMIC_THREE_FORWARD_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin atomic_three_forward$$
-$spell
-    taylor
-    ataylor
-    af
-    afun
-    enum
-    CppAD
-    aparameter
-$$
+{xrst_begin atomic_three_forward}
+{xrst_spell
+   aparameter
+   ataylor
+   superscripts
+}
 
-$section Atomic Function Forward Mode$$
+Atomic Function Forward Mode
+############################
 
-$head Base$$
+Base
+****
 This syntax and prototype are used by
-$cref/afun(ax, ay)/atomic_three_afun/$$; see
-$cref/Base/atomic_three_afun/Base/$$.
+:ref:`afun(ax, ay)<atomic_three_afun-name>` ; see
+:ref:`atomic_three_afun@Base` .
 They are also used by
-$icode%f%.Forward%$$ and $icode%f%.new_dynamic%$$
-where $icode f$$ has prototype
-$codei%
-    ADFun<%Base%> %f%
-%$$
-and $icode afun$$ is used during the recording of $icode f$$.
+*f* . ``Forward`` and *f* . ``new_dynamic``
+where *f* has prototype
 
-$subhead Syntax$$
-$icode%ok% = %afun%.forward(
-    %parameter_x%, %type_x%,
-    %need_y%, %order_low%, %order_up%, %type_x%, %taylor_x%, %taylor_y%
-)%$$
+   ``ADFun<`` *Base* > *f*
 
-$subhead Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE_BASE%// END_PROTOTYPE_BASE%1
-%$$
+and *afun* is used during the recording of *f* .
 
-$head AD<Base>$$
+Syntax
+======
+
+| *ok* = *afun* . ``forward`` (
+| |tab| *parameter_x* , *type_x* ,
+| |tab| *need_y* , *order_low* , *order_up* , *type_x* , *taylor_x* , *taylor_y*
+| )
+
+Prototype
+=========
+{xrst_literal
+   // BEGIN_PROTOTYPE_BASE
+   // END_PROTOTYPE_BASE
+}
+
+AD<Base>
+********
 This syntax and prototype are used by
-$icode%af%.Forward%$$ and $icode%af%.new_dynamic%$$
-where $icode af$$ has prototype
-$codei%
-    ADFun< AD<%Base%> , %Base% > %af%
-%$$
-and $icode afun$$ is used in $icode af$$ (see $cref base2ad$$).
+*af* . ``Forward`` and *af* . ``new_dynamic``
+where *af* has prototype
 
-$subhead Syntax$$
-$icode%ok% = %afun%.forward(
-    %parameter_x%, %type_x%,
-    %need_y%, %order_low%, %order_up%, %type_x%, %ataylor_x%, %ataylor_y%
-)%$$
+   ``ADFun< AD<`` *Base* > , *Base* > *af*
 
-$subhead Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE_AD_BASE%// END_PROTOTYPE_AD_BASE%1
-%$$
+and *afun* is used in *af* (see :ref:`base2ad-name` ).
 
-$head Implementation$$
-The $icode taylor_x$$, $icode taylor_y$$ version of this function
+Syntax
+======
+
+| *ok* = *afun* . ``forward`` (
+| |tab| *parameter_x* , *type_x* ,
+| |tab| *need_y* , *order_low* , *order_up* , *type_x* , *ataylor_x* , *ataylor_y*
+| )
+
+Prototype
+=========
+{xrst_literal
+   // BEGIN_PROTOTYPE_AD_BASE
+   // END_PROTOTYPE_AD_BASE
+}
+
+Implementation
+**************
+The *taylor_x* , *taylor_y* version of this function
 must be defined by the
-$cref/atomic_user/atomic_three_ctor/atomic_user/$$ class.
-It can just return $icode%ok% == false%$$
+:ref:`atomic_three_ctor@atomic_user` class.
+It can just return *ok* == ``false``
 (and not compute anything) for values
-of $icode%order_up%$$ that are greater than those used by your
-$cref/forward/Forward/$$ mode calculations
+of *order_up* that are greater than those used by your
+:ref:`Forward-name` mode calculations
 (order zero must be implemented).
 
-$head parameter_x$$
-See $cref/parameter_x/atomic_three_define/parameter_x/$$.
+parameter_x
+***********
+See :ref:`atomic_three_define@parameter_x` .
 
-$head aparameter_x$$
-The specifications for $icode aparameter_x$$
-is the same as for $cref/parameter_x/atomic_three_define/parameter_x/$$
-(only the type of $icode ataylor_x$$ is different).
+aparameter_x
+************
+The specifications for *aparameter_x*
+is the same as for :ref:`atomic_three_define@parameter_x`
+(only the type of *ataylor_x* is different).
 
-$head type_x$$
-See $cref/type_x/atomic_three_define/type_x/$$.
+type_x
+******
+See :ref:`atomic_three_define@type_x` .
 
-$head need_y$$
-One can ignore this argument and compute all the $icode taylor_y$$
+need_y
+******
+One can ignore this argument and compute all the *taylor_y*
 Taylor coefficient.
-Often, this is not necessary and $icode need_y$$ is used to specify this.
-The value $cref/type_y/atomic_three_for_type/type_y/$$ is used
+Often, this is not necessary and *need_y* is used to specify this.
+The value :ref:`atomic_three_for_type@type_y` is used
 to determine which coefficients are necessary as follows:
 
-$subhead Constant Parameters$$
-If $icode%need_y% == size_t(constant_enum)%$$,
+Constant Parameters
+===================
+If *need_y* == ``size_t`` ( ``constant_enum`` ) ,
 then only the taylor coefficients
-for $latex Y_i (t)$$ where $icode%type_y%[%i%] == constant_enum%$$
+for :math:`Y_i (t)` where *type_y* [ *i* ] == ``constant_enum``
 are necessary.
-This is the case during a $cref from_json$$ operation.
+This is the case during a :ref:`from_json-name` operation.
 
-$subhead Dynamic Parameters$$
-If $icode%need_y% == size_t(dynamic_enum)%$$,
+Dynamic Parameters
+==================
+If *need_y* == ``size_t`` ( ``dynamic_enum`` ) ,
 then only the taylor coefficients
-for $latex Y_i (t)$$ where $icode%type_y%[%i%] == dynamic_enum%$$
+for :math:`Y_i (t)` where *type_y* [ *i* ] == ``dynamic_enum``
 are necessary.
-This is the case during an $cref new_dynamic$$ operation.
+This is the case during an :ref:`new_dynamic-name` operation.
 
-$subhead Variables$$
-If $icode%need_y% == size_t(variable_enum)%$$,
-If $codei%ad_type_enum(%need_y%)% == variable_enum%$$,
+Variables
+=========
+If *need_y* == ``size_t`` ( ``variable_enum`` ) ,
+If ``ad_type_enum`` ( *need_y* ) == *variable_enum* ,
 then only the taylor coefficients
-for $latex Y_i (t)$$ where $icode%type_y%[%i%] == variable_enum%$$
+for :math:`Y_i (t)` where *type_y* [ *i* ] == ``variable_enum``
 are necessary.
-This is the case during a $cref/f.Forward/Forward/$$ operation.
+This is the case during a :ref:`f.Forward<Forward-name>` operation.
 T
 
-$subhead All$$
-If $icode%need_y > size_t(variable_enum)%$$,
-then the taylor coefficients for all $latex Y_i (t)$$ are necessary.
-This is the case during an $icode%afun%(%ax%, %ay%)%$$ operation.
+All
+===
+If *need_y > size_t* ( *variable_enum* ) ,
+then the taylor coefficients for all :math:`Y_i (t)` are necessary.
+This is the case during an *afun* ( *ax* , *ay* ) operation.
 
-
-$head order_low$$
+order_low
+*********
 This argument
 specifies the lowest order Taylor coefficient that we are computing.
 
-$subhead p$$
-We sometimes use the notation $icode%p% = %order_low%$$ below.
+p
+=
+We sometimes use the notation *p* = *order_low* below.
 
-$head order_up$$
+order_up
+********
 This argument
 specifies the highest order Taylor coefficient that we are computing
-($icode%order_low% <= %order_up%$$).
+( *order_low* <= *order_up* ).
 
-$subhead q$$
-We sometimes use the notation $icode%q% = %order_up%$$ below.
+q
+=
+We sometimes use the notation *q* = *order_up* below.
 
-$head taylor_x$$
-The size of $icode taylor_x$$ is $codei%(%q%+1)*%n%$$.
-For $latex j = 0 , \ldots , n-1$$ and $latex k = 0 , \ldots , q$$,
+taylor_x
+********
+The size of *taylor_x* is ( *q* +1)* *n* .
+For :math:`j = 0 , \ldots , n-1` and :math:`k = 0 , \ldots , q`,
 we use the Taylor coefficient notation
-$latex \[
-\begin{array}{rcl}
-    x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
-    \\
-    X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
-\end{array}
-\] $$
-Note that superscripts represent an index for $latex x_j^k$$
-and an exponent for $latex t^k$$.
-Also note that the Taylor coefficients for $latex X(t)$$ correspond
-to the derivatives of $latex X(t)$$ at $latex t = 0$$ in the following way:
-$latex \[
-    x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
-\] $$
 
-$subhead parameters$$
-If the $th j$$ component of $icode x$$ corresponds to a parameter,
-$codei%
-    %type_x%[%j%] < CppAD::variable_enum
-%$$
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      x_j^k    & = & \R{taylor\_x} [ j * ( q + 1 ) + k ]
+      \\
+      X_j (t)  & = & x_j^0 + x_j^1 t^1 + \cdots + x_j^q t^q
+   \end{eqnarray}
+
+Note that superscripts represent an index for :math:`x_j^k`
+and an exponent for :math:`t^k`.
+Also note that the Taylor coefficients for :math:`X(t)` correspond
+to the derivatives of :math:`X(t)` at :math:`t = 0` in the following way:
+
+.. math::
+
+   x_j^k = \frac{1}{ k ! } X_j^{(k)} (0)
+
+parameters
+==========
+If the *j*-th component of *x* corresponds to a parameter,
+
+   *type_x* [ *j* ] < ``CppAD::variable_enum``
+
 In this case,
-the $th j$$ component of $icode parameter_x$$ is equal to $latex x_j^0$$;
+the *j*-th component of *parameter_x* is equal to :math:`x_j^0`;
 i.e.,
-$codei%
-    %parameter_x%[%j%] == %taylor_x%[ %j% * ( %q% + 1 ) + 0 ]
-%$$
-Furthermore, for $icode%k% > 0%$$,
-$codei%
-    %taylor_x%[ %j% * ( %q% + 1 ) + %k% ] == 0
-%$$
 
-$head ataylor_x$$
-The specifications for $icode ataylor_x$$ is the same as for $icode taylor_x$$
-(only the type of $icode ataylor_x$$ is different).
+   *parameter_x* [ *j* ] == *taylor_x* [ *j* * ( *q*  + 1 ) + 0 ]
 
-$head taylor_y$$
-The size of $icode taylor_y$$ is $codei%(%q%+1)*%m%$$.
+Furthermore, for *k*  > 0 ,
+
+   *taylor_x* [ *j* * ( *q* + 1 ) + *k*  ] == 0
+
+ataylor_x
+*********
+The specifications for *ataylor_x* is the same as for *taylor_x*
+(only the type of *ataylor_x* is different).
+
+taylor_y
+********
+The size of *taylor_y* is ( *q* +1)* *m* .
 Upon return,
-For $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , q$$,
-$latex \[
-\begin{array}{rcl}
-    Y_i (t)  & = & g_i [ X(t) ]
-    \\
-    Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
-    \\
-    \R{taylor\_y}  [ i * ( q + 1 ) + k ] & = & y_i^k
-\end{array}
-\] $$
-where $latex o( t^q ) / t^q \rightarrow 0$$ as $latex t \rightarrow 0$$.
-Note that superscripts represent an index for $latex y_j^k$$
-and an exponent for $latex t^k$$.
-Also note that the Taylor coefficients for $latex Y(t)$$ correspond
-to the derivatives of $latex Y(t)$$ at $latex t = 0$$ in the following way:
-$latex \[
-    y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
-\] $$
-If $latex p > 0$$,
-for $latex i = 0 , \ldots , m-1$$ and $latex k = 0 , \ldots , p-1$$,
-the input of $icode taylor_y$$ satisfies
-$latex \[
-    \R{taylor\_y}  [ i * ( q + 1 ) + k ] = y_i^k
-\]$$
+For :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , q`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      Y_i (t)  & = & g_i [ X(t) ]
+      \\
+      Y_i (t)  & = & y_i^0 + y_i^1 t^1 + \cdots + y_i^q t^q + o ( t^q )
+      \\
+      \R{taylor\_y}  [ i * ( q + 1 ) + k ] & = & y_i^k
+   \end{eqnarray}
+
+where :math:`o( t^q ) / t^q \rightarrow 0` as :math:`t \rightarrow 0`.
+Note that superscripts represent an index for :math:`y_j^k`
+and an exponent for :math:`t^k`.
+Also note that the Taylor coefficients for :math:`Y(t)` correspond
+to the derivatives of :math:`Y(t)` at :math:`t = 0` in the following way:
+
+.. math::
+
+   y_j^k = \frac{1}{ k ! } Y_j^{(k)} (0)
+
+If :math:`p > 0`,
+for :math:`i = 0 , \ldots , m-1` and :math:`k = 0 , \ldots , p-1`,
+the input of *taylor_y* satisfies
+
+.. math::
+
+   \R{taylor\_y}  [ i * ( q + 1 ) + k ] = y_i^k
+
 These values do not need to be recalculated
 and can be used during the computation of the higher order coefficients.
 
-$head ataylor_y$$
-The specifications for $icode ataylor_y$$ is the same as for $icode taylor_y$$
-(only the type of $icode ataylor_y$$ is different).
+ataylor_y
+*********
+The specifications for *ataylor_y* is the same as for *taylor_y*
+(only the type of *ataylor_y* is different).
 
-$head ok$$
-If this calculation succeeded, $icode ok$$ is true.
+ok
+**
+If this calculation succeeded, *ok* is true.
 Otherwise, it is false.
 
-$head Discussion$$
-For example, suppose that $icode%order_up% == 2%$$,
-and you know how to compute the function $latex g(x)$$,
-its first derivative $latex g^{(1)} (x)$$,
-and it component wise Hessian $latex g_i^{(2)} (x)$$.
-Then you can compute $icode taylor_x$$ using the following formulas:
-$latex \[
-\begin{array}{rcl}
-y_i^0 & = & Y(0)
-        = g_i ( x^0 )
-\\
-y_i^1 & = & Y^{(1)} ( 0 )
-        = g_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
-        = g_i^{(1)} ( x^0 ) x^1
-\\
-y_i^2
-& = & \frac{1}{2 !} Y^{(2)} (0)
-\\
-& = & \frac{1}{2} X^{(1)} (0)^\R{T} g_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
-  +   \frac{1}{2} g_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
-\\
-& = & \frac{1}{2} (x^1)^\R{T} g_i^{(2)} ( x^0 ) x^1
-  +    g_i^{(1)} ( x^0 ) x^2
-\end{array}
-\] $$
-For $latex i = 0 , \ldots , m-1$$, and $latex k = 0 , 1 , 2$$,
-$latex \[
-    \R{taylor\_y} [ i * (q + 1) + k ] = y_i^k
-\] $$
+Discussion
+**********
+For example, suppose that *order_up*  == 2 ,
+and you know how to compute the function :math:`g(x)`,
+its first derivative :math:`g^{(1)} (x)`,
+and it component wise Hessian :math:`g_i^{(2)} (x)`.
+Then you can compute *taylor_x* using the following formulas:
 
-$children%
-    example/atomic_three/forward.cpp%
-    example/atomic_three/dynamic.cpp
-%$$
-$head Examples$$
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   y_i^0 & = & Y(0)
+         = g_i ( x^0 )
+   \\
+   y_i^1 & = & Y^{(1)} ( 0 )
+         = g_i^{(1)} ( x^0 ) X^{(1)} ( 0 )
+         = g_i^{(1)} ( x^0 ) x^1
+   \\
+   y_i^2
+   & = & \frac{1}{2 !} Y^{(2)} (0)
+   \\
+   & = & \frac{1}{2} X^{(1)} (0)^\R{T} g_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
+     +   \frac{1}{2} g_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
+   \\
+   & = & \frac{1}{2} (x^1)^\R{T} g_i^{(2)} ( x^0 ) x^1
+     +    g_i^{(1)} ( x^0 ) x^2
+   \end{eqnarray}
+
+For :math:`i = 0 , \ldots , m-1`, and :math:`k = 0 , 1 , 2`,
+
+.. math::
+
+   \R{taylor\_y} [ i * (q + 1) + k ] = y_i^k
+
+{xrst_toc_hidden
+   example/atomic_three/forward.cpp
+   example/atomic_three/dynamic.cpp
+}
+Examples
+********
 The files
-$cref atomic_three_forward.cpp$$ and $cref atomic_three_dynamic.cpp$$
+:ref:`atomic_three_forward.cpp-name` and :ref:`atomic_three_dynamic.cpp-name`
 contain examples and tests that uses this routine.
 
-$end
+{xrst_end atomic_three_forward}
 -----------------------------------------------------------------------------
 */
 
@@ -292,15 +328,15 @@ See the forward mode in user's documentation for atomic_three
 // BEGIN_PROTOTYPE_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
-    const vector<Base>&          parameter_x ,
-    const vector<ad_type_enum>&  type_x      ,
-    size_t                       need_y      ,
-    size_t                       order_low   ,
-    size_t                       order_up    ,
-    const vector<Base>&          taylor_x    ,
-    vector<Base>&                taylor_y    )
+   const vector<Base>&          parameter_x ,
+   const vector<ad_type_enum>&  type_x      ,
+   size_t                       need_y      ,
+   size_t                       order_low   ,
+   size_t                       order_up    ,
+   const vector<Base>&          taylor_x    ,
+   vector<Base>&                taylor_y    )
 // END_PROTOTYPE_BASE
-{   return false; }
+{  return false; }
 
 /*!
 Link from atomic_three to forward mode
@@ -331,15 +367,15 @@ See the forward mode in user's documentation for base_three
 // BEGIN_PROTOTYPE_AD_BASE
 template <class Base>
 bool atomic_three<Base>::forward(
-    const vector< AD<Base> >&    aparameter_x ,
-    const vector<ad_type_enum>&  type_x       ,
-    size_t                       need_y       ,
-    size_t                       order_low    ,
-    size_t                       order_up     ,
-    const vector< AD<Base> >&    ataylor_x    ,
-    vector< AD<Base> >&          ataylor_y    )
+   const vector< AD<Base> >&    aparameter_x ,
+   const vector<ad_type_enum>&  type_x       ,
+   size_t                       need_y       ,
+   size_t                       order_low    ,
+   size_t                       order_up     ,
+   const vector< AD<Base> >&    ataylor_x    ,
+   vector< AD<Base> >&          ataylor_y    )
 // END_PROTOTYPE_AD_BASE
-{   return false; }
+{  return false; }
 
 
 } // END_CPPAD_NAMESPACE

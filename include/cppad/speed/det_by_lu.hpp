@@ -1,123 +1,109 @@
 # ifndef CPPAD_SPEED_DET_BY_LU_HPP
 # define CPPAD_SPEED_DET_BY_LU_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin det_by_lu$$
-$spell
-    CppAD
-    cppad
-    lu
-    hpp
-    typedef
-    const
-    hpp
-    Det
-    CPPAD_TESTVECTOR
-    namespace
-$$
+{xrst_begin det_by_lu}
 
-$section Determinant Using Expansion by Lu Factorization$$
+Determinant Using Expansion by Lu Factorization
+###############################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/speed/det_by_lu.hpp>
-%$$
-$codei%det_by_lu<%Scalar%> %det%(%n%)
-%$$
-$icode%d% = %det%(%a%)
-%$$
+| # ``include <cppad/speed/det_by_lu.hpp>``
+| ``det_by_lu<`` *Scalar* > *det* ( *n* )
+| *d* = *det* ( *a* )
 
-$head Inclusion$$
-The template class $code det_by_lu$$ is defined in the $code CppAD$$
+Inclusion
+*********
+The template class ``det_by_lu`` is defined in the ``CppAD``
 namespace by including
-the file $code cppad/speed/det_by_lu.hpp$$
+the file ``cppad/speed/det_by_lu.hpp``
 (relative to the CppAD distribution directory).
 
-$head Constructor$$
+Constructor
+***********
 The syntax
-$codei%
-    det_by_lu<%Scalar%> %det%(%n%)
-%$$
-constructs the object $icode det$$ which can be used for
-evaluating the determinant of $icode n$$ by $icode n$$ matrices
+
+   ``det_by_lu<`` *Scalar* > *det* ( *n* )
+
+constructs the object *det* which can be used for
+evaluating the determinant of *n* by *n* matrices
 using LU factorization.
 
-$head Scalar$$
-The type $icode Scalar$$ can be any
-$cref NumericType$$
+Scalar
+******
+The type *Scalar* can be any
+:ref:`NumericType-name`
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-    size_t %n%
-%$$
+n
+*
+The argument *n* has prototype
 
-$head det$$
+   ``size_t`` *n*
+
+det
+***
 The syntax
-$codei%
-    %d% = %det%(%a%)
-%$$
-returns the determinant of the matrix $latex A$$ using LU factorization.
 
-$subhead a$$
-The argument $icode a$$ has prototype
-$codei%
-    const %Vector% &%a%
-%$$
-It must be a $icode Vector$$ with length $latex n * n$$ and with
-It must be a $icode Vector$$ with length $latex n * n$$ and with
-elements of type $icode Scalar$$.
-The elements of the $latex n \times n$$ matrix $latex A$$ are defined,
-for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
-$latex \[
-    A_{i,j} = a[ i * m + j]
-\] $$
+   *d* = *det* ( *a* )
 
-$subhead d$$
-The return value $icode d$$ has prototype
-$codei%
-    %Scalar% %d%
-%$$
+returns the determinant of the matrix :math:`A` using LU factorization.
 
-$head Vector$$
-If $icode y$$ is a $icode Vector$$ object,
+a
+=
+The argument *a* has prototype
+
+   ``const`` *Vector* & *a*
+
+It must be a *Vector* with length :math:`n * n` and with
+It must be a *Vector* with length :math:`n * n` and with
+elements of type *Scalar* .
+The elements of the :math:`n \times n` matrix :math:`A` are defined,
+for :math:`i = 0 , \ldots , n-1` and :math:`j = 0 , \ldots , n-1`, by
+
+.. math::
+
+   A_{i,j} = a[ i * m + j]
+
+d
+=
+The return value *d* has prototype
+
+   *Scalar* *d*
+
+Vector
+******
+If *y* is a *Vector* object,
 it must support the syntax
-$codei%
-    %y%[%i%]
-%$$
-where $icode i$$ has type $code size_t$$ with value less than $latex n * n$$.
-This must return a $icode Scalar$$ value corresponding to the $th i$$
-element of the vector $icode y$$.
-This is the only requirement of the type $icode Vector$$.
 
-$children%
-    speed/example/det_by_lu.cpp%
-    omh/det_by_lu_hpp.omh
-%$$
+   *y* [ *i* ]
 
+where *i* has type ``size_t`` with value less than :math:`n * n`.
+This must return a *Scalar* value corresponding to the *i*-th
+element of the vector *y* .
+This is the only requirement of the type *Vector* .
+{xrst_toc_hidden
+   speed/example/det_by_lu.cpp
+   xrst/det_by_lu_hpp.xrst
+}
 
-$head Example$$
+Example
+*******
 The file
-$cref det_by_lu.cpp$$
-contains an example and test of $code det_by_lu.hpp$$.
+:ref:`det_by_lu.cpp-name`
+contains an example and test of ``det_by_lu.hpp`` .
 
-$head Source Code$$
+Source Code
+***********
 The file
-$cref det_by_lu.hpp$$
+:ref:`det_by_lu.hpp-name`
 contains the source for this template function.
 
-
-$end
+{xrst_end det_by_lu}
 ---------------------------------------------------------------------------
 */
 // BEGIN C++
@@ -130,52 +116,52 @@ namespace CppAD {
 template <class Scalar>
 class det_by_lu {
 private:
-    const size_t m_;
-    const size_t n_;
-    CppAD::vector<Scalar> A_;
-    CppAD::vector<Scalar> B_;
-    CppAD::vector<Scalar> X_;
+   const size_t m_;
+   const size_t n_;
+   CppAD::vector<Scalar> A_;
+   CppAD::vector<Scalar> B_;
+   CppAD::vector<Scalar> X_;
 public:
-    det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
-    {   }
+   det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
+   {  }
 
-    template <class Vector>
-    Scalar operator()(const Vector &x)
-    {
+   template <class Vector>
+   Scalar operator()(const Vector &x)
+   {
 
-        Scalar       logdet;
-        Scalar       det;
-        int          signdet;
-        size_t       i;
+      Scalar       logdet;
+      Scalar       det;
+      int          signdet;
+      size_t       i;
 
-        // copy matrix so it is not overwritten
-        for(i = 0; i < n_ * n_; i++)
-            A_[i] = x[i];
+      // copy matrix so it is not overwritten
+      for(i = 0; i < n_ * n_; i++)
+         A_[i] = x[i];
 
-        // comput log determinant
-        signdet = CppAD::LuSolve(
-            n_, m_, A_, B_, X_, logdet);
+      // comput log determinant
+      signdet = CppAD::LuSolve(
+         n_, m_, A_, B_, X_, logdet);
 
 /*
-        // Do not do this for speed test because it makes floating
-        // point operation sequence very simple.
-        if( signdet == 0 )
-            det = 0;
-        else
-            det =  Scalar( signdet ) * exp( logdet );
+      // Do not do this for speed test because it makes floating
+      // point operation sequence very simple.
+      if( signdet == 0 )
+         det = 0;
+      else
+         det =  Scalar( signdet ) * exp( logdet );
 */
 
-        // convert to determinant
-        det     = Scalar( signdet ) * exp( logdet );
+      // convert to determinant
+      det     = Scalar( signdet ) * exp( logdet );
 
 # ifdef FADBAD
-        // Fadbad requires tempories to be set to constants
-        for(i = 0; i < n_ * n_; i++)
-            A_[i] = 0;
+      // Fadbad requires tempories to be set to constants
+      for(i = 0; i < n_ * n_; i++)
+         A_[i] = 0;
 # endif
 
-        return det;
-    }
+      return det;
+   }
 };
 } // END CppAD namespace
 // END C++

@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin atomic_three_example}
+
+Example Defining Atomic Functions: Third Generation
+###################################################
+
+Contents
+********
+{xrst_toc_table
+   example/atomic_three/get_started.cpp
+   example/atomic_three/norm_sq.cpp
+   example/atomic_three/tangent.cpp
+   example/atomic_three/base2ad.cpp
+   example/atomic_three/reciprocal.cpp
+   example/atomic_three/mat_mul.cpp
+}
+
+{xrst_end atomic_three_example}

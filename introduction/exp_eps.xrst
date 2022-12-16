@@ -1,0 +1,1341 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin exp_eps.hpp}
+
+exp_eps: Implementation
+#######################
+
+{xrst_literal
+   introduction/exp_eps.hpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end exp_eps.hpp}
+-----------------------------------------------------------------------------
+{xrst_begin exp_eps.cpp}
+
+exp_eps: Test of exp_eps
+########################
+
+{xrst_literal
+   introduction/exp_eps.cpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end exp_eps.cpp}
+-----------------------------------------------------------------------------
+{xrst_begin exp_eps_for0}
+
+exp_eps: Operation Sequence and Zero Order Forward Sweep
+########################################################
+
+Mathematical Form
+*****************
+Suppose that we use the algorithm :ref:`exp_eps.hpp-name`
+to compute ``exp_eps`` ( *x* , *epsilon* )
+with *x* is equal to .5
+and *epsilon* is equal to .2.
+For this case,
+the mathematical form for the operation sequence
+corresponding to the ``exp_eps`` is
+
+.. math::
+
+   f( x , \varepsilon ) = 1 + x + x^2 / 2
+
+Note that, for these particular values of *x* and *epsilon* ,
+this is the same as the mathematical form for
+:ref:`exp_2<exp_2_for0@Mathematical Form>` .
+
+Operation Sequence
+******************
+We consider the
+:ref:`operation sequence<glossary@Operation@Sequence>`
+corresponding to the algorithm :ref:`exp_eps.hpp-name`
+with the argument *x* is equal to .5
+and *epsilon* is equal to .2.
+
+Variable
+========
+We refer to values that depend on the input variables
+*x* and *epsilon* as variables.
+
+Parameter
+=========
+We refer to values that do not depend on the input variables
+*x* or *epsilon* as parameters.
+Operations where the result is a parameter are not included
+in the zero order sweep below.
+
+Index
+=====
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation and variable.
+A Forward sweep starts with the first operation
+and ends with the last.
+
+Code
+====
+The Code column contains the C++ source code corresponding
+to the corresponding atomic operation in the sequence.
+
+Operation
+=========
+The Operation column contains the
+mathematical function corresponding to each atomic operation in the sequence.
+
+Zero Order
+==========
+The Zero Order column contains the
+:ref:`zero order derivative<exp_2_for0@Zero Order Expansion>`
+for the corresponding variable in the operation sequence.
+Forward mode refers to the fact that
+these coefficients are computed in the same order as the original algorithm;
+i.e., in order of increasing index.
+
+Sweep
+=====
+
+.. csv-table::
+   :widths: auto
+
+   **Index**,,**Code**,,**Operation**,,**Zero Order**
+   1,,``abs_x = x;``,,:math:`v_1 = x`,,:math:`v_1^{(0)} = 0.5`
+   2,,``temp  = term * abs_x;``,,:math:`v_2 = 1 * v_1`,,:math:`v_2^{(0)} = 0.5`
+   3,,``term = temp / Type(k);``,,:math:`v_3 = v_2 / 1`,,:math:`v_3^{(0)} = 0.5`
+   4,,``sum  = sum + term;``,,:math:`v_4 = 1 + v_3`,,:math:`v_4^{(0)} = 1.5`
+   5,,``temp  = term * abs_x;``,,:math:`v_5 = v_3 * v_1`,,:math:`v_5^{(0)} = 0.25`
+   6,,``term = temp / Type(k);``,,:math:`v_6 = v_5 / 2`,,:math:`v_6^{(0)} = 0.125`
+   7,,``sum  = sum + term;``,,:math:`v_7 = v_4 + v_6`,,:math:`v_7^{(0)} = 1.625`
+
+Return Value
+************
+The return value for this case is
+
+.. math::
+
+   1.625 =
+   v_7^{(0)} =
+   f ( x^{(0)} , \varepsilon^{(0)} )
+
+Comparisons
+***********
+If *x* were negative,
+or if *epsilon* were a much smaller or much larger value,
+the results of the following comparisons could be different:
+::
+
+   if( Type(0) > x )
+   while(term > epsilon)
+
+This in turn would result in a different operation sequence.
+Thus the operation sequence above only corresponds to
+:ref:`exp_eps.hpp-name`
+for values of *x* and *epsilon* within a certain range.
+Note that there is a neighborhood
+of :math:`x = 0.5` for which the comparisons would have the
+same result and hence the operation sequence would be the same.
+{xrst_toc_hidden
+   introduction/exp_eps_for0.cpp
+}
+
+Verification
+************
+The file :ref:`exp_eps_for0.cpp-name` contains a routine
+that verifies the values computed above.
+
+Exercises
+*********
+
+#. Suppose that :math:`x^{(0)} = .1`,
+   what is the result of a zero order forward sweep for
+   the operation sequence above;
+   i.e., what are the corresponding values for
+   :math:`v_1^{(0)} , v_2^{(0)} , \ldots , v_7^{(0)}`.
+#. Create a modified version of
+   :ref:`exp_eps_for0.cpp-name` that verifies the values you obtained
+   for the previous exercise.
+#. Create and run a main program that reports the result of calling
+   the modified version
+   of :ref:`exp_eps_for0.cpp-name` in the previous exercise.
+
+{xrst_end exp_eps_for0}
+-----------------------------------------------------------------------------
+{xrst_begin exp_eps_for1}
+{xrst_spell
+   expansions
+}
+
+exp_eps: First Order Forward Sweep
+##################################
+
+First Order Expansion
+*********************
+We define :math:`x(t)` and :math:`\varepsilon(t) ]` near :math:`t = 0`
+by the first order expansions
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      x(t) & = & x^{(0)} + x^{(1)} * t
+      \\
+      \varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
+   \end{eqnarray}
+
+It follows that :math:`x^{(0)}` (:math:`\varepsilon^{(0)}`) is the zero,
+and :math:`x^{(1)}`  (:math:`\varepsilon^{(1)}`) the first,
+order derivative of :math:`x(t)`
+at :math:`t = 0` (:math:`\varepsilon (t)`)
+at :math:`t = 0`.
+
+Mathematical Form
+*****************
+Suppose that we use the algorithm :ref:`exp_eps.hpp-name`
+to compute ``exp_eps`` ( *x* , *epsilon* )
+with *x* is equal to .5
+and *epsilon* is equal to .2.
+For this case, the mathematical function for the operation sequence
+corresponding to ``exp_eps`` is
+
+.. math::
+
+   f ( x , \varepsilon ) =   1 + x + x^2 / 2
+
+The corresponding partial derivative with respect to :math:`x`,
+and the value of the derivative, are
+
+.. math::
+
+   \partial_x f ( x , \varepsilon ) =   1 + x  = 1.5
+
+Operation Sequence
+******************
+
+Index
+=====
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation.
+A Forward sweep starts with the first operation
+and ends with the last.
+
+Operation
+=========
+The Operation column contains the
+mathematical function corresponding to each atomic operation in the sequence.
+
+Zero Order
+==========
+The Zero Order column contains the zero order derivatives
+for the corresponding variable in the operation sequence
+(see :ref:`zero order sweep<exp_2_for1@Operation Sequence@Sweep>` ).
+
+Derivative
+==========
+The Derivative column contains the
+mathematical function corresponding to the derivative
+with respect to :math:`t`,
+at :math:`t = 0`, for each variable in the sequence.
+
+First Order
+===========
+The First Order column contains the first order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+
+.. math::
+
+   v_j (t) = v_j^{(0)} + v_j^{(1)} t
+
+We use :math:`x^{(1)} = 1` and :math:`\varepsilon^{(1)} = 0`,
+so that differentiation with respect to :math:`t`,
+at :math:`t = 0`,
+is the same partial differentiation with respect to :math:`x`
+at :math:`x = x^{(0)}`.
+
+Sweep
+=====
+
+.. csv-table::
+   :widths: auto
+
+   **Index**,,**Operation**,,**Zero Order**,,**Derivative**,,**First Order**
+   1,,:math:`v_1 = x`,,0.5,,:math:`v_1^{(1)} = x^{(1)}`,,:math:`v_1^{(1)} = 1`
+   2,,:math:`v_2 = 1 * v_1`,,0.5,,:math:`v_2^{(1)} = 1 * v_1^{(1)}`,,:math:`v_2^{(1)} = 1`
+   3,,:math:`v_3 = v_2 / 1`,,0.5,,:math:`v_3^{(1)} = v_2^{(1)} / 1`,,:math:`v_3^{(1)} = 1`
+   4,,:math:`v_4 = 1 + v_3`,,1.5,,:math:`v_4^{(1)} = v_3^{(1)}`,,:math:`v_4^{(1)} = 1`
+   5,,:math:`v_5 = v_3 * v_1`,,0.25,,:math:`v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}`,,:math:`v_5^{(1)} = 1`
+   6,,:math:`v_6 = v_5 / 2`,,0.125,,:math:`v_6^{(1)} = v_5^{(1)} / 2`,,:math:`v_6^{(1)} = 0.5`
+   7,,:math:`v_7 = v_4 + v_6`,,1.625,,:math:`v_7^{(1)} = v_4^{(1)} + v_6^{(1)}`,,:math:`v_7^{(1)} = 1.5`
+
+Return Value
+************
+The derivative of the return value for this case is
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   1.5
+   & = &
+   v_7^{(1)} =
+   \left[ \D{v_7}{t} \right]_{t=0} =
+   \left[ \D{}{t} f( x^{(0)} + x^{(1)} * t , \varepsilon^{(0)} ) \right]_{t=0}
+   \\
+   & = &
+   \partial_x f ( x^{(0)} , \varepsilon^{(0)} ) * x^{(1)} =
+   \partial_x f ( x^{(0)} , \varepsilon^{(0)} )
+   \end{eqnarray}
+
+(We have used the fact that
+:math:`x^{(1)} = 1` and :math:`\varepsilon^{(1)} = 0`.)
+{xrst_toc_hidden
+   introduction/exp_eps_for1.cpp
+}
+
+Verification
+************
+The file :ref:`exp_eps_for1.cpp-name` contains a routine
+that verifies the values computed above.
+
+Exercises
+*********
+
+#. Suppose that :math:`x = .1`,
+   what are the results of a zero and first order forward mode sweep for
+   the operation sequence above;
+   i.e., what are the corresponding values for
+   :math:`v_1^{(0)}, v_2^{(0)}, \cdots , v_7^{(0)}` and
+   :math:`v_1^{(1)}, v_2^{(1)}, \cdots , v_7^{(1)}` ?
+#. Create a modified version of :ref:`exp_eps_for1.cpp-name` that verifies
+   the derivative values from the previous exercise.
+   Also create and run a main program that reports the result
+   of calling the modified version of
+   :ref:`exp_eps_for1.cpp-name` .
+#. Suppose that :math:`x = .1` and :math:`\epsilon = .2`,
+   what is the operation sequence corresponding to
+
+      ``exp_eps`` ( *x* , *epsilon* )
+
+{xrst_end exp_eps_for1}
+-----------------------------------------------------------------------------
+{xrst_begin exp_eps_rev1}
+{xrst_spell
+   forward forward
+   preform
+   rcll
+}
+
+exp_eps: First Order Reverse Sweep
+##################################
+
+Purpose
+*******
+First order reverse mode uses the
+:ref:`exp_eps_for0@Operation Sequence` ,
+and zero order forward sweep values,
+to compute the first order derivative
+of one dependent variable with respect to all the independent variables.
+The computations are done in reverse
+of the order of the computations in the original algorithm.
+
+Mathematical Form
+*****************
+Suppose that we use the algorithm :ref:`exp_eps.hpp-name`
+to compute ``exp_eps`` ( *x* , *epsilon* )
+with *x* is equal to .5
+and *epsilon* is equal to .2.
+For this case, the mathematical function for the operation sequence
+corresponding to ``exp_eps`` is
+
+.. math::
+
+   f ( x , \varepsilon ) =   1 + x + x^2 / 2
+
+The corresponding partial derivatives,
+and the value of the derivatives, are
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \partial_x f ( x , \varepsilon ) & = &  1 + x  = 1.5
+   \\
+   \partial_\varepsilon f ( x , \varepsilon ) & = &  0
+   \end{eqnarray}
+
+epsilon
+*******
+Since :math:`\varepsilon` is an independent variable,
+it could included as an argument to all of the
+:math:`f_j` functions below.
+The result would be that all the partials with respect to
+:math:`\varepsilon` would be zero and hence we drop it to simplify
+the presentation.
+
+f_7
+***
+In reverse mode we choose one dependent variable and
+compute its derivative with respect to all the independent variables.
+For our example, we chose the value returned by :ref:`exp_eps.hpp-name`
+which is :math:`v_7`.
+We begin with the function :math:`f_7` where :math:`v_7`
+is both an argument and the value of the function; i.e.,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   f_7 ( v_1 , v_2 , v_3 , v_4 , v_5 , v_6 , v_7 ) & = & v_7
+   \\
+   \D{f_7}{v_7} & = & 1
+   \end{eqnarray}
+
+All the other partial derivatives of :math:`f_7` are zero.
+
+Index 7: f_6
+************
+The last operation has index 7,
+
+.. math::
+
+   v_7 =   v_4 + v_6
+
+We define the function
+:math:`f_6 ( v_1 , v_2 , v_3 , v_4 , v_5 , v_6 )`
+as equal to :math:`f_7`
+except that :math:`v_7` is eliminated using
+this operation; i.e.
+
+.. math::
+
+   f_6  =
+   f_7 [ v_1 , v_2 , v_3 , v_4 , v_5 , v_6 , v_7 ( v_4 , v_6 ) ]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_6}{v_4}
+   & = & \D{f_7}{v_4} +
+      \D{f_7}{v_7} * \D{v_7}{v_4}
+   & = 1
+   \\
+   \D{f_6}{v_6}
+   & = & \D{f_7}{v_6} +
+      \D{f_7}{v_7} * \D{v_7}{v_6}
+   & = 1
+   \end{array}
+
+All the other partial derivatives of :math:`f_6` are zero.
+
+Index 6: f_5
+************
+The previous operation has index 6,
+
+.. math::
+
+   v_6 = v_5 / 2
+
+We define the function
+:math:`f_5 (  v_1 , v_2 , v_3 , v_4 , v_5 )`
+as equal to :math:`f_6`
+except that :math:`v_6` is eliminated using this operation; i.e.,
+
+.. math::
+
+   f_5 =
+   f_6 [  v_1 , v_2 , v_3 , v_4 , v_5 , v_6 ( v_5 ) ]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_5}{v_4}
+   & = & \D{f_6}{v_4}
+   & = 1
+   \\
+   \D{f_5}{v_5}
+   & = & \D{f_6}{v_5} +
+      \D{f_6}{v_6} * \D{v_6}{v_5}
+   & = 0.5
+   \end{array}
+
+All the other partial derivatives of :math:`f_5` are zero.
+
+Index 5: f_4
+************
+The previous operation has index 5,
+
+.. math::
+
+   v_5 = v_3 * v_1
+
+We define the function
+:math:`f_4 (  v_1 , v_2 , v_3 , v_4 )`
+as equal to :math:`f_5`
+except that :math:`v_5` is eliminated using this operation; i.e.,
+
+.. math::
+
+   f_4 =
+   f_5 [  v_1 , v_2 , v_3 , v_4 , v_5 ( v_3 , v_1 )  ]
+
+Given the information from the forward sweep, we have
+:math:`v_3 =  0.5` and :math:`v_1 = 0.5`.
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_4}{v_1}
+   & = & \D{f_5}{v_1} +
+      \D{f_5}{v_5} * \D{v_5}{v_1}
+   & =  0.25
+   \\
+   \D{f_4}{v_2} & = & \D{f_5}{v_2}  & = 0
+   \\
+   \D{f_4}{v_3}
+   & = & \D{f_5}{v_3} +
+      \D{f_5}{v_5} * \D{v_5}{v_3}
+   & =  0.25
+   \\
+   \D{f_4}{v_4}
+   & = & \D{f_5}{v_4}
+   & = 1
+   \end{array}
+
+Index 4: f_3
+************
+The previous operation has index 4,
+
+.. math::
+
+   v_4 = 1 + v_3
+
+We define the function
+:math:`f_3 (  v_1 , v_2 , v_3 )`
+as equal to :math:`f_4`
+except that :math:`v_4` is eliminated using this operation; i.e.,
+
+.. math::
+
+   f_3 =
+   f_4 [  v_1 , v_2 , v_3 , v_4 ( v_3 )  ]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_3}{v_1}
+   & = & \D{f_4}{v_1}
+   & =  0.25
+   \\
+   \D{f_3}{v_2} & = & \D{f_4}{v_2}  & = 0
+   \\
+   \D{f_3}{v_3}
+   & = & \D{f_4}{v_3} +
+      \D{f_4}{v_4} * \D{v_4}{v_3}
+   & =  1.25
+   \end{array}
+
+Index 3: f_2
+************
+The previous operation has index 3,
+
+.. math::
+
+   v_3 = v_2 / 1
+
+We define the function
+:math:`f_2 (  v_1 , v_2 )`
+as equal to :math:`f_3`
+except that :math:`v_3` is eliminated using this operation; i.e.,
+
+.. math::
+
+   f_2 =
+   f_4 [  v_1 , v_2 , v_3 ( v_2 )  ]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_2}{v_1}
+   & = & \D{f_3}{v_1}
+   & =  0.25
+   \\
+   \D{f_2}{v_2} & = & \D{f_3}{v_2}  +
+      \D{f_3}{v_3} * \D{v_3}{v_2}
+   & = 1.25
+   \end{array}
+
+Index 2: f_1
+************
+The previous operation has index 1,
+
+.. math::
+
+   v_2 = 1 * v_1
+
+We define the function
+:math:`f_1 (  v_1 )`
+as equal to :math:`f_2`
+except that :math:`v_2` is eliminated using this operation; i.e.,
+
+.. math::
+
+   f_1 =
+   f_2 [  v_1 , v_2 ( v_1 )  ]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_1}{v_1} & = & \D{f_2}{v_1}  +
+      \D{f_2}{v_2} * \D{v_2}{v_1}
+   & = 1.5
+   \end{array}
+
+Note that :math:`v_1` is equal to :math:`x`,
+so the derivative of ``exp_eps`` ( *x* , *epsilon* )
+at *x* equal to .5 and *epsilon* equal .2 is
+1.5 in the *x* direction and zero in the *epsilon* direction.
+We also note that
+:ref:`forward<exp_eps_for1-name>` forward mode gave the
+same result for the partial in the *x* direction.
+{xrst_toc_hidden
+   introduction/exp_eps_rev1.cpp
+}
+
+Verification
+************
+The file :ref:`exp_eps_rev1.cpp-name` contains a routine
+that verifies the values computed above.
+It only tests the partial derivatives of
+:math:`f_j` that might not be equal to the corresponding
+partials of :math:`f_{j+1}`; i.e., the
+other partials of :math:`f_j` must be equal to the corresponding
+partials of :math:`f_{j+1}`.
+
+Exercises
+*********
+
+#. Consider the case where :math:`x = .1`
+   and we first preform a zero order forward mode sweep
+   for the operation sequence used above (in reverse order).
+   What are the results of a
+   first order reverse mode sweep; i.e.,
+   what are the corresponding values for
+   :math:`\D{f_j}{v_k}` for all :math:`j, k` such that
+   :math:`\D{f_j}{v_k} \neq 0`.
+#. Create a modified version of
+   :ref:`exp_eps_rev1.cpp-name`
+   that verifies the values you obtained for the previous exercise.
+   Also create and run a main program that reports the result
+   of calling the modified version of
+   :ref:`exp_eps_rev1.cpp-name` .
+
+{xrst_end exp_eps_rev1}
+-----------------------------------------------------------------------------
+{xrst_begin exp_eps_for2}
+{xrst_spell
+   expansions
+}
+
+exp_eps: Second Order Forward Mode
+##################################
+
+Second Order Expansion
+**********************
+
+We define :math:`x(t)` and :math:`\varepsilon(t) ]` near :math:`t = 0`
+by the second order expansions
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      x(t) & = & x^{(0)} + x^{(1)} * t  + x^{(2)} * t^2 / 2
+      \\
+      \varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
+                        +   \varepsilon^{(2)} * t^2 / 2
+   \end{eqnarray}
+
+It follows that for :math:`k = 0 , 1 , 2`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      x^{(k)}  & = & \dpow{k}{t} x (0)
+      \\
+      \varepsilon^{(k)}  & = & \dpow{k}{t} \varepsilon (0)
+   \end{eqnarray}
+
+Purpose
+*******
+In general, a second order forward sweep is given the
+:ref:`exp_2_for1@First Order Expansion`
+for all of the variables in an operation sequence,
+and the second order derivatives for the independent variables.
+It uses these to compute the second order derivative,
+and thereby obtain the second order expansion,
+for all the variables in the operation sequence.
+
+Mathematical Form
+*****************
+Suppose that we use the algorithm :ref:`exp_eps.hpp-name`
+to compute ``exp_eps`` ( *x* , *epsilon* )
+with *x* is equal to .5
+and *epsilon* is equal to .2.
+For this case, the mathematical function for the operation sequence
+corresponding to ``exp_eps`` is
+
+.. math::
+
+   f ( x , \varepsilon ) =   1 + x + x^2 / 2
+
+The corresponding second partial derivative with respect to :math:`x`,
+and the value of the derivative, are
+
+.. math::
+
+   \Dpow{2}{x} f ( x , \varepsilon ) =   1.
+
+Operation Sequence
+******************
+
+Index
+=====
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation.
+A Forward sweep starts with the first operation
+and ends with the last.
+
+Zero
+====
+The Zero column contains the zero order sweep results
+for the corresponding variable in the operation sequence
+(see :ref:`zero order sweep<exp_2_for0@Operation Sequence@Sweep>` ).
+
+Operation
+=========
+The Operation column contains the
+first order sweep operation for this variable.
+
+First
+=====
+The First column contains the first order sweep results
+for the corresponding variable in the operation sequence
+(see :ref:`first order sweep<exp_2_for1@Operation Sequence@Sweep>` ).
+
+Derivative
+==========
+The Derivative column contains the
+mathematical function corresponding to the second derivative
+with respect to :math:`t`,
+at :math:`t = 0`, for each variable in the sequence.
+
+Second
+======
+The Second column contains the second order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+the second order expansion for the *i*-th variable is given by
+
+.. math::
+
+   v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+
+We use :math:`x^{(1)} = 1`, :math:`x^{(2)} = 0`,
+use :math:`\varepsilon^{(1)} = 1`, and :math:`\varepsilon^{(2)} = 0`
+so that second order differentiation
+with respect to :math:`t`, at :math:`t = 0`,
+is the same as the second partial differentiation
+with respect to :math:`x` at :math:`x = x^{(0)}`.
+
+Sweep
+=====
+
+.. list-table::
+
+   * - **Index**
+     - 
+     - **Zero**
+     - 
+     - **Operation**
+     - 
+     - **First**
+     - 
+     - **Derivative**
+     - 
+     - **Second**
+   * - 1
+     - 
+     - 0.5
+     - 
+     - :math:`v_1^{(1)} = x^{(1)}`
+     - 
+     - 1
+     - 
+     - :math:`v_2^{(2)} = x^{(2)}`
+     - 
+     - 0
+   * - 2
+     - 
+     - 0.5
+     - 
+     - :math:`v_2^{(1)} = 1 * v_1^{(1)}`
+     - 
+     - 1
+     - 
+     - :math:`v_2^{(2)} = 1 * v_1^{(2)}`
+     - 
+     - 0
+   * - 3
+     - 
+     - 0.5
+     - 
+     - :math:`v_3^{(1)} = v_2^{(1)} / 1`
+     - 
+     - 1
+     - 
+     - :math:`v_3^{(2)} = v_2^{(2)} / 1`
+     - 
+     - 0
+   * - 4
+     - 
+     - 1.5
+     - 
+     - :math:`v_4^{(1)} = v_3^{(1)}`
+     - 
+     - 1
+     - 
+     - :math:`v_4^{(2)} = v_3^{(2)}`
+     - 
+     - 0
+   * - 5
+     - 
+     - 0.25
+     - 
+     - :math:`v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}`
+     - 
+     - 1
+     - 
+     - :math:`v_5^{(2)} = v_3^{(2)} * v_1^{(0)} + 2 * v_3^{(1)} * v_1^{(1)}`
+       :math:`+ v_3^{(0)} * v_1^{(2)}`
+     - 
+     - 2
+   * - 6
+     - 
+     - 0.125
+     - 
+     - :math:`v_6^{(1)} = v_5^{(1)} / 2`
+     - 
+     - 0.5
+     - 
+     - :math:`v_6^{(2)} = v_5^{(2)} / 2`
+     - 
+     - 1
+   * - 7
+     - 
+     - 1.625
+     - 
+     - :math:`v_7^{(1)} = v_4^{(1)} + v_6^{(1)}`
+     - 
+     - 1.5
+     - 
+     - :math:`v_7^{(2)} = v_4^{(2)} + v_6^{(2)}`
+     - 
+     - 1
+
+Return Value
+************
+The second derivative of the return value for this case is
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   1
+   & = &
+   v_7^{(2)} =
+   \left[ \Dpow{2}{t} v_7 \right]_{t=0} =
+   \left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t , \varepsilon^{(0)} ) \right]_{t=0}
+   \\
+   & = &
+   x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ,  \varepsilon^{(0)} ) * x^{(1)} =
+   \Dpow{2}{x} f ( x^{(0)} ,  \varepsilon^{(0)} )
+   \end{eqnarray}
+
+(We have used the fact that
+:math:`x^{(1)} = 1`, :math:`x^{(2)} = 0`,
+:math:`\varepsilon^{(1)} = 1`, and :math:`\varepsilon^{(2)} = 0`.)
+{xrst_toc_hidden
+   introduction/exp_eps_for2.cpp
+}
+Verification
+************
+The file :ref:`exp_eps_for2.cpp-name` contains a routine
+which verifies the values computed above.
+
+Exercises
+*********
+
+#. Which statement in the routine defined by :ref:`exp_eps_for2.cpp-name` uses
+   the values that are calculated by the routine
+   defined by :ref:`exp_eps_for1.cpp-name` ?
+#. Suppose that :math:`x = .1`,
+   what are the results of a zero, first, and second order forward sweep for
+   the operation sequence above;
+   i.e., what are the corresponding values for
+   :math:`v_i^{(k)}` for :math:`i = 1, \ldots , 7` and :math:`k = 0, 1, 2`.
+#. Create a modified version of :ref:`exp_eps_for2.cpp-name` that verifies
+   the derivative values from the previous exercise.
+   Also create and run a main program that reports the result
+   of calling the modified version of
+   :ref:`exp_eps_for2.cpp-name` .
+
+{xrst_end exp_eps_for2}
+-----------------------------------------------------------------------------
+{xrst_begin exp_eps_rev2}
+{xrst_spell
+   preform
+   rcll
+}
+
+exp_eps: Second Order Reverse Sweep
+###################################
+
+Purpose
+*******
+In general, a second order reverse sweep is given the
+:ref:`exp_eps_for1@First Order Expansion`
+for all of the variables in an operation sequence.
+Given a choice of a particular variable,
+it computes the derivative,
+of that variables first order expansion coefficient,
+with respect to all of the independent variables.
+
+Mathematical Form
+*****************
+Suppose that we use the algorithm :ref:`exp_eps.hpp-name`
+to compute ``exp_eps`` ( *x* , *epsilon* )
+with *x* is equal to .5
+and *epsilon* is equal to .2.
+For this case, the mathematical function for the operation sequence
+corresponding to ``exp_eps`` is
+
+.. math::
+
+   f ( x , \varepsilon ) =   1 + x + x^2 / 2
+
+The corresponding derivative of the
+partial derivative with respect to :math:`x` is
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \Dpow{2}{x} f ( x , \varepsilon ) & = &  1
+   \\
+   \partial_\varepsilon \partial_x f ( x , \varepsilon ) & = &  0
+   \end{eqnarray}
+
+epsilon
+*******
+Since :math:`\varepsilon` is an independent variable,
+it could included as an argument to all of the
+:math:`f_j` functions below.
+The result would be that all the partials with respect to
+:math:`\varepsilon` would be zero and hence we drop it to simplify
+the presentation.
+
+f_7
+***
+In reverse mode we choose one dependent variable and
+compute its derivative with respect to all the independent variables.
+For our example, we chose the value returned by :ref:`exp_eps.hpp-name`
+which is :math:`v_7`.
+We begin with the function :math:`f_7` where :math:`v_7`
+is both an argument and the value of the function; i.e.,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   f_7 \left(
+      v_1^{(0)} , v_1^{(1)} , \ldots , v_7^{(0)} , v_7^{(1)}
+   \right)
+   & = & v_7^{(1)}
+   \\
+   \D{f_7}{v_7^{(1)}} & = & 1
+   \end{eqnarray}
+
+All the other partial derivatives of :math:`f_7` are zero.
+
+Index 7: f_6
+************
+The last operation has index 7,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      v_7^{(0)} & = &   v_4^{(0)} + v_6^{(0)}
+      \\
+      v_7^{(1)} & = &   v_4^{(1)} + v_6^{(1)}
+   \end{eqnarray}
+
+We define the function
+:math:`f_6 \left( v_1^{(0)} , \ldots , v_6^{(1)} \right)`
+as equal to :math:`f_7`
+except that :math:`v_7^{(0)}` and :math:`v_7^{(1)}` are eliminated using
+this operation; i.e.
+
+.. math::
+
+   f_6  =
+   f_7 \left[ v_1^{(0)} , \ldots , v_6^{(1)} ,
+      v_7^{(0)} \left( v_4^{(0)} , v_6^{(0)} \right)  ,
+      v_7^{(1)} \left( v_4^{(1)} , v_6^{(1)} \right)
+   \right]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_6}{v_4^{(1)}}
+   & = & \D{f_7}{v_4^{(1)}} +
+      \D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_4^{(1)}}
+   & = 1
+   \\
+   \D{f_6}{v_6^{(1)}}
+   & = & \D{f_7}{v_6^{(1)}} +
+      \D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_6^{(1)}}
+   & = 1
+   \end{array}
+
+All the other partial derivatives of :math:`f_6` are zero.
+
+Index 6: f_5
+************
+The previous operation has index 6,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      v_6^{(0)} & = & v_5^{(0)} / 2
+      \\
+      v_6^{(1)} & = & v_5^{(1)} / 2
+   \end{eqnarray}
+
+We define the function
+:math:`f_5 \left( v_1^{(0)} , \ldots , v_5^{(1)} \right)`
+as equal to :math:`f_6`
+except that :math:`v_6^{(0)}` and :math:`v_6^{(1)}` are eliminated using
+this operation; i.e.
+
+.. math::
+
+   f_5 =
+   f_6 \left[ v_1^{(0)} , \ldots , v_5^{(1)} ,
+      v_6^{(0)} \left( v_5^{(0)} \right) ,
+      v_6^{(1)} \left( v_5^{(1)} \right)
+   \right]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_5}{v_4^{(1)}}
+   & = & \D{f_6}{v_4^{(1)}}
+   & = 1
+   \\
+   \D{f_5}{v_5^{(1)}}
+   & = & \D{f_6}{v_5} +
+      \D{f_6}{v_6^{(1)}} * \D{v_6^{(1)}}{v_5^{(1)}}
+   & = 0.5
+   \end{array}
+
+All the other partial derivatives of :math:`f_5` are zero.
+
+Index 5: f_4
+************
+The previous operation has index 5,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      v_5^{(0)} & = & v_3^{(0)} * v_1^{(0)}
+      \\
+      v_5^{(1)} & = & v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}
+   \end{eqnarray}
+
+We define the function
+:math:`f_4 \left( v_1^{(0)} , \ldots , v_4^{(1)} \right)`
+as equal to :math:`f_5`
+except that :math:`v_5^{(0)}` and :math:`v_5^{(1)}` are eliminated using
+this operation; i.e.
+
+.. math::
+
+   f_4 =
+   f_5 \left[  v_1^{(0)} , \ldots , v_4^{(1)} ,
+      v_5^{(0)} \left( v_1^{(0)}, v_3^{(0)} \right) ,
+      v_5^{(1)} \left( v_1^{(0)}, v_1^{(1)}, v_3^{(0)} , v_3^{(1)} \right) ,
+   \right]
+
+Given the information from the forward sweep, we have
+:math:`v_1^{(0)} =  0.5`,
+:math:`v_3^{(0)} =  0.5`,
+:math:`v_1^{(1)} =  1`,
+:math:`v_3^{(1)} =  1`,
+and the fact that the partial of :math:`f_5` with respect to
+:math:`v_5^{(0)}` is zero, we have
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_4}{v_1^{(0)}}
+   & = & \D{f_5}{v_1^{(0)}}
+     +   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_1^{(0)}}
+   & = 0.5
+   \\
+   \D{f_4}{v_1^{(1)}}
+   & = & \D{f_5}{v_1^{(1)}}
+     +   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_1^{(1)}}
+   & = 0.25
+   \\
+   \D{f_4}{v_3^{(0)}}
+   & = & \D{f_5}{v_3^{(0)}}
+     +   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_3^{(0)}}
+   & = 0.5
+   \\
+   \D{f_4}{v_3^{(1)}}
+   & = & \D{f_3}{v_1^{(1)}}
+     +   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_3^{(1)}}
+   & = 0.25
+   \\
+   \D{f_4}{v_4^{(1)}}
+   & = & \D{f_5}{v_4^{(1)}}
+   & = 1
+   \end{array}
+
+All the other partial derivatives of :math:`f_5` are zero.
+
+Index 4: f_3
+************
+The previous operation has index 4,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      v_4^{(0)} = 1 + v_3^{(0)}
+      \\
+      v_4^{(1)} = v_3^{(1)}
+   \end{eqnarray}
+
+We define the function
+:math:`f_3 \left( v_1^{(0)} , \ldots , v_3^{(1)} \right)`
+as equal to :math:`f_4`
+except that :math:`v_4^{(0)}` and :math:`v_4^{(1)}` are eliminated using
+this operation; i.e.
+
+.. math::
+
+   f_3 =
+   f_4 \left[ v_1^{(0)} , \ldots , v_3^{(1)} ,
+      v_4^{(0)} \left( v_3^{(0)} \right) ,
+      v_4^{(1)} \left( v_3^{(1)} \right)
+   \right]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_3}{v_1^{(0)}}
+   & = & \D{f_4}{v_1^{(0)}}
+   & =  0.5
+   \\
+   \D{f_3}{v_1^{(1)}}
+   & = & \D{f_4}{v_1^{(1)}}
+   & =  0.25
+   \\
+   \D{f_3}{v_2^{(0)}}
+   & = & \D{f_4}{v_2^{(0)}}
+   & = 0
+   \\
+   \D{f_3}{v_2^{(1)}}
+   & = & \D{f_4}{v_2^{(1)}}
+   & = 0
+   \\
+   \D{f_3}{v_3^{(0)}}
+   & = & \D{f_4}{v_3^{(0)}}
+     +   \D{f_4}{v_4^{(0)}} * \D{v_4^{(0)}}{v_3^{(0)}}
+   & = 0.5
+   \\
+   \D{f_3}{v_3^{(1)}}
+   & = & \D{f_4}{v_3^{(1)}}
+     +   \D{f_4}{v_4^{(1)}} * \D{v_4^{(1)}}{v_3^{(1)}}
+   & = 1.25
+   \end{array}
+
+Index 3: f_2
+************
+The previous operation has index 3,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      v_3^{(0)} & = & v_2^{(0)} / 1
+      \\
+      v_3^{(1)} & = & v_2^{(1)} / 1
+   \end{eqnarray}
+
+We define the function
+:math:`f_2 \left( v_1^{(0)} , \ldots , v_2^{(1)} \right)`
+as equal to :math:`f_3`
+except that :math:`v_3^{(0)}` and :math:`v_3^{(1)}` are eliminated using
+this operation; i.e.
+
+.. math::
+
+   f_2 =
+   f_3 \left[ v_1^{(0)} , \ldots , v_2^{(1)} ,
+      v_3^{(0)} \left( v_2^{(0)} \right) ,
+      v_3^{(1)} \left( v_2^{(1)} \right)
+   \right]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_2}{v_1^{(0)}}
+   & = & \D{f_3}{v_1^{(0)}}
+   & =  0.5
+   \\
+   \D{f_2}{v_1^{(1)}}
+   & = & \D{f_3}{v_1^{(1)}}
+   & =  0.25
+   \\
+   \D{f_2}{v_2^{(0)}}
+   & = & \D{f_3}{v_2^{(0)}}
+     +   \D{f_3}{v_3^{(0)}} * \D{v_3^{(0)}}{v_2^{(0)}}
+   & = 0.5
+   \\
+   \D{f_2}{v_2^{(1)}}
+   & = & \D{f_3}{v_2^{(1)}}
+     +   \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_2^{(0)}}
+   & = 1.25
+   \end{array}
+
+Index 2: f_1
+************
+The previous operation has index 1,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      v_2^{(0)} & = & 1 * v_1^{(0)}
+      \\
+      v_2^{(1)} & = & 1 * v_1^{(1)}
+   \end{eqnarray}
+
+We define the function
+:math:`f_1 \left( v_1^{(0)} , v_1^{(1)} \right)`
+as equal to :math:`f_2`
+except that :math:`v_2^{(0)}` and :math:`v_2^{(1)}` are eliminated using
+this operation; i.e.
+
+.. math::
+
+   f_1 =
+   f_2 \left[  v_1^{(0)} , v_1^{(1)} ,
+      v_2^{(0)} \left( v_1^{(0)} \right)  ,
+      v_2^{(1)} \left( v_1^{(1)} \right)
+   \right]
+
+It follows that
+
+.. math::
+
+   \begin{array}{rcll}
+   \D{f_1}{v_1^{(0)}}
+   & = & \D{f_2}{v_1^{(0)}}
+     +   \D{f_2}{v_2^{(0)}} * \D{v_2^{(0)}}{v_1^{(0)}}
+   & =  1
+   \\
+   \D{f_1}{v_1^{(1)}}
+   & = & \D{f_2}{v_1^{(1)}}
+     +   \D{f_2}{v_2^{(1)}} * \D{v_2^{(1)}}{v_1^{(1)}}
+   & = 1.5
+   \end{array}
+
+Note that :math:`v_1` is equal to :math:`x`,
+so the second partial derivative of
+``exp_eps`` ( *x* , *epsilon* )
+at *x* equal to .5 and *epsilon* equal .2 is
+
+.. math::
+
+   \Dpow{2}{x} v_7^{(0)}
+   = \D{v_7^{(1)}}{x}
+   = \D{f_1}{v_1^{(0)}}
+   = 1
+
+There is a theorem about algorithmic differentiation that explains why
+the other partial of :math:`f_1` is equal to the first partial of
+``exp_eps`` ( *x* , *epsilon* )
+with respect to :math:`x`.
+{xrst_toc_hidden
+   introduction/exp_eps_rev2.cpp
+}
+
+Verification
+************
+The file :ref:`exp_eps_rev2.cpp-name` contains a routine
+that verifies the values computed above.
+It only tests the partial derivatives of
+:math:`f_j` that might not be equal to the corresponding
+partials of :math:`f_{j+1}`; i.e., the
+other partials of :math:`f_j` must be equal to the corresponding
+partials of :math:`f_{j+1}`.
+
+Exercises
+*********
+
+#. Consider the case where :math:`x = .1`
+   and we first preform a zero order forward mode sweep
+   for the operation sequence used above (in reverse order).
+   What are the results of a
+   first order reverse mode sweep; i.e.,
+   what are the corresponding values for
+   :math:`\D{f_j}{v_k}` for all :math:`j, k` such that
+   :math:`\D{f_j}{v_k} \neq 0`.
+#. Create a modified version of
+   :ref:`exp_eps_rev2.cpp-name`
+   that verifies the values you obtained for the previous exercise.
+   Also create and run a main program that reports the result
+   of calling the modified version of
+   :ref:`exp_eps_rev2.cpp-name` .
+
+{xrst_end exp_eps_rev2}
+-----------------------------------------------------------------------------

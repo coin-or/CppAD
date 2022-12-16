@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin dev_sparse dev}
+
+Developer Sparse Documentation
+##############################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/local/sparse/unary_op.hpp
+   include/cppad/local/sparse/binary_op.hpp
+   include/cppad/local/sparse/setvector.xrst
+}
+
+{xrst_end dev_sparse}

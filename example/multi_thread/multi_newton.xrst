@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin multi_newton.cpp}
+
+Multi-Threaded Newton Method Example / Test
+###########################################
+
+Source File
+***********
+All of the routines below are located in the file
+::
+
+   example/multi_thread/multi_newton.cpp
+
+Contents
+********
+{xrst_toc_table
+   example/multi_thread/multi_newton.cpp
+}
+
+{xrst_end multi_newton.cpp}

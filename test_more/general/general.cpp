@@ -1,14 +1,7 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 // CPPAD_HAS_* defines
 # include <cppad/configure.hpp>
@@ -42,7 +35,6 @@ extern bool FunCheck(void);
 extern bool Mul(void);
 extern bool MulEq(void);
 extern bool MulZeroOne(void);
-extern bool NearEqualExt(void);
 extern bool Neg(void);
 extern bool Poly(void);
 extern bool Pow(void);
@@ -110,6 +102,7 @@ extern bool mul_cond_rev(void);
 extern bool mul_cskip(void);
 extern bool mul_level(void);
 extern bool mul_zdouble(void);
+extern bool near_equal_ext(void);
 extern bool new_dynamic(void);
 extern bool num_limits(void);
 extern bool ode_err_control(void);
@@ -141,147 +134,147 @@ extern bool vector_set(void);
 
 // main program that runs all the tests
 int main(void)
-{   std::string group = "test_more/general";
-    size_t      width = 20;
-    CppAD::test_boolofvoid Run(group, width);
+{  std::string group = "test_more/general";
+   size_t      width = 20;
+   CppAD::test_boolofvoid Run(group, width);
 
-    // This line is used by test_one.sh
+   // This line is used by test_one.sh
 
-    // BEGIN_SORT_THIS_LINE_PLUS_1
-    Run( Add,             "Add"            );
-    Run( AddEq,           "AddEq"          );
-    Run( AddZero,         "AddZero"        );
-    Run( Compare,         "Compare"        );
-    Run( CondExp,         "CondExp"        );
-    Run( CondExpAD,       "CondExpAD"      );
-    Run( Cos,             "Cos"            );
-    Run( Cosh,            "Cosh"           );
-    Run( Div,             "Div"            );
-    Run( DivEq,           "DivEq"          );
-    Run( DivZeroOne,      "DivZeroOne"     );
-    Run( Exp,             "Exp"            );
-    Run( ForHess,         "ForHess"        );
-    Run( Forward,         "Forward"        );
-    Run( FromBase,        "FromBase"       );
-    Run( FunCheck,        "FunCheck"       );
-    Run( Mul,             "Mul"            );
-    Run( MulEq,           "MulEq"          );
-    Run( MulZeroOne,      "MulZeroOne"     );
-    Run( NearEqualExt,    "NearEqualExt"   );
-    Run( Neg,             "Neg"            );
-    Run( Poly,            "Poly"           );
-    Run( Pow,             "Pow"            );
-    Run( PowInt,          "PowInt"         );
-    Run( RevTwo,          "RevTwo"         );
-    Run( RombergOne,      "RombergOne"     );
-    Run( Rosen34,         "Rosen34"        );
-    Run( Runge45,         "Runge45"        );
-    Run( SimpleVector,    "SimpleVector"   );
-    Run( Sin,             "Sin"            );
-    Run( SinCos,          "SinCos"         );
-    Run( Sinh,            "Sinh"           );
-    Run( Sqrt,            "Sqrt"           );
-    Run( Sub,             "Sub"            );
-    Run( SubEq,           "SubEq"          );
-    Run( SubZero,         "SubZero"        );
-    Run( Value,           "Value"          );
-    Run( VecAD,           "VecAD"          );
-    Run( VecADPar,        "VecADPar"       );
-    Run( VecUnary,        "VecUnary"       );
-    Run( abs_normal,      "abs_normal"     );
-    Run( acos,            "acos"           );
-    Run( acosh,           "acosh"          );
-    Run( adfun,           "adfun"          );
-    Run( asin,            "asin"           );
-    Run( asinh,           "asinh"          );
-    Run( assign,          "assign"         );
-    Run( atan,            "atan"           );
-    Run( atan2,           "atan2"          );
-    Run( atanh,           "atanh"          );
-    Run( atomic_three,    "atomic_three"   );
-    Run( azmul,           "azmul"          );
-    Run( base2ad,         "base2ad"        );
-    Run( bool_sparsity,   "bool_sparsity"  );
-    Run( check_simple_vector, "check_simple_vector" );
-    Run( chkpoint_one,    "chkpoint_one"   );
-    Run( chkpoint_two,    "chkpoint_two"   );
-    Run( compare_change,  "compare_change" );
-    Run( cond_exp_rev,    "cond_exp_rev"   );
-    Run( copy,            "copy"           );
-    Run( cpp_graph,       "cpp_graph"      );
-    Run( cppad_vector,    "cppad_vector"   );
-    Run( dbl_epsilon,     "dbl_epsilon"    );
-    Run( dependency,      "dependency"     );
-    Run( erf,             "erf"            );
-    Run( expm1,           "expm1"          );
-    Run( fabs,            "fabs"           );
-    Run( for_sparse_hes,  "for_sparse_hes" );
-    Run( for_sparse_jac,  "for_sparse_jac" );
-    Run( forward_dir,     "forward_dir"    );
-    Run( forward_order,   "forward_order"  );
-    Run( hes_sparsity,    "hes_sparsity"   );
-    Run( jacobian,        "jacobian"       );
-    Run( json_graph,      "json_graph"     );
-    Run( log,             "log"            );
-    Run( log10,           "log10"          );
-    Run( log1p,           "log1p"          );
-    Run( mul_cond_rev,    "mul_cond_rev"   );
-    Run( mul_cskip,       "Mul_cskip"      );
-    Run( mul_level,       "mul_level"      );
-    Run( mul_zdouble,     "mul_zdouble"    );
-    Run( new_dynamic,     "new_dynamic"    );
-    Run( num_limits,      "num_limits"     );
-    Run( ode_err_control, "ode_err_control");
-    Run( optimize,        "optimize"       );
-    Run( parameter,       "parameter"      );
-    Run( print_for,       "print_for"      );
-    Run( rev_sparse_jac,  "rev_sparse_jac" );
-    Run( reverse,         "reverse"        );
-    Run( sparse_hessian,  "sparse_hessian" );
-    Run( sparse_jac_work, "sparse_jac_work");
-    Run( sparse_jacobian, "sparse_jacobian");
-    Run( sparse_sub_hes,  "sparse_sub_hes" );
-    Run( sparse_vec_ad,   "sparse_vec_ad"  );
-    Run( std_math,        "std_math"       );
-    Run( subgraph_1,      "subgraph_1"     );
-    Run( subgraph_2,      "subgraph_2"     );
-    Run( subgraph_hes2jac, "subgraph_hes2jac" );
-    Run( tan,             "tan"            );
-    Run( to_string,       "to_string"      );
-    // END_SORT_THIS_LINE_MINUS_1
+   // BEGIN_SORT_THIS_LINE_PLUS_1
+   Run( Add,             "Add"            );
+   Run( AddEq,           "AddEq"          );
+   Run( AddZero,         "AddZero"        );
+   Run( Compare,         "Compare"        );
+   Run( CondExp,         "CondExp"        );
+   Run( CondExpAD,       "CondExpAD"      );
+   Run( Cos,             "Cos"            );
+   Run( Cosh,            "Cosh"           );
+   Run( Div,             "Div"            );
+   Run( DivEq,           "DivEq"          );
+   Run( DivZeroOne,      "DivZeroOne"     );
+   Run( Exp,             "Exp"            );
+   Run( ForHess,         "ForHess"        );
+   Run( Forward,         "Forward"        );
+   Run( FromBase,        "FromBase"       );
+   Run( FunCheck,        "FunCheck"       );
+   Run( Mul,             "Mul"            );
+   Run( MulEq,           "MulEq"          );
+   Run( MulZeroOne,      "MulZeroOne"     );
+   Run( Neg,             "Neg"            );
+   Run( Poly,            "Poly"           );
+   Run( Pow,             "Pow"            );
+   Run( PowInt,          "PowInt"         );
+   Run( RevTwo,          "RevTwo"         );
+   Run( RombergOne,      "RombergOne"     );
+   Run( Rosen34,         "Rosen34"        );
+   Run( Runge45,         "Runge45"        );
+   Run( SimpleVector,    "SimpleVector"   );
+   Run( Sin,             "Sin"            );
+   Run( SinCos,          "SinCos"         );
+   Run( Sinh,            "Sinh"           );
+   Run( Sqrt,            "Sqrt"           );
+   Run( Sub,             "Sub"            );
+   Run( SubEq,           "SubEq"          );
+   Run( SubZero,         "SubZero"        );
+   Run( Value,           "Value"          );
+   Run( VecAD,           "VecAD"          );
+   Run( VecADPar,        "VecADPar"       );
+   Run( VecUnary,        "VecUnary"       );
+   Run( abs_normal,      "abs_normal"     );
+   Run( acos,            "acos"           );
+   Run( acosh,           "acosh"          );
+   Run( adfun,           "adfun"          );
+   Run( asin,            "asin"           );
+   Run( asinh,           "asinh"          );
+   Run( assign,          "assign"         );
+   Run( atan,            "atan"           );
+   Run( atan2,           "atan2"          );
+   Run( atanh,           "atanh"          );
+   Run( atomic_three,    "atomic_three"   );
+   Run( azmul,           "azmul"          );
+   Run( base2ad,         "base2ad"        );
+   Run( bool_sparsity,   "bool_sparsity"  );
+   Run( check_simple_vector, "check_simple_vector" );
+   Run( chkpoint_one,    "chkpoint_one"   );
+   Run( chkpoint_two,    "chkpoint_two"   );
+   Run( compare_change,  "compare_change" );
+   Run( cond_exp_rev,    "cond_exp_rev"   );
+   Run( copy,            "copy"           );
+   Run( cpp_graph,       "cpp_graph"      );
+   Run( cppad_vector,    "cppad_vector"   );
+   Run( dbl_epsilon,     "dbl_epsilon"    );
+   Run( dependency,      "dependency"     );
+   Run( erf,             "erf"            );
+   Run( expm1,           "expm1"          );
+   Run( fabs,            "fabs"           );
+   Run( for_sparse_hes,  "for_sparse_hes" );
+   Run( for_sparse_jac,  "for_sparse_jac" );
+   Run( forward_dir,     "forward_dir"    );
+   Run( forward_order,   "forward_order"  );
+   Run( hes_sparsity,    "hes_sparsity"   );
+   Run( jacobian,        "jacobian"       );
+   Run( json_graph,      "json_graph"     );
+   Run( log,             "log"            );
+   Run( log10,           "log10"          );
+   Run( log1p,           "log1p"          );
+   Run( mul_cond_rev,    "mul_cond_rev"   );
+   Run( mul_cskip,       "Mul_cskip"      );
+   Run( mul_level,       "mul_level"      );
+   Run( mul_zdouble,     "mul_zdouble"    );
+   Run( near_equal_ext,  "near_equal_ext" );
+   Run( new_dynamic,     "new_dynamic"    );
+   Run( num_limits,      "num_limits"     );
+   Run( ode_err_control, "ode_err_control");
+   Run( optimize,        "optimize"       );
+   Run( parameter,       "parameter"      );
+   Run( print_for,       "print_for"      );
+   Run( rev_sparse_jac,  "rev_sparse_jac" );
+   Run( reverse,         "reverse"        );
+   Run( sparse_hessian,  "sparse_hessian" );
+   Run( sparse_jac_work, "sparse_jac_work");
+   Run( sparse_jacobian, "sparse_jacobian");
+   Run( sparse_sub_hes,  "sparse_sub_hes" );
+   Run( sparse_vec_ad,   "sparse_vec_ad"  );
+   Run( std_math,        "std_math"       );
+   Run( subgraph_1,      "subgraph_1"     );
+   Run( subgraph_2,      "subgraph_2"     );
+   Run( subgraph_hes2jac, "subgraph_hes2jac" );
+   Run( tan,             "tan"            );
+   Run( to_string,       "to_string"      );
+   // END_SORT_THIS_LINE_MINUS_1
 # if CPPAD_C_COMPILER_GNU || CPPAD_C_COMPILER_MSVC
-    Run( to_csrc,         "to_csrc"        );
+   Run( to_csrc,         "to_csrc"        );
 # endif
 #if CPPAD_HAS_ADOLC
-    Run( base_adolc,      "base_adolc"     );
+   Run( base_adolc,      "base_adolc"     );
 # endif
 #if CPPAD_HAS_IPOPT
-    Run( ipopt_solve,     "ipopt_solve"    );
+   Run( ipopt_solve,     "ipopt_solve"    );
 # endif
 # ifdef CPPAD_OPENMP_TEST
-    Run( alloc_openmp,    "alloc_openmp"   );
+   Run( alloc_openmp,    "alloc_openmp"   );
 # endif
 # if CPPAD_HAS_EIGEN
-    Run( cppad_eigen,     "cppad_eigen"    );
-    Run( eigen_mat_inv,   "eigen_mat_inv"  );
+   Run( cppad_eigen,     "cppad_eigen"    );
+   Run( eigen_mat_inv,   "eigen_mat_inv"  );
 # endif
-    // local sub-directory
-    Run( is_pod,         "is_pod"          );
-    Run( json_lexer,     "json_lexer"      );
-    Run( json_parser,    "json_parser"     );
-    Run( temp_file,       "temp_file"      );
-    Run( vector_set,      "vector_set"     );
-    //
-    // check for memory leak
-    bool memory_ok = CppAD::thread_alloc::free_all();
-    //
-    // Run base_alloc after memory leak check because base_alloc.hpp uses
-    // thread_alloc to allocate memory for static copies of nan.
-    Run( base_alloc_test,  "base_alloc"    );
-    //
-    // print summary at end
-    bool ok = Run.summary(memory_ok);
-    //
-    return static_cast<int>( ! ok );
+   // local sub-directory
+   Run( is_pod,         "is_pod"          );
+   Run( json_lexer,     "json_lexer"      );
+   Run( json_parser,    "json_parser"     );
+   Run( temp_file,       "temp_file"      );
+   Run( vector_set,      "vector_set"     );
+   //
+   // check for memory leak
+   bool memory_ok = CppAD::thread_alloc::free_all();
+   //
+   // Run base_alloc after memory leak check because base_alloc.hpp uses
+   // thread_alloc to allocate memory for static copies of nan.
+   Run( base_alloc_test,  "base_alloc"    );
+   //
+   // print summary at end
+   bool ok = Run.summary(memory_ok);
+   //
+   return static_cast<int>( ! ok );
 }
 // END PROGRAM

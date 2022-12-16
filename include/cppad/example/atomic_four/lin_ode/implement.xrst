@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin atomic_four_lin_ode_implement}
+
+Implementing Atomic Linear ODE
+##############################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/example/atomic_four/lin_ode/lin_ode.hpp
+   include/cppad/example/atomic_four/lin_ode/set.hpp
+   include/cppad/example/atomic_four/lin_ode/get.hpp
+   include/cppad/example/atomic_four/lin_ode/base_solver.hpp
+   include/cppad/example/atomic_four/lin_ode/for_type.hpp
+   include/cppad/example/atomic_four/lin_ode/forward.hpp
+   include/cppad/example/atomic_four/lin_ode/reverse.hpp
+   include/cppad/example/atomic_four/lin_ode/jac_sparsity.hpp
+   include/cppad/example/atomic_four/lin_ode/hes_sparsity.hpp
+   include/cppad/example/atomic_four/lin_ode/rev_depend.hpp
+}
+
+{xrst_end atomic_four_lin_ode_implement}

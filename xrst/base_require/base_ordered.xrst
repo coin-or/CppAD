@@ -1,0 +1,94 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+/*
+{xrst_begin base_ordered}
+{xrst_spell
+   geq
+}
+
+Base Type Requirements for Ordered Comparisons
+##############################################
+
+Purpose
+*******
+The following operations
+(in the CppAD namespace) are required to use the type
+``AD<`` *Base* > :
+
+.. list-table::
+
+   * - **Syntax**
+     - **Result**
+   * - *b* = ``GreaterThanZero`` ( *x* )
+     - :math:`x > 0`
+   * - *b* = ``GreaterThanOrZero`` ( *x* )
+     - :math:`x \geq 0`
+   * - *b* = ``LessThanZero`` ( *x* )
+     - :math:`x < 0`
+   * - *b* = ``LessThanOrZero`` ( *x* )
+     - :math:`x \leq 0`
+   * - *b* = ``abs_geq`` ( *x* , *y* )
+     - :math:`|x| \geq |y|`.
+
+where the arguments and return value have the prototypes
+
+| |tab| ``const`` *Base* & *x*
+| |tab| ``const`` *Base* & *y*
+| |tab| ``bool`` *b*
+
+Ordered Type
+************
+If the type *Base* supports ordered operations,
+these functions should have their corresponding definitions.
+For example,
+
+| ``namespace CppAD`` {
+| |tab| ``inline bool GreaterThanZero`` ( ``const`` *Base* & ``x`` )
+| |tab| { ``return`` ( ``x > 0`` );
+| |tab| }
+| }
+
+The other functions would replace ``>`` by the corresponding operator.
+For example, see
+:ref:`base_alloc<base_alloc.hpp@Ordered>` .
+
+Not Ordered
+***********
+If the type *Base* does not support ordering,
+one might (but need not) define ``GreaterThanZero`` as follows:
+
+| ``namespace CppAD`` {
+| |tab| ``inline bool GreaterThanZero`` ( ``const`` *Base* & ``x`` )
+| |tab| {  // ``attempt to use GreaterThanZero with a`` *Base* ``argument``
+| |tab| |tab| ``assert`` (0);
+| |tab| |tab| ``return x`` ;
+| |tab| }
+| }
+
+The other functions would have the corresponding definition.
+For example, see
+:ref:`complex Ordered<base_complex.hpp@Ordered>` .
+
+Special Requirements
+********************
+The following are special requirements when
+there is no ordered comparison for the base type:
+
+Independent
+===========
+:ref:`Independent@record_compare` must be false
+in the call to ``Independent`` .
+
+Optimize
+========
+The :ref:`optimize@options@no_conditional_skip`
+option must be present when ``optimize`` is used.
+
+PrintFor
+========
+The :ref:`PrintFor-name` operator cannot be used.
+
+{xrst_end base_ordered}
+*/

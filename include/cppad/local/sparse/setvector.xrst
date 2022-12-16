@@ -1,0 +1,264 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin SetVector dev}
+{xrst_spell
+   dereference
+   iterated
+}
+
+C++ Concept: Vector of Sets With size_t Elements
+################################################
+
+Purpose
+*******
+The main CppAD use of this C++ Concept is to compute sparsity patterns
+as fast as possible.
+It is also used for conditional expression optimization.
+We refer to a type that supports this concept as *SetVector* below.
+
+Vector Operations
+*****************
+
+Constructor
+===========
+In the specifications below, *vec* and *other*
+are *SetVector* objects created using the default constructor; e.g.,
+
+   *SetVector* *vec* , *other* ;
+
+After this constructor the vectors are empty; i.e.,
+there are no sets in either vector.
+The ``resize`` for *vec* and *other* can
+have different :ref:`SetVector@Vector Operations@n_set` values,
+but must have the same :ref:`SetVector@Vector Operations@end` value.
+
+resize
+======
+This operation has the following syntax:
+
+   *vec* . ``resize`` ( *n_set* , *end* )
+
+The argument *n_set* has type ``size_t`` and is the
+number of sets in *vec* .
+The argument *end* has type ``size_t`` and is greater than
+any element allowed in any set in *vec* .
+Any information in *vec* before this operation is lost.
+After this operation, all the sets in *vec* are empty.
+If *n_set* is zero,
+any allocated memory to keep track of this vector of sets is freed.
+
+n_set
+=====
+The syntax
+
+   *n_set* = *vec* . ``n_set`` ()
+
+sets the ``size_t`` value *n_set* equal to the
+number of sets in *vec* .
+The *vec* object is ``const`` for this operation.
+
+end
+===
+The syntax
+
+   *end* = *vec* . ``end`` ()
+
+sets the ``size_t`` value *end* equal to the
+end value for the sets in *vec* .
+(This is one greater than the maximum value for any element
+in any set in *vec* .)
+The *vec* object is ``const`` for this operation.
+
+Assignment
+==========
+The following
+makes *vec* into a separate copy of *other* :
+
+   *vec* = *other*
+
+The *other* object is ``const`` for this operation.
+
+swap
+====
+The following
+exchanges to vector of sets in *vec* and *other* :
+
+   *vec* . ``swap`` ( *other* )
+
+number_elements
+***************
+If *i* is a ``size_t`` value less than *n_set* ,
+
+   *count* = *vec* . ``number_elements`` ( *i* )
+
+returns the ``size_t`` value *count*
+equal to the number of elements in the *i*-th set.
+The *vec* object is ``const`` for this operation.
+It is an error to have postings to *i*-th that have not been processed.
+
+add_element
+***********
+If *i* is a ``size_t`` value less than *n_set*
+and *element* is a ``size_t`` value less than *end* ,
+
+   *vec* . ``add_element`` ( *i* , *element* )
+
+adds the specified element to the *i*-th set.
+
+post_element
+************
+If *i* is a ``size_t`` value less than *n_set*
+and *element* is a ``size_t`` value less than *end* ,
+
+   *vec* . ``post_element`` ( *i* , *element* )
+
+post the specified element for addition to the *i*-th set.
+Posting multiple elements to one set and then processing them may be faster
+than adding one element at a time.
+It is an error to use *vec* ,
+in a way that depends on the values in the *i*-th set,
+between a ``post_element`` and the corresponding ``process_post`` .
+
+process_post
+************
+If *i* is a ``size_t`` value less than *n_set* ,
+
+   *vec* . ``process_post`` ( *i* )
+
+Processes all of the posts that have been made for the *i*-th set; i.e.,
+adds the posted elements to the set.
+
+is_element
+**********
+If *i* is a ``size_t`` value less than *n_set*
+and *element* is a ``size_t`` value less than *end* ,
+
+   *find* = *vec* . ``is_element`` ( *i* , *element* )
+
+returns the ``bool`` value *find*
+which is  true (false) if the specified element is in
+(is not in) the *i*-th set.
+The *vec* object is ``const`` for this operation.
+
+clear
+*****
+If *i* is a ``size_t`` value less than *n_set* ,
+
+   *vec* . ``clear`` ( *i* )
+
+assigns the empty set to the *i*-th set.
+It is OK to have postings to *i*-th that have not been processed
+(they are removed).
+
+assignment
+**********
+If *this_target* and *other_source*
+are ``size_t`` with value less than the end value,
+
+   *vec* . ``assignment`` ( *this_target* , *other_source* , *other* )
+
+sets the *this_target* set in *vec*
+equal to the *other_source* set in *other* .
+If *vec* and *other* are the same object,
+this operation may save memory and time using smart pointers.
+The *other* object is ``const`` for this operation.
+It is OK (is an error) to have postings to *this_target*
+( *other_source* ) that have not been processed.
+
+binary_union
+************
+If *this_target* , *this_left* , and *other_right*
+are ``size_t`` with value less than the end value,
+
+| |tab| *vec* . ``binary_union`` (
+| |tab| |tab| *this_target* , *this_left* , *other_right* , *other*
+| |tab| )
+
+sets the *this_target* set in *vec* equal to the union of
+the *this_left* set in *vec* and
+the *other_right* set in *other* .
+If the resulting set is equal to the left set (right set),
+this operation may use save memory and time using smart pointers
+(provided *vec* and *other* are the same object),
+The *other* object is ``const`` for this operation.
+It is OK (is an error) to have postings to *this_target*
+( *this_left* and ``other_right`` ) that have not been processed.
+
+binary_intersection
+*******************
+If *this_target* , *this_left* , and *other_right*
+are ``size_t`` with value less than the end value,
+
+| |tab| *vec* . ``binary_intersection`` (
+| |tab| |tab| *this_target* , *this_left* , *other_right* , *other*
+| |tab| )
+
+sets the *this_target* set in *vec* equal to the intersection of
+the *this_left* set in *vec* and
+the *other_right* set in *other* .
+If the resulting set is equal to the left set (right set),
+this operation may use save memory and time using smart pointers
+(provided *vec* and *other* are the same object),
+The *other* object is ``const`` for this operation.
+It is OK (is an error) to have postings to *this_target*
+( *this_left* and ``other_right`` ) that have not been processed.
+
+const_iterator
+**************
+
+Constructor
+===========
+Given a *SetVector* object *vec* ,
+and a ``size_t`` index *i* ,
+a constant iterator *itr* is constructed as follows:
+
+   *SetVector* :: ``const_iterator`` *itr* ( *vec* , *i* )
+
+After this constructor, *itr* points to the first
+(smallest) element in the *i*-th set.
+The *vec* object is ``const`` for this operation.
+It is an error to have postings to *i*-th that have not been processed.
+
+Dereference
+===========
+The operation
+
+   ``element`` = * ``itr``
+
+sets the ``size_t`` value *element* to the current element value.
+If *element* is equal to value *vec* . ``end`` () ,
+we have iterated through all the elements of the set
+( *element* is not in the set).
+It is an error to have postings to *i*-th that have not been processed.
+
+Increment
+=========
+The operation ++ *itr* points *itr* to the next larger
+element in the set.
+The increment operation is not defined when the value of
+* *itr* is equal to *vec* . ``end`` () .
+The operation
+
+   *element* = * (++ *itr* )
+
+increments the iterator *itr* and sets *element*
+to the deference after the increment (see dereference above).
+It is an error to have postings to *i*-th that have not been processed.
+
+Implementation
+**************
+{xrst_toc_hidden
+   include/cppad/local/sparse/list_setvec.xrst
+   include/cppad/local/sparse/pack_setvec.xrst
+}
+
+.. csv-table::
+   :widths: auto
+
+   list_setvec,:ref:`list_setvec-title`
+   pack_setvec,:ref:`pack_setvec-title`
+
+{xrst_end SetVector}

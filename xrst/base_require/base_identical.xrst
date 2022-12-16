@@ -1,0 +1,111 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+/*
+{xrst_begin base_identical}
+
+Base Type Requirements for Identically Equal Comparisons
+########################################################
+
+EqualOpSeq
+**********
+If function :ref:`EqualOpSeq-name` is used with
+arguments of type ``AD<`` *Base* > ,
+the type *Base* must support the syntax
+
+   *b* = ``CppAD::EqualOpSeq`` ( *u* , *v* )
+
+This should return true if and only if
+*u* is identically equal to *v*
+and it makes no different which one is used.
+The arguments *u* and *v* have prototype
+
+| |tab| ``const`` *Base* & *u*
+| |tab| ``const`` *Base* & *v*
+
+The return value *b* has prototype
+
+   ``bool`` *b*
+
+The Simple Case
+===============
+If *Base* is a relatively simple type,
+the ``EqualOpSeq`` function can be defined by
+
+| ``namespace CppAD`` {
+| |tab| ``inline`` *Base* ``EqualOpSeq`` ( ``const`` *Base* & ``u`` , ``const`` *Base* & ``v`` )
+| |tab| { ``return u`` == ``v`` ; }
+| }
+
+For example, see
+:ref:`base_alloc<base_alloc.hpp@EqualOpSeq>` .
+
+More Complicated Case
+=====================
+The variables
+*u* and *v* are not identically equal in the following case:
+
+#. The type *Base* is ``AD<double>`` .
+#. The following assignment made using type *Base* : *x* [0] = *x* [1] = 1. ,
+#. The :ref:`independent-name` operations is used to make *x*
+   the independent variable vector,
+#. During the corresponding recording, *u* = *x* [0] , *v* = *x* [1] .
+
+Note that during a future :ref:`Forward-name` calculation,
+*u* and *v* could correspond to different values.
+For example, see
+:ref:`adolc EqualOpSeq<base_adolc.hpp@EqualOpSeq>` .
+
+Identical
+*********
+
+IdenticalCon
+============
+A *Base* object is a
+:ref:`glossary@Parameter@Constant` parameter
+when used in an ``AD<`` *Base* > operation sequence.
+It is however still possible for a parameter to change its value; e.g.,
+see the more complicated case above.
+
+Prototypes
+==========
+The argument *u* has prototype
+
+   ``const`` *Base* *u*
+
+If it is present, the argument *v* has prototype
+
+   ``const`` *Base* *v*
+
+The result *b* has prototype
+
+   ``bool`` *b*
+
+Identical Functions
+===================
+The type *Base* must support the following functions
+(in the CppAD namespace):
+
+.. list-table::
+
+   * - **Syntax**
+     - **Result**
+   * - *b* = ``IdenticalCon`` ( *u* )
+     - the *Base* value will always be the same
+   * - *b* = ``IdenticalZero`` ( *u* )
+     - *u* equals zero and ``IdenticalCon`` ( *u* )
+   * - *b* = ``IdenticalOne`` ( *u* )
+     - *u* equals one and ``IdenticalCon`` ( *u* )
+   * - *b* = ``IdenticalEqualCon`` ( *u* , *v* )
+     - *u* equals *v* ,
+       ``IdenticalCon`` ( *u* ) and
+       ``IdenticalCon`` ( *v* )
+
+Examples
+========
+See
+:ref:`base_alloc<base_alloc.hpp@Identical>` .
+
+{xrst_end base_identical}
+*/

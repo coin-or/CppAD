@@ -1,0 +1,179 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin speed_available dev}
+{xrst_spell
+   src
+}
+
+Is A Speed Test Available
+#########################
+
+Syntax
+******
+
+   *available* = ``available_`` *name* ()
+
+name
+****
+The text *name* in the syntax is
+``det_lu`` ,
+``det_minor`` ,
+``mat_mul`` ,
+``ode`` ,
+``sparse_hessian`` , or
+``sparse_jacobian`` .
+
+Namespace
+*********
+This function is in the global namespace, not the CppAD namespace.
+
+available
+*********
+The ``bool`` return value *available* is true (false)
+if the speed test *name* is (is not) available for this package.
+
+Implementation
+**************
+This function is implemented in the file
+``speed/src/link_`` *name* . ``cpp`` .
+
+{xrst_end speed_available}
+------------------------------------------------------------------------------
+{xrst_begin speed_correct dev}
+{xrst_spell
+   src
+}
+
+Does a A Speed Test Return Correct Results
+##########################################
+
+Syntax
+******
+
+   *ok* = ``correct_`` *name* ( *is_package_double* )
+
+name
+****
+The text *name* in the syntax is
+``det_lu`` ,
+``det_minor`` ,
+``mat_mul`` ,
+``ode`` ,
+``sparse_hessian`` , or
+``sparse_jacobian`` .
+
+Namespace
+*********
+This function is in the global namespace, not the CppAD namespace.
+
+is_package_double
+*****************
+The ``bool`` argument *is_package_double* is true (false)
+if we are checking functions values (derivative values).
+
+ok
+**
+The ``bool`` return value *ok* is true (false)
+if the speed test for *name* returns correct (incorrect) values.
+
+Implementation
+**************
+This function is implemented in the file
+``speed/src/link_`` *name* . ``cpp`` .
+
+{xrst_end speed_correct}
+------------------------------------------------------------------------------
+{xrst_begin speed_time dev}
+{xrst_spell
+   src
+}
+
+Measure Time It Takes for a A Speed Test to Run
+###############################################
+
+Syntax
+******
+
+   *time* = ``time_`` *name* ( *time_min* , *size* )
+
+name
+****
+The text *name* in the syntax is
+``det_lu`` ,
+``det_minor`` ,
+``mat_mul`` ,
+``ode`` ,
+``sparse_hessian`` , or
+``sparse_jacobian`` .
+
+Namespace
+*********
+This function is in the global namespace, not the CppAD namespace.
+
+time_min
+********
+Is the minimum time, in seconds, for the test.
+Calls to ``link_`` *name* will be repeated enough times so that
+the total time is at least *time_min* .
+
+size
+****
+This ``size_t`` argument the size for this speed test;
+see *size* in the corresponding ``link_`` *name* documentation.
+
+time
+****
+This is the average amount of time for each call; i.e., the total time,
+which is greater than or equal *time_min* ,
+divided by the number of repeats.
+
+Implementation
+**************
+This function is implemented in the file
+``speed/src/link_`` *name* . ``cpp`` .
+
+{xrst_end speed_time}
+------------------------------------------------------------------------------
+{xrst_begin speed_time_callback dev}
+
+Timing Callback Functions
+#########################
+
+Syntax
+******
+
+   *time* = ``time_`` *name* _ ``callback`` ( *size_t* , *repeat* )
+
+name
+****
+The text *name* in the syntax is
+``det_lu`` ,
+``det_minor`` ,
+``mat_mul`` ,
+``ode`` ,
+``sparse_hessian`` , or
+``sparse_jacobian`` .
+
+Namespace
+*********
+These functions are in the empty namespace; i.e., it is only accessed
+by functions in the file where it is defined.
+
+size
+****
+This ``size_t`` argument the size for this speed test;
+see *size* in the corresponding ``link_`` *name* documentation.
+
+repeat
+******
+This ``size_t`` value
+is the number of times to repeat a call to the corresponding link routine.
+
+job
+***
+The :ref:`link_routines@job`
+argument to the corresponding link routine will be ``run`` .
+
+{xrst_end speed_time_callback}

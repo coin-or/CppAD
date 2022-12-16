@@ -1,52 +1,44 @@
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+# {xrst_begin compare_c} 
+# {xrst_comment_ch #}
 #
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
+# Compare Speed of C and C++
+# ##########################
 #
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
-# $begin compare_c$$ $newlinech #$$
-# $spell
-#   det
-#   cpp
-# $$
+# Syntax
+# ******
 #
-# $section Compare Speed of C and C++$$
-# $index compare, speed C and C++$$
-# $index speed, compare C and C++$$
-# $index C, compare speed with C++$$
-# $index C++, compare speed with C$$
+#     ``test_more/compare_c/det_by_minor_c``
 #
-# $head Syntax$$
-# $codei%test_more/compare_c/det_by_minor_c
-# %$$
-# $codei test_more/compare_c/det_by_minor_cpp$$
+# ``test_more/compare_c/det_by_minor_cpp``
 #
-# $head Purpose$$
+# Purpose
+# *******
 # Compares the speed of the exact same source code compiled
 # using C versus C++.
 #
-# $childtable%
-#   test_more/compare_c/det_by_minor.c
-# %$$
+# Contents
+# ********
+# {xrst_toc_table
+#    test_more/compare_c/det_by_minor.c
+# }
 #
-# $end
+# {xrst_end compare_c}
 # -----------------------------------------------------------------------------
 #
 # use cppad_debug_which to determine build type
 IF( "${cppad_debug_which}" STREQUAL debug_all )
-    SET(CMAKE_BUILD_TYPE DEBUG)
-    SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_DEBUG}")
+   SET(CMAKE_BUILD_TYPE DEBUG)
+   SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_DEBUG}")
 ELSEIF( "${cppad_debug_which}" STREQUAL debug_odd )
-    SET(CMAKE_BUILD_TYPE DEBUG)
-    SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_DEBUG}")
+   SET(CMAKE_BUILD_TYPE DEBUG)
+   SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_DEBUG}")
 ELSE( "${cppad_debug_which}" STREQUAL debug_odd )
-    SET(CMAKE_BUILD_TYPE RELEASE)
-    SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_RELEASE}")
+   SET(CMAKE_BUILD_TYPE RELEASE)
+   SET(all_cxx_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGSS_RELEASE}")
 ENDIF( "${cppad_debug_which}" STREQUAL debug_all )
 #
 # initialize check_test_more_compare_c
@@ -57,7 +49,7 @@ ADD_SUBDIRECTORY(cpp)
 #
 # check_test_more_compare_c target
 ADD_CUSTOM_TARGET( check_test_more_compare_c
-    DEPENDS ${check_test_more_compare_c_depends}
+   DEPENDS ${check_test_more_compare_c_depends}
 )
 MESSAGE(STATUS "make check_test_more_compare_c: available")
 

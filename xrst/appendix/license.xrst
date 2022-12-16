@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin License}
+
+Your License for the CppAD Software
+###################################
+
+Your License
+************
+{xrst_literal
+   COPYING
+}
+
+Eclipse Public License Version 2.0
+**********************************
+
+{xrst_literal
+   epl-2.0.txt
+}
+
+{xrst_end License}

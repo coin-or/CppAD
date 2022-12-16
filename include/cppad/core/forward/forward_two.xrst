@@ -1,0 +1,153 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin forward_two}
+
+Second Order Forward Mode: Derivative Values
+############################################
+
+Syntax
+******
+*y2* = *f* . ``Forward`` (1, *x2* )
+
+Purpose
+*******
+We use :math:`F : \B{R}^n \rightarrow \B{R}^m` to denote the
+:ref:`glossary@AD Function` corresponding to *f* .
+The result of the syntax above is that for
+*i* = 0 , ... , *m* ``-1`` ,
+
+   ``y2`` [ ``i`` ]
+
+:math:`= F_i^{(1)} (x0) * x2 + \frac{1}{2} x1^T * F_i^{(2)} (x0) * x1`
+
+where
+:math:`F^{(1)} (x0)` is the Jacobian of :math:`F`, and
+:math:`F_i^{(2)} (x0)` is the Hessian of th *i*-th component of :math:`F`,
+evaluated at *x0* .
+
+f
+*
+The object *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+Note that the :ref:`ADFun-name` object *f* is not ``const`` .
+Before this call to ``Forward`` , the value returned by
+
+   *f* . ``size_order`` ()
+
+must be greater than or equal two.
+After this call it will be will be three (see :ref:`size_order-name` ).
+
+x0
+**
+The vector *x0* in the formula for *y2* [ *i* ]
+corresponds to the previous call to :ref:`forward_zero-name`
+using this ADFun object *f* ; i.e.,
+
+   *f* . ``Forward`` (0, *x0* )
+
+If there is no previous call with the first argument zero,
+the value of the :ref:`Independent-name` variables
+during the recording of the AD sequence of operations is used
+for *x0* .
+
+x1
+**
+The vector *x1* in the formula for *y2* [ *i* ]
+corresponds to the previous call to :ref:`forward_one-name`
+using this ADFun object *f* ; i.e.,
+
+   *f* . ``Forward`` (1, *x1* )
+
+x2
+**
+The argument *x2* has prototype
+
+   ``const`` *Vector* & *x2*
+
+(see :ref:`forward_two@Vector` below)
+and its size must be equal to *n* , the dimension of the
+:ref:`fun_property@Domain` space for *f* .
+
+y2
+**
+The result *y2* has prototype
+
+   *Vector* *y2*
+
+(see :ref:`forward_two@Vector` below)
+The size of *y1* is equal to *m* , the dimension of the
+:ref:`fun_property@Range` space for *f* .
+Its value is given element-wise by the formula in the
+:ref:`forward_two@Purpose` above.
+
+Vector
+******
+The type *Vector* must be a :ref:`SimpleVector-name` class with
+:ref:`elements of type<SimpleVector@Elements of Specified Type>`
+*Base* .
+The routine :ref:`CheckSimpleVector-name` will generate an error message
+if this is not the case.
+
+Example
+*******
+The file
+:ref:`forward.cpp-name`
+contains an example and test of this operation.
+
+Special Case
+************
+This is special case of :ref:`forward_order-name` where
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   Y(t) & = F[ X(t) ]
+   \\
+   X(t) & = & x^{(0)} t^0 + x^{(1)} * t^1 + \cdots, + x^{(q)} * t^q + o( t^q )
+   \\
+   Y(t) & = & y^{(0)} t^0 + y^{(1)} * t^1 + \cdots, + y^{(q)} * t^q + o( t^q )
+   \end{eqnarray}
+
+and :math:`o( t^q ) * t^{-q} \rightarrow 0` as :math:`t \rightarrow 0`.
+For this special case, :math:`q = 2`,
+:math:`x^{(0)}` = *x0* ,
+:math:`x^{(1)}` = *x1* ,
+:math:`X(t) = x^{(0)} + x^{(1)} t + x^{(2)} t^2`, and
+
+.. math::
+
+   y^{(0)} + y^{(1)} t  + y^{(2)} t^2
+   =
+   F [ x^{(0)} + x^{(1)} t + x^{(2)} t^2 ] + o(t^2)
+
+Restricting our attention to the *i*-th component, and
+taking the derivative with respect to :math:`t`, we obtain
+
+.. math::
+
+   y_i^{(1)} + 2 y_i^{(2)} t
+   =
+   F_i^{(1)} [ x^{(0)} + x^{(1)} t + x^{(2)} t^2 ] [ x^{(1)} + 2 x^{(2)} t ]
+   +
+   o(t)
+
+Taking a second derivative with respect to :math:`t`,
+and evaluating at :math:`t = 0`, we obtain
+
+.. math::
+
+   2 y_i^{(2)}
+   =
+   [ x^{(1)} ]^T F_i^{(2)} [ x^{(0)} ] x^{(1)}
+   +
+   F_i^{(1)} [ x^{(0)} ] 2 x^{(2)}
+
+which agrees with the specification for *y2* [ *i* ] in the
+:ref:`forward_two@Purpose` above.
+
+{xrst_end forward_two}

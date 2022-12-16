@@ -1,65 +1,66 @@
 # ifndef CPPAD_UTILITY_LINK_DLL_LIB_HPP
 # define CPPAD_UTILITY_LINK_DLL_LIB_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin link_dll_lib$$
-$spell
-    dll
-    cppad
-    hpp
-    ptr
-$$
+{xrst_begin link_dll_lib}
+{xrst_spell
+   dll
+   linker
+   msg
+}
 
-$section Link a Dynamic Link Library$$
+Link a Dynamic Link Library
+###########################
 
-$head Syntax$$
-$codei%# include <cppad/utility/link_dll_lib.hpp>
-%$$
-$codei%link_dll_lib %dll_linker%(%dll_file%, %err_msg%)
-%$$
-$icode%fun_ptr% = %dll_linker%(%function_name%, %err_msg%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+| # ``include <cppad/utility/link_dll_lib.hpp>``
+| ``link_dll_lib`` *dll_linker* ( *dll_file* , *err_msg* )
+| *fun_ptr* = *dll_linker* ( *function_name* , *err_msg* )
 
-$head dll_linker$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+dll_linker
+**********
 Is the dynamic link object that holds an in memory version of the library,
-It must not be deleted for as long as any $icode fun_ptr$$ return
+It must not be deleted for as long as any *fun_ptr* return
 values is used.
 
-$head err_msg$$
-If $icode err_msg$$ is non-empty, it contains an error message
+err_msg
+*******
+If *err_msg* is non-empty, it contains an error message
 for the corresponding operation.
 
-$head dll_file$$
+dll_file
+********
 Is the file containing the dynamic link library.
 
-$head function_name$$
+function_name
+*************
 Is the name of an external entry point in the dll.
 
-$head fun_ptr$$
-Is a $code void*$$ version of a pointer the function corresponding to
-$icode function_name$$.
+fun_ptr
+*******
+Is a ``void*`` version of a pointer the function corresponding to
+*function_name* .
+{xrst_toc_hidden
+   example/utility/dll_lib.cpp
+}
+Example
+*******
+The file :ref:`dll_lib.cpp-name` contains an example and test of
+``link_dll_lib`` .
 
-$children%
-    example/utility/dll_lib.cpp
-%$$
-$head Example$$
-The file $cref dll_lib.cpp$$ contains an example and test of
-$code link_dll_lib$$.
-
-$end
+{xrst_end link_dll_lib}
 */
 
 # include <string>
@@ -68,26 +69,26 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 class link_dll_lib {
 private:
-    // pointer to the dll object
-    void* handle_;
-    //
-    // error message during constructor
-    std::string ctor_err_msg_;
-    //
+   // pointer to the dll object
+   void* handle_;
+   //
+   // error message during constructor
+   std::string ctor_err_msg_;
+   //
 # ifdef _WIN32
-    static void*       dlopen(const char *filename, int flag);
-    static void*       dlsym(void* handle, const char* symbol);
-    static int         dlclose(void* handle);
-    static const char* dlerror(void);
+   static void*       dlopen(const char *filename, int flag);
+   static void*       dlsym(void* handle, const char* symbol);
+   static int         dlclose(void* handle);
+   static const char* dlerror(void);
 # endif
-    //
+   //
 public:
-    // BEGIN_PROTOTYPE
-    link_dll_lib(const std::string& dll_file, std::string& err_msg);
-    ~link_dll_lib(void);
-    void* operator()
-    (const std::string& function_name, std::string& err_msg) const;
-    // END_PROTOTYPE
+   // BEGIN_PROTOTYPE
+   link_dll_lib(const std::string& dll_file, std::string& err_msg);
+   ~link_dll_lib(void);
+   void* operator()
+   (const std::string& function_name, std::string& err_msg) const;
+   // END_PROTOTYPE
 };
 
 } // END_CPPAD_NAMESPACE

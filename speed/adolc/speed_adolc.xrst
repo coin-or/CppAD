@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed_adolc}
+
+Speed Test of Derivatives Using Adolc
+#####################################
+
+Purpose
+*******
+CppAD has a set of speed tests that are used to compare
+Adolc with other AD packages.
+This section links to the source code the Adolc speed tests
+(any suggestions to make the Adolc results faster are welcome).
+
+include_adolc
+*************
+To run these tests
+you must specify :ref:`cmake@include_adolc`
+on your cmake command line.
+
+Running Tests
+*************
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+:ref:`cmake@Build Directory` :
+
+| |tab| ``cd speed/adolc``
+| |tab| ``make check_speed_adolc VERBOSE`` =1
+
+You can then run the corresponding speed tests
+with the following command
+
+   ./ ``speed_adolc speed`` *seed*
+
+where *seed* is a positive integer.
+See :ref:`speed_main-name` for more options.
+
+Contents
+********
+{xrst_toc_list
+   speed/adolc/det_minor.cpp
+   speed/adolc/det_lu.cpp
+   speed/adolc/mat_mul.cpp
+   speed/adolc/ode.cpp
+   speed/adolc/poly.cpp
+   speed/adolc/sparse_hessian.cpp
+   speed/adolc/sparse_jacobian.cpp
+   speed/adolc/alloc_mat.cpp
+}
+
+{xrst_end speed_adolc}

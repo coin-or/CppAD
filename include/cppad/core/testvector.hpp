@@ -1,102 +1,92 @@
 # ifndef CPPAD_CORE_TESTVECTOR_HPP
 # define CPPAD_CORE_TESTVECTOR_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin testvector$$
-$spell
-    CppAD
-    cmake
-    testvector
-    cppad
-    Eigen
-    ifdef
-    hpp
-    std
-    endif
-    ublas
-$$
+{xrst_begin testvector}
+{xrst_spell
+   testvector
+   ublas
+}
 
+Using The CppAD Test Vector Template Class
+##########################################
 
-$section Using The CppAD Test Vector Template Class$$
+Syntax
+******
 
-$head Syntax$$
-$codei%CPPAD_TESTVECTOR(%Scalar%)
-%$$
+   ``CPPAD_TESTVECTOR`` ( *Scalar* )
 
-$head Choice$$
+Choice
+******
 The user can choose, during the install procedure,
 which template class to use in the examples and tests; see below.
 This shows that any
-$cref/simple vector/SimpleVector/$$ class can be used in place of
-$codei%
-    CPPAD_TESTVECTOR(%Type%)
-%$$
+:ref:`simple vector<SimpleVector-name>` class can be used in place of
+
+   ``CPPAD_TESTVECTOR`` ( *Type* )
+
 When writing their own code,
 users can choose a specific simple vector they prefer; for example,
-$codei%
-    CppAD::vector<%Type%>
-%$$
 
+   ``CppAD::vector<`` *Type* >
 
-$head CppAD::vector$$
-If in the $cref/cmake command/cmake/CMake Command/$$
-you specify $cref cppad_testvector$$ to be $code cppad$$,
-$codei%
-# define CPPAD_TESTVECTOR(%Scalar%) CppAD::vector< %Scalar% >
-%$$
+CppAD::vector
+*************
+If in the :ref:`cmake@CMake Command`
+you specify :ref:`cppad_testvector-name` to be ``cppad`` ,
 
-$subhead CPPAD_CPPADVECTOR, Deprecated 2022-06-22$$
+   # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``CppAD::vector<`` *Scalar*  >
+
+CPPAD_CPPADVECTOR, Deprecated 2022-06-22
+========================================
 This symbol is 1 (0) if the definition above
-is used (is not used) for $code CPPAD_TESTVECTOR$$.
+is used (is not used) for ``CPPAD_TESTVECTOR`` .
 
-$head std::vector$$
+std::vector
+***********
 If in the cmake command
-you specify $icode cppad_testvector$$ to be $code std$$,
-$codei%
-# define CPPAD_TESTVECTOR(%Scalar%) std::vector< %Scalar% >
-%$$
+you specify *cppad_testvector* to be ``std`` ,
 
-$subhead CPPAD_STDVECTOR, Deprecated 2022-06-22$$
+   # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``std::vector<`` *Scalar*  >
+
+CPPAD_STDVECTOR, Deprecated 2022-06-22
+======================================
 This symbol is 1 (0) if the definition above
-is used (is not used) for $code CPPAD_TESTVECTOR$$.
+is used (is not used) for ``CPPAD_TESTVECTOR`` .
 
-$head boost::numeric::ublas::vector$$
+boost::numeric::ublas::vector
+*****************************
 If in the cmake command
-you specify $icode cppad_testvector$$ to be $code boost$$,
-$codei%
-# define CPPAD_TESTVECTOR(%Scalar%) boost::numeric::ublas::vector< %Scalar% >
-%$$
+you specify *cppad_testvector* to be ``boost`` ,
 
-$subhead CPPAD_BOOSTVECTOR, Deprecated 2022-06-22$$
+   # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``boost::numeric::ublas::vector<`` *Scalar*  >
+
+CPPAD_BOOSTVECTOR, Deprecated 2022-06-22
+========================================
 This symbol is 1 (0) if the definition above
-is used (is not used) for $code CPPAD_TESTVECTOR$$.
+is used (is not used) for ``CPPAD_TESTVECTOR`` .
 
-$head CppAD::eigen_vector$$
+CppAD::eigen_vector
+*******************
 If in the cmake command
-you specify $icode cppad_testvector$$ to be $code eigen$$,
-$codei%
-# define CPPAD_TESTVECTOR(%Scalar%) CppAD::eigen_vector< %Scalar% >
-%$$
-see $cref/eigen_vector/cppad_eigen.hpp/eigen_vector/$$.
+you specify *cppad_testvector* to be ``eigen`` ,
+
+   # ``define CPPAD_TESTVECTOR`` ( *Scalar* ) ``CppAD::eigen_vector<`` *Scalar*  >
+
+see :ref:`cppad_eigen.hpp@eigen_vector` .
 In this case CppAD will use the Eigen vector
 for many of its examples and tests.
 
-$subhead CPPAD_EIGENVECTOR, Deprecated 2022-06-22$$
+CPPAD_EIGENVECTOR, Deprecated 2022-06-22
+========================================
 This symbol is 1 (0) if the definition above
-is used (is not used) for $code CPPAD_TESTVECTOR$$.
+is used (is not used) for ``CPPAD_TESTVECTOR`` .
 
-$end
+{xrst_end testvector}
 ------------------------------------------------------------------------
 */
 # if CPPAD_CPPADVECTOR

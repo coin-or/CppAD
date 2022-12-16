@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin abs_min_linear.hpp}
+
+abs_min_linear Source Code
+##########################
+
+{xrst_literal
+   example/abs_normal/abs_min_linear.hpp
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end abs_min_linear.hpp}

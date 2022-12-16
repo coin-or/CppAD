@@ -1,36 +1,30 @@
 # ifndef CPPAD_CORE_AD_VALUED_HPP
 # define CPPAD_CORE_AD_VALUED_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin ADValued$$
-$spell
-$$
+{xrst_begin ADValued}
 
+AD Valued Operations and Functions
+##################################
 
-$section AD Valued Operations and Functions$$
+{xrst_comment atomic.omh includes atomic_two.hpp}
 
-$comment atomic.omh includes atomic_two.hpp$$
-$childtable%
-    include/cppad/core/arithmetic.hpp%
-    include/cppad/core/standard_math.hpp%
-    include/cppad/core/cond_exp.hpp%
-    include/cppad/core/discrete/user.omh%
-    include/cppad/core/numeric_limits.hpp%
-    include/cppad/core/atomic/atomic.omh
-%$$
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/arithmetic.hpp
+   include/cppad/core/standard_math.hpp
+   include/cppad/core/cond_exp.hpp
+   include/cppad/core/discrete/user.xrst
+   include/cppad/core/numeric_limits.hpp
+   include/cppad/core/atomic/atomic.xrst
+}
 
-$end
+{xrst_end ADValued}
 */
 
 // include MathOther.h after CondExp.h because some MathOther.h routines use

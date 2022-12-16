@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin function_name}
+
+Setting and Getting a Function's Name
+#####################################
+
+Syntax
+******
+
+| *f* . ``function_name_set`` ( *function_name* )
+| *function_name* = *f* . ``function_name_get`` ()
+
+See Also
+********
+:ref:`fun_property-name`
+
+f
+*
+In the set operation, *f* has prototype
+
+   ``ADFun<`` *Base* > *f*
+
+In the get operation, *f* has prototype
+
+   ``const ADFun<`` *Base* > *f*
+
+(see ``ADFun<`` *Base* > :ref:`constructor<fun_construct-name>` ).
+
+function_name
+*************
+is the name of the function.
+In the set operation, *function_name* has prototype
+
+   ``const std::string&`` *function_name*
+
+In the get operation, *function_name* has prototype
+
+   ``std::string`` *function_name*
+
+{xrst_toc_hidden
+   example/general/function_name.cpp
+}
+Example
+*******
+The file :ref:`function_name.cpp-name` contains an example and test
+of these operations.
+
+{xrst_end function_name}

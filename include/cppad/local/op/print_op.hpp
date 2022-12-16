@@ -1,16 +1,9 @@
 # ifndef CPPAD_LOCAL_OP_PRINT_OP_HPP
 # define CPPAD_LOCAL_OP_PRINT_OP_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
@@ -19,9 +12,9 @@ Print operation for parameters; i.e., op = PriOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-    f.Forward(0, x)
-    PrintFor(before, var)
-    PrintFor(pos, before, var, after)
+   f.Forward(0, x)
+   PrintFor(before, var)
+   PrintFor(pos, before, var, after)
 \endverbatim
 The PrintFor call puts the print operation on the tape
 and the print occurs during the zero order forward mode computation.
@@ -100,47 +93,47 @@ Contains the value of variables.
 */
 template <class Base>
 void forward_pri_0(
-    std::ostream& s_out       ,
-    const addr_t* arg         ,
-    size_t        num_text    ,
-    const char*   text        ,
-    size_t        num_par     ,
-    const Base*   parameter   ,
-    size_t        cap_order   ,
-    const Base*   taylor      )
-{   Base pos, var;
-    const char* before;
-    const char* after;
-    CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
+   std::ostream& s_out       ,
+   const addr_t* arg         ,
+   size_t        num_text    ,
+   const char*   text        ,
+   size_t        num_par     ,
+   const Base*   parameter   ,
+   size_t        cap_order   ,
+   const Base*   taylor      )
+{  Base pos, var;
+   const char* before;
+   const char* after;
+   CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
 
-    // pos
-    if( arg[0] & 1 )
-    {   pos = taylor[ size_t(arg[1]) * cap_order + 0 ];
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-        pos = parameter[ arg[1] ];
-    }
+   // pos
+   if( arg[0] & 1 )
+   {  pos = taylor[ size_t(arg[1]) * cap_order + 0 ];
+   }
+   else
+   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
+      pos = parameter[ arg[1] ];
+   }
 
-    // before
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_text );
-    before = text + arg[2];
+   // before
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_text );
+   before = text + arg[2];
 
-    // var
-    if( arg[0] & 2 )
-    {   var = taylor[ size_t(arg[3]) * cap_order + 0 ];
-    }
-    else
-    {   CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-        var = parameter[ arg[3] ];
-    }
+   // var
+   if( arg[0] & 2 )
+   {  var = taylor[ size_t(arg[3]) * cap_order + 0 ];
+   }
+   else
+   {  CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+      var = parameter[ arg[3] ];
+   }
 
-    // after
-    CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_text );
-    after = text + arg[4];
+   // after
+   CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_text );
+   after = text + arg[4];
 
-    if( ! GreaterThanZero( pos ) )
-        s_out << before << var << after;
+   if( ! GreaterThanZero( pos ) )
+      s_out << before << var << after;
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE

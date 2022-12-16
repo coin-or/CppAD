@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin sacado_prefix}
+
+Including Sacado Speed Tests
+############################
+
+Sacado Home Page
+****************
+https://github.com/trilinos/Trilinos/tree/master/packages/sacado
+
+Purpose
+*******
+CppAD includes speed comparisons for the Sacado AD package;
+see :ref:`speed_sacado-name` .
+
+sacado_prefix
+*************
+If Sacado is installed on your system, you can
+specify a value for its install *sacado_prefix* on the
+:ref:`cmake-name` command line.
+The value of *sacado_prefix* must be such that,
+for one of the directories *dir* in
+:ref:`cmake@cmake_install_includedirs` ,
+
+   *sacado_prefix* / *dir* / ``Sacado.hpp``
+
+is a valid way to reference to the include file ``Sacado.hpp`` ;
+
+Speed Tests
+***********
+If you include *sacado_prefix* on the :ref:`cmake-name` command line,
+you will be able to run the Sacado speed correctness tests
+by executing the following commands starting in the
+:ref:`download@Distribution Directory` :
+
+| |tab| ``cd build/speed/sacado``
+| |tab| ``make check_speed_sacado``
+
+After executing ``make check_speed_sacado`` ,
+you can run a specific Sacado speed test
+by executing the command ``./speed_sacado`` ;
+see :ref:`speed_main-name` for the meaning of the command line
+options to this program.
+
+get_sacado
+**********
+If you are using Unix, you can download and install
+a copy of Sacado using :ref:`get_sacado.sh-name` .
+The corresponding *sacado_prefix* would be
+``build/prefix`` .
+
+{xrst_end sacado_prefix}

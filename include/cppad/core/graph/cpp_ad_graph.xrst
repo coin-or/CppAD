@@ -1,0 +1,265 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin cpp_ad_graph}
+{xrst_spell
+   heaviside
+   notpos
+   np
+   nx
+}
+
+C++ Representation of an AD Graph
+#################################
+
+See Also
+********
+:ref:`json_ad_graph-title`
+
+function
+********
+This section defines a computational graph representation of a function
+:math:`y = f(x, p)`.
+The vector *x* is called the independent variable vector,
+*p* is called the independent dynamic parameter vector,
+and *y* is called the dependent variable vector.
+
+Node Indices
+************
+The nodes in an AD graph have the following order:
+::
+
+      p_0 , ... ,  p_{np-1} ,
+      x_0 , ... ,  x_{nx-1} ,
+      c_0 , ... ,  c_{nc-1} ,
+      r_0 , ... ,  r_{no-1}
+
+p
+=
+The sub-vector
+::
+
+      p_0, ... , p_{np-1}
+
+is the independent dynamic parameter vector;
+see :ref:`cpp_ad_graph@n_dynamic_ind` .
+The node index corresponding to *p_0* is ``1`` .
+
+x
+=
+The sub-vector
+::
+
+      x_1, ... , x_nx
+
+is the independent variable vector;
+see :ref:`cpp_ad_graph@n_variable_ind` .
+The node index corresponding to *x_0* is
+the index corresponding to *p_0* plus *np* .
+
+c
+=
+The sub-vector
+::
+
+      c_1, ... , c_nc
+
+is the constant parameter vector;
+see :ref:`cpp_ad_graph@constant_vec` .
+The node index corresponding to *c_0* is
+the index corresponding to *x_0* plus *nx* .
+
+r
+=
+The sub-vector
+*r_i* for *i* =0,..., *no* ``-1`` is the result vector
+for the *i*-th operator;
+see :ref:`cpp_ad_graph@operator_vec` .
+All of the node arguments for an the *i*-th operator are nodes
+that come before the first element of *r_i* .
+The node index corresponding to the first element of *r_0* is
+the index corresponding to *c_0* plus *nc* .
+For *i*  > 0 ,
+The node index corresponding to the first element of *r_i* is
+the index corresponding to the first element of *r_* { *i-1* } plus
+the number of results for the *i-1*-th operator.
+
+function_name
+*************
+is a ``std::string`` containing the name for the function
+corresponding to this graph.
+
+discrete_name_vec
+*****************
+is a vector with elements of type ``std::string`` .
+A discrete function has one argument, one result, and it derivative
+is always zero; e.g., the Heaviside function.
+Calls by this function to discrete functions use the index in this
+vector to identify the discrete functions; see
+:ref:`cpp_ad_graph@operator_arg@discrete_graph_op` below.
+If there are no calls to discrete functions, this vector can be empty.
+
+atomic_name_vec
+***************
+is a vector with elements of type ``std::string`` .
+An atomic function can have any number of arguments and results
+and non-zero derivatives.
+Calls by this function to other functions use the index in this
+vector to identify the other functions; see
+:ref:`cpp_ad_graph@operator_arg@atom_graph_op` below.
+If there are no calls to other functions, this vector can be empty.
+Discrete functions are faster, and simpler to create and use
+than atomic functions.
+
+print_text_vec
+**************
+is a vector with elements of type ``std::string`` .
+The :ref:`graph_op_enum@Print` operators uses indices
+in this vector for the corresponding
+:ref:`PrintFor@before` and :ref:`PrintFor@after` values.
+If there are no print operators, this vector can be empty.
+
+n_dynamic_ind
+*************
+is the number of independent dynamic parameters in the function
+(called *np* above); see
+:ref:`Independent@dynamic` .
+
+n_variable_ind
+**************
+is the number of independent variables in the function
+(called *nx* above); see
+:ref:`Independent@x` .
+
+constant_vec
+************
+is a vector of with elements of type
+``double`` and size *nc* that can be used to define this function.
+
+operator_vec
+************
+is a vector with elements of type ``graph_op_enum``
+and size *no* (the number of operators in the graph).
+For *i* = 0, ..., *no* ``-1``
+*operator_vec* [ *i* ] contains the instructions
+for computing the result vector *r_i* .
+
+operator_arg
+************
+is a vector with size equal to the sum of the size of each
+of its sub-vectors (which are described below).
+For *i* = 0, ..., *no* ``-1`` , we use
+*first_node* [ *i* ] to denote the index in *operator_arg*
+of the first node argument to the *i*-th operator.
+We use *n_node_arg* [ *i* ] to denote the number of node arguments
+for the *i*-th operator.
+For *j* = 0 , ..., *n_node_arg* [ *i* ] ``-1`` ,
+the *j*-th node argument for the *i*-th operator has node index
+
+   *operator_arg* [ *first_node* [ *i* ] + *j*  ]
+
+The *operator_arg* sub-vector for the *i*-th operator starts are
+*first_node* [ *i* ] and has *n_node_arg* [ *i* ] elements
+except for the following operators:
+``sum_graph_op`` ,
+``discrete_graph_op`` ,
+``atom_graph_op`` ,
+``print_graph_op`` .
+
+print_graph_op
+==============
+In the case where *operator_vec* [ *i* ]. ``op_enum`` is
+``print_graph_op`` :
+
+   *before* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 2`` ]
+
+is the index in :ref:`cpp_ad_graph@print_text_vec`
+of the text that is printed before the value and
+
+   *after* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
+
+is the index in :ref:`cpp_ad_graph@print_text_vec`
+of the text that is printed after the value.
+The *operator_arg* sub-vector for the *i*-th operator
+starts at index *first_node* [ *i* ] ``-2``
+and has 4 = *n_node_arg* [ *i* ]+2 elements.
+The node with index
+
+   *notpos* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ]
+
+is checked and if it is positive, nothing is printed by this operator.
+Otherwise, the value corresponding to the following node is printed:
+
+   *value* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] + 1 ]
+
+discrete_graph_op
+=================
+In the case where *operator_vec* [ *i* ]. ``op_enum`` is
+``discrete_graph_op`` :
+
+   *name_index* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
+
+is the index in :ref:`cpp_ad_graph@discrete_name_vec`
+of the function being called by this operator.
+For this operator,
+the *operator_arg* sub-vector for the *i*-th operator
+starts at index *first_node* [ *i* ] ``-1``
+and has 2 = *n_node_arg* [ *i* ]+1 elements.
+
+atom_graph_op
+=============
+In the case where *operator_vec* [ *i* ]. ``op_enum`` is
+``atom_graph_op`` :
+
+   *name_index* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 3`` ]
+
+is the index in :ref:`cpp_ad_graph@atomic_name_vec`
+of the function being called by this operator.
+
+   *n_result* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 2`` ]
+
+is the number of result nodes for this operator.
+
+   *n_node_arg* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
+
+is the number of node arguments for this operator.
+For this operator,
+the *operator_arg* sub-vector for the *i*-th operator
+starts at index *first_node* [ *i* ] ``-3``
+and has *n_node_arg* [ *i* ]+3 elements.
+
+sum_graph_op
+============
+In the case where *operator_vec* [ *i* ]. ``op_enum`` is
+``sum_graph_op`` :
+
+   *n_node_arg* [ *i* ] = *operator_arg* [ *first_node* [ *i* ] ``- 1`` ]
+
+is the number of node arguments for this operator.
+For this operator,
+the *operator_arg* sub-vector for the *i*-th operator
+starts at index *first_node* [ *i* ] ``-1``
+and has *n_node_arg* [ *i* ]+1 elements.
+
+dependent_vec
+*************
+is a vector with size equal to the number element in *y* .
+The *i*-th element of *y* corresponds to the node index
+*dependent_vec* [ *i* ] .
+
+cpp_graph
+*********
+The ``cpp_graph`` class implements the data structure above.
+It is defined by the documentation sections under Contents below:
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/graph/graph_op_enum.hpp
+   include/cppad/core/graph/cpp_graph.xrst
+   include/cppad/core/graph/from_graph.hpp
+   include/cppad/core/graph/to_graph.hpp
+}
+
+{xrst_end cpp_ad_graph}

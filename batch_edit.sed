@@ -14,15 +14,14 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#     include/cppad/local/utility/cppad_vector_itr.hpp
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#   cmake/optional_package.cmake
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#   s|optional_package|prefix_info|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -34,4 +33,21 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of linei
-s|optional_package|prefix_info|
+/$code$/! b one
+N
+N
+N
+N
+/\n[$]pre\n[$][$]/! b end
+s|\n[$]pre\n[$][$]||
+s|$code|$codei%|
+s|$|\n%$$|
+b end
+#
+: one
+/^# endif$/! b end
+N
+/^# endif\n[$][$]$/! b end
+s|.*|$code # endif $$|
+#
+: end

@@ -1,14 +1,7 @@
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 # run_source_test(source variable)
 #
 # source: (in)
@@ -25,26 +18,26 @@
 # CMAKE_REQUIRED_name is set to the empty string.
 #
 MACRO(run_source_test source variable)
-    IF( DEFINED ${variable} )
-        MESSAGE(ERROR
-            "run_source_test: ${variable} is defined before expected"
-        )
-    ENDIF( DEFINED ${variable} )
-    SET(CMAKE_REQUIRED_DEFINITIONS "" )
-    SET(CMAKE_REQUIRED_INCLUDES    "" )
-    SET(CMAKE_REQUIRED_LIBRARIES   "" )
-    IF( cppad_cxx_flags )
-        SET(CMAKE_REQUIRED_FLAGS   "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS}" )
-    ELSE( cppad_cxx_flags )
-        SET(CMAKE_REQUIRED_FLAGS   "" )
-    ENDIF( cppad_cxx_flags )
-    CHECK_CXX_SOURCE_RUNS("${source}" ${variable} )
-    IF( ${variable} )
-        SET(${variable} 1)
-    ELSE( ${variable} )
-        SET(${variable} 0)
-    ENDIF( ${variable} )
-    MESSAGE(STATUS "${variable} = ${${variable}}" )
-    #
-    SET(CMAKE_REQUIRED_FLAGS        "" )
+   IF( DEFINED ${variable} )
+      MESSAGE(ERROR
+         "run_source_test: ${variable} is defined before expected"
+      )
+   ENDIF( DEFINED ${variable} )
+   SET(CMAKE_REQUIRED_DEFINITIONS "" )
+   SET(CMAKE_REQUIRED_INCLUDES    "" )
+   SET(CMAKE_REQUIRED_LIBRARIES   "" )
+   IF( cppad_cxx_flags )
+      SET(CMAKE_REQUIRED_FLAGS   "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS}" )
+   ELSE( cppad_cxx_flags )
+      SET(CMAKE_REQUIRED_FLAGS   "" )
+   ENDIF( cppad_cxx_flags )
+   CHECK_CXX_SOURCE_RUNS("${source}" ${variable} )
+   IF( ${variable} )
+      SET(${variable} 1)
+   ELSE( ${variable} )
+      SET(${variable} 0)
+   ENDIF( ${variable} )
+   MESSAGE(STATUS "${variable} = ${${variable}}" )
+   #
+   SET(CMAKE_REQUIRED_FLAGS        "" )
 ENDMACRO( run_source_test )

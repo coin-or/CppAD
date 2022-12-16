@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin dev_utility dev}
+
+General Purpose Utilities Developer Documentation
+#################################################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/utility/xrst/dev_cppad_vector.xrst
+   include/cppad/utility/xrst/dev_vector_bool.xrst
+}
+
+{xrst_end dev_utility}

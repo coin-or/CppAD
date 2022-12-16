@@ -1,0 +1,108 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed_xpackage}
+{xrst_spell
+   cp
+   grep
+   ifdef
+   ls
+   txt
+   xpackage
+}
+
+Speed Test Example and Template for a New Package
+#################################################
+
+Purpose
+*******
+CppAD has a set of speed tests that are used to compare
+AD packages.
+This section can be used as a starting point for linking a new package
+to he CppAD speed tests.
+
+Files
+*****
+Use the following command, in the
+:ref:`download@Distribution Directory` ,
+to see which files link the example package ``xpackage``
+to the speed tests:
+
+   ``git grep -l xpackage``
+
+Template
+********
+Suppose *your_package* is the name of a package you
+want to add to the speed tests.
+If you are using a Unix system,
+executing the following commands in the distribution directory
+will use ``xpackage`` as a template for your package:
+
+| |tab| ``cp -r speed/xpackage speed/`` *your_package*
+| |tab| ``for file in`` ` ``ls speed/`` *your_package* `
+| |tab| ``do``
+| |tab| |tab| ``sed -i speed/`` *your_package* / ``$file`` \\
+| |tab| |tab| |tab| ``-e`` ' ``s/xpackage/`` *your_package* /' \\
+| |tab| |tab| |tab| ``-e`` ' ``s/Xpackage/`` *Your_package* /' \\
+| |tab| |tab| |tab| ``-e`` ' ``s/CPPAD_XPACKAGE_SPEED/`` *YOUR_PACKGE* /'
+| |tab| ``done``
+| |tab| ``git checkout speed/CMakeLists.txt``
+| |tab| ``sed -i speed/CMakeLists.txt`` \\
+| |tab| |tab| ``-e`` ' ``s/^.`` * ( ``xpackage`` )/ ``ADD_SUBDIRECTORY`` ( *your_package* )\\ ``n&/`` '
+| |tab| ``git checkout speed/main.cpp``
+| |tab| ``line1`` ='# ``ifdef CPPAD_`` *YOUR_PACKAGE* _ ``SPEED`` '
+| |tab| ``line2`` ='# ``define AD_PACKAGE`` " *your_package* "'
+| |tab| ``line3`` ='# ``endif`` '
+| |tab| ``sed -i speed/main.cpp`` \\
+| |tab| |tab| ``-e`` "/ ``CPPAD_XPACKAGE_SPEED/s/^/$line1\n$line2\n$line3\n/`` "
+
+where *your_package* has been replaced by the name of the new package
+*Your_package* is a capitalized version of the name, and
+*YOUR_PACKAGE* is an all caps version of the name.
+
+Running Tests
+*************
+Starting in the distribution directory,
+the following commands will build the new package version of the tests:
+
+| |tab| ``bin/run_cmake.sh --no_optional``
+| |tab| ``cd build/speed/`` *your_package*
+| |tab| ``make check_speed_`` *your_package* ``VERBOSE`` =1
+
+This should result in the following output:
+
+| |tab| ...
+| |tab| *your_package* _ ``det_lu_available`` = ``false``
+| |tab| *your_package* _ ``det_minor_available`` = ``false``
+| |tab| *your_package* _ ``mat_mul_available`` = ``false``
+| |tab| *your_package* _ ``ode_available`` = ``false``
+| |tab| *your_package* _ ``poly_available`` = ``false``
+| |tab| *your_package* _ ``sparse_hessian_available`` = ``false``
+| |tab| *your_package* _ ``sparse_jacobian_available`` = ``false``
+| |tab| ``All 0 correctness tests passed.``
+| |tab| ``No memory leak detected``
+| |tab| ``speed main: OK``
+| |tab| [100%] ``Built target check_speed_`` *your_package*
+
+You can not edit one or more of the * . ``cpp`` files in the
+*your_package* directory so that the corresponding speed test
+is available and then run the corresponding test using the
+:ref:`speed_main-name` instructions.
+See :ref:`speed_cppad-name` for examples of how to do this for each
+of the speed tests.
+
+Contents
+********
+{xrst_toc_list
+   speed/xpackage/det_minor.cpp
+   speed/xpackage/det_lu.cpp
+   speed/xpackage/mat_mul.cpp
+   speed/xpackage/ode.cpp
+   speed/xpackage/poly.cpp
+   speed/xpackage/sparse_hessian.cpp
+   speed/xpackage/sparse_jacobian.cpp
+}
+
+{xrst_end speed_xpackage}

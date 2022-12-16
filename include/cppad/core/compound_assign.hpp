@@ -1,136 +1,139 @@
 # ifndef CPPAD_CORE_COMPOUND_ASSIGN_HPP
 # define CPPAD_CORE_COMPOUND_ASSIGN_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
 -------------------------------------------------------------------------------
-$begin compound_assign$$
-$spell
-    Op
-    VecAD
-    const
-$$
+{xrst_begin compound_assign}
 
-$section AD Compound Assignment Operators$$
+AD Compound Assignment Operators
+################################
 
+Syntax
+******
+*x* *Op* *y*
 
-
-
-
-
-$head Syntax$$
-$icode%x% %Op% %y%$$
-
-$head Purpose$$
+Purpose
+*******
 Performs compound assignment operations
-where either $icode x$$ has type
-$codei%AD<%Base%>%$$.
+where either *x* has type
+``AD<`` *Base* > .
 
-$head Op$$
-The operator $icode Op$$ is one of the following
-$table
-$bold Op$$  $cnext $bold Meaning$$ $rnext
-$code +=$$   $cnext $icode x$$ is assigned $icode x$$ plus $icode y$$ $rnext
-$code -=$$   $cnext $icode x$$ is assigned $icode x$$ minus $icode y$$ $rnext
-$code *=$$   $cnext $icode x$$ is assigned $icode x$$ times $icode y$$ $rnext
-$code /=$$   $cnext $icode x$$ is assigned $icode x$$ divided by $icode y$$
-$tend
+Op
+**
+The operator *Op* is one of the following
 
-$head Base$$
-The type $icode Base$$ is determined by the operand $icode x$$.
+.. csv-table::
+   :widths: auto
 
-$head x$$
-The operand $icode x$$ has the following prototype
-$codei%
-    AD<%Base%> &%x%
-%$$
+   **Op**,**Meaning**
+   ``+=``,*x* is assigned *x* plus *y*
+   ``-=``,*x* is assigned *x* minus *y*
+   ``*=``,*x* is assigned *x* times *y*
+   ``/=``,*x* is assigned *x* divided by *y*
 
-$head y$$
-The operand $icode y$$ has the following prototype
-$codei%
-    const %Type% &%y%
-%$$
-where $icode Type$$ is
-$codei%VecAD<%Base%>::reference%$$,
-$codei%AD<%Base%>%$$,
-$icode Base$$, or
-$code double$$.
+Base
+****
+The type *Base* is determined by the operand *x* .
 
-$head Result$$
+x
+*
+The operand *x* has the following prototype
+
+   ``AD<`` *Base* > & *x*
+
+y
+*
+The operand *y* has the following prototype
+
+   ``const`` *Type* & *y*
+
+where *Type* is
+``VecAD<`` *Base* >:: ``reference`` ,
+``AD<`` *Base* > ,
+*Base* , or
+``double`` .
+
+Result
+******
 The result of this assignment
-can be used as a reference to $icode x$$.
-For example, if $icode z$$ has the following type
-$codei%
-    AD<%Base%> %z%
-%$$
+can be used as a reference to *x* .
+For example, if *z* has the following type
+
+   ``AD<`` *Base* > *z*
+
 then the syntax
-$codei%
-    %z% = %x% += %y%
-%$$
-will compute $icode x$$ plus $icode y$$
-and then assign this value to both $icode x$$ and $icode z$$.
 
+   *z* = *x* += *y*
 
-$head Operation Sequence$$
-This is an $cref/atomic_base/glossary/Operation/Atomic/$$
-$cref/AD of Base/glossary/AD of Base/$$ operation
+will compute *x* plus *y*
+and then assign this value to both *x* and *z* .
+
+Operation Sequence
+******************
+This is an :ref:`atomic_base<glossary@Operation@Atomic>`
+:ref:`glossary@AD of Base` operation
 and hence it is part of the current
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
+{xrst_toc_hidden
+   example/general/add_eq.cpp
+   example/general/sub_eq.cpp
+   example/general/mul_eq.cpp
+   example/general/div_eq.cpp
+}
 
-$children%
-    example/general/add_eq.cpp%
-    example/general/sub_eq.cpp%
-    example/general/mul_eq.cpp%
-    example/general/div_eq.cpp
-%$$
-
-$head Example$$
+Example
+*******
 The following files contain examples and tests of these functions.
 Each test returns true if it succeeds and false otherwise.
-$table
-$rref AddEq.cpp$$
-$rref sub_eq.cpp$$
-$rref mul_eq.cpp$$
-$rref div_eq.cpp$$
-$tend
 
-$head Derivative$$
-If $latex f$$ and $latex g$$ are
-$cref/Base functions/glossary/Base Function/$$
+.. csv-table::
+   :widths: auto
 
-$subhead Addition$$
-$latex \[
-    \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
-\] $$
+   add_eq.cpp,:ref:`add_eq.cpp-title`
+   sub_eq.cpp,:ref:`sub_eq.cpp-title`
+   mul_eq.cpp,:ref:`mul_eq.cpp-title`
+   div_eq.cpp,:ref:`div_eq.cpp-title`
 
-$subhead Subtraction$$
-$latex \[
-    \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
-\] $$
+Derivative
+**********
+If :math:`f` and :math:`g` are
+:ref:`Base functions<glossary@Base Function>`
 
-$subhead Multiplication$$
-$latex \[
-    \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
-\] $$
+Addition
+========
 
-$subhead Division$$
-$latex \[
-    \D{[ f(x) / g(x) ]}{x} =
-        [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
-\] $$
+.. math::
 
-$end
+   \D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
+
+Subtraction
+===========
+
+.. math::
+
+   \D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
+
+Multiplication
+==============
+
+.. math::
+
+   \D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
+
+Division
+========
+
+.. math::
+
+   \D{[ f(x) / g(x) ]}{x} =
+      [1/g(x)] * \D{f(x)}{x} - [f(x)/g(x)^2] * \D{g(x)}{x}
+
+{xrst_end compound_assign}
 -----------------------------------------------------------------------------
 */
 # include <cppad/core/add_eq.hpp>

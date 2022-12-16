@@ -1,113 +1,120 @@
 # ifndef CPPAD_CORE_ATOMIC_FOUR_REV_DEPEND_HPP
 # define CPPAD_CORE_ATOMIC_FOUR_REV_DEPEND_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin atomic_four_rev_depend$$
-$spell
-    afun
-    enum
-    cpp
-    taylor
-    ident
-$$
+{xrst_begin atomic_four_rev_depend}
 
-$section Atomic Function Reverse Dependency$$
+Atomic Function Reverse Dependency
+##################################
 
-$head Syntax$$
+Syntax
+******
 You can define one or the other of the following callbacks,
 but you should not define both.
 
-$subhead Preferred$$
-$icode%ok% = %afun%.rev_depend(%call_id%,
-    %ident_zero_x%, %depend_x%, %depend_y%
-)%$$
+Preferred
+=========
 
-$subhead Deprecated 2022-05-10$$
-$icode%ok% = %afun%.rev_depend(%call_id%,
-    %depend_x%, %depend_y%
-)%$$
+| *ok* = *afun* . ``rev_depend`` ( *call_id* ,
+| |tab| *ident_zero_x* , *depend_x* , *depend_y*
+| )
 
-$subhead Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+Deprecated 2022-05-10
+=====================
 
-$head Dependency Analysis$$
+| *ok* = *afun* . ``rev_depend`` ( *call_id* ,
+| |tab| *depend_x* , *depend_y*
+| )
+
+Prototype
+=========
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Dependency Analysis
+*******************
 This calculation is sometimes referred to as a reverse dependency analysis.
 
-$head Implementation$$
+Implementation
+**************
 This function must be defined if
-$cref/afun/atomic_four_ctor/atomic_user/afun/$$ is
-used to define an $cref ADFun$$ object $icode f$$,
-and $cref/f.optimize()/optimize/$$ is used.
+:ref:`atomic_four_ctor@atomic_user@afun` is
+used to define an :ref:`ADFun-name` object *f* ,
+and :ref:`f.optimize()<optimize-name>` is used.
 
-$head Base$$
-See $cref/Base/atomic_four_call/Base/$$.
+Base
+****
+See :ref:`atomic_four_call@Base` .
 
-$head vector$$
-is the $cref CppAD_vector$$ template class.
+vector
+******
+is the :ref:`CppAD_vector-name` template class.
 
-$head call_id$$
-See $cref/call_id/atomic_four_call/call_id/$$.
+call_id
+*******
+See :ref:`atomic_four_call@call_id` .
 
-$head ident_zero_x$$
+ident_zero_x
+************
 This can sometimes be used to create more efficient dependency
-(fewer true values in $icode depend_y$$).
+(fewer true values in *depend_y* ).
 If you do not see a way to do this, you can just ignore it.
 This argument has size equal to the number of arguments to this
-atomic function; i.e. the size of $icode ax$$.
-If $icode%ident_zero_x%[%j%]%$$ is true, the argument $icode%ax%[%j%]%$$
+atomic function; i.e. the size of *ax* .
+If *ident_zero_x* [ *j* ] is true, the argument *ax* [ *j* ]
 is a constant parameter that is identically zero.
 An identically zero value times any other value can be treated
 as being identically zero.
 
-$head depend_x$$
+depend_x
+********
 This vector has size equal to the number of arguments for this atomic function;
-i.e. $icode%n%=%ax%.size()%$$ (see $cref/ax/atomic_four_call/ax/$$).
-The input values of the elements of $icode depend_x$$
+i.e. *n* = *ax* . ``size`` () (see :ref:`atomic_four_call@ax` ).
+The input values of the elements of *depend_x*
 are not specified (must not matter).
-Upon return, for $latex j = 0 , \ldots , n-1$$,
-$icode%depend_x%[%j%]%$$ is true if the values of interest depend
-on the value of $icode ax[j]$$ in the corresponding atomic function call.
+Upon return, for :math:`j = 0 , \ldots , n-1`,
+*depend_x* [ *j* ] is true if the values of interest depend
+on the value of *ax* [ *j* ] in the corresponding atomic function call.
 
-$subhead Optimize$$
+Optimize
+========
 Parameters and variables,
 that the values of interest do not depend on,
-may get removed by $cref/optimization/optimize/$$.
+may get removed by :ref:`optimization<optimize-name>` .
 The corresponding values in
-$cref/taylor_x/atomic_four_forward/taylor_x/$$
+:ref:`atomic_four_forward@taylor_x`
 (after optimization has removed them) are currently zero,
 but perhaps these should be changed back to nan.
 
-$head depend_y$$
+depend_y
+********
 This vector has size equal to the number of results for this atomic function;
-i.e. $icode%m%=%ay%.size()%$$ (see $cref/ay/atomic_four_call/ay/$$).
-For $latex i = 0 , \ldots , m-1$$,
-$icode%depend_y%[%i%]%$$ is true if the values of interest depend
-on the value of $icode ay[i]$$ in the corresponding atomic function call.
+i.e. *m* = *ay* . ``size`` () (see :ref:`atomic_four_call@ay` ).
+For :math:`i = 0 , \ldots , m-1`,
+*depend_y* [ *i* ] is true if the values of interest depend
+on the value of *ay* [ *i* ] in the corresponding atomic function call.
 
-$head ok$$
-If this calculation succeeded, $icode ok$$ is true.
+ok
+**
+If this calculation succeeded, *ok* is true.
 Otherwise, it is false.
 
-$head Example$$
-The following is an example $code rev_depend$$ definition taken from
-$cref atomic_four_norm_sq.cpp$$:
-$srcfile%
-    example/atomic_four/norm_sq.cpp%
-    0%// BEGIN REV_DEPEND%// END REV_DEPEND%0
-%$$
+Example
+*******
+The following is an example ``rev_depend`` definition taken from
+:ref:`atomic_four_norm_sq.cpp-name` :
+{xrst_literal
+   example/atomic_four/norm_sq.cpp
+   // BEGIN REV_DEPEND
+   // END REV_DEPEND
+}
 
-$end
+{xrst_end atomic_four_rev_depend}
 -----------------------------------------------------------------------------
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -115,21 +122,21 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Base>
 bool atomic_four<Base>::rev_depend(
-    size_t                      call_id      ,
-    vector<bool>&               ident_zero_x ,
-    vector<bool>&               depend_x     ,
-    const vector<bool>&         depend_y     )
+   size_t                      call_id      ,
+   vector<bool>&               ident_zero_x ,
+   vector<bool>&               depend_x     ,
+   const vector<bool>&         depend_y     )
 // END_PROTOTYPE
-{   return false; }
+{  return false; }
 
 // deprecated version
 template <class Base>
 bool atomic_four<Base>::rev_depend(
-    size_t                      call_id     ,
-    vector<bool>&               depend_x    ,
-    const vector<bool>&         depend_y    )
-// END_PROTOTYPE
-{   return false; }
+   size_t                      call_id     ,
+   vector<bool>&               depend_x    ,
+   const vector<bool>&         depend_y    )
+// end deprecated version
+{  return false; }
 
 } // END_CPPAD_NAMESPACE
 

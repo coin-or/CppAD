@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin pack_setvec dev}
+
+Implement SetVector Using Packed Boolean Values
+###############################################
+
+Namespace
+*********
+This class is in the ``CppAD::local::sparse`` namespace.
+
+Public
+******
+The public member function for the ``list_setvec`` class implement the
+:ref:`SetVector-name` concept.
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/local/sparse/pack_setvec.hpp
+}
+
+{xrst_end pack_setvec}

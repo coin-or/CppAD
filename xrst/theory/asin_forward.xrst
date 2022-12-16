@@ -1,0 +1,107 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin asin_forward}
+
+Inverse Sine and Hyperbolic Sine Forward Mode Theory
+####################################################
+
+Derivatives
+***********
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \R{asin}^{(1)} (x)  & = & 1 / \sqrt{ 1 - x * x }
+   \\
+   \R{asinh}^{(1)} (x) & = & 1 / \sqrt{ 1 + x * x }
+   \end{eqnarray}
+
+If :math:`F(x)` is :math:`\R{asin} (x)` or :math:`\R{asinh} (x)`
+the corresponding derivative satisfies the equation
+
+.. math::
+
+   \sqrt{ 1 \mp x * x } * F^{(1)} (x) - 0 * F (u)  = 1
+
+and in the
+:ref:`standard math function differential equation<forward_theory@Standard Math Functions@Differential Equation>` ,
+:math:`A(x) = 0`,
+:math:`B(x) = \sqrt{1 \mp x * x }`,
+and :math:`D(x) = 1`.
+We use :math:`a`, :math:`b`, :math:`d` and :math:`z` to denote the
+Taylor coefficients for
+:math:`A [ X (t) ]`,
+:math:`B [ X (t) ]`,
+:math:`D [ X (t) ]`,
+and :math:`F [ X(t) ]` respectively.
+
+Taylor Coefficients Recursion
+*****************************
+We define :math:`Q(x) = 1 \mp x * x`
+and let :math:`q` be the corresponding Taylor coefficients for
+:math:`Q[ X(t) ]`.
+It follows that
+
+.. math::
+
+   q^{(j)} = \left\{ \begin{array}{ll}
+      1 \mp x^{(0)} * x^{(0)}            & {\rm if} \; j = 0 \\
+      \mp \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
+   \end{array} \right.
+
+It follows that
+:math:`B[ X(t) ] = \sqrt{ Q[ X(t) ] }` and
+from the equations for the
+:ref:`square root<sqrt_forward-name>`
+that for :math:`j = 0 , 1, \ldots`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   b^{(0)}   & = & \sqrt{ q^{(0)} }
+   \\
+   b^{(j+1)} & = &
+      \frac{1}{j+1} \frac{1}{ b^{(0)} }
+      \left(
+         \frac{j+1}{2} q^{(j+1) }
+         - \sum_{k=1}^j k b^{(k)} b^{(j+1-k)}
+      \right)
+   \end{eqnarray}
+
+It now follows from the general
+:ref:`forward_theory@Standard Math Functions@Taylor Coefficients Recursion Formula`
+that for :math:`j = 0 , 1, \ldots`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z^{(0)} & = & F ( x^{(0)} )
+   \\
+   e^{(j)}
+   & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
+   \\
+   & = & \left\{ \begin{array}{ll}
+      1 & {\rm if} \; j = 0 \\
+      0 & {\rm otherwise}
+   \end{array} \right.
+   \\
+   z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      \sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)}
+      - \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}
+   \right)
+   \\
+   z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      (j+1) x^{(j+1)}
+      - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \right)
+   \end{eqnarray}
+
+{xrst_end asin_forward}

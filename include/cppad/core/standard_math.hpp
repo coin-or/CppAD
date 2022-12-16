@@ -1,116 +1,120 @@
 # ifndef CPPAD_CORE_STANDARD_MATH_HPP
 # define CPPAD_CORE_STANDARD_MATH_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin unary_standard_math$$
-$spell
-    const
-    VecAD
-    fabs
-$$
+{xrst_begin unary_standard_math}
+{xrst_spell
+   expm
+   tanh
+}
 
-$section The Unary Standard Math Functions$$
+The Unary Standard Math Functions
+#################################
 
-$head Syntax$$
-$icode%y% = %fun%(%x%)%$$
+Syntax
+******
+*y* = *fun* ( *x* )
 
-$head Purpose$$
-Evaluates the standard math function $icode fun$$.
+Purpose
+*******
+Evaluates the standard math function *fun* .
 
-$head Possible Types$$
+Possible Types
+**************
 
-$subhead Base$$
-If $icode Base$$ satisfies the
-$cref/base type requirements/base_require/$$
-and argument $icode x$$ has prototype
-$codei%
-    const %Base%& %x%
-%$$
-then the result $icode y$$ has prototype
-$codei%
-    %Base% %y%
-%$$
+Base
+====
+If *Base* satisfies the
+:ref:`base type requirements<base_require-name>`
+and argument *x* has prototype
 
-$subhead AD<Base>$$
-If the argument $icode x$$ has prototype
-$codei%
-    const AD<%Base%>& %x%
-%$$
-then the result $icode y$$ has prototype
-$codei%
-    AD<%Base%> %y%
-%$$
+   ``const`` *Base* & *x*
 
-$subhead VecAD<Base>$$
-If the argument $icode x$$ has prototype
-$codei%
-    const VecAD<%Base%>::reference& %x%
-%$$
-then the result $icode y$$ has prototype
-$codei%
-    AD<%Base%> %y%
-%$$
+then the result *y* has prototype
 
-$children%include/cppad/core/std_math_11.hpp
-    %include/cppad/core/abs.hpp
-    %include/cppad/core/sign.hpp
-%$$
+   *Base* *y*
 
-$head fun$$
-The possible values for $icode fun$$ are
-$table
-$icode  fun$$ $pre  $$ $cnext Description        $rnext
-$cref abs$$            $cnext $title abs$$       $rnext
-$cref acos$$           $cnext $title acos$$      $rnext
-$cref acosh$$          $cnext $title acosh$$     $rnext
-$cref asin$$           $cnext $title asin$$      $rnext
-$cref asinh$$          $cnext $title asinh$$     $rnext
-$cref atan$$           $cnext $title atan$$      $rnext
-$cref atanh$$          $cnext $title atanh$$     $rnext
-$cref cos$$            $cnext $title cos$$       $rnext
-$cref cosh$$           $cnext $title cosh$$      $rnext
-$cref erf$$            $cnext $title erf$$       $rnext
-$cref exp$$            $cnext $title exp$$       $rnext
-$cref expm1$$          $cnext $title expm1$$     $rnext
-$cref/fabs/abs/$$      $cnext $title abs$$       $rnext
-$cref log10$$          $cnext $title log10$$     $rnext
-$cref log1p$$          $cnext $title log1p$$     $rnext
-$cref log$$            $cnext $title log$$       $rnext
-$cref sign$$           $cnext $title sign$$      $rnext
-$cref sin$$            $cnext $title sin$$       $rnext
-$cref sinh$$           $cnext $title sinh$$      $rnext
-$cref sqrt$$           $cnext $title sqrt$$      $rnext
-$cref tan$$            $cnext $title tan$$       $rnext
-$cref tanh$$           $cnext $title tanh$$
-$tend
+AD<Base>
+========
+If the argument *x* has prototype
 
-$end
+   ``const AD<`` *Base* >& *x*
+
+then the result *y* has prototype
+
+   ``AD<`` *Base* > *y*
+
+VecAD<Base>
+===========
+If the argument *x* has prototype
+
+   ``const VecAD<`` *Base* >:: ``reference&`` *x*
+
+then the result *y* has prototype
+
+   ``AD<`` *Base* > *y*
+
+{xrst_toc_hidden
+   include/cppad/core/std_math_11.hpp
+   include/cppad/core/abs.hpp
+   include/cppad/core/sign.hpp
+}
+
+fun
+***
+The possible values for *fun* are
+
+.. csv-table::
+   :widths: auto
+
+   *fun*,Description
+   abs,:ref:`abs-title`
+   acos,:ref:`acos-title`
+   acosh,:ref:`acosh-title`
+   asin,:ref:`asin-title`
+   asinh,:ref:`asinh-title`
+   atan,:ref:`atan-title`
+   atanh,:ref:`atanh-title`
+   cos,:ref:`cos-title`
+   cosh,:ref:`cosh-title`
+   erf,:ref:`erf-title`
+   exp,:ref:`exp-title`
+   expm1,:ref:`expm1-title`
+   :ref:`fabs<abs-name>` :ref:`abs-title`
+   log10,:ref:`log10-title`
+   log1p,:ref:`log1p-title`
+   log,:ref:`log-title`
+   sign,:ref:`sign-title`
+   sin,:ref:`sin-title`
+   sinh,:ref:`sinh-title`
+   sqrt,:ref:`sqrt-title`
+   tan,:ref:`tan-title`
+   tanh,:ref:`tanh-title`
+
+{xrst_end unary_standard_math}
 */
 # include <cppad/core/abs.hpp>
 # include <cppad/core/sign.hpp>
 
 /*
-$begin binary_math$$
+{xrst_begin binary_math}
 
-$section The Binary Math Functions$$
+The Binary Math Functions
+#########################
 
-$childtable%include/cppad/core/atan2.hpp
-    %include/cppad/core/pow.hpp
-    %include/cppad/core/azmul.hpp
-%$$
+Contents
+********
+{xrst_toc_table
+   include/cppad/core/atan2.hpp
+   include/cppad/core/pow.hpp
+   include/cppad/core/azmul.hpp
+}
 
-$end
+{xrst_end binary_math}
 */
 # include <cppad/core/atan2.hpp>
 # include <cppad/core/pow.hpp>

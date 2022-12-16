@@ -1,39 +1,32 @@
 # ifndef CPPAD_WNO_CONVERSION_HPP
 # define CPPAD_WNO_CONVERSION_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin wno_conversion$$
-$spell
-    cppad
-    wno
-    cpp
-    hpp
-$$
+{xrst_begin wno_conversion}
+{xrst_spell
+   wno
+}
 
-$section Suppress Suspect Implicit Conversion Warnings$$
+Suppress Suspect Implicit Conversion Warnings
+#############################################
 
-$head Syntax$$
-$codei%# include <cppad/wno_conversion.hpp>%$$
+Syntax
+******
+# ``include <cppad/wno_conversion.hpp>``
 
-$head Purpose$$
+Purpose
+*******
 In many cases it is good to have warnings for implicit conversions
 that may loose range or precision.
 The include command above, before any other includes, suppresses
 these warning for a particular compilation unit (which usually corresponds
-to a $icode%*%.cpp%$$ file).
+to a * . ``cpp`` file).
 
-$end
+{xrst_end wno_conversion}
 */
 
 # include <cppad/configure.hpp>

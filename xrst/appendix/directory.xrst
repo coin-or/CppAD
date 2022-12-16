@@ -1,0 +1,92 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin directory}
+{xrst_spell
+   omh
+   pkgconfig
+}
+
+Directory Structure
+###################
+A brief description of each of the CppAD directories is provided below:
+
+Distribution Directory
+**********************
+The following table lists the sub-directories of the
+:ref:`download@Distribution Directory` :
+
+.. list-table::
+
+   * - ``bin``
+     - Scripts used for CppAD development.
+   * - ``bug``
+     - Used to create a simple CppAD bug report or test.
+   * - ``build``
+     - Used to build the libraries, examples, and tests.
+   * - ``cmake``
+     - cmake macro files.
+   * - ``cppad_ipopt``
+     - Example and tests for the deprecated cppad_ipopt library.
+   * - ``cppad_lib``
+     - Source code corresponding to the CppAD library.
+   * - ``example``
+     - Source code for the CppAD examples.
+   * - ``external``
+     - Used to build optional packages; see :ref:`get_optional.sh-name`
+   * - ``include``
+     - The CppAD include directory.
+   * - ``introduction``
+     - Source code for the CppAD introduction.
+   * - ``omh``
+     - Contains files that are only used for documentation.
+   * - ``pkgconfig``
+     - Contains the CppAD pkg-config information.
+   * - ``speed``
+     - The CppAD speed tests.
+   * - ``test_more``
+     - Tests that are not part of the documentation.
+
+Example Directory
+*****************
+The following table lists the sub-directories of the ``example``
+directory.
+
+.. list-table::
+
+   * - ``abs_normal``
+     - examples using :ref:`abs_normal<example_abs_normal-name>` representation of non-smooth functions.
+   * - ``atomic_four``
+     - :ref:`atomic_four-title` function examples.
+   * - ``atomic_three``
+     - :ref:`atomic_three-title` function examples.
+   * - ``atomic_two``
+     - :ref:`atomic_two-title` examples not yet converted to use ``atomic_four`` .
+   * - ``chkpoint_two``
+     - :ref:`chkpoint_two-title` examples
+   * - ``code_gen_fun``
+     - :ref:`code_gen_fun-title` examples
+   * - ``general``
+     - general purpose examples.
+   * - ``get_started``
+     - a good place to get started using CppAD.
+   * - ``ipopt_solve``
+     - :ref:`ipopt_solve-title` examples.
+   * - ``jit``
+     - :ref:`example_jit-title`
+   * - ``json``
+     - :ref:`json_ad_graph-title` examples
+   * - ``multi_thread``
+     - CppAD :ref:`multi_threading<multi_thread-name>` examples.
+   * - ``optimize``
+     - examples using the :ref:`optimize-name` operation.
+   * - ``print_for``
+     - examples that used the :ref:`PrintFor-name` operation.
+   * - ``sparse``
+     - examples using :ref:`sparsity_patterns<sparsity_pattern-name>` and
+       :ref:`sparse_derivatives<sparse_derivative-name>` .
+   * - ``utility``
+     - example using the CppAD :ref:`utilities<utility-name>` .
+
+{xrst_end directory}

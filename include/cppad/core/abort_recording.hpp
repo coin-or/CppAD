@@ -1,58 +1,51 @@
 # ifndef CPPAD_CORE_ABORT_RECORDING_HPP
 # define CPPAD_CORE_ABORT_RECORDING_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin abort_recording$$
-$spell
-$$
+{xrst_begin abort_recording}
 
-$section Abort Recording of an Operation Sequence$$
+Abort Recording of an Operation Sequence
+########################################
 
+Syntax
+******
+``AD<`` *Base* >:: ``abort_recording`` ()
 
-$head Syntax$$
-$codei%AD<%Base%>::abort_recording()%$$
-
-$head Purpose$$
+Purpose
+*******
 Sometimes it is necessary to abort the recording of an operation sequence
 that started with a call of the form
-$codei%
-    Independent(%x%)
-%$$
-If such a recording is currently in progress,
-$code abort_recording$$ will stop the recording and delete the
-corresponding information.
-Otherwise, $code abort_recording$$ has no effect.
 
-$children%
-    example/general/abort_recording.cpp
-%$$
-$head Example$$
+   ``Independent`` ( *x* )
+
+If such a recording is currently in progress,
+``abort_recording`` will stop the recording and delete the
+corresponding information.
+Otherwise, ``abort_recording`` has no effect.
+{xrst_toc_hidden
+   example/general/abort_recording.cpp
+}
+Example
+*******
 The file
-$cref abort_recording.cpp$$
+:ref:`abort_recording.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end abort_recording}
 ----------------------------------------------------------------------------
 */
 
 
 namespace CppAD {
-    template <class Base>
-    void AD<Base>::abort_recording(void)
-    {   local::ADTape<Base>* tape = AD<Base>::tape_ptr();
-        if( tape != nullptr )
-            AD<Base>::tape_manage(delete_tape_manage);
-    }
+   template <class Base>
+   void AD<Base>::abort_recording(void)
+   {  local::ADTape<Base>* tape = AD<Base>::tape_ptr();
+      if( tape != nullptr )
+         AD<Base>::tape_manage(delete_tape_manage);
+   }
 }
 
 # endif

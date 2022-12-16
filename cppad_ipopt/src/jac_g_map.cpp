@@ -1,14 +1,7 @@
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 # include "cppad_ipopt_nlp.hpp"
 # include "jac_g_map.hpp"
 // ---------------------------------------------------------------------------
@@ -34,7 +27,7 @@ For <tt>k = 0 , ... , K-1</tt>,
 for <tt>ell = 0 , ... , L[k]</tt>,
 the function call
 \verbatim
-    fg_info->index(k, ell, I, J);
+   fg_info->index(k, ell, I, J);
 \endverbatim
 is made by jac_g_map.
 The values k and ell are inputs.
@@ -107,61 +100,61 @@ Furthermore, if <tt>index_jac_g[i].find(j) == index_jac_g[i].end()</tt>,
 then the \f$ (i, j)\f$ entry in the Jacobian of \f$ g(x) \f$ is always zero.
 */
 void jac_g_map(
-    cppad_ipopt_fg_info*  fg_info                                  ,
-    size_t                                          m              ,
-    size_t                                          n              ,
-    size_t                                          K              ,
-    const CppAD::vector<size_t>&                    L              ,
-    const CppAD::vector<size_t>&                    p              ,
-    const CppAD::vector<size_t>&                    q              ,
-    const CppAD::vector<CppAD::vectorBool>&         pattern_jac_r  ,
-    CppAD::vector<size_t>&                          I              ,
-    CppAD::vector<size_t>&                          J              ,
-    CppAD::vector< std::map<size_t,size_t> >&       index_jac_g    )
+   cppad_ipopt_fg_info*  fg_info                                  ,
+   size_t                                          m              ,
+   size_t                                          n              ,
+   size_t                                          K              ,
+   const CppAD::vector<size_t>&                    L              ,
+   const CppAD::vector<size_t>&                    p              ,
+   const CppAD::vector<size_t>&                    q              ,
+   const CppAD::vector<CppAD::vectorBool>&         pattern_jac_r  ,
+   CppAD::vector<size_t>&                          I              ,
+   CppAD::vector<size_t>&                          J              ,
+   CppAD::vector< std::map<size_t,size_t> >&       index_jac_g    )
 {
-    using CppAD::vectorBool;
-    size_t i, j, ij, k, ell;
+   using CppAD::vectorBool;
+   size_t i, j, ij, k, ell;
 
-    CPPAD_ASSERT_UNKNOWN( K == L.size() );
-    CPPAD_ASSERT_UNKNOWN( K == p.size() );
-    CPPAD_ASSERT_UNKNOWN( K == q.size() );
-    CPPAD_ASSERT_UNKNOWN( K == pattern_jac_r.size() );
+   CPPAD_ASSERT_UNKNOWN( K == L.size() );
+   CPPAD_ASSERT_UNKNOWN( K == p.size() );
+   CPPAD_ASSERT_UNKNOWN( K == q.size() );
+   CPPAD_ASSERT_UNKNOWN( K == pattern_jac_r.size() );
 # ifndef NDEBUG
-    for(k = 0; k < K; k++)
-    {   CPPAD_ASSERT_UNKNOWN( p[k] <= I.size() );
-        CPPAD_ASSERT_UNKNOWN( q[k] <= J.size() );
-        CPPAD_ASSERT_UNKNOWN( p[k]*q[k] == pattern_jac_r[k].size() );
-    }
+   for(k = 0; k < K; k++)
+   {  CPPAD_ASSERT_UNKNOWN( p[k] <= I.size() );
+      CPPAD_ASSERT_UNKNOWN( q[k] <= J.size() );
+      CPPAD_ASSERT_UNKNOWN( p[k]*q[k] == pattern_jac_r[k].size() );
+   }
 # endif
-    // Now compute pattern for g
-    // (use standard set representation because can be huge).
-    CppAD::vector< std::set<size_t> > pattern_jac_g(m);
-    for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
-    {   fg_info->index(k, ell, I, J);
-        for(i = 0; i < p[k]; i++) if( I[i] != 0 )
-        {   for(j = 0; j < q[k]; j++)
-            {   ij  = i * q[k] + j;
-                if( pattern_jac_r[k][ij] )
-                    pattern_jac_g[I[i]-1].insert(J[j]);
-            }
-        }
-    }
+   // Now compute pattern for g
+   // (use standard set representation because can be huge).
+   CppAD::vector< std::set<size_t> > pattern_jac_g(m);
+   for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
+   {  fg_info->index(k, ell, I, J);
+      for(i = 0; i < p[k]; i++) if( I[i] != 0 )
+      {  for(j = 0; j < q[k]; j++)
+         {  ij  = i * q[k] + j;
+            if( pattern_jac_r[k][ij] )
+               pattern_jac_g[I[i]-1].insert(J[j]);
+         }
+      }
+   }
 
-    // Now compute the mapping from (i, j) in the Jacobian of g to the
-    // corresponding index value used by Ipopt to represent the Jacobian.
-    CPPAD_ASSERT_UNKNOWN( index_jac_g.size() == 0 );
-    index_jac_g.resize(m);
-    std::set<size_t>::const_iterator itr;
-    ell = 0;
-    for(i = 0; i < m; i++)
-    {   for(itr = pattern_jac_g[i].begin();
-            itr != pattern_jac_g[i].end();
-            itr++)
-        {
-            index_jac_g[i][*itr] = ell++;
-        }
-    }
-    return;
+   // Now compute the mapping from (i, j) in the Jacobian of g to the
+   // corresponding index value used by Ipopt to represent the Jacobian.
+   CPPAD_ASSERT_UNKNOWN( index_jac_g.size() == 0 );
+   index_jac_g.resize(m);
+   std::set<size_t>::const_iterator itr;
+   ell = 0;
+   for(i = 0; i < m; i++)
+   {  for(itr = pattern_jac_g[i].begin();
+         itr != pattern_jac_g[i].end();
+         itr++)
+      {
+         index_jac_g[i][*itr] = ell++;
+      }
+   }
+   return;
 }
 
 // ---------------------------------------------------------------------------

@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin recorder dev}
+
+Recorder Class Documentation
+############################
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/local/record/put_var_vecad.hpp
+   include/cppad/local/record/put_dyn_atomic.hpp
+   include/cppad/local/record/put_var_atomic.hpp
+   include/cppad/local/record/cond_exp.hpp
+   include/cppad/local/record/comp_op.hpp
+}
+
+{xrst_end recorder}

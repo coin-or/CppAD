@@ -1,111 +1,101 @@
 # ifndef CPPAD_CORE_INTEGER_HPP
 # define CPPAD_CORE_INTEGER_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
 ------------------------------------------------------------------------------
-$begin Integer$$
-$spell
-    std
-    VecAD
-    CppAD
-    namespace
-    const
-    bool
-$$
+{xrst_begin Integer}
 
+Convert From AD to Integer
+##########################
 
+Syntax
+******
+*i* = ``Integer`` ( *x* )
 
-$section Convert From AD to Integer$$
-
-$head Syntax$$
-$icode%i% = Integer(%x%)%$$
-
-
-$head Purpose$$
+Purpose
+*******
 Converts from an AD type to the corresponding integer value.
 
-$head i$$
-The result $icode i$$ has prototype
-$codei%
-    int %i%
-%$$
+i
+*
+The result *i* has prototype
 
-$head x$$
+   ``int`` *i*
 
-$subhead Real Types$$
-If the argument $icode x$$ has either of the following prototypes:
-$codei%
-    const float                %%  &%x%
-    const double               %%  &%x%
-%$$
+x
+*
+
+Real Types
+==========
+If the argument *x* has either of the following prototypes:
+
+| |tab| ``const float`` & *x*
+| |tab| ``const double`` & *x*
+
 the fractional part is dropped to form the integer value.
-For example, if $icode x$$ is 1.5, $icode i$$ is 1.
-In general, if $latex x \geq 0$$, $icode i$$ is the
-greatest integer less than or equal $icode x$$.
-If $latex x \leq 0$$, $icode i$$ is the
-smallest integer greater than or equal $icode x$$.
+For example, if *x* is 1.5, *i* is 1.
+In general, if :math:`x \geq 0`, *i* is the
+greatest integer less than or equal *x* .
+If :math:`x \leq 0`, *i* is the
+smallest integer greater than or equal *x* .
 
-$subhead Complex Types$$
-If the argument $icode x$$ has either of the following prototypes:
-$codei%
-    const std::complex<float>  %%  &%x%
-    const std::complex<double> %%  &%x%
-%$$
-The result $icode i$$ is given by
-$codei%
-    %i% = Integer(%x%.real())
-%$$
+Complex Types
+=============
+If the argument *x* has either of the following prototypes:
 
-$subhead AD Types$$
-If the argument $icode x$$ has either of the following prototypes:
-$codei%
-    const AD<%Base%>               &%x%
-    const VecAD<%Base%>::reference &%x%
-%$$
-$icode Base$$ must support the $code Integer$$ function and
-the conversion has the same meaning as for $icode Base$$.
+| |tab| ``const std::complex<float>`` & *x*
+| |tab| ``const std::complex<double>`` & *x*
 
-$head Operation Sequence$$
+The result *i* is given by
+
+   *i* = ``Integer`` ( *x* . ``real`` ())
+
+AD Types
+========
+If the argument *x* has either of the following prototypes:
+
+| |tab| ``const AD<`` *Base* >               & *x*
+| |tab| ``const VecAD<`` *Base* >:: ``reference &`` *x*
+
+*Base* must support the ``Integer`` function and
+the conversion has the same meaning as for *Base* .
+
+Operation Sequence
+******************
 The result of this operation is not an
-$cref/AD of Base/glossary/AD of Base/$$ object.
+:ref:`glossary@AD of Base` object.
 Thus it will not be recorded as part of an
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Example$$
-$children%
-    example/general/integer.cpp
-%$$
+Example
+*******
+{xrst_toc_hidden
+   example/general/integer.cpp
+}
 The file
-$cref integer.cpp$$
+:ref:`integer.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end Integer}
 ------------------------------------------------------------------------------
 */
 
 
 namespace CppAD {
 
-    template <class Base>
-    CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-    int Integer(const AD<Base> &x)
-    {   return Integer(x.value_); }
+   template <class Base>
+   CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+   int Integer(const AD<Base> &x)
+   {  return Integer(x.value_); }
 
-    template <class Base>
-    CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-    int Integer(const VecAD_reference<Base> &x)
-    {   return Integer( x.ADBase() ); }
+   template <class Base>
+   CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+   int Integer(const VecAD_reference<Base> &x)
+   {  return Integer( x.ADBase() ); }
 }
 # endif

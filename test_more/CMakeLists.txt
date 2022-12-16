@@ -1,14 +1,7 @@
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 # Build the test_more directory tests
 
 # initialize check_depends
@@ -22,13 +15,13 @@ ADD_SUBDIRECTORY(compare_c)
 
 # debug_rel tests
 IF( NOT "${CMAKE_GENERATOR}" STREQUAL "NMake Makefiles" )
-    # Visual studio rejects mixing debug and release flags
-    ADD_SUBDIRECTORY(debug_rel)
+   # Visual studio rejects mixing debug and release flags
+   ADD_SUBDIRECTORY(debug_rel)
 ENDIF( NOT "${CMAKE_GENERATOR}" STREQUAL "NMake Makefiles" )
 #
 # cppad_for_tmb tests
 IF( OpenMP_CXX_FOUND )
-    ADD_SUBDIRECTORY(cppad_for_tmb)
+   ADD_SUBDIRECTORY(cppad_for_tmb)
 ENDIF( OpenMP_CXX_FOUND )
 
 # general tests

@@ -1,26 +1,19 @@
 #! /bin/bash -e
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 if [ ! -e "bin/doxyfile.sh" ]
 then
-    echo "bin/doxyfile.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/doxyfile.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 if [ "$3" == "" ]
 then
-    echo "usage: bin/doxyfile.sh version error_file output_directory"
-    echo "creates the doxygen configuration file ./doxyfile"
-    exit 1
+   echo "usage: bin/doxyfile.sh version error_file output_directory"
+   echo "creates the doxygen configuration file ./doxyfile"
+   exit 1
 fi
 version="$1"
 error_file="$2"
@@ -89,10 +82,10 @@ WARN_LOGFILE            = $error_file
 WARN_NO_PARAMDOC        = YES
 EOF
 sed \
-    -e 's/^/s|^\\(/' \
-    -e 's/ *=/ *=\\).*|\\1/' \
-    -e 's/$/|/' \
-    -i doxyfile.$$
+   -e 's/^/s|^\\(/' \
+   -e 's/ *=/ *=\\).*|\\1/' \
+   -e 's/$/|/' \
+   -i doxyfile.$$
 #
 #
 echo "sed -f doxyfile.$$ -i doxyfile"

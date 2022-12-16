@@ -1,14 +1,7 @@
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-22 Bradley M. Bell
-#
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
-#
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 #
 # Name for this text
 SET(name cppad_for_tmb)
@@ -19,26 +12,26 @@ SET(cppad_cxx_flags "${cppad_cxx_flags} ${OpenMP_CXX_FLAGS} -DCPPAD_FOR_TMB")
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 SET(source_list
-    ${name}.cpp
-    implicit_ctor.cpp
-    multi_atomic_two.cpp
-    multi_atomic_three.cpp
-    multi_chkpoint_one.cpp
-    multi_chkpoint_two.cpp
-    perfer_reverse.cpp
+   ${name}.cpp
+   implicit_ctor.cpp
+   multi_atomic_three.cpp
+   multi_atomic_two.cpp
+   multi_chkpoint_one.cpp
+   multi_chkpoint_two.cpp
+   perfer_reverse.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 
 set_compile_flags(
-    test_more_${name} "${cppad_debug_which}" "${source_list}"
+   test_more_${name} "${cppad_debug_which}" "${source_list}"
 )
 #
 # now that we have the properties, add the executable
 ADD_EXECUTABLE( test_more_${name} EXCLUDE_FROM_ALL ${source_list} )
 TARGET_LINK_LIBRARIES(test_more_${name} PRIVATE
-    ${cppad_lib}
-    ${colpack_libs}
-    ${OpenMP_CXX_LIBRARIES}
+   ${cppad_lib}
+   ${colpack_libs}
+   ${OpenMP_CXX_LIBRARIES}
 )
 #
 # Extra flags used by linker for openmp support

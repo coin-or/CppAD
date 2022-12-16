@@ -1,0 +1,189 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin atomic_four_mat_mul}
+{xrst_spell
+   tr
+}
+
+Atomic Matrix Multiply Class: Example Implementation
+####################################################
+
+Syntax
+******
+
+| ``atomic_mat_mul`` *mat_mul* ( *name* )
+| *call_id* = *mat_mul* . ``set`` ( *n_left* , *n_middle* , *n_right* )
+| *mat_mul* . ``get`` ( *call_id* , *n_left* , *n_middle* , *n_right* )
+| *mat_mul* ( *call_id* , *x* , *y* )
+
+Purpose
+*******
+Construct an atomic operation that computes the matrix product
+*C* = *A* * *B* .
+
+n_left
+******
+This is the row dimension of the matrices *A* and *C* .
+This is an argument (return value) for the ``set`` (``get`` ) routine.
+
+n_middle
+********
+This is the column dimension of the matrix *A*
+and row dimension of the matrix *B*
+This is an argument (return value) for the ``set`` (``get`` ) routine.
+
+n_right
+*******
+This is the column dimension of the matrices *B* and *C* .
+This is an argument (return value) for the ``set`` (``get`` ) routine.
+
+call_id
+*******
+This is a return value (argument) for the ``set`` (``get`` ) routine.
+
+x
+*
+We use *x* to denote the argument to the atomic function.
+The size of this vector must be
+
+   *n* = *n_left* * *n_middle* + *n_middle* * *n_right*
+
+The matrix *A* is stored in row major order at the beginning of
+*x* ; i.e. its ( *i* , *k* ) element is
+
+   *A* ( *i* , *k* ) = *x* [ *i* * *n_middle* + *k* ]
+
+The matrix *B* is stored in row major order at the end of
+*x* ; i.e. its ( *k* , *j* ) element is
+
+   *B* ( *k* , *j* ) = *x* [ *n_left* * *n_middle* + *k* * *n_right* + *j* ]
+
+y
+*
+We use *y* to denote the result of the atomic function.
+The size of this vector must be
+*m* = *n_middle* * *n_right* .
+The matrix *C* is stored in row major order in *y* ;
+i.e. its ( *i* , *k* ) element is
+
+   *C* ( *i* , *j* ) = *y* [ *i* * *n_right* + *j* ]
+
+Theory
+******
+
+Forward
+=======
+For :math:`k = 0 , \ldots`, the *k*-th order Taylor coefficient
+:math:`C^{(k)}` is given by
+
+.. math::
+
+   C^{(k)} = \sum_{\ell = 0}^{k} A^{(\ell)} B^{(k-\ell)}
+
+Matrix Argument Scalar Valued Function
+======================================
+Suppose :math:`\bar{F}` is the derivative of the
+scalar value function :math:`s(F)` with respect to the matrix :math:`F`; i.e.,
+
+.. math::
+
+   \bar{F}_{i,j} = \frac{ \partial s } { \partial F_{i,j} }
+
+Also suppose that :math:`t` is a scalar valued argument and
+
+.. math::
+
+   F(t) = D(t) E(t)
+
+It follows that
+
+.. math::
+
+   F'(t) = D'(t) E(t) +  D(t) E'(t)
+
+.. math::
+
+   (s \circ F)'(t)
+   =
+   \R{tr} [ \bar{F}^\R{T} F'(t) ]
+
+.. math::
+
+   =
+   \R{tr} [ \bar{F}^\R{T} D'(t) E(t) ] +
+   \R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]
+
+.. math::
+
+   =
+   \R{tr} [ E(t) \bar{F}^\R{T} D'(t) ] +
+   \R{tr} [ \bar{F}^\R{T} D(t) E'(t) ]
+
+Letting :math:`E(t) = 0` and :math:`D(t) = \Delta^{i,j} (t)`
+(where :math:`\Delta^{i,j} (t)` is the matrix that is zero,
+except for :math:`i = j` where it is :math:`t`) we have
+
+.. math::
+
+   \bar{D}_{i,j}
+   = \frac{ \partial s } { \partial D_{i,j} }
+   = (s \circ F)'(t)
+   = \R{tr} [ E(t) \bar{F}^\R{T} \Delta^{i,j}(1) ]
+
+.. math::
+
+   \bar{D}_{i,j}
+   = \sum_k D_{j,k} \bar{F}^\R{T}_{k,i}
+   = \sum_k \bar{F}_{i,k} E^\R{T}_{k,j}
+
+.. math::
+
+   \bar{D} = \bar{F} E^\R{T}
+
+Letting :math:`D(t) = 0` and :math:`E(t) = \Delta^{i,j} (t)`
+we have
+
+.. math::
+
+   \bar{E}_{i,j}
+   = \frac{ \partial s } { \partial E_{i,j} }
+   = (s \circ F)'(t)
+   = \R{tr} [ \bar{F}^\R{T} D(t) \Delta^{i,j} ]
+
+.. math::
+
+   \bar{E}_{i,j}
+   = \sum_k \bar{F}^\R{T}_{j,k} C_{k,i}
+   = \sum_k D^\R{T}_{i,k} \bar{F}_{k,j}
+
+.. math::
+
+   \bar{E} = D^\R{T} \bar{F}
+
+Reverse
+=======
+Reverse mode eliminates :math:`C^{(k)}` as follows:
+for :math:`\ell = 0, \ldots , k`,
+
+.. math::
+
+   \bar{A}^{(\ell)}  = \bar{A}^{(\ell)} + \bar{C}^{(k)} [ B^{(k-\ell)} ] ^\R{T}
+
+.. math::
+
+   \bar{B}^{(k-\ell)} =  \bar{B}^{(k-\ell)} + [ A^{(\ell)} ]^\R{T} \bar{C}^{(k)}
+
+Contents
+********
+{xrst_toc_table
+   include/cppad/example/atomic_four/mat_mul/implement.xrst
+   example/atomic_four/mat_mul/forward.cpp
+   example/atomic_four/mat_mul/reverse.cpp
+   example/atomic_four/mat_mul/sparsity.cpp
+   example/atomic_four/mat_mul/rev_depend.cpp
+   example/atomic_four/mat_mul/identical_zero.cpp
+}
+
+{xrst_end atomic_four_mat_mul}

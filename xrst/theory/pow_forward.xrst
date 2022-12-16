@@ -1,0 +1,117 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin pow_forward}
+
+Power Function Forward Mode Theory
+##################################
+We consider the operation :math:`F(x) = x^y` where :math:`x`
+is a variable and :math:`y` is a parameter.
+
+Derivatives
+***********
+The corresponding derivative satisfies the equation
+
+.. math::
+
+   x * F^{(1)} (x) -  y F(x) = 0
+
+This is the
+:ref:`standard math function differential equation<forward_theory@Standard Math Functions@Differential Equation>` ,
+where
+:math:`A(x) = y`,
+:math:`B(x) = x`,
+and :math:`D(x) = 0`.
+We use :math:`a`, :math:`b`, :math:`d`,
+and :math:`z` to denote the
+Taylor coefficients for
+:math:`A [ X (t) ]`,
+:math:`B [ X (t) ]`,
+:math:`D [ X (t) ]`,
+and :math:`F [ X(t) ]` respectively.
+It follows that
+:math:`b^j = x^j`, :math:`d^j = 0`,
+
+.. math::
+
+   a^{(j)} = \left\{ \begin{array}{ll}
+      y & \R{if} \; j = 0
+      \\
+      0 & \R{otherwise}
+   \end{array} \right.
+
+Taylor Coefficients Recursion
+*****************************
+
+z^(0)
+=====
+
+.. math::
+
+   z^{(0)} = F ( x^{(0)} )
+
+e^(j)
+=====
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      e^{(j)} & = & d^{(j)} + \sum_{k=0}^j a^{(j-k)} * z^{(k)}
+      \\
+      e^{(j)} & = & y * z^{(j)}
+   \end{eqnarray}
+
+z^j
+===
+For :math:`j = 0, \ldots , p-1`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
+   \left(
+      \sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+      - \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
+   \right)
+   \\
+   & = & \frac{1}{j+1} \frac{1}{ x^{(0)} }
+   \left(
+      y \sum_{k=1}^{j+1} k x^{(k)} z^{(j+1-k)}
+      - \sum_{k=1}^j k z^{(k)}  x^{(j+1-k)}
+   \right)
+   \\
+   & = &
+   \frac{1}{j+1} \frac{1}{ x^{(0)} }
+   \left(
+      y (j+1) x^{(j+1)} z^{(0)}
+      +
+      \sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
+   \right)
+   \\
+   & = &
+   y z^{(0)} x^{(j+1)} / x^{(0)}
+   +
+   \frac{1}{j+1} \frac{1}{ x^{(0)} }
+   \sum_{k=1}^j k ( y x^{(k)} z^{(j+1-k)} - z^{(k)}  x^{(j+1-k)} )
+   \end{eqnarray}
+
+For :math:`j = 1, \ldots , p`
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z^{(j)}
+   & = &
+   \left. \left(
+      y z^{(0)} x^{(j)}
+      +
+      \frac{1}{j} \sum_{k=1}^{j-1} k ( y x^{(k)} z^{(j-k)} - z^{(k)}  x^{(j-k)} )
+   \right) \right/ x^{(0)}
+   \end{eqnarray}
+
+{xrst_end pow_forward}

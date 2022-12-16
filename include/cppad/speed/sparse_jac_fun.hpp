@@ -1,163 +1,166 @@
 # ifndef CPPAD_SPEED_SPARSE_JAC_FUN_HPP
 # define CPPAD_SPEED_SPARSE_JAC_FUN_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin sparse_jac_fun$$
-$spell
-    Jacobian
-    jac
-    cppad
-    hpp
-    fp
-    CppAD
-    namespace
-    const
-    bool
-    exp
-    arg
-$$
+{xrst_begin sparse_jac_fun}
+{xrst_spell
+   fp
+}
 
-$section Evaluate a Function That Has a Sparse Jacobian$$
+Evaluate a Function That Has a Sparse Jacobian
+##############################################
 
+Syntax
+******
 
-$head Syntax$$
-$codei%# include <cppad/speed/sparse_jac_fun.hpp>
-%$$
-$codei%sparse_jac_fun(%m%, %n%, %x%, %row%, %col%, %p%, %fp%)%$$
+   # ``include <cppad/speed/sparse_jac_fun.hpp>``
 
-$head Purpose$$
+``sparse_jac_fun`` ( *m* , *n* , *x* , *row* , *col* , *p* , *fp* )
+
+Purpose
+*******
 This routine evaluates
-$latex f(x)$$ and $latex f^{(1)} (x)$$
-where the Jacobian $latex f^{(1)} (x)$$ is sparse.
-The function $latex f : \B{R}^n \rightarrow \B{R}^m$$ only depends on the
-size and contents of the index vectors $icode row$$ and $icode col$$.
+:math:`f(x)` and :math:`f^{(1)} (x)`
+where the Jacobian :math:`f^{(1)} (x)` is sparse.
+The function :math:`f : \B{R}^n \rightarrow \B{R}^m` only depends on the
+size and contents of the index vectors *row* and *col* .
 The non-zero entries in the Jacobian of this function have
 one of the following forms:
-$latex \[
-    \D{ f[row[k]]}{x[col[k]]}
-\] $$
-for some $latex k $$ between zero and $latex K-1$$.
+
+.. math::
+
+   \D{ f[row[k]]}{x[col[k]]}
+
+for some :math:`k` between zero and :math:`K-1`.
 All the other terms of the Jacobian are zero.
 
-$head Inclusion$$
-The template function $code sparse_jac_fun$$
-is defined in the $code CppAD$$ namespace by including
-the file $code cppad/speed/sparse_jac_fun.hpp$$
+Inclusion
+*********
+The template function ``sparse_jac_fun``
+is defined in the ``CppAD`` namespace by including
+the file ``cppad/speed/sparse_jac_fun.hpp``
 (relative to the CppAD distribution directory).
 
-$head Float$$
-The type $icode Float$$ must be a $cref NumericType$$.
-In addition, if $icode y$$ and $icode z$$ are $icode Float$$ objects,
-$codei%
-    %y% = exp(%z%)
-%$$
-must set the $icode y$$ equal the exponential of $icode z$$, i.e.,
-the derivative of $icode y$$ with respect to $icode z$$ is equal to $icode y$$.
+Float
+*****
+The type *Float* must be a :ref:`NumericType-name` .
+In addition, if *y* and *z* are *Float* objects,
 
-$head FloatVector$$
-The type $icode FloatVector$$ is any
-$cref SimpleVector$$, or it can be a raw pointer,
-with elements of type $icode Float$$.
+   *y* = ``exp`` ( *z* )
 
-$head n$$
-The argument $icode n$$ has prototype
-$codei%
-    size_t %n%
-%$$
-It specifies the dimension for the domain space for $latex f(x)$$.
+must set the *y* equal the exponential of *z* , i.e.,
+the derivative of *y* with respect to *z* is equal to *y* .
 
-$head m$$
-The argument $icode m$$ has prototype
-$codei%
-    size_t %m%
-%$$
-It specifies the dimension for the range space for $latex f(x)$$.
+FloatVector
+***********
+The type *FloatVector* is any
+:ref:`SimpleVector-name` , or it can be a raw pointer,
+with elements of type *Float* .
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-    const %FloatVector%& %x%
-%$$
+n
+*
+The argument *n* has prototype
+
+   ``size_t`` *n*
+
+It specifies the dimension for the domain space for :math:`f(x)`.
+
+m
+*
+The argument *m* has prototype
+
+   ``size_t`` *m*
+
+It specifies the dimension for the range space for :math:`f(x)`.
+
+x
+*
+The argument *x* has prototype
+
+   ``const`` *FloatVector* & *x*
+
 It contains the argument value for which the function,
 or its derivative, is being evaluated.
-We use $latex n$$ to denote the size of the vector $icode x$$.
+We use :math:`n` to denote the size of the vector *x* .
 
-$head row$$
-The argument $icode row$$ has prototype
-$codei%
-     const CppAD::vector<size_t>& %row%
-%$$
-It specifies indices in the range of $latex f(x)$$ for non-zero components
+row
+***
+The argument *row* has prototype
+
+   ``const CppAD::vector<size_t>&`` *row*
+
+It specifies indices in the range of :math:`f(x)` for non-zero components
 of the Jacobian
-(see $cref/purpose/sparse_hes_fun/Purpose/$$ above).
-The value $latex K$$ is defined by $icode%K% = %row%.size()%$$.
-All the elements of $icode row$$ must be between zero and $icode%m%-1%$$.
+(see :ref:`sparse_hes_fun@Purpose` above).
+The value :math:`K` is defined by *K* = *row* . ``size`` () .
+All the elements of *row* must be between zero and *m* ``-1`` .
 
-$head col$$
-The argument $icode col$$ has prototype
-$codei%
-     const CppAD::vector<size_t>& %col%
-%$$
-and its size must be $latex K$$; i.e., the same as $icode row$$.
-It specifies the component of $latex x$$ for
+col
+***
+The argument *col* has prototype
+
+   ``const CppAD::vector<size_t>&`` *col*
+
+and its size must be :math:`K`; i.e., the same as *row* .
+It specifies the component of :math:`x` for
 the non-zero Jacobian terms.
-All the elements of $icode col$$ must be between zero and $icode%n%-1%$$.
+All the elements of *col* must be between zero and *n* ``-1`` .
 
-$head p$$
-The argument $icode p$$ has prototype
-$codei%
-    size_t %p%
-%$$
+p
+*
+The argument *p* has prototype
+
+   ``size_t`` *p*
+
 It is either zero or one and
-specifies the order of the derivative of $latex f$$
-that is being evaluated, i.e., $latex f^{(p)} (x)$$ is evaluated.
+specifies the order of the derivative of :math:`f`
+that is being evaluated, i.e., :math:`f^{(p)} (x)` is evaluated.
 
-$head fp$$
-The argument $icode fp$$ has prototype
-$codei%
-    %FloatVector%& %fp%
-%$$
-If $icode%p% = 0%$$, it size is $icode m$$
-otherwise its size is $icode K$$.
-The input value of the elements of $icode fp$$ does not matter.
+fp
+**
+The argument *fp* has prototype
 
-$subhead Function$$
-If $icode p$$ is zero, $icode fp$$ has size $latex m$$ and
-$codei%(%fp%[0]%, ... , %fp%[%m%-1])%$$ is the value of $latex f(x)$$.
+   *FloatVector* & *fp*
 
-$subhead Jacobian$$
-If $icode p$$ is one, $icode fp$$ has size $icode K$$ and
-for $latex k = 0 , \ldots , K-1$$,
-$latex \[
-    \D{f[ \R{row}[i] ]}{x[ \R{col}[j] ]} = fp [k]
-\] $$
+If *p*  = 0 , it size is *m*
+otherwise its size is *K* .
+The input value of the elements of *fp* does not matter.
 
-$children%
-    speed/example/sparse_jac_fun.cpp%
-    omh/sparse_jac_fun.omh
-%$$
+Function
+========
+If *p* is zero, *fp* has size :math:`m` and
+( *fp* [0], ... , ``fp`` [ ``m`` *-1* ]) is the value of :math:`f(x)`.
 
-$head Example$$
+Jacobian
+========
+If *p* is one, *fp* has size *K* and
+for :math:`k = 0 , \ldots , K-1`,
+
+.. math::
+
+   \D{f[ \R{row}[i] ]}{x[ \R{col}[j] ]} = fp [k]
+
+{xrst_toc_hidden
+   speed/example/sparse_jac_fun.cpp
+   xrst/sparse_jac_fun.xrst
+}
+
+Example
+*******
 The file
-$cref sparse_jac_fun.cpp$$
-contains an example and test  of $code sparse_jac_fun.hpp$$.
+:ref:`sparse_jac_fun.cpp-name`
+contains an example and test  of ``sparse_jac_fun.hpp`` .
 
-$head Source Code$$
+Source Code
+***********
 The file
-$cref sparse_jac_fun.hpp$$
+:ref:`sparse_jac_fun.hpp-name`
 contains the source code for this template function.
 
-$end
+{xrst_end sparse_jac_fun}
 ------------------------------------------------------------------------------
 */
 // BEGIN C++
@@ -169,51 +172,51 @@ $end
 # include <cppad/base_require.hpp>
 
 namespace CppAD {
-    template <class Float, class FloatVector>
-    void sparse_jac_fun(
-        size_t                       m    ,
-        size_t                       n    ,
-        const FloatVector&           x    ,
-        const CppAD::vector<size_t>& row  ,
-        const CppAD::vector<size_t>& col  ,
-        size_t                       p    ,
-        FloatVector&                 fp   )
-    {
-        // check numeric type specifications
-        CheckNumericType<Float>();
-        // check value of p
-        CPPAD_ASSERT_KNOWN(
-            p == 0 || p == 1,
-            "sparse_jac_fun: p != 0 and p != 1"
-        );
-        size_t K = row.size();
-        CPPAD_ASSERT_KNOWN(
-            K >= m,
-            "sparse_jac_fun: row.size() < m"
-        );
-        size_t i, j, k;
+   template <class Float, class FloatVector>
+   void sparse_jac_fun(
+      size_t                       m    ,
+      size_t                       n    ,
+      const FloatVector&           x    ,
+      const CppAD::vector<size_t>& row  ,
+      const CppAD::vector<size_t>& col  ,
+      size_t                       p    ,
+      FloatVector&                 fp   )
+   {
+      // check numeric type specifications
+      CheckNumericType<Float>();
+      // check value of p
+      CPPAD_ASSERT_KNOWN(
+         p == 0 || p == 1,
+         "sparse_jac_fun: p != 0 and p != 1"
+      );
+      size_t K = row.size();
+      CPPAD_ASSERT_KNOWN(
+         K >= m,
+         "sparse_jac_fun: row.size() < m"
+      );
+      size_t i, j, k;
 
-        if( p == 0 )
-            for(i = 0; i < m; i++)
-                fp[i] = Float(0);
+      if( p == 0 )
+         for(i = 0; i < m; i++)
+            fp[i] = Float(0);
 
-        Float t;
-        for(k = 0; k < K; k++)
-        {   i    = row[k];
-            j    = col[k];
-            t    = exp( x[j] * x[j] / 2.0 );
-            switch(p)
-            {
-                case 0:
-                fp[i] += t;
-                break;
+      Float t;
+      for(k = 0; k < K; k++)
+      {  i    = row[k];
+         j    = col[k];
+         t    = exp( x[j] * x[j] / 2.0 );
+         switch(p)
+         {
+            case 0:
+            fp[i] += t;
+            break;
 
-                case 1:
-                fp[k] = t * x[j];
-                break;
-            }
-        }
-    }
+            case 1:
+            fp[k] = t * x[j];
+            break;
+         }
+      }
+   }
 }
 // END C++
 # endif

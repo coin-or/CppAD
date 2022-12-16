@@ -1,77 +1,74 @@
 # ifndef CPPAD_CORE_BASE_HASH_HPP
 # define CPPAD_CORE_BASE_HASH_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 /*
-$begin base_hash$$
-$spell
-    alloc
-    Cpp
-    adouble
-    valgrind
-    const
-    inline
-$$
+{xrst_begin base_hash}
+{xrst_spell
+   adouble
+   valgrind
+}
 
-$section Base Type Requirements for Hash Coding Values$$
+Base Type Requirements for Hash Coding Values
+#############################################
 
-$head Syntax$$
-$icode%code% = hash_code(%x%)%$$
+Syntax
+******
+*code* = ``hash_code`` ( *x* )
 
-$head Purpose$$
-CppAD uses a table of $icode Base$$ type values when recording
-$codei%AD<%Base%>%$$ operations.
+Purpose
+*******
+CppAD uses a table of *Base* type values when recording
+``AD<`` *Base* > operations.
 A hashing function is used to reduce number of values stored in this table;
 for example, it is not necessary to store the value 3.0 every
-time it is used as a $cref/parameter/con_dyn_var/Parameter/$$.
+time it is used as a :ref:`con_dyn_var@Parameter` .
 
-$head Default$$
+Default
+*******
 The default hashing function works with the set of bits that correspond
-to a $icode Base$$ value.
+to a *Base* value.
 In most cases this works well, but in some cases
 it does not. For example, in the
-$cref base_adolc.hpp$$ case, an $code adouble$$ value can have
-fields that are not initialized and $code valgrind$$ reported an error
+:ref:`base_adolc.hpp-name` case, an ``adouble`` value can have
+fields that are not initialized and ``valgrind`` reported an error
 when these are used to form the hash code.
 
-$head x$$
+x
+*
 This argument has prototype
-$codei%
-    const %Base%& %x
-%$$
+
+   *const* ``Base`` & ``x``
+
 It is the value we are forming a hash code for.
 
-$head code$$
-The return value $icode code$$ has prototype
-$codei%
-    unsigned short %code%
-%$$
-It is the hash code corresponding to $icode x$$. This intention is the
+code
+****
+The return value *code* has prototype
+
+   ``unsigned short`` *code*
+
+It is the hash code corresponding to *x* . This intention is the
 commonly used values will have different hash codes.
 The hash code must satisfy
-$codei%
-    %code% < CPPAD_HASH_TABLE_SIZE
-%$$
+
+   *code* < ``CPPAD_HASH_TABLE_SIZE``
+
 so that it is a valid index into the hash code table.
 
-$head inline$$
-If you define this function, it should declare it to be $code inline$$,
+inline
+******
+If you define this function, it should declare it to be ``inline`` ,
 so that you do not get multiple definitions from different compilation units.
 
-$head Example$$
-See the $code base_alloc$$ $cref/hash_code/base_alloc.hpp/hash_code/$$
-and the $code adouble$$ $cref/hash_code/base_adolc.hpp/hash_code/$$.
+Example
+*******
+See the ``base_alloc`` :ref:`base_alloc.hpp@hash_code`
+and the ``adouble`` :ref:`base_adolc.hpp@hash_code` .
 
-$end
+{xrst_end base_hash}
 */
 
 /*!

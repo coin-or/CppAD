@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin deprecated}
+
+CppAD Deprecated API Features
+#############################
+
+Contents
+********
+{xrst_toc_table
+   xrst/appendix/deprecated/include_deprecated.xrst
+   xrst/appendix/deprecated/fun_deprecated.xrst
+   xrst/appendix/deprecated/compare_change.xrst
+   include/cppad/core/omp_max_thread.hpp
+   include/cppad/utility/track_new_del.hpp
+   xrst/appendix/deprecated/omp_alloc.xrst
+   include/cppad/utility/memory_leak.hpp
+   include/cppad/core/epsilon.hpp
+   cppad_ipopt/src/cppad_ipopt_nlp.hpp
+   include/cppad/core/atomic/one/atomic.hpp
+   include/cppad/core/atomic/two/atomic.hpp
+   example/multi_thread/multi_atomic_two.xrst
+   include/cppad/core/chkpoint_one/chkpoint_one.hpp
+   example/multi_thread/multi_chkpoint_one.xrst
+   include/cppad/core/zdouble.hpp
+   xrst/install/autotools.xrst
+}
+
+Name Changes
+************
+
+.. list-table::
+
+   * - ``CppADCreateUnaryBool``
+     - see Deprecated 2007-07-31 in :ref:`bool_fun-title`
+   * - ``CppADCreateDiscrete``
+     - see Deprecated 2007-07-31 in :ref:`bool_fun-title`
+   * - ``nan`` ( *zero* )
+     - :ref:`nan@nan(zero)`
+   * - ``colpack.star`` coloring
+     - see
+       :ref:`sparse_hes<sparse_hes@coloring@colpack.star Deprecated 2017-06-01>`
+       and
+       :ref:`sparse_hessian<sparse_hessian@work@colpack.star Deprecated 2017-06-01>`
+
+{xrst_end deprecated}

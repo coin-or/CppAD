@@ -1,73 +1,67 @@
 # ifndef CPPAD_CORE_VALUE_HPP
 # define CPPAD_CORE_VALUE_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-
-CppAD is distributed under the terms of the
-             Eclipse Public License Version 2.0.
-
-This Source Code may also be made available under the following
-Secondary License when the conditions for such availability set forth
-in the Eclipse Public License, Version 2.0 are satisfied:
-      GNU General Public License, Version 2.0 or later.
----------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 /*
-$begin Value$$
-$spell
-    const
-$$
+{xrst_begin Value}
 
+Convert From an AD Type to its Base Type
+########################################
 
+Syntax
+******
+*b* = ``Value`` ( *x* )
 
-$section Convert From an AD Type to its Base Type$$
+See Also
+********
+:ref:`var2par-name`
 
-$head Syntax$$
-$icode%b% = Value(%x%)%$$
-
-$head See Also$$
-$cref var2par$$
-
-
-$head Purpose$$
+Purpose
+*******
 Converts from an AD type to the corresponding
-$cref/base type/glossary/Base Type/$$.
+:ref:`glossary@Base Type` .
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-    const AD<%Base%> &%x%
-%$$
+x
+*
+The argument *x* has prototype
 
-$head b$$
-The return value $icode b$$ has prototype
-$codei%
-    %Base% %b%
-%$$
+   ``const AD<`` *Base* > & *x*
 
-$head Operation Sequence$$
+b
+*
+The return value *b* has prototype
+
+   *Base* *b*
+
+Operation Sequence
+******************
 The result of this operation is not an
-$cref/AD of Base/glossary/AD of Base/$$ object.
+:ref:`glossary@AD of Base` object.
 Thus it will not be recorded as part of an
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+AD of *Base*
+:ref:`operation sequence<glossary@Operation@Sequence>` .
 
-$head Restriction$$
-The argument $icode x$$ must not be a
-$cref/variable/glossary/Variable/$$ or
-$cref/dynamic/glossary/Parameter/Dynamic/$$ parameter
+Restriction
+***********
+The argument *x* must not be a
+:ref:`glossary@Variable` or
+:ref:`glossary@Parameter@Dynamic` parameter
 because its dependency information
-would not be included in the $code Value$$ result $icode b$$.
+would not be included in the ``Value`` result *b* .
 
-$head Example$$
-$children%
-    example/general/value.cpp
-%$$
+Example
+*******
+{xrst_toc_hidden
+   example/general/value.cpp
+}
 The file
-$cref value.cpp$$
+:ref:`value.cpp-name`
 contains an example and test of this operation.
 
-$end
+{xrst_end Value}
 -------------------------------------------------------------------------------
 */
 
@@ -77,15 +71,15 @@ namespace CppAD {
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 Base Value(const AD<Base> &x)
-{   Base result;
-    //
-    CPPAD_ASSERT_KNOWN(
-        ! ( Variable(x) | Dynamic(x) ) ,
-        "Value: argument is a variable or dynamic parameter"
-    );
-    //
-    result = x.value_;
-    return result;
+{  Base result;
+   //
+   CPPAD_ASSERT_KNOWN(
+      ! ( Variable(x) | Dynamic(x) ) ,
+      "Value: argument is a variable or dynamic parameter"
+   );
+   //
+   result = x.value_;
+   return result;
 }
 
 }

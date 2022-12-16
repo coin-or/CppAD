@@ -1,0 +1,46 @@
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+
+{xrst_begin speed_double}
+
+Speed Test of Functions in Double
+#################################
+
+Purpose
+*******
+CppAD has a set of speed tests for just calculating functions
+(in double precision instead of an AD type).
+This section links to the source code the function value speed tests.
+
+Running Tests
+*************
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+:ref:`cmake@Build Directory` :
+
+| |tab| ``cd speed/double``
+| |tab| ``make check_speed_double VERBOSE`` =1
+
+You can then run the corresponding speed tests
+with the following command
+
+   ./ ``speed_double speed`` *seed*
+
+where *seed* is a positive integer.
+See :ref:`speed_main-name` for more options.
+
+Contents
+********
+{xrst_toc_list
+   speed/double/det_minor.cpp
+   speed/double/det_lu.cpp
+   speed/double/mat_mul.cpp
+   speed/double/ode.cpp
+   speed/double/poly.cpp
+   speed/double/sparse_hessian.cpp
+   speed/double/sparse_jacobian.cpp
+}
+
+{xrst_end speed_double}

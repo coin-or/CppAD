@@ -1,16 +1,9 @@
 # ifndef CPPAD_LOCAL_GRAPH_JSON_LEXER_HPP
 # define CPPAD_LOCAL_GRAPH_JSON_LEXER_HPP
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-21 Bradley M. Bell
-
-  CppAD is distributed under the terms of the
-               Eclipse Public License Version 2.0.
-
-  This Source Code may also be made available under the following
-  Secondary License when the conditions for such availability set forth
-  in the Eclipse Public License, Version 2.0 are satisfied:
-        GNU General Public License, Version 2.0 or later.
--------------------------------------------------------------------------- */
+// SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+// SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+// SPDX-FileContributor: 2003-22 Bradley M. Bell
+// ----------------------------------------------------------------------------
 
 # include <string>
 # include <cppad/core/cppad_assert.hpp>
@@ -24,348 +17,392 @@ class json_lexer {
 
 /*
 -------------------------------------------------------------------------------
-$begin json_lexer_member_data$$
-$spell
-    json
-    lexer
-$$
+{xrst_begin json_lexer_member_data dev}
+{xrst_spell
+   parsed
+}
 
-$section json lexer: Private Data$$
+json lexer: Private Data
+########################
 
-$head graph_$$
-The $cref json_ad_graph$$.
+Member Variables
+****************
 
-$head index_$$
+graph\_
+=======
+The :ref:`json_ad_graph-name` .
+
+index\_
+=======
 is the index in the graph for the current character.
 If a token is returned, this corresponds to the last character
 it the token.
 
-$head line_number_$$
+line_number\_
+=============
 line number in the graph for the current character
 
-$head char_number_$$
+char_number\_
+=============
 character number in the graph for the current character
 
-$head token_$$
+token\_
+=======
 used to return tokens.
 
-$head function_name_$$
+function_name\_
+===============
 is the function name for this graph.
 This is initialized as empty,
 should be set as soon as it is parsed,
 and is used for error reporting.
 
-$head token$$
-returns current value of $code token_$$.
+token
+*****
+returns current value of ``token_`` .
 
-$head line_number$$
-returns current value of $code line_number_$$
+line_number
+***********
+returns current value of ``line_number_``
 (which corresponds to last character in the token).
 
-$head char_number$$
-returns current value of $code char_number_$$.
+char_number
+***********
+returns current value of ``char_number_`` .
 (which corresponds to last character in the token).
 
-$head set_function_name$$
-sets the value of $code function_name_$$.
+set_function_name
+*****************
+sets the value of ``function_name_`` .
 
-$head Source Code$$
-$srccode%hpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
-    const std::string& json_;
-    size_t             index_;
-    size_t             line_number_;
-    size_t             char_number_;
-    std::string        token_;
-    std::string        function_name_;
+   const std::string& json_;
+   size_t             index_;
+   size_t             line_number_;
+   size_t             char_number_;
+   std::string        token_;
+   std::string        function_name_;
 public:
-    const std::string& token(void)       const;
-    size_t             line_number(void) const;
-    size_t             char_number(void) const;
-    void               set_function_name(const std::string& function_name);
-/* %$$
-$end
+   const std::string& token(void)       const;
+   size_t             line_number(void) const;
+   size_t             char_number(void) const;
+   void               set_function_name(const std::string& function_name);
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_member_data}
 -------------------------------------------------------------------------------
-$begin json_lexer_report_error$$
-$spell
-    json
-    lexer
-    CppAD
-$$
+{xrst_begin json_lexer_report_error dev}
 
-$section json lexer: Report an Error$$
+json lexer: Report an Error
+###########################
 
-$head Syntax$$
-$codei%
-    %json_lexer%.report_error(%expected%, %found%)
-%$$
+Syntax
+******
 
-$head json_lexer$$
-is a $code local::graph::json_lexer$$ object.
+   *json_lexer* . ``report_error`` ( *expected* , *found* )
 
-$head expected$$
+json_lexer
+**********
+is a ``local::graph::json_lexer`` object.
+
+expected
+********
 is the token that is expected.
 
-$head found$$
+found
+*****
 is the token or text that was found.
 
-$head Report$$
-The current CppAD $cref ErrorHandler$$ is used to report
+Report
+******
+The current CppAD :ref:`ErrorHandler-name` is used to report
 an error parsing this Json AD graph.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
-    void report_error(const std::string& expected, const std::string& found);
-/* %$$
-$end
+   void report_error(const std::string& expected, const std::string& found);
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_report_error}
 -------------------------------------------------------------------------------
-$begin json_lexer_next_index$$
-$spell
-    json
-    lexer
-$$
+{xrst_begin json_lexer_next_index dev}
 
-$section json lexer: Advance Index by One$$
+json lexer: Advance Index by One
+################################
 
-$head Syntax$$
-$codei%
-    %json_lexer%.next_index()
-%$$
+Syntax
+******
 
-$head json_lexer$$
-is a $code local::graph::json_lexer$$ object.
+   *json_lexer* . ``next_index`` ()
 
-$head index_$$
-The input value of $code index_$$ is increased by one.
+json_lexer
+**********
+is a ``local::graph::json_lexer`` object.
+
+index\_
+*******
+The input value of ``index_`` is increased by one.
 It is an error to call this routine when the input value
-of $code index_$$ is greater than or equal $code json_.size()$$.
+of ``index_`` is greater than or equal ``json_.size()`` .
 
-$head line_number_$$
+line_number\_
+*************
 If the previous character, before  the call, was a new line,
-$code line_number_$$ is increased by one.
+``line_number_`` is increased by one.
 
-$head char_number_$$
+char_number\_
+*************
 If the previous character, before the call, was a new line,
-$code char_number$$ is set to one.
-Otherwise, $code char_number_$$ is increased by one.
+``char_number`` is set to one.
+Otherwise, ``char_number_`` is increased by one.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
-    void next_index(void);
-/* %$$
-$end
+   void next_index(void);
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_next_index}
 -------------------------------------------------------------------------------
-$begin json_lexer_skip_white_space$$
-$spell
-    json
-    lexer
-$$
+{xrst_begin json_lexer_skip_white_space dev}
 
-$section json lexer: Skip White Space That Separates Tokens$$
+json lexer: Skip White Space That Separates Tokens
+##################################################
 
-$head Syntax$$
-$codei%
-    %json_lexer%.skip_white_space()
-%$$
+Syntax
+******
 
-$head json_lexer$$
+   *json_lexer* . ``skip_white_space`` ()
+
+json_lexer
+**********
 is a json lexer object.
 
-$head Discussion$$
-This member functions is used to increase $code index_$$ until either
-a non-white space character is found or $code index_$$ is equal
-to $code json_.size()$$.
+Discussion
+**********
+This member functions is used to increase ``index_`` until either
+a non-white space character is found or ``index_`` is equal
+to ``json_.size()`` .
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 private:
-    void skip_white_space(void);
-/* %$$
-$end
+   void skip_white_space(void);
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_skip_white_space}
 -------------------------------------------------------------------------------
-$begin json_lexer_constructor$$
-$spell
-    json
-    lexer
-    enum
-    op
-    arg
-$$
+{xrst_begin json_lexer_constructor dev}
 
-$section json lexer: Constructor$$
+json lexer: Constructor
+#######################
 
-$head Syntax$$
-$codei%
-    local::graph::lexer %json_lexer%(%json%)
-%$$
+Syntax
+******
 
-$head json$$
-The argument $icode json$$ is an $cref json_ad_graph$$
-and it is assumed that $icode json$$ does not change
-for as long as $icode json_lexer$$ exists.
+   ``local::graph::lexer`` *json_lexer* ( *json* )
 
-$head Initialization$$
+json
+****
+The argument *json* is an :ref:`json_ad_graph-name`
+and it is assumed that *json* does not change
+for as long as *json_lexer* exists.
+
+Initialization
+**************
 The current token, index, line number, and character number
-are set to the first non white space character in $code json_$$.
-If this is not a left brace character $code '{'$$,
+are set to the first non white space character in ``json_`` .
+If this is not a left brace character ``'{'`` ,
 the error is reported and the constructor does not return.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
-    json_lexer(const std::string& json);
-/* %$$
-$end
+   json_lexer(const std::string& json);
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_constructor}
 -------------------------------------------------------------------------------
-$begin json_lexer_check_next_char$$
-$spell
-    json
-    lexer
-    ch
-$$
+{xrst_begin json_lexer_check_next_char dev}
+{xrst_spell
+   ch
+}
 
-$section Get and Check Next Single Character Token$$
+Get and Check Next Single Character Token
+#########################################
 
-$head Syntax$$
-$codei%
-    %json_lexer%.check_next_char(%ch%)
-%$$
+Syntax
+******
 
-$head index_$$
+   *json_lexer* . ``check_next_char`` ( *ch* )
+
+index\_
+*******
 The search for the character starts
-at one greater than the input value for $code index_$$ and skips white space.
+at one greater than the input value for ``index_`` and skips white space.
 
-$head ch$$
+ch
+**
 Is a non white space
 single character token that is expected.
 If this character is not found,
 the error is reported and this function does not return.
-In the special case where $icode ch$$ is $code '\0'$$,
+In the special case where *ch* is ``'\0'`` ,
 any non-white space character will be accepted
 (but there must be such a character).
 
-$head token_$$
-If this routine returns, $code token_$$ has size one
+token\_
+*******
+If this routine returns, ``token_`` has size one
 and contains the character that is found.
 
-
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
-    void check_next_char(char ch);
-/* %$$
-$end
+   void check_next_char(char ch);
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_check_next_char}
 -------------------------------------------------------------------------------
-$begin json_lexer_check_next_string$$
-$spell
-    json
-    lexer
-$$
+{xrst_begin json_lexer_check_next_string dev}
 
-$section Get and Check Next Single Character Token$$
+Get and Check Next Single Character Token
+#########################################
 
-$head Syntax$$
-$codei%
-    %json_lexer%.check_next_string(%expected%)
-%$$
+Syntax
+******
 
-$head index_$$
+   *json_lexer* . ``check_next_string`` ( *expected* )
+
+index\_
+*******
 The search for the string starts
-at one greater than the input value for $code index_$$ and skips white space.
+at one greater than the input value for ``index_`` and skips white space.
 
-$head expected$$
+expected
+********
 Is the value (not including double quotes) for the string that is expected.
 If this string is not found, the error is reported
 and this function does not return.
-In the special case where $icode expected$$ is empty,
+In the special case where *expected* is empty,
 any string will be accepted.
 
-$head token_$$
+token\_
+*******
 If this routine returns,
-$icode token_$$ is the string that was found.
+*token_* is the string that was found.
 
-
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
-    void check_next_string(const std::string& expected);
-/* %$$
-$end
+   void check_next_string(const std::string& expected);
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_check_next_string}
 -------------------------------------------------------------------------------
-$begin json_lexer_next_non_neg_int$$
-$spell
-    json
-    lexer
-    neg
-$$
+{xrst_begin json_lexer_next_non_neg_int dev}
 
-$section Get Next Non-Negative Integer$$
+Get Next Non-Negative Integer
+#############################
 
-$head Syntax$$
-$codei%
-    %json_lexer%.next_non_neg_int()
-    %value% = %json_lexer%.token2size_t()
-%$$
+Syntax
+******
 
-$head index_$$
+| |tab| *json_lexer* . ``next_non_neg_int`` ()
+| |tab| *value* = *json_lexer* . ``token2size_t`` ()
+
+index\_
+*******
 The search for the non-negative integer starts
-at one greater than the input value for $code index_$$ and skips white space.
+at one greater than the input value for ``index_`` and skips white space.
 
-$head token_$$
+token\_
+*******
 is set to the non-negative integer.
 If the next token is not a non-negative integer,
 the error is reported and this function does not return.
 
-$head value$$
+value
+*****
 If the current token is a non-negative integer,
-$icode value$$ is the corresponding value.
+*value* is the corresponding value.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
-    void next_non_neg_int(void);
-    size_t token2size_t(void) const;
+   void next_non_neg_int(void);
+   size_t token2size_t(void) const;
 
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_next_non_neg_int}
 -------------------------------------------------------------------------------
-$begin json_lexer_next_float$$
-$spell
-    json
-    lexer
-$$
+{xrst_begin json_lexer_next_float dev}
 
-$section Get Next Floating Point Number$$
+Get Next Floating Point Number
+##############################
 
-$head Syntax$$
-$codei%
-    %ok%    = %json_lexer%.next_float()
-    %value% = %json_lexer%.token2double()
-%$$
+Syntax
+******
 
-$head index_$$
+| |tab| *ok* = *json_lexer* . ``next_float`` ()
+| |tab| *value* = *json_lexer* . ``token2double`` ()
+
+index\_
+*******
 The search for the floating point number starts
-at one greater than the input value for $code index_$$ and skips white space.
+at one greater than the input value for ``index_`` and skips white space.
 
-$head token_$$
+token\_
+*******
 is set to the floating point number.
 If the next token is not a floating point number,
 the error is reported and this function does not return.
 
-$head value$$
+value
+*****
 If the current token is a floating point number,
-$icode value$$ is the corresponding value.
+*value* is the corresponding value.
 
-$head Prototype$$
-$srccode%hpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code hpp} */
 public:
-    void next_float(void);
-    double token2double(void) const;
+   void next_float(void);
+   double token2double(void) const;
 
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end json_lexer_next_float}
 */
 
 // ==========================================================================

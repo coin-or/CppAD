@@ -1,14 +1,7 @@
-% -----------------------------------------------------------------------------
-% CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-18 Bradley M. Bell
-%
-% CppAD is distributed under the terms of the
-%              Eclipse Public License Version 2.0.
-%
-% This Source Code may also be made available under the following
-% Secondary License when the conditions for such availability set forth
-% in the Eclipse Public License, Version 2.0 are satisfied:
-%       GNU General Public License, Version 2.0 or later.
-% -----------------------------------------------------------------------------
+% SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+% SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+% SPDX-FileContributor: 2003-22 Bradley M. Bell
+% ----------------------------------------------------------------------------
 \documentclass{beamer}
 
 % needed for fonts; see %https://tex.stackexchange.com/questions/58087/
@@ -21,20 +14,20 @@
 
 \title[CppAD]{CppAD's Abs-normal Representation}
 \institute{
-    \begin{tabular}{c}
-        {\Large Bradley M. Bell} \\
-        \\
-        Applied Physics Laboratory and \\
-        Institute for Health Metrics and Evaluation, \\
-        University of Washington, \\
-        \texttt{bradbell@uw.edu} \\
-    \end{tabular}
+   \begin{tabular}{c}
+      {\Large Bradley M. Bell} \\
+      \\
+      Applied Physics Laboratory and \\
+      Institute for Health Metrics and Evaluation, \\
+      University of Washington, \\
+      \texttt{bradbell@uw.edu} \\
+   \end{tabular}
 }
 
 \begin{document}
 
 \begin{frame}
-    \titlepage
+   \titlepage
 \end{frame}
 
 
@@ -90,8 +83,8 @@ g(x, u) = \left[ \begin{array}{c} y(x, u) \\ z(x, y) \end{array} \right]
 z[ \hat{x} ]( x , u )
 =
 z ( \hat{x}, a( \hat{x} ) )
-    + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-    + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+   + \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   + \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \]
 \pause
 
@@ -100,8 +93,8 @@ Note that $z_0 ( x , u )$ does not depend on $u$:
 a_0 [ \hat{x} ]( x )
 =
 \left|
-    z_0 ( \hat{x}, a( \hat{x} ) )
-    + \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   z_0 ( \hat{x}, a( \hat{x} ) )
+   + \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 \right|
 \]
 \pause
@@ -110,12 +103,12 @@ a_0 [ \hat{x} ]( x )
 a_i [ \hat{x} ]( x )
 & = &
 \left | \vphantom{ \sum_{j < i} } z_i ( \hat{x}, a( \hat{x} ) )
-    + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   + \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 \right.
 \\
 & + &
 \left. \sum_{j < i} \partial_{u(j)} z_i ( \hat{x}, a( \hat{x} ) )
-            ( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
+         ( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
 \right|
 \end{eqnarray*}
 \pause
@@ -150,8 +143,8 @@ any order forward and reverse mode, sparsity patterns, and sparse derivatives.
 y[ \hat{x} ]( x , u )
 =
 y ( \hat{x}, a( \hat{x} ) )
-    + \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
-    + \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
+   + \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+   + \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \]
 \pause
 

@@ -1,62 +1,61 @@
 #! /bin/bash -e
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-20 Bradley M. Bell
+# SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+# SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
+# SPDX-FileContributor: 2003-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+# {xrst_begin get_fadbad.sh} 
+# {xrst_comment_ch #}
 #
-# CppAD is distributed under the terms of the
-#              Eclipse Public License Version 2.0.
+# Download and Install Fadbad in Build Directory
+# ##############################################
 #
-# This Source Code may also be made available under the following
-# Secondary License when the conditions for such availability set forth
-# in the Eclipse Public License, Version 2.0 are satisfied:
-#       GNU General Public License, Version 2.0 or later.
-# -----------------------------------------------------------------------------
-# $begin get_fadbad.sh$$ $newlinech #$$
-# $spell
-#   Fadbad
-#   CppAD
-# $$
+# Syntax
+# ******
+# ``bin/get_fadbad.sh``
 #
-# $section Download and Install Fadbad in Build Directory$$
-#
-# $head Syntax$$
-# $code bin/get_fadbad.sh$$
-#
-# $head Purpose$$
+# Purpose
+# *******
 # If you are using Unix, this command will download and install
-# $cref/Fadbad/fadbad_prefix/Fadbad Home Page/$$
-# in the CppAD $code build$$ directory.
+# :ref:`Fadbad<fadbad_prefix@Fadbad Home Page>`
+# in the CppAD ``build`` directory.
 #
-# $head Distribution Directory$$
+# Distribution Directory
+# **********************
 # This command must be executed in the
-# $cref/distribution directory/download/Distribution Directory/$$.
+# :ref:`download@Distribution Directory` .
 #
-# $head Source Directory$$
+# Source Directory
+# ****************
 # The Fadbad source code is downloaded into the sub-directory
-# $code external/FADBAD++$$ below the distribution directory.
+# ``external/FADBAD++`` below the distribution directory.
 #
-# $head Prefix$$
-# The $cref/prefix/get_optional.sh/prefix/$$
-# in the file $code bin/get_optional.sh$$ is used for this install.
+# Prefix
+# ******
+# The :ref:`get_optional.sh@prefix`
+# in the file ``bin/get_optional.sh`` is used for this install.
 #
-# $head Version$$
+# Version
+# *******
 # This will install the following version of Fadbad
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
 version='2.1'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $end
+# {xrst_end get_fadbad.sh}
 # -----------------------------------------------------------------------------
 package='fadbad'
 if [ $0 != "bin/get_$package.sh" ]
 then
-    echo "bin/get_$package.sh: must be executed from its parent directory"
-    exit 1
+   echo "bin/get_$package.sh: must be executed from its parent directory"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 web_page='http://www.fadbad.com/download'
@@ -66,32 +65,32 @@ cppad_dir=`pwd`
 eval `grep '^prefix=' bin/get_optional.sh`
 if [[ "$prefix" =~ ^[^/] ]]
 then
-    prefix="$cppad_dir/$prefix"
+   prefix="$cppad_dir/$prefix"
 fi
 echo "prefix=$prefix"
 # -----------------------------------------------------------------------------
 if [ ! -d external ]
 then
-    echo_eval mkdir external
+   echo_eval mkdir external
 fi
 echo_eval cd external
 # -----------------------------------------------------------------------------
 if [ ! -e "FADBAD++-$version.tar.gz" ]
 then
-    echo_eval wget --no-check-certificate $web_page/FADBAD++-$version.tar.gz
+   echo_eval wget --no-check-certificate $web_page/FADBAD++-$version.tar.gz
 fi
 if [ -e "FADBAD++" ]
 then
-    echo_eval rm -r FADBAD++
+   echo_eval rm -r FADBAD++
 fi
 echo_eval tar -xzf FADBAD++-$version.tar.gz
 if [ ! -e "$prefix/include" ]
 then
-    echo_eval mkdir -p "$prefix/include"
+   echo_eval mkdir -p "$prefix/include"
 fi
 if [ -e "$prefix/include/FADBAD++" ]
 then
-    echo_eval rm -r "$prefix/include/FADBAD++"
+   echo_eval rm -r "$prefix/include/FADBAD++"
 fi
 echo_eval cp -r FADBAD++ "$prefix/include/FADBAD++"
 # -----------------------------------------------------------------------------
